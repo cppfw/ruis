@@ -31,6 +31,11 @@
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
           <executablePath></executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>../ext</pElem>
+            </incDir>
+          </ccTool>
         </makeTool>
       </makefileType>
     </conf>
