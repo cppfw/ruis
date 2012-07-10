@@ -28,11 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <vector>
-
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
-#include <ting/Signal.hpp>
 
 #include <tride/Vector3.hpp>
 
