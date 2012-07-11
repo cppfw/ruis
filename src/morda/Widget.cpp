@@ -6,8 +6,7 @@
 
 
 
-using namespace ting;
-using namespace tride;
+using namespace morda;
 
 
 

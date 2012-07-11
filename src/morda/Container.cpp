@@ -6,14 +6,7 @@
 
 
 
-using namespace ting;
-using namespace tride;
-
-
-
-Widget::Widget() :
-		p(0, 0)
-{}
+using namespace morda;
 
 
 
@@ -181,7 +174,7 @@ void Widget::Add(ting::Ref<Widget> w){
 
 
 
-bool Widget::Remove(ting::Ref<Widget> w){
+bool Container::Remove(ting::Ref<Widget> w){
 	ASSERT(w.IsValid())
 
 	if(this->modal == w){
