@@ -28,35 +28,18 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <GL/glx.h>
 
-#include "Exc.hpp"
+#include <ting/Exc.hpp>
 
 
 
 namespace morda{
 
-
-
-class Application{
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()throw();
-	} xDisplay;
-	
-	GLXContext glxContext;
-
-	Window window;
-	
+class Exc : public ting::Exc{
 public:
-	Application(unsigned w, unsigned h);
-	
-	~Application()throw();
-	
-	void Exec();
+	Exc(const std::string& message) :
+			ting::Exc(message)
+	{}
 };
-
-
 
 }//~namespace

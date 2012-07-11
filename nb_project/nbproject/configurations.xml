@@ -7,9 +7,41 @@
         <in>Application.hpp</in>
         <in>Container.cpp</in>
         <in>Container.hpp</in>
+        <in>Exc.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
       </df>
+      <df name="obj">
+        <df name="1">
+          <df name="2">
+            <df name="morda">
+            </df>
+          </df>
+        </df>
+      </df>
+    </df>
+    <df name="tests" root="../tests">
+      <df name="app">
+        <df name=".svn">
+          <df name="prop-base">
+          </df>
+          <df name="props">
+          </df>
+          <df name="text-base">
+          </df>
+          <df name="tmp">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+          </df>
+          <in>entries</in>
+        </df>
+        <in>main.cpp</in>
+      </df>
+      <in>makefile</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -32,17 +64,53 @@
       </toolsSet>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>../src</buildCommandWorkingDir>
+          <buildCommandWorkingDir>../</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
           <executablePath></executablePath>
-          <ccTool>
-            <incDir>
-              <pElem>../ext</pElem>
-            </incDir>
-          </ccTool>
         </makeTool>
       </makefileType>
+      <item path="../src/morda/Application.cpp" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <incDir>
+            <pElem>../ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Container.hpp" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <incDir>
+            <pElem>../ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="../tests/makefile" ex="true" tool="3" flavor="0">
+      </item>
+      <folder path="tests">
+        <ccTool>
+          <incDir>
+            <pElem>../ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
     </conf>
   </confs>
 </configurationDescriptor>
