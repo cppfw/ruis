@@ -151,19 +151,7 @@ bool Widget::OnMouseMoveInternal(const tride::Vec2f& oldPos, const tride::Vec2f&
 
 
 
-void Widget::Unhover(){
-	if(!this->IsHovered())
-		return;
 
-	//unhover children
-	for(T_ChildIter i = this->children.begin(); i != this->children.end(); ++i){
-		(*i)->Unhover();
-	}
-
-	this->isHovered = false;
-
-	this->OnMouseOut();
-}
 
 
 
@@ -205,7 +193,8 @@ bool Widget::Remove(ting::Ref<Widget> w){
 		if(w == (*i)){
 			this->children.erase(i);
 			w->parent.Reset();
-			w->Unhover();
+			w->isHovered = false;
+			w->OnMouseOut();
 			return true;
 		}
 	}
