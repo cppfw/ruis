@@ -1,6 +1,5 @@
 subdirs :=
-subdirs += parser
-subdirs += dom
+subdirs += app
 
 
 
