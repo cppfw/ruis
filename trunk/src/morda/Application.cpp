@@ -71,7 +71,16 @@ Application::Application(unsigned w, unsigned h){
 		XSetWindowAttributes attr;
 		attr.colormap = colorMap;
 		attr.border_pixel = 0;
-		attr.event_mask = ExposureMask | KeyPressMask | ButtonPressMask | StructureNotifyMask;
+		attr.event_mask =
+				ExposureMask |
+				KeyPressMask |
+				KeyReleaseMask |
+				ButtonPressMask |
+				ButtonReleaseMask |
+				PointerMotionMask |
+				ButtonMotionMask |
+				StructureNotifyMask
+			;
 		
 		this->window = XCreateWindow(
 				this->xDisplay.d,

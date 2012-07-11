@@ -7,7 +7,8 @@
 
 int main(int argc, char** argv){
 	morda::Application app(320, 480);
-		
+
+	app.Exec();
 	
 	return 0;
 }
