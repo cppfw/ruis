@@ -19,7 +19,7 @@ platform := linux
 #    release
 build_config := release
 
-name := libstob
+name := libmorda
 
 so_name := 0
 
@@ -37,8 +37,8 @@ endif
 
 #Sources
 srcs :=
-srcs += stob/parser.cpp
-srcs += stob/dom.cpp
+srcs += morda/Application.cpp
+
 
 
 
@@ -116,7 +116,7 @@ ifeq ($(platform), maemo_linux)
     libs := 
 endif
 ifeq ($(platform), linux)
-    libs := -lting -lpthread
+    libs := -lting -lpthread -lX11 -lGL
 endif
 ifeq ($(platform), win32)
     libs := 
