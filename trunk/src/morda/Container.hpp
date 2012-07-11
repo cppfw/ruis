@@ -171,12 +171,7 @@ public:
 		this->SetHidden(false);
 	}
 
-	inline void SetHidden(bool hidden){
-		this->isHidden = hidden;
-		if(this->isHidden){
-			this->Unhover();
-		}
-	}
+
 
 	inline void Enable(){
 		this->SetDisabled(false);
