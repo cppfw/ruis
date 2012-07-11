@@ -35,6 +35,10 @@ THE SOFTWARE. */
 
 
 
+namespace morda{
+
+
+
 class Widget : virtual public ting::RefCounted{
 private:
 	ting::WeakRef<Widget> parent;//Container?
@@ -160,3 +164,7 @@ protected:
 			;
 	}
 };
+
+
+
+}//~namespace
