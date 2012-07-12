@@ -111,6 +111,10 @@ Application::Application(unsigned w, unsigned h){
 	
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 	
+	if(glewInit() != GLEW_OK){
+		throw morda::Exc("GLEW initialization failed");
+	}
+	
 	this->curWinDim.x = float(w);
 	this->curWinDim.y = float(h);
 	this->SetGLViewport(this->curWinDim);
@@ -119,8 +123,9 @@ Application::Application(unsigned w, unsigned h){
 
 
 Application::~Application()throw(){
-	glXMakeCurrent(this->xDisplay.d, None, NULL);
+	glXMakeCurrent(this->xDisplay.d, this->window, NULL);
 	glXDestroyContext(this->xDisplay.d, this->glxContext);
+	XDestroyWindow(this->xDisplay.d, this->window);
 }
 
 
@@ -197,17 +202,17 @@ void Application::Exec(){
 			while(XPending(this->xDisplay.d) > 0){
 				XEvent event;
 				XNextEvent(this->xDisplay.d, &event);
-				TRACE(<< "X event got, type = " << (event.type) << std::endl)
+//				TRACE(<< "X event got, type = " << (event.type) << std::endl)
 				switch(event.type){
 					case Expose:
-						TRACE(<< "Expose X event got" << std::endl)
+//						TRACE(<< "Expose X event got" << std::endl)
 						if(event.xexpose.count != 0){
 							break;//~switch()
 						}
 						this->Render();
 						break;
 					case ConfigureNotify:
-						TRACE(<< "ConfigureNotify X event got" << std::endl)
+//						TRACE(<< "ConfigureNotify X event got" << std::endl)
 						if(
 								this->curWinDim.x != float(event.xconfigure.width) ||
 								this->curWinDim.y != float(event.xconfigure.height)
@@ -223,27 +228,27 @@ void Application::Exec(){
 						}
 						break;
 					case KeyPress:
-						TRACE(<< "KeyPress X event got" << std::endl)
+//						TRACE(<< "KeyPress X event got" << std::endl)
 						//TODO:
 						break;
 					case KeyRelease:
-						TRACE(<< "KeyRelease X event got" << std::endl)
+//						TRACE(<< "KeyRelease X event got" << std::endl)
 						//TODO:
 						break;
 					case ButtonPress:
-						TRACE(<< "ButtonPress X event got" << std::endl)
+//						TRACE(<< "ButtonPress X event got" << std::endl)
 						//TODO:
 						break;
 					case ButtonRelease:
-						TRACE(<< "ButtonRelease X event got" << std::endl)
+//						TRACE(<< "ButtonRelease X event got" << std::endl)
 						//TODO:
 						break;
 					case MotionNotify:
-						TRACE(<< "MotionNotify X event got" << std::endl)
+//						TRACE(<< "MotionNotify X event got" << std::endl)
 						//TODO:
 						break;
 					case ClientMessage:
-						TRACE(<< "ClientMessage X event got" << std::endl)
+//						TRACE(<< "ClientMessage X event got" << std::endl)
 						//probably a WM_DELETE_WINDOW event
 						if(*XGetAtomName(this->xDisplay.d, event.xclient.message_type) == *"WM_PROTOCOLS"){
 							this->quitFlag = true;

@@ -28,55 +28,37 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <GL/glew.h>
-#include <GL/glx.h>
 
-#include <ting/Singleton.hpp>
-#include <ting/types.hpp>
+#include <ting/debug.hpp>
 
-#include "Exc.hpp"
-#include "Widget.hpp"
+#include "Shader.hpp"
 
 
 
-namespace morda{
+class SingleColoringShader : virtual public Shader{
 
+	//no copying
+	SingleColoringShader(const SingleColoringShader&);
+	SingleColoringShader& operator=(const SingleColoringShader&);
 
+protected:
+	GLuint colorUniform;
 
-class Application : public ting::Singleton<Application>{
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()throw();
-	} xDisplay;
-	
-	GLXContext glxContext;
-
-	Window window;
-	
-	tride::Vec2f curWinDim;
-	
-	ting::Inited<volatile bool, false> quitFlag;
-	
-	ting::Ref<morda::Widget> rootWidget;
-	
-	void SetGLViewport(const tride::Vec2f& dim);
-	
-	void Render();
+	inline SingleColoringShader(){}
 public:
-	Application(unsigned w, unsigned h);
-	
-	~Application()throw();
-	
-	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
-		this->rootWidget = w;
-		this->rootWidget->Move(tride::Vec2f(0));
-		this->rootWidget->Resize(this->curWinDim);
-	}
-	
-	void Exec();
-};
+	inline void SetColor(tride::Vec3f color){
+		glUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
+		ASSERT(glGetError() == GL_NO_ERROR)
+    }
 
+	inline void SetColor(tride::Vec3f color, float alpha){
+		glUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
+		ASSERT(glGetError() == GL_NO_ERROR)
+    }
 
-
-}//~namespace
+	inline void SetColor(tride::Vec4f color){
+		STATIC_ASSERT(sizeof(color) == sizeof(GLfloat) * 4)
+		glUniform4fv(this->colorUniform, 1, reinterpret_cast<GLfloat*>(&color));
+		ASSERT(glGetError() == GL_NO_ERROR)
+    }
+};//~class SingleColoringShader

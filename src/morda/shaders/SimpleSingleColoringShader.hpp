@@ -28,55 +28,18 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <GL/glew.h>
-#include <GL/glx.h>
-
 #include <ting/Singleton.hpp>
-#include <ting/types.hpp>
 
-#include "Exc.hpp"
-#include "Widget.hpp"
+#include "SingleColoringShader.hpp"
 
 
 
-namespace morda{
+class SimpleSingleColoringShader : public SingleColoringShader, public ting::Singleton<SimpleSingleColoringShader>{
 
+	//no copying
+	SimpleSingleColoringShader(const SimpleSingleColoringShader&);
+	SimpleSingleColoringShader& operator=(const SimpleSingleColoringShader&);
 
-
-class Application : public ting::Singleton<Application>{
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()throw();
-	} xDisplay;
-	
-	GLXContext glxContext;
-
-	Window window;
-	
-	tride::Vec2f curWinDim;
-	
-	ting::Inited<volatile bool, false> quitFlag;
-	
-	ting::Ref<morda::Widget> rootWidget;
-	
-	void SetGLViewport(const tride::Vec2f& dim);
-	
-	void Render();
 public:
-	Application(unsigned w, unsigned h);
-	
-	~Application()throw();
-	
-	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
-		this->rootWidget = w;
-		this->rootWidget->Move(tride::Vec2f(0));
-		this->rootWidget->Resize(this->curWinDim);
-	}
-	
-	void Exec();
-};
-
-
-
-}//~namespace
+	SimpleSingleColoringShader();
+};//~class SingleColoringShader
