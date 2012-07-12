@@ -42,4 +42,4 @@ class SimpleSingleColoringShader : public SingleColoringShader, public ting::Sin
 
 public:
 	SimpleSingleColoringShader();
-};//~class SingleColoringShader
+};

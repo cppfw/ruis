@@ -25,12 +25,10 @@
             <df name="morda">
               <df name="shaders">
               </df>
-              <in>Application.d</in>
             </df>
           </df>
         </df>
       </df>
-      <in>libmorda.so.0</in>
       <in>makefile</in>
     </df>
     <df name="tests" root="../tests">
