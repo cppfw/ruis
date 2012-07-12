@@ -8,16 +8,16 @@ SimpleSingleColoringShader::SimpleSingleColoringShader() :
 				"attribute highp vec4 vertex;\n"
 				"uniform lowp vec4 uniformColor;\n"
 				"uniform highp mat4 matrix;\n"
-				"varying lowp vec4 color;\n"
+				"varying lowp vec4 clr;\n"
 				"void main(void){\n"
 					"gl_Position = matrix * vertex;\n"
-					"color = uniformColor;\n"
-				"}\n",
-
+					"clr = uniformColor;\n"
+				"}\n"
+				,
 				"#define highp\n #define mediump\n #define lowp\n"
-				"varying lowp vec4 color;\n"
+				"varying lowp vec4 clr;\n"
 				"void main(void){\n"
-					"gl_FragColor = color;\n"
+					"gl_FragColor = clr;\n"
 				"}\n"
 			)
 {}

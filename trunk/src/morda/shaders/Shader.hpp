@@ -36,6 +36,13 @@ THE SOFTWARE. */
 #include <ting/Singleton.hpp>
 
 
+
+/**
+ * @brief Abstract shader.
+ * Each shader has at least matrix uniform and vertex position attribute.
+ * Matrix uniform should be 'mat4' and named 'matrix'.
+ * Vertex position attribute should be 'vec4' and named 'vertex'.
+ */
 class Shader{
 	struct ShaderWrapper{
 		GLuint s;
