@@ -44,7 +44,9 @@ class SingleColoringShader : virtual public Shader{
 protected:
 	GLuint colorUniform;
 
-	inline SingleColoringShader(){}
+	inline SingleColoringShader() :
+			Shader(0, 0)
+	{}
 public:
 	inline void SetColor(tride::Vec3f color){
 		glUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);

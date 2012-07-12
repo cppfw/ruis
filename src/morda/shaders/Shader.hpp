@@ -46,7 +46,7 @@ protected:
 
 	GLuint matrixUniform;
 public:
-	Shader(){}
+	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
 	~Shader()throw();
 

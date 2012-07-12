@@ -8,6 +8,36 @@ using namespace tride;
 
 
 
+Shader::Shader(const char* vertexShaderCode, const char* fragmentShaderCode){
+	this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
+
+	glShaderSource(this->vertexShader, 1, &vertexShaderCode, 0);
+	glCompileShader(this->vertexShader);
+	if(this->CheckForCompileErrors(this->vertexShader)){
+		TRACE(<< "Error while compiling:\n" << vertexShaderCode << std::endl)
+		throw ting::Exc("Error compiling vertex shader");
+	}
+
+	this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(this->fragmentShader, 1, &fragmentShaderCode, 0);
+	glCompileShader(this->fragmentShader);
+	if(this->CheckForCompileErrors(this->fragmentShader)){
+		TRACE(<< "Error while compiling:\n" << fragmentShaderCode << std::endl)
+		throw ting::Exc("Error compiling fragment shader");
+	}
+
+	this->program = glCreateProgram();
+	glAttachShader(this->program, this->vertexShader);
+	glAttachShader(this->program, this->fragmentShader);
+	glLinkProgram(this->program);
+	if(this->CheckForLinkErrors(this->program)){
+		TRACE(<< "Error while linking shader program" << std::endl)
+		throw ting::Exc("Error linking shader program");
+	}
+}
+
+
+
 Shader::~Shader()throw(){
 	//make sure the shader objects are created before deleting them
 	ASSERT(this->vertexShader != 0)
