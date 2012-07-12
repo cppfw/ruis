@@ -45,7 +45,7 @@ class SingleColoringShader : virtual public Shader{
 	SingleColoringShader(const SingleColoringShader&);
 	SingleColoringShader& operator=(const SingleColoringShader&);
 
-	GLuint colorUniform;
+	GLint colorUniform;
 
 protected:
 	inline SingleColoringShader() :
