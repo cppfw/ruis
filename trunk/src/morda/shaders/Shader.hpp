@@ -37,22 +37,51 @@ THE SOFTWARE. */
 
 
 class Shader{
-protected:
-	ting::Inited<GLuint, 0> vertexShader;
-	ting::Inited<GLuint, 0> fragmentShader;
-	ting::Inited<GLuint, 0> program;
+	struct ShaderWrapper{
+		GLuint s;
+		ShaderWrapper(const char* code, GLenum type);
+		inline ~ShaderWrapper()throw(){
+			glDeleteShader(this->s);
+		}
+		
+		//return true if not compiled
+		static bool CheckForCompileErrors(GLuint shader);
+	};
+	
+	ShaderWrapper vertexShader;
+	ShaderWrapper fragmentShader;
+	
+	struct ProgramWrapper{
+		GLuint p;
+		ProgramWrapper(GLuint vertex, GLuint fragment);
+		inline ~ProgramWrapper()throw(){
+			glDeleteProgram(this->p);
+		}
+		
+		//return true if not linked
+		static bool CheckForLinkErrors(GLuint program);
+	};
+	
+	ProgramWrapper program;
 
 	GLuint positionAttr;
 
 	GLuint matrixUniform;
+	
+protected:
+	inline GLuint GetAttribute(const char* n){
+		return glGetAttribLocation(this->program.p, n);
+	}
+	inline GLuint GetUniform(const char* n){
+		return glGetUniformLocation(this->program.p, n);
+	}
 public:
 	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
-	~Shader()throw();
+	virtual ~Shader()throw(){}
 
 	inline void Bind(){
-		ASSERT(this->program != 0)
-		glUseProgram(this->program);
+		glUseProgram(this->program.p);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
@@ -91,11 +120,4 @@ public:
 	void DrawQuad(GLenum mode = GL_TRIANGLE_FAN);
 
 	void DrawQuad01(GLenum mode = GL_TRIANGLE_FAN);
-
-protected:
-	//return true if not compiled
-	static bool CheckForCompileErrors(GLuint shader);
-
-	//return true if not linked
-	static bool CheckForLinkErrors(GLuint program);
 };//~class Shader

@@ -8,50 +8,46 @@ using namespace tride;
 
 
 
-Shader::Shader(const char* vertexShaderCode, const char* fragmentShaderCode){
-	this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	glShaderSource(this->vertexShader, 1, &vertexShaderCode, 0);
-	glCompileShader(this->vertexShader);
-	if(this->CheckForCompileErrors(this->vertexShader)){
-		TRACE(<< "Error while compiling:\n" << vertexShaderCode << std::endl)
+Shader::ShaderWrapper::ShaderWrapper(const char* code, GLenum type){
+	this->s = glCreateShader(type);
+	
+	glShaderSource(this->s, 1, &code, 0);
+	glCompileShader(this->s);
+	if(this->CheckForCompileErrors(this->s)){
+		TRACE(<< "Error while compiling:\n" << code << std::endl)
+		glDeleteShader(this->s);
 		throw ting::Exc("Error compiling vertex shader");
 	}
+}
 
-	this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(this->fragmentShader, 1, &fragmentShaderCode, 0);
-	glCompileShader(this->fragmentShader);
-	if(this->CheckForCompileErrors(this->fragmentShader)){
-		TRACE(<< "Error while compiling:\n" << fragmentShaderCode << std::endl)
-		throw ting::Exc("Error compiling fragment shader");
-	}
 
-	this->program = glCreateProgram();
-	glAttachShader(this->program, this->vertexShader);
-	glAttachShader(this->program, this->fragmentShader);
-	glLinkProgram(this->program);
-	if(this->CheckForLinkErrors(this->program)){
+
+Shader::ProgramWrapper::ProgramWrapper(GLuint vertex, GLuint fragment){
+	this->p = glCreateProgram();
+	glAttachShader(this->p, vertex);
+	glAttachShader(this->p, fragment);
+	glLinkProgram(this->p);
+	if(this->CheckForLinkErrors(this->p)){
 		TRACE(<< "Error while linking shader program" << std::endl)
+		glDeleteProgram(this->p);
 		throw ting::Exc("Error linking shader program");
 	}
 }
 
 
 
-Shader::~Shader()throw(){
-	//make sure the shader objects are created before deleting them
-	ASSERT(this->vertexShader != 0)
-	ASSERT(this->fragmentShader != 0)
-	ASSERT(this->program != 0)
-
-	glDeleteProgram(this->program);
-	glDeleteShader(this->fragmentShader);
-	glDeleteShader(this->vertexShader);
+Shader::Shader(const char* vertexShaderCode, const char* fragmentShaderCode) :
+		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
+		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER),
+		program(this->vertexShader.s, this->fragmentShader.s)
+{
+	this->positionAttr = this->GetAttribute("vertex");
+	this->matrixUniform = this->GetUniform("matrix");
 }
 
 
 
-bool Shader::CheckForCompileErrors(GLuint shader){
+bool Shader::ShaderWrapper::CheckForCompileErrors(GLuint shader){
 	GLint value = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &value);
 	if(value == 0){ //if not compiled
@@ -62,8 +58,6 @@ bool Shader::CheckForCompileErrors(GLuint shader){
 			GLint len;
 			glGetShaderInfoLog(shader, log.Size(), &len, &log[0]);
 			TRACE(<< "===Compile log===\n" << log.Begin() << std::endl)
-		}else{
-			TRACE(<< "Shader::CheckForCompileErrors(): log length is 0" << std::endl)
 		}
 		return true;
 	}
@@ -72,7 +66,7 @@ bool Shader::CheckForCompileErrors(GLuint shader){
 
 
 
-bool Shader::CheckForLinkErrors(GLuint program){
+bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 	GLint value = 0;
 	glGetProgramiv(program, GL_LINK_STATUS, &value);
 	if(value == 0){ //if not linked
@@ -83,8 +77,6 @@ bool Shader::CheckForLinkErrors(GLuint program){
 			GLint len;
 			glGetProgramInfoLog(program, log.Size(), &len, &log[0]);
 			TRACE(<< "===Link log===\n" << log.Begin() << std::endl)
-		}else{
-			TRACE(<< "Shader::CheckForLinkErrors(): log length is 0" << std::endl)
 		}
 		return true;
 	}
@@ -122,9 +114,3 @@ void Shader::DrawQuad01(GLenum mode){
 	this->SetPositionPointer(quad01Triangles);
 	this->DrawArrays(mode, 4);
 }
-
-
-
-static Vec2f quadTexCoords[] = {
-	Vec2f(0, 0), Vec2f(0, 1), Vec2f(1, 1), Vec2f(1, 0)
-};
