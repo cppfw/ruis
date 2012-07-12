@@ -136,10 +136,21 @@ void Application::Render(){
 		return;
 	}
 	
+	ASSERT(glGetError() == GL_NO_ERROR)
+
+	glClearColor(0.0f, 0, 0.0f, 1.0f);
+	ASSERT(glGetError() == GL_NO_ERROR)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	ASSERT(glGetError() == GL_NO_ERROR)
+	
 	tride::Matr4f m;
 	m.Identity();
+	m.Translate(-1, -1);
+	m.Scale(2.0f / this->curWinDim.x, 2.0f / this->curWinDim.y);
 	
 	this->rootWidget->Render(m);
+	
+	glXSwapBuffers(this->xDisplay.d, this->window);
 }
 
 
