@@ -34,6 +34,7 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 
 #include "Exc.hpp"
+#include "Widget.hpp"
 
 
 
@@ -52,11 +53,25 @@ class Application : public ting::Singleton<Application>{
 
 	Window window;
 	
+	tride::Vec2f curWinDim;
+	
 	ting::Inited<volatile bool, false> quitFlag;
+	
+	ting::Ref<morda::Widget> rootWidget;
+	
+	void SetGLViewport(const tride::Vec2f& dim);
+	
+	void Render();
 public:
 	Application(unsigned w, unsigned h);
 	
 	~Application()throw();
+	
+	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
+		this->rootWidget = w;
+		this->rootWidget->Move(tride::Vec2f(0));
+		this->rootWidget->Resize(this->curWinDim);
+	}
 	
 	void Exec();
 };

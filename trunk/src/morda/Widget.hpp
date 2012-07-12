@@ -52,7 +52,7 @@ private:
 
 	ting::Inited<bool, false> isDisabled;
 
-	ting::Inited<tride::Vec2f, 0> p;
+	tride::Vec2f p;
 	tride::Vec2f d;
 public:
 
@@ -90,7 +90,7 @@ public:
 		return this->parent;
 	}
 
-	inline const ting::WeakRef<const Widget>& Parent()const{
+	inline const ting::WeakRef<const Widget> Parent()const{
 		return this->parent;
 	}
 
