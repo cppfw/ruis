@@ -98,7 +98,7 @@ ifeq ($(platform), maemo_linux)
     include_dirs :=
 endif
 ifeq ($(platform), linux)
-    include_dirs :=
+    include_dirs := -I../ext
 endif
 ifeq ($(platform), win32)
     include_dirs :=

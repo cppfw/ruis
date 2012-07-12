@@ -5,6 +5,7 @@
 #include <ting/WaitSet.hpp>
 
 
+
 using namespace morda;
 
 
@@ -107,6 +108,12 @@ Application::Application(unsigned w, unsigned h){
 		XMapWindow(this->xDisplay.d, this->window);
 	}
 	glXMakeCurrent(this->xDisplay.d, this->window, this->glxContext);
+	
+	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
+	
+	this->curWinDim.x = float(w);
+	this->curWinDim.y = float(h);
+	this->SetGLViewport(this->curWinDim);
 }
 
 
@@ -114,6 +121,25 @@ Application::Application(unsigned w, unsigned h){
 Application::~Application()throw(){
 	glXMakeCurrent(this->xDisplay.d, None, NULL);
 	glXDestroyContext(this->xDisplay.d, this->glxContext);
+}
+
+
+
+void Application::SetGLViewport(const tride::Vec2f& dim){
+	glViewport(0, 0, dim.x, dim.y);
+}
+
+
+
+void Application::Render(){
+	if(this->rootWidget.IsNotValid()){
+		return;
+	}
+	
+	tride::Matr4f m;
+	m.Identity();
+	
+	this->rootWidget->Render(m);
 }
 
 
@@ -150,6 +176,8 @@ void Application::Exec(){
 	waitSet.Add(&xew, ting::Waitable::READ);
 	//TODO: add queue?
 	
+	
+	
 	while(!this->quitFlag){
 		waitSet.Wait();
 		
@@ -160,31 +188,61 @@ void Application::Exec(){
 				XNextEvent(this->xDisplay.d, &event);
 				TRACE(<< "X event got, type = " << (event.type) << std::endl)
 				switch(event.type){
+					case Expose:
+						TRACE(<< "Expose X event got" << std::endl)
+						if(event.xexpose.count != 0){
+							break;//~switch()
+						}
+						this->Render();
+						break;
+					case ConfigureNotify:
+						TRACE(<< "ConfigureNotify X event got" << std::endl)
+						if(
+								this->curWinDim.x != float(event.xconfigure.width) ||
+								this->curWinDim.y != float(event.xconfigure.height)
+							)
+						{
+							this->curWinDim.x = float(event.xconfigure.width);
+							this->curWinDim.y = float(event.xconfigure.height);
+							
+							this->SetGLViewport(this->curWinDim);
+							if(this->rootWidget.IsValid()){
+								this->rootWidget->Resize(this->curWinDim);
+							}
+						}
+						break;
 					case KeyPress:
+						TRACE(<< "KeyPress X event got" << std::endl)
 						//TODO:
 						break;
 					case KeyRelease:
+						TRACE(<< "KeyRelease X event got" << std::endl)
 						//TODO:
 						break;
 					case ButtonPress:
+						TRACE(<< "ButtonPress X event got" << std::endl)
 						//TODO:
 						break;
 					case ButtonRelease:
+						TRACE(<< "ButtonRelease X event got" << std::endl)
 						//TODO:
 						break;
 					case MotionNotify:
+						TRACE(<< "MotionNotify X event got" << std::endl)
 						//TODO:
 						break;
 					case ClientMessage:
+						TRACE(<< "ClientMessage X event got" << std::endl)
 						//probably a WM_DELETE_WINDOW event
 						if(*XGetAtomName(this->xDisplay.d, event.xclient.message_type) == *"WM_PROTOCOLS"){
 							this->quitFlag = true;
 						}
 						break;
-					
-					//TODO:
-				}
-			}
+					default:
+						//ignore
+						break;
+				}//~switch()
+			}//~while()
 		}//~if there are pending X events
 		
 		//TODO:
