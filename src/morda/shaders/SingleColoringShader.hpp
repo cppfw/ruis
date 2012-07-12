@@ -35,6 +35,10 @@ THE SOFTWARE. */
 
 
 
+/**
+ * @brief Abstract shader with uniform coloring feature.
+ * The uniform for color should be 'vec4' and named 'uniformColor'.
+ */
 class SingleColoringShader : virtual public Shader{
 
 	//no copying
