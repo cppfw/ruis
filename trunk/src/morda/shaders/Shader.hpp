@@ -71,16 +71,24 @@ class Shader{
 	
 	ProgramWrapper program;
 
-	GLuint positionAttr;
+	GLint positionAttr;
 
-	GLuint matrixUniform;
+	GLint matrixUniform;
 	
 protected:
-	inline GLuint GetAttribute(const char* n){
-		return glGetAttribLocation(this->program.p, n);
+	inline GLint GetAttribute(const char* n){
+		GLint ret = glGetAttribLocation(this->program.p, n);
+		if(ret < 0){
+			throw ting::Exc("No attribute found in the shader program");
+		}
+		return ret;
 	}
-	inline GLuint GetUniform(const char* n){
-		return glGetUniformLocation(this->program.p, n);
+	inline GLint GetUniform(const char* n){
+		GLint ret = glGetUniformLocation(this->program.p, n);
+		if(ret < 0){
+			throw ting::Exc("No uniform found in the shader program");
+		}
+		return ret;
 	}
 public:
 	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
