@@ -30,6 +30,9 @@ THE SOFTWARE. */
 
 #include <GL/glx.h>
 
+#include <ting/Singleton.hpp>
+#include <ting/types.hpp>
+
 #include "Exc.hpp"
 
 
@@ -38,7 +41,7 @@ namespace morda{
 
 
 
-class Application{
+class Application : public ting::Singleton<Application>{
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
@@ -49,6 +52,7 @@ class Application{
 
 	Window window;
 	
+	ting::Inited<volatile bool, false> quitFlag;
 public:
 	Application(unsigned w, unsigned h);
 	

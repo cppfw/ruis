@@ -2,6 +2,7 @@
 
 
 #include <ting/debug.hpp>
+#include <ting/WaitSet.hpp>
 
 
 using namespace morda;
@@ -98,6 +99,11 @@ Application::Application(unsigned w, unsigned h){
 			);
 		//TODO: check for error
 		
+		{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
+			Atom a = XInternAtom(this->xDisplay.d, "WM_DELETE_WINDOW", True);
+			XSetWMProtocols(this->xDisplay.d, this->window, &a, 1);
+		}
+		
 		XMapWindow(this->xDisplay.d, this->window);
 	}
 	glXMakeCurrent(this->xDisplay.d, this->window, this->glxContext);
@@ -112,6 +118,77 @@ Application::~Application()throw(){
 
 
 
+namespace{
+
+class XEventWaitable : public ting::Waitable{
+	int fd;
+	
+	//override
+	int GetHandle(){
+		return this->fd;
+	}
+public:
+	XEventWaitable(Display* d){
+		this->fd = XConnectionNumber(d);
+	}
+	
+	inline void ClearCanReadFlag(){
+		this->ting::Waitable::ClearCanReadFlag();
+	}
+};
+
+}//~namespace
+
+
+
 void Application::Exec(){
-	//TODO:
+	
+	XEventWaitable xew(this->xDisplay.d);
+	
+	ting::WaitSet waitSet(2);
+	
+	waitSet.Add(&xew, ting::Waitable::READ);
+	//TODO: add queue?
+	
+	while(!this->quitFlag){
+		waitSet.Wait();
+		
+		if(xew.CanRead()){
+			xew.ClearCanReadFlag();
+			while(XPending(this->xDisplay.d) > 0){
+				XEvent event;
+				XNextEvent(this->xDisplay.d, &event);
+				TRACE(<< "X event got, type = " << (event.type) << std::endl)
+				switch(event.type){
+					case KeyPress:
+						//TODO:
+						break;
+					case KeyRelease:
+						//TODO:
+						break;
+					case ButtonPress:
+						//TODO:
+						break;
+					case ButtonRelease:
+						//TODO:
+						break;
+					case MotionNotify:
+						//TODO:
+						break;
+					case ClientMessage:
+						//probably a WM_DELETE_WINDOW event
+						if(*XGetAtomName(this->xDisplay.d, event.xclient.message_type) == *"WM_PROTOCOLS"){
+							this->quitFlag = true;
+						}
+						break;
+					
+					//TODO:
+				}
+			}
+		}//~if there are pending X events
+		
+		//TODO:
+	}
+	
+	waitSet.Remove(&xew);
 }

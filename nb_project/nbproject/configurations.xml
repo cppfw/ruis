@@ -65,9 +65,14 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>../</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f makefile</buildCommand>
+          <buildCommand>${MAKE} -f makefile build_config=debug</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
           <executablePath></executablePath>
+          <ccTool>
+            <preprocessorList>
+              <Elem>DEBUG</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
       <item path="../src/morda/Application.cpp" ex="false" tool="1" flavor="0">
@@ -82,9 +87,6 @@
           <incDir>
             <pElem>../ext</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/Container.hpp" ex="true" tool="3" flavor="0">
@@ -94,9 +96,6 @@
           <incDir>
             <pElem>../ext</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="../tests/makefile" ex="true" tool="3" flavor="0">
@@ -106,9 +105,6 @@
           <incDir>
             <pElem>../ext</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
     </conf>
