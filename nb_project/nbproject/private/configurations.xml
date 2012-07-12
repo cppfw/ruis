@@ -28,8 +28,9 @@
           <runcommandpicklistitem>tests</runcommandpicklistitem>
           <runcommandpicklistitem>optirun tests</runcommandpicklistitem>
           <runcommandpicklistitem>optirun ./tests</runcommandpicklistitem>
+          <runcommandpicklistitem>./tests</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>optirun ./tests</runcommand>
+        <runcommand>./tests</runcommand>
         <rundir>../tests/app</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

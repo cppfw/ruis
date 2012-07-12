@@ -29,30 +29,11 @@
           </df>
         </df>
       </df>
-      <in>makefile</in>
     </df>
     <df name="tests" root="../tests">
       <df name="app">
-        <df name=".svn">
-          <df name="prop-base">
-          </df>
-          <df name="props">
-          </df>
-          <df name="text-base">
-          </df>
-          <df name="tmp">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-          </df>
-          <in>entries</in>
-        </df>
         <in>main.cpp</in>
       </df>
-      <in>makefile</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -114,8 +95,6 @@
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="../tests/makefile" ex="true" tool="3" flavor="0">
       </item>
     </conf>
   </confs>
