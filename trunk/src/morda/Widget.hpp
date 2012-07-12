@@ -41,11 +41,8 @@ namespace morda{
 
 class Widget : virtual public ting::RefCounted{
 private:
-	ting::WeakRef<Widget> parent;//Container?
-
 	ting::Inited<bool, false> isHovered;
 
-	//return true if was hovered and was unhovered
 	void Unhover();
 
 	ting::Inited<bool, false> isHidden;
@@ -72,9 +69,14 @@ public:
 		return this->d;
 	}
 
-	void Move(const tride::Vec2f& newPos);
+	inline void Move(const tride::Vec2f& newPos){
+		this->p = newPos;
+	}
 
-	void Resize(const tride::Vec2f& newDims);
+	inline void Resize(const tride::Vec2f& newDims){
+		this->d = newDims;
+		this->OnResize();//call virtual method
+	}
 
 protected:
 	inline Widget(){}
@@ -86,14 +88,6 @@ public:
 
 	virtual ~Widget()throw(){}
 
-	inline ting::WeakRef<Widget>& Parent(){
-		return this->parent;
-	}
-
-	inline const ting::WeakRef<const Widget> Parent()const{
-		return this->parent;
-	}
-
 	virtual void Render(const tride::Matr4f& matrix)const{}
 
 	enum EMouseButton{
@@ -102,13 +96,13 @@ public:
 		MIDDLE = 4 //100b
 	};
 
-	virtual bool OnMouseClick(const tride::Vec2f& pos, EMouseButton button, bool isDown){
-		return false;
-	}
-
-	virtual bool OnMouseMove(const tride::Vec2f& oldPos, const tride::Vec2f& newPos, const tride::Vec2f& dpos){
-		return false;
-	}
+//	virtual bool OnMouseClick(const tride::Vec2f& pos, EMouseButton button, bool isDown){
+//		return false;
+//	}
+//
+//	virtual bool OnMouseMove(const tride::Vec2f& oldPos, const tride::Vec2f& newPos, const tride::Vec2f& dpos){
+//		return false;
+//	}
 
 	virtual void OnMouseOut(){}
 
@@ -117,8 +111,6 @@ public:
 	virtual void OnResize(){
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
-
-	void RemoveFromParent();
 
 	inline void Hide(){
 		this->SetHidden(true);

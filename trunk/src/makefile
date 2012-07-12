@@ -38,6 +38,9 @@ endif
 #Sources
 srcs :=
 srcs += morda/Application.cpp
+srcs += morda/shaders/Shader.cpp
+srcs += morda/shaders/SimpleSingleColoringShader.cpp
+
 
 
 
@@ -116,7 +119,7 @@ ifeq ($(platform), maemo_linux)
     libs := 
 endif
 ifeq ($(platform), linux)
-    libs := -lting -lpthread -lX11 -lGL
+    libs := -lting -lpthread -lX11 -lGL -lGLEW
 endif
 ifeq ($(platform), win32)
     libs := 

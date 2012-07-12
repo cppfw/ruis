@@ -26,8 +26,10 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>tests</runcommandpicklistitem>
+          <runcommandpicklistitem>optirun tests</runcommandpicklistitem>
+          <runcommandpicklistitem>optirun ./tests</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>tests</runcommand>
+        <runcommand>optirun ./tests</runcommand>
         <rundir>../tests/app</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
