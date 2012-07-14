@@ -236,7 +236,8 @@ void Application::Exec(){
 						//TODO:
 						break;
 					case ButtonPress:
-						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
+//						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
+//						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
 						if(this->rootWidget.IsValid()){
 							Widget::EMouseButton b;
 							switch(event.xbutton.button){
@@ -259,7 +260,11 @@ void Application::Exec(){
 									b = Widget::UNKNOWN;
 									break;
 							}
-							this->rootWidget->OnMouseButtonDown(tride::Vec2f(event.xbutton.x, event.xbutton.y), b, 0);
+							this->rootWidget->OnMouseButtonDown(
+									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
+									b,
+									0
+								);
 						}
 						break;
 					case ButtonRelease:
@@ -269,7 +274,10 @@ void Application::Exec(){
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
 						if(this->rootWidget.IsValid()){
-							this->rootWidget->OnMouseMove(tride::Vec2f(event.xmotion.x, event.xmotion.y), 0);
+							this->rootWidget->OnMouseMove(
+									tride::Vec2f(event.xmotion.x, this->curWinDim.y - float(event.xmotion.y) - 1.0f),
+									0
+								);
 						}
 						break;
 					case ClientMessage:

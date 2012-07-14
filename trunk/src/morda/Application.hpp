@@ -70,7 +70,7 @@ public:
 	
 	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
 		this->rootWidget = w;
-		this->rootWidget->Move(tride::Vec2f(0));
+		this->rootWidget->SetPos(tride::Vec2f(0));
 		this->rootWidget->Resize(this->curWinDim);
 	}
 	
