@@ -39,8 +39,14 @@ namespace morda{
 
 
 
+class Container;
+
+
+
 class Widget : virtual public ting::RefCounted{
 private:
+	ting::WeakRef<Container> parent;
+	
 	ting::Inited<bool, false> isHovered;
 
 	void Unhover();
@@ -53,6 +59,14 @@ private:
 	tride::Vec2f d;
 public:
 
+	inline const ting::WeakRef<Container>& Parent(){
+		return this->parent;
+	}
+	
+	inline ting::WeakRef<const Container> Parent()const{
+		return this->parent;
+	}
+	
 	inline bool IsHovered()const{
 		return this->isHovered;
 	}
@@ -69,8 +83,12 @@ public:
 		return this->d;
 	}
 
-	inline void Move(const tride::Vec2f& newPos){
+	inline void SetPos(const tride::Vec2f& newPos){
 		this->p = newPos;
+	}
+	
+	inline void Move(const tride::Vec2f& delta){
+		this->p += delta;
 	}
 
 	inline void Resize(const tride::Vec2f& newDims){
