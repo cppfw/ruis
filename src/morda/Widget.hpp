@@ -91,18 +91,28 @@ public:
 	virtual void Render(const tride::Matr4f& matrix)const{}
 
 	enum EMouseButton{
-		LEFT = 1, //1b
-		RIGHT = 2, //10b
-		MIDDLE = 4 //100b
+		UNKNOWN,
+		LEFT,
+		RIGHT,
+		MIDDLE,
+		WHEEL_UP,
+		WHEEL_DOWN
 	};
 
-//	virtual bool OnMouseClick(const tride::Vec2f& pos, EMouseButton button, bool isDown){
-//		return false;
-//	}
-//
-//	virtual bool OnMouseMove(const tride::Vec2f& oldPos, const tride::Vec2f& newPos, const tride::Vec2f& dpos){
-//		return false;
-//	}
+	//return true to consume event
+	virtual bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		return false;
+	}
+	
+	//return true to consume event
+	virtual bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		return false;
+	}
+
+	//return true to consume event
+	virtual bool OnMouseMove(const tride::Vec2f& newPos, unsigned pointerId){
+		return false;
+	}
 
 	virtual void OnMouseOut(){}
 
