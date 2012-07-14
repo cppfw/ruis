@@ -236,8 +236,31 @@ void Application::Exec(){
 						//TODO:
 						break;
 					case ButtonPress:
-//						TRACE(<< "ButtonPress X event got" << std::endl)
-						//TODO:
+						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
+						if(this->rootWidget.IsValid()){
+							Widget::EMouseButton b;
+							switch(event.xbutton.button){
+								case 1:
+									b = Widget::LEFT;
+									break;
+								case 2:
+									b = Widget::MIDDLE;
+									break;
+								case 3:
+									b = Widget::RIGHT;
+									break;
+								case 4:
+									b = Widget::WHEEL_UP;
+									break;
+								case 5:
+									b = Widget::WHEEL_DOWN;
+									break;
+								default:
+									b = Widget::UNKNOWN;
+									break;
+							}
+							this->rootWidget->OnMouseButtonDown(tride::Vec2f(event.xbutton.x, event.xbutton.y), b, 0);
+						}
 						break;
 					case ButtonRelease:
 //						TRACE(<< "ButtonRelease X event got" << std::endl)
@@ -245,7 +268,9 @@ void Application::Exec(){
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-						//TODO:
+						if(this->rootWidget.IsValid()){
+							this->rootWidget->OnMouseMove(tride::Vec2f(event.xmotion.x, event.xmotion.y), 0);
+						}
 						break;
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)

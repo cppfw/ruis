@@ -144,26 +144,7 @@ bool Widget::OnMouseMoveInternal(const tride::Vec2f& oldPos, const tride::Vec2f&
 
 
 
-
-
-
-
-void Widget::Move(const tride::Vec2f& newPos){
-	this->p = newPos;
-}
-
-
-
-void Widget::Resize(const tride::Vec2f& newDims){
-	this->d = newDims;
-//	TRACE(<< "Widget::Resize(): calling virtual method" << std::endl)
-	this->OnResize();//call virtual method
-//	TRACE(<< "Widget::Resize(): virtual method called" << std::endl)
-}
-
-
-
-void Widget::Add(ting::Ref<Widget> w){
+void Container::Add(ting::Ref<Widget> w){
 	ASSERT_INFO(w, "Widget::Add(): widget pointer is 0")
 	ASSERT(Ref<Widget>(w->parent).IsNotValid())
 	this->children.push_back(w);
@@ -196,30 +177,6 @@ bool Container::Remove(ting::Ref<Widget> w){
 
 
 
-void Widget::ShowModal(ting::Ref<Widget> w, bool drawWidgetsBelowModal){
-	ASSERT(w)
-	ASSERT(Ref<Widget>(w->parent).IsNotValid())
-	ASSERT(this->modal.IsNotValid())
-
-	this->Unhover();
-
-	this->drawWithModal = drawWidgetsBelowModal;
-	this->modal = w;
-	w->parent = this;
-}
-
-
-
-void Widget::RemoveModal(){
-	if(this->modal.IsNotValid())
-		return;
-
-	this->modal->parent.Reset();
-	this->modal.Reset();
-}
-
-
-
 void Widget::RemoveFromParent(){
 	if(Ref<Widget> p = this->parent){
 		p->Remove(Ref<Widget>(this));
@@ -227,121 +184,3 @@ void Widget::RemoveFromParent(){
 }
 
 
-
-void Widget::SetPriority(EPriority priority){
-	//TODO:
-}
-
-
-
-//override
-bool Button::OnMouseClick(const tride::Vec2f& pos, Widget::EMouseButton button, bool isDown){
-//	TRACE(<< "Button::OnMouseClick(): invoked" << std::endl)
-	if(button != Widget::LEFT)
-		return false;
-
-	if(isDown){
-		ASSERT(!this->isPressed)
-		GLWindow::Inst().SetDirty();
-
-		this->isPressed = true;
-	}else{
-		if(this->isPressed){
-			GLWindow::Inst().SetDirty();
-			this->isPressed = false;
-
-			this->clicked.Emit();
-		}
-		ASSERT(!this->isPressed)
-	}
-	
-	return true;
-}
-
-
-
-//override
-void Button::Render(const tride::Matr4f& matrix)const{
-	SimpleColoringShader &s = SimpleColoringShader::Inst();
-	s.UseProgram();
-
-	s.DisableColorPointer();
-
-	if(!this->isPressed){
-		s.SetColor(Vec3f(0.5, 0.5, 0.5), 1);
-//		TRACE(<< "Button::Render(): not pressed" << std::endl)
-	}else{
-		s.SetColor(Vec3f(1, 1, 1), 1);
-//		TRACE(<< "Button::Render(): pressed" << std::endl)
-	}
-
-	Matr4f matr(matrix);
-	matr.Scale(this->Dim());
-
-	s.SetMatrix(matr);
-
-	s.DrawQuad01();
-}
-
-
-
-//override
-void Button::OnMouseOut(){
-	TRACE(<< "Button::OnMouseOut(): invoked" << std::endl)
-	if(this->isPressed){
-		GLWindow::Inst().SetDirty();
-	}
-	this->isPressed = false;
-}
-
-
-
-//override
-bool ToggleButton::OnMouseClick(const tride::Vec2f& pos, Widget::EMouseButton button, bool isDown){
-//	TRACE(<< "ToggleButton::OnMouseClick(): invoked" << std::endl)
-	if(button != Widget::LEFT)
-		return false;
-
-	if(!isDown)
-		return false;
-
-	GLWindow::Inst().SetDirty();
-
-	this->isPressed = !this->isPressed;
-
-	this->clicked.Emit(this->isPressed);
-
-	return true;
-}
-
-
-
-//override
-void ToggleButton::Render(const tride::Matr4f& matrix)const{
-	SimpleColoringShader &s = SimpleColoringShader::Inst();
-	s.UseProgram();
-
-	s.DisableColorPointer();
-
-	if(!this->isPressed){
-		s.SetColor(Vec3f(0.5, 0, 0.5), 1);
-//		TRACE(<< "ToggleButton::Render(): not pressed" << std::endl)
-	}else{
-		s.SetColor(Vec3f(1, 0, 1), 1);
-//		TRACE(<< "ToggleButton::Render(): pressed" << std::endl)
-	}
-
-	Matr4f matr(matrix);
-	matr.Scale(this->Dim());
-
-	s.SetMatrix(matr);
-
-	s.DrawQuad01();
-}
-
-
-
-void ToggleButton::SetPressed(bool isPressed){
-	this->isPressed = isPressed;
-	GLWindow::Inst().SetDirty();
-}
