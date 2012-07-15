@@ -41,8 +41,6 @@ namespace morda{
 class Container : public Widget{
 protected:
 	typedef std::vector<ting::Ref<Widget> > T_ChildList;
-	typedef T_ChildList::iterator T_ChildIter;
-	typedef T_ChildList::const_iterator T_ChildConstIter;
 
 private:
 	T_ChildList children;
@@ -51,35 +49,41 @@ protected:
 	inline Container(){}
 
 public:
+	~Container()throw(){}
+	
 	static ting::Ref<Widget> New(){
-		return ting::Ref<Container>(new Widget());
+		return ting::Ref<Container>(new Container());
 	}
 
 	//override
-	virtual void Render(const tride::Matr4f& matrix)const{
-		//TODO:
-	}
+	void Render(const tride::Matr4f& matrix)const;
 
 	//override
-	virtual void OnResize(){
-		//TODO: relayout
-//		TRACE(<< "Container::OnResize(): invoked" << std::endl)
-	}
+	bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	
+	//override
+	bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	
+	//override
+	bool OnMouseMove(const tride::Vec2f& pos, unsigned pointerId);
+	
+	//override
+	void OnResize();
 
-	void Add(ting::Ref<Widget> w);
+	void Add(const ting::Ref<Widget>& w);
 
 	//return true if the widget was found in children and was removed
-	bool Remove(ting::Ref<Widget> w);
+	bool Remove(const ting::Ref<Widget>& w);
 
 
 protected:
-	inline const T_ChildList Children()const{
-		return this->children;
-	}
-
-	inline T_ChildList Children(){
-		return this->children;
-	}
+//	inline const T_ChildList Children()const{
+//		return this->children;
+//	}
+//
+//	inline T_ChildList Children(){
+//		return this->children;
+//	}
 };
 
 

@@ -44,6 +44,8 @@ class Container;
 
 
 class Widget : virtual public ting::RefCounted{
+	friend class morda::Container;
+	
 private:
 	ting::WeakRef<Container> parent;
 	
@@ -66,6 +68,8 @@ public:
 	inline ting::WeakRef<const Container> Parent()const{
 		return this->parent;
 	}
+	
+	void RemoveFromParent();
 	
 	inline bool IsHovered()const{
 		return this->isHovered;
@@ -128,7 +132,7 @@ public:
 	}
 
 	//return true to consume event
-	virtual bool OnMouseMove(const tride::Vec2f& newPos, unsigned pointerId){
+	virtual bool OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
 		return false;
 	}
 
@@ -155,6 +159,10 @@ public:
 			this->OnMouseOut();
 		}
 	}
+	
+	inline bool IsHidden()const throw(){
+		return this->isHidden;
+	}
 
 	inline void Enable(){
 		this->SetDisabled(false);
@@ -166,6 +174,10 @@ public:
 
 	inline void SetDisabled(bool disabled){
 		this->isDisabled = disabled;
+	}
+	
+	inline bool IsDisabled()const throw(){
+		return this->isDisabled;
 	}
 
 protected:

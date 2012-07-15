@@ -2,13 +2,19 @@
 
 #include "Shader.hpp"
 
+#include"../Application.hpp"
 
-using namespace ting;
-using namespace tride;
+
+
+using namespace morda;
 
 
 
 Shader::ShaderWrapper::ShaderWrapper(const char* code, GLenum type){
+	if(!morda::Application::IsCreated()){
+		throw morda::Exc("Application singleton object is not created, OpenGL is not initialized, cannot create shader.");
+	}
+	
 	this->s = glCreateShader(type);
 	
 	glShaderSource(this->s, 1, &code, 0);
@@ -86,8 +92,8 @@ bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 
 
 namespace{
-static Vec2f quadTriangles[] = {
-	Vec2f(-1, -1), Vec2f(-1, 1), Vec2f(1, 1), Vec2f(1, -1)
+static tride::Vec2f quadTriangles[] = {
+	tride::Vec2f(-1, -1), tride::Vec2f(-1, 1), tride::Vec2f(1, 1), tride::Vec2f(1, -1)
 };
 }//~namespace
 
@@ -102,8 +108,8 @@ void Shader::DrawQuad(GLenum mode){
 
 
 namespace{
-static Vec2f quad01Triangles[] = {
-	Vec2f(0, 0), Vec2f(0, 1), Vec2f(1, 1), Vec2f(1, 0)
+static tride::Vec2f quad01Triangles[] = {
+	tride::Vec2f(0, 0), tride::Vec2f(0, 1), tride::Vec2f(1, 1), tride::Vec2f(1, 0)
 };
 }//~namespace
 

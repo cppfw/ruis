@@ -77,7 +77,19 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Container.hpp" ex="true" tool="3" flavor="0">
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor="0">
         <ccTool>
