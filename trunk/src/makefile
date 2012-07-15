@@ -38,6 +38,8 @@ endif
 #Sources
 srcs :=
 srcs += morda/Application.cpp
+srcs += morda/Widget.cpp
+srcs += morda/Container.cpp
 srcs += morda/shaders/Shader.cpp
 srcs += morda/shaders/SimpleSingleColoringShader.cpp
 

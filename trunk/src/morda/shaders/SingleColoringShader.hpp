@@ -35,6 +35,10 @@ THE SOFTWARE. */
 
 
 
+namespace morda{
+
+
+
 /**
  * @brief Abstract shader with uniform coloring feature.
  * The uniform for color should be 'vec4' and named 'uniformColor'.
@@ -71,3 +75,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
     }
 };//~class SingleColoringShader
+
+
+
+}//~namespace

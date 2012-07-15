@@ -22,7 +22,7 @@ public:
 		tride::Matr4f matr(matrix);
 		matr.Scale(this->Dim());
 		
-		SimpleSingleColoringShader &s = SimpleSingleColoringShader::Inst();
+		morda::SimpleSingleColoringShader &s = morda::SimpleSingleColoringShader::Inst();
 		s.Bind();
 		s.EnablePositionPointer();
 		s.SetColor(tride::Vec3f(1, 0, 0));
@@ -36,7 +36,7 @@ public:
 int main(int argc, char** argv){
 	morda::Application app(320, 480);
 	
-	SimpleSingleColoringShader simpleSingleColoringShader;
+	morda::SimpleSingleColoringShader simpleSingleColoringShader;
 	
 	app.SetRootWidget(SimpleWidget::New());
 	

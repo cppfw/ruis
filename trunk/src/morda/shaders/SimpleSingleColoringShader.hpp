@@ -34,7 +34,11 @@ THE SOFTWARE. */
 
 
 
-class SimpleSingleColoringShader : public SingleColoringShader, public ting::Singleton<SimpleSingleColoringShader>{
+namespace morda{
+
+
+
+class SimpleSingleColoringShader : public morda::SingleColoringShader, public ting::Singleton<SimpleSingleColoringShader>{
 
 	//no copying
 	SimpleSingleColoringShader(const SimpleSingleColoringShader&);
@@ -44,3 +48,7 @@ public:
 	SimpleSingleColoringShader();
 	~SimpleSingleColoringShader()throw(){}
 };
+
+
+
+}//~namespace

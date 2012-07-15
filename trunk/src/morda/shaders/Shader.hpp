@@ -37,6 +37,10 @@ THE SOFTWARE. */
 
 
 
+namespace morda{
+
+
+
 /**
  * @brief Abstract shader.
  * Each shader has at least matrix uniform and vertex position attribute.
@@ -136,3 +140,7 @@ public:
 
 	void DrawQuad01(GLenum mode = GL_TRIANGLE_FAN);
 };//~class Shader
+
+
+
+}//~namespace
