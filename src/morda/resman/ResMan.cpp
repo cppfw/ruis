@@ -40,19 +40,19 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 //	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackIter i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
-		for(stob::Node* e = (*i).resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
-			stob::Node* nameNode = e->Child("name").second;
+		for(const stob::Node* e = (*i).resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
+			const stob::Node* nameNode = e->Child("name").second;
 			if(!nameNode){
 				TRACE(<< "ResMan::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
 				continue;
 			}
-			stob::Node* name = nameNode->Child();
+			const stob::Node* name = nameNode->Child();
 			if(!name){
 				TRACE(<< "ResMan::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
 				continue;
 			}
 //			TRACE(<< "ResMan::FindResourceInScript(): name = " << name << std::endl)
-			if(resName.compare(name) == 0){
+			if(resName.compare(name->Value()) == 0){
 //				TRACE(<< "ResMan::FindResourceInScript(): resource found" << std::endl)
 				return FindInScriptRet(&(*i), e);
 			}
@@ -63,13 +63,13 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 
 
 
-void ResMan::AddResource(const ting::Ref<Resource>& res, const std::string& resName){
+void ResMan::AddResource(const ting::Ref<Resource>& res, const stob::Node* node){
 	ASSERT(res)
 	
 	//add the resource to the resources map of ResMan
 	std::pair<T_ResMapIter, bool> pr = this->resMap->rm.insert(
-			std::pair<std::string, ting::WeakRef<Resource> >(
-					resName,
+			std::pair<const std::string*, ting::WeakRef<Resource> >(
+					&node->Value(),
 					res.GetWeakRef()
 				)
 		);
@@ -78,19 +78,4 @@ void ResMan::AddResource(const ting::Ref<Resource>& res, const std::string& resN
 
 	res->it = pr.first;
 	res->rm = this->resMap; //save weak reference to resource map
-}
-
-
-
-Resource::~Resource()throw(){
-//	TRACE(<< "Resource::~Resource(): invoked" << std::endl)
-	if(ting::Ref<ResMapRC> resMap = this->rm){ //if Resource map still exists
-//		TRACE(<< "Resource::~Resource(): removing resource" << std::endl)
-		//NOTE: the weak ref in the map is still valid because RefCounted destructor is not
-		//executed so far. It will be executed right after this destructor.
-		resMap->rm.erase(this->it);
-//		TRACE(<< "Resource::~Resource(): resource removed" << std::endl)
-	}else{
-//		TRACE(<< "Resource::~Resource(): resource map is no longer existent" << std::endl)
-	}
 }

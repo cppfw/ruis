@@ -23,6 +23,8 @@
           </df>
           <in>ResMan.cpp</in>
           <in>ResMan.hpp</in>
+          <in>Resource.cpp</in>
+          <in>Resource.hpp</in>
         </df>
         <df name="shaders">
           <in>Shader.cpp</in>
@@ -64,6 +66,8 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="resman">
+              </df>
               <df name="shaders">
               </df>
             </df>
@@ -125,6 +129,8 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor="0">
+      </item>
       <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor="0">
         <ccTool>
           <incDir>
@@ -149,6 +155,13 @@
           </incDir>
         </ccTool>
       </item>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
     </conf>
   </confs>
 </configurationDescriptor>

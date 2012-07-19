@@ -42,6 +42,8 @@ srcs += morda/Widget.cpp
 srcs += morda/Container.cpp
 srcs += morda/shaders/Shader.cpp
 srcs += morda/shaders/SimpleSingleColoringShader.cpp
+srcs += morda/resman/ResMan.cpp
+srcs += morda/resman/Resource.cpp
 
 
 

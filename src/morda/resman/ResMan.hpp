@@ -29,60 +29,20 @@ THE SOFTWARE. */
 #pragma once
 
 #include <map>
-#include <sstream>
 
 #include <ting/Ref.hpp>
 #include <ting/fs/File.hpp>
 
 #include <stob/dom.hpp>
 
+#include "../Exc.hpp"
+#include "Resource.hpp"
+
 
 namespace morda{
 
-//forward declarations
-class ResMan;
 
 
-//base class for all resources
-class Resource : virtual public ting::RefCounted{
-	friend class ResMan;
-
-	struct StringComparator{
-		bool operator()(const std::string& s1, const std::string& s2)const{
-			return s1.compare(s2) < 0;
-		}
-	};
-	typedef std::map<const std::string&, ting::WeakRef<Resource>, StringComparator> T_ResMap;
-
-	//ResMapRC = Resource Map RefCounted
-	class ResMapRC : public RefCounted{
-	public:
-		~ResMapRC()throw(){}
-		
-		T_ResMap rm;
-
-		static inline ting::Ref<ResMapRC> New(){
-			return ting::Ref<ResMapRC>(new ResMapRC());
-		}
-	};
-
-	ting::WeakRef<ResMapRC> rm;
-	T_ResMap::iterator it;
-
-protected:
-	//this can only be used as a base class
-	inline Resource(){}
-public:
-	virtual ~Resource()throw();
-};
-
-
-
-//
-//
-//      Resource manager class
-//
-//
 class ResMan{
     friend class Resource;
 
@@ -120,7 +80,7 @@ class ResMan{
 	template <class T> ting::Ref<T> FindResourceInResMap(const std::string& resName);
 
 	//Add resource to resources map
-	void AddResource(ting::Ref<Resource> res, const std::string& resName);
+	void AddResource(const ting::Ref<Resource>& res, const stob::Node* node);
 
 	
 public:
@@ -145,7 +105,7 @@ public:
 
 
 template <class T> ting::Ref<T> ResMan::FindResourceInResMap(const std::string& resName){
-	T_ResMapIter i = this->resMap->rm.find(resName);
+	T_ResMapIter i = this->resMap->rm.find(&resName);
 	if(i != this->resMap->rm.end()){
 		ting::Ref<Resource> r((*i).second);
 		ASSERT(r.DynamicCast<T>().IsValid())
@@ -173,7 +133,7 @@ template <class T> ting::Ref<T> ResMan::Load(const std::string& resName){
 
 	ting::Ref<T> resource = T::Load(ret.e, *(ret.rp->fi));
 
-	this->AddResource(resource, resName);
+	this->AddResource(resource, ret.e);
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;
