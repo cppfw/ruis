@@ -8,7 +8,11 @@ using namespace morda;
 
 SimpleSingleColoringShader::SimpleSingleColoringShader() :
 		Shader(
-				"#define highp\n #define mediump\n #define lowp\n"
+				"#ifndef GL_ES\n"
+				"#define highp\n"
+				"#define mediump\n"
+				"#define lowp\n"
+				"#endif\n"
 				"attribute highp vec4 vertex;\n"
 				"uniform lowp vec4 uniformColor;\n"
 				"uniform highp mat4 matrix;\n"
