@@ -94,7 +94,7 @@ class ResMan{
 	class ResPackEntry{
 	public:
 		ting::Ptr<ting::fs::File> fi;
-		ting::Ptr<stob::Node> resScript;
+		ting::Ptr<const stob::Node> resScript;
 	};
 
 	typedef std::vector<ResPackEntry> T_ResPackList;
