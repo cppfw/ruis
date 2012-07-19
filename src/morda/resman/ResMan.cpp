@@ -40,8 +40,8 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 //	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackIter i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
-		for(stob::Node* e = (*i).resScript->Child(DResTag); e; e = e->Next(DResTag)){
-			stob::Node* nameNode = e->Child("name");
+		for(stob::Node* e = (*i).resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
+			stob::Node* nameNode = e->Child("name").second;
 			if(!nameNode){
 				TRACE(<< "ResMan::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
 				continue;
