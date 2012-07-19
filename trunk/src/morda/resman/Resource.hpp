@@ -37,12 +37,12 @@ THE SOFTWARE. */
 namespace morda{
 
 //forward declarations
-class ResMan;
+class ResourceManager;
 
 
 //base class for all resources
 class Resource : virtual public ting::RefCounted{
-	friend class ResMan;
+	friend class ResourceManager;
 
 	struct StringComparator{
 		bool operator()(const std::string* s1, const std::string* s2)const{

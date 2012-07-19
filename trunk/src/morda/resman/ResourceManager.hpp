@@ -43,7 +43,7 @@ namespace morda{
 
 
 
-class ResMan{
+class ResourceManager{
     friend class Resource;
 
 	typedef Resource::T_ResMap T_ResMap;
@@ -91,11 +91,11 @@ public:
 		{}
 	};
 	
-	inline ResMan() :
+	inline ResourceManager() :
 			resMap(Resource::ResMapRC::New())
 	{}
 
-	virtual ~ResMan(){}
+	virtual ~ResourceManager(){}
 
 	void MountResPack(ting::Ptr<ting::fs::File> fi);
 
@@ -104,7 +104,7 @@ public:
 
 
 
-template <class T> ting::Ref<T> ResMan::FindResourceInResMap(const std::string& resName){
+template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const std::string& resName){
 	T_ResMapIter i = this->resMap->rm.find(&resName);
 	if(i != this->resMap->rm.end()){
 		ting::Ref<Resource> r((*i).second);
@@ -116,7 +116,7 @@ template <class T> ting::Ref<T> ResMan::FindResourceInResMap(const std::string& 
 
 
 
-template <class T> ting::Ref<T> ResMan::Load(const std::string& resName){
+template <class T> ting::Ref<T> ResourceManager::Load(const std::string& resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
 	if(ting::Ref<T> r = this->FindResourceInResMap<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)

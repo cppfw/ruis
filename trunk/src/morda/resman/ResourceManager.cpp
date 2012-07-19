@@ -1,4 +1,4 @@
-#include "ResMan.hpp"
+#include "ResourceManager.hpp"
 
 
 using namespace morda;
@@ -14,7 +14,7 @@ std::string DIncludeTag("include");
 
 
 
-void ResMan::MountResPack(ting::Ptr<ting::fs::File> fi){
+void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 	ASSERT(fi)
 	ASSERT(!fi->IsOpened())
 
@@ -36,7 +36,7 @@ void ResMan::MountResPack(ting::Ptr<ting::fs::File> fi){
 
 
 
-ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName){
+ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std::string& resName){
 //	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackIter i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
@@ -58,12 +58,12 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 			}
 		}//~for(res)
 	}//~for(resPack)
-	throw ResMan::Exc("resource name not found in mounted resource packs");
+	throw ResourceManager::Exc("resource name not found in mounted resource packs");
 }
 
 
 
-void ResMan::AddResource(const ting::Ref<Resource>& res, const stob::Node* node){
+void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::Node* node){
 	ASSERT(res)
 	
 	//add the resource to the resources map of ResMan

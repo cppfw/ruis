@@ -37,12 +37,12 @@ endif
 
 #Sources
 srcs :=
-srcs += morda/Application.cpp
+srcs += morda/App.cpp
 srcs += morda/Widget.cpp
 srcs += morda/Container.cpp
 srcs += morda/shaders/Shader.cpp
 srcs += morda/shaders/SimpleSingleColoringShader.cpp
-srcs += morda/resman/ResMan.cpp
+srcs += morda/resman/ResourceManager.cpp
 srcs += morda/resman/Resource.cpp
 
 

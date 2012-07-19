@@ -36,6 +36,7 @@ THE SOFTWARE. */
 
 #include "Exc.hpp"
 #include "Widget.hpp"
+#include "resman/ResourceManager.hpp"
 
 
 
@@ -43,7 +44,7 @@ namespace morda{
 
 
 
-class Application : public ting::Singleton<Application>{
+class App : public ting::Singleton<App>{
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
@@ -60,13 +61,15 @@ class Application : public ting::Singleton<Application>{
 	
 	ting::Ref<morda::Widget> rootWidget;
 	
+	ResourceManager resMan;
+	
 	void SetGLViewport(const tride::Vec2f& dim);
 	
 	void Render();
 public:
-	Application(unsigned w, unsigned h);
+	App(unsigned w, unsigned h);
 	
-	~Application()throw();
+	~App()throw();
 	
 	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
 		this->rootWidget = w;
@@ -75,6 +78,10 @@ public:
 	}
 	
 	void Exec();
+	
+	inline ResourceManager& ResMan()throw(){
+		return this->resMan;
+	}
 };
 
 

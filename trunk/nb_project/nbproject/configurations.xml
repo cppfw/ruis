@@ -21,10 +21,10 @@
             </df>
             <in>entries</in>
           </df>
-          <in>ResMan.cpp</in>
-          <in>ResMan.hpp</in>
           <in>Resource.cpp</in>
           <in>Resource.hpp</in>
+          <in>ResourceManager.cpp</in>
+          <in>ResourceManager.hpp</in>
         </df>
         <df name="shaders">
           <in>Shader.cpp</in>
@@ -53,8 +53,8 @@
             <in>entries</in>
           </df>
         </df>
-        <in>Application.cpp</in>
-        <in>Application.hpp</in>
+        <in>App.cpp</in>
+        <in>App.hpp</in>
         <in>Container.cpp</in>
         <in>Container.hpp</in>
         <in>Exc.hpp</in>
@@ -66,10 +66,6 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="resman">
-              </df>
-              <df name="shaders">
-              </df>
             </df>
           </df>
         </df>
@@ -115,7 +111,7 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../src/morda/Application.cpp" ex="false" tool="1" flavor="0">
+      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor="0">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>

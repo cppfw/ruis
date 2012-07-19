@@ -1,4 +1,4 @@
-#include "../../src/morda/Application.hpp"
+#include "../../src/morda/App.hpp"
 #include "../../src/morda/Widget.hpp"
 
 #include "../../src/morda/shaders/SimpleSingleColoringShader.hpp"
@@ -34,7 +34,7 @@ public:
 
 
 int main(int argc, char** argv){
-	morda::Application app(320, 480);
+	morda::App app(320, 480);
 	
 	morda::SimpleSingleColoringShader simpleSingleColoringShader;
 	
