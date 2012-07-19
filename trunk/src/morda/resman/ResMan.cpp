@@ -1,115 +1,20 @@
 #include "ResMan.hpp"
 
 
+using namespace morda;
+
+
+
+namespace{
+
 const char* DResTag = "res";
 const char* DIncludeTag = "include";
 
-
-
-//Clone one xml note to another
-static void CloneXMLNodeToXMLNode(pugi::xml_node& dest, const pugi::xml_node& source){
-	assert(source.type() != pugi::node_null && source.type() != pugi::node_document && source.type() == dest.type());
-
-	switch (source.type()){
-		case pugi::node_pcdata:
-		case pugi::node_cdata:
-		case pugi::node_comment:
-		case pugi::node_pi:
-			dest.set_value(source.value());
-			break;
-
-		case pugi::node_element:
-			dest.set_name(source.name());
-
-			// copy attributes
-			for(pugi::xml_attribute attr = source.first_attribute(); attr; attr = attr.next_attribute()){
-				dest.append_attribute(attr.name()) = attr.value();
-			}
-
-			// recursively copy children
-			for(pugi::xml_node child = source.first_child(); child; child = child.next_sibling()){
-				pugi::xml_node new_child = dest.append_child(child.type());
-				CloneXMLNodeToXMLNode(new_child, child);
-			}
-
-			break;
-
-		default:
-			assert(!"unexpected node type");
-			break;
-	}
 }
 
 
 
-//Returns true on success, false otherwise
-static bool LoadXMLDocument(pugi::xml_document &doc, File& fi){
-	ting::Array<ting::u8> rawFile;
-	try{
-		rawFile = fi.LoadWholeFileIntoMemory();
-	}catch(File::Exc& e){
-		return false;
-	}
-
-	if(!doc.load_buffer(rawFile.Begin(), rawFile.Size())){
-		return false;
-	}
-	
-	return true;
-}
-
-
-
-static void AppendIncludes(pugi::xml_document &doc, File& fi){
-//	TRACE(<< "AppendIncludes(): enter" << std::endl)
-
-	pugi::xml_node inc = doc.child(DIncludeTag);
-	while(!inc.empty()){
-		pugi::xml_attribute fileAttr = inc.attribute("file");
-		if(fileAttr.empty()){
-			TRACE_AND_LOG(<< "ResMan::AppendInclude(): no \"file\" attribute in include tag" << std::endl)
-			break;
-		}
-		const char* fileName = fileAttr.value();
-		ASSERT(fileName)
-//		TRACE(<< "AppendIncludes(): inc file = " << fileName << std::endl)
-
-		//Load the document to include
-		pugi::xml_document incDoc;
-
-		ASSERT(!fi.IsOpened())
-		fi.SetPath(fileName);
-		if(!LoadXMLDocument(incDoc, fi)){
-			TRACE_AND_LOG(<< "ResMan::AppendInclude(): unable to read file" << std::endl)
-			break;
-		}
-
-		if(incDoc.child(DResDescrTag).empty()){
-			TRACE_AND_LOG(<< "ResMan::AppendInclude(): no ResourcesDescription signature found, file = " << fileName << std::endl)
-			break;
-		}
-
-		AppendIncludes(incDoc, fi);//recursive call
-
-		//append all entries which go after <ResourceDescription/> tag to doc
-		pugi::xml_node r = incDoc.child(DResDescrTag).next_sibling();
-		while(!r.empty()){
-			pugi::xml_node newNode = doc.insert_child_after(r.type(), inc);
-			ASSERT(!newNode.empty())
-			CloneXMLNodeToXMLNode(newNode, r);
-			r = r.next_sibling();
-		}
-
-		pugi::xml_node elToRemove = inc;
-		inc = inc.next_sibling(DIncludeTag);
-		doc.remove_child(elToRemove);
-	}//~while(include tag)
-//	TRACE(<< "AppendIncludes(): exit" << std::endl)
-}
-
-
-
-void ResMan::MountResPack(ting::Ptr<File> fi){
+void ResMan::MountResPack(ting::Ptr<ting::fs::File> fi){
 	ASSERT(fi)
 	ASSERT(!fi->IsOpened())
 
@@ -159,13 +64,13 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 
 
 
-void ResMan::AddResource(Ref<Resource> res, const std::string& resName){
+void ResMan::AddResource(const ting::Ref<Resource>& res, const std::string& resName){
 	ASS(res)->rm = this->resMap; //save weak reference to resource map
 
 	//add the resource to the resources map of ResMan
 	typedef std::pair<T_ResMapIter, bool> T_RetPair;
-	typedef std::pair<std::string, WeakRef<Resource> > T_Pair;
-	T_RetPair pr = this->resMap->rm.insert(T_Pair(resName, WeakRef<Resource>(res)));
+	typedef std::pair<std::string, ting::WeakRef<Resource> > T_Pair;
+	T_RetPair pr = this->resMap->rm.insert(T_Pair(resName, ting::WeakRef<Resource>(res)));
 	ASSERT(pr.second == true) //make sure that the new element was added but not the old one rewritten
 	res->it = pr.first;
 }
