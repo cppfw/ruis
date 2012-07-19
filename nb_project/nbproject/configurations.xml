@@ -11,11 +11,31 @@
           <in>SingleColoringShader.cpp</in>
           <in>SingleColoringShader.hpp</in>
         </df>
+        <df name="widgets">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+        </df>
         <in>Application.cpp</in>
         <in>Application.hpp</in>
         <in>Container.cpp</in>
         <in>Container.hpp</in>
         <in>Exc.hpp</in>
+        <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
       </df>
