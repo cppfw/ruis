@@ -97,10 +97,10 @@ static tride::Vec2f quadTriangles[] = {
 
 
 
-void Shader::DrawQuad(GLenum mode){
+void Shader::DrawQuad(){
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quadTriangles);
-	this->DrawArrays(mode, 4);
+	this->DrawArrays(GL_TRIANGLE_FAN, 4);
 }
 
 
@@ -113,8 +113,8 @@ static tride::Vec2f quad01Triangles[] = {
 
 
 
-void Shader::DrawQuad01(GLenum mode){
+void Shader::DrawQuad01(){
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quad01Triangles);
-	this->DrawArrays(mode, 4);
+	this->DrawArrays(GL_TRIANGLE_FAN, 4);
 }
