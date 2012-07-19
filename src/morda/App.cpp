@@ -1,4 +1,4 @@
-#include "Application.hpp"
+#include "App.hpp"
 
 
 #include <ting/debug.hpp>
@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-Application::XDisplayWrapper::XDisplayWrapper(){
+App::XDisplayWrapper::XDisplayWrapper(){
 	this->d = XOpenDisplay(0);
 	if(!this->d){
 		throw morda::Exc("XOpenDisplay() failed");
@@ -19,13 +19,13 @@ Application::XDisplayWrapper::XDisplayWrapper(){
 
 
 
-Application::XDisplayWrapper::~XDisplayWrapper()throw(){
+App::XDisplayWrapper::~XDisplayWrapper()throw(){
 	XCloseDisplay(this->d);
 }
 
 
 
-Application::Application(unsigned w, unsigned h){
+App::App(unsigned w, unsigned h){
 	int screen = DefaultScreen(this->xDisplay.d);
 	
 	XVisualInfo *vi;
@@ -122,7 +122,7 @@ Application::Application(unsigned w, unsigned h){
 
 
 
-Application::~Application()throw(){
+App::~App()throw(){
 	glXMakeCurrent(this->xDisplay.d, this->window, NULL);
 	glXDestroyContext(this->xDisplay.d, this->glxContext);
 	XDestroyWindow(this->xDisplay.d, this->window);
@@ -130,13 +130,13 @@ Application::~Application()throw(){
 
 
 
-void Application::SetGLViewport(const tride::Vec2f& dim){
+void App::SetGLViewport(const tride::Vec2f& dim){
 	glViewport(0, 0, dim.x, dim.y);
 }
 
 
 
-void Application::Render(){
+void App::Render(){
 	if(this->rootWidget.IsNotValid()){
 		return;
 	}
@@ -183,7 +183,7 @@ public:
 
 
 
-void Application::Exec(){
+void App::Exec(){
 	
 	XEventWaitable xew(this->xDisplay.d);
 	

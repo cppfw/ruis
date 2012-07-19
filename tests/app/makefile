@@ -18,7 +18,7 @@ ifeq ($(platform),darwin)
     remove := rm -rf
 endif
 ifeq ($(platform),linux)
-    libs := -lting ../../src/libmorda.so -lGLEW
+    libs := -lting ../../src/libmorda.so -lGLEW -lstob
     includes := -I../../ext
     remove := rm -rf
 endif

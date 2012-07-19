@@ -2,8 +2,6 @@
 
 #include "Shader.hpp"
 
-#include"../Application.hpp"
-
 
 
 using namespace morda;
@@ -11,11 +9,11 @@ using namespace morda;
 
 
 Shader::ShaderWrapper::ShaderWrapper(const char* code, GLenum type){
-	if(!morda::Application::IsCreated()){
-		throw morda::Exc("Application singleton object is not created, OpenGL is not initialized, cannot create shader.");
-	}
-	
 	this->s = glCreateShader(type);
+	
+	if(this->s == 0){
+		throw ting::Exc("glCreateShader() failed");
+	}
 	
 	glShaderSource(this->s, 1, &code, 0);
 	glCompileShader(this->s);
