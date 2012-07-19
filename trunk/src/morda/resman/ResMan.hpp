@@ -84,7 +84,7 @@ public:
 //      Resource manager class
 //
 //
-class ResMan : public ting::Singleton<ResMan>{
+class ResMan{
     friend class Resource;
 
 	typedef Resource::T_ResMap T_ResMap;
@@ -114,10 +114,6 @@ class ResMan : public ting::Singleton<ResMan>{
 
 		ResPackEntry* rp;
 		const stob::Node* e;
-
-		inline bool IsValid()const{
-			return this->e && this->rp;
-		}
 	};
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
@@ -129,6 +125,13 @@ class ResMan : public ting::Singleton<ResMan>{
 
 	
 public:
+	class Exc : public morda::Exc{
+	public:
+		inline Exc(const std::string& message) :
+				morda::Exc(message)
+		{}
+	};
+	
 	inline ResMan() :
 			resMap(Resource::ResMapRC::New())
 	{}
@@ -161,29 +164,19 @@ template <class T> ting::Ref<T> ResMan::Load(const std::string& resName){
 		return r;
 	}
 
-	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
-	ting::fs::File* fi DEBUG_CODE(= 0);
-	stob::Node* el;
-	{
-		FindInScriptRet ret = this->FindResourceInScript(resName);
-		if(!ret.IsValid()){
-			TRACE(<< "ResMan::Load(): there is no resource with given name, throwing exception" << std::endl)
-			std::stringstream ss;
-			ss << "ResMan::Load(): there is no resource with given name: " << resName;
-			throw ting::Exc(ss.str().c_str());
-		}
-		fi = ASS(ret.rp)->fi.operator->();
-		el = ret.e;
-	}
-	ASSERT(fi)
+//	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
+	FindInScriptRet ret = this->FindResourceInScript(resName);
+	ASSERT(ret.e)
+	ASSERT(ret.rp)
+	ASSERT(ret.rp->fi)
 
-	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
+//	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	ting::Ref<T> resource = T::Load(el, *fi);
+	ting::Ref<T> resource = T::Load(ret.e, *(ret.rp->fi));
 
 	this->AddResource(resource, resName);
 
-	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
+//	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;
 }
 
