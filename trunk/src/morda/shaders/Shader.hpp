@@ -136,9 +136,9 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	void DrawQuad(GLenum mode = GL_TRIANGLE_FAN);
+	void DrawQuad();
 
-	void DrawQuad01(GLenum mode = GL_TRIANGLE_FAN);
+	void DrawQuad01();
 };//~class Shader
 
 

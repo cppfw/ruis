@@ -42,9 +42,13 @@ srcs += morda/Widget.cpp
 srcs += morda/Container.cpp
 srcs += morda/shaders/Shader.cpp
 srcs += morda/shaders/SimpleSingleColoringShader.cpp
+srcs += morda/shaders/TexturingShader.cpp
+srcs += morda/shaders/SimpleTexturingShader.cpp
 srcs += morda/resman/ResourceManager.cpp
 srcs += morda/resman/Resource.cpp
-
+srcs += morda/util/GLTexture.cpp
+srcs += morda/util/Image.cpp
+srcs += morda/util/TexFont.cpp
 
 
 
@@ -105,7 +109,7 @@ ifeq ($(platform), maemo_linux)
     include_dirs :=
 endif
 ifeq ($(platform), linux)
-    include_dirs := -I../ext
+    include_dirs := -I../ext `pkg-config --cflags freetype2`
 endif
 ifeq ($(platform), win32)
     include_dirs :=
@@ -123,7 +127,7 @@ ifeq ($(platform), maemo_linux)
     libs := 
 endif
 ifeq ($(platform), linux)
-    libs := -lting -lpthread -lX11 -lGL -lGLEW
+    libs := -lting -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2`
 endif
 ifeq ($(platform), win32)
     libs := 
