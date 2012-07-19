@@ -37,7 +37,7 @@ void ResMan::MountResPack(ting::Ptr<ting::fs::File> fi){
 
 
 ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName){
-	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
+//	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackIter i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
 		for(stob::Node* e = (*i).resScript->Child(DResTag); e; e = e->Next(DResTag)){
@@ -51,9 +51,9 @@ ResMan::FindInScriptRet ResMan::FindResourceInScript(const std::string& resName)
 				TRACE(<< "ResMan::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
 				continue;
 			}
-			TRACE(<< "ResMan::FindResourceInScript(): name = " << name << std::endl)
+//			TRACE(<< "ResMan::FindResourceInScript(): name = " << name << std::endl)
 			if(resName.compare(name) == 0){
-				TRACE(<< "ResMan::FindResourceInScript(): resource found" << std::endl)
+//				TRACE(<< "ResMan::FindResourceInScript(): resource found" << std::endl)
 				return FindInScriptRet(&(*i), e);
 			}
 		}//~for(res)
@@ -75,9 +75,9 @@ void ResMan::AddResource(const ting::Ref<Resource>& res, const std::string& resN
 		);
 	
 	ASSERT(pr.second == true) //make sure that the new element was added but not the old one rewritten
-	
-	res->rm = this->resMap; //save weak reference to resource map
+
 	res->it = pr.first;
+	res->rm = this->resMap; //save weak reference to resource map
 }
 
 
