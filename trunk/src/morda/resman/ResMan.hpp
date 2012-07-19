@@ -53,7 +53,6 @@ class Resource : virtual public ting::RefCounted{
 		}
 	};
 	typedef std::map<const std::string&, ting::WeakRef<Resource>, StringComparator> T_ResMap;
-	typedef T_ResMap::iterator T_ResMapIter;
 
 	//ResMapRC = Resource Map RefCounted
 	class ResMapRC : public RefCounted{
@@ -68,7 +67,7 @@ class Resource : virtual public ting::RefCounted{
 	};
 
 	ting::WeakRef<ResMapRC> rm;
-	T_ResMapIter it;
+	T_ResMap::iterator it;
 
 protected:
 	//this can only be used as a base class
