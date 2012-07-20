@@ -41,7 +41,7 @@ namespace morda{
  * @brief Base class for texturing shader.
  * Base class for all texturing shaders. The texture coordinate attribute in the
  * shader code should be 'vec2' and have name 'textureCoord'. Texture number
- * uniform in the shader code should be 'sampler2D' and have name 'texNumber'.
+ * uniform in the shader code should be 'sampler2D' and have name 'textureNumber'.
  */
 class TexturingShader : virtual public Shader{
 
@@ -61,7 +61,7 @@ protected:
 			Shader(0, 0)
 	{
 		this->texCoordAttr = this->GetAttribute("textureCoord");
-		this->texNumberUniform = this->GetUniform("texNumber");
+		this->texNumberUniform = this->GetUniform("textureNumber");
 	}
 
 public:

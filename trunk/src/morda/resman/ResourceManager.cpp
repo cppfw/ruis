@@ -88,28 +88,31 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 	rpe.resScript = resScript;
 
 	this->resPacks.push_back(rpe);
+	ASSERT(this->resPacks.back().fi.IsValid())
+	ASSERT(this->resPacks.back().resScript.IsValid())
 }
 
 
 
 ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std::string& resName){
-//	TRACE(<< "ResMan::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
+//	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
-	for(T_ResPackIter i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
-		for(const stob::Node* e = (*i).resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
+	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
+		for(const stob::Node* e = i->resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
+//			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
 			const stob::Node* nameNode = e->Child("name").second;
 			if(!nameNode){
-				TRACE(<< "ResMan::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
+//				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
 				continue;
 			}
 			const stob::Node* name = nameNode->Child();
 			if(!name){
-				TRACE(<< "ResMan::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
+//				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
 				continue;
 			}
-//			TRACE(<< "ResMan::FindResourceInScript(): name = " << name << std::endl)
+//			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
 			if(resName.compare(name->Value()) == 0){
-//				TRACE(<< "ResMan::FindResourceInScript(): resource found" << std::endl)
+//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
 				return FindInScriptRet(&(*i), e);
 			}
 		}//~for(res)
