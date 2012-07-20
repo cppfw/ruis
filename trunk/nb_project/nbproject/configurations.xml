@@ -4,23 +4,6 @@
     <df name="src" root="../src">
       <df name="morda">
         <df name="resman">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>Resource.cpp</in>
           <in>Resource.hpp</in>
           <in>ResourceManager.cpp</in>
@@ -39,23 +22,6 @@
           <in>TexturingShader.hpp</in>
         </df>
         <df name="util">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>GLTexture.cpp</in>
           <in>GLTexture.hpp</in>
           <in>Image.cpp</in>
@@ -65,23 +31,6 @@
           <in>ZipFile.hpp</in>
         </df>
         <df name="widgets">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
