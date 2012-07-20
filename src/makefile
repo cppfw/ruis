@@ -46,6 +46,7 @@ srcs += morda/shaders/TexturingShader.cpp
 srcs += morda/shaders/SimpleTexturingShader.cpp
 srcs += morda/resman/ResourceManager.cpp
 srcs += morda/resman/Resource.cpp
+srcs += morda/resources/ResTexture.cpp
 srcs += morda/util/GLTexture.cpp
 srcs += morda/util/Image.cpp
 srcs += morda/util/TexFont.cpp
