@@ -8,22 +8,4 @@
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/home/ivan/prj/morda/src/morda/Widget.hpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/Widget.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/Container.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/Container.hpp</file>
-        <file>file:/home/ivan/prj/morda/tests/app/main.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/makefile</file>
-        <file>file:/home/ivan/prj/morda/src/morda/util/Image.hpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/util/Image.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/util/TexFont.hpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/shaders/TexturingShader.hpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/shaders/TexturingShader.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/shaders/SimpleTexturingShader.hpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/shaders/SimpleTexturingShader.cpp</file>
-        <file>file:/home/ivan/prj/morda/src/morda/shaders/Shader.cpp</file>
-        <file>file:/home/ivan/prj/morda/tests/app/makefile</file>
-        <file>file:/home/ivan/prj/morda/src/morda/util/TexFont.cpp</file>
-    </open-files>
 </project-private>

@@ -10,7 +10,63 @@ namespace{
 std::string DResTag("res");
 std::string DIncludeTag("include");
 
+
+
+//fi path should be set to resource script for resolving includes.
+//return pointer to the last child node of the script
+stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
+	std::pair<stob::Node*, stob::Node*> n = root->Child(DIncludeTag);
+	for(; n.second;){
+		ASSERT(n.second)
+		stob::Node* incPathNode = n.second->Child();
+		if(!incPathNode){
+			throw Exc("include tag without value encountered in resource script");
+		}
+		
+		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
+		ting::Ptr<stob::Node> incNode = stob::Load(fi);
+		
+		//recursive call
+		stob::Node* lastChild = ResolveIncludes(fi, incNode.operator->());
+		
+		//substitute includes
+		if(!n.first){
+			//include tag is the very first tag
+			root->RemoveFirstChild();
+			
+			if(lastChild){
+				ASSERT(!lastChild->Next())
+				ASSERT(incNode->Child())
+				lastChild->InsertNext(root->RemoveChildren());
+				root->SetChildren(incNode->RemoveChildren());
+				n = lastChild->Next(DIncludeTag);
+			}else{
+				ASSERT(!incNode->Child())
+				n = n.second->Next(DIncludeTag);
+			}
+			continue;
+		}else{
+			//include tag is not the first one
+			
+			n.first->RemoveNext();
+			if(lastChild){
+				ASSERT(!lastChild->Next())
+				ASSERT(incNode->Child())
+				ting::Ptr<stob::Node> tail = n.first->ChopNext();
+				n.first->SetNext(incNode->RemoveChildren());
+				lastChild->SetNext(tail);
+				n = lastChild->Next(DIncludeTag);
+			}else{
+				ASSERT(!incNode->Child())
+				n = n.second->Next(DIncludeTag);
+			}
+			continue;
+		}
+	}
+	return n.first;
 }
+
+}//~namespace
 
 
 
@@ -24,12 +80,12 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 
 	ASS(rpe.fi)->SetPath("main.res");
 	
-	rpe.resScript = stob::Load(*(rpe.fi));
-	ASSERT(rpe.resScript)
+	ting::Ptr<stob::Node> resScript = stob::Load(*(rpe.fi));
 
 	//handle includes
-	//TODO:
-//	AppendIncludes(*ASS(rpe.resScript), *ASS(rpe.fi));
+	ResolveIncludes(*(rpe.fi), resScript.operator->());
+	
+	rpe.resScript = resScript;
 
 	this->resPacks.push_back(rpe);
 }
