@@ -58,7 +58,6 @@ class ResourceManager{
 	};
 
 	typedef std::vector<ResPackEntry> T_ResPackList;
-	typedef T_ResPackList::iterator T_ResPackIter;
 
 	//list of mounted resource packs
 	T_ResPackList resPacks;

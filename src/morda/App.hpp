@@ -44,6 +44,7 @@ namespace morda{
 
 
 
+//TODO: make intrusive singleton
 class App : public ting::Singleton<App>{
 	struct XDisplayWrapper{
 		Display* d;

@@ -44,6 +44,7 @@ namespace morda{
 
 
 
+//TODO: make intrusive PoolStored
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
