@@ -9,6 +9,27 @@
           <in>ResourceManager.cpp</in>
           <in>ResourceManager.hpp</in>
         </df>
+        <df name="resources">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+          <in>ResTexture.cpp</in>
+          <in>ResTexture.hpp</in>
+        </df>
         <df name="shaders">
           <in>Shader.cpp</in>
           <in>Shader.hpp</in>
@@ -46,6 +67,8 @@
           <df name="2">
             <df name="morda">
               <df name="resman">
+              </df>
+              <df name="resources">
               </df>
               <df name="shaders">
               </df>
@@ -166,6 +189,13 @@
         </ccTool>
       </folder>
       <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
