@@ -26,4 +26,3 @@ void TexturingShader::DrawQuad01(){
 	this->SetTexCoordPointer(quadTexCoords);
 	this->Shader::DrawQuad01();
 }
-

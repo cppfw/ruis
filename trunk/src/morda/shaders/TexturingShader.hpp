@@ -64,7 +64,7 @@ protected:
 		this->texNumberUniform = this->GetUniform("textureNumber");
 	}
 
-public:
+public:	
 	inline void SetTextureNumber(unsigned i){
 		glUniform1i(this->texNumberUniform, i);
 		ASSERT(glGetError() == GL_NO_ERROR)
