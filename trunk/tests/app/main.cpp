@@ -5,6 +5,7 @@
 #include "../../src/morda/shaders/SimpleTexturingShader.hpp"
 
 #include "../../src/morda/resources/ResTexture.hpp"
+#include "../../src/morda/resources/ResFont.hpp"
 
 
 #include <ting/debug.hpp>
@@ -14,10 +15,12 @@
 
 class SimpleWidget : public morda::Widget{
 	ting::Ref<morda::ResTexture> tex;
+	ting::Ref<morda::ResFont> fnt;
 	
 	SimpleWidget(){
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
+		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 public:	
 	static inline ting::Ref<SimpleWidget> New(){
@@ -31,7 +34,7 @@ public:
 		tride::Matr4f matr(matrix);
 		matr.Scale(this->Dim());
 		
-		this->tex->operator ->()->Bind();
+		this->tex->Tex().Bind();
 		
 		morda::SimpleTexturingShader &s = morda::SimpleTexturingShader::Inst();
 		s.Bind();
@@ -39,6 +42,16 @@ public:
 //		s.SetColor(tride::Vec3f(1, 0, 0));
 		s.SetMatrix(matr);
 		s.DrawQuad01();
+		
+#ifdef DEBUG
+		this->fnt->Fnt().RenderTex(s , matrix);
+#endif
+		
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		tride::Matr4f m(matrix);
+		m.Translate(200, 200);
+		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
 };
 

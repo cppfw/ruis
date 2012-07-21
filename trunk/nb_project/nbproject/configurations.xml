@@ -27,6 +27,8 @@
             </df>
             <in>entries</in>
           </df>
+          <in>ResFont.cpp</in>
+          <in>ResFont.hpp</in>
           <in>ResTexture.cpp</in>
           <in>ResTexture.hpp</in>
         </df>

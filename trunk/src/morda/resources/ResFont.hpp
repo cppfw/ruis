@@ -28,15 +28,13 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <string>
 
-#include <GL/glew.h>
-
-#include <tride/Vector3.hpp>
 #include <stob/dom.hpp>
 
-#include "../util/GLTexture.hpp"
-
 #include "../resman/Resource.hpp"
+
+#include "../util/TexFont.hpp"
 
 
 
@@ -44,24 +42,24 @@ namespace morda{
 
 
 
-//TODO: make intrusive PoolStored
-class ResTexture : public morda::Resource{
+class ResFont : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	GLTexture tex;
+	morda::TexFont font;
 
-	ResTexture(const Image& image) :
-			tex(image)
+	ResFont(ting::fs::File& fi, const std::wstring& chars, unsigned size, unsigned outline) :
+			font(fi, chars.c_str(), size, outline)
 	{}
+
 public:
-	~ResTexture()throw(){}
+	inline ~ResFont()throw(){}
 
-	inline const GLTexture& Tex()const throw(){
-		return this->tex;
+	inline const morda::TexFont& Fnt()throw(){
+		return this->font;
 	}
-
+	
 private:
-	static ting::Ref<ResTexture> Load(const stob::Node* el, ting::fs::File &fi);
+	static ting::Ref<ResFont> Load(const stob::Node* el, ting::fs::File &fi);
 };
 
 
