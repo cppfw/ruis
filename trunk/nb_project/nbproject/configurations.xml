@@ -60,6 +60,8 @@
           <in>ZipFile.hpp</in>
         </df>
         <df name="widgets">
+          <in>Button.cpp</in>
+          <in>Button.hpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
@@ -81,6 +83,8 @@
               <df name="shaders">
               </df>
               <df name="util">
+              </df>
+              <df name="widgets">
               </df>
             </df>
           </df>
@@ -128,6 +132,10 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor="0">
+      </item>
       <item path="../src/morda/App.cpp" ex="false" tool="1" flavor="0">
         <ccTool>
           <incDir>
@@ -212,6 +220,13 @@
         </ccTool>
       </folder>
       <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
