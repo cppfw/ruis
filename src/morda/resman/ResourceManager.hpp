@@ -47,7 +47,6 @@ class ResourceManager{
     friend class Resource;
 
 	typedef Resource::T_ResMap T_ResMap;
-	typedef T_ResMap::iterator T_ResMapIter;
 	
 	ting::Ref<Resource::ResMapRC> resMap;
 
@@ -65,13 +64,15 @@ class ResourceManager{
 
 	class FindInScriptRet{
 	public:
-		FindInScriptRet(ResPackEntry* resPack, const stob::Node* element) :
+		FindInScriptRet(ResPackEntry* resPack, const stob::Node* element, const stob::Node* nameVal) :
 				rp(resPack),
-				e(element)
+				e(element),
+				nameVal(nameVal)
 		{}
 
 		ResPackEntry* rp;
 		const stob::Node* e;
+		const stob::Node* nameVal;
 	};
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
@@ -104,7 +105,7 @@ public:
 
 
 template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const std::string& resName){
-	T_ResMapIter i = this->resMap->rm.find(&resName);
+	T_ResMap::iterator i = this->resMap->rm.find(&resName);
 	if(i != this->resMap->rm.end()){
 		ting::Ref<Resource> r((*i).second);
 		ASSERT(r.DynamicCast<T>().IsValid())
@@ -125,6 +126,7 @@ template <class T> ting::Ref<T> ResourceManager::Load(const std::string& resName
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
 	FindInScriptRet ret = this->FindResourceInScript(resName);
 	ASSERT(ret.e)
+	ASSERT(ret.nameVal)
 	ASSERT(ret.rp)
 	ASSERT(ret.rp->fi)
 
@@ -132,7 +134,7 @@ template <class T> ting::Ref<T> ResourceManager::Load(const std::string& resName
 
 	ting::Ref<T> resource = T::Load(ret.e, *(ret.rp->fi));
 
-	this->AddResource(resource, ret.e);
+	this->AddResource(resource, ret.nameVal);
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;

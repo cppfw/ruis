@@ -100,23 +100,24 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
 		for(const stob::Node* e = i->resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
-			const stob::Node* nameNode = e->Child("name").second;
-			if(!nameNode){
+			const stob::Node* nameProp = e->Child("name").second;
+			if(!nameProp){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
 				continue;
 			}
-			const stob::Node* name = nameNode->Child();
-			if(!name){
+			const stob::Node* nameVal = nameProp->Child();
+			if(!nameVal){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
 				continue;
 			}
 //			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
-			if(resName.compare(name->Value()) == 0){
+			if(resName.compare(nameVal->Value()) == 0){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-				return FindInScriptRet(&(*i), e);
+				return FindInScriptRet(&(*i), e, nameVal);
 			}
 		}//~for(res)
 	}//~for(resPack)
+	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	throw ResourceManager::Exc("resource name not found in mounted resource packs");
 }
 
@@ -126,7 +127,7 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 	ASSERT(res)
 	
 	//add the resource to the resources map of ResMan
-	std::pair<T_ResMapIter, bool> pr = this->resMap->rm.insert(
+	std::pair<T_ResMap::iterator, bool> pr = this->resMap->rm.insert(
 			std::pair<const std::string*, ting::WeakRef<Resource> >(
 					&node->Value(),
 					res.GetWeakRef()
@@ -135,6 +136,12 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 	
 	ASSERT(pr.second == true) //make sure that the new element was added but not the old one rewritten
 
+#ifdef DEBUG
+	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
+		TRACE(<< "\t" << *(*i).first << std::endl)
+	}
+#endif
+	
 	res->it = pr.first;
 	res->rm = this->resMap; //save weak reference to resource map
 }
