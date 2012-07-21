@@ -32,6 +32,7 @@ THE SOFTWARE. */
 #include <ting/Ref.hpp>
 
 #include <tride/Vector3.hpp>
+#include <tride/Rectangle2.hpp>
 
 
 
@@ -57,46 +58,37 @@ private:
 
 	ting::Inited<bool, false> isDisabled;
 
-	tride::Vec2f p;
-	tride::Vec2f d;
+	tride::Rect2f rect;
 public:
 
-	inline const ting::WeakRef<Container>& Parent(){
+	inline const ting::WeakRef<Container>& Parent()throw(){
 		return this->parent;
 	}
 	
-	inline ting::WeakRef<const Container> Parent()const{
+	inline ting::WeakRef<const Container> Parent()const throw(){
 		return this->parent;
 	}
 	
 	void RemoveFromParent();
 	
-	inline bool IsHovered()const{
+	inline bool IsHovered()const throw(){
 		return this->isHovered;
 	}
 
-	inline const tride::Vec2f& Pos()const{
-		return this->p;
+	inline const tride::Rect2f& Rect()const throw(){
+		return this->rect;
 	}
 
-	inline const tride::Vec2f TopRightPos()const{
-		return this->Pos() + this->Dim();
-	}
-
-	inline const tride::Vec2f& Dim()const{
-		return this->d;
-	}
-
-	inline void SetPos(const tride::Vec2f& newPos){
-		this->p = newPos;
+	inline void SetPos(const tride::Vec2f& newPos)throw(){
+		this->rect.p = newPos;
 	}
 	
-	inline void Move(const tride::Vec2f& delta){
-		this->p += delta;
+	inline void Move(const tride::Vec2f& delta)throw(){
+		this->rect.p += delta;
 	}
 
 	inline void Resize(const tride::Vec2f& newDims){
-		this->d = newDims;
+		this->rect.d = newDims;
 		this->OnResize();//call virtual method
 	}
 
@@ -164,15 +156,15 @@ public:
 		return this->isHidden;
 	}
 
-	inline void Enable(){
+	inline void Enable()throw(){
 		this->SetDisabled(false);
 	}
 
-	inline void Disable(){
+	inline void Disable()throw(){
 		this->SetDisabled(true);
 	}
 
-	inline void SetDisabled(bool disabled){
+	inline void SetDisabled(bool disabled)throw(){
 		this->isDisabled = disabled;
 	}
 	
@@ -181,20 +173,6 @@ public:
 	}
 
 protected:
-	/**
-	 * @brief Check if point is in widget's rectangle.
-	 * @param point - point to check, in widget parent's coordinates.
-	 * @return true if point lies inside widgets rectangle.
-	 * @return false otherwise.
-	 */
-	bool IsInWidgetRect(const tride::Vec2f& point){
-		return
-				this->p.x <= point.x &&
-				point.x < (this->p.x + this->d.x) &&
-				this->p.y <= point.y &&
-				point.y < (this->p.y + this->d.y)
-			;
-	}
 };
 
 

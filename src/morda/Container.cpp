@@ -16,7 +16,7 @@ void Container::Render(const tride::Matr4f& matrix)const{
 		}
 		
 		tride::Matr4f matr(matrix);
-		matr.Translate((*i)->Pos());
+		matr.Translate((*i)->Rect().p);
 
 		(*i)->Render(matr);
 	}
@@ -40,7 +40,7 @@ bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, 
 			continue;
 		}
 		
-		if(!(*i)->IsInWidgetRect(pos)){
+		if(!(*i)->Rect().Overlaps(pos)){
 			continue;
 		}
 		
@@ -51,7 +51,7 @@ bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, 
 			(*i)->OnMouseIn();
 		}
 
-		tride::Vec2f localPos = pos - (*i)->p;
+		tride::Vec2f localPos = pos - (*i)->Rect().p;
 		
 		if((*i)->OnMouseButtonDown(localPos, button, pointerId)){
 			return true;
@@ -78,7 +78,7 @@ bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, un
 			continue;
 		}
 		
-		if(!(*i)->IsInWidgetRect(pos)){
+		if(!(*i)->Rect().Overlaps(pos)){
 			continue;
 		}
 		
@@ -89,7 +89,7 @@ bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, un
 			(*i)->OnMouseIn();
 		}
 
-		tride::Vec2f localPos = pos - (*i)->p;
+		tride::Vec2f localPos = pos - (*i)->Rect().p;
 		
 		if((*i)->OnMouseButtonUp(localPos, button, pointerId)){
 			return true;
@@ -117,7 +117,7 @@ bool Container::OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
 			continue;
 		}
 		
-		if(!(*i)->IsInWidgetRect(pos)){
+		if(!(*i)->Rect().Overlaps(pos)){
 			if((*i)->IsHovered()){
 				(*i)->isHovered = false;
 				(*i)->OnMouseOut();

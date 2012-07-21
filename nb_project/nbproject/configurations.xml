@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="80">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="ext" root="../ext">
+      <df name="tride">
+        <in>Rectangle2.hpp</in>
+        <in>Vector3.hpp</in>
+      </df>
+    </df>
     <df name="src" root="../src">
       <df name="morda">
         <df name="resman">
@@ -97,6 +103,7 @@
   <sourceRootList>
     <Elem>../src</Elem>
     <Elem>../tests</Elem>
+    <Elem>../ext</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>

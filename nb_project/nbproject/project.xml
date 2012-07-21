@@ -12,6 +12,7 @@
             <sourceRootList>
                 <sourceRootElem>../src</sourceRootElem>
                 <sourceRootElem>../tests</sourceRootElem>
+                <sourceRootElem>../ext</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
