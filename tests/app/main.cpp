@@ -32,7 +32,7 @@ public:
 	//override
 	void Render(const tride::Matr4f& matrix)const{
 		tride::Matr4f matr(matrix);
-		matr.Scale(this->Dim());
+		matr.Scale(this->Rect().d);
 		
 		this->tex->Tex().Bind();
 		

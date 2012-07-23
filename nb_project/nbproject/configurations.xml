@@ -16,23 +16,6 @@
           <in>ResourceManager.hpp</in>
         </df>
         <df name="resources">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>ResFont.cpp</in>
           <in>ResFont.hpp</in>
           <in>ResTexture.cpp</in>
@@ -76,16 +59,6 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="resman">
-              </df>
-              <df name="resources">
-              </df>
-              <df name="shaders">
-              </df>
-              <df name="util">
-              </df>
-              <df name="widgets">
-              </df>
             </df>
           </df>
         </df>
