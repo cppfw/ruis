@@ -1,5 +1,8 @@
 #include "../../src/morda/App.hpp"
 #include "../../src/morda/Widget.hpp"
+#include "../../src/morda/Container.hpp"
+
+#include "../../src/morda/widgets/Button.hpp"
 
 #include "../../src/morda/shaders/SimpleSingleColoringShader.hpp"
 #include "../../src/morda/shaders/SimpleTexturingShader.hpp"
@@ -65,7 +68,19 @@ int main(int argc, char** argv){
 	morda::SimpleSingleColoringShader simpleSingleColoringShader;
 	morda::SimpleTexturingShader simpleTexturingShader;
 	
-	app.SetRootWidget(SimpleWidget::New());
+	ting::Ref<morda::Container> c = morda::Container::New();
+	
+	ting::Ref<morda::Widget> w1 = SimpleWidget::New();
+	w1->SetPos(tride::Vec2f(0, 0));
+	w1->Resize(tride::Vec2f(300, 400));
+	c->Add(w1);
+	
+	ting::Ref<morda::Widget> w2 = morda::Button::New();
+	w2->SetPos(tride::Vec2f(100, 200));
+	w2->Resize(tride::Vec2f(100, 80));
+	c->Add(w2);
+	
+	app.SetRootWidget(c);
 	
 	app.Exec();
 	

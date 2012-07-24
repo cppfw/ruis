@@ -179,6 +179,23 @@ public:
 	}
 };
 
+Widget::EMouseButton ButtonNumberToEnum(int number){
+	switch(number){
+		case 1:
+			return Widget::LEFT;
+		case 2:
+			return Widget::MIDDLE;
+		case 3:
+			return Widget::RIGHT;
+		case 4:
+			return Widget::WHEEL_UP;
+		case 5:
+			return Widget::WHEEL_DOWN;
+		default:
+			return Widget::UNKNOWN;
+	}
+}
+
 }//~namespace
 
 
@@ -239,37 +256,21 @@ void App::Exec(){
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
 						if(this->rootWidget.IsValid()){
-							Widget::EMouseButton b;
-							switch(event.xbutton.button){
-								case 1:
-									b = Widget::LEFT;
-									break;
-								case 2:
-									b = Widget::MIDDLE;
-									break;
-								case 3:
-									b = Widget::RIGHT;
-									break;
-								case 4:
-									b = Widget::WHEEL_UP;
-									break;
-								case 5:
-									b = Widget::WHEEL_DOWN;
-									break;
-								default:
-									b = Widget::UNKNOWN;
-									break;
-							}
 							this->rootWidget->OnMouseButtonDown(
 									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
-									b,
+									ButtonNumberToEnum(event.xbutton.button),
 									0
 								);
 						}
 						break;
 					case ButtonRelease:
-//						TRACE(<< "ButtonRelease X event got" << std::endl)
-						//TODO:
+						if(this->rootWidget.IsValid()){
+							this->rootWidget->OnMouseButtonUp(
+									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
+									ButtonNumberToEnum(event.xbutton.button),
+									0
+								);
+						}
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
@@ -295,7 +296,9 @@ void App::Exec(){
 		}//~if there are pending X events
 		
 		//TODO:
-	}
+		
+		this->Render();
+	}//~while(!this->quitFlag)
 	
 	waitSet.Remove(&xew);
 }

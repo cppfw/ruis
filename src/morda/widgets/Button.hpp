@@ -61,6 +61,10 @@ public:
 	inline bool IsPressed()const throw(){
 		return this->isPressed;
 	}
+	
+	inline static ting::Ref<Button> New(){
+		return ting::Ref<Button>(new Button());
+	}
 };
 
 

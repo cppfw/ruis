@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "../shaders/SimpleSingleColoringShader.hpp"
 
 
 
@@ -8,13 +9,25 @@ using namespace morda;
 
 //override
 void Button::Render(const tride::Matr4f& matrix)const{
-	//TODO:
+	tride::Matr4f matr(matrix);
+	matr.Scale(this->Rect().d);
+	
+	SimpleSingleColoringShader& s = SimpleSingleColoringShader::Inst();
+	s.Bind();
+	if(this->isPressed){
+		s.SetColor(tride::Vec3f(1, 1, 1));
+	}else{
+		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
+	}
+	s.SetMatrix(matr);
+	s.DrawQuad01();
 }
 
 
 
 //override
 bool Button::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Button::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
 	}
@@ -28,6 +41,7 @@ bool Button::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, uns
 
 //override
 bool Button::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Button::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
 	}
@@ -49,5 +63,6 @@ bool Button::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsig
 
 //override
 void Button::OnMouseOut(){
+//	TRACE(<< "Button::OnMouseOut(): enter" << std::endl)
 	this->isPressed = false;
 }

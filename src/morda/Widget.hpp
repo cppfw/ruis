@@ -128,9 +128,13 @@ public:
 		return false;
 	}
 
-	virtual void OnMouseOut(){}
+	virtual void OnMouseOut(){
+//		TRACE(<< "Widget::OnMouseOut(): invoked" << std::endl)
+	}
 
-	virtual void OnMouseIn(){}
+	virtual void OnMouseIn(){
+//		TRACE(<< "Widget::OnMouseIn(): invoked" << std::endl)
+	}
 
 	virtual void OnResize(){
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
