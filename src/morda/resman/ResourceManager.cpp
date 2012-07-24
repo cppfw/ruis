@@ -100,20 +100,15 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
 		for(const stob::Node* e = i->resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
-			const stob::Node* nameProp = e->Child("name").second;
+			const stob::Node* nameProp = e->GetProperty("name");
 			if(!nameProp){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
 				continue;
 			}
-			const stob::Node* nameVal = nameProp->Child();
-			if(!nameVal){
-//				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! 'name' property in resource has no value" << std::endl)
-				continue;
-			}
 //			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
-			if(resName.compare(nameVal->Value()) == 0){
+			if(resName.compare(nameProp->Value()) == 0){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-				return FindInScriptRet(&(*i), e, nameVal);
+				return FindInScriptRet(&(*i), e, nameProp);
 			}
 		}//~for(res)
 	}//~for(resPack)
