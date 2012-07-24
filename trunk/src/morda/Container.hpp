@@ -51,7 +51,7 @@ protected:
 public:
 	~Container()throw(){}
 	
-	static ting::Ref<Widget> New(){
+	inline static ting::Ref<Container> New(){
 		return ting::Ref<Container>(new Container());
 	}
 
@@ -74,8 +74,7 @@ public:
 
 	//return true if the widget was found in children and was removed
 	bool Remove(const ting::Ref<Widget>& w);
-
-
+	
 protected:
 //	inline const T_ChildList Children()const{
 //		return this->children;

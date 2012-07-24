@@ -26,6 +26,7 @@ void Container::Render(const tride::Matr4f& matrix)const{
 
 //override
 bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Container::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
 	T_ChildList childs;
@@ -64,6 +65,8 @@ bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, 
 
 //override
 bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Container::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
+	
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
 	T_ChildList childs;

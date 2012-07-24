@@ -60,10 +60,15 @@
           <df name="2">
             <df name="morda">
               <df name="resman">
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
               </df>
               <df name="util">
               </df>
