@@ -59,6 +59,16 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="resman">
+              </df>
+              <df name="resources">
+              </df>
+              <df name="shaders">
+              </df>
+              <df name="util">
+              </df>
+              <df name="widgets">
+              </df>
             </df>
           </df>
         </df>

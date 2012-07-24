@@ -10,29 +10,21 @@ using namespace morda;
 ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	ASSERT(el)
 	//get font filename
-	const stob::Node* fileProp = el->Child("file").second;
+	const stob::Node* fileProp = el->GetProperty("file");
 	if(!fileProp){
-		throw morda::Exc("ResFont::Load(): no 'file' property found");
-	}
-	const stob::Node* fileVal = fileProp->Child();
-	if(!fileVal){
-		throw morda::Exc("ResFont::Load(): 'file' property has no value");
+		throw morda::Exc("ResFont::Load(): no 'file' property in resource description");
 	}
 
 	//read chars attribute
 	std::wstring wideChars;
 	{
-		const stob::Node* charsProp = el->Child("chars").second;
+		const stob::Node* charsProp = el->GetProperty("chars");
 		if(!charsProp){
-			throw morda::Exc("ResFont::Load(): no 'chars' property found");
-		}
-		const stob::Node* charsVal = charsProp->Child();
-		if(!charsVal){
-			throw morda::Exc("ResFont::Load(): 'chars' property has no value");
+			throw morda::Exc("ResFont::Load(): no 'chars' property in resource description");
 		}
 		
 		//TODO: do utf8 to utf32
-		const std::string& charsStr = charsVal->Value();
+		const std::string& charsStr = charsProp->Value();
 		for(unsigned i = 0; i < charsStr.size(); ++i){
 			wideChars += charsStr[i];
 		}
@@ -42,36 +34,26 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	//read size attribute
 	unsigned size;
 	{
-		const stob::Node* sizeProp = el->Child("size").second;
+		const stob::Node* sizeProp = el->GetProperty("size");
 		if(!sizeProp){
-			size = 10;
+			size = 12;
 		}else{
-			const stob::Node* sizeVal = sizeProp->Child();
-			if(!sizeVal){
-				size = 10;
-			}else{
-				size = unsigned(sizeVal->AsU32());
-			}
+			size = unsigned(sizeProp->AsU32());
 		}
 	}
 	
 	//read outline attribute
 	unsigned outline;
 	{
-		const stob::Node* outlineProp = el->Child("outline").second;
+		const stob::Node* outlineProp = el->GetProperty("outline");
 		if(!outlineProp){
 			outline = 0;
 		}else{
-			const stob::Node* outlineVal = outlineProp->Child();
-			if(!outlineVal){
-				outline = 0;
-			}else{
-				outline = unsigned(outlineVal->AsU32());
-			}
+			outline = unsigned(outlineProp->AsU32());
 		}
 	}
 
-	fi.SetPath(fileVal->Value());
+	fi.SetPath(fileProp->Value());
 
 	return ting::Ref<ResFont>(new ResFont(fi, wideChars, size, outline));
 }
