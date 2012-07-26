@@ -56,11 +56,6 @@ App::App(unsigned w, unsigned h){
 	}
 #endif
 	
-	this->glxContext = glXCreateContext(this->xDisplay.d, vi, 0, GL_TRUE);
-	if(this->glxContext == NULL){
-		throw morda::Exc("glXCreateContext() failed");
-	}
-	
 	{
 		Colormap colorMap = XCreateColormap(
 				this->xDisplay.d,
@@ -106,6 +101,11 @@ App::App(unsigned w, unsigned h){
 		}
 		
 		XMapWindow(this->xDisplay.d, this->window);
+	}
+	
+	this->glxContext = glXCreateContext(this->xDisplay.d, vi, 0, GL_TRUE);
+	if(this->glxContext == NULL){
+		throw morda::Exc("glXCreateContext() failed");
 	}
 	glXMakeCurrent(this->xDisplay.d, this->window, this->glxContext);
 	
