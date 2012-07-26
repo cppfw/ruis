@@ -49,6 +49,8 @@ App::App(unsigned w, unsigned h){
 		}
 	}
 	
+	//TODO: free vi by XFree(vi);
+	
 #ifdef DEBUG
 	//print GLX version
 	{
