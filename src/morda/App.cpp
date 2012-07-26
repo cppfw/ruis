@@ -26,8 +26,6 @@ App::XDisplayWrapper::~XDisplayWrapper()throw(){
 
 
 App::App(unsigned w, unsigned h){
-	int screen = DefaultScreen(this->xDisplay.d);
-	
 	XVisualInfo *vi;
 	{
 		int attr[] = {
@@ -41,7 +39,11 @@ App::App(unsigned w, unsigned h){
 			None
 		};
 
-		vi = glXChooseVisual(this->xDisplay.d, screen, attr);
+		vi = glXChooseVisual(
+				this->xDisplay.d,
+				DefaultScreen(this->xDisplay.d),
+				attr
+			);
 		if(!vi){
 			throw morda::Exc("glXChooseVisual() failed");
 		}
