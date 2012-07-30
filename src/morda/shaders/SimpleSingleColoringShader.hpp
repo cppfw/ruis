@@ -38,7 +38,7 @@ namespace morda{
 
 
 
-class SimpleSingleColoringShader : public morda::SingleColoringShader, public ting::Singleton<SimpleSingleColoringShader>{
+class SimpleSingleColoringShader : public morda::SingleColoringShader{
 
 	//no copying
 	SimpleSingleColoringShader(const SimpleSingleColoringShader&);
