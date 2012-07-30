@@ -25,32 +25,125 @@ App::XDisplayWrapper::~XDisplayWrapper()throw(){
 
 
 
-App::App(unsigned w, unsigned h){
-	XVisualInfo *vi;
-	{
-		int attr[] = {
-			GLX_RGBA,
-			GLX_DOUBLEBUFFER,
-			GLX_RED_SIZE, 8,
-			GLX_GREEN_SIZE, 8,
-			GLX_BLUE_SIZE, 8,
-			GLX_ALPHA_SIZE, 8,
-			GLX_DEPTH_SIZE, 24, //TODO: allow configuring depth, stencil buffers
-			None
-		};
+App::XVisualInfoWrapper::XVisualInfoWrapper(XDisplayWrapper& xDisplay){
+	int attr[] = {
+		GLX_RGBA,
+		GLX_DOUBLEBUFFER,
+		GLX_RED_SIZE, 8,
+		GLX_GREEN_SIZE, 8,
+		GLX_BLUE_SIZE, 8,
+		GLX_ALPHA_SIZE, 8,
+		GLX_DEPTH_SIZE, 24, //TODO: allow configuring depth, stencil buffers
+		None
+	};
 
-		vi = glXChooseVisual(
-				this->xDisplay.d,
-				DefaultScreen(this->xDisplay.d),
-				attr
-			);
-		if(!vi){
-			throw morda::Exc("glXChooseVisual() failed");
-		}
+	this->vi = glXChooseVisual(
+			xDisplay.d,
+			DefaultScreen(xDisplay.d),
+			attr
+		);
+	if(!this->vi){
+		throw morda::Exc("glXChooseVisual() failed");
 	}
+}
+
+
+
+App::XVisualInfoWrapper::~XVisualInfoWrapper()throw(){
+	XFree(this->vi);
+}
+
+
+
+App::XWindowWrapper::XWindowWrapper(unsigned width, unsigned height, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo) :
+		d(xDisplay)
+{
+	Colormap colorMap = XCreateColormap(
+			this->d.d,
+			RootWindow(this->d.d, xVisualInfo.vi->screen),
+			xVisualInfo.vi->visual,
+			AllocNone
+		);
+	//TODO: check for error
+
+	XSetWindowAttributes attr;
+	attr.colormap = colorMap;
+	attr.border_pixel = 0;
+	attr.event_mask =
+			ExposureMask |
+			KeyPressMask |
+			KeyReleaseMask |
+			ButtonPressMask |
+			ButtonReleaseMask |
+			PointerMotionMask |
+			ButtonMotionMask |
+			StructureNotifyMask
+		;
+
+	this->w = XCreateWindow(
+			this->d.d,
+			RootWindow(this->d.d, xVisualInfo.vi->screen),
+			0,
+			0,
+			width,
+			height,
+			0,
+			xVisualInfo.vi->depth,
+			InputOutput,
+			xVisualInfo.vi->visual,
+			CWBorderPixel | CWColormap | CWEventMask,
+			&attr
+		);
+	//TODO: check for error
+
+	{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
+		Atom a = XInternAtom(this->d.d, "WM_DELETE_WINDOW", True);
+		XSetWMProtocols(this->d.d, this->w, &a, 1);
+	}
+
+	XMapWindow(this->d.d, this->w);
+}
+
+
+
+App::XWindowWrapper::~XWindowWrapper()throw(){
+	XDestroyWindow(this->d.d, this->w);
+}
+
+
+
+App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo) :
+		d(xDisplay),
+		w(xWindow)
+{
+	this->glxContext = glXCreateContext(this->d.d, xVisualInfo.vi, 0, GL_TRUE);
+	if(this->glxContext == NULL){
+		throw morda::Exc("glXCreateContext() failed");
+	}
+	glXMakeCurrent(this->d.d, this->w.w, this->glxContext);
 	
-	//TODO: free vi by XFree(vi);
+	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 	
+	if(glewInit() != GLEW_OK){
+		this->Destroy();
+		throw morda::Exc("GLEW initialization failed");
+	}
+}
+
+
+
+void App::GLXContextWrapper::Destroy()throw(){
+	glXMakeCurrent(this->d.d, this->w.w, NULL);
+	glXDestroyContext(this->d.d, this->glxContext);
+}
+
+
+
+App::App(unsigned w, unsigned h) :
+		xVisualInfo(xDisplay),
+		xWindow(w, h, xDisplay, xVisualInfo),
+		glxContex(xDisplay, xWindow, xVisualInfo)
+{	
 #ifdef DEBUG
 	//print GLX version
 	{
@@ -60,76 +153,9 @@ App::App(unsigned w, unsigned h){
 	}
 #endif
 	
-	{
-		Colormap colorMap = XCreateColormap(
-				this->xDisplay.d,
-				RootWindow(this->xDisplay.d, vi->screen),
-				vi->visual,
-				AllocNone
-			);
-		//TODO: check for error
-		
-		XSetWindowAttributes attr;
-		attr.colormap = colorMap;
-		attr.border_pixel = 0;
-		attr.event_mask =
-				ExposureMask |
-				KeyPressMask |
-				KeyReleaseMask |
-				ButtonPressMask |
-				ButtonReleaseMask |
-				PointerMotionMask |
-				ButtonMotionMask |
-				StructureNotifyMask
-			;
-		
-		this->window = XCreateWindow(
-				this->xDisplay.d,
-				RootWindow(this->xDisplay.d, vi->screen),
-				0,
-				0,
-				w,
-				h,
-				0,
-				vi->depth,
-				InputOutput,
-				vi->visual,
-				CWBorderPixel | CWColormap | CWEventMask,
-				&attr
-			);
-		//TODO: check for error
-		
-		{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
-			Atom a = XInternAtom(this->xDisplay.d, "WM_DELETE_WINDOW", True);
-			XSetWMProtocols(this->xDisplay.d, this->window, &a, 1);
-		}
-		
-		XMapWindow(this->xDisplay.d, this->window);
-	}
-	
-	this->glxContext = glXCreateContext(this->xDisplay.d, vi, 0, GL_TRUE);
-	if(this->glxContext == NULL){
-		throw morda::Exc("glXCreateContext() failed");
-	}
-	glXMakeCurrent(this->xDisplay.d, this->window, this->glxContext);
-	
-	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
-	
-	if(glewInit() != GLEW_OK){
-		throw morda::Exc("GLEW initialization failed");
-	}
-	
 	this->curWinDim.x = float(w);
 	this->curWinDim.y = float(h);
 	this->SetGLViewport(this->curWinDim);
-}
-
-
-
-App::~App()throw(){
-	glXMakeCurrent(this->xDisplay.d, this->window, NULL);
-	glXDestroyContext(this->xDisplay.d, this->glxContext);
-	XDestroyWindow(this->xDisplay.d, this->window);
 }
 
 
@@ -159,7 +185,7 @@ void App::Render(){
 	
 	this->rootWidget->Render(m);
 	
-	glXSwapBuffers(this->xDisplay.d, this->window);
+	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 }
 
 

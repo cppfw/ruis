@@ -37,10 +37,12 @@ namespace morda{
 
 
 
-class SimpleTexturingShader :
-		public TexturingShader,
-		public ting::Singleton<SimpleTexturingShader>
-{
+class SimpleTexturingShader : public TexturingShader{
+	
+	//no copying
+	SimpleTexturingShader(const SimpleTexturingShader&);
+	SimpleTexturingShader& operator=(const SimpleTexturingShader&);
+	
 public:
 	SimpleTexturingShader();
 	

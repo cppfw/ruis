@@ -39,7 +39,7 @@ public:
 		
 		this->tex->Tex().Bind();
 		
-		morda::SimpleTexturingShader &s = morda::SimpleTexturingShader::Inst();
+		morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
 		s.Bind();
 		s.EnablePositionPointer();
 //		s.SetColor(tride::Vec3f(1, 0, 0));
@@ -64,10 +64,7 @@ int main(int argc, char** argv){
 	morda::App app(320, 480);
 	
 	app.ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
-	
-	morda::SimpleSingleColoringShader simpleSingleColoringShader;
-	morda::SimpleTexturingShader simpleTexturingShader;
-	
+		
 	ting::Ref<morda::Container> c = morda::Container::New();
 	
 	ting::Ref<morda::Widget> w1 = SimpleWidget::New();

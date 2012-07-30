@@ -1,5 +1,5 @@
 #include "Button.hpp"
-#include "../shaders/SimpleSingleColoringShader.hpp"
+#include "../App.hpp"
 
 
 
@@ -12,7 +12,7 @@ void Button::Render(const tride::Matr4f& matrix)const{
 	tride::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	SimpleSingleColoringShader& s = SimpleSingleColoringShader::Inst();
+	SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
 	s.Bind();
 	if(this->isPressed){
 		s.SetColor(tride::Vec3f(1, 1, 1));

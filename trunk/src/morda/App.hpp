@@ -33,11 +33,14 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
+#include <ting/Ptr.hpp> //TODO: remove when no longer needed
 
 #include "Exc.hpp"
 #include "Widget.hpp"
 #include "resman/ResourceManager.hpp"
 
+#include "shaders/SimpleSingleColoringShader.hpp"
+#include "shaders/SimpleTexturingShader.hpp"
 
 
 namespace morda{
@@ -52,9 +55,34 @@ class App : public ting::Singleton<App>{
 		~XDisplayWrapper()throw();
 	} xDisplay;
 	
-	GLXContext glxContext;
+	struct XVisualInfoWrapper{
+		XVisualInfo *vi;
+		XVisualInfoWrapper(XDisplayWrapper& xDisplay);
+		~XVisualInfoWrapper()throw();
+	} xVisualInfo;
+	
+	struct XWindowWrapper{
+		Window w;
+		
+		XDisplayWrapper& d;
 
-	Window window;
+		XWindowWrapper(unsigned width, unsigned height, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
+		~XWindowWrapper()throw();
+	} xWindow;
+	
+	struct GLXContextWrapper{
+		GLXContext glxContext;
+		
+		XDisplayWrapper& d;
+		XWindowWrapper& w;
+		
+		GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo);
+		~GLXContextWrapper()throw(){
+			this->Destroy();
+		}
+		
+		void Destroy()throw();
+	} glxContex;
 	
 	tride::Vec2f curWinDim;
 	
@@ -67,10 +95,17 @@ class App : public ting::Singleton<App>{
 	void SetGLViewport(const tride::Vec2f& dim);
 	
 	void Render();
+	
+	
 public:
+	struct Shaders{
+		SimpleSingleColoringShader simpleSingleColoring;
+		SimpleTexturingShader simpleTexturing;
+	} shaders;
+	
 	App(unsigned w, unsigned h);
 	
-	~App()throw();
+	~App()throw(){}
 	
 	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
 		this->rootWidget = w;
