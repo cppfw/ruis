@@ -73,6 +73,14 @@ public:
 		glBindTexture(GL_TEXTURE_2D, this->tex);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
+	
+	inline void Bind(unsigned texUnitNum)const{
+		ASSERT(glGetError() == GL_NO_ERROR)
+		glActiveTexture(GL_TEXTURE0 + texUnitNum);
+		ASSERT(glGetError() == GL_NO_ERROR)
+		glBindTexture(GL_TEXTURE_2D, this->tex);
+		ASSERT(glGetError() == GL_NO_ERROR)
+	}
 
 	inline tride::Vec2f Dim()const throw(){
 		return this->dim;
