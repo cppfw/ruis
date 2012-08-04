@@ -92,7 +92,7 @@ public:
 
 private:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	BoundingBox boundingBox;
+	BoundingBox boundingBox;//TODO: use Rectangle2
 
 public:
 	TexFont(){}
