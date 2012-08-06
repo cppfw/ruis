@@ -245,7 +245,10 @@ void Image::LoadPNG(ting::fs::File& fi){
 	memset(sig.Begin(), 0, sig.SizeInBytes());
 
 	{
-		unsigned ret = fi.Read(sig);//TODO:???
+#ifdef DEBUG
+		unsigned ret = //TODO:???
+#endif
+		fi.Read(sig);
 		ASSERT(ret == sig.SizeInBytes())
 	}
 

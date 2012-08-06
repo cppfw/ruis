@@ -46,9 +46,7 @@ public:
 		s.SetMatrix(matr);
 		s.DrawQuad01();
 		
-#ifdef DEBUG
-		this->fnt->Fnt().RenderTex(s , matrix);
-#endif
+//		this->fnt->Fnt().RenderTex(s , matrix);
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
