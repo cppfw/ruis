@@ -1,0 +1,29 @@
+TextButton{
+	pos {10 20}
+	dim {200 80}
+	text {"Hello world!"}
+}
+
+Container{
+	pos {0 0}
+
+	layout{
+		LinearLayout{
+			vertical
+			spacing {5}
+		}
+	}
+
+	TextLabel{
+		text {trololo}
+		layout_Center {vertical}
+		layout_Weight {1}
+	}
+
+	TextButton{
+		text {"Push me"}
+		
+	}
+
+
+}
