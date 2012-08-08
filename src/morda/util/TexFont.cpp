@@ -147,7 +147,7 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 	texImg.Clear();
 
 	//init bounding box to zero
-	this->boundingBox.SetToZero();
+	float left = 0, right = 0, top = 0, bottom = 0;
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
@@ -238,29 +238,35 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 			g.texCoords[3] = tride::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
 
 			//update bounding box if needed
-			if(this->boundingBox.left < -g.verts[0].x){
-				this->boundingBox.left = -g.verts[0].x;
+			if(left < -g.verts[0].x){
+				left = -g.verts[0].x;
 			}
 
-			if(this->boundingBox.right < g.verts[2].x){
-				this->boundingBox.right = g.verts[2].x;
+			if(right < g.verts[2].x){
+				right = g.verts[2].x;
 			}
 
-			if(this->boundingBox.bottom < -g.verts[0].y){
-				this->boundingBox.bottom = -g.verts[0].y;
+			if(bottom < -g.verts[0].y){
+				bottom = -g.verts[0].y;
 			}
 
-			if(this->boundingBox.top < g.verts[2].y){
-				this->boundingBox.top = g.verts[2].y;
+			if(top < g.verts[2].y){
+				top = g.verts[2].y;
 			}
 
-			ASSERT(this->boundingBox.Width() >= 0)
-			ASSERT(this->boundingBox.Height() >= 0)
+			ASSERT(top - bottom >= 0) //width >= 0
+			ASSERT(right - left >= 0) //height >= 0
 		}
 
 		texImg.Blit(curX, curY, im);
 		curX += im.Width() + DXGap;
 	}//~for(i)
+	
+	//save bounding box
+	this->boundingBox.p.x = left;
+	this->boundingBox.p.y = bottom;
+	this->boundingBox.d.x = right - left;
+	this->boundingBox.d.y = top - bottom;
 
 //	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
 
@@ -292,6 +298,242 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 
 //	TRACE(<< "TexFont::Load(): initing texture" << std::endl)
 	this->tex.Init(texImg);
+}
+
+
+
+inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const tride::Matr4f& matrix, wchar_t ch)const{
+	const Glyph& g = this->glyphs.at(ch);
+
+	shader.SetMatrix(matrix);
+
+	shader.SetPositionPointer(g.verts.Begin());
+	shader.SetTexCoordPointer(g.texCoords.Begin());
+
+	shader.DrawArrays(GL_TRIANGLE_FAN, g.verts.Size());
+
+	return g.advance;
+}
+
+
+
+float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const wchar_t* s)const{
+	shader.EnablePositionPointer();
+	shader.EnableTexCoordPointer();
+
+	this->tex.Bind();
+
+	float ret = 0;
+
+	tride::Matr4f matr(matrix);
+
+	try{
+		for(; *s != 0; ++s){
+			float advance = this->RenderGlyphInternal(shader, matr, *s);
+			ret += advance;
+			matr.Translate(advance, 0);
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str());
+	}
+
+	return ret;
+}
+
+
+
+//TODO: add utf-8 support
+float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const char* s)const{
+	shader.EnablePositionPointer();
+	shader.EnableTexCoordPointer();
+
+	this->tex.Bind();
+
+	float ret = 0;
+
+	tride::Matr4f matr(matrix);
+
+	try{
+		for(; *s != 0; ++s){
+			float advance = this->RenderGlyphInternal(shader, matr, wchar_t(*s));
+			ret += advance;
+			matr.Translate(advance, 0);
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str());
+	}
+
+	return ret;
+}
+
+
+
+float TexFont::StringAdvanceInternal(const wchar_t* s)const{
+	float ret = 0;
+
+	try{
+		for(; *s != 0; ++s){
+			const Glyph& g = this->glyphs.at(*s);
+			ret += g.advance;
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str().c_str());
+	}
+
+	return ret;
+}
+
+
+
+//TODO: add utf-8 support
+float TexFont::StringAdvanceInternal(const char* s)const{
+	float ret = 0;
+
+	try{
+		for(; *s != 0; ++s){
+			const Glyph& g = this->glyphs.at(wchar_t(*s));
+			ret += g.advance;
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str().c_str());
+	}
+
+	return ret;
+}
+
+
+
+tride::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
+	tride::Rect2f ret;
+
+	if(*s == 0){
+		ret.p.SetToZero();
+		ret.d.SetToZero();
+		return ret;
+	}
+
+	float curAdvance;
+
+	float left, right, top, bottom;
+	//init with bounding box of the first glyph
+	{
+		const Glyph& g = this->glyphs.at(*s);
+		left = g.verts[0].x;
+		right = g.verts[2].x;
+		top = g.verts[1].y;
+		bottom = g.verts[0].y;
+		curAdvance = g.advance;
+		++s;
+	}
+
+	try{
+		for(; *s != 0; ++s){
+			const Glyph& g = this->glyphs.at(*s);
+
+			if(g.verts[1].y > top){
+				top = g.verts[1].y;
+			}
+
+			if(g.verts[0].y < bottom){
+				bottom = - g.verts[0].y;
+			}
+
+			if(curAdvance + g.verts[0].x < left){
+				left = -(curAdvance + g.verts[0].x);
+			}
+
+			if(curAdvance + g.verts[2].x > right){
+				right = curAdvance + g.verts[2].x;
+			}
+
+			curAdvance += g.advance;
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str().c_str());
+	}
+
+	ret.p.x = left;
+	ret.p.y = bottom;
+	ret.d.x = right - left;
+	ret.d.y = top - bottom;
+
+	ASSERT(ret.d.x >= 0)
+	ASSERT(ret.d.y >= 0)
+	return ret;
+}
+
+
+
+//TODO: add utf-8 support
+tride::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
+	tride::Rect2f ret;
+
+	if(*s == 0){
+		ret.p.SetToZero();
+		ret.d.SetToZero();
+		return ret;
+	}
+
+	float curAdvance;
+
+	float left, right, top, bottom;
+	//init with bounding box of the first glyph
+	{
+		const Glyph& g = this->glyphs.at(wchar_t(*s));
+		left = g.verts[0].x;
+		right = g.verts[2].x;
+		top = g.verts[1].y;
+		bottom = g.verts[0].y;
+		curAdvance = g.advance;
+		++s;
+	}
+
+	try{
+		for(; *s != 0; ++s){
+			const Glyph& g = this->glyphs.at(wchar_t(*s));
+
+			if(g.verts[1].y > top){
+				top = g.verts[1].y;
+			}
+
+			if(g.verts[0].y < bottom){
+				bottom = - g.verts[0].y;
+			}
+
+			if(curAdvance + g.verts[0].x < left){
+				left = -(curAdvance + g.verts[0].x);
+			}
+
+			if(curAdvance + g.verts[2].x > right){
+				right = curAdvance + g.verts[2].x;
+			}
+
+			curAdvance += g.advance;
+		}
+	}catch(std::out_of_range& e){
+		std::stringstream ss;
+		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		throw ting::Exc(ss.str().c_str());
+	}
+
+	ret.p.x = left;
+	ret.p.y = bottom;
+	ret.d.x = right - left;
+	ret.d.y = top - bottom;
+
+	ASSERT(ret.d.x >= 0)
+	ASSERT(ret.d.y >= 0)
+	return ret;
 }
 
 
