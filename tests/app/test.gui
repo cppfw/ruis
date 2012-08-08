@@ -6,6 +6,7 @@ TextButton{
 
 Container{
 	pos {0 0}
+	dim {300 300}
 
 	layout{
 		LinearLayout{

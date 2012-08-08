@@ -3,6 +3,7 @@
 #include "../../src/morda/Container.hpp"
 
 #include "../../src/morda/widgets/Button.hpp"
+#include "../../src/morda/widgets/TextLabel.hpp"
 
 #include "../../src/morda/shaders/SimpleSingleColoringShader.hpp"
 #include "../../src/morda/shaders/SimpleTexturingShader.hpp"
@@ -65,15 +66,26 @@ int main(int argc, char** argv){
 		
 	ting::Ref<morda::Container> c = morda::Container::New();
 	
-	ting::Ref<morda::Widget> w1 = SimpleWidget::New();
-	w1->SetPos(tride::Vec2f(0, 0));
-	w1->Resize(tride::Vec2f(300, 400));
-	c->Add(w1);
+	{
+		ting::Ref<SimpleWidget> w = SimpleWidget::New();
+		w->SetPos(tride::Vec2f(0, 0));
+		w->Resize(tride::Vec2f(300, 400));
+		c->Add(w);
+	}
 	
-	ting::Ref<morda::Widget> w2 = morda::Button::New();
-	w2->SetPos(tride::Vec2f(100, 200));
-	w2->Resize(tride::Vec2f(100, 80));
-	c->Add(w2);
+	{
+		ting::Ref<morda::Button> w = morda::Button::New();
+		w->SetPos(tride::Vec2f(100, 200));
+		w->Resize(tride::Vec2f(100, 80));
+		c->Add(w);
+	}
+	
+	{
+		ting::Ref<morda::TextLabel> w = morda::TextLabel::New();
+		w->SetPos(tride::Vec2f(10, 20));
+		w->SetText("Hello label!");
+		c->Add(w);
+	}
 	
 	app.SetRootWidget(c);
 	
