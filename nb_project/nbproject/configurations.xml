@@ -64,7 +64,6 @@
               <df name="resources">
               </df>
               <df name="shaders">
-                <in>TexturingShader.d</in>
               </df>
               <df name="util">
               </df>

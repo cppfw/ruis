@@ -3,7 +3,7 @@
 #include "../../src/morda/Container.hpp"
 
 #include "../../src/morda/widgets/Button.hpp"
-#include "../../src/morda/widgets/TextLabel.hpp"
+#include "../../src/morda/widgets/Label.hpp"
 
 #include "../../src/morda/shaders/SimpleSingleColoringShader.hpp"
 #include "../../src/morda/shaders/SimpleTexturingShader.hpp"
