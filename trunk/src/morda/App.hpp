@@ -47,8 +47,10 @@ namespace morda{
 
 
 
-//TODO: make intrusive singleton
-class App : public ting::Singleton<App>{
+class App : public ting::IntrusiveSingleton<App>{
+	friend class ting::IntrusiveSingleton<App>;
+	static ting::IntrusiveSingleton<App>::T_Instance instance;
+	
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
