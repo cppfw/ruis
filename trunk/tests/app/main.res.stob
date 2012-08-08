@@ -3,4 +3,4 @@ res{
 	file {texture.jpg}
 }
 
-include{font.res}
+include{font.res.stob}
