@@ -26,15 +26,15 @@ void TextLabel::SetText(const std::string& text){
 
 //override
 void TextLabel::Render(const tride::Matr4f& matrix)const{
-	{
-		tride::Matr4f matr(matrix);
-		matr.Scale(this->Rect().d);
-		SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
-		s.Bind();
-		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
-		s.SetMatrix(matr);
-		s.DrawQuad01();
-	}
+//	{
+//		tride::Matr4f matr(matrix);
+//		matr.Scale(this->Rect().d);
+//		SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
+//		s.Bind();
+//		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
+//		s.SetMatrix(matr);
+//		s.DrawQuad01();
+//	}
 	
 	//render text
 	morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
