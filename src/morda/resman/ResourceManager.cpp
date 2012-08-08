@@ -78,7 +78,7 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 
 	rpe.fi = fi;
 
-	ASS(rpe.fi)->SetPath("main.res");
+	ASS(rpe.fi)->SetPath("main.res.stob");
 	
 	ting::Ptr<stob::Node> resScript = stob::Load(*(rpe.fi));
 
