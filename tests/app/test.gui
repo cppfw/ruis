@@ -8,23 +8,28 @@ Container{
 	pos {0 0}
 	dim {300 300}
 
+	name {someContainer}
+
 	layout{
 		LinearLayout{
 			vertical
 			spacing {5}
 		}
+
+		weight {2}
 	}
 
 	TextLabel{
+		name {label1}
 		text {trololo}
-		layout_Center {vertical}
-		layout_Weight {1}
+		layout{
+			center {vertical}
+			weight {1}
+		}
 	}
 
 	TextButton{
 		text {"Push me"}
 		
 	}
-
-
 }
