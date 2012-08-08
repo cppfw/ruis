@@ -131,11 +131,11 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 	
 	ASSERT(pr.second == true) //make sure that the new element was added but not the old one rewritten
 
-#ifdef DEBUG
-	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
-		TRACE(<< "\t" << *(*i).first << std::endl)
-	}
-#endif
+//#ifdef DEBUG
+//	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
+//		TRACE(<< "\t" << *(*i).first << std::endl)
+//	}
+//#endif
 	
 	res->it = pr.first;
 	res->rm = this->resMap; //save weak reference to resource map
