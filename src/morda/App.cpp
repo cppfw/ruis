@@ -10,6 +10,10 @@ using namespace morda;
 
 
 
+ting::IntrusiveSingleton<App>::T_Instance App::instance;
+
+
+
 App::XDisplayWrapper::XDisplayWrapper(){
 	this->d = XOpenDisplay(0);
 	if(!this->d){
