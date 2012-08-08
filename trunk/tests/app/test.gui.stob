@@ -10,16 +10,18 @@ Container{
 
 	name {someContainer}
 
-	layout{
+	layoutType{
 		LinearLayout{
 			vertical
 			spacing {5}
 		}
+	}
 
+	layout{
 		weight {2}
 	}
 
-	TextLabel{
+	Label{
 		name {label1}
 		text {trololo}
 		layout{
@@ -28,7 +30,7 @@ Container{
 		}
 	}
 
-	TextButton{
+	Button{
 		text {"Push me"}
 		
 	}

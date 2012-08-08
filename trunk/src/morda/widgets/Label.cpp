@@ -1,4 +1,4 @@
-#include "TextLabel.hpp"
+#include "Label.hpp"
 
 #include "../App.hpp"
 
