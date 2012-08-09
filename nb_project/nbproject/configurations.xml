@@ -43,8 +43,6 @@
           <in>ZipFile.hpp</in>
         </df>
         <df name="widgets">
-          <in>Button.cpp</in>
-          <in>Button.hpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>

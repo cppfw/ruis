@@ -76,12 +76,12 @@ int main(int argc, char** argv){
 	{
 		ting::Ref<morda::Button> w = morda::Button::New();
 		w->SetPos(tride::Vec2f(100, 200));
-		w->Resize(tride::Vec2f(100, 80));
+		w->SetText("Hello Button!");
 		c->Add(w);
 	}
 	
 	{
-		ting::Ref<morda::TextLabel> w = morda::TextLabel::New();
+		ting::Ref<morda::Label> w = morda::Label::New();
 		w->SetPos(tride::Vec2f(10, 20));
 		w->SetText("Hello label!");
 		c->Add(w);

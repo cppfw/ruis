@@ -29,32 +29,48 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <string>
+#include <ting/Signal.hpp>
 
-#include "AbstractButton.hpp"
-#include "Label.hpp"
+#include "../Widget.hpp"
+
 
 
 namespace morda{
 
 
 
-class Button : public AbstractButton{
-	ting::Ref<morda::Label> label;
-	
+class AbstractButton : public Widget{
+	ting::Inited<bool, false> isPressed;
 protected:
-	Button(ting::Ptr<stob::Node> properties  = ting::Ptr<stob::Node>());
+	AbstractButton(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()) :
+			Widget(properties)
+	{
+		//TODO: apply properties?
+	}
 public:
 	
-	~Button()throw(){}
+	~AbstractButton()throw(){}
+	
+	ting::Signal0 pressed;
 	
 	//override
 	void Render(const tride::Matr4f& matrix)const;
 	
-	void SetText(const std::string& text);
+	//override
+	bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
-	inline static ting::Ref<Button> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
-		return ting::Ref<Button>(new Button(properties));
+	//override
+	bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	
+	//override
+	void OnMouseOut();
+	
+	inline bool IsPressed()const throw(){
+		return this->isPressed;
+	}
+	
+	inline static ting::Ref<AbstractButton> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+		return ting::Ref<AbstractButton>(new AbstractButton(properties));
 	}
 };
 

@@ -7,13 +7,17 @@ using namespace morda;
 
 
 
-TextLabel::TextLabel(){
+Label::Label(ting::Ptr<stob::Node> properties) :
+		Widget(properties)
+{
+	//TODO: apply properties
+	
 	this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 }
 
 
 
-void TextLabel::SetText(const std::string& text){
+void Label::SetText(const std::string& text){
 	this->text = text;
 	
 	tride::Rect2f bb = this->font->Fnt().StringBoundingBox(this->text);
@@ -25,7 +29,7 @@ void TextLabel::SetText(const std::string& text){
 
 
 //override
-void TextLabel::Render(const tride::Matr4f& matrix)const{
+void Label::Render(const tride::Matr4f& matrix)const{
 //	{
 //		tride::Matr4f matr(matrix);
 //		matr.Scale(this->Rect().d);
