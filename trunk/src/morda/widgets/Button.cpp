@@ -7,62 +7,24 @@ using namespace morda;
 
 
 
+Button::Button(ting::Ptr<stob::Node> properties) :
+		AbstractButton(properties),
+		label(morda::Label::New())
+{
+	//TODO: apply properties
+}
+
+
+
 //override
 void Button::Render(const tride::Matr4f& matrix)const{
-	tride::Matr4f matr(matrix);
-	matr.Scale(this->Rect().d);
-	
-	SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
-	s.Bind();
-	if(this->isPressed){
-		s.SetColor(tride::Vec3f(1, 1, 1));
-	}else{
-		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
-	}
-	s.SetMatrix(matr);
-	s.DrawQuad01();
+	this->AbstractButton::Render(matrix);
+	this->label->Render(matrix);
 }
 
 
 
-//override
-bool Button::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Button::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
-	if(button != LEFT){
-		return false;
-	}
-
-	this->isPressed = true;
-
-	return true;
-}
-
-
-
-//override
-bool Button::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Button::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
-	if(button != LEFT){
-		return false;
-	}
-	
-	if(!this->Rect().Overlaps(pos)){
-		this->isPressed = false;
-		return true;
-	}
-	
-	if(this->isPressed){
-		this->isPressed = false;
-		this->pressed.Emit();
-	}
-	
-	return true;
-}
-
-
-
-//override
-void Button::OnMouseOut(){
-//	TRACE(<< "Button::OnMouseOut(): enter" << std::endl)
-	this->isPressed = false;
+void Button::SetText(const std::string& text){
+	this->label->SetText(text);
+	this->Resize(this->label->Rect().d);
 }

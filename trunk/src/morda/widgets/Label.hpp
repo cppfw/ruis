@@ -38,16 +38,17 @@ namespace morda{
 
 
 
-class TextLabel : public Widget{
+class Label : public Widget{
 	std::string text;
 	
 	ting::Ref<morda::ResFont> font;
 	
 	tride::Vec2f pivot;
+protected:
+	Label(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>());
 public:
-	TextLabel();
 	
-	~TextLabel()throw(){}
+	~Label()throw(){}
 	
 	void SetText(const std::string& text);
 	
@@ -58,8 +59,8 @@ public:
 	//override
 	void Render(const tride::Matr4f& matrix)const;
 		
-	inline static ting::Ref<TextLabel> New(){
-		return ting::Ref<TextLabel>(new TextLabel());
+	inline static ting::Ref<Label> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+		return ting::Ref<Label>(new Label(properties));
 	}
 };
 

@@ -34,6 +34,7 @@ THE SOFTWARE. */
 #include <tride/Vector3.hpp>
 #include <tride/Rectangle2.hpp>
 
+#include <stob/dom.hpp>
 
 
 namespace morda{
@@ -48,6 +49,8 @@ class Widget : virtual public ting::RefCounted{
 	friend class morda::Container;
 	
 private:
+	ting::Ptr<stob::Node> properties;
+	
 	ting::WeakRef<Container> parent;
 	
 	ting::Inited<bool, false> isHovered;
@@ -71,6 +74,10 @@ public:
 	
 	void RemoveFromParent();
 	
+	inline const stob::Node* Properties()const throw(){
+		return this->properties.operator->();
+	}
+	
 	inline bool IsHovered()const throw(){
 		return this->isHovered;
 	}
@@ -93,11 +100,15 @@ public:
 	}
 
 protected:
-	inline Widget(){}
+	inline Widget(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()) :
+			properties(properties)
+	{
+		//TODO: apply properties
+	}
 
 public:
-	static ting::Ref<Widget> New(){
-		return ting::Ref<Widget>(new Widget());
+	static ting::Ref<Widget> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+		return ting::Ref<Widget>(new Widget(properties));
 	}
 
 	virtual ~Widget()throw(){}

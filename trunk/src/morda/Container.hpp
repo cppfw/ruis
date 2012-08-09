@@ -46,13 +46,17 @@ private:
 	T_ChildList children;
 
 protected:
-	inline Container(){}
+	inline Container(ting::Ptr<stob::Node> properties) :
+			Widget(properties)
+	{
+		//TODO: apply properties
+	}
 
 public:
 	~Container()throw(){}
 	
-	inline static ting::Ref<Container> New(){
-		return ting::Ref<Container>(new Container());
+	inline static ting::Ref<Container> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+		return ting::Ref<Container>(new Container(properties));
 	}
 
 	//override

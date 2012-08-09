@@ -1,4 +1,4 @@
-TextButton{
+Button{
 	pos {10 20}
 	dim {200 80}
 	text {"Hello world!"}
@@ -10,7 +10,7 @@ Container{
 
 	name {someContainer}
 
-	layoutType{
+	containerLayout{
 		LinearLayout{
 			vertical
 			spacing {5}
