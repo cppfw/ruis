@@ -33,10 +33,10 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
-#include <ting/Ptr.hpp> //TODO: remove when no longer needed
 
 #include "Exc.hpp"
 #include "Widget.hpp"
+#include "GuiInflater.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
@@ -94,6 +94,8 @@ class App : public ting::IntrusiveSingleton<App>{
 	
 	ResourceManager resMan;
 	
+	GuiInflater inflater;
+	
 	void SetGLViewport(const tride::Vec2f& dim);
 	
 	void Render();
@@ -119,6 +121,10 @@ public:
 	
 	inline ResourceManager& ResMan()throw(){
 		return this->resMan;
+	}
+	
+	inline GuiInflater& Inflater()throw(){
+		return this->inflater;
 	}
 };
 

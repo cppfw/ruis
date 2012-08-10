@@ -42,7 +42,7 @@ namespace morda{
 
 
 
-class Inflater{
+class GuiInflater{
 public:
 	class Exc : public morda::Exc{
 	public:
@@ -51,7 +51,7 @@ public:
 		{}
 	};
 	
-	Inflater();
+	GuiInflater();
 	
 	class Factory{
 	public:
