@@ -55,8 +55,8 @@
         <in>Container.cpp</in>
         <in>Container.hpp</in>
         <in>Exc.hpp</in>
-        <in>Inflater.cpp</in>
-        <in>Inflater.hpp</in>
+        <in>GuiInflater.cpp</in>
+        <in>GuiInflater.hpp</in>
         <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
@@ -66,18 +66,20 @@
           <df name="2">
             <df name="morda">
               <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
-                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>TexturingShader.d</in>
               </df>
               <df name="util">
                 <in>GLTexture.d</in>
-                <in>Image.d</in>
               </df>
               <df name="widgets">
-                <in>AbstractButton.d</in>
               </df>
             </df>
           </df>
@@ -141,7 +143,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>

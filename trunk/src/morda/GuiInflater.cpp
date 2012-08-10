@@ -1,4 +1,4 @@
-#include "Inflater.hpp"
+#include "GuiInflater.hpp"
 #include "Container.hpp"
 #include "widgets/Label.hpp"
 #include "widgets/Button.hpp"
@@ -11,13 +11,12 @@ using namespace morda;
 
 namespace{
 
-class WidgetFactory : public Inflater::Factory{
+class WidgetFactory : public GuiInflater::Factory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
 		ASSERT(node->Value() == "Widget")
-		
-		//TODO:
+		return Widget::New(node);
 	}
 	
 	inline static ting::Ptr<WidgetFactory> New(){
@@ -25,13 +24,12 @@ public:
 	}
 };
 
-class ContainerFactory : public Inflater::Factory{
+class ContainerFactory : public GuiInflater::Factory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
 		ASSERT(node->Value() == "Container")
-		
-		//TODO:
+		return Container::New(node);
 	}
 	
 	inline static ting::Ptr<ContainerFactory> New(){
@@ -39,13 +37,12 @@ public:
 	}
 };
 
-class LabelFactory : public Inflater::Factory{
+class LabelFactory : public GuiInflater::Factory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
 		ASSERT(node->Value() == "Label")
-		
-		//TODO:
+		return Label::New(node);
 	}
 	
 	inline static ting::Ptr<LabelFactory> New(){
@@ -53,13 +50,12 @@ public:
 	}
 };
 
-class ButtonFactory : public Inflater::Factory{
+class ButtonFactory : public GuiInflater::Factory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
 		ASSERT(node->Value() == "Button")
-		
-		//TODO:
+		return Button::New(node);
 	}
 	
 	inline static ting::Ptr<ButtonFactory> New(){
@@ -71,7 +67,7 @@ public:
 
 
 
-Inflater::Inflater(){
+GuiInflater::GuiInflater(){
 	this->AddFactory("Widget", WidgetFactory::New());
 	this->AddFactory("Container", ContainerFactory::New());
 	this->AddFactory("Label", LabelFactory::New());
@@ -81,16 +77,16 @@ Inflater::Inflater(){
 
 
 
-void Inflater::AddFactory(const std::string& widgetName, ting::Ptr<Inflater::Factory> factory){
-	std::pair<T_FactoryMap::iterator, bool> ret = this->factories.insert(std::pair<std::string, ting::Ptr<Inflater::Factory> >(widgetName, factory));
+void GuiInflater::AddFactory(const std::string& widgetName, ting::Ptr<GuiInflater::Factory> factory){
+	std::pair<T_FactoryMap::iterator, bool> ret = this->factories.insert(std::pair<std::string, ting::Ptr<GuiInflater::Factory> >(widgetName, factory));
 	if(!ret.second){
-		throw Inflater::Exc("Failed adding factory, factory with that widget name is already added");
+		throw GuiInflater::Exc("Failed adding factory, factory with that widget name is already added");
 	}
 }
 
 
 
-bool Inflater::RemoveFactory(const std::string& widgetName)throw(){
+bool GuiInflater::RemoveFactory(const std::string& widgetName)throw(){
 	if(this->factories.erase(widgetName) == 0){
 		return false;
 	}
@@ -99,7 +95,7 @@ bool Inflater::RemoveFactory(const std::string& widgetName)throw(){
 
 
 
-ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi)const{
+ting::Ref<morda::Widget> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	root->SetValue("Container");
 	
@@ -108,8 +104,16 @@ ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi)const{
 
 
 
-ting::Ref<morda::Widget> Inflater::Inflate(ting::Ptr<stob::Node> gui)const{
-	//TODO:
+ting::Ref<morda::Widget> GuiInflater::Inflate(ting::Ptr<stob::Node> gui)const{
+	if(gui.IsNotValid()){
+		throw GuiInflater::Exc("Failed to inflate, passed pointer to GUI STOB hierarchy is not valid");
+	}
 	
-	return ting::Ref<morda::Widget>();
+	T_FactoryMap::const_iterator i = this->factories.find(gui->Value());
+	
+	if(i == this->factories.end()){
+		throw GuiInflater::Exc("Failed to inflate, no matching factory found for requested widget name");
+	}
+	
+	return i->second->Create(gui);
 }
