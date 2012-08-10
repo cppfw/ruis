@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="80">
+<configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df name="ext" root="../ext">
       <df name="tride">
@@ -43,12 +43,20 @@
           <in>ZipFile.hpp</in>
         </df>
         <df name="widgets">
+          <in>AbstractButton.cpp</in>
+          <in>AbstractButton.hpp</in>
+          <in>Button.cpp</in>
+          <in>Button.hpp</in>
+          <in>Label.cpp</in>
+          <in>Label.hpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
         <in>Container.cpp</in>
         <in>Container.hpp</in>
         <in>Exc.hpp</in>
+        <in>Inflater.cpp</in>
+        <in>Inflater.hpp</in>
         <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
@@ -60,12 +68,16 @@
               <df name="resman">
               </df>
               <df name="resources">
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
               </df>
               <df name="widgets">
+                <in>AbstractButton.d</in>
               </df>
             </df>
           </df>
@@ -97,6 +109,8 @@
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
       </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>../</buildCommandWorkingDir>
@@ -113,34 +127,59 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor="0">
+      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor="0">
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor="0">
-      </item>
-      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor="0">
+      <item path="../src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor="0">
+      <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
@@ -150,7 +189,7 @@
       <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
             ex="false"
             tool="1"
-            flavor="0">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
@@ -160,24 +199,62 @@
       <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor="0">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
           </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/TexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor="0">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor="0">
+      <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/widgets/AbstractButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../tests/app/main.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <folder path="src">
         <ccTool>
