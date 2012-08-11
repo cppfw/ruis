@@ -7,6 +7,23 @@ using namespace morda;
 
 
 
+Widget::Widget(ting::Ptr<stob::Node> properties) :
+		properties(properties)
+{
+//	if(const stob::Node* p = this->Properties()->GetProperty("pos")){
+//		//TODO:
+//
+//	}
+//	
+//	if(const stob::Node* p = this->Properties()->GetProperty("dim")){
+//		//TODO:
+//
+//	}
+	
+}
+
+
+
 void Widget::RemoveFromParent(){
 	if(ting::Ref<Container> p = this->parent){
 #ifdef DEBUG
