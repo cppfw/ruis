@@ -28,6 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <string>
+
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
 
@@ -49,8 +51,6 @@ class Widget : virtual public ting::RefCounted{
 	friend class morda::Container;
 	
 private:
-	ting::Ptr<stob::Node> properties;
-	
 	ting::WeakRef<Container> parent;
 	
 	ting::Inited<bool, false> isHovered;
@@ -62,8 +62,16 @@ private:
 	ting::Inited<bool, false> isDisabled;
 
 	tride::Rect2f rect;
+	
+	std::string name;
 public:
 
+	ting::Ptr<stob::Node> properties;
+	
+	const std::string& Name()const throw(){
+		return this->name;
+	}
+	
 	inline const ting::WeakRef<Container>& Parent()throw(){
 		return this->parent;
 	}

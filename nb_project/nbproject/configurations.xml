@@ -41,6 +41,8 @@
           <in>TexFont.cpp</in>
           <in>TexFont.hpp</in>
           <in>ZipFile.hpp</in>
+          <in>util.cpp</in>
+          <in>util.hpp</in>
         </df>
         <df name="widgets">
           <in>AbstractButton.cpp</in>
@@ -65,6 +67,16 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="resman">
+              </df>
+              <df name="resources">
+              </df>
+              <df name="shaders">
+              </df>
+              <df name="util">
+              </df>
+              <df name="widgets">
+              </df>
             </df>
           </df>
         </df>
