@@ -52,6 +52,7 @@ srcs += morda/resources/ResFont.cpp
 srcs += morda/util/GLTexture.cpp
 srcs += morda/util/Image.cpp
 srcs += morda/util/TexFont.cpp
+srcs += morda/util/util.cpp
 srcs += morda/widgets/AbstractButton.cpp
 srcs += morda/widgets/Button.cpp
 srcs += morda/widgets/Label.cpp
