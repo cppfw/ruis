@@ -100,11 +100,7 @@ public:
 	}
 
 protected:
-	inline Widget(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()) :
-			properties(properties)
-	{
-		//TODO: apply properties
-	}
+	Widget(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>());
 
 public:
 	static ting::Ref<Widget> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
