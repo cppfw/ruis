@@ -45,8 +45,21 @@ protected:
 private:
 	T_ChildList children;
 
+	void ApplyProperties(stob::Node* properties);
+	
 protected:
-	Container(ting::Ptr<stob::Node> properties);
+	inline Container(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()) :
+			Widget(properties)
+	{
+		this->ApplyProperties(this->properties.operator->());		
+	}
+	
+	//NOTE: No this kind of constructor for Container because layout properties are needed.
+//	inline Container(const stob::Node* properties = 0) :
+//			Widget(properties)
+//	{
+//		this->ApplyProperties(properties);
+//	}
 
 public:
 	~Container()throw(){}

@@ -7,11 +7,10 @@ using namespace morda;
 
 
 
-Button::Button(ting::Ptr<stob::Node> properties) :
-		AbstractButton(properties),
-		label(morda::Label::New())
-{
-	this->label->ApplyProperties(this->properties.operator->());
+void Button::ApplyProperties(const stob::Node* properties){
+	this->Resize(this->label->Rect().d);
+	
+	//apply button specific properties
 }
 
 

@@ -12,40 +12,44 @@ using namespace morda;
 
 
 
-Container::Container(ting::Ptr<stob::Node> properties) :
-		Widget(properties)
-{
-	if(this->properties){
-		while(stob::Node *p = this->properties->Child()){
-//			TRACE(<< "Container::Container(): Child->Value() = " << p->Value() << std::endl)
+void Container::ApplyProperties(stob::Node* properties){
+	if(!properties){
+		return;
+	}
+	
+	while(stob::Node *p = properties->Child()){
+//		TRACE(<< "Container::Container(): Child->Value() = " << p->Value() << std::endl)
+		if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
+			break;
+		}
+
+		this->Add(
+				morda::App::Inst().Inflater().Inflate(
+						properties->RemoveFirstChild()
+					)
+			);
+	}
+
+	if(stob::Node* prev = properties->Child()){
+		for(stob::Node* p = prev->Next(); p;){
+			TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
+			TRACE(<< "Container::Container(): p->Next() = " << p->Next() << std::endl)
 			if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
-				break;
+				prev = p;
+				p = p->Next();
+				continue;
 			}
-			
+
 			this->Add(
 					morda::App::Inst().Inflater().Inflate(
-							this->properties->RemoveFirstChild()
+							prev->RemoveNext()
 						)
 				);
+			
+			p = prev->Next();
 		}
-		
-		if(stob::Node* prev = this->properties->Child()){
-			for(stob::Node* p = prev->Next(); p; prev = p, p = p->Next()){
-//				TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
-				if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
-					continue;
-				}
-				
-				this->Add(
-						morda::App::Inst().Inflater().Inflate(
-								prev->RemoveNext()
-							)
-					);
-			}
-		}
-	}//~if(this->properties)
+	}
 }
-
 
 
 

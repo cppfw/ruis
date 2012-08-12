@@ -50,6 +50,19 @@ public:
 	}
 };
 
+class AbstractButtonFactory : public GuiInflater::Factory{
+public:
+	//override
+	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
+		ASSERT(node->Value() == "AbstractButton")
+		return AbstractButton::New(node);
+	}
+	
+	inline static ting::Ptr<AbstractButtonFactory> New(){
+		return ting::Ptr<AbstractButtonFactory>(new AbstractButtonFactory());
+	}
+};
+
 class ButtonFactory : public GuiInflater::Factory{
 public:
 	//override
@@ -71,6 +84,7 @@ GuiInflater::GuiInflater(){
 	this->AddFactory("Widget", WidgetFactory::New());
 	this->AddFactory("Container", ContainerFactory::New());
 	this->AddFactory("Label", LabelFactory::New());
+	this->AddFactory("AbstractButton", AbstractButtonFactory::New());
 	this->AddFactory("Button", ButtonFactory::New());
 	//TODO: add default factories
 }
