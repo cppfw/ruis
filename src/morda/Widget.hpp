@@ -115,7 +115,7 @@ protected:
 	}
 	
 	inline Widget(const stob::Node* properties = 0){
-		this->ApplyProperties(const stob::Node* properties);
+		this->ApplyProperties(properties);
 	}
 	
 private:

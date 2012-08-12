@@ -9,10 +9,13 @@ using namespace morda;
 
 void Widget::ApplyProperties(const stob::Node* properties){
 	if(!properties){
+		this->rect.p.SetToZero();
 		return;
 	}
 	if(const stob::Node* p = properties->GetProperty("pos")){
 		this->rect.p = morda::Vec2fFromSTOB(p);
+	}else{
+		this->rect.p.SetToZero();
 	}
 
 	if(const stob::Node* p = properties->GetProperty("dim")){
