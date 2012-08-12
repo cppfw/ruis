@@ -1,12 +1,11 @@
 Button{
 	pos {10 20}
-	dim {200 80}
 	text {"Hello world!"}
 }
 
 Container{
-	pos {0 0}
-	dim {300 300}
+	pos {50 100}
+	dim {100 100}
 
 	name {someContainer}
 
@@ -22,6 +21,7 @@ Container{
 	}
 
 	Label{
+		pos {0 0}
 		name {label1}
 		text {trololo}
 		layout{
@@ -31,6 +31,7 @@ Container{
 	}
 
 	Button{
+		pos {50 80}
 		text {"Push me"}
 		
 	}

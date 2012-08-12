@@ -44,8 +44,21 @@ class Label : public Widget{
 	ting::Ref<morda::ResFont> font;
 	
 	tride::Vec2f pivot;
+	
+	void ApplyProperties(const stob::Node* properties);
+	
 protected:
-	Label(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>());
+	Label(ting::Ptr<stob::Node> properties) :
+			Widget(properties)
+	{	
+		this->ApplyProperties(this->properties.operator->());
+	}
+	
+	Label(const stob::Node* properties = 0) :
+			Widget(properties)
+	{
+		this->ApplyProperties(properties);
+	}
 public:
 	
 	~Label()throw(){}
@@ -59,7 +72,11 @@ public:
 	//override
 	void Render(const tride::Matr4f& matrix)const;
 		
-	inline static ting::Ref<Label> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+	inline static ting::Ref<Label> New(ting::Ptr<stob::Node> properties){
+		return ting::Ref<Label>(new Label(properties));
+	}
+	
+	inline static ting::Ref<Label> New(const stob::Node* properties = 0){
 		return ting::Ref<Label>(new Label(properties));
 	}
 };

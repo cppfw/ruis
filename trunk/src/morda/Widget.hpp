@@ -108,10 +108,25 @@ public:
 	}
 
 protected:
-	Widget(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>());
+	inline Widget(ting::Ptr<stob::Node> properties) :
+			properties(properties)
+	{
+		this->ApplyProperties(this->properties.operator->());
+	}
+	
+	inline Widget(const stob::Node* properties = 0){
+		this->ApplyProperties(const stob::Node* properties);
+	}
+	
+private:
+	void ApplyProperties(const stob::Node* properties);
 
 public:
-	static ting::Ref<Widget> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
+	static ting::Ref<Widget> New(ting::Ptr<stob::Node> properties){
+		return ting::Ref<Widget>(new Widget(properties));
+	}
+	
+	static ting::Ref<Widget> New(const stob::Node* properties = 0){
 		return ting::Ref<Widget>(new Widget(properties));
 	}
 

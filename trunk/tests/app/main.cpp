@@ -64,30 +64,38 @@ int main(int argc, char** argv){
 	
 	app.ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
-	ting::Ref<morda::Container> c = morda::Container::New();
+//	ting::Ref<morda::Container> c = morda::Container::New();
+//	
+//	{
+//		ting::Ref<SimpleWidget> w = SimpleWidget::New();
+//		w->SetPos(tride::Vec2f(0, 0));
+//		w->Resize(tride::Vec2f(300, 400));
+//		c->Add(w);
+//	}
+//	
+//	{
+//		ting::Ref<morda::Button> w = morda::Button::New();
+//		w->SetPos(tride::Vec2f(100, 200));
+//		w->SetText("Hello Button!");
+//		c->Add(w);
+//	}
+//	
+//	{
+//		ting::Ref<morda::Label> w = morda::Label::New();
+//		w->SetPos(tride::Vec2f(10, 20));
+//		w->SetText("Hello label!");
+//		c->Add(w);
+//	}
+//	
+//	{
+//		ting::fs::FSFile fi("test.gui.stob");
+//		c->Add(
+//				morda::App::Inst().Inflater().Inflate(fi)
+//			);
+//	}
 	
-	{
-		ting::Ref<SimpleWidget> w = SimpleWidget::New();
-		w->SetPos(tride::Vec2f(0, 0));
-		w->Resize(tride::Vec2f(300, 400));
-		c->Add(w);
-	}
-	
-	{
-		ting::Ref<morda::Button> w = morda::Button::New();
-		w->SetPos(tride::Vec2f(100, 200));
-		w->SetText("Hello Button!");
-		c->Add(w);
-	}
-	
-	{
-		ting::Ref<morda::Label> w = morda::Label::New();
-		w->SetPos(tride::Vec2f(10, 20));
-		w->SetText("Hello label!");
-		c->Add(w);
-	}
-	
-	app.SetRootWidget(c);
+	ting::fs::FSFile fi("test.gui.stob");
+	app.SetRootWidget(morda::App::Inst().Inflater().Inflate(fi));
 	
 	app.Exec();
 	

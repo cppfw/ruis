@@ -46,11 +46,7 @@ private:
 	T_ChildList children;
 
 protected:
-	inline Container(ting::Ptr<stob::Node> properties) :
-			Widget(properties)
-	{
-		//TODO: apply properties
-	}
+	Container(ting::Ptr<stob::Node> properties);
 
 public:
 	~Container()throw(){}
