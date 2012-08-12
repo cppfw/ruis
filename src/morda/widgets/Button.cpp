@@ -11,7 +11,7 @@ Button::Button(ting::Ptr<stob::Node> properties) :
 		AbstractButton(properties),
 		label(morda::Label::New())
 {
-	//TODO: apply properties
+	this->label->ApplyProperties(this->properties.operator->());
 }
 
 

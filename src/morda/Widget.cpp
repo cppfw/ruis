@@ -7,21 +7,20 @@ using namespace morda;
 
 
 
-Widget::Widget(ting::Ptr<stob::Node> properties) :
-		properties(properties)
-{
-	if(this->properties){
-		if(const stob::Node* p = this->properties->GetProperty("pos")){
-			this->rect.p = morda::Vec2fFromSTOB(p);
-		}
+void Widget::ApplyProperties(const stob::Node* properties){
+	if(!properties){
+		return;
+	}
+	if(const stob::Node* p = properties->GetProperty("pos")){
+		this->rect.p = morda::Vec2fFromSTOB(p);
+	}
 
-		if(const stob::Node* p = this->properties->GetProperty("dim")){
-			this->rect.d = morda::Vec2fFromSTOB(p);
-		}
-		
-		if(const stob::Node* p = this->properties->GetProperty("name")){
-			this->name = p->Value();
-		}
+	if(const stob::Node* p = properties->GetProperty("dim")){
+		this->rect.d = morda::Vec2fFromSTOB(p);
+	}
+
+	if(const stob::Node* p = properties->GetProperty("name")){
+		this->name = p->Value();
 	}
 }
 

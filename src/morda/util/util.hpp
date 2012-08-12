@@ -48,4 +48,19 @@ tride::Vec2f Vec2fFromSTOB(const stob::Node* chain);
 
 
 
+/**
+ * @brief Check if character is an upper case alphabetic character.
+ * Note, that this is locale independent, unlike isupper() function from standard C library.
+ * It only checks for latin alphabet and, thus, should be much faster than isupper().
+ * @param c - character to check for upper case.
+ * @return true if character is on of
+ *         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+ * @return false otherwise.
+ */
+inline bool IsUpperCase(char c){
+	return 'A' <= c && c <= 'Z';
+}
+
+
+
 }//~namespace
