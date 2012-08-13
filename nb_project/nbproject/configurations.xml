@@ -68,15 +68,23 @@
           <df name="2">
             <df name="morda">
               <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>TexturingShader.d</in>
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
               </df>
               <df name="widgets">
               </df>
+              <in>App.d</in>
             </df>
           </df>
         </df>

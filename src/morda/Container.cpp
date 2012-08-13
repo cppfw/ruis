@@ -96,10 +96,8 @@ bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, 
 			(*i)->isHovered = true;
 			(*i)->OnMouseIn();
 		}
-
-		tride::Vec2f localPos = pos - (*i)->Rect().p;
 		
-		if((*i)->OnMouseButtonDown(localPos, button, pointerId)){
+		if((*i)->OnMouseButtonDown((pos - (*i)->Rect().p), button, pointerId)){
 			return true;
 		}
 	}
@@ -136,10 +134,8 @@ bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, un
 			(*i)->isHovered = true;
 			(*i)->OnMouseIn();
 		}
-
-		tride::Vec2f localPos = pos - (*i)->Rect().p;
 		
-		if((*i)->OnMouseButtonUp(localPos, button, pointerId)){
+		if((*i)->OnMouseButtonUp(pos - (*i)->Rect().p, button, pointerId)){
 			return true;
 		}
 	}
@@ -178,7 +174,7 @@ bool Container::OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
 			(*i)->OnMouseIn();
 		}
 		
-		if((*i)->OnMouseMove(pos, pointerId)){//consumed mouse move event
+		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerId)){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != childs.rend(); ++i){
 				if((*i)->IsHovered()){
@@ -190,6 +186,18 @@ bool Container::OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
 		}		
 	}
 	return false;
+}
+
+
+
+void Container::OnMouseOut(){
+	//un-hover all the children
+	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
+		if((*i)->IsHovered()){
+			(*i)->isHovered = false;
+			(*i)->OnMouseOut();
+		}
+	}
 }
 
 
