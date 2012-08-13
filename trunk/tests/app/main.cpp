@@ -21,39 +21,54 @@ class SimpleWidget : public morda::Widget{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
-	SimpleWidget(){
+	SimpleWidget(ting::Ptr<stob::Node> properties) :
+			morda::Widget(properties)
+	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 public:	
-	static inline ting::Ref<SimpleWidget> New(){
+	static inline ting::Ref<SimpleWidget> New(ting::Ptr<stob::Node> properties){
 		return ting::Ref<SimpleWidget>(
-				new SimpleWidget()
+				new SimpleWidget(properties)
 			);
 	}
 	
 	//override
 	void Render(const tride::Matr4f& matrix)const{
-		tride::Matr4f matr(matrix);
-		matr.Scale(this->Rect().d);
-		
-		this->tex->Tex().Bind();
-		
-		morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
-		s.Bind();
-		s.EnablePositionPointer();
-//		s.SetColor(tride::Vec3f(1, 0, 0));
-		s.SetMatrix(matr);
-		s.DrawQuad01();
+		{
+			tride::Matr4f matr(matrix);
+			matr.Scale(this->Rect().d);
+
+			this->tex->Tex().Bind();
+
+			morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
+			s.Bind();
+			s.EnablePositionPointer();
+//			s.SetColor(tride::Vec3f(1, 0, 0));
+			s.SetMatrix(matr);
+			s.DrawQuad01();
+		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+		morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
 		tride::Matr4f m(matrix);
 		m.Translate(200, 200);
 		this->fnt->Fnt().RenderString(s, m, "Hello World!");
+	}
+};
+
+
+
+class SimpleWidgetFactory : public morda::GuiInflater::Factory{
+public:
+	//override
+	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
+		return SimpleWidget::New(node);
 	}
 };
 
@@ -64,35 +79,7 @@ int main(int argc, char** argv){
 	
 	app.ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
-//	ting::Ref<morda::Container> c = morda::Container::New();
-//	
-//	{
-//		ting::Ref<SimpleWidget> w = SimpleWidget::New();
-//		w->SetPos(tride::Vec2f(0, 0));
-//		w->Resize(tride::Vec2f(300, 400));
-//		c->Add(w);
-//	}
-//	
-//	{
-//		ting::Ref<morda::Button> w = morda::Button::New();
-//		w->SetPos(tride::Vec2f(100, 200));
-//		w->SetText("Hello Button!");
-//		c->Add(w);
-//	}
-//	
-//	{
-//		ting::Ref<morda::Label> w = morda::Label::New();
-//		w->SetPos(tride::Vec2f(10, 20));
-//		w->SetText("Hello label!");
-//		c->Add(w);
-//	}
-//	
-//	{
-//		ting::fs::FSFile fi("test.gui.stob");
-//		c->Add(
-//				morda::App::Inst().Inflater().Inflate(fi)
-//			);
-//	}
+	app.Inflater().AddFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::Factory>(new SimpleWidgetFactory()));
 	
 	ting::fs::FSFile fi("test.gui.stob");
 	app.SetRootWidget(morda::App::Inst().Inflater().Inflate(fi));
