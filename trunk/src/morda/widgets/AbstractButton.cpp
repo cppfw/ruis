@@ -33,7 +33,7 @@ void AbstractButton::Render(const tride::Matr4f& matrix)const{
 
 //override
 bool AbstractButton::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Button::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
+//	TRACE(<< "AbstractButton::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
 	}
@@ -47,7 +47,7 @@ bool AbstractButton::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton but
 
 //override
 bool AbstractButton::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Button::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
+//	TRACE(<< "AbstractButton::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
 	}
@@ -69,6 +69,6 @@ bool AbstractButton::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton butto
 
 //override
 void AbstractButton::OnMouseOut(){
-//	TRACE(<< "Button::OnMouseOut(): enter" << std::endl)
+//	TRACE(<< "AbstractButton::OnMouseOut(): enter" << std::endl)
 	this->isPressed = false;
 }

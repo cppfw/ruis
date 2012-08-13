@@ -81,6 +81,9 @@ public:
 	bool OnMouseMove(const tride::Vec2f& pos, unsigned pointerId);
 	
 	//override
+	void OnMouseOut();
+	
+	//override
 	void OnResize();
 
 	void Add(const ting::Ref<Widget>& w);
