@@ -32,8 +32,8 @@ void Container::ApplyProperties(stob::Node* properties){
 
 	if(stob::Node* prev = properties->Child()){
 		for(stob::Node* p = prev->Next(); p;){
-			TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
-			TRACE(<< "Container::Container(): p->Next() = " << p->Next() << std::endl)
+//			TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
+//			TRACE(<< "Container::Container(): p->Next() = " << p->Next() << std::endl)
 			if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
 				prev = p;
 				p = p->Next();
