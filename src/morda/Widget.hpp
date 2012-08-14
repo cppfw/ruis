@@ -169,6 +169,10 @@ public:
 	virtual void OnResize(){
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
+	
+	virtual tride::Vec2f ComputeMinSize()const{
+		return tride::Vec2f(0, 0);
+	}
 
 	inline void Hide(){
 		this->SetHidden(true);
