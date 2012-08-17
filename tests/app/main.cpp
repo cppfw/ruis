@@ -64,7 +64,7 @@ public:
 
 
 
-class SimpleWidgetFactory : public morda::GuiInflater::Factory{
+class SimpleWidgetFactory : public morda::GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
@@ -79,7 +79,7 @@ int main(int argc, char** argv){
 	
 	app.ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
-	app.Inflater().AddFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::Factory>(new SimpleWidgetFactory()));
+	app.Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
 	
 	ting::fs::FSFile fi("test.gui.stob");
 	app.SetRootWidget(morda::App::Inst().Inflater().Inflate(fi));
