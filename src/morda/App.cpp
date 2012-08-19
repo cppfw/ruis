@@ -171,7 +171,7 @@ void App::SetGLViewport(const tride::Vec2f& dim){
 
 
 void App::Render(){
-	if(this->rootWidget.IsNotValid()){
+	if(this->rootContainer.IsNotValid()){
 		return;
 	}
 	
@@ -187,7 +187,7 @@ void App::Render(){
 	m.Translate(-1, -1);
 	m.Scale(2.0f / this->curWinDim.x, 2.0f / this->curWinDim.y);
 	
-	this->rootWidget->Render(m);
+	this->rootContainer->Render(m);
 	
 	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 }
@@ -273,8 +273,8 @@ void App::Exec(){
 							this->curWinDim.y = float(event.xconfigure.height);
 							
 							this->SetGLViewport(this->curWinDim);
-							if(this->rootWidget.IsValid()){
-								this->rootWidget->Resize(this->curWinDim);
+							if(this->rootContainer.IsValid()){
+								this->rootContainer->Resize(this->curWinDim);
 							}
 						}
 						break;
@@ -289,8 +289,8 @@ void App::Exec(){
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						if(this->rootWidget.IsValid()){
-							this->rootWidget->OnMouseButtonDown(
+						if(this->rootContainer.IsValid()){
+							this->rootContainer->OnMouseButtonDown(
 									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
 									ButtonNumberToEnum(event.xbutton.button),
 									0
@@ -298,8 +298,8 @@ void App::Exec(){
 						}
 						break;
 					case ButtonRelease:
-						if(this->rootWidget.IsValid()){
-							this->rootWidget->OnMouseButtonUp(
+						if(this->rootContainer.IsValid()){
+							this->rootContainer->OnMouseButtonUp(
 									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
 									ButtonNumberToEnum(event.xbutton.button),
 									0
@@ -308,8 +308,8 @@ void App::Exec(){
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-						if(this->rootWidget.IsValid()){
-							this->rootWidget->OnMouseMove(
+						if(this->rootContainer.IsValid()){
+							this->rootContainer->OnMouseMove(
 									tride::Vec2f(event.xmotion.x, this->curWinDim.y - float(event.xmotion.y) - 1.0f),
 									0
 								);

@@ -82,7 +82,7 @@ int main(int argc, char** argv){
 	app.Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
 	
 	ting::fs::FSFile fi("test.gui.stob");
-	app.SetRootWidget(morda::App::Inst().Inflater().Inflate(fi));
+	app.SetRootContainer(morda::App::Inst().Inflater().Inflate(fi));
 	
 	app.Exec();
 	

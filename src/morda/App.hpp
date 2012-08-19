@@ -36,6 +36,7 @@ THE SOFTWARE. */
 
 #include "Exc.hpp"
 #include "Widget.hpp"
+#include "Container.hpp"
 #include "GuiInflater.hpp"
 #include "resman/ResourceManager.hpp"
 
@@ -90,7 +91,7 @@ class App : public ting::IntrusiveSingleton<App>{
 	
 	ting::Inited<volatile bool, false> quitFlag;
 	
-	ting::Ref<morda::Widget> rootWidget;
+	ting::Ref<morda::Container> rootContainer;
 	
 	ResourceManager resMan;
 	
@@ -111,10 +112,10 @@ public:
 	
 	~App()throw(){}
 	
-	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
-		this->rootWidget = w;
-		this->rootWidget->SetPos(tride::Vec2f(0));
-		this->rootWidget->Resize(this->curWinDim);
+	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
+		this->rootContainer = c;
+		this->rootContainer->SetPos(tride::Vec2f(0));
+		this->rootContainer->Resize(this->curWinDim);
 	}
 	
 	void Exec();

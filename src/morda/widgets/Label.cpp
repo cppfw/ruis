@@ -32,8 +32,21 @@ void Label::SetText(const std::string& text){
 	
 	tride::Rect2f bb = this->font->Fnt().StringBoundingBox(this->text);
 	
-	this->pivot = -bb.p;
-	this->Resize(bb.d);
+	if(this->Rect().d.x < bb.d.x || this->Rect().d.y < bb.d.y){
+		this->Resize(bb.d);
+		this->pivot = -bb.p;
+	}else{
+		//TODO: handle gravity
+		this->pivot = -bb.p;
+	}
+}
+
+
+
+void Label::SetGravity(E_Gravity gravity){
+	this->gravity = gravity;
+	
+	//TODO:
 }
 
 
