@@ -42,6 +42,8 @@ class Layout{
 public:
 	virtual void ArrangeWidgets(Container& c)const = 0;
 	
+	virtual tride::Vec2f CalculateMinimumSize(const Container& c)const = 0;
+	
 	virtual ~Layout()throw(){}
 };
 
