@@ -55,6 +55,17 @@ void Container::ApplyProperties(stob::Node* properties){
 
 //override
 void Container::Render(const tride::Matr4f& matrix)const{
+	//render border
+	{
+		morda::SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
+		s.Bind();
+		tride::Matr4f matr(matrix);
+		matr.Scale(this->Rect().d);
+		s.SetMatrix(matr);
+		s.SetColor(tride::Vec3f(1, 0, 1));
+		s.DrawQuad01(GL_LINE_LOOP);
+	}
+	
 	for(T_ChildList::const_iterator i = this->children.begin(); i != this->children.end(); ++i){
 		if((*i)->IsHidden()){
 			continue;

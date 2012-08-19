@@ -138,7 +138,7 @@ public:
 
 	void DrawQuad();
 
-	void DrawQuad01();
+	void DrawQuad01(GLint type = GL_TRIANGLE_FAN);
 };//~class Shader
 
 
