@@ -113,8 +113,8 @@ static tride::Vec2f quad01Triangles[] = {
 
 
 
-void Shader::DrawQuad01(){
+void Shader::DrawQuad01(GLint type){
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quad01Triangles);
-	this->DrawArrays(GL_TRIANGLE_FAN, 4);
+	this->DrawArrays(type, 4);
 }
