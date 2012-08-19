@@ -31,6 +31,7 @@ THE SOFTWARE. */
 #include <vector>
 
 #include "Widget.hpp"
+#include "Layout.hpp"
 
 
 
@@ -45,6 +46,8 @@ protected:
 private:
 	T_ChildList children;
 
+	ting::Ptr<Layout> layout;
+	
 	void ApplyProperties(stob::Node* properties);
 	
 protected:
@@ -54,6 +57,7 @@ protected:
 		this->ApplyProperties(this->properties.operator->());		
 	}
 	
+			//TODO: ?
 	//NOTE: No this kind of constructor for Container because layout properties are needed.
 //	inline Container(const stob::Node* properties = 0) :
 //			Widget(properties)
@@ -68,6 +72,10 @@ public:
 		return ting::Ref<Container>(new Container(properties));
 	}
 
+	void SetLayout(ting::Ptr<Layout> layout){
+		this->layout = layout;
+	}
+	
 	//override
 	void Render(const tride::Matr4f& matrix)const;
 

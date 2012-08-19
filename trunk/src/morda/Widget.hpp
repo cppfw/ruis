@@ -65,7 +65,7 @@ private:
 	
 	std::string name;
 public:
-
+	
 	ting::Ptr<stob::Node> properties;
 	
 	const std::string& Name()const throw(){

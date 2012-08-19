@@ -60,6 +60,23 @@ protected:
 		this->ApplyProperties(properties);
 	}
 public:
+	enum E_Gravity{
+		CENTER,
+		LEFT,
+		TOP_LEFT,
+		BOTTOM_LEFT,
+		RIGHT,
+		TOP_RIGHT,
+		BOTTOM_RIGHT,
+		TOP,
+		BOTTOM
+	};
+	
+private:
+	E_Gravity gravity;
+	
+public:
+	void SetGravity(E_Gravity gravity);
 	
 	~Label()throw(){}
 	

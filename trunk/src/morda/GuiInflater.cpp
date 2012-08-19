@@ -113,11 +113,12 @@ bool GuiInflater::RemoveWidgetFactory(const std::string& widgetName)throw(){
 
 
 
-ting::Ref<morda::Widget> GuiInflater::Inflate(ting::fs::File& fi)const{
+ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
+	ASSERT(root)
 	root->SetValue("Container");
 	
-	return this->Inflate(root);
+	return this->Inflate(root).StaticCast<morda::Container>();
 }
 
 

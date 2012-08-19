@@ -108,7 +108,7 @@ public:
      * @param fi - file interface to get the GUI script from.
      * @return reference to the root widget of the created hierarchy.
      */
-	ting::Ref<morda::Widget> Inflate(ting::fs::File& fi)const;
+	ting::Ref<morda::Container> Inflate(ting::fs::File& fi)const;
 	
 	/**
 	 * @brief Registers a layout factory.
