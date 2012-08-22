@@ -9,6 +9,10 @@
     </df>
     <df name="src" root="../src">
       <df name="morda">
+        <df name="layouts">
+          <in>LinearLayout.cpp</in>
+          <in>LinearLayout.hpp</in>
+        </df>
         <df name="resman">
           <in>Resource.cpp</in>
           <in>Resource.hpp</in>
@@ -68,15 +72,24 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="layouts">
+              </df>
               <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
               </df>
               <df name="util">
               </df>
               <df name="widgets">
+                <in>AbstractButton.d</in>
               </df>
             </df>
           </df>
@@ -140,7 +153,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
@@ -236,6 +249,10 @@
       </item>
       <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
       </item>
+      <item path="../src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <item path="../src/morda/widgets/AbstractButton.cpp"
             ex="false"
             tool="1"
@@ -259,6 +276,13 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/layouts">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </folder>

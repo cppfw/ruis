@@ -28,8 +28,9 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <stob/dom.hpp>
 
-#include <tride/Vector3.hpp>
+#include "../Layout.hpp"
 
 
 
@@ -37,17 +38,21 @@ namespace morda{
 
 
 
-class Container;
-
-
-
-class Layout{
+class LinearLayout : public morda::Layout{
+	
+	LinearLayout(const stob::Node* node);
 public:
-	virtual void ArrangeWidgets(Container& c)const = 0;
+	//override
+	void ArrangeWidgets(Container& c)const;
 	
-	virtual tride::Vec2f CalculateMinimumSize(const Container& c)const = 0;
+	//override
+	tride::Vec2f CalculateMinimumSize(const Container& c)const;
 	
-	virtual ~Layout()throw(){}
+	~LinearLayout()throw(){}
+	
+	static inline ting::Ptr<LinearLayout> New(const stob::Node* node = 0){
+		return ting::Ptr<LinearLayout>(new LinearLayout(node));
+	}
 };
 
 
