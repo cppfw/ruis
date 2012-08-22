@@ -1,7 +1,9 @@
 #include "GuiInflater.hpp"
+
 #include "Container.hpp"
 #include "widgets/Label.hpp"
 #include "widgets/Button.hpp"
+#include "layouts/LinearLayout.hpp"
 
 
 
@@ -76,6 +78,19 @@ public:
 	}
 };
 
+class LinearLayoutFactory : public GuiInflater::LayoutFactory{
+public:
+	//override
+	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "LinearLayout")
+		return LinearLayout::New(&node);
+	}
+	
+	inline static ting::Ptr<LinearLayoutFactory> New(){
+		return ting::Ptr<LinearLayoutFactory>(new LinearLayoutFactory());
+	}
+};
+
 }//~namespace
 
 
@@ -86,6 +101,8 @@ GuiInflater::GuiInflater(){
 	this->AddWidgetFactory("Label", LabelFactory::New());
 	this->AddWidgetFactory("AbstractButton", AbstractButtonFactory::New());
 	this->AddWidgetFactory("Button", ButtonFactory::New());
+	
+	this->AddLayoutFactory("LinearLayout", LinearLayoutFactory::New());
 	//TODO: add default factories
 }
 

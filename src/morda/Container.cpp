@@ -17,6 +17,10 @@ void Container::ApplyProperties(stob::Node* properties){
 		return;
 	}
 	
+	if(const stob::Node* n = properties->GetProperty("containerLayout")){
+		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
+	}
+	
 	while(stob::Node *p = properties->Child()){
 //		TRACE(<< "Container::Container(): Child->Value() = " << p->Value() << std::endl)
 		if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
