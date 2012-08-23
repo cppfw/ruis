@@ -93,6 +93,6 @@ public:
 
 
 
-ting::Ptr<morda::App> morda::CreateApp(){
+ting::Ptr<morda::App> morda::CreateApp(int argc, char** argv){
 	return ting::Ptr<Application>(new Application());
 }

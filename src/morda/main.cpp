@@ -2,8 +2,8 @@
 
 
 namespace morda{
-inline void Main(){
-	ting::Ptr<morda::App> app = morda::CreateApp();
+inline void Main(int argc, char** argv){
+	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv);
 	
 	app->Init();
 	
@@ -13,7 +13,7 @@ inline void Main(){
 
 
 int main(int argc, char** argv){
-	morda::Main();
+	morda::Main(argc, argv);
 	
 	return 0;
 }

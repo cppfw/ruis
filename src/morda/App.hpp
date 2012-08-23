@@ -111,7 +111,7 @@ public:
 private:
 	DefaultShaders shaders;
 	
-	friend void Main();
+	friend void Main(int argc, char** argv);
 	void Exec();
 	
 protected:
@@ -149,7 +149,7 @@ public:
  * User needs to define this factory function to create his application instance.
  * @return New application instance.
  */
-ting::Ptr<App> CreateApp();
+ting::Ptr<App> CreateApp(int argc, char** argv);
 
 
 

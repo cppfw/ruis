@@ -67,28 +67,20 @@
         <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
-        <in>main.cpp</in>
       </df>
       <df name="obj">
         <df name="1">
           <df name="2">
             <df name="morda">
               <df name="layouts">
-                <in>LinearLayout.d</in>
               </df>
               <df name="resman">
-                <in>Resource.d</in>
-                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
               </df>
               <df name="shaders">
-                <in>Shader.d</in>
-                <in>SimpleSingleColoringShader.d</in>
-                <in>TexturingShader.d</in>
               </df>
               <df name="util">
-                <in>GLTexture.d</in>
               </df>
               <df name="widgets">
               </df>
@@ -180,8 +172,13 @@
       <item path="../src/morda/main.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
+            <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
+            <pElem>../ext</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
