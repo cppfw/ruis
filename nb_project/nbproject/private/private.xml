@@ -9,4 +9,24 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/home/ivan/prj/morda/src/morda/Widget.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/Widget.cpp</file>
+        <file>file:/home/ivan/prj/morda/tests/app/test.gui.stob</file>
+        <file>file:/home/ivan/prj/morda/src/morda/Container.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/Container.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/Label.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/Label.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/Button.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/Button.cpp</file>
+        <file>file:/home/ivan/prj/morda/tests/app/main.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/AbstractButton.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/widgets/AbstractButton.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/GuiInflater.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/Layout.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/App.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/GuiInflater.hpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/main.cpp</file>
+        <file>file:/home/ivan/prj/morda/src/morda/shaders/Shader.hpp</file>
+    </open-files>
 </project-private>
