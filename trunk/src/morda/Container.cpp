@@ -23,7 +23,7 @@ void Container::ApplyProperties(stob::Node* properties){
 	
 	while(stob::Node *p = properties->Child()){
 //		TRACE(<< "Container::Container(): Child->Value() = " << p->Value() << std::endl)
-		if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
+		if(!p->IsCapital()){
 			break;
 		}
 
@@ -38,7 +38,7 @@ void Container::ApplyProperties(stob::Node* properties){
 		for(stob::Node* p = prev->Next(); p;){
 //			TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
 //			TRACE(<< "Container::Container(): p->Next() = " << p->Next() << std::endl)
-			if(p->Value().size() == 0 || !morda::IsUpperCase(p->Value()[0])){
+			if(!p->IsCapital()){
 				prev = p;
 				p = p->Next();
 				continue;
