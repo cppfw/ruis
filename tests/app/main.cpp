@@ -74,17 +74,25 @@ public:
 
 
 
-int main(int argc, char** argv){
-	morda::App app(320, 480);
+class Application : public morda::App{
+public:
+	Application() :
+			App(320, 480)
+	{}
 	
-	app.ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
+	//override
+	void Init(){
+		this->ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
-	app.Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
-	
-	ting::fs::FSFile fi("test.gui.stob");
-	app.SetRootContainer(morda::App::Inst().Inflater().Inflate(fi));
-	
-	app.Exec();
-	
-	return 0;
+		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
+
+		ting::fs::FSFile fi("test.gui.stob");
+		this->SetRootContainer(morda::App::Inst().Inflater().Inflate(fi));
+	}
+};
+
+
+
+ting::Ptr<morda::App> morda::CreateApp(){
+	return ting::Ptr<Application>(new Application());
 }
