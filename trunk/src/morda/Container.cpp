@@ -61,7 +61,7 @@ void Container::ApplyProperties(stob::Node* properties){
 void Container::Render(const tride::Matr4f& matrix)const{
 	//render border
 	{
-		morda::SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
+		morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
 		tride::Matr4f matr(matrix);
 		matr.Scale(this->Rect().d);
@@ -218,7 +218,10 @@ void Container::OnMouseOut(){
 
 
 void Container::OnResize(){
-	//TODO:
+//	TRACE(<< "Container::OnResize(): invoked" << std::endl)
+	if(this->layout){
+		this->layout->ArrangeWidgets(*this);
+	}
 }
 
 

@@ -56,7 +56,7 @@ void Label::Render(const tride::Matr4f& matrix)const{
 //	{
 //		tride::Matr4f matr(matrix);
 //		matr.Scale(this->Rect().d);
-//		SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
+//		SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 //		s.Bind();
 //		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
 //		s.SetMatrix(matr);
@@ -64,7 +64,7 @@ void Label::Render(const tride::Matr4f& matrix)const{
 //	}
 	
 	//render text
-	morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
+	morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
 	s.Bind();
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

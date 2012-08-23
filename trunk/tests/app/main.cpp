@@ -43,7 +43,7 @@ public:
 
 			this->tex->Tex().Bind();
 
-			morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
+			morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
 			s.Bind();
 			s.EnablePositionPointer();
 //			s.SetColor(tride::Vec3f(1, 0, 0));
@@ -55,7 +55,7 @@ public:
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		morda::SimpleTexturingShader &s = morda::App::Inst().shaders.simpleTexturing;
+		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
 		tride::Matr4f m(matrix);
 		m.Translate(200, 200);
 		this->fnt->Fnt().RenderString(s, m, "Hello World!");

@@ -103,10 +103,18 @@ class App : public ting::IntrusiveSingleton<App>{
 	
 	
 public:
-	struct Shaders{
+	struct DefaultShaders{
 		SimpleSingleColoringShader simpleSingleColoring;
 		SimpleTexturingShader simpleTexturing;
-	} shaders;
+	};
+	
+private:
+	DefaultShaders shaders;
+public:
+	
+	inline DefaultShaders& Shaders()throw(){
+		return this->shaders;
+	}
 	
 	App(unsigned w, unsigned h);
 	
