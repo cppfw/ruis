@@ -72,25 +72,6 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="layouts">
-              </df>
-              <df name="resman">
-                <in>Resource.d</in>
-                <in>ResourceManager.d</in>
-              </df>
-              <df name="resources">
-                <in>ResFont.d</in>
-                <in>ResTexture.d</in>
-              </df>
-              <df name="shaders">
-                <in>Shader.d</in>
-                <in>SimpleSingleColoringShader.d</in>
-              </df>
-              <df name="util">
-              </df>
-              <df name="widgets">
-                <in>AbstractButton.d</in>
-              </df>
             </df>
           </df>
         </df>

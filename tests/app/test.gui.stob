@@ -31,6 +31,7 @@ Container{
 		layout{
 			center {vertical}
 			weight {1}
+			fill
 		}
 	}
 
@@ -39,5 +40,8 @@ Container{
 		pos {50 80}
 		text {"Push me"}
 		
+		layout{
+			
+		}
 	}
 }
