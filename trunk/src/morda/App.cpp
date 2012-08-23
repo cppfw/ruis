@@ -147,7 +147,7 @@ App::App(unsigned w, unsigned h) :
 		xVisualInfo(xDisplay),
 		xWindow(w, h, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo)
-{	
+{
 #ifdef DEBUG
 	//print GLX version
 	{

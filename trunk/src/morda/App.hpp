@@ -110,23 +110,28 @@ public:
 	
 private:
 	DefaultShaders shaders;
+	
+	friend void Main();
+	void Exec();
+	
+protected:
+	App(unsigned w, unsigned h);
+
 public:
 	
 	inline DefaultShaders& Shaders()throw(){
 		return this->shaders;
 	}
 	
-	App(unsigned w, unsigned h);
+	virtual ~App()throw(){}
 	
-	~App()throw(){}
+	virtual void Init() = 0;
 	
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
 		this->rootContainer->SetPos(tride::Vec2f(0));
 		this->rootContainer->Resize(this->curWinDim);
 	}
-	
-	void Exec();
 	
 	inline ResourceManager& ResMan()throw(){
 		return this->resMan;
@@ -136,6 +141,15 @@ public:
 		return this->inflater;
 	}
 };
+
+
+
+/**
+ * @brief Create application instance
+ * User needs to define this factory function to create his application instance.
+ * @return New application instance.
+ */
+ting::Ptr<App> CreateApp();
 
 
 

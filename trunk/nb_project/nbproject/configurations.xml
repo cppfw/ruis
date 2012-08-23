@@ -67,6 +67,7 @@
         <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
+        <in>main.cpp</in>
       </df>
       <df name="obj">
         <df name="1">
@@ -163,6 +164,20 @@
       <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/layouts/LinearLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/main.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
             <pElem>../src</pElem>
