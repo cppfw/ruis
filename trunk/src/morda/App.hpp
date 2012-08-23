@@ -30,10 +30,12 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
-#include <ting/config.hpp>
 
-#if defined(__ANDROID__)
+#include "config.hpp"
+
+#ifdef M_MORDA_OGLES2
 #	include <GLES2/gl2.h>
+#	include <EGL/egl.h>
 #else
 #	include <GL/glew.h>
 #	include <GL/glx.h>
