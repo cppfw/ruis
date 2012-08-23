@@ -6,7 +6,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := cofi
 
-LOCAL_SRC_FILES := main.cpp
+LOCAL_SRC_FILES := morda/main.cpp
 #LOCAL_SRC_FILES += ../AssetFile/AssetFile.cpp
 #LOCAL_SRC_FILES += Activity.cpp
 
