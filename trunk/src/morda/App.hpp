@@ -28,11 +28,17 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <GL/glew.h>
-#include <GL/glx.h>
-
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
+#include <ting/config.hpp>
+
+#if defined(__ANDROID__)
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#	include <GL/glx.h>
+#endif
+
 
 #include "Exc.hpp"
 #include "Widget.hpp"

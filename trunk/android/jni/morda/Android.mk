@@ -13,10 +13,10 @@ LOCAL_SRC_FILES := morda/main.cpp
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
 LOCAL_CFLAGS += -DDEBUG
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. $(LOCAL_PATH)/../ting $(LOCAL_PATH)/../aumiks
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../ting $(LOCAL_PATH)/../stob $(LOCAL_PATH)/../tride
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv1_CM
 
-LOCAL_SHARED_LIBRARIES := ting
+LOCAL_SHARED_LIBRARIES := ting stob
 
 include $(BUILD_SHARED_LIBRARY)
