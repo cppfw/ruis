@@ -170,7 +170,7 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	virtual tride::Vec2f ComputeMinimalDimensions()const{
+	virtual tride::Vec2f ComputeMinimalDimensions()const throw(){
 		return tride::Vec2f(0, 0);
 	}
 

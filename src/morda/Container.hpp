@@ -93,6 +93,14 @@ public:
 	
 	//override
 	void OnResize();
+	
+	//override
+	tride::Vec2f ComputeMinimalDimensions()const throw(){
+		if(this->layout){
+			return this->layout->ComputeMinimalDimensions(*this);
+		}
+		return this->Widget::ComputeMinimalDimensions();
+	}
 
 	void Add(const ting::Ref<Widget>& w);
 

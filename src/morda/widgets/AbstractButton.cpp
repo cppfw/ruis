@@ -18,7 +18,7 @@ void AbstractButton::Render(const tride::Matr4f& matrix)const{
 	tride::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	SimpleSingleColoringShader& s = App::Inst().shaders.simpleSingleColoring;
+	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	if(this->isPressed){
 		s.SetColor(tride::Vec3f(1, 1, 1));

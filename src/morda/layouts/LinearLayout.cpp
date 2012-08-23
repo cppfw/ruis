@@ -14,13 +14,14 @@ LinearLayout::LinearLayout(const stob::Node* node){
 
 //override
 void LinearLayout::ArrangeWidgets(Container& c)const{
+	
 	//TODO:
 }
 
 
 
 //override
-tride::Vec2f LinearLayout::CalculateMinimumSize(const Container& c)const{
+tride::Vec2f LinearLayout::ComputeMinimalDimensions(const Container& c)const throw(){
 	//TODO:
 	return tride::Vec2f();
 }
