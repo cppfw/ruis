@@ -30,6 +30,7 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
+#include <ting/config.hpp>
 
 #include "config.hpp"
 
@@ -60,6 +61,7 @@ class App : public ting::IntrusiveSingleton<App>{
 	friend class ting::IntrusiveSingleton<App>;
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 	
+#if M_OS == M_OS_LINUX
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
@@ -94,6 +96,9 @@ class App : public ting::IntrusiveSingleton<App>{
 		
 		void Destroy()throw();
 	} glxContex;
+#else
+#	error "unsupported OS"
+#endif
 	
 	tride::Vec2f curWinDim;
 	
