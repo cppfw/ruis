@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 #TARGET_BUILD_TYPE := debug
 
-LOCAL_MODULE    := cofi
+LOCAL_MODULE := morda
 
 LOCAL_SRC_FILES := morda/main.cpp
 #LOCAL_SRC_FILES += ../AssetFile/AssetFile.cpp
