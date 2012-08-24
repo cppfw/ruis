@@ -31,6 +31,7 @@ THE SOFTWARE. */
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
 #include <ting/config.hpp>
+#include <ting/Buffer.hpp>
 
 #include "config.hpp"
 
@@ -61,7 +62,31 @@ class App : public ting::IntrusiveSingleton<App>{
 	friend class ting::IntrusiveSingleton<App>;
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 	
+	
+public:
+	struct DefaultShaders{
+		SimpleSingleColoringShader simpleSingleColoring;
+		SimpleTexturingShader simpleTexturing;
+	};
+	
+private:
+	
 #if M_OS == M_OS_LINUX
+	
+#	ifdef __ANDROID__
+	
+	//TODO: create shaders when OGL is initialized
+	ting::Ptr<DefaultShaders> shaders;
+
+public:
+	inline DefaultShaders& Shaders()throw(){
+		return *this->shaders;
+	}
+
+
+
+#	else //generic linux
+
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
@@ -96,10 +121,23 @@ class App : public ting::IntrusiveSingleton<App>{
 		
 		void Destroy()throw();
 	} glxContex;
+	
+	friend void Main(int argc, char** argv);
+	void Exec();
+	
+	DefaultShaders shaders;
+	
+public:
+	inline DefaultShaders& Shaders()throw(){
+		return this->shaders;
+	}
+#	endif
+
 #else
 #	error "unsupported OS"
 #endif
 	
+private:
 	tride::Vec2f curWinDim;
 	
 	ting::Inited<volatile bool, false> quitFlag;
@@ -114,31 +152,14 @@ class App : public ting::IntrusiveSingleton<App>{
 	
 	void Render();
 	
-	
-public:
-	struct DefaultShaders{
-		SimpleSingleColoringShader simpleSingleColoring;
-		SimpleTexturingShader simpleTexturing;
-	};
-	
-private:
-	DefaultShaders shaders;
-	
-	friend void Main(int argc, char** argv);
-	void Exec();
-	
 protected:
 	App(unsigned w, unsigned h);
 
 public:
 	
-	inline DefaultShaders& Shaders()throw(){
-		return this->shaders;
-	}
-	
 	virtual ~App()throw(){}
 	
-	virtual void Init() = 0;
+	virtual void Init(const ting::Buffer<const ting::u8>& savedState = ting::Buffer<const ting::u8>(0, 0)) = 0;
 	
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;

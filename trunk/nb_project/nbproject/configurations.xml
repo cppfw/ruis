@@ -7,6 +7,137 @@
         <in>Vector3.hpp</in>
       </df>
     </df>
+    <df name="jni" root="../android/jni">
+      <df name="morda">
+        <df name="morda">
+          <df name="layouts">
+            <in>LinearLayout.cpp</in>
+            <in>LinearLayout.hpp</in>
+          </df>
+          <df name="resman">
+            <in>Resource.cpp</in>
+            <in>Resource.hpp</in>
+            <in>ResourceManager.cpp</in>
+            <in>ResourceManager.hpp</in>
+          </df>
+          <df name="resources">
+            <in>ResFont.cpp</in>
+            <in>ResFont.hpp</in>
+            <in>ResTexture.cpp</in>
+            <in>ResTexture.hpp</in>
+          </df>
+          <df name="shaders">
+            <in>Shader.cpp</in>
+            <in>Shader.hpp</in>
+            <in>SimpleSingleColoringShader.cpp</in>
+            <in>SimpleSingleColoringShader.hpp</in>
+            <in>SimpleTexturingShader.cpp</in>
+            <in>SimpleTexturingShader.hpp</in>
+            <in>SingleColoringShader.cpp</in>
+            <in>SingleColoringShader.hpp</in>
+            <in>TexturingShader.cpp</in>
+            <in>TexturingShader.hpp</in>
+          </df>
+          <df name="util">
+            <in>GLTexture.cpp</in>
+            <in>GLTexture.hpp</in>
+            <in>Image.cpp</in>
+            <in>Image.hpp</in>
+            <in>TexFont.cpp</in>
+            <in>TexFont.hpp</in>
+            <in>ZipFile.hpp</in>
+            <in>util.cpp</in>
+            <in>util.hpp</in>
+          </df>
+          <df name="widgets">
+            <in>AbstractButton.cpp</in>
+            <in>AbstractButton.hpp</in>
+            <in>Button.cpp</in>
+            <in>Button.hpp</in>
+            <in>Label.cpp</in>
+            <in>Label.hpp</in>
+          </df>
+          <in>App.cpp</in>
+          <in>App.hpp</in>
+          <in>Container.cpp</in>
+          <in>Container.hpp</in>
+          <in>Exc.hpp</in>
+          <in>GuiInflater.cpp</in>
+          <in>GuiInflater.hpp</in>
+          <in>Layout.hpp</in>
+          <in>Updateable.hpp</in>
+          <in>Widget.cpp</in>
+          <in>Widget.hpp</in>
+          <in>config.hpp</in>
+          <in>main.cpp</in>
+        </df>
+      </df>
+      <df name="stob">
+        <df name="stob">
+          <in>Exc.hpp</in>
+          <in>dom.cpp</in>
+          <in>dom.hpp</in>
+          <in>parser.cpp</in>
+          <in>parser.hpp</in>
+        </df>
+      </df>
+      <df name="ting">
+        <df name="ting">
+          <df name="fs">
+            <in>Exc.hpp</in>
+            <in>FSFile.cpp</in>
+            <in>FSFile.hpp</in>
+            <in>File.cpp</in>
+            <in>File.hpp</in>
+          </df>
+          <df name="net">
+            <in>Exc.hpp</in>
+            <in>HostNameResolver.cpp</in>
+            <in>HostNameResolver.hpp</in>
+            <in>IPAddress.cpp</in>
+            <in>IPAddress.hpp</in>
+            <in>Lib.cpp</in>
+            <in>Lib.hpp</in>
+            <in>Socket.cpp</in>
+            <in>Socket.hpp</in>
+            <in>TCPServerSocket.cpp</in>
+            <in>TCPServerSocket.hpp</in>
+            <in>TCPSocket.cpp</in>
+            <in>TCPSocket.hpp</in>
+            <in>UDPSocket.cpp</in>
+            <in>UDPSocket.hpp</in>
+          </df>
+          <in>Array.hpp</in>
+          <in>Buffer.hpp</in>
+          <in>Exc.hpp</in>
+          <in>PoolStored.hpp</in>
+          <in>Ptr.hpp</in>
+          <in>Ref.cpp</in>
+          <in>Ref.hpp</in>
+          <in>Signal.hpp</in>
+          <in>Singleton.hpp</in>
+          <in>Thread.cpp</in>
+          <in>Thread.hpp</in>
+          <in>WaitSet.cpp</in>
+          <in>WaitSet.hpp</in>
+          <in>atomic.hpp</in>
+          <in>codegen.h</in>
+          <in>config.hpp</in>
+          <in>debug.hpp</in>
+          <in>math.hpp</in>
+          <in>timer.cpp</in>
+          <in>timer.hpp</in>
+          <in>types.hpp</in>
+          <in>util.hpp</in>
+        </df>
+      </df>
+      <df name="tride">
+        <df name="tride">
+          <in>Rectangle2.hpp</in>
+          <in>Vector3.hpp</in>
+        </df>
+      </df>
+    </df>
     <df name="src" root="../src">
       <df name="morda">
         <df name="layouts">
@@ -67,6 +198,7 @@
         <in>Updateable.hpp</in>
         <in>Widget.cpp</in>
         <in>Widget.hpp</in>
+        <in>config.hpp</in>
         <in>main.cpp</in>
       </df>
       <df name="obj">
@@ -127,13 +259,286 @@
           <ccTool>
             <incDir>
               <pElem>../ext</pElem>
+              <pElem>/home/ivan/bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
+              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="../android/jni/morda/morda/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/GuiInflater.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/Updateable.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/Widget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/layouts/LinearLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resman/Resource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resources/ResFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/Shader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/GLTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/Image.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/TexFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/ZipFile.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/util.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/widgets/AbstractButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/widgets/Button.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/widgets/Label.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/stob/stob/dom.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/stob/stob/parser.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/Ref.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/Signal.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Thread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/WaitSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/codegen.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/fs/FSFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/fs/File.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/HostNameResolver.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/IPAddress.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/Lib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/Socket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/TCPServerSocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/TCPSocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/UDPSocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/timer.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/tride/tride/Rectangle2.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/tride/tride/Vector3.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -250,6 +655,14 @@
         <ccTool>
         </ccTool>
       </item>
+      <folder path="jni">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="src">
         <ccTool>
           <incDir>
