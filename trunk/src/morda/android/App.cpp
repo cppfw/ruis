@@ -220,15 +220,13 @@ void ANativeActivity_onCreate(
 	activity->callbacks->onInputQueueDestroyed = &OnInputQueueDestroyed;
 	activity->callbacks->onContentRectChanged = &OnContentRectChanged;
 
-	activity->instance = morda::CreateApp(0, 0).Extract();
-	ASSERT(activity->instance)
-
-	morda::App* app = static_cast<morda::App*>(activity->instance);
+	morda::App* app = morda::CreateApp(0, 0).Extract();
+	ASSERT(app)
+	activity->instance = app;
 
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
 	appInfo.assetManager = activity->assetManager;
-	
 	if(savedState){
 		//copy saved state data because no guarantee that the data will be kept alive after returning from this function
 		appInfo.savedState.Init(savedStateSize);
