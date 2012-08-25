@@ -81,7 +81,7 @@ public:
 	{}
 	
 	//override
-	void Init(){
+	void Init(const ting::Buffer<const ting::u8>& savedState){
 		this->ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
 		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
