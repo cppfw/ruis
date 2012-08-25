@@ -37,7 +37,7 @@ endif
 
 #Sources
 srcs :=
-srcs += morda/main.cpp
+srcs += morda/linux/App.cpp
 srcs += morda/App.cpp
 srcs += morda/Widget.cpp
 srcs += morda/Container.cpp

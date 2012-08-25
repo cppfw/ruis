@@ -125,6 +125,10 @@ public:
 	friend void Main(int argc, char** argv);
 	void Exec();
 	
+	inline void SwapGLBuffers(){
+		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
+	}
+	
 	DefaultShaders shaders;
 	
 public:

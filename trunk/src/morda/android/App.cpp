@@ -1,16 +1,16 @@
-#include "App.hpp"
+//This file contains implementations of platform dependent methods from App class.
 
 
+#include "../App.hpp"
+
+
+#include <android/native_activity.h>
 #include <ting/Array.hpp>
 
 
+using namespace morda;
 
-#if M_OS == M_OS_LINUX
 
-#	ifdef __ANDROID__
-
-#	include <android/native_activity.h>
-#include <string.h>
 
 namespace{
 
@@ -238,29 +238,5 @@ void ANativeActivity_onCreate(
 	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
 
 	//TODO: call it after OGL is initialized
-	app->Init(ting::Buffer<const ting::u8>(savedState, savedStateSize));
+	app->Init(appInfo.savedState);
 }
-
-#	else //generic linux
-
-namespace morda{
-inline void Main(int argc, char** argv){
-	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv);
-
-	app->Init();
-
-	app->Exec();
-}
-}//~namespace
-
-
-int main(int argc, char** argv){
-	morda::Main(argc, argv);
-
-	return 0;
-}
-#	endif
-
-#else
-#	error "unsupported OS"
-#endif

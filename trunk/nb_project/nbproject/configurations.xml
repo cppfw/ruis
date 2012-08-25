@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="ext" root="../ext">
+    <df name="ext" root="/home/ivan/prj/morda/ext">
       <df name="tride">
         <in>Rectangle2.hpp</in>
         <in>Vector3.hpp</in>
       </df>
     </df>
-    <df name="jni" root="../android/jni">
+    <df name="jni" root="/home/ivan/prj/morda/android/jni">
       <df name="morda">
         <df name="morda">
           <df name="layouts">
@@ -71,6 +71,7 @@
           <in>config.hpp</in>
           <in>main.cpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="stob">
         <df name="stob">
@@ -80,6 +81,7 @@
           <in>parser.cpp</in>
           <in>parser.hpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="ting">
         <df name="ting">
@@ -130,6 +132,7 @@
           <in>types.hpp</in>
           <in>util.hpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="tride">
         <df name="tride">
@@ -137,12 +140,56 @@
           <in>Vector3.hpp</in>
         </df>
       </df>
+      <in>Android.mk</in>
+      <in>Application.mk</in>
     </df>
-    <df name="src" root="../src">
+    <df name="src" root="/home/ivan/prj/morda/src">
       <df name="morda">
+        <df name="android">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+          <in>App.cpp</in>
+          <in>AssetFile.cpp</in>
+          <in>AssetFile.hpp</in>
+        </df>
         <df name="layouts">
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
+        </df>
+        <df name="linux">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+          <in>App.cpp</in>
         </df>
         <df name="resman">
           <in>Resource.cpp</in>
@@ -205,27 +252,26 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="layouts">
-              </df>
-              <df name="resman">
-              </df>
-              <df name="resources">
-              </df>
-              <df name="shaders">
-              </df>
-              <df name="util">
-              </df>
-              <df name="widgets">
+              <df name="linux">
               </df>
             </df>
           </df>
         </df>
       </df>
+      <in>makefile</in>
     </df>
-    <df name="tests" root="../tests">
+    <df name="tests" root="/home/ivan/prj/morda/tests">
       <df name="app">
+        <in>font.res.stob</in>
         <in>main.cpp</in>
+        <in>main.res.stob</in>
+        <in>makefile</in>
+        <in>output.log</in>
+        <in>test.gui.stob</in>
+        <in>texture.jpg</in>
+        <in>vera.ttf</in>
       </df>
+      <in>makefile</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -236,10 +282,10 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>../src</Elem>
-    <Elem>../tests</Elem>
-    <Elem>../ext</Elem>
-    <Elem>../android/jni</Elem>
+    <Elem>/home/ivan/prj/morda/src</Elem>
+    <Elem>/home/ivan/prj/morda/tests</Elem>
+    <Elem>/home/ivan/prj/morda/ext</Elem>
+    <Elem>/home/ivan/prj/morda/android/jni</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -259,11 +305,9 @@
           <ccTool>
             <incDir>
               <pElem>../ext</pElem>
-              <pElem>/home/ivan/bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
-              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
@@ -557,11 +601,26 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/android/AssetFile.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <item path="../src/morda/layouts/LinearLayout.cpp"
             ex="false"
             tool="1"
             flavor2="4">
         <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/main.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
@@ -609,6 +668,12 @@
             tool="1"
             flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/TexturingShader.cpp"
@@ -655,12 +720,50 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="/home/ivan/prj/morda/android/jni/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/Application.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/stob/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/ting/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/app/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
+      </item>
       <folder path="jni">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="src">
@@ -669,6 +772,13 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
           </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/android">
+        <ccTool>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
     </conf>
