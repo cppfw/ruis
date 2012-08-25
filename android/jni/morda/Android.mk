@@ -6,9 +6,9 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := morda
 
-LOCAL_SRC_FILES := morda/main.cpp
-#LOCAL_SRC_FILES += ../AssetFile/AssetFile.cpp
-#LOCAL_SRC_FILES += Activity.cpp
+LOCAL_SRC_FILES := morda/android/App.cpp
+LOCAL_SRC_FILES += morda/android/AssetFile.cpp
+
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
 LOCAL_CFLAGS += -DDEBUG

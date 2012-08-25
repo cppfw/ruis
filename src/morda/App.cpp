@@ -40,7 +40,3 @@ void App::Render(){
 	
 	this->SwapGLBuffers();
 }
-
-
-
-
