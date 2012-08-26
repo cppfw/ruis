@@ -122,6 +122,8 @@ public:
 		void Destroy()throw();
 	} glxContex;
 	
+	ting::Inited<volatile bool, false> quitFlag;
+	
 	friend void Main(int argc, char** argv);
 	void Exec();
 	
@@ -143,8 +145,6 @@ public:
 	
 private:
 	tride::Vec2f curWinDim;
-	
-	ting::Inited<volatile bool, false> quitFlag;
 	
 	ting::Ref<morda::Container> rootContainer;
 	
