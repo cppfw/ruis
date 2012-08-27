@@ -28,9 +28,6 @@ THE SOFTWARE. */
 
 #pragma once
 
-
-#include <GL/glew.h>
-
 #include <tride/Vector3.hpp>
 #include <stob/dom.hpp>
 

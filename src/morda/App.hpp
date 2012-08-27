@@ -107,7 +107,7 @@ private:
 	friend void Render(App* app);
 	
 	inline void SwapGLBuffers(){
-		eglSwapBuffers(this->eglDisplay, this->eglSurface);
+		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 	}
 
 
