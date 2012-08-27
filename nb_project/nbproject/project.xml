@@ -4,16 +4,16 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>nb_project</name>
-            <c-extensions/>
+            <c-extensions>c</c-extensions>
             <cpp-extensions>cpp</cpp-extensions>
             <header-extensions>h,hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../src</sourceRootElem>
-                <sourceRootElem>../android/jni</sourceRootElem>
-                <sourceRootElem>../tests</sourceRootElem>
-                <sourceRootElem>../ext</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/src</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/tests</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/ext</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/android/jni</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
