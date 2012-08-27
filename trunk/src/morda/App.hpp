@@ -69,12 +69,13 @@ public:
 		SimpleTexturingShader simpleTexturing;
 	};
 	
-private:
+
 	
 #if M_OS == M_OS_LINUX
 	
 #	ifdef __ANDROID__
 	
+private:
 	EGLDisplay eglDisplay;
 	EGLContext eglContext;
 	EGLSurface eglSurface;
@@ -98,6 +99,7 @@ public:
 
 #	else //generic linux
 
+private:
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
