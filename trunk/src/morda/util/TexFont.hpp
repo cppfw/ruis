@@ -40,10 +40,24 @@ THE SOFTWARE. */
 #include <ting/Exc.hpp>
 #include <ting/fs/File.hpp>
 
-#include <GL/glew.h>
+#include "../config.hpp"
+
+#ifdef M_MORDA_OGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 #include "GLTexture.hpp"
 #include "../shaders/TexturingShader.hpp"
+
+
+
+#ifdef __ANDROID__
+namespace std {
+	typedef basic_string<wchar_t> wstring;
+}//~namespace
+#endif
 
 
 

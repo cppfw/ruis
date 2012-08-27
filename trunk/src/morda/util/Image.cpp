@@ -252,7 +252,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 		ASSERT(ret == sig.SizeInBytes())
 	}
 
-	if(!png_check_sig(sig.Begin(), sig.SizeInBytes())){//if it is not a PNG-file
+	if(png_sig_cmp(sig.Begin(), 0, sig.SizeInBytes()) != 0){//if it is not a PNG-file
 		throw Image::Exc("Image::LoadPNG(): not a PNG file");
 	}
 
@@ -289,7 +289,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 	}
 	//Convert grayscale PNG to 8bit greyscale PNG
 	if(colorType == PNG_COLOR_TYPE_GRAY && bitDepth < 8){
-		png_set_gray_1_2_4_to_8(pngPtr);
+		png_set_expand_gray_1_2_4_to_8(pngPtr);
 	}
 	//if(png_get_valid(pngPtr, infoPtr,PNG_INFO_tRNS)) png_set_tRNS_to_alpha(pngPtr);
 

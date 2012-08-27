@@ -129,7 +129,7 @@ App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper
 
 
 
-App::EGLContextWrapper::~EGLContextWrapper(){
+App::EGLContextWrapper::~EGLContextWrapper()throw(){
 	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 	eglDestroyContext(this->d.d, this->c);
 }
@@ -141,11 +141,11 @@ App::App(unsigned w, unsigned h) :
 		eglSurface(eglDisplay, eglConfig),
 		eglContext(eglDisplay, eglConfig, eglSurface)
 {
-	EGLint w, h;
-	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &w);
-	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &h);
+	EGLint width, height;
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
-	this->UpdateWindowDimensions(tride::Vec2f(float(w), float(h)));
+	this->UpdateWindowDimensions(tride::Vec2f(float(width), float(height)));
 }
 
 

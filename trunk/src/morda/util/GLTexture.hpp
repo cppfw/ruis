@@ -28,7 +28,13 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <GL/glew.h>
+#include "../config.hpp"
+
+#ifdef M_MORDA_OGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 #include <ting/debug.hpp>
 
