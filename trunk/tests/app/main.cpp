@@ -78,10 +78,7 @@ class Application : public morda::App{
 public:
 	Application() :
 			App(320, 480)
-	{}
-	
-	//override
-	void Init(const ting::Buffer<const ting::u8>& savedState){
+	{
 		this->ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
 		
 		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
@@ -93,6 +90,6 @@ public:
 
 
 
-ting::Ptr<morda::App> morda::CreateApp(int argc, char** argv){
+ting::Ptr<morda::App> morda::CreateApp(int argc, char** argv, const ting::Buffer<const ting::u8>& savedState){
 	return ting::Ptr<Application>(new Application());
 }

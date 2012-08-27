@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="ext" root="/home/ivan/prj/morda/ext">
+    <df name="ext" root="../ext">
       <df name="tride">
         <in>Rectangle2.hpp</in>
         <in>Vector3.hpp</in>
       </df>
     </df>
-    <df name="jni" root="/home/ivan/prj/morda/android/jni">
+    <df name="jni" root="../android/jni">
       <df name="morda">
         <df name="morda">
+          <df name="android">
+            <in>App.cpp</in>
+            <in>AssetFile.cpp</in>
+            <in>AssetFile.hpp</in>
+          </df>
           <df name="layouts">
             <in>LinearLayout.cpp</in>
             <in>LinearLayout.hpp</in>
+          </df>
+          <df name="linux">
+            <in>App.cpp</in>
           </df>
           <df name="resman">
             <in>Resource.cpp</in>
@@ -69,7 +77,6 @@
           <in>Widget.cpp</in>
           <in>Widget.hpp</in>
           <in>config.hpp</in>
-          <in>main.cpp</in>
         </df>
         <in>Android.mk</in>
       </df>
@@ -143,26 +150,9 @@
       <in>Android.mk</in>
       <in>Application.mk</in>
     </df>
-    <df name="src" root="/home/ivan/prj/morda/src">
+    <df name="src" root="../src">
       <df name="morda">
         <df name="android">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>App.cpp</in>
           <in>AssetFile.cpp</in>
           <in>AssetFile.hpp</in>
@@ -172,23 +162,6 @@
           <in>LinearLayout.hpp</in>
         </df>
         <df name="linux">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>App.cpp</in>
         </df>
         <df name="resman">
@@ -251,19 +224,7 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="layouts">
-              </df>
               <df name="linux">
-              </df>
-              <df name="resman">
-              </df>
-              <df name="resources">
-              </df>
-              <df name="shaders">
-              </df>
-              <df name="util">
-              </df>
-              <df name="widgets">
               </df>
             </df>
           </df>
@@ -271,7 +232,7 @@
       </df>
       <in>makefile</in>
     </df>
-    <df name="tests" root="/home/ivan/prj/morda/tests">
+    <df name="tests" root="../tests">
       <df name="app">
         <in>font.res.stob</in>
         <in>main.cpp</in>
@@ -293,10 +254,10 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>/home/ivan/prj/morda/src</Elem>
-    <Elem>/home/ivan/prj/morda/tests</Elem>
-    <Elem>/home/ivan/prj/morda/ext</Elem>
-    <Elem>/home/ivan/prj/morda/android/jni</Elem>
+    <Elem>../src</Elem>
+    <Elem>../android/jni</Elem>
+    <Elem>../tests</Elem>
+    <Elem>../ext</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -316,13 +277,21 @@
           <ccTool>
             <incDir>
               <pElem>../ext</pElem>
+              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
+              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="../android/jni/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/Application.mk" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/morda/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/morda/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -353,6 +322,20 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/morda/morda/android/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <item path="../android/jni/morda/morda/layouts/LinearLayout.cpp"
             ex="false"
             tool="1"
@@ -360,7 +343,7 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/morda/morda/main.cpp"
+      <item path="../android/jni/morda/morda/linux/App.cpp"
             ex="false"
             tool="1"
             flavor2="4">
@@ -484,6 +467,8 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/stob/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/stob/stob/dom.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -494,6 +479,8 @@
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/Android.mk" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/Ref.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -594,22 +581,44 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
@@ -620,51 +629,34 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/layouts/LinearLayout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
+      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/resources/ResTexture.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
             ex="false"
             tool="1"
-            flavor2="4">
+            flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="4">
+            flavor2="0">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SingleColoringShader.cpp"
@@ -673,6 +665,7 @@
             flavor2="4">
         <ccTool>
           <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
           <preprocessorList>
@@ -683,86 +676,24 @@
       <item path="../src/morda/shaders/TexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/widgets/AbstractButton.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../tests/app/main.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/ivan/prj/morda/android/jni/Android.mk"
-            ex="true"
-            tool="3"
             flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/android/jni/Application.mk"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/android/jni/morda/Android.mk"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/android/jni/stob/Android.mk"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/android/jni/ting/Android.mk"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/tests/app/makefile"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
-      </item>
-      <folder path="jni">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../tests/app/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../tests/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <folder path="jni">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
           <preprocessorList>
@@ -770,7 +701,18 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="src">
+      <folder path="src/morda/android">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+            <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/layouts">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -778,11 +720,44 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="src/morda/android">
+      <folder path="src/morda/linux">
         <ccTool>
-          <preprocessorList>
-            <Elem>__ANDROID__</Elem>
-          </preprocessorList>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </folder>
     </conf>
