@@ -143,7 +143,8 @@ void App::GLXContextWrapper::Destroy()throw(){
 App::App(unsigned w, unsigned h) :
 		xVisualInfo(xDisplay),
 		xWindow(w, h, xDisplay, xVisualInfo),
-		glxContex(xDisplay, xWindow, xVisualInfo)
+		glxContex(xDisplay, xWindow, xVisualInfo),
+		curWinDim(-1, -1)
 {
 #ifdef DEBUG
 	//print GLX version
@@ -154,9 +155,7 @@ App::App(unsigned w, unsigned h) :
 	}
 #endif
 	
-	this->curWinDim.x = float(w);
-	this->curWinDim.y = float(h);
-	this->SetGLViewport(this->curWinDim);
+	this->UpdateWindowDimensions(tride::Vec2f(float(w), float(h)));
 }
 
 
