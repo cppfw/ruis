@@ -231,19 +231,7 @@ void App::Exec(){
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						if(
-								this->curWinDim.x != float(event.xconfigure.width) ||
-								this->curWinDim.y != float(event.xconfigure.height)
-							)
-						{
-							this->curWinDim.x = float(event.xconfigure.width);
-							this->curWinDim.y = float(event.xconfigure.height);
-							
-							this->SetGLViewport(this->curWinDim);
-							if(this->rootContainer.IsValid()){
-								this->rootContainer->Resize(this->curWinDim);
-							}
-						}
+						this->UpdateWindowDimensions(tride::Vec2f(float(event.xconfigure.width), float(event.xconfigure.height)));
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
