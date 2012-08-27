@@ -76,11 +76,33 @@ public:
 #	ifdef __ANDROID__
 	
 private:
-	EGLDisplay eglDisplay;
-	EGLContext eglContext;
-	EGLSurface eglSurface;
 	
-	friend void SetEGLStuff(App* app, EGLDisplay display, EGLContext context, EGLSurface surface);
+	struct EGLDisplayWrapper{
+		EGLDisplay d;
+		EGLDisplayWrapper();
+		~EGLDisplayWrapper()throw();
+	};
+	
+	struct EGLConfigWrapper{
+		EGLConfig c;
+		EGLConfigWrapper(EGLDisplayWrapper& d);
+		~EGLConfigWrapper()throw(){}
+	};
+	
+	struct EGLSurfaceWrapper{
+		EGLDisplayWrapper& d;
+		EGLSurface s;
+		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
+		~EGLSurfaceWrapper()throw();
+	};
+	
+	struct EGLContextWrapper{
+		EGLDisplayWrapper& d;
+		EGLContext c;
+		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
+		~EGLContextWrapper()throw();
+	};
+	
 	friend void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim);
 	
 	//TODO: create shaders when OGL is initialized
