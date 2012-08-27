@@ -12,6 +12,12 @@ using namespace morda;
 
 
 
+namespace{
+ANativeWindow* androidWindow = 0;
+}//~namespace
+
+
+
 namespace morda{
 
 
@@ -70,9 +76,10 @@ App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper
 		throw morda::Exc("eglGetConfigAttrib() failed");
 	}
 
-	ANativeWindow_setBuffersGeometry(window, 0, 0, format);
+	ASSERT(androidWindow)
+	ANativeWindow_setBuffersGeometry(androidWindow, 0, 0, format);
 
-	this->s = eglCreateWindowSurface(d.d, c.c, window, NULL);
+	this->s = eglCreateWindowSurface(d.d, c.c, androidWindow, NULL);
 	if(this->s == EGL_NO_SURFACE){
 		throw morda::Exc("eglCreateWindowSurface() failed");
 	}
@@ -109,10 +116,16 @@ App::EGLContextWrapper::~EGLContextWrapper(){
 
 
 
-App::App(unsigned w, unsigned h){
+App::App(unsigned w, unsigned h) :
+		eglConfig(eglDisplay),
+		eglSurface(eglDisplay, eglConfig),
+		eglContext(eglDisplay, eglConfig, eglSurface)
+{
 	EGLint w, h;
-	eglQuerySurface(display, surface, EGL_WIDTH, &w);
-	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &w);
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &h);
+	
+	this->UpdateWindowDimensions(tride::Vec2f(float(w), float(h)));
 }
 
 
@@ -211,58 +224,65 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
     TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 	
-	//initialize OpenGL ES and EGL
-
-	EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-	eglInitialize(display, 0, 0);
+	//save window in a static var, so it is accessible for OGL initializers from morda::App class
+	androidWindow = window;
 	
-	//TODO: allow stencil configuration etc.
-	//Here specify the attributes of the desired configuration.
-	//Below, we select an EGLConfig with at least 8 bits per color
-	//component compatible with on-screen windows
-	const EGLint attribs[] = {
-			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-			EGL_BLUE_SIZE, 8,
-			EGL_GREEN_SIZE, 8,
-			EGL_RED_SIZE, 8,
-			EGL_NONE
-	};
-
-	//Here, the application chooses the configuration it desires. In this
-	//sample, we have a very simplified selection process, where we pick
-	//the first EGLConfig that matches our criteria
-	EGLConfig config;
-	EGLint numConfigs;
-	eglChooseConfig(display, attribs, &config, 1, &numConfigs);
-
-	//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
-	//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
-	//As soon as we picked a EGLConfig, we can safely reconfigure the
-	//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
-	EGLint format;
-	eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
-
-	ANativeWindow_setBuffersGeometry(window, 0, 0, format);
-
-	EGLSurface surface = eglCreateWindowSurface(display, config, window, NULL);
-	EGLContext context = eglCreateContext(display, config, NULL, NULL);
-
-	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
-		TRACE(<< "eglMakeCurrent(): failed" << std::endl)
-		return;
-	}
-
-	EGLint w, h;
-	eglQuerySurface(display, surface, EGL_WIDTH, &w);
-	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
-
-	morda::App* app = static_cast<morda::App*>(activity->instance);
+	morda::App* app = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+	ASSERT(app)
+	activity->instance = app;
 	
-	SetEGLStuff(app, display, context, surface);
-	UpdateWindowDimensions(app, tride::Vec2f(w, h));
-
-	//call Init() after OGL is initialized
-	app->Init(appInfo.savedState);
+//	//initialize OpenGL ES and EGL
+//
+//	EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+//	eglInitialize(display, 0, 0);
+//	
+//	//TODO: allow stencil configuration etc.
+//	//Here specify the attributes of the desired configuration.
+//	//Below, we select an EGLConfig with at least 8 bits per color
+//	//component compatible with on-screen windows
+//	const EGLint attribs[] = {
+//			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+//			EGL_BLUE_SIZE, 8,
+//			EGL_GREEN_SIZE, 8,
+//			EGL_RED_SIZE, 8,
+//			EGL_NONE
+//	};
+//
+//	//Here, the application chooses the configuration it desires. In this
+//	//sample, we have a very simplified selection process, where we pick
+//	//the first EGLConfig that matches our criteria
+//	EGLConfig config;
+//	EGLint numConfigs;
+//	eglChooseConfig(display, attribs, &config, 1, &numConfigs);
+//
+//	//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
+//	//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
+//	//As soon as we picked a EGLConfig, we can safely reconfigure the
+//	//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
+//	EGLint format;
+//	eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
+//
+//	ANativeWindow_setBuffersGeometry(window, 0, 0, format);
+//
+//	EGLSurface surface = eglCreateWindowSurface(display, config, window, NULL);
+//	EGLContext context = eglCreateContext(display, config, NULL, NULL);
+//
+//	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
+//		TRACE(<< "eglMakeCurrent(): failed" << std::endl)
+//		return;
+//	}
+//
+//	EGLint w, h;
+//	eglQuerySurface(display, surface, EGL_WIDTH, &w);
+//	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
+//
+//	morda::App* app = static_cast<morda::App*>(activity->instance);
+//	
+//	SetEGLStuff(app, display, context, surface);
+//	UpdateWindowDimensions(app, tride::Vec2f(w, h));
+//
+//	//call Init() after OGL is initialized
+//	app->Init(appInfo.savedState);
 }
 
 
@@ -286,8 +306,8 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 //    TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 
-	//TODO: destroy app object
-
+	//destroy app object
+	delete static_cast<morda::App*>(activity->instance);
 }
 
 
@@ -389,9 +409,7 @@ void ANativeActivity_onCreate(
 	activity->callbacks->onInputQueueDestroyed = &OnInputQueueDestroyed;
 	activity->callbacks->onContentRectChanged = &OnContentRectChanged;
 
-	morda::App* app = morda::CreateApp(0, 0).Extract();
-	ASSERT(app)
-	activity->instance = app;
+	activity->instance = 0;
 
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
@@ -402,5 +420,5 @@ void ANativeActivity_onCreate(
 		memcpy(appInfo.savedState.Begin(), savedState, savedStateSize);
 	}
 
-	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
+//	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
 }
