@@ -104,7 +104,8 @@ private:
 	} eglContext;
 	
 	friend void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim);
-
+	friend void Render(App* app);
+	
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay, this->eglSurface);
 	}
