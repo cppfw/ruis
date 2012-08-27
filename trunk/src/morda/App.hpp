@@ -75,8 +75,19 @@ private:
 	
 #	ifdef __ANDROID__
 	
+	EGLDisplay eglDisplay;
+	EGLContext eglContext;
+	EGLSurface eglSurface;
+	
+	friend void SetEGLStuff(App* app, EGLDisplay display, EGLContext context, EGLSurface surface);
+	friend void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim);
+	
 	//TODO: create shaders when OGL is initialized
 	ting::Ptr<DefaultShaders> shaders;
+
+	inline void SwapGLBuffers(){
+		eglSwapBuffers(this->eglDisplay, this->eglSurface);
+	}
 
 public:
 	inline DefaultShaders& Shaders()throw(){
@@ -153,6 +164,8 @@ private:
 	GuiInflater inflater;
 	
 	void SetGLViewport(const tride::Vec2f& dim);
+	
+	void UpdateWindowDimensions(const tride::Vec2f& dim);
 	
 	void Render();
 	

@@ -40,3 +40,17 @@ void App::Render(){
 	
 	this->SwapGLBuffers();
 }
+
+
+
+void App::UpdateWindowDimensions(const tride::Vec2f& dim){
+	if(this->curWinDim.x != dim.x || this->curWinDim.y != dim.y){
+		this->curWinDim.x = dim.x;
+		this->curWinDim.y = dim.y;
+
+		this->SetGLViewport(this->curWinDim);
+		if(this->rootContainer.IsValid()){
+			this->rootContainer->Resize(this->curWinDim);
+		}
+	}
+}

@@ -12,7 +12,45 @@ using namespace morda;
 
 
 
+namespace morda{
+
+
+inline void SetEGLStuff(App* app, EGLDisplay display, EGLContext context, EGLSurface surface){
+	app->eglDisplay = display;
+	app->eglContext = context;
+	app->eglSurface = surface;
+}
+
+
+
+inline void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim){
+	app->UpdateWindowDimensions(newWinDim);
+}
+
+
+
+}//~namespace
+
+
+
 namespace{
+
+struct AppInfo{
+	//Path to this application's internal data directory.
+	const char* internalDataPath;
+
+	//Path to this application's external (removable/mountable) data directory.
+	const char* externalDataPath;
+
+	//Pointer to the Asset Manager instance for the application. The application
+	//uses this to access binary assets bundled inside its own .apk file.
+	AAssetManager* assetManager;
+
+	//Holds info about saved state if restoring from previously saved state.
+	ting::Array<ting::u8> savedState;
+} appInfo;
+
+
 
 void OnDestroy(ANativeActivity* activity){
 	delete static_cast<morda::App*>(activity->instance);
@@ -77,9 +115,60 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
-//    TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnNativeWindowCreated(window);
+    TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
+	
+	//initialize OpenGL ES and EGL
+
+	EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+	eglInitialize(display, 0, 0);
+	
+	//TODO: allow stencil configuration etc.
+	//Here specify the attributes of the desired configuration.
+	//Below, we select an EGLConfig with at least 8 bits per color
+	//component compatible with on-screen windows
+	const EGLint attribs[] = {
+			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+			EGL_BLUE_SIZE, 8,
+			EGL_GREEN_SIZE, 8,
+			EGL_RED_SIZE, 8,
+			EGL_NONE
+	};
+
+	//Here, the application chooses the configuration it desires. In this
+	//sample, we have a very simplified selection process, where we pick
+	//the first EGLConfig that matches our criteria
+	EGLConfig config;
+	EGLint numConfigs;
+	eglChooseConfig(display, attribs, &config, 1, &numConfigs);
+
+	//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
+	//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
+	//As soon as we picked a EGLConfig, we can safely reconfigure the
+	//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
+	EGLint format;
+	eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
+
+	ANativeWindow_setBuffersGeometry(window, 0, 0, format);
+
+	EGLSurface surface = eglCreateWindowSurface(display, config, window, NULL);
+	EGLContext context = eglCreateContext(display, config, NULL, NULL);
+
+	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
+		TRACE(<< "eglMakeCurrent(): failed" << std::endl)
+		return;
+	}
+
+	EGLint w, h;
+	eglQuerySurface(display, surface, EGL_WIDTH, &w);
+	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
+
+	morda::App* app = static_cast<morda::App*>(activity->instance);
+	
+	SetEGLStuff(app, display, context, surface);
+	UpdateWindowDimensions(app, tride::Vec2f(w, h));
+
+	//call Init() after OGL is initialized
+	app->Init(appInfo.savedState);
 }
 
 
@@ -102,8 +191,18 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 //    TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnNativeWindowDestroyed(window);
+
+	if(this->display != EGL_NO_DISPLAY){
+		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		if(this->context != EGL_NO_CONTEXT){
+			eglDestroyContext(this->display, this->context);
+		}
+		if(this->surface != EGL_NO_SURFACE){
+			eglDestroySurface(this->display, this->surface);
+		}
+		eglTerminate(this->display);
+	}
+
 }
 
 
@@ -178,21 +277,6 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 
 
 
-struct AppInfo{
-	//Path to this application's internal data directory.
-	const char* internalDataPath;
-
-	//Path to this application's external (removable/mountable) data directory.
-	const char* externalDataPath;
-
-	//Pointer to the Asset Manager instance for the application. The application
-	//uses this to access binary assets bundled inside its own .apk file.
-	AAssetManager* assetManager;
-
-	//Holds info about saved state if restoring from previously saved state.
-	ting::Array<ting::u8> savedState;
-} appInfo;
-
 }//~namespace
 
 
@@ -234,7 +318,4 @@ void ANativeActivity_onCreate(
 	}
 
 	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
-
-	//TODO: call it after OGL is initialized
-	app->Init(appInfo.savedState);
 }
