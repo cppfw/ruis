@@ -15,10 +15,104 @@ using namespace morda;
 namespace morda{
 
 
-inline void SetEGLStuff(App* app, EGLDisplay display, EGLContext context, EGLSurface surface){
-	app->eglDisplay = display;
-	app->eglContext = context;
-	app->eglSurface = surface;
+
+App::EGLDisplayWrapper::EGLDisplayWrapper(){
+	this->d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+	if(this->d == EGL_NO_DISPLAY){
+		throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
+	}
+	
+	eglInitialize(this->d, 0, 0);
+}
+
+
+
+App::EGLDisplayWrapper::~EGLDisplayWrapper()throw(){
+	eglTerminate(this->d);
+}
+
+
+
+App::EGLConfigWrapper::EGLConfigWrapper(EGLDisplayWrapper& d){
+	//TODO: allow stencil configuration etc.
+	//Here specify the attributes of the desired configuration.
+	//Below, we select an EGLConfig with at least 8 bits per color
+	//component compatible with on-screen windows
+	const EGLint attribs[] = {
+			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+			EGL_BLUE_SIZE, 8,
+			EGL_GREEN_SIZE, 8,
+			EGL_RED_SIZE, 8,
+			EGL_NONE
+	};
+
+	//Here, the application chooses the configuration it desires. In this
+	//sample, we have a very simplified selection process, where we pick
+	//the first EGLConfig that matches our criteria
+	EGLint numConfigs;
+	eglChooseConfig(d.d, attribs, &this->c, 1, &numConfigs);
+	if(numConfigs <= 0){
+		throw morda::Exc("eglChooseConfig() failed, no matching config found");
+	}
+}
+
+
+
+App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& c) :
+		d(d)
+{
+	//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
+	//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
+	//As soon as we picked a EGLConfig, we can safely reconfigure the
+	//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
+	EGLint format;
+	if(eglGetConfigAttrib(d.d, c.c, EGL_NATIVE_VISUAL_ID, &format) == EGL_FALSE){
+		throw morda::Exc("eglGetConfigAttrib() failed");
+	}
+
+	ANativeWindow_setBuffersGeometry(window, 0, 0, format);
+
+	this->s = eglCreateWindowSurface(d.d, c.c, window, NULL);
+	if(this->s == EGL_NO_SURFACE){
+		throw morda::Exc("eglCreateWindowSurface() failed");
+	}
+}
+
+
+
+App::EGLSurfaceWrapper::~EGLSurfaceWrapper()throw(){
+	eglDestroySurface(this->d.d, this->s);
+}
+
+
+
+App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
+		d(d)
+{
+	this->c = eglCreateContext(d.d, config.c, NULL, NULL);
+	if(this->c == EGL_NO_CONTEXT){
+		throw morda::Exc("eglCreateContext() failed");
+	}
+
+	if(eglMakeCurrent(d.d, s.s, s.s, this->c) == EGL_FALSE){
+		eglDestroyContext(d.d, this->c);
+		throw morda::Exc("eglMakeCurrent() failed");
+	}
+}
+
+
+
+App::EGLContextWrapper::~EGLContextWrapper(){
+	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+	eglDestroyContext(this->d.d, this->c);
+}
+
+
+
+App::App(unsigned w, unsigned h){
+	EGLint w, h;
+	eglQuerySurface(display, surface, EGL_WIDTH, &w);
+	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
 }
 
 
@@ -192,16 +286,7 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 //    TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 
-	if(this->display != EGL_NO_DISPLAY){
-		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		if(this->context != EGL_NO_CONTEXT){
-			eglDestroyContext(this->display, this->context);
-		}
-		if(this->surface != EGL_NO_SURFACE){
-			eglDestroySurface(this->display, this->surface);
-		}
-		eglTerminate(this->display);
-	}
+	//TODO: destroy app object
 
 }
 
