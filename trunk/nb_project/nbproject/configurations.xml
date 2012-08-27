@@ -1,13 +1,413 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="ext" root="../ext">
+    <df name="ext" root="/home/ivan/prj/morda/ext">
       <df name="tride">
         <in>Rectangle2.hpp</in>
         <in>Vector3.hpp</in>
       </df>
     </df>
-    <df name="jni" root="../android/jni">
+    <df name="jni" root="/home/ivan/prj/morda/android/jni">
+      <df name="libfreetype2">
+        <df name="include">
+          <df name="freetype">
+            <df name="config">
+              <in>ftconfig.h</in>
+              <in>ftheader.h</in>
+              <in>ftmodule.h</in>
+              <in>ftoption.h</in>
+              <in>ftstdlib.h</in>
+            </df>
+            <df name="internal">
+              <df name="services">
+                <in>svbdf.h</in>
+                <in>svcid.h</in>
+                <in>svgldict.h</in>
+                <in>svgxval.h</in>
+                <in>svkern.h</in>
+                <in>svmm.h</in>
+                <in>svotval.h</in>
+                <in>svpfr.h</in>
+                <in>svpostnm.h</in>
+                <in>svpscmap.h</in>
+                <in>svpsinfo.h</in>
+                <in>svsfnt.h</in>
+                <in>svttcmap.h</in>
+                <in>svtteng.h</in>
+                <in>svttglyf.h</in>
+                <in>svwinfnt.h</in>
+                <in>svxf86nm.h</in>
+              </df>
+              <in>autohint.h</in>
+              <in>ftcalc.h</in>
+              <in>ftdebug.h</in>
+              <in>ftdriver.h</in>
+              <in>ftgloadr.h</in>
+              <in>ftmemory.h</in>
+              <in>ftobjs.h</in>
+              <in>ftpic.h</in>
+              <in>ftrfork.h</in>
+              <in>ftserv.h</in>
+              <in>ftstream.h</in>
+              <in>fttrace.h</in>
+              <in>ftvalid.h</in>
+              <in>internal.h</in>
+              <in>pcftypes.h</in>
+              <in>psaux.h</in>
+              <in>pshints.h</in>
+              <in>sfnt.h</in>
+              <in>t1types.h</in>
+              <in>tttypes.h</in>
+            </df>
+            <in>freetype.h</in>
+            <in>ftadvanc.h</in>
+            <in>ftbbox.h</in>
+            <in>ftbdf.h</in>
+            <in>ftbitmap.h</in>
+            <in>ftcache.h</in>
+            <in>ftchapters.h</in>
+            <in>ftcid.h</in>
+            <in>fterrdef.h</in>
+            <in>fterrors.h</in>
+            <in>ftgasp.h</in>
+            <in>ftglyph.h</in>
+            <in>ftgxval.h</in>
+            <in>ftgzip.h</in>
+            <in>ftimage.h</in>
+            <in>ftincrem.h</in>
+            <in>ftlcdfil.h</in>
+            <in>ftlist.h</in>
+            <in>ftlzw.h</in>
+            <in>ftmac.h</in>
+            <in>ftmm.h</in>
+            <in>ftmodapi.h</in>
+            <in>ftmoderr.h</in>
+            <in>ftotval.h</in>
+            <in>ftoutln.h</in>
+            <in>ftpfr.h</in>
+            <in>ftrender.h</in>
+            <in>ftsizes.h</in>
+            <in>ftsnames.h</in>
+            <in>ftstroke.h</in>
+            <in>ftsynth.h</in>
+            <in>ftsystem.h</in>
+            <in>fttrigon.h</in>
+            <in>fttypes.h</in>
+            <in>ftwinfnt.h</in>
+            <in>ftxf86.h</in>
+            <in>t1tables.h</in>
+            <in>ttnameid.h</in>
+            <in>tttables.h</in>
+            <in>tttags.h</in>
+            <in>ttunpat.h</in>
+          </df>
+          <in>ft2build.h</in>
+        </df>
+        <df name="src">
+          <df name="autofit">
+            <in>Jamfile</in>
+            <in>afangles.c</in>
+            <in>afangles.h</in>
+            <in>afcjk.c</in>
+            <in>afcjk.h</in>
+            <in>afdummy.c</in>
+            <in>afdummy.h</in>
+            <in>aferrors.h</in>
+            <in>afglobal.c</in>
+            <in>afglobal.h</in>
+            <in>afhints.c</in>
+            <in>afhints.h</in>
+            <in>afindic.c</in>
+            <in>afindic.h</in>
+            <in>aflatin.c</in>
+            <in>aflatin.h</in>
+            <in>aflatin2.c</in>
+            <in>aflatin2.h</in>
+            <in>afloader.c</in>
+            <in>afloader.h</in>
+            <in>afmodule.c</in>
+            <in>afmodule.h</in>
+            <in>afpic.c</in>
+            <in>afpic.h</in>
+            <in>aftypes.h</in>
+            <in>afwarp.c</in>
+            <in>afwarp.h</in>
+            <in>autofit.c</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
+          </df>
+          <df name="base">
+            <in>basepic.c</in>
+            <in>basepic.h</in>
+            <in>ftadvanc.c</in>
+            <in>ftapi.c</in>
+            <in>ftbase.c</in>
+            <in>ftbase.h</in>
+            <in>ftbbox.c</in>
+            <in>ftbitmap.c</in>
+            <in>ftcalc.c</in>
+            <in>ftdbgmem.c</in>
+            <in>ftdebug.c</in>
+            <in>ftgloadr.c</in>
+            <in>ftglyph.c</in>
+            <in>ftinit.c</in>
+            <in>ftobjs.c</in>
+            <in>ftoutln.c</in>
+            <in>ftpic.c</in>
+            <in>ftrfork.c</in>
+            <in>ftsnames.c</in>
+            <in>ftstream.c</in>
+            <in>ftstroke.c</in>
+            <in>ftsynth.c</in>
+            <in>ftsystem.c</in>
+            <in>fttrigon.c</in>
+            <in>ftutil.c</in>
+          </df>
+          <df name="cff">
+            <in>Jamfile</in>
+            <in>cff.c</in>
+            <in>cffcmap.c</in>
+            <in>cffcmap.h</in>
+            <in>cffdrivr.c</in>
+            <in>cffdrivr.h</in>
+            <in>cfferrs.h</in>
+            <in>cffgload.c</in>
+            <in>cffgload.h</in>
+            <in>cffload.c</in>
+            <in>cffload.h</in>
+            <in>cffobjs.c</in>
+            <in>cffobjs.h</in>
+            <in>cffparse.c</in>
+            <in>cffparse.h</in>
+            <in>cffpic.c</in>
+            <in>cffpic.h</in>
+            <in>cfftoken.h</in>
+            <in>cfftypes.h</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
+          </df>
+          <df name="pshinter">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>pshalgo.c</in>
+            <in>pshalgo.h</in>
+            <in>pshglob.c</in>
+            <in>pshglob.h</in>
+            <in>pshinter.c</in>
+            <in>pshmod.c</in>
+            <in>pshmod.h</in>
+            <in>pshnterr.h</in>
+            <in>pshpic.c</in>
+            <in>pshpic.h</in>
+            <in>pshrec.c</in>
+            <in>pshrec.h</in>
+            <in>rules.mk</in>
+          </df>
+          <df name="psnames">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>psmodule.c</in>
+            <in>psmodule.h</in>
+            <in>psnamerr.h</in>
+            <in>psnames.c</in>
+            <in>pspic.c</in>
+            <in>pspic.h</in>
+            <in>pstables.h</in>
+            <in>rules.mk</in>
+          </df>
+          <df name="raster">
+            <in>Jamfile</in>
+            <in>ftmisc.h</in>
+            <in>ftraster.c</in>
+            <in>ftraster.h</in>
+            <in>ftrend1.c</in>
+            <in>ftrend1.h</in>
+            <in>module.mk</in>
+            <in>raster.c</in>
+            <in>rasterrs.h</in>
+            <in>rastpic.c</in>
+            <in>rastpic.h</in>
+            <in>rules.mk</in>
+          </df>
+          <df name="sfnt">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
+            <in>sfdriver.c</in>
+            <in>sfdriver.h</in>
+            <in>sferrors.h</in>
+            <in>sfnt.c</in>
+            <in>sfntpic.c</in>
+            <in>sfntpic.h</in>
+            <in>sfobjs.c</in>
+            <in>sfobjs.h</in>
+            <in>ttbdf.c</in>
+            <in>ttbdf.h</in>
+            <in>ttcmap.c</in>
+            <in>ttcmap.h</in>
+            <in>ttcmapc.h</in>
+            <in>ttkern.c</in>
+            <in>ttkern.h</in>
+            <in>ttload.c</in>
+            <in>ttload.h</in>
+            <in>ttmtx.c</in>
+            <in>ttmtx.h</in>
+            <in>ttpost.c</in>
+            <in>ttpost.h</in>
+            <in>ttsbit.c</in>
+            <in>ttsbit.h</in>
+            <in>ttsbit0.c</in>
+          </df>
+          <df name="smooth">
+            <in>Jamfile</in>
+            <in>ftgrays.c</in>
+            <in>ftgrays.h</in>
+            <in>ftsmerrs.h</in>
+            <in>ftsmooth.c</in>
+            <in>ftsmooth.h</in>
+            <in>ftspic.c</in>
+            <in>ftspic.h</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
+            <in>smooth.c</in>
+          </df>
+          <df name="truetype">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
+            <in>truetype.c</in>
+            <in>ttdriver.c</in>
+            <in>ttdriver.h</in>
+            <in>tterrors.h</in>
+            <in>ttgload.c</in>
+            <in>ttgload.h</in>
+            <in>ttgxvar.c</in>
+            <in>ttgxvar.h</in>
+            <in>ttinterp.c</in>
+            <in>ttinterp.h</in>
+            <in>ttobjs.c</in>
+            <in>ttobjs.h</in>
+            <in>ttpic.c</in>
+            <in>ttpic.h</in>
+            <in>ttpload.c</in>
+            <in>ttpload.h</in>
+          </df>
+        </df>
+      </df>
+      <df name="libjpeg">
+        <df name="jpeg">
+          <in>ansi2knr.c</in>
+          <in>cderror.h</in>
+          <in>cdjpeg.c</in>
+          <in>cdjpeg.h</in>
+          <in>cjpeg.c</in>
+          <in>ckconfig.c</in>
+          <in>djpeg.c</in>
+          <in>example.c</in>
+          <in>jcapimin.c</in>
+          <in>jcapistd.c</in>
+          <in>jccoefct.c</in>
+          <in>jccolor.c</in>
+          <in>jcdctmgr.c</in>
+          <in>jchuff.c</in>
+          <in>jchuff.h</in>
+          <in>jcinit.c</in>
+          <in>jcmainct.c</in>
+          <in>jcmarker.c</in>
+          <in>jcmaster.c</in>
+          <in>jcomapi.c</in>
+          <in>jconfig.h</in>
+          <in>jcparam.c</in>
+          <in>jcphuff.c</in>
+          <in>jcprepct.c</in>
+          <in>jcsample.c</in>
+          <in>jctrans.c</in>
+          <in>jdapimin.c</in>
+          <in>jdapistd.c</in>
+          <in>jdatadst.c</in>
+          <in>jdatasrc.c</in>
+          <in>jdcoefct.c</in>
+          <in>jdcolor.c</in>
+          <in>jdct.h</in>
+          <in>jddctmgr.c</in>
+          <in>jdhuff.c</in>
+          <in>jdhuff.h</in>
+          <in>jdinput.c</in>
+          <in>jdmainct.c</in>
+          <in>jdmarker.c</in>
+          <in>jdmaster.c</in>
+          <in>jdmerge.c</in>
+          <in>jdphuff.c</in>
+          <in>jdpostct.c</in>
+          <in>jdsample.c</in>
+          <in>jdtrans.c</in>
+          <in>jerror.c</in>
+          <in>jerror.h</in>
+          <in>jfdctflt.c</in>
+          <in>jfdctfst.c</in>
+          <in>jfdctint.c</in>
+          <in>jidctflt.c</in>
+          <in>jidctfst.S</in>
+          <in>jidctfst.c</in>
+          <in>jidctint.c</in>
+          <in>jidctred.c</in>
+          <in>jinclude.h</in>
+          <in>jmem-android.c</in>
+          <in>jmemansi.c</in>
+          <in>jmemdos.c</in>
+          <in>jmemdosa.asm</in>
+          <in>jmemmac.c</in>
+          <in>jmemmgr.c</in>
+          <in>jmemname.c</in>
+          <in>jmemnobs.c</in>
+          <in>jmemsys.h</in>
+          <in>jmorecfg.h</in>
+          <in>jpegint.h</in>
+          <in>jpeglib.h</in>
+          <in>jpegtran.c</in>
+          <in>jquant1.c</in>
+          <in>jquant2.c</in>
+          <in>jutils.c</in>
+          <in>jversion.h</in>
+          <in>rdbmp.c</in>
+          <in>rdcolmap.c</in>
+          <in>rdgif.c</in>
+          <in>rdjpgcom.c</in>
+          <in>rdppm.c</in>
+          <in>rdrle.c</in>
+          <in>rdswitch.c</in>
+          <in>rdtarga.c</in>
+          <in>transupp.c</in>
+          <in>transupp.h</in>
+          <in>wrbmp.c</in>
+          <in>wrgif.c</in>
+          <in>wrjpgcom.c</in>
+          <in>wrppm.c</in>
+          <in>wrrle.c</in>
+          <in>wrtarga.c</in>
+        </df>
+      </df>
+      <df name="libpng">
+        <in>config.h</in>
+        <in>png.c</in>
+        <in>png.h</in>
+        <in>pngconf.h</in>
+        <in>pngerror.c</in>
+        <in>pngget.c</in>
+        <in>pngmem.c</in>
+        <in>pngpread.c</in>
+        <in>pngpriv.h</in>
+        <in>pngread.c</in>
+        <in>pngrio.c</in>
+        <in>pngrtran.c</in>
+        <in>pngrutil.c</in>
+        <in>pngset.c</in>
+        <in>pngtrans.c</in>
+        <in>pngwio.c</in>
+        <in>pngwrite.c</in>
+        <in>pngwtran.c</in>
+        <in>pngwutil.c</in>
+      </df>
       <df name="morda">
         <df name="morda">
           <df name="android">
@@ -150,9 +550,26 @@
       <in>Android.mk</in>
       <in>Application.mk</in>
     </df>
-    <df name="src" root="../src">
+    <df name="src" root="/home/ivan/prj/morda/src">
       <df name="morda">
         <df name="android">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
           <in>App.cpp</in>
           <in>AssetFile.cpp</in>
           <in>AssetFile.hpp</in>
@@ -162,6 +579,23 @@
           <in>LinearLayout.hpp</in>
         </df>
         <df name="linux">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
           <in>App.cpp</in>
         </df>
         <df name="resman">
@@ -224,7 +658,19 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="layouts">
+              </df>
               <df name="linux">
+              </df>
+              <df name="resman">
+              </df>
+              <df name="resources">
+              </df>
+              <df name="shaders">
+              </df>
+              <df name="util">
+              </df>
+              <df name="widgets">
               </df>
             </df>
           </df>
@@ -232,7 +678,7 @@
       </df>
       <in>makefile</in>
     </df>
-    <df name="tests" root="../tests">
+    <df name="tests" root="/home/ivan/prj/morda/tests">
       <df name="app">
         <in>font.res.stob</in>
         <in>main.cpp</in>
@@ -254,10 +700,10 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>../src</Elem>
-    <Elem>../android/jni</Elem>
-    <Elem>../tests</Elem>
-    <Elem>../ext</Elem>
+    <Elem>/home/ivan/prj/morda/src</Elem>
+    <Elem>/home/ivan/prj/morda/tests</Elem>
+    <Elem>/home/ivan/prj/morda/ext</Elem>
+    <Elem>/home/ivan/prj/morda/android/jni</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -277,21 +723,13 @@
           <ccTool>
             <incDir>
               <pElem>../ext</pElem>
-              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
-              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../android/jni/Android.mk" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../android/jni/Application.mk" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../android/jni/morda/Android.mk" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../android/jni/morda/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -322,28 +760,7 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/morda/morda/android/App.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../android/jni/morda/morda/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
       <item path="../android/jni/morda/morda/layouts/LinearLayout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../android/jni/morda/morda/linux/App.cpp"
             ex="false"
             tool="1"
             flavor2="4">
@@ -467,8 +884,6 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/stob/Android.mk" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../android/jni/stob/stob/dom.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -479,8 +894,6 @@
             flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../android/jni/ting/Android.mk" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/Ref.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -581,44 +994,22 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/makefile" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
-      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
@@ -629,34 +1020,51 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+      <item path="../src/morda/layouts/LinearLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SingleColoringShader.cpp"
@@ -665,7 +1073,6 @@
             flavor2="4">
         <ccTool>
           <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
           <preprocessorList>
@@ -676,88 +1083,106 @@
       <item path="../src/morda/shaders/TexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
         </ccTool>
       </item>
       <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="../tests/app/makefile" ex="true" tool="3" flavor2="0">
+      <item path="../src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="../tests/makefile" ex="true" tool="3" flavor2="0">
+      <item path="../src/morda/widgets/AbstractButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../tests/app/main.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/Application.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/stob/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/ting/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/app/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
       </item>
       <folder path="jni">
         <ccTool>
           <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>__ANDROID__</Elem>
           </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </folder>
       <folder path="src/morda/android">
         <ccTool>
-          <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
-            <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
-          </incDir>
           <preprocessorList>
             <Elem>__ANDROID__</Elem>
           </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/layouts">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/linux">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/resman">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/resources">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/util">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/widgets">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
         </ccTool>
       </folder>
     </conf>

@@ -134,7 +134,9 @@ App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrap
 
 
 void App::GLXContextWrapper::Destroy()throw(){
-	glXMakeCurrent(this->d.d, this->w.w, NULL);
+//	TRACE(<< "App::GLXContextWrapper::Destroy(): invoked" << std::endl)
+	glXMakeCurrent(this->d.d, None, NULL);
+//	TRACE(<< "App::GLXContextWrapper::Destroy(): destroying context" << std::endl)
 	glXDestroyContext(this->d.d, this->glxContext);
 }
 
