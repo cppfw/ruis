@@ -81,42 +81,33 @@ private:
 		EGLDisplay d;
 		EGLDisplayWrapper();
 		~EGLDisplayWrapper()throw();
-	};
+	} eglDisplay;
 	
 	struct EGLConfigWrapper{
 		EGLConfig c;
 		EGLConfigWrapper(EGLDisplayWrapper& d);
 		~EGLConfigWrapper()throw(){}
-	};
+	} eglConfig;
 	
 	struct EGLSurfaceWrapper{
 		EGLDisplayWrapper& d;
 		EGLSurface s;
 		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
 		~EGLSurfaceWrapper()throw();
-	};
+	} eglSurface;
 	
 	struct EGLContextWrapper{
 		EGLDisplayWrapper& d;
 		EGLContext c;
 		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
 		~EGLContextWrapper()throw();
-	};
+	} eglContext;
 	
 	friend void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim);
-	
-	//TODO: create shaders when OGL is initialized
-	ting::Ptr<DefaultShaders> shaders;
 
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay, this->eglSurface);
 	}
-
-public:
-	inline DefaultShaders& Shaders()throw(){
-		return *this->shaders;
-	}
-
 
 
 #	else //generic linux
@@ -165,18 +156,20 @@ private:
 	inline void SwapGLBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
+#	endif
+
+#else
+#	error "unsupported OS"
+#endif
 	
+	
+private:
 	DefaultShaders shaders;
 	
 public:
 	inline DefaultShaders& Shaders()throw(){
 		return this->shaders;
 	}
-#	endif
-
-#else
-#	error "unsupported OS"
-#endif
 	
 private:
 	tride::Vec2f curWinDim;
@@ -200,8 +193,6 @@ public:
 	
 	virtual ~App()throw(){}
 	
-	virtual void Init(const ting::Buffer<const ting::u8>& savedState = ting::Buffer<const ting::u8>(0, 0)) = 0;
-	
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
 		this->rootContainer->SetPos(tride::Vec2f(0));
@@ -224,7 +215,7 @@ public:
  * User needs to define this factory function to create his application instance.
  * @return New application instance.
  */
-ting::Ptr<App> CreateApp(int argc, char** argv);
+ting::Ptr<App> CreateApp(int argc, char** argv, const ting::Buffer<const ting::u8>& savedState);
 
 
 
