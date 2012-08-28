@@ -1038,27 +1038,18 @@
     <df name="tests" root="/home/igagis/prj/morda/tests">
       <df name="app">
         <df name="res">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
+          <in>font.res.stob</in>
+          <in>main.res.stob</in>
+          <in>test.gui.stob</in>
+          <in>texture.jpg</in>
+          <in>vera.ttf</in>
         </df>
-        <in>main.cpp</in>
+        <df name="src">
+          <in>main.cpp</in>
+        </df>
         <in>makefile</in>
         <in>output.log</in>
+        <in>tests</in>
       </df>
       <in>makefile</in>
     </df>
@@ -1073,8 +1064,8 @@
   <sourceRootList>
     <Elem>/home/igagis/prj/morda/src</Elem>
     <Elem>/home/igagis/prj/morda/android/jni</Elem>
-    <Elem>/home/igagis/prj/morda/tests</Elem>
     <Elem>/home/igagis/prj/morda/ext</Elem>
+    <Elem>/home/igagis/prj/morda/tests</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -1680,10 +1671,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/makefile" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
@@ -1845,9 +1832,7 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../tests/app/makefile" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../tests/makefile" ex="true" tool="3" flavor2="0">
+      <item path="../tests/app/main.cpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftconfig.h"
             ex="true"
@@ -3220,6 +3205,16 @@
         <cTool>
         </cTool>
       </item>
+      <item path="/home/igagis/prj/morda/tests/app/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/tests/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
       <folder path="jni">
         <ccTool>
           <incDir>
@@ -3293,6 +3288,14 @@
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="tests">
+        <ccTool>
+          <incDir>
+            <pElem>../src</pElem>
+            <pElem>../tests/app</pElem>
           </incDir>
         </ccTool>
       </folder>
