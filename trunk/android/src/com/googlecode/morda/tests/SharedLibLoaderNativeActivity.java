@@ -1,4 +1,4 @@
-package com.googlecode.morda;
+package com.googlecode.morda.tests;
 
 import android.app.NativeActivity;
 
@@ -8,7 +8,7 @@ static {
 	System.loadLibrary("gnustl_shared");
 	System.loadLibrary("ting");
 	System.loadLibrary("stob");
-	System.loadLibrary("morda");
+//	System.loadLibrary("morda");
 	System.loadLibrary("tests");
 }
 
