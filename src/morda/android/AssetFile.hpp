@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2011 Ivan Gagis
+Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
-// Homepage: http://ting.googlecode.com
-
-
+// Home page: http://morda.googlecode.com
 
 /**
  * @file Android assets File implementation
@@ -31,18 +29,21 @@ THE SOFTWARE. */
 
 #pragma once
 
-//#ifndef __ANDROID__
-//#error "Compiling in non-Android environment"
-//#endif
+#ifndef __ANDROID__
+#	error "Compiling in non-Android environment"
+#endif
 
 #include <android/asset_manager.h>
 
 #include <ting/debug.hpp>
+#include <ting/Ptr.hpp>
 #include <ting/fs/File.hpp>
 
+#include "../App.hpp"
 
 
-namespace ting_android{
+
+namespace morda{
 
 
 
@@ -55,12 +56,6 @@ class AssetFile : public ting::fs::File{
 	
 	ting::Inited<AAsset*, 0> handle;
 	
-public:
-	/**
-	 * @brief Constructor.
-	 * @param manager - android asset manager.
-     * @param pathName - initial path to set passed to File constructor.
-     */
 	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
 			File(pathName)
@@ -68,6 +63,13 @@ public:
 		ASSERT(this->manager)
 	}
 	
+	static inline ting::Ptr<AssetFile> New(AAssetManager* manager, const std::string& pathName = std::string()){
+		return ting::Ptr<AssetFile>(new AssetFile(manager, pathName));
+	}
+	
+	friend ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path = std::string())const;
+	
+public:
 	/**
 	 * @brief Destructor.
 	 * This destructor calls the Close() method.
@@ -88,12 +90,12 @@ public:
 
 
 	//override
-	virtual size_t ReadInternal(ting::Buffer<ting::u8>& buf);
+	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf);
 
 
 
 	//override
-	virtual size_t WriteInternal(const ting::Buffer<ting::u8>& buf);
+	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf);
 
 
 
