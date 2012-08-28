@@ -4,6 +4,7 @@
 #include "../App.hpp"
 
 #include <ting/WaitSet.hpp>
+#include <ting/fs/FSFile.hpp>
 
 
 
@@ -159,6 +160,14 @@ App::App(unsigned w, unsigned h) :
 #endif
 	
 	this->UpdateWindowDimensions(tride::Vec2f(float(w), float(h)));
+}
+
+
+
+ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+	fi->SetRootDir("res/");
+	return fi;
 }
 
 

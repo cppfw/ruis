@@ -32,6 +32,8 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/config.hpp>
 #include <ting/Buffer.hpp>
+#include <ting/Ptr.hpp>
+#include <ting/fs/File.hpp>
 
 #include "config.hpp"
 
@@ -171,6 +173,8 @@ public:
 	inline DefaultShaders& Shaders()throw(){
 		return this->shaders;
 	}
+	
+	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 	
 private:
 	tride::Vec2f curWinDim;
