@@ -61,6 +61,7 @@ void AssetFile::Open(E_Mode mode){
 	}
 	this->handle = AAssetManager_open(this->manager, this->Path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE mean at all
 	if(!this->handle){
+		TRACE(<< "AAssetManager_open() failed, file path = " << this->Path() << std::endl)
 		throw File::Exc("AAssetManager_open() failed");
 	}
 
