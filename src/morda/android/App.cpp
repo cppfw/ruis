@@ -188,7 +188,7 @@ void HandleInputEvents(){
 	//Read and handle input events
 	AInputEvent* event;
 	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
-		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
+//		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
 		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
 			continue;
 		}
@@ -201,62 +201,56 @@ void HandleInputEvents(){
 		switch(eventType){
 			case AINPUT_EVENT_TYPE_MOTION:	
 				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+					case AMOTION_EVENT_ACTION_POINTER_DOWN:
+						TRACE(<< "Pointer down" << std::endl)
 					case AMOTION_EVENT_ACTION_DOWN:
 						{
 							size_t numPointers = AMotionEvent_getPointerCount(event);
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action down" << std::endl)
+								TRACE(<< "Action down, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
 								if(app.rootContainer.IsValid()){
 									app.rootContainer->OnMouseButtonDown(
 											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
 											morda::Widget::LEFT,
-											pointerNum
+											unsigned(AMotionEvent_getPointerId(event, pointerNum))
 										);
 								}
 							}//~for(every pointer)
 						}
 						break;
+					case AMOTION_EVENT_ACTION_POINTER_UP:
+						TRACE(<< "Pointer up" << std::endl)
 					case AMOTION_EVENT_ACTION_UP:
-						TRACE(<< "Action up" << std::endl)
 						{
 							size_t numPointers = AMotionEvent_getPointerCount(event);
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action down" << std::endl)
+								TRACE(<< "Action up, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
 								if(app.rootContainer.IsValid()){
 									app.rootContainer->OnMouseButtonUp(
 											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
 											morda::Widget::LEFT,
-											pointerNum
+											unsigned(AMotionEvent_getPointerId(event, pointerNum))
 										);
 								}
 							}//~for(every pointer)
 						}
 						break;
 					case AMOTION_EVENT_ACTION_MOVE:
-						TRACE(<< "Action move" << std::endl)
 						{
 							size_t numPointers = AMotionEvent_getPointerCount(event);
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action down" << std::endl)
+								TRACE(<< "Action move, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
 								if(app.rootContainer.IsValid()){
 									app.rootContainer->OnMouseMove(
 											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
-											pointerNum
+											unsigned(AMotionEvent_getPointerId(event, pointerNum))
 										);
 								}
 							}//~for(every pointer)
 						}
-						break;
-					case AMOTION_EVENT_ACTION_POINTER_DOWN:
-						TRACE(<< "Pointer down" << std::endl)
-						//TODO:
-						break;
-					case AMOTION_EVENT_ACTION_POINTER_UP:
-						TRACE(<< "Pointer up" << std::endl)
-						//TODO:
 						break;
 					default:
 						TRACE(<< "unknown eventAction" << std::endl)
@@ -415,7 +409,7 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 
 
 int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
-	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
+//	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
 
 	ASSERT(curInputQueue) //if we get events we should have input queue
 
