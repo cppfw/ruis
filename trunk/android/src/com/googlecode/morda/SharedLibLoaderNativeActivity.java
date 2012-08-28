@@ -9,6 +9,7 @@ static {
 	System.loadLibrary("ting");
 	System.loadLibrary("stob");
 	System.loadLibrary("morda");
+	System.loadLibrary("tests");
 }
 
 }
