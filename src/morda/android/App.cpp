@@ -66,6 +66,7 @@ App::EGLConfigWrapper::EGLConfigWrapper(EGLDisplayWrapper& d){
 	//component compatible with on-screen windows
 	const EGLint attribs[] = {
 			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+			EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
 			EGL_BLUE_SIZE, 8,
 			EGL_GREEN_SIZE, 8,
 			EGL_RED_SIZE, 8,
@@ -116,7 +117,12 @@ App::EGLSurfaceWrapper::~EGLSurfaceWrapper()throw(){
 App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
 		d(d)
 {
-	this->c = eglCreateContext(d.d, config.c, NULL, NULL);
+	EGLint contextAttrs[] = {
+		EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+		EGL_NONE
+	};
+	
+	this->c = eglCreateContext(d.d, config.c, NULL, contextAttrs);
 	if(this->c == EGL_NO_CONTEXT){
 		throw morda::Exc("eglCreateContext() failed");
 	}
