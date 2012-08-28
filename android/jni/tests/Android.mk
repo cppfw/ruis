@@ -17,11 +17,11 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../tride
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
 
-LOCAL_LDLIBS := -llog -landroid -lGLESv2
+LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz
 
-LOCAL_SHARED_LIBRARIES := morda stob ting
+LOCAL_SHARED_LIBRARIES := stob ting
 
-LOCAL_STATIC_LIBRARIES := 
+LOCAL_STATIC_LIBRARIES := morda
 
 #disable undefined symbols check because we require CreateApp() function to be defined by library user
 #LOCAL_ALLOW_UNDEFINED_SYMBOLS := true

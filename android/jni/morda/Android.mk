@@ -47,6 +47,7 @@ LOCAL_SHARED_LIBRARIES := ting stob
 LOCAL_STATIC_LIBRARIES := png jpeg freetype2
 
 #disable undefined symbols check because we require CreateApp() function to be defined by library user
-LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
+#LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 
-include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

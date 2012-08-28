@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.googlecode.morda"
+package="com.googlecode.morda.tests"
 android:versionCode="1"
 android:versionName="1.0"
 >
@@ -17,7 +17,7 @@ android:versionName="1.0"
 			<!-- Tell NativeActivity the name of or .so -->
 			<meta-data
 			android:name="android.app.lib_name"
-			android:value="morda"
+			android:value="tests"
 			/>
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
