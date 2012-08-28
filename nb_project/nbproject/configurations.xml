@@ -776,6 +776,7 @@
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
+              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
