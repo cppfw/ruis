@@ -27,6 +27,7 @@ App::XDisplayWrapper::~XDisplayWrapper()throw(){
 
 
 App::XVisualInfoWrapper::XVisualInfoWrapper(XDisplayWrapper& xDisplay){
+	//TODO: allow configuring depth, stencil buffers
 	int attr[] = {
 		GLX_RGBA,
 		GLX_DOUBLEBUFFER,
@@ -34,7 +35,7 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(XDisplayWrapper& xDisplay){
 		GLX_GREEN_SIZE, 8,
 		GLX_BLUE_SIZE, 8,
 		GLX_ALPHA_SIZE, 8,
-		GLX_DEPTH_SIZE, 24, //TODO: allow configuring depth, stencil buffers
+		GLX_DEPTH_SIZE, 24,
 		None
 	};
 
