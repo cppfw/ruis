@@ -20,6 +20,8 @@ namespace{
 
 ANativeWindow* androidWindow = 0;
 
+AInputQueue* curInputQueue = 0;
+
 struct AppInfo{
 	//Path to this application's internal data directory.
 	const char* internalDataPath;
@@ -34,6 +36,8 @@ struct AppInfo{
 	//Holds info about saved state if restoring from previously saved state.
 	ting::Array<ting::u8> savedState;
 } appInfo;
+
+
 
 }//~namespace
 
@@ -178,6 +182,107 @@ inline void Render(App* app){
 
 
 
+void HandleInputEvents(){
+	morda::App& app = morda::App::Inst();
+	
+	//Read and handle input events
+	AInputEvent* event;
+	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
+		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+			continue;
+		}
+
+		int32_t eventType = AInputEvent_getType(event);
+		int32_t eventAction = AMotionEvent_getAction(event);
+		
+		bool consume = false;
+		
+		switch(eventType){
+			case AINPUT_EVENT_TYPE_MOTION:	
+				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+					case AMOTION_EVENT_ACTION_DOWN:
+						{
+							size_t numPointers = AMotionEvent_getPointerCount(event);
+							ASSERT(numPointers >= 1)
+							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+								TRACE(<< "Action down" << std::endl)
+								if(app.rootContainer.IsValid()){
+									app.rootContainer->OnMouseButtonDown(
+											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
+											morda::Widget::LEFT,
+											pointerNum
+										);
+								}
+							}//~for(every pointer)
+						}
+						break;
+					case AMOTION_EVENT_ACTION_UP:
+						TRACE(<< "Action up" << std::endl)
+						{
+							size_t numPointers = AMotionEvent_getPointerCount(event);
+							ASSERT(numPointers >= 1)
+							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+								TRACE(<< "Action down" << std::endl)
+								if(app.rootContainer.IsValid()){
+									app.rootContainer->OnMouseButtonUp(
+											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
+											morda::Widget::LEFT,
+											pointerNum
+										);
+								}
+							}//~for(every pointer)
+						}
+						break;
+					case AMOTION_EVENT_ACTION_MOVE:
+						TRACE(<< "Action move" << std::endl)
+						{
+							size_t numPointers = AMotionEvent_getPointerCount(event);
+							ASSERT(numPointers >= 1)
+							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+								TRACE(<< "Action down" << std::endl)
+								if(app.rootContainer.IsValid()){
+									app.rootContainer->OnMouseMove(
+											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
+											pointerNum
+										);
+								}
+							}//~for(every pointer)
+						}
+						break;
+					case AMOTION_EVENT_ACTION_POINTER_DOWN:
+						TRACE(<< "Pointer down" << std::endl)
+						//TODO:
+						break;
+					case AMOTION_EVENT_ACTION_POINTER_UP:
+						TRACE(<< "Pointer up" << std::endl)
+						//TODO:
+						break;
+					default:
+						TRACE(<< "unknown eventAction" << std::endl)
+						break;
+				}//~switch(event action)
+				consume = true;
+				break;
+			case AINPUT_EVENT_TYPE_KEY:
+				//TODO:
+				break;
+			default:
+				break;
+		}//~switch(event type)
+		
+		AInputQueue_finishEvent(
+				curInputQueue,
+				event,
+				consume
+			);
+	}//~while()
+	
+	app.Render();
+}
+
+
+
 }//~namespace
 
 
@@ -187,11 +292,13 @@ namespace{
 
 
 void OnDestroy(ANativeActivity* activity){
+	TRACE(<< "OnDestroy(): invoked" << std::endl)
 }
 
 
 
 void OnStart(ANativeActivity* activity){
+	TRACE(<< "OnStart(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnStart();
 }
@@ -199,6 +306,7 @@ void OnStart(ANativeActivity* activity){
 
 
 void OnResume(ANativeActivity* activity){
+	TRACE(<< "OnResume(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnResume();
 }
@@ -206,6 +314,7 @@ void OnResume(ANativeActivity* activity){
 
 
 void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
+	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
 	//TODO:
 //    return static_cast<morda::App*>(activity->instance)->OnSaveInstanceState(outSize);
 }
@@ -213,6 +322,7 @@ void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
 
 
 void OnPause(ANativeActivity* activity){
+	TRACE(<< "OnPause(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnPause();
 }
@@ -220,6 +330,7 @@ void OnPause(ANativeActivity* activity){
 
 
 void OnStop(ANativeActivity* activity){
+	TRACE(<< "OnStop(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnStop();
 }
@@ -227,6 +338,7 @@ void OnStop(ANativeActivity* activity){
 
 
 void OnConfigurationChanged(ANativeActivity* activity){
+	TRACE(<< "OnConfigurationChanged(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnConfigurationChanged();
 }
@@ -234,6 +346,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 
 
 void OnLowMemory(ANativeActivity* activity){
+	TRACE(<< "OnLowMemory(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnLowMemory();
 }
@@ -241,6 +354,7 @@ void OnLowMemory(ANativeActivity* activity){
 
 
 void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
+	TRACE(<< "OnWindowFocusChanged(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::App*>(activity->instance)->OnWindowFocusChanged(bool(hasFocus));
 }
@@ -248,7 +362,7 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
-    TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
+	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 	
 	//save window in a static var, so it is accessible for OGL initializers from morda::App class
 	androidWindow = window;
@@ -268,7 +382,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 
 
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
-//    TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
+	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
 	morda::UpdateWindowDimensions(
 			static_cast<morda::App*>(activity->instance),
@@ -282,7 +396,7 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 
 
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
-//    TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
+	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
 	
 	morda::Render(static_cast<morda::App*>(activity->instance));
 }
@@ -290,7 +404,7 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 
 
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
-//    TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
+	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 	
 	//TODO: need to destroy app right before window is destroyed, i.e. OGL de-initialized
 	//destroy app object
@@ -300,32 +414,28 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 
 
 
-AInputQueue* curInputQueue = 0;
-
-
-
 int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
-	//TODO:
-//    Activity& a = *static_cast<Activity*>(data);
-//
-////    TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
-//
-//    ASSERT(curInputQueue) //if we get events we should have input queue
-//
-//    //Read and handle input events
-//    AInputEvent* event;
-//    while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
-////        TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl);
-//        if(AInputQueue_preDispatchEvent(curInputQueue, event)){
-//            continue;
-//        }
-//
-//        AInputQueue_finishEvent(
-//                curInputQueue,
-//                event,
-//                a.OnInput(event)
-//            );
-//    }
+	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
+
+	ASSERT(curInputQueue) //if we get events we should have input queue
+
+	//If window is not created yet, ignore events.
+	if(!morda::App::IsCreated()){
+		ASSERT(false)
+		AInputEvent* event;
+		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+			if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+				continue;
+			}
+			
+			AInputQueue_finishEvent(curInputQueue, event, false);
+		}
+		return 1;
+	}
+	
+	ASSERT(morda::App::IsCreated())
+
+	morda::HandleInputEvents();
 
 	return 1; //we don't want to remove input queue descriptor from looper
 }
@@ -333,7 +443,7 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 
 
 void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
-//	TRACE(<< "OnInputQueueCreated(): invoked" << std::endl)
+	TRACE(<< "OnInputQueueCreated(): invoked" << std::endl)
 	ASSERT(queue);
 	ASSERT(!curInputQueue)
 	curInputQueue = queue;
@@ -351,7 +461,7 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 
 
 void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
-//	TRACE(<< "OnInputQueueDestroyed(): invoked" << std::endl)
+	TRACE(<< "OnInputQueueDestroyed(): invoked" << std::endl)
 	ASSERT(queue)
 	ASSERT(curInputQueue == queue)
 
@@ -364,7 +474,7 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 
 
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
-//	TRACE(<< "OnContentRectChanged(): invoked" << std::endl)
+	TRACE(<< "OnContentRectChanged(): invoked" << std::endl)
 	//TODO:
 }
 
