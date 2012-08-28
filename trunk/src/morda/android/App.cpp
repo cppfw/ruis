@@ -238,7 +238,15 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	androidWindow = window;
 	
 	ASSERT(!activity->instance)
-	activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();;
+	try{
+		activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+	}catch(std::exception& e){
+		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
+		throw;
+	}catch(...){
+		TRACE(<< "unknown exception uncaught while creating App instance!" << std::endl)
+		throw;
+	}
 }
 
 
