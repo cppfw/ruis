@@ -773,6 +773,7 @@
           <ccTool>
             <incDir>
               <pElem>../ext</pElem>
+              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
