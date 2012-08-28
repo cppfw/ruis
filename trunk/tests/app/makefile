@@ -6,20 +6,21 @@ ifeq ($(platform),win32)
     binary_name := $(binary_name).exe
 endif
 
+includes := -I../../src
 
 ifeq ($(platform),win32)
     libs := 
-    includes := -I"../../../ting/src"
+    includes += -I"../../../ting/src"
     remove := del /Q /F
 endif
 ifeq ($(platform),darwin)
     libs := 
-    includes :=
+    includes +=
     remove := rm -rf
 endif
 ifeq ($(platform),linux)
     libs := -lting ../../src/libmorda.so -lGLEW -lstob
-    includes := -I../../ext
+    includes += -I../../ext
     remove := rm -rf
 endif
 
@@ -38,7 +39,7 @@ test: $(binary_name)
 	@echo running $^...
 	@LD_LIBRARY_PATH=../../src ./$^
 
-$(binary_name): main.cpp
+$(binary_name): src/main.cpp
 	@echo Building $@...
 	@g++ -o $@ $(cf) $^ $(includes) $(libs)
 
