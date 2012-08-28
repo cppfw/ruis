@@ -10,10 +10,10 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>/home/ivan/prj/morda/src</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/tests</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/ext</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/android/jni</sourceRootElem>
+                <sourceRootElem>/home/igagis/prj/morda/src</sourceRootElem>
+                <sourceRootElem>/home/igagis/prj/morda/android/jni</sourceRootElem>
+                <sourceRootElem>/home/igagis/prj/morda/tests</sourceRootElem>
+                <sourceRootElem>/home/igagis/prj/morda/ext</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

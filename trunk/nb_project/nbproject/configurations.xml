@@ -1,17 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="ext" root="/home/ivan/prj/morda/ext">
+    <df name="ext" root="/home/igagis/prj/morda/ext">
       <df name="tride">
         <in>Rectangle2.hpp</in>
         <in>Vector3.hpp</in>
       </df>
     </df>
-    <df name="jni" root="/home/ivan/prj/morda/android/jni">
+    <df name="jni" root="/home/igagis/prj/morda/android/jni">
       <df name="libfreetype2">
+        <df name=".svn">
+          <df name="prop-base">
+          </df>
+          <df name="props">
+          </df>
+          <df name="text-base">
+          </df>
+          <df name="tmp">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+          </df>
+          <in>entries</in>
+        </df>
         <df name="include">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
           <df name="freetype">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <df name="config">
+              <df name=".svn">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+                <df name="tmp">
+                  <df name="prop-base">
+                  </df>
+                  <df name="props">
+                  </df>
+                  <df name="text-base">
+                  </df>
+                </df>
+                <in>entries</in>
+              </df>
               <in>ftconfig.h</in>
               <in>ftheader.h</in>
               <in>ftmodule.h</in>
@@ -19,7 +87,41 @@
               <in>ftstdlib.h</in>
             </df>
             <df name="internal">
+              <df name=".svn">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+                <df name="tmp">
+                  <df name="prop-base">
+                  </df>
+                  <df name="props">
+                  </df>
+                  <df name="text-base">
+                  </df>
+                </df>
+                <in>entries</in>
+              </df>
               <df name="services">
+                <df name=".svn">
+                  <df name="prop-base">
+                  </df>
+                  <df name="props">
+                  </df>
+                  <df name="text-base">
+                  </df>
+                  <df name="tmp">
+                    <df name="prop-base">
+                    </df>
+                    <df name="props">
+                    </df>
+                    <df name="text-base">
+                    </df>
+                  </df>
+                  <in>entries</in>
+                </df>
                 <in>svbdf.h</in>
                 <in>svcid.h</in>
                 <in>svgldict.h</in>
@@ -104,7 +206,41 @@
           <in>ft2build.h</in>
         </df>
         <df name="src">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
           <df name="autofit">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>Jamfile</in>
             <in>afangles.c</in>
             <in>afangles.h</in>
@@ -137,6 +273,23 @@
             <in>rules.mk</in>
           </df>
           <df name="base">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>basepic.c</in>
             <in>basepic.h</in>
             <in>ftadvanc.c</in>
@@ -164,6 +317,23 @@
             <in>ftutil.c</in>
           </df>
           <df name="cff">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>Jamfile</in>
             <in>cff.c</in>
             <in>cffcmap.c</in>
@@ -187,6 +357,23 @@
             <in>rules.mk</in>
           </df>
           <df name="pshinter">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>Jamfile</in>
             <in>module.mk</in>
             <in>pshalgo.c</in>
@@ -204,6 +391,23 @@
             <in>rules.mk</in>
           </df>
           <df name="psnames">
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>Jamfile</in>
             <in>module.mk</in>
             <in>psmodule.c</in>
@@ -213,26 +417,53 @@
             <in>pspic.c</in>
             <in>pspic.h</in>
             <in>pstables.h</in>
-            <in>rules.mk</in>
           </df>
           <df name="raster">
-            <in>Jamfile</in>
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>ftmisc.h</in>
             <in>ftraster.c</in>
             <in>ftraster.h</in>
             <in>ftrend1.c</in>
             <in>ftrend1.h</in>
-            <in>module.mk</in>
             <in>raster.c</in>
             <in>rasterrs.h</in>
             <in>rastpic.c</in>
             <in>rastpic.h</in>
-            <in>rules.mk</in>
           </df>
           <df name="sfnt">
-            <in>Jamfile</in>
-            <in>module.mk</in>
-            <in>rules.mk</in>
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>sfdriver.c</in>
             <in>sfdriver.h</in>
             <in>sferrors.h</in>
@@ -259,7 +490,23 @@
             <in>ttsbit0.c</in>
           </df>
           <df name="smooth">
-            <in>Jamfile</in>
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>ftgrays.c</in>
             <in>ftgrays.h</in>
             <in>ftsmerrs.h</in>
@@ -267,14 +514,26 @@
             <in>ftsmooth.h</in>
             <in>ftspic.c</in>
             <in>ftspic.h</in>
-            <in>module.mk</in>
-            <in>rules.mk</in>
             <in>smooth.c</in>
           </df>
           <df name="truetype">
-            <in>Jamfile</in>
-            <in>module.mk</in>
-            <in>rules.mk</in>
+            <df name=".svn">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+              <df name="tmp">
+                <df name="prop-base">
+                </df>
+                <df name="props">
+                </df>
+                <df name="text-base">
+                </df>
+              </df>
+              <in>entries</in>
+            </df>
             <in>truetype.c</in>
             <in>ttdriver.c</in>
             <in>ttdriver.h</in>
@@ -295,15 +554,71 @@
         </df>
       </df>
       <df name="libjpeg">
+        <df name=".svn">
+          <df name="prop-base">
+          </df>
+          <df name="props">
+          </df>
+          <df name="text-base">
+          </df>
+          <df name="tmp">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+          </df>
+          <in>entries</in>
+        </df>
         <df name="jpeg">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+              <in>testimg.jpg.svn-work</in>
+              <in>testimgp.jpg.svn-work</in>
+              <in>testorig.jpg.svn-work</in>
+              <in>testprog.jpg.svn-work</in>
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+          <in>CleanSpec.mk</in>
+          <in>MODULE_LICENSE_BSD_LIKE</in>
+          <in>Makefile</in>
+          <in>NOTICE</in>
+          <in>README</in>
+          <in>ansi2knr.1</in>
           <in>ansi2knr.c</in>
           <in>cderror.h</in>
           <in>cdjpeg.c</in>
           <in>cdjpeg.h</in>
+          <in>change.log</in>
+          <in>cjpeg.1</in>
           <in>cjpeg.c</in>
           <in>ckconfig.c</in>
+          <in>coderules.doc</in>
+          <in>config.guess</in>
+          <in>config.log</in>
+          <in>config.status</in>
+          <in>config.sub</in>
+          <in>configure</in>
+          <in>djpeg.1</in>
           <in>djpeg.c</in>
           <in>example.c</in>
+          <in>filelist.doc</in>
+          <in>install-sh</in>
+          <in>install.doc</in>
           <in>jcapimin.c</in>
           <in>jcapistd.c</in>
           <in>jccoefct.c</in>
@@ -316,7 +631,19 @@
           <in>jcmarker.c</in>
           <in>jcmaster.c</in>
           <in>jcomapi.c</in>
+          <in>jconfig.bcc</in>
+          <in>jconfig.cfg</in>
+          <in>jconfig.dj</in>
+          <in>jconfig.doc</in>
           <in>jconfig.h</in>
+          <in>jconfig.mac</in>
+          <in>jconfig.manx</in>
+          <in>jconfig.mc6</in>
+          <in>jconfig.sas</in>
+          <in>jconfig.st</in>
+          <in>jconfig.vc</in>
+          <in>jconfig.vms</in>
+          <in>jconfig.wat</in>
           <in>jcparam.c</in>
           <in>jcphuff.c</in>
           <in>jcprepct.c</in>
@@ -364,23 +691,56 @@
           <in>jmorecfg.h</in>
           <in>jpegint.h</in>
           <in>jpeglib.h</in>
+          <in>jpegtran.1</in>
           <in>jpegtran.c</in>
           <in>jquant1.c</in>
           <in>jquant2.c</in>
           <in>jutils.c</in>
           <in>jversion.h</in>
+          <in>libtool</in>
+          <in>ltconfig</in>
+          <in>ltmain.sh</in>
+          <in>makcjpeg.st</in>
+          <in>makdjpeg.st</in>
+          <in>makeapps.ds</in>
+          <in>makefile.ansi</in>
+          <in>makefile.bcc</in>
+          <in>makefile.cfg</in>
+          <in>makefile.dj</in>
+          <in>makefile.manx</in>
+          <in>makefile.mc6</in>
+          <in>makefile.mms</in>
+          <in>makefile.sas</in>
+          <in>makefile.unix</in>
+          <in>makefile.vc</in>
+          <in>makefile.vms</in>
+          <in>makefile.wat</in>
+          <in>makelib.ds</in>
+          <in>makeproj.mac</in>
+          <in>makljpeg.st</in>
+          <in>maktjpeg.st</in>
+          <in>makvms.opt</in>
           <in>rdbmp.c</in>
           <in>rdcolmap.c</in>
           <in>rdgif.c</in>
+          <in>rdjpgcom.1</in>
           <in>rdjpgcom.c</in>
           <in>rdppm.c</in>
           <in>rdrle.c</in>
           <in>rdswitch.c</in>
           <in>rdtarga.c</in>
+          <in>structure.doc</in>
+          <in>testimg.jpg</in>
+          <in>testimgp.jpg</in>
+          <in>testorig.jpg</in>
+          <in>testprog.jpg</in>
           <in>transupp.c</in>
           <in>transupp.h</in>
+          <in>usage.doc</in>
+          <in>wizard.doc</in>
           <in>wrbmp.c</in>
           <in>wrgif.c</in>
+          <in>wrjpgcom.1</in>
           <in>wrjpgcom.c</in>
           <in>wrppm.c</in>
           <in>wrrle.c</in>
@@ -388,6 +748,23 @@
         </df>
       </df>
       <df name="libpng">
+        <df name=".svn">
+          <df name="prop-base">
+          </df>
+          <df name="props">
+          </df>
+          <df name="text-base">
+          </df>
+          <df name="tmp">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+          </df>
+          <in>entries</in>
+        </df>
         <in>config.h</in>
         <in>png.c</in>
         <in>png.h</in>
@@ -550,26 +927,9 @@
       <in>Android.mk</in>
       <in>Application.mk</in>
     </df>
-    <df name="src" root="/home/ivan/prj/morda/src">
+    <df name="src" root="/home/igagis/prj/morda/src">
       <df name="morda">
         <df name="android">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>App.cpp</in>
           <in>AssetFile.cpp</in>
           <in>AssetFile.hpp</in>
@@ -579,23 +939,6 @@
           <in>LinearLayout.hpp</in>
         </df>
         <df name="linux">
-          <df name=".svn">
-            <df name="prop-base">
-            </df>
-            <df name="props">
-            </df>
-            <df name="text-base">
-            </df>
-            <df name="tmp">
-              <df name="prop-base">
-              </df>
-              <df name="props">
-              </df>
-              <df name="text-base">
-              </df>
-            </df>
-            <in>entries</in>
-          </df>
           <in>App.cpp</in>
         </df>
         <df name="resman">
@@ -659,18 +1002,32 @@
           <df name="2">
             <df name="morda">
               <df name="layouts">
+                <in>LinearLayout.d</in>
               </df>
               <df name="linux">
               </df>
               <df name="resman">
               </df>
               <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>SimpleTexturingShader.d</in>
+                <in>TexturingShader.d</in>
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
+                <in>TexFont.d</in>
+                <in>util.d</in>
               </df>
               <df name="widgets">
+                <in>AbstractButton.d</in>
+                <in>Button.d</in>
+                <in>Label.d</in>
               </df>
             </df>
           </df>
@@ -678,16 +1035,30 @@
       </df>
       <in>makefile</in>
     </df>
-    <df name="tests" root="/home/ivan/prj/morda/tests">
+    <df name="tests" root="/home/igagis/prj/morda/tests">
       <df name="app">
-        <in>font.res.stob</in>
+        <df name="res">
+          <df name=".svn">
+            <df name="prop-base">
+            </df>
+            <df name="props">
+            </df>
+            <df name="text-base">
+            </df>
+            <df name="tmp">
+              <df name="prop-base">
+              </df>
+              <df name="props">
+              </df>
+              <df name="text-base">
+              </df>
+            </df>
+            <in>entries</in>
+          </df>
+        </df>
         <in>main.cpp</in>
-        <in>main.res.stob</in>
         <in>makefile</in>
         <in>output.log</in>
-        <in>test.gui.stob</in>
-        <in>texture.jpg</in>
-        <in>vera.ttf</in>
       </df>
       <in>makefile</in>
     </df>
@@ -700,10 +1071,10 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>/home/ivan/prj/morda/src</Elem>
-    <Elem>/home/ivan/prj/morda/tests</Elem>
-    <Elem>/home/ivan/prj/morda/ext</Elem>
-    <Elem>/home/ivan/prj/morda/android/jni</Elem>
+    <Elem>/home/igagis/prj/morda/src</Elem>
+    <Elem>/home/igagis/prj/morda/android/jni</Elem>
+    <Elem>/home/igagis/prj/morda/tests</Elem>
+    <Elem>/home/igagis/prj/morda/ext</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -730,6 +1101,296 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="../android/jni/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/Application.mk" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/psnames/psmodule.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/psnames/psnames.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/psnames/pspic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/raster/ftmisc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/raster/ftraster.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/raster/ftrend1.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/raster/raster.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/raster/rastpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/sfdriver.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/sfnt.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/sfntpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/sfobjs.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttbdf.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttcmap.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttkern.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttload.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttmtx.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttpost.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttsbit.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/sfnt/ttsbit0.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/smooth/ftgrays.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/smooth/ftsmooth.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/smooth/ftspic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/smooth/smooth.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/truetype.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttdriver.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttgload.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttgxvar.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttinterp.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttobjs.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libfreetype2/src/truetype/ttpload.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/config.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/png.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngerror.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngget.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngmem.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngpread.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngread.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngrio.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngrtran.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngrutil.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngset.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngtrans.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngwio.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngwrite.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngwtran.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/libpng/pngwutil.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="../android/jni/morda/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/morda/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -760,7 +1421,28 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/morda/morda/android/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <item path="../android/jni/morda/morda/layouts/LinearLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/linux/App.cpp"
             ex="false"
             tool="1"
             flavor2="4">
@@ -884,6 +1566,8 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/stob/Android.mk" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/stob/stob/dom.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
@@ -894,6 +1578,8 @@
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/Android.mk" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/Ref.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -994,22 +1680,44 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../ext/tride/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../ext/tride/Vector3.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
@@ -1024,6 +1732,10 @@
             ex="false"
             tool="1"
             flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
@@ -1051,6 +1763,10 @@
       </item>
       <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
@@ -1058,6 +1774,10 @@
             tool="1"
             flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
@@ -1065,6 +1785,10 @@
             tool="1"
             flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SingleColoringShader.cpp"
@@ -1075,9 +1799,6 @@
           <incDir>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>__ANDROID__</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/TexturingShader.cpp"
@@ -1085,6 +1806,10 @@
             tool="1"
             flavor2="4">
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
@@ -1120,49 +1845,1385 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../tests/app/main.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
+      <item path="../tests/app/makefile" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/android/jni/Android.mk"
+      <item path="../tests/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftconfig.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/android/jni/Application.mk"
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftheader.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/android/jni/morda/Android.mk"
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftmodule.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/android/jni/stob/Android.mk"
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftoption.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/android/jni/ting/Android.mk"
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/config/ftstdlib.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="/home/ivan/prj/morda/tests/app/makefile"
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/freetype.h"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftadvanc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftbbox.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftbdf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftbitmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftcache.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftchapters.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftcid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/fterrdef.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/fterrors.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftgasp.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftglyph.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftgxval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftgzip.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftimage.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftincrem.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftlcdfil.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftlist.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftlzw.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftmac.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftmm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftmodapi.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftmoderr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftotval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftoutln.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftpfr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftrender.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftsizes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftsnames.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftstroke.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftsynth.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftsystem.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/fttrigon.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/fttypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftwinfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ftxf86.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/autohint.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftcalc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftdebug.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftdriver.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftgloadr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftmemory.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftobjs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftrfork.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftserv.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftstream.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/fttrace.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/ftvalid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/internal.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/pcftypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/psaux.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/pshints.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svbdf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svcid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svgldict.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svgxval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svkern.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svmm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svotval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svpfr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svpostnm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svpscmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svpsinfo.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svsfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svttcmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svtteng.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svttglyf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svwinfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/services/svxf86nm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/sfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/t1types.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/internal/tttypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/t1tables.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ttnameid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/tttables.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/tttags.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/freetype/ttunpat.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/include/ft2build.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afangles.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afangles.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afcjk.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afdummy.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afglobal.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afhints.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afindic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/aflatin.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/aflatin2.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afloader.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afmodule.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/afwarp.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/autofit.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/autofit/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/basepic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftadvanc.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftapi.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftbase.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftbbox.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftbitmap.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftcalc.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftdbgmem.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftdebug.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftgloadr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftglyph.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftinit.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftobjs.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftoutln.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftrfork.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftsnames.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftstream.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftstroke.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftsynth.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftsystem.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/fttrigon.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/base/ftutil.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cff.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffcmap.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffdrivr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffgload.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffload.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffobjs.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffparse.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/cffpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/cff/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshalgo.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshglob.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshinter.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshmod.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshmod.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshpic.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/pshrec.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/pshinter/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libfreetype2/src/psnames/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/CleanSpec.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/Makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/ansi2knr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/cdjpeg.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/cjpeg.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/ckconfig.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/configure"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/djpeg.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/example.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/install-sh"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcapimin.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcapistd.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jccoefct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jccolor.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcdctmgr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jchuff.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcinit.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcmainct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcmarker.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcmaster.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcomapi.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcparam.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcphuff.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcprepct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jcsample.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jctrans.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdapimin.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdapistd.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdatadst.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdatasrc.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdcoefct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdcolor.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jddctmgr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdhuff.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdinput.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdmainct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdmarker.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdmaster.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdmerge.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdphuff.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdpostct.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdsample.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jdtrans.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jerror.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jfdctflt.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jfdctfst.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jfdctint.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jidctflt.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jidctfst.S"
+            ex="true"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jidctfst.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jidctint.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jidctred.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmem-android.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemansi.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemdos.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemdosa.asm"
+            ex="true"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemmac.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemmgr.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemname.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jmemnobs.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jpegtran.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jquant1.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jquant2.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/jutils.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/libtool"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/ltconfig"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/ltmain.sh"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdbmp.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdcolmap.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdgif.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdjpgcom.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdppm.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdrle.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdswitch.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/rdtarga.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/transupp.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrbmp.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrgif.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrjpgcom.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrppm.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrrle.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="/home/igagis/prj/morda/android/jni/libjpeg/jpeg/wrtarga.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
       </item>
       <folder path="jni">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
           </incDir>
           <preprocessorList>
@@ -1173,16 +3234,66 @@
       <folder path="src">
         <ccTool>
           <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/android">
+        <ccTool>
+          <incDir>
+            <pElem>../../../bin/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/layouts">
+        <ccTool>
+          <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>../src</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="src/morda/android">
+      <folder path="src/morda/linux">
         <ccTool>
-          <preprocessorList>
-            <Elem>__ANDROID__</Elem>
-          </preprocessorList>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>../src</pElem>
+          </incDir>
         </ccTool>
       </folder>
     </conf>

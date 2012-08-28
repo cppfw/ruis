@@ -79,11 +79,15 @@ public:
 	Application() :
 			App(320, 480)
 	{
-		this->ResMan().MountResPack(ting::Ptr<ting::fs::File>(new ting::fs::FSFile()));
+		{
+			ting::Ptr<ting::fs::FSFile> fi(new ting::fs::FSFile());
+			fi->SetRootDir("res/");
+			this->ResMan().MountResPack(fi);
+		}
 		
 		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
 
-		ting::fs::FSFile fi("test.gui.stob");
+		ting::fs::FSFile fi("res/test.gui.stob");
 		this->SetRootContainer(morda::App::Inst().Inflater().Inflate(fi));
 	}
 };
