@@ -20,19 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
-// Homepage: http://ting.googlecode.com
 
 
-
-#ifdef WIN32
-#include <windows.h>
-
-#elif defined(__linux__)
 #include <dirent.h>
 #include <sys/stat.h>
 #include <cerrno>
-
-#endif
 
 #include <vector>
 #include <cstdlib>
@@ -41,7 +33,7 @@ THE SOFTWARE. */
 
 
 
-using namespace ting_android;
+using namespace morda;
 
 
 
@@ -95,7 +87,7 @@ void AssetFile::Close()throw(){
 
 
 //override
-size_t AssetFile::ReadInternal(ting::Buffer<ting::u8>& buf){
+size_t AssetFile::ReadInternal(const ting::Buffer<ting::u8>& buf){
 	ASSERT(this->handle)
 	int numBytesRead = AAsset_read(this->handle, buf.Begin(), buf.Size());
 	if(numBytesRead < 0){//something happened
@@ -108,7 +100,7 @@ size_t AssetFile::ReadInternal(ting::Buffer<ting::u8>& buf){
 
 
 //override
-size_t AssetFile::WriteInternal(const ting::Buffer<ting::u8>& buf){
+size_t AssetFile::WriteInternal(const ting::Buffer<const ting::u8>& buf){
 	ASSERT(this->handle)
 	throw File::Exc("Write() is not supported by Android assets");
 	return 0;

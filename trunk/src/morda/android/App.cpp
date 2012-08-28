@@ -5,7 +5,11 @@
 
 
 #include <android/native_activity.h>
+
 #include <ting/Array.hpp>
+
+#include "AssetFile.hpp"
+
 
 
 using namespace morda;
@@ -152,6 +156,12 @@ App::App(unsigned w, unsigned h) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
 	this->UpdateWindowDimensions(tride::Vec2f(float(width), float(height)));
+}
+
+
+
+ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+	return AssetFile::New(appInfo.assetManager, path);
 }
 
 
