@@ -39,6 +39,13 @@ struct AppInfo{
 
 
 
+struct PointerInfo{
+	ting::Inited<float, 0> x;
+	ting::Inited<float, 0> y;
+};
+ting::StaticBuffer<PointerInfo, 10> pointers;
+
+
 }//~namespace
 
 
@@ -202,51 +209,83 @@ void HandleInputEvents(){
 			case AINPUT_EVENT_TYPE_MOTION:	
 				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
 					case AMOTION_EVENT_ACTION_POINTER_DOWN:
-						TRACE(<< "Pointer down" << std::endl)
+//						TRACE(<< "Pointer down" << std::endl)
 					case AMOTION_EVENT_ACTION_DOWN:
 						{
-							size_t numPointers = AMotionEvent_getPointerCount(event);
-							ASSERT(numPointers >= 1)
-							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action down, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
-								if(app.rootContainer.IsValid()){
-									app.rootContainer->OnMouseButtonDown(
-											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
-											morda::Widget::LEFT,
-											unsigned(AMotionEvent_getPointerId(event, pointerNum))
-										);
-								}
-							}//~for(every pointer)
+							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+
+							if(pointerId >= pointers.Size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+								continue;
+							}
+							
+							TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
+
+							float x = AMotionEvent_getX(event, pointerIndex);
+							float y = AMotionEvent_getY(event, pointerIndex);
+							pointers[pointerId].x = x;
+							pointers[pointerId].y = y;
+
+							if(app.rootContainer.IsValid()){
+								app.rootContainer->OnMouseButtonDown(
+										tride::Vec2f(x, app.curWinDim.y - y - 1.0f),
+										morda::Widget::LEFT,
+										pointerId
+									);
+							}
 						}
 						break;
 					case AMOTION_EVENT_ACTION_POINTER_UP:
-						TRACE(<< "Pointer up" << std::endl)
+//						TRACE(<< "Pointer up" << std::endl)
 					case AMOTION_EVENT_ACTION_UP:
 						{
-							size_t numPointers = AMotionEvent_getPointerCount(event);
-							ASSERT(numPointers >= 1)
-							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action up, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
-								if(app.rootContainer.IsValid()){
-									app.rootContainer->OnMouseButtonUp(
-											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
-											morda::Widget::LEFT,
-											unsigned(AMotionEvent_getPointerId(event, pointerNum))
-										);
-								}
-							}//~for(every pointer)
+							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+
+							if(pointerId >= pointers.Size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+								continue;
+							}
+
+							TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+							
+							if(app.rootContainer.IsValid()){
+								app.rootContainer->OnMouseButtonUp(
+										tride::Vec2f(AMotionEvent_getX(event, pointerIndex), app.curWinDim.y - AMotionEvent_getY(event, pointerIndex) - 1.0f),
+										morda::Widget::LEFT,
+										pointerId
+									);
+							}
 						}
 						break;
 					case AMOTION_EVENT_ACTION_MOVE:
-						{
+						{							
 							size_t numPointers = AMotionEvent_getPointerCount(event);
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								TRACE(<< "Action move, ptr id = " << unsigned(AMotionEvent_getPointerId(event, pointerNum)) << std::endl)
+								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
+								if(pointerId >= pointers.Size()){
+									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+									continue;
+								}
+								
+								//notify root Container only if there was actual movement
+								float x = AMotionEvent_getX(event, pointerNum);
+								float y = AMotionEvent_getY(event, pointerNum);
+								if(pointers[pointerId].x == x && pointers[pointerId].y == y){
+									//pointer was already down
+									continue;
+								}
+								TRACE(<< "Action move, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
+								
+								pointers[pointerId].x = x;
+								pointers[pointerId].y = y;
+								
 								if(app.rootContainer.IsValid()){
 									app.rootContainer->OnMouseMove(
-											tride::Vec2f(AMotionEvent_getX(event, pointerNum), app.curWinDim.y - AMotionEvent_getY(event, pointerNum) - 1.0f),
-											unsigned(AMotionEvent_getPointerId(event, pointerNum))
+											tride::Vec2f(x, app.curWinDim.y - y - 1.0f),
+											pointerId
 										);
 								}
 							}//~for(every pointer)
