@@ -418,13 +418,13 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
-//	morda::UpdateWindowDimensions(
-//			static_cast<morda::App*>(activity->instance),
-//			tride::Vec2f(
-//					float(ANativeWindow_getWidth(window)),
-//					float(ANativeWindow_getHeight(window))
-//				)
-//		);
+	morda::UpdateWindowDimensions(
+			static_cast<morda::App*>(activity->instance),
+			tride::Vec2f(
+					float(ANativeWindow_getWidth(window)),
+					float(ANativeWindow_getHeight(window))
+				)
+		);
 }
 
 
@@ -510,10 +510,12 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
 	
-	UpdateWindowDimensions(
-			static_cast<morda::App*>(activity->instance),
-			tride::Vec2f(float(rect->right), float(rect->bottom))
-		);
+	//called when, for example, on-screen keyboard has been shown
+	
+//	UpdateWindowDimensions(
+//			static_cast<morda::App*>(activity->instance),
+//			tride::Vec2f(float(rect->right), float(rect->bottom))
+//		);
 }
 
 
