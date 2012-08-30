@@ -148,7 +148,7 @@ App::App(unsigned w, unsigned h) :
 		xVisualInfo(xDisplay),
 		xWindow(w, h, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
-		curWinDim(-1, -1)
+		curWinRect(0, 0, -1, -1)
 {
 #ifdef DEBUG
 	//print GLX version
@@ -159,7 +159,7 @@ App::App(unsigned w, unsigned h) :
 	}
 #endif
 	
-	this->UpdateWindowDimensions(tride::Vec2f(float(w), float(h)));
+	this->UpdateWindowRect(tride::Rect2f(0, 0, float(w), float(h)));
 }
 
 
@@ -242,7 +242,7 @@ void App::Exec(){
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						this->UpdateWindowDimensions(tride::Vec2f(float(event.xconfigure.width), float(event.xconfigure.height)));
+						this->UpdateWindowRect(tride::Rect2f(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
@@ -255,31 +255,34 @@ void App::Exec(){
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						if(this->rootContainer.IsValid()){
-							this->rootContainer->OnMouseButtonDown(
-									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
-									ButtonNumberToEnum(event.xbutton.button),
-									0
-								);
+						if(this->rootContainer.IsNotValid()){
+							break;
 						}
+						this->rootContainer->OnMouseButtonDown(
+								tride::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+								ButtonNumberToEnum(event.xbutton.button),
+								0
+							);
 						break;
 					case ButtonRelease:
-						if(this->rootContainer.IsValid()){
-							this->rootContainer->OnMouseButtonUp(
-									tride::Vec2f(event.xbutton.x, this->curWinDim.y - float(event.xbutton.y) - 1.0f),
-									ButtonNumberToEnum(event.xbutton.button),
-									0
-								);
+						if(this->rootContainer.IsNotValid()){
+							break;
 						}
+						this->rootContainer->OnMouseButtonUp(
+								tride::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+								ButtonNumberToEnum(event.xbutton.button),
+								0
+							);
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-						if(this->rootContainer.IsValid()){
-							this->rootContainer->OnMouseMove(
-									tride::Vec2f(event.xmotion.x, this->curWinDim.y - float(event.xmotion.y) - 1.0f),
-									0
-								);
+						if(this->rootContainer.IsNotValid()){
+							break;
 						}
+						this->rootContainer->OnMouseMove(
+								tride::Vec2f(event.xmotion.x, this->curWinRect.d.y - float(event.xmotion.y) - 1.0f),
+								0
+							);
 						break;
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)
