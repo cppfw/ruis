@@ -5,10 +5,12 @@
 
 
 #include <android/native_activity.h>
+#include <android/configuration.h>
 
 #include <ting/Array.hpp>
 
 #include "AssetFile.hpp"
+#include "morda/App.hpp"
 
 
 
@@ -20,7 +22,7 @@ namespace{
 
 ANativeWindow* androidWindow = 0;
 
-tride::Vec2f winDim(0, 0);
+tride::Vec2f curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
 
@@ -52,11 +54,33 @@ ting::StaticBuffer<PointerInfo, 10> pointers;
 inline tride::Vec2f AndroidWinCoordsToMordaWinRectCoords(const tride::Rect2f& winRect, float x, float y){
 	tride::Vec2f ret(
 			x,
-			winDim.y - y - winRect.p.y - 1.0f
+			curWinDim.y - y - winRect.p.y - 1.0f
 		);
 	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret;
 }
+
+
+
+struct AndroidConfiguration{
+	AConfiguration* ac;
+
+	AndroidConfiguration(){
+		this->ac = AConfiguration_new();
+	}
+	
+	~AndroidConfiguration()throw(){
+		AConfiguration_delete(this->ac);
+	}
+	
+	static inline ting::Ptr<AndroidConfiguration> New(){
+		return ting::Ptr<AndroidConfiguration>(new AndroidConfiguration());
+	}
+};
+
+ting::Ptr<AndroidConfiguration> curConfig;
+
+
 
 }//~namespace
 
@@ -391,7 +415,36 @@ void OnStop(ANativeActivity* activity){
 
 void OnConfigurationChanged(ANativeActivity* activity){
 	TRACE(<< "OnConfigurationChanged(): invoked" << std::endl)
-	//TODO:
+	
+	int32_t diff;
+	{
+		ting::Ptr<AndroidConfiguration> config = AndroidConfiguration::New();
+		AConfiguration_fromAssetManager(config->ac, appInfo.assetManager);
+
+		diff = AConfiguration_diff(curConfig->ac, config->ac);
+		
+		curConfig = config;
+	}
+	
+	//if orientation has changed
+	if(diff & ACONFIGURATION_ORIENTATION){
+		int32_t orientation = AConfiguration_getOrientation(curConfig->ac);
+		switch(orientation){
+			case ACONFIGURATION_ORIENTATION_LAND:
+			case ACONFIGURATION_ORIENTATION_PORT:
+				std::swap(curWinDim.x, curWinDim.y);
+				break;
+			case ACONFIGURATION_ORIENTATION_SQUARE:
+				//do nothing
+				break;
+			case ACONFIGURATION_ORIENTATION_ANY:
+				ASSERT(false)
+			default:
+				ASSERT(false)
+				break;
+		}
+	}
+	
 //    static_cast<morda::App*>(activity->instance)->OnConfigurationChanged();
 }
 
@@ -419,12 +472,20 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	//save window in a static var, so it is accessible for OGL initializers from morda::App class
 	androidWindow = window;
 	
-	winDim.x = float(ANativeWindow_getWidth(window));
-	winDim.y = float(ANativeWindow_getHeight(window));
+	curWinDim.x = float(ANativeWindow_getWidth(window));
+	curWinDim.y = float(ANativeWindow_getHeight(window));
 	
 	ASSERT(!activity->instance)
 	try{
+		//use local auto-pointer for now because an exception can be thrown and need to delete object then.
+		ting::Ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
+		//retrieve current configuration
+		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
+		
 		activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+		
+		//save current configuration in global variable
+		curConfig = cfg;
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
 		throw;
@@ -440,8 +501,8 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
 	//save window dimensions
-	winDim.x = float(ANativeWindow_getWidth(window));
-	winDim.y = float(ANativeWindow_getHeight(window));
+	curWinDim.x = float(ANativeWindow_getWidth(window));
+	curWinDim.y = float(ANativeWindow_getHeight(window));
 }
 
 
@@ -461,6 +522,9 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	//destroy app object
 	delete static_cast<morda::App*>(activity->instance);
 	activity->instance = 0;
+	
+	//delete configuration object
+	curConfig.Reset();
 }
 
 
@@ -529,15 +593,13 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	
 	//called when, for example, on-screen keyboard has been shown
 	
-	//TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
-	
-	//TODO: depending on orientation switch window width and height
+//	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
 	
 	UpdateWindowRect(
 			static_cast<morda::App*>(activity->instance),
 			tride::Rect2f(
 					float(rect->left),
-					winDim.y - float(rect->bottom),
+					curWinDim.y - float(rect->bottom),
 					float(rect->right - rect->left),
 					float(rect->bottom - rect->top)
 				)
@@ -583,6 +645,6 @@ void ANativeActivity_onCreate(
 		appInfo.savedState.Init(savedStateSize);
 		memcpy(appInfo.savedState.Begin(), savedState, savedStateSize);
 	}
-
+	
 //	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
 }
