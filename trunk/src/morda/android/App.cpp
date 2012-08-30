@@ -51,10 +51,10 @@ ting::StaticBuffer<PointerInfo, 10> pointers;
 
 
 
-inline tride::Vec2f AndroidWinCoordsToMordaWinRectCoords(const tride::Rect2f& winRect, float x, float y){
+inline tride::Vec2f AndroidWinCoordsToMordaWinRectCoords(const tride::Rect2f& winRect, const tride::Vec2f& p){
 	tride::Vec2f ret(
-			x,
-			curWinDim.y - y - winRect.p.y - 1.0f
+			p.x,
+			curWinDim.y - p.y - winRect.p.y - 1.0f
 		);
 	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret;
@@ -260,14 +260,12 @@ void HandleInputEvents(){
 
 								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-								float x = AMotionEvent_getX(event, pointerIndex);
-								float y = AMotionEvent_getY(event, pointerIndex);
-								pointers[pointerId].x = x;
-								pointers[pointerId].y = y;
+								tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
 								app.rootContainer->OnMouseButtonDown(
-										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
 										pointerId
 									);
@@ -287,14 +285,12 @@ void HandleInputEvents(){
 
 								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 
-								float x = AMotionEvent_getX(event, pointerIndex);
-								float y = AMotionEvent_getY(event, pointerIndex);
-								pointers[pointerId].x = x;
-								pointers[pointerId].y = y;
+								tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
 								app.rootContainer->OnMouseButtonUp(
-										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
 										pointerId
 									);
@@ -312,21 +308,19 @@ void HandleInputEvents(){
 									}
 
 									//notify root Container only if there was actual movement
-									float x = AMotionEvent_getX(event, pointerNum);
-									float y = AMotionEvent_getY(event, pointerNum);
-									if(pointers[pointerId].x == x && pointers[pointerId].y == y){
-										//pointer was already down
+									tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+									if(pointers[pointerId] == p){
+										//pointer position did not change
 										continue;
 									}
 
 	//								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
 
-									pointers[pointerId].x = x;
-									pointers[pointerId].y = y;
+									pointers[pointerId] = p;
 
 									ASSERT(app.rootContainer.IsValid())
 									app.rootContainer->OnMouseMove(
-											AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+											AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 											pointerId
 										);
 								}//~for(every pointer)
