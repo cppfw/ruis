@@ -20,6 +20,8 @@ namespace{
 
 ANativeWindow* androidWindow = 0;
 
+tride::Vec2f winDim(0, 0);
+
 AInputQueue* curInputQueue = 0;
 
 struct AppInfo{
@@ -45,6 +47,16 @@ struct PointerInfo{
 };
 ting::StaticBuffer<PointerInfo, 10> pointers;
 
+
+
+inline tride::Vec2f AndroidWinCoordsToMordaWinRectCoords(const tride::Rect2f& winRect, float x, float y){
+	tride::Vec2f ret(
+			x,
+			winDim.y - y - winRect.p.y - 1.0f
+		);
+	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
+	return ret;
+}
 
 }//~namespace
 
@@ -178,6 +190,7 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 inline void UpdateWindowRect(App* app, const tride::Rect2f& rect){
+	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
 	app->UpdateWindowRect(rect);
 }
 
@@ -205,108 +218,118 @@ void HandleInputEvents(){
 		
 		bool consume = false;
 		
-		switch(eventType){
-			case AINPUT_EVENT_TYPE_MOTION:	
-				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
-					case AMOTION_EVENT_ACTION_POINTER_DOWN:
-//						TRACE(<< "Pointer down" << std::endl)
-					case AMOTION_EVENT_ACTION_DOWN:
-						{
-							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+		if(app.rootContainer.IsValid()){
+			switch(eventType){
+				case AINPUT_EVENT_TYPE_MOTION:
+					switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+						case AMOTION_EVENT_ACTION_POINTER_DOWN:
+	//						TRACE(<< "Pointer down" << std::endl)
+						case AMOTION_EVENT_ACTION_DOWN:
+							{
+								unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
-							if(pointerId >= pointers.Size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
-								continue;
-							}
-
-							float x = AMotionEvent_getX(event, pointerIndex);
-							float y = AMotionEvent_getY(event, pointerIndex);
-							pointers[pointerId].x = x;
-							pointers[pointerId].y = y;
-
-							tride::Vec2f localPos(x, app.curWinRect.d.y + app.curWinRect.p.y - y - 1.0f);
-							
-							TRACE(<< "Action down, ptr id = " << pointerId << " x = " << x << " y = " << y << " localPos = " << localPos << std::endl)
-							
-							if(app.rootContainer.IsValid()){
-								app.rootContainer->OnMouseButtonDown(localPos, morda::Widget::LEFT, pointerId);
-							}
-						}
-						break;
-					case AMOTION_EVENT_ACTION_POINTER_UP:
-//						TRACE(<< "Pointer up" << std::endl)
-					case AMOTION_EVENT_ACTION_UP:
-						{
-							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
-
-							if(pointerId >= pointers.Size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
-								continue;
-							}
-
-							tride::Vec2f localPos(AMotionEvent_getX(event, pointerIndex), app.curWinRect.d.y + app.curWinRect.p.y - AMotionEvent_getY(event, pointerIndex) - 1.0f);
-							
-							TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
-							
-							if(app.rootContainer.IsValid()){
-								app.rootContainer->OnMouseButtonUp(localPos, morda::Widget::LEFT, pointerId);
-							}
-						}
-						break;
-					case AMOTION_EVENT_ACTION_MOVE:
-						{							
-							size_t numPointers = AMotionEvent_getPointerCount(event);
-							ASSERT(numPointers >= 1)
-							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
 								if(pointerId >= pointers.Size()){
 									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
 									continue;
 								}
-								
-								//notify root Container only if there was actual movement
-								float x = AMotionEvent_getX(event, pointerNum);
-								float y = AMotionEvent_getY(event, pointerNum);
-								if(pointers[pointerId].x == x && pointers[pointerId].y == y){
-									//pointer was already down
-									continue;
-								}
-								
-								tride::Vec2f localPos(x, app.curWinRect.d.y + app.curWinRect.p.y - y - 1.0f);
-//								TRACE(<< "Action move, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
-								
+
+								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
+
+								float x = AMotionEvent_getX(event, pointerIndex);
+								float y = AMotionEvent_getY(event, pointerIndex);
 								pointers[pointerId].x = x;
 								pointers[pointerId].y = y;
-								
-								if(app.rootContainer.IsValid()){
-									app.rootContainer->OnMouseMove(localPos, pointerId);
+
+								ASSERT(app.rootContainer.IsValid())
+								app.rootContainer->OnMouseButtonDown(
+										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+										morda::Widget::LEFT,
+										pointerId
+									);
+							}
+							break;
+						case AMOTION_EVENT_ACTION_POINTER_UP:
+	//						TRACE(<< "Pointer up" << std::endl)
+						case AMOTION_EVENT_ACTION_UP:
+							{
+								unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+
+								if(pointerId >= pointers.Size()){
+									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+									continue;
 								}
-							}//~for(every pointer)
-						}
-						break;
-					default:
-						TRACE(<< "unknown eventAction" << std::endl)
-						break;
-				}//~switch(event action)
-				consume = true;
-				break;
-			case AINPUT_EVENT_TYPE_KEY:
-				//TODO:
-				break;
-			default:
-				break;
-		}//~switch(event type)
+
+								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+
+								float x = AMotionEvent_getX(event, pointerIndex);
+								float y = AMotionEvent_getY(event, pointerIndex);
+								pointers[pointerId].x = x;
+								pointers[pointerId].y = y;
+
+								ASSERT(app.rootContainer.IsValid())
+								app.rootContainer->OnMouseButtonUp(
+										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+										morda::Widget::LEFT,
+										pointerId
+									);
+							}
+							break;
+						case AMOTION_EVENT_ACTION_MOVE:
+							{							
+								size_t numPointers = AMotionEvent_getPointerCount(event);
+								ASSERT(numPointers >= 1)
+								for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+									unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
+									if(pointerId >= pointers.Size()){
+										TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+										continue;
+									}
+
+									//notify root Container only if there was actual movement
+									float x = AMotionEvent_getX(event, pointerNum);
+									float y = AMotionEvent_getY(event, pointerNum);
+									if(pointers[pointerId].x == x && pointers[pointerId].y == y){
+										//pointer was already down
+										continue;
+									}
+
+	//								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
+
+									pointers[pointerId].x = x;
+									pointers[pointerId].y = y;
+
+									ASSERT(app.rootContainer.IsValid())
+									app.rootContainer->OnMouseMove(
+											AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, x, y),
+											pointerId
+										);
+								}//~for(every pointer)
+							}
+							break;
+						default:
+							TRACE(<< "unknown eventAction" << std::endl)
+							break;
+					}//~switch(event action)
+					consume = true;
+					break;
+				case AINPUT_EVENT_TYPE_KEY:
+					//TODO:
+					break;
+				default:
+					break;
+			}//~switch(event type)
+		}//~if(app.rootContainer.IsValid())
 		
 		AInputQueue_finishEvent(
 				curInputQueue,
 				event,
 				consume
 			);
-	}//~while()
+	}//~while(there are events in input queue)
 	
-	//TODO: render if needed
+	//TODO: render only if needed
 	app.Render();
 }
 
@@ -396,6 +419,9 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	//save window in a static var, so it is accessible for OGL initializers from morda::App class
 	androidWindow = window;
 	
+	winDim.x = float(ANativeWindow_getWidth(window));
+	winDim.y = float(ANativeWindow_getHeight(window));
+	
 	ASSERT(!activity->instance)
 	try{
 		activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();
@@ -413,15 +439,9 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
-//	float w = float(ANativeWindow_getWidth(window));
-//	float h = float(ANativeWindow_getHeight(window));
-//	
-//	TRACE(<< "OnNativeWindowResized(): w = " << w << " h = " << h << std::endl)
-//	
-//	morda::UpdateWindowDimensions(
-//			static_cast<morda::App*>(activity->instance),
-//			tride::Vec2f(w, h)
-//		);
+	//save window dimensions
+	winDim.x = float(ANativeWindow_getWidth(window));
+	winDim.y = float(ANativeWindow_getHeight(window));
 }
 
 
@@ -509,9 +529,18 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	
 	//called when, for example, on-screen keyboard has been shown
 	
+	//TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
+	
+	//TODO: depending on orientation switch window width and height
+	
 	UpdateWindowRect(
 			static_cast<morda::App*>(activity->instance),
-			tride::Rect2f(float(rect->left), float(rect->top), float(rect->right - rect->left), float(rect->bottom - rect->top))
+			tride::Rect2f(
+					float(rect->left),
+					winDim.y - float(rect->bottom),
+					float(rect->right - rect->left),
+					float(rect->bottom - rect->top)
+				)
 		);
 }
 

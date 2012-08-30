@@ -178,6 +178,7 @@ public:
 	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 	
 private:
+	//this is a viewport rectangle in coordinates that are x grows right, y grows up.
 	tride::Rect2f curWinRect;
 	
 	ting::Ref<morda::Container> rootContainer;
@@ -186,7 +187,7 @@ private:
 	
 	GuiInflater inflater;
 	
-	void SetGLViewport(const tride::Rect2f& rect);
+	void UpdateGLViewport();
 	
 	void UpdateWindowRect(const tride::Rect2f& rect);
 	
