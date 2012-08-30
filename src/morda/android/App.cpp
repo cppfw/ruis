@@ -26,6 +26,8 @@ tride::Vec2f curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
 
+ALooper* looper = 0;
+
 struct AppInfo{
 	//Path to this application's internal data directory.
 	const char* internalDataPath;
@@ -435,8 +437,6 @@ void OnConfigurationChanged(ANativeActivity* activity){
 				break;
 		}
 	}
-	
-//    static_cast<morda::App*>(activity->instance)->OnConfigurationChanged();
 }
 
 
@@ -554,10 +554,12 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 	ASSERT(!curInputQueue)
 	curInputQueue = queue;
 
+	looper = ALooper_prepare(0); //get looper for current thread (main thread)
+	
 	//attach queue to looper
 	AInputQueue_attachLooper(
 			curInputQueue,
-			ALooper_prepare(0), //get looper for current thread (main thread)
+			looper,
 			0, //'ident' is ignored since we are using callback
 			&OnInputEventsReadyForReadingFromQueue,
 			activity->instance
