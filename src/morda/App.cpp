@@ -20,7 +20,9 @@ void App::SetGLViewport(const tride::Vec2f& dim){
 
 
 void App::Render(){
+	TRACE(<< "App::Render(): invoked" << std::endl)
 	if(this->rootContainer.IsNotValid()){
+		TRACE(<< "App::Render(): root container is not valid" << std::endl)
 		return;
 	}
 	
@@ -28,6 +30,8 @@ void App::Render(){
 
 	glClearColor(0.0f, 0, 0.0f, 1.0f);
 	ASSERT(glGetError() == GL_NO_ERROR)
+			
+	//TODO: clear depth if depth buffer is created, and stencil also, and whatever else
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ASSERT(glGetError() == GL_NO_ERROR)
 	

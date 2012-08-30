@@ -219,14 +219,14 @@ void HandleInputEvents(){
 								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
 								continue;
 							}
-							
-							TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
 							float x = AMotionEvent_getX(event, pointerIndex);
 							float y = AMotionEvent_getY(event, pointerIndex);
 							pointers[pointerId].x = x;
 							pointers[pointerId].y = y;
 
+							TRACE(<< "Action down, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
+							
 							if(app.rootContainer.IsValid()){
 								app.rootContainer->OnMouseButtonDown(
 										tride::Vec2f(x, app.curWinDim.y - y - 1.0f),
@@ -277,7 +277,7 @@ void HandleInputEvents(){
 									//pointer was already down
 									continue;
 								}
-								TRACE(<< "Action move, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
+//								TRACE(<< "Action move, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
 								
 								pointers[pointerId].x = x;
 								pointers[pointerId].y = y;
@@ -311,6 +311,7 @@ void HandleInputEvents(){
 			);
 	}//~while()
 	
+	//TODO: render if needed
 	app.Render();
 }
 
@@ -417,13 +418,13 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
-	morda::UpdateWindowDimensions(
-			static_cast<morda::App*>(activity->instance),
-			tride::Vec2f(
-					float(ANativeWindow_getWidth(window)),
-					float(ANativeWindow_getHeight(window))
-				)
-		);
+//	morda::UpdateWindowDimensions(
+//			static_cast<morda::App*>(activity->instance),
+//			tride::Vec2f(
+//					float(ANativeWindow_getWidth(window)),
+//					float(ANativeWindow_getHeight(window))
+//				)
+//		);
 }
 
 
@@ -507,8 +508,12 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 
 
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
-	TRACE(<< "OnContentRectChanged(): invoked" << std::endl)
-	//TODO:
+	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
+	
+	UpdateWindowDimensions(
+			static_cast<morda::App*>(activity->instance),
+			tride::Vec2f(float(rect->right), float(rect->bottom))
+		);
 }
 
 
