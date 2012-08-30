@@ -308,7 +308,7 @@ void HandleInputEvents(){
 									}
 
 									//notify root Container only if there was actual movement
-									tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+									tride::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 									if(pointers[pointerId] == p){
 										//pointer position did not change
 										continue;
