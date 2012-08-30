@@ -43,11 +43,8 @@ struct AppInfo{
 
 
 
-struct PointerInfo{
-	ting::Inited<float, 0> x;
-	ting::Inited<float, 0> y;
-};
-ting::StaticBuffer<PointerInfo, 10> pointers;
+//array of current pointer positions, needed to detect which pointers have actually moved.
+ting::StaticBuffer<tride::Vec2f, 10> pointers;
 
 
 
