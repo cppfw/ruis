@@ -166,7 +166,7 @@ App::App(unsigned w, unsigned h) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
-	this->UpdateWindowDimensions(tride::Vec2f(float(width), float(height)));
+	this->UpdateWindowRect(tride::Rect2f(0, 0, float(width), float(height)));
 }
 
 
@@ -177,8 +177,8 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 
-inline void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim){
-	app->UpdateWindowDimensions(newWinDim);
+inline void UpdateWindowRect(App* app, const tride::Rect2f& rect){
+	app->UpdateWindowRect(rect);
 }
 
 
@@ -225,14 +225,12 @@ void HandleInputEvents(){
 							pointers[pointerId].x = x;
 							pointers[pointerId].y = y;
 
-							TRACE(<< "Action down, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
+							tride::Vec2f localPos(x, app.curWinRect.d.y + app.curWinRect.p.y - y - 1.0f);
+							
+							TRACE(<< "Action down, ptr id = " << pointerId << " x = " << x << " y = " << y << " localPos = " << localPos << std::endl)
 							
 							if(app.rootContainer.IsValid()){
-								app.rootContainer->OnMouseButtonDown(
-										tride::Vec2f(x, app.curWinDim.y - y - 1.0f),
-										morda::Widget::LEFT,
-										pointerId
-									);
+								app.rootContainer->OnMouseButtonDown(localPos, morda::Widget::LEFT, pointerId);
 							}
 						}
 						break;
@@ -248,14 +246,12 @@ void HandleInputEvents(){
 								continue;
 							}
 
+							tride::Vec2f localPos(AMotionEvent_getX(event, pointerIndex), app.curWinRect.d.y + app.curWinRect.p.y - AMotionEvent_getY(event, pointerIndex) - 1.0f);
+							
 							TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 							
 							if(app.rootContainer.IsValid()){
-								app.rootContainer->OnMouseButtonUp(
-										tride::Vec2f(AMotionEvent_getX(event, pointerIndex), app.curWinDim.y - AMotionEvent_getY(event, pointerIndex) - 1.0f),
-										morda::Widget::LEFT,
-										pointerId
-									);
+								app.rootContainer->OnMouseButtonUp(localPos, morda::Widget::LEFT, pointerId);
 							}
 						}
 						break;
@@ -277,16 +273,15 @@ void HandleInputEvents(){
 									//pointer was already down
 									continue;
 								}
+								
+								tride::Vec2f localPos(x, app.curWinRect.d.y + app.curWinRect.p.y - y - 1.0f);
 //								TRACE(<< "Action move, ptr id = " << pointerId << " x = " << x << " y = " << y << std::endl)
 								
 								pointers[pointerId].x = x;
 								pointers[pointerId].y = y;
 								
 								if(app.rootContainer.IsValid()){
-									app.rootContainer->OnMouseMove(
-											tride::Vec2f(x, app.curWinDim.y - y - 1.0f),
-											pointerId
-										);
+									app.rootContainer->OnMouseMove(localPos, pointerId);
 								}
 							}//~for(every pointer)
 						}
@@ -418,13 +413,15 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 	
-	morda::UpdateWindowDimensions(
-			static_cast<morda::App*>(activity->instance),
-			tride::Vec2f(
-					float(ANativeWindow_getWidth(window)),
-					float(ANativeWindow_getHeight(window))
-				)
-		);
+//	float w = float(ANativeWindow_getWidth(window));
+//	float h = float(ANativeWindow_getHeight(window));
+//	
+//	TRACE(<< "OnNativeWindowResized(): w = " << w << " h = " << h << std::endl)
+//	
+//	morda::UpdateWindowDimensions(
+//			static_cast<morda::App*>(activity->instance),
+//			tride::Vec2f(w, h)
+//		);
 }
 
 
@@ -512,10 +509,10 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	
 	//called when, for example, on-screen keyboard has been shown
 	
-//	UpdateWindowDimensions(
-//			static_cast<morda::App*>(activity->instance),
-//			tride::Vec2f(float(rect->right), float(rect->bottom))
-//		);
+	UpdateWindowRect(
+			static_cast<morda::App*>(activity->instance),
+			tride::Rect2f(float(rect->left), float(rect->top), float(rect->right - rect->left), float(rect->bottom - rect->top))
+		);
 }
 
 

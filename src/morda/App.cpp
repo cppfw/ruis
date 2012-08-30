@@ -13,8 +13,8 @@ ting::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 
-void App::SetGLViewport(const tride::Vec2f& dim){
-	glViewport(0, 0, dim.x, dim.y);
+void App::SetGLViewport(const tride::Rect2f& rect){
+	glViewport(int(rect.p.x), int(rect.p.y), int(rect.d.x), int(rect.d.y));
 }
 
 
@@ -38,7 +38,7 @@ void App::Render(){
 	tride::Matr4f m;
 	m.Identity();
 	m.Translate(-1, -1);
-	m.Scale(2.0f / this->curWinDim.x, 2.0f / this->curWinDim.y);
+	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);
 	
 	this->rootContainer->Render(m);
 	
@@ -47,16 +47,15 @@ void App::Render(){
 
 
 
-void App::UpdateWindowDimensions(const tride::Vec2f& dim){
-	if(this->curWinDim.x == dim.x && this->curWinDim.y == dim.y){
+void App::UpdateWindowRect(const tride::Rect2f& rect){
+	if(this->curWinRect == rect){
 		return;
 	}
 	
-	this->curWinDim.x = dim.x;
-	this->curWinDim.y = dim.y;
+	this->curWinRect = rect;
 
-	this->SetGLViewport(this->curWinDim);
+	this->SetGLViewport(this->curWinRect);
 	if(this->rootContainer.IsValid()){
-		this->rootContainer->Resize(this->curWinDim);
+		this->rootContainer->Resize(this->curWinRect.d);
 	}
 }

@@ -105,7 +105,7 @@ private:
 		~EGLContextWrapper()throw();
 	} eglContext;
 	
-	friend void UpdateWindowDimensions(App* app, const tride::Vec2f& newWinDim);
+	friend void UpdateWindowRect(App* app, const tride::Rect2f& rect);
 	friend void Render(App* app);
 	friend void HandleInputEvents();
 	
@@ -178,7 +178,7 @@ public:
 	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 	
 private:
-	tride::Vec2f curWinDim;
+	tride::Rect2f curWinRect;
 	
 	ting::Ref<morda::Container> rootContainer;
 	
@@ -186,9 +186,9 @@ private:
 	
 	GuiInflater inflater;
 	
-	void SetGLViewport(const tride::Vec2f& dim);
+	void SetGLViewport(const tride::Rect2f& rect);
 	
-	void UpdateWindowDimensions(const tride::Vec2f& dim);
+	void UpdateWindowRect(const tride::Rect2f& rect);
 	
 	void Render();
 	
@@ -202,7 +202,7 @@ public:
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
 		this->rootContainer->SetPos(tride::Vec2f(0));
-		this->rootContainer->Resize(this->curWinDim);
+		this->rootContainer->Resize(this->curWinRect.d);
 	}
 	
 	inline ResourceManager& ResMan()throw(){
