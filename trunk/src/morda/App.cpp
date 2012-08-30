@@ -13,8 +13,13 @@ ting::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 
-void App::SetGLViewport(const tride::Rect2f& rect){
-	glViewport(int(rect.p.x), int(rect.p.y), int(rect.d.x), int(rect.d.y));
+void App::UpdateGLViewport(){
+	glViewport(
+			int(this->curWinRect.p.x),
+			int(this->curWinRect.p.y),
+			int(this->curWinRect.d.x),
+			int(this->curWinRect.d.y)
+		);
 }
 
 
@@ -54,8 +59,11 @@ void App::UpdateWindowRect(const tride::Rect2f& rect){
 	
 	this->curWinRect = rect;
 
-	this->SetGLViewport(this->curWinRect);
-	if(this->rootContainer.IsValid()){
-		this->rootContainer->Resize(this->curWinRect.d);
+	this->UpdateGLViewport();
+	
+	if(this->rootContainer.IsNotValid()){
+		return;
 	}
+	
+	this->rootContainer->Resize(this->curWinRect.d);
 }
