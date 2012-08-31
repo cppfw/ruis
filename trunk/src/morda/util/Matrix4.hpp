@@ -67,7 +67,7 @@ public:
 	 * NOTE: it does not initialize the matrix with any values.
 	 * Matrix elements are undefined after the matrix is created with this constructor.
 	 */
-	inline Matrix4(){}//Default constructor.
+	inline Matrix4()throw(){}//Default constructor.
 
 	
 	
@@ -93,7 +93,7 @@ public:
 	 * @return pointer to array of 4 elements which forms the requested column of the matirx.
 	 */
 	//TODO: rewrite using Vec4
-	inline T* operator[](unsigned col){
+	inline T* operator[](unsigned col)throw(){
 		ASSERT(col < 4)
 		return &this->m[col * 4];
 	}
@@ -105,14 +105,14 @@ public:
 	 * @return pointer to array of 4 elements which forms the requested column of the matirx.
 	 */
 	//TODO: rewrite using Vec4
-	inline const T* operator[](unsigned col)const{
+	inline const T* operator[](unsigned col)const throw(){
 		ASSERT(col < 4)
 		return &this->m[col * 4];
 	}
 
 	//TODO: doxygen
 	//Multiply by Vector3 (M * V). i.e. transform vector with transformation matrix
-	Vector3<T> operator*(const Vector3<T>& vec)const;
+	Vector3<T> operator*(const Vector3<T>& vec)const throw();
 
 	
 	
@@ -127,7 +127,7 @@ public:
 	/**
 	 * @brief Transpose matrix.
 	 */
-	Matrix4& Transpose(){
+	Matrix4& Transpose()throw(){
 		std::swap(this->m[1], this->m[4]);
 		std::swap(this->m[2], this->m[8]);
 		std::swap(this->m[6], this->m[9]);
@@ -145,7 +145,7 @@ public:
 	 * @param M - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	Matrix4& RightMulBy(const Matrix4 &M){
+	Matrix4& RightMulBy(const Matrix4 &M)throw(){
 		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
 		T tmpM[16];
 		for(unsigned i = 0; i < 4; ++i){
@@ -167,7 +167,7 @@ public:
 	 * @param M - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	Matrix4& LeftMulBy(const Matrix4& M){
+	Matrix4& LeftMulBy(const Matrix4& M)throw(){
 		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
 		T tmpM[16];
 		for(unsigned i = 0; i < 4; ++i){
@@ -185,7 +185,7 @@ public:
 	/**
 	 * @brief Initialize this matrix with identity matrix.
 	 */
-	Matrix4& Identity(){
+	Matrix4& Identity()throw(){
 		this->m[0] = 1;    this->m[4] = 0;    this->m[8] = 0;    this->m[12] = 0;
 		this->m[1] = 0;    this->m[5] = 1;    this->m[9] = 0;    this->m[13] = 0;
 		this->m[2] = 0;    this->m[6] = 0;    this->m[10] = 1;   this->m[14] = 0;
@@ -197,9 +197,9 @@ public:
 
 	/**
 	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix by Scale matrix from the right (M = M * S).
-	 * @param scale - vector of scaling factors in x, y and z directons.
-	 * @return reference to this Matrix instance.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param scale - vector of scaling factors in x, y and z directions.
+	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(const Vector3<T>& scale);
 
@@ -207,9 +207,9 @@ public:
 
 	/**
 	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix by Scale matrix from the right (M = M * S).
-	 * @param scale - vector of scaling factors in x and y directions, scaing factor in z direction is 1.
-	 * @return reference to this Matrix instance.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param scale - vector of scaling factors in x and y directions, scaling factor in z direction is 1.
+	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(const Vector2<T>& scale);
 
@@ -217,41 +217,63 @@ public:
 
 	/**
 	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix by Scale matrix from the right (M = M * S).
-	 * @param x - scaling factor in x directon.
-	 * @param y - scaling factor in y directon.
-	 * @param z - scaling factor in z directon.
-	 * @return reference to this Matrix instance.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param x - scaling factor in x direction.
+	 * @param y - scaling factor in y direction.
+	 * @param z - scaling factor in z direction.
+	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(T x, T y, T z){
-		//TODO: rewrite all scale methods vice versa
-		return this->Scale(Vector3<T>(x, y, z));
+		//update 1st and 2nd columns
+		this->Scale(x, y);
+
+		//update 3rd column
+		this->m[8] *= z;
+		this->m[9] *= z;
+		this->m[10] *= z;
+		this->m[11] *= z;
+
+		//NOTE: 4th column remains unchanged
+		return (*this);
 	}
 
 
 
 	/**
 	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix by Scale matrix from the right (M = M * S).
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
 	 * Scaling factor in z direction is 1.
-	 * @param x - scaling factor in x directon.
-	 * @param y - scaling factor in y directon.
-	 * @return reference to this Matrix instance.
+	 * @param x - scaling factor in x direction.
+	 * @param y - scaling factor in y direction.
+	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(T x, T y){
-		return this->Scale(Vector2<T>(x, y));
+		//update 1st column
+		this->m[0] *= x;
+		this->m[1] *= x;
+		this->m[2] *= x;
+		this->m[3] *= x;
+
+		//update 2nd column
+		this->m[4] *= y;
+		this->m[5] *= y;
+		this->m[6] *= y;
+		this->m[7] *= y;
+
+		//NOTE: 3rd and 4th columns remain unchanged
+		return (*this);
 	}
 
 
 
 	/**
 	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix by Scale matrix from the right (M = M * S).
-	 * @param scale - scaling factor to be applied in all 3 directon (x, y and z).
-	 * @return reference to this Matrix instance.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param scale - scaling factor to be applied in all 3 directions (x, y and z).
+	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(T scale){
-		return this->Scale(Vector3<T>(scale, scale, scale));
+		return this->Scale(scale, scale, scale);
 	}
 
 
@@ -392,7 +414,7 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const{
+template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const throw(){
 	return Vector3<T>(
 			this->m[0] * vec[0] + this->m[4] * vec[1] + this->m[8] * vec[2] + this->m[12],
 			this->m[1] * vec[0] + this->m[5] * vec[1] + this->m[9] * vec[2] + this->m[13],
@@ -403,45 +425,13 @@ template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const{
 
 
 template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector3<T>& scale){
-	//calculate first column
-	this->m[0] *= scale[0];
-	this->m[1] *= scale[0];
-	this->m[2] *= scale[0];
-	this->m[3] *= scale[0];
-
-	//calculate second column
-	this->m[4] *= scale[1];
-	this->m[5] *= scale[1];
-	this->m[6] *= scale[1];
-	this->m[7] *= scale[1];
-
-	//calculate third column
-	this->m[8] *= scale[2];
-	this->m[9] *= scale[2];
-	this->m[10] *= scale[2];
-	this->m[11] *= scale[2];
-
-	//NOTE: 4th column remains unchanged
-	return (*this);
+	return this->Scale(scale.x, scale.y, scale.z);
 }
 
 
 
 template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector2<T>& scale){
-	//calculate first column
-	this->m[0] *= scale[0];
-	this->m[1] *= scale[0];
-	this->m[2] *= scale[0];
-	this->m[3] *= scale[0];
-
-	//calculate second column
-	this->m[4] *= scale[1];
-	this->m[5] *= scale[1];
-	this->m[6] *= scale[1];
-	this->m[7] *= scale[1];
-
-	//NOTE: 3rd and 4th columns remain unchanged
-	return (*this);
+	return this->Scale(scale.x, scale.y);
 }
 
 
