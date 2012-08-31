@@ -36,7 +36,9 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
-//TODO: add throw() where needed
+#include "Vector4.hpp"
+
+
 
 namespace morda{
 
@@ -55,10 +57,26 @@ template <class T> class Quaternion;
  * This means easy use of this class with OpenGL.
  */
 template <typename T> class Matrix4{
-	//TODO: rewrite using Vec4
-	//OpenGL compatible matrix elements array, if T is float or double
-	T m[4 * 4]; //matrix components 0-3 1st column, 4-7 2nd column, 8-11 3rd column, 12-15 4th column
 public:
+	/**
+	 * @brief 0th column of the matrix.
+	 */
+	Vector4<T> c0;
+	
+	/**
+	 * @brief 1st column of the matrix.
+	 */
+	Vector4<T> c1;
+	
+	/**
+	 * @brief 2nd column of the matrix.
+     */
+	Vector4<T> c2;
+	
+	/**
+	 * @brief 3rd column of the matrix.
+     */
+	Vector4<T> c3;
 
 
 	
@@ -67,11 +85,29 @@ public:
 	 * NOTE: it does not initialize the matrix with any values.
 	 * Matrix elements are undefined after the matrix is created with this constructor.
 	 */
-	inline Matrix4()throw(){}//Default constructor.
-
+	inline Matrix4()throw(){}
 	
 	
-	//TODO: add inline Matrix4(const Vector4<T>& c0, const Vector4<T>& c1, const Vector4<T>& c2, const Vector4<T>& c3)
+	
+	/**
+	 * @brief Construct initialized matrix.
+	 * Creates a matrix and initializes its columns by the given values.
+     * @param column0 - 0th column of the matrix.
+	 * @param column1 - 1st column of the matrix.
+	 * @param column2 - 2nd column of the matrix.
+	 * @param column3 - 3rd column of the matrix.
+     */
+	inline Matrix4(
+			const Vector4<T>& column0,
+			const Vector4<T>& column1,
+			const Vector4<T>& column2,
+			const Vector4<T>& column3
+		) :
+			c0(column0),
+			c1(column1),
+			c2(column2),
+			c3(column3)
+	{}
 	
 
 
@@ -81,42 +117,81 @@ public:
 
 	/**
 	 * @brief returns pointer to specified column.
-	 * Returns pointer to array of 4 elements which forms a matrix column specified by argument.
-	 * Thus, it is possible to access matrix elements using double [] operator as follows:
+	 * Returns reference to the matrix column indicated by the argument.
 	 * @code
 	 * Matrix4 m;
 	 * m[0][0] = 1;//assign 1 to element at row 0 column 0
 	 * m[3][2] = 3;//assign 3 to element at row 2 column 3
 	 * float elem = m[4][3];//assign value at row 3 column 4 of the matrix to variable 'elem'
 	 * @endcode
-	 * @param col - column number.
-	 * @return pointer to array of 4 elements which forms the requested column of the matirx.
+	 * @param col - column number, must be from 0 to 3.
+	 * @return reference to the matrix column indicated by the argument.
 	 */
-	//TODO: rewrite using Vec4
-	inline T* operator[](unsigned col)throw(){
+	inline Vector4<T>& operator[](unsigned col)throw(){
 		ASSERT(col < 4)
-		return &this->m[col * 4];
+		return (&this->c0)[col];
 	}
 
 	/**
-	 * @brief returns pointer to specified column.
-	 * Const variant of operator[].
-	 * @param col - column number.
-	 * @return pointer to array of 4 elements which forms the requested column of the matirx.
+	 * @brief returns reference to specified column.
+	 * Constant variant of operator[].
+	 * @param col - column number, must be from 0 to 3.
+	 * @return reference to the matrix column indicated by the argument.
 	 */
-	//TODO: rewrite using Vec4
-	inline const T* operator[](unsigned col)const throw(){
+	inline const Vector4<T>& operator[](unsigned col)const throw(){
 		ASSERT(col < 4)
-		return &this->m[col * 4];
+		return (&this->c0)[col];
 	}
 
-	//TODO: doxygen
-	//Multiply by Vector3 (M * V). i.e. transform vector with transformation matrix
+	/**
+	 * @brief Transform vector by matrix.
+	 * Multiply vector V by this matrix M from the right (M * V).
+	 * i.e. transform vector with this transformation matrix.
+	 * @param vec - vector to transform.
+     * @return Transformed vector.
+     */
 	inline Vector3<T> operator*(const Vector3<T>& vec)const throw();
 
 	
 	
-	//TODO: add operator*(const Matrix4& matr)const throw()
+	/**
+	 * @brief Transform vector by matrix.
+	 * Multiply vector V by this matrix M from the right (M * V).
+	 * i.e. transform vector with this transformation matrix.
+	 * @param vec - vector to transform.
+     * @return Transformed vector.
+     */
+	inline Vector4<T> operator*(const Vector4<T>& vec)const throw();
+	
+	
+	
+	/**
+	 * @brief Get matrix row.
+	 * Constructs a Vector4 holding requested row of the matrix.
+	 * @param row - row number to get, must be from 0 to 3.
+     * @return Vector4 representing the row of this matrix.
+     */
+	inline Vector4<T> Row(unsigned row)const throw(){
+		ASSERT(row < 4)
+		return Vector4<T>(this->c0[row], this->c1[row], this->c2[row], this->c3[row]);
+	}
+	
+	
+	
+	/**
+	 * @brief Multiply by matrix from the right.
+	 * Calculate result of this matrix M multiplied by another matrix K from the right (M * K).
+	 * @param matr - matrix to multiply by (matrix K).
+     * @return New matrix as a result of matrices product.
+     */
+	inline Matrix4 operator*(const Matrix4& matr)const throw(){
+		return Matrix4(
+				Vector4<T>(this->Row(0) * matr[0], this->Row(1) * matr[0], this->Row(2) * matr[0], this->Row(3) * matr[0]),
+				Vector4<T>(this->Row(0) * matr[1], this->Row(1) * matr[1], this->Row(2) * matr[1], this->Row(3) * matr[1]),
+				Vector4<T>(this->Row(0) * matr[2], this->Row(1) * matr[2], this->Row(2) * matr[2], this->Row(3) * matr[2]),
+				Vector4<T>(this->Row(0) * matr[3], this->Row(1) * matr[3], this->Row(2) * matr[3], this->Row(3) * matr[3])
+			);
+	}
 	
 	
 	
@@ -128,12 +203,14 @@ public:
 	 * @brief Transpose matrix.
 	 */
 	inline Matrix4& Transpose()throw(){
-		std::swap(this->m[1], this->m[4]);
-		std::swap(this->m[2], this->m[8]);
-		std::swap(this->m[6], this->m[9]);
-		std::swap(this->m[3], this->m[12]);
-		std::swap(this->m[7], this->m[13]);
-		std::swap(this->m[11], this->m[14]);
+		std::swap(this->c0[1], this->c1[0]);
+		std::swap(this->c0[2], this->c2[0]);
+		std::swap(this->c0[3], this->c3[0]);
+		
+		std::swap(this->c1[2], this->c2[1]);
+		std::swap(this->c1[3], this->c3[1]);
+		
+		std::swap(this->c2[3], this->c3[2]);
 		return (*this);
 	}
 
@@ -141,43 +218,36 @@ public:
 
 	/**
 	 * @brief Multiply by matrix from the right.
-	 * Multiply this matrix by matrix M from the right, i.e. m  = m * M
-	 * @param M - matrix to multiply by.
+	 * Multiply this matrix M by another matrix K from the right (M  = M * K).
+     * @return reference to this matrix object.
+     */
+	inline Matrix4& operator*=(const Matrix4& matr)throw(){
+		return this->operator=(this->operator*(matr));
+	}
+	
+	
+	
+	/**
+	 * @brief Multiply by matrix from the right.
+	 * Multiply this matrix M by another matrix K from the right (M  = M * K).
+	 * This is the same as operator*=().
+	 * @param matr - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& RightMulBy(const Matrix4 &M)throw(){
-		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
-		T tmpM[16];
-		for(unsigned i = 0; i < 4; ++i){
-			tmpM[4*i]  =m[0]*M.m[4*i]+m[4]*M.m[4*i+1]+m[8]*M.m[4*i+2]+ m[12]*M.m[4*i+3];
-			tmpM[4*i+1]=m[1]*M.m[4*i]+m[5]*M.m[4*i+1]+m[9]*M.m[4*i+2]+ m[13]*M.m[4*i+3];
-			tmpM[4*i+2]=m[2]*M.m[4*i]+m[6]*M.m[4*i+1]+m[10]*M.m[4*i+2]+m[14]*M.m[4*i+3];
-			tmpM[4*i+3]=m[3]*M.m[4*i]+m[7]*M.m[4*i+1]+m[11]*M.m[4*i+2]+m[15]*M.m[4*i+3];
-		}
-		memcpy(this->m, tmpM, sizeof(this->m));
-		//*this=tmp;
-		return (*this);
+	inline Matrix4& RightMulBy(const Matrix4& matr)throw(){
+		return this->operator*=(matr);
 	}
 
 
 
 	/**
 	 * @brief Multiply by matrix from the left.
-	 * Multiply this matrix by matrix M from the left, i.e. m  = M * m
-	 * @param M - matrix to multiply by.
+	 * Multiply this matrix M by another matrix K from the left (M  = K * M).
+	 * @param matr - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& LeftMulBy(const Matrix4& M)throw(){
-		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
-		T tmpM[16];
-		for(unsigned i = 0; i < 4; ++i){
-			tmpM[4*i]  =m[4*i]*M.m[0]+m[4*i+1]*M.m[4]+m[4*i+2]*M.m[8]+ m[4*i+3]*M.m[12];
-			tmpM[4*i+1]=m[4*i]*M.m[1]+m[4*i+1]*M.m[5]+m[4*i+2]*M.m[9]+ m[4*i+3]*M.m[13];
-			tmpM[4*i+2]=m[4*i]*M.m[2]+m[4*i+1]*M.m[6]+m[4*i+2]*M.m[10]+m[4*i+3]*M.m[14];
-			tmpM[4*i+3]=m[4*i]*M.m[3]+m[4*i+1]*M.m[7]+m[4*i+2]*M.m[11]+m[4*i+3]*M.m[15];
-		}
-		memcpy(this->m, tmpM, sizeof(this->m));
-		return (*this);
+	inline Matrix4& LeftMulBy(const Matrix4& matr)throw(){
+		return this->operator=(matr.operator*(*this));
 	}
 
 
@@ -186,10 +256,10 @@ public:
 	 * @brief Initialize this matrix with identity matrix.
 	 */
 	inline Matrix4& Identity()throw(){
-		this->m[0] = 1;    this->m[4] = 0;    this->m[8] = 0;    this->m[12] = 0;
-		this->m[1] = 0;    this->m[5] = 1;    this->m[9] = 0;    this->m[13] = 0;
-		this->m[2] = 0;    this->m[6] = 0;    this->m[10] = 1;   this->m[14] = 0;
-		this->m[3] = 0;    this->m[7] = 0;    this->m[11] = 0;   this->m[15] = 1;
+		this->c0 = Vector4<T>(1, 0, 0, 0);
+		this->c1 = Vector4<T>(0, 1, 0, 0);
+		this->c2 = Vector4<T>(0, 0, 1, 0);
+		this->c3 = Vector4<T>(0, 0, 0, 1);
 		return (*this);
 	}
 	
@@ -204,19 +274,13 @@ public:
 	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(T x, T y)throw(){
+		//update 0th column
+		this->c0 *= x;
+		
 		//update 1st column
-		this->m[0] *= x;
-		this->m[1] *= x;
-		this->m[2] *= x;
-		this->m[3] *= x;
+		this->c1 *= y;
 
-		//update 2nd column
-		this->m[4] *= y;
-		this->m[5] *= y;
-		this->m[6] *= y;
-		this->m[7] *= y;
-
-		//NOTE: 3rd and 4th columns remain unchanged
+		//NOTE: 2nd and 3rd columns remain unchanged
 		return (*this);
 	}
 	
@@ -231,16 +295,13 @@ public:
 	 * @return reference to this matrix instance.
 	 */
 	inline Matrix4& Scale(T x, T y, T z)throw(){
-		//update 1st and 2nd columns
+		//update 0th and 1st columns
 		this->Scale(x, y);
 
-		//update 3rd column
-		this->m[8] *= z;
-		this->m[9] *= z;
-		this->m[10] *= z;
-		this->m[11] *= z;
+		//update 2nd column
+		this->c2 *= z;
 
-		//NOTE: 4th column remains unchanged
+		//NOTE: 3rd column remains unchanged
 		return (*this);
 	}
 	
@@ -288,13 +349,10 @@ public:
 	 * @return reference to this matrix object.
 	 */
 	inline Matrix4& Translate(T x, T y)throw(){
-		//NOTE: 1st, 2nd and 3rd columns remain unchanged
+		//NOTE: 0th, 1st and 2nd columns remain unchanged
 
-		//calculate fourth column
-		this->m[12] = this->m[0] * x + this->m[4] * y + this->m[12];
-		this->m[13] = this->m[1] * x + this->m[5] * y + this->m[13];
-		this->m[14] = this->m[2] * x + this->m[6] * y + this->m[14];
-		this->m[15] = this->m[3] * x + this->m[7] * y + this->m[15];
+		//calculate 3rd column
+		this->c3 = this->c0 * x + this->c1 * y + this->c3;
 
 		return (*this);
 	}
@@ -310,13 +368,10 @@ public:
 	 * @return reference to this matrix object.
 	 */
 	inline Matrix4& Translate(T x, T y, T z)throw(){
-		//NOTE: 1st, 2nd and 3rd columns remain unchanged
+		//NOTE: 0th, 1st and 2nd columns remain unchanged
 		this->Translate(x, y);
 
-		this->m[12] += this->m[8] * z;
-		this->m[13] += this->m[9] * z;
-		this->m[14] += this->m[10] * z;
-		this->m[15] += this->m[11] * z;
+		this->c3 += this->c2 * z;
 
 		return (*this);
 	}
@@ -382,10 +437,10 @@ public:
 #ifdef DEBUG
 	friend std::ostream& operator<<(std::ostream& s, const Matrix4<T>& mat){
 		s << "\n";
-		s << "/" << mat[0][0] << " " << mat[1][0] << " " << mat[2][0] << " " << mat[3][0] << "\\" << std::endl;
-		s << "|" << mat[0][1] << " " << mat[1][1] << " " << mat[2][1] << " " << mat[3][1] << "|" << std::endl;
-		s << "|" << mat[0][2] << " " << mat[1][2] << " " << mat[2][2] << " " << mat[3][2] << "|" << std::endl;
-		s << "\\" << mat[0][3] << " " << mat[1][3] << " " << mat[2][3] << " " << mat[3][3] << "/";
+		s << "\t/" << mat[0][0] << " " << mat[1][0] << " " << mat[2][0] << " " << mat[3][0] << "\\" << std::endl;
+		s << "\t|" << mat[0][1] << " " << mat[1][1] << " " << mat[2][1] << " " << mat[3][1] << "|" << std::endl;
+		s << "\t|" << mat[0][2] << " " << mat[1][2] << " " << mat[2][2] << " " << mat[3][2] << "|" << std::endl;
+		s << "\t\\" << mat[0][3] << " " << mat[1][3] << " " << mat[2][3] << " " << mat[3][3] << "/";
 		return s;
 	};
 #endif
@@ -411,9 +466,20 @@ namespace morda{
 
 template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const throw(){
 	return Vector3<T>(
-			this->m[0] * vec[0] + this->m[4] * vec[1] + this->m[8] * vec[2] + this->m[12],
-			this->m[1] * vec[0] + this->m[5] * vec[1] + this->m[9] * vec[2] + this->m[13],
-			this->m[2] * vec[0] + this->m[6] * vec[1] + this->m[10] * vec[2] + this->m[14]
+			this->Row(0) * vec,
+			this->Row(1) * vec,
+			this->Row(2) * vec
+		);
+}
+
+
+
+template <class T> inline Vector4<T> Matrix4<T>::operator*(const Vector4<T>& vec)const throw(){
+	return Vector4<T>(
+			this->Row(0) * vec,
+			this->Row(1) * vec,
+			this->Row(2) * vec,
+			this->Row(3) * vec
 		);
 }
 
@@ -445,7 +511,7 @@ template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector3<T>& t)
 
 template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)throw(){
 	Matrix4<T> rm;
-	q.CreateMatrix4(rm);
+	q.CreateMatrix4(rm);//TODO: rewrite after CreateMatrix4() is removed
 	this->RightMulBy(rm);
 	return (*this);
 }
