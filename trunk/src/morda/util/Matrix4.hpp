@@ -112,7 +112,7 @@ public:
 
 	//TODO: doxygen
 	//Multiply by Vector3 (M * V). i.e. transform vector with transformation matrix
-	Vector3<T> operator*(const Vector3<T>& vec)const throw();
+	inline Vector3<T> operator*(const Vector3<T>& vec)const throw();
 
 	
 	
@@ -127,7 +127,7 @@ public:
 	/**
 	 * @brief Transpose matrix.
 	 */
-	Matrix4& Transpose()throw(){
+	inline Matrix4& Transpose()throw(){
 		std::swap(this->m[1], this->m[4]);
 		std::swap(this->m[2], this->m[8]);
 		std::swap(this->m[6], this->m[9]);
@@ -145,7 +145,7 @@ public:
 	 * @param M - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	Matrix4& RightMulBy(const Matrix4 &M)throw(){
+	inline Matrix4& RightMulBy(const Matrix4 &M)throw(){
 		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
 		T tmpM[16];
 		for(unsigned i = 0; i < 4; ++i){
@@ -167,7 +167,7 @@ public:
 	 * @param M - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	Matrix4& LeftMulBy(const Matrix4& M)throw(){
+	inline Matrix4& LeftMulBy(const Matrix4& M)throw(){
 		//TODO: rewrite to use Matrix4 instead of T tmpM[16]
 		T tmpM[16];
 		for(unsigned i = 0; i < 4; ++i){
@@ -185,60 +185,16 @@ public:
 	/**
 	 * @brief Initialize this matrix with identity matrix.
 	 */
-	Matrix4& Identity()throw(){
+	inline Matrix4& Identity()throw(){
 		this->m[0] = 1;    this->m[4] = 0;    this->m[8] = 0;    this->m[12] = 0;
 		this->m[1] = 0;    this->m[5] = 1;    this->m[9] = 0;    this->m[13] = 0;
 		this->m[2] = 0;    this->m[6] = 0;    this->m[10] = 1;   this->m[14] = 0;
 		this->m[3] = 0;    this->m[7] = 0;    this->m[11] = 0;   this->m[15] = 1;
 		return (*this);
 	}
-
-
-
-	/**
-	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
-	 * @param scale - vector of scaling factors in x, y and z directions.
-	 * @return reference to this matrix instance.
-	 */
-	inline Matrix4& Scale(const Vector3<T>& scale);
-
-
-
-	/**
-	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
-	 * @param scale - vector of scaling factors in x and y directions, scaling factor in z direction is 1.
-	 * @return reference to this matrix instance.
-	 */
-	inline Matrix4& Scale(const Vector2<T>& scale);
-
-
-
-	/**
-	 * @brief Multiply current matrix by scale matrix.
-	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
-	 * @param x - scaling factor in x direction.
-	 * @param y - scaling factor in y direction.
-	 * @param z - scaling factor in z direction.
-	 * @return reference to this matrix instance.
-	 */
-	inline Matrix4& Scale(T x, T y, T z){
-		//update 1st and 2nd columns
-		this->Scale(x, y);
-
-		//update 3rd column
-		this->m[8] *= z;
-		this->m[9] *= z;
-		this->m[10] *= z;
-		this->m[11] *= z;
-
-		//NOTE: 4th column remains unchanged
-		return (*this);
-	}
-
-
-
+	
+	
+	
 	/**
 	 * @brief Multiply current matrix by scale matrix.
 	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
@@ -247,7 +203,7 @@ public:
 	 * @param y - scaling factor in y direction.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(T x, T y){
+	inline Matrix4& Scale(T x, T y)throw(){
 		//update 1st column
 		this->m[0] *= x;
 		this->m[1] *= x;
@@ -263,124 +219,163 @@ public:
 		//NOTE: 3rd and 4th columns remain unchanged
 		return (*this);
 	}
+	
 
 
+	/**
+	 * @brief Multiply current matrix by scale matrix.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param x - scaling factor in x direction.
+	 * @param y - scaling factor in y direction.
+	 * @param z - scaling factor in z direction.
+	 * @return reference to this matrix instance.
+	 */
+	inline Matrix4& Scale(T x, T y, T z)throw(){
+		//update 1st and 2nd columns
+		this->Scale(x, y);
 
+		//update 3rd column
+		this->m[8] *= z;
+		this->m[9] *= z;
+		this->m[10] *= z;
+		this->m[11] *= z;
+
+		//NOTE: 4th column remains unchanged
+		return (*this);
+	}
+	
+	
+	
 	/**
 	 * @brief Multiply current matrix by scale matrix.
 	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
 	 * @param scale - scaling factor to be applied in all 3 directions (x, y and z).
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(T scale){
+	inline Matrix4& Scale(T scale)throw(){
 		return this->Scale(scale, scale, scale);
 	}
-
-
-
+	
+	
+	
 	/**
-	 * @brief Multiply this matrix by translation matrix.
-	 * Multiplies this matrix by Translation matrix from the right (M = M * T)
-	 * @param t - translation vector.
-	 * @return reference to this matrix object.
+	 * @brief Multiply current matrix by scale matrix.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param scale - vector of scaling factors in x and y directions, scaling factor in z direction is 1.
+	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Translate(const Vector3<T>& t){
-		//NOTE: 1st, 2nd and 3rd columns remain unchanged
-
-		//calculate fourth column
-		this->m[12] = this->m[0] * t[0] + this->m[4] * t[1] + this->m[8] * t[2] + this->m[12];
-		this->m[13] = this->m[1] * t[0] + this->m[5] * t[1] + this->m[9] * t[2] + this->m[13];
-		this->m[14] = this->m[2] * t[0] + this->m[6] * t[1] + this->m[10] * t[2] + this->m[14];
-		this->m[15] = this->m[3] * t[0] + this->m[7] * t[1] + this->m[11] * t[2] + this->m[15];
-
-		return (*this);
-	}
-
-
-
+	inline Matrix4& Scale(const Vector2<T>& scale)throw();
+	
+	
+	
 	/**
-	 * @brief Multiply this matrix by translation matrix.
-	 * Multiplies this matrix by Translation matrix from the right (M = M * T).
-	 * Translation only occurs in x-y plane, no translation in z direction,
-	 * i.e. z component of translation vector is assumed being 0.
-	 * @param t - translation vector.
-	 * @return reference to this matrix object.
+	 * @brief Multiply current matrix by scale matrix.
+	 * Multiplies this matrix M by scale matrix S from the right (M = M * S).
+	 * @param scale - vector of scaling factors in x, y and z directions.
+	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Translate(const Vector2<T>& t){
-		//NOTE: 1st, 2nd and 3rd columns remain unchanged
-
-		//calculate fourth column
-		this->m[12] = this->m[0] * t[0] + this->m[4] * t[1] + this->m[12];
-		this->m[13] = this->m[1] * t[0] + this->m[5] * t[1] + this->m[13];
-		this->m[14] = this->m[2] * t[0] + this->m[6] * t[1] + this->m[14];
-		this->m[15] = this->m[3] * t[0] + this->m[7] * t[1] + this->m[15];
-
-		return (*this);
-	}
-
-
+	inline Matrix4& Scale(const Vector3<T>& scale)throw();
+	
+	
 	
 	/**
 	 * @brief Multiply this matrix by translation matrix.
-	 * Multiplies this matrix by Translation matrix from the right (M = M * T).
+	 * Multiplies this matrix M by translation matrix T from the right (M = M * T).
+	 * Translation only occurs in x-y plane, no translation in z direction,
+	 * i.e. z component of translation vector is assumed to be 0.
+	 * @param x - x component of translation vector.
+	 * @param y - y component of translation vector.
+	 * @return reference to this matrix object.
+	 */
+	inline Matrix4& Translate(T x, T y)throw(){
+		//NOTE: 1st, 2nd and 3rd columns remain unchanged
+
+		//calculate fourth column
+		this->m[12] = this->m[0] * x + this->m[4] * y + this->m[12];
+		this->m[13] = this->m[1] * x + this->m[5] * y + this->m[13];
+		this->m[14] = this->m[2] * x + this->m[6] * y + this->m[14];
+		this->m[15] = this->m[3] * x + this->m[7] * y + this->m[15];
+
+		return (*this);
+	}
+	
+	
+	
+	/**
+	 * @brief Multiply this matrix by translation matrix.
+	 * Multiplies this matrix M by translation matrix T from the right (M = M * T).
 	 * @param x - x component of translation vector.
 	 * @param y - y component of translation vector.
 	 * @param z - z component of translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(T x, T y, T z){
-		//TODO: rewrite all translate methods
-		return this->Translate(Vector3<T>(x, y, z));
+	inline Matrix4& Translate(T x, T y, T z)throw(){
+		//NOTE: 1st, 2nd and 3rd columns remain unchanged
+		this->Translate(x, y);
+
+		this->m[12] += this->m[8] * z;
+		this->m[13] += this->m[9] * z;
+		this->m[14] += this->m[10] * z;
+		this->m[15] += this->m[11] * z;
+
+		return (*this);
 	}
 	
 	
-
+	
 	/**
 	 * @brief Multiply this matrix by translation matrix.
-	 * Multiplies this matrix by Translation matrix from the right (M = M * T).
+	 * Multiplies this matrix M by translation matrix T from the right (M = M * T).
 	 * Translation only occurs in x-y plane, no translation in z direction,
 	 * i.e. z component of translation vector is assumed being 0.
-	 * @param x - x component of translation vector.
-	 * @param y - y component of translation vector.
+	 * @param t - translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(T x, T y){
-		return this->Translate(Vector2<T>(x, y));
-	}
+	inline Matrix4& Translate(const Vector2<T>& t)throw();
+	
+	
+	
+	/**
+	 * @brief Multiply this matrix by translation matrix.
+	 * Multiplies this matrix M by translation matrix T from the right (M = M * T)
+	 * @param t - translation vector.
+	 * @return reference to this matrix object.
+	 */
+	inline Matrix4& Translate(const Vector3<T>& t)throw();
 
 
 
 	/**
 	 * @brief Multiply this matrix by rotation matrix.
-	 * Multiplies this matrix by Rotation matrix from the right (M = M * R).
-	 * @param q - quaternion, representing the rotation.
+	 * Multiplies this matrix M by rotation matrix R from the right (M = M * R).
+	 * @param q - unit quaternion, representing the rotation.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(const Quaternion<T>& q);//implementation see below
+	inline Matrix4& Rotate(const Quaternion<T>& q)throw();
 
 
 
 	/**
 	 * @brief Multiply this matrix by rotation matrix.
-	 * Multiplies this matrix by Rotation matrix from the right (M = M * R).
+	 * Multiplies this matrix M by rotation matrix R from the right (M = M * R).
 	 * @param rot - vector, representing the rotation. The vector direction
 	 *              defines the axis of rotation, vector length defines
 	 *              the angle of rotation in radians.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(const Vector3<T>& rot);
+	inline Matrix4& Rotate(const Vector3<T>& rot)throw();
 
 
 
 	/**
 	 * @brief Multiply this matrix by rotation matrix.
-	 * Multiplies this matrix by Rotation matrix from the right (M = M * R).
+	 * Multiplies this matrix M by rotation matrix R from the right (M = M * R).
 	 * Rotation is done around (0, 0, 1) axis by given number of radians.
 	 * Positive direction of rotation is determined by a right-hand rule.
 	 * @param rot - the angle of rotation in radians.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(T rot);
+	inline Matrix4& Rotate(T rot)throw();
 
 
 	
@@ -424,19 +419,31 @@ template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const 
 
 
 
-template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector3<T>& scale){
+template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector3<T>& scale)throw(){
 	return this->Scale(scale.x, scale.y, scale.z);
 }
 
 
 
-template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector2<T>& scale){
+template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector2<T>& scale)throw(){
 	return this->Scale(scale.x, scale.y);
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q){
+template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector2<T>& t)throw(){
+	return this->Translate(t.x, t.y);
+}
+
+
+
+template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector3<T>& t)throw(){
+	return this->Translate(t.x, t.y, t.z);
+}
+
+
+
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)throw(){
 	Matrix4<T> rm;
 	q.CreateMatrix4(rm);
 	this->RightMulBy(rm);
@@ -445,13 +452,13 @@ template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Vector3<T>& rot){
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Vector3<T>& rot)throw(){
 	return this->Rotate(Quaternion<T>(rot));
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(T rot){
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(T rot)throw(){
 	return this->Rotate(Vector3<T>(0, 0, rot));
 }
 
