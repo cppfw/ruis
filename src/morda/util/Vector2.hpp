@@ -28,18 +28,13 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <cmath> //TODO:?
-#include <cstdlib> //TODO:?
-#include <algorithm> //TODO:?
-
 #ifdef DEBUG
 #	include <iostream>
 #endif
 
-#include <ting/debug.hpp> //TODO:?
-#include <ting/types.hpp> //TODO:?
-#include <ting/math.hpp> //TODO:?
-#include <ting/Exc.hpp> //TODO:?
+#include <ting/debug.hpp>
+#include <ting/types.hpp>
+#include <ting/math.hpp>
 
 //TODO: add throw() where needed
 
@@ -47,12 +42,15 @@ namespace morda{
 
 
 
+//forward declarations
+template <class T> class Vector3;
+
+
+
 /**
  * @brief 2 dimensional vector class.
  */
 template <class T> class Vector2{
-	friend class Vector3<T>;
-
 	STATIC_ASSERT(sizeof(Vector2) == sizeof(T) * 2)
 public:
 	/**
@@ -77,7 +75,7 @@ public:
 	 * Creates a vector with all components initialized to a given value.
 	 * @param xy - value to assign to all components of the vector.
 	 */
-	Vector2(T xy) :
+	inline Vector2(T xy) :
 			x(xy), y(xy)
 	{}
 	
@@ -86,7 +84,7 @@ public:
 	 * @param x - x component of the vector.
 	 * @param y - y component of the vector.
 	 */
-	Vector2(T x, T y) :
+	inline Vector2(T x, T y) :
 			x(x), y(y)
 	{}
 
@@ -98,7 +96,7 @@ public:
 	 * from x and y of given 3 dimensional vector.
 	 * @param vec - 3 dimensional vector to copy x and y from.
 	 */
-	Vector2(const Vector3<T>& vec);
+	inline Vector2(const Vector3<T>& vec);
 
 	/**
 	 * @brief Access vector components.
@@ -294,8 +292,8 @@ public:
 	//TODO: doxygen
 	//Angle is passed in radians
 	Vector2& Rotate(T angle){
-		T cosa = T(::cos(angle));
-		T sina = T(::sin(angle));
+		T cosa = ting::math::Cos(angle);
+		T sina = ting::math::Sin(angle);
 		T tmp = this->x * cosa - this->y * sina;
 		this->y = this->y * cosa + this->x * sina;
 		this->x = tmp;
@@ -318,6 +316,16 @@ public:
 };//~class Vector2
 
 
+
+}//~namespace
+
+
+
+#include "Vector3.hpp"
+
+
+
+namespace morda{
 
 //=================================
 // inline functions implementation

@@ -38,7 +38,7 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
-#include "Vector3.hpp"
+#include "Vector2.hpp"
 
 #include "Image.hpp"
 

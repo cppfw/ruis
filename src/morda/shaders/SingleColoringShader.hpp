@@ -31,6 +31,8 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
+#include "../util/Vector4.hpp"
+
 #include "Shader.hpp"
 
 
