@@ -11,9 +11,9 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>/home/igagis/prj/morda/android/jni</sourceRootElem>
-                <sourceRootElem>/home/igagis/prj/morda/src</sourceRootElem>
                 <sourceRootElem>/home/igagis/prj/morda/tests</sourceRootElem>
                 <sourceRootElem>/home/igagis/prj/morda/ext</sourceRootElem>
+                <sourceRootElem>/home/igagis/prj/morda/src</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

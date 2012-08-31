@@ -29,31 +29,15 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include <ting/Ref.hpp>
-
-
 
 namespace morda{
 
-class Updateable : virtual public ting::RefCounted{
-	ting::u16 dt;
-	
-	ting::u32 lastUpdatedTimestamp;
-	
-	ting::Inited<bool, false> isUpdating;
-	
-public:
-	~Updateable()throw(){}
-	
-	bool IsUpdating()const throw(){
-		return this->isUpdating;
-	}
-	
-	void StartUpdating(ting::u16 dt);
-	
-	void StopUpdating();
-	
-	virtual void Update(ting::u32 dt) = 0;
+
+
+class Updater{
+	//TODO:
 };
+
+
 
 }//~namespace
