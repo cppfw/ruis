@@ -518,10 +518,14 @@
             <in>GLTexture.hpp</in>
             <in>Image.cpp</in>
             <in>Image.hpp</in>
+            <in>Matrix4.hpp</in>
+            <in>Quaternion.hpp</in>
             <in>Rectangle2.hpp</in>
             <in>TexFont.cpp</in>
             <in>TexFont.hpp</in>
+            <in>Vector2.hpp</in>
             <in>Vector3.hpp</in>
+            <in>Vector4.hpp</in>
             <in>ZipFile.hpp</in>
             <in>util.cpp</in>
             <in>util.hpp</in>
@@ -664,10 +668,14 @@
           <in>GLTexture.hpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
+          <in>Matrix4.hpp</in>
+          <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
           <in>TexFont.cpp</in>
           <in>TexFont.hpp</in>
+          <in>Vector2.hpp</in>
           <in>Vector3.hpp</in>
+          <in>Vector4.hpp</in>
           <in>ZipFile.hpp</in>
           <in>util.cpp</in>
           <in>util.hpp</in>
@@ -703,13 +711,18 @@
               <df name="linux">
               </df>
               <df name="resman">
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
                 <in>Shader.d</in>
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
               </df>
               <df name="widgets">
               </df>
@@ -775,23 +788,6 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../android/jni/morda/morda/linux/Updater.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../android/jni/morda/morda/util/Rectangle2.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../android/jni/morda/morda/util/Vector3.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/linux/Updater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -2578,184 +2574,6 @@
             ex="true"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/App.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/Container.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/GuiInflater.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/Updateable.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/Widget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/android/App.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/layouts/LinearLayout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/linux/App.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/resman/Resource.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/resources/ResFont.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/resources/ResTexture.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/shaders/Shader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/shaders/SimpleSingleColoringShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/shaders/SimpleTexturingShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/shaders/SingleColoringShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/shaders/TexturingShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/util/GLTexture.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/util/Image.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/util/TexFont.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/util/ZipFile.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/util/util.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/widgets/AbstractButton.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/widgets/Button.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/android/jni/morda/morda/widgets/Label.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/android/jni/stob/Android.mk"
             ex="true"

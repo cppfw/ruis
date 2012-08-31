@@ -37,7 +37,9 @@ THE SOFTWARE. */
 #	include <GL/glx.h>
 #endif
 
+#include "../util/Matrix4.hpp"
 #include "../util/Vector3.hpp"
+#include "../util/Vector2.hpp"
 
 #include <ting/types.hpp>
 #include <ting/Singleton.hpp>

@@ -33,7 +33,8 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
 
-#include "util/Vector3.hpp"
+#include "util/Matrix4.hpp"
+#include "util/Vector2.hpp"
 #include "util/Rectangle2.hpp"
 
 #include <stob/dom.hpp>

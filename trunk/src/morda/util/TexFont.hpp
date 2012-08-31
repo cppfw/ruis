@@ -33,7 +33,7 @@ THE SOFTWARE. */
 #include <sstream>
 #include <stdexcept>
 
-#include "Vector3.hpp"
+#include "Vector2.hpp"
 #include "Rectangle2.hpp"
 
 #include <ting/types.hpp>
