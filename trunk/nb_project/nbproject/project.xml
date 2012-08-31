@@ -12,7 +12,6 @@
             <sourceRootList>
                 <sourceRootElem>/home/ivan/prj/morda/src</sourceRootElem>
                 <sourceRootElem>/home/ivan/prj/morda/tests</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/ext</sourceRootElem>
                 <sourceRootElem>/home/ivan/prj/morda/android/jni</sourceRootElem>
             </sourceRootList>
             <confList>
