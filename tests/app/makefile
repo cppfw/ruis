@@ -30,6 +30,7 @@ ecf :=
 #compiler flags
 cf := $(ecf)
 cf += -Wall
+cf += -Wno-comment #no warnings on nested comments
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
 
