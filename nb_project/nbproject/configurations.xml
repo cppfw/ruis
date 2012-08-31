@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="null" root="/home/ivan/prj/morda/ext">
-    </df>
     <df name="jni" root="/home/ivan/prj/morda/android/jni">
       <df name="libfreetype2">
         <df name="include">
@@ -729,7 +727,6 @@
   <sourceRootList>
     <Elem>/home/ivan/prj/morda/src</Elem>
     <Elem>/home/ivan/prj/morda/tests</Elem>
-    <Elem>/home/ivan/prj/morda/ext</Elem>
     <Elem>/home/ivan/prj/morda/android/jni</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
