@@ -33,8 +33,8 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
 
-#include <tride/Vector3.hpp>
-#include <tride/Rectangle2.hpp>
+#include "util/Vector3.hpp"
+#include "util/Rectangle2.hpp"
 
 #include <stob/dom.hpp>
 
@@ -61,7 +61,7 @@ private:
 
 	ting::Inited<bool, false> isDisabled;
 
-	tride::Rect2f rect;
+	morda::Rect2f rect;
 	
 	std::string name;
 public:
@@ -90,19 +90,19 @@ public:
 		return this->isHovered;
 	}
 
-	inline const tride::Rect2f& Rect()const throw(){
+	inline const morda::Rect2f& Rect()const throw(){
 		return this->rect;
 	}
 
-	inline void SetPos(const tride::Vec2f& newPos)throw(){
+	inline void SetPos(const morda::Vec2f& newPos)throw(){
 		this->rect.p = newPos;
 	}
 	
-	inline void Move(const tride::Vec2f& delta)throw(){
+	inline void Move(const morda::Vec2f& delta)throw(){
 		this->rect.p += delta;
 	}
 
-	inline void Resize(const tride::Vec2f& newDims){
+	inline void Resize(const morda::Vec2f& newDims){
 		this->rect.d = newDims;
 		this->OnResize();//call virtual method
 	}
@@ -132,7 +132,7 @@ public:
 
 	virtual ~Widget()throw(){}
 
-	virtual void Render(const tride::Matr4f& matrix)const{}
+	virtual void Render(const morda::Matr4f& matrix)const{}
 
 	enum EMouseButton{
 		UNKNOWN,
@@ -144,17 +144,17 @@ public:
 	};
 
 	//return true to consume event
-	virtual bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+	virtual bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 		return false;
 	}
 	
 	//return true to consume event
-	virtual bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+	virtual bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 		return false;
 	}
 
 	//return true to consume event
-	virtual bool OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
+	virtual bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 		return false;
 	}
 
@@ -170,8 +170,8 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	virtual tride::Vec2f ComputeMinimalDimensions()const throw(){
-		return tride::Vec2f(0, 0);
+	virtual morda::Vec2f ComputeMinimalDimensions()const throw(){
+		return morda::Vec2f(0, 0);
 	}
 
 	inline void Hide(){

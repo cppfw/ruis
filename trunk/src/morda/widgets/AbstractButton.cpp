@@ -14,16 +14,16 @@ void AbstractButton::ApplyProperties(const stob::Node* properties){
 
 
 //override
-void AbstractButton::Render(const tride::Matr4f& matrix)const{
-	tride::Matr4f matr(matrix);
+void AbstractButton::Render(const morda::Matr4f& matrix)const{
+	morda::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	
 	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	if(this->isPressed){
-		s.SetColor(tride::Vec3f(1, 1, 1));
+		s.SetColor(morda::Vec3f(1, 1, 1));
 	}else{
-		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
+		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
 	}
 	s.SetMatrix(matr);
 	s.DrawQuad01();
@@ -32,7 +32,7 @@ void AbstractButton::Render(const tride::Matr4f& matrix)const{
 
 
 //override
-bool AbstractButton::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool AbstractButton::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
@@ -46,7 +46,7 @@ bool AbstractButton::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton but
 
 
 //override
-bool AbstractButton::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool AbstractButton::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;

@@ -33,8 +33,8 @@ THE SOFTWARE. */
 #include <sstream>
 #include <stdexcept>
 
-#include <tride/Vector3.hpp>
-#include <tride/Rectangle2.hpp>
+#include "Vector3.hpp"
+#include "Rectangle2.hpp"
 
 #include <ting/types.hpp>
 #include <ting/Exc.hpp>
@@ -67,8 +67,8 @@ namespace morda{
 
 class TexFont{
 	struct Glyph{
-		ting::StaticBuffer<tride::Vec2f, 4> verts;
-		ting::StaticBuffer<tride::Vec2f, 4> texCoords;
+		ting::StaticBuffer<morda::Vec2f, 4> verts;
+		ting::StaticBuffer<morda::Vec2f, 4> texCoords;
 
 		float advance;
 	};
@@ -85,7 +85,7 @@ public:
 
 private:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	tride::Rect2f boundingBox;
+	morda::Rect2f boundingBox;
 
 public:
 	TexFont(){}
@@ -101,23 +101,23 @@ public:
 	}
 
 	//renders the string, returns resulting string advance
-	inline float RenderString(TexturingShader& shader, const tride::Matr4f& matrix, const wchar_t* s)const{
+	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
 		return this->RenderStringInternal(shader, matrix, s);
 	}
 
-	inline float RenderString(TexturingShader& shader, const tride::Matr4f& matrix, const std::wstring& s)const{
+	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::wstring& s)const{
 		return this->RenderStringInternal(shader, matrix, s.c_str());
 	}
 
-	inline float RenderString(TexturingShader& shader, const tride::Matr4f& matrix, const char* s)const{
+	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
 		return this->RenderStringInternal(shader, matrix, s);
 	}
 
-	inline float RenderString(TexturingShader& shader, const tride::Matr4f& matrix, const std::string& s)const{
+	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::string& s)const{
 		return this->RenderStringInternal(shader, matrix, s.c_str());
 	}
 
-	inline const tride::Rect2f& FontBoundingBox()const{
+	inline const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
@@ -137,23 +137,23 @@ public:
 		return this->StringAdvanceInternal(s.c_str());
 	}
 
-	inline tride::Rect2f StringBoundingBox(const wchar_t* s)const{
+	inline morda::Rect2f StringBoundingBox(const wchar_t* s)const{
 		return this->StringBoundingBoxInternal(s);
 	}
 	
-	inline tride::Rect2f StringBoundingBox(const std::wstring& s)const{
+	inline morda::Rect2f StringBoundingBox(const std::wstring& s)const{
 		return this->StringBoundingBoxInternal(s.c_str());
 	}
 
-	inline tride::Rect2f StringBoundingBox(const char* s)const{
+	inline morda::Rect2f StringBoundingBox(const char* s)const{
 		return this->StringBoundingBoxInternal(s);
 	}
 
-	inline tride::Rect2f StringBoundingBox(const std::string& s)const{
+	inline morda::Rect2f StringBoundingBox(const std::string& s)const{
 		return this->StringBoundingBoxInternal(s.c_str());
 	}
 
-	DEBUG_CODE( void RenderTex(TexturingShader& shader, const tride::Matr4f& matrix)const; )
+	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const; )
 
 private:
 
@@ -161,15 +161,15 @@ private:
 	
 	float StringAdvanceInternal(const wchar_t* s)const;
 
-	tride::Rect2f StringBoundingBoxInternal(const char* s)const;
+	morda::Rect2f StringBoundingBoxInternal(const char* s)const;
 	
-	tride::Rect2f StringBoundingBoxInternal(const wchar_t* s)const;
+	morda::Rect2f StringBoundingBoxInternal(const wchar_t* s)const;
 	
-	float RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const char* s)const;
+	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const;
 	
-	float RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const wchar_t* s)const;	
+	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const;	
 
-	float RenderGlyphInternal(TexturingShader& shader, const tride::Matr4f& matrix, wchar_t ch)const;
+	float RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, wchar_t ch)const;
 
 };//~class TexFont
 

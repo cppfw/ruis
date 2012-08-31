@@ -37,7 +37,7 @@ THE SOFTWARE. */
 #	include <GL/glx.h>
 #endif
 
-#include <tride/Vector3.hpp>
+#include "../util/Vector3.hpp"
 
 #include <ting/types.hpp>
 #include <ting/Singleton.hpp>
@@ -111,18 +111,18 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetMatrix(const tride::Matr4f &m){
+	inline void SetMatrix(const morda::Matr4f &m){
 		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetPositionPointer(const tride::Vec3f *p){
+	inline void SetPositionPointer(const morda::Vec3f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetPositionPointer(const tride::Vec2f *p){
+	inline void SetPositionPointer(const morda::Vec2f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)

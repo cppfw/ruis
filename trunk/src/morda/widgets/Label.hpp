@@ -43,7 +43,7 @@ class Label : public Widget{
 	
 	ting::Ref<morda::ResFont> font;
 	
-	tride::Vec2f pivot;
+	morda::Vec2f pivot;
 	
 	void ApplyProperties(const stob::Node* properties);
 	
@@ -87,7 +87,7 @@ public:
 	}
 	
 	//override
-	void Render(const tride::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const;
 		
 	inline static ting::Ref<Label> New(ting::Ptr<stob::Node> properties){
 		return ting::Ref<Label>(new Label(properties));

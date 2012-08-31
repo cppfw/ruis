@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <tride/Vector3.hpp>
+#include "Vector3.hpp"
 
 #include <stob/dom.hpp>
 
@@ -45,7 +45,7 @@ namespace morda{
  *                If zero pointer is passed the resulting vector will be filled with zeros.
  * @return parsed Vec2f.
  */
-tride::Vec2f Vec2fFromSTOB(const stob::Node* chain);
+morda::Vec2f Vec2fFromSTOB(const stob::Node* chain);
 
 
 

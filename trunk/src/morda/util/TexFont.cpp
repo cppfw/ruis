@@ -227,15 +227,15 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 			g.advance = float(m->horiAdvance) / (64.0f);
 
 			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[0] = (tride::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + tride::Vec2f(-int(outline), -int(outline));
-			g.verts[1] = (tride::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + tride::Vec2f(-int(outline), int(outline));
-			g.verts[2] = (tride::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + tride::Vec2f(int(outline), int(outline));
-			g.verts[3] = (tride::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + tride::Vec2f(int(outline), -int(outline));
+			g.verts[0] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(-int(outline), -int(outline));
+			g.verts[1] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-int(outline), int(outline));
+			g.verts[2] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(int(outline), int(outline));
+			g.verts[3] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(int(outline), -int(outline));
 
-			g.texCoords[0] = tride::Vec2f(float(curX), float(curY + im.Height()));
-			g.texCoords[1] = tride::Vec2f(float(curX), float(curY));
-			g.texCoords[2] = tride::Vec2f(float(curX + im.Width()), float(curY));
-			g.texCoords[3] = tride::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
+			g.texCoords[0] = morda::Vec2f(float(curX), float(curY + im.Height()));
+			g.texCoords[1] = morda::Vec2f(float(curX), float(curY));
+			g.texCoords[2] = morda::Vec2f(float(curX + im.Width()), float(curY));
+			g.texCoords[3] = morda::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
 
 			//update bounding box if needed
 			if(left < -g.verts[0].x){
@@ -302,7 +302,7 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 
 
 
-inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const tride::Matr4f& matrix, wchar_t ch)const{
+inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, wchar_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
 	shader.SetMatrix(matrix);
@@ -317,7 +317,7 @@ inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const tride::
 
 
 
-float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const wchar_t* s)const{
+float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
 	shader.EnablePositionPointer();
 	shader.EnableTexCoordPointer();
 
@@ -325,7 +325,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f
 
 	float ret = 0;
 
-	tride::Matr4f matr(matrix);
+	morda::Matr4f matr(matrix);
 
 	try{
 		for(; *s != 0; ++s){
@@ -345,7 +345,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f
 
 
 //TODO: add utf-8 support
-float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f& matrix, const char* s)const{
+float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
 	shader.EnablePositionPointer();
 	shader.EnableTexCoordPointer();
 
@@ -353,7 +353,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const tride::Matr4f
 
 	float ret = 0;
 
-	tride::Matr4f matr(matrix);
+	morda::Matr4f matr(matrix);
 
 	try{
 		for(; *s != 0; ++s){
@@ -411,8 +411,8 @@ float TexFont::StringAdvanceInternal(const char* s)const{
 
 
 
-tride::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
-	tride::Rect2f ret;
+morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
+	morda::Rect2f ret;
 
 	if(*s == 0){
 		ret.p.SetToZero();
@@ -475,8 +475,8 @@ tride::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
 
 
 //TODO: add utf-8 support
-tride::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
-	tride::Rect2f ret;
+morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
+	morda::Rect2f ret;
 
 	if(*s == 0){
 		ret.p.SetToZero();
@@ -539,8 +539,8 @@ tride::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 
 
 #ifdef DEBUG
-void TexFont::RenderTex(TexturingShader& shader, const tride::Matr4f& matrix)const{
-	tride::Matr4f matr(matrix);
+void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const{
+	morda::Matr4f matr(matrix);
 	matr.Scale(this->tex.Dim());
 	shader.SetMatrix(matr);
 

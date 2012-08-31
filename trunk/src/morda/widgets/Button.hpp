@@ -62,7 +62,7 @@ public:
 	~Button()throw(){}
 	
 	//override
-	void Render(const tride::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const;
 	
 	void SetText(const std::string& text);
 	

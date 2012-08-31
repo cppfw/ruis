@@ -21,7 +21,7 @@ void LinearLayout::ArrangeWidgets(Container& c)const{
 
 
 //override
-tride::Vec2f LinearLayout::ComputeMinimalDimensions(const Container& c)const throw(){
+morda::Vec2f LinearLayout::ComputeMinimalDimensions(const Container& c)const throw(){
 	//TODO:
-	return tride::Vec2f();
+	return morda::Vec2f();
 }

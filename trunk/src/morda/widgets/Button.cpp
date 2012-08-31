@@ -16,7 +16,7 @@ void Button::ApplyProperties(const stob::Node* properties){
 
 
 //override
-void Button::Render(const tride::Matr4f& matrix)const{
+void Button::Render(const morda::Matr4f& matrix)const{
 	this->AbstractButton::Render(matrix);
 	this->label->Render(matrix);
 }

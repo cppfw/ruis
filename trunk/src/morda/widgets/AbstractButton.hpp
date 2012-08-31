@@ -62,13 +62,13 @@ public:
 	ting::Signal0 pressed;
 	
 	//override
-	void Render(const tride::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const;
 	
 	//override
-	bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
 	//override
-	bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
 	//override
 	void OnMouseOut();

@@ -28,7 +28,6 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <tride/Vector3.hpp>
 #include <stob/dom.hpp>
 
 #include "../util/GLTexture.hpp"

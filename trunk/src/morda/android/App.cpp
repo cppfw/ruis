@@ -22,7 +22,7 @@ namespace{
 
 ANativeWindow* androidWindow = 0;
 
-tride::Vec2f curWinDim(0, 0);
+morda::Vec2f curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
 
@@ -46,12 +46,12 @@ struct AppInfo{
 
 
 //array of current pointer positions, needed to detect which pointers have actually moved.
-ting::StaticBuffer<tride::Vec2f, 10> pointers;
+ting::StaticBuffer<morda::Vec2f, 10> pointers;
 
 
 
-inline tride::Vec2f AndroidWinCoordsToMordaWinRectCoords(const tride::Rect2f& winRect, const tride::Vec2f& p){
-	tride::Vec2f ret(
+inline morda::Vec2f AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2f& p){
+	morda::Vec2f ret(
 			p.x,
 			curWinDim.y - p.y - winRect.p.y - 1.0f
 		);
@@ -201,7 +201,7 @@ App::App(unsigned w, unsigned h) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
-	this->UpdateWindowRect(tride::Rect2f(0, 0, float(width), float(height)));
+	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
 }
 
 
@@ -212,7 +212,7 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 
-inline void UpdateWindowRect(App* app, const tride::Rect2f& rect){
+inline void UpdateWindowRect(App* app, const morda::Rect2f& rect){
 //	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
 	app->UpdateWindowRect(rect);
 }
@@ -259,7 +259,7 @@ void HandleInputEvents(){
 
 								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-								tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
@@ -284,7 +284,7 @@ void HandleInputEvents(){
 
 								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 
-								tride::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
@@ -307,7 +307,7 @@ void HandleInputEvents(){
 									}
 
 									//notify root Container only if there was actual movement
-									tride::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
+									morda::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 									if(pointers[pointerId] == p){
 										//pointer position did not change
 										continue;
@@ -591,7 +591,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	
 	UpdateWindowRect(
 			app,
-			tride::Rect2f(
+			morda::Rect2f(
 					float(rect->left),
 					curWinDim.y - float(rect->bottom),
 					float(rect->right - rect->left),
