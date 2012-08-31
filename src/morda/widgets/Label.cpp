@@ -30,7 +30,7 @@ void Label::ApplyProperties(const stob::Node* properties){
 void Label::SetText(const std::string& text){
 	this->text = text;
 	
-	tride::Rect2f bb = this->font->Fnt().StringBoundingBox(this->text);
+	morda::Rect2f bb = this->font->Fnt().StringBoundingBox(this->text);
 	
 	if(this->Rect().d.x < bb.d.x || this->Rect().d.y < bb.d.y){
 		this->Resize(bb.d);
@@ -52,13 +52,13 @@ void Label::SetGravity(E_Gravity gravity){
 
 
 //override
-void Label::Render(const tride::Matr4f& matrix)const{
+void Label::Render(const morda::Matr4f& matrix)const{
 //	{
-//		tride::Matr4f matr(matrix);
+//		morda::Matr4f matr(matrix);
 //		matr.Scale(this->Rect().d);
 //		SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 //		s.Bind();
-//		s.SetColor(tride::Vec3f(0.5, 0.5, 0.5));
+//		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
 //		s.SetMatrix(matr);
 //		s.DrawQuad01();
 //	}
@@ -69,7 +69,7 @@ void Label::Render(const tride::Matr4f& matrix)const{
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	tride::Matr4f matr(matrix);
+	morda::Matr4f matr(matrix);
 	matr.Translate(this->pivot);
 	this->font->Fnt().RenderString(s, matr, this->text);
 }

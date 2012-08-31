@@ -6,8 +6,8 @@ using namespace morda;
 
 
 namespace{
-tride::Vec2f quadTexCoords[] = {
-	tride::Vec2f(0, 0), tride::Vec2f(0, 1), tride::Vec2f(1, 1), tride::Vec2f(1, 0)
+morda::Vec2f quadTexCoords[] = {
+	morda::Vec2f(0, 0), morda::Vec2f(0, 1), morda::Vec2f(1, 1), morda::Vec2f(1, 0)
 };
 }//~namespace
 

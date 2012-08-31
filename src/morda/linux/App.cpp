@@ -159,7 +159,7 @@ App::App(unsigned w, unsigned h) :
 	}
 #endif
 	
-	this->UpdateWindowRect(tride::Rect2f(0, 0, float(w), float(h)));
+	this->UpdateWindowRect(morda::Rect2f(0, 0, float(w), float(h)));
 }
 
 
@@ -242,7 +242,7 @@ void App::Exec(){
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						this->UpdateWindowRect(tride::Rect2f(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+						this->UpdateWindowRect(morda::Rect2f(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
@@ -259,7 +259,7 @@ void App::Exec(){
 							break;
 						}
 						this->rootContainer->OnMouseButtonDown(
-								tride::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+								morda::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
@@ -269,7 +269,7 @@ void App::Exec(){
 							break;
 						}
 						this->rootContainer->OnMouseButtonUp(
-								tride::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+								morda::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
@@ -280,7 +280,7 @@ void App::Exec(){
 							break;
 						}
 						this->rootContainer->OnMouseMove(
-								tride::Vec2f(event.xmotion.x, this->curWinRect.d.y - float(event.xmotion.y) - 1.0f),
+								morda::Vec2f(event.xmotion.x, this->curWinRect.d.y - float(event.xmotion.y) - 1.0f),
 								0
 							);
 						break;

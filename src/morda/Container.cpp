@@ -1,6 +1,6 @@
 #include "Container.hpp"
 
-#include <tride/Vector3.hpp>
+#include "util/Vector3.hpp"
 #include <ting/Singleton.hpp>
 
 #include "App.hpp"
@@ -58,15 +58,15 @@ void Container::ApplyProperties(stob::Node* properties){
 
 
 //override
-void Container::Render(const tride::Matr4f& matrix)const{
+void Container::Render(const morda::Matr4f& matrix)const{
 	//render border
 	{
 		morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
-		tride::Matr4f matr(matrix);
+		morda::Matr4f matr(matrix);
 		matr.Scale(this->Rect().d);
 		s.SetMatrix(matr);
-		s.SetColor(tride::Vec3f(1, 0, 1));
+		s.SetColor(morda::Vec3f(1, 0, 1));
 		s.DrawQuad01(GL_LINE_LOOP);
 	}
 	
@@ -75,7 +75,7 @@ void Container::Render(const tride::Matr4f& matrix)const{
 			continue;
 		}
 		
-		tride::Matr4f matr(matrix);
+		morda::Matr4f matr(matrix);
 		matr.Translate((*i)->Rect().p);
 
 		(*i)->Render(matr);
@@ -85,7 +85,7 @@ void Container::Render(const tride::Matr4f& matrix)const{
 
 
 //override
-bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Container::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
@@ -122,7 +122,7 @@ bool Container::OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, 
 
 
 //override
-bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Container::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
 	
 	//Copy children list to iterate through it later, because the original list of children
@@ -160,7 +160,7 @@ bool Container::OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, un
 
 
 //override
-bool Container::OnMouseMove(const tride::Vec2f& pos, unsigned pointerId){
+bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
 	T_ChildList childs;

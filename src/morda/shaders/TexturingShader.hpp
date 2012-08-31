@@ -70,7 +70,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetTexCoordPointer(const tride::Vec2f *p){
+	inline void SetTexCoordPointer(const morda::Vec2f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->texCoordAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)

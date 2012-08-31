@@ -77,16 +77,16 @@ public:
 	}
 	
 	//override
-	void Render(const tride::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const;
 
 	//override
-	bool OnMouseButtonDown(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
 	//override
-	bool OnMouseButtonUp(const tride::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
 	//override
-	bool OnMouseMove(const tride::Vec2f& pos, unsigned pointerId);
+	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId);
 	
 	//override
 	void OnMouseOut();
@@ -95,7 +95,7 @@ public:
 	void OnResize();
 	
 	//override
-	tride::Vec2f ComputeMinimalDimensions()const throw(){
+	morda::Vec2f ComputeMinimalDimensions()const throw(){
 		if(this->layout){
 			return this->layout->ComputeMinimalDimensions(*this);
 		}

@@ -38,7 +38,7 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
-#include <tride/Vector3.hpp>
+#include "Vector3.hpp"
 
 #include "Image.hpp"
 
@@ -57,7 +57,7 @@ class GLTexture {
 
 	GLuint tex;
 
-	tride::Vec2f dim;
+	morda::Vec2f dim;
 
 public:
 	inline GLTexture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
@@ -88,7 +88,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline tride::Vec2f Dim()const throw(){
+	inline morda::Vec2f Dim()const throw(){
 		return this->dim;
 	}
 

@@ -46,7 +46,7 @@ public:
 	void ArrangeWidgets(Container& c)const;
 	
 	//override
-	tride::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
+	morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
 	
 	~LinearLayout()throw(){}
 	

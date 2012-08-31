@@ -105,7 +105,7 @@ private:
 		~EGLContextWrapper()throw();
 	} eglContext;
 	
-	friend void UpdateWindowRect(App* app, const tride::Rect2f& rect);
+	friend void UpdateWindowRect(App* app, const morda::Rect2f& rect);
 	friend void Render(App* app);
 	friend void HandleInputEvents();
 	
@@ -179,7 +179,7 @@ public:
 	
 private:
 	//this is a viewport rectangle in coordinates that are x grows right, y grows up.
-	tride::Rect2f curWinRect;
+	morda::Rect2f curWinRect;
 	
 	ting::Ref<morda::Container> rootContainer;
 	
@@ -189,7 +189,7 @@ private:
 	
 	void UpdateGLViewport();
 	
-	void UpdateWindowRect(const tride::Rect2f& rect);
+	void UpdateWindowRect(const morda::Rect2f& rect);
 	
 	void Render();
 	
@@ -202,7 +202,7 @@ public:
 	
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
-		this->rootContainer->SetPos(tride::Vec2f(0));
+		this->rootContainer->SetPos(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
 	}
 	

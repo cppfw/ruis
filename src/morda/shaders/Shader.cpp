@@ -90,8 +90,8 @@ bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 
 
 namespace{
-static tride::Vec2f quadTriangles[] = {
-	tride::Vec2f(-1, -1), tride::Vec2f(-1, 1), tride::Vec2f(1, 1), tride::Vec2f(1, -1)
+static morda::Vec2f quadTriangles[] = {
+	morda::Vec2f(-1, -1), morda::Vec2f(-1, 1), morda::Vec2f(1, 1), morda::Vec2f(1, -1)
 };
 }//~namespace
 
@@ -106,8 +106,8 @@ void Shader::DrawQuad(){
 
 
 namespace{
-static tride::Vec2f quad01Triangles[] = {
-	tride::Vec2f(0, 0), tride::Vec2f(0, 1), tride::Vec2f(1, 1), tride::Vec2f(1, 0)
+static morda::Vec2f quad01Triangles[] = {
+	morda::Vec2f(0, 0), morda::Vec2f(0, 1), morda::Vec2f(1, 1), morda::Vec2f(1, 0)
 };
 }//~namespace
 

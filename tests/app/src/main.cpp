@@ -36,9 +36,9 @@ public:
 	}
 	
 	//override
-	void Render(const tride::Matr4f& matrix)const{
+	void Render(const morda::Matr4f& matrix)const{
 		{
-			tride::Matr4f matr(matrix);
+			morda::Matr4f matr(matrix);
 			matr.Scale(this->Rect().d);
 
 			this->tex->Tex().Bind();
@@ -46,7 +46,7 @@ public:
 			morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
 			s.Bind();
 			s.EnablePositionPointer();
-//			s.SetColor(tride::Vec3f(1, 0, 0));
+//			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
 			s.DrawQuad01();
 		}
@@ -56,7 +56,7 @@ public:
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
-		tride::Matr4f m(matrix);
+		morda::Matr4f m(matrix);
 		m.Translate(200, 200);
 		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
