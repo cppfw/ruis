@@ -45,30 +45,39 @@ namespace morda{
  */
 template <class T> class Rectangle2{
 public:
+	//TODO: doxygen
 	Vector2<T> p; //Left-Bottom corner
+	
+	//TODO: doxygen
 	Vector2<T> d; //dimensions
 	
+	//TODO: doxygen
 	inline Rectangle2()throw(){}
 	
+	//TODO: doxygen
 	inline Rectangle2(T left, T bottom, T width, T height)throw() :
 			p(left, bottom),
 			d(width, height)
 	{}
 
+	//TODO: doxygen
 	inline Rectangle2(Vector2<T> leftBottom, Vector2<T> dimensions)throw() :
 			p(leftBottom),
 			d(dimensions)
 	{}
 	
+	//TODO: doxygen
 	inline Vector2<T> Center()const throw(){
 		return this->p + this->d / 2;
 	}
 
+	//TODO: doxygen
 	inline void MoveCenterTo(const Vector2<T>& vec)throw(){
 		this->p = vec - this->d / 2;
 	}
 
-	bool Overlaps(const Vector2<T>& vec)const throw(){
+	//TODO: doxygen
+	inline bool Overlaps(const Vector2<T>& vec)const throw(){
 		return
 				vec.x < this->Right() &&
 				vec.x >= this->Left() &&
@@ -77,38 +86,47 @@ public:
 			;
 	}
 	
+	//TODO: doxygen
 	inline Vector2<T> Extent()const throw(){
 		return this->d / 2;
 	}
 
+	//TODO: doxygen
 	inline Vector2<T> RightTop()const throw(){
 		return this->p + this->d;
 	}
 
+	//TODO: doxygen
 	inline T& Left()throw(){
 		return this->p.x;
 	}
 
+	//TODO: doxygen
 	inline const T& Left()const throw(){
 		return this->p.x;
 	}
 
+	//TODO: doxygen
 	inline T Top()const throw(){
 		return this->p.y + this->d.y;
 	}
 
+	//TODO: doxygen
 	inline T Right()const throw(){
 		return this->p.x + this->d.x;
 	}
 
+	//TODO: doxygen
 	inline T& Bottom()throw(){
 		return this->p.y;
 	}
 
+	//TODO: doxygen
 	inline const T& Bottom()const throw(){
 		return this->p.y;
 	}
 	
+	//TODO: doxygen
 	inline bool operator==(const Rectangle2& r)const throw(){
 		return this->p == r.p && this->d == r.d;
 	}
@@ -123,11 +141,9 @@ public:
 
 
 
-//
-//
-// Some convenient typedefs
-//
-//
+//=====================
+// Convenient typedefs
+//=====================
 
 typedef Rectangle2<float> Rect2f;
 typedef Rectangle2<double> Rect2d;
