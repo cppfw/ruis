@@ -213,7 +213,7 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 inline void UpdateWindowRect(App* app, const tride::Rect2f& rect){
-	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
+//	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
 	app->UpdateWindowRect(rect);
 }
 
@@ -581,15 +581,16 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 
 
 
+//called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
 	
-	//called when, for example, on-screen keyboard has been shown
-	
 //	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
 	
+	morda::App* app = static_cast<morda::App*>(activity->instance);
+	
 	UpdateWindowRect(
-			static_cast<morda::App*>(activity->instance),
+			app,
 			tride::Rect2f(
 					float(rect->left),
 					curWinDim.y - float(rect->bottom),
@@ -597,6 +598,9 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 					float(rect->bottom - rect->top)
 				)
 		);
+	
+	//redraw, since WindowRedrawNeeded not always comes
+	Render(app);
 }
 
 
