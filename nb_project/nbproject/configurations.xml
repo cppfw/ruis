@@ -751,9 +751,9 @@
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
     <Elem>/home/igagis/prj/morda/android/jni</Elem>
-    <Elem>/home/igagis/prj/morda/src</Elem>
     <Elem>/home/igagis/prj/morda/tests</Elem>
     <Elem>/home/igagis/prj/morda/ext</Elem>
+    <Elem>/home/igagis/prj/morda/src</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -777,7 +777,6 @@
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
-              <Elem>__ANDROID__</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
@@ -3223,6 +3222,16 @@
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath></executablePath>
+          <ccTool>
+            <standard>4</standard>
+            <incDir>
+              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>DEBUG</Elem>
+              <Elem>__ANDROID__</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
     </conf>
