@@ -529,10 +529,7 @@ template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector3<T>& t)
 
 
 template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)throw(){
-	Matrix4<T> rm;
-	q.CreateMatrix4(rm);//TODO: rewrite after CreateMatrix4() is removed
-	this->RightMulBy(rm);
-	return (*this);
+	return this->RightMulBy(Matrix4<T>(q));
 }
 
 
@@ -558,10 +555,10 @@ template <class T> inline Matrix4<T>::Matrix4(const Quaternion<T>& quat)throw(){
 template <class T> inline Matrix4<T>& Matrix4<T>::SetFrom(const Quaternion<T>& quat)throw(){
 	// After about 300 trees murdered and 20 packs of chalk depleted, the
 	// mathematicians came up with these equations for a quaternion to matrix conversion:
-	//   /  1-(2y^2+2z^2)   2xy-2zw         2xz+2yw         0   \
-	// M=|  2xy+2zw         1-(2x^2+2z^2)   2yz-2xw         0   |
-	//   |  2xz-2yw         2zy+2xw         1-(2x^2+2y^2)   0   |
-	//   \  0               0               0               1   /
+	//     /  1-(2y^2+2z^2)   2xy-2zw         2xz+2yw         0   \
+	// M = |  2xy+2zw         1-(2x^2+2z^2)   2yz-2xw         0   |
+	//     |  2xz-2yw         2zy+2xw         1-(2x^2+2y^2)   0   |
+	//     \  0               0               0               1   /
 
 	//First column
 	this->c0[0] = T(1) - T(2) * (ting::math::Pow2(quat.y) + ting::math::Pow2(quat.z));

@@ -349,15 +349,6 @@ public:
 
 
 	//TODO: doxygen
-	//Create 4x4 OpenGL like rotation matrix from this quaternion
-	//ARGS: m - matrix to fill
-	//RETURNS: return a reference to m
-	//TODO: move this functionality to  Matrix4::Matrix4(const Quaternion& q), i.e. create a contructor
-	inline Matrix4<T>& CreateMatrix4(Matrix4<T>& m)const;
-
-
-
-	//TODO: doxygen
 	//--||--||--
 	inline Matrix4<T> ToMatrix4()const;
 
@@ -456,46 +447,8 @@ template <class T> inline Quaternion<T>& Quaternion<T>::RotateAfter(Vector3<T> a
 
 
 
-template <class T> inline Matrix4<T>& Quaternion<T>::CreateMatrix4(Matrix4<T>& m)const{
-	// After about 300 trees murdered and 20 packs of chalk depleted, the
-	// mathematicians came up with these equations for a quaternion to matrix converion:
-	//   /  1-(2y^2+2z^2)   2xy+2zw         2xz-2yw         0   \T
-	// M=|  2xy-2zw         1-(2x^2+2z^2)   2zy+2xw         0   |
-	//   |  2xz+2yw         2yz-2xw         1-(2x^2+2y^2)   0   |
-	//   \  0               0               0               1   /
-
-	//First column
-	m[0][0] = T(1) - T(2) * (ting::math::Pow2(this->y) + ting::math::Pow2(this->z));
-	m[0][1] = T(2) * (this->x * this->y + this->z * this->w);
-	m[0][2] = T(2) * (this->x * this->z - this->y * this->w);
-	m[0][3] = T(0);
-
-	//Second column
-	m[1][0] = T(2) * (this->x * this->y - this->z * this->w);
-	m[1][1] = T(1) - T(2) * (ting::math::Pow2(this->x) + ting::math::Pow2(this->z));
-	m[1][2] = T(2) * (this->z * this->y + this->x * this->w);
-	m[1][3] = T(0);
-
-	//Third column
-	m[2][0] = T(2) * (this->x * this->z + this->y * this->w);
-	m[2][1] = T(2) * (this->y * this->z - this->x * this->w);
-	m[2][2] = T(1) - T(2) * (ting::math::Pow2(this->x) + ting::math::Pow2(this->y));
-	m[2][3] = T(0);
-
-	//Fourth column
-	m[3][0] = T(0);
-	m[3][1] = T(0);
-	m[3][2] = T(0);
-	m[3][3] = T(1);
-	return m;
-}
-
-
-
 template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const{
-	Matrix4<T> m;
-	this->CreateMatrix4(m);
-	return m;
+	return Matrix4<T>(*this);
 }
 
 
