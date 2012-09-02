@@ -56,18 +56,21 @@ public:
 
 
 	void OpenZipFile(){
-		if(this->ZipFileIsOpened())
+		if(this->ZipFileIsOpened()){
 			throw File::Exc("ZipFile::OpenZipFile(): zip file is already opened");
+		}
 
 		ASSERT(!this->IsOpened())
 
-		if(this->zipFilePath.size() == 0)
+		if(this->zipFilePath.size() == 0){
 			throw File::Exc("ZipFile::OpenZipFile(): zip file path is not set");
+		}
 
 		this->zipFile = unzOpen(this->zipFilePath.c_str());
 
-		if(!this->zipFile)
+		if(!this->zipFile){
 			throw File::Exc("ZipFile::OpenZipFile(): opening zip file failed");
+		}
 	}
 
 
@@ -112,17 +115,21 @@ public:
 
 	//override
 	virtual void Open(EMode mode){
-		if(!this->ZipFileIsOpened())
+		if(!this->ZipFileIsOpened()){
 			throw File::Exc("ZipFile::Open(): zip file is not opened");
+		}
 
-		if(this->IsOpened())
+		if(this->IsOpened()){
 			throw File::Exc("file already opened");
+		}
 
-		if(mode != File::READ)
+		if(mode != File::READ){
 			throw File::Exc("illegal mode requested, only READ supported inside ZIP file");
+		}
 
-		if(unzLocateFile(this->zipFile, this->Path().c_str(), 0) != UNZ_OK)
+		if(unzLocateFile(this->zipFile, this->Path().c_str(), 0) != UNZ_OK){
 			throw File::Exc("file not found");
+		}
 
 		{
 			unz_file_info zipFileInfo;
@@ -131,8 +138,9 @@ public:
 				throw File::Exc("failed obtaining file info");
 		}
 
-		if(unzOpenCurrentFile(this->zipFile) != UNZ_OK)
+		if(unzOpenCurrentFile(this->zipFile) != UNZ_OK){
 			throw File::Exc("file opening failed");
+		}
 
 		//set open mode
 		this->ioMode = mode;
@@ -144,8 +152,9 @@ public:
 
 	//override
 	virtual void Close()throw(){
-		if(!this->IsOpened())
+		if(!this->IsOpened()){
 			return;
+		}
 
 		ASSERT(this->ZipFileIsOpened())
 
@@ -185,11 +194,13 @@ public:
 
 	//override
 	virtual bool Exists()const{
-		if(this->Path().size() == 0)
+		if(this->Path().size() == 0){
 			return false;
+		}
 
-		if(this->IsOpened())
+		if(this->IsOpened()){
 			return true;
+		}
 
 		//if it is a directory, check directory existance
 		if(this->Path()[this->Path().size() - 1] == '/'){
@@ -203,14 +214,16 @@ public:
 
 	//override
 	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0){
-		if(!this->IsDir())
+		if(!this->IsDir()){
 			throw File::Exc("ZipFile::ListDirContents(): this is not a directory");
+		}
 
 		//if path refers to directory then there should be no files opened
 		ASSERT(!this->IsOpened())
 
-		if(!this->zipFile)
+		if(!this->zipFile){
 			throw File::Exc("ZipFile::ListDirContents(): zip file is not opened");
+		}
 
 		std::vector<std::string> files;
 
@@ -219,8 +232,9 @@ public:
 			//move to first file
 			int ret = unzGoToFirstFile(this->zipFile);
 
-			if(ret != UNZ_OK)
+			if(ret != UNZ_OK){
 				throw File::Exc("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
+			}
 
 			do{
 				ting::StaticBuffer<char, 255> fileNameBuf;
@@ -243,12 +257,14 @@ public:
 
 				std::string fn(fileNameBuf.Begin());//filename
 
-				if(fn.size() <= this->Path().size())
+				if(fn.size() <= this->Path().size()){
 					continue;
+				}
 
 				//check if full file path starts with the this->Path() string
-				if(fn.compare(0, this->Path().size(), this->Path()) != 0)
+				if(fn.compare(0, this->Path().size(), this->Path()) != 0){
 					continue;
+				}
 
 				ASSERT(fn.size() > this->Path().size())
 				std::string subfn(fn, this->Path().size(), fn.size() - this->Path().size());//subfilename
@@ -278,8 +294,9 @@ public:
 		}
 
 		ting::Array<std::string> filesArray(files.size());
-		for(unsigned i = 0; i < files.size(); ++i)
+		for(unsigned i = 0; i < files.size(); ++i){
 			filesArray[i] = files[i];
+		}
 
 		return filesArray;
 	}
