@@ -36,7 +36,7 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/math.hpp>
 
-//TODO: add throw() where needed
+
 
 namespace morda{
 
@@ -68,14 +68,14 @@ public:
 	 * It does not initialize vector components.
 	 * Their values are undefined right after construction.
 	 */
-	inline Vector2(){}
+	inline Vector2()throw(){}
 
 	/**
 	 * @brief Create vector with given values.
 	 * Creates a vector with all components initialized to a given value.
 	 * @param xy - value to assign to all components of the vector.
 	 */
-	inline Vector2(T xy) :
+	inline Vector2(T xy)throw() :
 			x(xy), y(xy)
 	{}
 	
@@ -84,7 +84,7 @@ public:
 	 * @param x - x component of the vector.
 	 * @param y - y component of the vector.
 	 */
-	inline Vector2(T x, T y) :
+	inline Vector2(T x, T y)throw() :
 			x(x), y(y)
 	{}
 
@@ -96,13 +96,13 @@ public:
 	 * from x and y of given 3 dimensional vector.
 	 * @param vec - 3 dimensional vector to copy x and y from.
 	 */
-	inline Vector2(const Vector3<T>& vec);
+	inline Vector2(const Vector3<T>& vec)throw();
 
 	/**
 	 * @brief Access vector components.
 	 * @param i - index of the component, can be 0 or 1.
 	 */
-	inline T& operator[](unsigned i){
+	inline T& operator[](unsigned i)throw(){
 		ASSERT(i < 2)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -113,7 +113,7 @@ public:
 	 * @brief Access vector components.
 	 * @param i - index of the component, can be 0 or 1.
 	 */
-	inline const T& operator[](unsigned i)const{
+	inline const T& operator[](unsigned i)const throw(){
 		ASSERT(i < 2)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -128,7 +128,7 @@ public:
 	 * @param vec - reference to the Vector3 object to assigne value from.
 	 * @return reference to this Vector2 object.
 	 */
-	inline Vector2& operator=(const Vector3<T>& vec);
+	inline Vector2& operator=(const Vector3<T>& vec)throw();
 
 	/**
 	 * @brief Add Vector2 and Vector3.
@@ -136,7 +136,7 @@ public:
 	 * @param vec - reference to the Vector3 object to add.
 	 * @return instance of the resulting Vector2.
 	 */
-	inline Vector2 operator+(const Vector3<T>& vec)const;
+	inline Vector2 operator+(const Vector3<T>& vec)const throw();
 
 	/**
 	 * @brief Add and assign.
@@ -144,7 +144,7 @@ public:
 	 * @param vec - reference to the Vector2 object to add.
 	 * @return reference to this Vector2 object.
 	 */
-	inline Vector2& operator+=(const Vector2& vec){
+	inline Vector2& operator+=(const Vector2& vec)throw(){
 		this->x += vec.x;
 		this->y += vec.y;
 		return (*this);
@@ -155,52 +155,52 @@ public:
 	 * @param vec - reference to the Vector2 object to add.
 	 * @return instance of the resulting Vector2.
 	 */
-	inline Vector2 operator+(const Vector2& vec)const{
+	inline Vector2 operator+(const Vector2& vec)const throw(){
 		return (Vector2(*this) += vec);
 	}
 
 
 	//TODO: doxygen
-	inline Vector2& operator-=(const Vector2& vec){
+	inline Vector2& operator-=(const Vector2& vec)throw(){
 		this->x -= vec.x;
 		this->y -= vec.y;
 		return (*this);
 	}
 
 	//TODO: doxygen
-	inline Vector2 operator-(const Vector2& vec)const{
+	inline Vector2 operator-(const Vector2& vec)const throw(){
 		return (Vector2(*this) -= vec);
 	}
 
 	//TODO: doxygen
-	inline Vector2 operator-(const Vector3<T>& vec)const;
+	inline Vector2 operator-(const Vector3<T>& vec)const throw();
 	
 	//TODO: doxygen
 	//unary minus
-	inline Vector2 operator-()const{
+	inline Vector2 operator-()const throw(){
 		return Vector2(-this->x, -this->y);
 	}
 
 	//TODO: doxygen
-	inline Vector2& operator*=(T num){
+	inline Vector2& operator*=(T num)throw(){
 		this->x *= num;
 		this->y *= num;
 		return (*this);
 	}
 
 	//TODO: doxygen
-	inline Vector2 operator*(T num)const{
+	inline Vector2 operator*(T num)const throw(){
 		return (Vector2(*this) *= num);
 	}
 
 	//TODO: doxygen
 	//operator num * vec
-	inline friend Vector2 operator*(T num, const Vector2& vec){
+	inline friend Vector2 operator*(T num, const Vector2& vec)throw(){
 		return vec * num;
 	}
 
 	//TODO: doxygen
-	inline Vector2& operator/=(T num){
+	inline Vector2& operator/=(T num)throw(){
 		ASSERT(num != 0)
 		this->x /= num;
 		this->y /= num;
@@ -208,24 +208,24 @@ public:
 	}
 
 	//TODO: doxygen
-	inline Vector2 operator/(T num)const{
+	inline Vector2 operator/(T num)const throw(){
 		ASSERT(num != 0)
 		return (Vector2(*this) /= num);
 	}
 
 	//TODO: doxygen
 	//dot product
-	inline T operator*(const Vector2& vec)const{
+	inline T operator*(const Vector2& vec)const throw(){
 		return (this->x * vec.x + this->y * vec.y);
 	}
 
 	//TODO: doxygen
-	inline bool operator==(const Vector2& vec)const{
+	inline bool operator==(const Vector2& vec)const throw(){
 		return this->x == vec.x && this->y == vec.y;
 	}
 
 	//TODO: doxygen
-	inline bool operator!=(const Vector2& vec)const{
+	inline bool operator!=(const Vector2& vec)const throw(){
 		return !this->operator==(vec);
 	}
 
@@ -236,7 +236,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
      */
-	inline Vector2 CompMul(const Vector2& vec)const{
+	inline Vector2 CompMul(const Vector2& vec)const throw(){
 		return Vector2(
 				this->x * vec.x,
 				this->y * vec.y
@@ -262,28 +262,28 @@ public:
 	}
 
 	//TODO: doxygen
-	inline T MagPow2(){
+	inline T MagPow2()throw(){
 		return ting::math::Pow2(this->x) + ting::math::Pow2(this->y);
 	}
 
 	//TODO: doxygen
-	inline T Magnitude(){
+	inline T Magnitude()throw(){
 		return T(ting::math::Sqrt(this->MagPow2()));
 	}
 
 	//TODO: doxygen
-	inline Vector2& Normalize(){
+	inline Vector2& Normalize()throw(){
 		ASSERT(this->Magnitude() != 0)
 		return (*this) /= this->Magnitude();
 	}
 
 	//TODO: doxygen
-	inline Vector2& Scale(T value){
+	inline Vector2& Scale(T value)throw(){
 		return (*this) *= value;
 	}
 
 	//TODO: doxygen
-	inline Vector2& SetToZero(){
+	inline Vector2& SetToZero()throw(){
 		this->x = 0;
 		this->y = 0;
 		return (*this);
@@ -291,7 +291,7 @@ public:
 
 	//TODO: doxygen
 	//Angle is passed in radians
-	Vector2& Rotate(T angle){
+	Vector2& Rotate(T angle)throw(){
 		T cosa = ting::math::Cos(angle);
 		T sina = ting::math::Sin(angle);
 		T tmp = this->x * cosa - this->y * sina;
@@ -301,7 +301,7 @@ public:
 	}
 
 	//TODO: doxygen
-	Vector2 Rotation(T angle)const{
+	Vector2 Rotation(T angle)const throw(){
 		return Vector2(*this).Rotate(angle);
 	}
 
@@ -331,13 +331,13 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> inline Vector2<T>::Vector2(const Vector3<T>& vec){
+template <class T> inline Vector2<T>::Vector2(const Vector3<T>& vec)throw(){
 	this->operator=(vec);
 }
 
 
 
-template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& vec){
+template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& vec)throw(){
 	this->x = vec.x;
 	this->y = vec.y;
 	return (*this);
@@ -345,7 +345,7 @@ template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& ve
 
 
 
-template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec)const{
+template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec)const throw(){
 	return Vector2<T>(
 				this->x + vec.x,
 				this->y + vec.y
@@ -354,7 +354,7 @@ template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec
 
 
 
-template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec)const{
+template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec)const throw(){
 	return Vector2<T>(
 				this->x - vec.x,
 				this->y - vec.y
