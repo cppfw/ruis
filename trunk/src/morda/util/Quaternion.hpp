@@ -380,7 +380,7 @@ public:
 	 * is a rotation angle in radians and vector direction defines the rotation axis.
 	 * Direction of rotation is determined by right-hand rule.
      * @param rot - rotation vector.
-     * @param t
+     * @return Reference to this quaternion object.
      */
 	inline Quaternion& InitRot(const Vector3<T>& rot)throw();
 
