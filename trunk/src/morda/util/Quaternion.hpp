@@ -35,7 +35,7 @@ THE SOFTWARE. */
 #include <ting/debug.hpp>
 #include <ting/math.hpp>
 
-//TODO: add throw() where needed
+
 
 namespace morda{
 
@@ -76,16 +76,16 @@ public:
 
 	/**
 	 * @brief Create quaternion with given components.
-	 * @param qx - x component.
-	 * @param qy - y component.
-	 * @param qz - z component.
-	 * @param qw - w component.
+	 * @param x - x component.
+	 * @param y - y component.
+	 * @param z - z component.
+	 * @param w - w component.
 	 */
-	Quaternion(T qx, T qy, T qz, T qw) :
-			x(qx),
-			y(qy),
-			z(qz),
-			w(qw)
+	Quaternion(T x, T y, T z, T w)throw() :
+			x(x),
+			y(y),
+			z(z),
+			w(w)
 	{}
 
 
@@ -96,9 +96,9 @@ public:
 	 * Rotation is given by 3 dimensional vector, whose direction defines the
 	 * axis about which rotation is done and its magnitude defines the angle of
 	 * rotation in radians.
-	 * @param axis - vector which defines the rotation.
+	 * @param rot - vector which defines the rotation.
 	 */
-	inline Quaternion(const Vector3<T>& axis);
+	inline Quaternion(const Vector3<T>& rot)throw();
 
 
 
@@ -107,7 +107,7 @@ public:
 	 * Note, that it does not initialize quaternion components,
 	 * right after creation the components are undefined.
 	 */
-	inline Quaternion(){}
+	inline Quaternion()throw(){}
 
 
 
@@ -116,14 +116,19 @@ public:
 	 * Note, complex conjugate of quaternion (x, y, z, w) is (-x, -y, -z, w).
 	 * @return quaternion instance which is a complex conjugate of this quaternion.
 	 */
-	inline Quaternion operator!()const{
+	inline Quaternion operator!()const throw(){
 		return Quaternion(-this->x, -this->y, -this->z, this->w);
 	}
 
 
 
-	//TODO: doxygen
-	inline Quaternion& operator+=(const Quaternion& q){
+	/**
+	 * @brief Add quaternion and assign.
+	 * Adds specified quaternion to this quaternion.
+     * @param q - quaternion to add to this quaternion.
+     * @return Reference to this quaternion object.
+     */
+	inline Quaternion& operator+=(const Quaternion& q)throw(){
 		this->x += q.x;
 		this->y += q.y;
 		this->z += q.z;
@@ -133,9 +138,14 @@ public:
 
 
 
-	//TODO: doxygen
-	inline Quaternion operator+(const Quaternion& q)const{
-		return Quaternion(this->x + q.x, this->y + q.y, this->z + q.z, this->w + q.w);
+	/**
+	 * @brief Addition of quaternions.
+	 * Calculates sum of this quaternion and another specified quaternion.
+     * @param q - quaternion to add.
+     * @return A quaternion object representing sum of quaternions.
+     */
+	inline Quaternion operator+(const Quaternion& q)const throw(){
+		return (Quaternion(*this) += q);
 	}
 
 
@@ -150,7 +160,7 @@ public:
 	 * @param s - scalar value to multiply by.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& operator*=(T s){
+	inline Quaternion& operator*=(T s)throw(){
 		this->x *= s;
 		this->y *= s;
 		this->z *= s;
@@ -165,7 +175,7 @@ public:
 	 * @param s - scalar value to multiply by.
 	 * @return resulting quaternion instance.
 	 */
-	inline Quaternion operator*(T s)const{
+	inline Quaternion operator*(T s)const throw(){
 		return (Quaternion(*this) *= s);
 	}
 
@@ -177,7 +187,7 @@ public:
 	 * @param s - scalar value to divide by.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& operator/=(T s){
+	inline Quaternion& operator/=(T s)throw(){
 		this->x /= s;
 		this->y /= s;
 		this->z /= s;
@@ -192,7 +202,7 @@ public:
 	 * @param s - scalar value to divide by.
 	 * @return resulting quaternion instance.
 	 */
-	inline Quaternion operator/(T s)const{
+	inline Quaternion operator/(T s)const throw(){
 		return (Quaternion(*this) /= s);
 	}
 
@@ -205,7 +215,7 @@ public:
 	 * x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2
 	 * @return result of the dot product.
 	 */
-	inline T operator*(const Quaternion& q)const{
+	inline T operator*(const Quaternion& q)const throw(){
 		return this->x * q.x + this->y * q.y + this->z * q.z + this->w * q.w;
 	}
 
@@ -219,7 +229,7 @@ public:
 	 * @param q - quaternion to multiply by.
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& operator%=(const Quaternion& q){
+	Quaternion& operator%=(const Quaternion& q)throw(){
 		T a = (this->w + this->x) * (q.w + q.x);
 		T b = (this->z - this->y) * (q.y - q.z);
 		T c = (this->x - this->w) * (q.y + q.z);
@@ -246,7 +256,7 @@ public:
 	 * @return resulting quaternion instance.
 	 */
 	//multiplication of quaternions
-	inline Quaternion operator%(const Quaternion& q)const{
+	inline Quaternion operator%(const Quaternion& q)const throw(){
 		return (Quaternion(*this) %= q);
 	}
 
@@ -255,9 +265,10 @@ public:
 	/**
 	 * @brief Initialize with identity quaternion.
 	 * Note, identity quaternion is (0, 0, 0, 1).
+	 * It is a unit quaternion representing no rotation.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Identity(){
+	inline Quaternion& Identity()throw(){
 		this->x = T(0);
 		this->y = T(0);
 		this->z = T(0);
@@ -272,9 +283,8 @@ public:
 	 * Note, complex conjugate of quaternion (x, y, z, w) is (-x, -y, -z, w).
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Conjugate(){
-		*this = !(*this);
-		return *this;
+	inline Quaternion& Conjugate()throw(){
+		return (*this = this->operator!());
 	}
 
 
@@ -284,7 +294,7 @@ public:
 	 * Note, negating quaternion means changing the sign of its every component.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Negate(){
+	inline Quaternion& Negate()throw(){
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -298,7 +308,7 @@ public:
 	 * @brief Calculate power 2 from quaternion magnitude.
 	 * @return power 2 from magnitude.
 	 */
-	inline T MagPow2()const{
+	inline T MagPow2()const throw(){
 		return (*this) * (*this);
 	}
 
@@ -308,7 +318,7 @@ public:
 	 * @brief Calculate quaternion magnitude.
 	 * @return quaternion magnitude.
 	 */
-	inline T Magnitude()const{
+	inline T Magnitude()const throw(){
 		return ting::math::Sqrt(this->MagPow2());
 	}
 
@@ -317,50 +327,79 @@ public:
 	/**
 	 * @brief Normalize quaternion.
 	 * Note, after normalization, the quaternion becomes a unit quaternion.
+	 * If it is a quaternion of zero magnitude, then the result is undefined.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Normalize(){
+	inline Quaternion& Normalize()throw(){
 		return (*this) /= Magnitude();
 	}
 
 
 
-	//TODO: doxygen
-	//TODO: consider removing this function moving its functional to corresponding constructor.
-	//Initialize this with rotation unit quaternion from axis (normalized) and an angle
-	inline void InitRot(T xx, T yy, T zz, T angle){
+	/**
+	 * @brief Initialize rotation.
+	 * Initializes this quaternion to a unit quaternion defining a rotation.
+	 * A rotation is given by normalized axis vector and angle. Direction of rotation is determined by right-hand rule.
+     * @param axisX - X component of rotation axis.
+	 * @param axisY - Y component of rotation axis.
+	 * @param axisZ - Z component of rotation axis.
+     * @param angle - rotation angle.
+     * @return Reference to this quaternion object.
+     */
+	inline Quaternion& InitRot(T axisX, T axisY, T axisZ, T angle)throw(){
 		T sina2 = ting::math::Sin(angle / 2);
 		this->w = ting::math::Cos(angle / 2);
-		this->x = xx * sina2;
-		this->y = yy * sina2;
-		this->z = zz * sina2;
+		this->x = axisX * sina2;
+		this->y = axisY * sina2;
+		this->z = axisZ * sina2;
+		return *this;
 	}
+	
+	
+	
+	/**
+	 * @brief Initialize rotation.
+	 * Initializes this quaternion to a unit quaternion defining a rotation.
+	 * A rotation is given by normalized axis vector and angle. Direction of rotation is determined by right-hand rule.
+     * @param axis - rotation axis, a normalized vector.
+     * @param angle - rotation angle.
+     * @return Reference to this quaternion object.
+     */
+	inline Quaternion& InitRot(const Vector3<T>& axis, T angle)throw();
+	
+	
+	
+	/**
+	 * @brief Initialize rotation.
+	 * Initializes this quaternion to a unit quaternion defining a rotation.
+	 * A rotation is given by rotation vector, where the magnitude of the vector
+	 * is a rotation angle in radians and vector direction defines the rotation axis.
+	 * Direction of rotation is determined by right-hand rule.
+     * @param rot - rotation vector.
+     * @param t
+     */
+	inline Quaternion& InitRot(const Vector3<T>& rot)throw();
 
 
 
-	//TODO: doxygen
-	//TODO:consider removing this function
-	//multiply this quaternion by unit rotation quaternion
-	//from the left
-	//TODO: check how this function relates with rotation matrixes multiplication (left-right)
-	//      need only "mult from the right" function
-	inline Quaternion& RotateAfter(Vector3<T> axis, T angle);
-
-
-
-	//TODO: doxygen
-	//--||--||--
-	inline Matrix4<T> ToMatrix4()const;
+	/**
+	 * @brief Convert this quaternion to 4x4 matrix.
+	 * Assuming that this quaternion is a unit quaternion, converts this quaternion
+	 * to a rotation matrix.
+     * @return Rotation matrix.
+     */
+	inline Matrix4<T> ToMatrix4()const throw();
 
 
 	
 	//TODO: doxygen
+	//TODO: rewrite
 	//Spherical linear interpolation.
 	//This quaternion = SLERP(q1,q2,t), t from [0;1].
 	//SLERP(q1,q2,t) = q1*sin((1-t)*alpha)/sin(alpha)+q2*sin(t*alpha)/sin(alpha),
 	//where cos(alpha) = (q1,q2) (dot product of normalized quaternions q1 and q2).
 	//It is assumed that quaternions are normalized!
-	void Slerp(const Quaternion& q1, const Quaternion& q2, T t){
+	void Slerp(const Quaternion& q1, const Quaternion& q2, T t)throw(){
 		//Since quaternions are normalized the cosine of the angle alpha
 		//between quaternions is equal to their dot product.
 		T cosalpha = q1 * q2;
@@ -427,27 +466,31 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> inline Quaternion<T>::Quaternion(const Vector3<T>& axis){
-	T mag = axis.Magnitude();//magnitude is a rotation angle
+template <class T> inline Quaternion<T>::Quaternion(const Vector3<T>& rot)throw(){
+	this->InitRot(rot);
+}
+
+
+
+template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& rot)throw(){
+	T mag = rot.Magnitude();
 	if(mag != 0){
-		Vector3<T> a = axis;
-		a /= mag;//normalize axis
-		this->InitRot(a.x, a.y, a.z, mag);
-	}else
+		this->InitRot(rot.x / mag, rot.y / mag, rot.z / mag, mag);
+	}else{
 		this->Identity();
+	}
+	return *this;
 }
 
 
 
-template <class T> inline Quaternion<T>& Quaternion<T>::RotateAfter(Vector3<T> axis, T angle){
-	Quaternion r;
-	r.InitRot(axis.x, axis.y, axis.z, angle);
-	return (*this) = r % (*this);
+template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& axis, T angle)throw(){
+	return this->InitRot(axis.x, axis.y, axis.z, angle);
 }
 
 
 
-template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const{
+template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const throw(){
 	return Matrix4<T>(*this);
 }
 

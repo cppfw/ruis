@@ -276,7 +276,7 @@ public:
 	
 	/**
 	 * @brief Set this matrix to be a rotation matrix.
-	 * Sets this matrix to a matrix representing a rotation given by a unit quaternion.
+	 * Sets this matrix to a matrix representing a rotation defined by a unit quaternion.
      * @param quat - unit quaternion defining the rotation.
      * @return Reference to this matrix object.
      */
