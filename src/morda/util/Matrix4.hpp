@@ -28,6 +28,10 @@ THE SOFTWARE. */
 
 #pragma once
 
+//This macro definition is part of a workaround to prevent IDE complain about recursive includes.
+#define M_MATRIX4_HPP_INCLUDED
+
+
 #include <algorithm>
 
 #ifdef DEBUG
@@ -471,9 +475,17 @@ public:
 
 
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Quaternion.hpp"
+#ifndef M_VECTOR2_HPP_INCLUDED
+#	include "Vector2.hpp"
+#endif
+
+#ifndef M_VECTOR3_HPP_INCLUDED
+#	include "Vector3.hpp"
+#endif
+
+#ifndef M_QUATERNION_HPP_INCLUDED
+#	include "Quaternion.hpp"
+#endif
 
 
 
