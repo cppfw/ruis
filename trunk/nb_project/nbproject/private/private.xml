@@ -9,4 +9,10 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <preferences xmlns="http://www.netbeans.org/ns/auxiliary-configuration-preferences/1">
+        <module name="org-netbeans-modules-cnd-discovery">
+            <property name="folder" value="/home/ivan/prj/morda/src"/>
+            <property name="rootFolder" value="/home/ivan/prj/morda/src"/>
+        </module>
+    </preferences>
 </project-private>

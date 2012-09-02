@@ -747,31 +747,1031 @@
           <ccTool>
             <standard>4</standard>
             <incDir>
-              <pElem>../ext</pElem>
+              <pElem>../src/morda/layouts</pElem>
+              <pElem>/usr/include/freetype2/freetype</pElem>
+              <pElem>/usr/include/freetype2/freetype/config</pElem>
+              <pElem>../src/morda/resman</pElem>
+              <pElem>/usr/include/stob</pElem>
+              <pElem>/usr/include/ting/fs</pElem>
+              <pElem>../src/morda</pElem>
+              <pElem>../src/morda/shaders</pElem>
+              <pElem>../src/morda/widgets</pElem>
+              <pElem>../src/morda/linux</pElem>
+              <pElem>../src</pElem>
+              <pElem>/usr/include/ting</pElem>
+              <pElem>../src/morda/resources</pElem>
+              <pElem>../src/morda/util</pElem>
+              <pElem>/usr/include/GL</pElem>
             </incDir>
-            <preprocessorList>
-              <Elem>DEBUG</Elem>
-            </preprocessorList>
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../android/jni/morda/morda/App.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../android/jni/libfreetype2/include/freetype/freetype.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftadvanc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftbbox.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftbdf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftbitmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftcache.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftchapters.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftcid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/fterrdef.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/fterrors.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftgasp.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftglyph.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftgxval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftgzip.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftimage.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftincrem.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftlcdfil.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftlist.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftlzw.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftmac.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftmm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftmodapi.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftmoderr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftotval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftoutln.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftpfr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftrender.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftsizes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftsnames.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftstroke.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftsynth.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftsystem.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/fttrigon.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/fttypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftwinfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ftxf86.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/autohint.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftcalc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftdebug.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftdriver.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftgloadr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftmemory.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftobjs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftrfork.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftserv.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftstream.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/fttrace.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/ftvalid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/internal.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/pcftypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/psaux.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/pshints.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svbdf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svcid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svgldict.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svgxval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svkern.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svmm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svotval.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svpfr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svpostnm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svpscmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svpsinfo.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svsfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svttcmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svtteng.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svttglyf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svwinfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/services/svxf86nm.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/sfnt.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/t1types.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/internal/tttypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/t1tables.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ttnameid.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/tttables.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/tttags.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/freetype/ttunpat.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/include/ft2build.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/basepic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/basepic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftadvanc.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftapi.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftbase.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftbase.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftbbox.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftbitmap.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftcalc.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftdbgmem.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftdebug.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftgloadr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftglyph.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftinit.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftobjs.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftoutln.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftrfork.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftsnames.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftstream.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftstroke.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftsynth.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftsystem.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/fttrigon.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libfreetype2/src/base/ftutil.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/ansi2knr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/cderror.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/cdjpeg.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/cdjpeg.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/cjpeg.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/ckconfig.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/djpeg.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/example.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcapimin.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcapistd.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jccoefct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jccolor.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcdctmgr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jchuff.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jchuff.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcinit.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcmainct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcmarker.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcmaster.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcomapi.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jconfig.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcparam.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcphuff.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcprepct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jcsample.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jctrans.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdapimin.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdapistd.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdatadst.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdatasrc.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdcoefct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdcolor.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdct.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jddctmgr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdhuff.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdhuff.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdinput.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdmainct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdmarker.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdmaster.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdmerge.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdphuff.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdpostct.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdsample.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jdtrans.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jerror.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jerror.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jfdctflt.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jfdctfst.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jfdctint.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jidctflt.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jidctfst.S"
+            ex="true"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jidctfst.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jidctint.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jidctred.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jinclude.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmem-android.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemansi.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemdos.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemdosa.asm"
+            ex="true"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemmac.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemmgr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemname.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemnobs.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmemsys.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jmorecfg.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jpegint.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jpeglib.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jpegtran.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jquant1.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jquant2.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jutils.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/jversion.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdbmp.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdcolmap.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdgif.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdjpgcom.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdppm.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdrle.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdswitch.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/rdtarga.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/transupp.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/transupp.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrbmp.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrgif.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrjpgcom.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrppm.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrrle.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libjpeg/jpeg/wrtarga.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/config.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/png.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/png.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngconf.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngerror.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngget.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngmem.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngpread.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngpriv.h" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngread.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngrio.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngrtran.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngrutil.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngset.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngtrans.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngwio.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngwrite.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngwtran.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/libpng/pngwutil.c" ex="true" tool="0" flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/App.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/App.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/Container.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/morda/morda/Container.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/Exc.hpp" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/morda/morda/GuiInflater.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/GuiInflater.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/Layout.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/Updateable.hpp"
             ex="true"
@@ -779,102 +1779,217 @@
             flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/Widget.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/Widget.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/config.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/layouts/LinearLayout.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/layouts/LinearLayout.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/linux/Updater.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/linux/Updater.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/resman/Resource.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resman/Resource.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/resman/ResourceManager.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resman/ResourceManager.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/resources/ResFont.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resources/ResFont.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/resources/ResTexture.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/resources/ResTexture.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/shaders/Shader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/Shader.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/shaders/SimpleSingleColoringShader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SimpleSingleColoringShader.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/shaders/SimpleTexturingShader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SimpleTexturingShader.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/shaders/SingleColoringShader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/SingleColoringShader.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/shaders/TexturingShader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/shaders/TexturingShader.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/util/GLTexture.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/GLTexture.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/util/Image.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
+      <item path="../android/jni/morda/morda/util/Image.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Matrix4.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Quaternion.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Rectangle2.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../android/jni/morda/morda/util/TexFont.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/TexFont.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Vector2.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Vector3.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/morda/morda/util/Vector4.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/util/ZipFile.hpp"
             ex="true"
@@ -882,132 +1997,247 @@
             flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/util/util.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/util/util.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/widgets/AbstractButton.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/widgets/AbstractButton.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/widgets/Button.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/morda/morda/widgets/Button.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/morda/morda/widgets/Label.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/stob/stob/dom.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../android/jni/morda/morda/widgets/Label.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/stob/stob/Exc.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/stob/stob/dom.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/stob/stob/parser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
+      <item path="../android/jni/stob/stob/dom.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/stob/stob/parser.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/ting/ting/Ref.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../android/jni/stob/stob/parser.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/tests/src/main.cpp" ex="true" tool="1" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Array.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Buffer.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Exc.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/PoolStored.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Ptr.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Ref.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/Ref.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/Signal.hpp" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="../android/jni/ting/ting/Thread.cpp"
-            ex="false"
+      <item path="../android/jni/ting/ting/Singleton.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/Thread.cpp" ex="true" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/Thread.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/WaitSet.cpp"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/ting/ting/WaitSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
+      <item path="../android/jni/ting/ting/WaitSet.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/atomic.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/codegen.h" ex="true" tool="3" flavor2="0">
       </item>
+      <item path="../android/jni/ting/ting/config.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/debug.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/fs/Exc.hpp" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../android/jni/ting/ting/fs/FSFile.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/fs/FSFile.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/fs/File.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/fs/File.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/math.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/net/Exc.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/HostNameResolver.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/HostNameResolver.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/IPAddress.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/IPAddress.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/Lib.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/Lib.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/Socket.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/Socket.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/TCPServerSocket.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/TCPServerSocket.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/TCPSocket.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/net/TCPSocket.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../android/jni/ting/ting/net/UDPSocket.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../android/jni/ting/ting/timer.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../android/jni/ting/ting/net/UDPSocket.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/timer.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../android/jni/ting/ting/timer.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/types.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../android/jni/ting/ting/util.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1027,13 +2257,17 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../src/morda/android/App.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/android/AssetFile.cpp" ex="false" tool="1" flavor2="4">
+      <item path="../src/morda/android/AssetFile.cpp" ex="true" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../src/morda/android/AssetFile.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/config.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/layouts/LinearLayout.cpp"
             ex="false"
@@ -1041,6 +2275,14 @@
             flavor2="4">
         <ccTool>
         </ccTool>
+      </item>
+      <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/linux/Updater.cpp" ex="true" tool="1" flavor2="0">
+      </item>
+      <item path="../src/morda/linux/Updater.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1083,7 +2325,7 @@
         </ccTool>
       </item>
       <item path="../src/morda/shaders/SingleColoringShader.cpp"
-            ex="false"
+            ex="true"
             tool="1"
             flavor2="4">
         <ccTool>
@@ -1120,6 +2362,8 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../src/morda/util/util.hpp" ex="true" tool="3" flavor2="0">
+      </item>
       <item path="../src/morda/widgets/AbstractButton.cpp"
             ex="false"
             tool="1"
@@ -1135,6 +2379,8 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="../tests/app/src/main.cpp" ex="true" tool="1" flavor2="0">
+      </item>
       <item path="/home/ivan/prj/morda/android/jni/Android.mk"
             ex="true"
             tool="3"
@@ -1145,12 +2391,747 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/include/freetype/config/ftconfig.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/include/freetype/config/ftheader.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/include/freetype/config/ftmodule.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/include/freetype/config/ftoption.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/include/freetype/config/ftstdlib.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afangles.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afangles.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afcjk.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afcjk.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afdummy.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afdummy.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aferrors.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afglobal.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afglobal.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afhints.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afhints.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afindic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afindic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aflatin.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aflatin.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aflatin2.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aflatin2.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afloader.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afloader.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afmodule.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afmodule.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/aftypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afwarp.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/afwarp.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/autofit.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/autofit/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cff.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffcmap.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffcmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffdrivr.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffdrivr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cfferrs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffgload.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffgload.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffload.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffload.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffobjs.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffobjs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffparse.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffparse.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cffpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cfftoken.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/cfftypes.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/cff/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshalgo.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshalgo.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshglob.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshglob.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshinter.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshmod.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshmod.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshnterr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshrec.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/pshrec.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/pshinter/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/psmodule.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/psmodule.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/psnamerr.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/psnames.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/pspic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/pspic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/pstables.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/psnames/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/ftmisc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/ftraster.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/ftraster.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/ftrend1.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/ftrend1.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/raster.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/rasterrs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/rastpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/rastpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/raster/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfdriver.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfdriver.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sferrors.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfnt.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfntpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfntpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfobjs.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/sfobjs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttbdf.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttbdf.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttcmap.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttcmap.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttcmapc.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttkern.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttkern.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttload.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttload.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttmtx.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttmtx.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttpost.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttpost.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttsbit.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttsbit.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/sfnt/ttsbit0.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftgrays.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftgrays.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftsmerrs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftsmooth.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftsmooth.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftspic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/ftspic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/smooth/smooth.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/module.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/rules.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/truetype.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttdriver.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttdriver.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/tterrors.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttgload.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttgload.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttgxvar.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttgxvar.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttinterp.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttinterp.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttobjs.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttobjs.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttpic.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttpic.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttpload.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/libfreetype2/src/truetype/ttpload.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/ivan/prj/morda/android/jni/morda/Android.mk"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/morda/android/App.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/morda/android/AssetFile.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/morda/android/AssetFile.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/morda/morda/linux/App.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/home/ivan/prj/morda/android/jni/stob/Android.mk"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/android/jni/tests/Android.mk"
             ex="true"
             tool="3"
             flavor2="0">
