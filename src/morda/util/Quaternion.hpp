@@ -395,35 +395,35 @@ public:
 	//TODO: doxygen
 	//TODO: rewrite
 	//Spherical linear interpolation.
-	//This quaternion = SLERP(q1,q2,t), t from [0;1].
-	//SLERP(q1,q2,t) = q1*sin((1-t)*alpha)/sin(alpha)+q2*sin(t*alpha)/sin(alpha),
-	//where cos(alpha) = (q1,q2) (dot product of normalized quaternions q1 and q2).
-	//It is assumed that quaternions are normalized!
-	void Slerp(const Quaternion& q1, const Quaternion& q2, T t)throw(){
+	//resulting quaternion = SLERP(this, q2, t), t from [0 : 1].
+	//SLERP(q1, q2, t) = q1 * sin((1 - t) * alpha) / sin(alpha) + q2 * sin(t * alpha) / sin(alpha),
+	//where cos(alpha) = (q1, q2) (dot product of unit quaternions q1 and q2).
+	//It is assumed that quaternions are unit.
+	Quaternion Slerp(const Quaternion& quat, T t)const throw(){
 		//Since quaternions are normalized the cosine of the angle alpha
 		//between quaternions is equal to their dot product.
-		T cosalpha = q1 * q2;
+		T cosalpha = (*this) * quat;
 
 		//If the dot product is less than 0, the angle alpha between quaternions
 		//is greater than 90 degrees. Then we negate second quaternion to make alpha
-		//be less than 90 degrees. It is possible since normalized quaternions
-		//q and -q represent the same rotation!
+		//to be less than 90 degrees. It is possible since normalized quaternions
+		//q and -q represent the same rotation.
 		if(cosalpha < T(0)){
 			//Negate the second quaternion and the result of the dot product (i.e. cos(alpha))
-			q2.Negate();
+			quat.Negate();
 			cosalpha = -cosalpha;
 		}
 
 		//interpolation done by the following general formula:
-		//RESULT=q1*sc1(t)+q2*sc2(t).
-		//Where sc1,sc2 called interpolation scales.
+		//RESULT = this * sc1(t) + quat * sc2(t).
+		//Where sc1, sc2 called interpolation scales.
 		T sc1, sc2;//Define variables for scales for interpolation
 
 		//Check if the angle alpha between the 2 quaternions is big enough
 		//to make SLERP. If alpha is small then we do a simple linear
 		//interpolation between quaternions instead of SLERP!
-		//It is also used to avoid divide by zero since sin(0)=0 !
-		//We made threshold for cos(alpha)>0.9f (if cos(alpha)==1 then alpha=0).
+		//It is also used to avoid divide by zero since sin(0) is 0.
+		//We made threshold for cos(alpha) > 0.9f (if cos(alpha) == 1 then alpha is 0).
 		if(cosalpha > T(0.9f)){
 			//Get the angle alpha between the 2 quaternions, and then store the sin(alpha)
 			T alpha = ting::math::Acos(cosalpha);
@@ -438,7 +438,7 @@ public:
 		}
 
 		// Calculate the x, y, z and w values for the interpolated quaternion.
-		(*this) = q1 * sc1 + q2 * sc2;
+		return (*this) * sc1 + quat * sc2;
 	}
 
 #ifdef DEBUG  
