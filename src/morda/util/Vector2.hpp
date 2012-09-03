@@ -51,7 +51,7 @@ template <class T> class Vector3;
 
 
 /**
- * @brief 2 dimensional vector class.
+ * @brief Two-dimensional vector class.
  */
 template <class T> class Vector2{
 	STATIC_ASSERT(sizeof(Vector2) == sizeof(T) * 2)

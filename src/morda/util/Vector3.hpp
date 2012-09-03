@@ -52,6 +52,7 @@ template <class T> class Quaternion;
 
 
 
+//TODO: doxygen
 template <class T> class Vector3{
 	friend class Vector2<T>;
 	friend class Matrix4<T>;
