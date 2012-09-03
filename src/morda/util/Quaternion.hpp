@@ -396,26 +396,35 @@ public:
 
 
 	
-	//TODO: doxygen
-	//TODO: rewrite
-	//Spherical linear interpolation.
-	//resulting quaternion = SLERP(this, q2, t), t from [0 : 1].
-	//SLERP(q1, q2, t) = q1 * sin((1 - t) * alpha) / sin(alpha) + q2 * sin(t * alpha) / sin(alpha),
-	//where cos(alpha) = (q1, q2) (dot product of unit quaternions q1 and q2).
-	//It is assumed that quaternions are unit.
+	/**
+	 * @brief Spherical linear interpolation.
+	 * Calculates spherical linear interpolation (SLERP) between two quaternions,
+	 * the first quaternion is this one and the second is passed as argument.
+	 * The result of SLERP is quaternion itself.
+	 * SLERP(q1, q2, t) = q1 * sin((1 - t) * alpha) / sin(alpha) + q2 * sin(t * alpha) / sin(alpha),
+	 * where cos(alpha) = (q1, q2) (dot product of unit quaternions q1 and q2).
+	 * Quaternions q1 and q2 are assumed to be unit quaternions and the resulting quaternion is also a unit quaternion.
+     * @param quat - quaternion to interpolate to.
+     * @param t - interpolation parameter, value from [0 : 1].
+     * @return Resulting quaternion of SLERP(this, quat, t).
+     */
 	Quaternion Slerp(const Quaternion& quat, T t)const throw(){
 		//Since quaternions are normalized the cosine of the angle alpha
 		//between quaternions is equal to their dot product.
 		T cosalpha = (*this) * quat;
 
+		T sign;
+		
 		//If the dot product is less than 0, the angle alpha between quaternions
 		//is greater than 90 degrees. Then we negate second quaternion to make alpha
 		//to be less than 90 degrees. It is possible since normalized quaternions
 		//q and -q represent the same rotation.
 		if(cosalpha < T(0)){
 			//Negate the second quaternion and the result of the dot product (i.e. cos(alpha))
-			quat.Negate();
+			sign = -1;
 			cosalpha = -cosalpha;
+		}else{
+			sign = 1;
 		}
 
 		//interpolation done by the following general formula:
@@ -442,7 +451,7 @@ public:
 		}
 
 		// Calculate the x, y, z and w values for the interpolated quaternion.
-		return (*this) * sc1 + quat * sc2;
+		return (*this) * sc1 + quat * (sc2 * sign);
 	}
 
 #ifdef DEBUG  

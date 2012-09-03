@@ -10,13 +10,17 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>/home/ivan/prj/morda/src</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/tests</sourceRootElem>
-                <sourceRootElem>/home/ivan/prj/morda/android/jni</sourceRootElem>
+                <sourceRootElem>../src</sourceRootElem>
+                <sourceRootElem>../tests</sourceRootElem>
+                <sourceRootElem>../android/jni</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>Default</name>
+                    <name>Android</name>
+                    <type>0</type>
+                </confElem>
+                <confElem>
+                    <name>linux</name>
                     <type>0</type>
                 </confElem>
             </confList>
