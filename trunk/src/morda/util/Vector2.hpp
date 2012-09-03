@@ -128,7 +128,7 @@ public:
 	/**
 	 * @brief Assign value of given Vector3 object.
 	 * Note, the z component of given Vector3 is ignored.
-	 * @param vec - reference to the Vector3 object to assigne value from.
+	 * @param vec - reference to the Vector3 object to assign value from.
 	 * @return reference to this Vector2 object.
 	 */
 	inline Vector2& operator=(const Vector3<T>& vec)throw();
@@ -163,46 +163,81 @@ public:
 	}
 
 
-	//TODO: doxygen
+	/**
+	 * @brief Subtract vector and assign.
+	 * Subtracts given vector from this one and assigns result back to this vector.
+     * @param vec - vector to subtract from this one.
+     * @return Reference to this vector object.
+     */
 	inline Vector2& operator-=(const Vector2& vec)throw(){
 		this->x -= vec.x;
 		this->y -= vec.y;
 		return (*this);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Subtract vector.
+     * @param vec - vector to subtract from this one.
+     * @return Vector resulting from subtraction of given vector from this vector.
+     */
 	inline Vector2 operator-(const Vector2& vec)const throw(){
 		return (Vector2(*this) -= vec);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Subtract vector.
+	 * Subtracts 3d vector from this 2d vector. 3rd component of subtracted vector is ignored, i.e.
+	 * (this.x, this.y) - (x, y, z) = (this.x - x, this.y -y).
+     * @param vec - vector to subtract from this one.
+     * @return Resulting two-dimensional vector.
+     */
 	inline Vector2 operator-(const Vector3<T>& vec)const throw();
 	
-	//TODO: doxygen
-	//unary minus
+	/**
+	 * @brief Unary minus.
+	 * @return Vector resulting from negating this vector.
+	 */
 	inline Vector2 operator-()const throw(){
 		return Vector2(-this->x, -this->y);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Multiply by scalar and assign.
+	 * Multiplies this vector by scalar and assigns the result back to this vector.
+     * @param num - scalar to multiply by.
+     * @return Reference to this vector object.
+     */
 	inline Vector2& operator*=(T num)throw(){
 		this->x *= num;
 		this->y *= num;
 		return (*this);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Multiply by scalar.
+	 * @param num - scalar to multiply by.
+	 * @return Vector resulting from multiplication of this vector by given scalar.
+	 */
 	inline Vector2 operator*(T num)const throw(){
 		return (Vector2(*this) *= num);
 	}
 
-	//TODO: doxygen
-	//operator num * vec
+	/**
+	 * @brief Multiply scalar by vector.
+     * @param num - scalar to multiply.
+     * @param vec - vector to multiply by.
+     * @return Vector resulting from multiplication of given scalar by given vector.
+     */
 	inline friend Vector2 operator*(T num, const Vector2& vec)throw(){
 		return vec * num;
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Divide by scalar and assign.
+	 * Divides this vector by scalar and assigns the result back to this vector.
+     * @param num - scalar to divide by.
+     * @return Reference to this vector object.
+     */
 	inline Vector2& operator/=(T num)throw(){
 		ASSERT(num != 0)
 		this->x /= num;
@@ -210,24 +245,42 @@ public:
 		return (*this);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Divide by scalar.
+	 * @param num - scalar to divide this vector by.
+	 * @return Vector resulting from dividing this vector by given scalar.
+	 */
 	inline Vector2 operator/(T num)const throw(){
 		ASSERT(num != 0)
 		return (Vector2(*this) /= num);
 	}
 
-	//TODO: doxygen
-	//dot product
+	/**
+	 * @brief Dot product.
+	 * Dot product of this vector and a given vector.
+	 * @return Dot product of two vectors (x1 * x2 + y1 * y2).
+	 */
 	inline T operator*(const Vector2& vec)const throw(){
 		return (this->x * vec.x + this->y * vec.y);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Check if this vector equals to the given vector.
+	 * @param vec - vector to compare to.
+	 * @return true if corresponding components of both vectors are equal.
+	 * @return false otherwise.
+	 */
 	inline bool operator==(const Vector2& vec)const throw(){
 		return this->x == vec.x && this->y == vec.y;
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Check if this vector is not equal to the given vector.
+	 * This is a logical NOT of result from operator==().
+	 * @param vec - vector to compare to.
+	 * @return true if any of corresponding components of two vectors are not equal.
+	 * @return false otherwise.
+	 */
 	inline bool operator!=(const Vector2& vec)const throw(){
 		return !this->operator==(vec);
 	}
@@ -246,54 +299,77 @@ public:
 			);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Check if both vector components are zero.
+	 * @return true if both vector components are zero.
+	 * @return false otherwise.
+	 */
 	inline bool IsZero()const throw(){
-		return (this->x == 0 && this->y == 0);
+		return this->x == 0 && this->y == 0;
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Check if both vector components are positive or zero.
+	 * @return true if both vector components are positive or zero.
+	 * @return false otherwise.
+	 */
 	inline bool IsPositiveOrZero()const throw(){
 		return this->x >= 0 && this->y >= 0;
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Negate this vector.
+     * @return Reference to this vector object.
+     */
 	inline Vector2& Negate()throw(){
-		//NOTE: this is faster than // (*this) = -(*this);
+		//NOTE: this should be faster than (*this) = -(*this);
 		this->x = -this->x;
 		this->y = -this->y;
 		return (*this);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Calculate power 2 of vector magnitude.
+	 * @return Power 2 of this vector magnitude.
+	 */
 	inline T MagPow2()throw(){
 		return ting::math::Pow2(this->x) + ting::math::Pow2(this->y);
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Calculate magnitude of the vector.
+	 * @return magnitude of this vector.
+	 */
 	inline T Magnitude()throw(){
 		return T(ting::math::Sqrt(this->MagPow2()));
 	}
 
-	//TODO: doxygen
+	/**
+	 * @brief Normalize this vector.
+	 * If the magnitude of vector is 0 then the result is undefined.
+	 * @return Reference to this vector object.
+	 */
 	inline Vector2& Normalize()throw(){
 		ASSERT(this->Magnitude() != 0)
 		return (*this) /= this->Magnitude();
 	}
 
-	//TODO: doxygen
-	inline Vector2& Scale(T value)throw(){
-		return (*this) *= value;
-	}
-
-	//TODO: doxygen
+	/**
+	 * @brief Set both vector components to 0 values.
+	 */
 	inline Vector2& SetToZero()throw(){
 		this->x = 0;
 		this->y = 0;
 		return (*this);
 	}
 
-	//TODO: doxygen
-	//Angle is passed in radians
+	/**
+	 * @brief Rotate vector.
+	 * Rotate this vector around (0, 0, 1) axis. Direction of the rotation is
+	 * determined by right-hand rule.
+     * @param angle - angle of rotation in radians.
+     * @return Reference to this vector object.
+     */
 	Vector2& Rotate(T angle)throw(){
 		T cosa = ting::math::Cos(angle);
 		T sina = ting::math::Sin(angle);
@@ -303,8 +379,14 @@ public:
 		return (*this);
 	}
 
-	//TODO: doxygen
-	Vector2 Rotation(T angle)const throw(){
+	/**
+	 * @brief Rotation of vector.
+	 * Calculate vector resulting from rotation this vector around (0, 0, 1) axis.
+	 * Direction of the rotation is determined by right-hand rule.
+	 * @param angle - angle of rotation in radians.
+	 * @return Vector resulting from rotation of this vector.
+	 */
+	inline Vector2 Rotation(T angle)const throw(){
 		return Vector2(*this).Rotate(angle);
 	}
 
