@@ -460,7 +460,7 @@ public:
 		return s;
 	}
 #endif  
-};//~class Quaterion
+};//~class Quaternion
 
 
 
