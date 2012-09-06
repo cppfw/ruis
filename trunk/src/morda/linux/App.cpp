@@ -302,8 +302,7 @@ void App::Exec(){
 			}//~while()
 		}//~if there are pending X events
 		
-		//TODO:
-		
+		//TODO: render only if needed
 		this->Render();
 	}//~while(!this->quitFlag)
 	
