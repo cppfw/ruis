@@ -44,6 +44,10 @@ class Updateable : virtual public ting::RefCounted{
 	
 	ting::u32 startedAt; //timestamp when update timer started.
 	
+	inline ting::u32 EndAt()const throw(){
+		return this->startedAt + ting::u32(this->dt);
+	}
+	
 	ting::Inited<bool, false> isUpdating;
 	
 public:
@@ -65,13 +69,14 @@ private:
 		public:
 			typedef std::pair<ting::u32, ting::WeakRef<morda::Updateable> > T_Pair;
 		private:
-			std::list<T_Pair> l;
+			typedef std::list<T_Pair> T_List;
+			T_List l;
 		public:
 			inline size_t Size()const throw(){
 				return this->l.size();
 			}
 
-			void Insert();
+			void Insert(const T_Pair& p);
 
 			inline const T_Pair& Front()const throw(){
 				return this->l.front();
@@ -88,11 +93,13 @@ private:
 		
 		UpdateQueue *activeQueue, *inactiveQueue;
 		
-		ting::Inited<bool, true> lastUpdateWasInFirstHalf;
+		ting::Inited<ting::u32, 0> lastUpdatedTimestamp;
 		
 		std::list<ting::Ref<morda::Updateable> > toAdd;
 		
 		void AddPending();
+		
+		void UpdateUpdateable(const ting::Ref<morda::Updateable>& u);
 	public:
 		Updater() :
 				activeQueue(&q1),
