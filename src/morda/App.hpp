@@ -68,8 +68,20 @@ class App : public ting::IntrusiveSingleton<App>{
 	friend class ting::IntrusiveSingleton<App>;
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 
+	friend class Updateable;
+	
+	struct ThreadId{
+		ting::mt::Thread::T_ThreadID id;
+		ThreadId() :
+				id(ting::mt::Thread::GetCurrentThreadID())
+		{}
+	} uiThreadId;
 
 public:
+	inline bool ThisIsUIThread()const throw(){
+		return this->uiThreadId.id == ting::mt::Thread::GetCurrentThreadID();
+	}
+	
 	struct DefaultShaders{
 		SimpleSingleColoringShader simpleSingleColoring;
 		SimpleTexturingShader simpleTexturing;

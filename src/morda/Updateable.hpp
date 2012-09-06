@@ -59,12 +59,16 @@ public:
 	
 	void StartUpdating(ting::u16 dt = 30);
 	
-	void StopUpdating();
+	inline void StopUpdating()const throw(){
+		this->isUpdating = false;
+	}
 	
 	virtual void Update(ting::u32 dt) = 0;
 	
 private:
 	class Updater{
+		friend class morda::Updateable;
+		
 		class UpdateQueue{
 		public:
 			typedef std::pair<ting::u32, ting::WeakRef<morda::Updateable> > T_Pair;

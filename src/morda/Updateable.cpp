@@ -1,5 +1,6 @@
 #include "Updateable.hpp"
 
+#include "App.hpp"
 
 #include <ting/timer.hpp>
 #include <zlib.h>
@@ -117,4 +118,13 @@ ting::u32 Updateable::Updater::Update(){
 	}else{
 		return uncorrectedDt - correction;
 	}
+}
+
+
+
+void Updateable::StartUpdating(ting::u16 dt){
+	ASSERT(App::Inst().ThisIsUIThread())
+	this->dt = dt;
+	this->isUpdating = true;
+	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
 }
