@@ -124,7 +124,14 @@ ting::u32 Updateable::Updater::Update(){
 
 void Updateable::StartUpdating(ting::u16 dt){
 	ASSERT(App::Inst().ThisIsUIThread())
+
 	this->dt = dt;
+	
+	if(this->IsUpdating()){
+		//already updating
+		return;
+	}
+
 	this->isUpdating = true;
 	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
 }
