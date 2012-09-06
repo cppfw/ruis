@@ -107,6 +107,8 @@ ting::u32 Updateable::Updater::Update(){
 	}else if(this->inactiveQueue->Size() != 0){
 		ASSERT(curTime > this->inactiveQueue->Front().first)
 		closestTime = this->inactiveQueue->Front().first;
+	}else{
+		return ting::u32(-1);
 	}
 	
 	ting::u32 uncorrectedDt = closestTime - curTime;
