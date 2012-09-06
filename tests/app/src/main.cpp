@@ -17,7 +17,7 @@
 
 
 
-class SimpleWidget : public morda::Widget{
+class SimpleWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
@@ -33,6 +33,22 @@ public:
 		return ting::Ref<SimpleWidget>(
 				new SimpleWidget(properties)
 			);
+	}
+	
+	//override
+	void Update(ting::u32 dt){
+		TRACE(<< "Update(): dt = " << dt << std::endl)
+	}
+	
+	//override
+	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		TRACE(<< "OnMouseButtonDown(): invoked" << std::endl)
+		if(this->IsUpdating()){
+			this->StopUpdating();
+		}else{
+			this->StartUpdating(50);
+		}
+		return true;
 	}
 	
 	//override
