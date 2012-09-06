@@ -219,12 +219,16 @@ void App::Exec(){
 	ting::WaitSet waitSet(2);
 	
 	waitSet.Add(&xew, ting::Waitable::READ);
-	//TODO: add queue?
-	
-	
+//	waitSet.Add(&this->queue, ting::Waitable::READ);
 	
 	while(!this->quitFlag){
-		waitSet.Wait();
+		waitSet.WaitWithTimeout(this->updater.Update());
+		
+//		if(this->queue.CanRead()){
+//			while(ting::Ptr<ting::mt::Message> m = this->queue.PeekMsg()){
+//				m->Handle();
+//			}
+//		}
 		
 		if(xew.CanRead()){
 			xew.ClearCanReadFlag();
@@ -303,6 +307,7 @@ void App::Exec(){
 		this->Render();
 	}//~while(!this->quitFlag)
 	
+//	waitSet.Remove(&this->queue);
 	waitSet.Remove(&xew);
 }
 

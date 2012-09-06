@@ -63,9 +63,11 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>${MAKE} test</runcommandpicklistitem>
+          <runcommandpicklistitem>make test</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
-        <rundir></rundir>
+        <runcommand>make test</runcommand>
+        <rundir>/home/igagis/prj/morda</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
