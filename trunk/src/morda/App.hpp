@@ -28,6 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <list>
+
 #include <ting/Singleton.hpp>
 #include <ting/types.hpp>
 #include <ting/config.hpp>
@@ -50,10 +52,12 @@ THE SOFTWARE. */
 #include "Widget.hpp"
 #include "Container.hpp"
 #include "GuiInflater.hpp"
+#include "Updateable.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
 #include "shaders/SimpleTexturingShader.hpp"
+#include "widgets/AbstractButton.hpp"
 
 
 namespace morda{
@@ -63,52 +67,52 @@ namespace morda{
 class App : public ting::IntrusiveSingleton<App>{
 	friend class ting::IntrusiveSingleton<App>;
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
-	
-	
+
+
 public:
 	struct DefaultShaders{
 		SimpleSingleColoringShader simpleSingleColoring;
 		SimpleTexturingShader simpleTexturing;
 	};
-	
 
-	
+
+
 #if M_OS == M_OS_LINUX
-	
+
 #	ifdef __ANDROID__
-	
+
 private:
-	
+
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
 		~EGLDisplayWrapper()throw();
 	} eglDisplay;
-	
+
 	struct EGLConfigWrapper{
 		EGLConfig c;
 		EGLConfigWrapper(EGLDisplayWrapper& d);
 		~EGLConfigWrapper()throw(){}
 	} eglConfig;
-	
+
 	struct EGLSurfaceWrapper{
 		EGLDisplayWrapper& d;
 		EGLSurface s;
 		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
 		~EGLSurfaceWrapper()throw();
 	} eglSurface;
-	
+
 	struct EGLContextWrapper{
 		EGLDisplayWrapper& d;
 		EGLContext c;
 		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
 		~EGLContextWrapper()throw();
 	} eglContext;
-	
+
 	friend void UpdateWindowRect(App* app, const morda::Rect2f& rect);
 	friend void Render(App* app);
 	friend void HandleInputEvents();
-	
+
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 	}
@@ -122,94 +126,98 @@ private:
 		XDisplayWrapper();
 		~XDisplayWrapper()throw();
 	} xDisplay;
-	
+
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
 		XVisualInfoWrapper(XDisplayWrapper& xDisplay);
 		~XVisualInfoWrapper()throw();
 	} xVisualInfo;
-	
+
 	struct XWindowWrapper{
 		Window w;
-		
+
 		XDisplayWrapper& d;
 
 		XWindowWrapper(unsigned width, unsigned height, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
 		~XWindowWrapper()throw();
 	} xWindow;
-	
+
 	struct GLXContextWrapper{
 		GLXContext glxContext;
-		
+
 		XDisplayWrapper& d;
 		XWindowWrapper& w;
-		
+
 		GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo);
 		~GLXContextWrapper()throw(){
 			this->Destroy();
 		}
-		
+
 		void Destroy()throw();
 	} glxContex;
-	
+
 	ting::Inited<volatile bool, false> quitFlag;
-	
+
 	friend void Main(int argc, char** argv);
 	void Exec();
-	
+
 	inline void SwapGLBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
+	
 #	endif
 
 #else
 #	error "unsupported OS"
 #endif
-	
-	
+
+
+private:
+	Updateable::Updater updater;
+
 private:
 	DefaultShaders shaders;
-	
+
 public:
 	inline DefaultShaders& Shaders()throw(){
 		return this->shaders;
 	}
-	
+
 	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
-	
+
 private:
 	//this is a viewport rectangle in coordinates that are x grows right, y grows up.
 	morda::Rect2f curWinRect;
-	
+
 	ting::Ref<morda::Container> rootContainer;
-	
+
 	ResourceManager resMan;
-	
+
 	GuiInflater inflater;
-	
+
 	void UpdateGLViewport();
-	
+
 	void UpdateWindowRect(const morda::Rect2f& rect);
-	
+
 	void Render();
-	
+
 protected:
 	App(unsigned w, unsigned h);
 
 public:
-	
+
 	virtual ~App()throw(){}
-	
+
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
 		this->rootContainer->SetPos(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
 	}
-	
+
 	inline ResourceManager& ResMan()throw(){
 		return this->resMan;
 	}
-	
+
 	inline GuiInflater& Inflater()throw(){
 		return this->inflater;
 	}
