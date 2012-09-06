@@ -46,8 +46,10 @@ void Updateable::Updater::AddPending(){
 		this->toAdd.pop_front();
 		
 		if(p.first < this->lastUpdatedTimestamp){
+			TRACE(<< "Updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
 			this->inactiveQueue->Insert(p);
 		}else{
+			TRACE(<< "Updateable::Updater::AddPending(): inserted to active queue" << std::endl)
 			this->activeQueue->Insert(p);
 		}
 	}
@@ -56,6 +58,7 @@ void Updateable::Updater::AddPending(){
 
 
 void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u){
+	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
 	}
@@ -74,9 +77,13 @@ void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u
 ting::u32 Updateable::Updater::Update(){
 	ting::u32 curTime = ting::timer::GetTicks();
 	
+	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
+	
 	//check if there is a warp around
 	if(curTime < this->lastUpdatedTimestamp){
 		this->lastUpdatedTimestamp = curTime;
+		
+		TRACE(<< "Updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->Size() << std::endl)
 		
 		//if time has warped, then all Updateables from active queue have expired.
 		while(this->activeQueue->Size() != 0){
@@ -88,6 +95,8 @@ ting::u32 Updateable::Updater::Update(){
 		this->lastUpdatedTimestamp = curTime;
 	}
 	ASSERT(this->lastUpdatedTimestamp == curTime)
+	
+	TRACE(<< "Updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->Size() << std::endl)
 	
 	while(this->activeQueue->Size() != 0){
 		if(this->activeQueue->Front().first > curTime){
@@ -127,13 +136,15 @@ ting::u32 Updateable::Updater::Update(){
 void Updateable::StartUpdating(ting::u16 dt){
 	ASSERT(App::Inst().ThisIsUIThread())
 
-	this->dt = dt;
+	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
 	if(this->IsUpdating()){
-		//already updating
-		return;
+		//TODO:
 	}
-
+	
+	this->dt = dt;
 	this->isUpdating = true;
+	this->startedAt = ting::timer::GetTicks();
+	
 	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
 }

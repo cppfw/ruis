@@ -621,16 +621,11 @@
               <df name="linux">
               </df>
               <df name="resman">
-                <in>Resource.d</in>
-                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
                 <in>ResTexture.d</in>
               </df>
               <df name="shaders">
-                <in>Shader.d</in>
-                <in>SimpleSingleColoringShader.d</in>
-                <in>TexturingShader.d</in>
               </df>
               <df name="util">
                 <in>GLTexture.d</in>
@@ -2876,9 +2871,14 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>../</buildCommandWorkingDir>
-          <buildCommand>${MAKE}</buildCommand>
+          <buildCommand>${MAKE} build_config=debug</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>../tests/app/tests</executablePath>
+          <ccTool>
+            <preprocessorList>
+              <Elem>DEBUG</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
       <item path="../android/jni/libfreetype2/include/freetype/ftcache.h"
@@ -4754,9 +4754,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="../src/morda/shaders/TexturingShader.cpp"
@@ -4808,20 +4805,6 @@
         <ccTool>
         </ccTool>
       </item>
-      <folder path="jni">
-        <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/android">
-        <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
       <folder path="src/morda/layouts">
         <ccTool>
           <incDir>
@@ -4883,9 +4866,6 @@
             <pElem>../tests/app</pElem>
             <pElem>../ext</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
     </conf>
