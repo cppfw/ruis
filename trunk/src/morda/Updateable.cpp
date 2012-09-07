@@ -46,6 +46,8 @@ void Updateable::Updater::AddPending(){
 			this->toAdd.front()->iter = this->activeQueue->Insert(p);
 		}
 		
+		this->toAdd.front()->pendingAddition = false;
+		
 		this->toAdd.pop_front();
 	}
 }
@@ -133,6 +135,20 @@ ting::u32 Updateable::Updater::Update(){
 
 
 
+void Updateable::Updater::RemoveFromToAdd(Updateable* u){
+	ASSERT(u->pendingAddition)
+	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
+		if((*i).operator->() == u){
+			ASSERT((*i)->pendingAddition)
+			u->pendingAddition = false;
+			this->toAdd.erase(i);
+			return;
+		}
+	}
+}
+
+
+
 void Updateable::StartUpdating(ting::u16 dt){
 	ASSERT(App::Inst().ThisIsUIThread())
 
@@ -146,6 +162,8 @@ void Updateable::StartUpdating(ting::u16 dt){
 	this->startedAt = ting::timer::GetTicks();
 	this->isUpdating = true;
 	
+	this->pendingAddition = true;
+	
 	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
 }
 
@@ -157,6 +175,8 @@ void Updateable::StopUpdating()throw(){
 	if(this->queue){
 		this->queue->erase(this->iter);
 		this->queue = 0;
+	}else if(this->pendingAddition){
+		App::Inst().updater.RemoveFromToAdd(this);
 	}
 
 	this->isUpdating = false;
