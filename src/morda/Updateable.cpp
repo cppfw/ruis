@@ -25,6 +25,7 @@ Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::Ins
 	}
 	
 	ASSERT(false)
+	return this->end();
 }
 
 
