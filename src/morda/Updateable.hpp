@@ -65,7 +65,8 @@ private:
 		
 		ting::Inited<ting::u32, 0> lastUpdatedTimestamp;
 		
-		std::list<ting::Ref<morda::Updateable> > toAdd;
+		typedef std::list<ting::Ref<morda::Updateable> > T_ToAddList;
+		T_ToAddList toAdd;
 		
 		void AddPending();
 		
@@ -75,6 +76,8 @@ private:
 				activeQueue(&q1),
 				inactiveQueue(&q2)
 		{}
+		
+		void RemoveFromToAdd(Updateable* u);
 		
 		//returns dt to wait before next update
 		ting::u32 Update();
@@ -95,6 +98,8 @@ private:
 	ting::Inited<Updater::UpdateQueue*, 0> queue;
 	
 	Updater::UpdateQueue::iterator iter; //iterator into the queue.
+	
+	ting::Inited<bool, false> pendingAddition;
 	
 public:
 	class Exc : public morda::Exc{
