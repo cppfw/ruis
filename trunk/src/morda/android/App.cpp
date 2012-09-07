@@ -81,6 +81,50 @@ ting::Ptr<AndroidConfiguration> curConfig;
 
 
 
+//================
+// for Updateable
+//================
+
+class FDFlag{
+	//use pipe to implement file descriptor flag which will be risen upon timer expiration
+	//TODO: use eventfd when it is available in Android NDK
+	int pipeEnds[2];
+public:
+	FDFlag(){
+		if(::pipe(&this->pipeEnds[0]) < 0){
+			std::stringstream ss;
+			ss << "FDFlag::FDFlag(): could not create pipe (*nix) for implementing Waitable,"
+					<< " error code = " << errno << ": " << strerror(errno);
+			throw ting::Exc(ss.str().c_str());
+		}
+	}
+	
+	~FDFlag()throw(){
+		close(this->pipeEnds[0]);
+		close(this->pipeEnds[1]);
+	}
+	
+	inline int GetFD()throw(){
+		return this->pipeEnds[0];
+	}
+	
+	inline void Set(){
+		u8 oneByteBuf[1];
+		if(write(this->pipeEnds[1], oneByteBuf, 1) != 1){
+			ASSERT(false)
+		}
+	}
+	
+	inline void Clear(){
+		u8 oneByteBuf[1];
+		if(read(this->pipeEnds[0], oneByteBuf, 1) != 1){
+			throw ting::Exc("Queue::Wait(): read() failed");
+		}
+	}
+};
+
+
+
 }//~namespace
 
 
