@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="jni" root="../android/jni">
+    <df name="jni" root="/home/igagis/prj/morda/android/jni">
       <df name="libfreetype2">
         <df name="include">
           <df name="freetype">
@@ -99,6 +99,7 @@
         </df>
         <df name="src">
           <df name="autofit">
+            <in>Jamfile</in>
             <in>afangles.c</in>
             <in>afangles.h</in>
             <in>afcjk.c</in>
@@ -126,6 +127,8 @@
             <in>afwarp.c</in>
             <in>afwarp.h</in>
             <in>autofit.c</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
           </df>
           <df name="base">
             <in>basepic.c</in>
@@ -155,6 +158,7 @@
             <in>ftutil.c</in>
           </df>
           <df name="cff">
+            <in>Jamfile</in>
             <in>cff.c</in>
             <in>cffcmap.c</in>
             <in>cffcmap.h</in>
@@ -173,8 +177,12 @@
             <in>cffpic.h</in>
             <in>cfftoken.h</in>
             <in>cfftypes.h</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
           </df>
           <df name="pshinter">
+            <in>Jamfile</in>
+            <in>module.mk</in>
             <in>pshalgo.c</in>
             <in>pshalgo.h</in>
             <in>pshglob.c</in>
@@ -187,8 +195,11 @@
             <in>pshpic.h</in>
             <in>pshrec.c</in>
             <in>pshrec.h</in>
+            <in>rules.mk</in>
           </df>
           <df name="psnames">
+            <in>Jamfile</in>
+            <in>module.mk</in>
             <in>psmodule.c</in>
             <in>psmodule.h</in>
             <in>psnamerr.h</in>
@@ -196,19 +207,26 @@
             <in>pspic.c</in>
             <in>pspic.h</in>
             <in>pstables.h</in>
+            <in>rules.mk</in>
           </df>
           <df name="raster">
+            <in>Jamfile</in>
             <in>ftmisc.h</in>
             <in>ftraster.c</in>
             <in>ftraster.h</in>
             <in>ftrend1.c</in>
             <in>ftrend1.h</in>
+            <in>module.mk</in>
             <in>raster.c</in>
             <in>rasterrs.h</in>
             <in>rastpic.c</in>
             <in>rastpic.h</in>
+            <in>rules.mk</in>
           </df>
           <df name="sfnt">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
             <in>sfdriver.c</in>
             <in>sfdriver.h</in>
             <in>sferrors.h</in>
@@ -235,6 +253,7 @@
             <in>ttsbit0.c</in>
           </df>
           <df name="smooth">
+            <in>Jamfile</in>
             <in>ftgrays.c</in>
             <in>ftgrays.h</in>
             <in>ftsmerrs.h</in>
@@ -242,9 +261,14 @@
             <in>ftsmooth.h</in>
             <in>ftspic.c</in>
             <in>ftspic.h</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
             <in>smooth.c</in>
           </df>
           <df name="truetype">
+            <in>Jamfile</in>
+            <in>module.mk</in>
+            <in>rules.mk</in>
             <in>truetype.c</in>
             <in>ttdriver.c</in>
             <in>ttdriver.h</in>
@@ -263,17 +287,37 @@
             <in>ttpload.h</in>
           </df>
         </df>
+        <in>Android.mk</in>
+        <in>LICENSE.txt</in>
       </df>
       <df name="libjpeg">
         <df name="jpeg">
+          <in>CleanSpec.mk</in>
+          <in>MODULE_LICENSE_BSD_LIKE</in>
+          <in>Makefile</in>
+          <in>NOTICE</in>
+          <in>README</in>
+          <in>ansi2knr.1</in>
           <in>ansi2knr.c</in>
           <in>cderror.h</in>
           <in>cdjpeg.c</in>
           <in>cdjpeg.h</in>
+          <in>change.log</in>
+          <in>cjpeg.1</in>
           <in>cjpeg.c</in>
           <in>ckconfig.c</in>
+          <in>coderules.doc</in>
+          <in>config.guess</in>
+          <in>config.log</in>
+          <in>config.status</in>
+          <in>config.sub</in>
+          <in>configure</in>
+          <in>djpeg.1</in>
           <in>djpeg.c</in>
           <in>example.c</in>
+          <in>filelist.doc</in>
+          <in>install-sh</in>
+          <in>install.doc</in>
           <in>jcapimin.c</in>
           <in>jcapistd.c</in>
           <in>jccoefct.c</in>
@@ -286,7 +330,19 @@
           <in>jcmarker.c</in>
           <in>jcmaster.c</in>
           <in>jcomapi.c</in>
+          <in>jconfig.bcc</in>
+          <in>jconfig.cfg</in>
+          <in>jconfig.dj</in>
+          <in>jconfig.doc</in>
           <in>jconfig.h</in>
+          <in>jconfig.mac</in>
+          <in>jconfig.manx</in>
+          <in>jconfig.mc6</in>
+          <in>jconfig.sas</in>
+          <in>jconfig.st</in>
+          <in>jconfig.vc</in>
+          <in>jconfig.vms</in>
+          <in>jconfig.wat</in>
           <in>jcparam.c</in>
           <in>jcphuff.c</in>
           <in>jcprepct.c</in>
@@ -334,30 +390,67 @@
           <in>jmorecfg.h</in>
           <in>jpegint.h</in>
           <in>jpeglib.h</in>
+          <in>jpegtran.1</in>
           <in>jpegtran.c</in>
           <in>jquant1.c</in>
           <in>jquant2.c</in>
           <in>jutils.c</in>
           <in>jversion.h</in>
+          <in>libtool</in>
+          <in>ltconfig</in>
+          <in>ltmain.sh</in>
+          <in>makcjpeg.st</in>
+          <in>makdjpeg.st</in>
+          <in>makeapps.ds</in>
+          <in>makefile.ansi</in>
+          <in>makefile.bcc</in>
+          <in>makefile.cfg</in>
+          <in>makefile.dj</in>
+          <in>makefile.manx</in>
+          <in>makefile.mc6</in>
+          <in>makefile.mms</in>
+          <in>makefile.sas</in>
+          <in>makefile.unix</in>
+          <in>makefile.vc</in>
+          <in>makefile.vms</in>
+          <in>makefile.wat</in>
+          <in>makelib.ds</in>
+          <in>makeproj.mac</in>
+          <in>makljpeg.st</in>
+          <in>maktjpeg.st</in>
+          <in>makvms.opt</in>
           <in>rdbmp.c</in>
           <in>rdcolmap.c</in>
           <in>rdgif.c</in>
+          <in>rdjpgcom.1</in>
           <in>rdjpgcom.c</in>
           <in>rdppm.c</in>
           <in>rdrle.c</in>
           <in>rdswitch.c</in>
           <in>rdtarga.c</in>
+          <in>structure.doc</in>
+          <in>testimg.jpg</in>
+          <in>testimgp.jpg</in>
+          <in>testorig.jpg</in>
+          <in>testprog.jpg</in>
           <in>transupp.c</in>
           <in>transupp.h</in>
+          <in>usage.doc</in>
+          <in>wizard.doc</in>
           <in>wrbmp.c</in>
           <in>wrgif.c</in>
+          <in>wrjpgcom.1</in>
           <in>wrjpgcom.c</in>
           <in>wrppm.c</in>
           <in>wrrle.c</in>
           <in>wrtarga.c</in>
         </df>
+        <in>Android.mk</in>
+        <in>LICENSE.txt</in>
       </df>
       <df name="libpng">
+        <in>Android.mk</in>
+        <in>LICENSE.txt</in>
         <in>config.h</in>
         <in>png.c</in>
         <in>png.h</in>
@@ -455,6 +548,7 @@
           <in>Widget.hpp</in>
           <in>config.hpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="stob">
         <df name="stob">
@@ -464,11 +558,13 @@
           <in>parser.cpp</in>
           <in>parser.hpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="tests">
         <df name="src">
           <in>main.cpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
       <df name="ting">
         <df name="ting">
@@ -530,9 +626,12 @@
           <in>types.hpp</in>
           <in>util.hpp</in>
         </df>
+        <in>Android.mk</in>
       </df>
+      <in>Android.mk</in>
+      <in>Application.mk</in>
     </df>
-    <df name="src" root="../src">
+    <df name="src" root="/home/igagis/prj/morda/src">
       <df name="morda">
         <df name="android">
           <in>App.cpp</in>
@@ -614,21 +713,66 @@
         <df name="1">
           <df name="2">
             <df name="morda">
-              <df name="linux">
+              <df name="layouts">
+                <in>LinearLayout.d</in>
               </df>
+              <df name="linux">
+                <in>App.d</in>
+              </df>
+              <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
+              </df>
+              <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
+              </df>
+              <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>SimpleTexturingShader.d</in>
+                <in>TexturingShader.d</in>
+              </df>
+              <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
+                <in>TexFont.d</in>
+                <in>util.d</in>
+              </df>
+              <df name="widgets">
+                <in>AbstractButton.d</in>
+                <in>Button.d</in>
+                <in>Label.d</in>
+              </df>
+              <in>App.d</in>
+              <in>Container.d</in>
+              <in>GuiInflater.d</in>
+              <in>Updateable.d</in>
+              <in>Widget.d</in>
             </df>
           </df>
         </df>
       </df>
+      <in>libmorda.so.0</in>
+      <in>makefile</in>
     </df>
-    <df name="tests" root="../tests">
+    <df name="tests" root="/home/igagis/prj/morda/tests">
       <df name="app">
         <df name="res">
+          <in>font.res.stob</in>
+          <in>main.res.stob</in>
+          <in>test.gui.stob</in>
+          <in>texture.jpg</in>
+          <in>vera.ttf</in>
         </df>
         <df name="src">
           <in>main.cpp</in>
         </df>
+        <in>makefile</in>
+        <in>output.log</in>
+        <in>tests</in>
       </df>
+      <in>makefile</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -639,9 +783,9 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>../src</Elem>
-    <Elem>../tests</Elem>
-    <Elem>../android/jni</Elem>
+    <Elem>/home/igagis/prj/morda/src</Elem>
+    <Elem>/home/igagis/prj/morda/tests</Elem>
+    <Elem>/home/igagis/prj/morda/android/jni</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -660,6 +804,9 @@
           <executablePath></executablePath>
           <ccTool>
             <standard>4</standard>
+            <incDir>
+              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+            </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
               <Elem>__ANDROID__</Elem>
