@@ -129,7 +129,10 @@ ting::u32 Updateable::Updater::Update(){
 		return 0;
 	}else{
 		uncorrectedDt -= correction;
-		uncorrectedDt -= uncorrectedDt % 10; //do the updating with 10ms steps at least
+		
+		//do the updating with 10ms steps at least
+		uncorrectedDt += (uncorrectedDt % 10 == 0 ? 0 : 10);
+		
 		return uncorrectedDt;
 	}
 }
