@@ -31,6 +31,8 @@ THE SOFTWARE. */
 
 #include <ting/Ref.hpp>
 
+#include "Exc.hpp"
+
 
 
 namespace morda{
@@ -40,55 +42,19 @@ namespace morda{
 class Updateable : virtual public ting::RefCounted{
 	friend class App;
 	
-	ting::u16 dt;
-	
-	ting::u32 startedAt; //timestamp when update timer started.
-	
-	inline ting::u32 EndAt()const throw(){
-		return this->startedAt + ting::u32(this->dt);
-	}
-	
-	ting::Inited<bool, false> isUpdating;
-	
-public:
-	~Updateable()throw(){}
-	
-	bool IsUpdating()const throw(){
-		return this->isUpdating;
-	}
-	
-	void StartUpdating(ting::u16 dt = 30);
-	
-	inline void StopUpdating()const throw(){
-		this->isUpdating = false;
-	}
-	
-	virtual void Update(ting::u32 dt) = 0;
-	
 private:
 	class Updater{
 		friend class morda::Updateable;
 		
-		class UpdateQueue{
+		typedef std::pair<ting::u32, ting::WeakRef<morda::Updateable> > T_Pair;
+		
+		class UpdateQueue : public std::list<T_Pair>{
 		public:
-			typedef std::pair<ting::u32, ting::WeakRef<morda::Updateable> > T_Pair;
-		private:
-			typedef std::list<T_Pair> T_List;
-			T_List l;
-		public:
-			inline size_t Size()const throw(){
-				return this->l.size();
-			}
-
-			void Insert(const T_Pair& p);
-
-			inline const T_Pair& Front()const throw(){
-				return this->l.front();
-			}
+			UpdateQueue::iterator Insert(const T_Pair& p);
 
 			inline ting::Ref<morda::Updateable> PopFront(){
-				ting::Ref<morda::Updateable> ret = this->l.front().second;
-				this->l.pop_front();
+				ting::Ref<morda::Updateable> ret = this->front().second;
+				this->pop_front();
 				return ret;
 			}
 		};
@@ -113,6 +79,42 @@ private:
 		//returns dt to wait before next update
 		ting::u32 Update();
 	};
+	
+private:
+	ting::u16 dt;
+	
+	ting::u32 startedAt; //timestamp when update timer started.
+	
+	inline ting::u32 EndAt()const throw(){
+		return this->startedAt + ting::u32(this->dt);
+	}
+	
+	ting::Inited<bool, false> isUpdating;
+	
+	//pointer to the queue the updateable is inserted into
+	ting::Inited<Updater::UpdateQueue*, 0> queue;
+	
+	Updater::UpdateQueue::iterator iter; //iterator into the queue.
+	
+public:
+	class Exc : public morda::Exc{
+	public:
+		Exc(const std::string& message) :
+				morda::Exc(message)
+		{}
+	};
+	
+	~Updateable()throw(){}
+	
+	bool IsUpdating()const throw(){
+		return this->isUpdating;
+	}
+	
+	void StartUpdating(ting::u16 dt = 30);
+	
+	void StopUpdating()throw();
+	
+	virtual void Update(ting::u32 dt) = 0;
 };
 
 }//~namespace

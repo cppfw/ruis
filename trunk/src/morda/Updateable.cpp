@@ -11,23 +11,16 @@ using namespace morda;
 
 
 
-void Updateable::Updater::UpdateQueue::Insert(const T_Pair& p){
-	if(this->l.size() == 0){
-		this->l.push_back(p);
-		return;
-	}
-	
-	//quick check
-	if(this->l.back().first <= p.first){
-		this->l.push_back(p);
-		return;
+Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::Insert(const T_Pair& p){
+	if(this->size() == 0 || this->back().first <= p.first){
+		this->push_back(p);
+		return --(this->end());
 	}
 	
 	//otherwise, go from the beginning
-	for(T_List::iterator i = this->l.begin(); i != this->l.end(); ++i){
+	for(iterator i = this->begin(); i != this->end(); ++i){
 		if(i->first >= p.first){
-			this->l.insert(i, p); //inserts before iterator
-			return;
+			return this->insert(i, p); //inserts before iterator
 		}
 	}
 	
@@ -38,20 +31,22 @@ void Updateable::Updater::UpdateQueue::Insert(const T_Pair& p){
 
 void Updateable::Updater::AddPending(){
 	while(this->toAdd.size() != 0){
-		UpdateQueue::T_Pair p;
+		T_Pair p;
 		
 		p.first = this->toAdd.front()->EndAt();
 		p.second = this->toAdd.front();
 		
-		this->toAdd.pop_front();
-		
 		if(p.first < this->lastUpdatedTimestamp){
-			TRACE(<< "Updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
-			this->inactiveQueue->Insert(p);
+//			TRACE(<< "Updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
+			this->toAdd.front()->queue = this->inactiveQueue;
+			this->toAdd.front()->iter = this->inactiveQueue->Insert(p);
 		}else{
-			TRACE(<< "Updateable::Updater::AddPending(): inserted to active queue" << std::endl)
-			this->activeQueue->Insert(p);
+//			TRACE(<< "Updateable::Updater::AddPending(): inserted to active queue" << std::endl)
+			this->toAdd.front()->queue = this->activeQueue;
+			this->toAdd.front()->iter = this->activeQueue->Insert(p);
 		}
+		
+		this->toAdd.pop_front();
 	}
 }
 
@@ -62,13 +57,16 @@ void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u
 	if(!u){
 		return;
 	}
-
+	
+	//at this point updateable is removed from update queue, so set it to 0
+	u->queue = 0;
+	
+	u->Update(this->lastUpdatedTimestamp - u->startedAt);
+	
+	//if not stopped during update, add it back
 	if(u->IsUpdating()){
-		u->Update(this->lastUpdatedTimestamp - u->startedAt);
-		if(u->IsUpdating()){
-			u->startedAt = this->lastUpdatedTimestamp;
-			this->toAdd.push_back(u);
-		}
+		u->startedAt = this->lastUpdatedTimestamp;
+		this->toAdd.push_back(u);
 	}
 }
 
@@ -77,16 +75,16 @@ void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u
 ting::u32 Updateable::Updater::Update(){
 	ting::u32 curTime = ting::timer::GetTicks();
 	
-	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
+//	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
 	//check if there is a warp around
 	if(curTime < this->lastUpdatedTimestamp){
 		this->lastUpdatedTimestamp = curTime;
 		
-		TRACE(<< "Updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->Size() << std::endl)
+//		TRACE(<< "Updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
 		
 		//if time has warped, then all Updateables from active queue have expired.
-		while(this->activeQueue->Size() != 0){
+		while(this->activeQueue->size() != 0){
 			this->UpdateUpdateable(this->activeQueue->PopFront());
 		}
 		
@@ -96,10 +94,10 @@ ting::u32 Updateable::Updater::Update(){
 	}
 	ASSERT(this->lastUpdatedTimestamp == curTime)
 	
-	TRACE(<< "Updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->Size() << std::endl)
+//	TRACE(<< "Updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
 	
-	while(this->activeQueue->Size() != 0){
-		if(this->activeQueue->Front().first > curTime){
+	while(this->activeQueue->size() != 0){
+		if(this->activeQueue->front().first > curTime){
 			break;
 		}
 		this->UpdateUpdateable(this->activeQueue->PopFront());
@@ -110,12 +108,12 @@ ting::u32 Updateable::Updater::Update(){
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
 	ting::u32 closestTime;
-	if(this->activeQueue->Size() != 0){
-		ASSERT(curTime <= this->activeQueue->Front().first)
-		closestTime = this->activeQueue->Front().first;
-	}else if(this->inactiveQueue->Size() != 0){
-		ASSERT(curTime > this->inactiveQueue->Front().first)
-		closestTime = this->inactiveQueue->Front().first;
+	if(this->activeQueue->size() != 0){
+		ASSERT(curTime <= this->activeQueue->front().first)
+		closestTime = this->activeQueue->front().first;
+	}else if(this->inactiveQueue->size() != 0){
+		ASSERT(curTime > this->inactiveQueue->front().first)
+		closestTime = this->inactiveQueue->front().first;
 	}else{
 		return ting::u32(-1);
 	}
@@ -127,7 +125,9 @@ ting::u32 Updateable::Updater::Update(){
 	if(correction >= uncorrectedDt){
 		return 0;
 	}else{
-		return uncorrectedDt - correction;
+		uncorrectedDt -= correction;
+		uncorrectedDt -= uncorrectedDt % 10; //do the updating with 10ms steps at least
+		return uncorrectedDt;
 	}
 }
 
@@ -136,15 +136,28 @@ ting::u32 Updateable::Updater::Update(){
 void Updateable::StartUpdating(ting::u16 dt){
 	ASSERT(App::Inst().ThisIsUIThread())
 
-	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
+//	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
 	if(this->IsUpdating()){
-		//TODO:
+		throw Exc("Updateable::StartUpdating(): Already updating");
 	}
 	
 	this->dt = dt;
-	this->isUpdating = true;
 	this->startedAt = ting::timer::GetTicks();
+	this->isUpdating = true;
 	
 	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
+}
+
+
+
+void Updateable::StopUpdating()throw(){
+	ASSERT(App::Inst().ThisIsUIThread())
+	
+	if(this->queue){
+		this->queue->erase(this->iter);
+		this->queue = 0;
+	}
+
+	this->isUpdating = false;
 }
