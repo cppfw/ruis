@@ -69,6 +69,7 @@ void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u
 	//if not stopped during update, add it back
 	if(u->IsUpdating()){
 		u->startedAt = this->lastUpdatedTimestamp;
+		u->pendingAddition = true;
 		this->toAdd.push_back(u);
 	}
 }
