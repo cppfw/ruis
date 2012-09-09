@@ -3,11 +3,13 @@
 
 #include "../App.hpp"
 
+#include <cerrno>
 
 #include <android/native_activity.h>
 #include <android/configuration.h>
 
 #include <ting/Array.hpp>
+#include <ting/types.hpp>
 
 #include "AssetFile.hpp"
 #include "morda/App.hpp"
@@ -25,8 +27,6 @@ ANativeWindow* androidWindow = 0;
 morda::Vec2f curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
-
-ALooper* looper = 0;
 
 struct AppInfo{
 	//Path to this application's internal data directory.
@@ -109,19 +109,19 @@ public:
 	}
 	
 	inline void Set(){
-		u8 oneByteBuf[1];
+		ting::u8 oneByteBuf[1];
 		if(write(this->pipeEnds[1], oneByteBuf, 1) != 1){
 			ASSERT(false)
 		}
 	}
 	
 	inline void Clear(){
-		u8 oneByteBuf[1];
+		ting::u8 oneByteBuf[1];
 		if(read(this->pipeEnds[0], oneByteBuf, 1) != 1){
 			throw ting::Exc("Queue::Wait(): read() failed");
 		}
 	}
-};
+} fdFlag;
 
 
 
@@ -501,6 +501,14 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 
 
+int OnUpdateTimerExpired(int fd, int events, void* data){
+	fdFlag.Clear();
+	
+	//TODO:
+}
+
+
+
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 	
@@ -521,6 +529,15 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		
 		//save current configuration in global variable
 		curConfig = cfg;
+		
+		ALooper_addFd(
+				ALooper_prepare(0),
+				fdFlag.GetFD(),
+				ALOOPER_POLL_CALLBACK,
+				ALOOPER_EVENT_INPUT,
+				&OnUpdateTimerExpired,
+				0
+			);
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
 		throw;
@@ -560,6 +577,9 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	
 	//delete configuration object
 	curConfig.Reset();
+	
+	//remove fdFlag from looper
+	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
 }
 
 
@@ -597,13 +617,11 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 	ASSERT(queue);
 	ASSERT(!curInputQueue)
 	curInputQueue = queue;
-
-	looper = ALooper_prepare(0); //get looper for current thread (main thread)
 	
 	//attach queue to looper
 	AInputQueue_attachLooper(
 			curInputQueue,
-			looper,
+			ALooper_prepare(0), //get looper for current thread (main thread)
 			0, //'ident' is ignored since we are using callback
 			&OnInputEventsReadyForReadingFromQueue,
 			activity->instance
