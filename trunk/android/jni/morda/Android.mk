@@ -12,6 +12,7 @@ LOCAL_SRC_FILES += morda/App.cpp
 LOCAL_SRC_FILES += morda/Widget.cpp
 LOCAL_SRC_FILES += morda/Container.cpp
 LOCAL_SRC_FILES += morda/GuiInflater.cpp
+LOCAL_SRC_FILES += morda/Updateable.cpp
 LOCAL_SRC_FILES += morda/shaders/Shader.cpp
 LOCAL_SRC_FILES += morda/shaders/SimpleSingleColoringShader.cpp
 LOCAL_SRC_FILES += morda/shaders/TexturingShader.cpp
