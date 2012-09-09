@@ -35,9 +35,21 @@ public:
 			);
 	}
 	
+	ting::Inited<ting::u32, 0> timer;
+	ting::Inited<ting::u32, 0> cnt;
+	
 	//override
 	void Update(ting::u32 dt){
-		TRACE(<< "Update(): dt = " << dt << std::endl)
+		this->timer += dt;
+		++this->cnt;
+		
+		if(this->timer > 1000){
+			this->timer -= 1000;
+			
+			TRACE(<< "Update(): UPS = " << this->cnt << std::endl)
+			
+			this->cnt = 0;
+		}
 	}
 	
 	//override
@@ -46,7 +58,7 @@ public:
 		if(this->IsUpdating()){
 			this->StopUpdating();
 		}else{
-			this->StartUpdating(30);
+			this->StartUpdating(15);
 		}
 		return true;
 	}
