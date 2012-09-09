@@ -671,6 +671,9 @@
           <executablePath></executablePath>
           <ccTool>
             <standard>4</standard>
+            <incDir>
+              <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+            </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
             </preprocessorList>
