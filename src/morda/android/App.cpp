@@ -4,12 +4,16 @@
 #include "../App.hpp"
 
 #include <cerrno>
+#include <ctime>
+#include <csignal>
 
 #include <android/native_activity.h>
 #include <android/configuration.h>
 
 #include <ting/Array.hpp>
 #include <ting/types.hpp>
+#include <time.h>
+#include <signal.h>
 
 #include "AssetFile.hpp"
 #include "morda/App.hpp"
@@ -122,6 +126,59 @@ public:
 		}
 	}
 } fdFlag;
+
+
+
+class LinuxTimer{
+	timer_t timer;
+	
+	//Handler for SIGALRM signal
+	static void OnSIGALRM(int){
+		//TODO:
+	}
+public:	
+	LinuxTimer(){
+		int res = timer_create(
+				CLOCK_MONOTONIC,
+				0,//means SIGALRM signal is emitted when timer expires
+				&this->timer
+			);
+		if(res != 0){
+			throw morda::Exc("timer_create() failed");
+		}
+		
+		struct sigaction sa;
+		sa._u._sa_handler = &LinuxTimer::OnSIGALRM;
+		sa.sa_flags = 0;
+		sa.sa_mask = 0;
+		
+		res = sigaction(SIGALRM, &sa, 0);
+		ASSERT(res == 0)
+	}
+	
+	~LinuxTimer()throw(){
+		//set default handler for SIGALRM
+		struct sigaction sa;
+		sa._u._sa_handler = SIG_DFL;
+		sa.sa_flags = 0;
+		sa.sa_mask = 0;
+		
+#ifdef DEBUG
+		int res =
+#endif
+		sigaction(SIGALRM, &sa, 0);
+		ASSERT(res == 0)
+		
+		//delete timer
+#ifdef DEBUG
+		res =
+#endif
+		timer_delete(this->timer);
+		ASSERT(res == 0)
+	}
+	
+	
+} timer;
 
 
 
