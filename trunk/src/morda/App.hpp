@@ -121,8 +121,9 @@ private:
 		~EGLContextWrapper()throw();
 	} eglContext;
 
-	friend void UpdateWindowRect(App* app, const morda::Rect2f& rect);
-	friend void Render(App* app);
+	friend void UpdateWindowRect(App& app, const morda::Rect2f& rect);
+	friend void Render(App& app);
+	friend ting::u32 Update(App& app);
 	friend void HandleInputEvents();
 
 	inline void SwapGLBuffers(){
