@@ -150,7 +150,7 @@ public:
 		
 		struct sigaction sa;
 		sa._u._sa_handler = &LinuxTimer::OnSIGALRM;
-		sa.sa_flags = 0;
+		sa.sa_flags = SA_NODEFER;
 		sa.sa_mask = 0;
 		
 		res = sigaction(SIGALRM, &sa, 0);
@@ -608,6 +608,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 	
 	ting::u32 dt = Update(App::Inst());
 	timer.Arm(dt == 0 ? 1 : dt);
+//	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 }
 
 
