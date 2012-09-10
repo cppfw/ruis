@@ -134,8 +134,9 @@ class LinuxTimer{
 	
 	//Handler for SIGALRM signal
 	static void OnSIGALRM(int){
-		//TODO:
+		fdFlag.Set();
 	}
+	
 public:	
 	LinuxTimer(){
 		int res = timer_create(
@@ -177,7 +178,39 @@ public:
 		ASSERT(res == 0)
 	}
 	
+	void Arm(ting::u32 dt){
+		itimerspec ts;
+		ts.it_value.tv_sec = dt / 1000;
+		ts.it_value.tv_nsec = (dt % 1000) * 1000000;
+		ts.it_interval.tv_nsec = 0;//one shot timer
+		ts.it_interval.tv_sec = 0;//one shot timer
 	
+#ifdef DEBUG
+		int res =
+#endif
+		timer_settime(this->timer, 0, &ts, 0);
+		ASSERT(res == 0)
+	}
+	
+	//returns true if timer was disarmed
+	//returns false if timer has fired before it was disarmed.
+	bool Disarm(){
+		itimerspec oldts;
+		itimerspec newts;
+		newts.it_value.tv_nsec = 0;
+		newts.it_value.tv_sec = 0;
+		
+#ifdef DEBUG
+		int res =
+#endif
+		timer_settime(this->timer, 0, &newts, &oldts);
+		ASSERT(res == 0)
+		
+		if(oldts.it_value.tv_nsec != 0 || oldts.it_value.tv_sec != 0){
+			return true;
+		}
+		return false;
+	}
 } timer;
 
 
