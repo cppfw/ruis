@@ -58,7 +58,7 @@ public:
 		if(this->IsUpdating()){
 			this->StopUpdating();
 		}else{
-			this->StartUpdating(3000);
+			this->StartUpdating(15);
 		}
 		return true;
 	}
