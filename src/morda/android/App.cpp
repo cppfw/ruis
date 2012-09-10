@@ -59,7 +59,7 @@ inline morda::Vec2f AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& wi
 			p.x,
 			curWinDim.y - p.y - winRect.p.y - 1.0f
 		);
-	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
+//	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret;
 }
 
@@ -178,6 +178,7 @@ public:
 		ASSERT(res == 0)
 	}
 	
+	//if timer is already armed, it will re-set the expiration time
 	void Arm(ting::u32 dt){
 		itimerspec ts;
 		ts.it_value.tv_sec = dt / 1000;
@@ -346,15 +347,21 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 
-inline void UpdateWindowRect(App* app, const morda::Rect2f& rect){
+inline void UpdateWindowRect(App& app, const morda::Rect2f& rect){
 //	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
-	app->UpdateWindowRect(rect);
+	app.UpdateWindowRect(rect);
 }
 
 
 
-inline void Render(App* app){
-	app->Render();
+inline void Render(App& app){
+	app.Render();
+}
+
+
+
+inline ting::u32 Update(App& app){
+	return app.updater.Update();
 }
 
 
@@ -391,7 +398,7 @@ void HandleInputEvents(){
 									continue;
 								}
 
-								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
+//								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
 								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 								pointers[pointerId] = p;
@@ -416,7 +423,7 @@ void HandleInputEvents(){
 									continue;
 								}
 
-								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 
 								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 								pointers[pointerId] = p;
@@ -482,6 +489,9 @@ void HandleInputEvents(){
 	
 	//TODO: render only if needed
 	app.Render();
+	
+	ting::u32 dt = app.updater.Update();
+	timer.Arm(dt == 0 ? 1 : dt);	
 }
 
 
@@ -592,9 +602,12 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 
 int OnUpdateTimerExpired(int fd, int events, void* data){
+	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
+	timer.Disarm();
 	fdFlag.Clear();
 	
-	//TODO:
+	ting::u32 dt = Update(App::Inst());
+	timer.Arm(dt == 0 ? 1 : dt);
 }
 
 
@@ -652,7 +665,7 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
 	
-	morda::Render(static_cast<morda::App*>(activity->instance));
+	morda::Render(*static_cast<morda::App*>(activity->instance));
 }
 
 
@@ -739,7 +752,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	
 //	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
 	
-	morda::App* app = static_cast<morda::App*>(activity->instance);
+	morda::App& app = *static_cast<morda::App*>(activity->instance);
 	
 	UpdateWindowRect(
 			app,
