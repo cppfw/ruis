@@ -54,11 +54,11 @@ public:
 	
 	//override
 	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-		TRACE(<< "OnMouseButtonDown(): invoked" << std::endl)
+//		TRACE(<< "OnMouseButtonDown(): invoked" << std::endl)
 		if(this->IsUpdating()){
 			this->StopUpdating();
 		}else{
-			this->StartUpdating(15);
+			this->StartUpdating(3000);
 		}
 		return true;
 	}
