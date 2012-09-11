@@ -603,12 +603,14 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 int OnUpdateTimerExpired(int fd, int events, void* data){
 	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
-	timer.Disarm();
+
 	fdFlag.Clear();
 	
 	ting::u32 dt = Update(App::Inst());
 	timer.Arm(dt == 0 ? 1 : dt);
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
+
+	return 1; //1 means do not remove descriptor from looper
 }
 
 
@@ -674,6 +676,9 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 	
+	//remove fdFlag from looper
+	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
+
 	//TODO: need to destroy app right before window is destroyed, i.e. OGL de-initialized
 	//destroy app object
 	delete static_cast<morda::App*>(activity->instance);
@@ -681,9 +686,6 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	
 	//delete configuration object
 	curConfig.Reset();
-	
-	//remove fdFlag from looper
-	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
 }
 
 
