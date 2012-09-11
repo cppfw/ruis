@@ -602,7 +602,7 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 
 
 int OnUpdateTimerExpired(int fd, int events, void* data){
-	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
+//	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
 	fdFlag.Clear();
 	
