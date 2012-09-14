@@ -1,5 +1,5 @@
 U_SimpleWidget{
-	dim{300, 300}
+	dim{300 300}
 }
 
 Button{
