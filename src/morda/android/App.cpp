@@ -71,11 +71,11 @@ struct AndroidConfiguration{
 	AndroidConfiguration(){
 		this->ac = AConfiguration_new();
 	}
-	
+
 	~AndroidConfiguration()throw(){
 		AConfiguration_delete(this->ac);
 	}
-	
+
 	static inline ting::Ptr<AndroidConfiguration> New(){
 		return ting::Ptr<AndroidConfiguration>(new AndroidConfiguration());
 	}
@@ -102,23 +102,23 @@ public:
 			throw ting::Exc(ss.str().c_str());
 		}
 	}
-	
+
 	~FDFlag()throw(){
 		close(this->pipeEnds[0]);
 		close(this->pipeEnds[1]);
 	}
-	
+
 	inline int GetFD()throw(){
 		return this->pipeEnds[0];
 	}
-	
+
 	inline void Set(){
 		ting::u8 oneByteBuf[1];
 		if(write(this->pipeEnds[1], oneByteBuf, 1) != 1){
 			ASSERT(false)
 		}
 	}
-	
+
 	inline void Clear(){
 		ting::u8 oneByteBuf[1];
 		if(read(this->pipeEnds[0], oneByteBuf, 1) != 1){
@@ -131,12 +131,12 @@ public:
 
 class LinuxTimer{
 	timer_t timer;
-	
+
 	//Handler for SIGALRM signal
 	static void OnSIGALRM(int){
 		fdFlag.Set();
 	}
-	
+
 public:	
 	LinuxTimer(){
 		int res = timer_create(
@@ -147,29 +147,29 @@ public:
 		if(res != 0){
 			throw morda::Exc("timer_create() failed");
 		}
-		
+
 		struct sigaction sa;
 		sa._u._sa_handler = &LinuxTimer::OnSIGALRM;
 		sa.sa_flags = SA_NODEFER;
 		sa.sa_mask = 0;
-		
+
 		res = sigaction(SIGALRM, &sa, 0);
 		ASSERT(res == 0)
 	}
-	
+
 	~LinuxTimer()throw(){
 		//set default handler for SIGALRM
 		struct sigaction sa;
 		sa._u._sa_handler = SIG_DFL;
 		sa.sa_flags = 0;
 		sa.sa_mask = 0;
-		
+
 #ifdef DEBUG
 		int res =
 #endif
 		sigaction(SIGALRM, &sa, 0);
 		ASSERT(res == 0)
-		
+
 		//delete timer
 #ifdef DEBUG
 		res =
@@ -177,7 +177,7 @@ public:
 		timer_delete(this->timer);
 		ASSERT(res == 0)
 	}
-	
+
 	//if timer is already armed, it will re-set the expiration time
 	void Arm(ting::u32 dt){
 		itimerspec ts;
@@ -185,14 +185,14 @@ public:
 		ts.it_value.tv_nsec = (dt % 1000) * 1000000;
 		ts.it_interval.tv_nsec = 0;//one shot timer
 		ts.it_interval.tv_sec = 0;//one shot timer
-	
+
 #ifdef DEBUG
 		int res =
 #endif
 		timer_settime(this->timer, 0, &ts, 0);
 		ASSERT(res == 0)
 	}
-	
+
 	//returns true if timer was disarmed
 	//returns false if timer has fired before it was disarmed.
 	bool Disarm(){
@@ -200,13 +200,13 @@ public:
 		itimerspec newts;
 		newts.it_value.tv_nsec = 0;
 		newts.it_value.tv_sec = 0;
-		
+
 #ifdef DEBUG
 		int res =
 #endif
 		timer_settime(this->timer, 0, &newts, &oldts);
 		ASSERT(res == 0)
-		
+
 		if(oldts.it_value.tv_nsec != 0 || oldts.it_value.tv_sec != 0){
 			return true;
 		}
@@ -229,7 +229,7 @@ App::EGLDisplayWrapper::EGLDisplayWrapper(){
 	if(this->d == EGL_NO_DISPLAY){
 		throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
 	}
-	
+
 	if(eglInitialize(this->d, 0, 0) == EGL_FALSE){
 		eglTerminate(this->d);
 		throw morda::Exc("eglInitialize() failed");
@@ -306,7 +306,7 @@ App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper
 		EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
 		EGL_NONE
 	};
-	
+
 	this->c = eglCreateContext(d.d, config.c, NULL, contextAttrs);
 	if(this->c == EGL_NO_CONTEXT){
 		throw morda::Exc("eglCreateContext() failed");
@@ -335,7 +335,7 @@ App::App(unsigned w, unsigned h) :
 	EGLint width, height;
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
-	
+
 	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
 }
 
@@ -368,7 +368,7 @@ inline ting::u32 Update(App& app){
 
 void HandleInputEvents(){
 	morda::App& app = morda::App::Inst();
-	
+
 	//Read and handle input events
 	AInputEvent* event;
 	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
@@ -379,9 +379,9 @@ void HandleInputEvents(){
 
 		int32_t eventType = AInputEvent_getType(event);
 		int32_t eventAction = AMotionEvent_getAction(event);
-		
+
 		bool consume = false;
-		
+
 		if(app.rootContainer.IsValid()){
 			switch(eventType){
 				case AINPUT_EVENT_TYPE_MOTION:
@@ -479,17 +479,17 @@ void HandleInputEvents(){
 					break;
 			}//~switch(event type)
 		}//~if(app.rootContainer.IsValid())
-		
+
 		AInputQueue_finishEvent(
 				curInputQueue,
 				event,
 				consume
 			);
 	}//~while(there are events in input queue)
-	
+
 	//TODO: render only if needed
 	app.Render();
-	
+
 	ting::u32 dt = app.updater.Update();
 	timer.Arm(dt == 0 ? 1 : dt);	
 }
@@ -552,17 +552,17 @@ void OnStop(ANativeActivity* activity){
 
 void OnConfigurationChanged(ANativeActivity* activity){
 	TRACE(<< "OnConfigurationChanged(): invoked" << std::endl)
-	
+
 	int32_t diff;
 	{
 		ting::Ptr<AndroidConfiguration> config = AndroidConfiguration::New();
 		AConfiguration_fromAssetManager(config->ac, appInfo.assetManager);
 
 		diff = AConfiguration_diff(curConfig->ac, config->ac);
-		
+
 		curConfig = config;
 	}
-	
+
 	//if orientation has changed
 	if(diff & ACONFIGURATION_ORIENTATION){
 		int32_t orientation = AConfiguration_getOrientation(curConfig->ac);
@@ -604,14 +604,14 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-    ting::u32 dt = Update(App::Inst());
-    if(dt == 0){
-        //do not arm the timer and do not clear the flag
-    }else{
-        fdFlag.Clear();
-        timer.Arm(dt);
-    }
-	
+	ting::u32 dt = Update(App::Inst());
+	if(dt == 0){
+		//do not arm the timer and do not clear the flag
+	}else{
+		fdFlag.Clear();
+		timer.Arm(dt);
+	}
+
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
 	return 1; //1 means do not remove descriptor from looper
@@ -621,25 +621,25 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
-	
+
 	//save window in a static var, so it is accessible for OGL initializers from morda::App class
 	androidWindow = window;
-	
+
 	curWinDim.x = float(ANativeWindow_getWidth(window));
 	curWinDim.y = float(ANativeWindow_getHeight(window));
-	
+
 	ASSERT(!activity->instance)
 	try{
 		//use local auto-pointer for now because an exception can be thrown and need to delete object then.
 		ting::Ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
-		
+
 		activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();
-		
+
 		//save current configuration in global variable
 		curConfig = cfg;
-		
+
 		ALooper_addFd(
 				ALooper_prepare(0),
 				fdFlag.GetFD(),
@@ -661,7 +661,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
-	
+
 	//save window dimensions
 	curWinDim.x = float(ANativeWindow_getWidth(window));
 	curWinDim.y = float(ANativeWindow_getHeight(window));
@@ -671,7 +671,7 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
-	
+
 	morda::Render(*static_cast<morda::App*>(activity->instance));
 }
 
@@ -679,7 +679,7 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
-	
+
 	//remove fdFlag from looper
 	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
 
@@ -687,7 +687,7 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	//destroy app object
 	delete static_cast<morda::App*>(activity->instance);
 	activity->instance = 0;
-	
+
 	//delete configuration object
 	curConfig.Reset();
 }
@@ -707,12 +707,12 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 			if(AInputQueue_preDispatchEvent(curInputQueue, event)){
 				continue;
 			}
-			
+
 			AInputQueue_finishEvent(curInputQueue, event, false);
 		}
 		return 1;
 	}
-	
+
 	ASSERT(morda::App::IsCreated())
 
 	morda::HandleInputEvents();
@@ -727,7 +727,7 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 	ASSERT(queue);
 	ASSERT(!curInputQueue)
 	curInputQueue = queue;
-	
+
 	//attach queue to looper
 	AInputQueue_attachLooper(
 			curInputQueue,
@@ -756,11 +756,11 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 //called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
-	
+
 //	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
-	
+
 	morda::App& app = *static_cast<morda::App*>(activity->instance);
-	
+
 	UpdateWindowRect(
 			app,
 			morda::Rect2f(
@@ -770,7 +770,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 					float(rect->bottom - rect->top)
 				)
 		);
-	
+
 	//redraw, since WindowRedrawNeeded not always comes
 	Render(app);
 }
@@ -814,6 +814,6 @@ void ANativeActivity_onCreate(
 		appInfo.savedState.Init(savedStateSize);
 		memcpy(appInfo.savedState.Begin(), savedState, savedStateSize);
 	}
-	
+
 //	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
 }

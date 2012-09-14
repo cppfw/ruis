@@ -16,8 +16,8 @@ namespace{
 class WidgetFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
-		ASSERT(node->Value() == "Widget")
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "Widget")
 		return Widget::New(node);
 	}
 	
@@ -29,8 +29,8 @@ public:
 class ContainerFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
-		ASSERT(node->Value() == "Container")
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "Container")
 		return Container::New(node);
 	}
 	
@@ -42,8 +42,8 @@ public:
 class LabelFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
-		ASSERT(node->Value() == "Label")
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "Label")
 		return Label::New(node);
 	}
 	
@@ -55,8 +55,8 @@ public:
 class AbstractButtonFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
-		ASSERT(node->Value() == "AbstractButton")
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "AbstractButton")
 		return AbstractButton::New(node);
 	}
 	
@@ -68,8 +68,8 @@ public:
 class ButtonFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
-		ASSERT(node->Value() == "Button")
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "Button")
 		return Button::New(node);
 	}
 	
@@ -135,17 +135,13 @@ ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ASSERT(root)
 	root->SetValue("Container");
 	
-	return this->Inflate(root).StaticCast<morda::Container>();
+	return this->Inflate(*root).StaticCast<morda::Container>();
 }
 
 
 
-ting::Ref<morda::Widget> GuiInflater::Inflate(ting::Ptr<stob::Node> gui)const{
-	if(gui.IsNotValid()){
-		throw GuiInflater::Exc("Failed to inflate, passed pointer to GUI STOB hierarchy is not valid");
-	}
-	
-	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui->Value());
+ting::Ref<morda::Widget> GuiInflater::Inflate(const stob::Node& gui)const{
+	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
 	
 	if(i == this->widgetFactories.end()){
 		throw GuiInflater::Exc("Failed to inflate, no matching factory found for requested widget name");

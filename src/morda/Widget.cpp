@@ -7,22 +7,23 @@ using namespace morda;
 
 
 
-void Widget::ApplyProperties(const stob::Node* properties){
-	if(!properties){
-		this->rect.p.SetToZero();
-		return;
+void Widget::ApplyDescription(const stob::Node& description){
+	if(const stob::Node* p = description.Child("prop").second){
+		this->prop = p->Clone();
+		this->prop->SetValue();//clear value of the prop node, we don't need it
 	}
-	if(const stob::Node* p = properties->GetProperty("pos")){
+
+	if(const stob::Node* p = description.GetProperty("pos")){
 		this->rect.p = morda::Vec2fFromSTOB(p);
 	}else{
 		this->rect.p.SetToZero();
 	}
 
-	if(const stob::Node* p = properties->GetProperty("dim")){
+	if(const stob::Node* p = description.GetProperty("dim")){
 		this->rect.d = morda::Vec2fFromSTOB(p);
 	}
 
-	if(const stob::Node* p = properties->GetProperty("name")){
+	if(const stob::Node* p = description.GetProperty("name")){
 		this->name = p->Value();
 	}
 }

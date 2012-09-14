@@ -67,7 +67,7 @@ private:
 	std::string name;
 public:
 	
-	ting::Ptr<stob::Node> properties;
+	ting::Ptr<stob::Node> prop;
 	
 	const std::string& Name()const throw(){
 		return this->name;
@@ -82,10 +82,6 @@ public:
 	}
 	
 	void RemoveFromParent();
-	
-	inline const stob::Node* Properties()const throw(){
-		return this->properties.operator->();
-	}
 	
 	inline bool IsHovered()const throw(){
 		return this->isHovered;
@@ -109,26 +105,22 @@ public:
 	}
 
 protected:
-	inline Widget(ting::Ptr<stob::Node> properties) :
-			properties(properties)
-	{
-		this->ApplyProperties(this->properties.operator->());
-	}
+	inline Widget(){}
 	
-	inline Widget(const stob::Node* properties = 0){
-		this->ApplyProperties(properties);
+	inline Widget(const stob::Node& description){
+		this->ApplyDescription(description);
 	}
 	
 private:
-	void ApplyProperties(const stob::Node* properties);
+	void ApplyDescription(const stob::Node& description);
 
 public:
-	static ting::Ref<Widget> New(ting::Ptr<stob::Node> properties){
-		return ting::Ref<Widget>(new Widget(properties));
+	static ting::Ref<Widget> New(const stob::Node& description){
+		return ting::Ref<Widget>(new Widget(description));
 	}
 	
-	static ting::Ref<Widget> New(const stob::Node* properties = 0){
-		return ting::Ref<Widget>(new Widget(properties));
+	static ting::Ref<Widget> New(){
+		return ting::Ref<Widget>(new Widget());
 	}
 
 	virtual ~Widget()throw(){}

@@ -48,28 +48,26 @@ private:
 
 	ting::Ptr<Layout> layout;
 	
-	void ApplyProperties(stob::Node* properties);
+	void ApplyDescription(const stob::Node& description);
 	
 protected:
-	inline Container(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()) :
-			Widget(properties)
-	{
-		this->ApplyProperties(this->properties.operator->());		
-	}
+	inline Container(){}
 	
-			//TODO: ?
-	//NOTE: No this kind of constructor for Container because layout properties are needed.
-//	inline Container(const stob::Node* properties = 0) :
-//			Widget(properties)
-//	{
-//		this->ApplyProperties(properties);
-//	}
+	inline Container(const stob::Node& description) :
+			Widget(description)
+	{
+		this->ApplyDescription(description);
+	}
 
 public:
 	~Container()throw(){}
 	
-	inline static ting::Ref<Container> New(ting::Ptr<stob::Node> properties = ting::Ptr<stob::Node>()){
-		return ting::Ref<Container>(new Container(properties));
+	inline static ting::Ref<Container> New(const stob::Node& description){
+		return ting::Ref<Container>(new Container(description));
+	}
+	
+	inline static ting::Ref<Container> New(){
+		return ting::Ref<Container>(new Container());
 	}
 
 	void SetLayout(ting::Ptr<Layout> layout){

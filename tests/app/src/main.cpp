@@ -21,17 +21,17 @@ class SimpleWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
-	SimpleWidget(ting::Ptr<stob::Node> properties) :
-			morda::Widget(properties)
+	SimpleWidget(const stob::Node& description) :
+			morda::Widget(description)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 public:	
-	static inline ting::Ref<SimpleWidget> New(ting::Ptr<stob::Node> properties){
+	static inline ting::Ref<SimpleWidget> New(const stob::Node& description){
 		return ting::Ref<SimpleWidget>(
-				new SimpleWidget(properties)
+				new SimpleWidget(description)
 			);
 	}
 	
@@ -95,7 +95,7 @@ public:
 class SimpleWidgetFactory : public morda::GuiInflater::WidgetFactory{
 public:
 	//override
-	ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const{
+	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		return SimpleWidget::New(node);
 	}
 };

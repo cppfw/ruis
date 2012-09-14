@@ -45,20 +45,17 @@ class Label : public Widget{
 	
 	morda::Vec2f pivot;
 	
-	void ApplyProperties(const stob::Node* properties);
+	void ApplyDescription(const stob::Node& description);
 	
 protected:
-	Label(ting::Ptr<stob::Node> properties) :
-			Widget(properties)
+	Label(const stob::Node& description) :
+			Widget(description)
 	{	
-		this->ApplyProperties(this->properties.operator->());
+		this->ApplyDescription(description);
 	}
 	
-	Label(const stob::Node* properties = 0) :
-			Widget(properties)
-	{
-		this->ApplyProperties(properties);
-	}
+	Label();
+	
 public:
 	enum E_Gravity{
 		CENTER,
@@ -89,12 +86,12 @@ public:
 	//override
 	void Render(const morda::Matr4f& matrix)const;
 		
-	inline static ting::Ref<Label> New(ting::Ptr<stob::Node> properties){
-		return ting::Ref<Label>(new Label(properties));
+	inline static ting::Ref<Label> New(const stob::Node& description){
+		return ting::Ref<Label>(new Label(description));
 	}
 	
-	inline static ting::Ref<Label> New(const stob::Node* properties = 0){
-		return ting::Ref<Label>(new Label(properties));
+	inline static ting::Ref<Label> New(){
+		return ting::Ref<Label>(new Label());
 	}
 };
 
