@@ -13,28 +13,25 @@ Container{
 
 	name {someContainer}
 
-	layout{
-		LinearLayout{
-			vertical
-			spacing {5}
-		}
-	}
+	layout{LinearLayout{
+		vertical
+		spacing {5}
+	}}
 
-	prop{
-		layout{
-			weight {2}
-		}
-	}
+	prop{layout{
+		weight {2}
+	}}
 
 	Label{
 		pos {0 0}
 		name {label1}
 		text {trololo}
-		layout{
+
+		prop{layout{
 			center {vertical}
 			weight {1}
 			fill
-		}
+		}}
 	}
 
 	Button{
