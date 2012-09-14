@@ -13,15 +13,17 @@ Container{
 
 	name {someContainer}
 
-	containerLayout{
+	layout{
 		LinearLayout{
 			vertical
 			spacing {5}
 		}
 	}
 
-	layout{
-		weight {2}
+	prop{
+		layout{
+			weight {2}
+		}
 	}
 
 	Label{
@@ -40,8 +42,10 @@ Container{
 		pos {50 80}
 		text {"Push me"}
 		
-		layout{
-			
+		prop{
+			layout{
+
+			}
 		}
 	}
 }

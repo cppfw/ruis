@@ -7,22 +7,27 @@ using namespace morda;
 
 
 
-void Label::ApplyProperties(const stob::Node* properties){
-	if(!properties){
-		this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
-		return;
-	}
+Label::Label(){
+	this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
+}
 
+
+void Label::ApplyDescription(const stob::Node& description){
 	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
-	if(const stob::Node* p = properties->GetProperty("font")){
+	if(const stob::Node* p = description.GetProperty("font")){
 		this->font = App::Inst().ResMan().Load<morda::ResFont>(p->Value());
 	}else{
 		this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 	
-	if(const stob::Node* p = properties->GetProperty("text")){
+	if(const stob::Node* p = description.GetProperty("text")){
 		this->SetText(p->Value());
 	}
+	
+	//TODO:
+//	if(const stob::Node* p = description.GetProperty("gravity")){
+//		
+//	}
 }
 
 

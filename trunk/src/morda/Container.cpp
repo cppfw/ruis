@@ -12,46 +12,17 @@ using namespace morda;
 
 
 
-void Container::ApplyProperties(stob::Node* properties){
-	if(!properties){
-		return;
-	}
-	
-	if(const stob::Node* n = properties->GetProperty("containerLayout")){
+void Container::ApplyDescription(const stob::Node& description){
+	if(const stob::Node* n = description.GetProperty("layout")){
 		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
 	}
 	
-	while(stob::Node *p = properties->Child()){
-//		TRACE(<< "Container::Container(): Child->Value() = " << p->Value() << std::endl)
-		if(!p->IsCapital()){
-			break;
+	for(const stob::Node* n = description.Child(); n; n = n->Next()){
+		if(!n->IsCapital()){
+			continue;//skip properties
 		}
-
-		this->Add(
-				morda::App::Inst().Inflater().Inflate(
-						properties->RemoveFirstChild()
-					)
-			);
-	}
-
-	if(stob::Node* prev = properties->Child()){
-		for(stob::Node* p = prev->Next(); p;){
-//			TRACE(<< "Container::Container(): p->Value() = " << p->Value() << std::endl)
-//			TRACE(<< "Container::Container(): p->Next() = " << p->Next() << std::endl)
-			if(!p->IsCapital()){
-				prev = p;
-				p = p->Next();
-				continue;
-			}
-
-			this->Add(
-					morda::App::Inst().Inflater().Inflate(
-							prev->RemoveNext()
-						)
-				);
-			
-			p = prev->Next();
-		}
+		
+		this->Add(morda::App::Inst().Inflater().Inflate(*n));
 	}
 }
 

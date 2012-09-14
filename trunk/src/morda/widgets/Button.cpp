@@ -7,7 +7,7 @@ using namespace morda;
 
 
 
-void Button::ApplyProperties(const stob::Node* properties){
+void Button::ApplyDescription(const stob::Node& description){
 	this->Resize(this->label->Rect().d);
 	
 	//apply button specific properties

@@ -42,19 +42,15 @@ namespace morda{
 class AbstractButton : public Widget{
 	ting::Inited<bool, false> isPressed;
 	
-	void ApplyProperties(const stob::Node* properties);
+	void ApplyDescription(const stob::Node& description);
 protected:
-	inline AbstractButton(ting::Ptr<stob::Node> properties) :
-			Widget(properties)
+	inline AbstractButton(const stob::Node& description) :
+			Widget(description)
 	{
-		this->ApplyProperties(this->properties.operator->());
+		this->ApplyDescription(description);
 	}
-			
-	inline AbstractButton(const stob::Node* properties = 0) :
-			Widget(properties)
-	{
-		this->ApplyProperties(properties);
-	}
+	
+	inline AbstractButton(){}
 public:
 	
 	~AbstractButton()throw(){}
@@ -77,12 +73,12 @@ public:
 		return this->isPressed;
 	}
 	
-	inline static ting::Ref<AbstractButton> New(ting::Ptr<stob::Node> properties){
-		return ting::Ref<AbstractButton>(new AbstractButton(properties));
+	inline static ting::Ref<AbstractButton> New(const stob::Node& description){
+		return ting::Ref<AbstractButton>(new AbstractButton(description));
 	}
 	
-	inline static ting::Ref<AbstractButton> New(stob::Node* properties = 0){
-		return ting::Ref<AbstractButton>(new AbstractButton(properties));
+	inline static ting::Ref<AbstractButton> New(){
+		return ting::Ref<AbstractButton>(new AbstractButton());
 	}
 };
 

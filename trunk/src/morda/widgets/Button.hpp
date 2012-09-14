@@ -42,21 +42,16 @@ namespace morda{
 class Button : public AbstractButton{
 	ting::Ref<morda::Label> label;
 	
-	void ApplyProperties(const stob::Node* properties);
+	void ApplyDescription(const stob::Node& description);
 protected:
-	inline Button(ting::Ptr<stob::Node> properties) :
-			AbstractButton(properties),
-			label(morda::Label::New(this->properties.operator->()))
+	inline Button(const stob::Node& description) :
+			AbstractButton(description),
+			label(morda::Label::New(description))
 	{
-		this->ApplyProperties(this->properties.operator->());
+		this->ApplyDescription(description);
 	}
 	
-	inline Button(const stob::Node* properties = 0) :
-			AbstractButton(properties),
-			label(morda::Label::New(properties))
-	{
-		this->ApplyProperties(properties);
-	}
+	inline Button(){}
 public:
 	
 	~Button()throw(){}
@@ -66,12 +61,12 @@ public:
 	
 	void SetText(const std::string& text);
 	
-	inline static ting::Ref<Button> New(ting::Ptr<stob::Node> properties){
-		return ting::Ref<Button>(new Button(properties));
+	inline static ting::Ref<Button> New(const stob::Node& description){
+		return ting::Ref<Button>(new Button(description));
 	}
 	
-	inline static ting::Ref<Button> New(const stob::Node* properties = 0){
-		return ting::Ref<Button>(new Button(properties));
+	inline static ting::Ref<Button> New(){
+		return ting::Ref<Button>(new Button());
 	}
 };
 

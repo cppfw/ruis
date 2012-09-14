@@ -7,7 +7,7 @@ using namespace morda;
 
 
 
-void AbstractButton::ApplyProperties(const stob::Node* properties){
+void AbstractButton::ApplyDescription(const stob::Node& properties){
 	//apply abstract button specific properties
 }
 

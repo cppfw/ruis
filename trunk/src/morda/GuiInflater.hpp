@@ -61,7 +61,7 @@ public:
 	
 	class WidgetFactory{
 	public:
-		virtual ting::Ref<morda::Widget> Create(ting::Ptr<stob::Node> node)const = 0;
+		virtual ting::Ref<morda::Widget> Create(const stob::Node& node)const = 0;
 
 		virtual ~WidgetFactory()throw(){}
 	};
@@ -101,7 +101,7 @@ public:
      * @param gui - GUI script to use.
      * @return reference to the root widget of the created hierarchy.
      */
-	ting::Ref<morda::Widget> Inflate(ting::Ptr<stob::Node> gui)const;
+	ting::Ref<morda::Widget> Inflate(const stob::Node& gui)const;
 	
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
