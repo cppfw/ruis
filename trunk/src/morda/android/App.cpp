@@ -604,10 +604,14 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-	fdFlag.Clear();
+    ting::u32 dt = Update(App::Inst());
+    if(dt == 0){
+        //do not arm the timer and do not clear the flag
+    }else{
+        fdFlag.Clear();
+        timer.Arm(dt);
+    }
 	
-	ting::u32 dt = Update(App::Inst());
-	timer.Arm(dt == 0 ? 1 : dt);
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
 	return 1; //1 means do not remove descriptor from looper
