@@ -15,6 +15,8 @@ using namespace morda;
 void Container::ApplyDescription(const stob::Node& description){
 	if(const stob::Node* n = description.GetProperty("layout")){
 		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
+	}else{
+		//TODO:
 	}
 	
 	for(const stob::Node* n = description.Child(); n; n = n->Next()){
@@ -197,12 +199,24 @@ void Container::OnResize(){
 
 
 
+//override
+morda::Vec2f Container::ComputeMinimalDimensions()const throw(){
+	if(this->layout){
+		return this->layout->ComputeMinimalDimensions(*this);
+	}
+	return this->Widget::ComputeMinimalDimensions();
+}
+
+
+
 void Container::Add(const ting::Ref<Widget>& w){
 	ASSERT_INFO(w, "Widget::Add(): widget pointer is 0")
 	ASSERT(ting::Ref<Widget>(w->parent).IsNotValid())
 	this->children.push_back(w);
 	w->parent = this;
 
+	w->RelayoutNeeded();//will call to this->RelayoutNeeded() also since parent is already set
+	
 	ASSERT(!w->IsHovered())
 }
 
@@ -219,6 +233,7 @@ bool Container::Remove(const ting::Ref<Widget>& w){
 				w->isHovered = false;
 				w->OnMouseOut();
 			}
+			this->RelayoutNeeded();
 			return true;
 		}
 	}

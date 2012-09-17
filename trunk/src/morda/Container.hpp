@@ -93,12 +93,7 @@ public:
 	void OnResize();
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions()const throw(){
-		if(this->layout){
-			return this->layout->ComputeMinimalDimensions(*this);
-		}
-		return this->Widget::ComputeMinimalDimensions();
-	}
+	morda::Vec2f ComputeMinimalDimensions()const throw();
 
 	void Add(const ting::Ref<Widget>& w);
 
