@@ -36,6 +36,7 @@ THE SOFTWARE. */
 #include "util/Matrix4.hpp"
 #include "util/Vector2.hpp"
 #include "util/Rectangle2.hpp"
+#include "Container.hpp"
 
 #include <stob/dom.hpp>
 
@@ -65,8 +66,13 @@ private:
 	morda::Rect2f rect;
 	
 	std::string name;
-public:
 	
+	//Apply description from STOB
+	void ApplyDescription(const stob::Node& description);
+	
+	ting::Inited<bool, true> relayoutNeeded;
+	
+public:
 	ting::Ptr<stob::Node> prop;
 	
 	const std::string& Name()const throw(){
@@ -102,6 +108,7 @@ public:
 	inline void Resize(const morda::Vec2f& newDims){
 		this->rect.d = newDims;
 		this->OnResize();//call virtual method
+		this->relayoutNeeded = false;
 	}
 
 protected:
@@ -111,9 +118,6 @@ protected:
 		this->ApplyDescription(description);
 	}
 	
-private:
-	void ApplyDescription(const stob::Node& description);
-
 public:
 	static ting::Ref<Widget> New(const stob::Node& description){
 		return ting::Ref<Widget>(new Widget(description));
@@ -164,9 +168,19 @@ public:
 	}
 	
 	virtual morda::Vec2f ComputeMinimalDimensions()const throw(){
-		return morda::Vec2f(0, 0);
+		return this->Rect().d;
 	}
 
+	void RelayoutNeeded()throw(){
+		if(this->relayoutNeeded){
+			return;
+		}
+		this->relayoutNeeded = true;
+		if(ting::Ref<Container> p = this->parent){
+			p->RelayoutNeeded();
+		}
+	}
+	
 	inline void Hide(){
 		this->SetHidden(true);
 	}
