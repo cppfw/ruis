@@ -38,9 +38,9 @@ namespace morda{
 
 
 
-class LinearLayout : public morda::Layout{
+class DefaultLayout : public morda::Layout{
 	
-	LinearLayout(const stob::Node* node);
+	DefaultLayout(){}
 public:
 	//override
 	void ArrangeWidgets(Container& c)const;
@@ -48,10 +48,10 @@ public:
 	//override
 	morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
 	
-	~LinearLayout()throw(){}
+	~DefaultLayout()throw(){}
 	
-	static inline ting::Ptr<LinearLayout> New(const stob::Node* node = 0){
-		return ting::Ptr<LinearLayout>(new LinearLayout(node));
+	static inline ting::Ptr<DefaultLayout> New(){
+		return ting::Ptr<DefaultLayout>(new DefaultLayout());
 	}
 };
 

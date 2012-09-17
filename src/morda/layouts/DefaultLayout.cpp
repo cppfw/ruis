@@ -1,4 +1,4 @@
-#include "LinearLayout.hpp"
+#include "DefaultLayout.hpp"
 
 
 
@@ -6,22 +6,15 @@ using namespace morda;
 
 
 
-LinearLayout::LinearLayout(const stob::Node* node){
+//override
+void DefaultLayout::ArrangeWidgets(Container& c)const{
 	//TODO:
 }
 
 
 
 //override
-void LinearLayout::ArrangeWidgets(Container& c)const{
-	
-	//TODO:
-}
-
-
-
-//override
-morda::Vec2f LinearLayout::ComputeMinimalDimensions(const Container& c)const throw(){
+morda::Vec2f DefaultLayout::ComputeMinimalDimensions(const Container& c)const throw(){
 	//TODO:
 	return morda::Vec2f();
 }

@@ -49,7 +49,8 @@ class Container;
 
 
 class Widget : virtual public ting::RefCounted{
-	friend class morda::Container;
+	friend class Container;
+	friend class App;
 	
 private:
 	ting::WeakRef<Container> parent;

@@ -46,6 +46,10 @@ void App::Render(){
 	m.Translate(-1, -1);
 	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);
 	
+	if(this->rootContainer->relayoutNeeded){
+		this->rootContainer->Resize(this->curWinRect.d);
+	}
+	
 	this->rootContainer->Render(m);
 	
 	this->SwapGLBuffers();
