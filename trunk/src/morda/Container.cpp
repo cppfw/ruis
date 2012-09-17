@@ -1,9 +1,7 @@
 #include "Container.hpp"
 
-#include "util/Vector3.hpp"
-#include <ting/Singleton.hpp>
-
 #include "App.hpp"
+
 #include "util/util.hpp"
 
 
@@ -16,7 +14,7 @@ void Container::ApplyDescription(const stob::Node& description){
 	if(const stob::Node* n = description.GetProperty("layout")){
 		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
 	}else{
-		//TODO:
+		this->SetLayout();
 	}
 	
 	for(const stob::Node* n = description.Child(); n; n = n->Next()){

@@ -154,35 +154,21 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/App.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/Container.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Exc.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/GuiInflater.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Layout.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/Widget.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/android/App.cpp" ex="true" tool="1" flavor2="0">
       </item>
@@ -190,29 +176,12 @@
       </item>
       <item path="../src/morda/android/AssetFile.hpp" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/config.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/layouts/DefaultLayout.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/layouts/DefaultLayout.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/layouts/LinearLayout.cpp"
             ex="false"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/layouts/LinearLayout.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -222,8 +191,6 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/resman/Resource.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/resman/ResourceManager.cpp"
             ex="false"
             tool="1"
@@ -231,16 +198,9 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/resman/ResourceManager.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/resources/ResFont.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/resources/ResTexture.cpp"
             ex="false"
@@ -249,16 +209,9 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/resources/ResTexture.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/shaders/Shader.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
             ex="false"
@@ -267,11 +220,6 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/shaders/SimpleSingleColoringShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
             ex="false"
             tool="1"
@@ -279,19 +227,9 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/shaders/SimpleTexturingShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/shaders/SingleColoringShader.cpp"
             ex="true"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SingleColoringShader.hpp"
-            ex="true"
-            tool="3"
             flavor2="0">
       </item>
       <item path="../src/morda/shaders/TexturingShader.cpp"
@@ -301,48 +239,23 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/shaders/TexturingShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/util/GLTexture.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/util/Image.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Matrix4.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Quaternion.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/util/TexFont.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector3.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector4.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/util/util.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/widgets/AbstractButton.cpp"
             ex="false"
@@ -351,22 +264,13 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/widgets/AbstractButton.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="../src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/widgets/Button.hpp" ex="true" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
-      </item>
-      <item path="../src/morda/widgets/Label.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <folder path="src">
         <ccTool>
