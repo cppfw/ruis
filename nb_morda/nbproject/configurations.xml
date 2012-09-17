@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="src" root="../src">
+      <df name="morda">
+        <df name="android">
+          <in>App.cpp</in>
+          <in>AssetFile.cpp</in>
+          <in>AssetFile.hpp</in>
+        </df>
+        <df name="layouts">
+          <in>DefaultLayout.cpp</in>
+          <in>DefaultLayout.hpp</in>
+          <in>LinearLayout.cpp</in>
+          <in>LinearLayout.hpp</in>
+        </df>
+        <df name="linux">
+          <in>App.cpp</in>
+        </df>
+        <df name="resman">
+          <in>Resource.cpp</in>
+          <in>Resource.hpp</in>
+          <in>ResourceManager.cpp</in>
+          <in>ResourceManager.hpp</in>
+        </df>
+        <df name="resources">
+          <in>ResFont.cpp</in>
+          <in>ResFont.hpp</in>
+          <in>ResTexture.cpp</in>
+          <in>ResTexture.hpp</in>
+        </df>
+        <df name="shaders">
+          <in>Shader.cpp</in>
+          <in>Shader.hpp</in>
+          <in>SimpleSingleColoringShader.cpp</in>
+          <in>SimpleSingleColoringShader.hpp</in>
+          <in>SimpleTexturingShader.cpp</in>
+          <in>SimpleTexturingShader.hpp</in>
+          <in>SingleColoringShader.cpp</in>
+          <in>SingleColoringShader.hpp</in>
+          <in>TexturingShader.cpp</in>
+          <in>TexturingShader.hpp</in>
+        </df>
+        <df name="util">
+          <in>GLTexture.cpp</in>
+          <in>GLTexture.hpp</in>
+          <in>Image.cpp</in>
+          <in>Image.hpp</in>
+          <in>Matrix4.hpp</in>
+          <in>Quaternion.hpp</in>
+          <in>Rectangle2.hpp</in>
+          <in>TexFont.cpp</in>
+          <in>TexFont.hpp</in>
+          <in>Vector2.hpp</in>
+          <in>Vector3.hpp</in>
+          <in>Vector4.hpp</in>
+          <in>ZipFile.hpp</in>
+          <in>util.cpp</in>
+          <in>util.hpp</in>
+        </df>
+        <df name="widgets">
+          <in>AbstractButton.cpp</in>
+          <in>AbstractButton.hpp</in>
+          <in>Button.cpp</in>
+          <in>Button.hpp</in>
+          <in>Label.cpp</in>
+          <in>Label.hpp</in>
+        </df>
+        <in>App.cpp</in>
+        <in>App.hpp</in>
+        <in>Container.cpp</in>
+        <in>Container.hpp</in>
+        <in>Exc.hpp</in>
+        <in>GuiInflater.cpp</in>
+        <in>GuiInflater.hpp</in>
+        <in>Layout.hpp</in>
+        <in>Updateable.cpp</in>
+        <in>Updateable.hpp</in>
+        <in>Widget.cpp</in>
+        <in>Widget.hpp</in>
+        <in>config.hpp</in>
+      </df>
+      <df name="obj">
+        <df name="1">
+          <df name="2">
+            <df name="morda">
+              <df name="layouts">
+              </df>
+              <df name="linux">
+              </df>
+              <df name="resman">
+              </df>
+              <df name="resources">
+              </df>
+              <df name="shaders">
+              </df>
+              <df name="util">
+              </df>
+              <df name="widgets">
+              </df>
+            </df>
+          </df>
+        </df>
+      </df>
+    </df>
+    <df name="tests" root="../tests">
+      <df name="app">
+        <df name="res">
+        </df>
+        <df name="src">
+          <in>main.cpp</in>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>../src/makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>../src</Elem>
+    <Elem>../tests</Elem>
+  </sourceRootList>
+  <projectmakefile>../src/makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>..</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f makefile build_config=debug</buildCommand>
+          <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>../src</pElem>
+              <pElem>/usr/include/ting</pElem>
+            </incDir>
+          </ccTool>
+        </makeTool>
+      </makefileType>
+      <item path="../src/morda/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/layouts</pElem>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/widgets</pElem>
+            <pElem>../src/morda/resources</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/util</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/android/App.cpp" ex="true" tool="1" flavor2="0">
+      </item>
+      <item path="../src/morda/android/AssetFile.cpp" ex="true" tool="1" flavor2="0">
+      </item>
+      <item path="../src/morda/android/AssetFile.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/layouts/DefaultLayout.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../src/morda/layouts/DefaultLayout.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../src/morda/layouts/LinearLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/shaders</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/shaders/SingleColoringShader.cpp"
+            ex="true"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2/freetype</pElem>
+            <pElem>/usr/include/freetype2/freetype/config</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/util/ZipFile.hpp" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="../src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/AbstractButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>../src/morda/shaders</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="../src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/resources</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="../tests/app/src/main.cpp" ex="true" tool="1" flavor2="0">
+      </item>
+      <folder path="src/morda/layouts">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/layouts</pElem>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda/util</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/linux">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/linux</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>../src/morda/resman</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>../src/morda/resman</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>../src/morda/resources</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/shaders">
+        <ccTool>
+          <incDir>
+            <pElem>../src/morda/shaders</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda/util</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/ting/mt</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>../src/morda</pElem>
+            <pElem>/usr/include/ting/fs</pElem>
+            <pElem>../src/morda/widgets</pElem>
+            <pElem>../src/morda/util</pElem>
+            <pElem>/usr/include/GL</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+    </conf>
+  </confs>
+</configurationDescriptor>
