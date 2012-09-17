@@ -39,3 +39,15 @@ void Widget::RemoveFromParent(){
 		ASSERT(res)
 	}
 }
+
+
+
+void Widget::RelayoutNeeded()throw(){
+	if(this->relayoutNeeded){
+		return;
+	}
+	this->relayoutNeeded = true;
+	if(ting::Ref<Container> p = this->parent){
+		p->RelayoutNeeded();
+	}
+}

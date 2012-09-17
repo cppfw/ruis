@@ -36,7 +36,6 @@ THE SOFTWARE. */
 #include "util/Matrix4.hpp"
 #include "util/Vector2.hpp"
 #include "util/Rectangle2.hpp"
-#include "Container.hpp"
 
 #include <stob/dom.hpp>
 
@@ -171,15 +170,7 @@ public:
 		return this->Rect().d;
 	}
 
-	void RelayoutNeeded()throw(){
-		if(this->relayoutNeeded){
-			return;
-		}
-		this->relayoutNeeded = true;
-		if(ting::Ref<Container> p = this->parent){
-			p->RelayoutNeeded();
-		}
-	}
+	void RelayoutNeeded()throw();
 	
 	inline void Hide(){
 		this->SetHidden(true);
