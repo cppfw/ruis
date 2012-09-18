@@ -58,7 +58,7 @@ srcs += morda/util/util.cpp
 srcs += morda/widgets/AbstractButton.cpp
 srcs += morda/widgets/Button.cpp
 srcs += morda/widgets/Label.cpp
-srcs += morda/layouts/DefaultLayout.cpp
+srcs += morda/layouts/MinSizeLayout.cpp
 srcs += morda/layouts/LinearLayout.cpp
 
 
