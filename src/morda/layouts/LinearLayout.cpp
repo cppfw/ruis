@@ -6,7 +6,7 @@ using namespace morda;
 
 
 
-LinearLayout::LinearLayout(const stob::Node* node){
+LinearLayout::LinearLayout(const stob::Node& description){
 	//TODO:
 }
 
