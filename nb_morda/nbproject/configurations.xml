@@ -9,10 +9,10 @@
           <in>AssetFile.hpp</in>
         </df>
         <df name="layouts">
-          <in>DefaultLayout.cpp</in>
-          <in>DefaultLayout.hpp</in>
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
+          <in>MinSizeLayout.cpp</in>
+          <in>MinSizeLayout.hpp</in>
         </df>
         <df name="linux">
           <in>App.cpp</in>
