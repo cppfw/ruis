@@ -32,7 +32,6 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "Layout.hpp"
-#include "layouts/DefaultLayout.hpp"
 
 
 
@@ -52,9 +51,7 @@ private:
 	void ApplyDescription(const stob::Node& description);
 	
 protected:
-	inline Container(){
-		this->SetLayout();
-	}
+	inline Container(){}
 	
 	inline Container(const stob::Node& description) :
 			Widget(description)
@@ -74,11 +71,7 @@ public:
 	}
 
 	void SetLayout(ting::Ptr<Layout> layout = ting::Ptr<Layout>()){
-		if(layout.IsNotValid()){
-			this->layout = DefaultLayout::New();
-		}else{
-			this->layout = layout;
-		}
+		this->layout = layout;
 	}
 	
 	//override
