@@ -59,6 +59,9 @@ public:
 	//override
 	void Render(const morda::Matr4f& matrix)const;
 	
+	//override
+	morda::Vec2f ComputeMinimalDimensions()const throw();
+	
 	void SetText(const std::string& text);
 	
 	inline static ting::Ref<Button> New(const stob::Node& description){

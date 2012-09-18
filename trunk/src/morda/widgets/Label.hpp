@@ -43,7 +43,7 @@ class Label : public Widget{
 	
 	ting::Ref<morda::ResFont> font;
 	
-	morda::Vec2f pivot;
+	morda::Rect2f bb;
 	
 	void ApplyDescription(const stob::Node& description);
 	
@@ -85,7 +85,10 @@ public:
 	
 	//override
 	void Render(const morda::Matr4f& matrix)const;
-		
+	
+	//override
+	Vec2f ComputeMinimalDimensions()const throw();
+	
 	inline static ting::Ref<Label> New(const stob::Node& description){
 		return ting::Ref<Label>(new Label(description));
 	}

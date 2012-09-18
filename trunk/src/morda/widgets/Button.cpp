@@ -23,6 +23,12 @@ void Button::Render(const morda::Matr4f& matrix)const{
 
 
 
+morda::Vec2f Button::ComputeMinimalDimensions()const throw(){
+	return this->label->ComputeMinimalDimensions();
+}
+
+
+
 void Button::SetText(const std::string& text){
 	this->label->SetText(text);
 	this->Resize(this->label->Rect().d);

@@ -35,15 +35,14 @@ void Label::ApplyDescription(const stob::Node& description){
 void Label::SetText(const std::string& text){
 	this->text = text;
 	
-	morda::Rect2f bb = this->font->Fnt().StringBoundingBox(this->text);
-	
-	if(this->Rect().d.x < bb.d.x || this->Rect().d.y < bb.d.y){
-		this->Resize(bb.d);
-		this->pivot = -bb.p;
-	}else{
-		//TODO: handle gravity
-		this->pivot = -bb.p;
-	}
+	this->bb = this->font->Fnt().StringBoundingBox(this->text);
+}
+
+
+
+//override
+morda::Vec2f Label::ComputeMinimalDimensions()const throw(){
+	return this->bb.d;
 }
 
 
@@ -58,15 +57,9 @@ void Label::SetGravity(E_Gravity gravity){
 
 //override
 void Label::Render(const morda::Matr4f& matrix)const{
-//	{
-//		morda::Matr4f matr(matrix);
-//		matr.Scale(this->Rect().d);
-//		SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
-//		s.Bind();
-//		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
-//		s.SetMatrix(matr);
-//		s.DrawQuad01();
-//	}
+#ifdef M_MORDA_RENDER_WIDGET_BORDERS
+	this->Widget::Render(matrix);
+#endif
 	
 	//render text
 	morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
@@ -75,6 +68,6 @@ void Label::Render(const morda::Matr4f& matrix)const{
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	morda::Matr4f matr(matrix);
-	matr.Translate(this->pivot);
+	matr.Translate(-this->bb.p);
 	this->font->Fnt().RenderString(s, matr, this->text);
 }

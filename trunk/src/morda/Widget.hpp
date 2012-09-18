@@ -52,6 +52,8 @@ class Widget : virtual public ting::RefCounted{
 	friend class Container;
 	friend class App;
 	
+	ting::Ref<Widget> next, prev;
+	
 private:
 	ting::WeakRef<Container> parent;
 	
@@ -87,6 +89,23 @@ public:
 		return this->parent;
 	}
 	
+	inline const ting::Ref<Widget>& Next()throw(){
+		return this->next;
+	}
+	
+	inline const ting::Ref<const Widget>& Next()const throw(){
+		return this->next;
+	}
+	
+	inline const ting::Ref<Widget>& Prev()throw(){
+		return this->prev;
+	}
+	
+	inline const ting::Ref<const Widget>& Prev()const throw(){
+		return this->prev;
+	}
+	
+	//NOTE: if only parent holds Ref then object may be deleted
 	void RemoveFromParent();
 	
 	inline bool IsHovered()const throw(){
@@ -129,7 +148,7 @@ public:
 
 	virtual ~Widget()throw(){}
 
-	virtual void Render(const morda::Matr4f& matrix)const{}
+	virtual void Render(const morda::Matr4f& matrix)const;
 
 	enum EMouseButton{
 		UNKNOWN,

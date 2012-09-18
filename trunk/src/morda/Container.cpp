@@ -28,26 +28,19 @@ void Container::ApplyDescription(const stob::Node& description){
 
 //override
 void Container::Render(const morda::Matr4f& matrix)const{
-	//render border
-	{
-		morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
-		s.Bind();
-		morda::Matr4f matr(matrix);
-		matr.Scale(this->Rect().d);
-		s.SetMatrix(matr);
-		s.SetColor(morda::Vec3f(1, 0, 1));
-		s.DrawQuad01(GL_LINE_LOOP);
-	}
+#ifdef M_MORDA_RENDER_WIDGET_BORDERS
+	this->Widget::Render(matrix);
+#endif
 	
-	for(T_ChildList::const_iterator i = this->children.begin(); i != this->children.end(); ++i){
-		if((*i)->IsHidden()){
+	for(ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
+		if((*c)->IsHidden()){
 			continue;
 		}
 		
 		morda::Matr4f matr(matrix);
-		matr.Translate((*i)->Rect().p);
+		matr.Translate((*c)->Rect().p);
 
-		(*i)->Render(matr);
+		(*c)->Render(matr);
 	}
 }
 
@@ -207,8 +200,22 @@ morda::Vec2f Container::ComputeMinimalDimensions()const throw(){
 
 void Container::Add(const ting::Ref<Widget>& w){
 	ASSERT_INFO(w, "Widget::Add(): widget pointer is 0")
-	ASSERT(ting::Ref<Widget>(w->parent).IsNotValid())
-	this->children.push_back(w);
+	if(w->parent.GetRef().IsValid()){
+		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
+	}
+	ASSERT(w->next.IsNotValid())
+	ASSERT(w->prev.IsNotValid())
+	
+	if(!this->childrenHead){
+		ASSERT(!this->childrenTail)
+		this->childrenHead = w;
+		this->childrenTail = w;
+	}else{
+		this->childrenTail->next = w;
+		w->prev = this->childrenTail;
+		this->childrenTail = w;
+	}
+	
 	w->parent = this;
 
 	w->RelayoutNeeded();//will call to this->RelayoutNeeded() also since parent is already set
@@ -218,20 +225,25 @@ void Container::Add(const ting::Ref<Widget>& w){
 
 
 
-bool Container::Remove(const ting::Ref<Widget>& w){
+void Container::Remove(const ting::Ref<Widget>& w){
 	ASSERT(w.IsValid())
+	ASSERT(w->parent.GetRef() == this)
 
-	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-		if(w == (*i)){
-			this->children.erase(i);
-			w->parent.Reset();
-			if(w->IsHovered()){
-				w->isHovered = false;
-				w->OnMouseOut();
-			}
-			this->RelayoutNeeded();
-			return true;
-		}
+	if(w->prev){
+		w->prev->next = w->next;
+	}else{
+		this->childrenHead = w->next;
 	}
-	return false;
+	if(w->next){
+		w->next->prev = w->prev;
+	}else{
+		this->childrenTail = w->prev;
+	}
+	
+	w->parent.Reset();
+	if(w->IsHovered()){
+		w->isHovered = false;
+		w->OnMouseOut();
+	}
+	this->RelayoutNeeded();
 }
