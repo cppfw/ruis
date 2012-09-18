@@ -39,8 +39,9 @@ namespace morda{
 
 
 class LinearLayout : public morda::Layout{
+	LinearLayout(){}
 	
-	LinearLayout(const stob::Node* node);
+	LinearLayout(const stob::Node& description);
 public:
 	//override
 	void ArrangeWidgets(Container& c)const;
@@ -50,8 +51,12 @@ public:
 	
 	~LinearLayout()throw(){}
 	
-	static inline ting::Ptr<LinearLayout> New(const stob::Node* node = 0){
-		return ting::Ptr<LinearLayout>(new LinearLayout(node));
+	static inline ting::Ptr<LinearLayout> New(const stob::Node& description){
+		return ting::Ptr<LinearLayout>(new LinearLayout(description));
+	}
+	
+	static inline ting::Ptr<LinearLayout> New(){
+		return ting::Ptr<LinearLayout>(new LinearLayout());
 	}
 };
 

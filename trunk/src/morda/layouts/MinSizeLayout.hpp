@@ -39,8 +39,9 @@ namespace morda{
 
 
 class MinSizeLayout : public morda::Layout{
-	
 	MinSizeLayout(){}
+	
+	MinSizeLayout(const stob::Node& description){}
 public:
 	//override
 	void ArrangeWidgets(Container& c)const;
@@ -49,6 +50,10 @@ public:
 	morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
 	
 	~MinSizeLayout()throw(){}
+	
+	static inline ting::Ptr<MinSizeLayout> New(const stob::Node& description){
+		return ting::Ptr<MinSizeLayout>(new MinSizeLayout(description));
+	}
 	
 	static inline ting::Ptr<MinSizeLayout> New(){
 		return ting::Ptr<MinSizeLayout>(new MinSizeLayout());

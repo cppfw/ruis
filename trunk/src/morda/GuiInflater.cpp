@@ -4,6 +4,7 @@
 #include "widgets/Label.hpp"
 #include "widgets/Button.hpp"
 #include "layouts/LinearLayout.hpp"
+#include "layouts/MinSizeLayout.hpp"
 
 
 
@@ -83,11 +84,24 @@ public:
 	//override
 	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "LinearLayout")
-		return LinearLayout::New(&node);
+		return LinearLayout::New(node);
 	}
 	
 	inline static ting::Ptr<LinearLayoutFactory> New(){
 		return ting::Ptr<LinearLayoutFactory>(new LinearLayoutFactory());
+	}
+};
+
+class MinSizeLayoutFactory : public GuiInflater::LayoutFactory{
+public:
+	//override
+	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
+		ASSERT(node.Value() == "MinSizeLayout")
+		return MinSizeLayout::New(node);
+	}
+	
+	inline static ting::Ptr<MinSizeLayoutFactory> New(){
+		return ting::Ptr<MinSizeLayoutFactory>(new MinSizeLayoutFactory());
 	}
 };
 
@@ -103,7 +117,7 @@ GuiInflater::GuiInflater(){
 	this->AddWidgetFactory("Button", ButtonFactory::New());
 	
 	this->AddLayoutFactory("LinearLayout", LinearLayoutFactory::New());
-	//TODO: add default factories
+	this->AddLayoutFactory("MinSizeLayout", MinSizeLayoutFactory::New());
 }
 
 
