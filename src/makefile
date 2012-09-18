@@ -67,6 +67,7 @@ defines :=
 
 ifeq ($(build_config), debug)
     defines += -DDEBUG
+    defines += -DM_MORDA_RENDER_WIDGET_BORDERS
 endif
 
 ifeq ($(platform), maemo_linux)

@@ -40,11 +40,9 @@ namespace morda{
 
 
 class Container : public Widget{
-protected:
-	typedef std::vector<ting::Ref<Widget> > T_ChildList;
-
 private:
-	T_ChildList children;
+	ting::Ref<Widget> childrenHead, childrenTail;
+	ting::Inited<unsigned, 0> numChildren;
 
 	ting::Ptr<Layout> layout;
 	
@@ -98,16 +96,19 @@ public:
 	void Add(const ting::Ref<Widget>& w);
 
 	//return true if the widget was found in children and was removed
-	bool Remove(const ting::Ref<Widget>& w);
+	void Remove(const ting::Ref<Widget>& w);
 	
+	inline unsigned NumChildren()const throw(){
+		return this->numChildren;
+	}
 protected:
-//	inline const T_ChildList Children()const{
-//		return this->children;
-//	}
-//
-//	inline T_ChildList Children(){
-//		return this->children;
-//	}
+	inline const ting::Ref<const Widget>& Children()const throw(){
+		return this->childrenHead;
+	}
+
+	inline ting::Ref<Widget>& Children()throw(){
+		return this->childrenHead;
+	}
 };
 
 

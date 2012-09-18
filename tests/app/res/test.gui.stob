@@ -1,3 +1,7 @@
+layout{
+	MinSizeLayout
+}
+
 U_SimpleWidget{
 	dim{300 300}
 }

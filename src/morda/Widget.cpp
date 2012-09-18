@@ -1,6 +1,8 @@
 #include "Widget.hpp"
 
+#include "App.hpp"
 #include "Container.hpp"
+#include "shaders/SimpleSingleColoringShader.hpp"
 #include "util/util.hpp"
 
 using namespace morda;
@@ -50,4 +52,17 @@ void Widget::RelayoutNeeded()throw(){
 	if(ting::Ref<Container> p = this->parent){
 		p->RelayoutNeeded();
 	}
+}
+
+
+
+void Widget::Render(const morda::Matr4f& matrix)const{
+	//render border
+	morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	s.Bind();
+	morda::Matr4f matr(matrix);
+	matr.Scale(this->Rect().d);
+	s.SetMatrix(matr);
+	s.SetColor(morda::Vec3f(1, 0, 1));
+	s.DrawQuad01(GL_LINE_LOOP);
 }
