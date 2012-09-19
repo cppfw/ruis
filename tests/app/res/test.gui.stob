@@ -3,7 +3,7 @@ layout{
 }
 
 U_SimpleWidget{
-	dim{300 300}
+	dim {300 300}
 }
 
 Button{
@@ -17,10 +17,9 @@ Container{
 
 	name {someContainer}
 
-	layout{LinearLayout{
-		vertical
-		spacing {5}
-	}}
+	layout{
+		MinSizeLayout
+	}
 
 	prop{layout{
 		weight {2}
@@ -39,7 +38,7 @@ Container{
 	}
 
 	Button{
-		name{butt1}
+		name {butt1}
 		pos {50 80}
 		text {"Push me"}
 		

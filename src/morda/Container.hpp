@@ -105,12 +105,12 @@ public:
 	inline unsigned NumChildren()const throw(){
 		return this->numChildren;
 	}
-protected:
-	inline const ting::Ref<const Widget>& Children()const throw(){
+	
+	inline const ting::Ref<Widget>& Children()throw(){
 		return this->childrenHead;
 	}
-
-	inline ting::Ref<Widget>& Children()throw(){
+	
+	inline const ting::Ref<const Widget>& Children()const throw(){
 		return this->childrenHead;
 	}
 };

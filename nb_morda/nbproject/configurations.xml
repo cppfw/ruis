@@ -9,7 +9,6 @@
           <in>AssetFile.hpp</in>
         </df>
         <df name="layouts">
-          <in>DefaultLayout.hpp</in>
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
           <in>MinSizeLayout.cpp</in>
@@ -317,11 +316,6 @@
           <executablePath></executablePath>
         </makeTool>
       </makefileType>
-      <item path="../src/morda/layouts/DefaultLayout.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
   </confs>
 </configurationDescriptor>
