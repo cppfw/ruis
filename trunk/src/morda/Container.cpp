@@ -32,7 +32,7 @@ void Container::Render(const morda::Matr4f& matrix)const{
 	this->Widget::Render(matrix);
 #endif
 	
-	for(ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
+	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
 		if((*c)->IsHidden()){
 			continue;
 		}
@@ -46,37 +46,42 @@ void Container::Render(const morda::Matr4f& matrix)const{
 
 
 
-//override
-bool Container::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Container::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
+template <bool is_down> bool Container::OnMouseButtonAction(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned pointerId){
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
-	T_ChildList childs;
-	childs.reserve(this->children.size());
-	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-		childs.push_back(*i);
-	}
+	//TODO:
+//	T_ChildList childs;
+//	childs.reserve(this->children.size());
+//	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
+//		childs.push_back(*i);
+//	}
 	
 	//call children in reverse order
-	for(T_ChildList::reverse_iterator i = childs.rbegin(); i != childs.rend(); ++i){
-		if((*i)->isHidden || (*i)->isDisabled){
+	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
+		if((*c)->IsHidden() || (*c)->IsDisabled()){
 			continue;
 		}
 		
-		if(!(*i)->Rect().Overlaps(pos)){
+		if(!(*c)->Rect().Overlaps(pos)){
 			continue;
 		}
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget is hovered.
-		if(!(*i)->IsHovered()){
-			(*i)->isHovered = true;
-			(*i)->OnMouseIn();
+		if(!(*c)->IsHovered()){
+			(*c)->isHovered = true;
+			(*c)->OnMouseIn();
 		}
 		
-		if((*i)->OnMouseButtonDown((pos - (*i)->Rect().p), button, pointerId)){
-			return true;
+		morda::Vec2f localPos(pos - (*c)->Rect().p);
+		
+		bool consume;
+		if(is_down){//this 'if' should be optimized out
+			consume = (*c)->OnMouseButtonDown(localPos, button, pointerId);
+		}else{
+			consume = (*c)->OnMouseButtonUp(localPos, button, pointerId);
 		}
+		return consume;
 	}
 	return false;
 }
@@ -84,39 +89,17 @@ bool Container::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, 
 
 
 //override
+bool Container::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Container::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
+	return this->OnMouseButtonAction<true>(pos, button, pointerId);
+}
+
+
+
+//override
 bool Container::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
-	
-	//Copy children list to iterate through it later, because the original list of children
-	//may change during iterating.
-	T_ChildList childs;
-	childs.reserve(this->children.size());
-	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-		childs.push_back(*i);
-	}
-	
-	//call children in reverse order
-	for(T_ChildList::reverse_iterator i = childs.rbegin(); i != childs.rend(); ++i){
-		if((*i)->isHidden || (*i)->isDisabled){
-			continue;
-		}
-		
-		if(!(*i)->Rect().Overlaps(pos)){
-			continue;
-		}
-		
-		//Sometimes mouse click event comes without prior mouse move,
-		//but, since we get mouse click, then the widget is hovered.
-		if(!(*i)->IsHovered()){
-			(*i)->isHovered = true;
-			(*i)->OnMouseIn();
-		}
-		
-		if((*i)->OnMouseButtonUp(pos - (*i)->Rect().p, button, pointerId)){
-			return true;
-		}
-	}
-	return false;
+	return this->OnMouseButtonAction<false>(pos, button, pointerId);
 }
 
 
@@ -125,38 +108,39 @@ bool Container::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, un
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
-	T_ChildList childs;
-	childs.reserve(this->children.size());
-	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-		childs.push_back(*i);
-	}
+	//TODO:
+//	T_ChildList childs;
+//	childs.reserve(this->children.size());
+//	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
+//		childs.push_back(*i);
+//	}
 	
 	//call children in reverse order
-	for(T_ChildList::reverse_iterator i = childs.rbegin(); i != childs.rend(); ++i){
-		if((*i)->isHidden){
-			ASSERT(!(*i)->IsHovered())
+	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
+		if((*c)->isHidden){
+			ASSERT(!(*c)->IsHovered())
 			continue;
 		}
 		
-		if(!(*i)->Rect().Overlaps(pos)){
-			if((*i)->IsHovered()){
-				(*i)->isHovered = false;
-				(*i)->OnMouseOut();
+		if(!(*c)->Rect().Overlaps(pos)){
+			if((*c)->IsHovered()){
+				(*c)->isHovered = false;
+				(*c)->OnMouseOut();
 			}
 			continue;
 		}
 		
-		if(!(*i)->IsHovered()){
-			(*i)->isHovered = true;
-			(*i)->OnMouseIn();
+		if(!(*c)->IsHovered()){
+			(*c)->isHovered = true;
+			(*c)->OnMouseIn();
 		}
 		
-		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerId)){//consumed mouse move event
+		if((*c)->OnMouseMove(pos - (*c)->Rect().p, pointerId)){//consumed mouse move event
 			//un-hover rest of the children
-			for(++i; i != childs.rend(); ++i){
-				if((*i)->IsHovered()){
-					(*i)->isHovered = false;
-					(*i)->OnMouseOut();
+			for(c = &(*c)->Prev(); *c; c = &(*c)->Prev()){
+				if((*c)->IsHovered()){
+					(*c)->isHovered = false;
+					(*c)->OnMouseOut();
 				}
 			}
 			return true;
@@ -168,11 +152,13 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 
 
 void Container::OnMouseOut(){
+	//TODO: if some child removed during iterating?
+	
 	//un-hover all the children
-	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-		if((*i)->IsHovered()){
-			(*i)->isHovered = false;
-			(*i)->OnMouseOut();
+	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
+		if((*c)->IsHovered()){
+			(*c)->isHovered = false;
+			(*c)->OnMouseOut();
 		}
 	}
 }
@@ -227,7 +213,7 @@ void Container::Add(const ting::Ref<Widget>& w){
 
 void Container::Remove(const ting::Ref<Widget>& w){
 	ASSERT(w.IsValid())
-	ASSERT(w->parent.GetRef() == this)
+	ASSERT(w->parent.GetRef() == ting::Ref<Container>(this))
 
 	if(w->prev){
 		w->prev->next = w->next;

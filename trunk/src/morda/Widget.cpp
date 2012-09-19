@@ -34,11 +34,7 @@ void Widget::ApplyDescription(const stob::Node& description){
 
 void Widget::RemoveFromParent(){
 	if(ting::Ref<Container> p = this->parent){
-#ifdef DEBUG
-		bool res =
-#endif
 		p->Remove(ting::Ref<Widget>(this));
-		ASSERT(res)
 	}
 }
 
