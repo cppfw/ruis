@@ -17,10 +17,6 @@ Container{
 
 	name {someContainer}
 
-	layout{
-		MinSizeLayout
-	}
-
 	prop{layout{
 		weight {2}
 	}}
@@ -40,6 +36,7 @@ Container{
 	Button{
 		name {butt1}
 		pos {50 80}
+		dim {100, 30}
 		text {"Push me"}
 		
 		prop{
