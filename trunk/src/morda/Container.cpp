@@ -81,7 +81,9 @@ template <bool is_down> bool Container::OnMouseButtonAction(const morda::Vec2f& 
 		}else{
 			consume = (*c)->OnMouseButtonUp(localPos, button, pointerId);
 		}
-		return consume;
+		if(consume){
+			return true;
+		}
 	}
 	return false;
 }
@@ -202,6 +204,8 @@ void Container::Add(const ting::Ref<Widget>& w){
 		this->childrenTail = w;
 	}
 	
+	++this->numChildren;
+	
 	w->parent = this;
 
 	w->RelayoutNeeded();//will call to this->RelayoutNeeded() also since parent is already set
@@ -225,6 +229,8 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	}else{
 		this->childrenTail = w->prev;
 	}
+	
+	--this->numChildren;
 	
 	w->parent.Reset();
 	if(w->IsHovered()){

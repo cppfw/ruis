@@ -43,9 +43,9 @@ class Container;
 
 class Layout{
 public:
-	virtual void ArrangeWidgets(Container& c)const = 0;
+	virtual void ArrangeWidgets(Container& cont)const = 0;
 	
-	virtual morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw()= 0;
+	virtual morda::Vec2f ComputeMinimalDimensions(const Container& cont)const throw()= 0;
 	
 	virtual ~Layout()throw(){}
 };

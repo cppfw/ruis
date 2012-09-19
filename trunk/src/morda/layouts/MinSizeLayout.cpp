@@ -1,4 +1,5 @@
 #include "MinSizeLayout.hpp"
+#include "../Container.hpp"
 
 
 
@@ -7,14 +8,25 @@ using namespace morda;
 
 
 //override
-void MinSizeLayout::ArrangeWidgets(Container& c)const{
-	//TODO:
+void MinSizeLayout::ArrangeWidgets(Container& cont)const{
+	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
+		(*c)->Resize((*c)->ComputeMinimalDimensions());
+	}
 }
 
 
 
 //override
-morda::Vec2f MinSizeLayout::ComputeMinimalDimensions(const Container& c)const throw(){
-	//TODO:
-	return morda::Vec2f();
+morda::Vec2f MinSizeLayout::ComputeMinimalDimensions(const Container& cont)const throw(){
+	morda::Vec2f minDim(0);
+	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
+		morda::Vec2f tr = (*c)->Rect().p + (*c)->ComputeMinimalDimensions();
+		if(tr.x > minDim.x){
+			minDim.x = tr.x;
+		}
+		if(tr.y > minDim.y){
+			minDim.y = tr.y;
+		}
+	}
+	return minDim;
 }

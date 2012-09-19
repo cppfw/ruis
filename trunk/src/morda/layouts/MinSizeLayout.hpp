@@ -44,10 +44,10 @@ class MinSizeLayout : public morda::Layout{
 	MinSizeLayout(const stob::Node& description){}
 public:
 	//override
-	void ArrangeWidgets(Container& c)const;
+	void ArrangeWidgets(Container& cont)const;
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
+	morda::Vec2f ComputeMinimalDimensions(const Container& cont)const throw();
 	
 	~MinSizeLayout()throw(){}
 	
