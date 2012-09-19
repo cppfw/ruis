@@ -81,6 +81,10 @@ public:
 	//override
 	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
+private:
+	template <bool is_down> bool OnMouseButtonAction(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned pointerId);
+public:
+	
 	//override
 	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId);
 	
