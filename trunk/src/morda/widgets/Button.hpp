@@ -46,7 +46,7 @@ class Button : public AbstractButton{
 protected:
 	inline Button(const stob::Node& description) :
 			AbstractButton(description),
-			label(morda::Label::New(description))
+			label(morda::Label::New(description)) //TODO: ignore prop
 	{
 		this->ApplyDescription(description);
 	}
@@ -61,6 +61,9 @@ public:
 	
 	//override
 	morda::Vec2f ComputeMinimalDimensions()const throw();
+	
+	//override
+	void OnResize();
 	
 	void SetText(const std::string& text);
 	
