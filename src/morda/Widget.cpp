@@ -18,11 +18,13 @@ void Widget::ApplyDescription(const stob::Node& description){
 	if(const stob::Node* p = description.GetProperty("pos")){
 		this->rect.p = morda::Vec2fFromSTOB(p);
 	}else{
-		this->rect.p.SetToZero();
+		this->rect.p.SetTo(0);
 	}
 
 	if(const stob::Node* p = description.GetProperty("dim")){
 		this->rect.d = morda::Vec2fFromSTOB(p);
+	}else{
+		this->rect.d.SetTo(0);
 	}
 
 	if(const stob::Node* p = description.GetProperty("name")){

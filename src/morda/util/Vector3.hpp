@@ -164,6 +164,18 @@ public:
 		this->z = num;
 		return (*this);
 	}
+	
+	/**
+	 * @brief Set all vector components to given value.
+	 * @param val - value to set vector components to.
+	 * @return Reference to this vector object.
+	 */
+	inline Vector3& SetTo(T val)throw(){
+		this->x = val;
+		this->y = val;
+		this->z = val;
+		return (*this);
+	}
 
 	/**
 	 * @brief Add and assign.
