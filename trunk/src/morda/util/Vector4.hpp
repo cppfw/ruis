@@ -202,6 +202,19 @@ public:
 	}
 
 	/**
+	 * @brief Set all vector components to given value.
+	 * @param val - value to set vector components to.
+	 * @return Reference to this vector object.
+	 */
+	inline Vector4& SetTo(T val)throw(){
+		this->x = val;
+		this->y = val;
+		this->z = val;
+		this->w = val;
+		return (*this);
+	}
+	
+	/**
 	 * @brief Add and assign.
 	 * Adds corresponding components of a given vector to first two components of this vector and assigns
 	 * the result back to this vector components.

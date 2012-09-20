@@ -355,11 +355,13 @@ public:
 	}
 
 	/**
-	 * @brief Set both vector components to 0 values.
+	 * @brief Set both vector components to given value.
+	 * @param val - value to set vector components to.
+	 * @return Reference to this vector object.
 	 */
-	inline Vector2& SetToZero()throw(){
-		this->x = 0;
-		this->y = 0;
+	inline Vector2& SetTo(T val)throw(){
+		this->x = val;
+		this->y = val;
 		return (*this);
 	}
 

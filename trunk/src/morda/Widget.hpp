@@ -131,7 +131,10 @@ public:
 	}
 
 protected:
-	inline Widget(){}
+	inline Widget(){
+		this->rect.p.SetTo(0);
+		this->rect.d.SetTo(0);
+	}
 	
 	inline Widget(const stob::Node& description){
 		this->ApplyDescription(description);

@@ -166,8 +166,8 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
 			ASSERT(g.verts.Size() == g.texCoords.Size())
 			for(unsigned i = 0; i < g.verts.Size(); ++i){
-				g.verts[i].SetToZero();
-				g.texCoords[i].SetToZero();
+				g.verts[i].SetTo(0);
+				g.texCoords[i].SetTo(0);
 			}
 			continue;
 		}
@@ -415,8 +415,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
 	morda::Rect2f ret;
 
 	if(*s == 0){
-		ret.p.SetToZero();
-		ret.d.SetToZero();
+		ret.p.SetTo(0);
+		ret.d.SetTo(0);
 		return ret;
 	}
 
@@ -479,8 +479,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 	morda::Rect2f ret;
 
 	if(*s == 0){
-		ret.p.SetToZero();
-		ret.d.SetToZero();
+		ret.p.SetTo(0);
+		ret.d.SetTo(0);
 		return ret;
 	}
 
