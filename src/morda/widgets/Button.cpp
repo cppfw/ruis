@@ -8,8 +8,6 @@ using namespace morda;
 
 
 void Button::ApplyDescription(const stob::Node& description){
-	this->Resize(this->label->Rect().d);
-	
 	//apply button specific properties
 }
 
@@ -19,6 +17,13 @@ void Button::ApplyDescription(const stob::Node& description){
 void Button::Render(const morda::Matr4f& matrix)const{
 	this->AbstractButton::Render(matrix);
 	this->label->Render(matrix);
+}
+
+
+
+//override
+void Button::OnResize(){
+	this->label->Resize(this->Rect().d);
 }
 
 
