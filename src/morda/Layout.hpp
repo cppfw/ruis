@@ -29,15 +29,11 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include "util/Vector2.hpp"
+#include "Container.hpp"
 
 
 
 namespace morda{
-
-
-
-class Container;
 
 
 
