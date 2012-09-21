@@ -19,7 +19,7 @@ public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "Widget")
-		return Widget::New(node);
+		return Widget::New(node, false);
 	}
 	
 	inline static ting::Ptr<WidgetFactory> New(){
@@ -32,7 +32,7 @@ public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "Container")
-		return Container::New(node);
+		return Container::New(node, false);
 	}
 	
 	inline static ting::Ptr<ContainerFactory> New(){
@@ -45,7 +45,7 @@ public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "Label")
-		return Label::New(node);
+		return Label::New(node, false);
 	}
 	
 	inline static ting::Ptr<LabelFactory> New(){
@@ -58,7 +58,7 @@ public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "AbstractButton")
-		return AbstractButton::New(node);
+		return AbstractButton::New(node, false);
 	}
 	
 	inline static ting::Ptr<AbstractButtonFactory> New(){
@@ -71,7 +71,7 @@ public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
 		ASSERT(node.Value() == "Button")
-		return Button::New(node);
+		return Button::New(node, false);
 	}
 	
 	inline static ting::Ptr<ButtonFactory> New(){

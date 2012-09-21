@@ -44,9 +44,9 @@ class Button : public AbstractButton{
 	
 	void ApplyDescription(const stob::Node& description);
 protected:
-	inline Button(const stob::Node& description) :
-			AbstractButton(description),
-			label(morda::Label::New(description)) //TODO: ignore prop
+	inline Button(const stob::Node& description, bool doNotCopyProp) :
+			AbstractButton(description, doNotCopyProp),
+			label(morda::Label::New(description, true))
 	{
 		this->ApplyDescription(description);
 	}
@@ -67,8 +67,8 @@ public:
 	
 	void SetText(const std::string& text);
 	
-	inline static ting::Ref<Button> New(const stob::Node& description){
-		return ting::Ref<Button>(new Button(description));
+	inline static ting::Ref<Button> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Button>(new Button(description, doNotCopyProp));
 	}
 	
 	inline static ting::Ref<Button> New(){

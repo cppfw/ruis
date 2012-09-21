@@ -51,8 +51,8 @@ private:
 protected:
 	inline Container(){}
 	
-	inline Container(const stob::Node& description) :
-			Widget(description)
+	inline Container(const stob::Node& description, bool doNotCopyProp) :
+			Widget(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);
 	}
@@ -60,8 +60,8 @@ protected:
 public:
 	~Container()throw(){}
 	
-	inline static ting::Ref<Container> New(const stob::Node& description){
-		return ting::Ref<Container>(new Container(description));
+	inline static ting::Ref<Container> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Container>(new Container(description, doNotCopyProp));
 	}
 	
 	inline static ting::Ref<Container> New(){

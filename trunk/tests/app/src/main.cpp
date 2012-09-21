@@ -22,7 +22,7 @@ class SimpleWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResFont> fnt;
 	
 	SimpleWidget(const stob::Node& description) :
-			morda::Widget(description)
+			morda::Widget(description, false)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
@@ -81,12 +81,12 @@ public:
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
 		
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
-		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
-		morda::Matr4f m(matrix);
-		m.Translate(200, 200);
-		this->fnt->Fnt().RenderString(s, m, "Hello World!");
+//		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//		glEnable(GL_BLEND);
+//		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
+//		morda::Matr4f m(matrix);
+//		m.Translate(200, 200);
+//		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
 };
 
