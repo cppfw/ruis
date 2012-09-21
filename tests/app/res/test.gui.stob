@@ -17,9 +17,15 @@ Container{
 
 	name {someContainer}
 
-	prop{layout{
-		weight {2}
-	}}
+	layout{
+		MinSizeLayout
+	}
+
+	prop{
+		layout{
+			weight {2}
+		}
+	}
 
 	Label{
 		pos {0 0}
@@ -36,12 +42,13 @@ Container{
 	Button{
 		name {butt1}
 		pos {50 80}
-		dim {100, 30}
+		dim {100 30}
 		text {"Push me"}
 		
 		prop{
 			layout{
-
+				dim {fill wrap}
+				gravity {center center}
 			}
 		}
 	}

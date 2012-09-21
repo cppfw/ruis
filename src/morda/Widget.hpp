@@ -70,7 +70,7 @@ private:
 	std::string name;
 	
 	//Apply description from STOB
-	void ApplyDescription(const stob::Node& description);
+	void ApplyDescription(const stob::Node& description, bool doNotCopyProp);
 	
 	ting::Inited<bool, true> relayoutNeeded;
 	
@@ -136,13 +136,13 @@ protected:
 		this->rect.d.SetTo(0);
 	}
 	
-	inline Widget(const stob::Node& description){
-		this->ApplyDescription(description);
+	inline Widget(const stob::Node& description, bool doNotCopyProp){
+		this->ApplyDescription(description, doNotCopyProp);
 	}
 	
 public:
-	static ting::Ref<Widget> New(const stob::Node& description){
-		return ting::Ref<Widget>(new Widget(description));
+	static ting::Ref<Widget> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Widget>(new Widget(description, doNotCopyProp));
 	}
 	
 	static ting::Ref<Widget> New(){

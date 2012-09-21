@@ -44,8 +44,8 @@ class AbstractButton : public Widget{
 	
 	void ApplyDescription(const stob::Node& description);
 protected:
-	inline AbstractButton(const stob::Node& description) :
-			Widget(description)
+	inline AbstractButton(const stob::Node& description, bool doNotCopyProp) :
+			Widget(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);
 	}
@@ -73,8 +73,8 @@ public:
 		return this->isPressed;
 	}
 	
-	inline static ting::Ref<AbstractButton> New(const stob::Node& description){
-		return ting::Ref<AbstractButton>(new AbstractButton(description));
+	inline static ting::Ref<AbstractButton> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<AbstractButton>(new AbstractButton(description, doNotCopyProp));
 	}
 	
 	inline static ting::Ref<AbstractButton> New(){

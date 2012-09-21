@@ -48,8 +48,8 @@ class Label : public Widget{
 	void ApplyDescription(const stob::Node& description);
 	
 protected:
-	Label(const stob::Node& description) :
-			Widget(description)
+	Label(const stob::Node& description, bool doNotCopyProp) :
+			Widget(description, doNotCopyProp)
 	{	
 		this->ApplyDescription(description);
 	}
@@ -89,8 +89,8 @@ public:
 	//override
 	Vec2f ComputeMinimalDimensions()const throw();
 	
-	inline static ting::Ref<Label> New(const stob::Node& description){
-		return ting::Ref<Label>(new Label(description));
+	inline static ting::Ref<Label> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Label>(new Label(description, doNotCopyProp));
 	}
 	
 	inline static ting::Ref<Label> New(){
