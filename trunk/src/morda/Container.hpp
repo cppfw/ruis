@@ -31,11 +31,14 @@ THE SOFTWARE. */
 #include <vector>
 
 #include "Widget.hpp"
-#include "Layout.hpp"
 
 
 
 namespace morda{
+
+
+
+class Layout;
 
 
 

@@ -42,12 +42,14 @@ class LinearLayout : public morda::Layout{
 	LinearLayout(){}
 	
 	LinearLayout(const stob::Node& description);
+	
+	bool isVertical;
 public:
 	//override
-	void ArrangeWidgets(Container& c)const;
+	void ArrangeWidgets(Container& cont)const;
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions(const Container& c)const throw();
+	morda::Vec2f ComputeMinimalDimensions(const Container& cont)const throw();
 	
 	~LinearLayout()throw(){}
 	
