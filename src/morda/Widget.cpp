@@ -45,6 +45,7 @@ void Widget::RemoveFromParent(){
 
 
 void Widget::RelayoutNeeded()throw(){
+	this->minDimNeedsRecomputing = true;
 	if(this->relayoutNeeded){
 		return;
 	}

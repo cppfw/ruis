@@ -10,17 +10,17 @@ using namespace morda;
 //override
 void MinSizeLayout::ArrangeWidgets(Container& cont)const{
 	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		(*c)->Resize((*c)->ComputeMinimalDimensions());
+		(*c)->Resize((*c)->GetMinDim());
 	}
 }
 
 
 
 //override
-morda::Vec2f MinSizeLayout::ComputeMinimalDimensions(const Container& cont)const throw(){
+morda::Vec2f MinSizeLayout::ComputeMinDim(const Container& cont)const throw(){
 	morda::Vec2f minDim(0);
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		morda::Vec2f tr = (*c)->Rect().p + (*c)->ComputeMinimalDimensions();
+		morda::Vec2f tr = (*c)->Rect().p + (*c)->GetMinDim();
 		if(tr.x > minDim.x){
 			minDim.x = tr.x;
 		}

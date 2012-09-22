@@ -73,6 +73,7 @@ public:
 
 	void SetLayout(ting::Ptr<Layout> layout = ting::Ptr<Layout>()){
 		this->layout = layout;
+		this->RelayoutNeeded();
 	}
 	
 	//override
@@ -98,7 +99,7 @@ public:
 	void OnResize();
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions()const throw();
+	morda::Vec2f ComputeMinDim()const throw();
 
 	void Add(const ting::Ref<Widget>& w);
 
