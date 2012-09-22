@@ -24,17 +24,19 @@ LinearLayout::LinearLayout(const stob::Node& description){
 
 //override
 void LinearLayout::ArrangeWidgets(Container& cont)const{
-//	unsigned longIndex, transIndex;
-//	if(this->isVertical){
-//		longIndex = 1;
+	unsigned longIndex;
+//	unsigned transIndex;
+	if(this->isVertical){
+		longIndex = 1;
 //		transIndex = 0;
-//	}else{
-//		longIndex = 0;
+	}else{
+		longIndex = 0;
 //		transIndex = 1;
-//	}
+	}
 	
 	//calculate net weight
 	float netWeight = 0;
+	float zeroWeightsLength = 0;
 	
 	ting::Array<float> weights(cont.NumChildren());
 	
@@ -45,19 +47,28 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			ASSERT(weights.Overlaps(i))
 			if(!layout){
 				*i = 0;
-				continue;
-			}
-			if(const stob::Node* weight = layout->GetProperty("weight")){
+			}else if(const stob::Node* weight = layout->GetProperty("weight")){
 				*i = weight->AsFloat();
-				netWeight += *i;
 			}else{
 				*i = 0;
+			}
+			
+			if(*i == 0){
+				zeroWeightsLength += (*c)->GetMinDim()[longIndex];
+			}else{
+				netWeight += *i;
 			}
 		}
 	}
 	
-	
-	//TODO:
+	for(bool doAgain = true; doAgain;){
+		doAgain = false;
+		
+		float *i = weights.Begin();
+		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+			//TODO:
+		}
+	}
 }
 
 
