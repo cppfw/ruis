@@ -28,6 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <stob/dom.hpp>
 
 #include "Container.hpp"
 
@@ -44,6 +45,14 @@ public:
 	virtual morda::Vec2f ComputeMinimalDimensions(const Container& cont)const throw()= 0;
 	
 	virtual ~Layout()throw(){}
+	
+protected:
+	static inline const stob::Node* GetLayoutProp(const Widget& w){
+		if(!w.prop){
+			return 0;
+		}
+		return w.prop->Child("layout").second;
+	}
 };
 
 
