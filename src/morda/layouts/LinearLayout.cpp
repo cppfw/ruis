@@ -22,6 +22,14 @@ LinearLayout::LinearLayout(const stob::Node& description){
 
 //override
 void LinearLayout::ArrangeWidgets(Container& cont)const{
+//	unsigned longIndex, transIndex;
+//	if(this->isVertical){
+//		longIndex = 1;
+//		transIndex = 0;
+//	}else{
+//		longIndex = 0;
+//		transIndex = 1;
+//	}
 	
 	//TODO:
 }
@@ -32,22 +40,21 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 morda::Vec2f LinearLayout::ComputeMinimalDimensions(const Container& cont)const throw(){
 	morda::Vec2f minDim(0);
 	
+	unsigned longIndex, transIndex;
 	if(this->isVertical){
-		for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-			morda::Vec2f md = (*c)->ComputeMinimalDimensions();
-			if(minDim.x < md.x){
-				minDim.x = md.x;
-			}
-			minDim.y =+ md.y;
-		}
+		longIndex = 1;
+		transIndex = 0;
 	}else{
-		for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-			morda::Vec2f md = (*c)->ComputeMinimalDimensions();
-			if(minDim.y < md.y){
-				minDim.y = md.y;
-			}
-			minDim.x =+ md.x;
+		longIndex = 0;
+		transIndex = 1;
+	}
+	
+	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
+		morda::Vec2f md = (*c)->ComputeMinimalDimensions();
+		if(minDim[transIndex] < md[transIndex]){
+			minDim[transIndex] = md[transIndex];
 		}
+		minDim[longIndex] =+ md[longIndex];
 	}
 	return minDim;
 }
