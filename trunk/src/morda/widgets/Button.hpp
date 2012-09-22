@@ -60,7 +60,7 @@ public:
 	void Render(const morda::Matr4f& matrix)const;
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions()const throw();
+	morda::Vec2f ComputeMinDim()const throw();
 	
 	//override
 	void OnResize();

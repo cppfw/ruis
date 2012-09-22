@@ -87,7 +87,7 @@ public:
 	void Render(const morda::Matr4f& matrix)const;
 	
 	//override
-	Vec2f ComputeMinimalDimensions()const throw();
+	Vec2f ComputeMinDim()const throw();
 	
 	inline static ting::Ref<Label> New(const stob::Node& description, bool doNotCopyProp){
 		return ting::Ref<Label>(new Label(description, doNotCopyProp));

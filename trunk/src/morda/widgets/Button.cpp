@@ -28,13 +28,14 @@ void Button::OnResize(){
 
 
 
-morda::Vec2f Button::ComputeMinimalDimensions()const throw(){
-	return this->label->ComputeMinimalDimensions();
+//override
+morda::Vec2f Button::ComputeMinDim()const throw(){
+	return this->label->GetMinDim();
 }
 
 
 
 void Button::SetText(const std::string& text){
 	this->label->SetText(text);
-	this->Resize(this->label->Rect().d);
+	this->RelayoutNeeded();
 }

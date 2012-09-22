@@ -177,11 +177,11 @@ void Container::OnResize(){
 
 
 //override
-morda::Vec2f Container::ComputeMinimalDimensions()const throw(){
+morda::Vec2f Container::ComputeMinDim()const throw(){
 	if(this->layout){
-		return this->layout->ComputeMinimalDimensions(*this);
+		return this->layout->ComputeMinDim(*this);
 	}
-	return this->Widget::ComputeMinimalDimensions();
+	return this->Widget::ComputeMinDim();
 }
 
 

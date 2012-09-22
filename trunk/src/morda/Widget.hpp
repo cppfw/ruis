@@ -67,6 +67,9 @@ private:
 
 	morda::Rect2f rect;
 	
+	morda::Vec2f minDim;
+	ting::Inited<bool, true> minDimNeedsRecomputing;
+	
 	std::string name;
 	
 	//Apply description from STOB
@@ -189,9 +192,20 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	virtual morda::Vec2f ComputeMinimalDimensions()const throw(){
+	inline const morda::Vec2f& GetMinDim()const throw(){
+		if(this->minDimNeedsRecomputing){
+			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
+			this->minDimNeedsRecomputing = false;
+		}
+		return this->minDim;
+	}
+
+protected:
+	virtual morda::Vec2f ComputeMinDim()const throw(){
 		return this->Rect().d;
 	}
+	
+public:
 
 	void RelayoutNeeded()throw();
 	

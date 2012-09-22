@@ -36,12 +36,14 @@ void Label::SetText(const std::string& text){
 	this->text = text;
 	
 	this->bb = this->font->Fnt().StringBoundingBox(this->text);
+	
+	this->RelayoutNeeded();
 }
 
 
 
 //override
-morda::Vec2f Label::ComputeMinimalDimensions()const throw(){
+morda::Vec2f Label::ComputeMinDim()const throw(){
 	return this->bb.d;
 }
 

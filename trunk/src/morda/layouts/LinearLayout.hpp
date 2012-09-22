@@ -49,7 +49,7 @@ public:
 	void ArrangeWidgets(Container& cont)const;
 	
 	//override
-	morda::Vec2f ComputeMinimalDimensions(const Container& cont)const throw();
+	morda::Vec2f ComputeMinDim(const Container& cont)const throw();
 	
 	~LinearLayout()throw(){}
 	
