@@ -1,5 +1,7 @@
 #include "LinearLayout.hpp"
 
+#include <ting/Array.hpp>
+
 
 
 using namespace morda;
@@ -34,15 +36,26 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	//calculate net weight
 	float netWeight = 0;
 	
-	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		const stob::Node* layout = Layout::GetLayoutProp(**c);
-		if(!layout){
-			continue;
-		}
-		if(const stob::Node* weight = layout->GetProperty("weight")){
-			netWeight += weight->AsFloat();
+	ting::Array<float> weights(cont.NumChildren());
+	
+	{
+		float *i = weights.Begin();
+		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+			const stob::Node* layout = Layout::GetLayoutProp(**c);
+			ASSERT(weights.Overlaps(i))
+			if(!layout){
+				*i = 0;
+				continue;
+			}
+			if(const stob::Node* weight = layout->GetProperty("weight")){
+				*i = weight->AsFloat();
+				netWeight += *i;
+			}else{
+				*i = 0;
+			}
 		}
 	}
+	
 	
 	//TODO:
 }
