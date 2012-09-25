@@ -46,7 +46,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			//TODO: layout props
 			
 			morda::Vec2f newPos;
-			newPos[longIndex] = ting::math::Round(pos);//TODO: round
+			newPos[longIndex] = ting::math::Round(pos);
 			newPos[transIndex] = 0;
 
 			(*c)->Move(newPos);
@@ -93,14 +93,31 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		}
 	}
 	
-	for(bool doAgain = true; doAgain;){
-		doAgain = false;
-		
-		std::pair<float, float> *i = weights.Begin();
-		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
-			//TODO:
+	//find children whose minSize is bigger than resulting weighted size and set their weight to 0
+	if(netWeight != 0){
+		float weightedLength = cont.Rect().d[longIndex] - zeroWeightsLength;
+		float lengthPerUnit = weightedLength / netWeight;
+
+		for(bool doAgain = true; doAgain;){
+			doAgain = false;
+
+			for(std::pair<float, float> *i = weights.Begin(); i != weights.End(); ++i){
+				if((*i).first == 0){
+					continue;
+				}
+				
+				if((*i).first * lengthPerUnit <= (*i).second){
+					weightedLength -= (*i).second;
+					netWeight -= (*i).first;
+					lengthPerUnit = weightedLength / netWeight;
+					(*i).first = 0;
+					doAgain = true;
+				}
+			}
 		}
 	}
+	
+	//TODO:
 }
 
 
