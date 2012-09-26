@@ -1,7 +1,3 @@
-layout{
-	MinSizeLayout
-}
-
 U_SimpleWidget{
 	dim {300 300}
 }
@@ -18,7 +14,9 @@ Container{
 	name {someContainer}
 
 	layout{
-		MinSizeLayout
+		LinearLayout{
+			orientation {horizontal}
+		}
 	}
 
 	prop{

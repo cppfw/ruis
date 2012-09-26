@@ -68,11 +68,12 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	float netWeight = 0;
 	float zeroWeightsLength = 0;
 	
-	//weight - minSize pairs
-	ting::Array<std::pair<float, float> > weights(cont.NumChildren());
+	//weight - minSize pair
+	typedef std::pair<float, float> T_Pair;
+	ting::Array<T_Pair> weights(cont.NumChildren());
 	
 	{
-		std::pair<float, float> *i = weights.Begin();
+		T_Pair *i = weights.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			const stob::Node* layout = Layout::GetLayoutProp(**c);
 			ASSERT(weights.Overlaps(i))
@@ -93,15 +94,16 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		}
 	}
 	
+	float weightedLength = cont.Rect().d[longIndex] - zeroWeightsLength;
+	
 	//find children whose minSize is bigger than resulting weighted size and set their weight to 0
 	if(netWeight != 0){
-		float weightedLength = cont.Rect().d[longIndex] - zeroWeightsLength;
 		float lengthPerUnit = weightedLength / netWeight;
 
 		for(bool doAgain = true; doAgain;){
 			doAgain = false;
 
-			for(std::pair<float, float> *i = weights.Begin(); i != weights.End(); ++i){
+			for(T_Pair *i = weights.Begin(); i != weights.End(); ++i){
 				if((*i).first == 0){
 					continue;
 				}
@@ -117,7 +119,33 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		}
 	}
 	
-	//TODO:
+	float pos = 0;
+	T_Pair *i = weights.Begin();
+	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+//			const stob::Node* layout = Layout::GetLayoutProp(**c);
+		//TODO: layout props
+
+		morda::Vec2f newPos;
+		newPos[longIndex] = ting::math::Round(pos);
+		newPos[transIndex] = 0;
+
+		(*c)->Move(newPos);
+
+		morda::Vec2f newSize;
+		if(i->first > 0){
+			newSize[longIndex] = (i->first / netWeight) * weightedLength;
+		}else{
+			newSize[longIndex] = (*c)->GetMinDim()[longIndex];
+		}
+		
+		newSize[transIndex] = (*c)->GetMinDim()[transIndex];
+
+		pos += newSize[longIndex];
+
+		newSize[longIndex] = ting::math::Round(newSize[longIndex]);
+
+		(*c)->Resize(newSize);
+	}
 }
 
 
