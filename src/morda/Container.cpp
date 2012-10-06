@@ -214,7 +214,7 @@ void Container::Add(const ting::Ref<Widget>& w){
 	
 	w->parent = this;
 
-	w->RelayoutNeeded();//will call to this->RelayoutNeeded() also since parent is already set
+	this->RelayoutNeeded();
 	
 	ASSERT(!w->IsHovered())
 }
