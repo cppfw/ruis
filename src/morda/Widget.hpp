@@ -78,6 +78,10 @@ private:
 	ting::Inited<bool, true> relayoutNeeded;
 	
 public:
+	inline bool NeedsRelayout()const throw(){
+		return this->relayoutNeeded;
+	}
+	
 	ting::Ptr<stob::Node> prop;
 	
 	const std::string& Name()const throw(){
@@ -119,11 +123,11 @@ public:
 		return this->rect;
 	}
 
-	inline void SetPos(const morda::Vec2f& newPos)throw(){
+	inline void MoveTo(const morda::Vec2f& newPos)throw(){
 		this->rect.p = newPos;
 	}
 	
-	inline void Move(const morda::Vec2f& delta)throw(){
+	inline void MoveBy(const morda::Vec2f& delta)throw(){
 		this->rect.p += delta;
 	}
 

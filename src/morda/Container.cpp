@@ -171,6 +171,12 @@ void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
 	if(this->layout){
 		this->layout->ArrangeWidgets(*this);
+	}else{
+		for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
+			if((*c)->NeedsRelayout()){
+				(*c)->Resize((*c)->Rect().d);
+			}
+		}
 	}
 }
 
