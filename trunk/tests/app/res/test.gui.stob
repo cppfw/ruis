@@ -4,12 +4,13 @@ U_SimpleWidget{
 
 Button{
 	pos {10 20}
+	dim{100 50}
 	text {"Hello world!"}
 }
 
 Container{
 	pos {50 100}
-	dim {80 100}
+	dim {120 100}
 
 	name {someContainer}
 
@@ -47,6 +48,7 @@ Container{
 			layout{
 				dim {fill wrap}
 				gravity {center center}
+				weight{1}
 			}
 		}
 	}

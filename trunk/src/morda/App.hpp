@@ -223,7 +223,7 @@ public:
 
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
-		this->rootContainer->SetPos(morda::Vec2f(0));
+		this->rootContainer->MoveTo(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
 	}
 

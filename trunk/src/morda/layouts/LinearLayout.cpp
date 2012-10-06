@@ -24,21 +24,14 @@ LinearLayout::LinearLayout(const stob::Node& description){
 
 //override
 void LinearLayout::ArrangeWidgets(Container& cont)const{
-	unsigned longIndex;
-	unsigned transIndex;
-	if(this->isVertical){
-		longIndex = 1;
-		transIndex = 0;
-	}else{
-		longIndex = 0;
-		transIndex = 1;
-	}
+	unsigned longIndex = this->isVertical ? 1 : 0;
+	unsigned transIndex = this->isVertical ? 0 : 1;
 	
 	const morda::Vec2f& minDim = cont.GetMinDim();
 	
 	//if size of the container is less than minimal required size
 	if(cont.Rect().d[longIndex] <= minDim[longIndex]){
-		float factor = minDim[longIndex] / cont.Rect().d[longIndex];
+		float factor = cont.Rect().d[longIndex] / minDim[longIndex];
 		
 		float pos = 0;
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
@@ -49,7 +42,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			newPos[longIndex] = ting::math::Round(pos);
 			newPos[transIndex] = 0;
 
-			(*c)->Move(newPos);
+			(*c)->MoveTo(newPos);
 			
 			morda::Vec2f newSize = (*c)->GetMinDim();
 			newSize[longIndex] *= factor;
@@ -129,7 +122,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		newPos[longIndex] = ting::math::Round(pos);
 		newPos[transIndex] = 0;
 
-		(*c)->Move(newPos);
+		(*c)->MoveTo(newPos);
 
 		morda::Vec2f newSize;
 		if(i->first > 0){
@@ -168,7 +161,7 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		if(minDim[transIndex] < md[transIndex]){
 			minDim[transIndex] = md[transIndex];
 		}
-		minDim[longIndex] =+ md[longIndex];
+		minDim[longIndex] += md[longIndex];
 	}
 	return minDim;
 }
