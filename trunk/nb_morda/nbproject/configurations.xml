@@ -85,16 +85,20 @@
           <df name="2">
             <df name="morda">
               <df name="layouts">
+                <in>MinSizeLayout.d</in>
               </df>
               <df name="linux">
               </df>
               <df name="resman">
               </df>
               <df name="resources">
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Image.d</in>
               </df>
               <df name="widgets">
               </df>
