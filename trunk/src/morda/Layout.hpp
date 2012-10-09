@@ -39,6 +39,9 @@ namespace morda{
 
 
 class Layout{
+	static inline const char* D_Layout()throw(){
+		return "layout";
+	}
 public:
 	virtual void ArrangeWidgets(Container& cont)const = 0;
 	
@@ -46,12 +49,16 @@ public:
 	
 	virtual ~Layout()throw(){}
 	
-protected:
-	static inline const stob::Node* GetLayoutProp(const Widget& w){
-		if(!w.prop){
+public:
+	static inline const stob::Node* GetLayoutProp(const stob::Node& prop){
+		return prop.Child(D_Layout()).second;
+	}
+	
+	static inline const stob::Node* GetLayoutProp(const stob::Node* prop){
+		if(!prop){
 			return 0;
 		}
-		return w.prop->Child("layout").second;
+		return GetLayoutProp(*prop);
 	}
 };
 
