@@ -68,7 +68,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	{
 		T_Pair *i = weights.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
-			const stob::Node* layout = Layout::GetLayoutProp(**c);
+			const stob::Node* layout = Layout::GetLayoutProp((*c)->prop.operator->());
 			ASSERT(weights.Overlaps(i))
 			if(!layout){
 				(*i).first = 0;
