@@ -28,25 +28,25 @@ Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
 	}
 	
 	if(n->Value() == D_Left){
-		ret.hori = LEFT;
+		ret.h = LEFT;
 	}else if(n->Value() == D_Right){
-		ret.hori = RIGHT;
+		ret.h = RIGHT;
 	}else{
-		ret.hori = CENTER;
+		ret.h = CENTER;
 	}
 	
 	n = n->Next();
 	if(!n){
-		ret.vert = CENTER;
+		ret.v = CENTER;
 		return ret;
 	}
 
 	if(n->Value() == D_Top){
-		ret.vert = TOP;
+		ret.v = TOP;
 	}else if(n->Value() == D_Bottom){
-		ret.vert = BOTTOM;
+		ret.v = BOTTOM;
 	}else{
-		ret.vert = CENTER;
+		ret.v = CENTER;
 	}
 	
 	return ret;
