@@ -66,34 +66,23 @@ void Label::SetGravity(Gravity gravity){
 
 
 void Label::UpdatePivot(){
-	switch(this->gravity.hori){
-		case Gravity::LEFT:
-			this->pivot.x = -this->bb.p.x;
-			break;
-		case Gravity::RIGHT:
-			this->pivot.x = this->Rect().d.x - this->bb.Right();
-			break;
-		default:
-		case Gravity::CENTER:
-			this->pivot.x = (this->Rect().d.x - this->bb.d.x) / 2 - this->bb.p.x;
-			break;
+	for(unsigned i = 0; i != 2; ++i){
+		switch(this->gravity[i]){
+			case Gravity::LEFT:
+//			case Gravity::BOTTOM:
+				this->pivot[i] = -this->bb.p[i];
+				break;
+			case Gravity::RIGHT:
+//			case Gravity::TOP:
+				this->pivot[i] = this->Rect().d[i] - (this->bb.p[i] + this->bb.d[i]);
+				break;
+			default:
+			case Gravity::CENTER:
+				this->pivot[i] = (this->Rect().d[i] - this->bb.d[i]) / 2 - this->bb.p[i];
+				break;
+		}
+		this->pivot[i] = ting::math::Round(this->pivot[i]);
 	}
-	
-	switch(this->gravity.vert){
-		case Gravity::BOTTOM:
-			this->pivot.y = -this->bb.p.y;
-			break;
-		case Gravity::TOP:
-			this->pivot.y = this->Rect().d.y - this->bb.Top();
-			break;
-		default:
-		case Gravity::CENTER:
-			this->pivot.y = (this->Rect().d.y - this->bb.d.y) / 2 - this->bb.p.y;
-			break;
-	}
-	
-	this->pivot.x = ting::math::Round(this->pivot.x);
-	this->pivot.y = ting::math::Round(this->pivot.y);
 }
 
 

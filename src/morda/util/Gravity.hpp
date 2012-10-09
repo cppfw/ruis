@@ -46,14 +46,31 @@ public:
 		TOP = RIGHT
 	};
 	
-	E_Gravity hori;
-	E_Gravity vert;
+	/**
+	 * @brief Horizontal gravity.
+	 */
+	E_Gravity h;
+	
+	/**
+	 * @brief Vertical gravity.
+	 */
+	E_Gravity v;
+	
+	inline E_Gravity& operator[](size_t i)throw(){
+		ASSERT(i < 2)
+		return reinterpret_cast<E_Gravity*>(this)[i];
+	}
+	
+	const E_Gravity& operator[](size_t i)const throw(){
+		ASSERT(i < 2)
+		return reinterpret_cast<const E_Gravity*>(this)[i];
+	}
 	
 	inline Gravity(){}
 	
-	inline Gravity(E_Gravity hori, E_Gravity vert) :
-			hori(hori),
-			vert(vert)
+	inline Gravity(E_Gravity h, E_Gravity v) :
+			h(h),
+			v(v)
 	{}
 	
 	/**
