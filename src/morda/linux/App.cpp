@@ -98,7 +98,7 @@ App::XWindowWrapper::XWindowWrapper(unsigned width, unsigned height, XDisplayWra
 			&attr
 		);
 	//TODO: check for error
-
+	
 	{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
 		Atom a = XInternAtom(this->d.d, "WM_DELETE_WINDOW", True);
 		XSetWMProtocols(this->d.d, this->w, &a, 1);
@@ -220,6 +220,10 @@ void App::Exec(){
 	
 	waitSet.Add(&xew, ting::Waitable::READ);
 //	waitSet.Add(&this->queue, ting::Waitable::READ);
+	
+	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
+	//So, render everything for the first time.
+	this->Render();
 	
 	while(!this->quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
