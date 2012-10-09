@@ -34,9 +34,7 @@ Container{
 
 		prop{
 			layout{
-				center {vertical}
 				weight {1}
-				fill
 			}
 		}
 	}
