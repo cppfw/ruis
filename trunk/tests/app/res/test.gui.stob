@@ -5,6 +5,7 @@ U_SimpleWidget{
 Button{
 	pos {10 20}
 	dim {100 50}
+	gravity{center center}
 	text {"Hello world!"}
 }
 
@@ -30,7 +31,7 @@ Container{
 		pos {0 0}
 		name {label1}
 		text {trololo}
-		gravity {left center}
+		gravity {right center}
 
 		prop{
 			layout{

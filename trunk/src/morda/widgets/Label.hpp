@@ -32,6 +32,8 @@ THE SOFTWARE. */
 
 #include "../Widget.hpp"
 #include "../resources/ResFont.hpp"
+#include "../util/Gravity.hpp"
+
 
 
 namespace morda{
@@ -43,7 +45,9 @@ class Label : public Widget{
 	
 	ting::Ref<morda::ResFont> font;
 	
-	morda::Rect2f bb;
+	morda::Rect2f bb;//text bounding box
+	
+	morda::Vec2f pivot;
 	
 	void ApplyDescription(const stob::Node& description);
 	
@@ -56,24 +60,12 @@ protected:
 	
 	Label();
 	
-public:
-	enum E_Gravity{
-		CENTER,
-		LEFT,
-		TOP_LEFT,
-		BOTTOM_LEFT,
-		RIGHT,
-		TOP_RIGHT,
-		BOTTOM_RIGHT,
-		TOP,
-		BOTTOM
-	};
-	
 private:
-	E_Gravity gravity;
+	Gravity gravity;
 	
+	void UpdatePivot();
 public:
-	void SetGravity(E_Gravity gravity);
+	void SetGravity(Gravity gravity);
 	
 	~Label()throw(){}
 	
@@ -88,6 +80,9 @@ public:
 	
 	//override
 	Vec2f ComputeMinDim()const throw();
+	
+	//override
+	void OnResize();
 	
 	inline static ting::Ref<Label> New(const stob::Node& description, bool doNotCopyProp){
 		return ting::Ref<Label>(new Label(description, doNotCopyProp));

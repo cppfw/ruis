@@ -1,5 +1,7 @@
 #include "Label.hpp"
 
+#include <ting/math.hpp>
+
 #include "../App.hpp"
 
 
@@ -24,10 +26,7 @@ void Label::ApplyDescription(const stob::Node& description){
 		this->SetText(p->Value());
 	}
 	
-	//TODO:
-//	if(const stob::Node* p = description.GetProperty("gravity")){
-//		
-//	}
+	this->SetGravity(Gravity::FromLayout(description));
 }
 
 
@@ -36,6 +35,8 @@ void Label::SetText(const std::string& text){
 	this->text = text;
 	
 	this->bb = this->font->Fnt().StringBoundingBox(this->text);
+	
+	this->UpdatePivot();
 	
 	this->RelayoutNeeded();
 }
@@ -49,10 +50,50 @@ morda::Vec2f Label::ComputeMinDim()const throw(){
 
 
 
-void Label::SetGravity(E_Gravity gravity){
+//override
+void Label::OnResize(){
+	this->UpdatePivot();
+}
+
+
+
+void Label::SetGravity(Gravity gravity){
 	this->gravity = gravity;
 	
-	//TODO:
+	this->UpdatePivot();
+}
+
+
+
+void Label::UpdatePivot(){
+	switch(this->gravity.hori){
+		case Gravity::LEFT:
+			this->pivot.x = -this->bb.p.x;
+			break;
+		case Gravity::RIGHT:
+			this->pivot.x = this->Rect().d.x - this->bb.Right();
+			break;
+		default:
+		case Gravity::CENTER:
+			this->pivot.x = (this->Rect().d.x - this->bb.d.x) / 2 - this->bb.p.x;
+			break;
+	}
+	
+	switch(this->gravity.vert){
+		case Gravity::BOTTOM:
+			this->pivot.y = -this->bb.p.y;
+			break;
+		case Gravity::TOP:
+			this->pivot.y = this->Rect().d.y - this->bb.Top();
+			break;
+		default:
+		case Gravity::CENTER:
+			this->pivot.y = (this->Rect().d.y - this->bb.d.y) / 2 - this->bb.p.y;
+			break;
+	}
+	
+	this->pivot.x = ting::math::Round(this->pivot.x);
+	this->pivot.y = ting::math::Round(this->pivot.y);
 }
 
 
@@ -70,6 +111,6 @@ void Label::Render(const morda::Matr4f& matrix)const{
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	morda::Matr4f matr(matrix);
-	matr.Translate(-this->bb.p);
+	matr.Translate(this->pivot);
 	this->font->Fnt().RenderString(s, matr, this->text);
 }
