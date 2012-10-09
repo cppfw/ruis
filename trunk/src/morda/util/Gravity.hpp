@@ -81,6 +81,7 @@ public:
 	 *     //...
 	 * }
 	 * @endcode
+	 * Value of the root node does not matter, it is ignored.
      * @param layout - layout properties STOB node.
      * @return Parsed Gravity object.
      */
@@ -100,6 +101,7 @@ public:
 	 *     //...
 	 * }
 	 * @endcode
+	 * Value of the root node does not matter, it is ignored.
      * @param prop - prop properties STOB node.
      * @return Parsed Gravity object.
      */
