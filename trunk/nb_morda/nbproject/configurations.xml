@@ -75,6 +75,7 @@
         <in>Exc.hpp</in>
         <in>GuiInflater.cpp</in>
         <in>GuiInflater.hpp</in>
+        <in>Layout.cpp</in>
         <in>Layout.hpp</in>
         <in>Updateable.cpp</in>
         <in>Updateable.hpp</in>

@@ -42,6 +42,7 @@ srcs += morda/App.cpp
 srcs += morda/Widget.cpp
 srcs += morda/Container.cpp
 srcs += morda/GuiInflater.cpp
+srcs += morda/Layout.cpp
 srcs += morda/Updateable.cpp
 srcs += morda/shaders/Shader.cpp
 srcs += morda/shaders/SimpleSingleColoringShader.cpp

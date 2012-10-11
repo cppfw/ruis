@@ -60,6 +60,88 @@ public:
 		}
 		return GetLayoutProp(*prop);
 	}
+	
+	
+	
+	class Dim{
+	public:
+		enum E_Unit{
+			PIXEL,
+			FRACTION, //means that the value is a fraction from parent size
+			MAX, //means fill parent, value should be ignored.
+			MIN //means wrap content, value should be taken from min size
+		};
+		
+		struct Value{
+			float value;
+			E_Unit unit;
+		}x, y;
+		
+		Value& operator[](size_t i)throw(){
+			ASSERT(i < 2)
+			return reinterpret_cast<Value*>(this)[i];
+		}
+		
+		const Value& operator[](size_t i)const throw(){
+			ASSERT(i < 2)
+			return reinterpret_cast<const Value*>(this)[i];
+		}
+		
+		/**
+		 * @brief Parse from STOB.
+		 * Parse from STOB of the form:
+		 * @code
+		 * dim{min 13%}
+		 * @endcode
+		 * The value of the root node does not matter, it is ignored.
+         * @param node - dim node.
+         * @return Parsed Dim object.
+         */
+		static Dim FromSTOB(const stob::Node& node)throw();
+		
+		/**
+		 * @brief Parse from layout properties STOB.
+		 * Parse from STOB of the form:
+		 * @code
+		 * layout{
+		 *     //...
+		 *     dim{134 max}
+		 *     //...
+		 * }
+		 * @endcode
+		 * The value of the root node does not matter, it is ignored.
+         * @param layout - layout node.
+         * @return Parsed Dim object.
+         */
+		static Dim FromLayout(const stob::Node& layout)throw();
+		
+		/**
+		 * @brief Parse from properties STOB.
+		 * Parse from STOB of the form:
+		 * @code
+		 * prop{
+		 *     //...
+		 *     layout{
+		 *         //...
+		 *         dim{134 max}
+		 *         //...
+		 *     }
+		 *     //...
+		 * }
+		 * @endcode
+		 * The value of the root node does not matter, it is ignored.
+         * @param prop - prop node.
+         * @return Parsed Dim object.
+         */
+		static Dim FromPropLayout(const stob::Node& prop)throw();
+		
+		static Dim Default()throw(){
+			Dim ret;
+			ret.x.unit = MIN;
+			ret.y.unit = MIN;
+			return ret;
+		}
+	};
 };
 
 
