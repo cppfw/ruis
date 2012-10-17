@@ -22,6 +22,18 @@ LinearLayout::LinearLayout(const stob::Node& description){
 
 
 
+namespace{
+
+class Info{
+public:
+	float weight;
+	float minSize;
+};
+
+}//~namespace
+
+
+
 //override
 void LinearLayout::ArrangeWidgets(Container& cont)const{
 	unsigned longIndex = this->isVertical ? 1 : 0;
@@ -61,28 +73,26 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	float netWeight = 0;
 	float zeroWeightsLength = 0;
 	
-	//weight - minSize pair
-	typedef std::pair<float, float> T_Pair;
-	ting::Array<T_Pair> weights(cont.NumChildren());
+	ting::Array<Info> weights(cont.NumChildren());
 	
 	{
-		T_Pair *i = weights.Begin();
+		Info *i = weights.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			const stob::Node* layout = Layout::GetLayoutProp((*c)->prop.operator->());
 			ASSERT(weights.Overlaps(i))
 			if(!layout){
-				(*i).first = 0;
+				(*i).weight = 0;
 			}else if(const stob::Node* weight = layout->GetProperty("weight")){
-				(*i).first = weight->AsFloat();
+				(*i).weight = weight->AsFloat();
 			}else{
-				(*i).first = 0;
+				(*i).weight = 0;
 			}
 			
-			(*i).second = (*c)->GetMinDim()[longIndex];
-			if((*i).first == 0){
-				zeroWeightsLength += (*i).second;
+			(*i).minSize = (*c)->GetMinDim()[longIndex];
+			if((*i).weight == 0){
+				zeroWeightsLength += (*i).minSize;
 			}else{
-				netWeight += (*i).first;
+				netWeight += (*i).weight;
 			}
 		}
 	}
@@ -96,16 +106,16 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		for(bool doAgain = true; doAgain;){
 			doAgain = false;
 
-			for(T_Pair *i = weights.Begin(); i != weights.End(); ++i){
-				if((*i).first == 0){
+			for(Info *i = weights.Begin(); i != weights.End(); ++i){
+				if((*i).weight == 0){
 					continue;
 				}
 				
-				if((*i).first * lengthPerUnit <= (*i).second){
-					weightedLength -= (*i).second;
-					netWeight -= (*i).first;
+				if((*i).weight * lengthPerUnit <= (*i).minSize){
+					weightedLength -= (*i).minSize;
+					netWeight -= (*i).weight;
 					lengthPerUnit = weightedLength / netWeight;
-					(*i).first = 0;
+					(*i).weight = 0;
 					doAgain = true;
 				}
 			}
@@ -113,7 +123,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	}
 	
 	float pos = 0;
-	T_Pair *i = weights.Begin();
+	Info *i = weights.Begin();
 	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 //			const stob::Node* layout = Layout::GetLayoutProp(**c);
 		//TODO: layout props
@@ -125,8 +135,8 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		(*c)->MoveTo(newPos);
 
 		morda::Vec2f newSize;
-		if(i->first > 0){
-			newSize[longIndex] = (i->first / netWeight) * weightedLength;
+		if(i->weight > 0){
+			newSize[longIndex] = (i->weight / netWeight) * weightedLength;
 		}else{
 			newSize[longIndex] = (*c)->GetMinDim()[longIndex];
 		}
