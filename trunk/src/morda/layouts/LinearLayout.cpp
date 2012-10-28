@@ -43,7 +43,12 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	
 	//if size of the container is less than minimal required size
 	if(cont.Rect().d[longIndex] <= minDim[longIndex]){
-		float factor = cont.Rect().d[longIndex] / minDim[longIndex];
+		float factor;
+		if(minDim[longIndex] == 0){
+			factor = 0;
+		}else{
+			factor = cont.Rect().d[longIndex] / minDim[longIndex];
+		}
 		
 		float pos = 0;
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
