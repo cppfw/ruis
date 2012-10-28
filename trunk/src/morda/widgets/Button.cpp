@@ -16,26 +16,14 @@ void Button::ApplyDescription(const stob::Node& description){
 //override
 void Button::Render(const morda::Matr4f& matrix)const{
 	this->AbstractButton::Render(matrix);
-	this->label->Render(matrix);
+	this->Label::Render(matrix);
 }
 
 
 
 //override
 void Button::OnResize(){
-	this->label->Resize(this->Rect().d);
+	this->Label::OnResize();
 }
 
 
-
-//override
-morda::Vec2f Button::ComputeMinDim()const throw(){
-	return this->label->GetMinDim();
-}
-
-
-
-void Button::SetText(const std::string& text){
-	this->label->SetText(text);
-	this->RelayoutNeeded();
-}

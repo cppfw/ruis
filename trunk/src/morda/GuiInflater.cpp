@@ -14,6 +14,10 @@ using namespace morda;
 
 namespace{
 
+const char* DContainer = "Container";
+
+
+
 class WidgetFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
@@ -111,7 +115,7 @@ public:
 
 GuiInflater::GuiInflater(){
 	this->AddWidgetFactory("Widget", ::WidgetFactory::New());
-	this->AddWidgetFactory("Container", ContainerFactory::New());
+	this->AddWidgetFactory(DContainer, ContainerFactory::New());
 	this->AddWidgetFactory("Label", LabelFactory::New());
 	this->AddWidgetFactory("AbstractButton", AbstractButtonFactory::New());
 	this->AddWidgetFactory("Button", ButtonFactory::New());
@@ -147,9 +151,9 @@ bool GuiInflater::RemoveWidgetFactory(const std::string& widgetName)throw(){
 ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
-	root->SetValue("Container");
+	root->SetValue(DContainer);
 	
-	return this->Inflate(*root).StaticCast<morda::Container>();
+	return this->Inflate(*root).DynamicCast<morda::Container>();
 }
 
 

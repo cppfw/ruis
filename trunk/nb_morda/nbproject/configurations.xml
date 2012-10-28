@@ -67,8 +67,10 @@
           <in>AbstractButton.hpp</in>
           <in>Button.cpp</in>
           <in>Button.hpp</in>
+          <in>Gravitating.hpp</in>
           <in>Label.cpp</in>
           <in>Label.hpp</in>
+          <in>Padded.hpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>

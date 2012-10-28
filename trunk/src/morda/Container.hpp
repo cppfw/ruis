@@ -42,7 +42,7 @@ class Layout;
 
 
 
-class Container : public Widget{
+class Container : public virtual Widget{
 private:
 	ting::Ref<Widget> childrenHead, childrenTail;
 	ting::Inited<unsigned, 0> numChildren;

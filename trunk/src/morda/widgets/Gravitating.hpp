@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis
+Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,47 +26,39 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
-#include <string>
+#include "../Widget.hpp"
+#include "../util/Gravity.hpp"
 
-#include "AbstractButton.hpp"
-#include "Label.hpp"
+
 
 
 namespace morda{
 
 
 
-class Button : public AbstractButton, public Label{
-	void ApplyDescription(const stob::Node& description);
+class Gravitating : public virtual Widget{
+	Gravity gravity;
 protected:
-	inline Button(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp),
-			AbstractButton(description, doNotCopyProp),
-			Label(description, doNotCopyProp)
-	{
-		this->ApplyDescription(description);
-	}
+
+	inline Gravitating()throw(){}
 	
-	inline Button(){}
+	inline Gravitating(Gravity gravity)throw() :
+			gravity(gravity)
+	{}
+	
+	inline Gravitating(const stob::Node& description){
+		this->SetGravity(Gravity::FromLayout(description));
+	}
 public:
-	
-	~Button()throw(){}
-	
-	//override
-	void Render(const morda::Matr4f& matrix)const;
-	
-	//override
-	void OnResize();
-	
-	inline static ting::Ref<Button> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<Button>(new Button(description, doNotCopyProp));
+	inline const Gravity& GetGravity()const throw(){
+		return this->gravity;
 	}
 	
-	inline static ting::Ref<Button> New(){
-		return ting::Ref<Button>(new Button());
+	inline void SetGravity(Gravity gravity){
+		this->gravity = gravity;
+		this->RelayoutNeeded();
 	}
 };
 
