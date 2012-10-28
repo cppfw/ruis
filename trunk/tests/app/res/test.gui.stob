@@ -51,7 +51,7 @@ Container{
 		
 		prop{
 			layout{
-				dim {fill wrap}
+				dim {max min}
 				gravity {center center}
 				margin {10 20 30 40}
 				weight{0}
