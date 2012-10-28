@@ -39,7 +39,8 @@ namespace morda{
 
 
 
-class AbstractButton : public Widget{
+//TODO: rename?
+class AbstractButton : public virtual Widget{
 	ting::Inited<bool, false> isPressed;
 	
 	void ApplyDescription(const stob::Node& description);

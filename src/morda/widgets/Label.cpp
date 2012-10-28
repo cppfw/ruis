@@ -25,8 +25,6 @@ void Label::ApplyDescription(const stob::Node& description){
 	if(const stob::Node* p = description.GetProperty("text")){
 		this->SetText(p->Value());
 	}
-	
-	this->SetGravity(Gravity::FromLayout(description));
 }
 
 
@@ -35,8 +33,6 @@ void Label::SetText(const std::string& text){
 	this->text = text;
 	
 	this->bb = this->font->Fnt().StringBoundingBox(this->text);
-	
-	this->UpdatePivot();
 	
 	this->RelayoutNeeded();
 }
@@ -52,22 +48,9 @@ morda::Vec2f Label::ComputeMinDim()const throw(){
 
 //override
 void Label::OnResize(){
-	this->UpdatePivot();
-}
-
-
-
-void Label::SetGravity(Gravity gravity){
-	this->gravity = gravity;
-	
-	this->UpdatePivot();
-}
-
-
-
-void Label::UpdatePivot(){
+	//update pivot
 	for(unsigned i = 0; i != 2; ++i){
-		switch(this->gravity[i]){
+		switch(this->GetGravity()[i]){
 			case Gravity::LEFT:
 //			case Gravity::BOTTOM:
 				this->pivot[i] = -this->bb.p[i];

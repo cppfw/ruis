@@ -52,7 +52,7 @@ Container{
 		prop{
 			layout{
 				dim {max min}
-				gravity {center center}
+				gravity {center right}
 				margin {10 20 30 40}
 				weight{0}
 			}
