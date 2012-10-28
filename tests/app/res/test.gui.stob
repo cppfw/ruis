@@ -15,6 +15,8 @@ Container{
 
 	name {someContainer}
 
+	padding {20 20 20 20}
+
 	layout{
 		LinearLayout{
 			orientation {horizontal}
@@ -36,6 +38,7 @@ Container{
 		prop{
 			layout{
 				weight {1}
+				margin {10 10 10 10}
 			}
 		}
 	}
