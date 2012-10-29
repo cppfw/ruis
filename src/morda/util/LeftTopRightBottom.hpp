@@ -54,12 +54,12 @@ public:
 	
 	float& operator[](size_t i)throw(){
 		ASSERT(i < 4)
-		return *reinterpret_cast<float*>(this);
+		return reinterpret_cast<float*>(this)[i];
 	}
 	
 	const float& operator[](size_t i)const throw(){
 		ASSERT(i < 4)
-		return *reinterpret_cast<const float*>(this);
+		return reinterpret_cast<const float*>(this)[i];
 	}
 	
 	/**

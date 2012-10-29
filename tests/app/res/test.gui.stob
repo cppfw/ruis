@@ -11,7 +11,7 @@ Button{
 
 Container{
 	pos {50 100}
-	dim {120 100}
+	dim {220 100}
 
 	name {someContainer}
 
@@ -33,11 +33,12 @@ Container{
 		pos {0 0}
 		name {label1}
 		text {trololo}
-		gravity {right center}
+		gravity {left bottom}
+		padding {20}
 
 		prop{
 			layout{
-				weight {1}
+				weight {0}
 				margin {10 10 10 10}
 			}
 		}
