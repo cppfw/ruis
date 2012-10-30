@@ -34,7 +34,7 @@ Container{
 		name {label1}
 		text {trololo}
 		gravity {left bottom}
-		padding {20}
+		padding {10 20 30 40}
 
 		prop{
 			layout{
