@@ -43,7 +43,7 @@ void Label::SetText(const std::string& text){
 //override
 morda::Vec2f Label::ComputeMinDim()const throw(){
 	LeftTopRightBottom padding = this->GetPadding();
-	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
+//	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
 	return this->bb.d + morda::Vec2f(padding.left + padding.right, padding.top + padding.bottom);
 }
 
