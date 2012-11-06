@@ -45,11 +45,11 @@ class Resource : virtual public ting::RefCounted{
 	friend class ResourceManager;
 
 	struct StringComparator{
-		bool operator()(const std::string* s1, const std::string* s2)const{
-			return s1->compare(*s2) < 0;
+		bool operator()(const char* s1, const char* s2)const{
+			return strcmp(s1, s2) < 0;
 		}
 	};
-	typedef std::map<const std::string*, ting::WeakRef<Resource>, StringComparator> T_ResMap;
+	typedef std::map<const char*, ting::WeakRef<Resource>, StringComparator> T_ResMap;
 
 	//ResMapRC = Resource Map RefCounted
 	class ResMapRC : public RefCounted{

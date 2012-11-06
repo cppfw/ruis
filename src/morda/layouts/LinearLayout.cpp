@@ -10,7 +10,7 @@ using namespace morda;
 
 LinearLayout::LinearLayout(const stob::Node& description){
 	if(const stob::Node* n = description.GetProperty("orientation")){
-		if(n->Value() == "horizontal"){
+		if(*n == "horizontal"){
 			this->isVertical = false;
 		}else{
 			this->isVertical = true;
