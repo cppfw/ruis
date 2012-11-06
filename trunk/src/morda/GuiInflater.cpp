@@ -22,7 +22,7 @@ class WidgetFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "Widget")
+		ASSERT(node == "Widget")
 		return Widget::New(node, false);
 	}
 	
@@ -35,7 +35,7 @@ class ContainerFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "Container")
+		ASSERT(node == "Container")
 		return Container::New(node, false);
 	}
 	
@@ -48,7 +48,7 @@ class LabelFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "Label")
+		ASSERT(node == "Label")
 		return Label::New(node, false);
 	}
 	
@@ -61,7 +61,7 @@ class AbstractButtonFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "AbstractButton")
+		ASSERT(node == "AbstractButton")
 		return AbstractButton::New(node, false);
 	}
 	
@@ -74,7 +74,7 @@ class ButtonFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "Button")
+		ASSERT(node == "Button")
 		return Button::New(node, false);
 	}
 	
@@ -87,7 +87,7 @@ class LinearLayoutFactory : public GuiInflater::LayoutFactory{
 public:
 	//override
 	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "LinearLayout")
+		ASSERT(node == "LinearLayout")
 		return LinearLayout::New(node);
 	}
 	
@@ -100,7 +100,7 @@ class MinSizeLayoutFactory : public GuiInflater::LayoutFactory{
 public:
 	//override
 	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node.Value() == "MinSizeLayout")
+		ASSERT(node == "MinSizeLayout")
 		return MinSizeLayout::New(node);
 	}
 	

@@ -7,8 +7,8 @@ using namespace morda;
 
 namespace{
 
-std::string DResTag("res");
-std::string DIncludeTag("include");
+const char* DResTag = "res";
+const char* DIncludeTag = "include";
 
 
 
@@ -123,8 +123,8 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 	
 	//add the resource to the resources map of ResMan
 	std::pair<T_ResMap::iterator, bool> pr = this->resMap->rm.insert(
-			std::pair<const std::string*, ting::WeakRef<Resource> >(
-					&node->Value(),
+			std::pair<const char*, ting::WeakRef<Resource> >(
+					node->Value(),
 					res.GetWeakRef()
 				)
 		);

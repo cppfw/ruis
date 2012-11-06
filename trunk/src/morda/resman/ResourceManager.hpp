@@ -77,7 +77,7 @@ class ResourceManager{
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
 
-	template <class T> ting::Ref<T> FindResourceInResMap(const std::string& resName);
+	template <class T> ting::Ref<T> FindResourceInResMap(const char* resName);
 
 	//Add resource to resources map
 	void AddResource(const ting::Ref<Resource>& res, const stob::Node* node);
@@ -99,13 +99,13 @@ public:
 
 	void MountResPack(ting::Ptr<ting::fs::File> fi);
 
-	template <class T> ting::Ref<T> Load(const std::string& resName);
+	template <class T> ting::Ref<T> Load(const char* resName);
 };
 
 
 
-template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const std::string& resName){
-	T_ResMap::iterator i = this->resMap->rm.find(&resName);
+template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const char* resName){
+	T_ResMap::iterator i = this->resMap->rm.find(resName);
 	if(i != this->resMap->rm.end()){
 		ting::Ref<Resource> r((*i).second);
 		ASSERT(r.DynamicCast<T>().IsValid())
@@ -116,7 +116,7 @@ template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const std:
 
 
 
-template <class T> ting::Ref<T> ResourceManager::Load(const std::string& resName){
+template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
 	if(ting::Ref<T> r = this->FindResourceInResMap<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
