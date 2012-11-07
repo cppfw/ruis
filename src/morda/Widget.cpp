@@ -32,6 +32,12 @@ void Widget::ApplyDescription(const stob::Node& description, bool doNotCopyProp)
 	if(const stob::Node* p = description.GetProperty("name")){
 		this->name = p->Value();
 	}
+	
+	if(const stob::Node* p = description.Child("margins").second){
+		this->margins = LeftTopRightBottom::FromSTOB(*p);
+	}else{
+		this->margins = LeftTopRightBottom::Default();
+	}
 }
 
 

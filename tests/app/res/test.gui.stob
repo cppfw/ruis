@@ -50,11 +50,12 @@ Container{
 		dim {100 30}
 		text {"Push me"}
 		
+		margins {10 20 30 40}
+
 		prop{
 			layout{
 				dim {max min}
 				gravity {center right}
-				margin {10 20 30 40}
 				weight{0}
 			}
 		}
