@@ -39,7 +39,21 @@ Container{
 		prop{
 			layout{
 				weight {0}
-				margin {10 10 10 10}
+			}
+		}
+	}
+
+	Label{
+		pos {0 0}
+		name {label2}
+		text {"blah bla"}
+		padding {10}
+
+		margin {10 10 10 10}
+
+		prop{
+			layout{
+				weight {0}
 			}
 		}
 	}
