@@ -39,6 +39,17 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	unsigned longIndex = this->isVertical ? 1 : 0;
 	unsigned transIndex = this->isVertical ? 0 : 1;
 	
+	//TODO:
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	const morda::Vec2f& minDim = cont.GetMinDim();
 	
 	//if size of the container is less than minimal required size
@@ -160,23 +171,27 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 
 //override
 morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
+	unsigned longIndex = this->isVertical ? 1 : 0;
+	unsigned transIndex = this->isVertical ? 0 : 1;
+	
 	morda::Vec2f minDim(0);
 	
-	unsigned longIndex, transIndex;
-	if(this->isVertical){
-		longIndex = 1;
-		transIndex = 0;
-	}else{
-		longIndex = 0;
-		transIndex = 1;
-	}
+	float prevMargin = 0;
 	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
 		const morda::Vec2f& md = (*c)->GetMinDim();
+		
 		if(minDim[transIndex] < md[transIndex]){
 			minDim[transIndex] = md[transIndex];
 		}
 		minDim[longIndex] += md[longIndex];
+		
+		//margin works for non-first children only
+		if((*c)->Prev().IsValid()){//if not first child
+			minDim[longIndex] += std::max(prevMargin, (*c)->Margins()[longIndex]);
+		}
+		
+		prevMargin = (*c)->Margins()[longIndex + 2];
 	}
 	return minDim;
 }
