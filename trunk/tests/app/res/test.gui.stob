@@ -49,7 +49,7 @@ Container{
 		text {"blah bla"}
 		padding {10}
 
-		margin {10 10 10 10}
+		margins {10 10 10 10}
 
 		prop{
 			layout{
@@ -61,16 +61,16 @@ Container{
 	Button{
 		name {butt1}
 		pos {50 80}
-		dim {100 30}
+		dim {10 30}
 		text {"Push me"}
 		
 		margins {10 20 30 40}
 
 		prop{
 			layout{
-				dim {max min}
+				dim {0 min}
 				gravity {center right}
-				weight{0}
+				weight{1}
 			}
 		}
 	}
