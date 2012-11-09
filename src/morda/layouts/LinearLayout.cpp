@@ -99,24 +99,22 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		float pos = 0;
 		Info *i = info.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
-			{
-				Vec2f newPos;
-				newPos[longIndex] = ting::math::Round(pos + i->margin);
-				
-				newPos[transIndex] = 0;//TODO: gravity
-
-				(*c)->MoveTo(newPos);
-			}
-
 			Vec2f newSize(i->dim);
 			
 			if(netWeight > 0){
 				newSize[longIndex] += (i->weight / netWeight) * flexible;
 			}
 
-			pos += i->margin + newSize[longIndex];
+			Vec2f newPos;
+			newPos[longIndex] = ting::math::Round(pos + i->margin);
+			newPos[transIndex] = 0;//TODO: gravity
 
+			(*c)->MoveTo(newPos);
+
+			pos += i->margin + newSize[longIndex];
+			
 			newSize[longIndex] = ting::math::Round(newSize[longIndex]);
+			newSize[transIndex] = ting::math::Round(newSize[transIndex]);
 
 			(*c)->Resize(newSize);
 		}

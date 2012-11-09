@@ -9,6 +9,12 @@ Button{
 	text {"Hello world!"}
 }
 
+/*
+layout{
+	MinSizeLayout{}
+}
+*/
+
 Container{
 	pos {50 100}
 	dim {220 100}
@@ -25,6 +31,7 @@ Container{
 
 	prop{
 		layout{
+			dim{min min}
 			weight {2}
 		}
 	}
@@ -68,7 +75,7 @@ Container{
 
 		prop{
 			layout{
-				dim {0 min}
+				dim {0 max}
 				gravity {center right}
 				weight{1}
 			}
