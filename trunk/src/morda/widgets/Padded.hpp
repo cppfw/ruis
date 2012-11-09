@@ -63,7 +63,7 @@ public:
 		this->RelayoutNeeded();
 	}
 	
-	inline const LeftTopRightBottom& GetPadding()const throw(){
+	inline const LeftTopRightBottom& Padding()const throw(){
 		return this->padding;
 	}
 };

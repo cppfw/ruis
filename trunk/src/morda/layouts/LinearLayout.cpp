@@ -38,6 +38,8 @@ public:
 }//~namespace
 
 
+//TODO: take container padding into account
+
 
 //override
 void LinearLayout::ArrangeWidgets(Container& cont)const{
@@ -107,8 +109,32 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 
 			Vec2f newPos;
 			newPos[longIndex] = ting::math::Round(pos + i->margin);
-			newPos[transIndex] = 0;//TODO: gravity
+			
+			//apply gravity
+			switch(i->gravity[transIndex]){
+				case Gravity::LEFT:
+	//			case Gravity::BOTTOM:
+					newPos[transIndex] = cont.Padding()[transIndex == 0 ? 0 : 3];
+					break;
+				case Gravity::RIGHT:
+	//			case Gravity::TOP:
+					newPos[transIndex] = cont.Rect().d[transIndex] - newSize[transIndex] - cont.Padding()[transIndex == 0 ? 2 : 1];
+					break;
+				default:
+				case Gravity::CENTER:
+					newPos[transIndex] = (
+							cont.Rect().d[transIndex]
+									- newSize[transIndex]
+									- (transIndex == 0 ?
+											(cont.Padding()[0] + cont.Padding()[2]) :
+											(cont.Padding()[1] + cont.Padding()[3])
+										)
+						) / 2;
+					break;
+			}
 
+			newPos[transIndex] = ting::math::Round(newPos[transIndex]);
+			
 			(*c)->MoveTo(newPos);
 
 			pos += i->margin + newSize[longIndex];
