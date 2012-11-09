@@ -27,9 +27,9 @@ Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
 		return Gravity::Default();
 	}
 	
-	if(n->Value() == D_Left){
+	if(*n == D_Left){
 		ret.h = LEFT;
-	}else if(n->Value() == D_Right){
+	}else if(*n == D_Right){
 		ret.h = RIGHT;
 	}else{
 		ret.h = CENTER;
@@ -41,9 +41,9 @@ Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
 		return ret;
 	}
 
-	if(n->Value() == D_Top){
+	if(*n == D_Top){
 		ret.v = TOP;
-	}else if(n->Value() == D_Bottom){
+	}else if(*n == D_Bottom){
 		ret.v = BOTTOM;
 	}else{
 		ret.v = CENTER;

@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include <vector>
 
-#include "Widget.hpp"
+#include "widgets/Padded.hpp"
 
 
 
@@ -42,7 +42,7 @@ class Layout;
 
 
 
-class Container : public virtual Widget{
+class Container : public Padded{
 private:
 	ting::Ref<Widget> childrenHead, childrenTail;
 	ting::Inited<unsigned, 0> numChildren;

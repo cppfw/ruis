@@ -42,7 +42,7 @@ void Label::SetText(const std::string& text){
 
 //override
 morda::Vec2f Label::ComputeMinDim()const throw(){
-	LeftTopRightBottom padding = this->GetPadding();
+	LeftTopRightBottom padding = this->Padding();
 //	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
 	return this->bb.d + morda::Vec2f(padding.left + padding.right, padding.top + padding.bottom);
 }
@@ -51,8 +51,8 @@ morda::Vec2f Label::ComputeMinDim()const throw(){
 
 //override
 void Label::OnResize(){
-	morda::Vec2f paddingLow(this->GetPadding().left, this->GetPadding().bottom);
-	morda::Vec2f paddingHigh(this->GetPadding().right, this->GetPadding().top);
+	morda::Vec2f paddingLow(this->Padding().left, this->Padding().bottom);
+	morda::Vec2f paddingHigh(this->Padding().right, this->Padding().top);
 	//update pivot
 	for(unsigned i = 0; i != 2; ++i){
 		switch(this->GetGravity()[i]){

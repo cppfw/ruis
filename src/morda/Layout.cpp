@@ -85,14 +85,14 @@ Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
 				ret[i] = v.value;
 				break;
 			case FRACTION:
-				if(ting::Ref<const Container> p = w.Parent()){
+				if(ting::Ref<const Container> p = w.Parent()){ //TODO: Container padding
 					ret[i] = v.value * p->Rect().d[i];
 				}else{
 					ret[i] = 0;
 				}
 				break;
 			case MAX:
-				if(ting::Ref<const Container> p = w.Parent()){
+				if(ting::Ref<const Container> p = w.Parent()){ //TODO: Container padding
 					ret[i] = p->Rect().d[i];
 				}else{
 					ret[i] = 0;
