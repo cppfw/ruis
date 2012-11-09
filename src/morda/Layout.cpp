@@ -73,3 +73,39 @@ Layout::Dim Layout::Dim::FromPropLayout(const stob::Node& prop)throw(){
 	}
 	return Dim::FromLayout(*layout);
 }
+
+
+
+Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
+	Vec2f ret;
+	
+	for(unsigned i = 0; i != 2; ++i){
+		const Value& v = this->operator[](i);
+		
+		switch(v.unit){
+			case PIXEL:
+				ret[i] = v.value;
+				break;
+			case FRACTION:
+				if(ting::Ref<const Container> p = w.Parent()){
+					ret[i] = v.value * p->Rect().d[i];
+				}else{
+					ret[i] = 0;
+				}
+				break;
+			case MAX:
+				if(ting::Ref<const Container> p = w.Parent()){
+					ret[i] = p->Rect().d[i];
+				}else{
+					ret[i] = 0;
+				}
+				break;
+			default:
+			case MIN:
+				ret[i] = w.GetMinDim()[i];
+				break;
+		}
+	}
+	
+	return ret;
+}

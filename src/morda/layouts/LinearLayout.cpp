@@ -1,6 +1,9 @@
+#include <ting/Array.hpp>
+#include <ting/util.hpp>
+
 #include "LinearLayout.hpp"
 
-#include <ting/Array.hpp>
+#include "../util/Gravity.hpp"
 
 
 
@@ -27,7 +30,9 @@ namespace{
 class Info{
 public:
 	float weight;
-	float minSize;
+	Vec2f dim;
+	float margin;
+	Gravity gravity;
 };
 
 }//~namespace
@@ -39,131 +44,82 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	unsigned longIndex = this->isVertical ? 1 : 0;
 	unsigned transIndex = this->isVertical ? 0 : 1;
 	
-	//TODO:
+	ting::Array<Info> info(cont.NumChildren());
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	const morda::Vec2f& minDim = cont.GetMinDim();
-	
-	//if size of the container is less than minimal required size
-	if(cont.Rect().d[longIndex] <= minDim[longIndex]){
-		float factor;
-		if(minDim[longIndex] == 0){
-			factor = 0;
-		}else{
-			factor = cont.Rect().d[longIndex] / minDim[longIndex];
-		}
-		
-		float pos = 0;
-		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-//			const stob::Node* layout = Layout::GetLayoutProp(**c);
-			//TODO: layout props
-			
-			morda::Vec2f newPos;
-			newPos[longIndex] = ting::math::Round(pos);
-			newPos[transIndex] = 0;
-
-			(*c)->MoveTo(newPos);
-			
-			morda::Vec2f newSize = (*c)->GetMinDim();
-			newSize[longIndex] *= factor;
-			
-			pos += newSize[longIndex];
-			
-			newSize[longIndex] = ting::math::Round(newSize[longIndex]);
-			
-			(*c)->Resize(newSize);
-		}
-		
-		return;
-	}
-	
-	//calculate net weight
+	//Calculate rigid size, net weight and store weights and margins
+	float rigid = 0;
 	float netWeight = 0;
-	float zeroWeightsLength = 0;
-	
-	ting::Array<Info> weights(cont.NumChildren());
 	
 	{
-		Info *i = weights.Begin();
+		Info* i = info.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+			ASSERT(info.Overlaps(i))
+
 			const stob::Node* layout = Layout::GetLayoutProp((*c)->prop.operator->());
-			ASSERT(weights.Overlaps(i))
+
 			if(!layout){
-				(*i).weight = 0;
-			}else if(const stob::Node* weight = layout->GetProperty("weight")){
-				(*i).weight = weight->AsFloat();
+				i->dim = (*c)->GetMinDim();
+				i->weight = 0;
+				i->gravity = Gravity::Default();
 			}else{
-				(*i).weight = 0;
-			}
-			
-			(*i).minSize = (*c)->GetMinDim()[longIndex];
-			if((*i).weight == 0){
-				zeroWeightsLength += (*i).minSize;
-			}else{
-				netWeight += (*i).weight;
-			}
-		}
-	}
-	
-	float weightedLength = cont.Rect().d[longIndex] - zeroWeightsLength;
-	
-	//find children whose minSize is bigger than resulting weighted size and set their weight to 0
-	if(netWeight != 0){
-		float lengthPerUnit = weightedLength / netWeight;
+				if(const stob::Node* weight = layout->GetProperty("weight")){
+					i->weight = weight->AsFloat();
+					netWeight += i->weight;
+				}else{
+					i->weight = 0;
+				}
 
-		for(bool doAgain = true; doAgain;){
-			doAgain = false;
-
-			for(Info *i = weights.Begin(); i != weights.End(); ++i){
-				if((*i).weight == 0){
-					continue;
+				if(const stob::Node* dim = layout->Child("dim").second){
+					i->dim = Layout::Dim::FromSTOB(*dim).ForWidget(*(*c));
+				}else{
+					i->dim = (*c)->GetMinDim();
 				}
 				
-				if((*i).weight * lengthPerUnit <= (*i).minSize){
-					weightedLength -= (*i).minSize;
-					netWeight -= (*i).weight;
-					lengthPerUnit = weightedLength / netWeight;
-					(*i).weight = 0;
-					doAgain = true;
-				}
+				i->gravity = Gravity::FromLayout(*layout);
 			}
+			
+			if((*c)->Prev().IsValid()){//if not first child
+				i->margin = std::max(
+						(*c)->Prev()->Margins()[longIndex + 2],
+						(*c)->Margins()[longIndex]
+					);
+			}else{
+				i->margin = 0;
+			}
+			
+			rigid += i->dim[longIndex] + i->margin;
 		}
 	}
 	
-	float pos = 0;
-	Info *i = weights.Begin();
-	for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
-//			const stob::Node* layout = Layout::GetLayoutProp(**c);
-		//TODO: layout props
-
-		morda::Vec2f newPos;
-		newPos[longIndex] = ting::math::Round(pos);
-		newPos[transIndex] = 0;
-
-		(*c)->MoveTo(newPos);
-
-		morda::Vec2f newSize;
-		if(i->weight > 0){
-			newSize[longIndex] = (i->weight / netWeight) * weightedLength;
-		}else{
-			newSize[longIndex] = (*c)->GetMinDim()[longIndex];
-		}
+	{
+		float flexible = cont.Rect().d[longIndex] - rigid;
+		ting::util::ClampBottom(flexible, 0.0f);
+		ASSERT(flexible >= 0)
 		
-		newSize[transIndex] = (*c)->GetMinDim()[transIndex];
+		float pos = 0;
+		Info *i = info.Begin();
+		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+			{
+				Vec2f newPos;
+				newPos[longIndex] = ting::math::Round(pos + i->margin);
+				
+				newPos[transIndex] = 0;//TODO: gravity
 
-		pos += newSize[longIndex];
+				(*c)->MoveTo(newPos);
+			}
 
-		newSize[longIndex] = ting::math::Round(newSize[longIndex]);
+			Vec2f newSize(i->dim);
+			
+			if(netWeight > 0){
+				newSize[longIndex] += (i->weight / netWeight) * flexible;
+			}
 
-		(*c)->Resize(newSize);
+			pos += i->margin + newSize[longIndex];
+
+			newSize[longIndex] = ting::math::Round(newSize[longIndex]);
+
+			(*c)->Resize(newSize);
+		}
 	}
 }
 
@@ -176,8 +132,6 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	
 	morda::Vec2f minDim(0);
 	
-	float prevMargin = 0;
-	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
 		const morda::Vec2f& md = (*c)->GetMinDim();
 		
@@ -188,10 +142,11 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		
 		//margin works for non-first children only
 		if((*c)->Prev().IsValid()){//if not first child
-			minDim[longIndex] += std::max(prevMargin, (*c)->Margins()[longIndex]);
+			minDim[longIndex] += std::max(
+					(*c)->Prev()->Margins()[longIndex + 2],
+					(*c)->Margins()[longIndex]
+				);
 		}
-		
-		prevMargin = (*c)->Margins()[longIndex + 2];
 	}
 	return minDim;
 }

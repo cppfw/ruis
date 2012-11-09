@@ -86,6 +86,15 @@ public:
 			ASSERT(i < 2)
 			return reinterpret_cast<const Value*>(this)[i];
 		}
+	
+		/**
+		 * @brief Get actual dimensions for given widget.
+		 * Get resulting dimensions for given Widget basing on dimension description
+		 * provided by this object. 
+         * @param w - widget to get dimensions for.
+         * @return Resulting dimensions.
+         */
+		Vec2f ForWidget(const Widget& w)const throw();
 		
 		/**
 		 * @brief Parse from STOB.
