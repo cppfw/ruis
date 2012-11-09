@@ -25,11 +25,13 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 	Dim ret;
 	
 	const stob::Node* n = node.Child();
-	if(!n){
-		return Dim::Default();
-	}
 	
 	for(unsigned i = 0; i != 2; ++i){
+		if(!n){
+			ret[i].unit = MIN;
+			continue;
+		}
+		
 		if(*n == D_Min){
 			ret[i].unit = MIN;
 		}else if(*n == D_Max){
@@ -43,10 +45,6 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 		}
 		
 		n = n->Next();
-		if(!n){
-			ret[i].unit = MIN;
-			break;
-		}
 	}
 	
 	return ret;
