@@ -36,7 +36,6 @@ THE SOFTWARE. */
 #include "util/Matrix4.hpp"
 #include "util/Vector2.hpp"
 #include "util/Rectangle2.hpp"
-#include "util/LeftTopRightBottom.hpp"
 
 #include <stob/dom.hpp>
 
@@ -77,8 +76,6 @@ private:
 	void ApplyDescription(const stob::Node& description, bool doNotCopyProp);
 	
 	ting::Inited<bool, true> relayoutNeeded;
-	
-	LeftTopRightBottom margins;
 	
 public:
 	inline bool NeedsRelayout()const throw(){
@@ -126,10 +123,6 @@ public:
 		return this->rect;
 	}
 	
-	inline const morda::LeftTopRightBottom& Margins()const throw(){
-		return this->margins;
-	}
-
 	inline void MoveTo(const morda::Vec2f& newPos)throw(){
 		this->rect.p = newPos;
 	}
@@ -146,8 +139,7 @@ public:
 
 protected:
 	inline Widget() :
-			rect(0, 0, 0, 0),
-			margins(LeftTopRightBottom::Default())
+			rect(0, 0, 0, 0)
 	{}
 	
 	inline Widget(const stob::Node& description, bool doNotCopyProp){

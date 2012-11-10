@@ -15,6 +15,7 @@ layout{
 }
 */
 
+
 Container{
 	pos {50 100}
 	dim {220 100}
@@ -56,11 +57,10 @@ Container{
 		text {"blah bla"}
 		padding {10}
 
-		margins {10 10 10 10}
-
 		prop{
 			layout{
 				weight {0}
+				margins {10 10 10 10}
 			}
 		}
 	}
@@ -70,14 +70,13 @@ Container{
 		pos {50 80}
 		dim {10 30}
 		text {"Push me"}
-		
-		margins {10 20 30 40}
 
 		prop{
 			layout{
 				dim {0 min}
 				gravity {center top}
 				weight{1}
+				margins {10 20 30 40}
 			}
 		}
 	}
