@@ -120,17 +120,24 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			}
 
 			Vec2f newPos;
-			newPos[longIndex] = ting::math::Round(pos + i->margin);
+			if(this-isVertical){
+				newPos[longIndex] = cont.Rect().d.y - pos - i->margin - newSize[longIndex];
+				pos += i->margin + newSize[longIndex];
+			}else{
+				newPos[longIndex] = pos + i->margin;
+				pos += i->margin + newSize[longIndex];
+			}
+				
 			
 			//apply gravity
 			switch(i->gravity[transIndex]){
 				case Gravity::LEFT:
 	//			case Gravity::BOTTOM:
-					newPos[transIndex] = cont.Padding()[transIndex == 0 ? 0 : 3];
+					newPos[transIndex] = cont.Padding()[this->isVertical ? 0 : 3];
 					break;
 				case Gravity::RIGHT:
 	//			case Gravity::TOP:
-					newPos[transIndex] = cont.Rect().d[transIndex] - newSize[transIndex] - cont.Padding()[transIndex == 0 ? 2 : 1];
+					newPos[transIndex] = cont.Rect().d[transIndex] - newSize[transIndex] - cont.Padding()[this->isVertical ? 2 : 1];
 					break;
 				default:
 				case Gravity::CENTER:
@@ -138,11 +145,10 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 					break;
 			}
 
+			newPos[longIndex] = ting::math::Round(newPos[longIndex]);
 			newPos[transIndex] = ting::math::Round(newPos[transIndex]);
 			
 			(*c)->MoveTo(newPos);
-
-			pos += i->margin + newSize[longIndex];
 			
 			newSize[longIndex] = ting::math::Round(newSize[longIndex]);
 			newSize[transIndex] = ting::math::Round(newSize[transIndex]);

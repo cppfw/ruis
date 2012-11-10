@@ -9,11 +9,10 @@ Button{
 	text {"Hello world!"}
 }
 
-/*
+
 layout{
 	MinSizeLayout{}
 }
-*/
 
 
 Container{
@@ -22,11 +21,11 @@ Container{
 
 	name {someContainer}
 
-	padding {20 20 20 20}
+	padding {20 30 10 40}
 
 	layout{
 		LinearLayout{
-			orientation {horizontal}
+			orientation {vertical}
 		}
 	}
 
@@ -47,6 +46,7 @@ Container{
 		prop{
 			layout{
 				weight {0}
+				gravity{right}
 			}
 		}
 	}
@@ -73,8 +73,8 @@ Container{
 
 		prop{
 			layout{
-				dim {0 min}
-				gravity {center top}
+				dim {min min}
+				gravity {left top}
 				weight{1}
 				margins {10 20 30 40}
 			}
