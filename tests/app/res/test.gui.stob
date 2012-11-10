@@ -26,7 +26,7 @@ Container{
 	layout{
 		LinearLayout{
 			orientation {horizontal}
-			reverse {true}
+//			reverse {true}
 		}
 	}
 
@@ -74,7 +74,7 @@ Container{
 
 		prop{
 			layout{
-				dim {0 min}
+				dim {30% min}
 				gravity {left top}
 				weight {1}
 				margins {10 20 30 40}
