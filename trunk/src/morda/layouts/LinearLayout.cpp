@@ -173,21 +173,33 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	float prevMargin = 0;
 	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		const morda::Vec2f& md = (*c)->GetMinDim(); //TODO: not min dim but dim from layout prop
-		
-		if(minDim[transIndex] < md[transIndex]){
-			minDim[transIndex] = md[transIndex];
-		}
-		minDim[longIndex] += md[longIndex];
-		
 		LeftTopRightBottom margins = LeftTopRightBottom::Default();
+		morda::Vec2f dim = (*c)->GetMinDim();
 		if((*c)->Prop()){
 			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).second){
 				if(const stob::Node* m = layout->Child(D_Margins).second){
 					margins = LeftTopRightBottom::FromSTOB(*m);
 				}
+				
+				{
+					Layout::Dim ld = Layout::Dim::FromLayout(*layout);
+					
+					//FRACTION is not allowed when computing min size. Change it to MIN.
+					for(unsigned i = 0; i != 2; ++i){
+						if(ld[i].unit == Layout::Dim::FRACTION){
+							ld[i].unit = Layout::Dim::MIN;
+						}
+					}
+					
+					dim = ld.ForWidget(*(*c));
+				}
 			}
 		}
+		
+		if(minDim[transIndex] < dim[transIndex]){
+			minDim[transIndex] = dim[transIndex];
+		}
+		minDim[longIndex] += dim[longIndex];
 		
 		//margin works for non-first children only
 		if((*c)->Prev().IsValid()){//if not first child
