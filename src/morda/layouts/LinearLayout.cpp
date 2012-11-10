@@ -125,7 +125,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 
 			Vec2f newPos;
 			if((this->isVertical && !this->isReverse) || (!this->isVertical && this->isReverse)){
-				newPos[longIndex] = cont.Rect().d.y - pos - i->margin - newSize[longIndex];
+				newPos[longIndex] = cont.Rect().d[longIndex] - pos - i->margin - newSize[longIndex];
 			}else{
 				newPos[longIndex] = pos + i->margin;
 			}
@@ -173,7 +173,7 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	float prevMargin = 0;
 	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		const morda::Vec2f& md = (*c)->GetMinDim();
+		const morda::Vec2f& md = (*c)->GetMinDim(); //TODO: not min dim but dim from layout prop
 		
 		if(minDim[transIndex] < md[transIndex]){
 			minDim[transIndex] = md[transIndex];
