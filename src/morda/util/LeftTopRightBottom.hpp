@@ -30,26 +30,24 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
+#include "Vector2.hpp"
 
 
 namespace morda{
 
 
 
+//TODO: doxygen
 class LeftTopRightBottom{
 public:
-	float left;
-	float top;
-	float right;
-	float bottom;
+	Vec2f lt;
+	Vec2f rb;
 	
 	inline LeftTopRightBottom(){}
 	
 	inline LeftTopRightBottom(float left, float top, float right, float bottom) :
-			left(left),
-			top(top),
-			right(right),
-			bottom(bottom)
+			lt(left, top),
+			rb(right, bottom)
 	{}
 	
 	float& operator[](size_t i)throw(){

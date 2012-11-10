@@ -30,48 +30,31 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
+#include "../util/Vector2.hpp"
 
 
 namespace morda{
 
 
 
-class Gravity{
+class Gravity : public morda::Vec2f{
 public:
-	enum E_Gravity{
-		LEFT,
-		BOTTOM = LEFT,
-		CENTER,
-		RIGHT,
-		TOP = RIGHT
-	};
-	
-	/**
-	 * @brief Horizontal gravity.
-	 */
-	E_Gravity h;
-	
-	/**
-	 * @brief Vertical gravity.
-	 */
-	E_Gravity v;
-	
-	inline E_Gravity& operator[](size_t i)throw(){
-		ASSERT(i < 2)
-		return reinterpret_cast<E_Gravity*>(this)[i];
-	}
-	
-	const E_Gravity& operator[](size_t i)const throw(){
-		ASSERT(i < 2)
-		return reinterpret_cast<const E_Gravity*>(this)[i];
-	}
-	
 	inline Gravity(){}
 	
-	inline Gravity(E_Gravity h, E_Gravity v) :
-			h(h),
-			v(v)
+	
+	//TODO: doxygen
+	inline Gravity(float h, float v) :
+			Vec2f(h, v)
 	{}
+	
+	/**
+	 * @brief Get position for widget.
+	 * Basing on gravity calculates the position for given widget within its parent.
+	 * Widget and its parent should have the correct size already set.
+     * @param w - widget to calculate the position for.
+     * @return The position for the widget.
+     */
+	Vec2f PosForWidget(const Widget& w)const throw();
 	
 	/**
 	 * @brief Parse the gravity property from STOB.
@@ -129,7 +112,7 @@ public:
      * @return Gravity object initialized to default gravity values.
      */
 	static Gravity Default()throw(){
-		return Gravity(CENTER, CENTER);
+		return Gravity(0.5f, 0.5f);
 	}
 };
 
