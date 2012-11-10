@@ -1,5 +1,6 @@
 #include "Gravity.hpp"
 #include "../Layout.hpp"
+#include "../util/util.hpp"
 
 
 using namespace morda;
@@ -9,45 +10,30 @@ using namespace morda;
 namespace{
 
 const char* D_Gravity = "gravity";
-const char* D_Left = "left";
-const char* D_Right = "right";
-const char* D_Top = "top";
-const char* D_Bottom = "bottom";
 
 }//~namespace
 
 
 
+Vec2f Gravity::PosForWidget(const Widget& w)const throw(){
+	ting::Ref<Container> p = w.Parent();
+	if(!p){
+		return Vec2f(0);
+	}
+	
+	Vec2f ret;
+	
+	ret.x = p->Padding().lt.x + (p->Rect().d.x - p->Padding().lt.x - p->Padding().rb.x - w.Rect().d.x) * this->x;
+	//TODO: for y
+	
+	return ret;
+}
+
+
+
 //static
 Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
-	Gravity ret;
-	
-	const stob::Node* n = gravity.Child();
-	if(!n){
-		return Gravity::Default();
-	}
-	
-	if(*n == D_Left){
-		ret.h = LEFT;
-	}else if(*n == D_Right){
-		ret.h = RIGHT;
-	}else{
-		ret.h = CENTER;
-	}
-	
-	n = n->Next();
-	if(!n){
-		ret.v = CENTER;
-		return ret;
-	}
-
-	if(*n == D_Top){
-		ret.v = TOP;
-	}else if(*n == D_Bottom){
-		ret.v = BOTTOM;
-	}else{
-		ret.v = CENTER;
-	}
+	Gravity ret = Vec2fFromSTOB(gravity.Child()) / 100;
 	
 	return ret;
 }
