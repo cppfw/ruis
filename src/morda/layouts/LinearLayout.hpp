@@ -44,7 +44,16 @@ class LinearLayout : public morda::Layout{
 	LinearLayout(const stob::Node& description);
 	
 	bool isVertical;
+	bool isReverse;
 public:
+	inline void SetReverse(bool isReverse)throw(){
+		this->isReverse = isReverse;
+	}
+	
+	inline void SetVertical(bool isVertical)throw(){
+		this->isVertical = isVertical;
+	}
+	
 	//override
 	void ArrangeWidgets(Container& cont)const;
 	

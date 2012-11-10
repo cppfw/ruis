@@ -15,14 +15,18 @@ using namespace morda;
 
 
 LinearLayout::LinearLayout(const stob::Node& description){
+	this->isVertical = true;
 	if(const stob::Node* n = description.GetProperty("orientation")){
 		if(*n == "horizontal"){
 			this->isVertical = false;
-		}else{
-			this->isVertical = true;
 		}
-	}else{
-		this->isVertical = true;
+	}
+	
+	this->isReverse = false;
+	if(const stob::Node* n = description.GetProperty("reverse")){
+		if(n->AsBool()){
+			this->isReverse = true;
+		}
 	}
 }
 
@@ -94,8 +98,8 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			
 			if(i != info.Begin()){//if not first child
 				i->margin = std::max(
-						(i - 1)->margins[longIndex + 2],
-						i->margins[longIndex]
+						(i - 1)->margins[this->isReverse ? longIndex : (longIndex + 2)],
+						i->margins[this->isReverse ? (longIndex + 2) : longIndex]
 					);
 			}else{
 				i->margin = 0;
@@ -110,7 +114,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		ting::util::ClampBottom(flexible, 0.0f);
 		ASSERT(flexible >= 0)
 		
-		float pos = cont.Padding()[longIndex];//start arranging widgets from padding
+		float pos = cont.Padding()[this->isReverse ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		Info *i = info.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			Vec2f newSize(i->dim);
@@ -120,7 +124,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			}
 
 			Vec2f newPos;
-			if(this->isVertical){
+			if((this->isVertical && !this->isReverse) || (!this->isVertical && this->isReverse)){
 				newPos[longIndex] = cont.Rect().d.y - pos - i->margin - newSize[longIndex];
 			}else{
 				newPos[longIndex] = pos + i->margin;
@@ -140,7 +144,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 					break;
 				default:
 				case Gravity::CENTER:
-					newPos[transIndex] = (cont.Rect().d[transIndex] - newSize[transIndex]) / 2;
+					newPos[transIndex] = (cont.Rect().d[transIndex] - newSize[transIndex]) / 2;//TODO: padding?
 					break;
 			}
 
@@ -189,11 +193,11 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		if((*c)->Prev().IsValid()){//if not first child
 			minDim[longIndex] += std::max(
 					prevMargin,
-					margins[longIndex]
+					margins[this->isReverse ? (longIndex + 2) : longIndex]
 				);
 		}
 		
-		prevMargin = margins[longIndex + 2];
+		prevMargin = margins[this->isReverse ? longIndex : (longIndex + 2)];
 	}
 	
 	minDim[0] += cont.Padding()[0] + cont.Padding()[2];

@@ -4,7 +4,7 @@
 #include "widgets/Label.hpp"
 #include "widgets/Button.hpp"
 #include "layouts/LinearLayout.hpp"
-#include "layouts/MinSizeLayout.hpp"
+#include "layouts/SimpleLayout.hpp"
 
 
 
@@ -21,7 +21,7 @@ const char* D_AbstractButton = "AbstractButton";
 const char* D_Button = "Button";
 
 const char* D_LinearLayout = "LinearLayout";
-const char* D_MinSizeLayout = "MinSizeLayout";
+const char* D_SimpleLayout = "SimpleLayout";
 
 
 
@@ -107,16 +107,16 @@ public:
 	}
 };
 
-class MinSizeLayoutFactory : public GuiInflater::LayoutFactory{
+class SimpleLayoutFactory : public GuiInflater::LayoutFactory{
 public:
 	//override
 	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node == D_MinSizeLayout)
-		return MinSizeLayout::New(node);
+		ASSERT(node == D_SimpleLayout)
+		return SimpleLayout::New(node);
 	}
 	
-	inline static ting::Ptr<MinSizeLayoutFactory> New(){
-		return ting::Ptr<MinSizeLayoutFactory>(new MinSizeLayoutFactory());
+	inline static ting::Ptr<SimpleLayoutFactory> New(){
+		return ting::Ptr<SimpleLayoutFactory>(new SimpleLayoutFactory());
 	}
 };
 
@@ -132,7 +132,7 @@ GuiInflater::GuiInflater(){
 	this->AddWidgetFactory(D_Button, ButtonFactory::New());
 	
 	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
-	this->AddLayoutFactory(D_MinSizeLayout, MinSizeLayoutFactory::New());
+	this->AddLayoutFactory(D_SimpleLayout, SimpleLayoutFactory::New());
 }
 
 

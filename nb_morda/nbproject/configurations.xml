@@ -11,8 +11,8 @@
         <df name="layouts">
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
-          <in>MinSizeLayout.cpp</in>
-          <in>MinSizeLayout.hpp</in>
+          <in>SimpleLayout.cpp</in>
+          <in>SimpleLayout.hpp</in>
         </df>
         <df name="linux">
           <in>App.cpp</in>
@@ -184,13 +184,6 @@
       <item path="../src/morda/android/AssetFile.hpp" ex="true" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/layouts/LinearLayout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/layouts/MinSizeLayout.cpp"
             ex="false"
             tool="1"
             flavor2="4">

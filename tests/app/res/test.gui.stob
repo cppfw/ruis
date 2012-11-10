@@ -9,11 +9,11 @@ Button{
 	text {"Hello world!"}
 }
 
-/*
+
 layout{
-	MinSizeLayout{}
+	SimpleLayout{}
 }
-*/
+
 
 Container{
 	pos {50 100}
@@ -26,6 +26,7 @@ Container{
 	layout{
 		LinearLayout{
 			orientation {vertical}
+			reverse {true}
 		}
 	}
 
