@@ -62,7 +62,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			ASSERT(info.Overlaps(i))
 
-			const stob::Node* layout = Layout::GetLayoutProp((*c)->prop.operator->());
+			const stob::Node* layout = Layout::GetLayoutProp((*c)->Prop());
 
 			if(!layout){
 				i->dim = (*c)->GetMinDim();
@@ -172,8 +172,8 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		minDim[longIndex] += md[longIndex];
 		
 		LeftTopRightBottom margins = LeftTopRightBottom::Default();
-		if((*c)->prop){
-			if(const stob::Node* layout = (*c)->prop->Child(Layout::D_Layout()).second){
+		if((*c)->Prop()){
+			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).second){
 				if(const stob::Node* m = layout->Child(D_Margins).second){
 					margins = LeftTopRightBottom::FromSTOB(*m);
 				}

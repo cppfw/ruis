@@ -77,12 +77,23 @@ private:
 	
 	ting::Inited<bool, true> relayoutNeeded;
 	
+	ting::Ptr<stob::Node> prop;
 public:
+	inline const stob::Node* Prop()const throw(){
+		return this->prop.operator->();
+	}
+	
+	inline ting::Ptr<stob::Node> ExtractProp()throw(){
+		return this->prop;
+	}
+	
+	inline void SetProp(ting::Ptr<stob::Node> prop)throw(){
+		this->prop = prop;
+	}
+	
 	inline bool NeedsRelayout()const throw(){
 		return this->relayoutNeeded;
 	}
-	
-	ting::Ptr<stob::Node> prop;
 	
 	const std::string& Name()const throw(){
 		return this->name;
