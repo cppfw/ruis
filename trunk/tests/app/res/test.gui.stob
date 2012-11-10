@@ -9,11 +9,11 @@ Button{
 	text {"Hello world!"}
 }
 
-
+/*
 layout{
 	MinSizeLayout{}
 }
-
+*/
 
 Container{
 	pos {50 100}

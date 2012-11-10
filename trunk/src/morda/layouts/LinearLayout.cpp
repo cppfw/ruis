@@ -120,13 +120,12 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			}
 
 			Vec2f newPos;
-			if(this-isVertical){
+			if(this->isVertical){
 				newPos[longIndex] = cont.Rect().d.y - pos - i->margin - newSize[longIndex];
-				pos += i->margin + newSize[longIndex];
 			}else{
 				newPos[longIndex] = pos + i->margin;
-				pos += i->margin + newSize[longIndex];
 			}
+			pos += i->margin + newSize[longIndex];
 				
 			
 			//apply gravity
