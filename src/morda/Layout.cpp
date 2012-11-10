@@ -9,7 +9,6 @@ using namespace morda;
 namespace{
 
 const char* D_Min = "min";
-const char* D_Max = "max";
 
 inline bool NodeHoldsFractionValue(const stob::Node& node)throw(){
 	size_t len = node.ValueLength();
@@ -33,8 +32,6 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 		
 		if(*n == D_Min){
 			ret[i].unit = MIN;
-		}else if(*n == D_Max){
-			ret[i].unit = MAX;
 		}else if(NodeHoldsFractionValue(*n)){
 			ret[i].unit = FRACTION;
 			ret[i].value = n->AsFloat() / 100;
@@ -84,15 +81,9 @@ Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
 				ret[i] = v.value;
 				break;
 			case FRACTION:
-				if(ting::Ref<const Container> p = w.Parent()){ //TODO: Container padding
-					ret[i] = v.value * p->Rect().d[i];
-				}else{
-					ret[i] = 0;
-				}
-				break;
-			case MAX:
-				if(ting::Ref<const Container> p = w.Parent()){ //TODO: Container padding
-					ret[i] = p->Rect().d[i];
+				if(ting::Ref<const Container> p = w.Parent()){
+					ret[i] = v.value * (p->Rect().d[i] - p->Padding()[i] - p->Padding()[i + 2]);
+					ting::util::ClampBottom(ret[i], 0.0f);
 				}else{
 					ret[i] = 0;
 				}
