@@ -73,7 +73,6 @@ public:
 		enum E_Unit{
 			PIXEL,
 			FRACTION, //means that the value is a fraction from parent size
-			MAX, //means fill parent, value should be ignored.
 			MIN //means wrap content, value should be taken from min size
 		};
 		
