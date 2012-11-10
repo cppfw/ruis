@@ -55,7 +55,8 @@ protected:
 	inline Container(){}
 	
 	inline Container(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp)
+			Widget(description, doNotCopyProp),
+			Padded(description)
 	{
 		this->ApplyDescription(description);
 	}

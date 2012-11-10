@@ -10,7 +10,6 @@ namespace{
 
 const char* D_Min = "min";
 const char* D_Max = "max";
-const char* D_Dim = "dim";
 
 inline bool NodeHoldsFractionValue(const stob::Node& node)throw(){
 	size_t len = node.ValueLength();
@@ -54,7 +53,7 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 
 //static
 Layout::Dim Layout::Dim::FromLayout(const stob::Node& layout)throw(){
-	const stob::Node* dim = layout.Child(D_Dim).second;
+	const stob::Node* dim = layout.Child(Dim::D_Dim()).second;
 	if(!dim){
 		return Dim::Default();
 	}

@@ -39,10 +39,11 @@ namespace morda{
 
 
 class Layout{
+public:
 	static inline const char* D_Layout()throw(){
 		return "layout";
 	}
-public:
+
 	virtual void ArrangeWidgets(Container& cont)const = 0;
 	
 	virtual morda::Vec2f ComputeMinDim(const Container& cont)const throw()= 0;
@@ -65,6 +66,10 @@ public:
 	
 	class Dim{
 	public:
+		static inline const char* D_Dim()throw(){
+			return "dim";
+		}
+		
 		enum E_Unit{
 			PIXEL,
 			FRACTION, //means that the value is a fraction from parent size

@@ -1,9 +1,12 @@
 #include <ting/Array.hpp>
 #include <ting/util.hpp>
+#include <setjmp.h>
 
 #include "LinearLayout.hpp"
 
 #include "../util/Gravity.hpp"
+#include "../util/LeftTopRightBottom.hpp"
+#include "../widgets/Padded.hpp"
 
 
 
@@ -27,18 +30,20 @@ LinearLayout::LinearLayout(const stob::Node& description){
 
 namespace{
 
+const char* D_Margins = "margins";
+const char* D_Weight = "weight";
+
 class Info{
 public:
 	float weight;
 	Vec2f dim;
-	float margin;
+	float margin;//actual margin between child widgets
 	Gravity gravity;
+	LeftTopRightBottom margins;
 };
 
 }//~namespace
 
-
-//TODO: take container padding into account
 
 
 //override
@@ -49,7 +54,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	ting::Array<Info> info(cont.NumChildren());
 	
 	//Calculate rigid size, net weight and store weights and margins
-	float rigid = 0;
+	float rigid = cont.Padding()[longIndex] + cont.Padding()[2 + longIndex];
 	float netWeight = 0;
 	
 	{
@@ -63,27 +68,34 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				i->dim = (*c)->GetMinDim();
 				i->weight = 0;
 				i->gravity = Gravity::Default();
+				i->margins = LeftTopRightBottom::Default();
 			}else{
-				if(const stob::Node* weight = layout->GetProperty("weight")){
+				if(const stob::Node* weight = layout->GetProperty(D_Weight)){
 					i->weight = weight->AsFloat();
 					netWeight += i->weight;
 				}else{
 					i->weight = 0;
 				}
 
-				if(const stob::Node* dim = layout->Child("dim").second){
+				if(const stob::Node* dim = layout->Child(Layout::Dim::D_Dim()).second){
 					i->dim = Layout::Dim::FromSTOB(*dim).ForWidget(*(*c));
 				}else{
 					i->dim = (*c)->GetMinDim();
 				}
 				
 				i->gravity = Gravity::FromLayout(*layout);
+				
+				if(const stob::Node* margins = layout->Child(D_Margins).second){
+					i->margins = LeftTopRightBottom::FromSTOB(*margins);
+				}else{
+					i->margins = LeftTopRightBottom::Default();
+				}
 			}
 			
-			if((*c)->Prev().IsValid()){//if not first child
+			if(i != info.Begin()){//if not first child
 				i->margin = std::max(
-						(*c)->Prev()->Margins()[longIndex + 2],
-						(*c)->Margins()[longIndex]
+						(i - 1)->margins[longIndex + 2],
+						i->margins[longIndex]
 					);
 			}else{
 				i->margin = 0;
@@ -98,7 +110,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		ting::util::ClampBottom(flexible, 0.0f);
 		ASSERT(flexible >= 0)
 		
-		float pos = 0;
+		float pos = cont.Padding()[longIndex];//start arranging widgets from padding
 		Info *i = info.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			Vec2f newSize(i->dim);
@@ -122,14 +134,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 					break;
 				default:
 				case Gravity::CENTER:
-					newPos[transIndex] = (
-							cont.Rect().d[transIndex]
-									- newSize[transIndex]
-									- (transIndex == 0 ?
-											(cont.Padding()[0] + cont.Padding()[2]) :
-											(cont.Padding()[1] + cont.Padding()[3])
-										)
-						) / 2;
+					newPos[transIndex] = (cont.Rect().d[transIndex] - newSize[transIndex]) / 2;
 					break;
 			}
 
@@ -156,6 +161,8 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	
 	morda::Vec2f minDim(0);
 	
+	float prevMargin = 0;
+	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
 		const morda::Vec2f& md = (*c)->GetMinDim();
 		
@@ -164,13 +171,28 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		}
 		minDim[longIndex] += md[longIndex];
 		
+		LeftTopRightBottom margins = LeftTopRightBottom::Default();
+		if((*c)->prop){
+			if(const stob::Node* layout = (*c)->prop->Child(Layout::D_Layout()).second){
+				if(const stob::Node* m = layout->Child(D_Margins).second){
+					margins = LeftTopRightBottom::FromSTOB(*m);
+				}
+			}
+		}
+		
 		//margin works for non-first children only
 		if((*c)->Prev().IsValid()){//if not first child
 			minDim[longIndex] += std::max(
-					(*c)->Prev()->Margins()[longIndex + 2],
-					(*c)->Margins()[longIndex]
+					prevMargin,
+					margins[longIndex]
 				);
 		}
+		
+		prevMargin = margins[longIndex + 2];
 	}
+	
+	minDim[0] += cont.Padding()[0] + cont.Padding()[2];
+	minDim[1] += cont.Padding()[1] + cont.Padding()[3];
+	
 	return minDim;
 }
