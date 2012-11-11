@@ -16,26 +16,25 @@ const char* D_Gravity = "gravity";
 
 
 Vec2f Gravity::PosForWidget(const Widget& w)const throw(){
-	ting::Ref<Container> p = w.Parent();
+	ting::Ref<const Container> p = w.Parent();
 	if(!p){
 		return Vec2f(0);
 	}
 	
-	Vec2f ret;
-	
-	ret.x = p->Padding().lt.x + (p->Rect().d.x - p->Padding().lt.x - p->Padding().rb.x - w.Rect().d.x) * this->x;
-	//TODO: for y
-	
-	return ret;
+	return PosForRect(*p, w.Rect().d);
+}
+
+
+
+Vec2f Gravity::PosForRect(const Padded& w, const Vec2f& dim)const throw(){
+	return w.Padding().lb + (w.Rect().d - w.Padding().lb - w.Padding().rt - dim).CompMul((*this));
 }
 
 
 
 //static
 Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
-	Gravity ret = Vec2fFromSTOB(gravity.Child()) / 100;
-	
-	return ret;
+	return Vec2fFromSTOB(gravity.Child()) / 100;
 }
 
 

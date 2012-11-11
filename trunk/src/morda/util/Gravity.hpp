@@ -31,6 +31,8 @@ THE SOFTWARE. */
 #include <stob/dom.hpp>
 
 #include "../util/Vector2.hpp"
+#include "../Widget.hpp"
+#include "../widgets/Padded.hpp"
 
 
 namespace morda{
@@ -39,22 +41,44 @@ namespace morda{
 
 class Gravity : public morda::Vec2f{
 public:
+	/**
+	 * @brief Constructor.
+	 * Creates uninitialized Gravity object.
+     */
 	inline Gravity(){}
 	
 	
-	//TODO: doxygen
-	inline Gravity(float h, float v) :
-			Vec2f(h, v)
+	/**
+	 * @brief Constructor.
+	 * Creates a Gravity object initialized to given values.
+	 * The values should be from range [0:1].
+     * @param gravity - gravity values.
+     */
+	inline Gravity(const Vec2f& gravity) :
+			Vec2f(gravity)
 	{}
 	
 	/**
 	 * @brief Get position for widget.
 	 * Basing on gravity calculates the position for given widget within its parent.
 	 * Widget and its parent should have the correct size already set.
+	 * Parent's padding is taken into account.
      * @param w - widget to calculate the position for.
      * @return The position for the widget.
      */
 	Vec2f PosForWidget(const Widget& w)const throw();
+	
+	/**
+	 * @brief Get position for rectangle within given padded widget.
+	 * Basing on gravity calculates the position for rectangle of given dimensions within
+	 * the given widget.
+	 * Widget should have the correct size already set.
+	 * Takes widget padding into account.
+     * @param w - padded widget within which the rectangle is to be placed.
+     * @param dim - dimensions of the rectangle.
+     * @return Position for the rectangle within widget.
+     */
+	Vec2f PosForRect(const Padded& w, const Vec2f& dim)const throw();
 	
 	/**
 	 * @brief Parse the gravity property from STOB.
@@ -112,7 +136,7 @@ public:
      * @return Gravity object initialized to default gravity values.
      */
 	static Gravity Default()throw(){
-		return Gravity(0.5f, 0.5f);
+		return Gravity(Vec2f(0.5f));
 	}
 };
 

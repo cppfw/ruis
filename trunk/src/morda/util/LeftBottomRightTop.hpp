@@ -38,16 +38,16 @@ namespace morda{
 
 
 //TODO: doxygen
-class LeftTopRightBottom{
+class LeftBottomRightTop{
 public:
-	Vec2f lt;
-	Vec2f rb;
+	Vec2f lb;
+	Vec2f rt;
 	
-	inline LeftTopRightBottom(){}
+	inline LeftBottomRightTop(){}
 	
-	inline LeftTopRightBottom(float left, float top, float right, float bottom) :
-			lt(left, top),
-			rb(right, bottom)
+	inline LeftBottomRightTop(float left, float bottom, float right, float top) :
+			lb(left, bottom),
+			rt(right, top)
 	{}
 	
 	float& operator[](size_t i)throw(){
@@ -66,7 +66,7 @@ public:
 	 * @code
 	 * padding{10 20 15 30}
 	 * @endcode
-	 * The order of values is as follows: left, top, right, bottom.
+	 * The order of values is as follows: left, bottom, right, top.
 	 * If passed node has less than 4 child values then the rest values are
 	 * filled with the last value encountered. For example
 	 * @code
@@ -82,15 +82,15 @@ public:
      * @param node - STOB node to parse from.
      * @return Parsed LeftTopRightBottom object.
      */
-	static LeftTopRightBottom FromSTOB(const stob::Node& node)throw();
+	static LeftBottomRightTop FromSTOB(const stob::Node& node)throw();
 	
 	/**
 	 * @brief Default values.
 	 * Default values are all 0.
      * @return LeftTopRightBottom object initialized to default values.
      */
-	static LeftTopRightBottom Default()throw(){
-		return LeftTopRightBottom(0, 0, 0, 0);
+	static LeftBottomRightTop Default()throw(){
+		return LeftBottomRightTop(0, 0, 0, 0);
 	}
 };
 

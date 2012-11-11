@@ -5,15 +5,15 @@ U_SimpleWidget{
 Button{
 	pos {10 20}
 	dim {100 50}
-	gravity {center center}
+	gravity {30% 70%}
 	text {"Hello world!"}
 }
 
-
+/*
 layout{
 	SimpleLayout{}
 }
-
+*/
 
 Container{
 	pos {50 100}
@@ -47,7 +47,7 @@ Container{
 		prop{
 			layout{
 				weight {0}
-				gravity {right}
+				gravity {100%}
 			}
 		}
 	}
@@ -75,7 +75,7 @@ Container{
 		prop{
 			layout{
 				dim {30% min}
-				gravity {left top}
+				gravity {0% 70%}
 				weight {1}
 				margins {10 20 30 40}
 			}

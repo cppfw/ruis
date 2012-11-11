@@ -42,33 +42,20 @@ void Label::SetText(const std::string& text){
 
 //override
 morda::Vec2f Label::ComputeMinDim()const throw(){
-	LeftTopRightBottom padding = this->Padding();
+	LeftBottomRightTop padding = this->Padding();
 //	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
-	return this->bb.d + morda::Vec2f(padding.left + padding.right, padding.top + padding.bottom);
+	return this->bb.d + padding.lb + padding.rt;
 }
 
 
 
 //override
 void Label::OnResize(){
-	morda::Vec2f paddingLow(this->Padding().left, this->Padding().bottom);
-	morda::Vec2f paddingHigh(this->Padding().right, this->Padding().top);
-	//update pivot
+	Vec2f p = this->GetGravity().PosForRect(*this, this->bb.d);
+	
+	this->pivot = p - this->bb.p;
+	
 	for(unsigned i = 0; i != 2; ++i){
-		switch(this->GetGravity()[i]){
-			case Gravity::LEFT:
-//			case Gravity::BOTTOM:
-				this->pivot[i] = -this->bb.p[i] + paddingLow[i];
-				break;
-			case Gravity::RIGHT:
-//			case Gravity::TOP:
-				this->pivot[i] = this->Rect().d[i] - paddingHigh[i] - (this->bb.p[i] + this->bb.d[i]);
-				break;
-			default:
-			case Gravity::CENTER:
-				this->pivot[i] = paddingLow[i] + (this->Rect().d[i] - paddingLow[i] - paddingHigh[i] - this->bb.d[i]) / 2 - this->bb.p[i];
-				break;
-		}
 		this->pivot[i] = ting::math::Round(this->pivot[i]);
 	}
 }
