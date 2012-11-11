@@ -9,10 +9,10 @@
           <in>AssetFile.hpp</in>
         </df>
         <df name="layouts">
+          <in>FrameLayout.cpp</in>
+          <in>FrameLayout.hpp</in>
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
-          <in>SimpleLayout.cpp</in>
-          <in>SimpleLayout.hpp</in>
         </df>
         <df name="linux">
           <in>App.cpp</in>
@@ -51,6 +51,7 @@
           <in>LeftBottomRightTop.cpp</in>
           <in>LeftBottomRightTop.hpp</in>
           <in>Matrix4.hpp</in>
+          <in>Padded.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
           <in>TexFont.cpp</in>
@@ -70,7 +71,7 @@
           <in>Gravitating.hpp</in>
           <in>Label.cpp</in>
           <in>Label.hpp</in>
-          <in>Padded.hpp</in>
+          <in>PaddedWidget.hpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>

@@ -28,37 +28,38 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Vector2.hpp"
+#include "../Widget.hpp"
+#include "../util/Padded.hpp"
 
-#include <stob/dom.hpp>
-#include <ting/math.hpp>
 
 
 namespace morda{
 
 
 
-/**
- * @brief Parse chain of 2 STOB nodes as Vec2f.
- * @param chain - chain of at least two nodes holding Vec2f values.
- *                If there are less than 2 nodes in the chain then the rest of
- *                vector components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting vector will be filled with zeros.
- * @return parsed Vec2f.
- */
-morda::Vec2f Vec2fFromSTOB(const stob::Node* chain);
+class PaddedWidget : public virtual Widget, private Padded{
+protected:
+	inline PaddedWidget(){}
+	
+	inline PaddedWidget(LeftBottomRightTop padding) :
+			Padded(padding)
+	{}
+	
+	inline PaddedWidget(const stob::Node& description) :
+			Padded(description)
+	{}
+	
+public:
+	inline void SetPadding(LeftBottomRightTop padding)throw(){
+		this->Padded::SetPadding(padding);
+		this->RelayoutNeeded();
+	}
+	
+	inline const LeftBottomRightTop& Padding()const throw(){
+		return this->Padded::Padding();
+	}
+};
 
-
-
-/**
- * @brief Round each component of Vec2f.
- * Call ting::math::Round() for each component of given Vec2f.
- * @param v - Vec2f to round.
- * @return Rounded Vec2f.
- */
-inline morda::Vec2f RoundVec(const Vec2f& v){
-	return Vec2f(ting::math::Round(v.x), ting::math::Round(v.y));
-}
 
 
 }//~namespace

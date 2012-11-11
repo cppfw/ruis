@@ -21,13 +21,19 @@ Vec2f Gravity::PosForWidget(const Widget& w)const throw(){
 		return Vec2f(0);
 	}
 	
-	return PosForRect(*p, w.Rect().d);
+	return PosForRect(p->Rect().d, p->GetLayout() ? p->GetLayout()->Padding() : LeftBottomRightTop::Default(), w.Rect().d);
 }
 
 
 
-Vec2f Gravity::PosForRect(const Padded& w, const Vec2f& dim)const throw(){
-	return w.Padding().lb + (w.Rect().d - w.Padding().lb - w.Padding().rt - dim).CompMul((*this));
+Vec2f Gravity::PosForRect(const PaddedWidget& w, const Vec2f& dim)const throw(){
+	return PosForRect(w.Rect().d, w.Padding(), dim);
+}
+
+
+
+Vec2f Gravity::PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const throw(){
+	return padding.lb + (parentDim - padding.lb - padding.rt - dim).CompMul(*this);
 }
 
 

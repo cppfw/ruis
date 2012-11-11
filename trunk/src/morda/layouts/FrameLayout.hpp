@@ -38,10 +38,12 @@ namespace morda{
 
 
 
-class SimpleLayout : public morda::Layout{
-	SimpleLayout(){}
+class FrameLayout : public morda::Layout{
+	FrameLayout(){}
 	
-	SimpleLayout(const stob::Node& description){}
+	FrameLayout(const stob::Node& description) :
+			Layout(description)
+	{}
 public:
 	//override
 	void ArrangeWidgets(Container& cont)const;
@@ -49,14 +51,14 @@ public:
 	//override
 	morda::Vec2f ComputeMinDim(const Container& cont)const throw();
 	
-	~SimpleLayout()throw(){}
+	~FrameLayout()throw(){}
 	
-	static inline ting::Ptr<SimpleLayout> New(const stob::Node& description){
-		return ting::Ptr<SimpleLayout>(new SimpleLayout(description));
+	static inline ting::Ptr<FrameLayout> New(const stob::Node& description){
+		return ting::Ptr<FrameLayout>(new FrameLayout(description));
 	}
 	
-	static inline ting::Ptr<SimpleLayout> New(){
-		return ting::Ptr<SimpleLayout>(new SimpleLayout());
+	static inline ting::Ptr<FrameLayout> New(){
+		return ting::Ptr<FrameLayout>(new FrameLayout());
 	}
 };
 

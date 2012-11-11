@@ -7,13 +7,23 @@ Button{
 	dim {100 50}
 	gravity {30% 70%}
 	text {"Hello world!"}
+
+	prop{
+		layout{
+			dim{min 30}
+			gravity{0% 0%}
+		}
+	}
 }
 
-/*
+
 layout{
-	SimpleLayout{}
+	FrameLayout{
+		padding{10 20 30 40}
+	}
 }
-*/
+
+
 
 Container{
 	pos {50 100}
@@ -21,12 +31,12 @@ Container{
 
 	name {someContainer}
 
-	padding {20 30 10 40}
-
 	layout{
 		LinearLayout{
+//		FrameLayout{
 			orientation {horizontal}
 //			reverse {true}
+			padding {20 30 10 40}
 		}
 	}
 

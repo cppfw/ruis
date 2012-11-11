@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include <vector>
 
-#include "widgets/Padded.hpp"
+#include "Widget.hpp"
 
 
 
@@ -42,7 +42,7 @@ class Layout;
 
 
 
-class Container : public Padded{
+class Container : virtual public Widget{
 private:
 	ting::Ref<Widget> childrenHead, childrenTail;
 	ting::Inited<unsigned, 0> numChildren;
@@ -55,8 +55,7 @@ protected:
 	inline Container(){}
 	
 	inline Container(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp),
-			Padded(description)
+			Widget(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);
 	}
@@ -75,6 +74,14 @@ public:
 	void SetLayout(ting::Ptr<Layout> layout = ting::Ptr<Layout>()){
 		this->layout = layout;
 		this->RelayoutNeeded();
+	}
+	
+	ting::Ptr<Layout> ExtractLayout()throw(){
+		return this->layout;
+	}
+	
+	const Layout* GetLayout()const throw(){
+		return this->layout.operator->();
 	}
 	
 	//override

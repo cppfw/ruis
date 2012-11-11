@@ -4,7 +4,7 @@
 #include "widgets/Label.hpp"
 #include "widgets/Button.hpp"
 #include "layouts/LinearLayout.hpp"
-#include "layouts/SimpleLayout.hpp"
+#include "layouts/FrameLayout.hpp"
 
 
 
@@ -21,7 +21,7 @@ const char* D_AbstractButton = "AbstractButton";
 const char* D_Button = "Button";
 
 const char* D_LinearLayout = "LinearLayout";
-const char* D_SimpleLayout = "SimpleLayout";
+const char* D_FrameLayout = "FrameLayout";
 
 
 
@@ -107,16 +107,16 @@ public:
 	}
 };
 
-class SimpleLayoutFactory : public GuiInflater::LayoutFactory{
+class FrameLayoutFactory : public GuiInflater::LayoutFactory{
 public:
 	//override
 	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node == D_SimpleLayout)
-		return SimpleLayout::New(node);
+		ASSERT(node == D_FrameLayout)
+		return FrameLayout::New(node);
 	}
 	
-	inline static ting::Ptr<SimpleLayoutFactory> New(){
-		return ting::Ptr<SimpleLayoutFactory>(new SimpleLayoutFactory());
+	inline static ting::Ptr<FrameLayoutFactory> New(){
+		return ting::Ptr<FrameLayoutFactory>(new FrameLayoutFactory());
 	}
 };
 
@@ -132,7 +132,7 @@ GuiInflater::GuiInflater(){
 	this->AddWidgetFactory(D_Button, ButtonFactory::New());
 	
 	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
-	this->AddLayoutFactory(D_SimpleLayout, SimpleLayoutFactory::New());
+	this->AddLayoutFactory(D_FrameLayout, FrameLayoutFactory::New());
 }
 
 

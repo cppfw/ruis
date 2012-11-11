@@ -6,7 +6,6 @@
 
 #include "../util/Gravity.hpp"
 #include "../util/LeftBottomRightTop.hpp"
-#include "../widgets/Padded.hpp"
 
 
 
@@ -14,7 +13,9 @@ using namespace morda;
 
 
 
-LinearLayout::LinearLayout(const stob::Node& description){
+LinearLayout::LinearLayout(const stob::Node& description) :
+		Layout(description)
+{
 	this->isVertical = true;
 	if(const stob::Node* n = description.GetProperty("orientation")){
 		if(*n == "horizontal"){
@@ -58,7 +59,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	ting::Array<Info> info(cont.NumChildren());
 	
 	//Calculate rigid size, net weight and store weights and margins
-	float rigid = cont.Padding()[longIndex] + cont.Padding()[2 + longIndex];
+	float rigid = this->Padding()[longIndex] + this->Padding()[2 + longIndex];
 	float netWeight = 0;
 	
 	{
@@ -114,7 +115,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		ting::util::ClampBottom(flexible, 0.0f);
 		ASSERT(flexible >= 0)
 		
-		float pos = cont.Padding()[this->isReverse ? (longIndex + 2) : longIndex];//start arranging widgets from padding
+		float pos = this->Padding()[this->isReverse ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		Info *i = info.Begin();
 		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
 			Vec2f newSize(i->dim);
@@ -199,8 +200,8 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		prevMargin = margins[this->isReverse ? longIndex : (longIndex + 2)];
 	}
 	
-	minDim[0] += cont.Padding()[0] + cont.Padding()[2];
-	minDim[1] += cont.Padding()[1] + cont.Padding()[3];
+	minDim[0] += this->Padding()[0] + this->Padding()[2];
+	minDim[1] += this->Padding()[1] + this->Padding()[3];
 	
 	return minDim;
 }

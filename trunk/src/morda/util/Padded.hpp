@@ -28,8 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "../Widget.hpp"
-#include "../util/LeftBottomRightTop.hpp"
+
+#include "LeftBottomRightTop.hpp"
 
 
 
@@ -37,7 +37,7 @@ namespace morda{
 
 
 
-class Padded : public virtual Widget{
+class Padded{
 	LeftBottomRightTop padding;
 protected:
 	inline Padded() :
@@ -60,7 +60,6 @@ protected:
 public:
 	inline void SetPadding(LeftBottomRightTop padding)throw(){
 		this->padding = padding;
-		this->RelayoutNeeded();
 	}
 	
 	inline const LeftBottomRightTop& Padding()const throw(){

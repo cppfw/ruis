@@ -31,6 +31,7 @@ THE SOFTWARE. */
 #include <stob/dom.hpp>
 
 #include "Container.hpp"
+#include "util/Padded.hpp"
 
 
 
@@ -38,7 +39,14 @@ namespace morda{
 
 
 
-class Layout{
+class Layout : public Padded{
+protected:
+	inline Layout(){}
+	
+	inline Layout(const stob::Node& description) :
+			Padded(description)
+	{}
+	
 public:
 	static inline const char* D_Layout()throw(){
 		return "layout";
@@ -111,6 +119,23 @@ public:
          * @return Parsed Dim object.
          */
 		static Dim FromSTOB(const stob::Node& node)throw();
+		
+		/**
+		 * @brief Parse from STOB.
+		 * Parse from STOB of the form:
+		 * @code
+		 * dim{min 13%}
+		 * @endcode
+		 * The value of the root node does not matter, it is ignored.
+         * @param node - dim node. If 0 pointer is passed then return default Dim.
+         * @return Parsed Dim object.
+         */
+		static inline Dim FromSTOB(const stob::Node* node)throw(){
+			if(!node){
+				return Default();
+			}
+			return FromSTOB(*node);
+		}
 		
 		/**
 		 * @brief Parse from layout properties STOB.
