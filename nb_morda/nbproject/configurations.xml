@@ -48,8 +48,8 @@
           <in>Gravity.hpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
-          <in>LeftTopRightBottom.cpp</in>
-          <in>LeftTopRightBottom.hpp</in>
+          <in>LeftBottomRightTop.cpp</in>
+          <in>LeftBottomRightTop.hpp</in>
           <in>Matrix4.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>

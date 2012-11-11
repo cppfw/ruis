@@ -5,7 +5,7 @@
 #include "LinearLayout.hpp"
 
 #include "../util/Gravity.hpp"
-#include "../util/LeftTopRightBottom.hpp"
+#include "../util/LeftBottomRightTop.hpp"
 #include "../widgets/Padded.hpp"
 
 
@@ -43,7 +43,7 @@ public:
 	Vec2f dim;
 	float margin;//actual margin between child widgets
 	Gravity gravity;
-	LeftTopRightBottom margins;
+	LeftBottomRightTop margins;
 };
 
 }//~namespace
@@ -72,7 +72,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				i->dim = (*c)->GetMinDim();
 				i->weight = 0;
 				i->gravity = Gravity::Default();
-				i->margins = LeftTopRightBottom::Default();
+				i->margins = LeftBottomRightTop::Default();
 			}else{
 				if(const stob::Node* weight = layout->GetProperty(D_Weight)){
 					i->weight = weight->AsFloat();
@@ -90,9 +90,9 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				i->gravity = Gravity::FromLayout(*layout);
 				
 				if(const stob::Node* margins = layout->Child(D_Margins).second){
-					i->margins = LeftTopRightBottom::FromSTOB(*margins);
+					i->margins = LeftBottomRightTop::FromSTOB(*margins);
 				}else{
-					i->margins = LeftTopRightBottom::Default();
+					i->margins = LeftBottomRightTop::Default();
 				}
 			}
 			
@@ -130,33 +130,20 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				newPos[longIndex] = pos + i->margin;
 			}
 			pos += i->margin + newSize[longIndex];
-				
 			
-			//apply gravity
-			switch(i->gravity[transIndex]){
-				case Gravity::LEFT:
-	//			case Gravity::BOTTOM:
-					newPos[transIndex] = cont.Padding()[this->isVertical ? 0 : 3];
-					break;
-				case Gravity::RIGHT:
-	//			case Gravity::TOP:
-					newPos[transIndex] = cont.Rect().d[transIndex] - newSize[transIndex] - cont.Padding()[this->isVertical ? 2 : 1];
-					break;
-				default:
-				case Gravity::CENTER:
-					newPos[transIndex] = (cont.Rect().d[transIndex] - newSize[transIndex]) / 2;//TODO: padding?
-					break;
+			for(unsigned j = 0; j != 2; ++j){
+				newSize[j] = ting::math::Round(newSize[j]);
 			}
 
-			newPos[longIndex] = ting::math::Round(newPos[longIndex]);
-			newPos[transIndex] = ting::math::Round(newPos[transIndex]);
+			(*c)->Resize(newSize);
+			
+			newPos[transIndex] = i->gravity.PosForWidget(*(*c))[transIndex];
+
+			for(unsigned i = 0; i != 2; ++i){
+				newPos[i] = ting::math::Round(newPos[i]);
+			}
 			
 			(*c)->MoveTo(newPos);
-			
-			newSize[longIndex] = ting::math::Round(newSize[longIndex]);
-			newSize[transIndex] = ting::math::Round(newSize[transIndex]);
-
-			(*c)->Resize(newSize);
 		}
 	}
 }
@@ -173,12 +160,12 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	float prevMargin = 0;
 	
 	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
-		LeftTopRightBottom margins = LeftTopRightBottom::Default();
+		LeftBottomRightTop margins = LeftBottomRightTop::Default();
 		morda::Vec2f dim = (*c)->GetMinDim();
 		if((*c)->Prop()){
 			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).second){
 				if(const stob::Node* m = layout->Child(D_Margins).second){
-					margins = LeftTopRightBottom::FromSTOB(*m);
+					margins = LeftBottomRightTop::FromSTOB(*m);
 				}
 				
 				{

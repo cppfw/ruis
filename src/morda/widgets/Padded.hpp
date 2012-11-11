@@ -29,7 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "../Widget.hpp"
-#include "../util/LeftTopRightBottom.hpp"
+#include "../util/LeftBottomRightTop.hpp"
 
 
 
@@ -38,32 +38,32 @@ namespace morda{
 
 
 class Padded : public virtual Widget{
-	LeftTopRightBottom padding;
+	LeftBottomRightTop padding;
 protected:
 	inline Padded() :
-			padding(LeftTopRightBottom::Default())
+			padding(LeftBottomRightTop::Default())
 	{}
 	
-	inline Padded(LeftTopRightBottom padding) :
+	inline Padded(LeftBottomRightTop padding) :
 			padding(padding)
 	{}
 	
 	inline Padded(const stob::Node& description){
 		const stob::Node* n = description.Child("padding").second;
 		if(!n){
-			this->padding = LeftTopRightBottom::Default();
+			this->padding = LeftBottomRightTop::Default();
 			return;
 		}
-		this->padding = LeftTopRightBottom::FromSTOB(*n);
+		this->padding = LeftBottomRightTop::FromSTOB(*n);
 	}
 	
 public:
-	inline void SetPadding(LeftTopRightBottom padding)throw(){
+	inline void SetPadding(LeftBottomRightTop padding)throw(){
 		this->padding = padding;
 		this->RelayoutNeeded();
 	}
 	
-	inline const LeftTopRightBottom& Padding()const throw(){
+	inline const LeftBottomRightTop& Padding()const throw(){
 		return this->padding;
 	}
 };

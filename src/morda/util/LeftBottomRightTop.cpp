@@ -1,4 +1,4 @@
-#include "LeftTopRightBottom.hpp"
+#include "LeftBottomRightTop.hpp"
 
 
 using namespace morda;
@@ -6,8 +6,8 @@ using namespace morda;
 
 
 //static
-LeftTopRightBottom LeftTopRightBottom::FromSTOB(const stob::Node& node)throw(){
-	LeftTopRightBottom ret;
+LeftBottomRightTop LeftBottomRightTop::FromSTOB(const stob::Node& node)throw(){
+	LeftBottomRightTop ret;
 	
 	const stob::Node* n = node.Child();
 	unsigned i = 0;
