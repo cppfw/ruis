@@ -6,6 +6,7 @@
 
 #include "../util/Gravity.hpp"
 #include "../util/LeftBottomRightTop.hpp"
+#include "../util/util.hpp"
 
 
 
@@ -82,11 +83,8 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 					i->weight = 0;
 				}
 
-				if(const stob::Node* dim = layout->Child(Layout::Dim::D_Dim()).second){
-					i->dim = Layout::Dim::FromSTOB(*dim).ForWidget(*(*c));
-				}else{
-					i->dim = (*c)->GetMinDim();
-				}
+				Layout::Dim dim = Layout::Dim::FromLayout(*layout);
+				i->dim = dim.ForWidget(*(*c));
 				
 				i->gravity = Gravity::FromLayout(*layout);
 				
@@ -131,20 +129,12 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				newPos[longIndex] = pos + i->margin;
 			}
 			pos += i->margin + newSize[longIndex];
-			
-			for(unsigned j = 0; j != 2; ++j){
-				newSize[j] = ting::math::Round(newSize[j]);
-			}
 
-			(*c)->Resize(newSize);
+			(*c)->Resize(RoundVec(newSize));
 			
 			newPos[transIndex] = i->gravity.PosForWidget(*(*c))[transIndex];
-
-			for(unsigned i = 0; i != 2; ++i){
-				newPos[i] = ting::math::Round(newPos[i]);
-			}
 			
-			(*c)->MoveTo(newPos);
+			(*c)->MoveTo(RoundVec(newPos));
 		}
 	}
 }
