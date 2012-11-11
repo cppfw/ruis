@@ -82,7 +82,13 @@ Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
 				break;
 			case FRACTION:
 				if(ting::Ref<const Container> p = w.Parent()){
-					ret[i] = v.value * (p->Rect().d[i] - p->Padding()[i] - p->Padding()[i + 2]);
+					float padding;
+					if(const Layout* l = p->GetLayout()){
+						padding = l->Padding()[i] - l->Padding()[i + 2];
+					}else{
+						padding = 0;
+					}
+					ret[i] = v.value * (p->Rect().d[i] - padding);
 					ting::util::ClampBottom(ret[i], 0.0f);
 				}else{
 					ret[i] = 0;

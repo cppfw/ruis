@@ -32,7 +32,7 @@ THE SOFTWARE. */
 
 #include "../util/Vector2.hpp"
 #include "../Widget.hpp"
-#include "../widgets/Padded.hpp"
+#include "../widgets/PaddedWidget.hpp"
 
 
 namespace morda{
@@ -71,14 +71,25 @@ public:
 	/**
 	 * @brief Get position for rectangle within given padded widget.
 	 * Basing on gravity calculates the position for rectangle of given dimensions within
-	 * the given widget.
+	 * the given padded widget.
 	 * Widget should have the correct size already set.
 	 * Takes widget padding into account.
      * @param w - padded widget within which the rectangle is to be placed.
      * @param dim - dimensions of the rectangle.
      * @return Position for the rectangle within widget.
      */
-	Vec2f PosForRect(const Padded& w, const Vec2f& dim)const throw();
+	Vec2f PosForRect(const PaddedWidget& w, const Vec2f& dim)const throw();
+	
+	/**
+	 * @brief Get position for rectangle within given parent rectangle.
+	 * Basing on gravity calculates the position for rectangle of given dimensions within
+	 * the given parent rectangle.
+     * @param parentDim - dimensions of parent rectangle.
+	 * @param padding - padding to take into account.
+     * @param dim - dimensions of the rectangle to place.
+     * @return Position for the rectangle within parent rectangle.
+     */
+	Vec2f PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const throw();
 	
 	/**
 	 * @brief Parse the gravity property from STOB.

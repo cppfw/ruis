@@ -33,7 +33,7 @@ THE SOFTWARE. */
 #include "../Widget.hpp"
 #include "../resources/ResFont.hpp"
 #include "Gravitating.hpp"
-#include "Padded.hpp"
+#include "PaddedWidget.hpp"
 
 
 
@@ -41,7 +41,7 @@ namespace morda{
 
 
 
-class Label : public Gravitating, public Padded{
+class Label : public Gravitating, public PaddedWidget{
 	std::string text;
 	
 	ting::Ref<morda::ResFont> font;
@@ -56,7 +56,7 @@ protected:
 	Label(const stob::Node& description, bool doNotCopyProp) :
 			Widget(description, doNotCopyProp),
 			Gravitating(description),
-			Padded(description)
+			PaddedWidget(description)
 	{
 		this->ApplyDescription(description);
 	}
