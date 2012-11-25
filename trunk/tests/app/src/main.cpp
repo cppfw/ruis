@@ -60,7 +60,34 @@ public:
 		}else{
 			this->StartUpdating(30);
 		}
+		this->Focus();
 		return true;
+	}
+	
+	//override
+	bool OnKeyDown(morda::key::Key keyCode){
+		TRACE(<< "SimpleWidget::OnKeyDown(): keyCode = " << unsigned(keyCode) << std::endl)
+		switch(keyCode){
+			case morda::key::LEFT:
+				TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
+				return true;
+			default:
+				break;
+		}
+		return false;
+	}
+	
+	//override
+	bool OnKeyUp(morda::key::Key keyCode){
+		TRACE(<< "SimpleWidget::OnKeyUp(): keyCode = " << unsigned(keyCode) << std::endl)
+		switch(keyCode){
+			case morda::key::LEFT:
+				TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
+				return true;
+			default:
+				break;
+		}
+		return false;
 	}
 	
 	//override
@@ -111,11 +138,30 @@ public:
 		
 		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
 
-		this->SetRootContainer(
-				morda::App::Inst().Inflater().Inflate(
-						*this->CreateResourceFileInterface("test.gui.stob")
-					)
+		ting::Ref<morda::Container> c = morda::App::Inst().Inflater().Inflate(
+				*this->CreateResourceFileInterface("test.gui.stob")
 			);
+		
+		class CustomKeyListener : public morda::KeyListener{
+		public:
+			//override
+			bool OnKeyDown(morda::key::Key keyCode){
+				TRACE(<< "CustomKeyListener::OnKeyDown(): keyCode = " << unsigned(keyCode) << std::endl)
+				return false;
+			}
+			
+			//override
+			bool OnKeyUp(morda::key::Key keyCode){
+				TRACE(<< "CustomKeyListener::OnKeyUp(): keyCode = " << unsigned(keyCode) << std::endl)
+				return false;
+			}
+		};
+		
+		c->SetKeyListener(ting::Ptr<morda::KeyListener>(
+				new CustomKeyListener()
+			));
+		
+		this->SetRootContainer(c);
 	}
 };
 

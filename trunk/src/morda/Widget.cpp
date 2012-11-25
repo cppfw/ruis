@@ -67,3 +67,25 @@ void Widget::Render(const morda::Matr4f& matrix)const{
 	s.SetColor(morda::Vec3f(1, 0, 1));
 	s.DrawQuad01(GL_LINE_LOOP);
 }
+
+
+
+void Widget::PassKeyUpEventToParent(key::Key keyCode){
+	if(ting::Ref<Container> p = this->Parent()){
+		p->HandleKeyEvent<false>(keyCode);
+	}
+}
+
+
+
+void Widget::PassKeyDownEventToParent(key::Key keyCode){
+	if(ting::Ref<Container> p = this->Parent()){
+		p->HandleKeyEvent<true>(keyCode);
+	}
+}
+
+
+
+void Widget::Focus()throw(){
+	App::Inst().focusedWidget = ting::WeakRef<Widget>(this);
+}

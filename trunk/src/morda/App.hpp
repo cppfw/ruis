@@ -53,6 +53,7 @@ THE SOFTWARE. */
 #include "Container.hpp"
 #include "GuiInflater.hpp"
 #include "Updateable.hpp"
+#include "KeyListener.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
@@ -69,6 +70,8 @@ class App : public ting::IntrusiveSingleton<App>{
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 
 	friend class Updateable;
+	
+	friend class Widget;
 	
 	struct ThreadId{
 		ting::mt::Thread::T_ThreadID id;
@@ -234,6 +237,19 @@ public:
 	inline GuiInflater& Inflater()throw(){
 		return this->inflater;
 	}
+	
+private:
+	ting::WeakRef<Widget> focusedWidget;
+	
+	template <bool is_down> void HandleKeyEvent(key::Key keyCode){
+		if(ting::Ref<Widget> w = this->focusedWidget){
+			w->HandleKeyEvent<is_down>(keyCode);
+		}else if(this->rootContainer){
+			this->rootContainer->HandleKeyEvent<is_down>(keyCode);
+		}
+	}
+public:
+	
 };
 
 
