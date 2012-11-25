@@ -33,6 +33,8 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
 
+#include "KeyListener.hpp"
+
 #include "util/Matrix4.hpp"
 #include "util/Vector2.hpp"
 #include "util/Rectangle2.hpp"
@@ -48,7 +50,7 @@ class Container;
 
 
 
-class Widget : virtual public ting::RefCounted{
+class Widget : virtual public ting::RefCounted, public KeyListener{
 	friend class Container;
 	friend class App;
 	
@@ -169,7 +171,51 @@ public:
 	virtual ~Widget()throw(){}
 
 	virtual void Render(const morda::Matr4f& matrix)const;
-
+	
+private:
+	ting::Ptr<KeyListener> keyListener;
+	
+	template <bool is_down> void HandleKeyEvent(key::Key keyCode){
+		if(this->keyListener){
+			bool res;
+			if(is_down){
+				res = this->keyListener->OnKeyDown(keyCode);
+			}else{
+				res = this->keyListener->OnKeyUp(keyCode);
+			}
+			if(res){
+				return;
+			}
+		}
+		
+		bool res;
+		if(is_down){
+			res = this->OnKeyDown(keyCode);
+		}else{
+			res = this->OnKeyUp(keyCode);
+		}
+		if(res){
+			return;
+		}
+		
+		if(is_down){
+			this->PassKeyDownEventToParent(keyCode);
+		}else{
+			this->PassKeyUpEventToParent(keyCode);
+		}
+	}
+	
+	void PassKeyUpEventToParent(key::Key keyCode);
+	
+	void PassKeyDownEventToParent(key::Key keyCode);
+	
+public:
+	void SetKeyListener(ting::Ptr<KeyListener> listener)throw(){
+		this->keyListener = listener;
+	}
+	
+	void Focus()throw();
+	
 	enum EMouseButton{
 		UNKNOWN,
 		LEFT,
