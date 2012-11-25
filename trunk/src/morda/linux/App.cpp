@@ -208,8 +208,9 @@ Widget::EMouseButton ButtonNumberToEnum(int number){
 	}
 }
 
-//TODO: add all keys mapping
-const key::Key keyCodeMap[] = {
+
+
+const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -219,8 +220,74 @@ const key::Key keyCodeMap[] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
+	key::ESCAPE,//9
+	key::ONE,//10
+	key::TWO,//11
+	key::THREE,//12
+	key::FOUR,//13
+	key::FIVE,//14
+	key::SIX,//15
+	key::SEVEN,//16
+	key::EIGHT,//17
+	key::NINE,//18
+	key::ZERO,//19
+	key::MINUS,//20
+	key::EQUALS,//21
+	key::BACKSPACE,//22
+	key::TAB,//23
+	key::Q,//24
+	key::W,//25
+	key::E,//26
+	key::R,//27
+	key::T,//28
+	key::Y,//29
+	key::U,//30
+	key::I,//31
+	key::O,//32
+	key::P,//33
+	key::LEFT_SQUARE_BRACKET,//34
+	key::RIGHT_SQUARE_BRACKET,//35
+	key::ENTER,//36
+	key::LEFT_CONTROL,//37
+	key::A,//38
+	key::S,//39
+	key::D,//40
+	key::F,//41
+	key::G,//42
+	key::H,//43
+	key::J,//44
+	key::K,//45
+	key::L,//46
+	key::SEMICOLON,//47
+	key::APOSTROPHE,//48
+	key::TICK,//49
+	key::LEFT_SHIFT,//50
+	key::BACKSLASH,//51
+	key::Z,//52
+	key::X,//53
+	key::C,//54
+	key::V,//55
+	key::B,//56
+	key::N,//57
+	key::M,//58
+	key::COMMA,//59
+	key::DOT,//60
+	key::SLASH,//61
+	key::RIGHT_SHIFT,//62
 	key::SPACE,
-	key::SPACE,//10
+	key::LEFT_ALT,//64
+	key::SPACE,//65
+	key::CAPSLOCK,//66
+	key::F1,//67
+	key::F2,//68
+	key::F3,//69
+	key::F4,//70
+	key::F5,//71
+	key::F6,//72
+	key::F7,//73
+	key::F8,//74
+	key::F9,//75
+	key::F10,//76
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -230,7 +297,6 @@ const key::Key keyCodeMap[] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
-	key::SPACE,//20
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -240,6 +306,8 @@ const key::Key keyCodeMap[] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
+	key::F11,//95
+	key::F12,//96
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -248,85 +316,21 @@ const key::Key keyCodeMap[] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
+	key::RIGHT_CONTROL,//105
 	key::SPACE,
+	key::PRINT_SCREEN,//107
+	key::RIGHT_ALT,//108
 	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,//100
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,//110
+	key::HOME,//110
 	key::UP,//111
-	key::SPACE,
+	key::PAGE_UP,//112
 	key::LEFT,//113
 	key::RIGHT,//114
-	key::SPACE,
+	key::END,//115
 	key::DOWN,//116
+	key::PAGE_DOWN,//117
+	key::INSERT,//118
+	key::DELETE,//119
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -334,19 +338,15 @@ const key::Key keyCodeMap[] = {
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
+	key::PAUSE,//127
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
+	key::WINDOWS,//133
 	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
+	key::WINDOWS_MENU,//135
 	key::SPACE,
 	key::SPACE,
 	key::SPACE,
@@ -567,7 +567,7 @@ void App::Exec(){
 			}//~while()
 		}//~if there are pending X events
 		
-		//TODO: render only if needed
+		//TODO: render only if needed?
 		this->Render();
 	}//~while(!this->quitFlag)
 	
