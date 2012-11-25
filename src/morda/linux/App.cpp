@@ -271,7 +271,7 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 	key::N,//57
 	key::M,//58
 	key::COMMA,//59
-	key::DOT,//60
+	key::PERIOD,//60
 	key::SLASH,//61
 	key::RIGHT_SHIFT,//62
 	key::SPACE,

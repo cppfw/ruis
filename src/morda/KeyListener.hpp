@@ -80,7 +80,7 @@ enum Key{
 	COMMA,
 	SEMICOLON,
 	APOSTROPHE,
-	DOT,
+	PERIOD,
 	SLASH,
 	BACKSLASH,
 	TAB,
@@ -120,8 +120,6 @@ enum Key{
 	PAUSE,
 	WINDOWS,
 	WINDOWS_MENU
-	
-	//TODO: add all keys
 };
 
 }//~namespace
