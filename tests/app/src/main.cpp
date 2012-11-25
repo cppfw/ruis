@@ -71,6 +71,9 @@ public:
 			case morda::key::LEFT:
 				TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 				return true;
+			case morda::key::A:
+				TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
+				return true;
 			default:
 				break;
 		}
@@ -83,6 +86,9 @@ public:
 		switch(keyCode){
 			case morda::key::LEFT:
 				TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
+				return true;
+			case morda::key::A:
+				TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 				return true;
 			default:
 				break;
