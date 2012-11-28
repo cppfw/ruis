@@ -98,14 +98,21 @@
               <df name="linux">
               </df>
               <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>TexturingShader.d</in>
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
               </df>
               <df name="widgets">
+                <in>AbstractButton.d</in>
               </df>
             </df>
           </df>

@@ -519,6 +519,23 @@ void App::Exec(){
 						break;
 					case KeyRelease:
 //						TRACE(<< "KeyRelease X event got" << std::endl)
+						
+						//ignore auto-repeated key events
+						if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
+							XEvent nev;
+							XPeekEvent(this->xDisplay.d, &nev);
+
+							if(nev.type == KeyPress
+									&& nev.xkey.time == event.xkey.time
+									&& nev.xkey.keycode == event.xkey.keycode
+								)
+							{
+								//Key wasn't actually released, ignore event
+								XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
+								break;
+							}
+						}
+						
 						this->HandleKeyEvent<false>(keyCodeMap[ting::u8(event.xkey.keycode)]);
 						break;
 					case ButtonPress:
