@@ -735,7 +735,7 @@ void HandleInputEvents(){
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
 					{
-						int32_t kc = AKeyEvent_getKeyCode();
+						int32_t kc = AKeyEvent_getKeyCode(event);
 						ASSERT(0 <= kc && kc <= ting::u8(-1))
 						
 						switch(eventAction){
