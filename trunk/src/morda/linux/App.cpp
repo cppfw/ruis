@@ -595,12 +595,15 @@ void App::Exec(){
 
 
 namespace morda{
+
 inline void Main(int argc, char** argv){
 	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 
 	app->Exec();
 }
+
 }//~namespace
+
 
 
 int main(int argc, char** argv){

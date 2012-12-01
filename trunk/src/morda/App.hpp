@@ -228,6 +228,8 @@ public:
 		this->rootContainer = c;
 		this->rootContainer->MoveTo(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
+		
+		this->focusedWidget = this->rootContainer;
 	}
 
 	inline ResourceManager& ResMan()throw(){
