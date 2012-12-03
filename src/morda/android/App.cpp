@@ -735,6 +735,7 @@ void HandleInputEvents(){
 					consume = true;
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
+					//TODO: detect and ignore auto-repeated key events
 					{
 						int32_t kc = AKeyEvent_getKeyCode(event);
 						ASSERT(0 <= kc && kc <= ting::u8(-1))
