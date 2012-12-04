@@ -72,3 +72,20 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 	
 	this->rootContainer->Resize(this->curWinRect.d);
 }
+
+
+
+void App::HandleCharacterInput(ting::u32 unicode, bool isRepeated){
+	ting::Ref<Widget> w = this->focusedWidget;
+	if(!w){
+		return;
+	}
+	
+	if(w->keyListener){
+		if(w->keyListener->OnCharacterInput(unicode, isRepeated)){
+			return;
+		}
+	}
+	
+	w->OnCharacterInput(unicode, isRepeated);
+}
