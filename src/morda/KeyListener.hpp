@@ -139,6 +139,22 @@ public:
 	virtual bool OnKeyUp(key::Key keyCode){
 		return false;
 	}
+	
+	/**
+	 * @brief Handler of character input event.
+	 * Handler for character input. Character input is only passed to focused widget.
+	 * It will not be passed to root container if no widget is focused.
+	 * Character input is not propagated to parent widgets. The consumption
+	 * of the event only has effect when event is consumed in KeyListener set to a widget,
+	 * then it will not be propagated to Widgets overridden handler method.
+     * @param unicode - unicode value of entered character.
+	 * @param isRepeated - true if the event is a result of auto-repeating when key is held pressed. False otherwise.
+	 * @return true to consume event.
+	 * @return false to allow event to propagate further.
+     */
+	virtual bool OnCharacterInput(ting::u32 unicode, bool isRepeated){
+		return false;
+	}
 };
 
 

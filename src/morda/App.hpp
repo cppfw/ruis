@@ -249,6 +249,8 @@ private:
 			this->rootContainer->HandleKeyEvent<is_down>(keyCode);
 		}
 	}
+	
+	void HandleCharacterInput(ting::u32 unicode, bool isRepeated);
 public:
 	
 };
