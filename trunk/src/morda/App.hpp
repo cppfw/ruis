@@ -225,17 +225,11 @@ public:
 	virtual ~App()throw(){}
 
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
-		if(this->rootContainer == c){
-			return;
-		}
-		
 		this->rootContainer = c;
 		this->focusedWidget = this->rootContainer;
 		
 		this->rootContainer->MoveTo(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
-		
-		this->focusedWidget = this->rootContainer;
 	}
 
 	inline ResourceManager& ResMan()throw(){
