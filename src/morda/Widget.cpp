@@ -96,11 +96,30 @@ void Widget::PassKeyDownEventToParent(key::Key keyCode){
 
 
 void Widget::Focus()throw(){
+	ASSERT(App::Inst().ThisIsUIThread())
+	
+	if(this->IsFocused()){
+		return;
+	}
+	
+	if(ting::Ref<Widget> w = App::Inst().focusedWidget){
+		w->isFocused = false;
+	}
 	App::Inst().focusedWidget = ting::WeakRef<Widget>(this);
+	this->isFocused = true;
 }
 
 
 
 void Widget::Unfocus()throw(){
-	App::Inst().focusedWidget = App::Inst().rootContainer;
+	ASSERT(App::Inst().ThisIsUIThread())
+
+	if(!this->IsFocused()){
+		return;
+	}
+	
+	ASSERT(App::Inst().focusedWidget.GetRef() && App::Inst().focusedWidget.GetRef().operator->() == this)
+	
+	App::Inst().focusedWidget.Reset();
+	this->isFocused = false;
 }

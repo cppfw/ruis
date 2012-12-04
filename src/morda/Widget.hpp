@@ -211,6 +211,8 @@ private:
 	
 	void PassKeyDownEventToParent(key::Key keyCode);
 	
+private:
+	ting::Inited<bool, false> isFocused;
 public:
 	void SetKeyListener(ting::Ptr<KeyListener> listener)throw(){
 		this->keyListener = listener;
@@ -219,6 +221,10 @@ public:
 	void Focus()throw();
 	
 	void Unfocus()throw();
+	
+	inline bool IsFocused()const throw(){
+		return this->isFocused;
+	}
 	
 	enum EMouseButton{
 		UNKNOWN,
