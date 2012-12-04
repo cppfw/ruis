@@ -226,7 +226,6 @@ public:
 
 	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
 		this->rootContainer = c;
-		this->focusedWidget = this->rootContainer;
 		
 		this->rootContainer->MoveTo(morda::Vec2f(0));
 		this->rootContainer->Resize(this->curWinRect.d);
@@ -246,6 +245,8 @@ private:
 	template <bool is_down> void HandleKeyEvent(key::Key keyCode){
 		if(ting::Ref<Widget> w = this->focusedWidget){
 			w->HandleKeyEvent<is_down>(keyCode);
+		}else if(this->rootContainer){
+			this->rootContainer->HandleKeyEvent<is_down>(keyCode);
 		}
 	}
 public:
