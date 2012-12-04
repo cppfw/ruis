@@ -98,3 +98,9 @@ void Widget::PassKeyDownEventToParent(key::Key keyCode){
 void Widget::Focus()throw(){
 	App::Inst().focusedWidget = ting::WeakRef<Widget>(this);
 }
+
+
+
+void Widget::Unfocus()throw(){
+	App::Inst().focusedWidget = App::Inst().rootContainer;
+}

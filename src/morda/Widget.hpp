@@ -218,6 +218,8 @@ public:
 	
 	void Focus()throw();
 	
+	void Unfocus()throw();
+	
 	enum EMouseButton{
 		UNKNOWN,
 		LEFT,
