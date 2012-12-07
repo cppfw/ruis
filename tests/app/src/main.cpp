@@ -97,6 +97,12 @@ public:
 	}
 	
 	//override
+	bool OnCharacterInput(ting::u32 unicode, bool isRepeated){
+		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode << std::endl)
+		return true;
+	}
+	
+	//override
 	void Render(const morda::Matr4f& matrix)const{
 		{
 			morda::Matr4f matr(matrix);
