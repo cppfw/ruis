@@ -469,6 +469,23 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 	key::SPACE
 };
 
+
+
+class KeyEventUnicodeResolver{
+	XEvent& event;
+public:
+	KeyEventUnicodeResolver(XEvent& event) :
+			event(event)
+	{}
+	
+	ting::u32 Resolve(){
+		//TODO:
+		return 0;
+	}
+};
+
+
+
 }//~namespace
 
 
@@ -515,12 +532,15 @@ void App::Exec(){
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
-						this->HandleKeyEvent<true>(keyCodeMap[ting::u8(event.xkey.keycode)]);
+						{
+							KeyEventUnicodeResolver resolver(event);
+							this->HandleKeyEvent<true, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
+						}
 						break;
 					case KeyRelease:
 //						TRACE(<< "KeyRelease X event got" << std::endl)
 						
-						//ignore auto-repeated key events
+						//detect auto-repeated key events
 						if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
 							XEvent nev;
 							XPeekEvent(this->xDisplay.d, &nev);
@@ -530,13 +550,21 @@ void App::Exec(){
 									&& nev.xkey.keycode == event.xkey.keycode
 								)
 							{
-								//Key wasn't actually released, ignore event
+								//Key wasn't actually released
+								
+								KeyEventUnicodeResolver resolver(nev);
+								
+								this->HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(nev.xkey.keycode)], resolver);
+								
 								XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 								break;
 							}
 						}
-						
-						this->HandleKeyEvent<false>(keyCodeMap[ting::u8(event.xkey.keycode)]);
+
+						{
+							KeyEventUnicodeResolver resolver(event);
+							this->HandleKeyEvent<false, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
+						}
 						break;
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)

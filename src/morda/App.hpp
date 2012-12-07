@@ -242,15 +242,28 @@ public:
 private:
 	ting::WeakRef<Widget> focusedWidget;
 	
-	template <bool is_down> void HandleKeyEvent(key::Key keyCode){
+	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
+	//as much as possible.
+	template <bool is_down, bool is_repeated, class UnicodeResolver> void HandleKeyEvent(key::Key keyCode, UnicodeResolver& unicodeResolver){
+		//don't handle repeated key release events
+		if(!is_down && is_repeated){
+			return;
+		}
+		
 		if(ting::Ref<Widget> w = this->focusedWidget){
-			w->HandleKeyEvent<is_down>(keyCode);
-		}else if(this->rootContainer){
-			this->rootContainer->HandleKeyEvent<is_down>(keyCode);
+			if(!is_repeated){
+				w->HandleKeyEvent<is_down>(keyCode);
+			}
+			
+			if(is_down){
+				w->HandleCharacterInput(unicodeResolver, is_repeated);
+			}
+		}else if(!is_repeated){
+			if(this->rootContainer){
+				this->rootContainer->HandleKeyEvent<is_down>(keyCode);
+			}
 		}
 	}
-	
-	void HandleCharacterInput(ting::u32 unicode, bool isRepeated);
 public:
 	
 };
