@@ -211,6 +211,19 @@ private:
 	
 	void PassKeyDownEventToParent(key::Key keyCode);
 	
+	template <class UnicodeResolver> void HandleCharacterInput(UnicodeResolver& unicodeResolver, bool isRepeated){
+		//TODO: if widget does not want to receive such events do nothing
+		
+		ting::u32 unicode = unicodeResolver.Resolve();
+		
+		if(this->keyListener){
+			if(this->keyListener->OnCharacterInput(unicode, isRepeated)){
+				return;
+			}
+		}
+
+		this->OnCharacterInput(unicode, isRepeated);
+	}
 private:
 	ting::Inited<bool, false> isFocused;
 public:
