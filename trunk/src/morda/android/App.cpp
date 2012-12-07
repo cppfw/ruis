@@ -478,6 +478,14 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 
 
 
+key::Key GetKeyFromKeyEvent(AInputEvent& event)throw(){
+	int32_t kc = AKeyEvent_getKeyCode(&event);
+	ASSERT(0 <= kc && kc <= ting::u8(-1))
+	return keyCodeMap[ting::u8(kc)];
+}
+
+
+
 }//~namespace
 
 
@@ -628,12 +636,28 @@ inline ting::u32 Update(App& app){
 
 
 
+namespace{
+
+class KeyEventToUnicodeResolver{
+public:
+	ting::u32 Resolve(){
+		//TODO:
+		return 0;
+	}
+};
+
+}//~namespace
+
+
+
 void HandleInputEvents(){
 	morda::App& app = morda::App::Inst();
 
 	//Read and handle input events
 	AInputEvent* event;
 	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+		ASSERT(event)
+		
 //		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
 		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
 			continue;
@@ -735,8 +759,15 @@ void HandleInputEvents(){
 					consume = true;
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
-					//detect and ignore auto-repeated key events
+					//detect auto-repeated key events
 					if(AKeyEvent_getRepeatCount(event) != 0){
+						if(eventAction == AKEY_EVENT_ACTION_DOWN){
+							KeyEventToUnicodeResolver resolver;
+							app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
+									GetKeyFromKeyEvent(*ASS(event)),
+									resolver
+								);
+						}
 						break;
 					}
 					
@@ -744,12 +775,20 @@ void HandleInputEvents(){
 						int32_t kc = AKeyEvent_getKeyCode(event);
 						ASSERT(0 <= kc && kc <= ting::u8(-1))
 						
+						KeyEventToUnicodeResolver resolver;
+						
 						switch(eventAction){
 							case AKEY_EVENT_ACTION_DOWN:
-								app.HandleKeyEvent<true>(keyCodeMap[ting::u8(kc)]);
+								app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
+										GetKeyFromKeyEvent(*ASS(event)),
+										resolver
+									);
 								break;
 							case AKEY_EVENT_ACTION_UP:
-								app.HandleKeyEvent<false>(keyCodeMap[ting::u8(kc)]);
+								app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
+										GetKeyFromKeyEvent(*ASS(event)),
+										resolver
+									);
 								break;
 							default:
 								TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)
