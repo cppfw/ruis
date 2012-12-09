@@ -781,7 +781,7 @@ void HandleInputEvents(){
 							}
 							break;
 						default:
-							TRACE(<< "unknown eventAction" << std::endl)
+							TRACE(<< "unknown eventAction = " << eventAction << std::endl)
 							break;
 					}//~switch(event action)
 					consume = true;
