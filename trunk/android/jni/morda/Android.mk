@@ -6,39 +6,42 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := morda
 
-LOCAL_SRC_FILES := morda/android/App.cpp
-LOCAL_SRC_FILES += morda/android/AssetFile.cpp
-LOCAL_SRC_FILES += morda/App.cpp
-LOCAL_SRC_FILES += morda/Container.cpp
-LOCAL_SRC_FILES += morda/GuiInflater.cpp
-LOCAL_SRC_FILES += morda/Layout.cpp
-LOCAL_SRC_FILES += morda/Updateable.cpp
-LOCAL_SRC_FILES += morda/Widget.cpp
-LOCAL_SRC_FILES += morda/shaders/Shader.cpp
-LOCAL_SRC_FILES += morda/shaders/SimpleSingleColoringShader.cpp
-LOCAL_SRC_FILES += morda/shaders/TexturingShader.cpp
-LOCAL_SRC_FILES += morda/shaders/SimpleTexturingShader.cpp
-LOCAL_SRC_FILES += morda/resman/ResourceManager.cpp
-LOCAL_SRC_FILES += morda/resman/Resource.cpp
-LOCAL_SRC_FILES += morda/resources/ResTexture.cpp
-LOCAL_SRC_FILES += morda/resources/ResFont.cpp
-LOCAL_SRC_FILES += morda/util/GLTexture.cpp
-LOCAL_SRC_FILES += morda/util/Gravity.cpp
-LOCAL_SRC_FILES += morda/util/LeftBottomRightTop.cpp
-LOCAL_SRC_FILES += morda/util/Image.cpp
-LOCAL_SRC_FILES += morda/util/TexFont.cpp
-LOCAL_SRC_FILES += morda/util/util.cpp
-LOCAL_SRC_FILES += morda/widgets/AbstractButton.cpp
-LOCAL_SRC_FILES += morda/widgets/Button.cpp
-LOCAL_SRC_FILES += morda/widgets/Label.cpp
-LOCAL_SRC_FILES += morda/layouts/LinearLayout.cpp
-LOCAL_SRC_FILES += morda/layouts/FrameLayout.cpp
+PREFIX := ../../../src/
+
+LOCAL_SRC_FILES := $(PREFIX)morda/android/App.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/android/AssetFile.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/App.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/Container.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/GuiInflater.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/Layout.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/Updateable.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/Widget.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/shaders/Shader.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/shaders/SimpleSingleColoringShader.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/shaders/TexturingShader.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/shaders/SimpleTexturingShader.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/resman/ResourceManager.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/resman/Resource.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/resources/ResTexture.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/resources/ResFont.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/GLTexture.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/Gravity.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/LeftBottomRightTop.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/Image.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/TexFont.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/util/util.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/widgets/AbstractButton.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Button.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Label.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/layouts/LinearLayout.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/layouts/FrameLayout.cpp
 
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
 LOCAL_CFLAGS += -DDEBUG
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../ting
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(PREFIX)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../tride
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../libpng
