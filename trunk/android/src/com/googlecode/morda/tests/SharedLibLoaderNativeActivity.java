@@ -2,6 +2,7 @@ package com.googlecode.morda.tests;
 
 import android.app.NativeActivity;
 import android.view.KeyCharacterMap;
+import android.util.Log;
 
 public class SharedLibLoaderNativeActivity extends NativeActivity {
 
@@ -23,6 +24,7 @@ static {
 				this.curCharMap = KeyCharacterMap.load(deviceID);
 				this.curKeyDevice = deviceID;
 			}catch(KeyCharacterMap.UnavailableException e){
+				Log.e("morda java side", "Could not load KeyCharacterMap");
 				return 0;//could not load char map, thus could not resolve character
 			}
 		}
