@@ -4,15 +4,14 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>nb_morda</name>
-            <c-extensions>c</c-extensions>
+            <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
-            <header-extensions>h,hpp</header-extensions>
+            <header-extensions>hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../../../igagis/prj/morda/src</sourceRootElem>
-                <sourceRootElem>../../../../igagis/prj/morda/tests</sourceRootElem>
-                <sourceRootElem>../android/jni</sourceRootElem>
+                <sourceRootElem>../src</sourceRootElem>
+                <sourceRootElem>../tests</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
