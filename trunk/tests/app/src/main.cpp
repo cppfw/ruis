@@ -98,7 +98,7 @@ public:
 	
 	//override
 	bool OnCharacterInput(ting::u32 unicode, bool isRepeated){
-		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode << std::endl)
+		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode << " repeated = " << isRepeated << std::endl)
 		return true;
 	}
 	

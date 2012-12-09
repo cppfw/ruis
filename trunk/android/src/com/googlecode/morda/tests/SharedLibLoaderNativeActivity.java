@@ -12,4 +12,8 @@ static {
 	System.loadLibrary("tests");
 }
 
+
+	public int resolveKeyUnicode(int deviceID, int keyCode, int metastate){
+		return 0x30;//TODO:
+	}
 }
