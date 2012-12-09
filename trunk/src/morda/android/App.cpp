@@ -26,6 +26,8 @@ using namespace morda;
 
 namespace{
 
+ANativeActivity* nativeActivity = 0;
+
 ANativeWindow* androidWindow = 0;
 
 morda::Vec2f curWinDim(0, 0);
@@ -640,9 +642,21 @@ namespace{
 
 class KeyEventToUnicodeResolver{
 public:
+	int32_t kc;//key code
+	int32_t ms;//meta state
+	int32_t di;//device id
+	
 	ting::u32 Resolve(){
-		//TODO:
-		return 0;
+		
+		JNIEnv *env = nativeActivity->env;
+		jclass clazz = env->GetObjectClass(nativeActivity->clazz);
+		ASSERT(clazz)
+		jmethodID meth = env->GetMethodID(clazz, "resolveKeyUnicode", "(III)I");
+		ASSERT(meth)
+		
+		jint res = env->CallIntMethod(nativeActivity->clazz, meth, jint(this->di), jint(this->kc), jint(this->ms));
+
+		return ting::u32(res);
 	}
 };
 
@@ -759,23 +773,22 @@ void HandleInputEvents(){
 					consume = true;
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
-					//detect auto-repeated key events
-					if(AKeyEvent_getRepeatCount(event) != 0){
-						if(eventAction == AKEY_EVENT_ACTION_DOWN){
-							KeyEventToUnicodeResolver resolver;
-							app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
-									GetKeyFromKeyEvent(*ASS(event)),
-									resolver
-								);
-						}
-						break;
-					}
-					
 					{
-						int32_t kc = AKeyEvent_getKeyCode(event);
-						ASSERT(0 <= kc && kc <= ting::u8(-1))
+						KeyEventToUnicodeResolver resolver;//TODO: create resolver only once
+						resolver.kc = AKeyEvent_getKeyCode(event);
+						resolver.ms = AKeyEvent_getMetaState(event);
+						resolver.di = AInputEvent_getDeviceId(event);
 						
-						KeyEventToUnicodeResolver resolver;
+						//detect auto-repeated key events
+						if(AKeyEvent_getRepeatCount(event) != 0){
+							if(eventAction == AKEY_EVENT_ACTION_DOWN){
+								app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
+										GetKeyFromKeyEvent(*ASS(event)),
+										resolver
+									);
+							}
+							break;
+						}
 						
 						switch(eventAction){
 							case AKEY_EVENT_ACTION_DOWN:
@@ -1126,6 +1139,8 @@ void ANativeActivity_onCreate(
 	activity->callbacks->onContentRectChanged = &OnContentRectChanged;
 
 	activity->instance = 0;
+	
+	nativeActivity = activity;	
 
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
