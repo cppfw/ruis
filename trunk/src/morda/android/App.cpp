@@ -87,6 +87,46 @@ ting::Ptr<AndroidConfiguration> curConfig;
 
 
 
+class KeyEventToUnicodeResolver{
+	JNIEnv *env;
+	jclass clazz;
+	jmethodID meth;
+	jobject obj;
+public:
+	KeyEventToUnicodeResolver(ANativeActivity* a){
+		this->env = a->env;
+		this->obj = a->clazz;
+		this->clazz = this->env->GetObjectClass(this->obj);
+		ASSERT(this->clazz)
+		this->meth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
+		ASSERT(this->meth)
+	}
+	
+	~KeyEventToUnicodeResolver()throw(){
+		
+	}
+	
+	int32_t kc;//key code
+	int32_t ms;//meta state
+	int32_t di;//device id
+	
+	ting::u32 Resolve(){	
+		jint res = this->env->CallIntMethod(this->obj, this->meth, jint(this->di), jint(this->kc), jint(this->ms));
+
+		return ting::u32(res);
+	}
+	
+	static ting::Ptr<KeyEventToUnicodeResolver> New(ANativeActivity* a){
+		return ting::Ptr<KeyEventToUnicodeResolver>(
+				new KeyEventToUnicodeResolver(a)
+			);
+	}
+};
+
+ting::Ptr<KeyEventToUnicodeResolver> keyUnicodeResolver;
+
+
+
 //================
 // for Updateable
 //================
@@ -638,32 +678,6 @@ inline ting::u32 Update(App& app){
 
 
 
-namespace{
-
-class KeyEventToUnicodeResolver{
-public:
-	int32_t kc;//key code
-	int32_t ms;//meta state
-	int32_t di;//device id
-	
-	ting::u32 Resolve(){
-		
-		JNIEnv *env = nativeActivity->env;
-		jclass clazz = env->GetObjectClass(nativeActivity->clazz);
-		ASSERT(clazz)
-		jmethodID meth = env->GetMethodID(clazz, "resolveKeyUnicode", "(III)I");
-		ASSERT(meth)
-		
-		jint res = env->CallIntMethod(nativeActivity->clazz, meth, jint(this->di), jint(this->kc), jint(this->ms));
-
-		return ting::u32(res);
-	}
-};
-
-}//~namespace
-
-
-
 void HandleInputEvents(){
 	morda::App& app = morda::App::Inst();
 
@@ -774,17 +788,17 @@ void HandleInputEvents(){
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
 					{
-						KeyEventToUnicodeResolver resolver;//TODO: create resolver only once
-						resolver.kc = AKeyEvent_getKeyCode(event);
-						resolver.ms = AKeyEvent_getMetaState(event);
-						resolver.di = AInputEvent_getDeviceId(event);
+						ASSERT(keyUnicodeResolver)
+						keyUnicodeResolver->kc = AKeyEvent_getKeyCode(event);
+						keyUnicodeResolver->ms = AKeyEvent_getMetaState(event);
+						keyUnicodeResolver->di = AInputEvent_getDeviceId(event);
 						
 						//detect auto-repeated key events
 						if(AKeyEvent_getRepeatCount(event) != 0){
 							if(eventAction == AKEY_EVENT_ACTION_DOWN){
 								app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										resolver
+										*keyUnicodeResolver
 									);
 							}
 							break;
@@ -794,13 +808,13 @@ void HandleInputEvents(){
 							case AKEY_EVENT_ACTION_DOWN:
 								app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										resolver
+										*keyUnicodeResolver
 									);
 								break;
 							case AKEY_EVENT_ACTION_UP:
 								app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										resolver
+										*keyUnicodeResolver
 									);
 								break;
 							default:
@@ -840,6 +854,8 @@ namespace{
 
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
+	
+	keyUnicodeResolver.Reset();
 }
 
 
@@ -1152,4 +1168,6 @@ void ANativeActivity_onCreate(
 	}
 
 //	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
+	
+	keyUnicodeResolver = KeyEventToUnicodeResolver::New(activity);
 }
