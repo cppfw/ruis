@@ -1,83 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="morda" displayName="morda" projectFiles="true" root="..">
-      <logicalFolder name="src" displayName="src" projectFiles="true">
-        <logicalFolder name="morda" displayName="morda" projectFiles="true">
-          <logicalFolder name="layouts" displayName="layouts" projectFiles="true">
-            <itemPath>../src/morda/layouts/FrameLayout.cpp</itemPath>
-            <itemPath>../src/morda/layouts/LinearLayout.cpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="linux" displayName="linux" projectFiles="true">
-            <itemPath>../src/morda/linux/App.cpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="resman" displayName="resman" projectFiles="true">
-            <itemPath>../src/morda/resman/Resource.cpp</itemPath>
-            <itemPath>../src/morda/resman/Resource.hpp</itemPath>
-            <itemPath>../src/morda/resman/ResourceManager.cpp</itemPath>
-            <itemPath>../src/morda/resman/ResourceManager.hpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="resources" displayName="resources" projectFiles="true">
-            <itemPath>../src/morda/resources/ResFont.cpp</itemPath>
-            <itemPath>../src/morda/resources/ResTexture.cpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="shaders" displayName="shaders" projectFiles="true">
-            <itemPath>../src/morda/shaders/Shader.cpp</itemPath>
-            <itemPath>../src/morda/shaders/Shader.hpp</itemPath>
-            <itemPath>../src/morda/shaders/SimpleSingleColoringShader.cpp</itemPath>
-            <itemPath>../src/morda/shaders/SimpleSingleColoringShader.hpp</itemPath>
-            <itemPath>../src/morda/shaders/SimpleTexturingShader.cpp</itemPath>
-            <itemPath>../src/morda/shaders/SimpleTexturingShader.hpp</itemPath>
-            <itemPath>../src/morda/shaders/SingleColoringShader.hpp</itemPath>
-            <itemPath>../src/morda/shaders/TexturingShader.cpp</itemPath>
-            <itemPath>../src/morda/shaders/TexturingShader.hpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="util" displayName="util" projectFiles="true">
-            <itemPath>../src/morda/util/GLTexture.cpp</itemPath>
-            <itemPath>../src/morda/util/Gravity.cpp</itemPath>
-            <itemPath>../src/morda/util/Image.cpp</itemPath>
-            <itemPath>../src/morda/util/LeftBottomRightTop.cpp</itemPath>
-            <itemPath>../src/morda/util/LeftBottomRightTop.hpp</itemPath>
-            <itemPath>../src/morda/util/Matrix4.hpp</itemPath>
-            <itemPath>../src/morda/util/Padded.hpp</itemPath>
-            <itemPath>../src/morda/util/Quaternion.hpp</itemPath>
-            <itemPath>../src/morda/util/Rectangle2.hpp</itemPath>
-            <itemPath>../src/morda/util/TexFont.cpp</itemPath>
-            <itemPath>../src/morda/util/Vector2.hpp</itemPath>
-            <itemPath>../src/morda/util/Vector3.hpp</itemPath>
-            <itemPath>../src/morda/util/Vector4.hpp</itemPath>
-            <itemPath>../src/morda/util/util.cpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="widgets" displayName="widgets" projectFiles="true">
-            <itemPath>../src/morda/widgets/AbstractButton.cpp</itemPath>
-            <itemPath>../src/morda/widgets/AbstractButton.hpp</itemPath>
-            <itemPath>../src/morda/widgets/Button.cpp</itemPath>
-            <itemPath>../src/morda/widgets/Label.cpp</itemPath>
-          </logicalFolder>
-          <itemPath>../src/morda/App.cpp</itemPath>
-          <itemPath>../src/morda/Container.cpp</itemPath>
-          <itemPath>../src/morda/Container.hpp</itemPath>
-          <itemPath>../src/morda/Exc.hpp</itemPath>
-          <itemPath>../src/morda/GuiInflater.cpp</itemPath>
-          <itemPath>../src/morda/GuiInflater.hpp</itemPath>
-          <itemPath>../src/morda/KeyListener.hpp</itemPath>
-          <itemPath>../src/morda/Layout.cpp</itemPath>
-          <itemPath>../src/morda/Layout.hpp</itemPath>
-          <itemPath>../src/morda/Updateable.cpp</itemPath>
-          <itemPath>../src/morda/Updateable.hpp</itemPath>
-          <itemPath>../src/morda/Widget.cpp</itemPath>
-          <itemPath>../src/morda/Widget.hpp</itemPath>
-          <itemPath>../src/morda/config.hpp</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="tests" displayName="tests" projectFiles="true">
-        <logicalFolder name="app" displayName="app" projectFiles="true">
-          <logicalFolder name="src" displayName="src" projectFiles="true">
-            <itemPath>../tests/app/src/main.cpp</itemPath>
-          </logicalFolder>
-        </logicalFolder>
-      </logicalFolder>
-    </logicalFolder>
+    <df name="src" root="/home/ivan/prj/morda/src">
+      <df name="morda">
+        <df name="android">
+          <in>App.cpp</in>
+          <in>AssetFile.cpp</in>
+          <in>AssetFile.hpp</in>
+        </df>
+        <df name="layouts">
+          <in>FrameLayout.hpp</in>
+          <in>LinearLayout.hpp</in>
+        </df>
+        <df name="linux">
+        </df>
+        <df name="resman">
+        </df>
+        <df name="resources">
+          <in>ResFont.hpp</in>
+          <in>ResTexture.hpp</in>
+        </df>
+        <df name="shaders">
+          <in>SingleColoringShader.cpp</in>
+        </df>
+        <df name="util">
+          <in>GLTexture.hpp</in>
+          <in>Gravity.hpp</in>
+          <in>Image.hpp</in>
+          <in>TexFont.hpp</in>
+          <in>ZipFile.hpp</in>
+          <in>util.hpp</in>
+        </df>
+        <df name="widgets">
+          <in>Button.hpp</in>
+          <in>Gravitating.hpp</in>
+          <in>Label.hpp</in>
+          <in>PaddedWidget.hpp</in>
+        </df>
+        <in>App.hpp</in>
+      </df>
+      <df name="obj">
+        <df name="1">
+          <df name="2">
+            <df name="morda">
+              <df name="layouts">
+                <in>FrameLayout.d</in>
+                <in>LinearLayout.d</in>
+              </df>
+              <df name="linux">
+                <in>App.d</in>
+              </df>
+              <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
+              </df>
+              <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
+              </df>
+              <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>SimpleTexturingShader.d</in>
+                <in>TexturingShader.d</in>
+              </df>
+              <df name="util">
+                <in>GLTexture.d</in>
+                <in>Gravity.d</in>
+                <in>Image.d</in>
+                <in>LeftBottomRightTop.d</in>
+                <in>TexFont.d</in>
+                <in>util.d</in>
+              </df>
+              <df name="widgets">
+                <in>AbstractButton.d</in>
+                <in>Button.d</in>
+                <in>Label.d</in>
+              </df>
+              <in>App.d</in>
+              <in>Container.d</in>
+              <in>GuiInflater.d</in>
+              <in>Layout.d</in>
+              <in>Updateable.d</in>
+              <in>Widget.d</in>
+            </df>
+          </df>
+        </df>
+      </df>
+      <in>libmorda.so.0</in>
+      <in>makefile</in>
+    </df>
+    <df name="tests" root="/home/ivan/prj/morda/tests">
+      <df name="app">
+        <df name="res">
+          <in>font.res.stob</in>
+          <in>main.res.stob</in>
+          <in>test.gui.stob</in>
+          <in>texture.jpg</in>
+          <in>vera.ttf</in>
+        </df>
+        <df name="src">
+        </df>
+        <in>makefile</in>
+        <in>output.log</in>
+        <in>tests</in>
+      </df>
+      <in>makefile</in>
+    </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -87,8 +116,8 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>../src</Elem>
-    <Elem>../tests</Elem>
+    <Elem>/home/ivan/prj/morda/src</Elem>
+    <Elem>/home/ivan/prj/morda/tests</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -117,23 +146,6 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <folder path="morda/src">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="morda/tests">
-        <ccTool>
-          <incDir>
-            <pElem>../tests/app</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
     </conf>
     <conf name="linux_release" type="0">
       <toolsSet>
@@ -150,156 +162,6 @@
           <executablePath></executablePath>
         </makeTool>
       </makefileType>
-      <item path="../src/morda/App.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Container.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Container.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Exc.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/GuiInflater.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/GuiInflater.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/KeyListener.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Layout.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Layout.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Updateable.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Updateable.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Widget.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Widget.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/config.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/layouts/FrameLayout.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/layouts/LinearLayout.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/linux/App.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/resman/Resource.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/resman/Resource.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/resman/ResourceManager.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/resman/ResourceManager.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/resources/ResFont.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/resources/ResTexture.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/Shader.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/Shader.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SimpleSingleColoringShader.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SimpleSingleColoringShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SimpleTexturingShader.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SimpleTexturingShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/SingleColoringShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/TexturingShader.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/shaders/TexturingShader.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/util/GLTexture.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Gravity.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Image.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/util/LeftBottomRightTop.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/util/LeftBottomRightTop.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/util/Matrix4.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Padded.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Quaternion.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Rectangle2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/TexFont.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector2.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector3.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/Vector4.hpp" ex="true" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/util/util.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/widgets/AbstractButton.cpp"
-            ex="true"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/widgets/AbstractButton.hpp"
-            ex="true"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../src/morda/widgets/Button.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/widgets/Label.cpp" ex="true" tool="1" flavor2="0">
-      </item>
-      <item path="../tests/app/src/main.cpp" ex="true" tool="1" flavor2="0">
-      </item>
     </conf>
   </confs>
 </configurationDescriptor>

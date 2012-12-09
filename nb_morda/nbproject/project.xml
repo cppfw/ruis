@@ -10,8 +10,8 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../src</sourceRootElem>
-                <sourceRootElem>../tests</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/src</sourceRootElem>
+                <sourceRootElem>/home/ivan/prj/morda/tests</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
