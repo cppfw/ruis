@@ -12,7 +12,7 @@ LOCAL_SRC_FILES := src/main.cpp
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
 LOCAL_CFLAGS += -DDEBUG
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../morda
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../src
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../tride
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
