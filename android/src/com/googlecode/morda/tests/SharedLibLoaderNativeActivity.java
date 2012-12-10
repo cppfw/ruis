@@ -23,7 +23,7 @@ static {
 			try{
 				this.curCharMap = KeyCharacterMap.load(deviceID);
 				this.curKeyDevice = deviceID;
-			}catch(KeyCharacterMap.UnavailableException e){
+			}catch(Exception e){
 				Log.e("morda java side", "Could not load KeyCharacterMap");
 				return 0;//could not load char map, thus could not resolve character
 			}
