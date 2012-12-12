@@ -256,7 +256,7 @@ private:
 			}
 			
 			if(is_down){
-				w->HandleCharacterInput(unicodeResolver, is_repeated);
+				w->HandleCharacterInput(unicodeResolver);
 			}
 		}else if(!is_repeated){
 			if(this->rootContainer){

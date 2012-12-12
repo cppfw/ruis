@@ -211,18 +211,23 @@ private:
 	
 	void PassKeyDownEventToParent(key::Key keyCode);
 	
-	template <class UnicodeResolver> void HandleCharacterInput(UnicodeResolver& unicodeResolver, bool isRepeated){
-		//TODO: if widget does not want to receive such events do nothing
+	ting::Inited<bool, false> deliverCharacterInputEvents;
+	
+	template <class UnicodeResolver> void HandleCharacterInput(UnicodeResolver& unicodeResolver){
+		//if widget does not want to receive such events do nothing
+		if(!this->deliverCharacterInputEvents){
+			return;
+		}
 		
-		ting::u32 unicode = unicodeResolver.Resolve();
+		ting::Array<ting::u32> unicode = unicodeResolver.Resolve();
 		
 		if(this->keyListener){
-			if(this->keyListener->OnCharacterInput(unicode, isRepeated)){
+			if(this->keyListener->OnCharacterInput(unicode)){
 				return;
 			}
 		}
 
-		this->OnCharacterInput(unicode, isRepeated);
+		this->OnCharacterInput(unicode);
 	}
 private:
 	ting::Inited<bool, false> isFocused;
@@ -237,6 +242,10 @@ public:
 	
 	inline bool IsFocused()const throw(){
 		return this->isFocused;
+	}
+	
+	void SetDeliverCharacterInputEvents(bool deliver){
+		this->deliverCharacterInputEvents = deliver;
 	}
 	
 	enum EMouseButton{

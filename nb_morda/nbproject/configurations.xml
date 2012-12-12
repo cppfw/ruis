@@ -9,85 +9,108 @@
           <in>AssetFile.hpp</in>
         </df>
         <df name="layouts">
+          <in>FrameLayout.cpp</in>
           <in>FrameLayout.hpp</in>
+          <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
         </df>
         <df name="linux">
+          <in>App.cpp</in>
         </df>
         <df name="resman">
+          <in>Resource.cpp</in>
+          <in>Resource.hpp</in>
+          <in>ResourceManager.cpp</in>
+          <in>ResourceManager.hpp</in>
         </df>
         <df name="resources">
+          <in>ResFont.cpp</in>
           <in>ResFont.hpp</in>
+          <in>ResTexture.cpp</in>
           <in>ResTexture.hpp</in>
         </df>
         <df name="shaders">
+          <in>Shader.cpp</in>
+          <in>Shader.hpp</in>
+          <in>SimpleSingleColoringShader.cpp</in>
+          <in>SimpleSingleColoringShader.hpp</in>
+          <in>SimpleTexturingShader.cpp</in>
+          <in>SimpleTexturingShader.hpp</in>
           <in>SingleColoringShader.cpp</in>
+          <in>SingleColoringShader.hpp</in>
+          <in>TexturingShader.cpp</in>
+          <in>TexturingShader.hpp</in>
         </df>
         <df name="util">
+          <in>GLTexture.cpp</in>
           <in>GLTexture.hpp</in>
+          <in>Gravity.cpp</in>
           <in>Gravity.hpp</in>
+          <in>Image.cpp</in>
           <in>Image.hpp</in>
+          <in>LeftBottomRightTop.cpp</in>
+          <in>LeftBottomRightTop.hpp</in>
+          <in>Matrix4.hpp</in>
+          <in>Padded.hpp</in>
+          <in>Quaternion.hpp</in>
+          <in>Rectangle2.hpp</in>
+          <in>TexFont.cpp</in>
           <in>TexFont.hpp</in>
+          <in>Vector2.hpp</in>
+          <in>Vector3.hpp</in>
+          <in>Vector4.hpp</in>
           <in>ZipFile.hpp</in>
+          <in>util.cpp</in>
           <in>util.hpp</in>
         </df>
         <df name="widgets">
+          <in>AbstractButton.cpp</in>
+          <in>AbstractButton.hpp</in>
+          <in>Button.cpp</in>
           <in>Button.hpp</in>
           <in>Gravitating.hpp</in>
+          <in>Label.cpp</in>
           <in>Label.hpp</in>
           <in>PaddedWidget.hpp</in>
         </df>
+        <in>App.cpp</in>
         <in>App.hpp</in>
+        <in>Container.cpp</in>
+        <in>Container.hpp</in>
+        <in>Exc.hpp</in>
+        <in>GuiInflater.cpp</in>
+        <in>GuiInflater.hpp</in>
+        <in>KeyListener.hpp</in>
+        <in>Layout.cpp</in>
+        <in>Layout.hpp</in>
+        <in>Updateable.cpp</in>
+        <in>Updateable.hpp</in>
+        <in>Widget.cpp</in>
+        <in>Widget.hpp</in>
+        <in>config.hpp</in>
       </df>
       <df name="obj">
         <df name="1">
           <df name="2">
             <df name="morda">
               <df name="layouts">
-                <in>FrameLayout.d</in>
-                <in>LinearLayout.d</in>
               </df>
               <df name="linux">
-                <in>App.d</in>
               </df>
               <df name="resman">
-                <in>Resource.d</in>
-                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
-                <in>ResFont.d</in>
-                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
-                <in>Shader.d</in>
-                <in>SimpleSingleColoringShader.d</in>
-                <in>SimpleTexturingShader.d</in>
-                <in>TexturingShader.d</in>
               </df>
               <df name="util">
-                <in>GLTexture.d</in>
-                <in>Gravity.d</in>
-                <in>Image.d</in>
-                <in>LeftBottomRightTop.d</in>
-                <in>TexFont.d</in>
-                <in>util.d</in>
               </df>
               <df name="widgets">
-                <in>AbstractButton.d</in>
-                <in>Button.d</in>
-                <in>Label.d</in>
               </df>
-              <in>App.d</in>
-              <in>Container.d</in>
-              <in>GuiInflater.d</in>
-              <in>Layout.d</in>
-              <in>Updateable.d</in>
-              <in>Widget.d</in>
             </df>
           </df>
         </df>
       </df>
-      <in>libmorda.so.0</in>
       <in>makefile</in>
     </df>
     <df name="tests" root="/home/ivan/prj/morda/tests">
@@ -100,10 +123,10 @@
           <in>vera.ttf</in>
         </df>
         <df name="src">
+          <in>main.cpp</in>
         </df>
         <in>makefile</in>
         <in>output.log</in>
-        <in>tests</in>
       </df>
       <in>makefile</in>
     </df>
@@ -138,7 +161,6 @@
             <incDir>
               <pElem>../src</pElem>
               <pElem>../ext</pElem>
-              <pElem>/home/ivan/android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -146,6 +168,248 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/GuiInflater.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/Layout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/Updateable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/Widget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/android/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/Shader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/ZipFile.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/app/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <folder path="src/morda/android">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/layouts">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/linux">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="tests">
+        <ccTool>
+          <incDir>
+            <pElem>../tests/app</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
     </conf>
     <conf name="linux_release" type="0">
       <toolsSet>

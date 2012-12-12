@@ -110,10 +110,13 @@ public:
 	int32_t ms;//meta state
 	int32_t di;//device id
 	
-	ting::u32 Resolve(){	
+	ting::Array<ting::u32> Resolve(){	
 		jint res = this->env->CallIntMethod(this->obj, this->meth, jint(this->di), jint(this->kc), jint(this->ms));
 
-		return ting::u32(res);
+		ting::Array<ting::u32> ret(1);
+		ret[0] = ting::u32(res);
+		
+		return ret;
 	}
 	
 	static ting::Ptr<KeyEventToUnicodeResolver> New(ANativeActivity* a){

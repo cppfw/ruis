@@ -147,12 +147,11 @@ public:
 	 * Character input is not propagated to parent widgets. The consumption
 	 * of the event only has effect when event is consumed in KeyListener set to a widget,
 	 * then it will not be propagated to Widgets overridden handler method.
-     * @param unicode - unicode value of entered character.
-	 * @param isRepeated - true if the event is a result of auto-repeating when key is held pressed. False otherwise.
+     * @param unicode - unicode string in UTF-32 of entered characters.
 	 * @return true to consume event.
 	 * @return false to allow event to propagate further.
      */
-	virtual bool OnCharacterInput(ting::u32 unicode, bool isRepeated){
+	virtual bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
 		return false;
 	}
 };
