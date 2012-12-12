@@ -60,6 +60,7 @@ public:
 		}else{
 			this->StartUpdating(30);
 		}
+		this->SetDeliverCharacterInputEvents(true);
 		this->Focus();
 		return true;
 	}
@@ -97,8 +98,8 @@ public:
 	}
 	
 	//override
-	bool OnCharacterInput(ting::u32 unicode, bool isRepeated){
-		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode << " repeated = " << isRepeated << std::endl)
+	bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
+		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 		return true;
 	}
 	

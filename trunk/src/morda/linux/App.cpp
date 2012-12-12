@@ -478,9 +478,11 @@ public:
 			event(event)
 	{}
 	
-	ting::u32 Resolve(){
+	ting::Array<ting::u32> Resolve(){
 		//TODO:
-		return 0;
+		ting::Array<ting::u32> ret(1);
+		//TODO:
+		return ret;
 	}
 };
 
