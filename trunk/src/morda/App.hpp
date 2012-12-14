@@ -172,6 +172,21 @@ private:
 		void Destroy()throw();
 	} glxContex;
 
+	struct XInputMethodWrapper{
+		XIM xim;
+		XIC xic;
+		
+		XDisplayWrapper& d;
+		XWindowWrapper& w;
+		
+		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XInputMethodWrapper()throw(){
+			this->Destroy();
+		}
+		
+		void Destroy()throw();
+	} xInputMethod;
+	
 	ting::Inited<volatile bool, false> quitFlag;
 
 	friend void Main(int argc, char** argv);

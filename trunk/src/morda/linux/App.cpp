@@ -144,10 +144,51 @@ void App::GLXContextWrapper::Destroy()throw(){
 
 
 
+App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow) :
+		d(xDisplay),
+		w(xWindow)
+{
+	char classname[] = "morda_app";
+	
+	this->xim = XOpenIM(this->d.d, NULL, classname, classname);
+	if(this->xim == NULL){
+		throw morda::Exc("XOpenIM() failed");
+	}
+	
+	this->xic = XCreateIC(
+			this->xim,
+			XNClientWindow, this->w.w,
+			XNFocusWindow, this->w.w,
+			XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
+			XNResourceName, classname,
+			XNResourceClass, classname,
+			NULL
+		);
+	if(this->xic == NULL){
+		this->Destroy();
+	}
+	
+	//TODO:
+}
+
+
+
+void App::XInputMethodWrapper::Destroy()throw(){
+	if(this->xic != NULL){
+		XUnsetICFocus(this->xic);
+		XDestroyIC(this->xic);
+	}
+	if(this->xim != NULL){
+		XCloseIM(this->xim);
+	}
+}
+
+
 App::App(unsigned w, unsigned h) :
 		xVisualInfo(xDisplay),
 		xWindow(w, h, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
+		xInputMethod(xDisplay, xWindow),
 		curWinRect(0, 0, -1, -1)
 {
 #ifdef DEBUG
@@ -479,6 +520,10 @@ public:
 	{}
 	
 	ting::Array<ting::u32> Resolve(){
+#ifndef X_HAVE_UTF8_STRING
+#	error "no Xutf8stringlookup()"
+#endif
+		
 		//TODO:
 		ting::Array<ting::u32> ret(1);
 		//TODO:
