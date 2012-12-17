@@ -513,9 +513,11 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 
 
 class KeyEventUnicodeResolver{
+	XIC& xic;
 	XEvent& event;
 public:
-	KeyEventUnicodeResolver(XEvent& event) :
+	KeyEventUnicodeResolver(XIC& xic, XEvent& event) :
+			xic(xic),
 			event(event)
 	{}
 	
@@ -580,7 +582,7 @@ void App::Exec(){
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
 						{
-							KeyEventUnicodeResolver resolver(event);
+							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
 							this->HandleKeyEvent<true, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
 						}
 						break;
@@ -599,7 +601,7 @@ void App::Exec(){
 							{
 								//Key wasn't actually released
 								
-								KeyEventUnicodeResolver resolver(nev);
+								KeyEventUnicodeResolver resolver(this->xInputMethod.xic, nev);
 								
 								this->HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(nev.xkey.keycode)], resolver);
 								
@@ -609,7 +611,7 @@ void App::Exec(){
 						}
 
 						{
-							KeyEventUnicodeResolver resolver(event);
+							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
 							this->HandleKeyEvent<false, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
 						}
 						break;
