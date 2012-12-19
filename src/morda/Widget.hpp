@@ -220,6 +220,9 @@ private:
 		}
 		
 		ting::Array<ting::u32> unicode = unicodeResolver.Resolve();
+		if(unicode.Size() == 0){
+			return;
+		}
 		
 		if(this->keyListener){
 			if(this->keyListener->OnCharacterInput(unicode)){
