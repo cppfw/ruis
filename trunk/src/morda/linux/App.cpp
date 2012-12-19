@@ -526,6 +526,47 @@ public:
 #	error "no Xutf8stringlookup()"
 #endif
 		
+		Status status;
+		//KeySym xkeysym;
+		ting::StaticBuffer<char, 32> staticBuf;
+		ting::Array<char> arr;
+		ting::Buffer<char>* buf = &staticBuf;
+
+		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf->Begin(), buf->Size() - 1, NULL, &status);
+		if(status == XBufferOverflow){
+			//allocate enough memory
+			arr.Init(size + 1);
+			buf = &arr;
+			size = Xutf8LookupString(this->xic, &this->event.xkey, buf->Begin(), buf->Size() - 1, NULL, &status);
+		}
+		ASSERT(size >= 0)
+		ASSERT(buf->Size() != 0)
+		ASSERT(buf->Size() > unsigned(size))
+		
+		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
+		//TODO: null-terminate?
+		
+		switch(status){
+			case XBufferOverflow:
+				throw morda::Exc("Xutf8LookupString() returned unexpected XBufferOverflow status");
+				break;
+			case XLookupChars:
+			case XLookupBoth:
+				if(size == 0){
+					return ting::Array<ting::u32>();
+				}
+				
+				//TODO:
+				
+				break;
+			default:
+				ASSERT(false)
+			case XLookupKeySym:
+			case XLookupNone:
+				return ting::Array<ting::u32>();
+				break;
+			}
+		
 		//TODO:
 		ting::Array<ting::u32> ret(1);
 		//TODO:

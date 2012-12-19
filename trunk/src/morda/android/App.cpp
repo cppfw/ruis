@@ -113,6 +113,11 @@ public:
 	ting::Array<ting::u32> Resolve(){	
 		jint res = this->env->CallIntMethod(this->obj, this->meth, jint(this->di), jint(this->kc), jint(this->ms));
 
+		//0 means that key did not produce any unicode character
+		if(res == 0){
+			return ting::Array<ting::u32>();
+		}
+		
 		ting::Array<ting::u32> ret(1);
 		ret[0] = ting::u32(res);
 		
