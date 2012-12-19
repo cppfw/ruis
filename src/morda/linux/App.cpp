@@ -1,10 +1,12 @@
 //This file contains implementations of platform dependent methods from App class.
 
+#include <vector>
 
 #include "../App.hpp"
 
 #include <ting/WaitSet.hpp>
 #include <ting/fs/FSFile.hpp>
+#include <ting/utf8.hpp>
 
 
 
@@ -544,33 +546,44 @@ public:
 		ASSERT(buf->Size() > unsigned(size))
 		
 		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
-		//TODO: null-terminate?
+		
+		(*buf)[size] = 0;//null-terminate
 		
 		switch(status){
-			case XBufferOverflow:
-				throw morda::Exc("Xutf8LookupString() returned unexpected XBufferOverflow status");
-				break;
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
 					return ting::Array<ting::u32>();
 				}
 				
-				//TODO:
+				{
+					typedef std::vector<ting::u32> T_Vector;
+					T_Vector utf32;
+					
+					for(ting::utf8::Iterator i(buf->Begin()); i.IsNotEnd(); ++i){
+						utf32.push_back(i.Char());
+					}
+					
+					ting::Array<ting::u32> ret(utf32.size());
+					
+					ting::u32* dst = ret.Begin();
+					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
+						*dst = *src;
+					}
+					
+					return ret;
+				}
 				
 				break;
 			default:
+			case XBufferOverflow:
 				ASSERT(false)
 			case XLookupKeySym:
 			case XLookupNone:
-				return ting::Array<ting::u32>();
 				break;
-			}
+		}//~switch
 		
-		//TODO:
-		ting::Array<ting::u32> ret(1);
-		//TODO:
-		return ret;
+		return ting::Array<ting::u32>();
 	}
 };
 
