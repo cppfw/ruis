@@ -536,7 +536,40 @@ key::Key GetKeyFromKeyEvent(AInputEvent& event)throw(){
 
 
 
+JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput(
+		JNIEnv *env,
+		jclass clazz,
+		jstring chars
+	)
+
+{
+	TRACE(<< "lhvouygnygnygiuygniuygbiuygiub" << std::endl)
+}
+
+
+
+
 }//~namespace
+
+
+
+jint JNI_OnLoad(JavaVM* vm, void* reserved){
+    JNIEnv* env;
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return -1;
+    }
+
+	static JNINativeMethod methods[] = {
+		{"handleCharacterStringInput", "(S)V", (void*)&Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput},
+	};
+	jclass clazz = env->FindClass("com/googlecode/morda/tests/SharedLibLoaderNativeActivity");
+	ASSERT(clazz)
+	if(env->RegisterNatives(clazz, methods, 1) < 0){
+		ASSERT(false)
+	}
+
+    return JNI_VERSION_1_6;
+}
 
 
 

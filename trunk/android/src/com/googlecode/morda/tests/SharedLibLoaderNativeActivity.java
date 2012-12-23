@@ -34,7 +34,7 @@ static {
 		return this.curCharMap.get(keyCode, metaState);
 	}
 	
-	
+	private static native void handleCharacterStringInput(String str);
 	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
@@ -43,7 +43,7 @@ static {
 			Log.d(LOGTAG, "dispatchKeyEvent(): multiple characters are being delivered, chars = " + event.getCharacters());
 			//Multiple characters are being delivered. NativeActivity currently does not
 			//support passing multiple characters from KeyEvent to native code, so we need to do it here.
-			//TODO:
+			handleCharacterStringInput(event.getCharacters());
 			return true;
 		}
 		return super.dispatchKeyEvent(event);

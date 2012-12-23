@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="src" root="/home/igagis/prj/morda/src">
+    <df name="src" root="/home/ivan/prj/morda/src">
       <df name="morda">
         <df name="android">
           <in>App.cpp</in>
@@ -94,32 +94,69 @@
           <df name="2">
             <df name="morda">
               <df name="layouts">
+                <in>FrameLayout.d</in>
+                <in>LinearLayout.d</in>
               </df>
               <df name="linux">
+                <in>App.d</in>
               </df>
               <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
               </df>
               <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>SimpleTexturingShader.d</in>
+                <in>TexturingShader.d</in>
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Gravity.d</in>
+                <in>Image.d</in>
+                <in>LeftBottomRightTop.d</in>
+                <in>TexFont.d</in>
+                <in>util.d</in>
               </df>
               <df name="widgets">
+                <in>AbstractButton.d</in>
+                <in>Button.d</in>
+                <in>Label.d</in>
               </df>
+              <in>App.d</in>
+              <in>Container.d</in>
+              <in>GuiInflater.d</in>
+              <in>Layout.d</in>
+              <in>Updateable.d</in>
+              <in>Widget.d</in>
             </df>
           </df>
         </df>
       </df>
+      <in>libmorda.so.0</in>
+      <in>makefile</in>
     </df>
-    <df name="tests" root="/home/igagis/prj/morda/tests">
+    <df name="tests" root="/home/ivan/prj/morda/tests">
       <df name="app">
         <df name="res">
+          <in>font.res.stob</in>
+          <in>main.res.stob</in>
+          <in>test.gui.stob</in>
+          <in>texture.jpg</in>
+          <in>vera.ttf</in>
         </df>
         <df name="src">
           <in>main.cpp</in>
         </df>
+        <in>makefile</in>
+        <in>output.log</in>
+        <in>tests</in>
       </df>
+      <in>makefile</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -132,8 +169,6 @@
   <sourceRootList>
     <Elem>/home/ivan/prj/morda/src</Elem>
     <Elem>/home/ivan/prj/morda/tests</Elem>
-    <Elem>/home/igagis/prj/morda/src</Elem>
-    <Elem>/home/igagis/prj/morda/tests</Elem>
   </sourceRootList>
   <projectmakefile>../src/makefile</projectmakefile>
   <confs>
@@ -161,7 +196,9 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="/home/igagis/prj/morda/src/morda/App.cpp"
+      <item path="/home/ivan/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/App.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -174,7 +211,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/Container.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/Container.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -187,7 +224,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/GuiInflater.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/GuiInflater.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -200,7 +237,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/Layout.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/Layout.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -213,7 +250,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/Updateable.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/Updateable.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -226,7 +263,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/Widget.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/Widget.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -239,88 +276,149 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/android/App.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/android/App.cpp"
             ex="false"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/android/AssetFile.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/android/AssetFile.cpp"
             ex="false"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/resources/ResTexture.hpp"
+      <item path="/home/ivan/prj/morda/src/morda/resman/Resource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/resources/ResFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/Shader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/GLTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/Gravity.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/Image.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/TexFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/util/ZipFile.hpp"
             ex="true"
             tool="3"
             flavor2="0">
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/shaders/Shader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/src/morda/shaders/SimpleSingleColoringShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/src/morda/shaders/SimpleTexturingShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/src/morda/shaders/SingleColoringShader.cpp"
+      <item path="/home/ivan/prj/morda/src/morda/util/util.cpp"
             ex="false"
             tool="1"
             flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <item path="/home/igagis/prj/morda/src/morda/shaders/TexturingShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="/home/igagis/prj/morda/src/morda/util/ZipFile.hpp"
+      <item path="/home/ivan/prj/morda/tests/app/makefile"
             ex="true"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="/home/ivan/prj/morda/tests/app/src/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
       </item>
       <folder path="src/morda/layouts">
         <ccTool>
@@ -342,36 +440,6 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="src/morda/resman">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/resources">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="src/morda/util">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
       <folder path="src/morda/widgets">
         <ccTool>
           <incDir>
@@ -380,13 +448,6 @@
           <preprocessorList>
             <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
           </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="tests">
-        <ccTool>
-          <incDir>
-            <pElem>../tests/app</pElem>
-          </incDir>
         </ccTool>
       </folder>
     </conf>
