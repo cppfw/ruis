@@ -77,10 +77,10 @@ Container{
 	}
 
 	Button{
-		name {butt1}
+		name {show_VK_button}
 		pos {50 80}
 		dim {10 30}
-		text {"Push me"}
+		text {"Show VK"}
 
 		prop{
 			layout{

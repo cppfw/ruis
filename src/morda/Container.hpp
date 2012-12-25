@@ -114,6 +114,9 @@ public:
 	//return true if the widget was found in children and was removed
 	void Remove(const ting::Ref<Widget>& w);
 	
+	//override
+	ting::Ref<Widget> FindChildByName(const std::string& name)throw();
+	
 	inline unsigned NumChildren()const throw(){
 		return this->numChildren;
 	}

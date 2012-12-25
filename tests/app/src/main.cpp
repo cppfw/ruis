@@ -174,6 +174,8 @@ public:
 				new CustomKeyListener()
 			));
 		
+		c->FindChildByName("show_VK_button").DynamicCast<morda::AbstractButton>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
+		
 		this->SetRootContainer(c);
 	}
 };
