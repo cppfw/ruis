@@ -254,6 +254,10 @@ public:
 		return this->inflater;
 	}
 	
+	void ShowVirtualKeyboard()throw();
+	
+	void HideVirtualKeyboard()throw();
+	
 private:
 	ting::WeakRef<Widget> focusedWidget;
 	

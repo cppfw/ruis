@@ -227,9 +227,10 @@
       <item path="/home/ivan/prj/morda/src/morda/GuiInflater.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
           <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>/usr/include/freetype2</pElem>
           </incDir>
           <preprocessorList>
@@ -240,9 +241,10 @@
       <item path="/home/ivan/prj/morda/src/morda/Layout.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
           <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>/usr/include/freetype2</pElem>
           </incDir>
           <preprocessorList>
@@ -284,6 +286,20 @@
         </ccTool>
       </item>
       <item path="/home/ivan/prj/morda/src/morda/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/layouts/FrameLayout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/ivan/prj/morda/src/morda/layouts/LinearLayout.cpp"
             ex="false"
             tool="1"
             flavor2="4">
@@ -363,7 +379,7 @@
       <item path="/home/ivan/prj/morda/src/morda/util/Gravity.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -420,9 +436,17 @@
       </item>
       <item path="/home/ivan/prj/morda/tests/makefile" ex="true" tool="3" flavor2="0">
       </item>
+      <folder path="src/morda/android">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="src/morda/layouts">
         <ccTool>
           <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
             <pElem>/usr/include/freetype2</pElem>
           </incDir>
           <preprocessorList>
@@ -440,6 +464,34 @@
           </preprocessorList>
         </ccTool>
       </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/shaders">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="src/morda/widgets">
         <ccTool>
           <incDir>
@@ -448,6 +500,13 @@
           <preprocessorList>
             <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
           </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="tests">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r8/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
         </ccTool>
       </folder>
     </conf>
