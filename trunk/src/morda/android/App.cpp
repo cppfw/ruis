@@ -541,11 +541,10 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActi
 		jclass clazz,
 		jstring chars
 	)
-
 {
 	TRACE(<< "lhvouygnygnygiuygniuygbiuygiub" << std::endl)
+	//TODO:
 }
-
 
 
 
@@ -696,6 +695,18 @@ App::App(unsigned w, unsigned h) :
 
 ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
+}
+
+
+
+void App::ShowVirtualKeyboard()throw(){
+	ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_IMPLICIT);
+}
+
+
+
+void App::HideVirtualKeyboard()throw(){
+	ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 }
 
 

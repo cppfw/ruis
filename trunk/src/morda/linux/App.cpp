@@ -725,6 +725,18 @@ void App::Exec(){
 
 
 
+void App::ShowVirtualKeyboard()throw(){
+	//do nothing
+}
+
+
+
+void App::HideVirtualKeyboard()throw(){
+	//do nothing
+}
+
+
+
 namespace morda{
 
 inline void Main(int argc, char** argv){
