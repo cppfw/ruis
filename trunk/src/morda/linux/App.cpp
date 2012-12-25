@@ -726,12 +726,14 @@ void App::Exec(){
 
 
 void App::ShowVirtualKeyboard()throw(){
+	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 
 
 
 void App::HideVirtualKeyboard()throw(){
+	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 

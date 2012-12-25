@@ -52,17 +52,14 @@ bool AbstractButton::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton butto
 		return false;
 	}
 	
-	if(!this->Rect().Overlaps(pos)){
+	if(this->isPressed){
 		this->isPressed = false;
+//		TRACE(<< "AbstractButton::OnMouseButtonUp(): emitting signal" << std::endl)
+		this->pressed.Emit();
 		return true;
 	}
 	
-	if(this->isPressed){
-		this->isPressed = false;
-		this->pressed.Emit();
-	}
-	
-	return true;
+	return false;
 }
 
 

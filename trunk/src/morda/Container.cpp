@@ -245,3 +245,20 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	}
 	this->RelayoutNeeded();
 }
+
+
+
+//override
+ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
+	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
+		TRACE(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
+		if((*c)->Name() == name){
+			return *c;
+		}
+		
+		if(ting::Ref<Widget> r = (*c)->FindChildByName(name)){
+			return r;
+		}
+	}
+	return 0;
+}

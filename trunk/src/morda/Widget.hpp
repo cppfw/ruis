@@ -150,6 +150,10 @@ public:
 		this->relayoutNeeded = false;
 	}
 
+	virtual ting::Ref<Widget> FindChildByName(const std::string& name)throw(){
+		return 0;
+	}
+	
 protected:
 	inline Widget() :
 			rect(0, 0, 0, 0)
