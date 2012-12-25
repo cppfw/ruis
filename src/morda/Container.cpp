@@ -251,7 +251,7 @@ void Container::Remove(const ting::Ref<Widget>& w){
 //override
 ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
 	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
-		TRACE(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
+//		TRACE(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
 		if((*c)->Name() == name){
 			return *c;
 		}
