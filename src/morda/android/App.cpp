@@ -559,7 +559,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
     }
 
 	static JNINativeMethod methods[] = {
-		{"handleCharacterStringInput", "(S)V", (void*)&Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput},
+		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput},
 	};
 	jclass clazz = env->FindClass("com/googlecode/morda/tests/SharedLibLoaderNativeActivity");
 	ASSERT(clazz)
@@ -700,7 +700,7 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 void App::ShowVirtualKeyboard()throw(){
-	ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_IMPLICIT);
+	ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 }
 
 

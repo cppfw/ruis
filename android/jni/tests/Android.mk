@@ -6,7 +6,9 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := tests
 
-LOCAL_SRC_FILES := src/main.cpp
+PREFIX := ../../../tests/
+
+LOCAL_SRC_FILES := $(PREFIX)app/src/main.cpp
 
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
