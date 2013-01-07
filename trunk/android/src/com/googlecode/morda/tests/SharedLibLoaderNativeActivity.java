@@ -1,9 +1,13 @@
 package com.googlecode.morda.tests;
 
 import android.app.NativeActivity;
+import android.app.Service;
+import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.util.Log;
+
 
 public class SharedLibLoaderNativeActivity extends NativeActivity {
 	public static final String LOGTAG = "morda java side";
@@ -47,5 +51,24 @@ static {
 			return true;
 		}
 		return super.dispatchKeyEvent(event);
+	}
+	
+	
+	private InputMethodManager imm;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		
+		this.imm = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+	}
+	
+	
+	public void showVirtualKeyboard(){
+		imm.showSoftInput(this.getWindow().getDecorView(), InputMethodManager.SHOW_FORCED);
+	}
+	
+	public void hideVirtualKeyboard(){
+		imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 	}
 }

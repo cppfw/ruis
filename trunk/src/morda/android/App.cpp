@@ -94,6 +94,8 @@ class JavaFunctionsWrapper{
 	
 	jmethodID resolveKeycodeUnicodeMeth;
 	
+	jmethodID showVirtualKeyboardMeth;
+	jmethodID hideVirtualKeyboardMeth;
 protected:
 	JavaFunctionsWrapper(ANativeActivity* a){
 		this->env = a->env;
@@ -104,6 +106,12 @@ protected:
 		
 		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
 		ASSERT(this->resolveKeycodeUnicodeMeth)
+		
+		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
+		ASSERT(this->showVirtualKeyboardMeth)
+		
+		this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
+		ASSERT(this->hideVirtualKeyboardMeth)
 	}
 	
 public:
@@ -121,7 +129,13 @@ public:
 		return this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(keyCode), jint(metaState));
 	}
 	
+	void HideVirtualKeyboard(){
+		this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
+	}
 	
+	void ShowVirtualKeyboard(){
+		this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
+	}
 };
 
 
@@ -721,13 +735,19 @@ ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& pa
 
 
 void App::ShowVirtualKeyboard()throw(){
-	ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+	
+	ASSERT(javaFunctionsWrapper)
+	javaFunctionsWrapper->ShowVirtualKeyboard();
 }
 
 
 
 void App::HideVirtualKeyboard()throw(){
-	ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+	
+	ASSERT(javaFunctionsWrapper)
+	javaFunctionsWrapper->HideVirtualKeyboard();
 }
 
 
