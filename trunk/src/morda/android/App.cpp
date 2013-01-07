@@ -87,31 +87,58 @@ ting::Ptr<AndroidConfiguration> curConfig;
 
 
 
-class KeyEventToUnicodeResolver{
+class JavaFunctionsWrapper{
 	JNIEnv *env;
 	jclass clazz;
-	jmethodID meth;
 	jobject obj;
-public:
-	KeyEventToUnicodeResolver(ANativeActivity* a){
+	
+	jmethodID resolveKeycodeUnicodeMeth;
+	
+protected:
+	JavaFunctionsWrapper(ANativeActivity* a){
 		this->env = a->env;
 		this->obj = a->clazz;
 		this->clazz = this->env->GetObjectClass(this->obj);
 		ASSERT(this->clazz)
-		this->meth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
-		ASSERT(this->meth)
-	}
-	
-	~KeyEventToUnicodeResolver()throw(){
 		
+		
+		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
+		ASSERT(this->resolveKeycodeUnicodeMeth)
 	}
 	
+public:
+	
+	static ting::Ptr<JavaFunctionsWrapper> New(ANativeActivity* a){
+		return ting::Ptr<JavaFunctionsWrapper>(
+				new JavaFunctionsWrapper(a)
+			);
+	}
+	
+	~JavaFunctionsWrapper()throw(){
+	}
+	
+	jint ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+		return this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(keyCode), jint(metaState));
+	}
+	
+	
+};
+
+
+
+ting::Ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
+
+
+
+class KeyEventToUnicodeResolver{
+public:	
 	int32_t kc;//key code
 	int32_t ms;//meta state
 	int32_t di;//device id
 	
-	ting::Array<ting::u32> Resolve(){	
-		jint res = this->env->CallIntMethod(this->obj, this->meth, jint(this->di), jint(this->kc), jint(this->ms));
+	ting::Array<ting::u32> Resolve(){
+		ASSERT(javaFunctionsWrapper)
+		jint res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->kc, this->ms);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
@@ -124,14 +151,8 @@ public:
 		return ret;
 	}
 	
-	static ting::Ptr<KeyEventToUnicodeResolver> New(ANativeActivity* a){
-		return ting::Ptr<KeyEventToUnicodeResolver>(
-				new KeyEventToUnicodeResolver(a)
-			);
-	}
-};
 
-ting::Ptr<KeyEventToUnicodeResolver> keyUnicodeResolver;
+} keyUnicodeResolver;
 
 
 
@@ -840,17 +861,16 @@ void HandleInputEvents(){
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
 					{
-						ASSERT(keyUnicodeResolver)
-						keyUnicodeResolver->kc = AKeyEvent_getKeyCode(event);
-						keyUnicodeResolver->ms = AKeyEvent_getMetaState(event);
-						keyUnicodeResolver->di = AInputEvent_getDeviceId(event);
+						keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
+						keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
+						keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
 						
 						//detect auto-repeated key events
 						if(AKeyEvent_getRepeatCount(event) != 0){
 							if(eventAction == AKEY_EVENT_ACTION_DOWN){
 								app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										*keyUnicodeResolver
+										keyUnicodeResolver
 									);
 							}
 							break;
@@ -860,13 +880,13 @@ void HandleInputEvents(){
 							case AKEY_EVENT_ACTION_DOWN:
 								app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										*keyUnicodeResolver
+										keyUnicodeResolver
 									);
 								break;
 							case AKEY_EVENT_ACTION_UP:
 								app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
-										*keyUnicodeResolver
+										keyUnicodeResolver
 									);
 								break;
 							default:
@@ -907,7 +927,7 @@ namespace{
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
 	
-	keyUnicodeResolver.Reset();
+	javaFunctionsWrapper.Reset();
 }
 
 
@@ -1221,5 +1241,5 @@ void ANativeActivity_onCreate(
 
 //	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
 	
-	keyUnicodeResolver = KeyEventToUnicodeResolver::New(activity);
+	javaFunctionsWrapper = JavaFunctionsWrapper::New(activity);
 }
