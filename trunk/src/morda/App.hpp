@@ -128,6 +128,7 @@ private:
 	friend void Render(App& app);
 	friend ting::u32 Update(App& app);
 	friend void HandleInputEvents();
+	friend void HandleCharacterInputEvent(ting::Array<ting::u32> chars);
 
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);

@@ -574,8 +574,6 @@ key::Key GetKeyFromKeyEvent(AInputEvent& event)throw(){
 
 
 
-namespace{
-
 struct UnicodeResolver{
 	ting::Array<ting::u32> chars;
 
@@ -584,7 +582,30 @@ struct UnicodeResolver{
 	}
 };
 
+
+
 }//~namespace
+
+
+
+namespace morda{
+
+void HandleCharacterInputEvent(ting::Array<ting::u32> chars){
+	UnicodeResolver resolver;
+	resolver.chars = chars;
+	
+	//notify about input event
+	morda::App::Inst().HandleKeyEvent<true, true, UnicodeResolver>(
+			key::SPACE,//will be ignored
+			resolver
+		);
+}
+
+}//~namespace
+
+
+
+namespace{
 
 
 
@@ -609,21 +630,15 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActi
 	for(ting::utf8::Iterator i(utf8Chars); i.IsNotEnd(); ++i){
 		utf32.push_back(i.Char());
 	}
-
-	UnicodeResolver resolver;
 	
-	resolver.chars.Init(utf32.size());
+	ting::Array<ting::u32> utf32Chars(utf32.size());
 
-	ting::u32* dst = resolver.chars.Begin();
+	ting::u32* dst = utf32Chars.Begin();
 	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 		*dst = *src;
 	}
 
-	//notify about input event
-	morda::App::Inst().HandleKeyEvent<true, true, UnicodeResolver>(
-			key::SPACE,//will be ignored
-			resolver
-		);
+	HandleCharacterInputEvent(utf32Chars);
 
 	env->ReleaseStringUTFChars(chars, utf8Chars);
 }
