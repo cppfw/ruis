@@ -189,7 +189,6 @@
             <incDir>
               <pElem>../src</pElem>
               <pElem>../ext</pElem>
-              <pElem>/home/igagis/android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -197,6 +196,306 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="/home/igagis/prj/morda/src/makefile" ex="true" tool="3" flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/GuiInflater.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/Layout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/Updateable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/Widget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/android/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/resman/Resource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/resources/ResFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/resources/ResTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/shaders/Shader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/GLTexture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/Gravity.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/Image.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/TexFont.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/ZipFile.hpp"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/util/util.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/tests/app/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/igagis/prj/morda/tests/makefile"
+            ex="true"
+            tool="3"
+            flavor2="0">
+      </item>
+      <folder path="src/morda/android">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/layouts">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/linux">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/shaders">
+        <ccTool>
+          <incDir>
+            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="tests">
+        <ccTool>
+          <incDir>
+            <pElem>../tests/app</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
     </conf>
     <conf name="linux_release" type="0">
       <toolsSet>
