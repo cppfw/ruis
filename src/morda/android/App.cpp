@@ -12,11 +12,14 @@
 
 #include <ting/Array.hpp>
 #include <ting/types.hpp>
+#include <ting/utf8.hpp>
+
 #include <time.h>
 #include <signal.h>
 
 #include "AssetFile.hpp"
 #include "morda/App.hpp"
+#include "morda/KeyListener.hpp"
 
 
 
@@ -571,14 +574,58 @@ key::Key GetKeyFromKeyEvent(AInputEvent& event)throw(){
 
 
 
+namespace{
+
+struct UnicodeResolver{
+	ting::Array<ting::u32> chars;
+
+	ting::Array<ting::u32> Resolve(){
+		return this->chars;
+	}
+};
+
+}//~namespace
+
+
+
 JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput(
 		JNIEnv *env,
 		jclass clazz,
 		jstring chars
 	)
 {
-	TRACE(<< "lhvouygnygnygiuygniuygbiuygiub" << std::endl)
-	//TODO:
+	TRACE(<< "handleCharacterStringInput(): invoked" << std::endl)
+	
+	const char *utf8Chars = env->GetStringUTFChars(chars, 0);
+
+	if(utf8Chars == 0 || *utf8Chars == 0){
+		TRACE(<< "handleCharacterStringInput(): empty string passed in" << std::endl)
+		return;
+	}
+	
+	typedef std::vector<ting::u32> T_Vector;
+	T_Vector utf32;
+
+	for(ting::utf8::Iterator i(utf8Chars); i.IsNotEnd(); ++i){
+		utf32.push_back(i.Char());
+	}
+
+	UnicodeResolver resolver;
+	
+	resolver.chars.Init(utf32.size());
+
+	ting::u32* dst = resolver.chars.Begin();
+	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
+		*dst = *src;
+	}
+
+	//notify about input event
+	morda::App::Inst().HandleKeyEvent<true, true, UnicodeResolver>(
+			key::SPACE,//will be ignored
+			resolver
+		);
+
+	env->ReleaseStringUTFChars(chars, utf8Chars);
 }
 
 
