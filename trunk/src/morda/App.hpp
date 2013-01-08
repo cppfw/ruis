@@ -263,21 +263,21 @@ private:
 	
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <bool is_down, bool is_repeated, class UnicodeResolver> void HandleKeyEvent(key::Key keyCode, UnicodeResolver& unicodeResolver){
-		//don't handle repeated key release events
-		if(!is_down && is_repeated){
+	template <bool is_down, bool is_char_input_only, class UnicodeResolver> void HandleKeyEvent(key::Key keyCode, UnicodeResolver& unicodeResolver){
+		//don't handle char input key release events
+		if(!is_down && is_char_input_only){
 			return;
 		}
 		
 		if(ting::Ref<Widget> w = this->focusedWidget){
-			if(!is_repeated){
+			if(!is_char_input_only){
 				w->HandleKeyEvent<is_down>(keyCode);
 			}
 			
 			if(is_down){
 				w->HandleCharacterInput(unicodeResolver);
 			}
-		}else if(!is_repeated){
+		}else if(!is_char_input_only){
 			if(this->rootContainer){
 				this->rootContainer->HandleKeyEvent<is_down>(keyCode);
 			}
