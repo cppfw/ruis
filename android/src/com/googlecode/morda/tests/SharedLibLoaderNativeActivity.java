@@ -24,7 +24,8 @@ static {
 	private int curKeyDevice;
 	private KeyCharacterMap curCharMap;
 
-	public int resolveKeyUnicode(int deviceID, int keyCode, int metaState){
+	public int resolveKeyUnicode(int deviceID, int metaState, int keyCode){
+		Log.d(LOGTAG, "resolveKeyUnicode(): invoked, keyCode = " + keyCode);
 		if(this.curCharMap == null || curKeyDevice != deviceID){
 			try{
 				this.curCharMap = KeyCharacterMap.load(deviceID);

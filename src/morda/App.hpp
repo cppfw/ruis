@@ -265,12 +265,16 @@ private:
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	template <bool is_down, bool is_char_input_only, class UnicodeResolver> void HandleKeyEvent(key::Key keyCode, UnicodeResolver& unicodeResolver){
+//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
+		
 		//don't handle char input key release events
 		if(!is_down && is_char_input_only){
 			return;
 		}
 		
 		if(ting::Ref<Widget> w = this->focusedWidget){
+//			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
+		
 			if(!is_char_input_only){
 				w->HandleKeyEvent<is_down>(keyCode);
 			}
@@ -279,6 +283,7 @@ private:
 				w->HandleCharacterInput(unicodeResolver);
 			}
 		}else if(!is_char_input_only){
+//			TRACE(<< "HandleKeyEvent(): there is no focused widget, not a char only input, passing to rootContainer" << std::endl)
 			if(this->rootContainer){
 				this->rootContainer->HandleKeyEvent<is_down>(keyCode);
 			}
