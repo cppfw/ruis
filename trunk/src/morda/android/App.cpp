@@ -129,7 +129,7 @@ public:
 	}
 	
 	jint ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
-		return this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(keyCode), jint(metaState));
+		return this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode));
 	}
 	
 	void HideVirtualKeyboard(){
@@ -155,7 +155,8 @@ public:
 	
 	ting::Array<ting::u32> Resolve(){
 		ASSERT(javaFunctionsWrapper)
-		jint res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->kc, this->ms);
+//		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
+		jint res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
@@ -943,9 +944,13 @@ void HandleInputEvents(){
 					break;
 				case AINPUT_EVENT_TYPE_KEY:
 					{
+//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
+						
 						keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
 						keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
 						keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
+						
+//						TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
 						
 						//detect auto-repeated key events
 						if(AKeyEvent_getRepeatCount(event) != 0){
@@ -960,12 +965,14 @@ void HandleInputEvents(){
 						
 						switch(eventAction){
 							case AKEY_EVENT_ACTION_DOWN:
+//								TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
 								app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
 										keyUnicodeResolver
 									);
 								break;
 							case AKEY_EVENT_ACTION_UP:
+//								TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
 								app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
 										GetKeyFromKeyEvent(*ASS(event)),
 										keyUnicodeResolver

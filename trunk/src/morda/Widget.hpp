@@ -218,15 +218,21 @@ private:
 	ting::Inited<bool, false> deliverCharacterInputEvents;
 	
 	template <class UnicodeResolver> void HandleCharacterInput(UnicodeResolver& unicodeResolver){
+//		TRACE(<< "HandleCharacterInput(): invoked, this->deliverCharacterInputEvents = " << this->deliverCharacterInputEvents << std::endl)
+		
 		//if widget does not want to receive such events do nothing
 		if(!this->deliverCharacterInputEvents){
 			return;
 		}
 		
 		ting::Array<ting::u32> unicode = unicodeResolver.Resolve();
+//		TRACE(<< "HandleCharacterInput(): unicode.Size() = " << unicode.Size() << std::endl)
+		
 		if(unicode.Size() == 0){
 			return;
 		}
+		
+//		TRACE(<< "HandleCharacterInput(): unicode[0] = " << unicode[0] << std::endl)
 		
 		if(this->keyListener){
 			if(this->keyListener->OnCharacterInput(unicode)){
