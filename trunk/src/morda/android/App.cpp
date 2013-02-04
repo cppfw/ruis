@@ -651,6 +651,8 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActi
 
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved){
+	TRACE(<< "JNI_OnLoad(): invoked" << std::endl)
+	
     JNIEnv* env;
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
         return -1;
@@ -1298,6 +1300,7 @@ void ANativeActivity_onCreate(
 		size_t savedStateSize
 	)
 {
+	TRACE(<< "ANativeActivity_onCreate(): invoked" << std::endl)
 	activity->callbacks->onDestroy = &OnDestroy;
 	activity->callbacks->onStart = &OnStart;
 	activity->callbacks->onResume = &OnResume;
