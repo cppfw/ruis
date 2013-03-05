@@ -42,9 +42,13 @@ THE SOFTWARE. */
 #ifdef M_MORDA_OGLES2
 #	include <GLES2/gl2.h>
 #	include <EGL/egl.h>
-#else
+#elif M_OS == M_OS_LINUX
 #	include <GL/glew.h>
 #	include <GL/glx.h>
+#elif M_OS == M_OS_WINDOWS
+
+#else
+#	error "unknown os"
 #endif
 
 
