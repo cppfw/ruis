@@ -11,17 +11,14 @@ includes := -I../../src
 ifeq ($(platform),win32)
     libs := 
     includes += -I"../../../ting/src"
-    remove := del /Q /F
 endif
 ifeq ($(platform),darwin)
     libs := 
     includes +=
-    remove := rm -rf
 endif
 ifeq ($(platform),linux)
     libs := -lting ../../src/libmorda.so -lGLEW -lstob
     includes += -I../../ext
-    remove := rm -rf
 endif
 
 #external compiler flags (to be passed to make from command line)
@@ -47,6 +44,6 @@ $(binary_name): src/main.cpp
 
 
 clean:
-	@$(remove) $(binary_name)
+	@rm -rf $(binary_name)
 
 include ../../targets.mk
