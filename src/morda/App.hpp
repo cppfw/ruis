@@ -244,6 +244,13 @@ private:
 	private:
 		void Destroy()throw();
 	} glContext;
+
+	inline void SwapGLBuffers(){
+		SwapBuffers(this->deviceContext.hdc);
+	}
+
+	friend void Main(int argc, char** argv);
+	void Exec();
 	
 #else
 #	error "unsupported OS"

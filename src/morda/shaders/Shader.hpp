@@ -28,6 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <ting/config.hpp>
+
 #include "../config.hpp"
 
 #ifdef M_MORDA_OGLES2
@@ -37,7 +39,7 @@ THE SOFTWARE. */
 #	include <GL/glew.h>
 #	include <GL/glx.h>
 #elif M_OS == M_OS_WINDOWS
-
+#	include <GL/glew.h>
 #else
 #	error "unknown os"
 #endif
