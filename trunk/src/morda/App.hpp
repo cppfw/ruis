@@ -96,9 +96,7 @@ public:
 
 
 
-#if M_OS == M_OS_LINUX
-
-#	ifdef __ANDROID__
+#ifdef M_MORDA_OGLES2
 
 private:
 
@@ -136,10 +134,9 @@ private:
 
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
-	}
-
-
-#	else //generic linux
+	}	
+	
+#elif M_OS == M_OS_LINUX
 
 private:
 	struct XDisplayWrapper{
@@ -200,8 +197,6 @@ private:
 	inline void SwapGLBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
-	
-#	endif
 
 #else
 #	error "unsupported OS"
