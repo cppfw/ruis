@@ -9,6 +9,54 @@ using namespace morda;
 
 
 
+namespace{
+
+LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
+	switch(msg){
+		case WM_ACTIVATE:
+			if (!HIWORD(wParam)){ //Check Minimization State
+				//window active
+			}else{
+				//window is no longer active
+			}
+			return 0;
+
+		case WM_SYSCOMMAND:
+			switch(wParam){
+				case SC_SCREENSAVE: //screensaver trying to start?
+				case SC_MONITORPOWER: //montor trying to enter powersave?
+					return 0; //prevent from happening
+			}
+			break;
+
+		case WM_CLOSE:
+			PostQuitMessage(0);
+			return 0;
+
+		case WM_KEYDOWN:
+			//TODO:
+			//keys[wParam] = TRUE;					// If So, Mark It As TRUE
+			return 0;
+
+		case WM_KEYUP:
+			//TODO:
+			//keys[wParam] = FALSE;					// If So, Mark It As FALSE
+			return 0;
+
+		case WM_SIZE:
+			//TODO: resize GL
+			//ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  // LoWord=Width, HiWord=Height
+			return 0;
+			
+		default:
+			return DefWindowProc(hWnd,uMsg,wParam,lParam);
+	}
+}
+
+}//~namespace
+
+
+
 App::WindowClassWrapper::WindowClassWrapper(){
 	this->name = "MordaWindowClassName";
 	
