@@ -52,6 +52,8 @@ THE SOFTWARE. */
 #endif
 
 
+#include "util/Vector2.hpp"
+
 #include "Exc.hpp"
 #include "Widget.hpp"
 #include "Container.hpp"
@@ -85,6 +87,11 @@ class App : public ting::IntrusiveSingleton<App>{
 	} uiThreadId;
 
 public:
+	struct WindowParams{
+		morda::Vec2ui dim;
+	};
+	
+	
 	inline bool ThisIsUIThread()const throw(){
 		return this->uiThreadId.id == ting::mt::Thread::GetCurrentThreadID();
 	}
@@ -156,7 +163,7 @@ private:
 
 		XDisplayWrapper& d;
 
-		XWindowWrapper(unsigned width, unsigned height, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
+		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
 		~XWindowWrapper()throw();
 	} xWindow;
 
@@ -198,6 +205,33 @@ private:
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
 
+#elif M_OS == M_OS_WINDOWS
+	
+private:
+	struct WindowClassWrapper{
+		std::string name;
+		
+		WindowClassWrapper();
+		~WindowClassWrapper()throw();
+	} windowClass;
+	
+	struct WindowWrapper{
+		HWND hwnd;
+		
+		WindowWrapper(unsigned width, unsigned height, const WindowClassWrapper& wc);
+		~WindowWrapper()throw();
+	} window;
+	
+	struct DeviceContextWrapper{
+		const WindowWrapper& w;
+		HDC hdc;
+		
+		DeviceContextWrapper(const WindowWrapper& w, const WindowParams& wp);
+		~DeviceContextWrapper()throw();
+	} deviceContext;
+	
+	//TODO:
+	
 #else
 #	error "unsupported OS"
 #endif
@@ -233,7 +267,7 @@ private:
 	void Render();
 
 protected:
-	App(unsigned w, unsigned h);
+	App(const WindowParams& requestedWindowParams);
 
 public:
 

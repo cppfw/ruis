@@ -60,7 +60,7 @@ App::XVisualInfoWrapper::~XVisualInfoWrapper()throw(){
 
 
 
-App::XWindowWrapper::XWindowWrapper(unsigned width, unsigned height, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo) :
+App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo) :
 		d(xDisplay)
 {
 	Colormap colorMap = XCreateColormap(
@@ -90,8 +90,8 @@ App::XWindowWrapper::XWindowWrapper(unsigned width, unsigned height, XDisplayWra
 			RootWindow(this->d.d, xVisualInfo.vi->screen),
 			0,
 			0,
-			width,
-			height,
+			wp.dim.x,
+			wp.dim.y,
 			0,
 			xVisualInfo.vi->depth,
 			InputOutput,
@@ -186,9 +186,9 @@ void App::XInputMethodWrapper::Destroy()throw(){
 }
 
 
-App::App(unsigned w, unsigned h) :
+App::App(const WindowParams& requestedWindowParams) :
 		xVisualInfo(xDisplay),
-		xWindow(w, h, xDisplay, xVisualInfo),
+		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xInputMethod(xDisplay, xWindow),
 		curWinRect(0, 0, -1, -1)
@@ -202,7 +202,14 @@ App::App(unsigned w, unsigned h) :
 	}
 #endif
 	
-	this->UpdateWindowRect(morda::Rect2f(0, 0, float(w), float(h)));
+	this->UpdateWindowRect(
+			morda::Rect2f(
+					0,
+					0,
+					float(requestedWindowParams.dim.x),
+					float(requestedWindowParams.dim.y)
+				)
+		);
 }
 
 
