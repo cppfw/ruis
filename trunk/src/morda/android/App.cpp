@@ -779,7 +779,7 @@ App::EGLContextWrapper::~EGLContextWrapper()throw(){
 
 
 
-App::App(unsigned w, unsigned h) :
+App::App(const WindowParams& requestedWindowParams) :
 		eglConfig(eglDisplay),
 		eglSurface(eglDisplay, eglConfig),
 		eglContext(eglDisplay, eglConfig, eglSurface)

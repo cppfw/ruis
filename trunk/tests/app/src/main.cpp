@@ -143,9 +143,17 @@ public:
 
 
 class Application : public morda::App{
+	inline static morda::App::WindowParams GetWindowParams()throw(){
+		morda::App::WindowParams wp;
+		
+		wp.dim.x = 320;
+		wp.dim.y = 480;
+		
+		return wp;
+	}
 public:
 	Application() :
-			App(320, 480)
+			App(GetWindowParams())
 	{
 		this->ResMan().MountResPack(this->CreateResourceFileInterface());
 		
