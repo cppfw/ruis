@@ -195,8 +195,6 @@ private:
 		
 		void Destroy()throw();
 	} xInputMethod;
-	
-	ting::Inited<volatile bool, false> quitFlag;
 
 	friend void Main(int argc, char** argv);
 	void Exec();

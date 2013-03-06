@@ -229,22 +229,51 @@ int WINAPI WinMain(
 		int nCmdShow // Window Show State
 	)
 {
-	//TODO: create App object
+	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	DWORD dwStart = GetTickCount();
+ DWORD dwElapsed;
+ while ((dwElapsed = GetTickCount() - dwStart) < dwTimeout) {
+  DWORD dwStatus = MsgWaitForMultipleObjectsEx(0, NULL,
+                    dwTimeout - dwElapsed, QS_ALLINPUT,
+                    MWFMO_WAITANY | MWMO_INPUTAVAILABLE);
+  if (dwStatus == WAIT_OBJECT_0) {
+   MSG msg;
+   while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+    if (msg.message == WM_QUIT) {
+     PostQuitMessage((int)msg.wParam);
+     return FALSE; // abandoned due to WM_QUIT
+    }
+    if (!CallMsgFilter(&msg, MSGF_SLEEPMSG)) {
+     TranslateMessage(&msg);
+     DispatchMessage(&msg);
+    }
+   }
+  }
+ }
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	MSG msg; // Windows Message Structure
 	BOOL done = FALSE; // Bool Variable To Exit Loop
 
-	//TODO: remove
-	//Ask The User Which Screen Mode They Prefer
-//	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
-//	{
-//		fullscreen=FALSE;							// Windowed Mode
-//	}
 
-	if(!CreateGLWindow("NeHe's OpenGL Framework",640,480,16,fullscreen)){
-		return 0;									// Quit If Window Was Not Created
-	}
 
 	while(!done){
 		if (PeekMessage(&msg,NULL,0,0,PM_REMOVE))	// Is There A Message Waiting?
@@ -289,8 +318,6 @@ int WINAPI WinMain(
 		}
 	}
 
-	// Shutdown
-	KillGLWindow();									// Kill The Window
 	return (msg.wParam);							// Exit The Program
 }
 
