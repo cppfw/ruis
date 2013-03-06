@@ -613,7 +613,7 @@ void App::Exec(){
 	
 	bool quitFlag = false;
 	
-	while(quitFlag){
+	while(!quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
 		
 //		if(this->queue.CanRead()){

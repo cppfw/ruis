@@ -73,6 +73,9 @@
           <in>Label.hpp</in>
           <in>PaddedWidget.hpp</in>
         </df>
+        <df name="windows">
+          <in>App.cpp</in>
+        </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
         <in>Container.cpp</in>
@@ -94,16 +97,23 @@
           <df name="2">
             <df name="morda">
               <df name="layouts">
+                <in>FrameLayout.d</in>
+                <in>LinearLayout.d</in>
               </df>
               <df name="linux">
+                <in>App.d</in>
               </df>
               <df name="resman">
               </df>
               <df name="resources">
+                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
               </df>
               <df name="util">
+                <in>GLTexture.d</in>
+                <in>Gravity.d</in>
+                <in>Image.d</in>
               </df>
               <df name="widgets">
               </df>
@@ -360,12 +370,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/src/morda/util/Gravity.cpp"
@@ -373,12 +377,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/src/morda/util/Image.cpp"
@@ -386,9 +384,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/src/morda/util/LeftBottomRightTop.cpp"
@@ -396,9 +391,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/src/morda/util/TexFont.cpp"
@@ -406,12 +398,6 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/src/morda/util/ZipFile.hpp"
@@ -424,9 +410,13 @@
             tool="1"
             flavor2="4">
         <ccTool>
-          <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
-          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/igagis/prj/morda/src/morda/windows/App.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
         </ccTool>
       </item>
       <item path="/home/igagis/prj/morda/tests/app/src/main.cpp"
@@ -466,11 +456,24 @@
       <folder path="src/morda/resman">
         <ccTool>
           <incDir>
-            <pElem>../../../android-ndk-r7c/platforms/android-14/arch-x86/usr/include</pElem>
+            <pElem>/usr/include/freetype2</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="src/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="src/morda/util">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
