@@ -29,8 +29,8 @@ App::XDisplayWrapper::~XDisplayWrapper()throw(){
 
 
 
-App::XVisualInfoWrapper::XVisualInfoWrapper(XDisplayWrapper& xDisplay){
-	//TODO: allow configuring depth, stencil buffers
+App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay){
+	//TODO: allow configuring depth, stencil buffers via WindowParams
 	int attr[] = {
 		GLX_RGBA,
 		GLX_DOUBLEBUFFER,
@@ -169,8 +169,6 @@ App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindow
 	if(this->xic == NULL){
 		this->Destroy();
 	}
-	
-	//TODO:
 }
 
 
@@ -187,7 +185,7 @@ void App::XInputMethodWrapper::Destroy()throw(){
 
 
 App::App(const WindowParams& requestedWindowParams) :
-		xVisualInfo(xDisplay),
+		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xInputMethod(xDisplay, xWindow),

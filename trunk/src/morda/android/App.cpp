@@ -696,8 +696,8 @@ App::EGLDisplayWrapper::~EGLDisplayWrapper()throw(){
 
 
 
-App::EGLConfigWrapper::EGLConfigWrapper(EGLDisplayWrapper& d){
-	//TODO: allow stencil configuration etc.
+App::EGLConfigWrapper::EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d){
+	//TODO: allow stencil configuration etc. via WindowParams
 	//Here specify the attributes of the desired configuration.
 	//Below, we select an EGLConfig with at least 8 bits per color
 	//component compatible with on-screen windows
@@ -780,7 +780,7 @@ App::EGLContextWrapper::~EGLContextWrapper()throw(){
 
 
 App::App(const WindowParams& requestedWindowParams) :
-		eglConfig(eglDisplay),
+		eglConfig(requestedWindowParams, eglDisplay),
 		eglSurface(eglDisplay, eglConfig),
 		eglContext(eglDisplay, eglConfig, eglSurface)
 {
