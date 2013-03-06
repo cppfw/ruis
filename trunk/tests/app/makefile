@@ -1,5 +1,10 @@
 platform := linux
 
+operating_system := $(shell uname -o)
+ifeq ($(operating_system), Msys)
+    platform := win32
+endif
+
 binary_name := tests
 
 ifeq ($(platform),win32)
@@ -9,8 +14,8 @@ endif
 includes := -I../../src
 
 ifeq ($(platform),win32)
-    libs := 
-    includes += -I"../../../ting/src"
+    libs := -L/usr/lib -L/usr/local/lib -lting ../../src/libmorda.a -lglew32 -lopengl32 -lstob -lpng -ljpeg -lz
+    includes += -I"../../../ting/src" -I/usr/include
 endif
 ifeq ($(platform),darwin)
     libs := 
@@ -28,6 +33,7 @@ ecf :=
 cf := $(ecf)
 cf += -Wall
 cf += -Wno-comment #no warnings on nested comments
+cf += -Wno-format
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
 

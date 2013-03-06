@@ -112,6 +112,9 @@ endif
 ifeq ($(platform), maemo_linux)
     compiler_flags += -fPIC # Since we are building shared library, we need Position-Independend Code
 endif
+ifeq ($(platform), win32)
+    compiler_flags += -Wno-format #due to bug in compiler it complains about format in sprintf
+endif
 
 
 linker_flags := -shared
@@ -138,7 +141,7 @@ ifeq ($(platform), linux)
     include_dirs := -I../ext `pkg-config --cflags freetype2`
 endif
 ifeq ($(platform), win32)
-    include_dirs := -I/usr/include
+    include_dirs := -I/usr/include -I/usr/local/include -I/usr/local/include/freetype2
 endif
 ifeq ($(platform), win32cross)
     include_dirs :=
@@ -156,7 +159,8 @@ ifeq ($(platform), linux)
     libs := -lting -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2`
 endif
 ifeq ($(platform), win32)
-    libs := 
+    libs := -L/usr/local/lib -L/usr/lib
+    libs += -lfreetype -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32 -lstob
 endif
 ifeq ($(platform), win32cross)
     libs :=
@@ -192,7 +196,7 @@ $(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(srcs)))
 	@echo Linking $@...
 ifeq ($(platform), win32)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
-	@$(compiler) $^ -o "$@" $(libs) $(linker_flags)
+#	@$(compiler) $^ -o "$@" $(libs) $(linker_flags)
 else
 	@ar cr $(patsubst %.so,%.a,$@) $^
 	@$(compiler) $^ -o "$@".$(so_name) $(libs) $(linker_flags)

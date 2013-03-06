@@ -4,6 +4,8 @@
 
 #include <windows.h>
 
+#include <ting/fs/FSFile.hpp>
+
 
 using namespace morda;
 
@@ -11,7 +13,11 @@ using namespace morda;
 
 namespace{
 
+App* app = 0;
+
 LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
+	ASSERT(app)
+
 	switch(msg){
 		case WM_ACTIVATE:
 			if (!HIWORD(wParam)){ //Check Minimization State
@@ -49,8 +55,9 @@ LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			return 0;
 			
 		default:
-			return DefWindowProc(hWnd,uMsg,wParam,lParam);
+			break;
 	}
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 }//~namespace
@@ -90,7 +97,7 @@ App::WindowClassWrapper::~WindowClassWrapper()throw(){
 
 
 App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClassWrapper& wc){
-	this->hWnd = CreateWindowEx(
+	this->hwnd = CreateWindowEx(
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, //extended style
 			wc.name.c_str(),
 			"morda app",
@@ -164,7 +171,7 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 
 
 
-App::DeviceContextWrapper::Destroy()throw(){
+void App::DeviceContextWrapper::Destroy()throw(){
 	if(!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
 	}
@@ -193,7 +200,7 @@ App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
 
 
 
-App::GLContextWrapper::Destroy()throw(){
+void App::GLContextWrapper::Destroy()throw(){
 	if(!wglMakeCurrent(NULL, NULL)){
 		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
 	}
@@ -222,24 +229,56 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-int WINAPI WinMain(
-		HINSTANCE hInstance, // Instance
-		HINSTANCE hPrevInstance, // Previous Instance
-		LPSTR lpCmdLine, // Command Line Parameters
-		int nCmdShow // Window Show State
-	)
-{
-	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+	fi->SetRootDir("res/");
+	return fi;
+}
+
+
+
+void App::ShowVirtualKeyboard()throw(){
+	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
+	//do nothing
+}
+
+
+
+void App::HideVirtualKeyboard()throw(){
+	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
+	//do nothing
+}
+
+
+
+void App::Exec(){
+	bool quitFlag = false;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	DWORD dwStart = GetTickCount();
+	while(!quitFlag){
+		DWORD status = MsgWaitForMultipleObjectsEx(
+				0,
+				NULL,
+				this->updater.Update(),
+				QS_ALLINPUT,
+				MWMO_INPUTAVAILABLE
+			);
+
+		if(status == WAIT_OBJECT_0){
+			MSG msg;
+			while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
+				if(msg.message == WM_QUIT){
+					quitFlag = true;
+					break;
+				}
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+	}
+
+/*
+//TODO: remove
+DWORD dwStart = GetTickCount();
  DWORD dwElapsed;
  while ((dwElapsed = GetTickCount() - dwStart) < dwTimeout) {
   DWORD dwStatus = MsgWaitForMultipleObjectsEx(0, NULL,
@@ -257,67 +296,37 @@ int WINAPI WinMain(
      DispatchMessage(&msg);
     }
    }
-  }
+  }//~if
  }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	MSG msg; // Windows Message Structure
-	BOOL done = FALSE; // Bool Variable To Exit Loop
+*/
+
+}
 
 
 
-	while(!done){
-		if (PeekMessage(&msg,NULL,0,0,PM_REMOVE))	// Is There A Message Waiting?
-		{
-			if (msg.message==WM_QUIT)				// Have We Received A Quit Message?
-			{
-				done=TRUE;							// If So done=TRUE
-			}
-			else									// If Not, Deal With Window Messages
-			{
-				TranslateMessage(&msg);				// Translate The Message
-				DispatchMessage(&msg);				// Dispatch The Message
-			}
-		}
-		else										// If There Are No Messages
-		{
-			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-			if (active)								// Program Active?
-			{
-				if (keys[VK_ESCAPE])				// Was ESC Pressed?
-				{
-					done=TRUE;						// ESC Signalled A Quit
-				}
-				else								// Not Time To Quit, Update Screen
-				{
-					DrawGLScene();					// Draw The Scene
-					SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
-				}
-			}
+namespace morda{
 
-			if (keys[VK_F1])						// Is F1 Being Pressed?
-			{
-				keys[VK_F1]=FALSE;					// If So Make Key FALSE
-				KillGLWindow();						// Kill Our Current Window
-				fullscreen=!fullscreen;				// Toggle Fullscreen / Windowed Mode
-				// Recreate Our OpenGL Window
-				if (!CreateGLWindow("NeHe's OpenGL Framework",640,480,16,fullscreen))
-				{
-					return 0;						// Quit If Window Was Not Created
-				}
-			}
-		}
-	}
+inline void Main(int argc, char** argv){
+	ting::Ptr<morda::App> a = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 
-	return (msg.wParam);							// Exit The Program
+	app = a.operator->();
+
+	a->Exec();
+}
+
+}//~namespace
+
+
+
+int WINAPI WinMain(
+		HINSTANCE hInstance, // Instance
+		HINSTANCE hPrevInstance, // Previous Instance
+		LPSTR lpCmdLine, // Command Line Parameters
+		int nCmdShow // Window Show State
+	)
+{
+	morda::Main(0, 0);
+	
+	return 0;
 }
 
