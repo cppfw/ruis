@@ -60,6 +60,8 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 	if(!this->hwnd){
 		throw morda::Exc("Failed to create a window");
 	}
+	
+	ShowWindow(this->hwnd, SW_SHOW);
 }
 
 
@@ -72,18 +74,102 @@ App::WindowWrapper::~WindowWrapper()throw(){
 
 
 
-App::DeviceContextWrapper::DeviceContextWrapper(const WindowWrapper& w, const App::WindowParams& wp) :
+App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w) :
 		w(w)
 {
-	//TODO:
+	this->hdc = GetDC(this->w.hwnd);
+	if(!this->hdc){
+		throw morda::Exc("Failed to create a OpenGL device context");
+	}
+
+	//TODO: make pixel format configurable via WindowParams
+	static	PIXELFORMATDESCRIPTOR pfd = {
+		sizeof(PIXELFORMATDESCRIPTOR),
+		1, // Version number
+		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+		PFD_TYPE_RGBA,
+		32, //color depth
+		0, 0, 0, 0, 0, 0, //color bits ignored
+		0, //no alpha buffer
+		0, //shift bit ignored
+		0, //no accumulation buffer
+		0, 0, 0, 0, //accumulation bits ignored
+		16, //16bit depth buffer
+		0, //no stencil buffer
+		0, //no auxiliary buffer
+		PFD_MAIN_PLANE, //main drawing layer
+		0, //reserved
+		0, 0, 0 //layer masks ignored
+	};
+	
+	GLuint pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
+	if(!pixelFormat){
+		this->Destroy();
+		throw morda::Exc("Could not find suitable pixel format");
+	}
+
+	if(!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
+		this->Destroy();
+		throw morda::Exc("Could not sent pixel format");
+	}
 }
 
 
 
-App::DeviceContextWrapper::~DeviceContextWrapper()throw(){
+App::DeviceContextWrapper::Destroy()throw(){
 	if(!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
 	}
+}
+
+
+
+App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
+	this->hrc = wglCreateContext(dc.hdc);
+	if(!this->hrc){
+		throw morda::Exc("Failed to create OpenGL rendering context");
+	}
+	
+	if(!wglMakeCurrent(dc.hdc, this->hrc)){
+		this->Destroy();
+		throw morda::Exc("Failed to activate OpenGL rendering context");
+	}
+	
+	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
+	
+	if(glewInit() != GLEW_OK){
+		this->Destroy();
+		throw morda::Exc("GLEW initialization failed");
+	}
+}
+
+
+
+App::GLContextWrapper::Destroy()throw(){
+	if(!wglMakeCurrent(NULL, NULL)){
+		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
+	}
+
+	if(!wglDeleteContext(this->hrc)){
+		ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
+	}
+}
+
+
+
+App::App(const WindowParams& requestedWindowParams) :
+		window(requestedWindowParams, windowClass),
+		deviceContext(requestedWindowParams, window),
+		glContext(deviceContext)
+{
+	this->UpdateWindowRect(
+			morda::Rect2f(
+					0,
+					0,
+					float(requestedWindowParams.dim.x),
+					float(requestedWindowParams.dim.y)
+				)
+		);
 }
 
 

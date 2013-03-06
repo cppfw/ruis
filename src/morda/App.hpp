@@ -115,7 +115,7 @@ private:
 
 	struct EGLConfigWrapper{
 		EGLConfig c;
-		EGLConfigWrapper(EGLDisplayWrapper& d);
+		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
 		~EGLConfigWrapper()throw(){}
 	} eglConfig;
 
@@ -154,7 +154,7 @@ private:
 
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
-		XVisualInfoWrapper(XDisplayWrapper& xDisplay);
+		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
 		~XVisualInfoWrapper()throw();
 	} xVisualInfo;
 
@@ -218,7 +218,7 @@ private:
 	struct WindowWrapper{
 		HWND hwnd;
 		
-		WindowWrapper(unsigned width, unsigned height, const WindowClassWrapper& wc);
+		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()throw();
 	} window;
 	
@@ -226,11 +226,26 @@ private:
 		const WindowWrapper& w;
 		HDC hdc;
 		
-		DeviceContextWrapper(const WindowWrapper& w, const WindowParams& wp);
-		~DeviceContextWrapper()throw();
+		DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w);
+		~DeviceContextWrapper()throw(){
+			this->Destroy();
+		}
+		
+	private:
+		void Destroy()throw();
 	} deviceContext;
 	
-	//TODO:
+	struct GLContextWrapper{
+		HGLRC hrc;
+		
+		GLContextWrapper(const DeviceContextWrapper& dc);
+		~GLContextWrapper()throw(){
+			this->Destroy();
+		}
+		
+	private:
+		void Destroy()throw();
+	} glContext;
 	
 #else
 #	error "unsupported OS"
