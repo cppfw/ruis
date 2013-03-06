@@ -611,7 +611,9 @@ void App::Exec(){
 	//So, render everything for the first time.
 	this->Render();
 	
-	while(!this->quitFlag){
+	bool quitFlag = false;
+	
+	while(quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
 		
 //		if(this->queue.CanRead()){
@@ -710,7 +712,7 @@ void App::Exec(){
 //						TRACE(<< "ClientMessage X event got" << std::endl)
 						//probably a WM_DELETE_WINDOW event
 						if(*XGetAtomName(this->xDisplay.d, event.xclient.message_type) == *"WM_PROTOCOLS"){
-							this->quitFlag = true;
+							quitFlag = true;
 						}
 						break;
 					default:
@@ -722,7 +724,7 @@ void App::Exec(){
 		
 		//TODO: render only if needed?
 		this->Render();
-	}//~while(!this->quitFlag)
+	}//~while(!quitFlag)
 	
 //	waitSet.Remove(&this->queue);
 	waitSet.Remove(&xew);
