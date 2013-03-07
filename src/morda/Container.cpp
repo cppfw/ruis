@@ -250,8 +250,10 @@ void Container::Remove(const ting::Ref<Widget>& w){
 
 //override
 ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
+	TRACE_AND_LOG(<< "Container::FindChildByName(): enter" << std::endl)
 	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
-//		TRACE(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
+		TRACE_AND_LOG(<< "hbjblib" << std::endl)
+		TRACE_AND_LOG(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
 		if((*c)->Name() == name){
 			return *c;
 		}

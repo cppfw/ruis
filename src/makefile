@@ -191,12 +191,21 @@ create-obj-dir:
 
 
 
+ifeq ($(platform), win32)
+    default: libmorda_main.a
+
+    libmorda_main.a: $(obj_dir)/morda/windows/main.o
+	@ar cr $@ $^
+endif
+
+
+
 #find all .cpp files and get an .o file name for it to get dependencies for this target
 $(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(srcs)))
 	@echo Linking $@...
 ifeq ($(platform), win32)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
-#	@$(compiler) $^ -o "$@" $(libs) $(linker_flags)
+	@$(compiler) $^ -o "$@" $(libs) $(linker_flags)
 else
 	@ar cr $(patsubst %.so,%.a,$@) $^
 	@$(compiler) $^ -o "$@".$(so_name) $(libs) $(linker_flags)
@@ -238,6 +247,8 @@ test:
 clean:
 ifeq ($(platform),win32)
 	@rm -rf $(name)
+	@rm -rf $(patsubst %.dll,%.a,$(name))
+	@rm -rf libmorda_main.a
 	@rm -rf obj
 else
 	@rm -rf $(name)

@@ -13,11 +13,7 @@ using namespace morda;
 
 namespace{
 
-App* app = 0;
-
 LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
-	ASSERT(app)
-
 	switch(msg){
 		case WM_ACTIVATE:
 			if (!HIWORD(wParam)){ //Check Minimization State
@@ -72,7 +68,7 @@ App::WindowClassWrapper::WindowClassWrapper(){
 	
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;//Redraw on resize, own DC for window
 	wc.lpfnWndProc = (WNDPROC) WndProc;
-	wc.cbClsExtra = 0;//no extra windw data
+	wc.cbClsExtra = 0;//no extra window data
 	wc.cbWndExtra = 0;//no extra window data
 	wc.hInstance = GetModuleHandle(NULL);// instance handle
 	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
@@ -97,6 +93,7 @@ App::WindowClassWrapper::~WindowClassWrapper()throw(){
 
 
 App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClassWrapper& wc){
+//	TRACE_AND_LOG(<< "App::WindowWrapper::WindowWrapper(): enter" << std::endl)
 	this->hwnd = CreateWindowEx(
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, //extended style
 			wc.name.c_str(),
@@ -117,6 +114,8 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 	}
 	
 	ShowWindow(this->hwnd, SW_SHOW);
+
+//	TRACE_AND_LOG(<< "App::WindowWrapper::WindowWrapper(): exit" << std::endl)
 }
 
 
@@ -132,10 +131,14 @@ App::WindowWrapper::~WindowWrapper()throw(){
 App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w) :
 		w(w)
 {
+//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): enter" << std::endl)
+
 	this->hdc = GetDC(this->w.hwnd);
 	if(!this->hdc){
 		throw morda::Exc("Failed to create a OpenGL device context");
 	}
+
+//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): DC created" << std::endl)
 
 	//TODO: make pixel format configurable via WindowParams
 	static	PIXELFORMATDESCRIPTOR pfd = {
@@ -163,10 +166,14 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 		throw morda::Exc("Could not find suitable pixel format");
 	}
 
+//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): pixel format chosen" << std::endl)
+
 	if(!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
 		this->Destroy();
 		throw morda::Exc("Could not sent pixel format");
 	}
+
+//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): pixel format set" << std::endl)
 }
 
 
@@ -180,17 +187,23 @@ void App::DeviceContextWrapper::Destroy()throw(){
 
 
 App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
+//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
+
 	this->hrc = wglCreateContext(dc.hdc);
 	if(!this->hrc){
 		throw morda::Exc("Failed to create OpenGL rendering context");
 	}
+
+//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
 	
 	if(!wglMakeCurrent(dc.hdc, this->hrc)){
 		this->Destroy();
 		throw morda::Exc("Failed to activate OpenGL rendering context");
 	}
+
+//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
 	
-	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
+	TRACE_AND_LOG(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 	
 	if(glewInit() != GLEW_OK){
 		this->Destroy();
@@ -252,6 +265,8 @@ void App::HideVirtualKeyboard()throw(){
 
 
 void App::Exec(){
+	TRACE(<< "App::Exec(): enter" << std::endl)
+
 	bool quitFlag = false;
 	
 	while(!quitFlag){
@@ -301,32 +316,3 @@ DWORD dwStart = GetTickCount();
 */
 
 }
-
-
-
-namespace morda{
-
-inline void Main(int argc, char** argv){
-	ting::Ptr<morda::App> a = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
-
-	app = a.operator->();
-
-	a->Exec();
-}
-
-}//~namespace
-
-
-
-int WINAPI WinMain(
-		HINSTANCE hInstance, // Instance
-		HINSTANCE hPrevInstance, // Previous Instance
-		LPSTR lpCmdLine, // Command Line Parameters
-		int nCmdShow // Window Show State
-	)
-{
-	morda::Main(0, 0);
-	
-	return 0;
-}
-
