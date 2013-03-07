@@ -14,8 +14,11 @@ endif
 includes := -I../../src
 
 ifeq ($(platform),win32)
-    libs := -L/usr/lib -L/usr/local/lib -lting ../../src/libmorda.a -lglew32 -lopengl32 -lstob -lpng -ljpeg -lz
-    includes += -I"../../../ting/src" -I/usr/include
+    libs := -lmingw32 -mwindows #these should go first, otherwise linker will complain about undefined reference to WinMain
+    libs += ../../src/libmorda_main.a ../../src/libmorda.dll
+    libs += -L/usr/lib -L/usr/local/lib
+    libs +=  -lglew32 -lopengl32
+    includes += -I/usr/include
 endif
 ifeq ($(platform),darwin)
     libs := 
@@ -41,7 +44,13 @@ default: $(binary_name)
 
 test: $(binary_name)
 	@echo running $^...
+ifeq ($(platform),win32)
+	@cp ../../src/libmorda.dll .
+	./$^
+endif
+ifeq ($(platform),linux)
 	@LD_LIBRARY_PATH=../../src ./$^
+endif
 
 $(binary_name): src/main.cpp
 	@echo Building $@...
