@@ -1,0 +1,11 @@
+#Step-by-step building morda in Windows
+
+=Step-by-step building morda in Windows using MinGW and MSYS=
+
+ # Download *mingw-get-inst-20120426.exe* from [http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/ here] and run it. Follow installation instructions bearing in mind the foolowing:
+   * When it asks about *Repository Catalogues* select "Use pre-packaged repository catalogues". Do NOT use "Download latest repository catalogues" because it will install g++ version 4.7 which is not stable yet and has bugs affecting *morda*.
+   * When it asks about which components to install, select the following:
+     # C Compiler
+     # C++ Compiler
+     # MSYS Basic System
+     # MinGW Developer ToolKit
