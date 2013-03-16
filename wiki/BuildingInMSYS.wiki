@@ -21,6 +21,12 @@
    * {{{cd /d/ting}}}
    * {{{make}}}
    * {{{make install}}}
+ # *stob*
+   * Check out *stob* sources to some directory, say */d/stob*:
+     * {{{svn co http://stob.googlecode.com/svn/trunk/ /d/stob}}}
+     * {{{cd /d/stob}}}
+     * {{{make}}}
+     * {{{make install}}}
  # *morda*
    * Check out *morda* sources to some directory, say */d/morda*:
      * {{{svn co http://morda.googlecode.com/svn/trunk/ /d/morda}}}
