@@ -43,7 +43,21 @@
    * {{{cp scripts/makefile.msys makefile}}}
    * {{{make}}}
    * {{{make install}}}
+ # *libjpeg*
+   * Download *libjpeg* sources from [http://ijg.org/files/jpegsrc.v9.tar.gz here] and untargz them to some directory, say */d*, then sources will reside in */d/jpeg-9*. Note, that it is important to download tar.gz package, NOT .zip one.
+   * {{{cd /d/jpeg-9}}}
+   * {{{./configure}}}
+   * {{{make}}}
+   * {{{make install}}}
+ # *libfreetype*
+   * Download *libfreetype* sources from [http://sourceforge.net/projects/freetype/files/freetype2/2.4.11/freetype-2.4.11.tar.gz/download here] and untargz them to some directory, say */d*, then sources will reside in */d/freetype-2.4.11*.
+   * {{{cd /d/freetype-2.4.11}}}
+   * {{{./configure}}}
+   * {{{make}}}
+   * {{{make install}}}
  # *morda*
    * Check out *morda* sources to some directory, say */d/morda*:
      * {{{svn co http://morda.googlecode.com/svn/trunk/ /d/morda}}}
-     * TODO:
+     * {{{cd /d/morda}}}
+     * {{{make}}}
+     * {{{make test}}}
