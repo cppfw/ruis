@@ -2,14 +2,26 @@
 
 =Step-by-step building morda in Windows using MinGW and MSYS=
 
- # Download *mingw-get-inst-20120426.exe* from [http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/ here] and run it. Follow installation instructions bearing in mind the following:
-   * When it asks about *Repository Catalogues* select "Use pre-packaged repository catalogues". Do NOT use "Download latest repository catalogues" because it will install g++ version 4.7 which is not stable yet and has bugs affecting *morda*.
-   * When it asks about which components to install, select the following:
-     # C Compiler
-     # C++ Compiler
-     # MSYS Basic System
-     # MinGW Developer !ToolKit
- # Download *SlikSVN* from [http://www.sliksvn.com/en/download here], choose the package depending on your system, 32 or 64 bit.
-    * Run the installer and follow instructions. Typical installation should be enough.
-    * Open MSYS console (Start menu/MinGW/MinGW Shell). Note, that disks *C:*, *D:* etc. are mounted as */c* and */d* and so on. In the home folder create file called *.bashrc* with the following contents: *export PATH=$PATH:/c/Program\ Files/!SlikSvn/bin*
- # 
+ # *MSYS*
+   * Download *mingw-get-inst-20120426.exe* from [http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/ here] and run it. Follow installation instructions bearing in mind the following:
+     * When it asks about *Repository Catalogues* select "Use pre-packaged repository catalogues". Do NOT use "Download latest repository catalogues" because it will install g++ version 4.7 which is not stable yet and has bugs affecting *morda*.
+     * When it asks about which components to install, select the following:
+       * C Compiler
+       * C++ Compiler
+       * MSYS Basic System
+       * MinGW Developer !ToolKit
+ # *SlikSVN*
+   * Download *SlikSVN* from [http://www.sliksvn.com/en/download here], choose the package depending on your system, 32 or 64 bit.
+   * Run the installer and follow instructions. Typical installation should be enough.
+   * Open MSYS console (Start menu/MinGW/MinGW Shell). Note, that disks *C:*, *D:* etc. are mounted as */c* and */d* and so on. In the home folder create file called *.bashrc* with the following contents:
+     * {{{export PATH=$PATH:/c/Program\ Files/SlikSvn/bin}}}
+ # *ting*
+   * Check out *ting* sources to some directory, say */d/ting*:
+     * {{{svn co http://ting.googlecode.com/svn/trunk/ /d/ting}}}
+   * {{{cd /d/ting}}}
+   * {{{make}}}
+   * {{{make install}}}
+ # *morda*
+   * Check out *morda* sources to some directory, say */d/morda*:
+     * {{{svn co http://morda.googlecode.com/svn/trunk/ /d/morda}}}
+     * TODO:
