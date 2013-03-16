@@ -8,5 +8,8 @@
      # C Compiler
      # C++ Compiler
      # MSYS Basic System
-     # MinGW Developer ToolKit
+     # MinGW Developer !ToolKit
+ # Download *SlikSVN* from [http://www.sliksvn.com/en/download here], choose the package depending on your system, 32 or 64 bit.
+    * Run the installer and follow instructions. Typical installation should be enough.
+    * Open MSYS console (Start menu/MinGW/MinGW Shell). Note, that disks *C:*, *D:* etc. are mounted as */c* and */d* and so on. In the home folder create file called *.bashrc* with the following contents: *export PATH=$PATH:/c/Program\ Files/!SlikSvn/bin*
  # 
