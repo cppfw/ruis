@@ -24,9 +24,25 @@
  # *stob*
    * Check out *stob* sources to some directory, say */d/stob*:
      * {{{svn co http://stob.googlecode.com/svn/trunk/ /d/stob}}}
-     * {{{cd /d/stob}}}
-     * {{{make}}}
-     * {{{make install}}}
+   * {{{cd /d/stob}}}
+   * {{{make}}}
+   * {{{make install}}}
+ # *GLEW*
+   * Download *GLEW* sources from [http://sourceforge.net/projects/glew/files/glew/1.9.0/glew-1.9.0.zip/download here] and unzip them to some directory, say */d*. Then the sources will reside in */d/glew-1.9.0*.
+   * {{{cd /d/glew-1.9.0}}}
+   * {{{make}}}
+   * {{{make install}}}
+ # *zlib*
+   * Download *zlib* sources from [http://zlib.net/zlib127.zip here] and unzip them to some directory, say */d*, then the sources will reside in */d/zlib-1.2.7*.
+   * {{{cd /d/zlib-1.2.7}}}
+   * {{{make -f win32/Makefile.gcc}}}
+   * {{{make -f win32/Makefile.gcc install INCLUDE_PATH=/usr/local/include LIBRARY_PATH=/usr/local/lib BINARY_PATH=/usr/local/lib}}}
+ # *libpng*
+   * Download *libpng* sources from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.0/lpng160.zip/download here] and unzip sources to some directory, say */d*, then sources will reside in */d/lpng160*.
+   * {{{cd /d/lpng160}}}
+   * {{{cp scripts/makefile.msys makefile}}}
+   * {{{make}}}
+   * {{{make install}}}
  # *morda*
    * Check out *morda* sources to some directory, say */d/morda*:
      * {{{svn co http://morda.googlecode.com/svn/trunk/ /d/morda}}}
