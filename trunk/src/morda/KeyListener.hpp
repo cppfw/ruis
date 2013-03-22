@@ -43,6 +43,7 @@ namespace morda{
 namespace key{
 
 enum Key{
+	UNKNOWN,
 	SPACE,
 	ENTER,
 	ZERO,
