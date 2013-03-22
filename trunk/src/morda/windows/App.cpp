@@ -143,7 +143,7 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 	//TODO: make pixel format configurable via WindowParams
 	static	PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),
-		1, // Version number
+		1, // Version number of the structure, should be 1
 		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
 		PFD_TYPE_RGBA,
 		32, //color depth
