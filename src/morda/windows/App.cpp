@@ -12,6 +12,271 @@ using namespace morda;
 
 
 
+namepsace{
+
+const key::Key keyCodeMap[ting::u8(-1) + 1] = {
+	key::SPACE, //Undefined
+	key::SPACE, //VK_LBUTTON
+	key::SPACE, //VK_RBUTTON
+	key::SPACE, //VK_CANCEL
+	key::SPACE, //VK_MBUTTON
+	key::SPACE, //VK_XBUTTON1, 5
+	key::SPACE, //VK_XBUTTON2
+	key::SPACE, //Undefined
+	key::BACKSPACE, //VK_BACK = backspace key
+	key::TAB, //VK_TAB
+	key::SPACE, //Reserved, 10
+	key::SPACE, //Reserved
+	key::SPACE, //VK_CLEAR = clear key???
+	key::ENTER, //VK_RETURN
+	key::SPACE, //Undefined
+	key::SPACE, //Undefined, 15
+	key::LEFT_SHIFT, //VK_SHIFT
+	key::LEFT_CONTROL, //VK_CONTROL
+	key::LEFT_ALT, //VK_MENU = alt key
+	key::PAUSE, //VK_PAUSE
+	key::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
+	key::SPACE, //VK_KANA, VK_HANGUEL, VK_HANGUL
+	key::SPACE, //Undefined
+	key::SPACE, //VK_JUNJA
+	key::SPACE, //VK_FINAL
+	key::SPACE, //VK_HANJA, VK_KANJI, 25
+	key::SPACE, //Undefined
+	key::ESCAPE, //VK_ESCAPE
+	key::SPACE, //VK_CONVERT
+	key::SPACE, //VK_NONCONVERT
+	key::SPACE, //VK_ACCEPT, 30
+	key::SPACE, //VK_MODECHANGE
+	key::SPACE, //VK_SPACE = space bar key
+	key::PAGEUP, //VK_PRIOR = page up key
+	key::PAGEDOWN,//VK_NEXT = page down key
+	key::END, //VK_END, 35
+	key::HOME,//VK_HOME
+	key::LEFT,//VK_LEFT
+	key::UP, //VK_UP
+	key::RIGHT, //VK_RIGHT
+	key::DOWN, //VK_DOWN, 40
+	key::UNKNOWN, //VK_SELECT
+	key::UNKNOWN, //VK_PRINT
+	key::UNKNOWN, //VK_EXECUTE
+	key::PRINT_SCREEN,//VK_SNAPSHOT = print screen key
+	key::INSERT, //VK_INSERT, 45
+	key::DELETE, //VK_DELETE
+	key::UNKNOWN, //VK_HELP
+	key::ZERO, //0 key
+	key::ONE, //1 key
+	key::TWO, //2 key, 50
+	key::THREE, //3 key
+	key::FOUR, //4 key
+	key::FIVE, //5 key
+	key::SIX, //6 key
+	key::SEVEN, //7 key, 55
+	key::EIGHT, //8 key
+	key::NINE, //9 key
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //Undefined, 60
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //Undefined
+	key::LEFT_ALT,//64 //TODO:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	key::SPACE,//65
+	key::CAPSLOCK,//66
+	key::F1,//67
+	key::F2,//68
+	key::F3,//69
+	key::F4,//70
+	key::F5,//71
+	key::F6,//72
+	key::F7,//73
+	key::F8,//74
+	key::F9,//75
+	key::F10,//76
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::F11,//95
+	key::F12,//96
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::RIGHT_CONTROL,//105
+	key::SPACE,
+	key::PRINT_SCREEN,//107
+	key::RIGHT_ALT,//108
+	key::SPACE,
+	key::HOME,//110
+	key::UP,//111
+	key::PAGE_UP,//112
+	key::LEFT,//113
+	key::RIGHT,//114
+	key::END,//115
+	key::DOWN,//116
+	key::PAGE_DOWN,//117
+	key::INSERT,//118
+	key::DELETE,//119
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::PAUSE,//127
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::WINDOWS,//133
+	key::SPACE,
+	key::WINDOWS_MENU,//135
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE,
+	key::SPACE
+};
+
+}//~namespace
+
+
+
 namespace morda{
 
 bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres){
