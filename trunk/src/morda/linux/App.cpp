@@ -679,32 +679,23 @@ void App::Exec(){
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						if(this->rootContainer.IsNotValid()){
-							break;
-						}
-						this->rootContainer->OnMouseButtonDown(
-								morda::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+						this->HandleMouseButtonDown(
+								morda::Vec2f(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
 						break;
 					case ButtonRelease:
-						if(this->rootContainer.IsNotValid()){
-							break;
-						}
-						this->rootContainer->OnMouseButtonUp(
-								morda::Vec2f(event.xbutton.x, this->curWinRect.d.y - float(event.xbutton.y) - 1.0f),
+						this->HandleMouseButtonUp(
+								morda::Vec2f(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-						if(this->rootContainer.IsNotValid()){
-							break;
-						}
-						this->rootContainer->OnMouseMove(
-								morda::Vec2f(event.xmotion.x, this->curWinRect.d.y - float(event.xmotion.y) - 1.0f),
+						this->HandleMouseMove(
+								morda::Vec2f(event.xmotion.x, event.xmotion.y),
 								0
 							);
 						break;

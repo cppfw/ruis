@@ -3,6 +3,7 @@
 #include "../App.hpp"
 
 #include <windows.h>
+#include <windowsx.h>
 
 #include <ting/fs/FSFile.hpp>
 
@@ -36,6 +37,73 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 
 		case WM_CLOSE:
 			PostQuitMessage(0);
+			lres = 0;
+			return true;
+
+		case WM_MOUSEMOVE:
+			app.HandleMouseMove(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_LBUTTONDOWN:
+			app.HandleMouseButtonDown(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::LEFT,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_LBUTTONUP:
+			app.HandleMouseButtonUp(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::LEFT,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_MBUTTONDOWN:
+			app.HandleMouseButtonDown(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::MIDDLE,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_MBUTTONUP:
+			app.HandleMouseButtonUp(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::MIDDLE,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_RBUTTONDOWN:
+			app.HandleMouseButtonDown(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::RIGHT,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_RBUTTONUP:
+			app.HandleMouseButtonUp(
+					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					Widget::RIGHT,
+					0
+				);
+			lres = 0;
+			return true;
+
+		case WM_MOUSEWHEEL:
+			//TODO:
 			lres = 0;
 			return true;
 
@@ -129,8 +197,8 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 			0, //x
 			0, //y
-			wp.dim.x,
-			wp.dim.y,
+			wp.dim.x + 2 * GetSystemMetrics(SM_CXSIZEFRAME),
+			wp.dim.y + GetSystemMetrics(SM_CYCAPTION) + 2 * GetSystemMetrics(SM_CYSIZEFRAME),
 			NULL, //no parent window
 			NULL, //no menu
 			GetModuleHandle(NULL),
