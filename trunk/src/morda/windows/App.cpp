@@ -11,9 +11,11 @@ using namespace morda;
 
 
 
-namespace{
+namespace morda{
 
-LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
+bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres){
+	morda::App& app = morda::App::Inst();
+
 	switch(msg){
 		case WM_ACTIVATE:
 			if (!HIWORD(wParam)){ //Check Minimization State
@@ -21,7 +23,8 @@ LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			}else{
 				//window is no longer active
 			}
-			return 0;
+			lres = 0;
+			return true;
 
 		case WM_SYSCOMMAND:
 			switch(wParam){
@@ -33,26 +36,51 @@ LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 		case WM_CLOSE:
 			PostQuitMessage(0);
-			return 0;
+			lres = 0;
+			return true;
 
 		case WM_KEYDOWN:
 			//TODO:
 			//keys[wParam] = TRUE;					// If So, Mark It As TRUE
-			return 0;
+			lres = 0;
+			return true;
 
 		case WM_KEYUP:
 			//TODO:
 			//keys[wParam] = FALSE;					// If So, Mark It As FALSE
-			return 0;
+			lres = 0;
+			return true;
+		
+		case WM_PAINT:
+			app.Render();
+			lres = 0;
+			return true;
 
 		case WM_SIZE:
 			//TODO: resize GL
 			//ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  // LoWord=Width, HiWord=Height
-			return 0;
+			lres = 0;
+			return true;
 			
 		default:
 			break;
 	}
+	return false;
+}
+
+}//~namespace
+
+
+
+namespace{
+
+
+LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
+	LRESULT res;
+	if(morda::HandleWindowMessage(hwnd, msg, wParam, lParam, res)){
+		return res;
+	}
+	
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
@@ -228,7 +256,8 @@ void App::GLContextWrapper::Destroy()throw(){
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
-		glContext(deviceContext)
+		glContext(deviceContext),
+		curWinRect(0, 0, -1, -1)
 {
 	this->UpdateWindowRect(
 			morda::Rect2f(
