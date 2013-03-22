@@ -133,11 +133,15 @@ private:
 		~EGLContextWrapper()throw();
 	} eglContext;
 
+#	ifdef __ANDROID__
+
 	friend void UpdateWindowRect(App& app, const morda::Rect2f& rect);
 	friend void Render(App& app);
 	friend ting::u32 Update(App& app);
 	friend void HandleInputEvents();
 	friend void HandleCharacterInputEvent(ting::Array<ting::u32> chars);
+
+#	endif
 
 	inline void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
@@ -251,6 +255,7 @@ private:
 
 	friend void Main(int argc, char** argv);
 	void Exec();
+	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 	
 #else
 #	error "unsupported OS"
