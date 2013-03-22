@@ -120,7 +120,9 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 		
 		case WM_PAINT:
-			app.Render();
+			//we will redraw anyway on every cycle
+			//app.Render();
+			ValidateRect(hwnd, NULL);//This is to tell Windows that we have redrawn contents and WM_PAINT should go away from message queue.
 			lres = 0;
 			return true;
 
@@ -362,22 +364,28 @@ void App::HideVirtualKeyboard()throw(){
 
 
 void App::Exec(){
-	TRACE(<< "App::Exec(): enter" << std::endl)
+//	TRACE(<< "App::Exec(): enter" << std::endl)
 
 	bool quitFlag = false;
 	
 	while(!quitFlag){
+		ting::u32 timeout = this->updater.Update();
+		TRACE(<< "timeout = " << timeout << std::endl)
+
 		DWORD status = MsgWaitForMultipleObjectsEx(
 				0,
 				NULL,
-				this->updater.Update(),
+				timeout,
 				QS_ALLINPUT,
 				MWMO_INPUTAVAILABLE
 			);
 
+		TRACE(<< "msg" << std::endl)
+
 		if(status == WAIT_OBJECT_0){
 			MSG msg;
 			while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
+				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
 				if(msg.message == WM_QUIT){
 					quitFlag = true;
 					break;
@@ -386,30 +394,8 @@ void App::Exec(){
 				DispatchMessage(&msg);
 			}
 		}
+
+		this->Render();
+		TRACE(<< "loop" << std::endl)
 	}
-
-/*
-//TODO: remove
-DWORD dwStart = GetTickCount();
- DWORD dwElapsed;
- while ((dwElapsed = GetTickCount() - dwStart) < dwTimeout) {
-  DWORD dwStatus = MsgWaitForMultipleObjectsEx(0, NULL,
-                    dwTimeout - dwElapsed, QS_ALLINPUT,
-                    MWFMO_WAITANY | MWMO_INPUTAVAILABLE);
-  if (dwStatus == WAIT_OBJECT_0) {
-   MSG msg;
-   while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-    if (msg.message == WM_QUIT) {
-     PostQuitMessage((int)msg.wParam);
-     return FALSE; // abandoned due to WM_QUIT
-    }
-    if (!CallMsgFilter(&msg, MSGF_SLEEPMSG)) {
-     TranslateMessage(&msg);
-     DispatchMessage(&msg);
-    }
-   }
-  }//~if
- }
-*/
-
 }

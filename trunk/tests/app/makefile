@@ -14,7 +14,8 @@ endif
 includes := -I../../src
 
 ifeq ($(platform),win32)
-    libs := -lmingw32 -mwindows #these should go first, otherwise linker will complain about undefined reference to WinMain
+    libs := -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
+#    libs := -mwindows #if we do not want console output, e.g. in production version
     libs += ../../src/libmorda_main.a ../../src/libmorda.dll
     libs += -L/usr/lib -L/usr/local/lib
     libs +=  -lglew32 -lopengl32
