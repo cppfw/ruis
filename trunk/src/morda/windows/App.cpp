@@ -370,7 +370,7 @@ void App::Exec(){
 	
 	while(!quitFlag){
 		ting::u32 timeout = this->updater.Update();
-		TRACE(<< "timeout = " << timeout << std::endl)
+//		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(
 				0,
@@ -380,12 +380,12 @@ void App::Exec(){
 				MWMO_INPUTAVAILABLE
 			);
 
-		TRACE(<< "msg" << std::endl)
+//		TRACE(<< "msg" << std::endl)
 
 		if(status == WAIT_OBJECT_0){
 			MSG msg;
 			while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
-				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
+//				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
 				if(msg.message == WM_QUIT){
 					quitFlag = true;
 					break;
@@ -396,6 +396,6 @@ void App::Exec(){
 		}
 
 		this->Render();
-		TRACE(<< "loop" << std::endl)
+//		TRACE(<< "loop" << std::endl)
 	}
 }
