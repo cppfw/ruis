@@ -57,8 +57,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_SIZE:
-			//TODO: resize GL
-			//ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  // LoWord=Width, HiWord=Height
+			//resize GL, LoWord=Width, HiWord=Height
+			app.UpdateWindowRect(morda::Rect2f(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam)))); 
 			lres = 0;
 			return true;
 			
