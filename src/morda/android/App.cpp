@@ -307,262 +307,262 @@ public:
 
 //TODO: this mapping is not final
 const key::Key keyCodeMap[ting::u8(-1) + 1] = {
-	key::SPACE,//AKEYCODE_UNKNOWN
-	key::LEFT,//AKEYCODE_SOFT_LEFT
-	key::RIGHT,//AKEYCODE_SOFT_RIGHT
-	key::HOME,//AKEYCODE_HOME
-	key::ESCAPE,//AKEYCODE_BACK
-	key::F11,//AKEYCODE_CALL
-	key::F12,//AKEYCODE_ENDCALL
-	key::ZERO,//AKEYCODE_0
-	key::ONE,//AKEYCODE_1
-	key::TWO,//AKEYCODE_2
-	key::THREE,//AKEYCODE_3
-	key::FOUR,//AKEYCODE_4
-	key::FIVE,//AKEYCODE_5
-	key::SIX,//AKEYCODE_6
-	key::SEVEN,//AKEYCODE_7
-	key::EIGHT,//AKEYCODE_8
-	key::NINE,//AKEYCODE_9
-	key::SPACE,//AKEYCODE_STAR
-	key::SPACE,//AKEYCODE_POUND
-	key::UP,//AKEYCODE_DPAD_UP
-	key::DOWN,//AKEYCODE_DPAD_DOWN
-	key::LEFT,//AKEYCODE_DPAD_LEFT
-	key::RIGHT,//AKEYCODE_DPAD_RIGHT
-	key::ENTER,//AKEYCODE_DPAD_CENTER
-	key::PAGE_UP,//AKEYCODE_VOLUME_UP
-	key::PAGE_DOWN,//AKEYCODE_VOLUME_DOWN
-	key::F10,//AKEYCODE_POWER
-	key::F9,//AKEYCODE_CAMERA
-	key::BACKSPACE,//AKEYCODE_CLEAR
-	key::A,//AKEYCODE_A
-	key::B,//AKEYCODE_B
-	key::C,//AKEYCODE_C
-	key::D,//AKEYCODE_D
-	key::E,//AKEYCODE_E
-	key::F,//AKEYCODE_F
-	key::G,//AKEYCODE_G
-	key::H,//AKEYCODE_H
-	key::I,//AKEYCODE_I
-	key::G,//AKEYCODE_J
-	key::K,//AKEYCODE_K
-	key::L,//AKEYCODE_L
-	key::M,//AKEYCODE_M
-	key::N,//AKEYCODE_N
-	key::O,//AKEYCODE_O
-	key::P,//AKEYCODE_P
-	key::Q,//AKEYCODE_Q
-	key::R,//AKEYCODE_R
-	key::S,//AKEYCODE_S
-	key::T,//AKEYCODE_T
-	key::U,//AKEYCODE_U
-	key::V,//AKEYCODE_V
-	key::W,//AKEYCODE_W
-	key::X,//AKEYCODE_X
-	key::Y,//AKEYCODE_Y
-	key::Z,//AKEYCODE_Z
-	key::V,//AKEYCODE_COMMA
-	key::B,//AKEYCODE_PERIOD
-	key::N,//AKEYCODE_ALT_LEFT
-	key::M,//AKEYCODE_ALT_RIGHT
-	key::LEFT_SHIFT,//AKEYCODE_SHIFT_LEFT
-	key::RIGHT_SHIFT,//AKEYCODE_SHIFT_RIGHT
-	key::TAB,//AKEYCODE_TAB
-	key::SPACE,//AKEYCODE_SPACE
-	key::LEFT_CONTROL,//AKEYCODE_SYM
-	key::F8,//AKEYCODE_EXPLORER
-	key::F7,//AKEYCODE_ENVELOPE
-	key::ENTER,//AKEYCODE_ENTER
-	key::DELETE,//AKEYCODE_DEL
-	key::F6,//AKEYCODE_GRAVE
-	key::MINUS,//AKEYCODE_MINUS
-	key::EQUALS,//AKEYCODE_EQUALS
-	key::LEFT_SQUARE_BRACKET,//AKEYCODE_LEFT_BRACKET
-	key::RIGHT_SQUARE_BRACKET,//AKEYCODE_RIGHT_BRACKET
-	key::BACKSLASH,//AKEYCODE_BACKSLASH
-	key::SEMICOLON,//AKEYCODE_SEMICOLON
-	key::APOSTROPHE,//AKEYCODE_APOSTROPHE
-	key::SLASH,//AKEYCODE_SLASH
-	key::TICK,//AKEYCODE_AT
-	key::F5,//AKEYCODE_NUM
-	key::F4,//AKEYCODE_HEADSETHOOK
-	key::F3,//AKEYCODE_FOCUS (camera focus)
-	key::F2,//AKEYCODE_PLUS
-	key::F1,//AKEYCODE_MENU
-	key::END,//AKEYCODE_NOTIFICATION
-	key::RIGHT_CONTROL,//AKEYCODE_SEARCH
-	key::SPACE,//AKEYCODE_MEDIA_PLAY_PAUSE
-	key::SPACE,//AKEYCODE_MEDIA_STOP
-	key::SPACE,//AKEYCODE_MEDIA_NEXT
-	key::SPACE,//AKEYCODE_MEDIA_PREVIOUS
-	key::SPACE,//AKEYCODE_MEDIA_REWIND
-	key::SPACE,//AKEYCODE_MEDIA_FAST_FORWARD
-	key::SPACE,//AKEYCODE_MUTE
-	key::PAGE_UP,//AKEYCODE_PAGE_UP
-	key::PAGE_DOWN,//AKEYCODE_PAGE_DOWN
-	key::SPACE,//AKEYCODE_PICTSYMBOLS
-	key::CAPSLOCK,//AKEYCODE_SWITCH_CHARSET
-	key::SPACE,//AKEYCODE_BUTTON_A
-	key::SPACE,//AKEYCODE_BUTTON_B
-	key::SPACE,//AKEYCODE_BUTTON_C
-	key::SPACE,//AKEYCODE_BUTTON_X
-	key::SPACE,//AKEYCODE_BUTTON_Y
-	key::SPACE,//AKEYCODE_BUTTON_Z
-	key::SPACE,//AKEYCODE_BUTTON_L1
-	key::SPACE,//AKEYCODE_BUTTON_R1
-	key::SPACE,//AKEYCODE_BUTTON_L2
-	key::SPACE,//AKEYCODE_BUTTON_R2
-	key::SPACE,//AKEYCODE_BUTTON_THUMBL
-	key::SPACE,//AKEYCODE_BUTTON_THUMBR
-	key::SPACE,//AKEYCODE_BUTTON_START
-	key::SPACE,//AKEYCODE_BUTTON_SELECT
-	key::SPACE,//AKEYCODE_BUTTON_MODE
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE,//
-	key::SPACE //
+	key::UNKNOWN, //AKEYCODE_UNKNOWN
+	key::LEFT, //AKEYCODE_SOFT_LEFT
+	key::RIGHT, //AKEYCODE_SOFT_RIGHT
+	key::HOME, //AKEYCODE_HOME
+	key::ESCAPE, //AKEYCODE_BACK
+	key::F11, //AKEYCODE_CALL
+	key::F12, //AKEYCODE_ENDCALL
+	key::ZERO, //AKEYCODE_0
+	key::ONE, //AKEYCODE_1
+	key::TWO, //AKEYCODE_2
+	key::THREE, //AKEYCODE_3
+	key::FOUR, //AKEYCODE_4
+	key::FIVE, //AKEYCODE_5
+	key::SIX, //AKEYCODE_6
+	key::SEVEN, //AKEYCODE_7
+	key::EIGHT, //AKEYCODE_8
+	key::NINE, //AKEYCODE_9
+	key::UNKNOWN, //AKEYCODE_STAR
+	key::UNKNOWN, //AKEYCODE_POUND
+	key::UP, //AKEYCODE_DPAD_UP
+	key::DOWN, //AKEYCODE_DPAD_DOWN
+	key::LEFT, //AKEYCODE_DPAD_LEFT
+	key::RIGHT, //AKEYCODE_DPAD_RIGHT
+	key::ENTER, //AKEYCODE_DPAD_CENTER
+	key::PAGE_UP, //AKEYCODE_VOLUME_UP
+	key::PAGE_DOWN, //AKEYCODE_VOLUME_DOWN
+	key::F10, //AKEYCODE_POWER
+	key::F9, //AKEYCODE_CAMERA
+	key::BACKSPACE, //AKEYCODE_CLEAR
+	key::A, //AKEYCODE_A
+	key::B, //AKEYCODE_B
+	key::C, //AKEYCODE_C
+	key::D, //AKEYCODE_D
+	key::E, //AKEYCODE_E
+	key::F, //AKEYCODE_F
+	key::G, //AKEYCODE_G
+	key::H, //AKEYCODE_H
+	key::I, //AKEYCODE_I
+	key::G, //AKEYCODE_J
+	key::K, //AKEYCODE_K
+	key::L, //AKEYCODE_L
+	key::M, //AKEYCODE_M
+	key::N, //AKEYCODE_N
+	key::O, //AKEYCODE_O
+	key::P, //AKEYCODE_P
+	key::Q, //AKEYCODE_Q
+	key::R, //AKEYCODE_R
+	key::S, //AKEYCODE_S
+	key::T, //AKEYCODE_T
+	key::U, //AKEYCODE_U
+	key::V, //AKEYCODE_V
+	key::W, //AKEYCODE_W
+	key::X, //AKEYCODE_X
+	key::Y, //AKEYCODE_Y
+	key::Z, //AKEYCODE_Z
+	key::V, //AKEYCODE_COMMA
+	key::B, //AKEYCODE_PERIOD
+	key::N, //AKEYCODE_ALT_LEFT
+	key::M, //AKEYCODE_ALT_RIGHT
+	key::LEFT_SHIFT, //AKEYCODE_SHIFT_LEFT
+	key::RIGHT_SHIFT, //AKEYCODE_SHIFT_RIGHT
+	key::TAB, //AKEYCODE_TAB
+	key::SPACE, //AKEYCODE_SPACE
+	key::LEFT_CONTROL, //AKEYCODE_SYM
+	key::F8, //AKEYCODE_EXPLORER
+	key::F7, //AKEYCODE_ENVELOPE
+	key::ENTER, //AKEYCODE_ENTER
+	key::DELETE, //AKEYCODE_DEL
+	key::F6, //AKEYCODE_GRAVE
+	key::MINUS, //AKEYCODE_MINUS
+	key::EQUALS, //AKEYCODE_EQUALS
+	key::LEFT_SQUARE_BRACKET, //AKEYCODE_LEFT_BRACKET
+	key::RIGHT_SQUARE_BRACKET, //AKEYCODE_RIGHT_BRACKET
+	key::BACKSLASH, //AKEYCODE_BACKSLASH
+	key::SEMICOLON, //AKEYCODE_SEMICOLON
+	key::APOSTROPHE, //AKEYCODE_APOSTROPHE
+	key::SLASH, //AKEYCODE_SLASH
+	key::TICK, //AKEYCODE_AT
+	key::F5, //AKEYCODE_NUM
+	key::F4, //AKEYCODE_HEADSETHOOK
+	key::F3, //AKEYCODE_FOCUS (camera focus)
+	key::F2, //AKEYCODE_PLUS
+	key::F1, //AKEYCODE_MENU
+	key::END, //AKEYCODE_NOTIFICATION
+	key::RIGHT_CONTROL, //AKEYCODE_SEARCH
+	key::UNKNOWN, //AKEYCODE_MEDIA_PLAY_PAUSE
+	key::UNKNOWN, //AKEYCODE_MEDIA_STOP
+	key::UNKNOWN, //AKEYCODE_MEDIA_NEXT
+	key::UNKNOWN, //AKEYCODE_MEDIA_PREVIOUS
+	key::UNKNOWN, //AKEYCODE_MEDIA_REWIND
+	key::UNKNOWN, //AKEYCODE_MEDIA_FAST_FORWARD
+	key::UNKNOWN, //AKEYCODE_MUTE
+	key::PAGE_UP, //AKEYCODE_PAGE_UP
+	key::PAGE_DOWN, //AKEYCODE_PAGE_DOWN
+	key::UNKNOWN, //AKEYCODE_PICTSYMBOLS
+	key::CAPSLOCK, //AKEYCODE_SWITCH_CHARSET
+	key::UNKNOWN, //AKEYCODE_BUTTON_A
+	key::UNKNOWN, //AKEYCODE_BUTTON_B
+	key::UNKNOWN, //AKEYCODE_BUTTON_C
+	key::UNKNOWN, //AKEYCODE_BUTTON_X
+	key::UNKNOWN, //AKEYCODE_BUTTON_Y
+	key::UNKNOWN, //AKEYCODE_BUTTON_Z
+	key::UNKNOWN, //AKEYCODE_BUTTON_L1
+	key::UNKNOWN, //AKEYCODE_BUTTON_R1
+	key::UNKNOWN, //AKEYCODE_BUTTON_L2
+	key::UNKNOWN, //AKEYCODE_BUTTON_R2
+	key::UNKNOWN, //AKEYCODE_BUTTON_THUMBL
+	key::UNKNOWN, //AKEYCODE_BUTTON_THUMBR
+	key::UNKNOWN, //AKEYCODE_BUTTON_START
+	key::UNKNOWN, //AKEYCODE_BUTTON_SELECT
+	key::UNKNOWN, //AKEYCODE_BUTTON_MODE
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN, //
+	key::UNKNOWN  //
 };
 
 
