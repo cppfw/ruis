@@ -12,44 +12,44 @@ using namespace morda;
 
 
 
-namepsace{
+namespace{
 
 const key::Key keyCodeMap[ting::u8(-1) + 1] = {
-	key::SPACE, //Undefined
-	key::SPACE, //VK_LBUTTON
-	key::SPACE, //VK_RBUTTON
-	key::SPACE, //VK_CANCEL
-	key::SPACE, //VK_MBUTTON
-	key::SPACE, //VK_XBUTTON1, 5
-	key::SPACE, //VK_XBUTTON2
-	key::SPACE, //Undefined
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //VK_LBUTTON
+	key::UNKNOWN, //VK_RBUTTON
+	key::UNKNOWN, //VK_CANCEL
+	key::UNKNOWN, //VK_MBUTTON
+	key::UNKNOWN, //VK_XBUTTON1, 5
+	key::UNKNOWN, //VK_XBUTTON2
+	key::UNKNOWN, //Undefined
 	key::BACKSPACE, //VK_BACK = backspace key
 	key::TAB, //VK_TAB
-	key::SPACE, //Reserved, 10
-	key::SPACE, //Reserved
-	key::SPACE, //VK_CLEAR = clear key???
+	key::UNKNOWN, //Reserved, 10
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //VK_CLEAR = clear key???
 	key::ENTER, //VK_RETURN
-	key::SPACE, //Undefined
-	key::SPACE, //Undefined, 15
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //Undefined, 15
 	key::LEFT_SHIFT, //VK_SHIFT
 	key::LEFT_CONTROL, //VK_CONTROL
 	key::LEFT_ALT, //VK_MENU = alt key
 	key::PAUSE, //VK_PAUSE
 	key::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
-	key::SPACE, //VK_KANA, VK_HANGUEL, VK_HANGUL
-	key::SPACE, //Undefined
-	key::SPACE, //VK_JUNJA
-	key::SPACE, //VK_FINAL
-	key::SPACE, //VK_HANJA, VK_KANJI, 25
-	key::SPACE, //Undefined
+	key::UNKNOWN, //VK_KANA, VK_HANGUEL, VK_HANGUL
+	key::UNKNOWN, //Undefined
+	key::UNKNOWN, //VK_JUNJA
+	key::UNKNOWN, //VK_FINAL
+	key::UNKNOWN, //VK_HANJA, VK_KANJI, 25
+	key::UNKNOWN, //Undefined
 	key::ESCAPE, //VK_ESCAPE
-	key::SPACE, //VK_CONVERT
-	key::SPACE, //VK_NONCONVERT
-	key::SPACE, //VK_ACCEPT, 30
-	key::SPACE, //VK_MODECHANGE
+	key::UNKNOWN, //VK_CONVERT
+	key::UNKNOWN, //VK_NONCONVERT
+	key::UNKNOWN, //VK_ACCEPT, 30
+	key::UNKNOWN, //VK_MODECHANGE
 	key::SPACE, //VK_SPACE = space bar key
-	key::PAGEUP, //VK_PRIOR = page up key
-	key::PAGEDOWN,//VK_NEXT = page down key
+	key::PAGE_UP, //VK_PRIOR = page up key
+	key::PAGE_DOWN,//VK_NEXT = page down key
 	key::END, //VK_END, 35
 	key::HOME,//VK_HOME
 	key::LEFT,//VK_LEFT
@@ -79,198 +79,198 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 	key::UNKNOWN, //Undefined
 	key::UNKNOWN, //Undefined
 	key::UNKNOWN, //Undefined
-	key::LEFT_ALT,//64 //TODO:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	key::SPACE,//65
-	key::CAPSLOCK,//66
-	key::F1,//67
-	key::F2,//68
-	key::F3,//69
-	key::F4,//70
-	key::F5,//71
-	key::F6,//72
-	key::F7,//73
-	key::F8,//74
-	key::F9,//75
-	key::F10,//76
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::F11,//95
-	key::F12,//96
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::RIGHT_CONTROL,//105
-	key::SPACE,
-	key::PRINT_SCREEN,//107
-	key::RIGHT_ALT,//108
-	key::SPACE,
-	key::HOME,//110
-	key::UP,//111
-	key::PAGE_UP,//112
-	key::LEFT,//113
-	key::RIGHT,//114
-	key::END,//115
-	key::DOWN,//116
-	key::PAGE_DOWN,//117
-	key::INSERT,//118
-	key::DELETE,//119
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::PAUSE,//127
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::WINDOWS,//133
-	key::SPACE,
-	key::WINDOWS_MENU,//135
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE,
-	key::SPACE
+	key::UNKNOWN, //Undefined
+	key::A, //A key, 65
+	key::B, //B key
+	key::C, //C key
+	key::D, //D key
+	key::E, //E key
+	key::F, //F key, 70
+	key::G, //G key
+	key::H, //H key
+	key::I, //I key
+	key::J, //J key
+	key::K, //K key, 75
+	key::L, //L key
+	key::M, //M key
+	key::N, //N key
+	key::O, //O key
+	key::P, //P key, 80
+	key::Q, //Q key
+	key::R, //R key
+	key::S, //S key
+	key::T, //T key
+	key::U, //U key, 85
+	key::V, //V key
+	key::W, //W key
+	key::X, //X key
+	key::Y, //Y key
+	key::Z, //Z key, 90
+	key::WINDOWS, //VK_LWIN = left windows key
+	key::WINDOWS, //VK_RWIN = right windows key
+	key::UNKNOWN, //VK_APPS = applications key
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //VK_SLEEP = computer sleep key, 95
+	key::ZERO, //VK_NUMPAD0 = numeric keypad 0 key
+	key::ONE, //VK_NUMPAD1 = numeric keypad 1 key
+	key::TWO, //VK_NUMPAD2 = numeric keypad 2 key
+	key::THREE, //VK_NUMPAD3 = numeric keypad 3 key
+	key::FOUR, //VK_NUMPAD4 = numeric keypad 4 key, 100
+	key::FIVE, //VK_NUMPAD5 = numeric keypad 5 key
+	key::SIX, //VK_NUMPAD6 = numeric keypad 6 key
+	key::SEVEN, //VK_NUMPAD7 = numeric keypad 7 key
+	key::EIGHT, //VK_NUMPAD8 = numeric keypad 8 key
+	key::NINE, //VK_NUMPAD9 = numeric keypad 9 key, 105
+	key::UNKNOWN, //VK_MULTIPLY = multiply key
+	key::UNKNOWN, //VK_ADD
+	key::UNKNOWN, //VK_SEPARATOR
+	key::UNKNOWN, //VK_SUBTRACT
+	key::UNKNOWN, //VK_DECIMAL, 110
+	key::UNKNOWN, //VK_DIVIDE
+	key::F1, //VK_F1
+	key::F2, //VK_F2
+	key::F3, //VK_F3
+	key::F4, //VK_F4, 115
+	key::F5, //VK_F5
+	key::F6, //VK_F6
+	key::F7, //VK_F7
+	key::F8, //VK_F8
+	key::F9, //VK_F9, 120
+	key::F10, //VK_F10
+	key::F11, //VK_F11
+	key::F12, //VK_F12
+	key::UNKNOWN, //VK_F13
+	key::UNKNOWN, //VK_F14, 125
+	key::UNKNOWN, //VK_F15
+	key::UNKNOWN, //VK_F16
+	key::UNKNOWN, //VK_F17
+	key::UNKNOWN, //VK_F18
+	key::UNKNOWN, //VK_F19, 130
+	key::UNKNOWN, //VK_F20
+	key::UNKNOWN, //VK_F21
+	key::UNKNOWN, //VK_F22
+	key::UNKNOWN, //VK_F23
+	key::UNKNOWN, //VK_F24, 135
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned, 140
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //VK_NUMLOCK
+	key::UNKNOWN, //VK_SCROLL = scroll lock key, 145
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific, 150
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned, 155
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::LEFT_SHIFT, //VK_LSHIFT, 160
+	key::RIGHT_SHIFT, //VK_RSHIFT
+	key::LEFT_CONTROL, //VK_LCONTROL
+	key::RIGHT_CONTROL, //VK_RCONTROL
+	key::WINDOWS_MENU, //VK_LMENU = left menu key
+	key::WINDOWS_MENU, //VK_RMENU, 165
+	key::UNKNOWN, //VK_BROWSER_BACK
+	key::UNKNOWN, //VK_BROWSER_FORWARD
+	key::UNKNOWN, //VK_BROWSER_REFRESH
+	key::UNKNOWN, //VK_BROWSER_STOP
+	key::UNKNOWN, //VK_BROWSER_SEARCH, 170
+	key::UNKNOWN, //VK_BROWSER_FAVORITES
+	key::UNKNOWN, //VK_BROWSER_HOME
+	key::UNKNOWN, //VK_VOLUME_MUTE
+	key::UNKNOWN, //VK_VOLUME_DOWN
+	key::UNKNOWN, //VK_VOLUME_UP, 175
+	key::UNKNOWN, //VK_MEDIA_NEXT_TRACK
+	key::UNKNOWN, //VK_MEDIA_PREV_TRACK
+	key::UNKNOWN, //VK_MEDIA_STOP
+	key::UNKNOWN, //VK_MEDIA_PLAY_PAUSE
+	key::UNKNOWN, //VK_LAUNCH_MAIL, 180
+	key::UNKNOWN, //VK_LAUNCH_MEDIA_SELECT
+	key::UNKNOWN, //VK_LAUNCH_APP1
+	key::UNKNOWN, //VK_LAUNCH_APP2
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 185
+	key::UNKNOWN, //VK_OEM_1
+	key::UNKNOWN, //VK_OEM_PLUS
+	key::UNKNOWN, //VK_OEM_COMMA
+	key::UNKNOWN, //VK_OEM_MINUS
+	key::UNKNOWN, //VK_OEM_PERIOD, 190
+	key::UNKNOWN, //VK_OEM_2
+	key::UNKNOWN, //VK_OEM_3
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 195
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 200
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 205
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 210
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //Reserved, 215
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //VK_OEM_4
+	key::UNKNOWN, //VK_OEM_5, 220
+	key::UNKNOWN, //VK_OEM_6
+	key::UNKNOWN, //VK_OEM_7
+	key::UNKNOWN, //VK_OEM_8
+	key::UNKNOWN, //Reserved
+	key::UNKNOWN, //OEM specific, 225
+	key::UNKNOWN, //VK_OEM_102
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //VK_PROCESSKEY
+	key::UNKNOWN, //OEM specific, 230
+	key::UNKNOWN, //VK_PACKET
+	key::UNKNOWN, //Unassigned
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific, 235
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific, 240
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific
+	key::UNKNOWN, //OEM specific, 245
+	key::UNKNOWN, //VK_ATTN
+	key::UNKNOWN, //VK_CRSEL
+	key::UNKNOWN, //VK_EXSEL
+	key::UNKNOWN, //VK_EREOF
+	key::UNKNOWN, //VK_PLAY, 250
+	key::UNKNOWN, //VK_ZOOM
+	key::UNKNOWN, //VK_NONAME
+	key::UNKNOWN, //VK_PA1
+	key::UNKNOWN, //VK_OEM_CLEAR
+	key::UNKNOWN
 };
 
 }//~namespace
