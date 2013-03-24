@@ -273,6 +273,19 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 	key::UNKNOWN
 };
 
+class KeyEventUnicodeResolver{
+public:
+	KeyEventUnicodeResolver()
+	{}
+	
+	ting::Array<ting::u32> Resolve(){
+		//TODO:
+		return ting::Array<ting::u32>();
+	}
+};
+
+
+
 }//~namespace
 
 
@@ -373,14 +386,21 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_KEYDOWN:
-			//TODO:
-			//keys[wParam] = TRUE;					// If So, Mark It As TRUE
+			if((lParam & 0x40000000) != 0){//key was pressed before, auto-repeated keypress event
+				KeyEventUnicodeResolver resolver;
+				app.HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+			}else{
+				KeyEventUnicodeResolver resolver;
+				app.HandleKeyEvent<true, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+			}
 			lres = 0;
 			return true;
 
 		case WM_KEYUP:
-			//TODO:
-			//keys[wParam] = FALSE;					// If So, Mark It As FALSE
+			{
+				KeyEventUnicodeResolver resolver;
+				app.HandleKeyEvent<false, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+			}
 			lres = 0;
 			return true;
 		
