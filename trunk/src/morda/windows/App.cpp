@@ -274,12 +274,26 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 };
 
 class KeyEventUnicodeResolver{
+	ting::u32 c;
 public:
-	KeyEventUnicodeResolver()
+	KeyEventUnicodeResolver(ting::u32 unicodeChar) :
+			c(unicodeChar)
 	{}
 	
 	ting::Array<ting::u32> Resolve(){
-		//TODO:
+		ting::Array<ting::u32> ret(1);
+		ret[0] = this->c;
+		return ret;
+	}
+};
+
+
+
+class DummyKeyEventUnicodeResolver{
+public:
+	DummyKeyEventUnicodeResolver(){}
+	
+	ting::Array<ting::u32> Resolve(){
 		return ting::Array<ting::u32>();
 	}
 };
@@ -386,24 +400,28 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_KEYDOWN:
-			if((lParam & 0x40000000) != 0){//key was pressed before, auto-repeated keypress event
-				KeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
-			}else{
-				KeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<true, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+			if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
+				DummyKeyEventUnicodeResolver resolver;
+				app.HandleKeyEvent<true, false, DummyKeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
 			}
 			lres = 0;
 			return true;
 
 		case WM_KEYUP:
 			{
-				KeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<false, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+				DummyKeyEventUnicodeResolver resolver;
+				app.HandleKeyEvent<false, false, DummyKeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
 			}
 			lres = 0;
 			return true;
 		
+		case WM_CHAR:
+			{
+				KeyEventUnicodeResolver resolver(wParam);
+				app.HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+			}
+			lres = 0;
+			return true;
 		case WM_PAINT:
 			//we will redraw anyway on every cycle
 			//app.Render();
