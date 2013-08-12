@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2013 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -274,6 +274,54 @@ public:
 		this->c2 = Vector4<T>(0, 0, 1, 0);
 		this->c3 = Vector4<T>(0, 0, 0, 1);
 		return (*this);
+	}
+	
+	
+	
+	/**
+	 * @brief Multiply current matrix by frustum matrix.
+	 * Multiplies this matrix M by frustum matrix S from the right (M = M * S).
+	 * Parameters are identical to glFrustum() function from OpenGL.
+	 * @param left - left vertical clipping plane.
+	 * @param right - right vertical clipping plane.
+	 * @param bottom - bottom horizontal clipping plane.
+	 * @param top - top horizontal clipping plane.
+	 * @param nearVal - distance to near depth clipping plane. Must be positive.
+	 * @param farVal - distance to the far clipping plane. Must be positive.
+	 * @return reference to this matrix instance.
+	 */
+	inline Matrix4& Frustum(T left, T right, T bottom, T top, T nearVal, T farVal)throw(){
+		T w = right - left;
+		ASSERT(w != 0)
+		
+		T h = top - bottom;
+		ASSERT(h != 0)
+				
+		T d = farVal - nearVal;
+		ASSERT(d != 0)
+		
+		Matrix4 f;
+		f[0][0] = 2 * nearVal / w;
+		f[0][1] = 0;
+		f[0][2] = (right + left) / w;
+		f[0][3] = 0;
+		
+		f[1][0] = 0;
+		f[1][1] = 2 * nearVal / h;
+		f[1][2] = (top + bottom) / h;
+		f[1][3] = 0;
+		
+		f[2][0] = 0;
+		f[2][1] = 0;
+		f[2][2] = -(farVal + nearVal) / d;
+		f[2][3] = -2 * farVal * nearVal / d;
+		
+		f[3][0] = 0;
+		f[3][1] = 0;
+		f[3][2] = -1;
+		f[3][3] = 0;
+		
+		return this->RightMulBy(f);
 	}
 	
 	

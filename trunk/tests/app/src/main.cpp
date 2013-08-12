@@ -142,6 +142,40 @@ public:
 
 
 
+class CubeWidget : public morda::Widget{
+	CubeWidget(){
+		
+	}
+public:
+	
+	static ting::Ref<CubeWidget> New(){
+		return ting::Ref<CubeWidget>(
+				new CubeWidget()
+			);
+	}
+	
+	//override
+	void Render(const morda::Matr4f& matrix)const{
+		morda::Matr4f matr(matrix);
+		matr.Frustum(
+				-this->Rect().d.x / 2,
+				this->Rect().d.x / 2,
+				-this->Rect().d.y / 2,
+				this->Rect().d.y / 2,
+				1,
+				1000
+			);
+
+		morda::SimpleSingleColoringShader &s = morda::App::Inst().Shaders().simpleSingleColoring;
+		s.Bind();
+		s.EnablePositionPointer();
+//		s.SetColor(morda::Vec3f(1, 0, 0));
+		s.SetMatrix(matr);
+		s.DrawQuad01(GL_LINE_STRIP);
+	}
+};
+
+
 class Application : public morda::App{
 	inline static morda::App::WindowParams GetWindowParams()throw(){
 		morda::App::WindowParams wp;
