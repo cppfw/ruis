@@ -604,8 +604,8 @@ void App::Exec(){
 	
 	ting::WaitSet waitSet(2);
 	
-	waitSet.Add(&xew, ting::Waitable::READ);
-//	waitSet.Add(&this->queue, ting::Waitable::READ);
+	waitSet.Add(xew, ting::Waitable::READ);
+//	waitSet.Add(this->queue, ting::Waitable::READ);
 	
 	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
 	//So, render everything for the first time.
@@ -718,7 +718,7 @@ void App::Exec(){
 	}//~while(!quitFlag)
 	
 //	waitSet.Remove(&this->queue);
-	waitSet.Remove(&xew);
+	waitSet.Remove(xew);
 }
 
 

@@ -75,6 +75,7 @@
         </df>
         <df name="windows">
           <in>App.cpp</in>
+          <in>main.cpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
@@ -97,23 +98,16 @@
           <df name="2">
             <df name="morda">
               <df name="layouts">
-                <in>FrameLayout.d</in>
-                <in>LinearLayout.d</in>
               </df>
               <df name="linux">
-                <in>App.d</in>
               </df>
               <df name="resman">
               </df>
               <df name="resources">
-                <in>ResTexture.d</in>
               </df>
               <df name="shaders">
               </df>
               <df name="util">
-                <in>GLTexture.d</in>
-                <in>Gravity.d</in>
-                <in>Image.d</in>
               </df>
               <df name="widgets">
               </df>
