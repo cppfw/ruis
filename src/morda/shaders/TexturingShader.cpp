@@ -7,7 +7,7 @@ using namespace morda;
 
 namespace{
 morda::Vec2f quadTexCoords[] = {
-	morda::Vec2f(0, 0), morda::Vec2f(0, 1), morda::Vec2f(1, 1), morda::Vec2f(1, 0)
+	morda::Vec2f(0, 1), morda::Vec2f(1, 1), morda::Vec2f(1, 0), morda::Vec2f(0, 0)
 };
 }//~namespace
 

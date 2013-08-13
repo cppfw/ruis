@@ -1,3 +1,6 @@
+
+#include "morda/util/Quaternion.hpp"
+
 #include "morda/App.hpp"
 #include "morda/Widget.hpp"
 #include "morda/Container.hpp"
@@ -142,16 +145,27 @@ public:
 
 
 
-class CubeWidget : public morda::Widget{
+class CubeWidget : public morda::Widget, public morda::Updateable{
+	ting::Ref<morda::ResTexture> tex;
+	
 	CubeWidget(){
-		
+		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
+		this->rot.Identity();
+		this->StartUpdating(30);
 	}
+	
+	morda::Quatf rot;
 public:
 	
 	static ting::Ref<CubeWidget> New(){
 		return ting::Ref<CubeWidget>(
 				new CubeWidget()
 			);
+	}
+	
+	//override
+	void Update(ting::u32 dt){
+		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5 * (float(dt) / 1000));
 	}
 	
 	//override
@@ -164,14 +178,49 @@ public:
 		matr.Frustum(-1, 1, -1, 1, 1, 100);
 		
 		morda::Matr4f m(matr);
-		m.Translate(0, 0, -2);
+		m.Translate(0, 0, -3);
+		
+		m.Rotate(this->rot);
 
-		morda::SimpleSingleColoringShader &s = morda::App::Inst().Shaders().simpleSingleColoring;
+		this->tex->Tex().Bind();
+		
+		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
 		s.Bind();
 		s.EnablePositionPointer();
-		s.SetColor(morda::Vec3f(0, 1, 0));
+		s.EnableTexCoordPointer();
+//		s.SetColor(morda::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
-		s.DrawQuad(GL_LINE_LOOP);
+		
+		
+		static morda::Vec3f cubePos[] = {
+			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, 1, -1),
+			morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, -1), morda::Vec3f(-1, 1, -1),
+			
+			morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, -1),
+			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(1, 1, -1),
+			
+			morda::Vec3f(1, -1, 1), morda::Vec3f(-1, -1, 1), morda::Vec3f(1, 1, 1),
+			morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, 1)
+			
+		};
+		s.SetPositionPointer(cubePos);
+		
+		static morda::Vec2f cubeTex[] = {
+			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
+			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+			
+			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
+			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+			
+			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
+			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+		};
+		s.SetTexCoordPointer(cubeTex);
+		
+//		glFrontFace(GL_CW);
+		glEnable(GL_CULL_FACE);
+		
+		s.DrawArrays(GL_TRIANGLES, 18);
 	}
 };
 

@@ -228,14 +228,14 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 
 			ASSERT(outline < (unsigned(-1) >> 1))
 			g.verts[0] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(-int(outline), -int(outline));
-			g.verts[1] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-int(outline), int(outline));
+			g.verts[1] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(int(outline), -int(outline));
 			g.verts[2] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(int(outline), int(outline));
-			g.verts[3] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(int(outline), -int(outline));
+			g.verts[3] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-int(outline), int(outline));
 
 			g.texCoords[0] = morda::Vec2f(float(curX), float(curY + im.Height()));
-			g.texCoords[1] = morda::Vec2f(float(curX), float(curY));
+			g.texCoords[1] = morda::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
 			g.texCoords[2] = morda::Vec2f(float(curX + im.Width()), float(curY));
-			g.texCoords[3] = morda::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
+			g.texCoords[3] = morda::Vec2f(float(curX), float(curY));
 
 			//update bounding box if needed
 			if(left < -g.verts[0].x){
@@ -428,7 +428,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
 		const Glyph& g = this->glyphs.at(*s);
 		left = g.verts[0].x;
 		right = g.verts[2].x;
-		top = g.verts[1].y;
+		top = g.verts[3].y;
 		bottom = g.verts[0].y;
 		curAdvance = g.advance;
 		++s;
@@ -438,8 +438,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
 		for(; *s != 0; ++s){
 			const Glyph& g = this->glyphs.at(*s);
 
-			if(g.verts[1].y > top){
-				top = g.verts[1].y;
+			if(g.verts[3].y > top){
+				top = g.verts[3].y;
 			}
 
 			if(g.verts[0].y < bottom){
@@ -492,7 +492,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 		const Glyph& g = this->glyphs.at(wchar_t(*s));
 		left = g.verts[0].x;
 		right = g.verts[2].x;
-		top = g.verts[1].y;
+		top = g.verts[3].y;
 		bottom = g.verts[0].y;
 		curAdvance = g.advance;
 		++s;
@@ -502,8 +502,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 		for(; *s != 0; ++s){
 			const Glyph& g = this->glyphs.at(wchar_t(*s));
 
-			if(g.verts[1].y > top){
-				top = g.verts[1].y;
+			if(g.verts[3].y > top){
+				top = g.verts[3].y;
 			}
 
 			if(g.verts[0].y < bottom){
