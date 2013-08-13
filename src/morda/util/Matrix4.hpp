@@ -320,9 +320,7 @@ public:
 		f[1][3] = 0;
 		f[2][3] = -1;
 		f[3][3] = 0;
-		
-		//TODO: calculate product right away
-		
+				
 		return this->RightMulBy(f);
 	}
 	
