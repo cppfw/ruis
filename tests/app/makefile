@@ -40,6 +40,7 @@ cf += -Wno-comment #no warnings on nested comments
 cf += -Wno-format
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
+cf += -g
 
 default: $(binary_name)
 
