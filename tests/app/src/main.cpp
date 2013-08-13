@@ -161,23 +161,15 @@ public:
 		morda::Matr4f matr(matrix);
 		matr.Scale(this->Rect().d / 2);
 		matr.Translate(1, 1);
-		matr.Frustum(
-				-1,
-				1,
-				-2,
-				2,
-				1,
-				1000
-			);
+		matr.Frustum(-1, 1, -1, 1, 1, 100);
 		
 		morda::Matr4f m(matr);
-		m.Translate(0, 0, -10);
-		m.Scale(50);
+		m.Translate(0, 0, -2);
 
 		morda::SimpleSingleColoringShader &s = morda::App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
 		s.EnablePositionPointer();
-		s.SetColor(morda::Vec3f(1, 0, 0));
+		s.SetColor(morda::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
 		s.DrawQuad(GL_LINE_LOOP);
 	}
