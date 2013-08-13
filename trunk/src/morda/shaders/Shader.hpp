@@ -152,7 +152,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	void DrawQuad();
+	void DrawQuad(GLint type = GL_TRIANGLE_FAN);
 
 	void DrawQuad01(GLint type = GL_TRIANGLE_FAN);
 };//~class Shader

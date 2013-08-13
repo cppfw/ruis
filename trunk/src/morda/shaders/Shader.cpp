@@ -97,10 +97,10 @@ static morda::Vec2f quadTriangles[] = {
 
 
 
-void Shader::DrawQuad(){
+void Shader::DrawQuad(GLint type){
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quadTriangles);
-	this->DrawArrays(GL_TRIANGLE_FAN, 4);
+	this->DrawArrays(type, 4);
 }
 
 

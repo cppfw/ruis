@@ -129,7 +129,7 @@ public:
 	
 
 	/**
-	 * @brief returns pointer to specified column.
+	 * @brief returns reference to specified column.
 	 * Returns reference to the matrix column indicated by the argument.
 	 * @code
 	 * Matrix4 m;
@@ -302,24 +302,26 @@ public:
 		
 		Matrix4 f;
 		f[0][0] = 2 * nearVal / w;
-		f[0][1] = 0;
-		f[0][2] = (right + left) / w;
-		f[0][3] = 0;
-		
 		f[1][0] = 0;
-		f[1][1] = 2 * nearVal / h;
-		f[1][2] = (top + bottom) / h;
-		f[1][3] = 0;
-		
-		f[2][0] = 0;
-		f[2][1] = 0;
-		f[2][2] = -(farVal + nearVal) / d;
-		f[2][3] = -2 * farVal * nearVal / d;
-		
+		f[2][0] = (right + left) / w;
 		f[3][0] = 0;
+		
+		f[0][1] = 0;
+		f[1][1] = 2 * nearVal / h;
+		f[2][1] = (top + bottom) / h;
 		f[3][1] = 0;
-		f[3][2] = -1;
-		f[3][3] = 0;
+		
+		f[0][1] = 0;
+		f[1][1] = 0;
+		f[2][1] = -(farVal + nearVal) / d;
+		f[3][1] = -2 * farVal * nearVal / d;
+		
+		f[0][1] = 0;
+		f[1][1] = 0;
+		f[2][1] = -1;
+		f[3][1] = 0;
+		
+		//TODO: calculate product right away
 		
 		return this->RightMulBy(f);
 	}

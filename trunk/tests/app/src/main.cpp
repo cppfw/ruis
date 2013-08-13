@@ -156,22 +156,30 @@ public:
 	
 	//override
 	void Render(const morda::Matr4f& matrix)const{
+		this->Widget::Render(matrix);
+		
 		morda::Matr4f matr(matrix);
+		matr.Scale(this->Rect().d / 2);
+		matr.Translate(1, 1);
 		matr.Frustum(
-				-this->Rect().d.x / 2,
-				this->Rect().d.x / 2,
-				-this->Rect().d.y / 2,
-				this->Rect().d.y / 2,
+				-1,
+				1,
+				-2,
+				2,
 				1,
 				1000
 			);
+		
+		morda::Matr4f m(matr);
+		m.Translate(0, 0, -10);
+		m.Scale(50);
 
 		morda::SimpleSingleColoringShader &s = morda::App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
 		s.EnablePositionPointer();
-//		s.SetColor(morda::Vec3f(1, 0, 0));
-		s.SetMatrix(matr);
-		s.DrawQuad01(GL_LINE_STRIP);
+		s.SetColor(morda::Vec3f(1, 0, 0));
+		s.SetMatrix(m);
+		s.DrawQuad(GL_LINE_LOOP);
 	}
 };
 
@@ -217,6 +225,12 @@ public:
 			));
 		
 		c->FindChildByName("show_VK_button").DynamicCast<morda::AbstractButton>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
+		
+		{
+			ting::Ref<CubeWidget> w = CubeWidget::New();
+			w->Resize(morda::Vec2f(100, 200));
+			c->Add(w);
+		}
 		
 		this->SetRootContainer(c);
 	}
