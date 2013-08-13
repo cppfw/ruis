@@ -175,10 +175,10 @@ public:
 		morda::Matr4f matr(matrix);
 		matr.Scale(this->Rect().d / 2);
 		matr.Translate(1, 1);
-		matr.Frustum(-1, 1, -1, 1, 1, 100);
+		matr.Frustum(-1, 1, -1, 1, 2, 100);
 		
 		morda::Matr4f m(matr);
-		m.Translate(0, 0, -3);
+		m.Translate(0, 0, -4);
 		
 		m.Rotate(this->rot);
 
@@ -193,34 +193,51 @@ public:
 		
 		
 		static morda::Vec3f cubePos[] = {
-			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, 1, -1),
-			morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, -1), morda::Vec3f(-1, 1, -1),
+			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, 1), morda::Vec3f(-1, 1, 1),
+			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(-1, 1, 1),
 			
-			morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, -1),
-			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(1, 1, -1),
+			morda::Vec3f(1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, 1),
+			morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, -1), morda::Vec3f(1, 1, 1),
 			
-			morda::Vec3f(1, -1, 1), morda::Vec3f(-1, -1, 1), morda::Vec3f(1, 1, 1),
-			morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, 1)
+			morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, -1), morda::Vec3f(1, 1, -1),
+			morda::Vec3f(-1, -1, -1), morda::Vec3f(-1, 1, -1), morda::Vec3f(1, 1, -1),
+			
+			morda::Vec3f(-1, -1, -1), morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, -1),
+			morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, 1), morda::Vec3f(-1, 1, -1),
+			
+			morda::Vec3f(-1, 1, -1), morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, -1),
+			morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(1, 1, -1),
+			
+			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, 1),
+			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1)
 			
 		};
 		s.SetPositionPointer(cubePos);
 		
 		static morda::Vec2f cubeTex[] = {
-			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
-			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
-			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 1),
-			morda::Vec2f(1, 1), morda::Vec2f(0, 0), morda::Vec2f(1, 0),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
 		};
 		s.SetTexCoordPointer(cubeTex);
 		
-//		glFrontFace(GL_CW);
 		glEnable(GL_CULL_FACE);
 		
-		s.DrawArrays(GL_TRIANGLES, 18);
+		s.DrawArrays(GL_TRIANGLES, 36);
 	}
 };
 
