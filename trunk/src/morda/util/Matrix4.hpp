@@ -311,15 +311,15 @@ public:
 		f[2][1] = (top + bottom) / h;
 		f[3][1] = 0;
 		
-		f[0][1] = 0;
-		f[1][1] = 0;
-		f[2][1] = -(farVal + nearVal) / d;
-		f[3][1] = -2 * farVal * nearVal / d;
+		f[0][2] = 0;
+		f[1][2] = 0;
+		f[2][2] = -(farVal + nearVal) / d;
+		f[3][2] = -2 * farVal * nearVal / d;
 		
-		f[0][1] = 0;
-		f[1][1] = 0;
-		f[2][1] = -1;
-		f[3][1] = 0;
+		f[0][3] = 0;
+		f[1][3] = 0;
+		f[2][3] = -1;
+		f[3][3] = 0;
 		
 		//TODO: calculate product right away
 		
