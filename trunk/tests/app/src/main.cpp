@@ -175,7 +175,7 @@ public:
 		morda::Matr4f matr(matrix);
 		matr.Scale(this->Rect().d / 2);
 		matr.Translate(1, 1);
-		matr.Frustum(-1, 1, -1, 1, 2, 100);
+		matr.Frustum(-2, 2, -1.5, 1.5, 2, 100);
 		
 		morda::Matr4f m(matr);
 		m.Translate(0, 0, -4);
@@ -286,7 +286,7 @@ public:
 		
 		{
 			ting::Ref<CubeWidget> w = CubeWidget::New();
-			w->Resize(morda::Vec2f(100, 200));
+			w->Resize(morda::Vec2f(200, 150));
 			c->Add(w);
 		}
 		
