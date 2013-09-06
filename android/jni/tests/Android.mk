@@ -15,7 +15,7 @@ LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it
 LOCAL_CFLAGS += -DDEBUG
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../src
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting/src
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz
