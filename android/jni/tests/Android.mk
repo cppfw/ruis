@@ -16,7 +16,7 @@ LOCAL_CFLAGS += -DDEBUG
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../src
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting/src
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob/src
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz
 
