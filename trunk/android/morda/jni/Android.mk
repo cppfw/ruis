@@ -6,7 +6,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := morda
 
-PREFIX := ../../../src/
+PREFIX := 
 
 LOCAL_SRC_FILES := $(PREFIX)morda/android/App.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/android/AssetFile.cpp
