@@ -41,11 +41,11 @@ LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it
 LOCAL_CFLAGS += -DDEBUG
 
 LOCAL_C_INCLUDES := 
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../ting
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../stob
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../libpng
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../libjpeg/jpeg
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../libfreetype2/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../stob
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../libpng
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../libjpeg/jpeg
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../libfreetype2/include
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz
 
