@@ -661,7 +661,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 	static JNINativeMethod methods[] = {
 		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput},
 	};
-	jclass clazz = env->FindClass("com/googlecode/morda/tests/SharedLibLoaderNativeActivity");
+	jclass clazz = env->FindClass("com/googlecode/morda/MordaActivity");
 	ASSERT(clazz)
 	if(env->RegisterNatives(clazz, methods, 1) < 0){
 		ASSERT(false)

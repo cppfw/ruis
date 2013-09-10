@@ -12,15 +12,6 @@ import android.util.Log;
 public class MordaActivity extends NativeActivity {
 	public static final String LOGTAG = "morda java side";
 
-static {
-	System.loadLibrary("gnustl_shared");
-//	System.loadLibrary("ting");
-//	System.loadLibrary("stob");
-//	System.loadLibrary("morda");
-//	System.loadLibrary("tests");
-}
-
-
 	private int curKeyDevice;
 	private KeyCharacterMap curCharMap;
 
