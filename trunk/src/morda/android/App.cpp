@@ -18,8 +18,8 @@
 #include <signal.h>
 
 #include "AssetFile.hpp"
-#include "morda/App.hpp"
-#include "morda/KeyListener.hpp"
+#include "../App.hpp"
+#include "../KeyListener.hpp"
 
 
 
