@@ -1178,6 +1178,8 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	//save window dimensions
 	curWinDim.x = float(ANativeWindow_getWidth(window));
 	curWinDim.y = float(ANativeWindow_getHeight(window));
+	
+	TRACE(<< "OnNativeWindowResized(): curWinDim = " << curWinDim << std::endl)
 }
 
 
