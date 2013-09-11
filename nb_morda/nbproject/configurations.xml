@@ -97,7 +97,38 @@
         <df name="1">
           <df name="2">
             <df name="morda">
+              <df name="layouts">
+                <in>FrameLayout.d</in>
+                <in>LinearLayout.d</in>
+              </df>
               <df name="linux">
+              </df>
+              <df name="resman">
+                <in>Resource.d</in>
+                <in>ResourceManager.d</in>
+              </df>
+              <df name="resources">
+                <in>ResFont.d</in>
+                <in>ResTexture.d</in>
+              </df>
+              <df name="shaders">
+                <in>Shader.d</in>
+                <in>SimpleSingleColoringShader.d</in>
+                <in>SimpleTexturingShader.d</in>
+                <in>TexturingShader.d</in>
+              </df>
+              <df name="util">
+                <in>GLTexture.d</in>
+                <in>Gravity.d</in>
+                <in>Image.d</in>
+                <in>LeftBottomRightTop.d</in>
+                <in>TexFont.d</in>
+                <in>util.d</in>
+              </df>
+              <df name="widgets">
+                <in>AbstractButton.d</in>
+                <in>Button.d</in>
+                <in>Label.d</in>
               </df>
             </df>
           </df>
@@ -139,7 +170,7 @@
           <buildCommandWorkingDir>..</buildCommandWorkingDir>
           <buildCommand>${MAKE} build_config=debug</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>/home/igagis/prj/morda/tests/app/tests</executablePath>
           <ccTool>
             <incDir>
               <pElem>../src</pElem>
