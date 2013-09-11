@@ -12,6 +12,7 @@ android:versionName="1.0"
 		android:configChanges="orientation|keyboardHidden"
 		android:theme="@android:style/Theme.NoTitleBar"
 		android:hasCode="true"
+		android:windowSoftInputMode="adjustResize"
 		>
 			<meta-data
 			android:name="android.app.lib_name"
