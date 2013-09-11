@@ -1276,7 +1276,7 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
 
-//	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
+	TRACE(<< "OnContentRectChanged(): winDim = " << winDim << std::endl)
 
 	morda::App& app = *static_cast<morda::App*>(activity->instance);
 
