@@ -185,11 +185,3 @@ void Updateable::StopUpdating()throw(){
 
 	this->isUpdating = false;
 }
-
-
-
-Updateable::Updater::Updater() :
-		activeQueue(&q1),
-		inactiveQueue(&q2),
-		lastUpdatedTimestamp(ting::timer::GetTicks())
-{}

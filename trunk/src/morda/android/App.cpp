@@ -1162,7 +1162,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				0
 			);
 		
-		timer.Arm(1);
+		timer.Arm(1);//this is to call the Update() for the first time if there were any Updateables started during creating App object
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
 		throw;
