@@ -80,6 +80,8 @@ ting::u32 Updateable::Updater::Update(){
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
+	this->AddPending();//add pending before updating this->lastUpdatedTimestamp
+	
 	//check if there is a warp around
 	if(curTime < this->lastUpdatedTimestamp){
 		this->lastUpdatedTimestamp = curTime;
@@ -106,7 +108,7 @@ ting::u32 Updateable::Updater::Update(){
 		this->UpdateUpdateable(this->activeQueue->PopFront());
 	}
 	
-	this->AddPending();
+	this->AddPending();//after updating need to add recurring Updateables if any
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
