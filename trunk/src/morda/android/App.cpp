@@ -1,8 +1,6 @@
 //This file contains implementations of platform dependent methods from App class.
 
 
-#include "../App.hpp"
-
 #include <cerrno>
 #include <ctime>
 #include <csignal>
