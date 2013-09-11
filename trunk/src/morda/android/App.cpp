@@ -1161,6 +1161,8 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				&OnUpdateTimerExpired,
 				0
 			);
+		
+		timer.Arm(1);
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
 		throw;
