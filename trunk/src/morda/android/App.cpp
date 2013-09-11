@@ -1124,6 +1124,8 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 		fdFlag.Clear();
 		timer.Arm(dt);
 	}
+	
+	Render(App::Inst());//after updating need to re-render everything
 
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
