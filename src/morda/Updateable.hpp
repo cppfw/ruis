@@ -63,7 +63,7 @@ private:
 		
 		UpdateQueue *activeQueue, *inactiveQueue;
 		
-		ting::u32 lastUpdatedTimestamp;
+		ting::Inited<ting::u32, 0> lastUpdatedTimestamp;
 		
 		typedef std::list<ting::Ref<morda::Updateable> > T_ToAddList;
 		T_ToAddList toAdd;
@@ -72,7 +72,10 @@ private:
 		
 		void UpdateUpdateable(const ting::Ref<morda::Updateable>& u);
 	public:
-		Updater();
+		Updater() :
+				activeQueue(&q1),
+				inactiveQueue(&q2)
+		{}
 		
 		void RemoveFromToAdd(Updateable* u);
 		
