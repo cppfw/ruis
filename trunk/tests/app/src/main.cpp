@@ -1,18 +1,18 @@
 
-#include "morda/util/Quaternion.hpp"
+#include "../../../src/morda/util/Quaternion.hpp"
 
-#include "morda/App.hpp"
-#include "morda/Widget.hpp"
-#include "morda/Container.hpp"
+#include "../../../src/morda/App.hpp"
+#include "../../../src/morda/Widget.hpp"
+#include "../../../src/morda/Container.hpp"
 
-#include "morda/widgets/Button.hpp"
-#include "morda/widgets/Label.hpp"
+#include "../../../src/morda/widgets/Button.hpp"
+#include "../../../src/morda/widgets/Label.hpp"
 
-#include "morda/shaders/SimpleSingleColoringShader.hpp"
-#include "morda/shaders/SimpleTexturingShader.hpp"
+#include "../../../src/morda/shaders/SimpleSingleColoringShader.hpp"
+#include "../../../src/morda/shaders/SimpleTexturingShader.hpp"
 
-#include "morda/resources/ResTexture.hpp"
-#include "morda/resources/ResFont.hpp"
+#include "../../../src/morda/resources/ResTexture.hpp"
+#include "../../../src/morda/resources/ResFont.hpp"
 
 
 #include <ting/debug.hpp>
