@@ -608,7 +608,7 @@ namespace{
 
 
 
-JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput(
+JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleCharacterStringInput(
 		JNIEnv *env,
 		jclass clazz,
 		jstring chars
@@ -657,7 +657,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
     }
 
 	static JNINativeMethod methods[] = {
-		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_com_googlecode_morda_tests_SharedLibLoaderNativeActivity_handleCharacterStringInput},
+		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_com_googlecode_morda_tests_MordaActivity_handleCharacterStringInput},
 	};
 	jclass clazz = env->FindClass("com/googlecode/morda/MordaActivity");
 	ASSERT(clazz)
@@ -1324,7 +1324,7 @@ void ANativeActivity_onCreate(
 
 	activity->instance = 0;
 	
-	nativeActivity = activity;	
+	nativeActivity = activity;
 
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
