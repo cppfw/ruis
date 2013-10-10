@@ -7,6 +7,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 
 
 public class MordaActivity extends NativeActivity {
