@@ -15,6 +15,7 @@ ting::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 void App::UpdateGLViewport(){
+	TRACE(<< "App::UpdateGLViewport(): this->curWinRect = " << this->curWinRect << std::endl)
 	glViewport(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
