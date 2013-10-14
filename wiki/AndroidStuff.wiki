@@ -1,0 +1,13 @@
+#summary Android specific stuff
+
+= Manifest =
+
+Put the following under *`<manifest></manifest>`* tag:
+
+{{{
+<supports-screens
+android:anyDensity="true"
+/>
+}}}
+
+Otherwise, OpenGL viewport will be incorrect.
