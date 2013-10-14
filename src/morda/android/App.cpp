@@ -1273,8 +1273,7 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 //called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
-
-//	TRACE(<< "OnContentRectChanged(): winDim = " << curWinDim << std::endl)
+	TRACE(<< "OnContentRectChanged(): winDim = " << curWinDim << std::endl)
 
 	morda::App& app = *static_cast<morda::App*>(activity->instance);
 
