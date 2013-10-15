@@ -2,7 +2,7 @@
 
 #include "Container.hpp"
 #include "widgets/Label.hpp"
-#include "widgets/Button.hpp"
+#include "widgets/TextButton.hpp"
 #include "layouts/LinearLayout.hpp"
 #include "layouts/FrameLayout.hpp"
 
@@ -17,15 +17,14 @@ namespace{
 const char* D_Widget = "Widget";
 const char* D_Container = "Container";
 const char* D_Label = "Label";
-const char* D_AbstractButton = "AbstractButton";
-const char* D_Button = "Button";
+const char* D_TextButton = "TextButton";
 
 const char* D_LinearLayout = "LinearLayout";
 const char* D_FrameLayout = "FrameLayout";
 
 
 
-class WidgetFactory : public GuiInflater::WidgetFactory{
+class BareWidgetFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
@@ -33,8 +32,8 @@ public:
 		return Widget::New(node, false);
 	}
 	
-	inline static ting::Ptr<WidgetFactory> New(){
-		return ting::Ptr<WidgetFactory>(new WidgetFactory());
+	inline static ting::Ptr<BareWidgetFactory> New(){
+		return ting::Ptr<BareWidgetFactory>(new BareWidgetFactory());
 	}
 };
 
@@ -68,29 +67,16 @@ public:
 	}
 };
 
-class AbstractButtonFactory : public GuiInflater::WidgetFactory{
+class TextButtonFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node == D_AbstractButton)
-		return AbstractButton::New(node, false);
+		ASSERT(node == D_TextButton)
+		return TextButton::New(node, false);
 	}
 	
-	inline static ting::Ptr<AbstractButtonFactory> New(){
-		return ting::Ptr<AbstractButtonFactory>(new AbstractButtonFactory());
-	}
-};
-
-class ButtonFactory : public GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node == D_Button)
-		return Button::New(node, false);
-	}
-	
-	inline static ting::Ptr<ButtonFactory> New(){
-		return ting::Ptr<ButtonFactory>(new ButtonFactory());
+	inline static ting::Ptr<TextButtonFactory> New(){
+		return ting::Ptr<TextButtonFactory>(new TextButtonFactory());
 	}
 };
 
@@ -125,11 +111,10 @@ public:
 
 
 GuiInflater::GuiInflater(){
-	this->AddWidgetFactory(D_Widget, ::WidgetFactory::New());
+	this->AddWidgetFactory(D_Widget, BareWidgetFactory::New());
 	this->AddWidgetFactory(D_Container, ContainerFactory::New());
 	this->AddWidgetFactory(D_Label, LabelFactory::New());
-	this->AddWidgetFactory(D_AbstractButton, AbstractButtonFactory::New());
-	this->AddWidgetFactory(D_Button, ButtonFactory::New());
+	this->AddWidgetFactory(D_TextButton, TextButtonFactory::New());
 	
 	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
 	this->AddLayoutFactory(D_FrameLayout, FrameLayoutFactory::New());

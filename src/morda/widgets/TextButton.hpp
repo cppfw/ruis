@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis
+Copyright (c) 2012-2013 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,57 +29,44 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/Signal.hpp>
+#include <string>
 
-#include "../Widget.hpp"
-
+#include "Button.hpp"
+#include "Label.hpp"
 
 
 namespace morda{
 
 
 
-//TODO: rename?
-class AbstractButton : public virtual Widget{
-	ting::Inited<bool, false> isPressed;
-	
+class TextButton : public AbstractButton, public Label{
 	void ApplyDescription(const stob::Node& description);
 protected:
-	inline AbstractButton(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp)
+	inline TextButton(const stob::Node& description, bool doNotCopyProp) :
+			Widget(description, doNotCopyProp),
+			AbstractButton(description, doNotCopyProp),
+			Label(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);
 	}
 	
-	inline AbstractButton(){}
+	inline TextButton(){}
 public:
 	
-	~AbstractButton()throw(){}
-	
-	ting::Signal0 pressed;
+	~TextButton()throw(){}
 	
 	//override
 	void Render(const morda::Matr4f& matrix)const;
 	
 	//override
-	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	void OnResize();
 	
-	//override
-	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
-	
-	//override
-	void OnMouseOut();
-	
-	inline bool IsPressed()const throw(){
-		return this->isPressed;
+	inline static ting::Ref<TextButton> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<TextButton>(new TextButton(description, doNotCopyProp));
 	}
 	
-	inline static ting::Ref<AbstractButton> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<AbstractButton>(new AbstractButton(description, doNotCopyProp));
-	}
-	
-	inline static ting::Ref<AbstractButton> New(){
-		return ting::Ref<AbstractButton>(new AbstractButton());
+	inline static ting::Ref<TextButton> New(){
+		return ting::Ref<TextButton>(new TextButton());
 	}
 };
 
