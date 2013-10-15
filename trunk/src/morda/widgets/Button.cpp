@@ -7,23 +7,65 @@ using namespace morda;
 
 
 
-void Button::ApplyDescription(const stob::Node& description){
-	//apply button specific properties
+void AbstractButton::ApplyDescription(const stob::Node& properties){
+	//apply abstract button specific properties
 }
 
 
 
 //override
-void Button::Render(const morda::Matr4f& matrix)const{
-	this->AbstractButton::Render(matrix);
-	this->Label::Render(matrix);
+void AbstractButton::Render(const morda::Matr4f& matrix)const{
+	morda::Matr4f matr(matrix);
+	matr.Scale(this->Rect().d);
+	
+	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	s.Bind();
+	if(this->isPressed){
+		s.SetColor(morda::Vec3f(1, 1, 1));
+	}else{
+		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
+	}
+	s.SetMatrix(matr);
+	s.DrawQuad01();
 }
 
 
 
 //override
-void Button::OnResize(){
-	this->Label::OnResize();
+bool AbstractButton::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "AbstractButton::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
+	if(button != LEFT){
+		return false;
+	}
+
+	this->isPressed = true;
+
+	return true;
 }
 
 
+
+//override
+bool AbstractButton::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "AbstractButton::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
+	if(button != LEFT){
+		return false;
+	}
+	
+	if(this->isPressed){
+		this->isPressed = false;
+//		TRACE(<< "AbstractButton::OnMouseButtonUp(): emitting signal" << std::endl)
+		this->pressed.Emit();
+		return true;
+	}
+	
+	return false;
+}
+
+
+
+//override
+void AbstractButton::OnMouseOut(){
+//	TRACE(<< "AbstractButton::OnMouseOut(): enter" << std::endl)
+	this->isPressed = false;
+}

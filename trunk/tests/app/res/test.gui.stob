@@ -2,7 +2,7 @@ U_SimpleWidget{
 	dim {300 300}
 }
 
-Button{
+TextButton{
 	pos {10 20}
 	dim {100 50}
 	gravity {30% 70%}
@@ -76,7 +76,7 @@ Container{
 		}
 	}
 
-	Button{
+	TextButton{
 		name {show_VK_button}
 		pos {50 80}
 		dim {10 30}
