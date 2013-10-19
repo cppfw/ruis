@@ -11,6 +11,7 @@
 #    linux
 #    maemo_linux
 #    windows
+#    macosx
 include ../platform.mk
 
 debug := false
@@ -20,6 +21,9 @@ name := libmorda
 so_name := 0
 
 ifeq ($(platform), linux)
+    name := $(name).so
+endif
+ifeq ($(platform), macosx)
     name := $(name).so
 endif
 ifeq ($(platform), windows)
@@ -33,6 +37,9 @@ srcs :=
 
 ifeq ($(platform), linux)
     srcs += morda/linux/App.cpp
+endif
+ifeq ($(platform), macosx)
+    srcs += morda/macosx/main.m
 endif
 ifeq ($(platform), windows)
     srcs += morda/windows/App.cpp
@@ -144,6 +151,9 @@ ifeq ($(platform), windows)
     libs := -L/usr/local/lib -L/usr/lib
     libs += -lfreetype -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32 -lstob
 endif
+ifeq ($(platform), macosx)
+    libs := -framework Cocoa
+endif
 
 
 
@@ -179,8 +189,8 @@ endif
 
 
 
-#find all .cpp files and get an .o file name for it to get dependencies for this target
-$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(srcs)))
+#find all .cpp and .m files and get an .o file name for it to get dependencies for this target
+$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(patsubst %.m,%.o,$(srcs))))
 	@echo Linking $@...
 ifeq ($(platform), windows)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
@@ -191,6 +201,16 @@ else
 	@ln -f -s $@.$(so_name) $@
 endif
 
+
+ifeq ($(platform), macosx)
+#====================
+#=compile .m sources=
+
+$(obj_dir)/%.o:%.m
+	@echo Compiling $<...
+	@mkdir -p $(dir $@)
+	@gcc -x objective-c -c -o "$@" $<
+endif
 
 #======================
 #=compile .cpp sources=
