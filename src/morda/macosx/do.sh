@@ -1,1 +1,1 @@
-gcc -x objective-c -framework Cocoa main.m
+gcc -x objective-c++ -framework Cocoa main.mm
