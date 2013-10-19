@@ -46,7 +46,7 @@ THE SOFTWARE. */
 #	include <GL/glew.h>
 #	include <GL/glx.h>
 #elif M_OS == M_OS_WINDOWS
-
+#elif M_OS == M_OS_MACOSX
 #else
 #	error "unknown os"
 #endif

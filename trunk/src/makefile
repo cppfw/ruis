@@ -39,7 +39,7 @@ ifeq ($(platform), linux)
     srcs += morda/linux/App.cpp
 endif
 ifeq ($(platform), macosx)
-    srcs += morda/macosx/main.m
+    srcs += morda/macosx/main.mm
 endif
 ifeq ($(platform), windows)
     srcs += morda/windows/App.cpp
@@ -190,7 +190,7 @@ endif
 
 
 #find all .cpp and .m files and get an .o file name for it to get dependencies for this target
-$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(patsubst %.m,%.o,$(srcs))))
+$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(patsubst %.mm,%.o,$(srcs))))
 	@echo Linking $@...
 ifeq ($(platform), windows)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
@@ -206,10 +206,10 @@ ifeq ($(platform), macosx)
 #====================
 #=compile .m sources=
 
-$(obj_dir)/%.o:%.m
+$(obj_dir)/%.o:%.mm
 	@echo Compiling $<...
 	@mkdir -p $(dir $@)
-	@gcc -x objective-c -c -o "$@" $<
+	@gcc -x objective-c++ -c -o "$@" $<
 endif
 
 #======================
