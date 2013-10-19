@@ -40,6 +40,8 @@ THE SOFTWARE. */
 #	include <GL/glx.h>
 #elif M_OS == M_OS_WINDOWS
 #	include <GL/glew.h>
+#elif M_OS == M_OS_MACOSX
+//TODO:
 #else
 #	error "unknown os"
 #endif
