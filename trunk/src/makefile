@@ -11,17 +11,9 @@
 #    linux
 #    maemo_linux
 #    windows
-platform := linux
+include ../platform.mk
 
-operating_system := $(shell uname -o)
-ifeq ($(operating_system), Msys)
-    platform := windows
-endif
-
-#build configuration:
-#    debug
-#    release
-build_config := release
+debug := false
 
 name := libmorda
 
@@ -76,7 +68,7 @@ srcs += morda/layouts/FrameLayout.cpp
 
 defines :=
 
-ifeq ($(build_config), debug)
+ifeq ($(debug), true)
     defines += -DDEBUG
     defines += -DM_MORDA_RENDER_WIDGET_BORDERS
 endif
