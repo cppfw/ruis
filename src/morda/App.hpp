@@ -256,6 +256,18 @@ private:
 	friend void Main(int argc, char** argv);
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
+
+#elif M_OS == M_OS_MACOSX	
+private:
+	struct ApplicationObject{
+		ApplicationObject();
+		~ApplicationObject();
+	} applicationObject;
+	
+	inline void SwapGLBuffers(){
+		TRACE(<< "TODO: swap gl buffers" << std::endl)
+		//TODO:
+	}
 	
 #else
 #	error "unsupported OS"
