@@ -1,19 +1,15 @@
-platform := linux
+include ../../platform.mk
 
-operating_system := $(shell uname -o)
-ifeq ($(operating_system), Msys)
-    platform := win32
-endif
 
 binary_name := tests
 
-ifeq ($(platform),win32)
+ifeq ($(platform),windows)
     binary_name := $(binary_name).exe
 endif
 
 includes := -I../../src
 
-ifeq ($(platform),win32)
+ifeq ($(platform),windows)
     libs := -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
 #    libs := -mwindows #if we do not want console output, e.g. in production version
     libs += ../../src/libmorda_main.a ../../src/libmorda.dll
@@ -21,8 +17,8 @@ ifeq ($(platform),win32)
     libs +=  -lglew32 -lopengl32
     includes += -I/usr/include
 endif
-ifeq ($(platform),darwin)
-    libs := 
+ifeq ($(platform),macosx)
+    libs := ../../src/libmorda.so -lGLEW -framework OpenGL -lstob -lting
     includes +=
 endif
 ifeq ($(platform),linux)
@@ -46,12 +42,15 @@ default: $(binary_name)
 
 test: $(binary_name)
 	@echo running $^...
-ifeq ($(platform),win32)
+ifeq ($(platform), windows)
 	@cp ../../src/libmorda.dll .
 	./$^
 endif
-ifeq ($(platform),linux)
+ifeq ($(platform), linux)
 	@LD_LIBRARY_PATH=../../src ./$^
+endif
+ifeq ($(platform), macosx)
+	@DYLD_LIBRARY_PATH=../../src ./$^
 endif
 
 $(binary_name): src/main.cpp

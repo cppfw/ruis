@@ -260,6 +260,7 @@ private:
 #elif M_OS == M_OS_MACOSX	
 private:
 	struct ApplicationObject{
+		void* id;
 		ApplicationObject();
 		~ApplicationObject();
 	} applicationObject;
