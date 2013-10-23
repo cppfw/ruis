@@ -46,4 +46,5 @@ cd freetype-2.4.11
 ./configure
 make
 sudo make install
+sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype
 }}}
