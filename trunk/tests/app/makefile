@@ -18,7 +18,7 @@ ifeq ($(platform),windows)
     includes += -I/usr/include
 endif
 ifeq ($(platform),macosx)
-    libs := ../../src/libmorda.so -lGLEW -framework OpenGL -lstob -lting
+    libs := ../../src/libmorda.a -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
     includes +=
 endif
 ifeq ($(platform),linux)

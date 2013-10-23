@@ -265,10 +265,19 @@ private:
 		~ApplicationObject();
 	} applicationObject;
 	
+	struct WindowObject{
+		void* id;
+		WindowObject();
+		~WindowObject();
+	} windowObject;
+	
 	inline void SwapGLBuffers(){
 		TRACE(<< "TODO: swap gl buffers" << std::endl)
 		//TODO:
 	}
+	
+	friend void Main(int argc, const char** argv);
+	void Exec();
 	
 #else
 #	error "unsupported OS"
@@ -394,7 +403,7 @@ public:
  * User needs to define this factory function to create his application instance.
  * @return New application instance.
  */
-ting::Ptr<App> CreateApp(int argc, char** argv, const ting::Buffer<const ting::u8>& savedState);
+ting::Ptr<App> CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState);
 
 
 

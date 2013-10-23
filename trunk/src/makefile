@@ -24,7 +24,7 @@ ifeq ($(platform), linux)
     name := $(name).so
 endif
 ifeq ($(platform), macosx)
-    name := $(name).so
+    name := $(name).a
 endif
 ifeq ($(platform), windows)
     name := $(name).dll
@@ -196,9 +196,13 @@ ifeq ($(platform), windows)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
 	@$(compiler) $^ -o "$@" $(libs) $(linker_flags)
 else
+ifeq ($(platform), macosx)
+	@ar cr $(name) $^
+else
 	@ar cr $(patsubst %.so,%.a,$@) $^
 	@$(compiler) $^ -o "$@".$(so_name) $(libs) $(linker_flags)
 	@ln -f -s $@.$(so_name) $@
+endif
 endif
 
 
