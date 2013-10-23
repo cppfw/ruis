@@ -1,0 +1,22 @@
+#summary How to build morda in mac os x.
+
+= How to build morda in Mac OS X =
+
+== Step by step instructions ==
+
+1. Download and install *libpng*
+{{{
+cd libpng-1.6.6
+cp scripts/makefile.darwin makefile
+make
+make install
+}}}
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
