@@ -152,7 +152,7 @@ ifeq ($(platform), windows)
     libs += -lfreetype -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32 -lstob
 endif
 ifeq ($(platform), macosx)
-    libs := -framework Cocoa
+    libs := -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
 endif
 
 
