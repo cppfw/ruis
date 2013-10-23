@@ -4,15 +4,14 @@
 
 == Step by step instructions ==
 
-# Download .tgz file of *GLEW* from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
+  # Download .tgz file of *GLEW* from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
 {{{
 tar zxvf glew-1.10.0.tar
 cd glew-1.10.0
 make
 sudo make install
 }}}
-
-# Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
+  # Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
 {{{
 tar zxvf zlib-1.2.8.tar.gz
 cd zlib-1.2.8
@@ -20,8 +19,7 @@ cd zlib-1.2.8
 make
 sudo make install
 }}}
-
-# Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
+  # Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
 {{{
 tar zxvf libpng-1.6.6
 cd libpng-1.6.6
@@ -29,8 +27,7 @@ cd libpng-1.6.6
 make
 sudo make install
 }}}
-
-# Download *libjpeg* from [http://ijg.org/files/jpegsrc.v9.tar.gz here] and install it:
+  # Download *libjpeg* from [http://ijg.org/files/jpegsrc.v9.tar.gz here] and install it:
 {{{
 tar zxvf jpegsrc.v9.tar
 cd jpeg-9
@@ -38,8 +35,7 @@ cd jpeg-9
 make
 sudo make install
 }}}
-
-# Download *libfreetype* from [http://sourceforge.net/projects/freetype/files/freetype2/2.4.11/freetype-2.4.11.tar.gz/download here] and install:
+  # Download *libfreetype* from [http://sourceforge.net/projects/freetype/files/freetype2/2.4.11/freetype-2.4.11.tar.gz/download here] and install:
 {{{
 tar zxvf freetype-2.4.11.tar
 cd freetype-2.4.11
@@ -48,16 +44,15 @@ make
 sudo make install
 sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype
 }}}
-
-# *ting*
-   * Check out *ting* sources to some directory, say */d/ting*:
-     * {{{svn co http://ting.googlecode.com/svn/trunk/ /d/ting}}}
-   * {{{cd /d/ting}}}
-   * {{{make}}}
-   * {{{make install}}}
- # *stob*
-   * Check out *stob* sources to some directory, say */d/stob*:
-     * {{{svn co http://stob.googlecode.com/svn/trunk/ /d/stob}}}
-   * {{{cd /d/stob}}}
-   * {{{make}}}
-   * {{{make install}}}
+  # Check out *ting* sources to some directory, say */d/ting*:
+{{{svn co http://ting.googlecode.com/svn/trunk/ /d/ting
+cd /d/ting
+make
+make install
+}}}
+  # Check out *stob* sources to some directory, say */d/stob*:
+{{{svn co http://stob.googlecode.com/svn/trunk/ /d/stob
+cd /d/stob
+make
+make install
+}}}
