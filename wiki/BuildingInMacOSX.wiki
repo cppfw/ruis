@@ -44,14 +44,14 @@ make
 sudo make install
 sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype
 }}}
-  # Check out *ting* sources to some directory, say */d/ting*:
+  # Check out *ting* sources and install:
 {{{
 svn co http://ting.googlecode.com/svn/trunk/ ting
 cd ting
 make
 make install
 }}}
-  # Check out *stob* sources to some directory, say */d/stob*:
+  # Check out *stob* sources and install:
 {{{
 svn co http://stob.googlecode.com/svn/trunk/ stob
 cd stob
