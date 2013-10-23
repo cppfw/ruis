@@ -25,7 +25,7 @@ sudo make install
 {{{
 tar zxvf libpng-1.6.6
 cd libpng-1.6.6
-cp scripts/makefile.darwin makefile
+./configure
 make
 sudo make install
 }}}
