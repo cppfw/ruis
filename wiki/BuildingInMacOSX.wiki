@@ -29,3 +29,12 @@ cd libpng-1.6.6
 make
 sudo make install
 }}}
+
+4. Download *libjpeg* from [http://ijg.org/files/jpegsrc.v9.tar.gz here] and install it:
+{{{
+tar zxvf jpegsrc.v9.tar
+cd jpeg-9
+./configure
+make
+sudo make install
+}}}
