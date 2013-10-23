@@ -38,3 +38,12 @@ cd jpeg-9
 make
 sudo make install
 }}}
+
+5. Download *libfreetype* from [http://sourceforge.net/projects/freetype/files/freetype2/2.4.11/freetype-2.4.11.tar.gz/download here] and install:
+{{{
+tar zxvf freetype-2.4.11.tar
+cd freetype-2.4.11
+./configure
+make
+sudo make install
+}}}
