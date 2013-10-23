@@ -4,11 +4,19 @@
 
 == Step by step instructions ==
 
-1. Download and install *libpng*
+1. Download .tgz file of GLEW from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
 {{{
+tar zxvf glew-1.10.0.tar
+cd glew-1.10.0
+make
+sudo make install
+}}}
+
+1. Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
+{{{
+tar zxvf libpng-1.6.6
 cd libpng-1.6.6
 cp scripts/makefile.darwin makefile
 make
-make install
+sudo make install
 }}}
-
