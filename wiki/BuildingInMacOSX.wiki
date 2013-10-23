@@ -12,7 +12,16 @@ make
 sudo make install
 }}}
 
-1. Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
+2. Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
+{{{
+tar zxvf zlib-1.2.8.tar.gz
+cd zlib-1.2.8
+./configure
+make
+sudo make install
+}}}
+
+3. Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
 {{{
 tar zxvf libpng-1.6.6
 cd libpng-1.6.6
