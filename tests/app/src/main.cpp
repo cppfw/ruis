@@ -296,6 +296,6 @@ public:
 
 
 
-ting::Ptr<morda::App> morda::CreateApp(int argc, char** argv, const ting::Buffer<const ting::u8>& savedState){
+ting::Ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState){
 	return ting::Ptr<Application>(new Application());
 }
