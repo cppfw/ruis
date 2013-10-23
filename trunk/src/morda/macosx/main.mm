@@ -1,4 +1,11 @@
+#include "../App.hpp"
+
+#include <ting/fs/FSFile.hpp>
+
 #import <Cocoa/Cocoa.h>
+
+
+
 
 
 @interface MordaApplication : NSApplication{
@@ -9,6 +16,30 @@
 - (void)terminate:(id)sender;
 
 @end
+
+
+ting::Ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::string& path)const{
+	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+	fi->SetRootDir("res/");
+	return fi;
+}
+
+void morda::App::ShowVirtualKeyboard()throw(){
+	//do nothing
+}
+
+morda::App::ApplicationObject::ApplicationObject(){
+	//TODO:
+}
+
+morda::App::ApplicationObject::~ApplicationObject(){
+	//TODO:
+}
+
+morda::App::App(const morda::App::WindowParams& wp){
+	//TODO:
+}
+
 
 @implementation MordaApplication
 
