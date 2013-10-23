@@ -44,7 +44,7 @@
 
 
 int main (int argc, const char** argv){
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 //    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
 //    Class principalClass = NSClassFromString([infoDictionary objectForKey:@"NSPrincipalClass"]);
@@ -54,25 +54,25 @@ int main (int argc, const char** argv){
 //    NSNib *mainNib = [[NSNib alloc] initWithNibNamed:mainNibName bundle:[NSBundle mainBundle]];
 //    [mainNib instantiateNibWithOwner:applicationObject topLevelObjects:nil];
 
-	[NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-	id menubar = [[NSMenu new] autorelease];
-	id appMenuItem = [[NSMenuItem new] autorelease];
-	[menubar addItem:appMenuItem];
-	[NSApp setMainMenu:menubar];
-	id appMenu = [[NSMenu new] autorelease];
-	id appName = [[NSProcessInfo processInfo] processName];
-	id quitTitle = [@"Quit " stringByAppendingString:appName];
-	id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle
-		action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
-	[appMenu addItem:quitMenuItem];
-	[appMenuItem setSubmenu:appMenu];
+//	[NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+//	id menubar = [[NSMenu new] autorelease];
+//	id appMenuItem = [[NSMenuItem new] autorelease];
+//	[menubar addItem:appMenuItem];
+//	[NSApp setMainMenu:menubar];
+//	id appMenu = [[NSMenu new] autorelease];
+//	id appName = [[NSProcessInfo processInfo] processName];
+//	id quitTitle = [@"Quit " stringByAppendingString:appName];
+//	id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle
+//		action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
+//	[appMenu addItem:quitMenuItem];
+//	[appMenuItem setSubmenu:appMenu];
 
 	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200)
 		styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
-	[window cascadeTopLeftFromPoint:NSMakePoint(20, 20)];
-	[window setTitle:appName];
+//	[window cascadeTopLeftFromPoint:NSMakePoint(20, 20)];
+	[window setTitle:[[NSProcessInfo processInfo] processName]];
 	[window makeKeyAndOrderFront:nil];
-	[NSApp activateIgnoringOtherApps:YES];
+//	[NSApp activateIgnoringOtherApps:YES];
 
 	if ([applicationObject respondsToSelector:@selector(run)]){
 		[applicationObject
@@ -85,7 +85,7 @@ int main (int argc, const char** argv){
 	[window release];
 //	[mainNib release];
 	[applicationObject release];
-	[pool release];
+//	[pool release];
 
 	return 0;
 }
