@@ -33,8 +33,8 @@
    * {{{make}}}
    * {{{make install}}}
  # *zlib*
-   * Download *zlib* sources from [http://zlib.net/zlib127.zip here] and unzip them to some directory, say */d*, then the sources will reside in */d/zlib-1.2.7*.
-   * {{{cd /d/zlib-1.2.7}}}
+   * Download *zlib* sources from [http://zlib.net/zlib-1.2.8.tar.gz here] and unpack them to some directory, say */d*, then the sources will reside in */d/zlib-1.2.8*.
+   * {{{cd /d/zlib-1.2.8}}}
    * {{{make -f win32/Makefile.gcc}}}
    * {{{make -f win32/Makefile.gcc install INCLUDE_PATH=/usr/local/include LIBRARY_PATH=/usr/local/lib BINARY_PATH=/usr/local/lib}}}
  # *libpng*
