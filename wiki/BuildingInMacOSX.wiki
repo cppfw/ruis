@@ -4,7 +4,7 @@
 
 == Step by step instructions ==
 
-1. Download .tgz file of GLEW from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
+1. Download .tgz file of *GLEW* from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
 {{{
 tar zxvf glew-1.10.0.tar
 cd glew-1.10.0
