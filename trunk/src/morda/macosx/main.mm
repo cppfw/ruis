@@ -31,9 +31,13 @@ void morda::App::ShowVirtualKeyboard()throw(){
 morda::App::ApplicationObject::ApplicationObject(){
 	NSApplication *applicationObject = [[MordaApplication alloc] init];
 	this->id = applicationObject;
+	
+	if(!this->id){
+		throw morda::Exc("morda::App::ApplicationObject::ApplicationObject(): failed to create application object");
+	}
 }
 
-morda::App::ApplicationObject::~ApplicationObject(){
+morda::App::ApplicationObject::~ApplicationObject()throw(){
 	NSApplication *applicationObject = (NSApplication*)this->id;
 	[applicationObject release];
 }
@@ -46,16 +50,56 @@ morda::App::WindowObject::WindowObject(){
 			defer:NO
 		];
 	this->id = window;
+	
+	if(!this->id){
+		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
+	}
 }
 
-morda::App::WindowObject::~WindowObject(){
+morda::App::WindowObject::~WindowObject()throw(){
 	NSWindow* window = (NSWindow*)this->id;
 	[window release];
 }
 
 
 
-morda::App::App(const morda::App::WindowParams& wp){
+morda::App::OpenGLContext::OpenGLContext(void* window){
+	NSWindow *wnd = (NSWindow*)window;
+	
+	static NSOpenGLPixelFormatAttribute attributes[] = {
+		NSOpenGLPFAAccelerated,
+		NSOpenGLPFAColorSize, 24,
+		NSOpenGLPFADepthSize, 16,
+		NSOpenGLPFADoubleBuffer,
+		NSOpenGLPFASupersample,
+		0
+	};
+	
+	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
+	if(pixelFormat == nil){
+		throw morda::Exc("morda::App::OpenGLContext::OpenGLContext(): failed to create pixel format");
+	}
+	
+	NSOpenGLContext *openGLContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
+	[pixelFormat release];
+	this->id = openGLContext;
+	if(!this->id){
+		throw morda::Exc("morda::App::OpenGLContext::OpenGLContext(): failed to create OpenGL context");
+	}
+	
+	[openGLContext setView:[wnd contentView]];
+}
+
+morda::App::OpenGLContext::~OpenGLContext()throw(){
+	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->id;
+	[openGLContext release];
+}
+
+
+
+morda::App::App(const morda::App::WindowParams& wp) :
+		openGLContext(windowObject.id)
+{
 	//TODO:
 }
 

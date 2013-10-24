@@ -262,14 +262,20 @@ private:
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();
-		~ApplicationObject();
+		~ApplicationObject()throw();
 	} applicationObject;
 	
 	struct WindowObject{
 		void* id;
 		WindowObject();
-		~WindowObject();
+		~WindowObject()throw();
 	} windowObject;
+	
+	struct OpenGLContext{
+		void *id;
+		OpenGLContext(void* window);
+		~OpenGLContext()throw();
+	} openGLContext;
 	
 	inline void SwapGLBuffers(){
 		TRACE(<< "TODO: swap gl buffers" << std::endl)
