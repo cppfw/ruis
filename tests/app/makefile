@@ -53,12 +53,19 @@ ifeq ($(platform), macosx)
 	@DYLD_LIBRARY_PATH=../../src ./$^
 endif
 
+ifeq ($(platform), macosx)
+    $(binary_name): ../../src/libmorda.a
+
+    ../../src/libmorda.a:
+	@$(MAKE) -C ../../src/
+endif
+
 $(binary_name): src/main.cpp
 	@echo Building $@...
 	@g++ -o $@ $(cf) $^ $(includes) $(libs)
 
 
-
+.PHONY:
 clean:
 	@rm -rf $(binary_name)
 

@@ -177,7 +177,7 @@ void morda::App::Exec(){
 	}while(!quitFlag);
 	
 
-	[window release];
+//	[window release];
 //	[mainNib release];
 //	[applicationObject release];
 //	[pool release];
