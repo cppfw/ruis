@@ -267,7 +267,7 @@ private:
 	
 	struct WindowObject{
 		void* id;
-		WindowObject();
+		WindowObject(const morda::App::WindowParams& wp);
 		~WindowObject()throw();
 	} windowObject;
 	

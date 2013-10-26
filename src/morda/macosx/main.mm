@@ -40,9 +40,9 @@ morda::App::ApplicationObject::~ApplicationObject()throw(){
 	[applicationObject release];
 }
 
-morda::App::WindowObject::WindowObject(){
+morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	NSWindow* window = [[NSWindow alloc]
-			initWithContentRect:NSMakeRect(0, 0, 200, 200)
+			initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
 			styleMask:NSTitledWindowMask
 			backing:NSBackingStoreBuffered
 			defer:NO
@@ -102,6 +102,7 @@ void morda::App::OpenGLContext::Destroy()throw(){
 
 
 morda::App::App(const morda::App::WindowParams& wp) :
+		windowObject(wp),
 		openGLContext(windowObject.id)
 {
 	this->UpdateWindowRect(
@@ -162,6 +163,9 @@ void morda::App::Exec(){
 //				waitUntilDone:YES
 //			];
 //	}
+	
+	this->Render();//initial render
+	
 	bool quitFlag = false;
 	do{
 		NSEvent *event =

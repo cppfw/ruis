@@ -40,7 +40,10 @@ cf += -g
 
 default: $(binary_name)
 
+.PHONY:
 test: $(binary_name)
+	@$(MAKE) clean
+	@$(MAKE)
 	@echo running $^...
 ifeq ($(platform), windows)
 	@cp ../../src/libmorda.dll .
@@ -53,14 +56,9 @@ ifeq ($(platform), macosx)
 	@DYLD_LIBRARY_PATH=../../src ./$^
 endif
 
-ifeq ($(platform), macosx)
-    $(binary_name): ../../src/libmorda.a
-
-    ../../src/libmorda.a:
-	@$(MAKE) -C ../../src/
-endif
 
 $(binary_name): src/main.cpp
+	@$(MAKE) -C ../../src
 	@echo Building $@...
 	@g++ -o $@ $(cf) $^ $(includes) $(libs)
 
