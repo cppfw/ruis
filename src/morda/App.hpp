@@ -274,7 +274,11 @@ private:
 	struct OpenGLContext{
 		void *id;
 		OpenGLContext(void* window);
-		~OpenGLContext()throw();
+		~OpenGLContext()throw(){
+			this->Destroy();
+		}
+		
+		void Destroy()throw();
 	} openGLContext;
 	
 	void SwapGLBuffers();
