@@ -277,10 +277,7 @@ private:
 		~OpenGLContext()throw();
 	} openGLContext;
 	
-	inline void SwapGLBuffers(){
-		TRACE(<< "TODO: swap gl buffers" << std::endl)
-		//TODO:
-	}
+	void SwapGLBuffers();
 	
 	friend void Main(int argc, const char** argv);
 	void Exec();
