@@ -168,10 +168,12 @@ void morda::App::Exec(){
 	
 	bool quitFlag = false;
 	do{
+		ting::u32 millis = this->updater.Update();
+		
 		NSEvent *event =
 			[applicationObject
 				nextEventMatchingMask:NSAnyEventMask
-				untilDate:[NSDate distantFuture]
+				untilDate:[NSDate dateWithTimeIntervalSinceNow:(double(millis) / 1000.0)]
 				inMode:NSDefaultRunLoopMode
 				dequeue:YES];
 
