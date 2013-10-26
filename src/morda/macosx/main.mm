@@ -88,6 +88,7 @@ morda::App::OpenGLContext::OpenGLContext(void* window){
 	}
 	
 	[openGLContext setView:[wnd contentView]];
+	[openGLContext makeCurrentContext];
 }
 
 morda::App::OpenGLContext::~OpenGLContext()throw(){
@@ -100,9 +101,22 @@ morda::App::OpenGLContext::~OpenGLContext()throw(){
 morda::App::App(const morda::App::WindowParams& wp) :
 		openGLContext(windowObject.id)
 {
-	//TODO:
+	this->UpdateWindowRect(
+			morda::Rect2f(
+					0,
+					0,
+					float(wp.dim.x),
+					float(wp.dim.y)
+				)
+		);
 }
 
+
+
+void morda::App::SwapGLBuffers(){
+	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->openGLContext.id;
+	[openGLContext flushBuffer];
+}
 
 
 void morda::App::Exec(){
