@@ -6,16 +6,14 @@
 
 
 
-
-
-@interface MordaApplication : NSApplication{
-	bool shouldKeepRunning;
-}
-
-- (void)run;
-- (void)terminate:(id)sender;
-
-@end
+//@interface MordaApplication : NSApplication{
+//	bool shouldKeepRunning;
+//}
+//
+//- (void)run;
+//- (void)terminate:(id)sender;
+//
+//@end
 
 
 ting::Ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::string& path)const{
@@ -29,7 +27,7 @@ void morda::App::ShowVirtualKeyboard()throw(){
 }
 
 morda::App::ApplicationObject::ApplicationObject(){
-	NSApplication *applicationObject = [[MordaApplication alloc] init];
+	NSApplication *applicationObject = [[NSApplication alloc] init];
 	this->id = applicationObject;
 	
 	if(!this->id){
@@ -157,19 +155,67 @@ void morda::App::Exec(){
 	[window makeKeyAndOrderFront:nil];
 //	[NSApp activateIgnoringOtherApps:YES];
 
-	if ([applicationObject respondsToSelector:@selector(run)]){
-		[applicationObject
-				performSelectorOnMainThread:@selector(run)
-				withObject:nil
-				waitUntilDone:YES
-			];
-	}
+//	if ([applicationObject respondsToSelector:@selector(run)]){
+//		[applicationObject
+//				performSelectorOnMainThread:@selector(run)
+//				withObject:nil
+//				waitUntilDone:YES
+//			];
+//	}
+	bool quitFlag = false;
+	do{
+		NSEvent *event =
+			[applicationObject
+				nextEventMatchingMask:NSAnyEventMask
+				untilDate:[NSDate distantFuture]
+				inMode:NSDefaultRunLoopMode
+				dequeue:YES];
+
+		[applicationObject sendEvent:event];
+		[applicationObject updateWindows];
+		this->Render();
+	}while(!quitFlag);
+	
 
 	[window release];
 //	[mainNib release];
 //	[applicationObject release];
 //	[pool release];
 }
+
+
+
+//@implementation MordaApplication
+
+//- (void)run{
+////	[self finishLaunching];
+//	[[NSNotificationCenter defaultCenter]
+//		postNotificationName:NSApplicationWillFinishLaunchingNotification
+//		object:NSApp];
+//	[[NSNotificationCenter defaultCenter]
+//		postNotificationName:NSApplicationDidFinishLaunchingNotification
+//		object:NSApp];
+//
+//	shouldKeepRunning = YES;
+//	do{
+//		NSEvent *event =
+//			[self
+//				nextEventMatchingMask:NSAnyEventMask
+//				untilDate:[NSDate distantFuture]
+//				inMode:NSDefaultRunLoopMode
+//				dequeue:YES];
+//
+//		[self sendEvent:event];
+//		[self updateWindows];
+//		
+//	}while(shouldKeepRunning);
+//}
+
+//- (void)terminate:(id)sender{
+//	shouldKeepRunning = NO;
+//}
+//
+//@end
 
 
 
@@ -182,39 +228,6 @@ void Main(int argc, const char** argv){
 }
 
 }
-
-
-
-@implementation MordaApplication
-
-- (void)run{
-//	[self finishLaunching];
-	[[NSNotificationCenter defaultCenter]
-		postNotificationName:NSApplicationWillFinishLaunchingNotification
-		object:NSApp];
-	[[NSNotificationCenter defaultCenter]
-		postNotificationName:NSApplicationDidFinishLaunchingNotification
-		object:NSApp];
-
-	shouldKeepRunning = YES;
-	do{
-		NSEvent *event =
-			[self
-				nextEventMatchingMask:NSAnyEventMask
-				untilDate:[NSDate distantFuture]
-				inMode:NSDefaultRunLoopMode
-				dequeue:YES];
-
-		[self sendEvent:event];
-		[self updateWindows];
-	}while(shouldKeepRunning);
-}
-
-- (void)terminate:(id)sender{
-	shouldKeepRunning = NO;
-}
-
-@end
 
 
 
