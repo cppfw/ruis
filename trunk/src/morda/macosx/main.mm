@@ -164,10 +164,10 @@ void morda::App::Exec(){
 //			];
 //	}
 	
-	this->Render();//initial render
-	
 	bool quitFlag = false;
 	do{
+		this->Render();
+		
 		ting::u32 millis = this->updater.Update();
 		
 		NSEvent *event =
@@ -177,9 +177,50 @@ void morda::App::Exec(){
 				inMode:NSDefaultRunLoopMode
 				dequeue:YES];
 
-		[applicationObject sendEvent:event];
-		[applicationObject updateWindows];
-		this->Render();
+		if(event){
+			TRACE(<< "Event: type = "<< [event type] << std::endl)
+	
+			switch([event type]){
+				case NSLeftMouseDown:
+					{
+						NSPoint pos = [event locationInWindow];
+						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
+						this->HandleMouseButtonDown(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::LEFT,
+								0
+							);
+					}
+					break;
+				case NSLeftMouseUp:
+					{
+						NSPoint pos = [event locationInWindow];
+						this->HandleMouseButtonUp(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::LEFT,
+								0
+							);
+					}
+					break;
+				
+				case NSLeftMouseDragged:
+					{
+						NSPoint pos = [event locationInWindow];
+						this->HandleMouseMove(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								0
+							);
+					}
+					break;
+					
+				//TODO:
+				
+				default:
+					[applicationObject sendEvent:event];
+					[applicationObject updateWindows];
+					break;
+			}
+		}
 	}while(!quitFlag);
 	
 

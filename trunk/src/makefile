@@ -213,7 +213,7 @@ ifeq ($(platform), macosx)
 $(obj_dir)/%.o:%.mm
 	@echo Compiling $<...
 	@mkdir -p $(dir $@)
-	@gcc -x objective-c++ -c -o "$@" $<
+	@gcc -x objective-c++ -c $(defines) -o "$@" $<
 endif
 
 #======================
