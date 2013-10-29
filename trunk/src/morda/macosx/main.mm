@@ -127,8 +127,6 @@ void morda::App::SwapGLBuffers(){
 
 
 void morda::App::Exec(){
-	//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
 //    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
 //    Class principalClass = NSClassFromString([infoDictionary objectForKey:@"NSPrincipalClass"]);
 //	NSApplication *applicationObject = [[MordaApplication alloc] init];//[principalClass sharedApplication];
@@ -151,21 +149,9 @@ void morda::App::Exec(){
 //	[appMenu addItem:quitMenuItem];
 //	[appMenuItem setSubmenu:appMenu];
 
-//	NSWindow* window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200)
 	NSWindow* window = (NSWindow*)this->windowObject.id;
-//		styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
-//	[window cascadeTopLeftFromPoint:NSMakePoint(20, 20)];
 	[window setTitle:[[NSProcessInfo processInfo] processName]];
 	[window makeKeyAndOrderFront:nil];
-//	[NSApp activateIgnoringOtherApps:YES];
-
-//	if ([applicationObject respondsToSelector:@selector(run)]){
-//		[applicationObject
-//				performSelectorOnMainThread:@selector(run)
-//				withObject:nil
-//				waitUntilDone:YES
-//			];
-//	}
 
 	
 	bool quitFlag = false;
@@ -270,47 +256,7 @@ void morda::App::Exec(){
 			}
 		}
 	}while(!quitFlag);
-	
-
-//	[window release];
-//	[mainNib release];
-//	[applicationObject release];
-//	[pool release];
 }
-
-
-
-//@implementation MordaApplication
-
-//- (void)run{
-////	[self finishLaunching];
-//	[[NSNotificationCenter defaultCenter]
-//		postNotificationName:NSApplicationWillFinishLaunchingNotification
-//		object:NSApp];
-//	[[NSNotificationCenter defaultCenter]
-//		postNotificationName:NSApplicationDidFinishLaunchingNotification
-//		object:NSApp];
-//
-//	shouldKeepRunning = YES;
-//	do{
-//		NSEvent *event =
-//			[self
-//				nextEventMatchingMask:NSAnyEventMask
-//				untilDate:[NSDate distantFuture]
-//				inMode:NSDefaultRunLoopMode
-//				dequeue:YES];
-//
-//		[self sendEvent:event];
-//		[self updateWindows];
-//		
-//	}while(shouldKeepRunning);
-//}
-
-//- (void)terminate:(id)sender{
-//	shouldKeepRunning = NO;
-//}
-//
-//@end
 
 
 
