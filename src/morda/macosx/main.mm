@@ -52,6 +52,9 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	if(!this->id){
 		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
 	}
+	
+	[window setAcceptsMouseMovedEvents:YES];
+	[window becomeFirstResponder];
 }
 
 morda::App::WindowObject::~WindowObject()throw(){
@@ -163,6 +166,7 @@ void morda::App::Exec(){
 //				waitUntilDone:YES
 //			];
 //	}
+
 	
 	bool quitFlag = false;
 	do{
@@ -202,7 +206,51 @@ void morda::App::Exec(){
 							);
 					}
 					break;
-				
+				case NSRightMouseDown:
+					{
+						NSPoint pos = [event locationInWindow];
+						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
+						this->HandleMouseButtonDown(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::RIGHT,
+								0
+							);
+					}
+					break;
+				case NSRightMouseUp:
+					{
+						NSPoint pos = [event locationInWindow];
+						this->HandleMouseButtonUp(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::RIGHT,
+								0
+							);
+					}
+					break;
+				case NSOtherMouseDown:
+					{
+						NSPoint pos = [event locationInWindow];
+						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
+						this->HandleMouseButtonDown(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::MIDDLE,
+								0
+							);
+					}
+					break;
+				case NSOtherMouseUp:
+					{
+						NSPoint pos = [event locationInWindow];
+						this->HandleMouseButtonUp(
+								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
+								morda::Widget::MIDDLE,
+								0
+							);
+					}
+					break;
+					
+				case NSOtherMouseDragged:
+				case NSRightMouseDragged:
 				case NSLeftMouseDragged:
 					{
 						NSPoint pos = [event locationInWindow];
