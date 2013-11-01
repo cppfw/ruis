@@ -58,3 +58,9 @@ cd stob
 make
 make install
 }}}
+  # Check out *morda* sources, build and run test app:
+{{{
+svn co http://morda.googlecode.com/svn/trunk/ morda
+cd morda
+make test
+}}}
