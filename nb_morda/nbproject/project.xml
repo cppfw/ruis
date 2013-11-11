@@ -4,7 +4,7 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>nb_morda</name>
-            <c-extensions>m</c-extensions>
+            <c-extensions/>
             <cpp-extensions>cpp,mm</cpp-extensions>
             <header-extensions>hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
