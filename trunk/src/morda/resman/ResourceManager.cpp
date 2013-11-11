@@ -7,7 +7,7 @@ using namespace morda;
 
 namespace{
 
-const char* DResTag = "res";
+const char* DResTag = "Res";
 const char* DIncludeTag = "include";
 
 

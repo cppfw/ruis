@@ -200,7 +200,7 @@ private:
 		void Destroy()throw();
 	} xInputMethod;
 
-	friend void Main(int argc, char** argv);
+	friend void Main(int argc, const char** argv);
 	void Exec();
 
 	inline void SwapGLBuffers(){
