@@ -22,7 +22,7 @@ ifeq ($(platform),macosx)
     includes +=
 endif
 ifeq ($(platform),linux)
-    libs := -lting ../../src/libmorda.so -lGLEW -lstob
+    libs := -lting ../../src/libmorda.so -lGLEW -lstob -pthread -lGL
     includes += -I../../ext
 endif
 
