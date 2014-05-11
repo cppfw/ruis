@@ -28,9 +28,7 @@ void Container::ApplyDescription(const stob::Node& description){
 
 //override
 void Container::Render(const morda::Matr4f& matrix)const{
-#ifdef M_MORDA_RENDER_WIDGET_BORDERS
 	this->Widget::Render(matrix);
-#endif
 	
 	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
 		if((*c)->IsHidden()){

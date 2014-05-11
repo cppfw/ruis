@@ -32,6 +32,10 @@ void Widget::ApplyDescription(const stob::Node& description, bool doNotCopyProp)
 	if(const stob::Node* p = description.GetProperty("name")){
 		this->name = p->Value();
 	}
+	
+	if(const stob::Node* p = description.GetProperty("clip")){
+		this->clip = p->AsBool();
+	}
 }
 
 
@@ -58,7 +62,14 @@ void Widget::RelayoutNeeded()throw(){
 
 
 void Widget::Render(const morda::Matr4f& matrix)const{
+	if(clip){
+		//TODO:
+	}else{
+		//TODO:
+	}
+	
 	//render border
+#ifdef M_MORDA_RENDER_WIDGET_BORDERS
 	morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	morda::Matr4f matr(matrix);
@@ -66,6 +77,7 @@ void Widget::Render(const morda::Matr4f& matrix)const{
 	s.SetMatrix(matr);
 	s.SetColor(morda::Vec3f(1, 0, 1));
 	s.DrawQuad01(GL_LINE_LOOP);
+#endif
 }
 
 

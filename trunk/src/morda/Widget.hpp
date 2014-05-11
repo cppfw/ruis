@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ class Widget : virtual public ting::RefCounted, public KeyListener{
 	friend class Container;
 	friend class App;
 	
-	ting::Ref<Widget> next, prev;
+	ting::Ref<Widget> next, prev;//used to store widgets in Container as double-linked list
 	
 private:
 	ting::WeakRef<Container> parent;
@@ -72,6 +72,17 @@ private:
 	morda::Vec2f minDim;
 	ting::Inited<bool, true> minDimNeedsRecomputing;
 	
+	ting::Inited<bool, false> clip;
+public:
+	bool Clip()const throw(){
+		return this->clip;
+	}
+	
+	void SetClip(bool clip)throw(){
+		this->clip = clip;
+	}
+	
+private:
 	std::string name;
 	
 	//Apply description from STOB
