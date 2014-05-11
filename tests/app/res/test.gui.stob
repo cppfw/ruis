@@ -31,6 +31,8 @@ Container{
 
 	name {someContainer}
 
+	clip {true}
+
 	layout{
 		LinearLayout{
 //		FrameLayout{
