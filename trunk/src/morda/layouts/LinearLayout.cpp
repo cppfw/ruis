@@ -108,6 +108,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 		}
 	}
 	
+	//arrange widgets
 	{
 		float flexible = cont.Rect().d[longIndex] - rigid;
 		ting::util::ClampBottom(flexible, 0.0f);
