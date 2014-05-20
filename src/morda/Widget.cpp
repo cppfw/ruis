@@ -48,14 +48,14 @@ void Widget::RemoveFromParent(){
 
 
 
-void Widget::RelayoutNeeded()throw(){
+void Widget::SetRelayoutNeeded()throw(){
 	this->minDimNeedsRecomputing = true;
 	if(this->relayoutNeeded){
 		return;
 	}
 	this->relayoutNeeded = true;
 	if(ting::Ref<Container> p = this->parent){
-		p->RelayoutNeeded();
+		p->SetRelayoutNeeded();
 	}
 }
 

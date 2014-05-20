@@ -35,7 +35,7 @@ void Label::SetText(const std::string& text){
 	
 	this->bb = this->font->Fnt().StringBoundingBox(this->text);
 	
-	this->RelayoutNeeded();
+	this->SetRelayoutNeeded();
 }
 
 

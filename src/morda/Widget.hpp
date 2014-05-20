@@ -163,6 +163,7 @@ public:
 		this->relayoutNeeded = false;
 	}
 
+	//TODO: should it be only for containers?
 	virtual ting::Ref<Widget> FindChildByName(const std::string& name)throw(){
 		return 0;
 	}
@@ -325,7 +326,7 @@ protected:
 	
 public:
 
-	void RelayoutNeeded()throw();
+	void SetRelayoutNeeded()throw();
 	
 	inline void Hide(){
 		this->SetHidden(true);

@@ -52,7 +52,7 @@ protected:
 public:
 	inline void SetPadding(LeftBottomRightTop padding)throw(){
 		this->Padded::SetPadding(padding);
-		this->RelayoutNeeded();
+		this->SetRelayoutNeeded();
 	}
 	
 	inline const LeftBottomRightTop& Padding()const throw(){

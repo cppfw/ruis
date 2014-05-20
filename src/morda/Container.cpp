@@ -212,7 +212,7 @@ void Container::Add(const ting::Ref<Widget>& w){
 	
 	w->parent = this;
 
-	this->RelayoutNeeded();
+	this->SetRelayoutNeeded();
 	
 	ASSERT(!w->IsHovered())
 }
@@ -241,7 +241,7 @@ void Container::Remove(const ting::Ref<Widget>& w){
 		w->isHovered = false;
 		w->OnMouseOut();
 	}
-	this->RelayoutNeeded();
+	this->SetRelayoutNeeded();
 }
 
 
