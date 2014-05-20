@@ -224,9 +224,7 @@ private:
 	}
 	
 	template <bool is_down> void PassKeyEventToParent(key::Key keyCode);
-	
 	void PassKeyUpEventToParent(key::Key keyCode);
-	
 	void PassKeyDownEventToParent(key::Key keyCode);
 	
 	ting::Inited<bool, false> deliverCharacterInputEvents;
