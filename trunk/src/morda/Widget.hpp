@@ -61,20 +61,20 @@ private:
 	
 	ting::Inited<bool, false> isHovered;
 
-	void Unhover();
-
 	ting::Inited<bool, false> isHidden;
 
 	ting::Inited<bool, false> isDisabled;
 
 	morda::Rect2f rect;
 	
+	//minimal dimensions needed to show widget's contents normally
 	morda::Vec2f minDim;
 	ting::Inited<bool, true> minDimNeedsRecomputing;
 	
+	//clip widgets contents by widget's border if set to true
 	ting::Inited<bool, false> clip;
 public:
-	bool Clip()const throw(){
+	bool GetClip()const throw(){
 		return this->clip;
 	}
 	
@@ -83,6 +83,7 @@ public:
 	}
 	
 private:
+	//logical ID of the widget
 	std::string name;
 	
 	//Apply description from STOB
@@ -90,6 +91,7 @@ private:
 	
 	ting::Inited<bool, true> relayoutNeeded;
 	
+	//properties from STOB description
 	ting::Ptr<stob::Node> prop;
 public:
 	inline const stob::Node* Prop()const throw(){
@@ -116,7 +118,7 @@ public:
 		return this->parent;
 	}
 	
-	inline ting::WeakRef<const Container> Parent()const throw(){
+	inline const ting::WeakRef<const Container>& Parent()const throw(){
 		return this->parent;
 	}
 	
