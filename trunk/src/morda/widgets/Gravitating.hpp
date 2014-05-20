@@ -58,7 +58,7 @@ public:
 	
 	inline void SetGravity(Gravity gravity){
 		this->gravity = gravity;
-		this->RelayoutNeeded();
+		this->SetRelayoutNeeded();
 	}
 };
 

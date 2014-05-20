@@ -73,7 +73,7 @@ public:
 
 	void SetLayout(ting::Ptr<Layout> layout = ting::Ptr<Layout>()){
 		this->layout = layout;
-		this->RelayoutNeeded();
+		this->SetRelayoutNeeded();
 	}
 	
 	ting::Ptr<Layout> ExtractLayout()throw(){
