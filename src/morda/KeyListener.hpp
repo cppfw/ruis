@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -155,7 +155,7 @@ public:
 	 * It will not be passed to root container if no widget is focused.
 	 * Character input is not propagated to parent widgets. The consumption
 	 * of the event only has effect when event is consumed in KeyListener set to a widget,
-	 * then it will not be propagated to Widgets overridden handler method.
+	 * then it will not be propagated to Widget's overridden handler method.
      * @param unicode - unicode string in UTF-32 of entered characters.
 	 * @return true to consume event.
 	 * @return false to allow event to propagate further.
