@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ public:
 	
 public:
 	static inline const stob::Node* GetLayoutProp(const stob::Node& prop){
-		return prop.Child(D_Layout()).second;
+		return prop.Child(D_Layout()).node();
 	}
 	
 	static inline const stob::Node* GetLayoutProp(const stob::Node* prop){

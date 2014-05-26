@@ -18,7 +18,7 @@ void FrameLayout::ArrangeWidgets(Container& cont)const{
 		Gravity gravity;
 
 		if(const stob::Node* layout = Layout::GetLayoutProp((*c)->Prop())){
-			dim = Layout::Dim::FromSTOB(layout->Child(Layout::Dim::D_Dim()).second);
+			dim = Layout::Dim::FromSTOB(layout->Child(Layout::Dim::D_Dim()).node());
 			gravity = Gravity::FromLayout(*layout);
 		}else{
 			dim = Layout::Dim::Default();

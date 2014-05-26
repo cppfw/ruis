@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -99,16 +99,25 @@ public:
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
      * @param gui - GUI script to use.
-     * @return reference to the root widget of the created hierarchy.
+     * @return reference to the inflated widget.
      */
 	ting::Ref<morda::Widget> Inflate(const stob::Node& gui)const;
 	
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
+	 * Inflates widget hierarchy, assuming that GUI script describes contents of
+	 * a root container.
      * @param fi - file interface to get the GUI script from.
-     * @return reference to the root widget of the created hierarchy.
+     * @return reference to the root container of the created hierarchy.
      */
 	ting::Ref<morda::Container> Inflate(ting::fs::File& fi)const;
+	
+	/**
+	 * @brief Inflate first widget described in GUI script.
+     * @param fi - file interface to get the GUI script from.
+     * @return reference to the inflated widget.
+     */
+	ting::Ref<morda::Widget> InflateFirstFrom(ting::fs::File& fi)const;
 	
 	/**
 	 * @brief Registers a layout factory.

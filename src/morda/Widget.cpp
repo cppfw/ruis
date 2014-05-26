@@ -11,7 +11,7 @@ using namespace morda;
 
 void Widget::ApplyDescription(const stob::Node& description, bool doNotCopyProp){
 	if(!doNotCopyProp){
-		if(const stob::Node* p = description.Child("prop").second){
+		if(const stob::Node* p = description.Child("prop").node()){
 			this->prop = p->Clone();
 			this->prop->SetValue();//clear value of the prop node, we don't need it
 		}

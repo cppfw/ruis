@@ -16,7 +16,7 @@ void Container::ApplyDescription(const stob::Node& description){
 	}
 	
 	for(const stob::Node* n = description.Child(); n; n = n->Next()){
-		if(!n->IsCapital()){
+		if(n->IsProperty()){
 			continue;//skip properties
 		}
 		

@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ protected:
 	{}
 	
 	inline Padded(const stob::Node& description){
-		const stob::Node* n = description.Child("padding").second;
+		const stob::Node* n = description.Child("padding").node();
 		if(!n){
 			this->padding = LeftBottomRightTop::Default();
 			return;

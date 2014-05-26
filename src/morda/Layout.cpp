@@ -50,7 +50,7 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 
 //static
 Layout::Dim Layout::Dim::FromLayout(const stob::Node& layout)throw(){
-	const stob::Node* dim = layout.Child(Dim::D_Dim()).second;
+	const stob::Node* dim = layout.Child(Dim::D_Dim()).node();
 	if(!dim){
 		return Dim::Default();
 	}
@@ -61,7 +61,7 @@ Layout::Dim Layout::Dim::FromLayout(const stob::Node& layout)throw(){
 
 //static
 Layout::Dim Layout::Dim::FromPropLayout(const stob::Node& prop)throw(){
-	const stob::Node* layout = prop.Child(D_Layout()).second;
+	const stob::Node* layout = prop.Child(D_Layout()).node();
 	if(!layout){
 		return Dim::Default();
 	}
