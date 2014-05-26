@@ -88,7 +88,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 				
 				i->gravity = Gravity::FromLayout(*layout);
 				
-				if(const stob::Node* margins = layout->Child(D_Margins).second){
+				if(const stob::Node* margins = layout->Child(D_Margins).node()){
 					i->margins = LeftBottomRightTop::FromSTOB(*margins);
 				}else{
 					i->margins = LeftBottomRightTop::Default();
@@ -155,8 +155,8 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
 		morda::Vec2f dim = (*c)->GetMinDim();
 		if((*c)->Prop()){
-			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).second){
-				if(const stob::Node* m = layout->Child(D_Margins).second){
+			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).node()){
+				if(const stob::Node* m = layout->Child(D_Margins).node()){
 					margins = LeftBottomRightTop::FromSTOB(*m);
 				}
 				

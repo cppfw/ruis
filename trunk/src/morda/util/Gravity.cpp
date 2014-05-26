@@ -47,7 +47,7 @@ Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
 
 //static
 Gravity Gravity::FromLayout(const stob::Node& layout)throw(){
-	const stob::Node* gravity = layout.Child(D_Gravity).second;
+	const stob::Node* gravity = layout.Child(D_Gravity).node();
 	if(!gravity){
 		return Gravity::Default();
 	}

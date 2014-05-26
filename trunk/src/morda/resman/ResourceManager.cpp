@@ -15,13 +15,14 @@ const char* DIncludeTag = "include";
 //fi path should be set to resource script for resolving includes.
 //return pointer to the last child node of the script
 stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
-	std::pair<stob::Node*, stob::Node*> n = root->Child(DIncludeTag);
-	for(; n.second;){
-		ASSERT(n.second)
-		stob::Node* incPathNode = n.second->Child();
+	stob::Node::NodeAndPrev n = root->Child(DIncludeTag);
+	for(; n.node();){
+		ASSERT(n.node())
+		stob::Node* incPathNode = n.node()->Child();
 		if(!incPathNode){
 			throw Exc("include tag without value encountered in resource script");
 		}
+		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
 		
 		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
 		ting::Ptr<stob::Node> incNode = stob::Load(fi);
@@ -30,7 +31,7 @@ stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
 		stob::Node* lastChild = ResolveIncludes(fi, incNode.operator->());
 		
 		//substitute includes
-		if(!n.first){
+		if(!n.prev()){
 			//include tag is the very first tag
 			root->RemoveFirstChild();
 			
@@ -42,28 +43,28 @@ stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
 				n = lastChild->Next(DIncludeTag);
 			}else{
 				ASSERT(!incNode->Child())
-				n = n.second->Next(DIncludeTag);
+				n = n.node()->Next(DIncludeTag);
 			}
 			continue;
 		}else{
 			//include tag is not the first one
 			
-			n.first->RemoveNext();
+			n.prev()->RemoveNext();
 			if(lastChild){
 				ASSERT(!lastChild->Next())
 				ASSERT(incNode->Child())
-				ting::Ptr<stob::Node> tail = n.first->ChopNext();
-				n.first->SetNext(incNode->RemoveChildren());
+				ting::Ptr<stob::Node> tail = n.prev()->ChopNext();
+				n.prev()->SetNext(incNode->RemoveChildren());
 				lastChild->SetNext(tail);
 				n = lastChild->Next(DIncludeTag);
 			}else{
 				ASSERT(!incNode->Child())
-				n = n.second->Next(DIncludeTag);
+				n = n.node()->Next(DIncludeTag);
 			}
 			continue;
 		}
 	}
-	return n.first;
+	return n.prev();
 }
 
 }//~namespace
@@ -98,7 +99,7 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
-		for(const stob::Node* e = i->resScript->Child(DResTag).second; e; e = e->Next(DResTag).second){
+		for(const stob::Node* e = i->resScript->Child(DResTag).node(); e; e = e->Next(DResTag).node()){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
 			const stob::Node* nameProp = e->GetProperty("name");
 			if(!nameProp){

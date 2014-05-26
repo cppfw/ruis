@@ -154,6 +154,20 @@ ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 
 
 
+ting::Ref<morda::Widget> GuiInflater::InflateFirstFrom(ting::fs::File& fi) const{
+	ting::Ptr<stob::Node> root = stob::Load(fi);
+	ASSERT(root)
+	
+	stob::Node* first = root->ChildNonProperty().node();
+	if(!first){
+		return 0;
+	}
+	
+	return this->Inflate(*first);
+}
+
+
+
 ting::Ref<morda::Widget> GuiInflater::Inflate(const stob::Node& gui)const{
 	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
 	
