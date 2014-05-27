@@ -16,8 +16,7 @@
 #include <signal.h>
 
 #include "AssetFile.hpp"
-#include "../App.hpp"
-#include "../KeyListener.hpp"
+#include "../../App.hpp"
 
 
 
@@ -874,7 +873,8 @@ void HandleInputEvents(){
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
-								app.rootContainer->OnMouseButtonDown(
+								app.rootContainer->OnMouseButton(
+										true,
 										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
 										pointerId
@@ -899,7 +899,8 @@ void HandleInputEvents(){
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
-								app.rootContainer->OnMouseButtonUp(
+								app.rootContainer->OnMouseButton(
+										false,
 										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
 										pointerId

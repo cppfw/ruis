@@ -32,13 +32,22 @@ void AbstractButton::Render(const morda::Matr4f& matrix)const{
 
 
 //override
-bool AbstractButton::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "AbstractButton::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
+bool AbstractButton::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
 	}
 
-	this->isPressed = true;
+	if(isDown){
+		this->isPressed = true;
+	}else{
+		if(this->isPressed){
+			this->isPressed = false;
+	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
+			this->pressed.Emit();
+			return true;
+		}
+	}
 
 	return true;
 }
@@ -46,26 +55,10 @@ bool AbstractButton::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton but
 
 
 //override
-bool AbstractButton::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "AbstractButton::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
-	if(button != LEFT){
-		return false;
-	}
+void AbstractButton::OnHoverChanged(){
+//	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
-	if(this->isPressed){
+	if(!this->IsHovered()){
 		this->isPressed = false;
-//		TRACE(<< "AbstractButton::OnMouseButtonUp(): emitting signal" << std::endl)
-		this->pressed.Emit();
-		return true;
 	}
-	
-	return false;
-}
-
-
-
-//override
-void AbstractButton::OnMouseOut(){
-//	TRACE(<< "AbstractButton::OnMouseOut(): enter" << std::endl)
-	this->isPressed = false;
 }

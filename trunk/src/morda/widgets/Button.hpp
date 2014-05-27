@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2013 Ivan Gagis
+Copyright (c) 2012-2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -62,13 +62,10 @@ public:
 	void Render(const morda::Matr4f& matrix)const;
 	
 	//override
-	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 	
 	//override
-	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
-	
-	//override
-	void OnMouseOut();
+	void OnHoverChanged();
 	
 	inline bool IsPressed()const throw(){
 		return this->isPressed;

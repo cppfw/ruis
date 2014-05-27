@@ -1,4 +1,4 @@
-#include "../App.hpp"
+#include "../../App.hpp"
 
 #include <ting/fs/FSFile.hpp>
 
@@ -175,7 +175,8 @@ void morda::App::Exec(){
 					{
 						NSPoint pos = [event locationInWindow];
 						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButtonDown(
+						this->HandleMouseButton(
+								true,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::LEFT,
 								0
@@ -185,7 +186,8 @@ void morda::App::Exec(){
 				case NSLeftMouseUp:
 					{
 						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButtonUp(
+						this->HandleMouseButton(
+								false,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::LEFT,
 								0
@@ -196,7 +198,8 @@ void morda::App::Exec(){
 					{
 						NSPoint pos = [event locationInWindow];
 						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButtonDown(
+						this->HandleMouseButton(
+								true,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::RIGHT,
 								0
@@ -206,7 +209,8 @@ void morda::App::Exec(){
 				case NSRightMouseUp:
 					{
 						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButtonUp(
+						this->HandleMouseButton(
+								false,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::RIGHT,
 								0
@@ -217,7 +221,8 @@ void morda::App::Exec(){
 					{
 						NSPoint pos = [event locationInWindow];
 						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButtonDown(
+						this->HandleMouseButton(
+								true,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::MIDDLE,
 								0
@@ -227,7 +232,8 @@ void morda::App::Exec(){
 				case NSOtherMouseUp:
 					{
 						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButtonUp(
+						this->HandleMouseButton(
+								false,
 								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
 								morda::Widget::MIDDLE,
 								0

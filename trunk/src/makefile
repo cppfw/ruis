@@ -36,13 +36,13 @@ endif
 srcs :=
 
 ifeq ($(platform), linux)
-    srcs += morda/linux/App.cpp
+    srcs += morda/glue/linux/App.cpp
 endif
 ifeq ($(platform), macosx)
-    srcs += morda/macosx/main.mm
+    srcs += morda/glue/macosx/main.mm
 endif
 ifeq ($(platform), windows)
-    srcs += morda/windows/App.cpp
+    srcs += morda/glue/windows/App.cpp
 endif
 
 srcs += morda/App.cpp

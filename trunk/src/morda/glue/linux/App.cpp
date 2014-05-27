@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../App.hpp"
+#include "../../App.hpp"
 
 #include <ting/WaitSet.hpp>
 #include <ting/fs/FSFile.hpp>
@@ -673,14 +673,16 @@ void App::Exec(){
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						this->HandleMouseButtonDown(
+						this->HandleMouseButton(
+								true,
 								morda::Vec2f(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
 						break;
 					case ButtonRelease:
-						this->HandleMouseButtonUp(
+						this->HandleMouseButton(
+								false,
 								morda::Vec2f(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0

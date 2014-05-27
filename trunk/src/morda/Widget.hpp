@@ -144,6 +144,17 @@ public:
 	inline bool IsHovered()const throw(){
 		return this->isHovered;
 	}
+	
+private:
+	void setHovered(bool isHovered){
+		bool needNotify = (this->isHovered != isHovered);
+		this->isHovered = isHovered;
+		if(needNotify){
+			this->OnHoverChanged();
+		}
+	}
+	
+public:
 
 	inline const morda::Rect2f& Rect()const throw(){
 		return this->rect;
@@ -286,12 +297,7 @@ public:
 	};
 
 	//return true to consume event
-	virtual bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-		return false;
-	}
-	
-	//return true to consume event
-	virtual bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+	virtual bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 		return false;
 	}
 
@@ -300,12 +306,8 @@ public:
 		return false;
 	}
 
-	virtual void OnMouseOut(){
-//		TRACE(<< "Widget::OnMouseOut(): invoked" << std::endl)
-	}
-
-	virtual void OnMouseIn(){
-//		TRACE(<< "Widget::OnMouseIn(): invoked" << std::endl)
+	virtual void OnHoverChanged(){
+//		TRACE(<< "Widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
 	virtual void OnResize(){
@@ -339,9 +341,8 @@ public:
 
 	inline void SetHidden(bool hidden){
 		this->isHidden = hidden;
-		if(this->isHidden && this->isHovered){
-			this->isHovered = false;
-			this->OnMouseOut();
+		if(this->isHidden){
+			this->setHovered(false);
 		}
 	}
 	

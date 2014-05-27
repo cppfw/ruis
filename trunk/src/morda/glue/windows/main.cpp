@@ -1,6 +1,6 @@
 //This file contains implementations of platform dependent methods from App class.
 
-#include "../App.hpp"
+#include "../../App.hpp"
 
 #include <windows.h>
 

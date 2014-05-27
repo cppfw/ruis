@@ -329,20 +329,13 @@ private:
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButtonDown(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
+	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
-		this->rootContainer->OnMouseButtonDown(morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
+		this->rootContainer->OnMouseButton(isDown, morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
 	}
 
-		//pos is in usual window coordinates, y goes down.
-	void HandleMouseButtonUp(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
-		if(this->rootContainer.IsNotValid()){
-			return;
-		}
-		this->rootContainer->OnMouseButtonUp(morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
-	}
 protected:
 	App(const WindowParams& requestedWindowParams);
 
