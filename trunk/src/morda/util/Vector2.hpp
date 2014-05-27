@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -288,6 +288,7 @@ public:
 	/**
 	 * @brief Component-wise multiplication.
 	 * Performs component-wise multiplication of two vectors.
+	 * Resulting vector is (x1 * x2, y1* y2).
 	 * The result of such operation is also vector.
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
@@ -297,6 +298,19 @@ public:
 				this->x * vec.x,
 				this->y * vec.y
 			);
+	}
+	
+	/**
+	 * @brief Component-wise multiplication.
+	 * Performs component-wise multiplication of this vector by another given vector.
+	 * See CompMul() for details.
+     * @param vec - vector to multiply by.
+     * @return reference to this Vector2 instance.
+     */
+	Vector2& CompMulBy(const Vector2& vec)throw(){
+		this->x *= vec.x;
+		this->y *= vec.y;
+		return *this;
 	}
 
 	/**

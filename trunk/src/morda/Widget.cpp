@@ -32,7 +32,7 @@ void Widget::ApplyDescription(const stob::Node& description, bool doNotCopyProp)
 	if(const stob::Node* p = description.GetProperty("name")){
 		this->name = p->Value();
 	}
-	
+
 	if(const stob::Node* p = description.GetProperty("clip")){
 		this->clip = p->AsBool();
 	}
@@ -62,14 +62,36 @@ void Widget::SetRelayoutNeeded()throw(){
 
 
 void Widget::RenderInternal(const morda::Matr4f& matrix)const{
-	if(clip){
+	if(this->clip){
+		GLint oldcissorBox[4];
+		glGetIntegerv(GL_SCISSOR_BOX, oldcissorBox);
+
+//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
+
+		//set scissor test
+		const Vec2f& viewportDim = App::Inst().viewportDim();
+
+		TRACE(<< " Widget::RenderInternal(): matrix = " << matrix << std::endl)
+		Vec2f p0 = matrix * Vec2f(0, 0);
+		p0 = (p0 + Vec2f(1, 1)) / 2;
+		p0.CompMulBy(viewportDim);
+
+		glScissor(p0.x, p0.y, this->rect.d.x, this->rect.d.y);
+//		glScissor(0, 0, 0, 0);
+		glEnable(GL_SCISSOR_TEST);
+
+//		TRACE(<< " Widget::RenderInternal(): p0 = " << p0 << std::endl)
 		//TODO:
 	}else{
 		//TODO:
 	}
-	
+
 	this->Render(matrix);
-	
+
+	if(this->clip){
+		glDisable(GL_SCISSOR_TEST);
+	}
+
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
 	morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
@@ -77,7 +99,7 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 	morda::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	s.SetMatrix(matr);
-	
+
 	if(this->IsHovered()){
 		s.SetColor(morda::Vec3f(0, 1, 0));
 	}else{
@@ -116,11 +138,11 @@ void Widget::PassKeyDownEventToParent(key::Key keyCode){
 
 void Widget::Focus()throw(){
 	ASSERT(App::Inst().ThisIsUIThread())
-	
+
 	if(this->IsFocused()){
 		return;
 	}
-	
+
 	if(ting::Ref<Widget> w = App::Inst().focusedWidget){
 		w->isFocused = false;
 	}
@@ -136,9 +158,9 @@ void Widget::Unfocus()throw(){
 	if(!this->IsFocused()){
 		return;
 	}
-	
+
 	ASSERT(App::Inst().focusedWidget.GetRef() && App::Inst().focusedWidget.GetRef().operator->() == this)
-	
+
 	App::Inst().focusedWidget.Reset();
 	this->isFocused = false;
 }
