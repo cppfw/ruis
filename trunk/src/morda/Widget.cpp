@@ -77,7 +77,12 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 	morda::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	s.SetMatrix(matr);
-	s.SetColor(morda::Vec3f(1, 0, 1));
+	
+	if(this->IsHovered()){
+		s.SetColor(morda::Vec3f(0, 1, 0));
+	}else{
+		s.SetColor(morda::Vec3f(1, 0, 1));
+	}
 	s.DrawQuad01(GL_LINE_LOOP);
 #endif
 }
