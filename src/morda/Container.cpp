@@ -42,7 +42,10 @@ void Container::Render(const morda::Matr4f& matrix)const{
 
 
 
-template <bool is_down> bool Container::OnMouseButtonAction(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned pointerId){
+//override
+bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+//	TRACE(<< "Container::OnMouseButton(): isDow = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
+	
 	//Copy children list to iterate through it later, because the original list of children
 	//may change during iterating.
 	//TODO:
@@ -64,40 +67,15 @@ template <bool is_down> bool Container::OnMouseButtonAction(const morda::Vec2f& 
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget is hovered.
-		if(!(*c)->IsHovered()){
-			(*c)->isHovered = true;
-			(*c)->OnMouseIn();
-		}
+		(*c)->setHovered(true);
 		
 		morda::Vec2f localPos(pos - (*c)->Rect().p);
 		
-		bool consume;
-		if(is_down){//this 'if' should be optimized out
-			consume = (*c)->OnMouseButtonDown(localPos, button, pointerId);
-		}else{
-			consume = (*c)->OnMouseButtonUp(localPos, button, pointerId);
-		}
-		if(consume){
+		if((*c)->OnMouseButton(isDown, localPos, button, pointerId)){
 			return true;
 		}
 	}
 	return false;
-}
-
-
-
-//override
-bool Container::OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Container::OnMouseButtonDown(): enter, button = " << button << ", pos = " << pos << std::endl)
-	return this->OnMouseButtonAction<true>(pos, button, pointerId);
-}
-
-
-
-//override
-bool Container::OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Container::OnMouseButtonUp(): enter, button = " << button << ", pos = " << pos << std::endl)
-	return this->OnMouseButtonAction<false>(pos, button, pointerId);
 }
 
 
@@ -121,25 +99,16 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 		}
 		
 		if(!(*c)->Rect().Overlaps(pos)){
-			if((*c)->IsHovered()){
-				(*c)->isHovered = false;
-				(*c)->OnMouseOut();
-			}
+			(*c)->setHovered(false);
 			continue;
 		}
 		
-		if(!(*c)->IsHovered()){
-			(*c)->isHovered = true;
-			(*c)->OnMouseIn();
-		}
+		(*c)->setHovered(true);
 		
 		if((*c)->OnMouseMove(pos - (*c)->Rect().p, pointerId)){//consumed mouse move event
 			//un-hover rest of the children
 			for(c = &(*c)->Prev(); *c; c = &(*c)->Prev()){
-				if((*c)->IsHovered()){
-					(*c)->isHovered = false;
-					(*c)->OnMouseOut();
-				}
+				(*c)->setHovered(false);
 			}
 			return true;
 		}		
@@ -149,15 +118,16 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 
 
 
-void Container::OnMouseOut(){
+void Container::OnHoverChanged(){
 	//TODO: if some child removed during iterating?
 	
-	//un-hover all the children
+	if(this->IsHovered()){
+		return;
+	}
+	
+	//un-hover all the children if container became un-hovered
 	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
-		if((*c)->IsHovered()){
-			(*c)->isHovered = false;
-			(*c)->OnMouseOut();
-		}
+		(*c)->setHovered(false);
 	}
 }
 
@@ -235,10 +205,8 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	--this->numChildren;
 	
 	w->parent.Reset();
-	if(w->IsHovered()){
-		w->isHovered = false;
-		w->OnMouseOut();
-	}
+	w->setHovered(false);
+	
 	this->SetRelayoutNeeded();
 }
 

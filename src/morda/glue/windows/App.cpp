@@ -1,6 +1,6 @@
 //This file contains implementations of platform dependent methods from App class.
 
-#include "../App.hpp"
+#include "../../App.hpp"
 
 #include <windows.h>
 #include <windowsx.h>
@@ -341,7 +341,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_LBUTTONDOWN:
-			app.HandleMouseButtonDown(
+			app.HandleMouseButton(
+					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::LEFT,
 					0
@@ -350,7 +351,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_LBUTTONUP:
-			app.HandleMouseButtonUp(
+			app.HandleMouseButton(
+					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::LEFT,
 					0
@@ -359,7 +361,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_MBUTTONDOWN:
-			app.HandleMouseButtonDown(
+			app.HandleMouseButton(
+					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::MIDDLE,
 					0
@@ -368,7 +371,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_MBUTTONUP:
-			app.HandleMouseButtonUp(
+			app.HandleMouseButton(
+					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::MIDDLE,
 					0
@@ -377,7 +381,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_RBUTTONDOWN:
-			app.HandleMouseButtonDown(
+			app.HandleMouseButton(
+					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::RIGHT,
 					0
@@ -386,7 +391,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_RBUTTONUP:
-			app.HandleMouseButtonUp(
+			app.HandleMouseButton(
+					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::RIGHT,
 					0

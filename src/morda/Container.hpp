@@ -88,20 +88,14 @@ public:
 	void Render(const morda::Matr4f& matrix)const;
 
 	//override
-	bool OnMouseButtonDown(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
-	
-	//override
-	bool OnMouseButtonUp(const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
-	
-private:
-	template <bool is_down> bool OnMouseButtonAction(const morda::Vec2f& pos, Widget::EMouseButton button, unsigned pointerId);
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
 public:
 	
 	//override
 	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId);
 	
 	//override
-	void OnMouseOut();
+	void OnHoverChanged();
 	
 	//override
 	void OnResize();
