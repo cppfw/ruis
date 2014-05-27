@@ -3,19 +3,11 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="../src" name="0">
       <df name="morda">
-        <df name="android">
-          <in>App.cpp</in>
-          <in>AssetFile.cpp</in>
-          <in>AssetFile.hpp</in>
-        </df>
         <df name="layouts">
           <in>FrameLayout.cpp</in>
           <in>FrameLayout.hpp</in>
           <in>LinearLayout.cpp</in>
           <in>LinearLayout.hpp</in>
-        </df>
-        <df name="linux">
-          <in>App.cpp</in>
         </df>
         <df name="resman">
           <in>Resource.cpp</in>
@@ -72,10 +64,6 @@
           <in>PaddedWidget.hpp</in>
           <in>TextButton.cpp</in>
           <in>TextButton.hpp</in>
-        </df>
-        <df name="windows">
-          <in>App.cpp</in>
-          <in>main.cpp</in>
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
@@ -260,14 +248,6 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/android/AssetFile.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
       <item path="../src/morda/layouts/FrameLayout.cpp"
             ex="false"
             tool="1"
@@ -279,10 +259,6 @@
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
@@ -426,44 +402,11 @@
         <ccTool>
         </ccTool>
       </item>
-      <item path="../src/morda/windows/App.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
-      <item path="../src/morda/windows/main.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
       <item path="../tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>
       </item>
-      <folder path="0/morda/android">
-        <ccTool>
-          <incDir>
-            <pElem>../src</pElem>
-            <pElem>../ext</pElem>
-            <pElem>../tests/app</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
       <folder path="0/morda/layouts">
-        <ccTool>
-          <incDir>
-            <pElem>../ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>__PIC__=2</Elem>
-            <Elem>__pic__=2</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/linux">
         <ccTool>
           <incDir>
             <pElem>../ext</pElem>
@@ -528,18 +471,6 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="0/morda/windows">
-        <ccTool>
-          <incDir>
-            <pElem>../src</pElem>
-            <pElem>../ext</pElem>
-            <pElem>../tests/app</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
       <folder path="1">
         <ccTool>
           <incDir>
@@ -597,12 +528,6 @@
       </item>
       <item path="../src/morda/Widget.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/android/App.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/android/AssetFile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/android/AssetFile.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/config.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/layouts/FrameLayout.cpp"
@@ -624,8 +549,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="../src/morda/linux/App.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -772,10 +695,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="../src/morda/windows/App.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/windows/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/obj/1/2/morda/layouts/FrameLayout.d"
             ex="false"

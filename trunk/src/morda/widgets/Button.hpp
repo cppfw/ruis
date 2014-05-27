@@ -39,22 +39,21 @@ namespace morda{
 
 
 
-//TODO: rename?
-class AbstractButton : public virtual Widget{
+class Button : public virtual Widget{
 	ting::Inited<bool, false> isPressed;
 	
 	void ApplyDescription(const stob::Node& description);
 protected:
-	inline AbstractButton(const stob::Node& description, bool doNotCopyProp) :
+	inline Button(const stob::Node& description, bool doNotCopyProp) :
 			Widget(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);
 	}
 	
-	inline AbstractButton(){}
+	inline Button(){}
 public:
 	
-	~AbstractButton()throw(){}
+	~Button()throw(){}
 	
 	ting::Signal0 pressed;
 	
@@ -71,12 +70,12 @@ public:
 		return this->isPressed;
 	}
 	
-	inline static ting::Ref<AbstractButton> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<AbstractButton>(new AbstractButton(description, doNotCopyProp));
+	inline static ting::Ref<Button> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Button>(new Button(description, doNotCopyProp));
 	}
 	
-	inline static ting::Ref<AbstractButton> New(){
-		return ting::Ref<AbstractButton>(new AbstractButton());
+	inline static ting::Ref<Button> New(){
+		return ting::Ref<Button>(new Button());
 	}
 };
 

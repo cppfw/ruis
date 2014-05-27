@@ -39,12 +39,12 @@ namespace morda{
 
 
 
-class TextButton : public AbstractButton, public Label{
+class TextButton : public Button, public Label{
 	void ApplyDescription(const stob::Node& description);
 protected:
 	inline TextButton(const stob::Node& description, bool doNotCopyProp) :
 			Widget(description, doNotCopyProp),
-			AbstractButton(description, doNotCopyProp),
+			Button(description, doNotCopyProp),
 			Label(description, doNotCopyProp)
 	{
 		this->ApplyDescription(description);

@@ -15,7 +15,7 @@ void TextButton::ApplyDescription(const stob::Node& description){
 
 //override
 void TextButton::Render(const morda::Matr4f& matrix)const{
-	this->AbstractButton::Render(matrix);
+	this->Button::Render(matrix);
 	this->Label::Render(matrix);
 }
 
