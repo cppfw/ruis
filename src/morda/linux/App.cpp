@@ -713,7 +713,6 @@ void App::Exec(){
 			}//~while()
 		}//~if there are pending X events
 		
-		//TODO: render only if needed?
 		this->Render();
 	}//~while(!quitFlag)
 	

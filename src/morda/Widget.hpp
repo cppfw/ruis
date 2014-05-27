@@ -188,7 +188,10 @@ public:
 
 	virtual ~Widget()throw(){}
 
-	virtual void Render(const morda::Matr4f& matrix)const;
+	virtual void Render(const morda::Matr4f& matrix)const{};
+	
+private:
+	void RenderInternal(const morda::Matr4f& matrix)const;
 	
 private:
 	ting::Ptr<KeyListener> keyListener;

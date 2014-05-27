@@ -61,12 +61,14 @@ void Widget::SetRelayoutNeeded()throw(){
 
 
 
-void Widget::Render(const morda::Matr4f& matrix)const{
+void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 	if(clip){
 		//TODO:
 	}else{
 		//TODO:
 	}
+	
+	this->Render(matrix);
 	
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
