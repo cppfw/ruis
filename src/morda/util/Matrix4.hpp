@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2013 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -156,6 +156,15 @@ public:
 		return (&this->c0)[col];
 	}
 
+	/**
+	 * @brief Transform vector by matrix.
+	 * Multiply vector V by this matrix M from the right (M * V).
+	 * i.e. transform vector with this transformation matrix.
+	 * @param vec - vector to transform.
+     * @return Transformed vector.
+     */
+	inline Vector2<T> operator*(const Vector2<T>& vec)const throw();
+	
 	/**
 	 * @brief Transform vector by matrix.
 	 * Multiply vector V by this matrix M from the right (M * V).
@@ -542,6 +551,15 @@ namespace morda{
 //=================================
 // inline functions implementation
 //=================================
+
+template <class T> Vector2<T> Matrix4<T>::operator*(const Vector2<T>& vec)const throw(){
+	return Vector2<T>(
+			this->Row(0) * vec,
+			this->Row(1) * vec
+		);
+}
+
+
 
 template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const throw(){
 	return Vector3<T>(

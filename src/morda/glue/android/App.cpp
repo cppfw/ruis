@@ -997,7 +997,6 @@ void HandleInputEvents(){
 			);
 	}//~while(there are events in input queue)
 
-	//TODO: render only if needed
 	app.Render();
 
 	ting::u32 dt = app.updater.Update();

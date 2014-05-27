@@ -305,9 +305,15 @@ public:
 	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 
 private:
-	//this is a viewport rectangle in coordinates that are x grows right, y grows up.
+	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
 	morda::Rect2f curWinRect;
 
+public:
+	const morda::Vec2f& viewportDim()const throw(){
+		return this->curWinRect.d;
+	}
+	
+private:
 	ting::Ref<morda::Container> rootContainer;
 
 	ResourceManager resMan;
