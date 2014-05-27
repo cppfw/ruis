@@ -27,6 +27,8 @@ void App::UpdateGLViewport(){
 
 
 void App::Render(){
+	//TODO: render only if needed?
+	
 //	TRACE(<< "App::Render(): invoked" << std::endl)
 	if(this->rootContainer.IsNotValid()){
 		TRACE(<< "App::Render(): root container is not valid" << std::endl)
@@ -51,7 +53,7 @@ void App::Render(){
 		this->rootContainer->Resize(this->curWinRect.d);
 	}
 	
-	this->rootContainer->Render(m);
+	this->rootContainer->RenderInternal(m);
 	
 	this->SwapGLBuffers();
 }
