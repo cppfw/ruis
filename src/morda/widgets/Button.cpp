@@ -7,14 +7,14 @@ using namespace morda;
 
 
 
-void AbstractButton::ApplyDescription(const stob::Node& properties){
+void Button::ApplyDescription(const stob::Node& properties){
 	//apply abstract button specific properties
 }
 
 
 
 //override
-void AbstractButton::Render(const morda::Matr4f& matrix)const{
+void Button::Render(const morda::Matr4f& matrix)const{
 	morda::Matr4f matr(matrix);
 	matr.Scale(this->Rect().d);
 	
@@ -32,7 +32,7 @@ void AbstractButton::Render(const morda::Matr4f& matrix)const{
 
 
 //override
-bool AbstractButton::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Button::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != LEFT){
 		return false;
@@ -55,7 +55,7 @@ bool AbstractButton::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseB
 
 
 //override
-void AbstractButton::OnHoverChanged(){
+void Button::OnHoverChanged(){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
 	if(!this->IsHovered()){

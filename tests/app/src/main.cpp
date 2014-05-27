@@ -286,7 +286,7 @@ public:
 				new CustomKeyListener()
 			));
 		
-		c->FindChildByName("show_VK_button").DynamicCast<morda::AbstractButton>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
+		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
 		
 		{
 			ting::Ref<CubeWidget> w = CubeWidget::New();
