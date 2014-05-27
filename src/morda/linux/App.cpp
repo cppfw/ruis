@@ -616,12 +616,6 @@ void App::Exec(){
 	while(!quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
 		
-//		if(this->queue.CanRead()){
-//			while(ting::Ptr<ting::mt::Message> m = this->queue.PeekMsg()){
-//				m->Handle();
-//			}
-//		}
-		
 		if(xew.CanRead()){
 			xew.ClearCanReadFlag();
 			while(XPending(this->xDisplay.d) > 0){
@@ -716,7 +710,6 @@ void App::Exec(){
 		this->Render();
 	}//~while(!quitFlag)
 	
-//	waitSet.Remove(&this->queue);
 	waitSet.Remove(xew);
 }
 
