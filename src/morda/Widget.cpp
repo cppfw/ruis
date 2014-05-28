@@ -63,33 +63,38 @@ void Widget::SetRelayoutNeeded()throw(){
 
 void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 	if(this->clip){
-		GLint oldcissorBox[4];
-		glGetIntegerv(GL_SCISSOR_BOX, oldcissorBox);
-
 //		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 		//set scissor test
-		const Vec2f& viewportDim = App::Inst().viewportDim();
+		Rect2i scissor(
+				((matrix * Vec2f(0, 0) + Vec2f(1, 1)) / 2)
+						.CompMulBy(App::Inst().viewportDim())
+						.ConvertTo<int>(),
+				this->rect.d.ConvertTo<int>()
+			);
 
-		TRACE(<< " Widget::RenderInternal(): matrix = " << matrix << std::endl)
-		Vec2f p0 = matrix * Vec2f(0, 0);
-		p0 = (p0 + Vec2f(1, 1)) / 2;
-		p0.CompMulBy(viewportDim);
-
-		glScissor(p0.x, p0.y, this->rect.d.x, this->rect.d.y);
-//		glScissor(0, 0, 0, 0);
-		glEnable(GL_SCISSOR_TEST);
-
-//		TRACE(<< " Widget::RenderInternal(): p0 = " << p0 << std::endl)
-		//TODO:
+		Rect2i oldScissor;
+		bool scissorTestWasEnabled = glIsEnabled(GL_SCISSOR_TEST);
+		if(scissorTestWasEnabled){
+			GLint osb[4];
+			glGetIntegerv(GL_SCISSOR_BOX, osb);
+			oldScissor = Rect2i(osb[0], osb[1], osb[2], osb[3]);
+			scissor.Intersect(oldScissor);
+		}else{
+			glEnable(GL_SCISSOR_TEST);
+		}
+		
+		glScissor(scissor.p.x, scissor.p.y, scissor.d.x, scissor.d.y);
+		
+		this->Render(matrix);
+		
+		if(scissorTestWasEnabled){
+			glScissor(oldScissor.p.x, oldScissor.p.y, oldScissor.d.x, oldScissor.d.y);
+		}else{
+			glDisable(GL_SCISSOR_TEST);
+		}
 	}else{
-		//TODO:
-	}
-
-	this->Render(matrix);
-
-	if(this->clip){
-		glDisable(GL_SCISSOR_TEST);
+		this->Render(matrix);
 	}
 
 	//render border

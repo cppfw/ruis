@@ -406,6 +406,19 @@ public:
 		return Vector2(*this).Rotate(angle);
 	}
 
+	
+	
+	/**
+	 * @brief Convert to Vector2 with different type of component.
+	 * Convert this Vector2 to a Vector2 whose component type is different from T.
+	 * Components are converted using constructor of target type passing the source
+	 * component as argument of the target type constructor.
+     * @return converted Vector2.
+     */
+	template <class TS> Vector2<TS> ConvertTo()const throw(){
+		return Vector2<TS>(TS(this->x), TS(this->y));
+	}
+	
 
 	
 #ifdef DEBUG  

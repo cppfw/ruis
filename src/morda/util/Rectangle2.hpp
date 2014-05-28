@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2011-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2011-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -87,6 +87,27 @@ public:
 	}
 	
 	//TODO: doxygen
+	//Get intersection of two rectangles
+	Rectangle2 Intersection(const Rectangle2& rect)const throw(){
+		return Rectangle2(*this).Intersect(rect);
+	}
+	
+	//TODO: doxygen
+	Rectangle2& Intersect(const Rectangle2& rect)throw(){
+		for(unsigned i = 0; i != 2; ++i){
+			T end = std::min(this->p[i] + this->d[i], rect.p[i] + rect.d[i]);
+			this->p[i] = std::max(this->p[i], rect.p[i]);
+			if(end > this->p[i]){
+				this->d[i] = end - this->p[i];
+			}else{
+				this->d[i] = 0;
+			}
+		}
+		
+		return *this;
+	}
+	
+	//TODO: doxygen
 	inline Vector2<T> Extent()const throw(){
 		return this->d / 2;
 	}
@@ -148,5 +169,6 @@ public:
 typedef Rectangle2<float> Rect2f;
 typedef Rectangle2<double> Rect2d;
 typedef Rectangle2<int> Rect2i;
+typedef Rectangle2<unsigned> Rect2u;
 
 }//~namespace
