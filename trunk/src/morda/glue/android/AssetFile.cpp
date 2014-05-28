@@ -1,27 +1,3 @@
-/* The MIT License:
-
-Copyright (c) 2011 Ivan Gagis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-
-
-
 #include <dirent.h>
 #include <sys/stat.h>
 #include <cerrno>
@@ -38,7 +14,7 @@ using namespace morda;
 
 
 //override
-void AssetFile::Open(E_Mode mode){
+void AssetFile::OpenInternal(E_Mode mode){
 	if(this->IsOpened()){
 		throw File::Exc("file already opened");
 	}
@@ -73,7 +49,7 @@ void AssetFile::Open(E_Mode mode){
 
 
 //override
-void AssetFile::Close()throw(){
+void AssetFile::CloseInternal()throw(){
 	if(!this->IsOpened())
 		return;
 
@@ -151,21 +127,21 @@ void AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 
 
 //override
-void AssetFile::SeekForward(size_t numBytesToSeek){
+void AssetFile::SeekForwardInternal(size_t numBytesToSeek){
 	this->Seek(numBytesToSeek, true);
 }
 
 
 
 //override
-void AssetFile::SeekBackward(size_t numBytesToSeek){
+void AssetFile::SeekBackwardInternal(size_t numBytesToSeek){
 	this->Seek(numBytesToSeek, false);
 }
 
 
 
 //override
-void AssetFile::Rewind(){
+void AssetFile::RewindInternal(){
 	if(!this->IsOpened()){
 		throw File::Exc("file is not opened, cannot rewind");
 	}
