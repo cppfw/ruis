@@ -146,7 +146,7 @@ public:
 	}
 	
 private:
-	void setHovered(bool isHovered){
+	void SetHovered(bool isHovered){
 		if(this->isHovered == isHovered){
 			return;
 		}
@@ -343,7 +343,7 @@ public:
 	inline void SetHidden(bool hidden){
 		this->isHidden = hidden;
 		if(this->isHidden){
-			this->setHovered(false);
+			this->SetHovered(false);
 		}
 	}
 	
@@ -365,8 +365,8 @@ public:
 	
 	inline bool IsDisabled()const throw(){
 		return this->isDisabled;
-	}
-
+	}	
+	
 protected:
 };
 

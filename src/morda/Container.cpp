@@ -67,7 +67,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget is hovered.
-		(*c)->setHovered(true);
+		(*c)->SetHovered(true);
 		
 		morda::Vec2f localPos(pos - (*c)->Rect().p);
 		
@@ -99,16 +99,16 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 		}
 		
 		if(!(*c)->Rect().Overlaps(pos)){
-			(*c)->setHovered(false);
+			(*c)->SetHovered(false);
 			continue;
 		}
 		
-		(*c)->setHovered(true);
+		(*c)->SetHovered(true);
 		
 		if((*c)->OnMouseMove(pos - (*c)->Rect().p, pointerId)){//consumed mouse move event
 			//un-hover rest of the children
 			for(c = &(*c)->Prev(); *c; c = &(*c)->Prev()){
-				(*c)->setHovered(false);
+				(*c)->SetHovered(false);
 			}
 			return true;
 		}		
@@ -127,7 +127,7 @@ void Container::OnHoverChanged(){
 	
 	//un-hover all the children if container became un-hovered
 	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
-		(*c)->setHovered(false);
+		(*c)->SetHovered(false);
 	}
 }
 
@@ -205,7 +205,7 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	--this->numChildren;
 	
 	w->parent.Reset();
-	w->setHovered(false);
+	w->SetHovered(false);
 	
 	this->SetRelayoutNeeded();
 }

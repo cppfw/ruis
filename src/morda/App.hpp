@@ -331,7 +331,7 @@ private:
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
-		this->rootContainer->setHovered(true);
+		this->rootContainer->SetHovered(true);
 		this->rootContainer->OnMouseMove(morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), id);
 	}
 
@@ -340,7 +340,7 @@ private:
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
-		this->rootContainer->setHovered(true);
+		this->rootContainer->SetHovered(true);
 		this->rootContainer->OnMouseButton(isDown, morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
 	}
 	
@@ -348,7 +348,7 @@ private:
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
-		this->rootContainer->setHovered(isHovered);
+		this->rootContainer->SetHovered(isHovered);
 	}
 
 protected:
@@ -407,6 +407,8 @@ private:
 			}
 		}
 	}
+
+	
 public:
 	
 };
