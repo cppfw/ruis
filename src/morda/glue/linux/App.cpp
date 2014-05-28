@@ -82,7 +82,9 @@ App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper
 			ButtonReleaseMask |
 			PointerMotionMask |
 			ButtonMotionMask |
-			StructureNotifyMask
+			StructureNotifyMask |
+			EnterWindowMask |
+			LeaveWindowMask
 		;
 
 	this->w = XCreateWindow(
@@ -694,6 +696,12 @@ void App::Exec(){
 								morda::Vec2f(event.xmotion.x, event.xmotion.y),
 								0
 							);
+						break;
+					case EnterNotify:
+						this->HandleMouseHover(true);
+						break;
+					case LeaveNotify:
+						this->HandleMouseHover(false);
 						break;
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)
