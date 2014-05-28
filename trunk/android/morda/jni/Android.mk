@@ -8,8 +8,8 @@ LOCAL_MODULE := morda
 
 PREFIX := 
 
-LOCAL_SRC_FILES := $(PREFIX)morda/android/App.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/android/AssetFile.cpp
+LOCAL_SRC_FILES := $(PREFIX)morda/glue/android/App.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/App.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/Container.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/GuiInflater.cpp
