@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2013 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -331,6 +331,7 @@ private:
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
+		this->rootContainer->setHovered(true);
 		this->rootContainer->OnMouseMove(morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), id);
 	}
 
@@ -339,7 +340,15 @@ private:
 		if(this->rootContainer.IsNotValid()){
 			return;
 		}
+		this->rootContainer->setHovered(true);
 		this->rootContainer->OnMouseButton(isDown, morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
+	}
+	
+	void HandleMouseHover(bool isHovered){
+		if(this->rootContainer.IsNotValid()){
+			return;
+		}
+		this->rootContainer->setHovered(isHovered);
 	}
 
 protected:

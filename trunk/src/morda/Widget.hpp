@@ -147,11 +147,12 @@ public:
 	
 private:
 	void setHovered(bool isHovered){
-		bool needNotify = (this->isHovered != isHovered);
-		this->isHovered = isHovered;
-		if(needNotify){
-			this->OnHoverChanged();
+		if(this->isHovered == isHovered){
+			return;
 		}
+		
+		this->isHovered = isHovered;
+		this->OnHoverChanged();
 	}
 	
 public:

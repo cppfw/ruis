@@ -59,7 +59,7 @@ ting::StaticBuffer<morda::Vec2f, 10> pointers;
 inline morda::Vec2f AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2f& p){
 	morda::Vec2f ret(
 			p.x,
-			curWinDim.y - p.y - winRect.p.y - 1.0f
+			curWinDim.y - p.y - winRect.p.y - 1.0f //TODO: correct those, should be smth like (p.y + winRect.p.y)
 		);
 //	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret;
@@ -873,7 +873,7 @@ void HandleInputEvents(){
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
-								app.rootContainer->OnMouseButton(
+								app.HandleMouseButton(
 										true,
 										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
@@ -899,7 +899,7 @@ void HandleInputEvents(){
 								pointers[pointerId] = p;
 
 								ASSERT(app.rootContainer.IsValid())
-								app.rootContainer->OnMouseButton(
+								app.HandleMouseButton(
 										false,
 										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 										morda::Widget::LEFT,
@@ -930,7 +930,7 @@ void HandleInputEvents(){
 									pointers[pointerId] = p;
 
 									ASSERT(app.rootContainer.IsValid())
-									app.rootContainer->OnMouseMove(
+									app.HandleMouseMove(
 											AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
 											pointerId
 										);
