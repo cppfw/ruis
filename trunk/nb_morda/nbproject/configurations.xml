@@ -123,6 +123,8 @@
     </df>
     <df root="../src" name="2">
     </df>
+    <df root="../src" name="3">
+    </df>
     <df root="../tests" name="1">
       <df name="app">
         <df name="src">
@@ -130,8 +132,16 @@
         </df>
       </df>
     </df>
-    <df root="../tests" name="3">
+    <df root="../tests" name="4">
     </df>
+    <df root="../tests" name="5">
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>../src/makefile</itemPath>
+    </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -147,6 +157,8 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
+    <Elem>../src</Elem>
+    <Elem>../tests</Elem>
     <Elem>../src</Elem>
     <Elem>../tests</Elem>
     <Elem>../src</Elem>
