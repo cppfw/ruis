@@ -30,9 +30,9 @@ LOCAL_SRC_FILES += $(PREFIX)morda/util/LeftBottomRightTop.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/util/Image.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/util/TexFont.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/util/util.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/AbstractButton.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Button.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Label.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/widgets/TextButton.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/layouts/LinearLayout.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/layouts/FrameLayout.cpp
 
