@@ -80,12 +80,12 @@ public:
 
 
 	//override
-	virtual void Open(E_Mode mode);
+	virtual void OpenInternal(E_Mode mode);
 
 
 
 	//override
-	virtual void Close()throw();
+	virtual void CloseInternal()throw();
 
 
 
@@ -100,12 +100,12 @@ public:
 
 
 	//override
-	virtual void SeekForward(size_t numBytesToSeek);
+	virtual void SeekForwardInternal(size_t numBytesToSeek);
 	
 	
 	
 	//override
-	virtual void SeekBackward(size_t numBytesToSeek);
+	virtual void SeekBackwardInternal(size_t numBytesToSeek);
 
 	
 	
@@ -119,7 +119,7 @@ public:
 	
 	
 	//override
-	virtual void Rewind();
+	virtual void RewindInternal();
 	
 
 
