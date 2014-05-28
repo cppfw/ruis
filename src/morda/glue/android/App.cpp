@@ -59,7 +59,7 @@ ting::StaticBuffer<morda::Vec2f, 10> pointers;
 inline morda::Vec2f AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2f& p){
 	morda::Vec2f ret(
 			p.x,
-			curWinDim.y - p.y - winRect.p.y - 1.0f //TODO: correct those, should be smth like (p.y + winRect.p.y)
+			p.y - (curWinDim.y - winRect.d.y)
 		);
 //	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret;
