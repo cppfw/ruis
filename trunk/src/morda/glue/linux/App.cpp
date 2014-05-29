@@ -245,6 +245,7 @@ Widget::EMouseButton ButtonNumberToEnum(int number){
 	switch(number){
 		case 1:
 			return Widget::LEFT;
+		default:
 		case 2:
 			return Widget::MIDDLE;
 		case 3:
@@ -253,8 +254,6 @@ Widget::EMouseButton ButtonNumberToEnum(int number){
 			return Widget::WHEEL_UP;
 		case 5:
 			return Widget::WHEEL_DOWN;
-		default:
-			return Widget::UNKNOWN;
 	}
 }
 

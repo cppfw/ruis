@@ -76,7 +76,6 @@ class App : public ting::IntrusiveSingleton<App>{
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 
 	friend class Updateable;
-	
 	friend class Widget;
 	
 	struct ThreadId{
@@ -327,29 +326,17 @@ private:
 	void Render();
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseMove(const morda::Vec2f& pos, unsigned id){
-		if(this->rootContainer.IsNotValid()){
-			return;
-		}
-		this->rootContainer->SetHovered(true);
-		this->rootContainer->OnMouseMove(morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), id);
-	}
-
-	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
-		if(this->rootContainer.IsNotValid()){
-			return;
-		}
-		this->rootContainer->SetHovered(true);
-		this->rootContainer->OnMouseButton(isDown, morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f), button, id);
+	morda::Vec2f NativeWindowToRootCoordinates(const morda::Vec2f& pos)const throw(){
+		return morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 	
-	void HandleMouseHover(bool isHovered){
-		if(this->rootContainer.IsNotValid()){
-			return;
-		}
-		this->rootContainer->SetHovered(isHovered);
-	}
+	//pos is in usual window coordinates, y goes down.
+	void HandleMouseMove(const morda::Vec2f& pos, unsigned id);
+
+	//pos is in usual window coordinates, y goes down.
+	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	
+	void HandleMouseHover(bool isHovered);
 
 protected:
 	App(const WindowParams& requestedWindowParams);
@@ -407,7 +394,6 @@ private:
 			}
 		}
 	}
-
 	
 public:
 	
