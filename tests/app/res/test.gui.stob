@@ -16,10 +16,22 @@ TextButton{
 	}
 }
 
+Label{
+	text {"Test Label"}
+
+	prop{
+		layout{
+			dim{min 30}
+			gravity{50% 0%}
+		}
+	}
+}
+
+
 
 layout{
 	FrameLayout{
-		padding{10 20 30 40}
+		padding{10 20 30 40} //TODO: i padding a layout property?
 	}
 }
 

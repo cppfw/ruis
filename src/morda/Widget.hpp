@@ -289,12 +289,13 @@ public:
 	}
 	
 	enum EMouseButton{
-		UNKNOWN,
 		LEFT,
 		RIGHT,
 		MIDDLE,
 		WHEEL_UP,
-		WHEEL_DOWN
+		WHEEL_DOWN,
+		
+		ENUM_SIZE
 	};
 
 	//return true to consume event

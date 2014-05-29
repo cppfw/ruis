@@ -77,3 +77,32 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 }
 
 
+
+void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
+	if(this->rootContainer.IsNotValid()){
+		return;
+	}
+	this->rootContainer->SetHovered(true);
+	this->rootContainer->OnMouseMove(this->NativeWindowToRootCoordinates(pos), id);
+}
+
+
+
+void App::HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
+	if(this->rootContainer.IsNotValid()){
+		return;
+	}
+
+	this->rootContainer->SetHovered(true);
+	this->rootContainer->OnMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, id);
+}
+
+
+
+void App::HandleMouseHover(bool isHovered){
+	TRACE(<< "App::HandleMouseHover(): isHovered = " << isHovered << std::endl)
+	if(this->rootContainer.IsNotValid()){
+		return;
+	}
+	this->rootContainer->SetHovered(isHovered);
+}

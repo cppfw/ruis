@@ -44,16 +44,10 @@ void Container::Render(const morda::Matr4f& matrix)const{
 
 //override
 bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-//	TRACE(<< "Container::OnMouseButton(): isDow = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
+//	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
-	//Copy children list to iterate through it later, because the original list of children
-	//may change during iterating.
+	//original list of children may change during iterating.
 	//TODO:
-//	T_ChildList childs;
-//	childs.reserve(this->children.size());
-//	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-//		childs.push_back(*i);
-//	}
 	
 	//call children in reverse order
 	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
@@ -82,14 +76,10 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 
 //override
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
-	//Copy children list to iterate through it later, because the original list of children
-	//may change during iterating.
+//	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
+	
+	//original list of children may change during iterating.
 	//TODO:
-//	T_ChildList childs;
-//	childs.reserve(this->children.size());
-//	for(T_ChildList::iterator i = this->children.begin(); i != this->children.end(); ++i){
-//		childs.push_back(*i);
-//	}
 	
 	//call children in reverse order
 	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
