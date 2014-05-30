@@ -2,8 +2,8 @@
 #include "../../../src/morda/util/Quaternion.hpp"
 
 #include "../../../src/morda/App.hpp"
-#include "../../../src/morda/Widget.hpp"
-#include "../../../src/morda/Container.hpp"
+#include "../../../src/morda/widgets/Widget.hpp"
+#include "../../../src/morda/widgets/Container.hpp"
 
 #include "../../../src/morda/widgets/Button.hpp"
 #include "../../../src/morda/widgets/Label.hpp"

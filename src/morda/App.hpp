@@ -55,11 +55,11 @@ THE SOFTWARE. */
 #include "util/Vector2.hpp"
 
 #include "Exc.hpp"
-#include "Widget.hpp"
-#include "Container.hpp"
+#include "widgets/Widget.hpp"
+#include "widgets/Container.hpp"
 #include "GuiInflater.hpp"
 #include "Updateable.hpp"
-#include "KeyListener.hpp"
+#include "util/KeyListener.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"

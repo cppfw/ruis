@@ -1,6 +1,6 @@
 #include "GuiInflater.hpp"
 
-#include "Container.hpp"
+#include "widgets/Container.hpp"
 #include "widgets/Label.hpp"
 #include "widgets/TextButton.hpp"
 #include "layouts/LinearLayout.hpp"

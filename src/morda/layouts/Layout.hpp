@@ -30,8 +30,8 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
-#include "Container.hpp"
-#include "util/Padded.hpp"
+#include "../widgets/Container.hpp"
+#include "../util/Padded.hpp"
 
 
 
