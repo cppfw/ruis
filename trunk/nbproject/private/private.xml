@@ -10,7 +10,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/igagis/prj/morda/src/morda/widgets/Button.cpp</file>
+            <file>file:/home/ivan/prj/morda/src/morda/App.cpp</file>
+            <file>file:/home/ivan/prj/morda/src/morda/widgets/Widget.hpp</file>
+            <file>file:/home/ivan/prj/morda/src/morda/widgets/Container.cpp</file>
         </group>
     </open-files>
 </project-private>
