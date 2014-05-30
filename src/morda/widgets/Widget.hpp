@@ -366,7 +366,17 @@ public:
 	
 	inline bool IsDisabled()const throw(){
 		return this->isDisabled;
-	}	
+	}
+	
+	/**
+	 * @brief Check is point is within the widget bounds.
+     * @param pos - point to check in widget coordinates.
+     * @return true if point is inside of the widget boundaries.
+	 * @return false otherwise.
+     */
+	bool Contains(const morda::Vec2f& pos)const throw(){
+		return morda::Rect2f(morda::Vec2f(0, 0), this->Rect().d).Overlaps(pos);
+	}
 	
 protected:
 };

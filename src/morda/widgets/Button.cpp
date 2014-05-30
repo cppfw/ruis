@@ -39,7 +39,12 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton bu
 	}
 
 	if(isDown){
-		this->isPressed = true;
+		//NOTE: sometimes pos is outside of the widget. For example, when mouse is captured by this widget and
+		//some other mouse button is clicked, and then the left one is clicked outside of widget,
+		//then the event about left button down will still be delivered to this widget because it has captured the mouse.
+		if(this->Contains(pos)){
+			this->isPressed = true;
+		}
 	}else{
 		if(this->isPressed){
 			this->isPressed = false;
