@@ -67,18 +67,12 @@
         </df>
         <in>App.cpp</in>
         <in>App.hpp</in>
-        <in>Container.cpp</in>
-        <in>Container.hpp</in>
         <in>Exc.hpp</in>
         <in>GuiInflater.cpp</in>
         <in>GuiInflater.hpp</in>
-        <in>KeyListener.hpp</in>
-        <in>Layout.cpp</in>
         <in>Layout.hpp</in>
         <in>Updateable.cpp</in>
         <in>Updateable.hpp</in>
-        <in>Widget.cpp</in>
-        <in>Widget.hpp</in>
         <in>config.hpp</in>
       </df>
       <df name="obj">
@@ -121,11 +115,11 @@
         </df>
       </df>
     </df>
+    <df root="../src" name="1">
+    </df>
     <df root="../src" name="2">
     </df>
-    <df root="../src" name="3">
-    </df>
-    <df root="../tests" name="1">
+    <df root="../tests" name="3">
       <df name="app">
         <df name="src">
           <in>main.cpp</in>
@@ -195,19 +189,6 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>../ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>__PIC__=2</Elem>
-            <Elem>__pic__=2</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -221,33 +202,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="../src/morda/Layout.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>../ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>__PIC__=2</Elem>
-            <Elem>__pic__=2</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="../src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>../ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>__PIC__=2</Elem>
-            <Elem>__pic__=2</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>../ext</pElem>
@@ -516,29 +471,17 @@
       </item>
       <item path="../src/morda/App.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/Container.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Container.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../src/morda/Exc.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/morda/GuiInflater.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../src/morda/KeyListener.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Layout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="../src/morda/Layout.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/Updateable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/morda/Updateable.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../src/morda/Widget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../src/morda/Widget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../src/morda/config.hpp" ex="false" tool="3" flavor2="0">
       </item>
