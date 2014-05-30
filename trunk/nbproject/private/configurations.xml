@@ -84,6 +84,8 @@
           <in>Label.cpp</in>
           <in>Label.hpp</in>
           <in>PaddedWidget.hpp</in>
+          <in>Slider.cpp</in>
+          <in>Slider.hpp</in>
           <in>TextButton.cpp</in>
           <in>TextButton.hpp</in>
           <in>Widget.cpp</in>
@@ -208,8 +210,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>

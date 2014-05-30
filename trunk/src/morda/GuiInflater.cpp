@@ -3,6 +3,7 @@
 #include "widgets/Container.hpp"
 #include "widgets/Label.hpp"
 #include "widgets/TextButton.hpp"
+#include "widgets/Slider.hpp"
 #include "layouts/LinearLayout.hpp"
 #include "layouts/FrameLayout.hpp"
 
@@ -14,71 +15,90 @@ using namespace morda;
 
 namespace{
 
-const char* D_Widget = "Widget";
+	//TODO:remove?
+//const char* D_Widget = "Widget";
 const char* D_Container = "Container";
-const char* D_Label = "Label";
-const char* D_TextButton = "TextButton";
-
+//const char* D_Label = "Label";
+//const char* D_TextButton = "TextButton";
+//
 const char* D_LinearLayout = "LinearLayout";
 const char* D_FrameLayout = "FrameLayout";
 
 
 
-class BareWidgetFactory : public GuiInflater::WidgetFactory{
+//TODO: remove this class, make just AddWidget<> method in GuiInflater
+template <class T_Widget> class ConcreteWidgetFactory : public GuiInflater::WidgetFactory{
 public:
 	//override
 	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node == D_Widget)
-		return Widget::New(node, false);
+		return T_Widget::New(node, false);
 	}
 	
-	inline static ting::Ptr<BareWidgetFactory> New(){
-		return ting::Ptr<BareWidgetFactory>(new BareWidgetFactory());
+	inline static ting::Ptr<ConcreteWidgetFactory> New(){
+		return ting::Ptr<ConcreteWidgetFactory>(new ConcreteWidgetFactory());
 	}
 };
 
-class ContainerFactory : public GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		return ContainerFactory::Inflate(node);
-	}
-	
-	inline static ting::Ref<morda::Container> Inflate(const stob::Node& node){
-		ASSERT(node == D_Container)
-		return Container::New(node, false);
-	}
-	
-	inline static ting::Ptr<ContainerFactory> New(){
-		return ting::Ptr<ContainerFactory>(new ContainerFactory());
-	}
-};
 
-class LabelFactory : public GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node == D_Label)
-		return Label::New(node, false);
-	}
-	
-	inline static ting::Ptr<LabelFactory> New(){
-		return ting::Ptr<LabelFactory>(new LabelFactory());
-	}
-};
+//TODO: remove?
+//class BareWidgetFactory : public GuiInflater::WidgetFactory{
+//public:
+//	//override
+//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+//		ASSERT(node == D_Widget)
+//		return Widget::New(node, false);
+//	}
+//	
+//	inline static ting::Ptr<BareWidgetFactory> New(){
+//		return ting::Ptr<BareWidgetFactory>(new BareWidgetFactory());
+//	}
+//};
+//
+//class ContainerFactory : public GuiInflater::WidgetFactory{
+//public:
+//	//override
+//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+//		return ContainerFactory::Inflate(node);
+//	}
+//	
+//	inline static ting::Ref<morda::Container> Inflate(const stob::Node& node){
+//		ASSERT(node == D_Container)
+//		return Container::New(node, false);
+//	}
+//	
+//	inline static ting::Ptr<ContainerFactory> New(){
+//		return ting::Ptr<ContainerFactory>(new ContainerFactory());
+//	}
+//};
+//
+//class LabelFactory : public GuiInflater::WidgetFactory{
+//public:
+//	//override
+//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+//		ASSERT(node == D_Label)
+//		return Label::New(node, false);
+//	}
+//	
+//	inline static ting::Ptr<LabelFactory> New(){
+//		return ting::Ptr<LabelFactory>(new LabelFactory());
+//	}
+//};
+//
+//class TextButtonFactory : public GuiInflater::WidgetFactory{
+//public:
+//	//override
+//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+//		ASSERT(node == D_TextButton)
+//		return TextButton::New(node, false);
+//	}
+//	
+//	inline static ting::Ptr<TextButtonFactory> New(){
+//		return ting::Ptr<TextButtonFactory>(new TextButtonFactory());
+//	}
+//};
 
-class TextButtonFactory : public GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		ASSERT(node == D_TextButton)
-		return TextButton::New(node, false);
-	}
-	
-	inline static ting::Ptr<TextButtonFactory> New(){
-		return ting::Ptr<TextButtonFactory>(new TextButtonFactory());
-	}
-};
+
+
 
 class LinearLayoutFactory : public GuiInflater::LayoutFactory{
 public:
@@ -111,10 +131,11 @@ public:
 
 
 GuiInflater::GuiInflater(){
-	this->AddWidgetFactory(D_Widget, BareWidgetFactory::New());
-	this->AddWidgetFactory(D_Container, ContainerFactory::New());
-	this->AddWidgetFactory(D_Label, LabelFactory::New());
-	this->AddWidgetFactory(D_TextButton, TextButtonFactory::New());
+	this->AddWidgetFactory("Widget", ConcreteWidgetFactory<Widget>::New());
+	this->AddWidgetFactory(D_Container, ConcreteWidgetFactory<Container>::New());
+	this->AddWidgetFactory("Label", ConcreteWidgetFactory<Label>::New());
+	this->AddWidgetFactory("TextButton", ConcreteWidgetFactory<TextButton>::New());
+	this->AddWidgetFactory("Slider", ConcreteWidgetFactory<Slider>::New());
 	
 	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
 	this->AddLayoutFactory(D_FrameLayout, FrameLayoutFactory::New());
@@ -149,7 +170,7 @@ ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ASSERT(root)
 	root->SetValue(D_Container);
 	
-	return ContainerFactory::Inflate(*root);
+	return Container::New(*root, false);
 }
 
 
