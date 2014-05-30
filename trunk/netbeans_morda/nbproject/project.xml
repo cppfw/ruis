@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>nb_morda</name>
+            <name>netbeans_morda</name>
             <c-extensions/>
             <cpp-extensions>cpp,mm</cpp-extensions>
             <header-extensions>hpp</header-extensions>
@@ -12,18 +12,10 @@
             <sourceRootList>
                 <sourceRootElem>../src</sourceRootElem>
                 <sourceRootElem>../tests</sourceRootElem>
-                <sourceRootElem>../src</sourceRootElem>
-                <sourceRootElem>../tests</sourceRootElem>
-                <sourceRootElem>../src</sourceRootElem>
-                <sourceRootElem>../tests</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>linux_debug</name>
-                    <type>0</type>
-                </confElem>
-                <confElem>
-                    <name>linux_release</name>
+                    <name>Default</name>
                     <type>0</type>
                 </confElem>
             </confList>
