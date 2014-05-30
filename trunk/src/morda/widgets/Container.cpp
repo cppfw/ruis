@@ -46,6 +46,20 @@ void Container::Render(const morda::Matr4f& matrix)const{
 bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
+	if(this->mouseCaptured.IsValid()){
+		this->mouseCaptured->SetHovered(this->mouseCaptured->Rect().Overlaps(pos));
+		this->mouseCaptured->OnMouseButton(isDown, pos - this->mouseCaptured->Rect().p, button, pointerId);
+		if(isDown){
+			++this->numMouseCaptureClicks;
+		}else{
+			--this->numMouseCaptureClicks;
+		}
+		if(this->numMouseCaptureClicks == 0){
+			this->mouseCaptured.Reset();
+		}
+		return true;//doesn't matter what to return
+	}
+	
 	//original list of children may change during iterating.
 	//TODO:
 	
@@ -60,12 +74,14 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 		}
 		
 		//Sometimes mouse click event comes without prior mouse move,
-		//but, since we get mouse click, then the widget is hovered.
+		//but, since we get mouse click, then the widget was hovered before the click.
 		(*c)->SetHovered(true);
 		
-		morda::Vec2f localPos(pos - (*c)->Rect().p);
-		
-		if((*c)->OnMouseButton(isDown, localPos, button, pointerId)){
+		if((*c)->OnMouseButton(isDown, pos - (*c)->Rect().p, button, pointerId)){
+			if(isDown){
+				this->mouseCaptured = *c;
+				this->numMouseCaptureClicks = 1;
+			}
 			return true;
 		}
 	}
@@ -77,6 +93,16 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 //override
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
+	
+	if(this->mouseCaptured.IsValid()){
+		this->mouseCaptured->OnMouseMove(pos - this->mouseCaptured->Rect().p, pointerId);
+		
+		//set hovered goes after move notification because position of widget could change
+		//during handling the notification, so need to check after that for hovering
+		this->mouseCaptured->SetHovered(this->mouseCaptured->Rect().Overlaps(pos));
+		
+		return true;//doesn't matter what to return
+	}
 	
 	//original list of children may change during iterating.
 	//TODO:
@@ -196,6 +222,10 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	
 	w->parent.Reset();
 	w->SetHovered(false);
+	
+	if(this->mouseCaptured == w){
+		this->mouseCaptured.Reset();
+	}
 	
 	this->SetRelayoutNeeded();
 }

@@ -49,6 +49,9 @@ private:
 
 	ting::Ptr<Layout> layout;
 	
+	ting::Ref<Widget> mouseCaptured;
+	ting::u8 numMouseCaptureClicks;
+	
 	void ApplyDescription(const stob::Node& description);
 	
 protected:
