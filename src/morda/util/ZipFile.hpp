@@ -114,7 +114,7 @@ public:
 
 
 	//override
-	virtual void Open(EMode mode){
+	virtual void Open(EMode mode){//TODO: fix, should be OpenInternal
 		if(!this->ZipFileIsOpened()){
 			throw File::Exc("ZipFile::Open(): zip file is not opened");
 		}
@@ -151,7 +151,7 @@ public:
 
 
 	//override
-	virtual void Close()throw(){
+	virtual void Close()throw(){//TODO: fix, should be CloseInternal
 		if(!this->IsOpened()){
 			return;
 		}
