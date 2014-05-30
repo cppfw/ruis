@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "../Widget.hpp"
+#include "Widget.hpp"
 #include "../util/Gravity.hpp"
 
 

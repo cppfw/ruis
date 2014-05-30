@@ -1,9 +1,9 @@
 #include "Widget.hpp"
 
-#include "App.hpp"
+#include "../App.hpp"
 #include "Container.hpp"
-#include "shaders/SimpleSingleColoringShader.hpp"
-#include "util/util.hpp"
+#include "../shaders/SimpleSingleColoringShader.hpp"
+#include "../util/util.hpp"
 
 using namespace morda;
 

@@ -31,7 +31,7 @@ THE SOFTWARE. */
 
 #include <ting/Signal.hpp>
 
-#include "../Widget.hpp"
+#include "../widgets/Widget.hpp"
 
 
 

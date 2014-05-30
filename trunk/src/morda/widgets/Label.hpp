@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis
+Copyright (c) 2012-2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include "../Widget.hpp"
+#include "../widgets/Widget.hpp"
 #include "../resources/ResFont.hpp"
 #include "Gravitating.hpp"
 #include "PaddedWidget.hpp"
