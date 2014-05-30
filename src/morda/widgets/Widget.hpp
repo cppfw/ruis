@@ -223,7 +223,7 @@ private:
 		
 		bool res;
 		if(is_down){
-			res = this->OnKeyDown(keyCode);
+			res = this->OnKeyDown(keyCode);//TODO: refactor, isDown should be argument
 		}else{
 			res = this->OnKeyUp(keyCode);
 		}

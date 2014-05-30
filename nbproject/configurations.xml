@@ -51,6 +51,8 @@
           <in>Button.cpp</in>
           <in>Container.cpp</in>
           <in>Label.cpp</in>
+          <in>Slider.cpp</in>
+          <in>Slider.hpp</in>
           <in>TextButton.cpp</in>
           <in>Widget.cpp</in>
         </df>
@@ -294,6 +296,10 @@
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -557,6 +563,10 @@
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
       </item>

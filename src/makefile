@@ -65,6 +65,7 @@ srcs += morda/util/util.cpp
 srcs += morda/widgets/Button.cpp
 srcs += morda/widgets/Container.cpp
 srcs += morda/widgets/Label.cpp
+srcs += morda/widgets/Slider.cpp
 srcs += morda/widgets/TextButton.cpp
 srcs += morda/widgets/Widget.cpp
 srcs += morda/layouts/Layout.cpp
