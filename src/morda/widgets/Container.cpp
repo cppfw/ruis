@@ -149,7 +149,7 @@ morda::Vec2f Container::ComputeMinDim()const throw(){
 
 
 void Container::Add(const ting::Ref<Widget>& w){
-	ASSERT_INFO(w, "Widget::Add(): widget pointer is 0")
+	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->parent.GetRef().IsValid()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
 	}
