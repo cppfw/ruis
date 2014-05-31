@@ -15,88 +15,8 @@ using namespace morda;
 
 namespace{
 
-	//TODO:remove?
-//const char* D_Widget = "Widget";
-const char* D_Container = "Container";
-//const char* D_Label = "Label";
-//const char* D_TextButton = "TextButton";
-//
 const char* D_LinearLayout = "LinearLayout";
 const char* D_FrameLayout = "FrameLayout";
-
-
-
-//TODO: remove this class, make just AddWidget<> method in GuiInflater
-template <class T_Widget> class ConcreteWidgetFactory : public GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		return T_Widget::New(node, false);
-	}
-	
-	inline static ting::Ptr<ConcreteWidgetFactory> New(){
-		return ting::Ptr<ConcreteWidgetFactory>(new ConcreteWidgetFactory());
-	}
-};
-
-
-//TODO: remove?
-//class BareWidgetFactory : public GuiInflater::WidgetFactory{
-//public:
-//	//override
-//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-//		ASSERT(node == D_Widget)
-//		return Widget::New(node, false);
-//	}
-//	
-//	inline static ting::Ptr<BareWidgetFactory> New(){
-//		return ting::Ptr<BareWidgetFactory>(new BareWidgetFactory());
-//	}
-//};
-//
-//class ContainerFactory : public GuiInflater::WidgetFactory{
-//public:
-//	//override
-//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-//		return ContainerFactory::Inflate(node);
-//	}
-//	
-//	inline static ting::Ref<morda::Container> Inflate(const stob::Node& node){
-//		ASSERT(node == D_Container)
-//		return Container::New(node, false);
-//	}
-//	
-//	inline static ting::Ptr<ContainerFactory> New(){
-//		return ting::Ptr<ContainerFactory>(new ContainerFactory());
-//	}
-//};
-//
-//class LabelFactory : public GuiInflater::WidgetFactory{
-//public:
-//	//override
-//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-//		ASSERT(node == D_Label)
-//		return Label::New(node, false);
-//	}
-//	
-//	inline static ting::Ptr<LabelFactory> New(){
-//		return ting::Ptr<LabelFactory>(new LabelFactory());
-//	}
-//};
-//
-//class TextButtonFactory : public GuiInflater::WidgetFactory{
-//public:
-//	//override
-//	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-//		ASSERT(node == D_TextButton)
-//		return TextButton::New(node, false);
-//	}
-//	
-//	inline static ting::Ptr<TextButtonFactory> New(){
-//		return ting::Ptr<TextButtonFactory>(new TextButtonFactory());
-//	}
-//};
-
 
 
 
@@ -131,11 +51,11 @@ public:
 
 
 GuiInflater::GuiInflater(){
-	this->AddWidgetFactory("Widget", ConcreteWidgetFactory<Widget>::New());
-	this->AddWidgetFactory(D_Container, ConcreteWidgetFactory<Container>::New());
-	this->AddWidgetFactory("Label", ConcreteWidgetFactory<Label>::New());
-	this->AddWidgetFactory("TextButton", ConcreteWidgetFactory<TextButton>::New());
-	this->AddWidgetFactory("Slider", ConcreteWidgetFactory<Slider>::New());
+	this->AddWidget<Widget>("Widget");
+	this->AddWidget<Container>("Container");
+	this->AddWidget<Label>("Label");
+	this->AddWidget<TextButton>("TextButton");
+	this->AddWidget<Slider>("Slider");
 	
 	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
 	this->AddLayoutFactory(D_FrameLayout, FrameLayoutFactory::New());
@@ -143,20 +63,7 @@ GuiInflater::GuiInflater(){
 
 
 
-void GuiInflater::AddWidgetFactory(const std::string& widgetName, ting::Ptr<GuiInflater::WidgetFactory> factory){
-	if(!factory){
-		throw GuiInflater::Exc("Failed adding factory, passed factory pointer is not valid");
-	}
-	
-	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(std::pair<std::string, ting::Ptr<GuiInflater::WidgetFactory> >(widgetName, factory));
-	if(!ret.second){
-		throw GuiInflater::Exc("Failed adding factory, factory with that widget name is already added");
-	}
-}
-
-
-
-bool GuiInflater::RemoveWidgetFactory(const std::string& widgetName)throw(){
+bool GuiInflater::RemoveWidget(const std::string& widgetName)throw(){
 	if(this->widgetFactories.erase(widgetName) == 0){
 		return false;
 	}
@@ -168,7 +75,6 @@ bool GuiInflater::RemoveWidgetFactory(const std::string& widgetName)throw(){
 ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
-	root->SetValue(D_Container);
 	
 	return Container::New(*root, false);
 }

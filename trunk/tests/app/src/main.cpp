@@ -24,17 +24,17 @@ class SimpleWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
-	SimpleWidget(const stob::Node& description) :
-			morda::Widget(description, false)
+	SimpleWidget(const stob::Node& description, bool doNotCopyProp) :
+			morda::Widget(description, doNotCopyProp)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 public:	
-	static inline ting::Ref<SimpleWidget> New(const stob::Node& description){
+	static inline ting::Ref<SimpleWidget> New(const stob::Node& description, bool doNotCopyProp){
 		return ting::Ref<SimpleWidget>(
-				new SimpleWidget(description)
+				new SimpleWidget(description, doNotCopyProp)
 			);
 	}
 	
@@ -134,16 +134,6 @@ public:
 //		morda::Matr4f m(matrix);
 //		m.Translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
-	}
-};
-
-
-
-class SimpleWidgetFactory : public morda::GuiInflater::WidgetFactory{
-public:
-	//override
-	ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-		return SimpleWidget::New(node);
 	}
 };
 
@@ -261,7 +251,7 @@ public:
 	{
 		this->ResMan().MountResPack(this->CreateResourceFileInterface());
 		
-		this->Inflater().AddWidgetFactory("U_SimpleWidget", ting::Ptr<morda::GuiInflater::WidgetFactory>(new SimpleWidgetFactory()));
+		this->Inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 
 		ting::Ref<morda::Container> c = morda::App::Inst().Inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")

@@ -80,19 +80,36 @@ private:
 	
 public:
 	/**
-	 * @brief Registers a new factory for constructing widgets.
-     * @param widgetName - name of the widget the factory constructs.
-     * @param factory - factory object.
+	 * @brief Registers a new widget type.
+     * @param widgetName - name of the widget as it appears in GUI script.
      */
-	void AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory);
+	template <class T_Widget> void AddWidget(const std::string& widgetName){
+		class Factory : public WidgetFactory{
+			public:
+			//override
+			ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+				return T_Widget::New(node, false);
+			}
+		};
+		
+		std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
+				std::pair<std::string, ting::Ptr<GuiInflater::WidgetFactory> >(
+						widgetName,
+						ting::Ptr<WidgetFactory>(new Factory())
+					)
+			);
+		if(!ret.second){
+			throw GuiInflater::Exc("Failed registering widget type, widget type with given name is already added");
+		}
+	}
 	
 	/**
-	 * @brief Remove widget factory.
-     * @param widgetName - widget name associated with the factory to remove.
+	 * @brief Remove previously registered widget.
+     * @param widgetName - widget name as it appears in GUI script.
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
      */
-	bool RemoveWidgetFactory(const std::string& widgetName)throw();
+	bool RemoveWidget(const std::string& widgetName)throw();
 	
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
