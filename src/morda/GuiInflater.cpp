@@ -13,43 +13,6 @@ using namespace morda;
 
 
 
-namespace{
-
-const char* D_LinearLayout = "LinearLayout";
-const char* D_FrameLayout = "FrameLayout";
-
-
-
-class LinearLayoutFactory : public GuiInflater::LayoutFactory{
-public:
-	//override
-	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node == D_LinearLayout)
-		return LinearLayout::New(node);
-	}
-	
-	inline static ting::Ptr<LinearLayoutFactory> New(){
-		return ting::Ptr<LinearLayoutFactory>(new LinearLayoutFactory());
-	}
-};
-
-class FrameLayoutFactory : public GuiInflater::LayoutFactory{
-public:
-	//override
-	ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
-		ASSERT(node == D_FrameLayout)
-		return FrameLayout::New(node);
-	}
-	
-	inline static ting::Ptr<FrameLayoutFactory> New(){
-		return ting::Ptr<FrameLayoutFactory>(new FrameLayoutFactory());
-	}
-};
-
-}//~namespace
-
-
-
 GuiInflater::GuiInflater(){
 	this->AddWidget<Widget>("Widget");
 	this->AddWidget<Container>("Container");
@@ -57,8 +20,22 @@ GuiInflater::GuiInflater(){
 	this->AddWidget<TextButton>("TextButton");
 	this->AddWidget<Slider>("Slider");
 	
-	this->AddLayoutFactory(D_LinearLayout, LinearLayoutFactory::New());
-	this->AddLayoutFactory(D_FrameLayout, FrameLayoutFactory::New());
+	this->AddLayout<LinearLayout>("LinearLayout");
+	this->AddLayout<FrameLayout>("FrameLayout");
+}
+
+
+
+void GuiInflater::AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory){
+	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
+			std::pair<std::string, ting::Ptr<GuiInflater::WidgetFactory> >(
+					widgetName,
+					factory
+				)
+		);
+	if(!ret.second){
+		throw GuiInflater::Exc("Failed registering widget type, widget type with given name is already added");
+	}
 }
 
 
@@ -107,24 +84,25 @@ ting::Ref<morda::Widget> GuiInflater::Inflate(const stob::Node& gui)const{
 
 
 
-void GuiInflater::AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory){
-	if(!factory){
-		throw GuiInflater::Exc("Failed adding factory, passed factory pointer is not valid");
-	}
-	
-	std::pair<T_LayoutMap::iterator, bool> ret = this->layoutFactories.insert(std::pair<std::string, ting::Ptr<GuiInflater::LayoutFactory> >(layoutName, factory));
-	if(!ret.second){
-		throw GuiInflater::Exc("Failed adding factory, factory with that layout name is already added");
-	}
-}
-
-
-
-bool GuiInflater::RemoveLayoutFactory(const std::string& layoutName)throw(){
+bool GuiInflater::RemoveLayout(const std::string& layoutName)throw(){
 	if(this->layoutFactories.erase(layoutName) == 0){
 		return false;
 	}
 	return true;
+}
+
+
+
+void GuiInflater::AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory){
+	std::pair<T_LayoutMap::iterator, bool> ret = this->layoutFactories.insert(
+			std::pair<std::string, ting::Ptr<GuiInflater::LayoutFactory> >(
+					layoutName,
+					factory
+				)
+		);
+	if(!ret.second){
+		throw GuiInflater::Exc("Failed adding factory, factory with that layout name is already added");
+	}
 }
 
 
