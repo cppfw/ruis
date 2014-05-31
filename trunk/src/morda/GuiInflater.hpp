@@ -75,8 +75,12 @@ private:
 	typedef std::map<std::string, ting::Ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
 	
+	void AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory);
+	
 	typedef std::map<std::string, ting::Ptr<LayoutFactory> > T_LayoutMap;
 	T_LayoutMap layoutFactories;
+	
+	void AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory);
 	
 public:
 	/**
@@ -92,19 +96,11 @@ public:
 			}
 		};
 		
-		std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
-				std::pair<std::string, ting::Ptr<GuiInflater::WidgetFactory> >(
-						widgetName,
-						ting::Ptr<WidgetFactory>(new Factory())
-					)
-			);
-		if(!ret.second){
-			throw GuiInflater::Exc("Failed registering widget type, widget type with given name is already added");
-		}
+		this->AddWidgetFactory(widgetName, ting::Ptr<WidgetFactory>(new Factory()));
 	}
 	
 	/**
-	 * @brief Remove previously registered widget.
+	 * @brief Remove previously registered widget type.
      * @param widgetName - widget name as it appears in GUI script.
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
@@ -135,19 +131,28 @@ public:
 	ting::Ref<morda::Widget> InflateFirstFrom(ting::fs::File& fi)const;
 	
 	/**
-	 * @brief Registers a layout factory.
-     * @param layoutName - name of the layout the factory creates.
-     * @param factory - the factory object to register.
+	 * @brief Registers a layout type.
+     * @param layoutName - name of the layout as it appears in GUI script.
      */
-	void AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory);
+	template <class T_Layout> void AddLayout(const std::string& layoutName){
+		class Factory : public LayoutFactory{
+		public:
+			//override
+			ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
+				return T_Layout::New(node);
+			}
+		};
+
+		this->AddLayoutFactory(layoutName, ting::Ptr<LayoutFactory>(new Factory()));
+	}
 	
 	/**
-	 * @brief Remove layout factory.
-     * @param layoutName - name of the layout associated with the factory.
-	 * @return true if factory was successfully removed.
-	 * @return false if the factory with given layout name was not found in the list of registered factories.
+	 * @brief Remove previously registered layout type.
+     * @param layoutName - name of the layout as it appears in GUI script.
+	 * @return true if layout type was successfully removed.
+	 * @return false if layout type with given name was not found in the list of registered types.
      */
-	bool RemoveLayoutFactory(const std::string& layoutName)throw();
+	bool RemoveLayout(const std::string& layoutName)throw();
 	
 	
 	ting::Ptr<Layout> CreateLayout(const stob::Node& layout)const;
