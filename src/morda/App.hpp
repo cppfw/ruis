@@ -56,7 +56,6 @@ THE SOFTWARE. */
 
 #include "Exc.hpp"
 #include "widgets/Widget.hpp"
-#include "widgets/Container.hpp"
 #include "GuiInflater.hpp"
 #include "Updateable.hpp"
 #include "util/KeyListener.hpp"
@@ -313,7 +312,7 @@ public:
 	}
 	
 private:
-	ting::Ref<morda::Container> rootContainer;
+	ting::Ref<morda::Widget> rootWidget;
 
 	ResourceManager resMan;
 
@@ -345,11 +344,11 @@ public:
 
 	virtual ~App()throw(){}
 
-	inline void SetRootContainer(const ting::Ref<morda::Container>& c){
-		this->rootContainer = c;
+	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
+		this->rootWidget = w;
 		
-		this->rootContainer->MoveTo(morda::Vec2f(0));
-		this->rootContainer->Resize(this->curWinRect.d);
+		this->rootWidget->MoveTo(morda::Vec2f(0));
+		this->rootWidget->Resize(this->curWinRect.d);
 	}
 
 	inline ResourceManager& ResMan()throw(){
@@ -388,9 +387,9 @@ private:
 				w->HandleCharacterInput(unicodeResolver);
 			}
 		}else if(!is_char_input_only){
-//			TRACE(<< "HandleKeyEvent(): there is no focused widget, not a char only input, passing to rootContainer" << std::endl)
-			if(this->rootContainer){
-				this->rootContainer->HandleKeyEvent<is_down>(keyCode);
+//			TRACE(<< "HandleKeyEvent(): there is no focused widget, not a char only input, passing to rootWidget" << std::endl)
+			if(this->rootWidget){
+				this->rootWidget->HandleKeyEvent<is_down>(keyCode);
 			}
 		}
 	}

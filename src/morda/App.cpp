@@ -30,7 +30,7 @@ void App::Render(){
 	//TODO: render only if needed?
 	
 //	TRACE(<< "App::Render(): invoked" << std::endl)
-	if(this->rootContainer.IsNotValid()){
+	if(this->rootWidget.IsNotValid()){
 		TRACE(<< "App::Render(): root container is not valid" << std::endl)
 		return;
 	}
@@ -49,11 +49,11 @@ void App::Render(){
 	m.Translate(-1, -1);
 	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);
 	
-	if(this->rootContainer->relayoutNeeded){
-		this->rootContainer->Resize(this->curWinRect.d);
+	if(this->rootWidget->relayoutNeeded){
+		this->rootWidget->Resize(this->curWinRect.d);
 	}
 	
-	this->rootContainer->RenderInternal(m);
+	this->rootWidget->RenderInternal(m);
 	
 	this->SwapGLBuffers();
 }
@@ -69,39 +69,39 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 
 	this->UpdateGLViewport();
 	
-	if(this->rootContainer.IsNotValid()){
+	if(this->rootWidget.IsNotValid()){
 		return;
 	}
 	
-	this->rootContainer->Resize(this->curWinRect.d);
+	this->rootWidget->Resize(this->curWinRect.d);
 }
 
 
 
 void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
-	if(this->rootContainer.IsNotValid()){
+	if(this->rootWidget.IsNotValid()){
 		return;
 	}
-	this->rootContainer->SetHovered(this->rootContainer->Rect().Overlaps(pos));
-	this->rootContainer->OnMouseMove(this->NativeWindowToRootCoordinates(pos), id);
+	this->rootWidget->SetHovered(this->rootWidget->Rect().Overlaps(pos));
+	this->rootWidget->OnMouseMove(this->NativeWindowToRootCoordinates(pos), id);
 }
 
 
 
 void App::HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
-	if(this->rootContainer.IsNotValid()){
+	if(this->rootWidget.IsNotValid()){
 		return;
 	}
 
-	this->rootContainer->SetHovered(this->rootContainer->Rect().Overlaps(pos));
-	this->rootContainer->OnMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, id);
+	this->rootWidget->SetHovered(this->rootWidget->Rect().Overlaps(pos));
+	this->rootWidget->OnMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, id);
 }
 
 
 
 void App::HandleMouseHover(bool isHovered){
-	if(this->rootContainer.IsNotValid()){
+	if(this->rootWidget.IsNotValid()){
 		return;
 	}
-	this->rootContainer->SetHovered(isHovered);
+	this->rootWidget->SetHovered(isHovered);
 }
