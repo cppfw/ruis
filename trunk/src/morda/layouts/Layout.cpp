@@ -84,7 +84,7 @@ Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
 				if(ting::Ref<const Container> p = w.Parent()){
 					float padding;
 					if(const Layout* l = p->GetLayout()){
-						padding = l->Padding()[i] - l->Padding()[i + 2];
+						padding = l->Padding()[i] + l->Padding()[i + 2];
 					}else{
 						padding = 0;
 					}

@@ -31,11 +31,9 @@ Container{
 
 
 
-	layout{
-		FrameLayout{
-			padding{10 20 30 40} //NOTE: padding is a layout property because without layout widgets can be placed anywhere
-		}
-	}
+	layout{FrameLayout{
+		padding{10 20 30 40} //NOTE: padding is a layout property because without layout widgets can be placed anywhere
+	}}
 
 
 
@@ -111,20 +109,15 @@ Container{
 	}
 
 	Container{
-		layout{
-			LinearLayout{
-				orientation {horizontal}
-				padding {20 30 10 40}
-			}
-		}
+		layout{ LinearLayout{
+			orientation {horizontal}
+			padding {1 1 1 1}
+		}}
 
-		prop{
-			layout{
-				dim {100% 50%}
-				gravity {50% 100%}
-				padding {1 1 1 1}
-			}
-		}
+		prop{ layout{
+			dim {100% 50%}
+			gravity {50% 100%}
+		}}
 
 		Slider{
 			horizontal
@@ -137,6 +130,8 @@ Container{
 		}
 
 		Slider{
+			name {"vertical slider"}
+
 			vertical
 
 			prop{layout{
