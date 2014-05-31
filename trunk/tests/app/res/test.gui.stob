@@ -48,8 +48,8 @@ Container{
 		layout{
 			LinearLayout{
 	//		FrameLayout{
-				orientation {horizontal}
-	//			reverse {true}
+				vertical {false}
+//				reverse {true}
 				padding {20 30 10 40}
 			}
 		}
@@ -110,7 +110,7 @@ Container{
 
 	Container{
 		layout{ LinearLayout{
-			orientation {horizontal}
+			vertical {false}
 			padding {1 1 1 1}
 		}}
 
@@ -120,7 +120,7 @@ Container{
 		}}
 
 		Slider{
-			horizontal
+			vertical{false}
 
 			prop{layout{
 				dim {0 40} //TODO: min min
@@ -131,8 +131,6 @@ Container{
 
 		Slider{
 			name {"vertical slider"}
-
-			vertical
 
 			prop{layout{
 				dim {40 100%} //TODO: min min
