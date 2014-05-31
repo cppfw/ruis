@@ -17,18 +17,12 @@ using namespace morda;
 LinearLayout::LinearLayout(const stob::Node& description) :
 		Layout(description)
 {
-	this->isVertical = true;
-	if(const stob::Node* n = description.GetProperty("orientation")){
-		if(*n == "horizontal"){
-			this->isVertical = false;
-		}
+	if(const stob::Node* n = description.GetProperty("vertical")){
+		this->isVertical = n->AsBool();
 	}
-	
-	this->isReverse = false;
+
 	if(const stob::Node* n = description.GetProperty("reverse")){
-		if(n->AsBool()){
-			this->isReverse = true;
-		}
+		this->isReverse = n->AsBool();
 	}
 }
 

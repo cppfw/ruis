@@ -43,8 +43,8 @@ class LinearLayout : public morda::Layout{
 	
 	LinearLayout(const stob::Node& description);
 	
-	bool isVertical;
-	bool isReverse;
+	ting::Inited<bool, true> isVertical;
+	ting::Inited<bool, false> isReverse;
 public:
 	inline void SetReverse(bool isReverse)throw(){
 		this->isReverse = isReverse;
