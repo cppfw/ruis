@@ -37,6 +37,7 @@ namespace morda{
 
 
 
+	//TODO: this class seems redundant?
 //TODO: doxygen
 class LeftBottomRightTop{
 public:

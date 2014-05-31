@@ -240,8 +240,8 @@ class Application : public morda::App{
 	inline static morda::App::WindowParams GetWindowParams()throw(){
 		morda::App::WindowParams wp;
 		
-		wp.dim.x = 320;
-		wp.dim.y = 480;
+		wp.dim.x = 800;
+		wp.dim.y = 800;
 		
 		return wp;
 	}

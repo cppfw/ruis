@@ -325,7 +325,7 @@ public:
 
 protected:
 	virtual morda::Vec2f ComputeMinDim()const throw(){
-		return this->Rect().d;
+		return 0;
 	}
 	
 public:
