@@ -1,107 +1,110 @@
-U_SimpleWidget{
-	dim {300 300}
-}
-
-TextButton{
-	pos {10 20}
-	dim {100 50}
-	gravity {30% 70%}
-	text {"Hello world!"}
-
-	prop{
-		layout{
-			dim{min 30}
-			gravity{0% 0%}
-		}
-	}
-}
-
-Label{
-	text {"Test Label"}
-
-	prop{
-		layout{
-			dim{min 30}
-			gravity{50% 0%}
-		}
-	}
-}
-
-
-
-layout{
-	FrameLayout{
-		padding{10 20 30 40} //TODO: i padding a layout property?
-	}
-}
-
-
-
 Container{
-	pos {50 100}
-	dim {220 100}
 
-	name {someContainer}
-
-	clip {true}
-
-	layout{
-		LinearLayout{
-//		FrameLayout{
-			orientation {horizontal}
-//			reverse {true}
-			padding {20 30 10 40}
-		}
-	}
-
-	prop{
-		layout{
-			dim {min min}
-			weight {2}
-		}
-	}
-
-	Label{
-		pos {0 0}
-		name {label1}
-		text {trololo}
-		gravity {left bottom}
-		padding {10 20 30 40}
-
-		prop{
-			layout{
-				weight {0}
-				gravity {100%}
-			}
-		}
-	}
-
-	Label{
-		pos {0 0}
-		name {label2}
-		text {"blah bla"}
-		padding {10}
-
-		prop{
-			layout{
-				weight {0}
-				margins {10 10 10 10}
-			}
-		}
+	U_SimpleWidget{
+		dim {300 300}
 	}
 
 	TextButton{
-		name {show_VK_button}
-		pos {50 80}
-		dim {10 30}
-		text {"Show VK"}
+		pos {10 20}
+		dim {100 50}
+		gravity {30% 70%}
+		text {"Hello world!"}
 
 		prop{
 			layout{
-				dim {30% min}
-				gravity {0% 70%}
-				weight {1}
-				margins {10 20 30 40}
+				dim{min 30}
+				gravity{0% 0%}
+			}
+		}
+	}
+
+	Label{
+		text {"Test Label"}
+
+		prop{
+			layout{
+				dim{min 30}
+				gravity{50% 0%}
+			}
+		}
+	}
+
+
+
+	layout{
+		FrameLayout{
+			padding{10 20 30 40} //NOTE: padding is a layout property because without layout widgets can be placed anywhere
+		}
+	}
+
+
+
+	Container{
+		pos {50 100}
+		dim {220 100}
+
+		name {someContainer}
+
+		clip {true}
+
+		layout{
+			LinearLayout{
+	//		FrameLayout{
+				orientation {horizontal}
+	//			reverse {true}
+				padding {20 30 10 40}
+			}
+		}
+
+		prop{
+			layout{
+				dim {min min}
+				weight {2}
+			}
+		}
+
+		Label{
+			pos {0 0}
+			name {label1}
+			text {trololo}
+			gravity {left bottom}
+			padding {10 20 30 40}
+
+			prop{
+				layout{
+					weight {0}
+					gravity {100%}
+				}
+			}
+		}
+
+		Label{
+			pos {0 0}
+			name {label2}
+			text {"blah bla"}
+			padding {10}
+
+			prop{
+				layout{
+					weight {0}
+					margins {10 10 10 10}
+				}
+			}
+		}
+
+		TextButton{
+			name {show_VK_button}
+			pos {50 80}
+			dim {10 30}
+			text {"Show VK"}
+
+			prop{
+				layout{
+					dim {30% min}
+					gravity {0% 70%}
+					weight {1}
+					margins {10 20 30 40}
+				}
 			}
 		}
 	}

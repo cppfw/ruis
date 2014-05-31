@@ -115,20 +115,11 @@ public:
 	ting::Ref<morda::Widget> Inflate(const stob::Node& gui)const;
 	
 	/**
-	 * @brief Create widgets hierarchy from GUI script.
-	 * Inflates widget hierarchy, assuming that GUI script describes contents of
-	 * a root container.
-     * @param fi - file interface to get the GUI script from.
-     * @return reference to the root container of the created hierarchy.
-     */
-	ting::Ref<morda::Container> Inflate(ting::fs::File& fi)const;
-	
-	/**
-	 * @brief Inflate first widget described in GUI script.
+	 * @brief Inflate widget described in GUI script.
      * @param fi - file interface to get the GUI script from.
      * @return reference to the inflated widget.
      */
-	ting::Ref<morda::Widget> InflateFirstFrom(ting::fs::File& fi)const;
+	ting::Ref<morda::Widget> Inflate(ting::fs::File& fi)const;
 	
 	/**
 	 * @brief Registers a layout type.

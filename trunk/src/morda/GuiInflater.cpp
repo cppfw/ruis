@@ -49,20 +49,11 @@ bool GuiInflater::RemoveWidget(const std::string& widgetName)throw(){
 
 
 
-ting::Ref<morda::Container> GuiInflater::Inflate(ting::fs::File& fi)const{
+ting::Ref<morda::Widget> GuiInflater::Inflate(ting::fs::File& fi) const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
 	
-	return Container::New(*root, false);
-}
-
-
-
-ting::Ref<morda::Widget> GuiInflater::InflateFirstFrom(ting::fs::File& fi) const{
-	ting::Ptr<stob::Node> root = stob::Load(fi);
-	ASSERT(root)
-	
-	stob::Node* first = root->ChildNonProperty().node();
+	stob::Node* first = root->Child();
 	if(!first){
 		return 0;
 	}

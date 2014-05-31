@@ -253,7 +253,7 @@ public:
 		
 		this->Inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 
-		ting::Ref<morda::Container> c = morda::App::Inst().Inflater().Inflate(
+		ting::Ref<morda::Widget> c = morda::App::Inst().Inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")
 			);
 		
@@ -278,13 +278,13 @@ public:
 		
 		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
 		
-		{
+		if(ting::Ref<morda::Container> container = c.DynamicCast<morda::Container>()){
 			ting::Ref<CubeWidget> w = CubeWidget::New();
 			w->Resize(morda::Vec2f(200, 150));
-			c->Add(w);
+			container->Add(w);
 		}
 		
-		this->SetRootContainer(c);
+		this->SetRootWidget(c);
 	}
 };
 

@@ -121,8 +121,8 @@ template <bool is_down> void Widget::PassKeyEventToParent(key::Key keyCode){
 		p->HandleKeyEvent<is_down>(keyCode);
 	}else{
 		App& app = App::Inst();
-		if(app.rootContainer && static_cast<Widget*>(app.rootContainer.operator->()) != this){
-			app.rootContainer->HandleKeyEvent<is_down>(keyCode);
+		if(app.rootWidget && static_cast<Widget*>(app.rootWidget.operator->()) != this){
+			app.rootWidget->HandleKeyEvent<is_down>(keyCode);
 		}
 	}
 }
