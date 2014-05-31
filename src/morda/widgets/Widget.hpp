@@ -175,7 +175,6 @@ public:
 		this->relayoutNeeded = false;
 	}
 
-	//TODO: should it be only for containers?
 	virtual ting::Ref<Widget> FindChildByName(const std::string& name)throw(){
 		return 0;
 	}

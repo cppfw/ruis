@@ -60,6 +60,7 @@ Container{
 			layout{
 				dim {min min}
 				weight {2}
+				gravity {50% 0%}
 			}
 		}
 
@@ -106,6 +107,42 @@ Container{
 					margins {10 20 30 40}
 				}
 			}
+		}
+	}
+
+	Container{
+		layout{
+			LinearLayout{
+				orientation {horizontal}
+				padding {20 30 10 40}
+			}
+		}
+
+		prop{
+			layout{
+				dim {100% 50%}
+				gravity {50% 100%}
+				padding {1 1 1 1}
+			}
+		}
+
+		Slider{
+			horizontal
+
+			prop{layout{
+				dim {0 40} //TODO: min min
+				weight{1}
+				gravity {0% 0%}
+			}}
+		}
+
+		Slider{
+			vertical
+
+			prop{layout{
+				dim {40 100%} //TODO: min min
+				gravity {0% 0%}
+			}}
 		}
 	}
 }
