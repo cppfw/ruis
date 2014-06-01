@@ -31,6 +31,8 @@ THE SOFTWARE. */
 
 #include <map>
 
+#include <ting/util.hpp>
+
 #include "Exc.hpp"
 #include "widgets/Widget.hpp"
 #include "layouts/Layout.hpp"
@@ -89,9 +91,8 @@ public:
      */
 	template <class T_Widget> void AddWidget(const std::string& widgetName){
 		class Factory : public WidgetFactory{
-			public:
-			//override
-			ting::Ref<morda::Widget> Create(const stob::Node& node)const{
+		public:
+			ting::Ref<morda::Widget> Create(const stob::Node& node)const OVERRIDE{
 				return T_Widget::New(node);
 			}
 		};
@@ -128,8 +129,7 @@ public:
 	template <class T_Layout> void AddLayout(const std::string& layoutName){
 		class Factory : public LayoutFactory{
 		public:
-			//override
-			ting::Ptr<morda::Layout> Create(const stob::Node& node)const{
+			ting::Ptr<morda::Layout> Create(const stob::Node& node)const OVERRIDE{
 				return T_Layout::New(node);
 			}
 		};

@@ -54,11 +54,9 @@ public:
 		this->isVertical = isVertical;
 	}
 	
-	//override
-	void ArrangeWidgets(Container& cont)const;
+	void ArrangeWidgets(Container& cont)const OVERRIDE;
 	
-	//override
-	morda::Vec2f ComputeMinDim(const Container& cont)const throw();
+	morda::Vec2f ComputeMinDim(const Container& cont)const throw() OVERRIDE;
 	
 	~LinearLayout()throw(){}
 	

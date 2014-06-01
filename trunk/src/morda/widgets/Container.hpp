@@ -81,32 +81,25 @@ public:
 		return this->layout.operator->();
 	}
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 
-	//override
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
 public:
 	
-	//override
-	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId);
+	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
 	
-	//override
-	void OnHoverChanged();
+	void OnHoverChanged() OVERRIDE;
 	
-	//override
-	void OnResize();
+	void OnResize() OVERRIDE;
 	
-	//override
-	morda::Vec2f ComputeMinDim()const throw();
+	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
 
 	void Add(const ting::Ref<Widget>& w);
 
 	//return true if the widget was found in children and was removed
 	void Remove(const ting::Ref<Widget>& w);
 	
-	//override
-	ting::Ref<Widget> FindChildByName(const std::string& name)throw();
+	ting::Ref<Widget> FindChildByName(const std::string& name)throw() OVERRIDE;
 	
 	inline unsigned NumChildren()const throw(){
 		return this->numChildren;

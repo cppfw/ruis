@@ -32,6 +32,7 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 #include <ting/fs/File.hpp>
+#include <ting/util.hpp>
 
 
 
@@ -113,8 +114,7 @@ public:
 
 
 
-	//override
-	virtual void Open(EMode mode){//TODO: fix, should be OpenInternal
+	virtual void Open(EMode mode) OVERRIDE{//TODO: fix, should be OpenInternal
 		if(!this->ZipFileIsOpened()){
 			throw File::Exc("ZipFile::Open(): zip file is not opened");
 		}
@@ -150,8 +150,7 @@ public:
 
 
 
-	//override
-	virtual void Close()throw(){//TODO: fix, should be CloseInternal
+	virtual void Close()throw() OVERRIDE{//TODO: fix, should be CloseInternal
 		if(!this->IsOpened()){
 			return;
 		}
@@ -167,8 +166,7 @@ public:
 
 
 
-	//override
-	virtual size_t ReadInternal(ting::Buffer<ting::u8>& buf){
+	virtual size_t ReadInternal(ting::Buffer<ting::u8>& buf) OVERRIDE{
 		int numBytesRead = unzReadCurrentFile(this->zipFile, buf.Begin(), buf.Size());
 		if(numBytesRead < 0){
 			throw File::Exc("ZipFile::Read(): file reading failed");
@@ -180,9 +178,8 @@ public:
 
 
 
-	//override
 	//returns number of bytes actually written
-	virtual size_t WriteInternal(const ting::Buffer<ting::u8>& buf){
+	virtual size_t WriteInternal(const ting::Buffer<ting::u8>& buf) OVERRIDE{
 		if(this->ioMode != WRITE){
 			throw File::Exc("file is opened, but not in WRITE mode");
 		}
@@ -192,8 +189,7 @@ public:
 
 
 
-	//override
-	virtual bool Exists()const{
+	virtual bool Exists()const OVERRIDE{
 		if(this->Path().size() == 0){
 			return false;
 		}
@@ -212,8 +208,7 @@ public:
 
 
 
-	//override
-	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0){
+	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0) OVERRIDE{
 		if(!this->IsDir()){
 			throw File::Exc("ZipFile::ListDirContents(): this is not a directory");
 		}

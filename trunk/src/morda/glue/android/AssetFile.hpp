@@ -29,7 +29,11 @@ THE SOFTWARE. */
 
 #pragma once
 
-#ifndef __ANDROID__
+#include <ting/util.hpp>
+#include <ting/config.hpp>
+
+
+#if M_OS_NAME != M_OS_NAME_ANDROID
 #	error "Compiling in non-Android environment"
 #endif
 
@@ -79,33 +83,27 @@ public:
 	}
 
 
-	//override
-	virtual void OpenInternal(E_Mode mode);
+	virtual void OpenInternal(E_Mode mode) OVERRIDE;
 
 
 
-	//override
-	virtual void CloseInternal()throw();
+	virtual void CloseInternal()throw() OVERRIDE;
 
 
 
-	//override
-	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf);
+	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf) OVERRIDE;
 
 
 
-	//override
-	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf);
+	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf) OVERRIDE;
 
 
 
-	//override
-	virtual void SeekForwardInternal(size_t numBytesToSeek);
+	virtual void SeekForwardInternal(size_t numBytesToSeek) OVERRIDE;
 	
 	
 	
-	//override
-	virtual void SeekBackwardInternal(size_t numBytesToSeek);
+	virtual void SeekBackwardInternal(size_t numBytesToSeek) OVERRIDE;
 
 	
 	
@@ -118,20 +116,18 @@ public:
 	void Seek(size_t numBytesToSeek, bool seekForward);
 	
 	
-	//override
-	virtual void RewindInternal();
+	
+	virtual void RewindInternal() OVERRIDE;
 	
 
 
-	//override
-	virtual bool Exists()const;
+	virtual bool Exists()const OVERRIDE;
 
 
 
 public:
 
-	//override
-	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0);
+	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0) OVERRIDE;
 };
 
 

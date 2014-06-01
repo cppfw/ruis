@@ -7,6 +7,7 @@
 #include <ting/WaitSet.hpp>
 #include <ting/fs/FSFile.hpp>
 #include <ting/utf8.hpp>
+#include <ting/util.hpp>
 
 
 
@@ -227,8 +228,7 @@ namespace{
 class XEventWaitable : public ting::Waitable{
 	int fd;
 	
-	//override
-	int GetHandle(){
+	int GetHandle() OVERRIDE{
 		return this->fd;
 	}
 public:

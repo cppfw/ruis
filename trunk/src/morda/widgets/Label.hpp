@@ -65,14 +65,11 @@ public:
 		return this->text;
 	}
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 	
-	//override
-	Vec2f ComputeMinDim()const throw();
+	Vec2f ComputeMinDim()const throw() OVERRIDE;
 	
-	//override
-	void OnResize();
+	void OnResize() OVERRIDE;
 	
 	inline static ting::Ref<Label> New(const stob::Node& description){
 		return ting::Ref<Label>(new Label(description));
