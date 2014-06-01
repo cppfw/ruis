@@ -56,7 +56,7 @@ THE SOFTWARE. */
 
 #include "Exc.hpp"
 #include "widgets/Widget.hpp"
-#include "GuiInflater.hpp"
+#include "Inflater.hpp"
 #include "Updateable.hpp"
 #include "util/KeyListener.hpp"
 #include "resman/ResourceManager.hpp"
@@ -316,7 +316,7 @@ private:
 
 	ResourceManager resMan;
 
-	GuiInflater inflater;
+	Inflater guiInflater;
 
 	void UpdateGLViewport();
 
@@ -355,8 +355,8 @@ public:
 		return this->resMan;
 	}
 
-	inline GuiInflater& Inflater()throw(){
-		return this->inflater;
+	inline Inflater& inflater()throw(){
+		return this->guiInflater;
 	}
 	
 	void ShowVirtualKeyboard()throw();

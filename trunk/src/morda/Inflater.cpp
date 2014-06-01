@@ -1,4 +1,4 @@
-#include "GuiInflater.hpp"
+#include "Inflater.hpp"
 
 #include "widgets/Container.hpp"
 #include "widgets/Label.hpp"
@@ -13,7 +13,7 @@ using namespace morda;
 
 
 
-GuiInflater::GuiInflater(){
+Inflater::Inflater(){
 	this->AddWidget<Widget>("Widget");
 	this->AddWidget<Container>("Container");
 	this->AddWidget<Label>("Label");
@@ -26,21 +26,21 @@ GuiInflater::GuiInflater(){
 
 
 
-void GuiInflater::AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory){
+void Inflater::AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory){
 	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
-			std::pair<std::string, ting::Ptr<GuiInflater::WidgetFactory> >(
+			std::pair<std::string, ting::Ptr<Inflater::WidgetFactory> >(
 					widgetName,
 					factory
 				)
 		);
 	if(!ret.second){
-		throw GuiInflater::Exc("Failed registering widget type, widget type with given name is already added");
+		throw Inflater::Exc("Failed registering widget type, widget type with given name is already added");
 	}
 }
 
 
 
-bool GuiInflater::RemoveWidget(const std::string& widgetName)throw(){
+bool Inflater::RemoveWidget(const std::string& widgetName)throw(){
 	if(this->widgetFactories.erase(widgetName) == 0){
 		return false;
 	}
@@ -49,7 +49,7 @@ bool GuiInflater::RemoveWidget(const std::string& widgetName)throw(){
 
 
 
-ting::Ref<morda::Widget> GuiInflater::Inflate(ting::fs::File& fi) const{
+ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
 	
@@ -63,11 +63,11 @@ ting::Ref<morda::Widget> GuiInflater::Inflate(ting::fs::File& fi) const{
 
 
 
-ting::Ref<morda::Widget> GuiInflater::Inflate(const stob::Node& gui)const{
+ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
 	
 	if(i == this->widgetFactories.end()){
-		throw GuiInflater::Exc("Failed to inflate, no matching factory found for requested widget name");
+		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 	
 	return i->second->Create(gui);
@@ -75,7 +75,7 @@ ting::Ref<morda::Widget> GuiInflater::Inflate(const stob::Node& gui)const{
 
 
 
-bool GuiInflater::RemoveLayout(const std::string& layoutName)throw(){
+bool Inflater::RemoveLayout(const std::string& layoutName)throw(){
 	if(this->layoutFactories.erase(layoutName) == 0){
 		return false;
 	}
@@ -84,25 +84,25 @@ bool GuiInflater::RemoveLayout(const std::string& layoutName)throw(){
 
 
 
-void GuiInflater::AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory){
+void Inflater::AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory){
 	std::pair<T_LayoutMap::iterator, bool> ret = this->layoutFactories.insert(
-			std::pair<std::string, ting::Ptr<GuiInflater::LayoutFactory> >(
+			std::pair<std::string, ting::Ptr<Inflater::LayoutFactory> >(
 					layoutName,
 					factory
 				)
 		);
 	if(!ret.second){
-		throw GuiInflater::Exc("Failed adding factory, factory with that layout name is already added");
+		throw Inflater::Exc("Failed adding factory, factory with that layout name is already added");
 	}
 }
 
 
 
-ting::Ptr<Layout> GuiInflater::CreateLayout(const stob::Node& layout)const{
+ting::Ptr<Layout> Inflater::CreateLayout(const stob::Node& layout)const{
 	T_LayoutMap::const_iterator i = this->layoutFactories.find(layout.Value());
 	
 	if(i == this->layoutFactories.end()){
-		throw GuiInflater::Exc("Failed to inflate, no matching factory found for requested layout name");
+		throw Inflater::Exc("Failed to inflate, no matching factory found for requested layout name");
 	}
 	
 	return i->second->Create(layout);

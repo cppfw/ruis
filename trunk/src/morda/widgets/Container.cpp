@@ -14,7 +14,7 @@ Container::Container(const stob::Node& description) :
 		Widget(description)
 {
 	if(const stob::Node* n = description.GetProperty("layout")){
-		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
+		this->SetLayout(morda::App::Inst().inflater().CreateLayout(*n));
 	}
 	
 	for(const stob::Node* n = description.Child(); n; n = n->Next()){
@@ -22,7 +22,7 @@ Container::Container(const stob::Node& description) :
 			continue;//skip properties
 		}
 		
-		this->Add(morda::App::Inst().Inflater().Inflate(*n));
+		this->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }
 

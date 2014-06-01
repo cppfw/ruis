@@ -57,7 +57,7 @@
           <in>Widget.cpp</in>
         </df>
         <in>App.cpp</in>
-        <in>GuiInflater.cpp</in>
+        <in>Inflater.cpp</in>
         <in>Updateable.cpp</in>
       </df>
     </df>
@@ -176,7 +176,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
         <ccTool flags="0">
           <incDir>
             <pElem>ext</pElem>
@@ -425,7 +425,7 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="src/morda/GuiInflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
         <ccTool flags="0">
           <incDir>
             <pElem>ext</pElem>
