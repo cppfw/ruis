@@ -2,6 +2,8 @@
 
 #include "../App.hpp"
 
+#include <ting/math.hpp>
+
 
 using namespace morda;
 
@@ -66,10 +68,11 @@ void Slider::OnResize(){
 	
 	morda::Vec2f ns(this->Rect().d);
 	
-	ns[longIndex] *= this->handleSizeFactor;
+	ns[longIndex] = ting::math::Round(ns[longIndex] * this->handleSizeFactor);
 	ting::util::ClampBottom(ns[longIndex], this->GetMinDim()[longIndex]);
 	
 	this->Children()->Resize(ns);
+	
 	//TODO: move
 }
 
