@@ -47,11 +47,11 @@ class Slider :
 	Slider& operator=(const Slider&);
 	
 	ting::Inited<float, 0> curFactor; //Current position from 0 to 1
+	ting::Inited<float, 0> handleSizeFactor; //Current handle size factor from 0 to 1
 	
 	ting::Inited<bool, true> isVertical;
-	
 protected:
-	Slider(){}
+	Slider();
 	
 	Slider(const stob::Node& description);
 	
@@ -60,15 +60,16 @@ public:
 		return ting::Ref<Slider>(new Slider(description));
 	}
 	
-	static ting::Ref<Slider> New(){
-		return ting::Ref<Slider>(new Slider());
-	}
+	static ting::Ref<Slider> New();
 
 	virtual ~Slider()throw(){}
 	
-private:
+private:	
+	void OnResize() OVERRIDE;
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
+	
+	void Render(const morda::Matr4f& matrix) const OVERRIDE;
 };
 
 
