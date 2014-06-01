@@ -22,6 +22,10 @@
                     <name>Debug</name>
                     <type>0</type>
                 </confElem>
+                <confElem>
+                    <name>Android</name>
+                    <type>0</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

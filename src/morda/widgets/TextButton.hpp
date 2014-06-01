@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2013 Ivan Gagis
+Copyright (c) 2012-2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -53,11 +53,9 @@ public:
 	
 	~TextButton()throw(){}
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 	
-	//override
-	void OnResize();
+	void OnResize() OVERRIDE;
 	
 	inline static ting::Ref<TextButton> New(const stob::Node& description){
 		return ting::Ref<TextButton>(new TextButton(description));

@@ -54,14 +54,11 @@ public:
 	
 	ting::Signal0 pressed;
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const;
+	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 	
-	//override
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId);
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
 	
-	//override
-	void OnHoverChanged();
+	void OnHoverChanged() OVERRIDE;
 	
 	inline bool IsPressed()const throw(){
 		return this->isPressed;

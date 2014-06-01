@@ -39,7 +39,7 @@ namespace morda{
 
 class Slider :
 		public virtual morda::Widget,
-		private morda::Container
+		private morda::Container //users do not need to know that it is a container
 {
 	
 	//no copying
