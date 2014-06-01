@@ -28,20 +28,32 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <ting/util.hpp>
+
 #include "Widget.hpp"
+#include "Container.hpp"
 
 
 namespace morda{
 
 
-class Slider : public virtual morda::Widget{
+class Slider :
+		public virtual morda::Widget,
+		private morda::Container
+{
 	
 	//no copying
 	Slider(const Slider&);
 	Slider& operator=(const Slider&);
 	
+	ting::Inited<float, 0> curFactor; //Current position from 0 to 1
+	ting::Inited<float, 0> sliderLength; //Current sliderLength from 0 to 1
+	
+	ting::Inited<bool, true> isVertical;
+	
 	void ApplyDescription(const stob::Node& description);
-public:
+	
+protected:
 	Slider(){}
 	
 	Slider(const stob::Node& description, bool doNotCopyProp) :
@@ -49,11 +61,21 @@ public:
 	{
 		this->ApplyDescription(description);
 	}
-
 	
-	virtual ~Slider()throw(){}
-private:
+public:
+	static ting::Ref<Slider> New(const stob::Node& description, bool doNotCopyProp){
+		return ting::Ref<Slider>(new Slider(description, doNotCopyProp));
+	}
+	
+	static ting::Ref<Slider> New(){
+		return ting::Ref<Slider>(new Slider());
+	}
 
+	virtual ~Slider()throw(){}
+	
+private:
+	
+	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 };
 
 
