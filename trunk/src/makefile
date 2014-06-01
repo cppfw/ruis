@@ -104,6 +104,7 @@ compiler_flags += -g #include debugging symbols
 
 ifeq ($(platform), linux)
     compiler_flags += -fPIC # Since we are building shared library, we need Position-Independend Code
+    compiler_flags += -std=c++11 #some c++'11 features can optionally be used, so enable it.
 endif
 ifeq ($(platform), maemo_linux)
     compiler_flags += -fPIC # Since we are building shared library, we need Position-Independend Code
@@ -165,7 +166,7 @@ endif
 
 
 obj_dir := obj/1/2
-compiler := g++
+compiler := g++-4.7
 
 
 #==============================================================================
