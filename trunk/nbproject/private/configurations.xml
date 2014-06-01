@@ -101,6 +101,28 @@
         <in>config.hpp</in>
       </df>
       <df name="obj">
+        <df name="1">
+          <df name="2">
+            <df name="morda">
+              <df name="glue">
+                <df name="linux">
+                </df>
+              </df>
+              <df name="layouts">
+              </df>
+              <df name="resman">
+              </df>
+              <df name="resources">
+              </df>
+              <df name="shaders">
+              </df>
+              <df name="util">
+              </df>
+              <df name="widgets">
+              </df>
+            </df>
+          </df>
+        </df>
       </df>
     </df>
     <df root="tests" name="1">
@@ -188,8 +210,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
