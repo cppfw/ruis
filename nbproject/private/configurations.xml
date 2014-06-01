@@ -94,8 +94,8 @@
         <in>App.cpp</in>
         <in>App.hpp</in>
         <in>Exc.hpp</in>
-        <in>GuiInflater.cpp</in>
-        <in>GuiInflater.hpp</in>
+        <in>Inflater.cpp</in>
+        <in>Inflater.hpp</in>
         <in>Updateable.cpp</in>
         <in>Updateable.hpp</in>
         <in>config.hpp</in>

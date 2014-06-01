@@ -251,9 +251,9 @@ public:
 	{
 		this->ResMan().MountResPack(this->CreateResourceFileInterface());
 		
-		this->Inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
+		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 
-		ting::Ref<morda::Widget> c = morda::App::Inst().Inflater().Inflate(
+		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")
 			);
 		

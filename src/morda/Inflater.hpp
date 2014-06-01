@@ -45,10 +45,10 @@ class App;
 
 
 
-class GuiInflater{
+class Inflater{
 	friend class morda::App;
 	
-	GuiInflater();
+	Inflater();
 public:
 	class Exc : public morda::Exc{
 	public:

@@ -33,44 +33,17 @@ endif
 
 
 #Sources
-srcs :=
+include sources.mk
 
 ifeq ($(platform), linux)
-    srcs += morda/glue/linux/App.cpp
+    sources += morda/glue/linux/App.cpp
 endif
 ifeq ($(platform), macosx)
-    srcs += morda/glue/macosx/main.mm
+    sources += morda/glue/macosx/main.mm
 endif
 ifeq ($(platform), windows)
-    srcs += morda/glue/windows/App.cpp
+    sources += morda/glue/windows/App.cpp
 endif
-
-srcs += morda/App.cpp
-srcs += morda/GuiInflater.cpp
-srcs += morda/Updateable.cpp
-srcs += morda/shaders/Shader.cpp
-srcs += morda/shaders/SimpleSingleColoringShader.cpp
-srcs += morda/shaders/TexturingShader.cpp
-srcs += morda/shaders/SimpleTexturingShader.cpp
-srcs += morda/resman/ResourceManager.cpp
-srcs += morda/resman/Resource.cpp
-srcs += morda/resources/ResTexture.cpp
-srcs += morda/resources/ResFont.cpp
-srcs += morda/util/GLTexture.cpp
-srcs += morda/util/Gravity.cpp
-srcs += morda/util/Image.cpp
-srcs += morda/util/LeftBottomRightTop.cpp
-srcs += morda/util/TexFont.cpp
-srcs += morda/util/util.cpp
-srcs += morda/widgets/Button.cpp
-srcs += morda/widgets/Container.cpp
-srcs += morda/widgets/Label.cpp
-srcs += morda/widgets/Slider.cpp
-srcs += morda/widgets/TextButton.cpp
-srcs += morda/widgets/Widget.cpp
-srcs += morda/layouts/Layout.cpp
-srcs += morda/layouts/LinearLayout.cpp
-srcs += morda/layouts/FrameLayout.cpp
 
 
 
@@ -192,7 +165,7 @@ endif
 
 
 #find all .cpp and .m files and get an .o file name for it to get dependencies for this target
-$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(patsubst %.mm,%.o,$(srcs))))
+$(name): $(addprefix $(obj_dir)/,$(patsubst %.cpp,%.o,$(patsubst %.mm,%.o,$(sources))))
 	@echo Linking $@...
 ifeq ($(platform), windows)
 	@ar cr $(patsubst %.dll,%.a,$@) $^
@@ -232,7 +205,7 @@ $(obj_dir)/%.o:%.cpp
 #	@mv $(patsubst %.o,%.d_,$@) $(patsubst %.o,%.d,$@)
 #endif
 
-include $(wildcard $(addsuffix /*.d,$(dir $(addprefix $(obj_dir)/,$(srcs)))))
+include $(wildcard $(addsuffix /*.d,$(dir $(addprefix $(obj_dir)/,$(sources)))))
 
 
 

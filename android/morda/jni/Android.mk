@@ -6,36 +6,14 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := morda
 
+include ../../../src/sources.mk
+
 PREFIX := 
 
-LOCAL_SRC_FILES := $(PREFIX)morda/glue/android/App.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/App.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/GuiInflater.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/Updateable.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/shaders/Shader.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/shaders/SimpleSingleColoringShader.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/shaders/TexturingShader.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/shaders/SimpleTexturingShader.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/resman/ResourceManager.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/resman/Resource.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/resources/ResTexture.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/resources/ResFont.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/GLTexture.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/Gravity.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/LeftBottomRightTop.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/Image.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/TexFont.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/util/util.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Button.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Container.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Label.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/TextButton.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/widgets/Widget.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/layouts/Layout.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/layouts/LinearLayout.cpp
-LOCAL_SRC_FILES += $(PREFIX)morda/layouts/FrameLayout.cpp
+LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(sources))
 
+LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/App.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
 LOCAL_CFLAGS += -DDEBUG
