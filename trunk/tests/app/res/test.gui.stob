@@ -111,7 +111,6 @@ Container{
 	Container{
 		layout{ LinearLayout{
 			vertical {false}
-			padding {1 1 1 1}
 		}}
 
 		prop{ layout{
