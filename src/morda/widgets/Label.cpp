@@ -15,7 +15,11 @@ Label::Label(){
 }
 
 
-void Label::ApplyDescription(const stob::Node& description){
+Label::Label(const stob::Node& description) :
+		Widget(description),
+		Gravitating(description),
+		PaddedWidget(description)
+{
 	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
 	if(const stob::Node* p = description.GetProperty("font")){
 		this->font = App::Inst().ResMan().Load<morda::ResFont>(p->Value());

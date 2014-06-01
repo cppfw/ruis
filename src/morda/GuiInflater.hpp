@@ -92,7 +92,7 @@ public:
 			public:
 			//override
 			ting::Ref<morda::Widget> Create(const stob::Node& node)const{
-				return T_Widget::New(node, false);
+				return T_Widget::New(node);
 			}
 		};
 		

@@ -10,7 +10,9 @@ using namespace morda;
 
 
 
-void Container::ApplyDescription(const stob::Node& description){
+Container::Container(const stob::Node& description) :
+		Widget(description)
+{
 	if(const stob::Node* n = description.GetProperty("layout")){
 		this->SetLayout(morda::App::Inst().Inflater().CreateLayout(*n));
 	}

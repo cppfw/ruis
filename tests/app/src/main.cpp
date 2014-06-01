@@ -24,17 +24,17 @@ class SimpleWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
-	SimpleWidget(const stob::Node& description, bool doNotCopyProp) :
-			morda::Widget(description, doNotCopyProp)
+	SimpleWidget(const stob::Node& description) :
+			morda::Widget(description)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 	}
 public:	
-	static inline ting::Ref<SimpleWidget> New(const stob::Node& description, bool doNotCopyProp){
+	static inline ting::Ref<SimpleWidget> New(const stob::Node& description){
 		return ting::Ref<SimpleWidget>(
-				new SimpleWidget(description, doNotCopyProp)
+				new SimpleWidget(description)
 			);
 	}
 	

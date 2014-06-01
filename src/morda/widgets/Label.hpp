@@ -50,16 +50,8 @@ class Label : public Gravitating, public PaddedWidget{
 	
 	morda::Vec2f pivot;
 	
-	void ApplyDescription(const stob::Node& description);
-	
 protected:
-	Label(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp),
-			Gravitating(description),
-			PaddedWidget(description)
-	{
-		this->ApplyDescription(description);
-	}
+	Label(const stob::Node& description);
 	
 	Label();
 	
@@ -82,8 +74,8 @@ public:
 	//override
 	void OnResize();
 	
-	inline static ting::Ref<Label> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<Label>(new Label(description, doNotCopyProp));
+	inline static ting::Ref<Label> New(const stob::Node& description){
+		return ting::Ref<Label>(new Label(description));
 	}
 	
 	inline static ting::Ref<Label> New(){

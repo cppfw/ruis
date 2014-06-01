@@ -40,15 +40,13 @@ namespace morda{
 
 
 class TextButton : public Button, public Label{
-	void ApplyDescription(const stob::Node& description);
+
 protected:
-	inline TextButton(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp),
-			Button(description, doNotCopyProp),
-			Label(description, doNotCopyProp)
-	{
-		this->ApplyDescription(description);
-	}
+	inline TextButton(const stob::Node& description) :
+			Widget(description),
+			Button(description),
+			Label(description)
+	{}
 	
 	inline TextButton(){}
 public:
@@ -61,8 +59,8 @@ public:
 	//override
 	void OnResize();
 	
-	inline static ting::Ref<TextButton> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<TextButton>(new TextButton(description, doNotCopyProp));
+	inline static ting::Ref<TextButton> New(const stob::Node& description){
+		return ting::Ref<TextButton>(new TextButton(description));
 	}
 	
 	inline static ting::Ref<TextButton> New(){
