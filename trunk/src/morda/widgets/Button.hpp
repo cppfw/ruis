@@ -42,13 +42,10 @@ namespace morda{
 class Button : public virtual Widget{
 	ting::Inited<bool, false> isPressed;
 	
-	void ApplyDescription(const stob::Node& description);
 protected:
-	inline Button(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp)
-	{
-		this->ApplyDescription(description);
-	}
+	Button(const stob::Node& description) :
+			Widget(description)
+	{}
 	
 	inline Button(){}
 public:
@@ -70,8 +67,8 @@ public:
 		return this->isPressed;
 	}
 	
-	inline static ting::Ref<Button> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<Button>(new Button(description, doNotCopyProp));
+	inline static ting::Ref<Button> New(const stob::Node& description){
+		return ting::Ref<Button>(new Button(description));
 	}
 	
 	inline static ting::Ref<Button> New(){

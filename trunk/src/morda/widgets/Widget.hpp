@@ -86,9 +86,6 @@ private:
 	//logical ID of the widget
 	std::string name;
 	
-	//Apply description from STOB
-	void ApplyDescription(const stob::Node& description, bool doNotCopyProp);
-	
 	ting::Inited<bool, true> relayoutNeeded;
 	
 	//properties from STOB description
@@ -180,17 +177,15 @@ public:
 	}
 	
 protected:
-	inline Widget() :
+	Widget() :
 			rect(0, 0, 0, 0)
 	{}
 	
-	inline Widget(const stob::Node& description, bool doNotCopyProp){
-		this->ApplyDescription(description, doNotCopyProp);
-	}
+	Widget(const stob::Node& description);
 	
 public:
-	static ting::Ref<Widget> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<Widget>(new Widget(description, doNotCopyProp));
+	static ting::Ref<Widget> New(const stob::Node& description){
+		return ting::Ref<Widget>(new Widget(description));
 	}
 	
 	static ting::Ref<Widget> New(){

@@ -9,12 +9,10 @@ using namespace morda;
 
 
 
-void Widget::ApplyDescription(const stob::Node& description, bool doNotCopyProp){
-	if(!doNotCopyProp){
-		if(const stob::Node* p = description.Child("prop").node()){
-			this->prop = p->Clone();
-			this->prop->SetValue();//clear value of the prop node, we don't need it
-		}
+Widget::Widget(const stob::Node& description){
+	if(const stob::Node* p = description.Child("prop").node()){
+		this->prop = p->Clone();
+		this->prop->SetValue();//clear value of the prop node, we don't need it
 	}
 
 	if(const stob::Node* p = description.GetProperty("pos")){

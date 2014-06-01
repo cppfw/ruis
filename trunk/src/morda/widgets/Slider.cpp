@@ -5,7 +5,9 @@ using namespace morda;
 
 
 
-void Slider::ApplyDescription(const stob::Node& description){
+Slider::Slider(const stob::Node& description) :
+		Widget(description)
+{
 	if(const stob::Node* n = description.GetProperty("vertical")){
 		this->isVertical = n->AsBool();
 	}

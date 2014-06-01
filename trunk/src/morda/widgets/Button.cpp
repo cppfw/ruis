@@ -7,12 +7,6 @@ using namespace morda;
 
 
 
-void Button::ApplyDescription(const stob::Node& properties){
-	//apply abstract button specific properties
-}
-
-
-
 //override
 void Button::Render(const morda::Matr4f& matrix)const{
 	morda::Matr4f matr(matrix);

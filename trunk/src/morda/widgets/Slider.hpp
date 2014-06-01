@@ -47,24 +47,17 @@ class Slider :
 	Slider& operator=(const Slider&);
 	
 	ting::Inited<float, 0> curFactor; //Current position from 0 to 1
-	ting::Inited<float, 0> sliderLength; //Current sliderLength from 0 to 1
 	
 	ting::Inited<bool, true> isVertical;
-	
-	void ApplyDescription(const stob::Node& description);
 	
 protected:
 	Slider(){}
 	
-	Slider(const stob::Node& description, bool doNotCopyProp) :
-			Widget(description, doNotCopyProp)
-	{
-		this->ApplyDescription(description);
-	}
+	Slider(const stob::Node& description);
 	
 public:
-	static ting::Ref<Slider> New(const stob::Node& description, bool doNotCopyProp){
-		return ting::Ref<Slider>(new Slider(description, doNotCopyProp));
+	static ting::Ref<Slider> New(const stob::Node& description){
+		return ting::Ref<Slider>(new Slider(description));
 	}
 	
 	static ting::Ref<Slider> New(){
