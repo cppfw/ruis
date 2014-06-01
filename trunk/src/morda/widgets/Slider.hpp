@@ -64,7 +64,9 @@ public:
 
 	virtual ~Slider()throw(){}
 	
-private:	
+	
+	
+private:
 	void OnResize() OVERRIDE;
 	
 	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
