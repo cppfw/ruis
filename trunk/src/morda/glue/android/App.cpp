@@ -851,144 +851,140 @@ void HandleInputEvents(){
 
 		bool consume = false;
 
-		if(app.rootContainer.IsValid()){
-			switch(eventType){
-				case AINPUT_EVENT_TYPE_MOTION:
-					switch(eventAction & AMOTION_EVENT_ACTION_MASK){
-						case AMOTION_EVENT_ACTION_POINTER_DOWN:
-	//						TRACE(<< "Pointer down" << std::endl)
-						case AMOTION_EVENT_ACTION_DOWN:
-							{
-								unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+		switch(eventType){
+			case AINPUT_EVENT_TYPE_MOTION:
+				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+					case AMOTION_EVENT_ACTION_POINTER_DOWN:
+//						TRACE(<< "Pointer down" << std::endl)
+					case AMOTION_EVENT_ACTION_DOWN:
+						{
+							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
-								if(pointerId >= pointers.Size()){
-									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
-									continue;
-								}
+							if(pointerId >= pointers.Size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+								continue;
+							}
 
 //								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
-								pointers[pointerId] = p;
+							morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+							pointers[pointerId] = p;
 
-								ASSERT(app.rootContainer.IsValid())
-								app.HandleMouseButton(
-										true,
-										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
-										morda::Widget::LEFT,
-										pointerId
-									);
+							app.HandleMouseButton(
+									true,
+									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
+									morda::Widget::LEFT,
+									pointerId
+								);
+						}
+						break;
+					case AMOTION_EVENT_ACTION_POINTER_UP:
+//						TRACE(<< "Pointer up" << std::endl)
+					case AMOTION_EVENT_ACTION_UP:
+						{
+							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+
+							if(pointerId >= pointers.Size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+								continue;
 							}
-							break;
-						case AMOTION_EVENT_ACTION_POINTER_UP:
-	//						TRACE(<< "Pointer up" << std::endl)
-						case AMOTION_EVENT_ACTION_UP:
-							{
-								unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
+//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+
+							morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+							pointers[pointerId] = p;
+
+							app.HandleMouseButton(
+									false,
+									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
+									morda::Widget::LEFT,
+									pointerId
+								);
+						}
+						break;
+					case AMOTION_EVENT_ACTION_MOVE:
+						{							
+							size_t numPointers = AMotionEvent_getPointerCount(event);
+							ASSERT(numPointers >= 1)
+							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
 								if(pointerId >= pointers.Size()){
 									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
 									continue;
 								}
 
-//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+								//notify root Container only if there was actual movement
+								morda::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
+								if(pointers[pointerId] == p){
+									//pointer position did not change
+									continue;
+								}
 
-								morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+//								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
+
 								pointers[pointerId] = p;
 
-								ASSERT(app.rootContainer.IsValid())
-								app.HandleMouseButton(
-										false,
+								app.HandleMouseMove(
 										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
-										morda::Widget::LEFT,
 										pointerId
 									);
-							}
+							}//~for(every pointer)
+						}
+						break;
+					default:
+						TRACE(<< "unknown eventAction = " << eventAction << std::endl)
+						break;
+				}//~switch(event action)
+				consume = true;
+				break;
+			case AINPUT_EVENT_TYPE_KEY:
+				{
+//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
+
+					keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
+					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
+					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
+
+//						TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+
+					//detect auto-repeated key events
+					if(AKeyEvent_getRepeatCount(event) != 0){
+						if(eventAction == AKEY_EVENT_ACTION_DOWN){
+							app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
+									GetKeyFromKeyEvent(*ASS(event)),
+									keyUnicodeResolver
+								);
+						}
+						break;
+					}
+
+					switch(eventAction){
+						case AKEY_EVENT_ACTION_DOWN:
+//								TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
+							app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
+									GetKeyFromKeyEvent(*ASS(event)),
+									keyUnicodeResolver
+								);
 							break;
-						case AMOTION_EVENT_ACTION_MOVE:
-							{							
-								size_t numPointers = AMotionEvent_getPointerCount(event);
-								ASSERT(numPointers >= 1)
-								for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-									unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
-									if(pointerId >= pointers.Size()){
-										TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
-										continue;
-									}
-
-									//notify root Container only if there was actual movement
-									morda::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
-									if(pointers[pointerId] == p){
-										//pointer position did not change
-										continue;
-									}
-
-	//								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
-
-									pointers[pointerId] = p;
-
-									ASSERT(app.rootContainer.IsValid())
-									app.HandleMouseMove(
-											AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
-											pointerId
-										);
-								}//~for(every pointer)
-							}
+						case AKEY_EVENT_ACTION_UP:
+//								TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
+							app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
+									GetKeyFromKeyEvent(*ASS(event)),
+									keyUnicodeResolver
+								);
 							break;
 						default:
-							TRACE(<< "unknown eventAction = " << eventAction << std::endl)
+							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)
 							break;
-					}//~switch(event action)
-					consume = true;
-					break;
-				case AINPUT_EVENT_TYPE_KEY:
-					{
-//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
-						
-						keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
-						keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
-						keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
-						
-//						TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
-						
-						//detect auto-repeated key events
-						if(AKeyEvent_getRepeatCount(event) != 0){
-							if(eventAction == AKEY_EVENT_ACTION_DOWN){
-								app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
-										GetKeyFromKeyEvent(*ASS(event)),
-										keyUnicodeResolver
-									);
-							}
-							break;
-						}
-						
-						switch(eventAction){
-							case AKEY_EVENT_ACTION_DOWN:
-//								TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
-								app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
-										GetKeyFromKeyEvent(*ASS(event)),
-										keyUnicodeResolver
-									);
-								break;
-							case AKEY_EVENT_ACTION_UP:
-//								TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-								app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
-										GetKeyFromKeyEvent(*ASS(event)),
-										keyUnicodeResolver
-									);
-								break;
-							default:
-								TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)
-								break;
-						}
 					}
-					break;
-				default:
-					break;
-			}//~switch(event type)
-		}//~if(app.rootContainer.IsValid())
+				}
+				break;
+			default:
+				break;
+		}//~switch(event type)
+
 
 		AInputQueue_finishEvent(
 				curInputQueue,
