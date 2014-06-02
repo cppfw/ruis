@@ -140,12 +140,7 @@ public:
 	virtual ~KeyListener()throw(){}
 	
 	//return true to consume
-	virtual bool OnKeyDown(key::Key keyCode){
-		return false;
-	}
-	
-	//return true to consume
-	virtual bool OnKeyUp(key::Key keyCode){
+	virtual bool OnKey(bool isDown, key::Key keyCode){
 		return false;
 	}
 	

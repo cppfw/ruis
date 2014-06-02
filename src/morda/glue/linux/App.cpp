@@ -639,7 +639,7 @@ void App::Exec(){
 //						TRACE(<< "KeyPress X event got" << std::endl)
 						{
 							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
-							this->HandleKeyEvent<true, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
+							this->HandleKeyEvent<false, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
 						}
 						break;
 					case KeyRelease:
@@ -659,7 +659,7 @@ void App::Exec(){
 								
 								KeyEventUnicodeResolver resolver(this->xInputMethod.xic, nev);
 								
-								this->HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(nev.xkey.keycode)], resolver);
+								this->HandleKeyEvent<true, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(nev.xkey.keycode)], resolver);
 								
 								XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 								break;
@@ -668,7 +668,7 @@ void App::Exec(){
 
 						{
 							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
-							this->HandleKeyEvent<false, false, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
+							this->HandleKeyEvent<false, KeyEventUnicodeResolver>(false, keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
 						}
 						break;
 					case ButtonPress:

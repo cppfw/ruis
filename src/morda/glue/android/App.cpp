@@ -593,7 +593,8 @@ void HandleCharacterInputEvent(ting::Array<ting::u32> chars){
 	resolver.chars = chars;
 	
 	//notify about input event
-	morda::App::Inst().HandleKeyEvent<true, true, UnicodeResolver>(
+	morda::App::Inst().HandleKeyEvent<true, UnicodeResolver>(
+			true,
 			key::SPACE,//will be ignored
 			resolver
 		);
@@ -952,7 +953,8 @@ void HandleInputEvents(){
 					//detect auto-repeated key events
 					if(AKeyEvent_getRepeatCount(event) != 0){
 						if(eventAction == AKEY_EVENT_ACTION_DOWN){
-							app.HandleKeyEvent<true, true, KeyEventToUnicodeResolver>(
+							app.HandleKeyEvent<true, KeyEventToUnicodeResolver>(
+									true,
 									GetKeyFromKeyEvent(*ASS(event)),
 									keyUnicodeResolver
 								);
@@ -963,14 +965,16 @@ void HandleInputEvents(){
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
 //								TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
-							app.HandleKeyEvent<true, false, KeyEventToUnicodeResolver>(
+							app.HandleKeyEvent<false, KeyEventToUnicodeResolver>(
+									true,
 									GetKeyFromKeyEvent(*ASS(event)),
 									keyUnicodeResolver
 								);
 							break;
 						case AKEY_EVENT_ACTION_UP:
 //								TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-							app.HandleKeyEvent<false, false, KeyEventToUnicodeResolver>(
+							app.HandleKeyEvent<false, KeyEventToUnicodeResolver>(
+									false,
 									GetKeyFromKeyEvent(*ASS(event)),
 									keyUnicodeResolver
 								);

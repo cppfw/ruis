@@ -408,7 +408,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_KEYDOWN:
 			if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
 				DummyKeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<true, false, DummyKeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+				app.HandleKeyEvent<false, DummyKeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(wParam)], resolver);
 			}
 			lres = 0;
 			return true;
@@ -416,7 +416,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_KEYUP:
 			{
 				DummyKeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<false, false, DummyKeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+				app.HandleKeyEvent<false, DummyKeyEventUnicodeResolver>(false, keyCodeMap[ting::u8(wParam)], resolver);
 			}
 			lres = 0;
 			return true;
@@ -424,7 +424,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_CHAR:
 			{
 				KeyEventUnicodeResolver resolver(wParam);
-				app.HandleKeyEvent<true, true, KeyEventUnicodeResolver>(keyCodeMap[ting::u8(wParam)], resolver);
+				app.HandleKeyEvent<true, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(wParam)], resolver);
 			}
 			lres = 0;
 			return true;
