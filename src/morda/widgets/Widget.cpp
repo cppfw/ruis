@@ -129,6 +129,7 @@ void Widget::HandleKeyEvent(bool isDown, key::Key keyCode){
 	if(ting::Ref<Container> p = this->Parent()){
 		p->HandleKeyEvent(isDown, keyCode);
 	}else{
+		//TODO: why is this needed?
 		App& app = App::Inst();
 		if(app.rootWidget && static_cast<Widget*>(app.rootWidget.operator->()) != this){
 			app.rootWidget->HandleKeyEvent(isDown, keyCode);

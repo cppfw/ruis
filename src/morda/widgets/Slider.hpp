@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/util.hpp>
+#include <ting/Signal.hpp>
 
 #include "Widget.hpp"
 #include "Container.hpp"
@@ -41,7 +42,6 @@ class Slider :
 		public virtual morda::Widget,
 		private morda::Container //users do not need to know that it is a container
 {
-	
 	//no copying
 	Slider(const Slider&);
 	Slider& operator=(const Slider&);
@@ -50,12 +50,40 @@ class Slider :
 	ting::Inited<float, 0> handleSizeFactor; //Current handle size factor from 0 to 1
 	
 	ting::Inited<bool, true> isVertical;
+	
+	class SliderHandle : public morda::Widget{
+		Slider& slider;
+
+		ting::Inited<bool, false> isGrabbed;
+		float clickPoint;
+
+	protected:
+		SliderHandle(Slider& slider) :
+				slider(slider)
+		{
+			this->MoveTo(0);
+		}
+	public:
+		static ting::Ref<SliderHandle> New(Slider& slider){
+			return ting::Ref<SliderHandle>(new SliderHandle(slider));
+		}
+
+	private:
+		void Render(const morda::Matr4f& matrix)const OVERRIDE;
+
+		bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
+
+		bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
+	};
+	
 protected:
 	Slider();
 	
 	Slider(const stob::Node& description);
 	
 public:
+	ting::Signal1<float> factorChange;
+	
 	static ting::Ref<Slider> New(const stob::Node& description){
 		return ting::Ref<Slider>(new Slider(description));
 	}
@@ -64,7 +92,15 @@ public:
 
 	virtual ~Slider()throw(){}
 	
+	bool IsVertical()const throw(){
+		return this->isVertical;
+	}
 	
+	float Factor()const throw(){
+		return this->curFactor;
+	}
+	
+	void SetFactor(float newFactor);
 	
 private:
 	void OnResize() OVERRIDE;
