@@ -10,17 +10,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ivan/prj/morda/src/morda/App.cpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/App.hpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Widget.hpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Widget.cpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Slider.hpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Slider.cpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Label.hpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/widgets/Label.cpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/GuiInflater.cpp</file>
-            <file>file:/home/ivan/prj/morda/src/morda/GuiInflater.hpp</file>
-            <file>file:/home/ivan/prj/morda/tests/app/src/main.cpp</file>
+            <file>file:/home/igagis/prj/morda/src/makefile</file>
+            <file>file:/home/igagis/prj/morda/src/morda/widgets/Widget.hpp</file>
+            <file>file:/home/igagis/prj/morda/src/morda/util/KeyListener.hpp</file>
+            <file>file:/home/igagis/prj/morda/src/morda/App.hpp</file>
+            <file>file:/home/igagis/prj/morda/src/morda/widgets/Widget.cpp</file>
         </group>
     </open-files>
 </project-private>

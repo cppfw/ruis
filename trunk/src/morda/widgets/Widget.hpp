@@ -202,39 +202,7 @@ private:
 private:
 	ting::Ptr<KeyListener> keyListener;
 	
-	template <bool is_down> void HandleKeyEvent(key::Key keyCode){
-		if(this->keyListener){
-			bool res;
-			if(is_down){
-				res = this->keyListener->OnKeyDown(keyCode);
-			}else{
-				res = this->keyListener->OnKeyUp(keyCode);
-			}
-			if(res){
-				return;
-			}
-		}
-		
-		bool res;
-		if(is_down){
-			res = this->OnKeyDown(keyCode);//TODO: refactor, isDown should be argument
-		}else{
-			res = this->OnKeyUp(keyCode);
-		}
-		if(res){
-			return;
-		}
-		
-		if(is_down){
-			this->PassKeyDownEventToParent(keyCode);
-		}else{
-			this->PassKeyUpEventToParent(keyCode);
-		}
-	}
-	
-	template <bool is_down> void PassKeyEventToParent(key::Key keyCode);
-	void PassKeyUpEventToParent(key::Key keyCode);
-	void PassKeyDownEventToParent(key::Key keyCode);
+	void HandleKeyEvent(bool isDown, key::Key keyCode);
 	
 	ting::Inited<bool, false> deliverCharacterInputEvents;
 	

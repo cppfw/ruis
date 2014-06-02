@@ -114,27 +114,26 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 
 
 
-template <bool is_down> void Widget::PassKeyEventToParent(key::Key keyCode){
+void Widget::HandleKeyEvent(bool isDown, key::Key keyCode){
+	if(this->keyListener){
+		if(this->keyListener->OnKey(isDown, keyCode)){
+			return;
+		}
+	}
+
+	if(this->OnKey(isDown, keyCode)){
+		return;
+	}
+
+	//pass key event to parent
 	if(ting::Ref<Container> p = this->Parent()){
-		p->HandleKeyEvent<is_down>(keyCode);
+		p->HandleKeyEvent(isDown, keyCode);
 	}else{
 		App& app = App::Inst();
 		if(app.rootWidget && static_cast<Widget*>(app.rootWidget.operator->()) != this){
-			app.rootWidget->HandleKeyEvent<is_down>(keyCode);
+			app.rootWidget->HandleKeyEvent(isDown, keyCode);
 		}
 	}
-}
-
-
-
-void Widget::PassKeyUpEventToParent(key::Key keyCode){
-	this->PassKeyEventToParent<false>(keyCode);
-}
-
-
-
-void Widget::PassKeyDownEventToParent(key::Key keyCode){
-	this->PassKeyEventToParent<true>(keyCode);
 }
 
 
