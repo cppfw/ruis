@@ -255,6 +255,8 @@ public:
 		return this->isFocused;
 	}
 	
+	//TODO: add on focus changed
+	
 	void SetDeliverCharacterInputEvents(bool deliver){
 		this->deliverCharacterInputEvents = deliver;
 	}
