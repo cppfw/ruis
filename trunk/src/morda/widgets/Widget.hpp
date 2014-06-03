@@ -33,7 +33,7 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/Ref.hpp>
 
-#include "../util/KeyListener.hpp"
+#include "../util/keycodes.hpp"
 
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
@@ -50,7 +50,7 @@ class Container;
 
 
 
-class Widget : virtual public ting::RefCounted, public KeyListener{
+class Widget : virtual public ting::RefCounted{
 	friend class Container;
 	friend class App;
 	
@@ -200,13 +200,11 @@ private:
 	void RenderInternal(const morda::Matr4f& matrix)const;
 	
 private:
-	ting::Ptr<KeyListener> keyListener;
-	
-	void HandleKeyEvent(bool isDown, key::Key keyCode);
+	void OnKeyInternal(bool isDown, key::Key keyCode);
 	
 	ting::Inited<bool, false> deliverCharacterInputEvents;
 	
-	template <class UnicodeResolver> void HandleCharacterInput(UnicodeResolver& unicodeResolver){
+	template <class UnicodeResolver> void OnCharacterInputInternal(UnicodeResolver& unicodeResolver){
 //		TRACE(<< "HandleCharacterInput(): invoked, this->deliverCharacterInputEvents = " << this->deliverCharacterInputEvents << std::endl)
 		
 		//if widget does not want to receive such events do nothing
@@ -222,20 +220,31 @@ private:
 		}
 		
 //		TRACE(<< "HandleCharacterInput(): unicode[0] = " << unicode[0] << std::endl)
-		
-		if(this->keyListener){
-			if(this->keyListener->OnCharacterInput(unicode)){
-				return;
-			}
-		}
 
 		this->OnCharacterInput(unicode);
 	}
 private:
 	ting::Inited<bool, false> isFocused;
 public:
-	void SetKeyListener(ting::Ptr<KeyListener> listener)throw(){
-		this->keyListener = listener;
+	
+	//return true to consume
+	virtual bool OnKey(bool isDown, key::Key keyCode){
+		return false;
+	}
+	
+	/**
+	 * @brief Handler of character input event.
+	 * Handler for character input. Character input is only passed to focused widget.
+	 * It will not be passed to root container if no widget is focused.
+	 * Character input is not propagated to parent widgets. The consumption
+	 * of the event only has effect when event is consumed in KeyListener set to a widget,
+	 * then it will not be propagated to Widget's overridden handler method.
+     * @param unicode - unicode string of entered characters in UTF-32.
+	 * @return true to consume event.
+	 * @return false to allow event to propagate further.
+     */
+	virtual bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
+		return false;
 	}
 	
 	void Focus()throw();

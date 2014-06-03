@@ -135,31 +135,4 @@ enum Key{
 
 
 
-class KeyListener{
-public:
-	virtual ~KeyListener()throw(){}
-	
-	//return true to consume
-	virtual bool OnKey(bool isDown, key::Key keyCode){
-		return false;
-	}
-	
-	/**
-	 * @brief Handler of character input event.
-	 * Handler for character input. Character input is only passed to focused widget.
-	 * It will not be passed to root container if no widget is focused.
-	 * Character input is not propagated to parent widgets. The consumption
-	 * of the event only has effect when event is consumed in KeyListener set to a widget,
-	 * then it will not be propagated to Widget's overridden handler method.
-     * @param unicode - unicode string in UTF-32 of entered characters.
-	 * @return true to consume event.
-	 * @return false to allow event to propagate further.
-     */
-	virtual bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
-		return false;
-	}
-};
-
-
-
 }//~namespace

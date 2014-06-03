@@ -58,7 +58,7 @@ THE SOFTWARE. */
 #include "widgets/Widget.hpp"
 #include "Inflater.hpp"
 #include "Updateable.hpp"
-#include "util/KeyListener.hpp"
+#include "util/keycodes.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
@@ -380,16 +380,16 @@ private:
 //			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
 		
 			if(!is_char_input_only){
-				w->HandleKeyEvent(isDown, keyCode);
+				w->OnKeyInternal(isDown, keyCode);
 			}
 			
 			if(isDown){
-				w->HandleCharacterInput(unicodeResolver);
+				w->OnCharacterInputInternal(unicodeResolver);
 			}
 		}else if(!is_char_input_only){
 //			TRACE(<< "HandleKeyEvent(): there is no focused widget, not a char only input, passing to rootWidget" << std::endl)
 			if(this->rootWidget){
-				this->rootWidget->HandleKeyEvent(isDown, keyCode);
+				this->rootWidget->OnKeyInternal(isDown, keyCode);
 			}
 		}
 	}
