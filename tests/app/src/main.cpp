@@ -17,6 +17,7 @@
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
+#include <ting/util.hpp>
 
 
 
@@ -41,8 +42,7 @@ public:
 	ting::Inited<ting::u32, 0> timer;
 	ting::Inited<ting::u32, 0> cnt;
 	
-	//override
-	void Update(ting::u32 dt){
+	void Update(ting::u32 dt) OVERRIDE{
 		this->timer += dt;
 		++this->cnt;
 		
@@ -55,8 +55,7 @@ public:
 		}
 	}
 	
-	//override
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << button << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -72,46 +71,41 @@ public:
 		return true;
 	}
 	
-	//override
-	bool OnKeyDown(morda::key::Key keyCode){
-		TRACE(<< "SimpleWidget::OnKeyDown(): keyCode = " << unsigned(keyCode) << std::endl)
-		switch(keyCode){
-			case morda::key::LEFT:
-				TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
-				return true;
-			case morda::key::A:
-				TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
-				return true;
-			default:
-				break;
+	bool OnKey(bool isDown, morda::key::Key keyCode) OVERRIDE{
+		if(isDown){
+			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
+			switch(keyCode){
+				case morda::key::LEFT:
+					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
+					return true;
+				case morda::key::A:
+					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
+					return true;
+				default:
+					break;
+			}
+		}else{
+			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
+			switch(keyCode){
+				case morda::key::LEFT:
+					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
+					return true;
+				case morda::key::A:
+					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
+					return true;
+				default:
+					break;
+			}
 		}
 		return false;
 	}
 	
-	//override
-	bool OnKeyUp(morda::key::Key keyCode){
-		TRACE(<< "SimpleWidget::OnKeyUp(): keyCode = " << unsigned(keyCode) << std::endl)
-		switch(keyCode){
-			case morda::key::LEFT:
-				TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
-				return true;
-			case morda::key::A:
-				TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
-				return true;
-			default:
-				break;
-		}
-		return false;
-	}
-	
-	//override
-	bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
+	bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) OVERRIDE{
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 		return true;
 	}
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const{
+	void Render(const morda::Matr4f& matrix)const OVERRIDE{
 		{
 			morda::Matr4f matr(matrix);
 			matr.Scale(this->Rect().d);
@@ -157,13 +151,11 @@ public:
 			);
 	}
 	
-	//override
-	void Update(ting::u32 dt){
+	void Update(ting::u32 dt) OVERRIDE{
 		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5 * (float(dt) / 1000));
 	}
 	
-	//override
-	void Render(const morda::Matr4f& matrix)const{
+	void Render(const morda::Matr4f& matrix)const OVERRIDE{
 		this->Widget::Render(matrix);
 		
 		morda::Matr4f matr(matrix);
@@ -256,25 +248,6 @@ public:
 		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")
 			);
-		
-		class CustomKeyListener : public morda::KeyListener{
-		public:
-			//override
-			bool OnKeyDown(morda::key::Key keyCode){
-				TRACE(<< "CustomKeyListener::OnKeyDown(): keyCode = " << unsigned(keyCode) << std::endl)
-				return false;
-			}
-			
-			//override
-			bool OnKeyUp(morda::key::Key keyCode){
-				TRACE(<< "CustomKeyListener::OnKeyUp(): keyCode = " << unsigned(keyCode) << std::endl)
-				return false;
-			}
-		};
-		
-		c->SetKeyListener(ting::Ptr<morda::KeyListener>(
-				new CustomKeyListener()
-			));
 		
 		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
 		

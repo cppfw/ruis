@@ -34,6 +34,7 @@ cf := $(ecf)
 cf += -Wall
 cf += -Wno-comment #no warnings on nested comments
 cf += -Wno-format
+cf += -std=c++11
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
 cf += -g
@@ -60,7 +61,7 @@ endif
 $(binary_name): src/main.cpp
 	@$(MAKE) -C ../../src
 	@echo Building $@...
-	@g++ -o $@ $(cf) $^ $(includes) $(libs)
+	@g++-4.7 -o $@ $(cf) $^ $(includes) $(libs)
 
 
 .PHONY:
