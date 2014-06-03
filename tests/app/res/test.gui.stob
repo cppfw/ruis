@@ -121,6 +121,8 @@ Container{
 		Slider{
 			vertical{false}
 
+			//reverse{true}
+
 			prop{layout{
 				dim {0 40} //TODO: min min
 				weight{1}
@@ -130,6 +132,8 @@ Container{
 
 		Slider{
 			name {"vertical slider"}
+
+			reverse{true}
 
 			prop{layout{
 				dim {40 100%} //TODO: min min

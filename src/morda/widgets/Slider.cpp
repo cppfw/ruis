@@ -65,6 +65,9 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 	
 	//update factor
 	this->slider.curFactor = newPos / maxPos;
+	if(this->slider.isReverse){
+		this->slider.curFactor = 1 - this->slider.curFactor;
+	}
 	this->slider.factorChange.Emit(this->slider.curFactor);
 	
 	return true;
@@ -87,8 +90,9 @@ Slider::Slider(const stob::Node& description) :
 		this->isVertical = n->AsBool();
 	}
 	
-	
-	//TODO: "reverse"
+	if(const stob::Node* n = description.GetProperty("reverse")){
+		this->isReverse = n->AsBool();
+	}
 }
 
 
@@ -118,6 +122,10 @@ void Slider::OnResize(){
 		float effectiveLength = this->Rect().d[longIndex] - this->Children()->Rect().d[longIndex];
 		morda::Vec2f newPos(0);
 		newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
+		ASSERT(newPos[longIndex] <= effectiveLength)
+		if(this->isReverse){
+			newPos[longIndex] = effectiveLength - newPos[longIndex];
+		}
 		this->Children()->MoveTo(newPos);
 	}
 }
