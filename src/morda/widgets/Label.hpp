@@ -32,7 +32,7 @@ THE SOFTWARE. */
 
 #include "../widgets/Widget.hpp"
 #include "../resources/ResFont.hpp"
-#include "Gravitating.hpp"
+#include "GravitatingWidget.hpp"
 #include "PaddedWidget.hpp"
 
 
@@ -41,7 +41,7 @@ namespace morda{
 
 
 
-class Label : public Gravitating, public PaddedWidget{
+class Label : public GravitatingWidget, public PaddedWidget{
 	std::string text;
 	
 	ting::Ref<morda::ResFont> font;

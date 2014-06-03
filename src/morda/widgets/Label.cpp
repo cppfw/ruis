@@ -17,7 +17,7 @@ Label::Label(){
 
 Label::Label(const stob::Node& description) :
 		Widget(description),
-		Gravitating(description),
+		GravitatingWidget(description),
 		PaddedWidget(description)
 {
 	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
