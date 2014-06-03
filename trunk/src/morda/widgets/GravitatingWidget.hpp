@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,17 +38,17 @@ namespace morda{
 
 
 
-class Gravitating : public virtual Widget{
+class GravitatingWidget : public virtual Widget{
 	Gravity gravity;
 protected:
 
-	inline Gravitating()throw(){}
+	inline GravitatingWidget()throw(){}
 	
-	inline Gravitating(Gravity gravity)throw() :
+	inline GravitatingWidget(Gravity gravity)throw() :
 			gravity(gravity)
 	{}
 	
-	inline Gravitating(const stob::Node& description){
+	inline GravitatingWidget(const stob::Node& description){
 		this->SetGravity(Gravity::FromLayout(description));
 	}
 public:
