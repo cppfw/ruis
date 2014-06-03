@@ -50,6 +50,7 @@ class Slider :
 	ting::Inited<float, 0> handleSizeFactor; //Current handle size factor from 0 to 1
 	
 	ting::Inited<bool, true> isVertical;
+	ting::Inited<bool, false> isReverse;
 	
 	class SliderHandle : public morda::Widget{
 		Slider& slider;
@@ -60,9 +61,7 @@ class Slider :
 	protected:
 		SliderHandle(Slider& slider) :
 				slider(slider)
-		{
-			this->MoveTo(0);
-		}
+		{}
 	public:
 		static ting::Ref<SliderHandle> New(Slider& slider){
 			return ting::Ref<SliderHandle>(new SliderHandle(slider));
