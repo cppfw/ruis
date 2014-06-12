@@ -251,7 +251,7 @@ private:
 		SwapBuffers(this->deviceContext.hdc);
 	}
 
-	friend void Main(int argc, char** argv);
+	friend void Main(int argc, const char** argv);
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
