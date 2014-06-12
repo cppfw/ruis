@@ -158,7 +158,7 @@ create-obj-dir:
 ifeq ($(platform), windows)
     default: libmorda_main.a
 
-    libmorda_main.a: $(obj_dir)/morda/windows/main.o
+    libmorda_main.a: $(obj_dir)/morda/glue/windows/main.o
 	@ar cr $@ $^
 endif
 
