@@ -11,7 +11,7 @@
 
 namespace morda{
 
-inline void Main(int argc, char** argv){
+inline void Main(int argc, const char** argv){
 	ting::Ptr<morda::App> a = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 
 	a->Exec();
