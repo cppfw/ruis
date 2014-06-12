@@ -39,7 +39,7 @@
    * {{{make -f win32/Makefile.gcc}}}
    * {{{make -f win32/Makefile.gcc install INCLUDE_PATH=/usr/local/include LIBRARY_PATH=/usr/local/lib BINARY_PATH=/usr/local/lib}}}
  # *libpng*
-   * Download *libpng* sources from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.0/lpng160.zip/download here] and unzip sources to some directory, say */d*, then sources will reside in */d/lpng160*.
+   * Download *libpng-1.6.0* sources from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.0/lpng160.zip/download here] and unzip sources to some directory, say */d*, then sources will reside in */d/lpng160*.
    * {{{cd /d/lpng160}}}
    * {{{cp scripts/makefile.msys makefile}}}
    * {{{make}}}
