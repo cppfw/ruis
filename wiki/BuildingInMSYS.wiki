@@ -11,6 +11,7 @@
        * MSYS Basic System
        * MinGW Developer !ToolKit
      * After installation add path to MinGW and MSYS to environment variable PATH. Usually, those paths are {{{C:\MinGW\bin}}} and {{{C:\MinGW\msys\1.0\bin}}}
+     * Make a link to {{{C:\MinGW\msys\1.0\msys.bat}}} and place it to Desktop in order to be able to conveniently start MSYS shell.
  # *SlikSVN*
    * Download *SlikSVN* from [http://www.sliksvn.com/en/download here], choose the package depending on your system, 32 or 64 bit.
    * Run the installer and follow instructions. Typical installation should be enough.
