@@ -3,7 +3,7 @@
 =Step-by-step building morda in Windows using MinGW and MSYS=
 
  # *MSYS*
-   * Download *mingw-get-inst-20120426.exe* from [http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/ here] and run it. Follow installation instructions bearing in mind the following:
+   * Download *mingw installer* from [http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/ here] and run it. Follow installation instructions bearing in mind the following:
      * When it asks about which components to install, select the following:
        * C Compiler
        * C++ Compiler
