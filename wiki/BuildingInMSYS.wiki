@@ -55,6 +55,7 @@
    * {{{cd /d/freetype-2.4.11}}}
    * {{{./configure}}}
    * {{{make}}}
+   * if getting error about off64_t and off_t, then it is a bug in MinGW, see http://sourceforge.net/p/mingw/bugs/2024/ how to resolve.
    * {{{make install}}}
  # *morda*
    * Check out *morda* sources to some directory, say */d/morda*:
