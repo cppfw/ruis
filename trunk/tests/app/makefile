@@ -61,7 +61,7 @@ endif
 $(binary_name): src/main.cpp
 	@$(MAKE) -C ../../src
 	@echo Building $@...
-	@g++-4.7 -o $@ $(cf) $^ $(includes) $(libs)
+	@g++ -o $@ $(cf) $^ $(includes) $(libs)
 
 
 .PHONY:
