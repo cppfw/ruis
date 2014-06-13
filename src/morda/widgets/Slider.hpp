@@ -35,6 +35,12 @@ THE SOFTWARE. */
 #include "Container.hpp"
 
 
+//diable stupid warnings
+#if M_COMPILER == M_COMPILER_MSVC
+#	pragma warning(disable : 4250)
+#endif
+
+
 namespace morda{
 
 
