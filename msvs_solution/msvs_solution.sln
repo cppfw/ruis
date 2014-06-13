@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stob", "..\..\stob\msvs_sol
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ting", "..\..\ting\msvs_solution\ting\ting.vcxproj", "{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "glew\glew.vcxproj", "{9BB6633F-032B-41D5-A6BA-0CFD498851C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -29,10 +27,6 @@ Global
 		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug|Win32.Build.0 = Debug|Win32
 		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release|Win32.ActiveCfg = Release|Win32
 		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release|Win32.Build.0 = Release|Win32
-		{9BB6633F-032B-41D5-A6BA-0CFD498851C5}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9BB6633F-032B-41D5-A6BA-0CFD498851C5}.Debug|Win32.Build.0 = Debug|Win32
-		{9BB6633F-032B-41D5-A6BA-0CFD498851C5}.Release|Win32.ActiveCfg = Release|Win32
-		{9BB6633F-032B-41D5-A6BA-0CFD498851C5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
