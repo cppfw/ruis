@@ -34,6 +34,10 @@ THE SOFTWARE. */
 #include "Button.hpp"
 #include "Label.hpp"
 
+//diable stupid warnings
+#if M_COMPILER == M_COMPILER_MSVC
+#	pragma warning(disable : 4250)
+#endif
 
 namespace morda{
 

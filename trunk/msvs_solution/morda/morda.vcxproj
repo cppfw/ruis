@@ -49,7 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\glew-1.9.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -78,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\morda\App.cpp" />
-    <ClCompile Include="..\..\src\morda\glue\windows\App.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\layouts\FrameLayout.cpp" />

@@ -72,7 +72,7 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 			);
 
 		Rect2i oldScissor;
-		bool scissorTestWasEnabled = glIsEnabled(GL_SCISSOR_TEST);
+		bool scissorTestWasEnabled = glIsEnabled(GL_SCISSOR_TEST) ? true : false;
 		if(scissorTestWasEnabled){
 			GLint osb[4];
 			glGetIntegerv(GL_SCISSOR_BOX, osb);
