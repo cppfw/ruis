@@ -227,10 +227,10 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 			g.advance = float(m->horiAdvance) / (64.0f);
 
 			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[0] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(-int(outline), -int(outline));
-			g.verts[1] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(int(outline), -int(outline));
-			g.verts[2] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(int(outline), int(outline));
-			g.verts[3] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-int(outline), int(outline));
+			g.verts[0] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(-float(outline), -float(outline));
+			g.verts[1] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(float(outline), -float(outline));
+			g.verts[2] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(float(outline), float(outline));
+			g.verts[3] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-float(outline), float(outline));
 
 			g.texCoords[0] = morda::Vec2f(float(curX), float(curY + im.Height()));
 			g.texCoords[1] = morda::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
@@ -333,7 +333,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 			ret += advance;
 			matr.Translate(advance, 0);
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str());
@@ -361,7 +361,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 			ret += advance;
 			matr.Translate(advance, 0);
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str());
@@ -380,7 +380,7 @@ float TexFont::StringAdvanceInternal(const wchar_t* s)const{
 			const Glyph& g = this->glyphs.at(*s);
 			ret += g.advance;
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str().c_str());
@@ -400,7 +400,7 @@ float TexFont::StringAdvanceInternal(const char* s)const{
 			const Glyph& g = this->glyphs.at(wchar_t(*s));
 			ret += g.advance;
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str().c_str());
@@ -456,7 +456,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
 
 			curAdvance += g.advance;
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str().c_str());
@@ -520,7 +520,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 
 			curAdvance += g.advance;
 		}
-	}catch(std::out_of_range& e){
+	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
 		throw ting::Exc(ss.str().c_str());
