@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <vector>
+#include <map>
 
 #include "Widget.hpp"
 
@@ -49,8 +49,9 @@ private:
 
 	ting::Ptr<Layout> layout;
 	
-	ting::Ref<Widget> mouseCaptured;
-	ting::u8 numMouseCaptureClicks;
+	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
+	typedef std::map<unsigned, std::pair<ting::WeakRef<Widget>, unsigned> > T_MouseCaptureMap;
+	T_MouseCaptureMap mouseCaptureMap;
 	
 protected:
 	inline Container(){}

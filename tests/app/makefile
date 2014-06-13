@@ -34,7 +34,7 @@ cf := $(ecf)
 cf += -Wall
 cf += -Wno-comment #no warnings on nested comments
 cf += -Wno-format
-cf += -std=c++11
+#cf += -std=c++11
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
 cf += -g
