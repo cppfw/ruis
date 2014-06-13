@@ -48,18 +48,28 @@ void Container::Render(const morda::Matr4f& matrix)const{
 bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
-	if(this->mouseCaptured.IsValid()){
-		this->mouseCaptured->SetHovered(this->mouseCaptured->Rect().Overlaps(pos));
-		this->mouseCaptured->OnMouseButton(isDown, pos - this->mouseCaptured->Rect().p, button, pointerId);
-		if(isDown){
-			++this->numMouseCaptureClicks;
-		}else{
-			--this->numMouseCaptureClicks;
+	//check if mouse captured
+	{
+		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
+		if(i != this->mouseCaptureMap.end()){
+			if(ting::Ref<Widget> w = i->second.first){
+				w->SetHovered(w->Rect().Overlaps(pos));
+				w->OnMouseButton(isDown, pos - w->Rect().p, button, pointerId);
+				
+				unsigned& n = i->second.second;
+				if(isDown){
+					++n;
+				}else{
+					--n;
+				}
+				if(n == 0){
+					this->mouseCaptureMap.erase(i);
+				}
+				return true;//doesn't matter what to return
+			}else{
+				this->mouseCaptureMap.erase(i);
+			}
 		}
-		if(this->numMouseCaptureClicks == 0){
-			this->mouseCaptured.Reset();
-		}
-		return true;//doesn't matter what to return
 	}
 	
 	//original list of children may change during iterating.
@@ -78,12 +88,13 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
 		(*c)->SetHovered(true);
-		
 		if((*c)->OnMouseButton(isDown, pos - (*c)->Rect().p, button, pointerId)){
-			if(isDown){
-				this->mouseCaptured = *c;
-				this->numMouseCaptureClicks = 1;
+			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
+			
+			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
+				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair((*c).GetWeakRef(), 1)));
 			}
+			
 			return true;
 		}
 	}
@@ -96,14 +107,22 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
-	if(this->mouseCaptured.IsValid()){
-		this->mouseCaptured->OnMouseMove(pos - this->mouseCaptured->Rect().p, pointerId);
+	//check if mouse captured
+	{
+		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
+		if(i != this->mouseCaptureMap.end()){
+			if(ting::Ref<Widget> w = i->second.first){
+				w->OnMouseMove(pos - w->Rect().p, pointerId);
 		
-		//set hovered goes after move notification because position of widget could change
-		//during handling the notification, so need to check after that for hovering
-		this->mouseCaptured->SetHovered(this->mouseCaptured->Rect().Overlaps(pos));
-		
-		return true;//doesn't matter what to return
+				//set hovered goes after move notification because position of widget could change
+				//during handling the notification, so need to check after that for hovering
+				w->SetHovered(w->Rect().Overlaps(pos));
+
+				return true;//doesn't matter what to return
+			}else{
+				this->mouseCaptureMap.erase(i);
+			}
+		}
 	}
 	
 	//original list of children may change during iterating.
@@ -224,10 +243,6 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	
 	w->parent.Reset();
 	w->SetHovered(false);
-	
-	if(this->mouseCaptured == w){
-		this->mouseCaptured.Reset();
-	}
 	
 	this->SetRelayoutNeeded();
 }
