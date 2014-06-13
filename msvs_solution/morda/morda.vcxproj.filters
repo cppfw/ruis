@@ -99,9 +99,6 @@
     <ClCompile Include="..\..\src\morda\layouts\LinearLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\glue\windows\App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
