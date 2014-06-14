@@ -152,7 +152,7 @@ public:
 	}
 	
 	void Update(ting::u32 dt) OVERRIDE{
-		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5 * (float(dt) / 1000));
+		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE{
