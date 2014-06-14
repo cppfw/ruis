@@ -94,11 +94,7 @@
     <IntDir>static/release_mx/</IntDir>
     <TargetName>glew32mxs</TargetName>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>../../lib/</OutDir>
-    <IntDir>static/debug/</IntDir>
-    <TargetName>glew32sd</TargetName>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
     <OutDir>../../lib/</OutDir>
   </PropertyGroup>
@@ -201,7 +197,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;GLEW_STATIC;GLEW_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\static/debug\</AssemblerListingLocation>
       <PrecompiledHeaderOutputFile>.\static/debug\glew_static.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\static/debug\</ObjectFileName>
@@ -218,9 +214,11 @@
     </Bscmake>
     <Lib>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>../../lib/glew32sd.lib</OutputFile>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
     <ClCompile>
