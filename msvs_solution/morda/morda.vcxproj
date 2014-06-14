@@ -49,7 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\libjpeg\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.9.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libjpeg\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.10.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,9 +162,6 @@
     </ProjectReference>
     <ProjectReference Include="..\freetype-2.4.11\builds\win32\vc2010\freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\glew-1.9.0\build\vc10\glew_static.vcxproj">
-      <Project>{9efc97a0-71bf-429b-9333-66182f2eeca4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\libjpeg\libjpeg.vcxproj">
       <Project>{d1e60560-6a5f-43a2-adaa-1c423e9d7b80}</Project>
