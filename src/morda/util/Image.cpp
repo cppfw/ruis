@@ -417,7 +417,7 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	try{
 		ting::Buffer<ting::u8> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
 		nbytes = ASS(src->fi)->Read(bufWrapper);
-	}catch(ting::fs::File::Exc& e){
+	}catch(ting::fs::File::Exc&){
 		if(src->sof){
 			return FALSE;//the specified file is empty
 		}
