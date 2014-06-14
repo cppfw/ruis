@@ -197,7 +197,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;GLEW_STATIC;GLEW_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WIN32_LEAN_AND_MEAN;VC_EXTRALEAN;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\static/debug\</AssemblerListingLocation>
       <PrecompiledHeaderOutputFile>.\static/debug\glew_static.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\static/debug\</ObjectFileName>
