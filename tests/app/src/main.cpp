@@ -14,6 +14,7 @@
 #include "../../../src/morda/resources/ResTexture.hpp"
 #include "../../../src/morda/resources/ResFont.hpp"
 
+#include "../../../src/morda/util/CharInputFocusable.hpp"
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
@@ -21,7 +22,7 @@
 
 
 
-class SimpleWidget : public morda::Widget, public morda::Updateable{
+class SimpleWidget : public morda::Widget, public morda::Updateable, public morda::CharInputFocusable{
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
@@ -66,8 +67,8 @@ public:
 		}else{
 			this->StartUpdating(30);
 		}
-		this->SetDeliverCharacterInputEvents(true);
 		this->Focus();
+		this->FocusCharInput();
 		return true;
 	}
 	
@@ -100,9 +101,8 @@ public:
 		return false;
 	}
 	
-	bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) OVERRIDE{
+	void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) OVERRIDE{
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
-		return true;
 	}
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE{

@@ -10,6 +10,7 @@ sources += morda/resman/ResourceManager.cpp
 sources += morda/resman/Resource.cpp
 sources += morda/resources/ResTexture.cpp
 sources += morda/resources/ResFont.cpp
+sources += morda/util/CharInputFocusable.cpp
 sources += morda/util/GLTexture.cpp
 sources += morda/util/Gravity.cpp
 sources += morda/util/Image.cpp

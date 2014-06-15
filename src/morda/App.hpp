@@ -59,6 +59,7 @@ THE SOFTWARE. */
 #include "Inflater.hpp"
 #include "Updateable.hpp"
 #include "util/keycodes.hpp"
+#include "util/CharInputFocusable.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
@@ -76,6 +77,7 @@ class App : public ting::IntrusiveSingleton<App>{
 
 	friend class Updateable;
 	friend class Widget;
+	friend class CharInputFocusable;
 	
 	struct ThreadId{
 		ting::mt::Thread::T_ThreadID id;
@@ -365,34 +367,32 @@ public:
 	
 private:
 	ting::WeakRef<Widget> focusedWidget;
+	ting::WeakRef<CharInputFocusable> focusedCharInput;
 	
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <bool is_char_input_only, class UnicodeResolver> void HandleKeyEvent(bool isDown, key::Key keyCode, UnicodeResolver& unicodeResolver){
-//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
-		
-		//don't handle char input key release events
-		if(!isDown && is_char_input_only){
-			return;
+	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver){
+		if(ting::Ref<CharInputFocusable> c = this->focusedCharInput){
+//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
+			c->OnCharacterInput(unicodeResolver.Resolve());
 		}
+	}
+	
+	void HandleKeyEvent(bool isDown, key::Key keyCode){
+//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 		
 		if(ting::Ref<Widget> w = this->focusedWidget){
 //			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		
-			if(!is_char_input_only){
-				w->OnKeyInternal(isDown, keyCode);
-			}
-			
-			if(isDown){
-				w->OnCharacterInputInternal(unicodeResolver);
-			}
-		}else if(!is_char_input_only){
-//			TRACE(<< "HandleKeyEvent(): there is no focused widget, not a char only input, passing to rootWidget" << std::endl)
+			w->OnKeyInternal(isDown, keyCode);
+		}else{
+//			TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
 			if(this->rootWidget){
 				this->rootWidget->OnKeyInternal(isDown, keyCode);
 			}
 		}
 	}
+	
+	
 	
 public:
 	

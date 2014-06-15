@@ -529,7 +529,7 @@ public:
 			event(event)
 	{}
 	
-	ting::Array<ting::u32> Resolve(){
+	ting::Array<ting::u32> Resolve()const{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
@@ -637,10 +637,8 @@ void App::Exec(){
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
-						{
-							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
-							this->HandleKeyEvent<false, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
-						}
+						this->HandleKeyEvent(true, keyCodeMap[ting::u8(event.xkey.keycode)]);
+						this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event));
 						break;
 					case KeyRelease:
 //						TRACE(<< "KeyRelease X event got" << std::endl)
@@ -656,20 +654,14 @@ void App::Exec(){
 								)
 							{
 								//Key wasn't actually released
-								
-								KeyEventUnicodeResolver resolver(this->xInputMethod.xic, nev);
-								
-								this->HandleKeyEvent<true, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(nev.xkey.keycode)], resolver);
+								this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev));
 								
 								XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 								break;
 							}
 						}
 
-						{
-							KeyEventUnicodeResolver resolver(this->xInputMethod.xic, event);
-							this->HandleKeyEvent<false, KeyEventUnicodeResolver>(false, keyCodeMap[ting::u8(event.xkey.keycode)], resolver);
-						}
+						this->HandleKeyEvent(false, keyCodeMap[ting::u8(event.xkey.keycode)]);
 						break;
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
