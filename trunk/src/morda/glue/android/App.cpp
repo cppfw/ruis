@@ -150,7 +150,7 @@ public:
 	int32_t ms;//meta state
 	int32_t di;//device id
 	
-	ting::Array<ting::u32> Resolve(){
+	ting::Array<ting::u32> Resolve()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
 		jint res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
@@ -948,36 +948,25 @@ void HandleInputEvents(){
 					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
 					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
 
-//						TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+//					TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
 
 					//detect auto-repeated key events
 					if(AKeyEvent_getRepeatCount(event) != 0){
 						if(eventAction == AKEY_EVENT_ACTION_DOWN){
-							app.HandleKeyEvent<true, KeyEventToUnicodeResolver>(
-									true,
-									GetKeyFromKeyEvent(*ASS(event)),
-									keyUnicodeResolver
-								);
+							app.HandleCharacterInput(keyUnicodeResolver);
 						}
 						break;
 					}
 
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
-//								TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
-							app.HandleKeyEvent<false, KeyEventToUnicodeResolver>(
-									true,
-									GetKeyFromKeyEvent(*ASS(event)),
-									keyUnicodeResolver
-								);
+//							TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
+							app.HandleKeyEvent(true, GetKeyFromKeyEvent(*ASS(event)));
+							app.HandleCharacterInput(keyUnicodeResolver);
 							break;
 						case AKEY_EVENT_ACTION_UP:
-//								TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-							app.HandleKeyEvent<false, KeyEventToUnicodeResolver>(
-									false,
-									GetKeyFromKeyEvent(*ASS(event)),
-									keyUnicodeResolver
-								);
+//							TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
+							app.HandleKeyEvent(false, GetKeyFromKeyEvent(*ASS(event)));
 							break;
 						default:
 							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)

@@ -202,48 +202,12 @@ private:
 private:
 	void OnKeyInternal(bool isDown, key::Key keyCode);
 	
-	ting::Inited<bool, false> deliverCharacterInputEvents;
-	
-	template <class UnicodeResolver> void OnCharacterInputInternal(UnicodeResolver& unicodeResolver){
-//		TRACE(<< "HandleCharacterInput(): invoked, this->deliverCharacterInputEvents = " << this->deliverCharacterInputEvents << std::endl)
-		
-		//if widget does not want to receive such events do nothing
-		if(!this->deliverCharacterInputEvents){
-			return;
-		}
-		
-		ting::Array<ting::u32> unicode = unicodeResolver.Resolve();
-//		TRACE(<< "HandleCharacterInput(): unicode.Size() = " << unicode.Size() << std::endl)
-		
-		if(unicode.Size() == 0){
-			return;
-		}
-		
-//		TRACE(<< "HandleCharacterInput(): unicode[0] = " << unicode[0] << std::endl)
-
-		this->OnCharacterInput(unicode);
-	}
 private:
 	ting::Inited<bool, false> isFocused;
 public:
 	
 	//return true to consume
 	virtual bool OnKey(bool isDown, key::Key keyCode){
-		return false;
-	}
-	
-	/**
-	 * @brief Handler of character input event.
-	 * Handler for character input. Character input is only passed to focused widget.
-	 * It will not be passed to root container if no widget is focused.
-	 * Character input is not propagated to parent widgets. The consumption
-	 * of the event only has effect when event is consumed in KeyListener set to a widget,
-	 * then it will not be propagated to Widget's overridden handler method.
-     * @param unicode - unicode string of entered characters in UTF-32.
-	 * @return true to consume event.
-	 * @return false to allow event to propagate further.
-     */
-	virtual bool OnCharacterInput(const ting::Buffer<const ting::u32>& unicode){
 		return false;
 	}
 	
@@ -256,10 +220,6 @@ public:
 	}
 	
 	//TODO: add on focus changed
-	
-	void SetDeliverCharacterInputEvents(bool deliver){
-		this->deliverCharacterInputEvents = deliver;
-	}
 	
 	enum EMouseButton{
 		LEFT,
@@ -342,7 +302,7 @@ public:
 	}
 	
 	/**
-	 * @brief Check is point is within the widget bounds.
+	 * @brief Check if point is within the widget bounds.
      * @param pos - point to check in widget coordinates.
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.

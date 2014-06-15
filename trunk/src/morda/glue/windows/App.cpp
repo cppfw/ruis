@@ -280,21 +280,10 @@ public:
 			c(unicodeChar)
 	{}
 	
-	ting::Array<ting::u32> Resolve(){
+	ting::Array<ting::u32> Resolve()const{
 		ting::Array<ting::u32> ret(1);
 		ret[0] = this->c;
 		return ret;
-	}
-};
-
-
-
-class DummyKeyEventUnicodeResolver{
-public:
-	DummyKeyEventUnicodeResolver(){}
-	
-	ting::Array<ting::u32> Resolve(){
-		return ting::Array<ting::u32>();
 	}
 };
 
@@ -407,25 +396,18 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 
 		case WM_KEYDOWN:
 			if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-				DummyKeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<false, DummyKeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(wParam)], resolver);
+				app.HandleKeyEvent(true, keyCodeMap[ting::u8(wParam)]);
 			}
 			lres = 0;
 			return true;
 
 		case WM_KEYUP:
-			{
-				DummyKeyEventUnicodeResolver resolver;
-				app.HandleKeyEvent<false, DummyKeyEventUnicodeResolver>(false, keyCodeMap[ting::u8(wParam)], resolver);
-			}
+			app.HandleKeyEvent(false, keyCodeMap[ting::u8(wParam)]);
 			lres = 0;
 			return true;
 		
 		case WM_CHAR:
-			{
-				KeyEventUnicodeResolver resolver(wParam);
-				app.HandleKeyEvent<true, KeyEventUnicodeResolver>(true, keyCodeMap[ting::u8(wParam)], resolver);
-			}
+			app.HandleCharacterInput(KeyEventUnicodeResolver(wParam));
 			lres = 0;
 			return true;
 		case WM_PAINT:

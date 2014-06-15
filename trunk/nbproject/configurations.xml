@@ -40,6 +40,8 @@
           <in>TexturingShader.cpp</in>
         </df>
         <df name="util">
+          <in>CharInputFocusable.cpp</in>
+          <in>CharInputFocusable.hpp</in>
           <in>GLTexture.cpp</in>
           <in>Gravity.cpp</in>
           <in>Image.cpp</in>
@@ -279,6 +281,16 @@
             <pElem>src</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -547,6 +559,16 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
@@ -591,6 +613,14 @@
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>/home/ivan/prj/morda/tests/app/tests</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>../../bin/android-ndk-r9d/platforms/android-19/arch-x86/usr/include</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>__ANDROID__</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
       <folder path="0">
@@ -671,6 +701,16 @@
             ex="false"
             tool="1"
             flavor2="4">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
       </item>
