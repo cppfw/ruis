@@ -23,3 +23,9 @@ Section: libdevel
 Architecture: any
 Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
 Description: Debug symbols for the libmorda library
+
+Package: libmorda-doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Documentation for libmorda
+ Doxygen docs.
