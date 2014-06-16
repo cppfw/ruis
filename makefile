@@ -29,5 +29,5 @@ install:
 	    install -D src/$$i $(DESTDIR)$(PREFIX)/include/$$i; \
 	done
 #install library files
-	install -d $(DESTDIR)$(PREFIX)/lib/
-	install src/libmorda.* $(DESTDIR)$(PREFIX)/lib/
+	@install -d $(DESTDIR)$(PREFIX)/lib/
+	@install src/libmorda.* $(DESTDIR)$(PREFIX)/lib/
