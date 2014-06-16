@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,40 +26,45 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
+
 #pragma once
 
-#include "../widgets/Widget.hpp"
-#include "../util/Padded.hpp"
 
+#include "Container.hpp"
+#include "PaddedWidget.hpp"
 
 
 namespace morda{
 
 
 
-class PaddedWidget : public virtual Widget, private Padded{//TODO: Padded is not needed, move to PaddedWidget
-protected:
-	inline PaddedWidget(){}
+class FrameContainer :
+		public Container,
+		public PaddedWidget
+{
 	
-	inline PaddedWidget(LeftBottomRightTop padding) :
-			Padded(padding)
-	{}
+	FrameContainer(const FrameContainer&);
+	FrameContainer& operator=(const FrameContainer&);
 	
-	inline PaddedWidget(const stob::Node& description) :
-			Padded(description)
-	{}
+	FrameContainer(){}
+	FrameContainer(const stob::Node& desc);
 	
 public:
-	inline void SetPadding(LeftBottomRightTop padding)throw(){
-		this->Padded::SetPadding(padding);
-		this->SetRelayoutNeeded();
+	static ting::Ref<FrameContainer> New(){
+		return ting::Ref<FrameContainer>(new FrameContainer());
 	}
 	
-	inline const LeftBottomRightTop& Padding()const throw(){
-		return this->Padded::Padding();
+	static ting::Ref<FrameContainer> New(const stob::Node& desc){
+		return ting::Ref<FrameContainer>(new FrameContainer(desc));
 	}
+	
+	morda::Vec2f ComputeMinDim()const OVERRIDE;
+
+	void OnResize() OVERRIDE;
+
+private:
+
 };
 
 
-
-}//~namespace
+}

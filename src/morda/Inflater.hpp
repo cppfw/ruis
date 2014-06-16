@@ -35,7 +35,6 @@ THE SOFTWARE. */
 
 #include "Exc.hpp"
 #include "widgets/Widget.hpp"
-#include "layouts/Layout.hpp"
 
 
 
@@ -66,23 +65,11 @@ public:
 		virtual ~WidgetFactory()throw(){}
 	};
 	
-	class LayoutFactory{
-	public:
-		virtual ting::Ptr<morda::Layout> Create(const stob::Node& node)const = 0;
-
-		virtual ~LayoutFactory()throw(){}
-	};
-	
 private:
 	typedef std::map<std::string, ting::Ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
 	
 	void AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory);
-	
-	typedef std::map<std::string, ting::Ptr<LayoutFactory> > T_LayoutMap;
-	T_LayoutMap layoutFactories;
-	
-	void AddLayoutFactory(const std::string& layoutName, ting::Ptr<LayoutFactory> factory);
 	
 public:
 	/**
@@ -93,7 +80,9 @@ public:
 		class Factory : public WidgetFactory{
 		public:
 			ting::Ref<morda::Widget> Create(const stob::Node& node)const OVERRIDE{
-				return T_Widget::New(node);
+				ting::Ref<morda::Widget> ret = T_Widget::New(node);
+				ASSERT(ret.DynamicCast<T_Widget>().IsValid())
+				return ret;
 			}
 		};
 		
@@ -121,32 +110,6 @@ public:
      * @return reference to the inflated widget.
      */
 	ting::Ref<morda::Widget> Inflate(ting::fs::File& fi)const;
-	
-	/**
-	 * @brief Registers a layout type.
-     * @param layoutName - name of the layout as it appears in GUI script.
-     */
-	template <class T_Layout> void AddLayout(const std::string& layoutName){
-		class Factory : public LayoutFactory{
-		public:
-			ting::Ptr<morda::Layout> Create(const stob::Node& node)const OVERRIDE{
-				return T_Layout::New(node);
-			}
-		};
-
-		this->AddLayoutFactory(layoutName, ting::Ptr<LayoutFactory>(new Factory()));
-	}
-	
-	/**
-	 * @brief Remove previously registered layout type.
-     * @param layoutName - name of the layout as it appears in GUI script.
-	 * @return true if layout type was successfully removed.
-	 * @return false if layout type with given name was not found in the list of registered types.
-     */
-	bool RemoveLayout(const std::string& layoutName)throw();
-	
-	
-	ting::Ptr<Layout> CreateLayout(const stob::Node& layout)const;
 };
 
 

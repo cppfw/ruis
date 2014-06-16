@@ -19,11 +19,6 @@
             <in>main.cpp</in>
           </df>
         </df>
-        <df name="layouts">
-          <in>FrameLayout.cpp</in>
-          <in>Layout.cpp</in>
-          <in>LinearLayout.cpp</in>
-        </df>
         <df name="resman">
           <in>Resource.cpp</in>
           <in>ResourceManager.cpp</in>
@@ -45,6 +40,8 @@
           <in>GLTexture.cpp</in>
           <in>Gravity.cpp</in>
           <in>Image.cpp</in>
+          <in>LayoutDim.cpp</in>
+          <in>LayoutDim.hpp</in>
           <in>LeftBottomRightTop.cpp</in>
           <in>TexFont.cpp</in>
           <in>util.cpp</in>
@@ -52,7 +49,13 @@
         <df name="widgets">
           <in>Button.cpp</in>
           <in>Container.cpp</in>
+          <in>FrameContainer.cpp</in>
+          <in>FrameContainer.hpp</in>
           <in>Label.cpp</in>
+          <in>LinearContainer.cpp</in>
+          <in>LinearContainer.hpp</in>
+          <in>LinearWidget.cpp</in>
+          <in>LinearWidget.hpp</in>
           <in>Slider.cpp</in>
           <in>Slider.hpp</in>
           <in>TextButton.cpp</in>
@@ -107,15 +110,6 @@
         </makeTool>
       </makefileType>
       <folder path="0/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/layouts">
         <ccTool>
           <incDir>
             <pElem>ext</pElem>
@@ -214,12 +208,6 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/layouts/FrameLayout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/layouts/Layout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/layouts/LinearLayout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resman/ResourceManager.cpp"
@@ -297,6 +285,10 @@
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
             tool="1"
@@ -310,7 +302,31 @@
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -348,18 +364,6 @@
         </makeTool>
       </makefileType>
       <folder path="0/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/layouts">
         <ccTool>
           <incDir>
             <pElem>ext</pElem>
@@ -479,12 +483,6 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/layouts/FrameLayout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/layouts/Layout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/layouts/LinearLayout.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resman/ResourceManager.cpp"
@@ -574,6 +572,10 @@
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
             tool="1"
@@ -587,7 +589,31 @@
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -662,12 +688,6 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/layouts/FrameLayout.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/layouts/Layout.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/layouts/LinearLayout.cpp" ex="false" tool="1" flavor2="4">
-      </item>
       <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/resman/ResourceManager.cpp"
@@ -717,6 +737,10 @@
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
       </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
             tool="1"
@@ -730,7 +754,31 @@
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="4">
       </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="4">
       </item>

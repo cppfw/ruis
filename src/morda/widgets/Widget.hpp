@@ -95,6 +95,13 @@ public:
 		return this->prop.operator->();
 	}
 	
+	const stob::Node* GetProperty(const char* propName)const throw(){
+		if(!this->Prop()){
+			return 0;
+		}
+		return this->Prop()->Child(propName).node();
+	}
+	
 	inline ting::Ptr<stob::Node> ExtractProp()throw(){
 		return this->prop;
 	}
@@ -249,7 +256,7 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	inline const morda::Vec2f& GetMinDim()const throw(){
+	inline const morda::Vec2f& GetMinDim()const{
 		if(this->minDimNeedsRecomputing){
 			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
 			this->minDimNeedsRecomputing = false;
@@ -258,7 +265,7 @@ public:
 	}
 
 protected:
-	virtual morda::Vec2f ComputeMinDim()const throw(){
+	virtual morda::Vec2f ComputeMinDim()const{
 		return this->Rect().d;
 	}
 	

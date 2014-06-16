@@ -49,7 +49,7 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 		return false;
 	}
 
-	unsigned longIndex = morda::GetLongIndex(this->slider.IsVertical());
+	unsigned longIndex = this->slider.GetLongIndex();
 
 	float maxPos = this->slider.Rect().d[longIndex] - this->Rect().d[longIndex];
 	ASSERT(maxPos >= 0)
@@ -65,7 +65,7 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 	
 	//update factor
 	this->slider.curFactor = newPos / maxPos;
-	if(this->slider.isReverse){
+	if(this->slider.IsReverse()){
 		this->slider.curFactor = 1 - this->slider.curFactor;
 	}
 	this->slider.factorChange.Emit(this->slider.curFactor);
@@ -82,17 +82,10 @@ Slider::Slider(){
 
 
 Slider::Slider(const stob::Node& description) :
-		Widget(description)
+		Widget(description),
+		LinearWidget(description)
 {
 	this->Add(SliderHandle::New(*this));
-	
-	if(const stob::Node* n = description.GetProperty("vertical")){
-		this->isVertical = n->AsBool();
-	}
-	
-	if(const stob::Node* n = description.GetProperty("reverse")){
-		this->isReverse = n->AsBool();
-	}
 }
 
 
@@ -108,7 +101,7 @@ void Slider::SetFactor(float newFactor){
 
 
 void Slider::OnResize(){
-	unsigned longIndex = this->isVertical ? 1 : 0;
+	unsigned longIndex = this->GetLongIndex();
 	
 	morda::Vec2f newSize(this->Rect().d);
 	
@@ -121,10 +114,12 @@ void Slider::OnResize(){
 	{
 		float effectiveLength = this->Rect().d[longIndex] - this->Children()->Rect().d[longIndex];
 		morda::Vec2f newPos(0);
-		newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
-		ASSERT(newPos[longIndex] <= effectiveLength)
-		if(this->isReverse){
-			newPos[longIndex] = effectiveLength - newPos[longIndex];
+		if(effectiveLength > 0){
+			newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
+			ASSERT(newPos[longIndex] <= effectiveLength)
+			if(this->IsReverse()){
+				newPos[longIndex] = effectiveLength - newPos[longIndex];
+			}
 		}
 		this->Children()->MoveTo(newPos);
 	}

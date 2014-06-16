@@ -1,35 +1,16 @@
-#include <ting/Array.hpp>
-#include <ting/util.hpp>
-#include <setjmp.h>
-
-#include "LinearLayout.hpp"
+#include "LinearContainer.hpp"
 
 #include "../util/Gravity.hpp"
-#include "../util/LeftBottomRightTop.hpp"
+#include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
-
 
 
 using namespace morda;
 
 
 
-LinearLayout::LinearLayout(const stob::Node& description) :
-		Layout(description)
-{
-	if(const stob::Node* n = description.GetProperty("vertical")){
-		this->isVertical = n->AsBool();
-	}
-
-	if(const stob::Node* n = description.GetProperty("reverse")){
-		this->isReverse = n->AsBool();
-	}
-}
-
-
-
 namespace{
-
+	
 const char* D_Margins = "margins";
 const char* D_Weight = "weight";
 
@@ -46,12 +27,20 @@ public:
 
 
 
+LinearContainer::LinearContainer(const stob::Node& desc) :
+		Container(desc),
+		PaddedWidget(desc),
+		LinearWidget(desc)
+{}
+
+
+
 //override
-void LinearLayout::ArrangeWidgets(Container& cont)const{
-	unsigned longIndex = this->isVertical ? 1 : 0;
-	unsigned transIndex = this->isVertical ? 0 : 1;
+void LinearContainer::OnResize(){
+	unsigned longIndex = this->GetLongIndex();
+	unsigned transIndex = this->GetTransIndex();
 	
-	ting::Array<Info> info(cont.NumChildren());
+	ting::Array<Info> info(this->NumChildren());
 	
 	//Calculate rigid size, net weight and store weights and margins
 	float rigid = this->Padding()[longIndex] + this->Padding()[2 + longIndex];
@@ -59,10 +48,10 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	
 	{
 		Info* i = info.Begin();
-		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+		for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next(), ++i){
 			ASSERT(info.Overlaps(i))
 
-			const stob::Node* layout = Layout::GetLayoutProp((*c)->Prop());
+			const stob::Node* layout = (*c)->GetProperty("layout");//TODO: const str
 
 			if(!layout){
 				i->dim = (*c)->GetMinDim();
@@ -77,7 +66,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 					i->weight = 0;
 				}
 
-				Layout::Dim dim = Layout::Dim::FromLayout(*layout);
+				LayoutDim dim = LayoutDim::FromLayout(*layout);
 				i->dim = dim.ForWidget(*(*c));
 				
 				i->gravity = Gravity::FromLayout(*layout);
@@ -91,8 +80,8 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			
 			if(i != info.Begin()){//if not first child
 				i->margin = std::max(
-						(i - 1)->margins[this->isReverse ? longIndex : (longIndex + 2)],
-						i->margins[this->isReverse ? (longIndex + 2) : longIndex]
+						(i - 1)->margins[this->IsReverse() ? longIndex : (longIndex + 2)],
+						i->margins[this->IsReverse() ? (longIndex + 2) : longIndex]
 					);
 			}else{
 				i->margin = 0;
@@ -104,13 +93,13 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 	
 	//arrange widgets
 	{
-		float flexible = cont.Rect().d[longIndex] - rigid;
+		float flexible = this->Rect().d[longIndex] - rigid;
 		ting::util::ClampBottom(flexible, 0.0f);
 		ASSERT(flexible >= 0)
 		
-		float pos = this->Padding()[this->isReverse ? (longIndex + 2) : longIndex];//start arranging widgets from padding
+		float pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		Info *i = info.Begin();
-		for(const ting::Ref<Widget>* c = &cont.Children(); *c; c = &(*c)->Next(), ++i){
+		for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next(), ++i){
 			Vec2f newSize(i->dim);
 			
 			if(netWeight > 0){
@@ -118,8 +107,8 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 			}
 
 			Vec2f newPos;
-			if((this->isVertical && !this->isReverse) || (!this->isVertical && this->isReverse)){
-				newPos[longIndex] = cont.Rect().d[longIndex] - pos - i->margin - newSize[longIndex];
+			if((this->IsVertical() && !this->IsReverse()) || (!this->IsVertical() && this->IsReverse())){
+				newPos[longIndex] = this->Rect().d[longIndex] - pos - i->margin - newSize[longIndex];
 			}else{
 				newPos[longIndex] = pos + i->margin;
 			}
@@ -127,7 +116,7 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 
 			(*c)->Resize(RoundVec(newSize));
 			
-			newPos[transIndex] = i->gravity.PosForWidget(*(*c))[transIndex];
+			newPos[transIndex] = i->gravity.PosForRect(*this, (*c)->Rect().d)[transIndex];
 			
 			(*c)->MoveTo(RoundVec(newPos));
 		}
@@ -137,30 +126,30 @@ void LinearLayout::ArrangeWidgets(Container& cont)const{
 
 
 //override
-morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
-	unsigned longIndex = this->isVertical ? 1 : 0;
-	unsigned transIndex = this->isVertical ? 0 : 1;
+morda::Vec2f LinearContainer::ComputeMinDim()const throw(){
+	unsigned longIndex = this->GetLongIndex();
+	unsigned transIndex = this->GetTransIndex();
 	
 	morda::Vec2f minDim(0);
 	
 	float prevMargin = 0;
 	
-	for(const ting::Ref<const Widget>* c = &cont.Children(); *c; c = &(*c)->Next()){
+	for(const ting::Ref<const Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
 		morda::Vec2f dim = (*c)->GetMinDim();
 		if((*c)->Prop()){
-			if(const stob::Node* layout = (*c)->Prop()->Child(Layout::D_Layout()).node()){
+			if(const stob::Node* layout = (*c)->Prop()->Child("layout").node()){//TODO: layout str
 				if(const stob::Node* m = layout->Child(D_Margins).node()){
 					margins = LeftBottomRightTop::FromSTOB(*m);
 				}
 				
 				{
-					Layout::Dim ld = Layout::Dim::FromLayout(*layout);
+					LayoutDim ld = LayoutDim::FromLayout(*layout);
 					
 					//FRACTION is not allowed when computing min size. Change it to MIN.
 					for(unsigned i = 0; i != 2; ++i){
-						if(ld[i].unit == Layout::Dim::FRACTION){
-							ld[i].unit = Layout::Dim::MIN;
+						if(ld[i].unit == LayoutDim::FRACTION){
+							ld[i].unit = LayoutDim::MIN;
 						}
 					}
 					
@@ -178,11 +167,11 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 		if((*c)->Prev().IsValid()){//if not first child
 			minDim[longIndex] += std::max(
 					prevMargin,
-					margins[this->isReverse ? (longIndex + 2) : longIndex]
+					margins[this->IsReverse() ? (longIndex + 2) : longIndex]
 				);
 		}
 		
-		prevMargin = margins[this->isReverse ? longIndex : (longIndex + 2)];
+		prevMargin = margins[this->IsReverse() ? longIndex : (longIndex + 2)];
 	}
 	
 	minDim[0] += this->Padding()[0] + this->Padding()[2];
@@ -190,3 +179,5 @@ morda::Vec2f LinearLayout::ComputeMinDim(const Container& cont)const throw(){
 	
 	return minDim;
 }
+
+

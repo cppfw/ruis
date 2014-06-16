@@ -1,4 +1,6 @@
-#include "Layout.hpp"
+#include "LayoutDim.hpp"
+#include "../widgets/PaddedWidget.hpp"
+#include "../widgets/Container.hpp"
 
 
 
@@ -9,6 +11,7 @@ using namespace morda;
 namespace{
 
 const char* D_Min = "min";
+const char* D_Layout = "layout";
 
 inline bool NodeHoldsFractionValue(const stob::Node& node)throw(){
 	size_t len = node.ValueLength();
@@ -19,8 +22,8 @@ inline bool NodeHoldsFractionValue(const stob::Node& node)throw(){
 
 
 //static
-Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
-	Dim ret;
+LayoutDim LayoutDim::FromSTOB(const stob::Node& node)throw(){
+	LayoutDim ret;
 	
 	const stob::Node* n = node.Child();
 	
@@ -49,28 +52,28 @@ Layout::Dim Layout::Dim::FromSTOB(const stob::Node& node)throw(){
 
 
 //static
-Layout::Dim Layout::Dim::FromLayout(const stob::Node& layout)throw(){
-	const stob::Node* dim = layout.Child(Dim::D_Dim()).node();
+LayoutDim LayoutDim::FromLayout(const stob::Node& layout)throw(){
+	const stob::Node* dim = layout.Child(LayoutDim::D_Dim()).node();
 	if(!dim){
-		return Dim::Default();
+		return LayoutDim::Default();
 	}
-	return Dim::FromSTOB(*dim);
+	return LayoutDim::FromSTOB(*dim);
 }
 
 
 
 //static
-Layout::Dim Layout::Dim::FromPropLayout(const stob::Node& prop)throw(){
-	const stob::Node* layout = prop.Child(D_Layout()).node();
+LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)throw(){
+	const stob::Node* layout = prop.Child(D_Layout).node();
 	if(!layout){
-		return Dim::Default();
+		return LayoutDim::Default();
 	}
-	return Dim::FromLayout(*layout);
+	return LayoutDim::FromLayout(*layout);
 }
 
 
 
-Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
+Vec2f LayoutDim::ForWidget(const Widget& w)const throw(){
 	Vec2f ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
@@ -83,8 +86,8 @@ Vec2f Layout::Dim::ForWidget(const Widget& w)const throw(){
 			case FRACTION:
 				if(ting::Ref<const Container> p = w.Parent()){
 					float padding;
-					if(const Layout* l = p->GetLayout()){
-						padding = l->Padding()[i] + l->Padding()[i + 2];
+					if(ting::Ref<const PaddedWidget> pw = p.DynamicCast<const PaddedWidget>()){
+						padding = pw->Padding()[i] + pw->Padding()[i + 2];
 					}else{
 						padding = 0;
 					}

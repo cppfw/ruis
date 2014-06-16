@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,40 +26,45 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
+
 #pragma once
 
-#include <stob/dom.hpp>
+#include "Container.hpp"
+#include "PaddedWidget.hpp"
+#include "LinearWidget.hpp"
 
-#include "Layout.hpp"
-
+#include <ting/types.hpp>
 
 
 namespace morda{
 
 
+class LinearContainer :
+		public Container,
+		public PaddedWidget,
+		public LinearWidget
+{
+	LinearContainer(const LinearContainer&);
+	LinearContainer& operator=(const LinearContainer&);
 
-class FrameLayout : public morda::Layout{
-	FrameLayout(){}
-	
-	FrameLayout(const stob::Node& description) :
-			Layout(description)
-	{}
+	LinearContainer(){}
+	LinearContainer(const stob::Node& desc);	
 public:
-	void ArrangeWidgets(Container& cont)const OVERRIDE;
+
+	void OnResize() OVERRIDE;	
 	
-	morda::Vec2f ComputeMinDim(const Container& cont)const throw() OVERRIDE;
+	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
 	
-	~FrameLayout()throw(){}
-	
-	static inline ting::Ptr<FrameLayout> New(const stob::Node& description){
-		return ting::Ptr<FrameLayout>(new FrameLayout(description));
+	static ting::Ref<LinearContainer> New(){
+		return ting::Ref<LinearContainer>(new LinearContainer());
 	}
 	
-	static inline ting::Ptr<FrameLayout> New(){
-		return ting::Ptr<FrameLayout>(new FrameLayout());
+	static ting::Ref<LinearContainer> New(const stob::Node& desc){
+		return ting::Ref<LinearContainer>(new LinearContainer(desc));
 	}
+private:
+
 };
 
 
-
-}//~namespace
+}

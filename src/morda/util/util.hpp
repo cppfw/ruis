@@ -62,18 +62,4 @@ inline morda::Vec2f RoundVec(const Vec2f& v){
 
 
 
-//TODO: doxygen
-inline unsigned GetLongIndex(bool isVertical)throw(){
-	return isVertical ? 1 : 0;
-}
-
-
-
-//TODO: doxygen
-inline unsigned GetTransIndex(bool isVertical)throw(){
-	return isVertical ? 0 : 1;
-}
-
-
-
 }//~namespace
