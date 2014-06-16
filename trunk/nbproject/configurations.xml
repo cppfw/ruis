@@ -74,7 +74,6 @@
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
-      <itemPath>install.sh</itemPath>
       <itemPath>makefile</itemPath>
       <itemPath>platform.mk</itemPath>
       <itemPath>subdirs.mk</itemPath>

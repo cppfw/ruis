@@ -5,8 +5,21 @@ Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 9)
 
+Package: libmorda-dev
+Architecture: any
+Depends: libmorda0-dbg (= ${binary:Version}), ${misc:Depends}
+Description: OpenGL UI framework development files
+ Cross platform OpenGL UI framework written in C++.
+ Development files.
+
 Package: libmorda0
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
+
+Package: libmorda0-dbg
+Section: libdevel
+Architecture: any
+Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
+Description: Debug symbols for the libmorda library
