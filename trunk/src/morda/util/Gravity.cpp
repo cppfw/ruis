@@ -1,5 +1,4 @@
 #include "Gravity.hpp"
-#include "../layouts/Layout.hpp"
 #include "../util/util.hpp"
 
 
@@ -12,17 +11,6 @@ namespace{
 const char* D_Gravity = "gravity";
 
 }//~namespace
-
-
-
-Vec2f Gravity::PosForWidget(const Widget& w)const throw(){
-	ting::Ref<const Container> p = w.Parent();
-	if(!p){
-		return Vec2f(0);
-	}
-	
-	return PosForRect(p->Rect().d, p->GetLayout() ? p->GetLayout()->Padding() : LeftBottomRightTop::Default(), w.Rect().d);
-}
 
 
 
@@ -59,7 +47,7 @@ Gravity Gravity::FromLayout(const stob::Node& layout)throw(){
 
 //static
 Gravity Gravity::FromPropLayout(const stob::Node& prop)throw(){
-	const stob::Node* layout = Layout::GetLayoutProp(prop);
+	const stob::Node* layout = prop.Child("layout").node();//TODO: const str
 	if(!layout){
 		return Gravity::Default();
 	}

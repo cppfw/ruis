@@ -46,15 +46,13 @@ class Container : virtual public Widget{
 private:
 	ting::Ref<Widget> childrenHead, childrenTail;
 	ting::Inited<unsigned, 0> numChildren;
-
-	ting::Ptr<Layout> layout;
 	
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<ting::WeakRef<Widget>, unsigned> > T_MouseCaptureMap;
 	T_MouseCaptureMap mouseCaptureMap;
 	
 protected:
-	inline Container(){}
+	Container(){}
 	
 	Container(const stob::Node& description);
 
@@ -68,19 +66,6 @@ public:
 	inline static ting::Ref<Container> New(){
 		return ting::Ref<Container>(new Container());
 	}
-
-	void SetLayout(ting::Ptr<Layout> layout = ting::Ptr<Layout>()){
-		this->layout = layout;
-		this->SetRelayoutNeeded();
-	}
-	
-	ting::Ptr<Layout> ExtractLayout()throw(){
-		return this->layout;
-	}
-	
-	const Layout* GetLayout()const throw(){
-		return this->layout.operator->();
-	}
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 
@@ -92,8 +77,6 @@ public:
 	void OnHoverChanged() OVERRIDE;
 	
 	void OnResize() OVERRIDE;
-	
-	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
 
 	void Add(const ting::Ref<Widget>& w);
 

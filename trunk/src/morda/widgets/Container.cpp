@@ -13,10 +13,6 @@ using namespace morda;
 Container::Container(const stob::Node& description) :
 		Widget(description)
 {
-	if(const stob::Node* n = description.GetProperty("layout")){
-		this->SetLayout(morda::App::Inst().inflater().CreateLayout(*n));
-	}
-	
 	for(const stob::Node* n = description.Child(); n; n = n->Next()){
 		if(n->IsProperty()){
 			continue;//skip properties
@@ -172,25 +168,11 @@ void Container::OnHoverChanged(){
 
 void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
-	if(this->layout){
-		this->layout->ArrangeWidgets(*this);
-	}else{
-		for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
-			if((*c)->NeedsRelayout()){
-				(*c)->Resize((*c)->Rect().d);
-			}
+	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
+		if((*c)->NeedsRelayout()){
+			(*c)->Resize((*c)->Rect().d);
 		}
 	}
-}
-
-
-
-//override
-morda::Vec2f Container::ComputeMinDim()const throw(){
-	if(this->layout){
-		return this->layout->ComputeMinDim(*this);
-	}
-	return this->Widget::ComputeMinDim();
 }
 
 

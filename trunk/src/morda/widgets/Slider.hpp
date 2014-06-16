@@ -33,6 +33,7 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "Container.hpp"
+#include "LinearWidget.hpp"
 
 
 //diable stupid warnings
@@ -45,8 +46,9 @@ namespace morda{
 
 
 class Slider :
-		public virtual morda::Widget,
-		private morda::Container //users do not need to know that it is a container
+		public virtual Widget,
+		private Container, //users do not need to know that it is a container
+		public LinearWidget
 {
 	//no copying
 	Slider(const Slider&);
@@ -55,10 +57,7 @@ class Slider :
 	ting::Inited<float, 0> curFactor; //Current position from 0 to 1
 	ting::Inited<float, 0> handleSizeFactor; //Current handle size factor from 0 to 1
 	
-	ting::Inited<bool, true> isVertical;
-	ting::Inited<bool, false> isReverse;
-	
-	class SliderHandle : public morda::Widget{
+	class SliderHandle : public Widget{
 		Slider& slider;
 
 		ting::Inited<bool, false> isGrabbed;
@@ -96,10 +95,6 @@ public:
 	static ting::Ref<Slider> New();
 
 	virtual ~Slider()throw(){}
-	
-	bool IsVertical()const throw(){
-		return this->isVertical;
-	}
 	
 	float Factor()const throw(){
 		return this->curFactor;

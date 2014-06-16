@@ -39,6 +39,7 @@ namespace morda{
 
 
 
+//TODO: gravity is not needed, move all to GravitatingWidget
 class Gravity : public morda::Vec2f{
 public:
 	/**
@@ -57,16 +58,6 @@ public:
 	inline Gravity(const Vec2f& gravity) :
 			Vec2f(gravity)
 	{}
-	
-	/**
-	 * @brief Get position for widget.
-	 * Basing on gravity calculates the position for given widget within its parent.
-	 * Widget and its parent should have the correct size already set.
-	 * Parent's padding is taken into account.
-     * @param w - widget to calculate the position for.
-     * @return The position for the widget.
-     */
-	Vec2f PosForWidget(const Widget& w)const throw();
 	
 	/**
 	 * @brief Get position for rectangle within given padded widget.

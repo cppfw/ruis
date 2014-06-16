@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,26 +26,39 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
+
 #pragma once
 
-#include <stob/dom.hpp>
-
-#include "Layout.hpp"
-
+#include "Widget.hpp"
 
 
 namespace morda{
 
 
-
-class LinearLayout : public morda::Layout{
-	LinearLayout(){}
+class LinearWidget : public virtual Widget{
+	LinearWidget(const LinearWidget&);
+	LinearWidget& operator=(const LinearWidget&);
 	
-	LinearLayout(const stob::Node& description);
-	
-	ting::Inited<bool, true> isVertical;
+	ting::Inited<bool, false> isVertical;
 	ting::Inited<bool, false> isReverse;
-public:
+
+protected:
+	LinearWidget(){}
+	
+	LinearWidget(const stob::Node& desc);
+
+	
+	//TODO: doxygen
+	inline unsigned GetLongIndex()const throw(){
+		return this->isVertical ? 1 : 0;
+	}
+
+	//TODO: doxygen
+	inline unsigned GetTransIndex()const throw(){
+		return this->isVertical ? 0 : 1;
+	}
+
+public:	
 	inline void SetReverse(bool isReverse)throw(){
 		this->isReverse = isReverse;
 	}
@@ -54,21 +67,15 @@ public:
 		this->isVertical = isVertical;
 	}
 	
-	void ArrangeWidgets(Container& cont)const OVERRIDE;
-	
-	morda::Vec2f ComputeMinDim(const Container& cont)const throw() OVERRIDE;
-	
-	~LinearLayout()throw(){}
-	
-	static inline ting::Ptr<LinearLayout> New(const stob::Node& description){
-		return ting::Ptr<LinearLayout>(new LinearLayout(description));
+	bool IsReverse()const throw(){
+		return this->isReverse;
 	}
 	
-	static inline ting::Ptr<LinearLayout> New(){
-		return ting::Ptr<LinearLayout>(new LinearLayout());
+	bool IsVertical()const throw(){
+		return this->isVertical;
 	}
+private:
+
 };
 
-
-
-}//~namespace
+}
