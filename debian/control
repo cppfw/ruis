@@ -1,0 +1,12 @@
+Source: libmorda
+Maintainer: Ivan Gagis <igagis@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: libmorda0
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OpenGL UI framework
+ Cross platform OpenGL UI framework written in C++.
