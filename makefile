@@ -19,13 +19,15 @@ include ./subdirs.mk
 
 
 
-install_dst_dir := /usr
+#use exactly this name for the var, so that dh_auto_install could set it if needed
+DESTDIR :=
+PREFIX := /usr
 
 install:
 #install header files
 	@for i in $(patsubst src/%,%,$(shell find src/morda -type f -name *.hpp)); do \
-	    install -D src/$$i $(install_dst_dir)/include/$$i; \
+	    install -D src/$$i $(DESTDIR)$(PREFIX)/include/$$i; \
 	done
 #install library files
-	@install -D src/libmorda.* $(install_dst_dir)/lib
-	
+	install -d $(DESTDIR)$(PREFIX)/lib/
+	install src/libmorda.* $(DESTDIR)$(PREFIX)/lib/
