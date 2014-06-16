@@ -31,3 +31,6 @@ install:
 #install library files
 	@install -d $(DESTDIR)$(PREFIX)/lib/
 	@install src/libmorda.* $(DESTDIR)$(PREFIX)/lib/
+#install docs
+	@install -d $(DESTDIR)$(PREFIX)/share/doc/libmorda
+	@install docs/doxygen/* $(DESTDIR)$(PREFIX)/share/doc/libmorda
