@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/Ref.hpp>
+#include <ting/Buffer.hpp>
 
 namespace morda{
 
