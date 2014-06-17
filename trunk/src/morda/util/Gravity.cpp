@@ -42,15 +42,3 @@ Gravity Gravity::FromLayout(const stob::Node& layout)throw(){
 
 	return Gravity::FromSTOB(*gravity);
 }
-
-
-
-//static
-Gravity Gravity::FromPropLayout(const stob::Node& prop)throw(){
-	const stob::Node* layout = prop.Child("layout").node();//TODO: const str
-	if(!layout){
-		return Gravity::Default();
-	}
-	
-	return Gravity::FromLayout(*layout);
-}

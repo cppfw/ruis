@@ -52,6 +52,10 @@ private:
 	T_MouseCaptureMap mouseCaptureMap;
 	
 protected:
+	static const char* D_Layout()throw(){
+		return "layout";
+	}
+	
 	Container() : Widget(0){}
 	
 	Container(const stob::Node& description);
