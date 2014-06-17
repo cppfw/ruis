@@ -36,11 +36,8 @@ using namespace morda;
 
 
 
-void GLTexture::Init(const Image& image, GLint minFilter, GLint magFilter){
-	if(this->tex != 0){
-		this->Destroy();
-	}
 
+void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter) {
 	this->dim = morda::Vec2f(float(image.Width()), float(image.Height()));
 
 	glGenTextures(1, &this->tex);
@@ -54,6 +51,8 @@ void GLTexture::Init(const Image& image, GLint minFilter, GLint magFilter){
 
 	GLint internalFormat;
 	switch(image.NumChannels()){
+		default:
+			ASSERT(false)
 		case 1:
 			internalFormat = GL_LUMINANCE;
 			break;
@@ -65,9 +64,6 @@ void GLTexture::Init(const Image& image, GLint minFilter, GLint magFilter){
 			break;
 		case 4:
 			internalFormat = GL_RGBA;
-			break;
-		default:
-			ASSERT(false)
 			break;
 	}
 

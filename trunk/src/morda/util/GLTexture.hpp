@@ -55,24 +55,29 @@ class GLTexture {
 	//no assigning
 	GLTexture& operator=(const GLTexture& tex);
 
-	GLuint tex;
+	ting::Inited<GLuint, 0> tex;
 
 	morda::Vec2f dim;
 
+	void Constructor(const Image& image, GLint minFilter, GLint magFilter);
 public:
-	inline GLTexture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
-		this->Init(image, minFilter, magFilter);
+	GLTexture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+		this->Constructor(image, minFilter, magFilter);
 	}
 
-	inline GLTexture() :
-			tex(0)
-	{}
+	GLTexture(){}
 
 	~GLTexture()throw(){
-		this->Destroy();
+		this->Destructor();
 	}
 
-	void Init(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR);
+	void Init(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+		if(this->tex != 0){
+			this->Destructor();
+		}
+
+		this->Constructor(image, minFilter, magFilter);
+	}
 
 	inline void Bind()const{
 		ASSERT(glGetError() == GL_NO_ERROR)
@@ -93,7 +98,7 @@ public:
 	}
 
 private:
-	void Destroy()throw(){
+	void Destructor()throw(){
 		glDeleteTextures(1, &this->tex);
 	}
 };
