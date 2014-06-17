@@ -26,6 +26,10 @@
                     <name>Android</name>
                     <type>0</type>
                 </confElem>
+                <confElem>
+                    <name>Valgrind</name>
+                    <type>0</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>
