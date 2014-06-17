@@ -30,6 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "../widgets/Widget.hpp"
+#include "../widgets/PaddedWidget.hpp"
 
 
 namespace morda{
@@ -67,10 +68,11 @@ public:
 	 * @brief Get actual dimensions for given widget.
 	 * Get resulting dimensions for given Widget basing on dimension description
 	 * provided by this object. 
+	 * @param parent - widget's parent.
 	 * @param w - widget to get dimensions for.
 	 * @return Resulting dimensions.
 	 */
-	Vec2f ForWidget(const Widget& w)const throw();
+	Vec2f ForWidget(const PaddedWidget& parent, const Widget& w)const throw();
 
 	/**
 	 * @brief Parse from STOB.

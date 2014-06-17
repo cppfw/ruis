@@ -68,7 +68,7 @@ void LinearContainer::OnResize(){
 				}
 
 				LayoutDim dim = LayoutDim::FromLayout(*layout);
-				i->dim = dim.ForWidget(*(*c));
+				i->dim = dim.ForWidget(*this, *(*c));
 				
 				i->gravity = Gravity::FromLayout(*layout);
 				
@@ -154,7 +154,7 @@ morda::Vec2f LinearContainer::ComputeMinDim()const throw(){
 						}
 					}
 					
-					dim = ld.ForWidget(*(*c));
+					dim = ld.ForWidget(*this, *(*c));
 				}
 			}
 		}
