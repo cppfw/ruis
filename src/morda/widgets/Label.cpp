@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-Label::Label(){
+Label::Label() : Widget(0){
 	this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
 }
 

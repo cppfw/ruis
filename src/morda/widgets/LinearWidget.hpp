@@ -43,7 +43,7 @@ class LinearWidget : public virtual Widget{
 	ting::Inited<bool, false> isReverse;
 
 protected:
-	LinearWidget(){}
+	LinearWidget() : Widget(0){}
 	
 	LinearWidget(const stob::Node& desc);
 

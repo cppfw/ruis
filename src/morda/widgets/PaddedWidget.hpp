@@ -39,14 +39,16 @@ namespace morda{
 
 class PaddedWidget : public virtual Widget, private Padded{//TODO: Padded is not needed, move to PaddedWidget
 protected:
-	inline PaddedWidget(){}
+	PaddedWidget() : Widget(0){}
 	
-	inline PaddedWidget(LeftBottomRightTop padding) :
+	PaddedWidget(LeftBottomRightTop padding) :
+			Widget(0),
 			Padded(padding)
 	{}
 	
-	inline PaddedWidget(const stob::Node& description) :
-			Padded(description)
+	PaddedWidget(const stob::Node& desc) :
+			Widget(desc),
+			Padded(desc)
 	{}
 	
 public:

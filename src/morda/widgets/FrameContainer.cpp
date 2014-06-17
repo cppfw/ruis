@@ -9,6 +9,7 @@ using namespace morda;
 
 
 FrameContainer::FrameContainer(const stob::Node& desc) :
+		Widget(desc),
 		Container(desc),
 		PaddedWidget(desc)
 {}

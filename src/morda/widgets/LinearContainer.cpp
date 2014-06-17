@@ -28,6 +28,7 @@ public:
 
 
 LinearContainer::LinearContainer(const stob::Node& desc) :
+		Widget(desc),
 		Container(desc),
 		PaddedWidget(desc),
 		LinearWidget(desc)

@@ -46,7 +46,7 @@ class FrameContainer :
 	FrameContainer(const FrameContainer&);
 	FrameContainer& operator=(const FrameContainer&);
 	
-	FrameContainer(){}
+	FrameContainer() : Widget(0){}
 	FrameContainer(const stob::Node& desc);
 	
 public:

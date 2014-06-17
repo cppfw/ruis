@@ -1,15 +1,19 @@
 FrameContainer{
 	padding{10 20 30 40}
 
+
 	U_SimpleWidget{
 		dim {300 300}
 	}
+
 
 	TextButton{
 		pos {10 20}
 		dim {100 50}
 		gravity {30% 70%}
 		text {"Hello world!"}
+
+		name{"Hello world button"}
 
 		prop{
 			layout{
@@ -21,6 +25,8 @@ FrameContainer{
 
 	Label{
 		text {"Test Label"}
+
+		name{"Test label"}
 
 		prop{
 			layout{
@@ -97,6 +103,7 @@ FrameContainer{
 		}
 	}
 
+
 	LinearContainer{
 		dim{100 200}
 		pos{10 10}
@@ -109,9 +116,9 @@ FrameContainer{
 		}}
 
 		Slider{
-			vertical{false}
+//			vertical{false}
 
-			//reverse{true}
+//			reverse{true}
 
 			prop{layout{
 				dim {0 40} //TODO: min min
@@ -123,6 +130,7 @@ FrameContainer{
 		Slider{
 			name {"vertical slider"}
 
+			vertical{true}
 			reverse{true}
 
 			prop{layout{
