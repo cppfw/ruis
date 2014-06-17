@@ -65,6 +65,7 @@ class Slider :
 
 	protected:
 		SliderHandle(Slider& slider) :
+				Widget(0),
 				slider(slider)
 		{}
 	public:

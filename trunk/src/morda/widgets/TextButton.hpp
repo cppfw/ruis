@@ -52,7 +52,7 @@ protected:
 			Label(description)
 	{}
 	
-	inline TextButton(){}
+	TextButton() : Widget(0){}
 public:
 	
 	~TextButton()throw(){}

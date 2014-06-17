@@ -75,7 +75,7 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 
 
 
-Slider::Slider(){
+Slider::Slider() : Widget(0){
 	this->Add(SliderHandle::New(*this));
 }
 

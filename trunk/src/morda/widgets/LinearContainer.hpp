@@ -47,7 +47,7 @@ class LinearContainer :
 	LinearContainer(const LinearContainer&);
 	LinearContainer& operator=(const LinearContainer&);
 
-	LinearContainer(){}
+	LinearContainer() : Widget(0){}
 	LinearContainer(const stob::Node& desc);	
 public:
 

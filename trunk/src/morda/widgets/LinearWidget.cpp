@@ -5,7 +5,9 @@ using namespace morda;
 
 
 
-LinearWidget::LinearWidget(const stob::Node& desc) {
+LinearWidget::LinearWidget(const stob::Node& desc) :
+		Widget(desc)
+{
 	if(const stob::Node* n = desc.GetProperty("vertical")){
 		this->isVertical = n->AsBool();
 	}

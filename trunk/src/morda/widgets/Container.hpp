@@ -52,7 +52,7 @@ private:
 	T_MouseCaptureMap mouseCaptureMap;
 	
 protected:
-	Container(){}
+	Container() : Widget(0){}
 	
 	Container(const stob::Node& description);
 

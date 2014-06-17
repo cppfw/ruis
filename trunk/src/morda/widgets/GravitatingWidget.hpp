@@ -42,14 +42,17 @@ class GravitatingWidget : public virtual Widget{
 	Gravity gravity;
 protected:
 
-	inline GravitatingWidget()throw(){}
+	GravitatingWidget() : Widget(0){}
 	
-	inline GravitatingWidget(Gravity gravity)throw() :
+	GravitatingWidget(Gravity gravity) :
+			Widget(0),
 			gravity(gravity)
 	{}
 	
-	inline GravitatingWidget(const stob::Node& description){
-		this->SetGravity(Gravity::FromLayout(description));
+	GravitatingWidget(const stob::Node& desc) :
+			Widget(desc)
+	{
+		this->SetGravity(Gravity::FromLayout(desc));
 	}
 public:
 	inline const Gravity& GetGravity()const throw(){

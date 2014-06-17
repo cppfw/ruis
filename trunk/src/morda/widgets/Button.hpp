@@ -47,7 +47,7 @@ protected:
 			Widget(description)
 	{}
 	
-	inline Button(){}
+	Button() : Widget(0){}
 public:
 	
 	~Button()throw(){}

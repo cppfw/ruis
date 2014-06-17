@@ -136,7 +136,7 @@ public:
 class CubeWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	
-	CubeWidget(){
+	CubeWidget() : Widget(0){
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
 		this->StartUpdating(30);
