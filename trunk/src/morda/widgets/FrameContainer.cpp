@@ -7,6 +7,8 @@
 using namespace morda;
 
 
+//TODO: add margins
+
 
 FrameContainer::FrameContainer(const stob::Node& desc) :
 		Widget(desc),
