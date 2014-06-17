@@ -29,7 +29,7 @@ void FrameContainer::OnResize() {
 			gravity = Gravity::Default();
 		}
 		
-		(*c)->Resize(RoundVec(dim.ForWidget(*(*c))));
+		(*c)->Resize(RoundVec(dim.ForWidget(*this, *(*c))));
 		
 		(*c)->MoveTo(RoundVec(gravity.PosForRect(*this, (*c)->Rect().d)));
 	}
@@ -52,7 +52,7 @@ morda::Vec2f FrameContainer::ComputeMinDim()const{
 				}
 			}
 
-			dim = ld.ForWidget(*(*c));
+			dim = ld.ForWidget(*this, *(*c));
 		}
 		
 		if(dim.x > minDim.x){

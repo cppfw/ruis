@@ -73,7 +73,7 @@ LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)throw(){
 
 
 
-Vec2f LayoutDim::ForWidget(const Widget& w)const throw(){
+Vec2f LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const throw(){
 	Vec2f ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
@@ -84,17 +84,10 @@ Vec2f LayoutDim::ForWidget(const Widget& w)const throw(){
 				ret[i] = v.value;
 				break;
 			case FRACTION:
-				if(ting::Ref<const Container> p = w.Parent()){
-					float padding;
-					if(ting::Ref<const PaddedWidget> pw = p.DynamicCast<const PaddedWidget>()){
-						padding = pw->Padding()[i] + pw->Padding()[i + 2];
-					}else{
-						padding = 0;
-					}
-					ret[i] = v.value * (p->Rect().d[i] - padding);
+				{
+					float padding = parent.Padding()[i] + parent.Padding()[i + 2];
+					ret[i] = v.value * (parent.Rect().d[i] - padding);
 					ting::util::ClampBottom(ret[i], 0.0f);
-				}else{
-					ret[i] = 0;
 				}
 				break;
 			default:
