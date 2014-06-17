@@ -37,16 +37,15 @@ namespace morda{
 
 
 
-	//TODO: this class seems redundant?
 //TODO: doxygen
 class LeftBottomRightTop{
 public:
 	Vec2f lb;
 	Vec2f rt;
 	
-	inline LeftBottomRightTop(){}
+	LeftBottomRightTop(){}
 	
-	inline LeftBottomRightTop(float left, float bottom, float right, float top) :
+	LeftBottomRightTop(float left, float bottom, float right, float top) :
 			lb(left, bottom),
 			rt(right, top)
 	{}
@@ -90,7 +89,7 @@ public:
 	 * Default values are all 0.
      * @return LeftTopRightBottom object initialized to default values.
      */
-	static LeftBottomRightTop Default()throw(){
+	static LeftBottomRightTop Default()throw(){//TODO: remove that and add constructor with just one argument
 		return LeftBottomRightTop(0, 0, 0, 0);
 	}
 };
