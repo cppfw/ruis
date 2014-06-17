@@ -114,26 +114,6 @@ public:
 	static Gravity FromLayout(const stob::Node& layout)throw();
 	
 	/**
-	 * @brief Parse the gravity property from prop STOB.
-	 * Parses gravity property from given prop properties.
-	 * @code
-	 * prop{
-	 *     //...
-	 *     layout{
-	 *         //...
-	 *         gravity{right top}
-	 *         //...
-	 *     }
-	 *     //...
-	 * }
-	 * @endcode
-	 * Value of the root node does not matter, it is ignored.
-     * @param prop - prop properties STOB node.
-     * @return Parsed Gravity object.
-     */
-	static Gravity FromPropLayout(const stob::Node& prop)throw();
-	
-	/**
 	 * @brief Default gravity values.
      * @return Gravity object initialized to default gravity values.
      */

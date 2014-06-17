@@ -52,7 +52,7 @@ void LinearContainer::OnResize(){
 		for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next(), ++i){
 			ASSERT(info.Overlaps(i))
 
-			const stob::Node* layout = (*c)->GetProperty("layout");//TODO: const str
+			const stob::Node* layout = (*c)->GetProperty(Container::D_Layout());
 
 			if(!layout){
 				i->dim = (*c)->GetMinDim();
@@ -139,7 +139,7 @@ morda::Vec2f LinearContainer::ComputeMinDim()const throw(){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
 		morda::Vec2f dim = (*c)->GetMinDim();
 		if((*c)->Prop()){
-			if(const stob::Node* layout = (*c)->Prop()->Child("layout").node()){//TODO: layout str
+			if(const stob::Node* layout = (*c)->Prop()->Child(Container::D_Layout()).node()){
 				if(const stob::Node* m = layout->Child(D_Margins).node()){
 					margins = LeftBottomRightTop::FromSTOB(*m);
 				}
