@@ -63,11 +63,11 @@ protected:
 public:
 	~Container()throw(){}
 	
-	inline static ting::Ref<Container> New(const stob::Node& description){
+	static ting::Ref<Container> New(const stob::Node& description){
 		return ting::Ref<Container>(new Container(description));
 	}
 	
-	inline static ting::Ref<Container> New(){
+	static ting::Ref<Container> New(){
 		return ting::Ref<Container>(new Container());
 	}
 	
@@ -89,15 +89,15 @@ public:
 	
 	ting::Ref<Widget> FindChildByName(const std::string& name)throw() OVERRIDE;
 	
-	inline unsigned NumChildren()const throw(){
+	unsigned NumChildren()const throw(){
 		return this->numChildren;
 	}
 	
-	inline const ting::Ref<Widget>& Children()throw(){
+	const ting::Ref<Widget>& Children()throw(){
 		return this->childrenHead;
 	}
 	
-	inline const ting::Ref<const Widget>& Children()const throw(){
+	const ting::Ref<const Widget>& Children()const throw(){
 		return this->childrenHead;
 	}
 };
