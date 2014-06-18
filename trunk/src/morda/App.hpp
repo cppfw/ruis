@@ -92,7 +92,7 @@ public:
 	};
 	
 	
-	inline bool ThisIsUIThread()const throw(){
+	bool ThisIsUIThread()const throw(){
 		return this->uiThreadId.id == ting::mt::Thread::GetCurrentThreadID();
 	}
 	
@@ -143,7 +143,7 @@ private:
 
 #	endif
 
-	inline void SwapGLBuffers(){
+	void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 	}	
 	
@@ -203,7 +203,7 @@ private:
 	friend void Main(int argc, const char** argv);
 	void Exec();
 
-	inline void SwapGLBuffers(){
+	void SwapGLBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
 
@@ -249,7 +249,7 @@ private:
 		void Destroy()throw();
 	} glContext;
 
-	inline void SwapGLBuffers(){
+	void SwapGLBuffers(){
 		SwapBuffers(this->deviceContext.hdc);
 	}
 
@@ -298,7 +298,7 @@ private:
 	DefaultShaders shaders;
 
 public:
-	inline DefaultShaders& Shaders()throw(){
+	DefaultShaders& Shaders()throw(){
 		return this->shaders;
 	}
 
@@ -346,18 +346,18 @@ public:
 
 	virtual ~App()throw(){}
 
-	inline void SetRootWidget(const ting::Ref<morda::Widget>& w){
+	void SetRootWidget(const ting::Ref<morda::Widget>& w){
 		this->rootWidget = w;
 		
 		this->rootWidget->MoveTo(morda::Vec2f(0));
 		this->rootWidget->Resize(this->curWinRect.d);
 	}
 
-	inline ResourceManager& ResMan()throw(){
+	ResourceManager& ResMan()throw(){
 		return this->resMan;
 	}
 
-	inline Inflater& inflater()throw(){
+	Inflater& inflater()throw(){
 		return this->guiInflater;
 	}
 	

@@ -91,7 +91,7 @@ private:
 	//properties from STOB description
 	ting::Ptr<stob::Node> prop;
 public:
-	inline const stob::Node* Prop()const throw(){
+	const stob::Node* Prop()const throw(){
 		return this->prop.operator->();
 	}
 	
@@ -103,15 +103,15 @@ public:
 		return this->Prop()->Child(propName).node();
 	}
 	
-	inline ting::Ptr<stob::Node> ExtractProp()throw(){
+	ting::Ptr<stob::Node> ExtractProp()throw(){
 		return this->prop;
 	}
 	
-	inline void SetProp(ting::Ptr<stob::Node> prop)throw(){
+	void SetProp(ting::Ptr<stob::Node> prop)throw(){
 		this->prop = prop;
 	}
 	
-	inline bool NeedsRelayout()const throw(){
+	bool NeedsRelayout()const throw(){
 		return this->relayoutNeeded;
 	}
 	
@@ -119,34 +119,34 @@ public:
 		return this->name;
 	}
 	
-	inline const ting::WeakRef<Container>& Parent()throw(){
+	const ting::WeakRef<Container>& Parent()throw(){
 		return this->parent;
 	}
 	
-	inline const ting::WeakRef<const Container>& Parent()const throw(){
+	const ting::WeakRef<const Container>& Parent()const throw(){
 		return this->parent;
 	}
 	
-	inline const ting::Ref<Widget>& Next()throw(){
+	const ting::Ref<Widget>& Next()throw(){
 		return this->next;
 	}
 	
-	inline const ting::Ref<const Widget>& Next()const throw(){
+	const ting::Ref<const Widget>& Next()const throw(){
 		return this->next;
 	}
 	
-	inline const ting::Ref<Widget>& Prev()throw(){
+	const ting::Ref<Widget>& Prev()throw(){
 		return this->prev;
 	}
 	
-	inline const ting::Ref<const Widget>& Prev()const throw(){
+	const ting::Ref<const Widget>& Prev()const throw(){
 		return this->prev;
 	}
 	
 	//NOTE: if only parent holds Ref then object may be deleted
 	void RemoveFromParent();
 	
-	inline bool IsHovered()const throw(){
+	bool IsHovered()const throw(){
 		return this->isHovered;
 	}
 	
@@ -162,19 +162,19 @@ private:
 	
 public:
 
-	inline const morda::Rect2f& Rect()const throw(){
+	const morda::Rect2f& Rect()const throw(){
 		return this->rect;
 	}
 	
-	inline void MoveTo(const morda::Vec2f& newPos)throw(){
+	void MoveTo(const morda::Vec2f& newPos)throw(){
 		this->rect.p = newPos;
 	}
 	
-	inline void MoveBy(const morda::Vec2f& delta)throw(){
+	void MoveBy(const morda::Vec2f& delta)throw(){
 		this->rect.p += delta;
 	}
 
-	inline void Resize(const morda::Vec2f& newDims){
+	void Resize(const morda::Vec2f& newDims){
 		this->rect.d = newDims;
 		this->OnResize();//call virtual method
 		this->relayoutNeeded = false;
@@ -222,7 +222,7 @@ public:
 	
 	void Unfocus()throw();
 	
-	inline bool IsFocused()const throw(){
+	bool IsFocused()const throw(){
 		return this->isFocused;
 	}
 	
@@ -256,7 +256,7 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	inline const morda::Vec2f& GetMinDim()const{
+	const morda::Vec2f& GetMinDim()const{
 		if(this->minDimNeedsRecomputing){
 			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
 			this->minDimNeedsRecomputing = false;
@@ -273,38 +273,38 @@ public:
 
 	void SetRelayoutNeeded()throw();
 	
-	inline void Hide(){
+	void Hide(){
 		this->SetHidden(true);
 	}
 
-	inline void Show(){
+	void Show(){
 		this->SetHidden(false);
 	}
 
-	inline void SetHidden(bool hidden){
+	void SetHidden(bool hidden){
 		this->isHidden = hidden;
 		if(this->isHidden){
 			this->SetHovered(false);
 		}
 	}
 	
-	inline bool IsHidden()const throw(){
+	bool IsHidden()const throw(){
 		return this->isHidden;
 	}
 
-	inline void Enable()throw(){
+	void Enable()throw(){
 		this->SetDisabled(false);
 	}
 
-	inline void Disable()throw(){
+	void Disable()throw(){
 		this->SetDisabled(true);
 	}
 
-	inline void SetDisabled(bool disabled)throw(){
+	void SetDisabled(bool disabled)throw(){
 		this->isDisabled = disabled;
 	}
 	
-	inline bool IsDisabled()const throw(){
+	bool IsDisabled()const throw(){
 		return this->isDisabled;
 	}
 	
