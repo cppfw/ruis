@@ -26,15 +26,15 @@ Container::Container(const stob::Node& description) :
 
 //override
 void Container::Render(const morda::Matr4f& matrix)const{
-	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
-		if((*c)->IsHidden()){
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+		if((*i)->IsHidden()){
 			continue;
 		}
 		
 		morda::Matr4f matr(matrix);
-		matr.Translate((*c)->Rect().p);
+		matr.Translate((*i)->Rect().p);
 
-		(*c)->RenderInternal(matr);
+		(*i)->RenderInternal(matr);
 	}
 }
 
@@ -69,26 +69,26 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 	}
 	
 	//original list of children may change during iterating.
-	//TODO:
+	//TODO: see same comment in OnMouseMove
 	
 	//call children in reverse order
-	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
-		if((*c)->IsHidden() || (*c)->IsDisabled()){
+	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
+		if((*i)->IsHidden() || (*i)->IsDisabled()){
 			continue;
 		}
 		
-		if(!(*c)->Rect().Overlaps(pos)){
+		if(!(*i)->Rect().Overlaps(pos)){
 			continue;
 		}
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		(*c)->SetHovered(true);
-		if((*c)->OnMouseButton(isDown, pos - (*c)->Rect().p, button, pointerId)){
+		(*i)->SetHovered(true);
+		if((*i)->OnMouseButton(isDown, pos - (*i)->Rect().p, button, pointerId)){
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair((*c).GetWeakRef(), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair((*i).GetWeakRef(), 1)));
 			}
 			
 			return true;
@@ -122,26 +122,26 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 	}
 	
 	//original list of children may change during iterating.
-	//TODO:
+	//TODO: forbid adding deleting widgets during this function call, add deferred add delete functions
 	
 	//call children in reverse order
-	for(const ting::Ref<Widget>* c = &this->childrenTail; *c; c = &(*c)->Prev()){
-		if((*c)->isHidden){
-			ASSERT(!(*c)->IsHovered())
+	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
+		if((*i)->isHidden){
+			ASSERT(!(*i)->IsHovered())
 			continue;
 		}
 		
-		if(!(*c)->Rect().Overlaps(pos)){
-			(*c)->SetHovered(false);
+		if(!(*i)->Rect().Overlaps(pos)){
+			(*i)->SetHovered(false);
 			continue;
 		}
 		
-		(*c)->SetHovered(true);
+		(*i)->SetHovered(true);
 		
-		if((*c)->OnMouseMove(pos - (*c)->Rect().p, pointerId)){//consumed mouse move event
+		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerId)){//consumed mouse move event
 			//un-hover rest of the children
-			for(c = &(*c)->Prev(); *c; c = &(*c)->Prev()){
-				(*c)->SetHovered(false);
+			for(++i; i != this->Children().rend(); ++i){
+				(*i)->SetHovered(false);
 			}
 			return true;
 		}		
@@ -159,8 +159,8 @@ void Container::OnHoverChanged(){
 	}
 	
 	//un-hover all the children if container became un-hovered
-	for(const ting::Ref<Widget>* c = &this->childrenHead; *c; c = &(*c)->Next()){
-		(*c)->SetHovered(false);
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+		(*i)->SetHovered(false);
 	}
 }
 
@@ -168,9 +168,9 @@ void Container::OnHoverChanged(){
 
 void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
-	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
-		if((*c)->NeedsRelayout()){
-			(*c)->Resize((*c)->Rect().d);
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+		if((*i)->NeedsRelayout()){
+			(*i)->Resize((*i)->Rect().d);
 		}
 	}
 }
@@ -182,20 +182,9 @@ void Container::Add(const ting::Ref<Widget>& w){
 	if(w->parent.GetRef().IsValid()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
 	}
-	ASSERT(w->next.IsNotValid())
-	ASSERT(w->prev.IsNotValid())
-	
-	if(!this->childrenHead){
-		ASSERT(!this->childrenTail)
-		this->childrenHead = w;
-		this->childrenTail = w;
-	}else{
-		this->childrenTail->next = w;
-		w->prev = this->childrenTail;
-		this->childrenTail = w;
-	}
-	
-	++this->numChildren;
+
+	this->children.push_back(w);
+	w->parentIter = --this->children.end();
 	
 	w->parent = this;
 
@@ -210,18 +199,11 @@ void Container::Remove(const ting::Ref<Widget>& w){
 	ASSERT(w.IsValid())
 	ASSERT(w->parent.GetRef() == ting::Ref<Container>(this))
 
-	if(w->prev){
-		w->prev->next = w->next;
-	}else{
-		this->childrenHead = w->next;
-	}
-	if(w->next){
-		w->next->prev = w->prev;
-	}else{
-		this->childrenTail = w->prev;
+	if(w->parent.GetRef().operator->() != this){
+		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
 	
-	--this->numChildren;
+	this->children.erase(w->parentIter);
 	
 	w->parent.Reset();
 	w->SetHovered(false);
@@ -234,13 +216,13 @@ void Container::Remove(const ting::Ref<Widget>& w){
 //override
 ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
 //	TRACE_AND_LOG(<< "Container::FindChildByName(): enter" << std::endl)
-	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 //		TRACE_AND_LOG(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
-		if((*c)->Name() == name){
-			return *c;
+		if((*i)->Name() == name){
+			return *i;
 		}
 		
-		if(ting::Ref<Widget> r = (*c)->FindChildByName(name)){
+		if(ting::Ref<Widget> r = (*i)->FindChildByName(name)){
 			return r;
 		}
 	}

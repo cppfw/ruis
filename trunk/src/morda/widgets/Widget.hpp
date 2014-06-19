@@ -54,10 +54,12 @@ class Widget : virtual public ting::RefCounted{
 	friend class Container;
 	friend class App;
 	
-	ting::Ref<Widget> next, prev;//used to store widgets in Container as double-linked list
+public:
+	typedef std::list<ting::Ref<Widget> > T_ChildrenList;
 	
 private:
 	ting::WeakRef<Container> parent;
+	T_ChildrenList::iterator parentIter;
 	
 	ting::Inited<bool, false> isHovered;
 
@@ -125,22 +127,6 @@ public:
 	
 	const ting::WeakRef<const Container>& Parent()const throw(){
 		return this->parent;
-	}
-	
-	const ting::Ref<Widget>& Next()throw(){
-		return this->next;
-	}
-	
-	const ting::Ref<const Widget>& Next()const throw(){
-		return this->next;
-	}
-	
-	const ting::Ref<Widget>& Prev()throw(){
-		return this->prev;
-	}
-	
-	const ting::Ref<const Widget>& Prev()const throw(){
-		return this->prev;
 	}
 	
 	//NOTE: if only parent holds Ref then object may be deleted

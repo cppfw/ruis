@@ -19,11 +19,11 @@ FrameContainer::FrameContainer(const stob::Node& desc) :
 
 
 void FrameContainer::OnResize() {
-	for(const ting::Ref<Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LayoutDim dim;
 		Gravity gravity;
 
-		if(const stob::Node* layout = (*c)->GetProperty(Container::D_Layout())){
+		if(const stob::Node* layout = (*i)->GetProperty(Container::D_Layout())){
 			dim = LayoutDim::FromSTOB(layout->Child(LayoutDim::D_Dim()).node());
 			gravity = Gravity::FromLayout(*layout);
 		}else{
@@ -31,9 +31,9 @@ void FrameContainer::OnResize() {
 			gravity = Gravity::Default();
 		}
 		
-		(*c)->Resize(RoundVec(dim.ForWidget(*this, *(*c))));
+		(*i)->Resize(RoundVec(dim.ForWidget(*this, *(*i))));
 		
-		(*c)->MoveTo(RoundVec(gravity.PosForRect(*this, (*c)->Rect().d)));
+		(*i)->MoveTo(RoundVec(gravity.PosForRect(*this, (*i)->Rect().d)));
 	}
 }
 
@@ -42,19 +42,19 @@ void FrameContainer::OnResize() {
 morda::Vec2f FrameContainer::ComputeMinDim()const{
 	morda::Vec2f minDim(0);
 	
-	for(const ting::Ref<const Widget>* c = &this->Children(); *c; c = &(*c)->Next()){
-		morda::Vec2f dim = (*c)->GetMinDim();
-		if((*c)->Prop()){
-			LayoutDim ld = LayoutDim::FromPropLayout(*(*c)->Prop());
+	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+		morda::Vec2f dim = (*i)->GetMinDim();
+		if((*i)->Prop()){
+			LayoutDim ld = LayoutDim::FromPropLayout(*(*i)->Prop());
 			
 			//FRACTION is not allowed when computing min size. Change it to MIN.
-			for(unsigned i = 0; i != 2; ++i){
-				if(ld[i].unit == LayoutDim::FRACTION){
-					ld[i].unit = LayoutDim::MIN;
+			for(unsigned j = 0; j != 2; ++j){
+				if(ld[j].unit == LayoutDim::FRACTION){
+					ld[j].unit = LayoutDim::MIN;
 				}
 			}
 
-			dim = ld.ForWidget(*this, *(*c));
+			dim = ld.ForWidget(*this, *(*i));
 		}
 		
 		if(dim.x > minDim.x){
