@@ -51,6 +51,9 @@ private:
 	typedef std::map<unsigned, std::pair<ting::WeakRef<Widget>, unsigned> > T_MouseCaptureMap;
 	T_MouseCaptureMap mouseCaptureMap;
 	
+	//flag indicating that modifications to children list are blocked
+	ting::Inited<bool, false> isBlocked;
+	
 protected:
 	static const char* D_Layout()throw(){
 		return "layout";
