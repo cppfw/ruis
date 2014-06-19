@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <map>
+#include <list>
 
 #include "Widget.hpp"
 
@@ -44,8 +45,7 @@ class Layout;
 
 class Container : virtual public Widget{
 private:
-	ting::Ref<Widget> childrenHead, childrenTail;
-	ting::Inited<unsigned, 0> numChildren;
+	T_ChildrenList children;
 	
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<ting::WeakRef<Widget>, unsigned> > T_MouseCaptureMap;
@@ -89,16 +89,8 @@ public:
 	
 	ting::Ref<Widget> FindChildByName(const std::string& name)throw() OVERRIDE;
 	
-	unsigned NumChildren()const throw(){
-		return this->numChildren;
-	}
-	
-	const ting::Ref<Widget>& Children()throw(){
-		return this->childrenHead;
-	}
-	
-	const ting::Ref<const Widget>& Children()const throw(){
-		return this->childrenHead;
+	const T_ChildrenList& Children()const throw(){
+		return this->children;
 	}
 };
 

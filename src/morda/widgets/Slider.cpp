@@ -108,11 +108,12 @@ void Slider::OnResize(){
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
 	ting::util::ClampBottom(newSize[longIndex], this->GetMinDim()[longIndex]);
 	
-	this->Children()->Resize(newSize);
+	Widget& handle = *(*this->Children().begin());
+	handle.Resize(newSize);
 	
 	//move
 	{
-		float effectiveLength = this->Rect().d[longIndex] - this->Children()->Rect().d[longIndex];
+		float effectiveLength = this->Rect().d[longIndex] - handle.Rect().d[longIndex];
 		morda::Vec2f newPos(0);
 		if(effectiveLength > 0){
 			newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
@@ -121,7 +122,7 @@ void Slider::OnResize(){
 				newPos[longIndex] = effectiveLength - newPos[longIndex];
 			}
 		}
-		this->Children()->MoveTo(newPos);
+		handle.MoveTo(newPos);
 	}
 }
 
