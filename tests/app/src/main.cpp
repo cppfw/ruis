@@ -1,4 +1,3 @@
-
 #include "../../../src/morda/util/Quaternion.hpp"
 
 #include "../../../src/morda/App.hpp"
