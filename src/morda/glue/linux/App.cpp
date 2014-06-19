@@ -153,9 +153,7 @@ App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindow
 		d(xDisplay),
 		w(xWindow)
 {
-	char classname[] = "morda_app";
-	
-	this->xim = XOpenIM(this->d.d, NULL, classname, classname);
+	this->xim = XOpenIM(this->d.d, NULL, NULL, NULL);
 	if(this->xim == NULL){
 		throw morda::Exc("XOpenIM() failed");
 	}
@@ -165,8 +163,6 @@ App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindow
 			XNClientWindow, this->w.w,
 			XNFocusWindow, this->w.w,
 			XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
-			XNResourceName, classname,
-			XNResourceClass, classname,
 			NULL
 		);
 	if(this->xic == NULL){
