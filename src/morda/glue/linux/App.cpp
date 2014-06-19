@@ -697,8 +697,12 @@ void App::Exec(){
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)
 						//probably a WM_DELETE_WINDOW event
-						if(*XGetAtomName(this->xDisplay.d, event.xclient.message_type) == *"WM_PROTOCOLS"){
-							quitFlag = true;
+						{
+							char* name = XGetAtomName(this->xDisplay.d, event.xclient.message_type);
+							if(*name == *"WM_PROTOCOLS"){
+								quitFlag = true;
+							}
+							XFree(name);
 						}
 						break;
 					default:
