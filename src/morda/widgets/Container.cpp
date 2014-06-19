@@ -44,6 +44,8 @@ void Container::Render(const morda::Matr4f& matrix)const{
 bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
+	this->isBlocked = true;
+	
 	//check if mouse captured
 	{
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
@@ -68,9 +70,6 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 		}
 	}
 	
-	//original list of children may change during iterating.
-	//TODO: see same comment in OnMouseMove
-	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
 		if((*i)->IsHidden() || (*i)->IsDisabled()){
@@ -94,6 +93,9 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 			return true;
 		}
 	}
+	
+	this->isBlocked = false;
+	
 	return false;
 }
 
@@ -102,6 +104,8 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 //override
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
+	
+	this->isBlocked = true;
 	
 	//check if mouse captured
 	{
@@ -120,9 +124,6 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 			}
 		}
 	}
-	
-	//original list of children may change during iterating.
-	//TODO: forbid adding deleting widgets during this function call, add deferred add delete functions
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
@@ -146,6 +147,9 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 			return true;
 		}		
 	}
+	
+	this->isBlocked = false;
+	
 	return false;
 }
 
@@ -159,20 +163,24 @@ void Container::OnHoverChanged(){
 	}
 	
 	//un-hover all the children if container became un-hovered
+	this->isBlocked = true;
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		(*i)->SetHovered(false);
 	}
+	this->isBlocked = false;
 }
 
 
 
 void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
+	this->isBlocked = true;
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		if((*i)->NeedsRelayout()){
 			(*i)->Resize((*i)->Rect().d);
 		}
 	}
+	this->isBlocked = false;
 }
 
 
@@ -197,11 +205,16 @@ void Container::Add(const ting::Ref<Widget>& w){
 
 void Container::Remove(const ting::Ref<Widget>& w){
 	ASSERT(w.IsValid())
-	ASSERT(w->parent.GetRef() == ting::Ref<Container>(this))
-
+	
 	if(w->parent.GetRef().operator->() != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
+	
+	if(this->isBlocked){
+		throw morda::Exc("Container::Remove(): cannot remove child while iterating through children, try deferred removing.");
+	}
+	
+	ASSERT(w->parent.GetRef() == ting::Ref<Container>(this))
 	
 	this->children.erase(w->parentIter);
 	
