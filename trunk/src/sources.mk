@@ -26,6 +26,7 @@ sources += morda/util/util.cpp
 sources += morda/widgets/Button.cpp
 sources += morda/widgets/Container.cpp
 sources += morda/widgets/FrameContainer.cpp
+sources += morda/widgets/ImageLabel.cpp
 sources += morda/widgets/Label.cpp
 sources += morda/widgets/LinearContainer.cpp
 sources += morda/widgets/LinearWidget.cpp
