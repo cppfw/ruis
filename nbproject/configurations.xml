@@ -312,6 +312,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
@@ -599,6 +603,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
@@ -763,6 +771,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -998,6 +1010,10 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -1,6 +1,9 @@
 FrameContainer{
 	padding{10 20 30 40}
 
+	ImageLabel{
+		image{tex_sample}
+	}
 
 	U_SimpleWidget{
 		dim {300 300}
