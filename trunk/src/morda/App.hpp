@@ -393,8 +393,14 @@ private:
 	}
 	
 	
+private:
+	float dotsPerMm;
 	
 public:
+	
+	float DotsPerMm()const throw(){
+		return this->dotsPerMm;
+	}
 	
 };
 

@@ -51,6 +51,19 @@ morda::Vec2f Vec2fFromSTOB(const stob::Node* chain);
 
 
 /**
+ * @brief Parse distance Vec2f from STOB.
+ * Same as Vec2fFromSTOB but using ParseDistanceValue() to parse values.
+ * @param chain - chain of at least two nodes holding Vec2f values.
+ *                If there are less than 2 nodes in the chain then the rest of
+ *                vector components will be filled with latest parsed value.
+ *                If zero pointer is passed the resulting vector will be filled with zeros.
+ * @return parsed Vec2f.
+ */
+morda::Vec2f DistanceVec2fFromSTOB(const stob::Node* chain);
+
+
+
+/**
  * @brief Round each component of Vec2f.
  * Call ting::math::Round() for each component of given Vec2f.
  * @param v - Vec2f to round.
@@ -59,6 +72,17 @@ morda::Vec2f Vec2fFromSTOB(const stob::Node* chain);
 inline morda::Vec2f RoundVec(const Vec2f& v){
 	return Vec2f(ting::math::Round(v.x), ting::math::Round(v.y));
 }
+
+
+
+/**
+ * @brief Parse distance value.
+ * Parses value of 'pos' or 'dim' property from STOB.
+ * In case the value is given in millimeters it will do the conversion.
+ * @param n - stob node holding the value.
+ * @return Parsed value in pixels.
+ */
+float ParseDistanceValue(const stob::Node& n);
 
 
 

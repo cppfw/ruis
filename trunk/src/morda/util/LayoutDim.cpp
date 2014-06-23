@@ -1,7 +1,7 @@
 #include "LayoutDim.hpp"
 #include "../widgets/PaddedWidget.hpp"
 #include "../widgets/Container.hpp"
-
+#include "util.hpp"
 
 
 using namespace morda;
@@ -40,7 +40,7 @@ LayoutDim LayoutDim::FromSTOB(const stob::Node& node)throw(){
 			ret[i].value = n->AsFloat() / 100;
 		}else{
 			ret[i].unit = PIXEL;
-			ret[i].value = n->AsFloat();
+			ret[i].value = ParseDistanceValue(*n);
 		}
 		
 		n = n->Next();
