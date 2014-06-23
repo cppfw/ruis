@@ -20,7 +20,7 @@ FrameContainer{
 
 		prop{
 			layout{
-				dim{min 30}
+				dim{min 10mm}
 				gravity{0% 0%}
 			}
 		}

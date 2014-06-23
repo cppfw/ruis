@@ -16,13 +16,13 @@ Widget::Widget(const stob::Node& description){
 	}
 
 	if(const stob::Node* p = description.GetProperty("pos")){
-		this->rect.p = morda::Vec2fFromSTOB(p);
+		this->rect.p = morda::DistanceVec2fFromSTOB(p);
 	}else{
 		this->rect.p.SetTo(0);
 	}
 
 	if(const stob::Node* p = description.GetProperty("dim")){
-		this->rect.d = morda::Vec2fFromSTOB(p);
+		this->rect.d = morda::DistanceVec2fFromSTOB(p);
 	}else{
 		this->rect.d.SetTo(0);
 	}
