@@ -36,3 +36,6 @@ install:
 #install docs
 	@install -d $(DESTDIR)$(PREFIX)/share/doc/lib$(lib_name)
 	@install docs/doxygen/* $(DESTDIR)$(PREFIX)/share/doc/lib$(lib_name)
+#install pkg-config files
+	@install -d $(DESTDIR)$(PREFIX)/lib/pkgconfig
+	@install pkg-config/*.pc $(DESTDIR)$(PREFIX)/lib/pkgconfig
