@@ -41,6 +41,8 @@ class ImageLabel : public virtual Widget{
 	
 	ting::Ref<morda::ResTexture> tex;
 	
+	ting::Inited<bool, false> keepAspectRatio;
+	
 protected:
 	ImageLabel();
 	
@@ -59,6 +61,8 @@ public:
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 
 	morda::Vec2f ComputeMinDim()const OVERRIDE;
+	
+	morda::Vec2f Measure(const Vec2f& offer)const OVERRIDE;
 	
 private:
 

@@ -97,5 +97,5 @@ Vec2f LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const thr
 		}
 	}
 	
-	return ret;
+	return RoundVec(ret);
 }

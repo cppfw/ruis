@@ -31,9 +31,9 @@ void FrameContainer::OnResize() {
 			gravity = Gravity::Default();
 		}
 		
-		(*i)->Resize(RoundVec(dim.ForWidget(*this, *(*i))));
+		(*i)->Resize((*i)->Measure(dim.ForWidget(*this, *(*i))));
 		
-		(*i)->MoveTo(RoundVec(gravity.PosForRect(*this, (*i)->Rect().d)));
+		(*i)->MoveTo(gravity.PosForRect(*this, (*i)->Rect().d));
 	}
 }
 
@@ -47,14 +47,15 @@ morda::Vec2f FrameContainer::ComputeMinDim()const{
 		if((*i)->Prop()){
 			LayoutDim ld = LayoutDim::FromPropLayout(*(*i)->Prop());
 			
-			//FRACTION is not allowed when computing min size. Change it to MIN.
+			//FRACTION min size is 0.
 			for(unsigned j = 0; j != 2; ++j){
 				if(ld[j].unit == LayoutDim::FRACTION){
-					ld[j].unit = LayoutDim::MIN;
+					ld[j].unit = LayoutDim::PIXEL;
+					ld[j].value = 0;
 				}
 			}
 
-			dim = ld.ForWidget(*this, *(*i));
+			dim = (*i)->Measure(ld.ForWidget(*this, *(*i)));
 		}
 		
 		if(dim.x > minDim.x){
