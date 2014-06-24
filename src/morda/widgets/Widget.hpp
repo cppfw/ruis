@@ -161,6 +161,10 @@ public:
 	}
 
 	void Resize(const morda::Vec2f& newDims){
+		if(this->rect.d == newDims){
+			return;
+		}
+		
 		this->rect.d = newDims;
 		this->OnResize();//call virtual method
 		this->relayoutNeeded = false;

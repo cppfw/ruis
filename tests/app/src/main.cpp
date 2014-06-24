@@ -101,6 +101,10 @@ public:
 	}
 	
 	void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) OVERRIDE{
+		if(unicode.Size() == 0){
+			return;
+		}
+		
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 	}
 	
