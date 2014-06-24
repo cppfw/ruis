@@ -13,6 +13,10 @@ ImageLabel::ImageLabel(const stob::Node& desc) :
 		this->tex = App::Inst().ResMan().Load<ResTexture>(image->Value());
 		this->Resize(this->tex->Tex().Dim());
 	}
+	
+	if(const stob::Node* kar = desc.GetProperty("keepAspectRatio")){
+		this->keepAspectRatio = kar->AsBool();
+	}
 }
 
 void ImageLabel::Render(const morda::Matr4f& matrix) const{
@@ -36,3 +40,21 @@ morda::Vec2f ImageLabel::ComputeMinDim()const{
 	}
 	return this->tex->Tex().Dim();
 }
+
+
+morda::Vec2f ImageLabel::Measure(const Vec2f& offer) const {
+	if(!this->keepAspectRatio || !this->tex){
+		return offer;
+	}
+	
+	float texRatio = this->tex->Tex().Dim().x / this->tex->Tex().Dim().y;
+	
+	float offerRatio = offer.x / offer.y;
+	
+	if(texRatio <= offerRatio){
+		return Vec2f(offer.y * texRatio, offer.y);
+	}else{
+		return Vec2f(offer.x, offer.x / texRatio);
+	}
+}
+

@@ -3,6 +3,12 @@ FrameContainer{
 
 	ImageLabel{
 		image{tex_sample}
+
+		keepAspectRatio{true}
+
+		prop{layout{
+			dim{min 100%}
+		}}
 	}
 
 	U_SimpleWidget{

@@ -21,7 +21,7 @@ Vec2f Gravity::PosForRect(const PaddedWidget& w, const Vec2f& dim)const throw(){
 
 
 Vec2f Gravity::PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const throw(){
-	return padding.lb + (parentDim - padding.lb - padding.rt - dim).CompMul(*this);
+	return RoundVec(padding.lb + (parentDim - padding.lb - padding.rt - dim).CompMul(*this));
 }
 
 
