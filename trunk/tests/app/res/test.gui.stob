@@ -58,13 +58,11 @@ FrameContainer{
 
 		clip {true}
 
-		prop{
-			layout{
+		prop{layout{
 				dim {min min}
 				weight {2}
 				gravity {50% 0%}
-			}
-		}
+		}}
 
 		Label{
 			pos {0 0}
@@ -123,6 +121,16 @@ FrameContainer{
 			dim {100% 50%}
 			gravity {50% 100%}
 		}}
+
+		ImageLabel{
+			image{tex_sample}
+
+			keepAspectRatio{true}
+
+			prop{layout{
+				dim{min 100%}
+			}}
+		}
 
 		Slider{
 //			vertical{false}
