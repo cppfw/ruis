@@ -33,7 +33,10 @@ public class MordaActivity extends NativeActivity {
 	}
 	
 	public float getDotsPerCm(){
-		return 72.0f / 2.54f;
+		Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		DisplayMetrics m = new DisplayMetrics();
+		d.getMetrics(m);
+		return ((m.xdpi + m.ydpi) / 2) / 2.54f;
 	}
 	
 	private static native void handleCharacterStringInput(String str);
