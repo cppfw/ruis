@@ -94,7 +94,7 @@ class JavaFunctionsWrapper{
 	
 	jmethodID resolveKeycodeUnicodeMeth;
 	
-	jmethodID getDotsPerMmMeth;
+	jmethodID getDotsPerCmMeth;
 	
 	jmethodID showVirtualKeyboardMeth;
 	jmethodID hideVirtualKeyboardMeth;
@@ -109,7 +109,7 @@ protected:
 		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
 		ASSERT(this->resolveKeycodeUnicodeMeth)
 		
-		this->getDotsPerMmMeth = this->env->GetMethodID(this->clazz, "getDotsPerMm", "()F");
+		this->getDotsPerCmMeth = this->env->GetMethodID(this->clazz, "getDotsPerCm", "()F");
 		
 		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
 		ASSERT(this->showVirtualKeyboardMeth)
@@ -133,8 +133,8 @@ public:
 		return ting::u32(this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode)));
 	}
 	
-	float GetDotsPerMm(){
-		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerMmMeth));
+	float GetDotsPerCm(){
+		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerCmMeth));
 	}
 	
 	void HideVirtualKeyboard(){
@@ -795,7 +795,7 @@ App::App(const WindowParams& requestedWindowParams) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 
 	ASSERT(javaFunctionsWrapper)
-	this->dotsPerMm = javaFunctionsWrapper->GetDotsPerMm();
+	this->dotsPerCm = javaFunctionsWrapper->GetDotsPerCm();
 	
 	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
 }

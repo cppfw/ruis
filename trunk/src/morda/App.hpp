@@ -394,12 +394,12 @@ private:
 	
 	
 private:
-	float dotsPerMm;
+	float dotsPerCm;
 	
 public:
 	
-	float DotsPerMm()const throw(){
-		return this->dotsPerMm;
+	float DotsPerCm()const throw(){
+		return this->dotsPerCm;
 	}
 	
 };
