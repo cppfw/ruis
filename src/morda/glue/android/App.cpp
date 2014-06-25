@@ -583,7 +583,7 @@ key::Key GetKeyFromKeyEvent(AInputEvent& event)throw(){
 struct UnicodeResolver{
 	ting::Array<ting::u32> chars;
 
-	ting::Array<ting::u32> Resolve(){
+	ting::Array<ting::u32> Resolve()const{
 		return this->chars;
 	}
 };
