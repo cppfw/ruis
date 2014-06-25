@@ -52,7 +52,7 @@ float morda::ParseDistanceValue(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
 		float ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
-		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
+//		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
 		return ret;
 	}
 	

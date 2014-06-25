@@ -190,12 +190,11 @@ App::App(const WindowParams& requestedWindowParams) :
 		xInputMethod(xDisplay, xWindow),
 		curWinRect(0, 0, -1, -1)
 {
-//	{
-//		int scrNum = 0;
-//		this->dotsPerCm = ((double(DisplayWidth(this->xDisplay.d, scrNum)) / (double(DisplayWidthMM(this->xDisplay.d, scrNum))) / 10.0)
-//				+ (double(DisplayHeight(this->xDisplay.d, scrNum)) / (double(DisplayHeightMM(this->xDisplay.d, scrNum)) / 10.0))) / 2;
-//	}
-	this->dotsPerCm = 72.0f / 2.54f;
+	{
+		int scrNum = 0;
+		this->dotsPerCm = ((double(DisplayWidth(this->xDisplay.d, scrNum)) / (double(DisplayWidthMM(this->xDisplay.d, scrNum))/ 10.0))
+				+ (double(DisplayHeight(this->xDisplay.d, scrNum)) / (double(DisplayHeightMM(this->xDisplay.d, scrNum)) / 10.0))) / 2;
+	}
 	
 #ifdef DEBUG
 	//print GLX version
