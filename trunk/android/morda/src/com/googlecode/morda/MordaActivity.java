@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.content.Context;
 
 
 public class MordaActivity extends NativeActivity {
