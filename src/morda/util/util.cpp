@@ -50,7 +50,7 @@ morda::Vec2f morda::DistanceVec2fFromSTOB(const stob::Node* chain){
 float morda::ParseDistanceValue(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
-		return ting::math::Round(n.AsFloat() * App::Inst().DotsPerMm());
+		return ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
 	}
 	
 	return n.AsFloat();
