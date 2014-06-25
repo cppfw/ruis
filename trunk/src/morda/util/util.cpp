@@ -3,6 +3,7 @@
 #include "../App.hpp"
 
 #include <ting/math.hpp>
+#include <ting/debug.hpp>
 
 
 using namespace morda;
@@ -50,7 +51,9 @@ morda::Vec2f morda::DistanceVec2fFromSTOB(const stob::Node* chain){
 float morda::ParseDistanceValue(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
-		return ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
+		float ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
+		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
+		return ret;
 	}
 	
 	return n.AsFloat();
