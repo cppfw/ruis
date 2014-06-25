@@ -94,6 +94,8 @@ class JavaFunctionsWrapper{
 	
 	jmethodID resolveKeycodeUnicodeMeth;
 	
+	jmethodID getDotsPerMmMeth;
+	
 	jmethodID showVirtualKeyboardMeth;
 	jmethodID hideVirtualKeyboardMeth;
 protected:
@@ -106,6 +108,8 @@ protected:
 		
 		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
 		ASSERT(this->resolveKeycodeUnicodeMeth)
+		
+		this->getDotsPerMmMeth = this->env->GetMethodID(this->clazz, "getDotsPerMm", "()F");
 		
 		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
 		ASSERT(this->showVirtualKeyboardMeth)
@@ -125,8 +129,12 @@ public:
 	~JavaFunctionsWrapper()throw(){
 	}
 	
-	jint ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
-		return this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode));
+	ting::u32 ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+		return ting::u32(this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode)));
+	}
+	
+	float GetDotsPerMm(){
+		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerMmMeth));
 	}
 	
 	void HideVirtualKeyboard(){
@@ -153,7 +161,7 @@ public:
 	ting::Array<ting::u32> Resolve()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
-		jint res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
+		ting::u32 res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
@@ -161,7 +169,7 @@ public:
 		}
 		
 		ting::Array<ting::u32> ret(1);
-		ret[0] = ting::u32(res);
+		ret[0] = res;
 		
 		return ret;
 	}
@@ -786,6 +794,9 @@ App::App(const WindowParams& requestedWindowParams) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 
+	ASSERT(javaFunctionsWrapper)
+	this->dotsPerMm = javaFunctionsWrapper->GetDotsPerMm();
+	
 	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
 }
 

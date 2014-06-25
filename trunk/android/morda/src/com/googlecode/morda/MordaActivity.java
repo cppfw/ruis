@@ -32,6 +32,10 @@ public class MordaActivity extends NativeActivity {
 		return this.curCharMap.get(keyCode, metaState);
 	}
 	
+	public float getDotsPerMm(){
+		return 72.0f / 25.4f;
+	}
+	
 	private static native void handleCharacterStringInput(String str);
 	
 	@Override
