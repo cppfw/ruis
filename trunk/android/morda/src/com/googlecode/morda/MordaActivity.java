@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.util.DisplayMetrics;
+import android.view.Display;
 
 
 public class MordaActivity extends NativeActivity {
@@ -36,7 +38,7 @@ public class MordaActivity extends NativeActivity {
 		Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics m = new DisplayMetrics();
 		d.getMetrics(m);
-		return ((m.xdpi + m.ydpi) / 2) / 2.54f;
+		return ((m.xdpi + m.ydpi) / 2.0f) / 2.54f;
 	}
 	
 	private static native void handleCharacterStringInput(String str);
