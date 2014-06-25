@@ -792,6 +792,7 @@ App::App(const WindowParams& requestedWindowParams) :
 
 	ASSERT(javaFunctionsWrapper)
 	this->dotsPerCm = javaFunctionsWrapper->GetDotsPerCm();
+	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->dotsPerCm << std::endl)
 	
 	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
 }
