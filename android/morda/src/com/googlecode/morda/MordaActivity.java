@@ -40,7 +40,7 @@ public class MordaActivity extends NativeActivity {
 		Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics m = new DisplayMetrics();
 		d.getMetrics(m);
-		Log.d(LOGTAG, "getDotsPerCm(): xdpi = " + m.xdpi + " ydpi = " + m.ydpi);
+		Log.d(LOGTAG, "getDotsPerCm(): xdpi = " + m.xdpi + " ydpi = " + m.ydpi + " density = " + m.density);
 		return ((m.xdpi + m.ydpi) / 2.0f) / 2.54f;
 	}
 	
