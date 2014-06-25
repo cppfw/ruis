@@ -601,11 +601,7 @@ void HandleCharacterInputEvent(ting::Array<ting::u32> chars){
 	resolver.chars = chars;
 	
 	//notify about input event
-	morda::App::Inst().HandleKeyEvent<true, UnicodeResolver>(
-			true,
-			key::SPACE,//will be ignored
-			resolver
-		);
+	morda::App::Inst().HandleCharacterInput<UnicodeResolver>(resolver);
 }
 
 }//~namespace
