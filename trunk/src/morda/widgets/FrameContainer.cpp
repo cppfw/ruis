@@ -23,7 +23,7 @@ void FrameContainer::OnResize() {
 		LayoutDim dim;
 		Gravity gravity;
 
-		if(const stob::Node* layout = (*i)->GetProperty(Container::D_Layout())){
+		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 			dim = LayoutDim::FromSTOB(layout->Child(LayoutDim::D_Dim()).node());
 			gravity = Gravity::FromLayout(*layout);
 		}else{
