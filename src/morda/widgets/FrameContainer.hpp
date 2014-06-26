@@ -38,6 +38,7 @@ namespace morda{
 
 
 
+//TODO: make Gravitating
 class FrameContainer :
 		public Container,
 		public PaddedWidget

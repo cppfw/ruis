@@ -52,7 +52,7 @@ void LinearContainer::OnResize(){
 		for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			ASSERT(infoArray.Overlaps(info))
 
-			const stob::Node* layout = (*i)->GetProperty(Container::D_Layout());
+			const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout());
 
 			if(!layout){
 				info->dim = (*i)->GetMinDim();

@@ -97,8 +97,7 @@ public:
 		return this->prop.operator->();
 	}
 	
-	//TODO: rename method to avoid confusion with Node::GetProperty()
-	const stob::Node* GetProperty(const char* propName)const throw(){
+	const stob::Node* GetPropertyNode(const char* propName)const throw(){
 		if(!this->Prop()){
 			return 0;
 		}

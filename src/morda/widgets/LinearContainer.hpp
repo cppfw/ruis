@@ -39,6 +39,7 @@ THE SOFTWARE. */
 namespace morda{
 
 
+//TODO: make gravitating
 class LinearContainer :
 		public Container,
 		public PaddedWidget,
