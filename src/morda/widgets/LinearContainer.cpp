@@ -31,7 +31,8 @@ LinearContainer::LinearContainer(const stob::Node& desc) :
 		Widget(desc),
 		Container(desc),
 		PaddedWidget(desc),
-		LinearWidget(desc)
+		LinearWidget(desc),
+		GravitatingWidget(desc)
 {}
 
 
@@ -52,14 +53,7 @@ void LinearContainer::OnResize(){
 		for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			ASSERT(infoArray.Overlaps(info))
 
-			const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout());
-
-			if(!layout){
-				info->dim = (*i)->GetMinDim();
-				info->weight = 0;
-				info->gravity = Gravity::Default();
-				info->margins = LeftBottomRightTop::Default();
-			}else{
+			if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 				if(const stob::Node* weight = layout->GetProperty(D_Weight)){
 					info->weight = weight->AsFloat();
 					netWeight += info->weight;
@@ -70,13 +64,22 @@ void LinearContainer::OnResize(){
 				LayoutDim dim = LayoutDim::FromLayout(*layout);
 				info->dim = (*i)->Measure(dim.ForWidget(*this, *(*i)));
 				
-				info->gravity = Gravity::FromLayout(*layout);
+				if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
+					info->gravity = Gravity::FromSTOB(*g);
+				}else{
+					info->gravity = this->gravity();
+				}
 				
 				if(const stob::Node* margins = layout->Child(D_Margins).node()){
 					info->margins = LeftBottomRightTop::FromSTOB(*margins);
 				}else{
 					info->margins = LeftBottomRightTop::Default();
 				}
+			}else{
+				info->dim = (*i)->GetMinDim();
+				info->weight = 0;
+				info->gravity = this->gravity();
+				info->margins = LeftBottomRightTop::Default();
 			}
 			
 			if(info != infoArray.Begin()){//if not first child

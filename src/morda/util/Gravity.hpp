@@ -120,6 +120,10 @@ public:
 	static Gravity Default()throw(){
 		return Gravity(Vec2f(0.5f));
 	}
+	
+	static const char* D_Gravity()throw(){
+		return "gravity";
+	}
 };
 
 

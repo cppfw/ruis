@@ -6,14 +6,6 @@ using namespace morda;
 
 
 
-namespace{
-
-const char* D_Gravity = "gravity";
-
-}//~namespace
-
-
-
 Vec2f Gravity::PosForRect(const PaddedWidget& w, const Vec2f& dim)const throw(){
 	return PosForRect(w.Rect().d, w.Padding(), dim);
 }
@@ -55,7 +47,7 @@ Gravity Gravity::FromSTOB(const stob::Node& gravity)throw(){
 
 //static
 Gravity Gravity::FromLayout(const stob::Node& layout)throw(){
-	const stob::Node* gravity = layout.Child(D_Gravity).node();
+	const stob::Node* gravity = layout.Child(D_Gravity()).node();
 	if(!gravity){
 		return Gravity::Default();
 	}

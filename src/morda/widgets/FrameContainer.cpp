@@ -13,7 +13,8 @@ using namespace morda;
 FrameContainer::FrameContainer(const stob::Node& desc) :
 		Widget(desc),
 		Container(desc),
-		PaddedWidget(desc)
+		PaddedWidget(desc),
+		GravitatingWidget(desc)
 {}
 
 
@@ -25,10 +26,15 @@ void FrameContainer::OnResize() {
 
 		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 			dim = LayoutDim::FromSTOB(layout->Child(LayoutDim::D_Dim()).node());
-			gravity = Gravity::FromLayout(*layout);
+			
+			if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
+				gravity = Gravity::FromSTOB(*g);
+			}else{
+				gravity = this->gravity();
+			}
 		}else{
 			dim = LayoutDim::Default();
-			gravity = Gravity::Default();
+			gravity = this->gravity();
 		}
 		
 		(*i)->Resize((*i)->Measure(dim.ForWidget(*this, *(*i))));

@@ -32,6 +32,7 @@ THE SOFTWARE. */
 #include "Container.hpp"
 #include "PaddedWidget.hpp"
 #include "LinearWidget.hpp"
+#include "GravitatingWidget.hpp"
 
 #include <ting/types.hpp>
 
@@ -39,11 +40,12 @@ THE SOFTWARE. */
 namespace morda{
 
 
-//TODO: make gravitating
+
 class LinearContainer :
 		public Container,
 		public PaddedWidget,
-		public LinearWidget
+		public LinearWidget,
+		public GravitatingWidget
 {
 	LinearContainer(const LinearContainer&);
 	LinearContainer& operator=(const LinearContainer&);
