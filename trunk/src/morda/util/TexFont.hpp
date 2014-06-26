@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2010-2012 Ivan Gagis
+Copyright (c) 2010-2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -65,6 +65,7 @@ namespace morda{
 
 
 
+//TODO: make Font interface
 class TexFont{
 	struct Glyph{
 		ting::StaticBuffer<morda::Vec2f, 4> verts;
@@ -96,60 +97,60 @@ public:
 
 	void Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsigned outline = 0);
 
-	inline float FontSize()const{
+	float FontSize()const{
 		return this->fontSize;
 	}
 
 	//renders the string, returns resulting string advance
-	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
+	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
 		return this->RenderStringInternal(shader, matrix, s);
 	}
 
-	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::wstring& s)const{
+	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::wstring& s)const{
 		return this->RenderStringInternal(shader, matrix, s.c_str());
 	}
 
-	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
+	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
 		return this->RenderStringInternal(shader, matrix, s);
 	}
 
-	inline float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::string& s)const{
+	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::string& s)const{
 		return this->RenderStringInternal(shader, matrix, s.c_str());
 	}
 
-	inline const morda::Rect2f& FontBoundingBox()const{
+	const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
-	inline float StringAdvance(const wchar_t* s)const{
+	float StringAdvance(const wchar_t* s)const{
 		return this->StringAdvanceInternal(s);
 	}
 	
-	inline float StringAdvance(const std::wstring& s)const{
+	float StringAdvance(const std::wstring& s)const{
 		return this->StringAdvanceInternal(s.c_str());
 	}
 	
-	inline float StringAdvance(const char* s)const{
+	float StringAdvance(const char* s)const{
 		return this->StringAdvanceInternal(s);
 	}
 	
-	inline float StringAdvance(const std::string& s)const{
+	float StringAdvance(const std::string& s)const{
 		return this->StringAdvanceInternal(s.c_str());
 	}
 
-	inline morda::Rect2f StringBoundingBox(const wchar_t* s)const{
+	morda::Rect2f StringBoundingBox(const wchar_t* s)const{
 		return this->StringBoundingBoxInternal(s);
 	}
 	
-	inline morda::Rect2f StringBoundingBox(const std::wstring& s)const{
+	morda::Rect2f StringBoundingBox(const std::wstring& s)const{
 		return this->StringBoundingBoxInternal(s.c_str());
 	}
 
-	inline morda::Rect2f StringBoundingBox(const char* s)const{
+	morda::Rect2f StringBoundingBox(const char* s)const{
 		return this->StringBoundingBoxInternal(s);
 	}
 
-	inline morda::Rect2f StringBoundingBox(const std::string& s)const{
+	morda::Rect2f StringBoundingBox(const std::string& s)const{
 		return this->StringBoundingBoxInternal(s.c_str());
 	}
 
