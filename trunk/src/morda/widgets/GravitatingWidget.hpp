@@ -39,14 +39,14 @@ namespace morda{
 
 
 class GravitatingWidget : public virtual Widget{
-	Gravity gravity;
+	Gravity widgetGravity;
 protected:
 
 	GravitatingWidget() : Widget(0){}
 	
 	GravitatingWidget(Gravity gravity) :
 			Widget(0),
-			gravity(gravity)
+			widgetGravity(gravity)
 	{}
 	
 	GravitatingWidget(const stob::Node& desc) :
@@ -55,12 +55,12 @@ protected:
 		this->SetGravity(Gravity::FromLayout(desc));
 	}
 public:
-	inline const Gravity& GetGravity()const throw(){
-		return this->gravity;
+	const Gravity& gravity()const throw(){
+		return this->widgetGravity;
 	}
 	
-	inline void SetGravity(Gravity gravity){
-		this->gravity = gravity;
+	void SetGravity(Gravity gravity){
+		this->widgetGravity = gravity;
 		this->SetRelayoutNeeded();
 	}
 };

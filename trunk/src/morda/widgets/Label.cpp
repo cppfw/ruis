@@ -55,7 +55,7 @@ morda::Vec2f Label::ComputeMinDim()const throw(){
 
 //override
 void Label::OnResize(){
-	Vec2f p = this->GetGravity().PosForRect(*this, this->bb.d);
+	Vec2f p = this->gravity().PosForRect(*this, this->bb.d);
 	
 	this->pivot = p - this->bb.p;
 	

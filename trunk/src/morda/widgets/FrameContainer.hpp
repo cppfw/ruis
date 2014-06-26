@@ -32,16 +32,17 @@ THE SOFTWARE. */
 
 #include "Container.hpp"
 #include "PaddedWidget.hpp"
+#include "GravitatingWidget.hpp"
 
 
 namespace morda{
 
 
 
-//TODO: make Gravitating
 class FrameContainer :
 		public Container,
-		public PaddedWidget
+		public PaddedWidget,
+		public GravitatingWidget
 {
 	
 	FrameContainer(const FrameContainer&);
