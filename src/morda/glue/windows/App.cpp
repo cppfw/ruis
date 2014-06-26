@@ -620,7 +620,6 @@ App::App(const WindowParams& requestedWindowParams) :
 		glContext(deviceContext),
 		curWinRect(0, 0, -1, -1)
 {
-	SetProcessDPIAware(); //TODO: use SetProcessDpiAwareness() instead?
 	this->dotsPerCm = (float(GetDeviceCaps(this->deviceContext.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, HORZSIZE))
 			+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
 	
