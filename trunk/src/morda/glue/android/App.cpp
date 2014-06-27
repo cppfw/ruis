@@ -214,9 +214,11 @@ public:
 	void Clear(){
 		eventfd_t value;
 		if(eventfd_read(this->eventFD, &value) < 0){
-			throw ting::Exc("FDFlag::Clear(): eventfd_read() failed");
+			if(errno == EAGAIN){
+				return;
+			}
+			ASSERT(false)
 		}
-		ASSERT(value == 1)
 	}
 } fdFlag;
 
@@ -995,8 +997,7 @@ void HandleInputEvents(){
 
 	app.Render();
 
-	ting::u32 dt = app.updater.Update();
-	timer.Arm(dt == 0 ? 1 : dt);	
+	fdFlag.Set();
 }
 
 
@@ -1115,6 +1116,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 	if(dt == 0){
 		//do not arm the timer and do not clear the flag
 	}else{
+		timer.Disarm();//if we got here not by timer, disarm existing one before clearing the flag
 		fdFlag.Clear();
 		timer.Arm(dt);
 	}
@@ -1158,7 +1160,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				0
 			);
 		
-		timer.Arm(1);//this is to call the Update() for the first time if there were any Updateables started during creating App object
+		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating App object
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
 		throw;
