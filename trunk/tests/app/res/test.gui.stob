@@ -4,10 +4,11 @@ FrameContainer{
 	ImageLabel{
 		image{tex_sample}
 
-		keepAspectRatio{true}
+//		keepAspectRatio{true}
 
 		prop{layout{
-			dim{min 100%}
+			dim{50 84}
+			gravity{50% 0%}
 		}}
 	}
 
