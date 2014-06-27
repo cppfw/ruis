@@ -263,14 +263,14 @@ public:
 		int res =
 #endif
 		sigaction(SIGALRM, &sa, 0);
-		ASSERT(res == 0)
+		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 
 		//delete timer
 #ifdef DEBUG
 		res =
 #endif
 		timer_delete(this->timer);
-		ASSERT(res == 0)
+		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 	}
 
 	//if timer is already armed, it will re-set the expiration time
@@ -285,7 +285,7 @@ public:
 		int res =
 #endif
 		timer_settime(this->timer, 0, &ts, 0);
-		ASSERT(res == 0)
+		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 	}
 
 	//returns true if timer was disarmed
@@ -296,11 +296,10 @@ public:
 		newts.it_value.tv_nsec = 0;
 		newts.it_value.tv_sec = 0;
 
-#ifdef DEBUG
-		int res =
-#endif
-		timer_settime(this->timer, 0, &newts, &oldts);
-		ASSERT(res == 0)
+		int res = timer_settime(this->timer, 0, &newts, &oldts);
+		if(res != 0){
+			ASSERT_INFO(false, "errno = " << errno << " res = " << res)
+		}
 
 		if(oldts.it_value.tv_nsec != 0 || oldts.it_value.tv_sec != 0){
 			return true;
@@ -1116,7 +1115,6 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 	if(dt == 0){
 		//do not arm the timer and do not clear the flag
 	}else{
-		timer.Disarm();//if we got here not by timer, disarm existing one before clearing the flag
 		fdFlag.Clear();
 		timer.Arm(dt);
 	}
