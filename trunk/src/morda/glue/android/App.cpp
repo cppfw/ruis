@@ -14,6 +14,7 @@
 
 #include <time.h>
 #include <signal.h>
+#include <sys/eventfd.h>
 
 #include "AssetFile.hpp"
 #include "../../App.hpp"
@@ -184,40 +185,38 @@ public:
 //================
 
 class FDFlag{
-	//use pipe to implement file descriptor flag which will be risen upon timer expiration
-	//TODO: use eventfd when it is available in Android NDK
-	int pipeEnds[2];
+	int eventFD;
 public:
 	FDFlag(){
-		if(::pipe(&this->pipeEnds[0]) < 0){
+		this->eventFD = eventfd(0, EFD_NONBLOCK);
+		if(this->eventFD < 0){
 			std::stringstream ss;
-			ss << "FDFlag::FDFlag(): could not create pipe (*nix) for implementing Waitable,"
+			ss << "FDFlag::FDFlag(): could not create eventFD (*nix) for implementing Waitable,"
 					<< " error code = " << errno << ": " << strerror(errno);
 			throw ting::Exc(ss.str().c_str());
 		}
 	}
 
 	~FDFlag()throw(){
-		close(this->pipeEnds[0]);
-		close(this->pipeEnds[1]);
+		close(this->eventFD);
 	}
 
 	inline int GetFD()throw(){
-		return this->pipeEnds[0];
+		return this->eventFD;
 	}
 
 	inline void Set(){
-		ting::u8 oneByteBuf[1];
-		if(write(this->pipeEnds[1], oneByteBuf, 1) != 1){
+		if(eventfd_write(this->eventFD, 1) < 0){
 			ASSERT(false)
 		}
 	}
 
 	inline void Clear(){
-		ting::u8 oneByteBuf[1];
-		if(read(this->pipeEnds[0], oneByteBuf, 1) != 1){
-			throw ting::Exc("Queue::Wait(): read() failed");
+		eventfd_t value;
+		if(eventfd_read(this->eventFD, &value) < 0){
+			throw ting::Exc("FDFlag::Clear(): eventfd_read() failed");
 		}
+		ASSERT(value == 1)
 	}
 } fdFlag;
 
