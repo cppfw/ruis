@@ -201,17 +201,17 @@ public:
 		close(this->eventFD);
 	}
 
-	inline int GetFD()throw(){
+	int GetFD()throw(){
 		return this->eventFD;
 	}
 
-	inline void Set(){
+	void Set(){
 		if(eventfd_write(this->eventFD, 1) < 0){
 			ASSERT(false)
 		}
 	}
 
-	inline void Clear(){
+	void Clear(){
 		eventfd_t value;
 		if(eventfd_read(this->eventFD, &value) < 0){
 			throw ting::Exc("FDFlag::Clear(): eventfd_read() failed");
