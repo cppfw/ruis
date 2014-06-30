@@ -40,22 +40,19 @@ THE SOFTWARE. */
 
 #include "config.hpp"
 
+
 #ifdef M_MORDA_OGLES2
 #	include <GLES2/gl2.h>
 #	include <EGL/egl.h>
-#elif M_OS == M_OS_LINUX
+#else
 #	include <GL/glew.h>
 #	include <GL/glx.h>
-
-#	include <ting/mt/Queue.hpp>
-#elif M_OS == M_OS_WINDOWS
-#elif M_OS == M_OS_MACOSX
-#else
-#	error "unknown os"
 #endif
 
+#if M_OS == M_OS_LINUX
+#	include <ting/mt/Queue.hpp>
+#endif
 
-#include "util/Vector2.hpp"
 
 #include "Exc.hpp"
 #include "widgets/Widget.hpp"
@@ -63,6 +60,7 @@ THE SOFTWARE. */
 #include "Updateable.hpp"
 #include "util/keycodes.hpp"
 #include "util/CharInputFocusable.hpp"
+#include "util/Vector2.hpp"
 #include "resman/ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
