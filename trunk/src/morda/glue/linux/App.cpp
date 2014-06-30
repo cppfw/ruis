@@ -601,6 +601,12 @@ public:
 
 
 
+void App::PostToUIThread(ting::Ptr<ting::mt::Message> msg){
+	this->uiQueue.PushMessage(msg);
+}
+
+
+
 void App::Exec(){
 	
 	XEventWaitable xew(this->xDisplay.d);
@@ -608,7 +614,7 @@ void App::Exec(){
 	ting::WaitSet waitSet(2);
 	
 	waitSet.Add(xew, ting::Waitable::READ);
-//	waitSet.Add(this->queue, ting::Waitable::READ);
+	waitSet.Add(this->uiQueue, ting::Waitable::READ);
 	
 	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
 	//So, render everything for the first time.
@@ -618,6 +624,13 @@ void App::Exec(){
 	
 	while(!quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
+		
+		if(this->uiQueue.CanRead()){
+			while(ting::Ptr<ting::mt::Message> m = this->uiQueue.PeekMsg()){
+				m->Handle();
+			}
+			ASSERT(!this->uiQueue.CanRead())
+		}
 		
 		if(xew.CanRead()){
 			xew.ClearCanReadFlag();
@@ -717,6 +730,7 @@ void App::Exec(){
 		this->Render();
 	}//~while(!quitFlag)
 	
+	waitSet.Remove(this->uiQueue);
 	waitSet.Remove(xew);
 }
 
