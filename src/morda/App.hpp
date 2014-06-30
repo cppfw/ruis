@@ -107,9 +107,7 @@ public:
 
 
 #ifdef M_MORDA_OGLES2
-
 private:
-
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -136,23 +134,31 @@ private:
 		~EGLContextWrapper()throw();
 	} eglContext;
 
-#	ifdef __ANDROID__
+	void SwapGLBuffers(){
+		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
+	}
+#endif
+	
+#if M_OS == M_OS_LINUX
 
+private:
+	ting::mt::Queue uiQueue;
+public:
+	void PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg){
+		this->uiQueue.PushMessage(msg);
+	}
+	
+private:
+#	if M_OS_NAME == M_OS_NAME_ANDROID
 	friend void UpdateWindowRect(App& app, const morda::Rect2f& rect);
 	friend void Render(App& app);
 	friend ting::u32 Update(App& app);
 	friend void HandleInputEvents();
 	friend void HandleCharacterInputEvent(ting::Array<ting::u32> chars);
-
-#	endif
-
-	void SwapGLBuffers(){
-		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
-	}	
+	friend void HandleQueueMessages(App& app);
+	friend int GetUIQueueHandle(App& app);
 	
-#elif M_OS == M_OS_LINUX
-
-private:
+#	else
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
@@ -209,8 +215,7 @@ private:
 	void SwapGLBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
-
-	ting::mt::Queue uiQueue;
+#	endif
 	
 #elif M_OS == M_OS_WINDOWS
 	
@@ -406,9 +411,6 @@ public:
 	float DotsPerCm()const throw(){
 		return this->dotsPerCm;
 	}
-	
-	
-	void PostToUIThread(ting::Ptr<ting::mt::Message> msg);
 };
 
 

@@ -11,6 +11,7 @@
 #include <ting/Array.hpp>
 #include <ting/types.hpp>
 #include <ting/utf8.hpp>
+#include <ting/mt/Queue.hpp>
 
 #include <time.h>
 #include <signal.h>
@@ -842,6 +843,20 @@ inline ting::u32 Update(App& app){
 
 
 
+inline void HandleQueueMessages(App& app){
+	while(ting::Ptr<ting::mt::Message> m = app.uiQueue.PeekMsg()){
+		m->Handle();
+	}
+}
+
+
+
+inline int GetUIQueueHandle(App& app){
+	return app.uiQueue.GetHandle();
+}
+
+
+
 void HandleInputEvents(){
 	morda::App& app = morda::App::Inst();
 
@@ -1128,6 +1143,14 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 
 
+int OnQueueHasMessages(int fd, int events, void* data){
+	HandleQueueMessages(App::Inst());
+	
+	return 1; //1 means do not remove descriptor from looper
+}
+
+
+
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 
@@ -1149,12 +1172,24 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//save current configuration in global variable
 		curConfig = cfg;
 
+		ALooper* looper = ALooper_prepare(0);
+		ASSERT(looper)
+		
 		ALooper_addFd(
-				ALooper_prepare(0),
+				looper,
 				fdFlag.GetFD(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnUpdateTimerExpired,
+				0
+			);
+		
+		ALooper_addFd(
+				looper,
+				GetUIQueueHandle(*activity->instance),
+				ALOOPER_POLL_CALLBACK,
+				ALOOPER_EVENT_INPUT,
+				&OnQueueHasMessages,
 				0
 			);
 		
