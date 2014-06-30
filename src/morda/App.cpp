@@ -50,7 +50,7 @@ void App::Render(){
 	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);
 	
 	if(this->rootWidget->relayoutNeeded){
-		this->rootWidget->Resize(this->curWinRect.d);
+		this->rootWidget->OnResize();
 	}
 	
 	this->rootWidget->RenderInternal(m);

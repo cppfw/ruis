@@ -36,6 +36,7 @@ THE SOFTWARE. */
 #include <ting/Buffer.hpp>
 #include <ting/Ptr.hpp>
 #include <ting/fs/File.hpp>
+#include <ting/mt/Message.hpp>
 
 #include "config.hpp"
 
@@ -45,6 +46,8 @@ THE SOFTWARE. */
 #elif M_OS == M_OS_LINUX
 #	include <GL/glew.h>
 #	include <GL/glx.h>
+
+#	include <ting/mt/Queue.hpp>
 #elif M_OS == M_OS_WINDOWS
 #elif M_OS == M_OS_MACOSX
 #else
@@ -207,6 +210,8 @@ private:
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
 
+	ting::mt::Queue uiQueue;
+	
 #elif M_OS == M_OS_WINDOWS
 	
 private:
@@ -402,6 +407,8 @@ public:
 		return this->dotsPerCm;
 	}
 	
+	
+	void PostToUIThread(ting::Ptr<ting::mt::Message> msg);
 };
 
 
