@@ -852,7 +852,7 @@ inline void HandleQueueMessages(App& app){
 
 
 inline int GetUIQueueHandle(App& app){
-	return app.uiQueue.GetHandle();
+	return static_cast<ting::Waitable&>(app.uiQueue).GetHandle();
 }
 
 
@@ -1167,7 +1167,9 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
-		activity->instance = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+		App* app = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+		
+		activity->instance = app;
 
 		//save current configuration in global variable
 		curConfig = cfg;
@@ -1186,7 +1188,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		
 		ALooper_addFd(
 				looper,
-				GetUIQueueHandle(*activity->instance),
+				GetUIQueueHandle(*app),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
