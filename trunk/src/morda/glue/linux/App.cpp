@@ -601,14 +601,7 @@ public:
 
 
 
-void App::PostToUIThread(ting::Ptr<ting::mt::Message> msg){
-	this->uiQueue.PushMessage(msg);
-}
-
-
-
 void App::Exec(){
-	
 	XEventWaitable xew(this->xDisplay.d);
 	
 	ting::WaitSet waitSet(2);
