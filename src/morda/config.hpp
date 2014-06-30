@@ -28,8 +28,10 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <ting/config.hpp>
 
 
-#if defined(__ANDROID__)
+
+#if M_OS_NAME == M_OS_NAME_ANDROID
 #	define M_MORDA_OGLES2
 #endif
