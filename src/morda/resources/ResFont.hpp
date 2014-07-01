@@ -48,7 +48,7 @@ class ResFont : public morda::Resource{
 	morda::TexFont font;
 
 	ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline) :
-			font(fi, chars.Begin(), size, outline)
+			font(fi, chars, size, outline)
 	{}
 
 public:

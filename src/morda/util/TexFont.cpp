@@ -59,7 +59,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline){
+void TexFont::Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -127,15 +127,8 @@ void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, un
 
 	//guess for texture width
 	unsigned texWidth;
-	{
-		unsigned numChars = 0;
-		for(const ting::u32* c = chars; *c != 0; ++c){
-			++numChars;
-		}
-
-		texWidth = std::max(unsigned(128), FindNextPowOf2((numChars / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
-		texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
-	}
+	texWidth = std::max(unsigned(128), FindNextPowOf2((chars.Size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
+	texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
 
 	unsigned curTexHeight = FindNextPowOf2(size);//first guess of texture height
 	unsigned curX = DXGap;
@@ -153,17 +146,17 @@ void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, un
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
 	//print all the glyphs to the image
-	for(unsigned i = 0; chars[i] != 0; ++i){
-		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(chars[i]), FT_LOAD_RENDER) != 0){
+	for(const ting::u32* c = chars.Begin(); c != chars.End(); ++c){
+		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
 			throw ting::Exc("TexFont::Load(): unable to load char");
 		}
-
+		
 //		TRACE(<< "TexFont::Load(): char loaded" << std::endl)
 
 		FT_GlyphSlot slot = static_cast<FT_Face&>(face)->glyph;
 
 		if(!slot->bitmap.buffer){//if glyph is empty (e.g. space character)
-			Glyph &g = this->glyphs[chars[i]];
+			Glyph &g = this->glyphs[*c];
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
 			ASSERT(g.verts.Size() == g.texCoords.Size())
 			for(unsigned i = 0; i < g.verts.Size(); ++i){
@@ -224,7 +217,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, un
 		{
 			FT_Glyph_Metrics *m = &slot->metrics;
 			
-			Glyph &g = this->glyphs[chars[i]];
+			Glyph &g = this->glyphs[*c];
 			g.advance = float(m->horiAdvance) / (64.0f);
 
 			ASSERT(outline < (unsigned(-1) >> 1))
@@ -261,7 +254,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, un
 
 		texImg.Blit(curX, curY, im);
 		curX += im.Width() + DXGap;
-	}//~for(i)
+	}//~for
 	
 	//save bounding box
 	this->boundingBox.p.x = left;
