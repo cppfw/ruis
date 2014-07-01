@@ -254,6 +254,9 @@ public:
 		
 		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
 		
+		c->FindChildByName("Hello world button").DynamicCast<morda::Button>()->pressed.Connect(this, &Application::PostMessageToUIThread);
+		
+		
 		if(ting::Ref<morda::Container> container = c.DynamicCast<morda::Container>()){
 			ting::Ref<CubeWidget> w = CubeWidget::New();
 			w->Resize(morda::Vec2f(200, 150));
@@ -261,6 +264,17 @@ public:
 		}
 		
 		this->SetRootWidget(c);
+	}
+		
+	class UIMessage : public ting::mt::Message{
+		virtual void Handle() OVERRIDE{
+			ASSERT_ALWAYS(morda::App::Inst().ThisIsUIThread())
+			TRACE_ALWAYS(<< "UIMessage::Handle(): Print from UI thread!!!" << std::endl)
+		}
+	};
+	
+	void PostMessageToUIThread(){
+		this->PostToUIThread_ts(ting::Ptr<ting::mt::Message>(new UIMessage()));
 	}
 };
 
