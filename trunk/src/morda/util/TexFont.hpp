@@ -86,11 +86,11 @@ public:
 	
 	~TexFont()throw(){}
 
-	TexFont(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline = 0){
+	TexFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
-	void Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline = 0);
+	void Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0);
 
 	float FontSize()const{
 		return this->fontSize;
