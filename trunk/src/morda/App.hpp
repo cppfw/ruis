@@ -46,7 +46,9 @@ THE SOFTWARE. */
 #	include <EGL/egl.h>
 #else
 #	include <GL/glew.h>
-#	include <GL/glx.h>
+#	if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
+#		include <GL/glx.h>
+#	endif
 #endif
 
 #if M_OS == M_OS_LINUX
