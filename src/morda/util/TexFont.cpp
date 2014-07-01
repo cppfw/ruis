@@ -59,7 +59,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsigned outline){
+void TexFont::Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -129,11 +129,12 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 	unsigned texWidth;
 	{
 		unsigned numChars = 0;
-		for(const wchar_t* c = chars; *c != 0; ++c)
+		for(const ting::u32* c = chars; *c != 0; ++c){
 			++numChars;
+		}
 
 		texWidth = std::max(unsigned(128), FindNextPowOf2((numChars / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
-		texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth);//clamp width to min of max texture size and 1024
+		texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
 	}
 
 	unsigned curTexHeight = FindNextPowOf2(size);//first guess of texture height
@@ -302,7 +303,7 @@ void TexFont::Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsi
 
 
 
-inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, wchar_t ch)const{
+inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::u32 ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
 	shader.SetMatrix(matrix);
@@ -317,7 +318,7 @@ inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::
 
 
 
-float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
+float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const{
 	shader.EnablePositionPointer();
 	shader.EnableTexCoordPointer();
 
@@ -357,7 +358,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 
 	try{
 		for(; *s != 0; ++s){
-			float advance = this->RenderGlyphInternal(shader, matr, wchar_t(*s));
+			float advance = this->RenderGlyphInternal(shader, matr, ting::u32(*s));
 			ret += advance;
 			matr.Translate(advance, 0);
 		}
@@ -372,7 +373,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 
 
 
-float TexFont::StringAdvanceInternal(const wchar_t* s)const{
+float TexFont::StringAdvanceInternal(const ting::u32* s)const{
 	float ret = 0;
 
 	try{
@@ -397,7 +398,7 @@ float TexFont::StringAdvanceInternal(const char* s)const{
 
 	try{
 		for(; *s != 0; ++s){
-			const Glyph& g = this->glyphs.at(wchar_t(*s));
+			const Glyph& g = this->glyphs.at(ting::u32(*s));
 			ret += g.advance;
 		}
 	}catch(std::out_of_range&){
@@ -411,7 +412,7 @@ float TexFont::StringAdvanceInternal(const char* s)const{
 
 
 
-morda::Rect2f TexFont::StringBoundingBoxInternal(const wchar_t* s)const{
+morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::u32* s)const{
 	morda::Rect2f ret;
 
 	if(*s == 0){
@@ -489,7 +490,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 	float left, right, top, bottom;
 	//init with bounding box of the first glyph
 	{
-		const Glyph& g = this->glyphs.at(wchar_t(*s));
+		const Glyph& g = this->glyphs.at(ting::u32(*s));
 		left = g.verts[0].x;
 		right = g.verts[2].x;
 		top = g.verts[3].y;
@@ -500,7 +501,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 
 	try{
 		for(; *s != 0; ++s){
-			const Glyph& g = this->glyphs.at(wchar_t(*s));
+			const Glyph& g = this->glyphs.at(ting::u32(*s));
 
 			if(g.verts[3].y > top){
 				top = g.verts[3].y;
