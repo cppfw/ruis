@@ -263,11 +263,14 @@ private:
 		SwapBuffers(this->deviceContext.hdc);
 	}
 
-	void PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg);
+	
 
 	friend void Main(int argc, const char** argv);
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
+
+public:
+	void PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg);
 
 #elif M_OS == M_OS_MACOSX	
 private:
