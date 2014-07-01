@@ -665,9 +665,7 @@ void App::HideVirtualKeyboard()throw(){
 
 
 void App::PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg){
-	ting::mt::Message* m = msg.Extract();
-
-	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(m)) == 0){
+	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(msg.Extract())) == 0){
 		throw morda::Exc("PostMessage(): failed");
 	}
 }
