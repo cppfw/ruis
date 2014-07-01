@@ -422,7 +422,14 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.UpdateWindowRect(morda::Rect2f(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam)))); 
 			lres = 0;
 			return true;
-			
+		
+		case WM_USER:
+			{
+				ting::Ptr<ting::mt::Message> m(reinterpret_cast<ting::mt::Message*>(lParam));
+				m->Handle();
+			}
+			return true;
+
 		default:
 			break;
 	}
@@ -653,6 +660,16 @@ void App::ShowVirtualKeyboard()throw(){
 void App::HideVirtualKeyboard()throw(){
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
+}
+
+
+
+void App::PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg){
+	ting::mt::Message* m = msg.Extract();
+
+	if(PostMessage(NULL, WM_USER, 0, reinterpret_cast<LPARAM>(m)) == 0){
+		throw morda::Exc("PostMessage(): failed");
+	}
 }
 
 
