@@ -16,7 +16,7 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	}
 
 	//read chars attribute
-	std::wstring wideChars;
+	std::vector<ting::u32> wideChars;
 	{
 		const stob::Node* charsProp = el->GetProperty("chars");
 		if(!charsProp){
@@ -26,7 +26,7 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 		//TODO: do utf8 to utf32
 		const std::string& charsStr = charsProp->Value();
 		for(unsigned i = 0; i < charsStr.size(); ++i){
-			wideChars += charsStr[i];
+			wideChars.push_back(charsStr[i]);
 		}
 	}
 	ASSERT(wideChars.size() > 0)
@@ -55,6 +55,6 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 
 	fi.SetPath(fileProp->Value());
 
-	return ting::Ref<ResFont>(new ResFont(fi, wideChars, size, outline));
+	return ting::Ref<ResFont>(new ResFont(fi, ting::Buffer<ting::u32>(&(*wideChars.begin()), wideChars.size()), size, outline));
 }
 

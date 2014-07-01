@@ -49,15 +49,9 @@ THE SOFTWARE. */
 #endif
 
 #include "GLTexture.hpp"
+#include "Font.hpp"
+
 #include "../shaders/TexturingShader.hpp"
-
-
-
-#ifdef __ANDROID__
-namespace std {
-	typedef basic_string<wchar_t> wstring;
-}//~namespace
-#endif
 
 
 
@@ -65,8 +59,7 @@ namespace morda{
 
 
 
-//TODO: make Font interface
-class TexFont{
+class TexFont : public Font{
 	struct Glyph{
 		ting::StaticBuffer<morda::Vec2f, 4> verts;
 		ting::StaticBuffer<morda::Vec2f, 4> texCoords;
@@ -90,24 +83,22 @@ private:
 
 public:
 	TexFont(){}
+	
+	~TexFont()throw(){}
 
-	TexFont(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsigned outline = 0){
+	TexFont(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
-	void Load(ting::fs::File& fi, const wchar_t* chars, unsigned size, unsigned outline = 0);
+	void Load(ting::fs::File& fi, const ting::u32* chars, unsigned size, unsigned outline = 0);
 
 	float FontSize()const{
 		return this->fontSize;
 	}
 
 	//renders the string, returns resulting string advance
-	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const{
+	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const{
 		return this->RenderStringInternal(shader, matrix, s);
-	}
-
-	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::wstring& s)const{
-		return this->RenderStringInternal(shader, matrix, s.c_str());
 	}
 
 	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
@@ -122,12 +113,8 @@ public:
 		return this->boundingBox;
 	}
 
-	float StringAdvance(const wchar_t* s)const{
+	float StringAdvance(const ting::u32* s)const{
 		return this->StringAdvanceInternal(s);
-	}
-	
-	float StringAdvance(const std::wstring& s)const{
-		return this->StringAdvanceInternal(s.c_str());
 	}
 	
 	float StringAdvance(const char* s)const{
@@ -138,12 +125,8 @@ public:
 		return this->StringAdvanceInternal(s.c_str());
 	}
 
-	morda::Rect2f StringBoundingBox(const wchar_t* s)const{
+	morda::Rect2f StringBoundingBox(const ting::u32* s)const{
 		return this->StringBoundingBoxInternal(s);
-	}
-	
-	morda::Rect2f StringBoundingBox(const std::wstring& s)const{
-		return this->StringBoundingBoxInternal(s.c_str());
 	}
 
 	morda::Rect2f StringBoundingBox(const char* s)const{
@@ -160,17 +143,17 @@ private:
 
 	float StringAdvanceInternal(const char* s)const;
 	
-	float StringAdvanceInternal(const wchar_t* s)const;
+	float StringAdvanceInternal(const ting::u32* s)const;
 
 	morda::Rect2f StringBoundingBoxInternal(const char* s)const;
 	
-	morda::Rect2f StringBoundingBoxInternal(const wchar_t* s)const;
+	morda::Rect2f StringBoundingBoxInternal(const ting::u32* s)const;
 	
 	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const;
 	
-	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const wchar_t* s)const;	
+	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const;	
 
-	float RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, wchar_t ch)const;
+	float RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::u32 ch)const;
 
 };//~class TexFont
 

@@ -37,6 +37,8 @@
         <df name="util">
           <in>CharInputFocusable.cpp</in>
           <in>CharInputFocusable.hpp</in>
+          <in>Font.cpp</in>
+          <in>Font.hpp</in>
           <in>GLTexture.cpp</in>
           <in>Gravity.cpp</in>
           <in>Image.cpp</in>
@@ -279,6 +281,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -562,6 +568,10 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
@@ -714,6 +724,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -956,6 +970,10 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>

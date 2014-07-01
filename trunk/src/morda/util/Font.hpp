@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,40 +28,22 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <string>
-
-#include <stob/dom.hpp>
-
-#include "../resman/Resource.hpp"
-
-#include "../util/TexFont.hpp"
-
-
 
 namespace morda{
 
 
-
-class ResFont : public morda::Resource{
-	friend class morda::ResourceManager;
-
-	morda::TexFont font;
-
-	ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline) :
-			font(fi, chars.Begin(), size, outline)
-	{}
-
-public:
-	inline ~ResFont()throw(){}
-
-	inline const morda::TexFont& Fnt()throw(){
-		return this->font;
-	}
+class Font{
+	Font(const Font&);
+	Font& operator=(const Font&);
+	
+protected:
+	Font(){}
+	
+public:	
+	virtual ~Font()throw(){}
 	
 private:
-	static ting::Ref<ResFont> Load(const stob::Node* el, ting::fs::File &fi);
+
 };
 
-
-
-}//~namespace
+}
