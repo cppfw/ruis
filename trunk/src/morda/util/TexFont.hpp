@@ -39,6 +39,7 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/Exc.hpp>
 #include <ting/fs/File.hpp>
+#include <ting/util.hpp>
 
 #include "../config.hpp"
 
@@ -75,6 +76,7 @@ class TexFont : public Font{
 
 	float fontSize;
 
+	TexturingShader& shader;
 public:
 
 private:
@@ -82,11 +84,15 @@ private:
 	morda::Rect2f boundingBox;
 
 public:
-	TexFont(){}
+	TexFont(TexturingShader& shader) :
+			shader(shader)
+	{}
 	
 	~TexFont()throw(){}
 
-	TexFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0){
+	TexFont(TexturingShader& shader, ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0) :
+			shader(shader)
+	{
 		this->Load(fi, chars, size, outline);
 	}
 
@@ -96,6 +102,14 @@ public:
 		return this->fontSize;
 	}
 
+	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const OVERRIDE{
+		throw ting::Exc("TexFont::RenderString(utf8): not implemented");
+	}
+	
+	float RenderString(const morda::Matr4f& matrix, const ting::Buffer<ting::u32>& utf32str)const OVERRIDE{
+		throw ting::Exc("TexFont::RenderString(utf8): not implemented");
+	}
+	
 	//renders the string, returns resulting string advance
 	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const{
 		return this->RenderStringInternal(shader, matrix, s);

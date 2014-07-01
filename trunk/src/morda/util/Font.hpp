@@ -28,6 +28,10 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <ting/Buffer.hpp>
+#include <ting/utf8.hpp>
+
+#include <string>
 
 namespace morda{
 
@@ -42,6 +46,18 @@ protected:
 public:	
 	virtual ~Font()throw(){}
 	
+	//renders the string, returns resulting string advance
+	virtual float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const = 0;
+	
+	virtual float RenderString(const morda::Matr4f& matrix, const ting::Buffer<ting::u32>& utf32str)const = 0;
+	
+	float RenderString(const morda::Matr4f& matrix, const char* str)const{
+		return this->RenderString(matrix, ting::utf8::Iterator(str));
+	}
+	
+	float RenderString(const morda::Matr4f& matrix, const std::string& str)const{
+		return this->RenderString(matrix, str.c_str());
+	}
 private:
 
 };

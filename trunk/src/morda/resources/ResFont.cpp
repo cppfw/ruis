@@ -1,9 +1,17 @@
 #include "ResFont.hpp"
 
 #include "../Exc.hpp"
+#include "../App.hpp"
 
 
 using namespace morda;
+
+
+
+ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline) :
+		font(App::Inst().Shaders().simpleTexturing, fi, chars, size, outline)
+{}
+
 
 
 //static
