@@ -22,6 +22,7 @@ sources += morda/util/LayoutDim.cpp
 sources += morda/util/LeftBottomRightTop.cpp
 sources += morda/util/TexFont.cpp
 sources += morda/util/util.cpp
+#sources += morda/util/ZipFile.cpp
 
 sources += morda/widgets/Button.cpp
 sources += morda/widgets/Container.cpp
