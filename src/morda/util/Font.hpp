@@ -43,7 +43,7 @@ class Font{
 protected:
 	Font(){}
 	
-public:	
+public:
 	virtual ~Font()throw(){}
 	
 	//renders the string, returns resulting string advance

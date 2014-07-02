@@ -37,7 +37,7 @@ Label::Label(const stob::Node& description) :
 void Label::SetText(const std::string& text){
 	this->text = text;
 	
-	this->bb = this->font->Fnt().StringBoundingBox(this->text);
+	this->bb = this->font->font().StringBoundingBox(this->text);
 	
 	this->SetRelayoutNeeded();
 }
@@ -80,5 +80,5 @@ void Label::Render(const morda::Matr4f& matrix)const{
 	glEnable(GL_BLEND);
 	morda::Matr4f matr(matrix);
 	matr.Translate(this->pivot);
-	this->font->Fnt().RenderString(s, matr, this->text);
+	this->font->font().RenderString(s, matr, this->text);
 }

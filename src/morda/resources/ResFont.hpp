@@ -45,15 +45,15 @@ namespace morda{
 class ResFont : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	morda::TexFont font;
+	morda::TexFont f;
 
 	ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline);
 
 public:
-	inline ~ResFont()throw(){}
+	~ResFont()throw(){}
 
-	inline const morda::TexFont& Fnt()throw(){
-		return this->font;
+	const morda::TexFont& font()throw(){
+		return this->f;
 	}
 	
 private:
