@@ -303,6 +303,8 @@
       </item>
       <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
@@ -373,7 +375,7 @@
       <folder path="0/morda/glue/linux">
         <ccTool>
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -385,7 +387,7 @@
       <folder path="0/morda/resman">
         <ccTool>
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -397,7 +399,7 @@
       <folder path="0/morda/resources">
         <ccTool>
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -408,11 +410,6 @@
       </folder>
       <folder path="0/morda/util">
         <ccTool>
-          <incDir>
-            <pElem>ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
           <preprocessorList>
             <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
           </preprocessorList>
@@ -421,7 +418,7 @@
       <folder path="0/morda/widgets">
         <ccTool>
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -439,10 +436,10 @@
           </incDir>
         </ccTool>
       </folder>
-      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -451,10 +448,10 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -463,10 +460,10 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -483,6 +480,8 @@
             flavor2="4">
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
       </item>
@@ -490,21 +489,29 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/resman/ResourceManager.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
-      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
-      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
-      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -516,10 +523,10 @@
       <item path="src/morda/shaders/SimpleSingleColoringShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -531,10 +538,10 @@
       <item path="src/morda/shaders/SimpleTexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -551,10 +558,10 @@
       <item path="src/morda/shaders/TexturingShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
         <ccTool flags="0">
           <incDir>
-            <pElem>ext</pElem>
+            <pElem>3rd_party</pElem>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>src</pElem>
           </incDir>
@@ -567,51 +574,148 @@
             ex="false"
             tool="1"
             flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
             tool="1"
             flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+            <pElem>3rd_party</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
             tool="1"
             flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -743,6 +847,8 @@
             flavor2="4">
       </item>
       <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -985,6 +1091,8 @@
             flavor2="0">
       </item>
       <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
