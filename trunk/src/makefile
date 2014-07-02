@@ -109,10 +109,10 @@ ifeq ($(platform), maemo_linux)
     include_dirs :=
 endif
 ifeq ($(platform), linux)
-    include_dirs := -I../3rd_party `pkg-config --cflags freetype2`
+    include_dirs := `pkg-config --cflags freetype2`
 endif
 ifeq ($(platform), windows)
-    include_dirs := -I../3rd_party -I/usr/include -I/usr/local/include -I/usr/local/include/freetype2
+    include_dirs := -I/usr/include -I/usr/local/include -I/usr/local/include/freetype2
 endif
 
 
