@@ -46,10 +46,12 @@ protected:
 public:
 	virtual ~Font()throw(){}
 	
+	
+	
 	//renders the string, returns resulting string advance
 	virtual float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const = 0;
 	
-	virtual float RenderString(const morda::Matr4f& matrix, const ting::Buffer<ting::u32>& utf32str)const = 0;
+	virtual float RenderString(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const = 0;
 	
 	float RenderString(const morda::Matr4f& matrix, const char* str)const{
 		return this->RenderString(matrix, ting::utf8::Iterator(str));
@@ -58,6 +60,37 @@ public:
 	float RenderString(const morda::Matr4f& matrix, const std::string& str)const{
 		return this->RenderString(matrix, str.c_str());
 	}
+	
+	
+	
+	virtual float StringAdvance(ting::utf8::Iterator str)const = 0;
+	
+	virtual float StringAdvance(const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	
+	float StringAdvance(const char* str)const{
+		return this->StringAdvance(ting::utf8::Iterator(str));
+	}
+	
+	float StringAdvance(const std::string& str)const{
+		return this->StringAdvance(str.c_str());
+	}
+	
+	
+	
+	virtual morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const = 0;
+	
+	virtual morda::Rect2f StringBoundingBox(const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	
+	morda::Rect2f StringBoundingBox(const char* str)const{
+		return this->StringBoundingBox(ting::utf8::Iterator(str));
+	}
+	
+	morda::Rect2f StringBoundingBox(const std::string& str)const{
+		return this->StringBoundingBox(str.c_str());
+	}
+	
+	
+	
 private:
 
 };

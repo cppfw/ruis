@@ -10,6 +10,8 @@
 #include "TexFont.hpp"
 #include "../util/Image.hpp"
 
+#include "../App.hpp"
+
 //freetype includes
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -59,7 +61,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline){
+void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -339,7 +341,7 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 
 
 //TODO: add utf-8 support
-float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
+float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::utf8::Iterator str)const{
 	shader.EnablePositionPointer();
 	shader.EnableTexCoordPointer();
 
@@ -350,14 +352,14 @@ float TexFont::RenderStringInternal(TexturingShader& shader, const morda::Matr4f
 	morda::Matr4f matr(matrix);
 
 	try{
-		for(; *s != 0; ++s){
-			float advance = this->RenderGlyphInternal(shader, matr, ting::u32(*s));
+		for(; str.IsNotEnd(); ++str){
+			float advance = this->RenderGlyphInternal(shader, matr, str.Char());
 			ret += advance;
 			matr.Translate(advance, 0);
 		}
 	}catch(std::out_of_range&){
 		std::stringstream ss;
-		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		ss << "TexFont::RenderStringInternal(): Character is not loaded, unicode = 0x" << std::hex << str.Char();
 		throw ting::Exc(ss.str());
 	}
 
@@ -468,11 +470,10 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::u32* s)const{
 
 
 
-//TODO: add utf-8 support
-morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
+morda::Rect2f TexFont::StringBoundingBoxInternal(ting::utf8::Iterator str)const{
 	morda::Rect2f ret;
 
-	if(*s == 0){
+	if(str.IsEnd()){
 		ret.p.SetTo(0);
 		ret.d.SetTo(0);
 		return ret;
@@ -483,18 +484,18 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 	float left, right, top, bottom;
 	//init with bounding box of the first glyph
 	{
-		const Glyph& g = this->glyphs.at(ting::u32(*s));
+		const Glyph& g = this->glyphs.at(str.Char());
 		left = g.verts[0].x;
 		right = g.verts[2].x;
 		top = g.verts[3].y;
 		bottom = g.verts[0].y;
 		curAdvance = g.advance;
-		++s;
+		++str;
 	}
 
 	try{
-		for(; *s != 0; ++s){
-			const Glyph& g = this->glyphs.at(ting::u32(*s));
+		for(; str.IsNotEnd(); ++str){
+			const Glyph& g = this->glyphs.at(str.Char());
 
 			if(g.verts[3].y > top){
 				top = g.verts[3].y;
@@ -516,7 +517,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const char* s)const{
 		}
 	}catch(std::out_of_range&){
 		std::stringstream ss;
-		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, unicode = 0x" << std::hex << str.Char();
 		throw ting::Exc(ss.str().c_str());
 	}
 
@@ -549,3 +550,33 @@ void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)con
 	shader.DrawQuad01();
 }
 #endif
+
+
+
+float TexFont::RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const{
+	morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
+	s.Bind();
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	
+	return this->RenderStringInternal(s, matrix, str);
+}
+
+
+
+morda::Rect2f TexFont::StringBoundingBox(ting::utf8::Iterator str)const{
+	return this->StringBoundingBoxInternal(str);
+}
+
+morda::Rect2f TexFont::StringBoundingBox(const ting::Buffer<const ting::u32>& utf32str)const{
+	throw ting::Exc("TexFont::StringAdvance(utf32): not implemented");
+}
+
+float TexFont::StringAdvance(const ting::Buffer<const ting::u32>& utf32str)const{
+	throw ting::Exc("TexFont::StringAdvance(utf32): not implemented");
+}
+
+float TexFont::StringAdvance(ting::utf8::Iterator str)const{
+	throw ting::Exc("TexFont::StringAdvance(utf8): not implemented");
+}
