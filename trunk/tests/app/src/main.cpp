@@ -251,12 +251,12 @@ public:
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 
-//		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(
-//				*this->CreateResourceFileInterface("test.gui.stob")
-//			);
+		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(
+				*this->CreateResourceFileInterface("test.gui.stob")
+			);
 
-		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
-		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
+//		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
+//		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
 		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
