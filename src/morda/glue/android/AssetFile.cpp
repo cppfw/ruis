@@ -25,7 +25,6 @@ void AssetFile::OpenInternal(E_Mode mode){
 		throw File::Exc("path refers to a directory, directories can't be opened");
 	}
 	
-
 	switch(mode){
 		case File::WRITE:
 		case File::CREATE:
@@ -42,25 +41,20 @@ void AssetFile::OpenInternal(E_Mode mode){
 		TRACE(<< "AAssetManager_open() failed, file path = " << this->Path() << std::endl)
 		throw File::Exc("AAssetManager_open() failed");
 	}
-
-	this->ioMode = READ;
-	
-	this->isOpened = true;//set "opened" flag
 }
 
 
 
 //override
 void AssetFile::CloseInternal()throw(){
-	if(!this->IsOpened())
+	if(!this->IsOpened()){
 		return;
+	}
 
 	ASSERT(this->handle)
 
 	AAsset_close(this->handle);
 	this->handle = 0;
-
-	this->isOpened = false;
 }
 
 
@@ -103,9 +97,9 @@ size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 			
 	if(seekForward){
 		ASSERT(size_t(assetSize) >= this->CurPos())
-		ting::ClampTop(numBytesToSeek, size_t(assetSize) - this->CurPos());
+		ting::util::ClampTop(numBytesToSeek, size_t(assetSize) - this->CurPos());
 	}else{
-		ting::ClampTop(numBytesToSeek, this->CurPos());
+		ting::util::ClampTop(numBytesToSeek, this->CurPos());
 	}
 	
 	typedef off_t T_FSeekOffset;
@@ -140,15 +134,15 @@ size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 
 
 //override
-void AssetFile::SeekForwardInternal(size_t numBytesToSeek){
-	this->Seek(numBytesToSeek, true);
+size_t AssetFile::SeekForwardInternal(size_t numBytesToSeek){
+	return this->Seek(numBytesToSeek, true);
 }
 
 
 
 //override
-void AssetFile::SeekBackwardInternal(size_t numBytesToSeek){
-	this->Seek(numBytesToSeek, false);
+size_t AssetFile::SeekBackwardInternal(size_t numBytesToSeek){
+	return this->Seek(numBytesToSeek, false);
 }
 
 
