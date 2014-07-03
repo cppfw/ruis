@@ -3,9 +3,77 @@
 #include "unzip/unzip.h"
 
 #include <sstream>
+#include <ting/fs/FSFile.hpp>
 
 
 using namespace morda;
+
+
+
+namespace{
+
+voidpf ZCALLBACK UnzipOpen(voidpf opaque, const char* filename, int mode){
+	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(opaque);
+	
+	switch(mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER){
+		case ZLIB_FILEFUNC_MODE_READ:
+			f->Open(ting::fs::File::READ);
+			break;
+		default:
+			throw ting::fs::File::Exc("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
+	}
+	
+	return f;
+}
+
+int ZCALLBACK UnzipClose(voidpf opaque, voidpf stream){
+	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
+	f->Close();
+	return 0;
+}
+
+uLong ZCALLBACK UnzipRead(voidpf opaque, voidpf stream, void* buf, uLong size){
+	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
+	return uLong(f->Read(ting::Buffer<ting::u8>(reinterpret_cast<ting::u8*>(buf), size)));
+}
+
+uLong ZCALLBACK UnzipWrite(voidpf opaque, voidpf stream, const void* buf, uLong size){
+	ASSERT_INFO(false, "Writing ZIP files is not supported")
+	return 0;
+}
+
+int ZCALLBACK UnzipError(voidpf opaque, voidpf stream){
+	return 0;//no error
+}
+
+long ZCALLBACK UnzipSeek(voidpf  opaque, voidpf stream, uLong offset, int origin){
+	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
+	
+	//Assume that offset can only be positive, since its type is unsigned
+	
+	switch(origin){
+		case ZLIB_FILEFUNC_SEEK_CUR:
+			f->SeekForward(offset);
+			return 0;
+		case ZLIB_FILEFUNC_SEEK_END:
+			f->SeekForward(size_t(-1));
+			return 0;
+		case ZLIB_FILEFUNC_SEEK_SET:
+			f->Rewind();
+			f->SeekForward(offset);
+			return 0;
+		default:
+			return -1;
+	}
+}
+
+long ZCALLBACK UnzipTell(voidpf opaque, voidpf stream){
+	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
+	return long(f->CurPos());
+}
+
+}
+
 
 
 
@@ -13,7 +81,17 @@ ZipFile::ZipFile(ting::Ptr<ting::fs::File> zipFile, const std::string& path) :
 		ting::fs::File(path),
 		zipFile(zipFile)
 {
-	this->handle = unzOpen(this->zipFile->Path().c_str());
+	zlib_filefunc_def ff;
+	ff.opaque = this->zipFile.operator->();
+	ff.zopen_file = &UnzipOpen;
+	ff.zclose_file = &UnzipClose;
+	ff.zread_file = &UnzipRead;
+	ff.zwrite_file = &UnzipWrite;
+	ff.zseek_file = &UnzipSeek;
+	ff.zerror_file = &UnzipError;
+	ff.ztell_file = &UnzipTell;
+	
+	this->handle = unzOpen2(this->zipFile->Path().c_str(), &ff);
 
 	if(!this->handle){
 		throw File::Exc("ZipFile::OpenZipFile(): opening zip file failed");
