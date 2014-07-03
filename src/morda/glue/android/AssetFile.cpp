@@ -87,7 +87,7 @@ size_t AssetFile::WriteInternal(const ting::Buffer<const ting::u8>& buf){
 
 
 
-void AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
+size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 	if(!this->IsOpened()){
 		throw File::Exc("file is not opened, cannot seek");
 	}
@@ -134,6 +134,7 @@ void AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 		
 		numBytesLeft -= size_t(offset);
 	}
+	return numBytesToSeek;
 }
 
 

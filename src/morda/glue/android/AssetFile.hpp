@@ -85,25 +85,15 @@ public:
 
 	virtual void OpenInternal(E_Mode mode) OVERRIDE;
 
-
-
 	virtual void CloseInternal()throw() OVERRIDE;
-
-
 
 	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf) OVERRIDE;
 
-
-
 	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf) OVERRIDE;
 
-
-
-	virtual void SeekForwardInternal(size_t numBytesToSeek) OVERRIDE;
+	virtual size_t SeekForwardInternal(size_t numBytesToSeek) OVERRIDE;
 	
-	
-	
-	virtual void SeekBackwardInternal(size_t numBytesToSeek) OVERRIDE;
+	virtual size_t SeekBackwardInternal(size_t numBytesToSeek) OVERRIDE;
 
 	
 	
@@ -113,7 +103,7 @@ public:
      * @param seekForward - if true, then the seeking will be done forward.
 	 *                      If false, then the seeking will be done backward.
      */
-	void Seek(size_t numBytesToSeek, bool seekForward);
+	size_t Seek(size_t numBytesToSeek, bool seekForward);
 	
 	
 	
