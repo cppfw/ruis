@@ -33,8 +33,8 @@ THE SOFTWARE. */
 #include <sstream>
 #include <stdexcept>
 
-#include "Vector2.hpp"
-#include "Rectangle2.hpp"
+#include "../util/Vector2.hpp"
+#include "../util/Rectangle2.hpp"
 
 #include <ting/types.hpp>
 #include <ting/Exc.hpp>
@@ -49,7 +49,7 @@ THE SOFTWARE. */
 #	include <GL/glew.h>
 #endif
 
-#include "GLTexture.hpp"
+#include "../util/GLTexture.hpp"
 #include "Font.hpp"
 
 #include "../shaders/TexturingShader.hpp"

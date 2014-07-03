@@ -14,13 +14,14 @@ sources += morda/resman/Resource.cpp
 sources += morda/resources/ResTexture.cpp
 sources += morda/resources/ResFont.cpp
 
+sources += morda/fonts/TexFont.cpp
+
 sources += morda/util/CharInputFocusable.cpp
 sources += morda/util/GLTexture.cpp
 sources += morda/util/Gravity.cpp
 sources += morda/util/Image.cpp
 sources += morda/util/LayoutDim.cpp
 sources += morda/util/LeftBottomRightTop.cpp
-sources += morda/util/TexFont.cpp
 sources += morda/util/util.cpp
 
 sources += morda/util/ZipFile.cpp
