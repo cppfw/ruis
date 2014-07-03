@@ -75,8 +75,6 @@ class TexFont : public Font{
 	T_GlyphsMap glyphs;
 
 	float fontSize;
-
-	TexturingShader& shader;
 public:
 
 private:
@@ -84,18 +82,13 @@ private:
 	morda::Rect2f boundingBox;
 
 public:
-	TexFont(TexturingShader& shader) :
-			shader(shader)
-	{}
 	
-	~TexFont()throw(){}
-
-	TexFont(TexturingShader& shader, ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0) :
-			shader(shader)
-	{
+	TexFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
+	~TexFont()throw(){}
+	
 	void Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline = 0);
 
 	float FontSize()const{

@@ -9,7 +9,7 @@ using namespace morda;
 
 
 ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsigned size, unsigned outline) :
-		f(App::Inst().Shaders().simpleTexturing, fi, chars, size, outline)
+		f(fi, chars, size, outline)
 {}
 
 

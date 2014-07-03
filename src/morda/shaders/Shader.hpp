@@ -69,7 +69,7 @@ class Shader{
 	struct ShaderWrapper{
 		GLuint s;
 		ShaderWrapper(const char* code, GLenum type);
-		inline ~ShaderWrapper()throw(){
+		~ShaderWrapper()throw(){
 			glDeleteShader(this->s);
 		}
 		
@@ -83,7 +83,7 @@ class Shader{
 	struct ProgramWrapper{
 		GLuint p;
 		ProgramWrapper(GLuint vertex, GLuint fragment);
-		inline ~ProgramWrapper()throw(){
+		~ProgramWrapper()throw(){
 			glDeleteProgram(this->p);
 		}
 		
@@ -98,14 +98,14 @@ class Shader{
 	GLint matrixUniform;
 	
 protected:
-	inline GLint GetAttribute(const char* n){
+	GLint GetAttribute(const char* n){
 		GLint ret = glGetAttribLocation(this->program.p, n);
 		if(ret < 0){
 			throw ting::Exc("No attribute found in the shader program");
 		}
 		return ret;
 	}
-	inline GLint GetUniform(const char* n){
+	GLint GetUniform(const char* n){
 		GLint ret = glGetUniformLocation(this->program.p, n);
 		if(ret < 0){
 			throw ting::Exc("No uniform found in the shader program");
@@ -117,39 +117,39 @@ public:
 
 	virtual ~Shader()throw(){}
 
-	inline void Bind(){
+	void Bind(){
 		glUseProgram(this->program.p);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetMatrix(const morda::Matr4f &m){
+	void SetMatrix(const morda::Matr4f &m){
 		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetPositionPointer(const morda::Vec3f *p){
+	void SetPositionPointer(const morda::Vec3f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetPositionPointer(const morda::Vec2f *p){
+	void SetPositionPointer(const morda::Vec2f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void EnablePositionPointer(){
+	void EnablePositionPointer(){
 		glEnableVertexAttribArray(this->positionAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void DisablePositionPointer(){
+	void DisablePositionPointer(){
 		glDisableVertexAttribArray(this->positionAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void DrawArrays(GLenum mode, unsigned numElements){
+	void DrawArrays(GLenum mode, unsigned numElements){
 		glDrawArrays(mode, 0, numElements);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}

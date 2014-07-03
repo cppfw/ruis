@@ -44,15 +44,12 @@
           </df>
           <in>CharInputFocusable.cpp</in>
           <in>CharInputFocusable.hpp</in>
-          <in>Font.cpp</in>
-          <in>Font.hpp</in>
           <in>GLTexture.cpp</in>
           <in>Gravity.cpp</in>
           <in>Image.cpp</in>
           <in>LayoutDim.cpp</in>
           <in>LayoutDim.hpp</in>
           <in>LeftBottomRightTop.cpp</in>
-          <in>TexFont.cpp</in>
           <in>ZipFile.cpp</in>
           <in>util.cpp</in>
         </df>
@@ -290,10 +287,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
@@ -308,8 +301,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -511,14 +502,6 @@
             tool="1"
             flavor2="8">
       </item>
-      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>3rd_party</pElem>
-            <pElem>ext</pElem>
-          </incDir>
-        </ccTool>
-      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
@@ -531,8 +514,6 @@
             ex="false"
             tool="1"
             flavor2="8">
-      </item>
-      <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -767,16 +748,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>../../bin/android-ndk-r9d/platforms/android-19/arch-x86/usr/include</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>__ANDROID__</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
@@ -813,14 +784,6 @@
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="4">
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -1057,8 +1020,6 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="4">
-      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
@@ -1071,8 +1032,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="src/morda/util/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
