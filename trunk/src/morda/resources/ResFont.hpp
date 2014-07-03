@@ -52,7 +52,7 @@ class ResFont : public morda::Resource{
 public:
 	~ResFont()throw(){}
 
-	const morda::TexFont& font()throw(){
+	const morda::Font& font()throw(){
 		return this->f;
 	}
 	

@@ -61,7 +61,7 @@ public:
 	
 	void SetText(const std::string& text);
 	
-	inline const std::string& GetText()const throw(){
+	const std::string& GetText()const throw(){
 		return this->text;
 	}
 	
@@ -71,11 +71,11 @@ public:
 	
 	void OnResize() OVERRIDE;
 	
-	inline static ting::Ref<Label> New(const stob::Node& description){
+	static ting::Ref<Label> New(const stob::Node& description){
 		return ting::Ref<Label>(new Label(description));
 	}
 	
-	inline static ting::Ref<Label> New(){
+	static ting::Ref<Label> New(){
 		return ting::Ref<Label>(new Label());
 	}
 };

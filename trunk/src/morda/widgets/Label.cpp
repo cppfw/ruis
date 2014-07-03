@@ -72,13 +72,7 @@ void Label::Render(const morda::Matr4f& matrix)const{
 	this->Widget::Render(matrix);
 #endif
 	
-	//render text
-	morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
-	s.Bind();
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
 	morda::Matr4f matr(matrix);
 	matr.Translate(this->pivot);
-	this->font->font().RenderString(s, matr, this->text);
+	this->font->font().RenderString(matr, this->text);
 }
