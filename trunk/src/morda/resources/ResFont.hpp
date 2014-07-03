@@ -34,7 +34,7 @@ THE SOFTWARE. */
 
 #include "../resman/Resource.hpp"
 
-#include "../util/TexFont.hpp"
+#include "../fonts/TexFont.hpp"
 
 
 

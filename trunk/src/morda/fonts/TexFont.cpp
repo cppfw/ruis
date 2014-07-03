@@ -8,7 +8,7 @@
 #include <ting/debug.hpp>
 
 #include "TexFont.hpp"
-#include "Image.hpp"
+#include "../util/Image.hpp"
 
 //freetype includes
 #include <ft2build.h>
