@@ -57,7 +57,7 @@ private:
 	GLuint texNumberUniform;
 
 protected:
-	inline TexturingShader() :
+	TexturingShader() :
 			Shader(0, 0)
 	{
 		this->texCoordAttr = this->GetAttribute("textureCoord");
@@ -65,23 +65,23 @@ protected:
 	}
 
 public:	
-	inline void SetTextureNumber(unsigned i){
+	void SetTextureNumber(unsigned i){
 		glUniform1i(this->texNumberUniform, i);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void SetTexCoordPointer(const morda::Vec2f *p){
+	void SetTexCoordPointer(const morda::Vec2f *p){
 		ASSERT(p)
 		glVertexAttribPointer(this->texCoordAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void EnableTexCoordPointer(){
+	void EnableTexCoordPointer(){
 		glEnableVertexAttribArray(this->texCoordAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline void DisableTexCoordPointer(){
+	void DisableTexCoordPointer(){
 		glDisableVertexAttribArray(this->texCoordAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}

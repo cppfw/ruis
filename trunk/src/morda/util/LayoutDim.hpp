@@ -39,7 +39,7 @@ namespace morda{
 
 class LayoutDim{
 public:
-	static inline const char* D_Dim()throw(){
+	static const char* D_Dim()throw(){
 		return "dim";
 	}
 
@@ -96,7 +96,7 @@ public:
 	 * @param node - dim node. If 0 pointer is passed then return default Dim.
 	 * @return Parsed Dim object.
 	 */
-	static inline LayoutDim FromSTOB(const stob::Node* node)throw(){
+	static LayoutDim FromSTOB(const stob::Node* node)throw(){
 		if(!node){
 			return Default();
 		}

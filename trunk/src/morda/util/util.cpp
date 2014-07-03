@@ -29,13 +29,13 @@ morda::Vec2f morda::Vec2fFromSTOB(const stob::Node* chain){
 
 
 
-morda::Vec2f morda::DistanceVec2fFromSTOB(const stob::Node* chain){
+morda::Vec2f morda::DimVec2f(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2f ret;
 	
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
-		v = ParseDistanceValue(*chain);
+		v = DimValue(*chain);
 		ret[i] = v;
 	}
 	
@@ -48,7 +48,7 @@ morda::Vec2f morda::DistanceVec2fFromSTOB(const stob::Node* chain){
 
 
 
-float morda::ParseDistanceValue(const stob::Node& n){
+float morda::DimValue(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
 		float ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);

@@ -69,15 +69,15 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, uns
 	class FreeTypeLibWrapper{
 		FT_Library lib;// handle to freetype library object
 	public:
-		inline FreeTypeLibWrapper(){
+		FreeTypeLibWrapper(){
 			if(FT_Init_FreeType(&this->lib)){
 				throw ting::Exc("TexFont::Load(): unable to init freetype library");
 			}
 		}
-		inline ~FreeTypeLibWrapper(){
+		~FreeTypeLibWrapper()throw(){
 			FT_Done_FreeType(this->lib);
 		}
-		inline operator FT_Library& (){
+		operator FT_Library& (){
 			return this->lib;
 		}
 	} library;
@@ -94,10 +94,10 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, uns
 				throw ting::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}
-		inline ~FreeTypeFaceWrapper(){
+		~FreeTypeFaceWrapper()throw(){
 			FT_Done_Face(this->face);
 		}
-		inline operator FT_Face& (){
+		operator FT_Face& (){
 			return this->face;
 		}
 	} face(library, fi);
