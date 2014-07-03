@@ -5,6 +5,8 @@
 #include <vector>
 #include <cstdlib>
 
+#include <ting/util.hpp>
+
 #include "AssetFile.hpp"
 
 
@@ -95,6 +97,16 @@ void AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 	//NOTE: AAsset_seek() accepts 'off_t' as offset argument which is signed and can be
 	//      less than size_t value passed as argument to this function.
 	//      Therefore, do several seek operations with smaller offset if necessary.
+	
+	off_t assetSize = AAsset_getLength(this->handle);
+	ASSERT(assetSize >= 0)
+			
+	if(seekForward){
+		ASSERT(size_t(assetSize) >= this->CurPos())
+		ting::ClampTop(numBytesToSeek, size_t(assetSize) - this->CurPos());
+	}else{
+		ting::ClampTop(numBytesToSeek, this->CurPos());
+	}
 	
 	typedef off_t T_FSeekOffset;
 	const size_t DMax = ((size_t(T_FSeekOffset(-1))) >> 1);

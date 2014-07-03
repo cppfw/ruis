@@ -364,9 +364,21 @@
           <buildCommand>${MAKE} debug=true</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <ccTool flags="-funsigned-char -fPIC">
+          <ccTool flags="0">
+            <incDir>
+              <pElem>3rd_party</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>src</pElem>
+              <pElem>3rd_party</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>src</pElem>
+            </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+              <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>
@@ -488,8 +500,6 @@
             flavor2="4">
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
       </item>
@@ -498,23 +508,15 @@
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resman/ResourceManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -661,32 +663,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>3rd_party</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>3rd_party</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
@@ -697,50 +673,30 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -847,14 +803,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/morda/util/CharInputFocusable.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/util/Font.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Font.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -863,8 +812,6 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -884,11 +831,6 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
@@ -896,14 +838,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/LinearContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="4">
       </item>
