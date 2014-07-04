@@ -14,6 +14,7 @@ sources += morda/resman/Resource.cpp
 sources += morda/resources/ResTexture.cpp
 sources += morda/resources/ResFont.cpp
 
+sources += morda/fonts/Font.cpp
 sources += morda/fonts/TexFont.cpp
 
 sources += morda/util/CharInputFocusable.cpp

@@ -91,85 +91,25 @@ public:
 	
 	void Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& chars, unsigned size, unsigned outline = 0);
 
-	float FontSize()const{
+	float Size()const throw() OVERRIDE{
 		return this->fontSize;
 	}
 
-	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const OVERRIDE;
 	
-	float RenderString(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE{
-		throw ting::Exc("TexFont::RenderString(utf8): not implemented");
-	}
-	
-	//renders the string, returns resulting string advance
-//	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const{
-//		return this->RenderStringInternal(shader, matrix, s);
-//	}
-//
-//	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const char* s)const{
-//		return this->RenderStringInternal(shader, matrix, s);
-//	}
-//
-//	float RenderString(TexturingShader& shader, const morda::Matr4f& matrix, const std::string& s)const{
-//		return this->RenderStringInternal(shader, matrix, s.c_str());
-//	}
+	float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE;
 
 	const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
 	
+	float StringAdvanceInternal(const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE;
 
-	float StringAdvance(ting::utf8::Iterator str)const OVERRIDE;
-	
-	float StringAdvance(const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE;
-
-//	float StringAdvance(const ting::u32* s)const{
-//		return this->StringAdvanceInternal(s);
-//	}
-//	
-//	float StringAdvance(const char* s)const{
-//		return this->StringAdvanceInternal(s);
-//	}
-//	
-//	float StringAdvance(const std::string& s)const{
-//		return this->StringAdvanceInternal(s.c_str());
-//	}
-
-	
-
-	morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const OVERRIDE;
-	
-
-	morda::Rect2f StringBoundingBox(const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE;
-
-//	morda::Rect2f StringBoundingBox(const ting::u32* s)const{
-//		return this->StringBoundingBoxInternal(s);
-//	}
-//
-//	morda::Rect2f StringBoundingBox(const char* s)const{
-//		return this->StringBoundingBoxInternal(s);
-//	}
-//
-//	morda::Rect2f StringBoundingBox(const std::string& s)const{
-//		return this->StringBoundingBoxInternal(s.c_str());
-//	}
+	morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<const ting::u32>& utf32str)const OVERRIDE;
 
 	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const; )
 
 private:
-
-	float StringAdvanceInternal(const char* s)const;
-	
-	float StringAdvanceInternal(const ting::u32* s)const;
-
-	morda::Rect2f StringBoundingBoxInternal(ting::utf8::Iterator str)const;
-	
-	morda::Rect2f StringBoundingBoxInternal(const ting::u32* s)const;
-	
-	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::utf8::Iterator str)const;
-	
-	float RenderStringInternal(TexturingShader& shader, const morda::Matr4f& matrix, const ting::u32* s)const;	
 
 	float RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::u32 ch)const;
 

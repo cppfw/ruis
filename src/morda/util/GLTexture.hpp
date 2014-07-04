@@ -79,13 +79,13 @@ public:
 		this->Constructor(image, minFilter, magFilter);
 	}
 
-	inline void Bind()const{
+	void Bind()const{
 		ASSERT(glGetError() == GL_NO_ERROR)
 		glBindTexture(GL_TEXTURE_2D, this->tex);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 	
-	inline void Bind(unsigned texUnitNum)const{
+	void Bind(unsigned texUnitNum)const{
 		ASSERT(glGetError() == GL_NO_ERROR)
 		glActiveTexture(GL_TEXTURE0 + texUnitNum);
 		ASSERT(glGetError() == GL_NO_ERROR)
@@ -93,7 +93,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	inline morda::Vec2f Dim()const throw(){
+	morda::Vec2f Dim()const throw(){
 		return this->dim;
 	}
 
