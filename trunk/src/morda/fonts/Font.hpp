@@ -31,6 +31,9 @@ THE SOFTWARE. */
 #include <ting/Buffer.hpp>
 #include <ting/utf8.hpp>
 
+#include "../util/Matrix4.hpp"
+#include "../util/Rectangle2.hpp"
+
 #include <string>
 
 namespace morda{
@@ -43,15 +46,22 @@ class Font{
 protected:
 	Font(){}
 	
+	virtual float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	
+	virtual float StringAdvanceInternal(const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	
+	virtual morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<const ting::u32>& utf32str)const = 0;
 public:
 	virtual ~Font()throw(){}
 	
-	
+	virtual float Size()const throw() = 0;
 	
 	//renders the string, returns resulting string advance
-	virtual float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const = 0;
+	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const;
 	
-	virtual float RenderString(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	float RenderString(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const{
+		return this->RenderStringInternal(matrix, utf32str);
+	}
 	
 	float RenderString(const morda::Matr4f& matrix, const char* str)const{
 		return this->RenderString(matrix, ting::utf8::Iterator(str));
@@ -63,9 +73,11 @@ public:
 	
 	
 	
-	virtual float StringAdvance(ting::utf8::Iterator str)const = 0;
+	float StringAdvance(ting::utf8::Iterator str)const;
 	
-	virtual float StringAdvance(const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	float StringAdvance(const ting::Buffer<const ting::u32>& utf32str)const{
+		return this->StringAdvanceInternal(utf32str);
+	}
 	
 	float StringAdvance(const char* str)const{
 		return this->StringAdvance(ting::utf8::Iterator(str));
@@ -77,9 +89,11 @@ public:
 	
 	
 	
-	virtual morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const = 0;
+	morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const;
 	
-	virtual morda::Rect2f StringBoundingBox(const ting::Buffer<const ting::u32>& utf32str)const = 0;
+	morda::Rect2f StringBoundingBox(const ting::Buffer<const ting::u32>& utf32str)const{
+		return this->StringBoundingBoxInternal(utf32str);
+	}
 	
 	morda::Rect2f StringBoundingBox(const char* str)const{
 		return this->StringBoundingBox(ting::utf8::Iterator(str));

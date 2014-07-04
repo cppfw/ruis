@@ -79,7 +79,7 @@ public:
 	 * @brief Default constructor.
 	 * Default constructor does not initialize vector components to any values.
 	 */
-	inline Vector4()throw(){}
+	Vector4()throw(){}
 
 	/**
 	 * @brief Constructor.
@@ -89,7 +89,7 @@ public:
      * @param z - value for third vector component.
      * @param w - value for fourth vector component.
      */
-	inline Vector4(T x, T y, T z, T w)throw() :
+	Vector4(T x, T y, T z, T w)throw() :
 			x(x),
 			y(y),
 			z(z),
@@ -103,7 +103,7 @@ public:
 	 * Initializes all vector components to a given value.
      * @param num - value to initialize all vector components with.
      */
-	inline Vector4(T num)throw(){
+	Vector4(T num)throw(){
 		this->operator=(num);
 	}
 
@@ -113,7 +113,7 @@ public:
      * @param num - value to use for initialization of first three vector components.
      * @param w - value to use for initialization of fourth vector component.
      */
-	inline Vector4(T num, T w)throw() :
+	Vector4(T num, T w)throw() :
 			x(num),
 			y(num),
 			z(num),
@@ -142,7 +142,7 @@ public:
      * @param i - component index to access, must be from 0 to 3.
      * @return Reference to the requested vector component.
      */
-	inline T& operator[](unsigned i)throw(){
+	T& operator[](unsigned i)throw(){
 		ASSERT(i < 4)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -157,7 +157,7 @@ public:
      * @param i - component index to access, must be from 0 to 3.
      * @return constant reference to the requested vector component.
      */
-	inline const T& operator[](unsigned i)const throw(){
+	const T& operator[](unsigned i)const throw(){
 		ASSERT(i < 4)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -193,7 +193,7 @@ public:
      * @param num - number to use for assignment.
      * @return Reference to this vector object.
      */
-	inline Vector4& operator=(T num)throw(){
+	Vector4& operator=(T num)throw(){
 		this->x = num;
 		this->y = num;
 		this->z = num;
@@ -206,7 +206,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& SetTo(T val)throw(){
+	Vector4& SetTo(T val)throw(){
 		this->x = val;
 		this->y = val;
 		this->z = val;
@@ -238,7 +238,7 @@ public:
 	 * @param vec - vector to add.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator+=(const Vector4& vec)throw(){
+	Vector4& operator+=(const Vector4& vec)throw(){
 		this->x += vec.x;
 		this->y += vec.y;
 		this->z += vec.z;
@@ -252,7 +252,7 @@ public:
 	 * @param vec - vector to add.
 	 * @return Vector resulting from vector addition.
 	 */
-	inline Vector4 operator+(const Vector4& vec)const throw(){
+	Vector4 operator+(const Vector4& vec)const throw(){
 		return (Vector4(*this) += vec);
 	}
 
@@ -262,7 +262,7 @@ public:
 	 * @param vec - vector to subtract.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator-=(const Vector4& vec)throw(){
+	Vector4& operator-=(const Vector4& vec)throw(){
 		this->x -= vec.x;
 		this->y -= vec.y;
 		this->z -= vec.z;
@@ -276,7 +276,7 @@ public:
 	 * @param vec - vector to subtract.
 	 * @return Vector resulting from vector subtraction.
 	 */
-	inline Vector4 operator-(const Vector4& vec)const throw(){
+	Vector4 operator-(const Vector4& vec)const throw(){
 		return (Vector4(*this) -= vec);
 	}
 
@@ -284,7 +284,7 @@ public:
 	 * @brief Unary minus.
      * @return Negated vector.
      */
-	inline Vector4 operator-()const throw(){
+	Vector4 operator-()const throw(){
 		return Vector4(*this).Negate();
 	}
 
@@ -294,7 +294,7 @@ public:
      * @param num - scalar to multiply by.
      * @return Reference to this vector object.
      */
-	inline Vector4& operator*=(T num)throw(){
+	Vector4& operator*=(T num)throw(){
 		this->x *= num;
 		this->y *= num;
 		this->z *= num;
@@ -308,7 +308,7 @@ public:
      * @param num - scalar to multiply by.
      * @return Vector resulting from multiplication of this vector by scalar.
      */
-	inline Vector4 operator*(T num)const throw(){
+	Vector4 operator*(T num)const throw(){
 		return (Vector4(*this) *= num);
 	}
 
@@ -318,7 +318,7 @@ public:
 	 * @param vec - vector to multiply by.
 	 * @return Vector resulting from multiplication of given scalar by given vector.
 	 */
-	inline friend Vector4 operator*(T num, const Vector4& vec)throw(){
+	friend Vector4 operator*(T num, const Vector4& vec)throw(){
 		return vec * num;
 	}
 
@@ -328,7 +328,7 @@ public:
 	 * @param num - scalar to divide by.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator/=(T num)throw(){
+	Vector4& operator/=(T num)throw(){
 		ASSERT_INFO(num != 0, "Vector4::operator/=(): division by 0")
 		this->x /= num;
 		this->y /= num;
@@ -343,7 +343,7 @@ public:
 	 * @param num - scalar to divide by.
 	 * @return Vector resulting from division of this vector by scalars.
 	 */
-	inline Vector4 operator/(T num)throw(){
+	Vector4 operator/(T num)throw(){
 		ASSERT_INFO(num != 0, "Vector4::operator/(): division by 0")
 		return (Vector4(*this) /= num);
 	}
@@ -353,7 +353,7 @@ public:
      * @param vec -vector to multiply by.
      * @return Dot product of this vector and given vector.
      */
-	inline T operator*(const Vector4& vec)const throw(){
+	T operator*(const Vector4& vec)const throw(){
 		return this->x * vec.x
 				+ this->y * vec.y
 				+ this->z * vec.z
@@ -368,7 +368,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Four-dimensional vector resulting from the cross product.
      */
-	inline Vector4 operator%(const Vector4& vec)const throw(){
+	Vector4 operator%(const Vector4& vec)const throw(){
 		return Vector4(
 				this->y * vec.z - this->z * vec.y,
 				this->z * vec.x - this->x * vec.z,
@@ -382,7 +382,7 @@ public:
 	 * Negates this vector.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& Negate()throw(){
+	Vector4& Negate()throw(){
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -394,7 +394,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	inline T MagPow2()const throw(){
+	T MagPow2()const throw(){
 		return ting::math::Pow2(this->x)
 				+ ting::math::Pow2(this->y)
 				+ ting::math::Pow2(this->z)
@@ -405,7 +405,7 @@ public:
 	 * @brief Calculate vector magnitude.
 	 * @return Vector magnitude.
 	 */
-	inline T Magnitude()const throw(){
+	T Magnitude()const throw(){
 		return ting::math::Sqrt(this->MagPow2());
 	}
 
@@ -414,7 +414,7 @@ public:
 	 * Normalizes this vector.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& Normalize()throw(){
+	Vector4& Normalize()throw(){
 		ASSERT(this->Magnitude() != 0)
 		(*this) /= this->Magnitude();
 		return (*this);
