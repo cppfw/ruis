@@ -25,7 +25,8 @@ stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
 		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
 
 		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
-		ting::Ptr<stob::Node> incNode = stob::Load(fi);
+		ting::Ptr<stob::Node> incNode = stob::Node::New();
+		incNode->SetChildren(stob::Load(fi));
 
 		//recursive call
 		stob::Node* lastChild = ResolveIncludes(fi, incNode.operator->());
@@ -81,7 +82,8 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 
 	ASS(rpe.fi)->SetPath("main.res.stob");
 
-	ting::Ptr<stob::Node> resScript = stob::Load(*(rpe.fi));
+	ting::Ptr<stob::Node> resScript = stob::Node::New();
+	resScript->SetChildren(stob::Load(*(rpe.fi)));
 
 	//handle includes
 	ResolveIncludes(*(rpe.fi), resScript.operator->());

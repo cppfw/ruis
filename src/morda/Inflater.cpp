@@ -7,6 +7,7 @@
 #include "widgets/TextButton.hpp"
 #include "widgets/Slider.hpp"
 #include "widgets/ImageLabel.hpp"
+#include "App.hpp"
 
 
 
@@ -54,17 +55,16 @@ ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
 
-	stob::Node* first = root->Child();
-	if(!first){
-		return 0;
-	}
-
-	return this->Inflate(*first);
+	return this->Inflate(*root);
 }
 
 
 
 ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
+	if(!App::Inst().ThisIsUIThread()){
+		throw Inflater::Exc("Inflate called not from UI thread");
+	}
+	
 	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
 
 	if(i == this->widgetFactories.end()){
