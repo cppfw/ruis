@@ -3,6 +3,7 @@
 #include "../Exc.hpp"
 #include "../App.hpp"
 
+#include <ting/utf8.hpp>
 
 using namespace morda;
 
@@ -30,10 +31,8 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 			throw morda::Exc("ResFont::Load(): no 'chars' property in resource description");
 		}
 		
-		//TODO: do utf8 to utf32
-		const std::string& charsStr = charsProp->Value();
-		for(unsigned i = 0; i < charsStr.size(); ++i){
-			wideChars.push_back(charsStr[i]);
+		for(ting::utf8::Iterator i(charsProp->Value()); i.IsNotEnd(); ++i){
+			wideChars.push_back(i.Char());
 		}
 	}
 	ASSERT(wideChars.size() > 0)
