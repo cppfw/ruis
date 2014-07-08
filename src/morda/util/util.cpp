@@ -59,3 +59,61 @@ float morda::DimValue(const stob::Node& n){
 	return n.AsFloat();
 }
 
+
+
+stob::Node* morda::ResolveIncludes(ting::fs::File& fi, stob::Node& root){
+	const char* DIncludeTag = "include";
+	
+	stob::Node::NodeAndPrev n = root.Child(DIncludeTag);
+	for(; n.node();){
+		ASSERT(n.node())
+		stob::Node* incPathNode = n.node()->Child();
+		if(!incPathNode){
+			throw Exc("include tag without value encountered in resource script");
+		}
+		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
+
+		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
+		ting::Ptr<stob::Node> incNode = stob::Node::New();
+		incNode->SetChildren(stob::Load(fi));
+
+		//recursive call
+		stob::Node* lastChild = ResolveIncludes(fi, *incNode);
+
+		//substitute includes
+		if(!n.prev()){
+			//include tag is the very first tag
+			root.RemoveFirstChild();
+
+			if(lastChild){
+				ASSERT(!lastChild->Next())
+				ASSERT(incNode->Child())
+				lastChild->InsertNext(root.RemoveChildren());
+				root.SetChildren(incNode->RemoveChildren());
+				n = lastChild->Next(DIncludeTag);
+			}else{
+				ASSERT(!incNode->Child())
+				n = n.node()->Next(DIncludeTag);
+			}
+			continue;
+		}else{
+			//include tag is not the first one
+
+			n.prev()->RemoveNext();
+			if(lastChild){
+				ASSERT(!lastChild->Next())
+				ASSERT(incNode->Child())
+				ting::Ptr<stob::Node> tail = n.prev()->ChopNext();
+				n.prev()->SetNext(incNode->RemoveChildren());
+				lastChild->SetNext(tail);
+				n = lastChild->Next(DIncludeTag);
+			}else{
+				ASSERT(!incNode->Child())
+				n = n.node()->Next(DIncludeTag);
+			}
+			continue;
+		}
+	}
+	return n.prev();
+}
+

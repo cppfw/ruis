@@ -1,5 +1,7 @@
 #include "ResourceManager.hpp"
 
+#include "../util/util.hpp"
+
 
 using namespace morda;
 
@@ -8,65 +10,6 @@ using namespace morda;
 namespace{
 
 const char* DResTag = "Res";
-const char* DIncludeTag = "include";
-
-
-
-//fi path should be set to resource script for resolving includes.
-//return pointer to the last child node of the script
-stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
-	stob::Node::NodeAndPrev n = root->Child(DIncludeTag);
-	for(; n.node();){
-		ASSERT(n.node())
-		stob::Node* incPathNode = n.node()->Child();
-		if(!incPathNode){
-			throw Exc("include tag without value encountered in resource script");
-		}
-		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
-
-		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
-		ting::Ptr<stob::Node> incNode = stob::Node::New();
-		incNode->SetChildren(stob::Load(fi));
-
-		//recursive call
-		stob::Node* lastChild = ResolveIncludes(fi, incNode.operator->());
-
-		//substitute includes
-		if(!n.prev()){
-			//include tag is the very first tag
-			root->RemoveFirstChild();
-
-			if(lastChild){
-				ASSERT(!lastChild->Next())
-				ASSERT(incNode->Child())
-				lastChild->InsertNext(root->RemoveChildren());
-				root->SetChildren(incNode->RemoveChildren());
-				n = lastChild->Next(DIncludeTag);
-			}else{
-				ASSERT(!incNode->Child())
-				n = n.node()->Next(DIncludeTag);
-			}
-			continue;
-		}else{
-			//include tag is not the first one
-
-			n.prev()->RemoveNext();
-			if(lastChild){
-				ASSERT(!lastChild->Next())
-				ASSERT(incNode->Child())
-				ting::Ptr<stob::Node> tail = n.prev()->ChopNext();
-				n.prev()->SetNext(incNode->RemoveChildren());
-				lastChild->SetNext(tail);
-				n = lastChild->Next(DIncludeTag);
-			}else{
-				ASSERT(!incNode->Child())
-				n = n.node()->Next(DIncludeTag);
-			}
-			continue;
-		}
-	}
-	return n.prev();
-}
 
 }//~namespace
 
@@ -86,7 +29,7 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 	resScript->SetChildren(stob::Load(*(rpe.fi)));
 
 	//handle includes
-	ResolveIncludes(*(rpe.fi), resScript.operator->());
+	ResolveIncludes(*(rpe.fi), *resScript);
 
 	rpe.resScript = resScript;
 
