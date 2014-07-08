@@ -44,10 +44,10 @@ namespace morda{
 
 
 class ResourceManager{
-    friend class Resource;
+	friend class Resource;
 
 	typedef Resource::T_ResMap T_ResMap;
-	
+
 	ting::Ref<Resource::ResMapRC> resMap;
 
 	class ResPackEntry{
@@ -64,15 +64,15 @@ class ResourceManager{
 
 	class FindInScriptRet{
 	public:
-		FindInScriptRet(ResPackEntry* resPack, const stob::Node* element, const stob::Node* nameVal) :
+		FindInScriptRet(ResPackEntry& resPack, const stob::Node& element, const stob::Node& nameVal) :
 				rp(resPack),
 				e(element),
 				nameVal(nameVal)
 		{}
 
-		ResPackEntry* rp;
-		const stob::Node* e;
-		const stob::Node* nameVal;
+		ResPackEntry& rp;
+		const stob::Node& e;
+		const stob::Node& nameVal;
 	};
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
@@ -80,17 +80,17 @@ class ResourceManager{
 	template <class T> ting::Ref<T> FindResourceInResMap(const char* resName);
 
 	//Add resource to resources map
-	void AddResource(const ting::Ref<Resource>& res, const stob::Node* node);
+	void AddResource(const ting::Ref<Resource>& res, const stob::Node& node);
 
-	
+
 public:
 	class Exc : public morda::Exc{
 	public:
-		inline Exc(const std::string& message) :
+		Exc(const std::string& message) :
 				morda::Exc(message)
 		{}
 	};
-	
+
 	inline ResourceManager() :
 			resMap(Resource::ResMapRC::New())
 	{}
@@ -125,14 +125,11 @@ template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
 
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
 	FindInScriptRet ret = this->FindResourceInScript(resName);
-	ASSERT(ret.e)
-	ASSERT(ret.nameVal)
-	ASSERT(ret.rp)
-	ASSERT(ret.rp->fi)
+	ASSERT(ret.rp.fi)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	ting::Ref<T> resource = T::Load(ret.e, *(ret.rp->fi));
+	ting::Ref<T> resource = T::Load(ret.e, *ret.rp.fi);
 
 	this->AddResource(resource, ret.nameVal);
 

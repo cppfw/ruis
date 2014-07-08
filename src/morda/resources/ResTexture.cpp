@@ -10,9 +10,9 @@ using namespace morda;
 
 
 //static
-ting::Ref<ResTexture> ResTexture::Load(const stob::Node* el, ting::fs::File& fi){
+ting::Ref<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi){
 //	TRACE(<< "ResTexture::Load(): enter" << std::endl)
-	const stob::Node* fileVal = el->GetProperty("file");
+	const stob::Node* fileVal = el.GetProperty("file");
 	if(!fileVal){
 		throw morda::Exc("ResTexture::Load(): no 'file' property in resource description");
 	}

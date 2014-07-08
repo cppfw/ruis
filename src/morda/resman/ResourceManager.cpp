@@ -23,18 +23,18 @@ stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
 			throw Exc("include tag without value encountered in resource script");
 		}
 		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
-		
+
 		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
 		ting::Ptr<stob::Node> incNode = stob::Load(fi);
-		
+
 		//recursive call
 		stob::Node* lastChild = ResolveIncludes(fi, incNode.operator->());
-		
+
 		//substitute includes
 		if(!n.prev()){
 			//include tag is the very first tag
 			root->RemoveFirstChild();
-			
+
 			if(lastChild){
 				ASSERT(!lastChild->Next())
 				ASSERT(incNode->Child())
@@ -48,7 +48,7 @@ stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node* root){
 			continue;
 		}else{
 			//include tag is not the first one
-			
+
 			n.prev()->RemoveNext();
 			if(lastChild){
 				ASSERT(!lastChild->Next())
@@ -80,12 +80,12 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 	rpe.fi = fi;
 
 	ASS(rpe.fi)->SetPath("main.res.stob");
-	
+
 	ting::Ptr<stob::Node> resScript = stob::Load(*(rpe.fi));
 
 	//handle includes
 	ResolveIncludes(*(rpe.fi), resScript.operator->());
-	
+
 	rpe.resScript = resScript;
 
 	this->resPacks.push_back(rpe);
@@ -101,15 +101,14 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
 		for(const stob::Node* e = i->resScript->Child(DResTag).node(); e; e = e->Next(DResTag).node()){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
-			const stob::Node* nameProp = e->GetProperty("name");
-			if(!nameProp){
+			if(const stob::Node* nameProp = e->GetProperty("name")){
+	//			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
+				if(resName.compare(nameProp->Value()) == 0){
+	//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
+					return FindInScriptRet(*i, *e, *nameProp);
+				}
+			}else{
 //				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
-				continue;
-			}
-//			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
-			if(resName.compare(nameProp->Value()) == 0){
-//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-				return FindInScriptRet(&(*i), e, nameProp);
 			}
 		}//~for(res)
 	}//~for(resPack)
@@ -119,17 +118,17 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 
 
 
-void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::Node* node){
+void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::Node& node){
 	ASSERT(res)
-	
+
 	//add the resource to the resources map of ResMan
 	std::pair<T_ResMap::iterator, bool> pr = this->resMap->rm.insert(
 			std::pair<const char*, ting::WeakRef<Resource> >(
-					node->Value(),
+					node.Value(),
 					res.GetWeakRef()
 				)
 		);
-	
+
 	ASSERT(pr.second == true) //make sure that the new element was added but not the old one rewritten
 
 //#ifdef DEBUG
@@ -137,7 +136,7 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 //		TRACE(<< "\t" << *(*i).first << std::endl)
 //	}
 //#endif
-	
+
 	res->it = pr.first;
 	res->rm = this->resMap; //save weak reference to resource map
 }
