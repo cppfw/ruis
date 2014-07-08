@@ -26,7 +26,7 @@ void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
 	ASS(rpe.fi)->SetPath("main.res.stob");
 
 	ting::Ptr<stob::Node> resScript = stob::Node::New();
-	resScript->SetChildren(stob::Load(*(rpe.fi)));
+	resScript->SetChildren(stob::Load(*(rpe.fi)));//TODO: refactor this
 
 	//handle includes
 	ResolveIncludes(*(rpe.fi), *resScript);
