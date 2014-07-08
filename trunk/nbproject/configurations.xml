@@ -421,8 +421,6 @@
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="0">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
       </item>

@@ -48,7 +48,7 @@ class App;
 
 class Inflater{
 	friend class morda::App;
-	
+
 	Inflater();
 public:
 	class Exc : public morda::Exc{
@@ -57,25 +57,25 @@ public:
 				morda::Exc(message)
 		{}
 	};
-	
+
 	class WidgetFactory{
 	public:
 		virtual ting::Ref<morda::Widget> Create(const stob::Node& node)const = 0;
 
 		virtual ~WidgetFactory()throw(){}
 	};
-	
+
 private:
 	typedef std::map<std::string, ting::Ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
-	
+
 	void AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory);
-	
+
 public:
 	/**
 	 * @brief Registers a new widget type.
-     * @param widgetName - name of the widget as it appears in GUI script.
-     */
+	 * @param widgetName - name of the widget as it appears in GUI script.
+	 */
 	template <class T_Widget> void AddWidget(const std::string& widgetName){
 		class Factory : public WidgetFactory{
 		public:
@@ -85,31 +85,39 @@ public:
 				return ret;
 			}
 		};
-		
+
 		this->AddWidgetFactory(widgetName, ting::Ptr<WidgetFactory>(new Factory()));
 	}
-	
+
 	/**
 	 * @brief Remove previously registered widget type.
-     * @param widgetName - widget name as it appears in GUI script.
+	 * @param widgetName - widget name as it appears in GUI script.
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
-     */
+	 */
 	bool RemoveWidget(const std::string& widgetName)throw();
-	
+
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
-     * @param gui - GUI script to use.
-     * @return reference to the inflated widget.
-     */
+	 * @param gui - GUI script to use.
+	 * @return reference to the inflated widget.
+	 */
 	ting::Ref<morda::Widget> Inflate(const stob::Node& gui)const;
-	
+
 	/**
 	 * @brief Inflate widget described in GUI script.
-     * @param fi - file interface to get the GUI script from.
-     * @return reference to the inflated widget.
-     */
+	 * @param fi - file interface to get the GUI script from.
+	 * @return reference to the inflated widget.
+	 */
 	ting::Ref<morda::Widget> Inflate(ting::fs::File& fi)const;
+
+	/**
+	 * @brief Load GUI script.
+	 * Loads a GUI script resolving includes.
+	 * @param fi - file interface providing GUI script and its dependencies.
+	 * @return Pointer to a root node of the GUI hierarchy.
+	 */
+	static ting::Ptr<stob::Node> Load(ting::fs::File& fi);
 };
 
 

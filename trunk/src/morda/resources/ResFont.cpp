@@ -15,10 +15,9 @@ ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsig
 
 
 //static
-ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
-	ASSERT(el)
+ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 	//get font filename
-	const stob::Node* fileProp = el->GetProperty("file");
+	const stob::Node* fileProp = el.GetProperty("file");
 	if(!fileProp){
 		throw morda::Exc("ResFont::Load(): no 'file' property in resource description");
 	}
@@ -26,7 +25,7 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	//read chars attribute
 	std::vector<ting::u32> wideChars;
 	{
-		const stob::Node* charsProp = el->GetProperty("chars");
+		const stob::Node* charsProp = el.GetProperty("chars");
 		if(!charsProp){
 			throw morda::Exc("ResFont::Load(): no 'chars' property in resource description");
 		}
@@ -42,7 +41,7 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	//read size attribute
 	unsigned size;
 	{
-		const stob::Node* sizeProp = el->GetProperty("size");
+		const stob::Node* sizeProp = el.GetProperty("size");
 		if(!sizeProp){
 			size = 12;
 		}else{
@@ -53,7 +52,7 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node* el, ting::fs::File& fi){
 	//read outline attribute
 	unsigned outline;
 	{
-		const stob::Node* outlineProp = el->GetProperty("outline");
+		const stob::Node* outlineProp = el.GetProperty("outline");
 		if(!outlineProp){
 			outline = 0;
 		}else{

@@ -53,12 +53,12 @@ bool Inflater::RemoveWidget(const std::string& widgetName)throw(){
 ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 	ting::Ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
-	
+
 	stob::Node* first = root->Child();
 	if(!first){
 		return 0;
 	}
-	
+
 	return this->Inflate(*first);
 }
 
@@ -66,10 +66,17 @@ ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 
 ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
-	
+
 	if(i == this->widgetFactories.end()){
 		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
-	
+
 	return i->second->Create(gui);
+}
+
+
+
+ting::Ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
+	//TODO:
+	return ting::Ptr<stob::Node>();
 }
