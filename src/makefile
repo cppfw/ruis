@@ -59,9 +59,6 @@ ifeq ($(platform), maemo_linux)
 endif
 
 
-gpp_408 := $(shell expr `g++ -dumpversion | sed -e 's/\.\([0-9][0-9]\)/\1/g' -e 's/\.\([0-9]\)/0\1/g' -e 's/^[0-9]\{3,4\}$$/&00/'` \>= 40800)
-
-
 compiler_flags := -Wall #enable all warnings
 compiler_flags += -Wno-comment #no warnings on nested comments
 compiler_flags += -funsigned-char #the 'char' type is unsigned
@@ -71,12 +68,9 @@ compiler_flags += -Werror #treat warnings as errors
 compiler_flags += -Wfatal-errors # stop on first error encountered
 compiler_flags += -fstrict-aliasing #strict aliasing (in order to comply with the c++ standard more strictly)
 compiler_flags += -g #include debugging symbols
+compiler_flags += -std=c++11
                 #-P -E #-Wreorder
                 #-O3 -funroll-loops -fomit-frame-pointer
-
-ifeq ($(gpp_408), 1)
-    compiler_flags += -std=c++11 #some c++'11 features can optionally be used, so enable it.
-endif
 
 
 
