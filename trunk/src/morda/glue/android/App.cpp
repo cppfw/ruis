@@ -800,7 +800,7 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
 }
 

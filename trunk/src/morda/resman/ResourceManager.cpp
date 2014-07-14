@@ -15,27 +15,27 @@ const char* DResTag = "Res";
 
 
 
-void ResourceManager::MountResPack(ting::Ptr<ting::fs::File> fi){
+void ResourceManager::MountResPack(std::unique_ptr<ting::fs::File> fi){
 	ASSERT(fi)
 	ASSERT(!fi->IsOpened())
 
 	ResPackEntry rpe;
 
-	rpe.fi = fi;
+	rpe.fi = std::move(fi);
 
 	ASS(rpe.fi)->SetPath("main.res.stob");
 
-	ting::Ptr<stob::Node> resScript = stob::Node::New();
+	std::unique_ptr<stob::Node> resScript = stob::Node::New();
 	resScript->SetChildren(stob::Load(*(rpe.fi)));//TODO: refactor this
 
 	//handle includes
 	ResolveIncludes(*(rpe.fi), *resScript);
 
-	rpe.resScript = resScript;
+	rpe.resScript = std::move(resScript);
 
-	this->resPacks.push_back(rpe);
-	ASSERT(this->resPacks.back().fi.IsValid())
-	ASSERT(this->resPacks.back().resScript.IsValid())
+	this->resPacks.push_back(std::move(rpe));
+	ASSERT(this->resPacks.back().fi)
+	ASSERT(this->resPacks.back().resScript)
 }
 
 

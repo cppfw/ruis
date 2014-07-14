@@ -32,6 +32,7 @@ THE SOFTWARE. */
 
 #include <ting/Ref.hpp>
 #include <ting/fs/File.hpp>
+#include <ting/Ptr.hpp>
 
 #include <stob/dom.hpp>
 
@@ -52,8 +53,8 @@ class ResourceManager{
 
 	class ResPackEntry{
 	public:
-		ting::Ptr<ting::fs::File> fi;
-		ting::Ptr<const stob::Node> resScript;
+		std::unique_ptr<ting::fs::File> fi;
+		std::unique_ptr<const stob::Node> resScript;
 	};
 
 	typedef std::vector<ResPackEntry> T_ResPackList;
@@ -97,7 +98,7 @@ public:
 
 	virtual ~ResourceManager(){}
 
-	void MountResPack(ting::Ptr<ting::fs::File> fi);
+	void MountResPack(std::unique_ptr<ting::fs::File> fi);
 
 	template <class T> ting::Ref<T> Load(const char* resName);
 };

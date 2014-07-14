@@ -91,7 +91,7 @@ private:
 	ting::Inited<bool, true> relayoutNeeded;
 	
 	//properties from STOB description
-	ting::Ptr<stob::Node> prop;
+	std::unique_ptr<stob::Node> prop;
 public:
 	const stob::Node* Prop()const throw(){
 		return this->prop.operator->();
@@ -104,12 +104,12 @@ public:
 		return this->Prop()->Child(propName).node();
 	}
 	
-	ting::Ptr<stob::Node> ExtractProp()throw(){
-		return this->prop;
+	std::unique_ptr<stob::Node> ExtractProp()throw(){
+		return std::move(this->prop);
 	}
 	
-	void SetProp(ting::Ptr<stob::Node> prop)throw(){
-		this->prop = prop;
+	void SetProp(std::unique_ptr<stob::Node> prop)throw(){
+		this->prop = std::move(prop);
 	}
 	
 	bool NeedsRelayout()const throw(){

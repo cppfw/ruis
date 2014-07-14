@@ -317,7 +317,7 @@ public:
 		return this->shaders;
 	}
 
-	ting::Ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
+	std::unique_ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.

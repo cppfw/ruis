@@ -30,6 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <map>
+#include <memory>
 
 #include <ting/util.hpp>
 
@@ -66,10 +67,10 @@ public:
 	};
 
 private:
-	typedef std::map<std::string, ting::Ptr<WidgetFactory> > T_FactoryMap;
+	typedef std::map<std::string, std::unique_ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
 
-	void AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory);
+	void AddWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory);
 
 public:
 	/**
@@ -86,7 +87,7 @@ public:
 			}
 		};
 
-		this->AddWidgetFactory(widgetName, ting::Ptr<WidgetFactory>(new Factory()));
+		this->AddWidgetFactory(widgetName, std::unique_ptr<WidgetFactory>(new Factory()));
 	}
 
 	/**
@@ -117,7 +118,7 @@ public:
 	 * @param fi - file interface providing GUI script and its dependencies.
 	 * @return Pointer to a root node of the GUI hierarchy.
 	 */
-	static ting::Ptr<stob::Node> Load(ting::fs::File& fi);
+	static std::unique_ptr<stob::Node> Load(ting::fs::File& fi);
 };
 
 
