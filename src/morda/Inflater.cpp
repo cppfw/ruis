@@ -28,11 +28,11 @@ Inflater::Inflater(){
 
 
 
-void Inflater::AddWidgetFactory(const std::string& widgetName, ting::Ptr<WidgetFactory> factory){
+void Inflater::AddWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory){
 	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
-			std::pair<std::string, ting::Ptr<Inflater::WidgetFactory> >(
+			std::pair<std::string, std::unique_ptr<Inflater::WidgetFactory> >(
 					widgetName,
-					factory
+					std::move(factory)
 				)
 		);
 	if(!ret.second){
@@ -52,7 +52,7 @@ bool Inflater::RemoveWidget(const std::string& widgetName)throw(){
 
 
 ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
-	ting::Ptr<stob::Node> root = stob::Load(fi);
+	std::unique_ptr<stob::Node> root = stob::Load(fi);
 	ASSERT(root)
 
 	return this->Inflate(*root);
@@ -76,7 +76,7 @@ ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 
 
 
-ting::Ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
+std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 	//TODO:
-	return ting::Ptr<stob::Node>();
+	return std::unique_ptr<stob::Node>();
 }

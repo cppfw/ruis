@@ -74,7 +74,7 @@ stob::Node* morda::ResolveIncludes(ting::fs::File& fi, stob::Node& root){
 		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
 
 		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
-		ting::Ptr<stob::Node> incNode = stob::Node::New();
+		std::unique_ptr<stob::Node> incNode = stob::Node::New();
 		incNode->SetChildren(stob::Load(fi));
 
 		//recursive call
@@ -103,9 +103,9 @@ stob::Node* morda::ResolveIncludes(ting::fs::File& fi, stob::Node& root){
 			if(lastChild){
 				ASSERT(!lastChild->Next())
 				ASSERT(incNode->Child())
-				ting::Ptr<stob::Node> tail = n.prev()->ChopNext();
+				std::unique_ptr<stob::Node> tail = n.prev()->ChopNext();
 				n.prev()->SetNext(incNode->RemoveChildren());
-				lastChild->SetNext(tail);
+				lastChild->SetNext(std::move(tail));
 				n = lastChild->Next(DIncludeTag);
 			}else{
 				ASSERT(!incNode->Child())

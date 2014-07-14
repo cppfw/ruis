@@ -38,6 +38,7 @@ cf += -Wno-format
 cf += -DDEBUG
 cf += -fstrict-aliasing #strict aliasing!!!
 cf += -g
+cf += -std=c++11
 
 default: $(binary_name)
 

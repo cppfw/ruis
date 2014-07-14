@@ -217,10 +217,10 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
 	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
 	fi->SetRootDir("res/");
-	return fi;
+	return std::unique_ptr<ting::fs::FSFile>(fi.Extract());
 }
 
 
