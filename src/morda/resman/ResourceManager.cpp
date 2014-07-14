@@ -25,11 +25,10 @@ void ResourceManager::MountResPack(std::unique_ptr<ting::fs::File> fi){
 
 	ASS(rpe.fi)->SetPath("main.res.stob");
 
-	std::unique_ptr<stob::Node> resScript = stob::Node::New();
-	resScript->SetChildren(stob::Load(*(rpe.fi)));//TODO: refactor this
+	std::unique_ptr<stob::Node> resScript = stob::Load(*rpe.fi);
 
 	//handle includes
-	ResolveIncludes(*(rpe.fi), *resScript);
+	resScript = std::move(std::get<0>(ResolveIncludes(*rpe.fi, std::move(resScript))));
 
 	rpe.resScript = std::move(resScript);
 
@@ -44,7 +43,7 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
-		for(const stob::Node* e = i->resScript->Child(DResTag).node(); e; e = e->Next(DResTag).node()){
+		for(const stob::Node* e = i->resScript->ThisOrNext(DResTag).node(); e; e = e->Next(DResTag).node()){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
 			if(const stob::Node* nameProp = e->GetProperty("name")){
 	//			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
