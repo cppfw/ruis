@@ -61,10 +61,14 @@ float morda::DimValue(const stob::Node& n){
 
 
 
-stob::Node* morda::ResolveIncludes(ting::fs::File& fi, stob::Node& root){
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting::fs::File& fi, std::unique_ptr<stob::Node> begin){
+	if(!begin){
+		return std::make_tuple(std::unique_ptr<stob::Node>(), nullptr);
+	}
+	
 	const char* DIncludeTag = "include";
 	
-	stob::Node::NodeAndPrev n = root.Child(DIncludeTag);
+	stob::Node::NodeAndPrev n = begin->ThisOrNext(DIncludeTag);
 	for(; n.node();){
 		ASSERT(n.node())
 		stob::Node* incPathNode = n.node()->Child();
@@ -74,46 +78,36 @@ stob::Node* morda::ResolveIncludes(ting::fs::File& fi, stob::Node& root){
 		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
 
 		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
-		std::unique_ptr<stob::Node> incNode = stob::Node::New();
-		incNode->SetChildren(stob::Load(fi));
+		std::unique_ptr<stob::Node> incNodes = stob::Load(fi);
 
 		//recursive call
-		stob::Node* lastChild = ResolveIncludes(fi, *incNode);
+		auto ri = ResolveIncludes(fi, std::move(incNodes));
 
-		//substitute includes
-		if(!n.prev()){
-			//include tag is the very first tag
-			root.RemoveFirstChild();
+		stob::Node* lastChild = std::get<1>(ri);
+		
+		if(lastChild){
+			//substitute includes
+			if(!n.prev()){
+				//include tag is the very first tag
 
-			if(lastChild){
 				ASSERT(!lastChild->Next())
-				ASSERT(incNode->Child())
-				lastChild->InsertNext(root.RemoveChildren());
-				root.SetChildren(incNode->RemoveChildren());
-				n = lastChild->Next(DIncludeTag);
+				lastChild->InsertNext(std::move(n.node()->ChopNext()));
+				begin = std::move(std::get<0>(ri));
 			}else{
-				ASSERT(!incNode->Child())
-				n = n.node()->Next(DIncludeTag);
-			}
-			continue;
-		}else{
-			//include tag is not the first one
+				//include tag is not the first one
 
-			n.prev()->RemoveNext();
-			if(lastChild){
+				n.prev()->RemoveNext();
+
 				ASSERT(!lastChild->Next())
-				ASSERT(incNode->Child())
 				std::unique_ptr<stob::Node> tail = n.prev()->ChopNext();
-				n.prev()->SetNext(incNode->RemoveChildren());
+				n.prev()->SetNext(std::move(std::get<0>(ri)));
 				lastChild->SetNext(std::move(tail));
-				n = lastChild->Next(DIncludeTag);
-			}else{
-				ASSERT(!incNode->Child())
-				n = n.node()->Next(DIncludeTag);
 			}
-			continue;
+			n = lastChild->Next(DIncludeTag);
+		}else{
+			n = n.node()->Next(DIncludeTag);
 		}
 	}
-	return n.prev();
+	return std::make_tuple(std::move(begin), n.prev());
 }
 

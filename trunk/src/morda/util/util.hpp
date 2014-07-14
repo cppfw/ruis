@@ -30,6 +30,8 @@ THE SOFTWARE. */
 
 #include "Vector2.hpp"
 
+#include <tuple>
+
 #include <stob/dom.hpp>
 #include <ting/math.hpp>
 
@@ -89,10 +91,10 @@ float DimValue(const stob::Node& n);
 /**
  * @brief Resolve includes in STOB document.
  * @param fi - file interface set to the original STOB document. Because resolving include paths is done relatively to original STOB document path.
- * @param root - root node of the original STOB document.
- * @return Pointer to the last child node of the script.
+ * @param begin - first node of the original STOB document.
+ * @return New first node and pointer to the last child node of the script.
  */
-stob::Node* ResolveIncludes(ting::fs::File& fi, stob::Node& root);
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> ResolveIncludes(ting::fs::File& fi, std::unique_ptr<stob::Node> begin);
 
 
 
