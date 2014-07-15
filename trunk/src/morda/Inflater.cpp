@@ -8,6 +8,7 @@
 #include "widgets/Slider.hpp"
 #include "widgets/ImageLabel.hpp"
 #include "App.hpp"
+#include "util/util.hpp"
 
 
 
@@ -52,7 +53,7 @@ bool Inflater::RemoveWidget(const std::string& widgetName)throw(){
 
 
 ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
-	std::unique_ptr<stob::Node> root = stob::Load(fi);
+	std::unique_ptr<stob::Node> root = this->Load(fi);
 	ASSERT(root)
 
 	return this->Inflate(*root);
@@ -77,6 +78,9 @@ ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 
 
 std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
-	//TODO:
-	return std::unique_ptr<stob::Node>();
+	std::unique_ptr<stob::Node> ret = stob::Load(fi);
+	
+	ret = std::move(std::get<0>(ResolveIncludes(fi, std::move(ret))));
+
+	return ret;
 }
