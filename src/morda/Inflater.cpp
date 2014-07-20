@@ -66,13 +66,50 @@ ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}
 	
-	T_FactoryMap::const_iterator i = this->widgetFactories.find(gui.Value());
+	const stob::Node* n = &gui;
+	for(; ; n = n->Next()){
+		if(!n){
+			return 0;
+		}
+		
+		if(!n->IsProperty()){
+			break;
+		}
+		
+		if(*n == "class"){
+			n = n->Next();
+			if(!n){
+				TRACE(<< "Inflater::Inflate(): unexpected end of document after class keyword"<< std::endl)
+				return 0;
+			}
+			
+			if(n->IsProperty()){
+				TRACE(<< "Inflater::Inflate(): class keyword is not followed by a class name (Should start with capital letter)"<< std::endl)
+				return 0;
+			}
+			
+			//TODO: save class name
+			
+			n = n->Next();
+			if(!n){
+				TRACE(<< "Inflater::Inflate(): unexpected end of document after class name"<< std::endl)
+				return 0;
+			}
+			
+			//TODO: search for inherited class existence
+			
+			//TODO: add new class
+		}
+	}
+	
+	T_FactoryMap::const_iterator i = this->widgetFactories.find(n->Value());
 
 	if(i == this->widgetFactories.end()){
+		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
 		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
-	return i->second->Create(gui);
+	return i->second->Create(*n);
 }
 
 
