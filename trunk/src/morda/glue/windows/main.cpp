@@ -14,6 +14,8 @@ namespace morda{
 inline void Main(int argc, const char** argv){
 	ting::Ptr<morda::App> a = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 
+	ShowWindow(a->window.hwnd, SW_SHOW);
+	
 	a->Exec();
 }
 
