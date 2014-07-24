@@ -10,7 +10,7 @@ include $(LOCAL_PATH)/../../../../src/sources.mk
 
 PREFIX := 
 
-LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(sources))
+LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(this_srcs))
 
 LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/App.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp

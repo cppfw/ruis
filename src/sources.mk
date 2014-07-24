@@ -1,41 +1,41 @@
-sources := 
-sources += morda/App.cpp
-sources += morda/Inflater.cpp
-sources += morda/Updateable.cpp
+this_srcs := 
+this_srcs += morda/App.cpp
+this_srcs += morda/Inflater.cpp
+this_srcs += morda/Updateable.cpp
 
-sources += morda/shaders/Shader.cpp
-sources += morda/shaders/SimpleSingleColoringShader.cpp
-sources += morda/shaders/TexturingShader.cpp
-sources += morda/shaders/SimpleTexturingShader.cpp
+this_srcs += morda/shaders/Shader.cpp
+this_srcs += morda/shaders/SimpleSingleColoringShader.cpp
+this_srcs += morda/shaders/TexturingShader.cpp
+this_srcs += morda/shaders/SimpleTexturingShader.cpp
 
-sources += morda/resman/ResourceManager.cpp
-sources += morda/resman/Resource.cpp
+this_srcs += morda/resman/ResourceManager.cpp
+this_srcs += morda/resman/Resource.cpp
 
-sources += morda/resources/ResTexture.cpp
-sources += morda/resources/ResFont.cpp
+this_srcs += morda/resources/ResTexture.cpp
+this_srcs += morda/resources/ResFont.cpp
 
-sources += morda/fonts/Font.cpp
-sources += morda/fonts/TexFont.cpp
+this_srcs += morda/fonts/Font.cpp
+this_srcs += morda/fonts/TexFont.cpp
 
-sources += morda/util/CharInputFocusable.cpp
-sources += morda/util/GLTexture.cpp
-sources += morda/util/Gravity.cpp
-sources += morda/util/Image.cpp
-sources += morda/util/LayoutDim.cpp
-sources += morda/util/LeftBottomRightTop.cpp
-sources += morda/util/util.cpp
+this_srcs += morda/util/CharInputFocusable.cpp
+this_srcs += morda/util/GLTexture.cpp
+this_srcs += morda/util/Gravity.cpp
+this_srcs += morda/util/Image.cpp
+this_srcs += morda/util/LayoutDim.cpp
+this_srcs += morda/util/LeftBottomRightTop.cpp
+this_srcs += morda/util/util.cpp
 
-sources += morda/util/ZipFile.cpp
-sources += morda/util/unzip/ioapi.cpp
-sources += morda/util/unzip/unzip.cpp
+this_srcs += morda/util/ZipFile.cpp
+this_srcs += morda/util/unzip/ioapi.cpp
+this_srcs += morda/util/unzip/unzip.cpp
 
-sources += morda/widgets/Button.cpp
-sources += morda/widgets/Container.cpp
-sources += morda/widgets/FrameContainer.cpp
-sources += morda/widgets/ImageLabel.cpp
-sources += morda/widgets/Label.cpp
-sources += morda/widgets/LinearContainer.cpp
-sources += morda/widgets/LinearWidget.cpp
-sources += morda/widgets/Slider.cpp
-sources += morda/widgets/TextButton.cpp
-sources += morda/widgets/Widget.cpp
+this_srcs += morda/widgets/Button.cpp
+this_srcs += morda/widgets/Container.cpp
+this_srcs += morda/widgets/FrameContainer.cpp
+this_srcs += morda/widgets/ImageLabel.cpp
+this_srcs += morda/widgets/Label.cpp
+this_srcs += morda/widgets/LinearContainer.cpp
+this_srcs += morda/widgets/LinearWidget.cpp
+this_srcs += morda/widgets/Slider.cpp
+this_srcs += morda/widgets/TextButton.cpp
+this_srcs += morda/widgets/Widget.cpp

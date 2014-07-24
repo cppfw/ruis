@@ -1,10 +1,5 @@
-default: doc
+include prorab.mk
 
-doc:
-	@echo Building docs...
-	@doxygen doxygen.cfg
+this_name := morda
 
-clean:
-	@rm -rf doxygen
-
-include ../targets.mk
+$(eval $(prorab-build-doxygen))
