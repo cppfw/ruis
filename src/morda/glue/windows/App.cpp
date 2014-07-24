@@ -509,7 +509,7 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 		throw morda::Exc("Failed to create a window");
 	}
 	
-	ShowWindow(this->hwnd, SW_SHOW);
+	//NOTE: window will be shown later, right before entering main loop and after all initial App data is initialized
 
 //	TRACE_AND_LOG(<< "App::WindowWrapper::WindowWrapper(): exit" << std::endl)
 }
