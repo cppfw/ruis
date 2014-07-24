@@ -16,17 +16,16 @@ this_cflags += -std=c++11
 
 
 ifeq ($(prorab_os),windows)
-    this_ldlibs := -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-#    this_ldlibs := -mwindows #if we do not want console output, e.g. in production version
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda_main.a $(prorab_this_dir)../../src/libmorda.dll
-    this_ldflags := -L/usr/lib -L/usr/local/lib
-    this_ldlibs +=  -lglew32 -lopengl32
+    this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda.a
+    this_ldflags += -L/usr/lib -L/usr/local/lib
+    this_ldlibs +=  -lglew32 -lopengl32 -lting -lstob -lpng -ljpeg -lz -lfreetype -mwindows
 
     this_cflags += -I/usr/include
 else ifeq ($(prorab_os),macosx)
-    this_ldlibs := $(prorab_this_dir)../../src/libmorda.a -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda.a -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
 else ifeq ($(prorab_os),linux)
-    this_ldlibs := -lting $(prorab_this_dir)../../src/libmorda.so -lGLEW -lstob -pthread -lGL
+    this_ldlibs += -lting $(prorab_this_dir)../../src/libmorda.so -lGLEW -lstob -pthread -lGL
 endif
 
 
@@ -42,7 +41,7 @@ endef
 $(eval $(this_rules))
 
 #add dependency on libmorda
-$(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
+$(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda.a)
 
 $(eval $(call prorab-include,$(prorab_this_dir)../../src/makefile))
 
