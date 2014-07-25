@@ -59,7 +59,8 @@ endif
 $(eval $(prorab-build-lib))
 
 
-ifeq ($(prorab_os), windows)
+
+ifeq ($(prorab_os),windows)
     #override .dll rule, no .dll will be built
     $(prorab_this_name):
 	

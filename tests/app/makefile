@@ -41,10 +41,13 @@ endef
 $(eval $(this_rules))
 
 #add dependency on libmorda
-$(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda.a)
+ifeq ($(prorab_os),windows)
+    $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda.a)
+else
+    $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
+endif
 
 $(eval $(call prorab-include,$(prorab_this_dir)../../src/makefile))
-
 
 
 
