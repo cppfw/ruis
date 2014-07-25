@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,11 +45,9 @@ namespace morda{
 
 
 class ResourceManager{
-	friend class Resource;
+	typedef std::map<const std::string, ting::WeakRef<Resource> > T_ResMap;
 
-	typedef Resource::T_ResMap T_ResMap;
-
-	ting::Ref<Resource::ResMapRC> resMap;
+	T_ResMap resMap;
 
 	class ResPackEntry{
 	public:
@@ -92,9 +90,7 @@ public:
 		{}
 	};
 
-	inline ResourceManager() :
-			resMap(Resource::ResMapRC::New())
-	{}
+	ResourceManager(){}
 
 	virtual ~ResourceManager(){}
 
@@ -106,8 +102,8 @@ public:
 
 
 template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const char* resName){
-	T_ResMap::iterator i = this->resMap->rm.find(resName);
-	if(i != this->resMap->rm.end()){
+	T_ResMap::iterator i = this->resMap.find(resName);
+	if(i != this->resMap.end()){
 		ting::Ref<Resource> r((*i).second);
 		ASSERT(r.DynamicCast<T>().IsValid())
 		return r.StaticCast<T>();

@@ -1,7 +1,5 @@
 include prorab.mk
 
-debug := false
-
 
 this_name := morda
 
@@ -35,11 +33,11 @@ this_cflags += -g #include debugging symbols
                 #-O3 -funroll-loops -fomit-frame-pointer
 this_cflags += -std=c++11
 
-ifeq ($(debug), true)
+ifeq ($(debug),true)
     this_cflags += -DDEBUG
 endif
 
-ifneq ($(prorab_os), windows)
+ifneq ($(prorab_os),windows)
     this_cflags += -fPIC # Since we are building shared library, we need Position-Independend Code
 endif
 
