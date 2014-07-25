@@ -33,7 +33,7 @@ THE SOFTWARE. */
 #include "../util/GLTexture.hpp"
 
 #include "../resman/Resource.hpp"
-
+#include "../resman/ResourceManager.hpp"
 
 
 namespace morda{
