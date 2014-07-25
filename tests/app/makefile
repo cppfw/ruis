@@ -14,6 +14,9 @@ this_cflags += -fstrict-aliasing #strict aliasing!!!
 this_cflags += -g
 this_cflags += -std=c++11
 
+ifeq ($(debug), true)
+    this_cflags += -DDEBUG
+endif
 
 ifeq ($(prorab_os),windows)
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
