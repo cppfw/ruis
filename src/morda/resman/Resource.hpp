@@ -36,8 +36,6 @@ THE SOFTWARE. */
 
 namespace morda{
 
-//forward declarations
-class ResourceManager;
 
 
 //base class for all resources

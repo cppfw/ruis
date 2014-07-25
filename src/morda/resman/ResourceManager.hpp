@@ -43,7 +43,7 @@ THE SOFTWARE. */
 namespace morda{
 
 
-
+//TODO: make singleton
 class ResourceManager{
 	typedef std::map<const std::string, ting::WeakRef<Resource> > T_ResMap;
 
