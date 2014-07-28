@@ -2,6 +2,7 @@
 
 #include "../Exc.hpp"
 #include "../App.hpp"
+#include "../util/util.hpp"
 
 #include <ting/utf8.hpp>
 
@@ -39,13 +40,10 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 
 	//read size attribute
 	unsigned size;
-	{
-		const stob::Node* sizeProp = el.GetProperty("size");
-		if(!sizeProp){
-			size = 12;
-		}else{
-			size = unsigned(sizeProp->AsU32());
-		}
+	if(const stob::Node* sizeProp = el.GetProperty("size")){
+		size = unsigned(morda::DimValue(*sizeProp));
+	}else{
+		size = 13;
 	}
 	
 	//read outline attribute
