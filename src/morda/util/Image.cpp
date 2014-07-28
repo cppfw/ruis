@@ -571,7 +571,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 			break;
 		default:
 			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")
-			break;
+			return;
 	}
 	
 	//Set buffer size (allocate memory for image)
