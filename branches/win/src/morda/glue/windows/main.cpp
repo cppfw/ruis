@@ -1,6 +1,6 @@
 //This file contains implementations of platform dependent methods from App class.
 
-#include "../../AppFactory.hpp"
+#include "../../App.hpp"
 
 #include <windows.h>
 
@@ -12,8 +12,11 @@
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> a = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::Buffer<const ting::u8>&);
 
+	Factory f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcRKN4ting6BufferIKhEE")));
+	std::unique_ptr<morda::App> a = f(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	
 	ShowWindow(a->window.hwnd, SW_SHOW);
 	
 	a->Exec();
