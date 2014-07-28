@@ -422,13 +422,4 @@ public:
 
 
 
-/**
- * @brief Create application instance
- * User needs to define this factory function to create his application instance.
- * @return New application instance.
- */
-std::unique_ptr<App> CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState);
-
-
-
 }//~namespace
