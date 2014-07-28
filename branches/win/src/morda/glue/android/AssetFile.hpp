@@ -71,7 +71,7 @@ class AssetFile : public ting::fs::File{
 		return ting::Ptr<AssetFile>(new AssetFile(manager, pathName));
 	}
 	
-	friend ting::Ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path = std::string())const;
+	friend std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const;
 	
 public:
 	/**

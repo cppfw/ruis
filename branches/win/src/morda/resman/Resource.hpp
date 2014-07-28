@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,39 +36,13 @@ THE SOFTWARE. */
 
 namespace morda{
 
-//forward declarations
-class ResourceManager;
 
 
 //base class for all resources
 class Resource : virtual public ting::RefCounted{
-	friend class ResourceManager;
-
-	struct StringComparator{
-		bool operator()(const char* s1, const char* s2)const{
-			return strcmp(s1, s2) < 0;
-		}
-	};
-	typedef std::map<const char*, ting::WeakRef<Resource>, StringComparator> T_ResMap;
-
-	//ResMapRC = Resource Map RefCounted
-	class ResMapRC : public RefCounted{
-	public:
-		~ResMapRC()throw(){}
-		
-		T_ResMap rm;
-
-		static inline ting::Ref<ResMapRC> New(){
-			return ting::Ref<ResMapRC>(new ResMapRC());
-		}
-	};
-
-	ting::WeakRef<ResMapRC> rm;
-	T_ResMap::iterator it;
-
 protected:
 	//this can only be used as a base class
-	inline Resource(){}
+	Resource(){}
 public:
 	virtual ~Resource()throw();
 };

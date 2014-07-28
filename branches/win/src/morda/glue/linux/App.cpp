@@ -746,7 +746,7 @@ void App::HideVirtualKeyboard()throw(){
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 
 	app->Exec();
 }
