@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9), doxygen, libting-dev (>= 3.0.0), libstob-dev (>
 
 Package: libmorda-dev
 Architecture: any
-Depends: libmorda0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
 Suggests: libmorda-doc, libmorda0-dbg (= ${binary:Version})
 Description: OpenGL UI framework development files
  Cross platform OpenGL UI framework written in C++.
