@@ -61,6 +61,6 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 
 	fi.SetPath(fileProp->Value());
 
-	return ting::Ref<ResFont>(new ResFont(fi, ting::Buffer<ting::u32>(&(*wideChars.begin()), wideChars.size()), size, outline));
+	return ting::New<ResFont>(fi, ting::Buffer<ting::u32>(&(*wideChars.begin()), wideChars.size()), size, outline);
 }
 

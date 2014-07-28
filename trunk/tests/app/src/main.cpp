@@ -27,18 +27,13 @@ class SimpleWidget : public morda::Widget, public morda::Updateable, public mord
 	ting::Ref<morda::ResTexture> tex;
 	ting::Ref<morda::ResFont> fnt;
 	
+public:	
 	SimpleWidget(const stob::Node& description) :
 			morda::Widget(description)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
-	}
-public:	
-	static inline ting::Ref<SimpleWidget> New(const stob::Node& description){
-		return ting::Ref<SimpleWidget>(
-				new SimpleWidget(description)
-			);
 	}
 	
 	ting::Inited<ting::u32, 0> timer;
@@ -141,19 +136,12 @@ public:
 class CubeWidget : public morda::Widget, public morda::Updateable{
 	ting::Ref<morda::ResTexture> tex;
 	
+	morda::Quatf rot;
+public:
 	CubeWidget() : Widget(0){
 		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
 		this->StartUpdating(30);
-	}
-	
-	morda::Quatf rot;
-public:
-	
-	static ting::Ref<CubeWidget> New(){
-		return ting::Ref<CubeWidget>(
-				new CubeWidget()
-			);
 	}
 	
 	void Update(ting::u32 dt) OVERRIDE{
@@ -265,7 +253,7 @@ public:
 		
 		
 		if(ting::Ref<morda::Container> container = c.DynamicCast<morda::Container>()){
-			ting::Ref<CubeWidget> w = CubeWidget::New();
+			ting::Ref<CubeWidget> w = ting::New<CubeWidget>();
 			w->Resize(morda::Vec2f(200, 150));
 			container->Add(w);
 		}

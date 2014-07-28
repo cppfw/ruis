@@ -46,13 +46,14 @@ class ResTexture : public morda::Resource{
 
 	GLTexture tex;
 
+public:
 	ResTexture(const Image& image) :
 			tex(image)
 	{}
-public:
+
 	~ResTexture()throw(){}
 
-	inline const GLTexture& Tex()const throw(){
+	const GLTexture& Tex()const throw(){
 		return this->tex;
 	}
 

@@ -48,18 +48,11 @@ class FrameContainer :
 	FrameContainer(const FrameContainer&);
 	FrameContainer& operator=(const FrameContainer&);
 	
+public:
 	FrameContainer() : Widget(0){}
 	FrameContainer(const stob::Node& desc);
 	
-public:
-	static ting::Ref<FrameContainer> New(){
-		return ting::Ref<FrameContainer>(new FrameContainer());
-	}
-	
-	static ting::Ref<FrameContainer> New(const stob::Node& desc){
-		return ting::Ref<FrameContainer>(new FrameContainer(desc));
-	}
-	
+public:	
 	morda::Vec2f ComputeMinDim()const OVERRIDE;
 
 	void OnResize() OVERRIDE;

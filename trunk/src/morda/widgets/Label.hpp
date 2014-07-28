@@ -50,7 +50,7 @@ class Label : public GravitatingWidget, public PaddedWidget{
 	
 	morda::Vec2f pivot;
 	
-protected:
+public:
 	Label(const stob::Node& description);
 	
 	Label();
@@ -70,14 +70,6 @@ public:
 	Vec2f ComputeMinDim()const throw() OVERRIDE;
 	
 	void OnResize() OVERRIDE;
-	
-	static ting::Ref<Label> New(const stob::Node& description){
-		return ting::Ref<Label>(new Label(description));
-	}
-	
-	static ting::Ref<Label> New(){
-		return ting::Ref<Label>(new Label());
-	}
 };
 
 

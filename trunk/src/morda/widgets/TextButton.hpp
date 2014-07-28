@@ -45,8 +45,8 @@ namespace morda{
 
 class TextButton : public Button, public Label{
 
-protected:
-	inline TextButton(const stob::Node& description) :
+public:
+	TextButton(const stob::Node& description) :
 			Widget(description),
 			Button(description),
 			Label(description)
@@ -60,14 +60,6 @@ public:
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 	
 	void OnResize() OVERRIDE;
-	
-	inline static ting::Ref<TextButton> New(const stob::Node& description){
-		return ting::Ref<TextButton>(new TextButton(description));
-	}
-	
-	inline static ting::Ref<TextButton> New(){
-		return ting::Ref<TextButton>(new TextButton());
-	}
 };
 
 
