@@ -6,8 +6,18 @@ class MyLabel Label{
 	}
 }
 
+style some_style{
+	prop{
+		layout{
+			dim{min min}
+		}
+	}
+}
+
 FrameContainer{
 	padding{10 20 30 40}
+
+	style{some_style}
 
 	ImageLabel{
 		image{tex_sample}
