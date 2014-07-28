@@ -35,3 +35,8 @@ THE SOFTWARE. */
 #if M_OS_NAME == M_OS_NAME_ANDROID
 #	define M_MORDA_OGLES2
 #endif
+
+
+#ifdef DEBUG
+#	define M_MORDA_RENDER_WIDGET_BORDERS
+#endif

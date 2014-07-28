@@ -39,6 +39,8 @@ THE SOFTWARE. */
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
 
+#include "../config.hpp"
+
 #include <stob/dom.hpp>
 
 

@@ -33,6 +33,7 @@ this_cflags += -g #include debugging symbols
                 #-O3 -funroll-loops -fomit-frame-pointer
 this_cflags += -std=c++11
 
+
 ifeq ($(debug),true)
     this_cflags += -DDEBUG
 endif
@@ -52,6 +53,7 @@ else ifeq ($(prorab_os), windows)
 else ifeq ($(prorab_os), macosx)
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
 endif
+
 
 
 $(eval $(prorab-build-lib))
