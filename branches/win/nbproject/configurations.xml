@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="94">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="src" name="0">
+      <df name="morda">
+        <df name="fonts">
+          <in>Font.cpp</in>
+          <in>TexFont.cpp</in>
+        </df>
+        <df name="glue">
+          <df name="android">
+            <in>App.cpp</in>
+            <in>AssetFile.cpp</in>
+          </df>
+          <df name="linux">
+            <in>App.cpp</in>
+          </df>
+          <df name="macosx">
+            <in>main.mm</in>
+          </df>
+          <df name="windows">
+            <in>App.cpp</in>
+            <in>main.cpp</in>
+          </df>
+        </df>
+        <df name="resman">
+          <in>Resource.cpp</in>
+          <in>ResourceManager.cpp</in>
+        </df>
+        <df name="resources">
+          <in>ResFont.cpp</in>
+          <in>ResTexture.cpp</in>
+        </df>
+        <df name="shaders">
+          <in>Shader.cpp</in>
+          <in>SimpleSingleColoringShader.cpp</in>
+          <in>SimpleTexturingShader.cpp</in>
+          <in>SingleColoringShader.cpp</in>
+          <in>TexturingShader.cpp</in>
+        </df>
+        <df name="util">
+          <df name="unzip">
+            <in>ioapi.cpp</in>
+            <in>unzip.cpp</in>
+          </df>
+          <in>CharInputFocusable.cpp</in>
+          <in>CharInputFocusable.hpp</in>
+          <in>GLTexture.cpp</in>
+          <in>Gravity.cpp</in>
+          <in>Image.cpp</in>
+          <in>LayoutDim.cpp</in>
+          <in>LayoutDim.hpp</in>
+          <in>LeftBottomRightTop.cpp</in>
+          <in>ZipFile.cpp</in>
+          <in>util.cpp</in>
+        </df>
+        <df name="widgets">
+          <in>Button.cpp</in>
+          <in>Container.cpp</in>
+          <in>FrameContainer.cpp</in>
+          <in>FrameContainer.hpp</in>
+          <in>ImageLabel.cpp</in>
+          <in>Label.cpp</in>
+          <in>LinearContainer.cpp</in>
+          <in>LinearContainer.hpp</in>
+          <in>LinearWidget.cpp</in>
+          <in>LinearWidget.hpp</in>
+          <in>Slider.cpp</in>
+          <in>Slider.hpp</in>
+          <in>TextButton.cpp</in>
+          <in>Widget.cpp</in>
+        </df>
+        <in>App.cpp</in>
+        <in>Inflater.cpp</in>
+        <in>Updateable.cpp</in>
+      </df>
+    </df>
+    <df root="tests" name="1">
+      <df name="app">
+        <df name="src">
+          <in>main.cpp</in>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>makefile</itemPath>
+      <itemPath>platform.mk</itemPath>
+      <itemPath>subdirs.mk</itemPath>
+      <itemPath>targets.mk</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>src</Elem>
+    <Elem>tests</Elem>
+  </sourceRootList>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Release" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-funsigned-char -fPIC"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE}</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
+          <executablePath>tests/app/tests</executablePath>
+        </makeTool>
+      </makefileType>
+      <folder path="0/morda/glue/linux">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/util">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="1">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>tests/app</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} debug=true</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
+          <executablePath>tests/app/tests</executablePath>
+          <ccTool flags="-funsigned-char -fPIC">
+            <standard>8</standard>
+            <preprocessorList>
+              <Elem>DEBUG</Elem>
+            </preprocessorList>
+          </ccTool>
+        </makeTool>
+      </makefileType>
+      <folder path="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/glue/android">
+        <ccTool>
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/glue/macosx">
+        <ccTool>
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/glue/windows">
+        <ccTool>
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="1">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>tests/app</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>3rd_party</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+    <conf name="Android" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-funsigned-char -fPIC"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE}</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
+          <executablePath>/home/ivan/prj/morda/tests/app/tests</executablePath>
+          <ccTool flags="0">
+            <incDir>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>src</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>src</pElem>
+            </incDir>
+          </ccTool>
+        </makeTool>
+      </makefileType>
+      <folder path="0/morda/glue">
+        <ccTool>
+          <incDir>
+            <pElem>../../bin/android-ndk-r9d/platforms/android-19/arch-x86/usr/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/glue/linux">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/resman">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/widgets">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="1">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>tests/app</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>../../bin/android-ndk-r9d/platforms/android-19/arch-x86/usr/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__ANDROID__</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+    <conf name="Valgrind" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-funsigned-char -fPIC"/>
+        <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE}</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
+          <executablePath>tests/app/tests</executablePath>
+        </makeTool>
+      </makefileType>
+      <folder path="0/morda/glue/linux">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/morda/resources">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="1">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>tests/app</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/resman/ResourceManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleSingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SimpleTexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/shaders/SingleColoringShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/morda/shaders/TexturingShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/CharInputFocusable.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>ext</pElem>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

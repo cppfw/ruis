@@ -1,0 +1,32 @@
+Source: libmorda
+Maintainer: Ivan Gagis <igagis@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9), doxygen, libting-dev (>= 3.0.0), libstob-dev (>= 1.0.0), libpng12-dev, libjpeg8-dev, zlib1g-dev, libglew1.6-dev, libfreetype6-dev
+
+Package: libmorda-dev
+Architecture: any
+Depends: libmorda0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Suggests: libmorda-doc, libmorda0-dbg (= ${binary:Version})
+Description: OpenGL UI framework development files
+ Cross platform OpenGL UI framework written in C++.
+ Development files.
+
+Package: libmorda0
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OpenGL UI framework
+ Cross platform OpenGL UI framework written in C++.
+
+Package: libmorda0-dbg
+Section: libdevel
+Architecture: any
+Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
+Description: Debug symbols for the libmorda library
+
+Package: libmorda-doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Documentation for libmorda
+ Doxygen docs.
