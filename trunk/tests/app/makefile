@@ -20,7 +20,7 @@ endif
 
 ifeq ($(prorab_os),windows)
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda.a
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda.dll
     this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lting -lstob -lpng -ljpeg -lz -lfreetype -mwindows
 
@@ -43,11 +43,19 @@ test:: $(prorab_this_name)
 endef
 $(eval $(this_rules))
 
+
 #add dependency on libmorda
 ifeq ($(prorab_os),windows)
-    $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda.a)
+    $(prorab_this_dir)libmorda$(prorab_lib_extension): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
+	@cp $< $@
+
+    $(prorab_this_name): $(prorab_this_dir)libmorda$(prorab_lib_extension)
+
+    clean::
+	@rm $(prorab_this_dir)libmorda$(prorab_lib_extension)
 else
     $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
 endif
+
 
 $(eval $(call prorab-include,$(prorab_this_dir)../../src/makefile))
