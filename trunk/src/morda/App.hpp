@@ -38,6 +38,8 @@ THE SOFTWARE. */
 #include <ting/fs/File.hpp>
 #include <ting/mt/Message.hpp>
 
+#include <memory>
+
 #include "config.hpp"
 
 
@@ -425,7 +427,7 @@ public:
  * User needs to define this factory function to create his application instance.
  * @return New application instance.
  */
-ting::Ptr<App> CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState);
+std::unique_ptr<App> CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState);
 
 
 
