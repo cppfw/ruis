@@ -51,8 +51,11 @@ ifeq ($(prorab_os),windows)
 
     $(prorab_this_name): $(prorab_this_dir)libmorda$(prorab_lib_extension)
 
-    clean::
-	@rm $(prorab_this_dir)libmorda$(prorab_lib_extension)
+    define this_rules
+        clean::
+		@rm -f $(prorab_this_dir)libmorda$(prorab_lib_extension)
+    endef
+    $(eval $(this_rules))
 else
     $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
 endif
