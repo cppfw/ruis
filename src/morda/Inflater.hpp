@@ -81,7 +81,7 @@ public:
 		class Factory : public WidgetFactory{
 		public:
 			ting::Ref<morda::Widget> Create(const stob::Node& node)const OVERRIDE{
-				ting::Ref<morda::Widget> ret = T_Widget::New(node);
+				ting::Ref<morda::Widget> ret = ting::New<T_Widget>(node);
 				ASSERT(ret.DynamicCast<T_Widget>().IsValid())
 				return ret;
 			}

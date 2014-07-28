@@ -43,19 +43,11 @@ class ImageLabel : public virtual Widget{
 	
 	ting::Inited<bool, false> keepAspectRatio;
 	
-protected:
+public:
 	ImageLabel();
 	
 	ImageLabel(const stob::Node& desc);
 public:
-	static ting::Ref<ImageLabel> New(){
-		return ting::Ref<ImageLabel>(new ImageLabel());
-	}
-	
-	static ting::Ref<ImageLabel> New(const stob::Node& desc){
-		return ting::Ref<ImageLabel>(new ImageLabel(desc));
-	}
-	
 	virtual ~ImageLabel()throw(){}
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;

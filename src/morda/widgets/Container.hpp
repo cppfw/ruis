@@ -59,20 +59,13 @@ protected:
 		return "layout";
 	}
 	
+public:
 	Container() : Widget(0){}
 	
 	Container(const stob::Node& description);
 
 public:
 	~Container()throw(){}
-	
-	static ting::Ref<Container> New(const stob::Node& description){
-		return ting::Ref<Container>(new Container(description));
-	}
-	
-	static ting::Ref<Container> New(){
-		return ting::Ref<Container>(new Container());
-	}
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 

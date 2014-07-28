@@ -60,16 +60,8 @@ public:
 	
 	void OnHoverChanged() OVERRIDE;
 	
-	inline bool IsPressed()const throw(){
+	bool IsPressed()const throw(){
 		return this->isPressed;
-	}
-	
-	inline static ting::Ref<Button> New(const stob::Node& description){
-		return ting::Ref<Button>(new Button(description));
-	}
-	
-	inline static ting::Ref<Button> New(){
-		return ting::Ref<Button>(new Button());
 	}
 };
 

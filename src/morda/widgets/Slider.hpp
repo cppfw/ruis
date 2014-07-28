@@ -63,15 +63,12 @@ class Slider :
 		ting::Inited<bool, false> isGrabbed;
 		float clickPoint;
 
-	protected:
+	public:
 		SliderHandle(Slider& slider) :
 				Widget(0),
 				slider(slider)
 		{}
 	public:
-		static ting::Ref<SliderHandle> New(Slider& slider){
-			return ting::Ref<SliderHandle>(new SliderHandle(slider));
-		}
 
 	private:
 		void Render(const morda::Matr4f& matrix)const OVERRIDE;
@@ -81,19 +78,13 @@ class Slider :
 		bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
 	};
 	
-protected:
+public:
 	Slider();
 	
 	Slider(const stob::Node& description);
 	
 public:
 	ting::Signal1<float> factorChange;
-	
-	static ting::Ref<Slider> New(const stob::Node& description){
-		return ting::Ref<Slider>(new Slider(description));
-	}
-	
-	static ting::Ref<Slider> New();
 
 	virtual ~Slider()throw(){}
 	

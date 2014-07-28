@@ -50,6 +50,7 @@ class LinearContainer :
 	LinearContainer(const LinearContainer&);
 	LinearContainer& operator=(const LinearContainer&);
 
+public:
 	LinearContainer() : Widget(0){}
 	LinearContainer(const stob::Node& desc);	
 public:
@@ -57,14 +58,6 @@ public:
 	void OnResize() OVERRIDE;	
 	
 	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
-	
-	static ting::Ref<LinearContainer> New(){
-		return ting::Ref<LinearContainer>(new LinearContainer());
-	}
-	
-	static ting::Ref<LinearContainer> New(const stob::Node& desc){
-		return ting::Ref<LinearContainer>(new LinearContainer(desc));
-	}
 private:
 
 };

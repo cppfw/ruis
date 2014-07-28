@@ -173,7 +173,7 @@ public:
 		return 0;
 	}
 	
-protected:
+public:
 	//NOTE: dummy int argument to avoid implicit call of default constructor in derived classes, to avoid silent bugs.
 	Widget(int dummy) :
 			rect(0)
@@ -182,13 +182,6 @@ protected:
 	Widget(const stob::Node& description);
 	
 public:
-	static ting::Ref<Widget> New(const stob::Node& description){
-		return ting::Ref<Widget>(new Widget(description));
-	}
-	
-	static ting::Ref<Widget> New(){
-		return ting::Ref<Widget>(new Widget(0));
-	}
 
 	virtual ~Widget()throw(){}
 
