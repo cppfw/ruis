@@ -1,4 +1,7 @@
 class MyLabel Label{
+
+	text{"trololo"}
+
 	prop{
 		layout{
 			dim{min min}
