@@ -377,12 +377,19 @@ public:
 	/**
 	 * @brief Normalize this vector.
 	 * Normalizes this vector.
+	 * If magnitude is 0 then the result is vector (1, 0, 0).
 	 * @return Reference to this vector object.
 	 */
-	inline Vector3& Normalize()throw(){
-		ASSERT(this->Magnitude() != 0)
-		(*this) /= this->Magnitude();
-		return (*this);
+	Vector3& Normalize()throw(){
+		T mag = this->Magnitude();
+		if(mag == 0){
+			this->x = 1;
+			this->y = 0;
+			this->z = 0;
+			return *this;
+		}
+		
+		return (*this) /= this->Magnitude();
 	}
 
 	/**
