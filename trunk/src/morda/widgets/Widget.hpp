@@ -200,7 +200,7 @@ private:
 public:
 	
 	//return true to consume
-	virtual bool OnKey(bool isDown, key::Key keyCode){
+	virtual bool OnKey(bool isDown, morda::key::Key keyCode){
 		return false;
 	}
 	
