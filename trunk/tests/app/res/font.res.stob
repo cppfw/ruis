@@ -2,6 +2,6 @@ Res{
 	name {fnt_main}
 	file {vera.ttf}
 	chars {" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;?!()"}
-	size {13}
+	size {5mm}
 	outline {1}
 }
