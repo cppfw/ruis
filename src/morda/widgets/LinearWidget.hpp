@@ -39,8 +39,8 @@ class LinearWidget : public virtual Widget{
 	LinearWidget(const LinearWidget&);
 	LinearWidget& operator=(const LinearWidget&);
 	
-	ting::Inited<bool, false> isVertical;
-	ting::Inited<bool, false> isReverse;
+	bool isVertical = false;
+	bool isReverse = false;
 
 protected:
 	LinearWidget() : Widget(0){}

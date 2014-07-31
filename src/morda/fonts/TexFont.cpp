@@ -352,7 +352,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<const ting::
 		const Glyph& g = this->glyphs.at(*s);
 		left = g.verts[0].x;
 		right = g.verts[2].x;
-		top = g.verts[3].y;
+		top = g.verts[2].y;
 		bottom = g.verts[0].y;
 		curAdvance = g.advance;
 		++s;
@@ -362,8 +362,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<const ting::
 		for(; s != str.End(); ++s){
 			const Glyph& g = this->glyphs.at(*s);
 
-			if(g.verts[3].y > top){
-				top = g.verts[3].y;
+			if(g.verts[2].y > top){
+				top = g.verts[2].y;
 			}
 
 			if(g.verts[0].y < bottom){
