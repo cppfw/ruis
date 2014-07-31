@@ -360,11 +360,16 @@ public:
 
 	/**
 	 * @brief Normalize this vector.
-	 * If the magnitude of vector is 0 then the result is undefined.
+	 * If the magnitude of vector is 0 then the result is vector (1, 0).
 	 * @return Reference to this vector object.
 	 */
-	inline Vector2& Normalize()throw(){
-		ASSERT(this->Magnitude() != 0)
+	Vector2& Normalize()throw(){
+		T mag = this->Magnitude();
+		if(mag == 0){
+			this->x = 1;
+			this->y = 0;
+			return *this;
+		}
 		return (*this) /= this->Magnitude();
 	}
 
