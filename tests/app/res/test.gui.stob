@@ -105,7 +105,7 @@ FrameContainer{
 			pos {0 0}
 			name {label2}
 			text {"blah bla"}
-			padding {10}
+			padding {0}
 
 			prop{
 				layout{
@@ -120,6 +120,7 @@ FrameContainer{
 			pos {50 80}
 			dim {10 30}
 			text {"Show VK"}
+			clip{true}
 
 			prop{
 				layout{
