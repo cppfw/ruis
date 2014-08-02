@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\morda\App.cpp" />
+    <ClCompile Include="..\..\src\morda\fonts\Font.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Container.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\FrameContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\ImageLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Label.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp" />
