@@ -14,7 +14,14 @@ namespace morda{
 void Main(int argc, const char** argv){
 	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::Buffer<const ting::u8>&);
 
-	Factory f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcRKN4ting6BufferIKhEE")));
+	Factory f;
+	
+	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcRKN4ting6BufferIKhEE")));
+
+	if(!f){ //try MSVC function mangling style
+		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDABV?$Buffer@$$CBE@ting@@@Z")));
+	}
+
 	std::unique_ptr<morda::App> a = f(argc, argv, ting::Buffer<const ting::u8>(0, 0));
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
