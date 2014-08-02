@@ -51,6 +51,13 @@ class ResourceManager{
 
 	class ResPackEntry{
 	public:
+		ResPackEntry() = default;
+
+		ResPackEntry(ResPackEntry&& r){
+			this->fi = std::move(r.fi);
+			this->resScript = std::move(r.resScript);
+		}
+
 		std::unique_ptr<ting::fs::File> fi;
 		std::unique_ptr<const stob::Node> resScript;
 	};
