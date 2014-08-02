@@ -7,6 +7,7 @@
 #include "widgets/TextButton.hpp"
 #include "widgets/Slider.hpp"
 #include "widgets/ImageLabel.hpp"
+#include "widgets/Window.hpp"
 #include "App.hpp"
 #include "util/util.hpp"
 
@@ -25,6 +26,7 @@ Inflater::Inflater(){
 	this->AddWidget<TextButton>("TextButton");
 	this->AddWidget<Slider>("Slider");
 	this->AddWidget<ImageLabel>("ImageLabel");
+	this->AddWidget<Window>("Window");
 }
 
 

@@ -22,6 +22,20 @@ FrameContainer{
 
 	style{some_style}
 
+	Container{
+		prop{
+			layout{
+				dim{100% 100%}
+			}
+		}
+
+		Window{
+			dim{300 200}
+			pos{10 10}
+		}
+	}
+
+
 	ImageLabel{
 		image{tex_sample}
 
