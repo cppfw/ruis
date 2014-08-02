@@ -53,6 +53,7 @@ class ResourceManager{
 	public:
 		ResPackEntry() = default;
 
+		//For MSVC compiler, it does not generate move constructor automatically
 		ResPackEntry(ResPackEntry&& r){
 			this->fi = std::move(r.fi);
 			this->resScript = std::move(r.resScript);
