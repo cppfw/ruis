@@ -174,7 +174,7 @@ private:
 	} xVisualInfo;
 
 	struct XWindowWrapper{
-		Window w;
+		::Window w;
 
 		XDisplayWrapper& d;
 
