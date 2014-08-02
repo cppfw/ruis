@@ -3,8 +3,6 @@
 // File description:
 //	Texture font class
 
-#include <algorithm>
-
 #include <ting/debug.hpp>
 
 #include "TexFont.hpp"
@@ -16,6 +14,12 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#if M_OS == M_OS_WINDOWS
+#	undef min
+#	undef max
+#endif
+
+#include <algorithm>
 
 
 using namespace morda;

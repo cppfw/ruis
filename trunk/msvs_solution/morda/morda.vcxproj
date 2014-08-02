@@ -51,6 +51,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.10.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\morda\App.cpp" />
+    <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\resman\Resource.cpp" />
@@ -97,7 +100,6 @@
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
     <ClCompile Include="..\..\src\morda\util\LayoutDim.cpp" />
     <ClCompile Include="..\..\src\morda\util\LeftBottomRightTop.cpp" />
-    <ClCompile Include="..\..\src\morda\util\TexFont.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Container.cpp" />

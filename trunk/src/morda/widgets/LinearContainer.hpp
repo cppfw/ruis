@@ -59,7 +59,6 @@ public:
 	
 	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
 private:
-
 };
 
 
