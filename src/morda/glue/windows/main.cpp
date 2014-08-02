@@ -11,7 +11,7 @@
 
 namespace morda{
 
-inline void Main(int argc, const char** argv){
+void Main(int argc, const char** argv){
 	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::Buffer<const ting::u8>&);
 
 	Factory f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcRKN4ting6BufferIKhEE")));
