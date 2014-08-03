@@ -6,8 +6,9 @@ using namespace morda;
 
 namespace{
 const char* WindowDesc(){
-	return R"qwerty(
+	return R"qwertyuiop(
 			{
+				//left border
 				LinearContainer{
 					vertical{true}
 					prop{layout{
@@ -23,12 +24,14 @@ const char* WindowDesc(){
 						dim{min 100%}
 					}}
 
+					//top border
 					LinearContainer{
 						prop{layout{
 							dim{100% 2.5mm}
 						}}
 					}
 			
+					//caption
 					LinearContainer{
 						prop{layout{
 							dim{100% 7mm}
@@ -52,6 +55,7 @@ const char* WindowDesc(){
 						}}
 					}
 			
+					//bottom border
 					LinearContainer{
 						prop{layout{
 							dim{100% 2.5mm}
@@ -59,6 +63,7 @@ const char* WindowDesc(){
 					}
 				}
 
+				//right border
 				LinearContainer{
 					vertical{true}
 					prop{layout{
@@ -66,7 +71,7 @@ const char* WindowDesc(){
 					}}
 				}
 			}
-		)qwerty";
+		)qwertyuiop";
 }
 }
 
