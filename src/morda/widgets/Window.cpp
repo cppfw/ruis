@@ -5,6 +5,7 @@ using namespace morda;
 
 
 namespace{
+
 const char* WindowDesc(){
 	return R"qwertyuiop(
 			{
@@ -73,6 +74,7 @@ const char* WindowDesc(){
 			}
 		)qwertyuiop";
 }
+
 }
 
 
