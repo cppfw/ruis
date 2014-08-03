@@ -105,3 +105,22 @@ void App::HandleMouseHover(bool isHovered){
 	}
 	this->rootWidget->SetHovered(isHovered);
 }
+
+
+
+void App::PostToUIThread_ts(std::function<void()>&& f){
+	class UIMessage : public ting::mt::Message{
+		std::function<void()> f;
+		virtual void Handle()override{
+			ASSERT_ALWAYS(morda::App::Inst().ThisIsUIThread())
+			this->f();
+		}
+		
+	public:
+		UIMessage(std::function<void()> f) :
+				f(f)
+		{}
+	};
+	
+	this->uiQueue.PushMessage(ting::Ptr<ting::mt::Message>(new UIMessage(std::move(f))));
+}

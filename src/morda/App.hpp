@@ -146,9 +146,8 @@ private:
 private:
 	ting::mt::Queue uiQueue;
 public:
-	void PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg){
-		this->uiQueue.PushMessage(msg);
-	}
+	void PostToUIThread_ts(std::function<void()>&& f);
+
 	
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
