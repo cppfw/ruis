@@ -31,15 +31,14 @@ const char* WindowDesc(){
 			
 					LinearContainer{
 						prop{layout{
-							dim{100% min}
+							dim{100% 7mm}
 						}}
 						name{morda_caption}
 						Label{
-							text{"The Window Title"}
 							name{morda_title}
 							gravity{0% 50%}
 							prop{layout{
-								dim{min min}
+								dim{20mm min}
 								weight{1}
 							}}
 						}
@@ -76,14 +75,43 @@ const char* WindowDesc(){
 morda::Window::Window() :
 		Widget(0),
 		LinearContainer(*stob::Parse(WindowDesc()))
-{}
+{
+	this->FindWidgets();
+}
 
 
 morda::Window::Window(const stob::Node& desc) :
 		Widget(desc),
 		LinearContainer(*stob::Parse(WindowDesc()))
 {
-//	if(const stob::Node* t = desc.GetProperty("title")){
-//		this->title->SetText(t->Value());
-//	}
+	this->FindWidgets();
+	
+	if(const stob::Node* t = desc.GetProperty("title")){
+		this->title->SetText(t->Value());
+	}
+}
+
+void morda::Window::FindWidgets(){
+	this->caption = this->FindChildByName("morda_caption");
+	
+	this->caption->onMouseButton = [this](Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		if(isDown){
+			this->captionCaptured = true;
+			this->capturePoint = pos;
+			return true;
+		}
+		this->captionCaptured = false;
+		return false;
+	};
+	
+	this->caption->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		if(this->captionCaptured){
+			this->MoveBy(pos - this->capturePoint);
+			return true;
+		}
+		return false;
+	};
+	
+	
+	this->title = this->caption->FindChildByName("morda_title").DynamicCast<Label>();
 }
