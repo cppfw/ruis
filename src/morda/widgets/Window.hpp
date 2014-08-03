@@ -39,6 +39,14 @@ class Window :
 		virtual public Widget,
 		private LinearContainer
 {
+	ting::Ref<Widget> caption;
+	ting::Ref<Label> title;
+	
+	bool captionCaptured = false;
+	morda::Vec2f capturePoint;
+	
+	void FindWidgets();
+	
 public:
 	Window();
 	

@@ -10,6 +10,24 @@ using namespace morda;
 
 
 
+namespace{
+class BlockedFlagGuard{
+	bool& blocked;
+public:
+	BlockedFlagGuard(bool& blocked) :
+			blocked(blocked)
+	{
+		this->blocked = true;
+	}
+	
+	~BlockedFlagGuard()noexcept{
+		this->blocked = false;
+	}
+};
+}
+
+
+
 Container::Container(const stob::Node& description) :
 		Widget(description)
 {
@@ -44,7 +62,7 @@ void Container::Render(const morda::Matr4f& matrix)const{
 bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
-	this->isBlocked = true;
+	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
 	//check if mouse captured
 	{
@@ -94,9 +112,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 		}
 	}
 	
-	this->isBlocked = false;
-	
-	return false;
+	return this->Widget::OnMouseButton(isDown, pos, button, pointerId);
 }
 
 
@@ -105,7 +121,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
-	this->isBlocked = true;
+	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
 	//check if mouse captured
 	{
@@ -148,9 +164,7 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 		}		
 	}
 	
-	this->isBlocked = false;
-	
-	return false;
+	return this->Widget::OnMouseMove(pos, pointerId);
 }
 
 
@@ -163,24 +177,22 @@ void Container::OnHoverChanged(){
 	}
 	
 	//un-hover all the children if container became un-hovered
-	this->isBlocked = true;
+	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		(*i)->SetHovered(false);
 	}
-	this->isBlocked = false;
 }
 
 
 
 void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
-	this->isBlocked = true;
+	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		if((*i)->NeedsRelayout()){
 			(*i)->OnResize();
 		}
 	}
-	this->isBlocked = false;
 }
 
 
