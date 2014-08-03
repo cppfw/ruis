@@ -261,15 +261,14 @@ public:
 		this->SetRootWidget(c);
 	}
 		
-	class UIMessage : public ting::mt::Message{
-		virtual void Handle() OVERRIDE{
-			ASSERT_ALWAYS(morda::App::Inst().ThisIsUIThread())
-			TRACE_ALWAYS(<< "UIMessage::Handle(): Print from UI thread!!!" << std::endl)
-		}
-	};
+	
 	
 	void PostMessageToUIThread(){
-		this->PostToUIThread_ts(ting::Ptr<ting::mt::Message>(new UIMessage()));
+		this->PostToUIThread_ts(
+				[](){
+					TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
+				}
+			);
 	}
 };
 
