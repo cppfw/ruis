@@ -102,6 +102,10 @@ void morda::Window::FindWidgets(){
 	this->caption = this->FindChildByName("morda_caption");
 	
 	this->caption->onMouseButton = [this](Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		if(button != Widget::LEFT){
+			return false;
+		}
+		
 		if(isDown){
 			this->captionCaptured = true;
 			this->capturePoint = pos;
