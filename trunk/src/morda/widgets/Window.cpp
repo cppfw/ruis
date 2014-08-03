@@ -14,7 +14,7 @@ const char* WindowDesc(){
 						dim{2.5mm 100%}
 					}}
 				}
-			
+
 				LinearContainer{
 					vertical{true}
 			
@@ -22,17 +22,44 @@ const char* WindowDesc(){
 						weight{1}
 						dim{min 100%}
 					}}
-			
-					Label{
-						text{"The Window Title"}
-						name{morda_title}
+
+					LinearContainer{
 						prop{layout{
-							dim{min min}
-							gravity{0%}
+							dim{100% 2.5mm}
+						}}
+					}
+			
+					LinearContainer{
+						prop{layout{
+							dim{100% min}
+						}}
+						name{morda_caption}
+						Label{
+							text{"The Window Title"}
+							name{morda_title}
+							gravity{0% 50%}
+							prop{layout{
+								dim{min min}
+								weight{1}
+							}}
+						}
+					}
+			
+					Widget{
+						name{child_widget_area}
+						prop{layout{
+							dim{100% 0}
+							weight{1}
+						}}
+					}
+			
+					LinearContainer{
+						prop{layout{
+							dim{100% 2.5mm}
 						}}
 					}
 				}
-				
+
 				LinearContainer{
 					vertical{true}
 					prop{layout{

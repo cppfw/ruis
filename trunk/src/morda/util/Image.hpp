@@ -64,7 +64,7 @@ private:
 
 public:
 	//default constructor
-	inline Image() :
+	Image() :
 			type(UNKNOWN),
 			w(0),
 			h(0)
@@ -74,7 +74,7 @@ public:
 	Image(const Image& im);
 
 	//Creates Image object with initialized image.
-	inline Image(unsigned width, unsigned height, EType imageType){
+	Image(unsigned width, unsigned height, EType imageType){
 		this->Init(width, height, imageType);
 	}
 
@@ -83,37 +83,37 @@ public:
 	//Creates Image object and copies a region from source image.
 	Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src);
 
-	inline Image(ting::fs::File& f){
+	Image(ting::fs::File& f){
 		this->Load(f);
 	}
 
 	~Image();
 
-	inline unsigned Width()const{
+	unsigned Width()const{
 		return this->w;
 	}
 
-	inline unsigned Height()const{
+	unsigned Height()const{
 		return this->h;
 	}
 
-	inline unsigned BitsPerPixel()const{
+	unsigned BitsPerPixel()const{
 		return this->NumChannels() * 8;
 	}
 
-	inline unsigned NumChannels()const{
+	unsigned NumChannels()const{
 		return unsigned(this->type);
 	}
 
-	inline EType Type()const{
+	EType Type()const{
 		return this->type;
 	}
 
-	inline ting::Buffer<ting::u8>& Buf(){
+	ting::Buffer<ting::u8>& Buf(){
 		return this->buf;
 	}
 
-	inline const ting::Buffer<ting::u8>& Buf()const{
+	const ting::Buffer<ting::u8>& Buf()const{
 		return this->buf;
 	}
 
@@ -129,11 +129,11 @@ public:
 
 	void Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
-	inline const ting::u8& PixChan(unsigned x, unsigned y, unsigned chan)const{
+	const ting::u8& PixChan(unsigned x, unsigned y, unsigned chan)const{
 		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.Size())];
 	}
 
-	inline ting::u8& PixChan(unsigned x, unsigned y, unsigned chan){
+	ting::u8& PixChan(unsigned x, unsigned y, unsigned chan){
 		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.Size())];
 	}
 
