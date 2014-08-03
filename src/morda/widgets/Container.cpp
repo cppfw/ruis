@@ -177,7 +177,7 @@ void Container::OnResize(){
 	this->isBlocked = true;
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		if((*i)->NeedsRelayout()){
-			(*i)->Resize((*i)->Rect().d);
+			(*i)->OnResize();
 		}
 	}
 	this->isBlocked = false;

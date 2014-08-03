@@ -74,9 +74,9 @@ public:
 	
 	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
 	
-	void OnHoverChanged() OVERRIDE;
+	void OnHoverChanged()override;
 	
-	void OnResize() OVERRIDE;
+	void OnResize()override;
 
 	void Add(const ting::Ref<Widget>& w);
 
