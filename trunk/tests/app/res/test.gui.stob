@@ -32,6 +32,8 @@ FrameContainer{
 		Window{
 			dim{300 200}
 			pos{10 10}
+
+			title{"Window title"}
 		}
 	}
 

@@ -59,6 +59,7 @@
           <in>Container.cpp</in>
           <in>FrameContainer.cpp</in>
           <in>FrameContainer.hpp</in>
+          <in>HookWidget.hpp</in>
           <in>ImageLabel.cpp</in>
           <in>Label.cpp</in>
           <in>LinearContainer.cpp</in>
@@ -320,6 +321,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -607,6 +610,8 @@
             tool="1"
             flavor2="8">
       </item>
+      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
@@ -876,6 +881,8 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -1160,6 +1167,8 @@
             <pElem>src</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>

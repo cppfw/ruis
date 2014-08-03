@@ -185,7 +185,7 @@ public:
 	
 public:
 
-	virtual ~Widget()throw(){}
+	virtual ~Widget()noexcept{}
 
 	virtual void Render(const morda::Matr4f& matrix)const{};
 	
@@ -224,13 +224,23 @@ public:
 		ENUM_SIZE
 	};
 
+	std::function<bool (Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
+	
 	//return true to consume event
 	virtual bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		if(this->onMouseButton){
+			return this->onMouseButton(*this, isDown, pos, button, pointerId);
+		}
 		return false;
 	}
 
+	std::function<bool (Widget& widget, const morda::Vec2f& pos, unsigned pointerId)> onMouseMove;
+	
 	//return true to consume event
 	virtual bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
+		if(this->onMouseMove){
+			return this->onMouseMove(*this, pos, pointerId);
+		}
 		return false;
 	}
 

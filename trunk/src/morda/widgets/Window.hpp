@@ -29,28 +29,25 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Container.hpp"
+#include "LinearContainer.hpp"
 
+#include "Label.hpp"
 
 namespace morda{
 
 class Window :
 		virtual public Widget,
-		private Container
+		private LinearContainer
 {
 public:
-	Window() = default;
+	Window();
 	
 	Window(const stob::Node& desc);
 	
 	
 	Window(const Window& orig) = delete;
-	
-	
-	~Window()noexcept override{}
 
 	
-
 };
 
 }
