@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,24 +54,24 @@ class SingleColoringShader : virtual public Shader{
 	GLint colorUniform;
 
 protected:
-	inline SingleColoringShader() :
+	SingleColoringShader() :
 			Shader(0, 0)
 	{
 		this->colorUniform = this->GetUniform("uniformColor");
 	}
-	~SingleColoringShader()throw(){}
+
 public:
-	inline void SetColor(morda::Vec3f color){
+	void SetColor(morda::Vec3f color){
 		glUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
 		ASSERT(glGetError() == GL_NO_ERROR)
     }
 
-	inline void SetColor(morda::Vec3f color, float alpha){
+	void SetColor(morda::Vec3f color, float alpha){
 		glUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
 		ASSERT(glGetError() == GL_NO_ERROR)
     }
 
-	inline void SetColor(const morda::Vec4f& color){
+	void SetColor(const morda::Vec4f& color){
 		STATIC_ASSERT(sizeof(color) == sizeof(GLfloat) * 4)
 		glUniform4fv(this->colorUniform, 1, reinterpret_cast<const GLfloat*>(&color));
 		ASSERT(glGetError() == GL_NO_ERROR)
