@@ -43,7 +43,9 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton bu
 		if(this->isPressed){
 			this->isPressed = false;
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
-			this->pressed.Emit();
+			if(this->onPressed){
+				this->onPressed();
+			}
 			return true;
 		}
 	}

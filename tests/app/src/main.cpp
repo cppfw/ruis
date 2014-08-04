@@ -247,9 +247,17 @@ public:
 //		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
-		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->pressed.Connect(static_cast<morda::App*>(this), &morda::App::ShowVirtualKeyboard);
+		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->onPressed = [this](){
+			this->ShowVirtualKeyboard();
+		};
 		
-		c->FindChildByName("Hello world button").DynamicCast<morda::Button>()->pressed.Connect(this, &Application::PostMessageToUIThread);
+		c->FindChildByName("Hello world button").DynamicCast<morda::Button>()->onPressed = [this](){
+			this->PostToUIThread_ts(
+					[](){
+						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
+					}
+				);
+		};
 		
 		
 		if(ting::Ref<morda::Container> container = c.DynamicCast<morda::Container>()){
@@ -259,16 +267,6 @@ public:
 		}
 		
 		this->SetRootWidget(c);
-	}
-		
-	
-	
-	void PostMessageToUIThread(){
-		this->PostToUIThread_ts(
-				[](){
-					TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
-				}
-			);
 	}
 };
 
