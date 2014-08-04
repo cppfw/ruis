@@ -32,8 +32,8 @@ public:
 			morda::Widget(description)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
-		this->fnt = morda::App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
+		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
+		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
 	ting::Inited<ting::u32, 0> timer;
@@ -139,7 +139,7 @@ class CubeWidget : public morda::Widget, public morda::Updateable{
 	morda::Quatf rot;
 public:
 	CubeWidget() : Widget(0){
-		this->tex = morda::App::Inst().ResMan().Load<morda::ResTexture>("tex_sample");
+		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
 		this->StartUpdating(30);
 	}
@@ -222,7 +222,7 @@ public:
 
 
 class Application : public morda::App{
-	inline static morda::App::WindowParams GetWindowParams()throw(){
+	static morda::App::WindowParams GetWindowParams()throw(){
 		morda::App::WindowParams wp;
 		
 		wp.dim.x = 800;
@@ -234,7 +234,7 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->ResMan().MountResPack(this->CreateResourceFileInterface());
+		this->resMan.MountResPack(this->CreateResourceFileInterface());
 //		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");

@@ -11,7 +11,7 @@ using namespace morda;
 
 
 Label::Label() : Widget(0){
-	this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
+	this->font = App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 }
 
 
@@ -22,9 +22,9 @@ Label::Label(const stob::Node& description) :
 {
 	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
 	if(const stob::Node* p = description.GetProperty("font")){
-		this->font = App::Inst().ResMan().Load<morda::ResFont>(p->Value());
+		this->font = App::Inst().resMan.Load<morda::ResFont>(p->Value());
 	}else{
-		this->font = App::Inst().ResMan().Load<morda::ResFont>("fnt_main");
+		this->font = App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
 	if(const stob::Node* p = description.GetProperty("text")){

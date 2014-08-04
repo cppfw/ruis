@@ -1,6 +1,7 @@
 #include "ResourceManager.hpp"
 
-#include "../util/util.hpp"
+#include "util/util.hpp"
+#include "App.hpp"
 
 
 using namespace morda;
@@ -68,16 +69,26 @@ void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::No
 	ASSERT(this->resMap.find(node.Value()) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
-	this->resMap.insert(
+	auto result = this->resMap.insert(
 			std::pair<const char*, ting::WeakRef<Resource> >(
 					node.Value(),
 					res.GetWeakRef()
 				)
 		);
+	ASSERT(result.second)
 
+	res->resMapIter = result.first;
+	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
 //		TRACE(<< "\t" << *(*i).first << std::endl)
 //	}
 //#endif
 }
+
+
+
+Resource::~Resource()noexcept{
+	morda::App::Inst().resMan.resMap.erase(this->resMapIter);
+}
+

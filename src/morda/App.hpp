@@ -65,7 +65,7 @@ THE SOFTWARE. */
 #include "util/keycodes.hpp"
 #include "util/CharInputFocusable.hpp"
 #include "util/Vector2.hpp"
-#include "resman/ResourceManager.hpp"
+#include "ResourceManager.hpp"
 
 #include "shaders/SimpleSingleColoringShader.hpp"
 #include "shaders/SimpleTexturingShader.hpp"
@@ -328,12 +328,14 @@ public:
 	const morda::Vec2f& viewportDim()const throw(){
 		return this->curWinRect.d;
 	}
-	
-private:
-	ting::Ref<morda::Widget> rootWidget;
 
+public:
 	ResourceManager resMan;
 
+private:
+	ting::Ref<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources
+
+private:
 	Inflater guiInflater;
 
 	void UpdateGLViewport();
@@ -367,10 +369,6 @@ public:
 		
 		this->rootWidget->MoveTo(morda::Vec2f(0));
 		this->rootWidget->Resize(this->curWinRect.d);
-	}
-
-	ResourceManager& ResMan()throw(){
-		return this->resMan;
 	}
 
 	Inflater& inflater()throw(){

@@ -32,8 +32,7 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
-#include "../resman/Resource.hpp"
-#include "../resman/ResourceManager.hpp"
+#include "../ResourceManager.hpp"
 
 #include "../fonts/TexFont.hpp"
 

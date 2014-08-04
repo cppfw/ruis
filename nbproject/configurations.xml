@@ -23,10 +23,6 @@
             <in>main.cpp</in>
           </df>
         </df>
-        <df name="resman">
-          <in>Resource.cpp</in>
-          <in>ResourceManager.cpp</in>
-        </df>
         <df name="resources">
           <in>ResFont.cpp</in>
           <in>ResTexture.cpp</in>
@@ -59,7 +55,6 @@
           <in>Container.cpp</in>
           <in>FrameContainer.cpp</in>
           <in>FrameContainer.hpp</in>
-          <in>HookWidget.hpp</in>
           <in>ImageLabel.cpp</in>
           <in>Label.cpp</in>
           <in>LinearContainer.cpp</in>
@@ -75,6 +70,7 @@
         </df>
         <in>App.cpp</in>
         <in>Inflater.cpp</in>
+        <in>ResourceManager.cpp</in>
         <in>Updateable.cpp</in>
       </df>
     </df>
@@ -122,15 +118,6 @@
         </makeTool>
       </makefileType>
       <folder path="0/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/resman">
         <ccTool>
           <incDir>
             <pElem>ext</pElem>
@@ -219,13 +206,6 @@
       <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -321,8 +301,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -437,13 +415,6 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="0/morda/resman">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="0/morda/resources">
         <ccTool>
           <incDir>
@@ -486,6 +457,13 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
@@ -494,8 +472,12 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -512,16 +494,13 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -579,6 +558,8 @@
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -610,8 +591,6 @@
             tool="1"
             flavor2="8">
       </item>
-      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
@@ -629,9 +608,7 @@
       </item>
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -707,13 +684,6 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="0/morda/resman">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="0/morda/resources">
         <ccTool>
           <incDir>
@@ -784,13 +754,6 @@
       <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -881,8 +844,6 @@
             ex="false"
             tool="1"
             flavor2="8">
-      </item>
-      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -999,26 +960,6 @@
       <item path="src/morda/glue/windows/App.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/resman/Resource.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>ext</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/resman/ResourceManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>src</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -1167,8 +1108,6 @@
             <pElem>src</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/widgets/HookWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>

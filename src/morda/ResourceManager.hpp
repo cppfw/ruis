@@ -36,15 +36,22 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
-#include "../Exc.hpp"
-#include "Resource.hpp"
+#include "Exc.hpp"
 
 
 namespace morda{
 
 
-//TODO: make singleton
+
+class App;
+class Resource;
+
+
+
 class ResourceManager{
+	friend class morda::App;
+	friend class Resource;
+	
 	typedef std::map<const std::string, ting::WeakRef<Resource> > T_ResMap;
 
 	T_ResMap resMap;
@@ -89,6 +96,8 @@ class ResourceManager{
 	//Add resource to resources map
 	void AddResource(const ting::Ref<Resource>& res, const stob::Node& node);
 
+private:
+	ResourceManager(){}
 
 public:
 	class Exc : public morda::Exc{
@@ -98,13 +107,27 @@ public:
 		{}
 	};
 
-	ResourceManager(){}
-
-	virtual ~ResourceManager(){}
+	~ResourceManager()noexcept{
+		ASSERT(this->resMap.size() == 0)
+	}
 
 	void MountResPack(std::unique_ptr<ting::fs::File> fi);
 
 	template <class T> ting::Ref<T> Load(const char* resName);
+};
+
+
+
+//base class for all resources
+class Resource : virtual public ting::RefCounted{
+	friend class ResourceManager;
+	
+	ResourceManager::T_ResMap::iterator resMapIter;
+protected:
+	//this can only be used as a base class
+	Resource(){}
+public:
+	virtual ~Resource()noexcept;
 };
 
 
@@ -141,6 +164,10 @@ template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;
 }
+
+
+
+
 
 
 
