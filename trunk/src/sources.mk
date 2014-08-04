@@ -1,15 +1,12 @@
-this_srcs := 
 this_srcs += morda/App.cpp
 this_srcs += morda/Inflater.cpp
 this_srcs += morda/Updateable.cpp
+this_srcs += morda/ResourceManager.cpp
 
 this_srcs += morda/shaders/Shader.cpp
 this_srcs += morda/shaders/SimpleSingleColoringShader.cpp
 this_srcs += morda/shaders/TexturingShader.cpp
 this_srcs += morda/shaders/SimpleTexturingShader.cpp
-
-this_srcs += morda/resman/ResourceManager.cpp
-this_srcs += morda/resman/Resource.cpp
 
 this_srcs += morda/resources/ResTexture.cpp
 this_srcs += morda/resources/ResFont.cpp

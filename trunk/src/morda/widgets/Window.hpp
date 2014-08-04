@@ -54,7 +54,6 @@ public:
 	
 	
 	Window(const Window& orig) = delete;
-
 	
 };
 

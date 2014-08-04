@@ -10,7 +10,7 @@ ImageLabel::ImageLabel(const stob::Node& desc) :
 		Widget(desc)
 {
 	if(const stob::Node* image = desc.GetProperty("image")){
-		this->tex = App::Inst().ResMan().Load<ResTexture>(image->Value());
+		this->tex = App::Inst().resMan.Load<ResTexture>(image->Value());
 		this->Resize(this->tex->Tex().Dim());
 	}
 	
