@@ -1,5 +1,4 @@
-Res{
-	name {fnt_main}
+fnt_main{
 	file {vera.ttf}
 	chars {" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;?!()"}
 	size {5mm}

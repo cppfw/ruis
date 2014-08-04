@@ -94,7 +94,7 @@ morda::Window::Window(const stob::Node& desc) :
 	this->FindWidgets();
 	
 	if(const stob::Node* t = desc.GetProperty("title")){
-		this->title->SetText(t->Value());
+		this->SetTitle(t->Value());
 	}
 }
 
@@ -125,4 +125,8 @@ void morda::Window::FindWidgets(){
 	
 	
 	this->title = this->caption->FindChildByName("morda_title").DynamicCast<Label>();
+}
+
+void morda::Window::SetTitle(const std::string& str){
+	this->title->SetText(str);
 }

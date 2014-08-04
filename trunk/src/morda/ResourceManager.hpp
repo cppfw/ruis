@@ -78,15 +78,13 @@ class ResourceManager{
 
 	class FindInScriptRet{
 	public:
-		FindInScriptRet(ResPackEntry& resPack, const stob::Node& element, const stob::Node& nameVal) :
+		FindInScriptRet(ResPackEntry& resPack, const stob::Node& element) :
 				rp(resPack),
-				e(element),
-				nameVal(nameVal)
+				e(element)
 		{}
 
 		ResPackEntry& rp;
 		const stob::Node& e;
-		const stob::Node& nameVal;
 	};
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
@@ -159,7 +157,7 @@ template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
 
 	ting::Ref<T> resource = T::Load(ret.e, *ret.rp.fi);
 
-	this->AddResource(resource, ret.nameVal);
+	this->AddResource(resource, ret.e);
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;

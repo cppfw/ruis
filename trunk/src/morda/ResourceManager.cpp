@@ -8,14 +8,6 @@ using namespace morda;
 
 
 
-namespace{
-
-const char* DResTag = "Res";
-
-}//~namespace
-
-
-
 void ResourceManager::MountResPack(std::unique_ptr<ting::fs::File> fi){
 	ASSERT(fi)
 	ASSERT(!fi->IsOpened())
@@ -44,16 +36,10 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
-		for(const stob::Node* e = i->resScript->ThisOrNext(DResTag).node(); e; e = e->Next(DResTag).node()){
-//			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
-			if(const stob::Node* nameProp = e->GetProperty("name")){
-	//			TRACE(<< "ResourceManager::FindResourceInScript(): name = " << name << std::endl)
-				if(resName.compare(nameProp->Value()) == 0){
-	//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-					return FindInScriptRet(*i, *e, *nameProp);
-				}
-			}else{
-//				TRACE(<< "ResourceManager::FindResourceInScript(): WARNING! no 'name' property in resource" << std::endl)
+		for(const stob::Node* e = i->resScript.operator->(); e; e = e->Next()){
+			if(resName.compare(e->Value()) == 0){
+//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
+				return FindInScriptRet(*i, *e);
 			}
 		}//~for(res)
 	}//~for(resPack)

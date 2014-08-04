@@ -25,6 +25,8 @@
         </df>
         <df name="resources">
           <in>ResFont.cpp</in>
+          <in>ResImage.cpp</in>
+          <in>ResImage.hpp</in>
           <in>ResTexture.cpp</in>
         </df>
         <df name="shaders">
@@ -208,6 +210,10 @@
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -492,6 +498,10 @@
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
@@ -747,6 +757,10 @@
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
@@ -952,6 +966,10 @@
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="4">
       </item>
