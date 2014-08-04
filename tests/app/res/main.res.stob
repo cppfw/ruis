@@ -1,5 +1,4 @@
-Res{
-	name {tex_sample}
+tex_sample{
 	file {texture.jpg}
 }
 

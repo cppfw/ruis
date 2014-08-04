@@ -55,6 +55,7 @@ public:
 	
 	Window(const Window& orig) = delete;
 	
+	void SetTitle(const std::string& str);
 };
 
 }
