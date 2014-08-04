@@ -97,7 +97,7 @@ class ResourceManager{
 	void AddResource(const ting::Ref<Resource>& res, const stob::Node& node);
 
 private:
-	ResourceManager(){}
+	ResourceManager() = default;
 
 public:
 	class Exc : public morda::Exc{
