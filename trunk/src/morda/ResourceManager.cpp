@@ -43,7 +43,7 @@ void ResourceManager::MountResPack(std::unique_ptr<ting::fs::File> fi){
 ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std::string& resName){
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
-	for(T_ResPackList::iterator i = this->resPacks.begin(); i != this->resPacks.end(); ++i){
+	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
 		for(const stob::Node* e = i->resScript->ThisOrNext(DResTag).node(); e; e = e->Next(DResTag).node()){
 //			TRACE(<< "ResourceManager::FindResourceInScript(): searching for 'name' property" << std::endl)
 			if(const stob::Node* nameProp = e->GetProperty("name")){
