@@ -115,7 +115,7 @@ protected:
 public:
 	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
-	virtual ~Shader()throw(){}
+	virtual ~Shader()noexcept{}
 
 	void Bind(){
 		glUseProgram(this->program.p);
