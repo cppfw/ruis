@@ -29,7 +29,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/Signal.hpp>
+#include <functional>
 
 #include "../widgets/Widget.hpp"
 
@@ -52,7 +52,7 @@ public:
 	
 	~Button()throw(){}
 	
-	ting::Signal0 pressed;
+	std::function<void()> onPressed;
 	
 	void Render(const morda::Matr4f& matrix)const OVERRIDE;
 	
