@@ -1,4 +1,4 @@
-#include "ResImage.hpp"
+#include "ResSprite.hpp"
 
 
 using namespace morda;
