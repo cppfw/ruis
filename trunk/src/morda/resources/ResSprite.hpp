@@ -37,16 +37,16 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class ResImage : public Resource{
+class ResSprite : public Resource{
 	
 	ting::Ref<ResTexture> tex;
 	
 	std::array<Vec2f, 4> texCoords;
 	
 public:
-	ResImage() = default;
-	ResImage(const ResImage& orig) = delete;
-	virtual ~ResImage()noexcept;
+	ResSprite() = default;
+	ResSprite(const ResSprite& orig) = delete;
+	virtual ~ResSprite()noexcept;
 private:
 
 };

@@ -8,7 +8,7 @@ this_srcs += morda/shaders/SimpleSingleColoringShader.cpp
 this_srcs += morda/shaders/TexturingShader.cpp
 this_srcs += morda/shaders/SimpleTexturingShader.cpp
 
-this_srcs += morda/resources/ResImage.cpp
+this_srcs += morda/resources/ResSprite.cpp
 this_srcs += morda/resources/ResTexture.cpp
 this_srcs += morda/resources/ResFont.cpp
 
