@@ -31,6 +31,9 @@ THE SOFTWARE. */
 
 #include <ting/Shared.hpp>
 
+#include <cstdint>
+#include <list>
+
 #include "Exc.hpp"
 
 
@@ -46,16 +49,16 @@ private:
 	class Updater{
 		friend class morda::Updateable;
 		
-		typedef std::pair<ting::u32, ting::WeakRef<morda::Updateable> > T_Pair;
+		typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
 		
 		class UpdateQueue : public std::list<T_Pair>{
 		public:
 			UpdateQueue::iterator Insert(const T_Pair& p);
 
-			inline ting::Ref<morda::Updateable> PopFront(){
-				ting::Ref<morda::Updateable> ret = this->front().second;
+			std::shared_ptr<morda::Updateable> PopFront(){
+				std::shared_ptr<morda::Updateable> ret = std::move(this->front().second.lock());
 				this->pop_front();
-				return ret;
+				return std::move(ret);
 			}
 		};
 		
@@ -63,14 +66,14 @@ private:
 		
 		UpdateQueue *activeQueue, *inactiveQueue;
 		
-		ting::Inited<ting::u32, 0> lastUpdatedTimestamp;
+		std::uint32_t lastUpdatedTimestamp = 0;
 		
-		typedef std::list<ting::Ref<morda::Updateable> > T_ToAddList;
+		typedef std::list<std::shared_ptr<morda::Updateable> > T_ToAddList;
 		T_ToAddList toAdd;
 		
 		void AddPending();
 		
-		void UpdateUpdateable(const ting::Ref<morda::Updateable>& u);
+		void UpdateUpdateable(const std::shared_ptr<morda::Updateable>& u);
 	public:
 		Updater() :
 				activeQueue(&q1),
@@ -80,26 +83,26 @@ private:
 		void RemoveFromToAdd(Updateable* u);
 		
 		//returns dt to wait before next update
-		ting::u32 Update();
+		std::uint32_t Update();
 	};
 	
 private:
-	ting::u16 dt;
+	std::uint16_t dt;
 	
-	ting::u32 startedAt; //timestamp when update timer started.
+	std::uint32_t startedAt; //timestamp when update timer started.
 	
-	inline ting::u32 EndAt()const throw(){
-		return this->startedAt + ting::u32(this->dt);
+	std::uint32_t EndAt()const throw(){
+		return this->startedAt + std::uint32_t(this->dt);
 	}
 	
-	ting::Inited<bool, false> isUpdating;
+	bool isUpdating = false;
 	
 	//pointer to the queue the updateable is inserted into
-	ting::Inited<Updater::UpdateQueue*, 0> queue;
+	Updater::UpdateQueue* queue = nullptr;
 	
 	Updater::UpdateQueue::iterator iter; //iterator into the queue.
 	
-	ting::Inited<bool, false> pendingAddition;
+	bool pendingAddition = false;
 	
 public:
 	class Exc : public morda::Exc{
@@ -109,17 +112,17 @@ public:
 		{}
 	};
 	
-	~Updateable()throw(){}
+	~Updateable()noexcept{}
 	
-	bool IsUpdating()const throw(){
+	bool IsUpdating()const noexcept{
 		return this->isUpdating;
 	}
 	
-	void StartUpdating(ting::u16 dt = 30);
+	void StartUpdating(std::uint16_t dt = 30);
 	
 	void StopUpdating()throw();
 	
-	virtual void Update(ting::u32 dt) = 0;
+	virtual void Update(std::uint32_t dt) = 0;
 };
 
 }//~namespace

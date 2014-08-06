@@ -54,7 +54,7 @@ void Updateable::Updater::AddPending(){
 
 
 
-void Updateable::Updater::UpdateUpdateable(const ting::Ref<morda::Updateable>& u){
+void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -171,7 +171,7 @@ void Updateable::StartUpdating(ting::u16 dt){
 	
 	this->pendingAddition = true;
 	
-	App::Inst().updater.toAdd.push_front(ting::Ref<morda::Updateable>(this));
+	App::Inst().updater.toAdd.push_front(this->SharedFromThis(this));
 }
 
 
