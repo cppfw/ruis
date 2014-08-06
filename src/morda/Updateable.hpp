@@ -29,7 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include <ting/Ref.hpp>
+#include <ting/Shared.hpp>
 
 #include "Exc.hpp"
 
@@ -39,7 +39,7 @@ namespace morda{
 
 
 
-class Updateable : virtual public ting::RefCounted{
+class Updateable : virtual public ting::Shared{
 	friend class App;
 	
 private:

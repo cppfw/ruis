@@ -333,7 +333,7 @@ public:
 	ResourceManager resMan;
 
 private:
-	ting::Ref<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources
+	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources
 
 private:
 	Inflater guiInflater;
@@ -364,7 +364,7 @@ public:
 
 	virtual ~App()throw(){}
 
-	void SetRootWidget(const ting::Ref<morda::Widget>& w){
+	void SetRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
 		
 		this->rootWidget->MoveTo(morda::Vec2f(0));
@@ -380,13 +380,13 @@ public:
 	void HideVirtualKeyboard()throw();
 	
 private:
-	ting::WeakRef<Widget> focusedWidget;
-	ting::WeakRef<CharInputFocusable> focusedCharInput;
+	std::weak_ptr<Widget> focusedWidget;
+	std::weak_ptr<CharInputFocusable> focusedCharInput;
 	
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver){
-		if(ting::Ref<CharInputFocusable> c = this->focusedCharInput){
+		if(auto c = this->focusedCharInput.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 			c->OnCharacterInput(unicodeResolver.Resolve());
 		}
@@ -395,7 +395,7 @@ private:
 	void HandleKeyEvent(bool isDown, key::Key keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 		
-		if(ting::Ref<Widget> w = this->focusedWidget){
+		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
 			w->OnKeyInternal(isDown, keyCode);
 		}else{

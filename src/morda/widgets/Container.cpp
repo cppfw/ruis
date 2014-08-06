@@ -68,7 +68,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 	{
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
-			if(ting::Ref<Widget> w = i->second.first){
+			if(auto w = i->second.first.lock()){
 				w->SetHovered(w->Rect().Overlaps(pos));
 				w->OnMouseButton(isDown, pos - w->Rect().p, button, pointerId);
 				
@@ -105,7 +105,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair((*i).GetWeakRef(), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<Widget>(*i), 1)));
 			}
 			
 			return true;
@@ -127,7 +127,7 @@ bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
 	{
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
-			if(ting::Ref<Widget> w = i->second.first){
+			if(auto w = i->second.first.lock()){
 				w->OnMouseMove(pos - w->Rect().p, pointerId);
 		
 				//set hovered goes after move notification because position of widget could change
@@ -197,9 +197,9 @@ void Container::OnResize(){
 
 
 
-void Container::Add(const ting::Ref<Widget>& w){
+void Container::Add(const std::shared_ptr<Widget>& w){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
-	if(w->parent.GetRef().IsValid()){
+	if(w->Parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
 	}
 
@@ -215,10 +215,8 @@ void Container::Add(const ting::Ref<Widget>& w){
 
 
 
-void Container::Remove(const ting::Ref<Widget>& w){
-	ASSERT(w.IsValid())
-	
-	if(w->parent.GetRef().operator->() != this){
+void Container::Remove(Widget& w){
+	if(w.parent != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
 	
@@ -226,12 +224,12 @@ void Container::Remove(const ting::Ref<Widget>& w){
 		throw morda::Exc("Container::Remove(): cannot remove child while iterating through children, try deferred removing.");
 	}
 	
-	ASSERT(w->parent.GetRef() == ting::Ref<Container>(this))
+	ASSERT(w.parent == this)
 	
-	this->children.erase(w->parentIter);
+	this->children.erase(w.parentIter);
 	
-	w->parent.Reset();
-	w->SetHovered(false);
+	w.parent = 0;
+	w.SetHovered(false);
 	
 	this->SetRelayoutNeeded();
 }
@@ -239,7 +237,7 @@ void Container::Remove(const ting::Ref<Widget>& w){
 
 
 //override
-ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
+std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)noexcept{
 //	TRACE_AND_LOG(<< "Container::FindChildByName(): enter" << std::endl)
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 //		TRACE_AND_LOG(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
@@ -247,7 +245,7 @@ ting::Ref<Widget> Container::FindChildByName(const std::string& name)throw(){
 			return *i;
 		}
 		
-		if(ting::Ref<Widget> r = (*i)->FindChildByName(name)){
+		if(auto r = (*i)->FindChildByName(name)){
 			return r;
 		}
 	}

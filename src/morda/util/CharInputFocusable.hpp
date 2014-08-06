@@ -28,13 +28,13 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/Ref.hpp>
+#include <ting/Shared.hpp>
 #include <ting/Buffer.hpp>
 
 namespace morda{
 
 
-class CharInputFocusable : virtual public ting::RefCounted{
+class CharInputFocusable : virtual public ting::Shared{
 public:
 	
 	/**

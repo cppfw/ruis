@@ -239,7 +239,7 @@ public:
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 
-		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(
+		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")
 			);
 
@@ -247,11 +247,11 @@ public:
 //		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
-		c->FindChildByName("show_VK_button").DynamicCast<morda::Button>()->onPressed = [this](){
+		std::dynamic_pointer_cast<morda::Button>(c->FindChildByName("show_VK_button"))->onPressed = [this](){
 			this->ShowVirtualKeyboard();
 		};
 		
-		c->FindChildByName("Hello world button").DynamicCast<morda::Button>()->onPressed = [this](){
+		std::dynamic_pointer_cast<morda::Button>(c->FindChildByName("Hello world button"))->onPressed = [this](){
 			this->PostToUIThread_ts(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
@@ -260,8 +260,8 @@ public:
 		};
 		
 		
-		if(ting::Ref<morda::Container> container = c.DynamicCast<morda::Container>()){
-			ting::Ref<CubeWidget> w = ting::New<CubeWidget>();
+		if(auto container = std::dynamic_pointer_cast<morda::Container>(c)){
+			auto w = ting::New<CubeWidget>();
 			w->Resize(morda::Vec2f(200, 150));
 			container->Add(w);
 		}

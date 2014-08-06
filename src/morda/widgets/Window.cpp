@@ -124,7 +124,7 @@ void morda::Window::FindWidgets(){
 	};
 	
 	
-	this->title = this->caption->FindChildByName("morda_title").DynamicCast<Label>();
+	this->title = std::dynamic_pointer_cast<Label>(this->caption->FindChildByName("morda_title"));
 }
 
 void morda::Window::SetTitle(const std::string& str){

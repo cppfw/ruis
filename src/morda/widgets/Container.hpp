@@ -48,7 +48,7 @@ private:
 	T_ChildrenList children;
 	
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
-	typedef std::map<unsigned, std::pair<ting::WeakRef<Widget>, unsigned> > T_MouseCaptureMap;
+	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
 	T_MouseCaptureMap mouseCaptureMap;
 	
 	//flag indicating that modifications to children list are blocked
@@ -78,12 +78,12 @@ public:
 	
 	void OnResize()override;
 
-	void Add(const ting::Ref<Widget>& w);
+	void Add(const std::shared_ptr<Widget>& w);
 
 	//return true if the widget was found in children and was removed
-	void Remove(const ting::Ref<Widget>& w);
+	void Remove(Widget& w);
 	
-	ting::Ref<Widget> FindChildByName(const std::string& name)throw() OVERRIDE;
+	std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept override;
 	
 	const T_ChildrenList& Children()const throw(){
 		return this->children;
