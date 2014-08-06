@@ -30,9 +30,8 @@ THE SOFTWARE. */
 
 #include <map>
 
-#include <ting/Ref.hpp>
+#include <ting/Shared.hpp>
 #include <ting/fs/File.hpp>
-#include <ting/Ptr.hpp>
 
 #include <stob/dom.hpp>
 
@@ -52,9 +51,7 @@ class ResourceManager{
 	friend class morda::App;
 	friend class Resource;
 	
-	typedef std::map<const std::string, ting::WeakRef<Resource> > T_ResMap;
-
-	T_ResMap resMap;
+	std::map<const std::string, std::weak_ptr<Resource>> resMap;
 
 	class ResPackEntry{
 	public:
@@ -89,10 +86,10 @@ class ResourceManager{
 
 	FindInScriptRet FindResourceInScript(const std::string& resName);
 
-	template <class T> ting::Ref<T> FindResourceInResMap(const char* resName);
+	template <class T> std::shared_ptr<T> FindResourceInResMap(const char* resName);
 
 	//Add resource to resources map
-	void AddResource(const ting::Ref<Resource>& res, const stob::Node& node);
+	void AddResource(const std::shared_ptr<Resource>& res, const stob::Node& node);
 
 private:
 	ResourceManager() = default;
@@ -111,16 +108,16 @@ public:
 
 	void MountResPack(std::unique_ptr<ting::fs::File> fi);
 
-	template <class T> ting::Ref<T> Load(const char* resName);
+	template <class T> std::shared_ptr<T> Load(const char* resName);
 };
 
 
 
 //base class for all resources
-class Resource : virtual public ting::RefCounted{
+class Resource : virtual public ting::Shared{
 	friend class ResourceManager;
 	
-	ResourceManager::T_ResMap::iterator resMapIter;
+	decltype(ResourceManager().resMap)::iterator resMapIter;
 protected:
 	//this can only be used as a base class
 	Resource(){}
@@ -130,23 +127,23 @@ public:
 
 
 
-template <class T> ting::Ref<T> ResourceManager::FindResourceInResMap(const char* resName){
-	T_ResMap::iterator i = this->resMap.find(resName);
+template <class T> std::shared_ptr<T> ResourceManager::FindResourceInResMap(const char* resName){
+	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
-		ting::Ref<Resource> r((*i).second);
-		ASSERT(r.DynamicCast<T>().IsValid())
-		return r.StaticCast<T>();
+		auto r = std::move((*i).second.lock());
+		ASSERT(std::dynamic_pointer_cast<T>(r))
+		return std::move(std::static_pointer_cast<T>(std::move(r)));
 	}
-	return ting::Ref<T>();//no resource found with given name, return invalid reference
+	return nullptr;//no resource found with given name, return invalid reference
 }
 
 
 
-template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
+template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
-	if(ting::Ref<T> r = this->FindResourceInResMap<T>(resName)){
+	if(auto r = std::move(this->FindResourceInResMap<T>(resName))){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
-		return r;
+		return std::move(r);
 	}
 
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
@@ -155,12 +152,12 @@ template <class T> ting::Ref<T> ResourceManager::Load(const char* resName){
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	ting::Ref<T> resource = T::Load(ret.e, *ret.rp.fi);
+	auto resource = std::move(T::Load(ret.e, *ret.rp.fi));
 
 	this->AddResource(resource, ret.e);
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
-	return resource;
+	return std::move(resource);
 }
 
 

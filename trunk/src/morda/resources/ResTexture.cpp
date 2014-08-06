@@ -10,7 +10,7 @@ using namespace morda;
 
 
 //static
-ting::Ref<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi){
+std::shared_ptr<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi){
 //	TRACE(<< "ResTexture::Load(): enter" << std::endl)
 	const stob::Node* fileVal = el.GetProperty("file");
 	if(!fileVal){
@@ -23,5 +23,5 @@ ting::Ref<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi)
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	image.FlipVertical();
 
-	return ting::NewRefCounted<ResTexture>(image);
+	return std::move(ting::New<ResTexture>(image));
 }

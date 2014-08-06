@@ -24,8 +24,8 @@
 
 
 class SimpleWidget : public morda::Widget, public morda::Updateable, public morda::CharInputFocusable{
-	ting::Ref<morda::ResTexture> tex;
-	ting::Ref<morda::ResFont> fnt;
+	std::shared_ptr<morda::ResTexture> tex;
+	std::shared_ptr<morda::ResFont> fnt;
 	
 public:	
 	SimpleWidget(const stob::Node& description) :
@@ -134,7 +134,7 @@ public:
 
 
 class CubeWidget : public morda::Widget, public morda::Updateable{
-	ting::Ref<morda::ResTexture> tex;
+	std::shared_ptr<morda::ResTexture> tex;
 	
 	morda::Quatf rot;
 public:
