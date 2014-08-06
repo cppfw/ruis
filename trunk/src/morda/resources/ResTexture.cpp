@@ -23,5 +23,5 @@ ting::Ref<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi)
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	image.FlipVertical();
 
-	return ting::New<ResTexture>(image);
+	return ting::NewRefCounted<ResTexture>(image);
 }

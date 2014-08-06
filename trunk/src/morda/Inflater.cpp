@@ -54,16 +54,16 @@ bool Inflater::RemoveWidget(const std::string& widgetName)throw(){
 
 
 
-ting::Ref<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
+std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 	std::unique_ptr<stob::Node> root = this->Load(fi);
 	ASSERT(root)
 
-	return this->Inflate(*root);
+	return std::move(this->Inflate(*root));
 }
 
 
 
-ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
+std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 	if(!App::Inst().ThisIsUIThread()){
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}
@@ -111,7 +111,7 @@ ting::Ref<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
-	return i->second->Create(*n);
+	return std::move(i->second->Create(*n));
 }
 
 

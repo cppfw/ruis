@@ -39,8 +39,8 @@ class Window :
 		virtual public Widget,
 		private LinearContainer
 {
-	ting::Ref<Widget> caption;
-	ting::Ref<Label> title;
+	std::shared_ptr<Widget> caption;
+	std::shared_ptr<Label> title;
 	
 	bool captionCaptured = false;
 	morda::Vec2f capturePoint;

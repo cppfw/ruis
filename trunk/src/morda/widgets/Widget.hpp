@@ -31,7 +31,7 @@ THE SOFTWARE. */
 #include <string>
 
 #include <ting/types.hpp>
-#include <ting/Ref.hpp>
+#include <ting/Shared.hpp>
 
 #include "../util/keycodes.hpp"
 
@@ -52,15 +52,15 @@ class Container;
 
 
 
-class Widget : virtual public ting::RefCounted{
+class Widget : virtual public ting::Shared{
 	friend class Container;
 	friend class App;
 	
 public:
-	typedef std::list<ting::Ref<Widget> > T_ChildrenList;
+	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
 	
 private:
-	ting::WeakRef<Container> parent;
+	Container* parent = 0;
 	T_ChildrenList::iterator parentIter;
 	
 	ting::Inited<bool, false> isHovered;
@@ -118,15 +118,15 @@ public:
 		return this->relayoutNeeded;
 	}
 	
-	const std::string& Name()const throw(){
+	const std::string& Name()const noexcept{
 		return this->name;
 	}
 	
-	const ting::WeakRef<Container>& Parent()throw(){
+	const Container* Parent()const noexcept{
 		return this->parent;
 	}
 	
-	const ting::WeakRef<const Container>& Parent()const throw(){
+	Container* Parent()noexcept{
 		return this->parent;
 	}
 	
@@ -171,8 +171,8 @@ public:
 		this->relayoutNeeded = false;
 	}
 
-	virtual ting::Ref<Widget> FindChildByName(const std::string& name)throw(){
-		return 0;
+	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept{
+		return nullptr;
 	}
 	
 public:

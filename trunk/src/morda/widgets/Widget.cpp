@@ -39,8 +39,8 @@ Widget::Widget(const stob::Node& description){
 
 
 void Widget::RemoveFromParent(){
-	if(ting::Ref<Container> p = this->parent){
-		p->Remove(ting::Ref<Widget>(this));
+	if(this->parent){
+		this->parent->Remove(*this);
 	}
 }
 
@@ -52,8 +52,8 @@ void Widget::SetRelayoutNeeded()throw(){
 		return;
 	}
 	this->relayoutNeeded = true;
-	if(ting::Ref<Container> p = this->parent){
-		p->SetRelayoutNeeded();
+	if(this->parent){
+		this->parent->SetRelayoutNeeded();
 	}
 }
 
@@ -120,8 +120,8 @@ void Widget::OnKeyInternal(bool isDown, key::Key keyCode){
 	}
 
 	//pass key event to parent
-	if(ting::Ref<Container> p = this->Parent()){
-		p->OnKeyInternal(isDown, keyCode);
+	if(this->Parent()){
+		this->Parent()->OnKeyInternal(isDown, keyCode);
 	}
 }
 
@@ -134,10 +134,10 @@ void Widget::Focus()throw(){
 		return;
 	}
 
-	if(ting::Ref<Widget> w = App::Inst().focusedWidget){
+	if(auto w = App::Inst().focusedWidget.lock()){
 		w->isFocused = false;
 	}
-	App::Inst().focusedWidget = ting::WeakRef<Widget>(this);
+	App::Inst().focusedWidget = this->SharedFromThis(this);
 	this->isFocused = true;
 }
 
@@ -150,8 +150,8 @@ void Widget::Unfocus()throw(){
 		return;
 	}
 
-	ASSERT(App::Inst().focusedWidget.GetRef() && App::Inst().focusedWidget.GetRef().operator->() == this)
+	ASSERT(App::Inst().focusedWidget.lock() && App::Inst().focusedWidget.lock().operator->() == this)
 
-	App::Inst().focusedWidget.Reset();
+	App::Inst().focusedWidget.reset();
 	this->isFocused = false;
 }

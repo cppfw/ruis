@@ -61,9 +61,9 @@ public:
 
 	class WidgetFactory{
 	public:
-		virtual ting::Ref<morda::Widget> Create(const stob::Node& node)const = 0;
+		virtual std::shared_ptr<morda::Widget> Create(const stob::Node& node)const = 0;
 
-		virtual ~WidgetFactory()throw(){}
+		virtual ~WidgetFactory()noexcept{}
 	};
 
 private:
@@ -80,10 +80,8 @@ public:
 	template <class T_Widget> void AddWidget(const std::string& widgetName){
 		class Factory : public WidgetFactory{
 		public:
-			ting::Ref<morda::Widget> Create(const stob::Node& node)const OVERRIDE{
-				ting::Ref<morda::Widget> ret = ting::New<T_Widget>(node);
-				ASSERT(ret.DynamicCast<T_Widget>().IsValid())
-				return ret;
+			std::shared_ptr<morda::Widget> Create(const stob::Node& node)const override{
+				return std::move(ting::New<T_Widget>(node));
 			}
 		};
 
@@ -103,14 +101,14 @@ public:
 	 * @param gui - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
-	ting::Ref<morda::Widget> Inflate(const stob::Node& gui)const;
+	std::shared_ptr<morda::Widget> Inflate(const stob::Node& gui)const;
 
 	/**
 	 * @brief Inflate widget described in GUI script.
 	 * @param fi - file interface to get the GUI script from.
 	 * @return reference to the inflated widget.
 	 */
-	ting::Ref<morda::Widget> Inflate(ting::fs::File& fi)const;
+	std::shared_ptr<morda::Widget> Inflate(ting::fs::File& fi)const;
 
 	/**
 	 * @brief Load GUI script.

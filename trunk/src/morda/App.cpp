@@ -30,7 +30,7 @@ void App::Render(){
 	//TODO: render only if needed?
 	
 //	TRACE(<< "App::Render(): invoked" << std::endl)
-	if(this->rootWidget.IsNotValid()){
+	if(!this->rootWidget){
 		TRACE(<< "App::Render(): root container is not valid" << std::endl)
 		return;
 	}
@@ -69,7 +69,7 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 
 	this->UpdateGLViewport();
 	
-	if(this->rootWidget.IsNotValid()){
+	if(!this->rootWidget){
 		return;
 	}
 	
@@ -79,7 +79,7 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 
 
 void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
-	if(this->rootWidget.IsNotValid()){
+	if(!this->rootWidget){
 		return;
 	}
 	this->rootWidget->SetHovered(this->rootWidget->Rect().Overlaps(pos));
@@ -89,7 +89,7 @@ void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
 
 
 void App::HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
-	if(this->rootWidget.IsNotValid()){
+	if(!this->rootWidget){
 		return;
 	}
 
@@ -100,7 +100,7 @@ void App::HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouse
 
 
 void App::HandleMouseHover(bool isHovered){
-	if(this->rootWidget.IsNotValid()){
+	if(!this->rootWidget){
 		return;
 	}
 	this->rootWidget->SetHovered(isHovered);

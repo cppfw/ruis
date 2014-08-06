@@ -7,15 +7,15 @@ using namespace morda;
 
 
 void CharInputFocusable::FocusCharInput()const{
-	App::Inst().focusedCharInput = const_cast<CharInputFocusable*>(this);
+	App::Inst().focusedCharInput = this->SharedFromThis(const_cast<CharInputFocusable*>(this));
 }
 
 
 
 void CharInputFocusable::UnfocusCharInput()const{
-	if(ting::Ref<CharInputFocusable> c = App::Inst().focusedCharInput){
+	if(auto c = App::Inst().focusedCharInput.lock()){
 		if(c.operator->() == this){
-			App::Inst().focusedCharInput.Reset();
+			App::Inst().focusedCharInput.reset();
 		}
 	}
 }
