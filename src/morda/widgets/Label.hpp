@@ -44,7 +44,7 @@ namespace morda{
 class Label : public GravitatingWidget, public PaddedWidget{
 	std::string text;
 	
-	ting::Ref<morda::ResFont> font;
+	std::shared_ptr<morda::ResFont> font;
 	
 	morda::Rect2f bb;//text bounding box
 	

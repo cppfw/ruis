@@ -49,16 +49,16 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 
 
 
-void ResourceManager::AddResource(const ting::Ref<Resource>& res, const stob::Node& node){
+void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
 	ASSERT(res)
 
 	ASSERT(this->resMap.find(node.Value()) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
 	auto result = this->resMap.insert(
-			std::pair<const char*, ting::WeakRef<Resource> >(
+			std::pair<const char*, std::weak_ptr<Resource>>(
 					node.Value(),
-					res.GetWeakRef()
+					std::move(std::weak_ptr<Resource>(res))
 				)
 		);
 	ASSERT(result.second)

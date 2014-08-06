@@ -39,9 +39,9 @@ class ImageLabel : public virtual Widget{
 	ImageLabel(const ImageLabel&);
 	ImageLabel& operator=(const ImageLabel&);
 	
-	ting::Ref<morda::ResTexture> tex;
+	std::shared_ptr<morda::ResTexture> tex;
 	
-	ting::Inited<bool, false> keepAspectRatio;
+	bool keepAspectRatio = false;
 	
 public:
 	ImageLabel();

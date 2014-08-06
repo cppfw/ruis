@@ -17,7 +17,7 @@ ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<ting::u32>& chars, unsig
 
 
 //static
-ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
+std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 	//get font filename
 	const stob::Node* fileProp = el.GetProperty("file");
 	if(!fileProp){
@@ -59,6 +59,6 @@ ting::Ref<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
 
 	fi.SetPath(fileProp->Value());
 
-	return ting::NewRefCounted<ResFont>(fi, ting::Buffer<ting::u32>(&(*wideChars.begin()), wideChars.size()), size, outline);
+	return std::move(ting::New<ResFont>(fi, ting::Buffer<ting::u32>(&(*wideChars.begin()), wideChars.size()), size, outline));
 }
 

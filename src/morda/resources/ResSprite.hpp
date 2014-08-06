@@ -39,7 +39,7 @@ namespace morda{
 
 class ResSprite : public Resource{
 	
-	ting::Ref<ResTexture> tex;
+	std::shared_ptr<ResTexture> tex;
 	
 	std::array<Vec2f, 4> texCoords;
 	
