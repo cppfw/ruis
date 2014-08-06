@@ -141,7 +141,6 @@ public:
 	CubeWidget() : Widget(0){
 		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
-		this->StartUpdating(30);
 	}
 	
 	void Update(ting::u32 dt) OVERRIDE{
@@ -263,6 +262,7 @@ public:
 		if(auto container = std::dynamic_pointer_cast<morda::Container>(c)){
 			auto w = ting::New<CubeWidget>();
 			w->Resize(morda::Vec2f(200, 150));
+			w->StartUpdating(30);
 			container->Add(w);
 		}
 		
