@@ -52,7 +52,7 @@ public:
 	void CloseInternal()noexcept override;
 	size_t ReadInternal(const ting::Buffer<std::uint8_t>& buf) override;
 	bool Exists() const override;
-	ting::Array<std::string> ListDirContents(size_t maxEntries = 0) override;
+	std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;
 	
 	static ting::Ptr<ZipFile> New(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
 		return ting::Ptr<ZipFile>(new ZipFile(zipFile, path));

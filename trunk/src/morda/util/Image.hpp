@@ -30,7 +30,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/types.hpp>
-#include <ting/Array.hpp>
 #include <ting/fs/File.hpp>
 
 
@@ -60,7 +59,7 @@ private:
 	EType type;
 	unsigned w;//The width of the image in pixels
 	unsigned h;//The height of the image in pixels
-	ting::Array<std::uint8_t> buf;//image pixels data
+	std::vector<std::uint8_t> buf;//image pixels data
 
 public:
 	//default constructor
@@ -109,12 +108,12 @@ public:
 		return this->type;
 	}
 
-	const ting::Buffer<std::uint8_t>& Buf(){
-		return this->buf;
+	const ting::Buffer<std::uint8_t> Buf(){
+		return std::move(ting::Buffer<std::uint8_t>(this->buf));
 	}
 
-	const ting::Buffer<const std::uint8_t>& Buf()const{
-		return this->buf;
+	const ting::Buffer<const std::uint8_t> Buf()const{
+		return std::move(ting::Buffer<const std::uint8_t>(this->buf));
 	}
 
 public:

@@ -48,7 +48,7 @@ struct AppInfo{
 	AAssetManager* assetManager;
 
 	//Holds info about saved state if restoring from previously saved state.
-	ting::Array<std::uint8_t> savedState;
+	std::vector<std::uint8_t> savedState;
 } appInfo;
 
 
@@ -160,17 +160,17 @@ public:
 	int32_t ms;//meta state
 	int32_t di;//device id
 	
-	ting::Array<std::uint32_t> Resolve()const{
+	std::vector<std::uint32_t> Resolve()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
 		std::uint32_t res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
-			return ting::Array<std::uint32_t>();
+			return std::vector<std::uint32_t>();
 		}
 		
-		ting::Array<std::uint32_t> ret(1);
+		std::vector<std::uint32_t> ret(1);
 		ret[0] = res;
 		
 		return ret;
@@ -582,9 +582,9 @@ key::Key GetKeyFromKeyEvent(AInputEvent& event)noexcept{
 
 
 struct UnicodeResolver{
-	ting::Array<std::uint32_t> chars;
+	std::vector<std::uint32_t> chars;
 
-	ting::Array<std::uint32_t> Resolve()const{
+	std::vector<std::uint32_t> Resolve()const{
 		return this->chars;
 	}
 };
@@ -597,7 +597,7 @@ struct UnicodeResolver{
 
 namespace morda{
 
-void HandleCharacterInputEvent(ting::Array<std::uint32_t> chars){
+void HandleCharacterInputEvent(std::vector<std::uint32_t> chars){
 	UnicodeResolver resolver;
 	resolver.chars = chars;
 	
@@ -635,7 +635,7 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 		utf32.push_back(i.Char());
 	}
 	
-	ting::Array<std::uint32_t> utf32Chars(utf32.size());
+	std::vector<std::uint32_t> utf32Chars(utf32.size());
 
 	std::uint32_t* dst = utf32Chars.Begin();
 	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
