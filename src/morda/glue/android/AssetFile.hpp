@@ -117,7 +117,7 @@ public:
 
 public:
 
-	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0) override;
+	virtual std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;
 };
 
 

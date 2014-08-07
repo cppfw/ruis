@@ -531,7 +531,7 @@ public:
 			event(event)
 	{}
 	
-	ting::Array<std::uint32_t> Resolve()const{
+	std::vector<std::uint32_t> Resolve()const{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
@@ -539,14 +539,14 @@ public:
 		Status status;
 		//KeySym xkeysym;
 		std::array<char, 32> staticBuf;
-		ting::Array<char> arr;
+		std::vector<char> arr;
 		ting::Buffer<char> buf = staticBuf;
 
 		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
 			//allocate enough memory
-			arr.Init(size + 1);
-			buf = ting::Buffer<char>(arr.begin(), arr.size());
+			arr.resize(size + 1);
+			buf = arr;
 			size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		}
 		ASSERT(size >= 0)
@@ -561,7 +561,7 @@ public:
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
-					return ting::Array<std::uint32_t>();
+					return std::vector<std::uint32_t>();
 				}
 				
 				{
@@ -572,9 +572,9 @@ public:
 						utf32.push_back(i.Char());
 					}
 					
-					ting::Array<std::uint32_t> ret(utf32.size());
+					std::vector<std::uint32_t> ret(utf32.size());
 					
-					std::uint32_t* dst = ret.begin();
+					std::uint32_t* dst = &*ret.begin();
 					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 						*dst = *src;
 					}
@@ -591,7 +591,7 @@ public:
 				break;
 		}//~switch
 		
-		return ting::Array<std::uint32_t>();
+		return std::vector<std::uint32_t>();
 	}
 };
 

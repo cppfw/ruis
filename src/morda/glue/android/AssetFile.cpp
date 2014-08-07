@@ -189,7 +189,7 @@ bool AssetFile::Exists()const{
 
 
 //override
-ting::Array<std::string> AssetFile::ListDirContents(size_t maxEntries){
+std::vector<std::string> AssetFile::ListDirContents(size_t maxEntries){
 	if(!this->IsDir()){
 		throw File::Exc("AndroidAssetFile::ListDirContents(): this is not a directory");
 	}
@@ -232,7 +232,7 @@ ting::Array<std::string> AssetFile::ListDirContents(size_t maxEntries){
 	}
 
 	
-	ting::Array<std::string> filesArray(files.size());
+	std::vector<std::string> filesArray(files.size());
 	
 	for(size_t i = 0; i < files.size(); ++i){
 		filesArray[i] = files[i];

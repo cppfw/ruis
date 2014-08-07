@@ -170,7 +170,7 @@ bool ZipFile::Exists() const {
 
 
 
-ting::Array<std::string> ZipFile::ListDirContents(size_t maxEntries){
+std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries){
 	if(!this->IsDir()){
 		throw File::Exc("ZipFile::ListDirContents(): this is not a directory");
 	}
@@ -250,7 +250,7 @@ ting::Array<std::string> ZipFile::ListDirContents(size_t maxEntries){
 		}
 	}
 
-	ting::Array<std::string> filesArray(files.size());
+	std::vector<std::string> filesArray(files.size());
 	for(unsigned i = 0; i < files.size(); ++i){
 		filesArray[i] = files[i];
 	}

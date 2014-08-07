@@ -57,7 +57,7 @@ void Image::Init(unsigned width, unsigned height, EType typeOfImage){
 	this->w = width;
 	this->h = height;
 	this->type = typeOfImage;
-	buf.Init(this->w * this->h * this->NumChannels());
+	this->buf.resize(this->w * this->h * this->NumChannels());
 }
 
 
@@ -65,7 +65,7 @@ void Image::Init(unsigned width, unsigned height, EType typeOfImage){
 Image::Image(unsigned width, unsigned height, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->Init(width, height, typeOfImage);
-	memcpy(this->buf.begin(), srcBuf, this->buf.SizeInBytes());
+	memcpy(&*this->buf.begin(), srcBuf, this->buf.size() * sizeof(this->buf[0]));
 }
 
 
@@ -90,8 +90,8 @@ Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Imag
 //copy constructor
 Image::Image(const Image& im){
 	this->Init(im.Width(), im.Height(), im.Type());
-	ASSERT(this->buf.SizeInBytes() == im.buf.SizeInBytes())
-	memcpy(this->Buf().begin(), im.Buf().begin(), this->buf.SizeInBytes());
+	ASSERT(this->buf.size() * sizeof(this->buf[0]) == im.buf.size() * sizeof(im.buf[0]))
+	memcpy(this->Buf().begin(), im.Buf().begin(), this->buf.size() * sizeof(this->buf[0]));
 }
 
 
@@ -105,7 +105,7 @@ Image::~Image(){
 
 //Fills image buffer with zeroes
 void Image::Clear(std::uint8_t  val){
-	memset(this->buf.begin(), val, this->buf.SizeInBytes());
+	memset(&*this->buf.begin(), val, this->buf.size() * sizeof(this->buf[0]));
 }
 
 
@@ -123,7 +123,7 @@ void Image::Reset(){
 	this->w = 0;
 	this->h = 0;
 	this->type = UNKNOWN;
-	this->buf.Reset();
+	this->buf.clear();
 }
 
 
@@ -133,17 +133,18 @@ void Image::Reset(){
 //====================================================
 //Flips vertically current image
 void Image::FlipVertical(){
-	if(!this->buf.size())
+	if(!this->buf.size()){
 		return;//nothing to flip
+	}
 
 	unsigned stride = this->NumChannels() * this->Width();//stride
-	ting::Array<std::uint8_t> line(stride);
+	std::vector<std::uint8_t> line(stride);
 
 	//TODO: use iterators
 	for(unsigned i = 0; i < this->Height() / 2; ++i){
-		memcpy(line.begin(), this->buf.begin() + stride * i, stride);//move line to temp
-		memcpy(this->buf.begin() + stride * i, this->buf.begin() + stride * (this->Height() - i - 1), stride);//move bottom line to top
-		memcpy(this->buf.begin() + stride * (this->Height() - i - 1), line.begin(), stride);
+		memcpy(&*line.begin(), &*this->buf.begin() + stride * i, stride);//move line to temp
+		memcpy(&*this->buf.begin() + stride * i, &*this->buf.begin() + stride * (this->Height() - i - 1), stride);//move bottom line to top
+		memcpy(&*this->buf.begin() + stride * (this->Height() - i - 1), &*line.begin(), stride);
 	}
 }
 
@@ -151,8 +152,9 @@ void Image::FlipVertical(){
 
 void Image::Blit(unsigned x, unsigned y, const Image& src){
 	ASSERT(this->buf.size())
-	if(this->Type() != src.Type())
+	if(this->Type() != src.Type()){
 		throw ting::Exc("Image::Blit(): bits per pixel values do not match");
+	}
 
 	unsigned blitAreaW = std::min(src.Width(), this->Width() - x);
 	unsigned blitAreaH = std::min(src.Height(), this->Height() - y);
@@ -184,11 +186,13 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 
 void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf.size())
-	if(dstChan >= this->NumChannels())
+	if(dstChan >= this->NumChannels()){
 		throw ting::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
+	}
 
-	if(srcChan >= src.NumChannels())
+	if(srcChan >= src.NumChannels()){
 		throw ting::Exc("Image::Blit(): source channel index is greater than number of channels in the image");
+	}
 
 	unsigned blitAreaW = std::min(src.Width(), this->Width() - x);
 	unsigned blitAreaH = std::min(src.Height(), this->Height() - y);
@@ -349,16 +353,16 @@ void Image::LoadPNG(ting::fs::File& fi){
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
 		ASSERT(this->Height() && this->buf.size())
-		ting::Array<png_bytep> rows(this->Height());
+		std::vector<png_bytep> rows(this->Height());
 		//initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
 		for(unsigned i = 0; i < this->Height(); ++i){
-			rows[i] = this->buf.begin() + i * bytesPerRow;
+			rows[i] = &*this->buf.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 //		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
 		//Read in image data!
-		png_read_image(pngPtr, rows.begin());
+		png_read_image(pngPtr, &*rows.begin());
 //		TRACE(<< "Image::LoadPNG(): image data read" << std::endl)
 	}
 
@@ -600,7 +604,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 		//read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		//copy the data to an image
-		memcpy(this->buf.begin() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(&*this->buf.begin() + bytesRow * y, buffer[0], bytesRow);
 		++y;
 	}
 

@@ -1,5 +1,3 @@
-#include <ting/Array.hpp>
-
 #include "Shader.hpp"
 
 
@@ -58,10 +56,10 @@ bool Shader::ShaderWrapper::CheckForCompileErrors(GLuint shader){
 		GLint logLen = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
 		if(logLen > 1){//1 char is a terminating 0
-			ting::Array<char> log(logLen);
+			std::vector<char> log(logLen);
 			GLint len;
 			glGetShaderInfoLog(shader, log.size(), &len, &log[0]);
-			TRACE(<< "===Compile log===\n" << log.begin() << std::endl)
+			TRACE(<< "===Compile log===\n" << &*log.begin() << std::endl)
 		}
 		return true;
 	}
@@ -77,10 +75,10 @@ bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 		GLint logLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
 		if(logLen > 1){ //1 is for terminating 0 character.
-			ting::Array<char> log(logLen);
+			std::vector<char> log(logLen);
 			GLint len;
 			glGetProgramInfoLog(program, log.size(), &len, &log[0]);
-			TRACE(<< "===Link log===\n" << log.begin() << std::endl)
+			TRACE(<< "===Link log===\n" << &*log.begin() << std::endl)
 		}
 		return true;
 	}

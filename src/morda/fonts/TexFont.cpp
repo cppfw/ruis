@@ -92,11 +92,11 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const std::uint32_t>& 
 
 	class FreeTypeFaceWrapper{
 		FT_Face face; // handle to face object
-		ting::Array<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
+		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 	public:
 		FreeTypeFaceWrapper(FT_Library& lib, ting::fs::File& fi){
 			this->fontFile = fi.LoadWholeFileIntoMemory();
-			if(FT_New_Memory_Face(lib, this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
+			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
 				throw ting::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}

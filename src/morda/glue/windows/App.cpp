@@ -280,8 +280,8 @@ public:
 			c(unicodeChar)
 	{}
 	
-	ting::Array<std::uint32_t> Resolve()const{
-		ting::Array<std::uint32_t> ret(1);
+	std::vector<std::uint32_t> Resolve()const{
+		std::vector<std::uint32_t> ret(1);
 		ret[0] = this->c;
 		return ret;
 	}
