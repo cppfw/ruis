@@ -60,7 +60,7 @@ public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
 	
 private:
-	Container* parent = 0;
+	Container* parent = nullptr;
 	T_ChildrenList::iterator parentIter;
 	
 	ting::Inited<bool, false> isHovered;
@@ -90,7 +90,7 @@ private:
 	//logical ID of the widget
 	std::string name;
 	
-	ting::Inited<bool, true> relayoutNeeded;
+	bool relayoutNeeded = true;
 	
 	//properties from STOB description
 	std::unique_ptr<stob::Node> prop;
@@ -99,9 +99,9 @@ public:
 		return this->prop.operator->();
 	}
 	
-	const stob::Node* GetPropertyNode(const char* propName)const throw(){
+	const stob::Node* GetPropertyNode(const char* propName)const noexcept{
 		if(!this->Prop()){
-			return 0;
+			return nullptr;
 		}
 		return this->Prop()->Child(propName).node();
 	}
