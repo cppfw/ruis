@@ -51,9 +51,9 @@ public:
 			tex(image)
 	{}
 
-	~ResTexture()throw(){}
+	~ResTexture()noexcept{}
 
-	const GLTexture& Tex()const throw(){
+	const GLTexture& Tex()const noexcept{
 		return this->tex;
 	}
 

@@ -45,14 +45,14 @@ class ZipFile : public ting::fs::File{
 public:
 	ZipFile(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string());
 
-	~ZipFile()throw();
+	~ZipFile()noexcept;
 
 
-	void OpenInternal(E_Mode mode) OVERRIDE;
-	void CloseInternal()throw() OVERRIDE;
-	size_t ReadInternal(const ting::Buffer<ting::u8>& buf) OVERRIDE;
-	bool Exists() const OVERRIDE;
-	ting::Array<std::string> ListDirContents(size_t maxEntries = 0) OVERRIDE;
+	void OpenInternal(E_Mode mode) override;
+	void CloseInternal()noexcept override;
+	size_t ReadInternal(const ting::Buffer<ting::u8>& buf) override;
+	bool Exists() const override;
+	ting::Array<std::string> ListDirContents(size_t maxEntries = 0) override;
 	
 	static ting::Ptr<ZipFile> New(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
 		return ting::Ptr<ZipFile>(new ZipFile(zipFile, path));

@@ -55,7 +55,7 @@ private:
 	ting::Inited<bool, false> isBlocked;
 	
 protected:
-	static const char* D_Layout()throw(){
+	static const char* D_Layout()noexcept{
 		return "layout";
 	}
 	
@@ -65,14 +65,14 @@ public:
 	Container(const stob::Node& description);
 
 public:
-	~Container()throw(){}
+	~Container()noexcept{}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	void Render(const morda::Matr4f& matrix)const override;
 
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override;
 public:
 	
-	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
+	bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) override;
 	
 	void OnHoverChanged()override;
 	
@@ -85,7 +85,7 @@ public:
 	
 	std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept override;
 	
-	const T_ChildrenList& Children()const throw(){
+	const T_ChildrenList& Children()const noexcept{
 		return this->children;
 	}
 };

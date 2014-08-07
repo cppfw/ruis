@@ -78,22 +78,22 @@ public:
 	 * @brief Destructor.
 	 * This destructor calls the Close() method.
 	 */
-	~AssetFile()throw(){
+	~AssetFile()noexcept{
 		this->Close();
 	}
 
 
-	virtual void OpenInternal(E_Mode mode) OVERRIDE;
+	virtual void OpenInternal(E_Mode mode) override;
 
-	virtual void CloseInternal()throw() OVERRIDE;
+	virtual void CloseInternal()noexcept override;
 
-	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf) OVERRIDE;
+	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf) override;
 
-	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf) OVERRIDE;
+	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf) override;
 
-	virtual size_t SeekForwardInternal(size_t numBytesToSeek) OVERRIDE;
+	virtual size_t SeekForwardInternal(size_t numBytesToSeek) override;
 	
-	virtual size_t SeekBackwardInternal(size_t numBytesToSeek) OVERRIDE;
+	virtual size_t SeekBackwardInternal(size_t numBytesToSeek) override;
 
 	
 	
@@ -107,17 +107,17 @@ public:
 	
 	
 	
-	virtual void RewindInternal() OVERRIDE;
+	virtual void RewindInternal() override;
 	
 
 
-	virtual bool Exists()const OVERRIDE;
+	virtual bool Exists()const override;
 
 
 
 public:
 
-	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0) OVERRIDE;
+	virtual ting::Array<std::string> ListDirContents(size_t maxEntries = 0) override;
 };
 
 

@@ -71,11 +71,11 @@ class Slider :
 	public:
 
 	private:
-		void Render(const morda::Matr4f& matrix)const OVERRIDE;
+		void Render(const morda::Matr4f& matrix)const override;
 
-		bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
+		bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override;
 
-		bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) OVERRIDE;
+		bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId) override;
 	};
 	
 public:
@@ -86,20 +86,20 @@ public:
 public:
 	ting::Signal1<float> factorChange;
 
-	virtual ~Slider()throw(){}
+	virtual ~Slider()noexcept{}
 	
-	float Factor()const throw(){
+	float Factor()const noexcept{
 		return this->curFactor;
 	}
 	
 	void SetFactor(float newFactor);
 	
 private:
-	void OnResize() OVERRIDE;
+	void OnResize() override;
 	
-	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
+	morda::Vec2f ComputeMinDim()const noexcept override;
 	
-	void Render(const morda::Matr4f& matrix) const OVERRIDE;
+	void Render(const morda::Matr4f& matrix) const override;
 };
 
 

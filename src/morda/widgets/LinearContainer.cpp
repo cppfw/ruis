@@ -130,7 +130,7 @@ void LinearContainer::OnResize(){
 
 
 //override
-morda::Vec2f LinearContainer::ComputeMinDim()const throw(){
+morda::Vec2f LinearContainer::ComputeMinDim()const noexcept{
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	

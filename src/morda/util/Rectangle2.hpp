@@ -62,38 +62,38 @@ public:
 	Vector2<T> d; //dimensions
 	
 	//TODO: doxygen
-	Rectangle2()throw(){}
+	Rectangle2()noexcept{}
 	
 	//TODO: doxygen
-	Rectangle2(T value)throw() :
+	Rectangle2(T value)noexcept :
 			p(value),
 			d(value)
 	{}
 	
 	//TODO: doxygen
-	Rectangle2(T left, T bottom, T width, T height)throw() :
+	Rectangle2(T left, T bottom, T width, T height)noexcept :
 			p(left, bottom),
 			d(width, height)
 	{}
 
 	//TODO: doxygen
-	Rectangle2(Vector2<T> leftBottom, Vector2<T> dimensions)throw() :
+	Rectangle2(Vector2<T> leftBottom, Vector2<T> dimensions)noexcept :
 			p(leftBottom),
 			d(dimensions)
 	{}
 	
 	//TODO: doxygen
-	Vector2<T> Center()const throw(){
+	Vector2<T> Center()const noexcept{
 		return this->p + this->d / 2;
 	}
 
 	//TODO: doxygen
-	void MoveCenterTo(const Vector2<T>& vec)throw(){
+	void MoveCenterTo(const Vector2<T>& vec)noexcept{
 		this->p = vec - this->d / 2;
 	}
 
 	//TODO: doxygen
-	bool Overlaps(const Vector2<T>& vec)const throw(){
+	bool Overlaps(const Vector2<T>& vec)const noexcept{
 		return
 				vec.x < this->Right() &&
 				vec.x >= this->Left() &&
@@ -104,12 +104,12 @@ public:
 	
 	//TODO: doxygen
 	//Get intersection of two rectangles
-	Rectangle2 Intersection(const Rectangle2& rect)const throw(){
+	Rectangle2 Intersection(const Rectangle2& rect)const noexcept{
 		return Rectangle2(*this).Intersect(rect);
 	}
 	
 	//TODO: doxygen
-	Rectangle2& Intersect(const Rectangle2& rect)throw(){
+	Rectangle2& Intersect(const Rectangle2& rect)noexcept{
 		for(unsigned i = 0; i != 2; ++i){
 			T end = std::min(this->p[i] + this->d[i], rect.p[i] + rect.d[i]);
 			this->p[i] = std::max(this->p[i], rect.p[i]);
@@ -124,47 +124,47 @@ public:
 	}
 	
 	//TODO: doxygen
-	Vector2<T> Extent()const throw(){
+	Vector2<T> Extent()const noexcept{
 		return this->d / 2;
 	}
 
 	//TODO: doxygen
-	Vector2<T> RightTop()const throw(){
+	Vector2<T> RightTop()const noexcept{
 		return this->p + this->d;
 	}
 
 	//TODO: doxygen
-	T& Left()throw(){
+	T& Left()noexcept{
 		return this->p.x;
 	}
 
 	//TODO: doxygen
-	const T& Left()const throw(){
+	const T& Left()const noexcept{
 		return this->p.x;
 	}
 
 	//TODO: doxygen
-	T Top()const throw(){
+	T Top()const noexcept{
 		return this->p.y + this->d.y;
 	}
 
 	//TODO: doxygen
-	T Right()const throw(){
+	T Right()const noexcept{
 		return this->p.x + this->d.x;
 	}
 
 	//TODO: doxygen
-	T& Bottom()throw(){
+	T& Bottom()noexcept{
 		return this->p.y;
 	}
 
 	//TODO: doxygen
-	const T& Bottom()const throw(){
+	const T& Bottom()const noexcept{
 		return this->p.y;
 	}
 	
 	//TODO: doxygen
-	bool operator==(const Rectangle2& r)const throw(){
+	bool operator==(const Rectangle2& r)const noexcept{
 		return this->p == r.p && this->d == r.d;
 	}
 	

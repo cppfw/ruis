@@ -49,29 +49,29 @@ protected:
 
 	
 	//TODO: doxygen
-	inline unsigned GetLongIndex()const throw(){
+	inline unsigned GetLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
 	}
 
 	//TODO: doxygen
-	inline unsigned GetTransIndex()const throw(){
+	inline unsigned GetTransIndex()const noexcept{
 		return this->isVertical ? 0 : 1;
 	}
 
 public:	
-	inline void SetReverse(bool isReverse)throw(){
+	inline void SetReverse(bool isReverse)noexcept{
 		this->isReverse = isReverse;
 	}
 	
-	inline void SetVertical(bool isVertical)throw(){
+	inline void SetVertical(bool isVertical)noexcept{
 		this->isVertical = isVertical;
 	}
 	
-	bool IsReverse()const throw(){
+	bool IsReverse()const noexcept{
 		return this->isReverse;
 	}
 	
-	bool IsVertical()const throw(){
+	bool IsVertical()const noexcept{
 		return this->isVertical;
 	}
 private:
