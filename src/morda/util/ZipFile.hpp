@@ -41,7 +41,7 @@ namespace morda{
 class ZipFile : public ting::fs::File{
 	ting::Ptr<ting::fs::File> zipFile;
 	
-	ting::Inited<void*, 0> handle;
+	void* handle = nullptr;
 public:
 	ZipFile(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string());
 

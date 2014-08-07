@@ -40,7 +40,7 @@ namespace morda{
 
 
 class Button : public virtual Widget{
-	ting::Inited<bool, false> isPressed;
+	bool isPressed = false;
 	
 protected:
 	Button(const stob::Node& description) :

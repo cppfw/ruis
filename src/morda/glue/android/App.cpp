@@ -54,7 +54,7 @@ struct AppInfo{
 
 
 //array of current pointer positions, needed to detect which pointers have actually moved.
-ting::StaticBuffer<morda::Vec2f, 10> pointers;
+std::array<morda::Vec2f, 10> pointers;
 
 
 

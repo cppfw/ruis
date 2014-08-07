@@ -36,8 +36,8 @@ public:
 		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
-	ting::Inited<std::uint32_t, 0> timer;
-	ting::Inited<std::uint32_t, 0> cnt;
+	std::uint32_t timer = 0;
+	std::uint32_t cnt = 0;
 	
 	void Update(std::uint32_t dt) override{
 		this->timer += dt;

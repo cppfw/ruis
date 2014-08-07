@@ -62,8 +62,8 @@ namespace morda{
 
 class TexFont : public Font{
 	struct Glyph{
-		ting::StaticBuffer<morda::Vec2f, 4> verts;
-		ting::StaticBuffer<morda::Vec2f, 4> texCoords;
+		std::array<morda::Vec2f, 4> verts;
+		std::array<morda::Vec2f, 4> texCoords;
 
 		float advance;
 	};

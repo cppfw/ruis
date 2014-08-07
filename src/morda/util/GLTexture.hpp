@@ -55,7 +55,7 @@ class GLTexture {
 	//no assigning
 	GLTexture& operator=(const GLTexture& tex);
 
-	ting::Inited<GLuint, 0> tex;
+	GLuint tex = 0;
 
 	morda::Vec2f dim;
 

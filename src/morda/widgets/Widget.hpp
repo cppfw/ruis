@@ -63,20 +63,20 @@ private:
 	Container* parent = nullptr;
 	T_ChildrenList::iterator parentIter;
 	
-	ting::Inited<bool, false> isHovered;
+	bool isHovered = false;
 
-	ting::Inited<bool, false> isHidden;
+	bool isHidden = false;
 
-	ting::Inited<bool, false> isDisabled;
+	bool isDisabled = false;
 
 	morda::Rect2f rect;
 	
 	//minimal dimensions needed to show widget's contents normally
 	morda::Vec2f minDim;
-	ting::Inited<bool, true> minDimNeedsRecomputing;
+	bool minDimNeedsRecomputing = true;
 	
 	//clip widgets contents by widget's border if set to true
-	ting::Inited<bool, false> clip;
+	bool clip = false;
 public:
 	bool GetClip()const noexcept{
 		return this->clip;
@@ -196,7 +196,7 @@ private:
 	void OnKeyInternal(bool isDown, key::Key keyCode);
 	
 private:
-	ting::Inited<bool, false> isFocused;
+	bool isFocused = false;
 public:
 	
 	//return true to consume
@@ -255,7 +255,7 @@ public:
 	const morda::Vec2f& GetMinDim()const{
 		if(this->minDimNeedsRecomputing){
 			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
-			this->minDimNeedsRecomputing = false;
+			const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->minDimNeedsRecomputing = false;
 		}
 		return this->minDim;
 	}

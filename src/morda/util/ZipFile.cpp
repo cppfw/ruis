@@ -194,7 +194,7 @@ ting::Array<std::string> ZipFile::ListDirContents(size_t maxEntries){
 		}
 
 		do{
-			ting::StaticBuffer<char, 255> fileNameBuf;
+			std::array<char, 255> fileNameBuf;
 
 			if(unzGetCurrentFileInfo(
 					this->handle,
