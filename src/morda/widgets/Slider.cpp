@@ -68,7 +68,10 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 	if(this->slider.IsReverse()){
 		this->slider.curFactor = 1 - this->slider.curFactor;
 	}
-	this->slider.factorChange.Emit(this->slider.curFactor);
+	
+	if(this->slider.factorChange){
+		this->slider.factorChange(this->slider.curFactor);
+	}
 	
 	return true;
 }
@@ -95,7 +98,9 @@ void Slider::SetFactor(float newFactor){
 	
 	this->Slider::OnResize();
 	
-	this->factorChange.Emit(this->curFactor);
+	if(this->factorChange){
+		this->factorChange(this->curFactor);
+	}
 }
 
 

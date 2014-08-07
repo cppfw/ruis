@@ -29,7 +29,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/util.hpp>
-#include <ting/Signal.hpp>
 
 #include "Widget.hpp"
 #include "Container.hpp"
@@ -84,7 +83,7 @@ public:
 	Slider(const stob::Node& description);
 	
 public:
-	ting::Signal1<float> factorChange;
+	std::function<void(float)> factorChange;
 
 	virtual ~Slider()noexcept{}
 	
