@@ -228,7 +228,7 @@ void Container::Remove(Widget& w){
 	
 	this->children.erase(w.parentIter);
 	
-	w.parent = 0;
+	w.parent = nullptr;
 	w.SetHovered(false);
 	
 	this->SetRelayoutNeeded();
