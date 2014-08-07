@@ -60,7 +60,7 @@ private:
 	EType type;
 	unsigned w;//The width of the image in pixels
 	unsigned h;//The height of the image in pixels
-	ting::Array<ting::u8> buf;//image pixels data
+	ting::Array<std::uint8_t> buf;//image pixels data
 
 public:
 	//default constructor
@@ -78,7 +78,7 @@ public:
 		this->Init(width, height, imageType);
 	}
 
-	Image(unsigned width, unsigned height, EType typeOfImage, const ting::u8* srcBuf);
+	Image(unsigned width, unsigned height, EType typeOfImage, const std::uint8_t* srcBuf);
 
 	//Creates Image object and copies a region from source image.
 	Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src);
@@ -109,19 +109,19 @@ public:
 		return this->type;
 	}
 
-	ting::Buffer<ting::u8>& Buf(){
+	const ting::Buffer<std::uint8_t>& Buf(){
 		return this->buf;
 	}
 
-	const ting::Buffer<ting::u8>& Buf()const{
+	const ting::Buffer<const std::uint8_t>& Buf()const{
 		return this->buf;
 	}
 
 public:
 	void Init(unsigned width, unsigned height, EType typeOfImage);
 	void Reset();//destroys all image data
-	void Clear(ting::u8  val = 0);//fills each image channel with specified value
-	void Clear(unsigned chan, ting::u8 val = 0);//fills specified channel with given value
+	void Clear(std::uint8_t  val = 0);//fills each image channel with specified value
+	void Clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value
 
 	void FlipVertical();
 
@@ -129,12 +129,12 @@ public:
 
 	void Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
-	const ting::u8& PixChan(unsigned x, unsigned y, unsigned chan)const{
-		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.Size())];
+	const std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan)const{
+		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
-	ting::u8& PixChan(unsigned x, unsigned y, unsigned chan){
-		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.Size())];
+	std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan){
+		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
 	void LoadPNG(ting::fs::File& f);//Load image from PNG-file

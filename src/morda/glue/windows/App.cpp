@@ -14,7 +14,7 @@ using namespace morda;
 
 namespace{
 
-const key::Key keyCodeMap[ting::u8(-1) + 1] = {
+const key::Key keyCodeMap[std::uint8_t(-1) + 1] = {
 	key::UNKNOWN, //Undefined
 	key::UNKNOWN, //VK_LBUTTON
 	key::UNKNOWN, //VK_RBUTTON
@@ -274,14 +274,14 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 };
 
 class KeyEventUnicodeResolver{
-	ting::u32 c;
+	std::uint32_t c;
 public:
-	KeyEventUnicodeResolver(ting::u32 unicodeChar) :
+	KeyEventUnicodeResolver(std::uint32_t unicodeChar) :
 			c(unicodeChar)
 	{}
 	
-	ting::Array<ting::u32> Resolve()const{
-		ting::Array<ting::u32> ret(1);
+	ting::Array<std::uint32_t> Resolve()const{
+		ting::Array<std::uint32_t> ret(1);
 		ret[0] = this->c;
 		return ret;
 	}
@@ -396,13 +396,13 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 
 		case WM_KEYDOWN:
 			if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-				app.HandleKeyEvent(true, keyCodeMap[ting::u8(wParam)]);
+				app.HandleKeyEvent(true, keyCodeMap[std::uint8_t(wParam)]);
 			}
 			lres = 0;
 			return true;
 
 		case WM_KEYUP:
-			app.HandleKeyEvent(false, keyCodeMap[ting::u8(wParam)]);
+			app.HandleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
 			lres = 0;
 			return true;
 		
@@ -678,7 +678,7 @@ void App::Exec(){
 	bool quitFlag = false;
 	
 	while(!quitFlag){
-		ting::u32 timeout = this->updater.Update();
+		std::uint32_t timeout = this->updater.Update();
 //		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(

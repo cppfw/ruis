@@ -75,8 +75,8 @@ void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateab
 
 
 
-ting::u32 Updateable::Updater::Update(){
-	ting::u32 curTime = ting::timer::GetTicks();
+std::uint32_t Updateable::Updater::Update(){
+	std::uint32_t curTime = ting::timer::GetTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
@@ -112,7 +112,7 @@ ting::u32 Updateable::Updater::Update(){
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
-	ting::u32 closestTime;
+	std::uint32_t closestTime;
 	if(this->activeQueue->size() != 0){
 		ASSERT(curTime <= this->activeQueue->front().first)
 		closestTime = this->activeQueue->front().first;
@@ -120,12 +120,12 @@ ting::u32 Updateable::Updater::Update(){
 		ASSERT(curTime > this->inactiveQueue->front().first)
 		closestTime = this->inactiveQueue->front().first;
 	}else{
-		return ting::u32(-1);
+		return std::uint32_t(-1);
 	}
 	
-	ting::u32 uncorrectedDt = closestTime - curTime;
+	std::uint32_t uncorrectedDt = closestTime - curTime;
 	
-	ting::u32 correction = ting::timer::GetTicks() - curTime;
+	std::uint32_t correction = ting::timer::GetTicks() - curTime;
 	
 	if(correction >= uncorrectedDt){
 		return 0;
@@ -156,7 +156,7 @@ void Updateable::Updater::RemoveFromToAdd(Updateable* u){
 
 
 
-void Updateable::StartUpdating(ting::u16 dt){
+void Updateable::StartUpdating(std::uint16_t dt){
 	ASSERT(App::Inst().ThisIsUIThread())
 
 //	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)

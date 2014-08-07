@@ -29,7 +29,7 @@ using namespace morda;
 namespace{
 
 static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsigned srcChan, unsigned x, unsigned y){
-	ASSERT(dst.Buf().Size())
+	ASSERT(dst.Buf().size())
 	ASSERT(dstChan < dst.NumChannels())
 	ASSERT(srcChan < src.NumChannels())
 
@@ -38,8 +38,8 @@ static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsign
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
-			ting::u8 &d = dst.PixChan(i + x, j + y, dstChan);
-			ting::u8 s = src.PixChan(i, j, srcChan);
+			std::uint8_t &d = dst.PixChan(i + x, j + y, dstChan);
+			std::uint8_t s = src.PixChan(i, j, srcChan);
 			if(s > d){
 				d = s;
 			}
@@ -65,7 +65,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& chars, unsigned size, unsigned outline){
+void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const std::uint32_t>& chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -92,11 +92,11 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 
 	class FreeTypeFaceWrapper{
 		FT_Face face; // handle to face object
-		ting::Array<ting::u8> fontFile;//the buffer should be alive as long as the Face is alive!!!
+		ting::Array<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 	public:
 		FreeTypeFaceWrapper(FT_Library& lib, ting::fs::File& fi){
 			this->fontFile = fi.LoadWholeFileIntoMemory();
-			if(FT_New_Memory_Face(lib, this->fontFile.Begin(), this->fontFile.Size(), 0/* face_index */, &this->face) != 0){
+			if(FT_New_Memory_Face(lib, this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
 				throw ting::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}
@@ -133,7 +133,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 
 	//guess for texture width
 	unsigned texWidth;
-	texWidth = std::max(unsigned(128), FindNextPowOf2((chars.Size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
+	texWidth = std::max(unsigned(128), FindNextPowOf2((chars.size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
 	texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
 
 	unsigned curTexHeight = FindNextPowOf2(size);//first guess of texture height
@@ -152,7 +152,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
 	//print all the glyphs to the image
-	for(const ting::u32* c = chars.Begin(); c != chars.End(); ++c){
+	for(const std::uint32_t* c = chars.begin(); c != chars.end(); ++c){
 		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
 			throw ting::Exc("TexFont::Load(): unable to load char");
 		}
@@ -164,8 +164,8 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 		if(!slot->bitmap.buffer){//if glyph is empty (e.g. space character)
 			Glyph &g = this->glyphs[*c];
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
-			ASSERT(g.verts.Size() == g.texCoords.Size())
-			for(unsigned i = 0; i < g.verts.Size(); ++i){
+			ASSERT(g.verts.size() == g.texCoords.size())
+			for(unsigned i = 0; i < g.verts.size(); ++i){
 				g.verts[i].SetTo(0);
 				g.texCoords[i].SetTo(0);
 			}
@@ -290,7 +290,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 
 	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
-		for(unsigned j = 0; j < i->second.texCoords.Size(); ++j){
+		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
 			i->second.texCoords[j].x /= texImg.Width();
 			i->second.texCoords[j].y /= texImg.Height();
 		}
@@ -302,27 +302,27 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<const ting::u32>& char
 
 
 
-inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, ting::u32 ch)const{
+inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
 	shader.SetMatrix(matrix);
 
-	shader.SetPositionPointer(g.verts.Begin());
-	shader.SetTexCoordPointer(g.texCoords.Begin());
+	shader.SetPositionPointer(g.verts.begin());
+	shader.SetTexCoordPointer(g.texCoords.begin());
 
-	shader.DrawArrays(GL_TRIANGLE_FAN, g.verts.Size());
+	shader.DrawArrays(GL_TRIANGLE_FAN, g.verts.size());
 
 	return g.advance;
 }
 
 
 
-float TexFont::StringAdvanceInternal(const ting::Buffer<const ting::u32>& str)const{
+float TexFont::StringAdvanceInternal(const ting::Buffer<const std::uint32_t>& str)const{
 	float ret = 0;
 
-	const ting::u32* s = str.Begin();
+	const std::uint32_t* s = str.begin();
 	try{
-		for(; s != str.End(); ++s){
+		for(; s != str.end(); ++s){
 			const Glyph& g = this->glyphs.at(*s);
 			ret += g.advance;
 		}
@@ -337,16 +337,16 @@ float TexFont::StringAdvanceInternal(const ting::Buffer<const ting::u32>& str)co
 
 
 
-morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<const ting::u32>& str)const{
+morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<const std::uint32_t>& str)const{
 	morda::Rect2f ret;
 
-	if(str.Size() == 0){
+	if(str.size() == 0){
 		ret.p.SetTo(0);
 		ret.d.SetTo(0);
 		return ret;
 	}
 
-	const ting::u32* s = str.Begin();
+	const std::uint32_t* s = str.begin();
 
 	float curAdvance;
 
@@ -363,7 +363,7 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<const ting::
 	}
 
 	try{
-		for(; s != str.End(); ++s){
+		for(; s != str.end(); ++s){
 			const Glyph& g = this->glyphs.at(*s);
 
 			if(g.verts[2].y > top){
@@ -422,7 +422,7 @@ void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)con
 
 
 
-float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<const ting::u32>& utf32str)const{
+float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<const std::uint32_t>& utf32str)const{
 	morda::SimpleTexturingShader &shader = morda::App::Inst().Shaders().simpleTexturing;
 	shader.Bind();
 
@@ -438,9 +438,9 @@ float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buf
 
 	morda::Matr4f matr(matrix);
 
-	const ting::u32* s = utf32str.Begin();
+	const std::uint32_t* s = utf32str.begin();
 	try{
-		for(; s != utf32str.End(); ++s){
+		for(; s != utf32str.end(); ++s){
 			float advance = this->RenderGlyphInternal(shader, matr, *s);
 			ret += advance;
 			matr.Translate(advance, 0);

@@ -50,7 +50,7 @@ public:
 
 	void OpenInternal(E_Mode mode) override;
 	void CloseInternal()noexcept override;
-	size_t ReadInternal(const ting::Buffer<ting::u8>& buf) override;
+	size_t ReadInternal(const ting::Buffer<std::uint8_t>& buf) override;
 	bool Exists() const override;
 	ting::Array<std::string> ListDirContents(size_t maxEntries = 0) override;
 	

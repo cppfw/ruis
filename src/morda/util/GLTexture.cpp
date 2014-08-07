@@ -79,7 +79,7 @@ void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter
 			0,//border, should be 0!
 			internalFormat, //format of the texel data
 			GL_UNSIGNED_BYTE,
-			image.Buf().Begin()
+			image.Buf().begin()
 		);
 	ASSERT(glGetError() == GL_NO_ERROR)
 

@@ -261,7 +261,7 @@ Widget::EMouseButton ButtonNumberToEnum(int number){
 
 
 
-const key::Key keyCodeMap[ting::u8(-1) + 1] = {
+const key::Key keyCodeMap[std::uint8_t(-1) + 1] = {
 	key::UNKNOWN,
 	key::UNKNOWN,
 	key::UNKNOWN,
@@ -531,7 +531,7 @@ public:
 			event(event)
 	{}
 	
-	ting::Array<ting::u32> Resolve()const{
+	ting::Array<std::uint32_t> Resolve()const{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
@@ -542,16 +542,16 @@ public:
 		ting::Array<char> arr;
 		ting::Buffer<char>* buf = &staticBuf;
 
-		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf->Begin(), buf->Size() - 1, NULL, &status);
+		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf->begin(), buf->size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
 			//allocate enough memory
 			arr.Init(size + 1);
 			buf = &arr;
-			size = Xutf8LookupString(this->xic, &this->event.xkey, buf->Begin(), buf->Size() - 1, NULL, &status);
+			size = Xutf8LookupString(this->xic, &this->event.xkey, buf->begin(), buf->size() - 1, NULL, &status);
 		}
 		ASSERT(size >= 0)
-		ASSERT(buf->Size() != 0)
-		ASSERT(buf->Size() > unsigned(size))
+		ASSERT(buf->size() != 0)
+		ASSERT(buf->size() > unsigned(size))
 		
 		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
 		
@@ -561,20 +561,20 @@ public:
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
-					return ting::Array<ting::u32>();
+					return ting::Array<std::uint32_t>();
 				}
 				
 				{
-					typedef std::vector<ting::u32> T_Vector;
+					typedef std::vector<std::uint32_t> T_Vector;
 					T_Vector utf32;
 					
-					for(ting::utf8::Iterator i(buf->Begin()); i.IsNotEnd(); ++i){
+					for(ting::utf8::Iterator i(buf->begin()); i.IsNotEnd(); ++i){
 						utf32.push_back(i.Char());
 					}
 					
-					ting::Array<ting::u32> ret(utf32.size());
+					ting::Array<std::uint32_t> ret(utf32.size());
 					
-					ting::u32* dst = ret.Begin();
+					std::uint32_t* dst = ret.begin();
 					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 						*dst = *src;
 					}
@@ -591,7 +591,7 @@ public:
 				break;
 		}//~switch
 		
-		return ting::Array<ting::u32>();
+		return ting::Array<std::uint32_t>();
 	}
 };
 
@@ -645,7 +645,7 @@ void App::Exec(){
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
-						this->HandleKeyEvent(true, keyCodeMap[ting::u8(event.xkey.keycode)]);
+						this->HandleKeyEvent(true, keyCodeMap[std::uint8_t(event.xkey.keycode)]);
 						this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event));
 						break;
 					case KeyRelease:
@@ -669,7 +669,7 @@ void App::Exec(){
 							}
 						}
 
-						this->HandleKeyEvent(false, keyCodeMap[ting::u8(event.xkey.keycode)]);
+						this->HandleKeyEvent(false, keyCodeMap[std::uint8_t(event.xkey.keycode)]);
 						break;
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
@@ -746,7 +746,7 @@ void App::HideVirtualKeyboard()noexcept{
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
 
 	app->Exec();
 }

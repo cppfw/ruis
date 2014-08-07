@@ -34,7 +34,7 @@ int ZCALLBACK UnzipClose(voidpf opaque, voidpf stream){
 
 uLong ZCALLBACK UnzipRead(voidpf opaque, voidpf stream, void* buf, uLong size){
 	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	return uLong(f->Read(ting::Buffer<ting::u8>(reinterpret_cast<ting::u8*>(buf), size)));
+	return uLong(f->Read(ting::Buffer<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
 }
 
 uLong ZCALLBACK UnzipWrite(voidpf opaque, voidpf stream, const void* buf, uLong size){
@@ -141,8 +141,8 @@ void ZipFile::CloseInternal()noexcept{
 	}
 }
 
-size_t ZipFile::ReadInternal(const ting::Buffer<ting::u8>& buf) {
-	int numBytesRead = unzReadCurrentFile(this->handle, buf.Begin(), buf.Size());
+size_t ZipFile::ReadInternal(const ting::Buffer<std::uint8_t>& buf) {
+	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
 	if(numBytesRead < 0){
 		throw File::Exc("ZipFile::Read(): file reading failed");
 	}
@@ -199,8 +199,8 @@ ting::Array<std::string> ZipFile::ListDirContents(size_t maxEntries){
 			if(unzGetCurrentFileInfo(
 					this->handle,
 					NULL,
-					fileNameBuf.Begin(),
-					fileNameBuf.Size(),
+					fileNameBuf.begin(),
+					fileNameBuf.size(),
 					NULL,
 					0,
 					NULL,
@@ -210,9 +210,9 @@ ting::Array<std::string> ZipFile::ListDirContents(size_t maxEntries){
 				throw File::Exc("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
 			}
 
-			fileNameBuf[fileNameBuf.Size() - 1] = 0;//null-terminate, just to be on a safe side
+			fileNameBuf[fileNameBuf.size() - 1] = 0;//null-terminate, just to be on a safe side
 
-			std::string fn(fileNameBuf.Begin());//filename
+			std::string fn(fileNameBuf.begin());//filename
 
 			if(fn.size() <= this->Path().size()){
 				continue;

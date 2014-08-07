@@ -62,10 +62,10 @@ void Image::Init(unsigned width, unsigned height, EType typeOfImage){
 
 
 
-Image::Image(unsigned width, unsigned height, EType typeOfImage, const ting::u8* srcBuf){
+Image::Image(unsigned width, unsigned height, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->Init(width, height, typeOfImage);
-	memcpy(this->buf.Begin(), srcBuf, this->buf.SizeInBytes());
+	memcpy(this->buf.begin(), srcBuf, this->buf.SizeInBytes());
 }
 
 
@@ -91,7 +91,7 @@ Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Imag
 Image::Image(const Image& im){
 	this->Init(im.Width(), im.Height(), im.Type());
 	ASSERT(this->buf.SizeInBytes() == im.buf.SizeInBytes())
-	memcpy(this->Buf().Begin(), im.Buf().Begin(), this->buf.SizeInBytes());
+	memcpy(this->Buf().begin(), im.Buf().begin(), this->buf.SizeInBytes());
 }
 
 
@@ -104,13 +104,13 @@ Image::~Image(){
 
 
 //Fills image buffer with zeroes
-void Image::Clear(ting::u8  val){
-	memset(this->buf.Begin(), val, this->buf.SizeInBytes());
+void Image::Clear(std::uint8_t  val){
+	memset(this->buf.begin(), val, this->buf.SizeInBytes());
 }
 
 
 
-void Image::Clear(unsigned chan, ting::u8 val){
+void Image::Clear(unsigned chan, std::uint8_t val){
 	for(unsigned i = 0; i < this->Width() * this->Height(); ++i){
 		this->buf[i * this->NumChannels() + chan] = val;
 	}
@@ -133,24 +133,24 @@ void Image::Reset(){
 //====================================================
 //Flips vertically current image
 void Image::FlipVertical(){
-	if(!this->buf.Size())
+	if(!this->buf.size())
 		return;//nothing to flip
 
 	unsigned stride = this->NumChannels() * this->Width();//stride
-	ting::Array<ting::u8> line(stride);
+	ting::Array<std::uint8_t> line(stride);
 
 	//TODO: use iterators
 	for(unsigned i = 0; i < this->Height() / 2; ++i){
-		memcpy(line.Begin(), this->buf.Begin() + stride * i, stride);//move line to temp
-		memcpy(this->buf.Begin() + stride * i, this->buf.Begin() + stride * (this->Height() - i - 1), stride);//move bottom line to top
-		memcpy(this->buf.Begin() + stride * (this->Height() - i - 1), line.Begin(), stride);
+		memcpy(line.begin(), this->buf.begin() + stride * i, stride);//move line to temp
+		memcpy(this->buf.begin() + stride * i, this->buf.begin() + stride * (this->Height() - i - 1), stride);//move bottom line to top
+		memcpy(this->buf.begin() + stride * (this->Height() - i - 1), line.begin(), stride);
 	}
 }
 
 
 
 void Image::Blit(unsigned x, unsigned y, const Image& src){
-	ASSERT(this->buf.Size())
+	ASSERT(this->buf.size())
 	if(this->Type() != src.Type())
 		throw ting::Exc("Image::Blit(): bits per pixel values do not match");
 
@@ -183,7 +183,7 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 
 
 void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
-	ASSERT(this->buf.Size())
+	ASSERT(this->buf.size())
 	if(dstChan >= this->NumChannels())
 		throw ting::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
 
@@ -215,8 +215,8 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 	ASSERT(fi)
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
-		ASSERT(png_size_t(-1) == ting::u32(-1))
-		ting::Buffer<png_byte> bufWrapper(data, ting::u32(length));
+		ASSERT(png_size_t(-1) == std::uint32_t(-1))
+		ting::Buffer<png_byte> bufWrapper(data, std::uint32_t(length));
 		fi->Read(bufWrapper);
 //		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	}catch(...){
@@ -233,7 +233,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 void Image::LoadPNG(ting::fs::File& fi){
 	ASSERT(!fi.IsOpened())
 
-	if(this->buf.Size() > 0){
+	if(this->buf.size() > 0){
 		this->Reset();
 	}
 
@@ -242,7 +242,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 
 #define PNGSIGSIZE 8 //The size of PNG signature (max 8 bytes)
 	ting::StaticBuffer<png_byte, PNGSIGSIZE> sig;
-	memset(sig.Begin(), 0, sig.SizeInBytes());
+	memset(sig.begin(), 0, sig.SizeInBytes());
 
 	{
 #ifdef DEBUG
@@ -252,7 +252,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 		ASSERT(ret == sig.SizeInBytes())
 	}
 
-	if(png_sig_cmp(sig.Begin(), 0, sig.SizeInBytes()) != 0){//if it is not a PNG-file
+	if(png_sig_cmp(sig.begin(), 0, sig.SizeInBytes()) != 0){//if it is not a PNG-file
 		throw Image::Exc("Image::LoadPNG(): not a PNG file");
 	}
 
@@ -344,21 +344,21 @@ void Image::LoadPNG(ting::fs::File& fi){
 		throw Image::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
-	ASSERT((bytesPerRow * height) == this->buf.Size())
+	ASSERT((bytesPerRow * height) == this->buf.size())
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->Height() && this->buf.Size())
+		ASSERT(this->Height() && this->buf.size())
 		ting::Array<png_bytep> rows(this->Height());
 		//initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
 		for(unsigned i = 0; i < this->Height(); ++i){
-			rows[i] = this->buf.Begin() + i * bytesPerRow;
+			rows[i] = this->buf.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 //		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
 		//Read in image data!
-		png_read_image(pngPtr, rows.Begin());
+		png_read_image(pngPtr, rows.begin());
 //		TRACE(<< "Image::LoadPNG(): image data read" << std::endl)
 	}
 
@@ -415,7 +415,7 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	int nbytes;
 
 	try{
-		ting::Buffer<ting::u8> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
+		ting::Buffer<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
 		nbytes = ASS(src->fi)->Read(bufWrapper);
 	}catch(ting::fs::File::Exc&){
 		if(src->sof){
@@ -474,7 +474,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 	ASSERT(!fi.IsOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
-	if(this->buf.Size()){
+	if(this->buf.size()){
 		this->Reset();
 	}
 	
@@ -600,7 +600,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 		//read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		//copy the data to an image
-		memcpy(this->buf.Begin() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(this->buf.begin() + bytesRow * y, buffer[0], bytesRow);
 		++y;
 	}
 
@@ -645,9 +645,9 @@ void Image::LoadTGA(File& fi){
 	M_IMAGE_PRINT(<< "Image::LoadTGA: file opened" << std::endl)
 
 	// Read in the length in bytes from the header to the pixel data
-	ting::u8 length = 0;//The length in bytes to the pixels
+	std::uint8_t length = 0;//The length in bytes to the pixels
 	{
-		ting::Buffer<ting::u8> bufWrapper(&length, sizeof(length));
+		ting::Buffer<std::uint8_t> bufWrapper(&length, sizeof(length));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -656,9 +656,9 @@ void Image::LoadTGA(File& fi){
 	//fi.Read(&tmp, 1);
 
 	// Read in the imageType (RLE, RGB, etc...)
-	ting::u8 imageType = 0;//The image type (RLE, RGB, Alpha...)
+	std::uint8_t imageType = 0;//The image type (RLE, RGB, Alpha...)
 	{
-		ting::Buffer<ting::u8> bufWrapper(&imageType, sizeof(imageType));
+		ting::Buffer<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -672,13 +672,13 @@ void Image::LoadTGA(File& fi){
 	
 
 	//Read the width, height and bits per pixel (16, 24 or 32)
-	ting::u8 bits = 0;//The bits per pixel for the image (16, 24, 32)
+	std::uint8_t bits = 0;//The bits per pixel for the image (16, 24, 32)
 	{
-		ting::u16 width = 0;
-		ting::u16 height = 0;
-		fi.Read(&width, sizeof(ting::u16));
-		fi.Read(&height, sizeof(ting::u16));
-		fi.Read(&bits, sizeof(ting::u8));
+		std::uint16_t width = 0;
+		std::uint16_t height = 0;
+		fi.Read(&width, sizeof(std::uint16_t));
+		fi.Read(&height, sizeof(std::uint16_t));
+		fi.Read(&bits, sizeof(std::uint8_t));
 		unsigned bitspp = bits;
 		if(bitspp < 24){
 			bitspp = 24;

@@ -153,9 +153,9 @@ private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
 	friend void UpdateWindowRect(App& app, const morda::Rect2f& rect);
 	friend void Render(App& app);
-	friend ting::u32 Update(App& app);
+	friend std::uint32_t Update(App& app);
 	friend void HandleInputEvents();
-	friend void HandleCharacterInputEvent(ting::Array<ting::u32> chars);
+	friend void HandleCharacterInputEvent(ting::Array<std::uint32_t> chars);
 	friend void HandleQueueMessages(App& app);
 	friend int GetUIQueueHandle(App& app);
 	

@@ -36,10 +36,10 @@ public:
 		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
-	ting::Inited<ting::u32, 0> timer;
-	ting::Inited<ting::u32, 0> cnt;
+	ting::Inited<std::uint32_t, 0> timer;
+	ting::Inited<std::uint32_t, 0> cnt;
 	
-	void Update(ting::u32 dt) override{
+	void Update(std::uint32_t dt) override{
 		this->timer += dt;
 		++this->cnt;
 		
@@ -97,8 +97,8 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) override{
-		if(unicode.Size() == 0){
+	void OnCharacterInput(const ting::Buffer<const std::uint32_t>& unicode) override{
+		if(unicode.size() == 0){
 			return;
 		}
 		
@@ -143,7 +143,7 @@ public:
 		this->rot.Identity();
 	}
 	
-	void Update(ting::u32 dt) override{
+	void Update(std::uint32_t dt) override{
 		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
@@ -272,6 +272,6 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::Buffer<const ting::u8>& savedState){
+std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::Buffer<const std::uint8_t>& savedState){
 	return std::unique_ptr<Application>(new Application());
 }
