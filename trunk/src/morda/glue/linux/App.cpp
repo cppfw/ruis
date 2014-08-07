@@ -538,24 +538,24 @@ public:
 		
 		Status status;
 		//KeySym xkeysym;
-		ting::StaticBuffer<char, 32> staticBuf;
+		std::array<char, 32> staticBuf;
 		ting::Array<char> arr;
-		ting::Buffer<char>* buf = &staticBuf;
+		ting::Buffer<char> buf = staticBuf;
 
-		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf->begin(), buf->size() - 1, NULL, &status);
+		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
 			//allocate enough memory
 			arr.Init(size + 1);
-			buf = &arr;
-			size = Xutf8LookupString(this->xic, &this->event.xkey, buf->begin(), buf->size() - 1, NULL, &status);
+			buf = ting::Buffer<char>(arr.begin(), arr.size());
+			size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		}
 		ASSERT(size >= 0)
-		ASSERT(buf->size() != 0)
-		ASSERT(buf->size() > unsigned(size))
+		ASSERT(buf.size() != 0)
+		ASSERT(buf.size() > unsigned(size))
 		
 		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
 		
-		(*buf)[size] = 0;//null-terminate
+		buf[size] = 0;//null-terminate
 		
 		switch(status){
 			case XLookupChars:
@@ -568,7 +568,7 @@ public:
 					typedef std::vector<std::uint32_t> T_Vector;
 					T_Vector utf32;
 					
-					for(ting::utf8::Iterator i(buf->begin()); i.IsNotEnd(); ++i){
+					for(ting::utf8::Iterator i(buf.begin()); i.IsNotEnd(); ++i){
 						utf32.push_back(i.Char());
 					}
 					

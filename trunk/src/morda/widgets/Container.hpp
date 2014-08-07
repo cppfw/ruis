@@ -52,7 +52,7 @@ private:
 	T_MouseCaptureMap mouseCaptureMap;
 	
 	//flag indicating that modifications to children list are blocked
-	ting::Inited<bool, false> isBlocked;
+	bool isBlocked = false;
 	
 protected:
 	static const char* D_Layout()noexcept{

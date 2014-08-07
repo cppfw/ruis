@@ -54,13 +54,13 @@ class Slider :
 	Slider(const Slider&);
 	Slider& operator=(const Slider&);
 	
-	ting::Inited<float, 0> curFactor; //Current position from 0 to 1
-	ting::Inited<float, 0> handleSizeFactor; //Current handle size factor from 0 to 1
+	float curFactor = 0; //Current position from 0 to 1
+	float handleSizeFactor = 0; //Current handle size factor from 0 to 1
 	
 	class SliderHandle : public Widget{
 		Slider& slider;
 
-		ting::Inited<bool, false> isGrabbed;
+		bool isGrabbed = false;
 		float clickPoint;
 
 	public:

@@ -241,18 +241,18 @@ void Image::LoadPNG(ting::fs::File& fi){
 //	TRACE(<< "Image::LoadPNG(): file opened" << std::endl)
 
 #define PNGSIGSIZE 8 //The size of PNG signature (max 8 bytes)
-	ting::StaticBuffer<png_byte, PNGSIGSIZE> sig;
-	memset(sig.begin(), 0, sig.SizeInBytes());
+	std::array<png_byte, PNGSIGSIZE> sig;
+	memset(sig.begin(), 0, sig.size() * sizeof(sig[0]));
 
 	{
 #ifdef DEBUG
 		unsigned ret = //TODO:???
 #endif
 		fi.Read(sig);
-		ASSERT(ret == sig.SizeInBytes())
+		ASSERT(ret == sig.size() * sizeof(sig[0]))
 	}
 
-	if(png_sig_cmp(sig.begin(), 0, sig.SizeInBytes()) != 0){//if it is not a PNG-file
+	if(png_sig_cmp(sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){//if it is not a PNG-file
 		throw Image::Exc("Image::LoadPNG(): not a PNG file");
 	}
 
