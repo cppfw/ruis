@@ -41,7 +41,7 @@ public:
 	 * @brief Handler for character input.
      * @param unicode - unicode string of entered characters in UTF-32.
      */
-	virtual void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) = 0;
+	virtual void OnCharacterInput(const ting::Buffer<const std::uint32_t>& unicode) = 0;
 	
 	void FocusCharInput()const;
 	void UnfocusCharInput()const;

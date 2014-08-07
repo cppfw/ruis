@@ -48,7 +48,7 @@ struct AppInfo{
 	AAssetManager* assetManager;
 
 	//Holds info about saved state if restoring from previously saved state.
-	ting::Array<ting::u8> savedState;
+	ting::Array<std::uint8_t> savedState;
 } appInfo;
 
 
@@ -131,8 +131,8 @@ public:
 	~JavaFunctionsWrapper()noexcept{
 	}
 	
-	ting::u32 ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
-		return ting::u32(this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode)));
+	std::uint32_t ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+		return std::uint32_t(this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode)));
 	}
 	
 	float GetDotsPerCm(){
@@ -160,17 +160,17 @@ public:
 	int32_t ms;//meta state
 	int32_t di;//device id
 	
-	ting::Array<ting::u32> Resolve()const{
+	ting::Array<std::uint32_t> Resolve()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
-		ting::u32 res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
+		std::uint32_t res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
-			return ting::Array<ting::u32>();
+			return ting::Array<std::uint32_t>();
 		}
 		
-		ting::Array<ting::u32> ret(1);
+		ting::Array<std::uint32_t> ret(1);
 		ret[0] = res;
 		
 		return ret;
@@ -275,7 +275,7 @@ public:
 	}
 
 	//if timer is already armed, it will re-set the expiration time
-	void Arm(ting::u32 dt){
+	void Arm(std::uint32_t dt){
 		itimerspec ts;
 		ts.it_value.tv_sec = dt / 1000;
 		ts.it_value.tv_nsec = (dt % 1000) * 1000000;
@@ -312,7 +312,7 @@ public:
 
 
 //TODO: this mapping is not final
-const key::Key keyCodeMap[ting::u8(-1) + 1] = {
+const key::Key keyCodeMap[std::uint8_t(-1) + 1] = {
 	key::UNKNOWN, //AKEYCODE_UNKNOWN
 	key::LEFT, //AKEYCODE_SOFT_LEFT
 	key::RIGHT, //AKEYCODE_SOFT_RIGHT
@@ -575,16 +575,16 @@ const key::Key keyCodeMap[ting::u8(-1) + 1] = {
 
 key::Key GetKeyFromKeyEvent(AInputEvent& event)noexcept{
 	int32_t kc = AKeyEvent_getKeyCode(&event);
-	ASSERT(0 <= kc && kc <= ting::u8(-1))
-	return keyCodeMap[ting::u8(kc)];
+	ASSERT(0 <= kc && kc <= std::uint8_t(-1))
+	return keyCodeMap[std::uint8_t(kc)];
 }
 
 
 
 struct UnicodeResolver{
-	ting::Array<ting::u32> chars;
+	ting::Array<std::uint32_t> chars;
 
-	ting::Array<ting::u32> Resolve()const{
+	ting::Array<std::uint32_t> Resolve()const{
 		return this->chars;
 	}
 };
@@ -597,7 +597,7 @@ struct UnicodeResolver{
 
 namespace morda{
 
-void HandleCharacterInputEvent(ting::Array<ting::u32> chars){
+void HandleCharacterInputEvent(ting::Array<std::uint32_t> chars){
 	UnicodeResolver resolver;
 	resolver.chars = chars;
 	
@@ -628,16 +628,16 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 		return;
 	}
 	
-	typedef std::vector<ting::u32> T_Vector;
+	typedef std::vector<std::uint32_t> T_Vector;
 	T_Vector utf32;
 
 	for(ting::utf8::Iterator i(utf8Chars); i.IsNotEnd(); ++i){
 		utf32.push_back(i.Char());
 	}
 	
-	ting::Array<ting::u32> utf32Chars(utf32.size());
+	ting::Array<std::uint32_t> utf32Chars(utf32.size());
 
-	ting::u32* dst = utf32Chars.Begin();
+	std::uint32_t* dst = utf32Chars.Begin();
 	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 		*dst = *src;
 	}
@@ -837,7 +837,7 @@ inline void Render(App& app){
 
 
 
-inline ting::u32 Update(App& app){
+inline std::uint32_t Update(App& app){
 	return app.updater.Update();
 }
 
@@ -1126,7 +1126,7 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-	ting::u32 dt = Update(App::Inst());
+	std::uint32_t dt = Update(App::Inst());
 	if(dt == 0){
 		//do not arm the timer and do not clear the flag
 	}else{

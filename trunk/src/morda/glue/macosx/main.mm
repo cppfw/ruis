@@ -158,7 +158,7 @@ void morda::App::Exec(){
 	do{
 		this->Render();
 		
-		ting::u32 millis = this->updater.Update();
+		std::uint32_t millis = this->updater.Update();
 		
 		NSEvent *event =
 			[applicationObject
@@ -269,7 +269,7 @@ void morda::App::Exec(){
 namespace morda{
 
 void Main(int argc, const char** argv){
-	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const ting::u8>(0, 0));
+	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
 
 	app->Exec();
 }

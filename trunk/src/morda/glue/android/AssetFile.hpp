@@ -87,9 +87,9 @@ public:
 
 	virtual void CloseInternal()noexcept override;
 
-	virtual size_t ReadInternal(const ting::Buffer<ting::u8>& buf) override;
+	virtual size_t ReadInternal(const ting::Buffer<std::uint8_t>& buf) override;
 
-	virtual size_t WriteInternal(const ting::Buffer<const ting::u8>& buf) override;
+	virtual size_t WriteInternal(const ting::Buffer<const std::uint8_t>& buf) override;
 
 	virtual size_t SeekForwardInternal(size_t numBytesToSeek) override;
 	
