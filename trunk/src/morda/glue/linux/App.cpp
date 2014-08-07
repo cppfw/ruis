@@ -24,7 +24,7 @@ App::XDisplayWrapper::XDisplayWrapper(){
 
 
 
-App::XDisplayWrapper::~XDisplayWrapper()throw(){
+App::XDisplayWrapper::~XDisplayWrapper()noexcept{
 	XCloseDisplay(this->d);
 }
 
@@ -55,7 +55,7 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrap
 
 
 
-App::XVisualInfoWrapper::~XVisualInfoWrapper()throw(){
+App::XVisualInfoWrapper::~XVisualInfoWrapper()noexcept{
 	XFree(this->vi);
 }
 
@@ -114,7 +114,7 @@ App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper
 
 
 
-App::XWindowWrapper::~XWindowWrapper()throw(){
+App::XWindowWrapper::~XWindowWrapper()noexcept{
 	XDestroyWindow(this->d.d, this->w);
 }
 
@@ -140,7 +140,7 @@ App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrap
 
 
 
-void App::GLXContextWrapper::Destroy()throw(){
+void App::GLXContextWrapper::Destroy()noexcept{
 //	TRACE(<< "App::GLXContextWrapper::Destroy(): invoked" << std::endl)
 	glXMakeCurrent(this->d.d, None, NULL);
 //	TRACE(<< "App::GLXContextWrapper::Destroy(): destroying context" << std::endl)
@@ -172,7 +172,7 @@ App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindow
 
 
 
-void App::XInputMethodWrapper::Destroy()throw(){
+void App::XInputMethodWrapper::Destroy()noexcept{
 	if(this->xic != NULL){
 		XUnsetICFocus(this->xic);
 		XDestroyIC(this->xic);
@@ -230,7 +230,7 @@ namespace{
 class XEventWaitable : public ting::Waitable{
 	int fd;
 	
-	int GetHandle() OVERRIDE{
+	int GetHandle() override{
 		return this->fd;
 	}
 public:
@@ -729,14 +729,14 @@ void App::Exec(){
 
 
 
-void App::ShowVirtualKeyboard()throw(){
+void App::ShowVirtualKeyboard()noexcept{
 	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 
 
 
-void App::HideVirtualKeyboard()throw(){
+void App::HideVirtualKeyboard()noexcept{
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }

@@ -48,13 +48,13 @@ public:
 	
 	ImageLabel(const stob::Node& desc);
 public:
-	virtual ~ImageLabel()throw(){}
+	virtual ~ImageLabel()noexcept{}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	void Render(const morda::Matr4f& matrix)const override;
 
-	morda::Vec2f ComputeMinDim()const OVERRIDE;
+	morda::Vec2f ComputeMinDim()const override;
 	
-	morda::Vec2f Measure(const Vec2f& offer)const OVERRIDE;
+	morda::Vec2f Measure(const Vec2f& offer)const override;
 	
 private:
 

@@ -69,7 +69,7 @@ class Shader{
 	struct ShaderWrapper{
 		GLuint s;
 		ShaderWrapper(const char* code, GLenum type);
-		~ShaderWrapper()throw(){
+		~ShaderWrapper()noexcept{
 			glDeleteShader(this->s);
 		}
 		
@@ -83,7 +83,7 @@ class Shader{
 	struct ProgramWrapper{
 		GLuint p;
 		ProgramWrapper(GLuint vertex, GLuint fragment);
-		~ProgramWrapper()throw(){
+		~ProgramWrapper()noexcept{
 			glDeleteProgram(this->p);
 		}
 		

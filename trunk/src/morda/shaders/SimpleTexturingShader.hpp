@@ -46,7 +46,7 @@ class SimpleTexturingShader : public TexturingShader{
 public:
 	SimpleTexturingShader();
 	
-	~SimpleTexturingShader()throw(){}
+	~SimpleTexturingShader()noexcept{}
 };
 
 

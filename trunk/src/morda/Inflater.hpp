@@ -94,7 +94,7 @@ public:
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
 	 */
-	bool RemoveWidget(const std::string& widgetName)throw();
+	bool RemoveWidget(const std::string& widgetName)noexcept;
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.

@@ -69,7 +69,7 @@ public:
      * @param dim - dimensions of the rectangle.
      * @return Position for the rectangle within widget.
      */
-	Vec2f PosForRect(const PaddedWidget& w, const Vec2f& dim)const throw();
+	Vec2f PosForRect(const PaddedWidget& w, const Vec2f& dim)const noexcept;
 	
 	/**
 	 * @brief Get position for rectangle within given parent rectangle.
@@ -80,7 +80,7 @@ public:
      * @param dim - dimensions of the rectangle to place.
      * @return Position for the rectangle within parent rectangle.
      */
-	Vec2f PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const throw();
+	Vec2f PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const noexcept;
 	
 	/**
 	 * @brief Parse the gravity property from STOB.
@@ -95,7 +95,7 @@ public:
      * @param gravity - "gravity" STOB node.
      * @return Parsed Gravity object.
      */
-	static Gravity FromSTOB(const stob::Node& gravity)throw();
+	static Gravity FromSTOB(const stob::Node& gravity)noexcept;
 	
 	/**
 	 * @brief Parse the gravity property from layout STOB.
@@ -111,17 +111,17 @@ public:
      * @param layout - layout properties STOB node.
      * @return Parsed Gravity object.
      */
-	static Gravity FromLayout(const stob::Node& layout)throw();
+	static Gravity FromLayout(const stob::Node& layout)noexcept;
 	
 	/**
 	 * @brief Default gravity values.
      * @return Gravity object initialized to default gravity values.
      */
-	static Gravity Default()throw(){
+	static Gravity Default()noexcept{
 		return Gravity(Vec2f(0.5f));
 	}
 	
-	static const char* D_Gravity()throw(){
+	static const char* D_Gravity()noexcept{
 		return "gravity";
 	}
 };

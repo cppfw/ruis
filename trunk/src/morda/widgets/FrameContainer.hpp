@@ -53,9 +53,9 @@ public:
 	FrameContainer(const stob::Node& desc);
 	
 public:	
-	morda::Vec2f ComputeMinDim()const OVERRIDE;
+	morda::Vec2f ComputeMinDim()const override;
 
-	void OnResize() OVERRIDE;
+	void OnResize() override;
 
 private:
 

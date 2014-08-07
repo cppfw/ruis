@@ -55,9 +55,9 @@ public:
 	LinearContainer(const stob::Node& desc);	
 public:
 
-	void OnResize() OVERRIDE;	
+	void OnResize() override;	
 	
-	morda::Vec2f ComputeMinDim()const throw() OVERRIDE;
+	morda::Vec2f ComputeMinDim()const noexcept override;
 private:
 };
 

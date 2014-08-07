@@ -480,7 +480,7 @@ App::WindowClassWrapper::WindowClassWrapper(){
 
 
 
-App::WindowClassWrapper::~WindowClassWrapper()throw(){
+App::WindowClassWrapper::~WindowClassWrapper()noexcept{
 	if(!UnregisterClass(this->name.c_str(), GetModuleHandle(NULL))){
 		ASSERT_INFO(false, "Failed to unregister window class")
 	}
@@ -516,7 +516,7 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 
 
 
-App::WindowWrapper::~WindowWrapper()throw(){
+App::WindowWrapper::~WindowWrapper()noexcept{
 	if(!DestroyWindow(this->hwnd)){
 		ASSERT_INFO(false, "Failed to destroy window")
 	}
@@ -574,7 +574,7 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 
 
 
-void App::DeviceContextWrapper::Destroy()throw(){
+void App::DeviceContextWrapper::Destroy()noexcept{
 	if(!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
 	}
@@ -609,7 +609,7 @@ App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
 
 
 
-void App::GLContextWrapper::Destroy()throw(){
+void App::GLContextWrapper::Destroy()noexcept{
 	if(!wglMakeCurrent(NULL, NULL)){
 		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
 	}
@@ -650,14 +650,14 @@ std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::stri
 
 
 
-void App::ShowVirtualKeyboard()throw(){
+void App::ShowVirtualKeyboard()noexcept{
 	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 
 
 
-void App::HideVirtualKeyboard()throw(){
+void App::HideVirtualKeyboard()noexcept{
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }

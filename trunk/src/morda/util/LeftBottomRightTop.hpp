@@ -50,12 +50,12 @@ public:
 			rt(right, top)
 	{}
 	
-	float& operator[](size_t i)throw(){
+	float& operator[](size_t i)noexcept{
 		ASSERT(i < 4)
 		return reinterpret_cast<float*>(this)[i];
 	}
 	
-	const float& operator[](size_t i)const throw(){
+	const float& operator[](size_t i)const noexcept{
 		ASSERT(i < 4)
 		return reinterpret_cast<const float*>(this)[i];
 	}
@@ -82,14 +82,14 @@ public:
      * @param node - STOB node to parse from.
      * @return Parsed LeftTopRightBottom object.
      */
-	static LeftBottomRightTop FromSTOB(const stob::Node& node)throw();
+	static LeftBottomRightTop FromSTOB(const stob::Node& node)noexcept;
 	
 	/**
 	 * @brief Default values.
 	 * Default values are all 0.
      * @return LeftTopRightBottom object initialized to default values.
      */
-	static LeftBottomRightTop Default()throw(){//TODO: remove that and add constructor with just one argument
+	static LeftBottomRightTop Default()noexcept{//TODO: remove that and add constructor with just one argument
 		return LeftBottomRightTop(0, 0, 0, 0);
 	}
 };

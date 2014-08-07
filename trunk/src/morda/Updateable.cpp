@@ -176,7 +176,7 @@ void Updateable::StartUpdating(ting::u16 dt){
 
 
 
-void Updateable::StopUpdating()throw(){
+void Updateable::StopUpdating()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 	
 	if(this->queue){

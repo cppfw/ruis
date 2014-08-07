@@ -22,7 +22,7 @@ ting::Ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::str
 	return fi;
 }
 
-void morda::App::ShowVirtualKeyboard()throw(){
+void morda::App::ShowVirtualKeyboard()noexcept{
 	//do nothing
 }
 
@@ -35,7 +35,7 @@ morda::App::ApplicationObject::ApplicationObject(){
 	}
 }
 
-morda::App::ApplicationObject::~ApplicationObject()throw(){
+morda::App::ApplicationObject::~ApplicationObject()noexcept{
 	NSApplication *applicationObject = (NSApplication*)this->id;
 	[applicationObject release];
 }
@@ -57,7 +57,7 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	[window becomeFirstResponder];
 }
 
-morda::App::WindowObject::~WindowObject()throw(){
+morda::App::WindowObject::~WindowObject()noexcept{
 	NSWindow* window = (NSWindow*)this->id;
 	[window release];
 }
@@ -97,7 +97,7 @@ morda::App::OpenGLContext::OpenGLContext(void* window){
 	}
 }
 
-void morda::App::OpenGLContext::Destroy()throw(){
+void morda::App::OpenGLContext::Destroy()noexcept{
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->id;
 	[openGLContext release];
 }

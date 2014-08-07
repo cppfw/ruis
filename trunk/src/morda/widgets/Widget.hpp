@@ -78,11 +78,11 @@ private:
 	//clip widgets contents by widget's border if set to true
 	ting::Inited<bool, false> clip;
 public:
-	bool GetClip()const throw(){
+	bool GetClip()const noexcept{
 		return this->clip;
 	}
 	
-	void SetClip(bool clip)throw(){
+	void SetClip(bool clip)noexcept{
 		this->clip = clip;
 	}
 	
@@ -95,7 +95,7 @@ private:
 	//properties from STOB description
 	std::unique_ptr<stob::Node> prop;
 public:
-	const stob::Node* Prop()const throw(){
+	const stob::Node* Prop()const noexcept{
 		return this->prop.operator->();
 	}
 	
@@ -106,15 +106,15 @@ public:
 		return this->Prop()->Child(propName).node();
 	}
 	
-	std::unique_ptr<stob::Node> ExtractProp()throw(){
+	std::unique_ptr<stob::Node> ExtractProp()noexcept{
 		return std::move(this->prop);
 	}
 	
-	void SetProp(std::unique_ptr<stob::Node> prop)throw(){
+	void SetProp(std::unique_ptr<stob::Node> prop)noexcept{
 		this->prop = std::move(prop);
 	}
 	
-	bool NeedsRelayout()const throw(){
+	bool NeedsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
 	
@@ -133,7 +133,7 @@ public:
 	//NOTE: if only parent holds Ref then object may be deleted
 	void RemoveFromParent();
 	
-	bool IsHovered()const throw(){
+	bool IsHovered()const noexcept{
 		return this->isHovered;
 	}
 	
@@ -149,15 +149,15 @@ private:
 	
 public:
 
-	const morda::Rect2f& Rect()const throw(){
+	const morda::Rect2f& Rect()const noexcept{
 		return this->rect;
 	}
 	
-	void MoveTo(const morda::Vec2f& newPos)throw(){
+	void MoveTo(const morda::Vec2f& newPos)noexcept{
 		this->rect.p = newPos;
 	}
 	
-	void MoveBy(const morda::Vec2f& delta)throw(){
+	void MoveBy(const morda::Vec2f& delta)noexcept{
 		this->rect.p += delta;
 	}
 
@@ -204,11 +204,11 @@ public:
 		return false;
 	}
 	
-	void Focus()throw();
+	void Focus()noexcept;
 	
-	void Unfocus()throw();
+	void Unfocus()noexcept;
 	
-	bool IsFocused()const throw(){
+	bool IsFocused()const noexcept{
 		return this->isFocused;
 	}
 	
@@ -271,7 +271,7 @@ protected:
 	
 public:
 
-	void SetRelayoutNeeded()throw();
+	void SetRelayoutNeeded()noexcept;
 	
 	void Hide(){
 		this->SetHidden(true);
@@ -288,23 +288,23 @@ public:
 		}
 	}
 	
-	bool IsHidden()const throw(){
+	bool IsHidden()const noexcept{
 		return this->isHidden;
 	}
 
-	void Enable()throw(){
+	void Enable()noexcept{
 		this->SetDisabled(false);
 	}
 
-	void Disable()throw(){
+	void Disable()noexcept{
 		this->SetDisabled(true);
 	}
 
-	void SetDisabled(bool disabled)throw(){
+	void SetDisabled(bool disabled)noexcept{
 		this->isDisabled = disabled;
 	}
 	
-	bool IsDisabled()const throw(){
+	bool IsDisabled()const noexcept{
 		return this->isDisabled;
 	}
 	
@@ -314,7 +314,7 @@ public:
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
      */
-	bool Contains(const morda::Vec2f& pos)const throw(){
+	bool Contains(const morda::Vec2f& pos)const noexcept{
 		return morda::Rect2f(morda::Vec2f(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	

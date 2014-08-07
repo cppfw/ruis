@@ -57,19 +57,19 @@ public:
 	
 public:
 	
-	~Label()throw(){}
+	~Label()noexcept{}
 	
 	void SetText(const std::string& text);
 	
-	const std::string& GetText()const throw(){
+	const std::string& GetText()const noexcept{
 		return this->text;
 	}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	void Render(const morda::Matr4f& matrix)const override;
 	
-	Vec2f ComputeMinDim()const throw() OVERRIDE;
+	Vec2f ComputeMinDim()const noexcept override;
 	
-	void OnResize() OVERRIDE;
+	void OnResize() override;
 };
 
 

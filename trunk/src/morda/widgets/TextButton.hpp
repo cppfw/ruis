@@ -55,11 +55,11 @@ public:
 	TextButton() : Widget(0){}
 public:
 	
-	~TextButton()throw(){}
+	~TextButton()noexcept{}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	void Render(const morda::Matr4f& matrix)const override;
 	
-	void OnResize() OVERRIDE;
+	void OnResize() override;
 };
 
 

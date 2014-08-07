@@ -6,7 +6,7 @@ using namespace morda;
 
 
 //static
-LeftBottomRightTop LeftBottomRightTop::FromSTOB(const stob::Node& node)throw(){
+LeftBottomRightTop LeftBottomRightTop::FromSTOB(const stob::Node& node)noexcept{
 	LeftBottomRightTop ret;
 	
 	const stob::Node* n = node.Child();

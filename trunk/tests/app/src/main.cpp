@@ -39,7 +39,7 @@ public:
 	ting::Inited<ting::u32, 0> timer;
 	ting::Inited<ting::u32, 0> cnt;
 	
-	void Update(ting::u32 dt) OVERRIDE{
+	void Update(ting::u32 dt) override{
 		this->timer += dt;
 		++this->cnt;
 		
@@ -52,7 +52,7 @@ public:
 		}
 	}
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE{
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << button << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -68,7 +68,7 @@ public:
 		return true;
 	}
 	
-	bool OnKey(bool isDown, morda::key::Key keyCode) OVERRIDE{
+	bool OnKey(bool isDown, morda::key::Key keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
@@ -97,7 +97,7 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) OVERRIDE{
+	void OnCharacterInput(const ting::Buffer<const ting::u32>& unicode) override{
 		if(unicode.Size() == 0){
 			return;
 		}
@@ -105,7 +105,7 @@ public:
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 	}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE{
+	void Render(const morda::Matr4f& matrix)const override{
 		{
 			morda::Matr4f matr(matrix);
 			matr.Scale(this->Rect().d);
@@ -143,11 +143,11 @@ public:
 		this->rot.Identity();
 	}
 	
-	void Update(ting::u32 dt) OVERRIDE{
+	void Update(ting::u32 dt) override{
 		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE{
+	void Render(const morda::Matr4f& matrix)const override{
 		this->Widget::Render(matrix);
 		
 		morda::Matr4f matr(matrix);
@@ -221,7 +221,7 @@ public:
 
 
 class Application : public morda::App{
-	static morda::App::WindowParams GetWindowParams()throw(){
+	static morda::App::WindowParams GetWindowParams()noexcept{
 		morda::App::WindowParams wp;
 		
 		wp.dim.x = 800;

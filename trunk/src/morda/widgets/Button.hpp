@@ -50,17 +50,17 @@ protected:
 	Button() : Widget(0){}
 public:
 	
-	~Button()throw(){}
+	~Button()noexcept{}
 	
 	std::function<void()> onPressed;
 	
-	void Render(const morda::Matr4f& matrix)const OVERRIDE;
+	void Render(const morda::Matr4f& matrix)const override;
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) OVERRIDE;
+	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override;
 	
-	void OnHoverChanged() OVERRIDE;
+	void OnHoverChanged() override;
 	
-	bool IsPressed()const throw(){
+	bool IsPressed()const noexcept{
 		return this->isPressed;
 	}
 };

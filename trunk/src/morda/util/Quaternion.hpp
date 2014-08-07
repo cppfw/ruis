@@ -85,7 +85,7 @@ public:
 	 * @param z - z component.
 	 * @param w - w component.
 	 */
-	Quaternion(T x, T y, T z, T w)throw() :
+	Quaternion(T x, T y, T z, T w)noexcept :
 			x(x),
 			y(y),
 			z(z),
@@ -102,7 +102,7 @@ public:
 	 * rotation in radians.
 	 * @param rot - vector which defines the rotation.
 	 */
-	inline Quaternion(const Vector3<T>& rot)throw();
+	inline Quaternion(const Vector3<T>& rot)noexcept;
 
 
 
@@ -111,7 +111,7 @@ public:
 	 * Note, that it does not initialize quaternion components,
 	 * right after creation the components are undefined.
 	 */
-	inline Quaternion()throw(){}
+	inline Quaternion()noexcept{}
 
 
 
@@ -120,7 +120,7 @@ public:
 	 * Note, complex conjugate of quaternion (x, y, z, w) is (-x, -y, -z, w).
 	 * @return quaternion instance which is a complex conjugate of this quaternion.
 	 */
-	inline Quaternion operator!()const throw(){
+	inline Quaternion operator!()const noexcept{
 		return Quaternion(-this->x, -this->y, -this->z, this->w);
 	}
 
@@ -132,7 +132,7 @@ public:
      * @param q - quaternion to add to this quaternion.
      * @return Reference to this quaternion object.
      */
-	inline Quaternion& operator+=(const Quaternion& q)throw(){
+	inline Quaternion& operator+=(const Quaternion& q)noexcept{
 		this->x += q.x;
 		this->y += q.y;
 		this->z += q.z;
@@ -148,7 +148,7 @@ public:
      * @param q - quaternion to add.
      * @return A quaternion object representing sum of quaternions.
      */
-	inline Quaternion operator+(const Quaternion& q)const throw(){
+	inline Quaternion operator+(const Quaternion& q)const noexcept{
 		return (Quaternion(*this) += q);
 	}
 
@@ -164,7 +164,7 @@ public:
 	 * @param s - scalar value to multiply by.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& operator*=(T s)throw(){
+	inline Quaternion& operator*=(T s)noexcept{
 		this->x *= s;
 		this->y *= s;
 		this->z *= s;
@@ -179,7 +179,7 @@ public:
 	 * @param s - scalar value to multiply by.
 	 * @return resulting quaternion instance.
 	 */
-	inline Quaternion operator*(T s)const throw(){
+	inline Quaternion operator*(T s)const noexcept{
 		return (Quaternion(*this) *= s);
 	}
 
@@ -191,7 +191,7 @@ public:
 	 * @param s - scalar value to divide by.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& operator/=(T s)throw(){
+	inline Quaternion& operator/=(T s)noexcept{
 		this->x /= s;
 		this->y /= s;
 		this->z /= s;
@@ -206,7 +206,7 @@ public:
 	 * @param s - scalar value to divide by.
 	 * @return resulting quaternion instance.
 	 */
-	inline Quaternion operator/(T s)const throw(){
+	inline Quaternion operator/(T s)const noexcept{
 		return (Quaternion(*this) /= s);
 	}
 
@@ -219,7 +219,7 @@ public:
 	 * x1 * x2 + y1 * y2 + z1 * z2 + w1 * w2
 	 * @return result of the dot product.
 	 */
-	inline T operator*(const Quaternion& q)const throw(){
+	inline T operator*(const Quaternion& q)const noexcept{
 		return this->x * q.x + this->y * q.y + this->z * q.z + this->w * q.w;
 	}
 
@@ -233,7 +233,7 @@ public:
 	 * @param q - quaternion to multiply by.
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& operator%=(const Quaternion& q)throw(){
+	Quaternion& operator%=(const Quaternion& q)noexcept{
 		T a = (this->w + this->x) * (q.w + q.x);
 		T b = (this->z - this->y) * (q.y - q.z);
 		T c = (this->x - this->w) * (q.y + q.z);
@@ -260,7 +260,7 @@ public:
 	 * @return resulting quaternion instance.
 	 */
 	//multiplication of quaternions
-	inline Quaternion operator%(const Quaternion& q)const throw(){
+	inline Quaternion operator%(const Quaternion& q)const noexcept{
 		return (Quaternion(*this) %= q);
 	}
 
@@ -272,7 +272,7 @@ public:
 	 * It is a unit quaternion representing no rotation.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Identity()throw(){
+	inline Quaternion& Identity()noexcept{
 		this->x = T(0);
 		this->y = T(0);
 		this->z = T(0);
@@ -287,7 +287,7 @@ public:
 	 * Note, complex conjugate of quaternion (x, y, z, w) is (-x, -y, -z, w).
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Conjugate()throw(){
+	inline Quaternion& Conjugate()noexcept{
 		return (*this = this->operator!());
 	}
 
@@ -298,7 +298,7 @@ public:
 	 * Note, negating quaternion means changing the sign of its every component.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Negate()throw(){
+	inline Quaternion& Negate()noexcept{
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -312,7 +312,7 @@ public:
 	 * @brief Calculate power 2 from quaternion magnitude.
 	 * @return power 2 from magnitude.
 	 */
-	inline T MagPow2()const throw(){
+	inline T MagPow2()const noexcept{
 		return (*this) * (*this);
 	}
 
@@ -322,7 +322,7 @@ public:
 	 * @brief Calculate quaternion magnitude.
 	 * @return quaternion magnitude.
 	 */
-	inline T Magnitude()const throw(){
+	inline T Magnitude()const noexcept{
 		return ting::math::Sqrt(this->MagPow2());
 	}
 
@@ -334,7 +334,7 @@ public:
 	 * If it is a quaternion of zero magnitude, then the result is undefined.
 	 * @return reference to this quaternion instance.
 	 */
-	inline Quaternion& Normalize()throw(){
+	inline Quaternion& Normalize()noexcept{
 		return (*this) /= Magnitude();
 	}
 
@@ -350,7 +350,7 @@ public:
      * @param angle - rotation angle.
      * @return Reference to this quaternion object.
      */
-	inline Quaternion& InitRot(T axisX, T axisY, T axisZ, T angle)throw(){
+	inline Quaternion& InitRot(T axisX, T axisY, T axisZ, T angle)noexcept{
 		T sina2 = ting::math::Sin(angle / 2);
 		this->w = ting::math::Cos(angle / 2);
 		this->x = axisX * sina2;
@@ -369,7 +369,7 @@ public:
      * @param angle - rotation angle.
      * @return Reference to this quaternion object.
      */
-	inline Quaternion& InitRot(const Vector3<T>& axis, T angle)throw();
+	inline Quaternion& InitRot(const Vector3<T>& axis, T angle)noexcept;
 	
 	
 	
@@ -382,7 +382,7 @@ public:
      * @param rot - rotation vector.
      * @return Reference to this quaternion object.
      */
-	inline Quaternion& InitRot(const Vector3<T>& rot)throw();
+	inline Quaternion& InitRot(const Vector3<T>& rot)noexcept;
 
 
 
@@ -392,7 +392,7 @@ public:
 	 * to a rotation matrix.
      * @return Rotation matrix.
      */
-	inline Matrix4<T> ToMatrix4()const throw();
+	inline Matrix4<T> ToMatrix4()const noexcept;
 
 
 	
@@ -408,7 +408,7 @@ public:
      * @param t - interpolation parameter, value from [0 : 1].
      * @return Resulting quaternion of SLERP(this, quat, t).
      */
-	Quaternion Slerp(const Quaternion& quat, T t)const throw(){
+	Quaternion Slerp(const Quaternion& quat, T t)const noexcept{
 		//Since quaternions are normalized the cosine of the angle alpha
 		//between quaternions is equal to their dot product.
 		T cosalpha = (*this) * quat;
@@ -484,13 +484,13 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> inline Quaternion<T>::Quaternion(const Vector3<T>& rot)throw(){
+template <class T> inline Quaternion<T>::Quaternion(const Vector3<T>& rot)noexcept{
 	this->InitRot(rot);
 }
 
 
 
-template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& rot)throw(){
+template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& rot)noexcept{
 	T mag = rot.Magnitude();
 	if(mag != 0){
 		this->InitRot(rot.x / mag, rot.y / mag, rot.z / mag, mag);
@@ -502,13 +502,13 @@ template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>
 
 
 
-template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& axis, T angle)throw(){
+template <class T> inline Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& axis, T angle)noexcept{
 	return this->InitRot(axis.x, axis.y, axis.z, angle);
 }
 
 
 
-template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const throw(){
+template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const noexcept{
 	return Matrix4<T>(*this);
 }
 
