@@ -34,7 +34,6 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/config.hpp>
 #include <ting/Buffer.hpp>
-#include <ting/Ptr.hpp>
 #include <ting/fs/File.hpp>
 
 #include <memory>

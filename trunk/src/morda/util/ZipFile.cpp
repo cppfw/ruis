@@ -77,9 +77,9 @@ long ZCALLBACK UnzipTell(voidpf opaque, voidpf stream){
 
 
 
-ZipFile::ZipFile(ting::Ptr<ting::fs::File> zipFile, const std::string& path) :
+ZipFile::ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& path) :
 		ting::fs::File(path),
-		zipFile(zipFile)
+		zipFile(std::move(zipFile))
 {
 	zlib_filefunc_def ff;
 	ff.opaque = this->zipFile.operator->();
