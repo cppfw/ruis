@@ -31,19 +31,20 @@ THE SOFTWARE. */
 #include <ting/debug.hpp>
 #include <ting/fs/File.hpp>
 #include <ting/util.hpp>
-#include <ting/Ptr.hpp>
 #include <ting/types.hpp>
+
+#include <memory>
 
 
 namespace morda{
 
 
 class ZipFile : public ting::fs::File{
-	ting::Ptr<ting::fs::File> zipFile;
+	std::unique_ptr<ting::fs::File> zipFile;
 	
 	void* handle = nullptr;
 public:
-	ZipFile(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string());
+	ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& path = std::string());
 
 	~ZipFile()noexcept;
 
@@ -54,8 +55,8 @@ public:
 	bool Exists() const override;
 	std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;
 	
-	static ting::Ptr<ZipFile> New(ting::Ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
-		return ting::Ptr<ZipFile>(new ZipFile(zipFile, path));
+	static std::unique_ptr<ZipFile> New(std::unique_ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
+		return std::unique_ptr<ZipFile>(new ZipFile(std::move(zipFile), path));
 	}
 };
 
