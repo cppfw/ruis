@@ -518,9 +518,9 @@ template <class T> inline Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& v
 //=====================
 
 typedef Vector4<float> Vec4f;
-STATIC_ASSERT(sizeof(Vec4f) == sizeof(float) * 4)
+static_assert(sizeof(Vec4f) == sizeof(float) * 4, "size mismatch");
 typedef Vector4<double> Vec4d;
-STATIC_ASSERT(sizeof(Vec4d) == sizeof(double) * 4)
+static_assert(sizeof(Vec4d) == sizeof(double) * 4, "size mismatch");
 
 
 

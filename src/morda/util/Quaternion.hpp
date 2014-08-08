@@ -519,9 +519,9 @@ template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const noexcept{
 //=====================
 
 typedef Quaternion<float> Quatf;
-STATIC_ASSERT(sizeof(Quatf) == sizeof(float) * 4)
+static_assert(sizeof(Quatf) == sizeof(float) * 4, "size mismatch");
 typedef Quaternion<double> Quatd;
-STATIC_ASSERT(sizeof(Quatd) == sizeof(double) * 4)
+static_assert(sizeof(Quatd) == sizeof(double) * 4, "size mismatch");
 
 
 

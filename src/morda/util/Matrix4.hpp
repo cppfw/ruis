@@ -672,9 +672,9 @@ template <class T> inline Matrix4<T>& Matrix4<T>::SetFrom(const Quaternion<T>& q
 //=====================
 
 typedef Matrix4<float> Matr4f;
-STATIC_ASSERT(sizeof(Matr4f) == sizeof(float) * 4 * 4)
+static_assert(sizeof(Matr4f) == sizeof(float) * 4 * 4, "size mismatch");
 typedef Matrix4<double> Matr4d;
-STATIC_ASSERT(sizeof(Matr4d) == sizeof(double) * 4 * 4)
+static_assert(sizeof(Matr4d) == sizeof(double) * 4 * 4, "size mismatch");
 
 
 
