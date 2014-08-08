@@ -72,7 +72,7 @@ public:
     }
 
 	void SetColor(const morda::Vec4f& color){
-		STATIC_ASSERT(sizeof(color) == sizeof(GLfloat) * 4)
+		static_assert(sizeof(color) == sizeof(GLfloat) * 4, "size mismatch");
 		glUniform4fv(this->colorUniform, 1, reinterpret_cast<const GLfloat*>(&color));
 		ASSERT(glGetError() == GL_NO_ERROR)
     }

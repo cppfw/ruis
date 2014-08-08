@@ -56,7 +56,6 @@ template <class T> class Quaternion;
  * @brief Three-dimensional vector.
  */
 template <class T> class Vector3{
-	STATIC_ASSERT(sizeof(Vector3) == sizeof(T) * 3)
 public:
 
 	/**
@@ -484,9 +483,9 @@ template <class T> inline Vector3<T>& Vector3<T>::Rotate(const Quaternion<T>& q)
 //=====================
 
 typedef Vector3<float> Vec3f;
-STATIC_ASSERT(sizeof(Vec3f) == sizeof(float) * 3)
+static_assert(sizeof(Vec3f) == sizeof(float) * 3, "size mismatch");
 typedef Vector3<double> Vec3d;
-STATIC_ASSERT(sizeof(Vec3d) == sizeof(double) * 3)
+static_assert(sizeof(Vec3d) == sizeof(double) * 3, "size mismatch");
 
 
 

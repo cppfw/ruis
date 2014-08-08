@@ -54,7 +54,6 @@ template <class T> class Vector3;
  * @brief Two-dimensional vector class.
  */
 template <class T> class Vector2{
-	STATIC_ASSERT(sizeof(Vector2) == sizeof(T) * 2)
 public:
 	/**
 	 * @brief 0th vector component.
@@ -489,13 +488,13 @@ template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec
 //=====================
 
 typedef Vector2<int> Vec2i;
-STATIC_ASSERT(sizeof(Vec2i) == sizeof(int) * 2)
+static_assert(sizeof(Vec2i) == sizeof(int) * 2, "size mismatch");
 typedef Vector2<unsigned> Vec2ui;
-STATIC_ASSERT(sizeof(Vec2ui) == sizeof(unsigned) * 2)
+static_assert(sizeof(Vec2ui) == sizeof(unsigned) * 2, "size mismatch");
 typedef Vector2<float> Vec2f;
-STATIC_ASSERT(sizeof(Vec2f) == sizeof(float) * 2)
+static_assert(sizeof(Vec2f) == sizeof(float) * 2, "size mismatch");
 typedef Vector2<double> Vec2d;
-STATIC_ASSERT(sizeof(Vec2d) == sizeof(double) * 2)
+static_assert(sizeof(Vec2d) == sizeof(double) * 2, "size mismatch");
 
 
 

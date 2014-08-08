@@ -31,10 +31,10 @@ THE SOFTWARE. */
 #include <list>
 
 #include <ting/Singleton.hpp>
-#include <ting/types.hpp>
 #include <ting/config.hpp>
 #include <ting/Buffer.hpp>
 #include <ting/fs/File.hpp>
+#include <ting/mt/Thread.hpp>
 
 #include <memory>
 
