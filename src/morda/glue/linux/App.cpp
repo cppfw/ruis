@@ -619,8 +619,8 @@ void App::Exec(){
 		waitSet.WaitWithTimeout(this->updater.Update());
 		
 		if(this->uiQueue.CanRead()){
-			while(ting::Ptr<ting::mt::Message> m = this->uiQueue.PeekMsg()){
-				m->Handle();
+			while(auto m = this->uiQueue.PeekMsg()){
+				m();
 			}
 			ASSERT(!this->uiQueue.CanRead())
 		}
