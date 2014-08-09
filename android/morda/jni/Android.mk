@@ -8,7 +8,7 @@ LOCAL_MODULE := morda
 
 include $(LOCAL_PATH)/../../../../src/sources.mk
 
-PREFIX := 
+PREFIX := $(LOCAL_PATH)/../../../../src/
 
 LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(this_srcs))
 

@@ -40,7 +40,6 @@ THE SOFTWARE. */
 #include <android/asset_manager.h>
 
 #include <ting/debug.hpp>
-#include <ting/Ptr.hpp>
 #include <ting/fs/File.hpp>
 
 #include "../../App.hpp"
@@ -58,7 +57,7 @@ namespace morda{
 class AssetFile : public ting::fs::File{
 	AAssetManager* manager;
 	
-	ting::Inited<AAsset*, 0> handle;
+	AAsset* handle = nullptr;
 	
 	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
@@ -78,22 +77,22 @@ public:
 	 * @brief Destructor.
 	 * This destructor calls the Close() method.
 	 */
-	~AssetFile()noexcept{
+	~AssetFile()noexcept override{
 		this->Close();
 	}
 
 
-	virtual void OpenInternal(E_Mode mode) override;
+	virtual void OpenInternal(E_Mode mode)override;
 
 	virtual void CloseInternal()noexcept override;
 
-	virtual size_t ReadInternal(const ting::ArrayAdaptor<std::uint8_t>& buf) override;
+	virtual size_t ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf)override;
 
-	virtual size_t WriteInternal(const ting::ArrayAdaptor<const std::uint8_t>& buf) override;
+	virtual size_t WriteInternal(const ting::ArrayAdaptor<std::uint8_t> buf)override;
 
-	virtual size_t SeekForwardInternal(size_t numBytesToSeek) override;
+	virtual size_t SeekForwardInternal(size_t numBytesToSeek)override;
 	
-	virtual size_t SeekBackwardInternal(size_t numBytesToSeek) override;
+	virtual size_t SeekBackwardInternal(size_t numBytesToSeek)override;
 
 	
 	

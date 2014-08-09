@@ -8,8 +8,6 @@
 #include <android/native_activity.h>
 #include <android/configuration.h>
 
-#include <ting/Array.hpp>
-#include <ting/types.hpp>
 #include <ting/utf8.hpp>
 #include <ting/mt/Queue.hpp>
 
@@ -19,6 +17,7 @@
 
 #include "AssetFile.hpp"
 #include "../../App.hpp"
+#include "../../AppFactory.hpp"
 
 
 
@@ -637,7 +636,7 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 	
 	std::vector<std::uint32_t> utf32Chars(utf32.size());
 
-	std::uint32_t* dst = utf32Chars.Begin();
+	std::uint32_t* dst = &*utf32Chars.begin();
 	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 		*dst = *src;
 	}
@@ -801,7 +800,7 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	return std::unique_ptr<ting::fs::File>(AssetFile::New(appInfo.assetManager, path).Extract());
+	return AssetFile::New(appInfo.assetManager, path);
 }
 
 
@@ -844,8 +843,8 @@ inline std::uint32_t Update(App& app){
 
 
 inline void HandleQueueMessages(App& app){
-	while(std::unique_ptr<ting::mt::Message> m = app.uiQueue.PeekMsg()){
-		m->Handle();
+	while(auto m = app.uiQueue.PeekMsg()){
+		m();
 	}
 }
 
@@ -885,8 +884,8 @@ void HandleInputEvents(){
 							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
-							if(pointerId >= pointers.Size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+							if(pointerId >= pointers.size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 								continue;
 							}
 
@@ -910,8 +909,8 @@ void HandleInputEvents(){
 							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
-							if(pointerId >= pointers.Size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+							if(pointerId >= pointers.size()){
+								TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 								continue;
 							}
 
@@ -934,8 +933,8 @@ void HandleInputEvents(){
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
 								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
-								if(pointerId >= pointers.Size()){
-									TRACE(<< "Pointer ID is too big, only " << pointers.Size() << " pointers supported at maximum")
+								if(pointerId >= pointers.size()){
+									TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 									continue;
 								}
 
@@ -1027,7 +1026,7 @@ namespace{
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
 	
-	javaFunctionsWrapper.Reset();
+	javaFunctionsWrapper.reset();
 }
 
 
@@ -1082,7 +1081,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 
 		diff = AConfiguration_diff(curConfig->ac, config->ac);
 
-		curConfig = config;
+		curConfig = std::move(config);
 	}
 
 	//if orientation has changed
@@ -1167,12 +1166,12 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
-		App* app = morda::CreateApp(0, 0, appInfo.savedState).Extract();
+		App* app = morda::CreateApp(0, 0, appInfo.savedState).release();
 		
 		activity->instance = app;
 
 		//save current configuration in global variable
-		curConfig = cfg;
+		curConfig = std::move(cfg);
 
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
@@ -1239,7 +1238,7 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	activity->instance = 0;
 
 	//delete configuration object
-	curConfig.Reset();
+	curConfig.reset();
 }
 
 
@@ -1363,8 +1362,8 @@ void ANativeActivity_onCreate(
 	appInfo.assetManager = activity->assetManager;
 	if(savedState){
 		//copy saved state data because no guarantee that the data will be kept alive after returning from this function
-		appInfo.savedState.Init(savedStateSize);
-		memcpy(appInfo.savedState.Begin(), savedState, savedStateSize);
+		appInfo.savedState.resize(savedStateSize);
+		memcpy(&*appInfo.savedState.begin(), savedState, savedStateSize);
 	}
 
 //	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
