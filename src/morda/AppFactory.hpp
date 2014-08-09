@@ -44,7 +44,7 @@ namespace morda{
 __declspec(dllexport)
 #endif
 
-std::unique_ptr<App> CreateApp(int argc, const char** argv, const ting::ArrayAdaptor<const std::uint8_t>& savedState);
+std::unique_ptr<App> CreateApp(int argc, const char** argv, const ting::ArrayAdaptor<std::uint8_t> savedState);
 
 
 
