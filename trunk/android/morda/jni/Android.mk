@@ -16,7 +16,7 @@ LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/App.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates
-LOCAL_CFLAGS += -DDEBUG
+#LOCAL_CFLAGS += -DDEBUG
 
 LOCAL_C_INCLUDES := 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ting
