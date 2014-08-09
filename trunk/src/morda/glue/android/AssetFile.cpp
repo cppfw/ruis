@@ -60,9 +60,9 @@ void AssetFile::CloseInternal()noexcept{
 
 
 //override
-size_t AssetFile::ReadInternal(const ting::ArrayAdaptor<std::uint8_t>& buf){
+size_t AssetFile::ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf){
 	ASSERT(this->handle)
-	int numBytesRead = AAsset_read(this->handle, buf.Begin(), buf.Size());
+	int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
 	if(numBytesRead < 0){//something happened
 		throw File::Exc("AAsset_read() error");
 	}
@@ -73,7 +73,7 @@ size_t AssetFile::ReadInternal(const ting::ArrayAdaptor<std::uint8_t>& buf){
 
 
 //override
-size_t AssetFile::WriteInternal(const ting::ArrayAdaptor<const std::uint8_t>& buf){
+size_t AssetFile::WriteInternal(const ting::ArrayAdaptor<std::uint8_t> buf){
 	ASSERT(this->handle)
 	throw File::Exc("Write() is not supported by Android assets");
 	return 0;
@@ -105,7 +105,7 @@ size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 	typedef off_t T_FSeekOffset;
 	const size_t DMax = ((size_t(T_FSeekOffset(-1))) >> 1);
 	ASSERT((size_t(1) << ((sizeof(T_FSeekOffset) * 8) - 1)) - 1 == DMax)
-	STATIC_ASSERT(size_t(-(-T_FSeekOffset(DMax))) == DMax)
+	static_assert(size_t(-(-T_FSeekOffset(DMax))) == DMax, "size mismatch");
 	
 	for(size_t numBytesLeft = numBytesToSeek; numBytesLeft != 0;){
 		ASSERT(numBytesLeft <= numBytesToSeek)
