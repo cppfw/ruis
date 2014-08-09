@@ -220,7 +220,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
 		ASSERT(png_size_t(-1) == std::uint32_t(-1))
-		ting::Buffer<png_byte> bufWrapper(data, std::uint32_t(length));
+		ting::ArrayAdaptor<png_byte> bufWrapper(data, std::uint32_t(length));
 		fi->Read(bufWrapper);
 //		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	}catch(...){
@@ -419,7 +419,7 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	int nbytes;
 
 	try{
-		ting::Buffer<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
+		ting::ArrayAdaptor<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
 		nbytes = ASS(src->fi)->Read(bufWrapper);
 	}catch(ting::fs::File::Exc&){
 		if(src->sof){
@@ -651,7 +651,7 @@ void Image::LoadTGA(File& fi){
 	// Read in the length in bytes from the header to the pixel data
 	std::uint8_t length = 0;//The length in bytes to the pixels
 	{
-		ting::Buffer<std::uint8_t> bufWrapper(&length, sizeof(length));
+		ting::ArrayAdaptor<std::uint8_t> bufWrapper(&length, sizeof(length));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -662,7 +662,7 @@ void Image::LoadTGA(File& fi){
 	// Read in the imageType (RLE, RGB, etc...)
 	std::uint8_t imageType = 0;//The image type (RLE, RGB, Alpha...)
 	{
-		ting::Buffer<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
+		ting::ArrayAdaptor<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 

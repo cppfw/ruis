@@ -108,12 +108,12 @@ public:
 		return this->type;
 	}
 
-	const ting::Buffer<std::uint8_t> Buf(){
-		return std::move(ting::Buffer<std::uint8_t>(this->buf));
+	ting::ArrayAdaptor<std::uint8_t> Buf(){
+		return ting::ArrayAdaptor<std::uint8_t>(this->buf);
 	}
 
-	const ting::Buffer<const std::uint8_t> Buf()const{
-		return std::move(ting::Buffer<const std::uint8_t>(this->buf));
+	const ting::ArrayAdaptor<std::uint8_t> Buf()const{
+		return ting::ArrayAdaptor<std::uint8_t>(this->buf);
 	}
 
 public:

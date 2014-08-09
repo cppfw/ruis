@@ -29,7 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/Shared.hpp>
-#include <ting/Buffer.hpp>
+#include <ting/ArrayAdaptor.hpp>
 
 namespace morda{
 
@@ -41,7 +41,7 @@ public:
 	 * @brief Handler for character input.
      * @param unicode - unicode string of entered characters in UTF-32.
      */
-	virtual void OnCharacterInput(const ting::Buffer<const std::uint32_t>& unicode) = 0;
+	virtual void OnCharacterInput(const ting::ArrayAdaptor<const std::uint32_t>& unicode) = 0;
 	
 	void FocusCharInput()const;
 	void UnfocusCharInput()const;

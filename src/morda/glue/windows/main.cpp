@@ -12,7 +12,7 @@
 namespace morda{
 
 void Main(int argc, const char** argv){
-	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::Buffer<const std::uint8_t>&);
+	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::ArrayAdaptor<const std::uint8_t>&);
 
 	Factory f;
 	
@@ -22,7 +22,7 @@ void Main(int argc, const char** argv){
 		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDABV?$Buffer@$$CBE@ting@@@Z")));
 	}
 
-	std::unique_ptr<morda::App> a = f(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> a = f(argc, argv, ting::ArrayAdaptor<const std::uint8_t>(0, 0));
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
 	

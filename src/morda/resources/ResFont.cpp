@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<std::uint32_t>& chars, unsigned size, unsigned outline) :
+ResFont::ResFont(ting::fs::File& fi, const ting::ArrayAdaptor<std::uint32_t> chars, unsigned size, unsigned outline) :
 		f(fi, chars, size, outline)
 {}
 
@@ -59,6 +59,6 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi)
 
 	fi.SetPath(fileProp->Value());
 
-	return std::move(ting::New<ResFont>(fi, ting::Buffer<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
+	return std::move(ting::New<ResFont>(fi, ting::ArrayAdaptor<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
 }
 
