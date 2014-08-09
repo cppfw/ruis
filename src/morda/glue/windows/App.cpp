@@ -425,8 +425,8 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		
 		case WM_USER:
 			{
-				std::unique_ptr<ting::mt::Message> m(reinterpret_cast<ting::mt::Message*>(lParam));
-				m->Handle();
+				std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(lParam));
+				(*m)();
 			}
 			return true;
 
@@ -642,14 +642,6 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
-	fi->SetRootDir("res/");
-	return std::unique_ptr<ting::fs::FSFile>(fi.Extract());
-}
-
-
-
 void App::ShowVirtualKeyboard()noexcept{
 	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
@@ -664,8 +656,8 @@ void App::HideVirtualKeyboard()noexcept{
 
 
 
-void App::PostToUIThread_ts(std::unique_ptr<ting::mt::Message> msg){
-	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(msg.Extract())) == 0){
+void App::PostToUIThread_ts(std::function<void()>&& msg){
+	if(PostMessage(this->window.hwnd, WM_USER, 0, new std::remove_reference<decltype(msg)>::type(std::move(msg)) == 0)){
 		throw morda::Exc("PostMessage(): failed");
 	}
 }

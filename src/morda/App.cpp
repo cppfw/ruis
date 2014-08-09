@@ -3,6 +3,7 @@
 
 #include <ting/debug.hpp>
 #include <ting/timer.hpp>
+#include <ting/fs/FSFile.hpp>
 
 
 
@@ -108,6 +109,10 @@ void App::HandleMouseHover(bool isHovered){
 
 
 
-void App::PostToUIThread_ts(ting::mt::Queue::T_Message&& f){	
-	this->uiQueue.PushMessage(std::move(f));
+#if M_OS_NAME != M_OS_NAME_ANDROID
+std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+	fi->SetRootDir("res/");
+	return std::move(fi);
 }
+#endif
