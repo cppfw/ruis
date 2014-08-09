@@ -272,6 +272,6 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::ArrayAdaptor<const std::uint8_t>& savedState){
+std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::ArrayAdaptor<std::uint8_t> savedState){
 	return std::unique_ptr<Application>(new Application());
 }
