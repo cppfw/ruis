@@ -217,14 +217,6 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
-	fi->SetRootDir("res/");
-	return std::move(fi);
-}
-
-
-
 namespace{
 
 class XEventWaitable : public ting::Waitable{

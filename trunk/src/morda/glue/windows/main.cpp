@@ -2,9 +2,8 @@
 
 #include "../../App.hpp"
 
-#include <windows.h>
+#include <ting/windows.hpp>
 
-#include <ting/Ptr.hpp>
 #include <ting/fs/FSFile.hpp>
 
 

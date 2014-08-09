@@ -143,9 +143,6 @@ private:
 
 private:
 	ting::mt::Queue uiQueue;
-public:
-	void PostToUIThread_ts(std::function<void()>&& f);
-
 	
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
@@ -268,9 +265,6 @@ private:
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
-public:
-	void PostToUIThread_ts(std::unique_ptr<ting::mt::Message> msg);
-
 #elif M_OS == M_OS_MACOSX	
 private:
 	struct ApplicationObject{
@@ -304,6 +298,14 @@ private:
 #	error "unsupported OS"
 #endif
 
+public:
+#if M_OS == M_OS_WINDOWS
+	void PostToUIThread_ts(std::function<void()>&& f);
+#else
+	void PostToUIThread_ts(std::function<void()>&& f){	
+		this->uiQueue.PushMessage(std::move(f));
+	}
+#endif
 
 private:
 	Updateable::Updater updater;
