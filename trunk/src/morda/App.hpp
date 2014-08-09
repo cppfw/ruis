@@ -32,7 +32,7 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/config.hpp>
-#include <ting/Buffer.hpp>
+#include <ting/ArrayAdaptor.hpp>
 #include <ting/fs/File.hpp>
 #include <ting/mt/Thread.hpp>
 
@@ -269,7 +269,7 @@ private:
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
 public:
-	void PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg);
+	void PostToUIThread_ts(std::unique_ptr<ting::mt::Message> msg);
 
 #elif M_OS == M_OS_MACOSX	
 private:

@@ -97,7 +97,7 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(const ting::Buffer<const std::uint32_t>& unicode) override{
+	void OnCharacterInput(const ting::ArrayAdaptor<const std::uint32_t>& unicode) override{
 		if(unicode.size() == 0){
 			return;
 		}
@@ -243,7 +243,7 @@ public:
 			);
 
 //		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
-//		ting::Ref<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
+//		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
 		std::dynamic_pointer_cast<morda::Button>(c->FindChildByName("show_VK_button"))->onPressed = [this](){
@@ -272,6 +272,6 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::Buffer<const std::uint8_t>& savedState){
+std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const ting::ArrayAdaptor<const std::uint8_t>& savedState){
 	return std::unique_ptr<Application>(new Application());
 }

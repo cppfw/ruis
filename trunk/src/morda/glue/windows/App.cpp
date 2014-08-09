@@ -425,7 +425,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		
 		case WM_USER:
 			{
-				ting::Ptr<ting::mt::Message> m(reinterpret_cast<ting::mt::Message*>(lParam));
+				std::unique_ptr<ting::mt::Message> m(reinterpret_cast<ting::mt::Message*>(lParam));
 				m->Handle();
 			}
 			return true;
@@ -643,7 +643,7 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
 	fi->SetRootDir("res/");
 	return std::unique_ptr<ting::fs::FSFile>(fi.Extract());
 }
@@ -664,7 +664,7 @@ void App::HideVirtualKeyboard()noexcept{
 
 
 
-void App::PostToUIThread_ts(ting::Ptr<ting::mt::Message> msg){
+void App::PostToUIThread_ts(std::unique_ptr<ting::mt::Message> msg){
 	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(msg.Extract())) == 0){
 		throw morda::Exc("PostMessage(): failed");
 	}

@@ -34,7 +34,7 @@ int ZCALLBACK UnzipClose(voidpf opaque, voidpf stream){
 
 uLong ZCALLBACK UnzipRead(voidpf opaque, voidpf stream, void* buf, uLong size){
 	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	return uLong(f->Read(ting::Buffer<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
+	return uLong(f->Read(ting::ArrayAdaptor<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
 }
 
 uLong ZCALLBACK UnzipWrite(voidpf opaque, voidpf stream, const void* buf, uLong size){
@@ -141,7 +141,7 @@ void ZipFile::CloseInternal()noexcept{
 	}
 }
 
-size_t ZipFile::ReadInternal(const ting::Buffer<std::uint8_t>& buf) {
+size_t ZipFile::ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf) {
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
 	if(numBytesRead < 0){
 		throw File::Exc("ZipFile::Read(): file reading failed");

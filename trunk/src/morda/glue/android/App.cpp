@@ -80,12 +80,12 @@ struct AndroidConfiguration{
 		AConfiguration_delete(this->ac);
 	}
 
-	static inline ting::Ptr<AndroidConfiguration> New(){
-		return ting::Ptr<AndroidConfiguration>(new AndroidConfiguration());
+	static inline std::unique_ptr<AndroidConfiguration> New(){
+		return std::unique_ptr<AndroidConfiguration>(new AndroidConfiguration());
 	}
 };
 
-ting::Ptr<AndroidConfiguration> curConfig;
+std::unique_ptr<AndroidConfiguration> curConfig;
 
 
 
@@ -122,8 +122,8 @@ protected:
 	
 public:
 	
-	static ting::Ptr<JavaFunctionsWrapper> New(ANativeActivity* a){
-		return ting::Ptr<JavaFunctionsWrapper>(
+	static std::unique_ptr<JavaFunctionsWrapper> New(ANativeActivity* a){
+		return std::unique_ptr<JavaFunctionsWrapper>(
 				new JavaFunctionsWrapper(a)
 			);
 	}
@@ -150,7 +150,7 @@ public:
 
 
 
-ting::Ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
+std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
 
 
 
@@ -844,7 +844,7 @@ inline std::uint32_t Update(App& app){
 
 
 inline void HandleQueueMessages(App& app){
-	while(ting::Ptr<ting::mt::Message> m = app.uiQueue.PeekMsg()){
+	while(std::unique_ptr<ting::mt::Message> m = app.uiQueue.PeekMsg()){
 		m->Handle();
 	}
 }
@@ -1077,7 +1077,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 
 	int32_t diff;
 	{
-		ting::Ptr<AndroidConfiguration> config = AndroidConfiguration::New();
+		std::unique_ptr<AndroidConfiguration> config = AndroidConfiguration::New();
 		AConfiguration_fromAssetManager(config->ac, appInfo.assetManager);
 
 		diff = AConfiguration_diff(curConfig->ac, config->ac);
@@ -1163,7 +1163,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	ASSERT(!activity->instance)
 	try{
 		//use local auto-pointer for now because an exception can be thrown and need to delete object then.
-		ting::Ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
+		std::unique_ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 

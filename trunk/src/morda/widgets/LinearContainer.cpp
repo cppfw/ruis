@@ -51,7 +51,7 @@ void LinearContainer::OnResize(){
 	{
 		Info* info = &*infoArray.begin();
 		for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
-			ASSERT(ting::Buffer<Info>(infoArray).Overlaps(info))
+			ASSERT(ting::ArrayAdaptor<Info>(infoArray).Overlaps(info))
 
 			if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 				if(const stob::Node* weight = layout->GetProperty(D_Weight)){

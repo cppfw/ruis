@@ -67,8 +67,8 @@ class AssetFile : public ting::fs::File{
 		ASSERT(this->manager)
 	}
 	
-	static inline ting::Ptr<AssetFile> New(AAssetManager* manager, const std::string& pathName = std::string()){
-		return ting::Ptr<AssetFile>(new AssetFile(manager, pathName));
+	static inline std::unique_ptr<AssetFile> New(AAssetManager* manager, const std::string& pathName = std::string()){
+		return std::unique_ptr<AssetFile>(new AssetFile(manager, pathName));
 	}
 	
 	friend std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const;
@@ -87,9 +87,9 @@ public:
 
 	virtual void CloseInternal()noexcept override;
 
-	virtual size_t ReadInternal(const ting::Buffer<std::uint8_t>& buf) override;
+	virtual size_t ReadInternal(const ting::ArrayAdaptor<std::uint8_t>& buf) override;
 
-	virtual size_t WriteInternal(const ting::Buffer<const std::uint8_t>& buf) override;
+	virtual size_t WriteInternal(const ting::ArrayAdaptor<const std::uint8_t>& buf) override;
 
 	virtual size_t SeekForwardInternal(size_t numBytesToSeek) override;
 	

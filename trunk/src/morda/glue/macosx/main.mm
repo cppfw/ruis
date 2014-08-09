@@ -16,8 +16,8 @@
 //@end
 
 
-ting::Ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::string& path)const{
-	ting::Ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
+std::unique_ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::string& path)const{
+	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
 	fi->SetRootDir("res/");
 	return fi;
 }
@@ -269,7 +269,7 @@ void morda::App::Exec(){
 namespace morda{
 
 void Main(int argc, const char** argv){
-	ting::Ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::ArrayAdaptor<const std::uint8_t>(0, 0));
 
 	app->Exec();
 }
