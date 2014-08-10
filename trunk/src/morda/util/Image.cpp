@@ -246,7 +246,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 
 #define PNGSIGSIZE 8 //The size of PNG signature (max 8 bytes)
 	std::array<png_byte, PNGSIGSIZE> sig;
-	memset(sig.begin(), 0, sig.size() * sizeof(sig[0]));
+	memset(&*sig.begin(), 0, sig.size() * sizeof(sig[0]));
 
 	{
 #ifdef DEBUG
@@ -256,7 +256,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 		ASSERT(ret == sig.size() * sizeof(sig[0]))
 	}
 
-	if(png_sig_cmp(sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){//if it is not a PNG-file
+	if(png_sig_cmp(&*sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){//if it is not a PNG-file
 		throw Image::Exc("Image::LoadPNG(): not a PNG file");
 	}
 
