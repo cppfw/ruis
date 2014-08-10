@@ -49,7 +49,9 @@ else ifeq ($(prorab_os), windows)
     this_cflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
     this_cflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
     this_ldflags += -L/usr/local/lib -L/usr/lib
-    this_ldlibs += -lfreetype -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32 -lstob
+
+    #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
+    this_ldlibs += -lfreetype -lstob -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32
 else ifeq ($(prorab_os), macosx)
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
 endif
