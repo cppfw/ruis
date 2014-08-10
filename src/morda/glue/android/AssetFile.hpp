@@ -77,14 +77,14 @@ public:
 	 * @brief Destructor.
 	 * This destructor calls the Close() method.
 	 */
-	~AssetFile()noexcept override{
+	~AssetFile()NOEXCEPT override{
 		this->Close();
 	}
 
 
 	virtual void OpenInternal(E_Mode mode)override;
 
-	virtual void CloseInternal()noexcept override;
+	virtual void CloseInternal()NOEXCEPT override;
 
 	virtual size_t ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf)override;
 

@@ -46,7 +46,7 @@ void Widget::RemoveFromParent(){
 
 
 
-void Widget::SetRelayoutNeeded()noexcept{
+void Widget::SetRelayoutNeeded()NOEXCEPT{
 	this->minDimNeedsRecomputing = true;
 	if(this->relayoutNeeded){
 		return;
@@ -127,7 +127,7 @@ void Widget::OnKeyInternal(bool isDown, key::Key keyCode){
 
 
 
-void Widget::Focus()noexcept{
+void Widget::Focus()NOEXCEPT{
 	ASSERT(App::Inst().ThisIsUIThread())
 
 	if(this->IsFocused()){
@@ -143,7 +143,7 @@ void Widget::Focus()noexcept{
 
 
 
-void Widget::Unfocus()noexcept{
+void Widget::Unfocus()NOEXCEPT{
 	ASSERT(App::Inst().ThisIsUIThread())
 
 	if(!this->IsFocused()){

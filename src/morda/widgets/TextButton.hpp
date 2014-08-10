@@ -55,7 +55,7 @@ public:
 	TextButton() : Widget(0){}
 public:
 	
-	~TextButton()noexcept{}
+	~TextButton()NOEXCEPT{}
 	
 	void Render(const morda::Matr4f& matrix)const override;
 	

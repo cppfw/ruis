@@ -50,7 +50,7 @@ protected:
 	Button() : Widget(0){}
 public:
 	
-	~Button()noexcept{}
+	~Button()NOEXCEPT{}
 	
 	std::function<void()> onPressed;
 	
@@ -60,7 +60,7 @@ public:
 	
 	void OnHoverChanged() override;
 	
-	bool IsPressed()const noexcept{
+	bool IsPressed()const NOEXCEPT{
 		return this->isPressed;
 	}
 };

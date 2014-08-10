@@ -39,7 +39,7 @@ namespace morda{
 
 class LayoutDim{
 public:
-	static const char* D_Dim()noexcept{
+	static const char* D_Dim()NOEXCEPT{
 		return "dim";
 	}
 
@@ -54,12 +54,12 @@ public:
 		E_Unit unit;
 	}x, y;
 
-	Value& operator[](size_t i)noexcept{
+	Value& operator[](size_t i)NOEXCEPT{
 		ASSERT(i < 2)
 		return reinterpret_cast<Value*>(this)[i];
 	}
 
-	const Value& operator[](size_t i)const noexcept{
+	const Value& operator[](size_t i)const NOEXCEPT{
 		ASSERT(i < 2)
 		return reinterpret_cast<const Value*>(this)[i];
 	}
@@ -72,7 +72,7 @@ public:
 	 * @param w - widget to get dimensions for.
 	 * @return Resulting dimensions.
 	 */
-	Vec2f ForWidget(const PaddedWidget& parent, const Widget& w)const noexcept;
+	Vec2f ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT;
 
 	/**
 	 * @brief Parse from STOB.
@@ -84,7 +84,7 @@ public:
 	 * @param node - dim node.
 	 * @return Parsed Dim object.
 	 */
-	static LayoutDim FromSTOB(const stob::Node& node)noexcept;
+	static LayoutDim FromSTOB(const stob::Node& node)NOEXCEPT;
 
 	/**
 	 * @brief Parse from STOB.
@@ -96,7 +96,7 @@ public:
 	 * @param node - dim node. If 0 pointer is passed then return default Dim.
 	 * @return Parsed Dim object.
 	 */
-	static LayoutDim FromSTOB(const stob::Node* node)noexcept{
+	static LayoutDim FromSTOB(const stob::Node* node)NOEXCEPT{
 		if(!node){
 			return Default();
 		}
@@ -117,7 +117,7 @@ public:
 	 * @param layout - layout node.
 	 * @return Parsed Dim object.
 	 */
-	static LayoutDim FromLayout(const stob::Node& layout)noexcept;
+	static LayoutDim FromLayout(const stob::Node& layout)NOEXCEPT;
 
 	/**
 	 * @brief Parse from properties STOB.
@@ -137,9 +137,9 @@ public:
 	 * @param prop - prop node.
 	 * @return Parsed Dim object.
 	 */
-	static LayoutDim FromPropLayout(const stob::Node& prop)noexcept;
+	static LayoutDim FromPropLayout(const stob::Node& prop)NOEXCEPT;
 
-	static LayoutDim Default()noexcept{
+	static LayoutDim Default()NOEXCEPT{
 		LayoutDim ret;
 		ret.x.unit = MIN;
 		ret.y.unit = MIN;

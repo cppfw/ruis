@@ -78,11 +78,11 @@ private:
 	//clip widgets contents by widget's border if set to true
 	bool clip = false;
 public:
-	bool GetClip()const noexcept{
+	bool GetClip()const NOEXCEPT{
 		return this->clip;
 	}
 	
-	void SetClip(bool clip)noexcept{
+	void SetClip(bool clip)NOEXCEPT{
 		this->clip = clip;
 	}
 	
@@ -95,45 +95,45 @@ private:
 	//properties from STOB description
 	std::unique_ptr<stob::Node> prop;
 public:
-	const stob::Node* Prop()const noexcept{
+	const stob::Node* Prop()const NOEXCEPT{
 		return this->prop.operator->();
 	}
 	
-	const stob::Node* GetPropertyNode(const char* propName)const noexcept{
+	const stob::Node* GetPropertyNode(const char* propName)const NOEXCEPT{
 		if(!this->Prop()){
 			return nullptr;
 		}
 		return this->Prop()->Child(propName).node();
 	}
 	
-	std::unique_ptr<stob::Node> ExtractProp()noexcept{
+	std::unique_ptr<stob::Node> ExtractProp()NOEXCEPT{
 		return std::move(this->prop);
 	}
 	
-	void SetProp(std::unique_ptr<stob::Node> prop)noexcept{
+	void SetProp(std::unique_ptr<stob::Node> prop)NOEXCEPT{
 		this->prop = std::move(prop);
 	}
 	
-	bool NeedsRelayout()const noexcept{
+	bool NeedsRelayout()const NOEXCEPT{
 		return this->relayoutNeeded;
 	}
 	
-	const std::string& Name()const noexcept{
+	const std::string& Name()const NOEXCEPT{
 		return this->name;
 	}
 	
-	const Container* Parent()const noexcept{
+	const Container* Parent()const NOEXCEPT{
 		return this->parent;
 	}
 	
-	Container* Parent()noexcept{
+	Container* Parent()NOEXCEPT{
 		return this->parent;
 	}
 	
 	//NOTE: if only parent holds Ref then object may be deleted
 	void RemoveFromParent();
 	
-	bool IsHovered()const noexcept{
+	bool IsHovered()const NOEXCEPT{
 		return this->isHovered;
 	}
 	
@@ -149,15 +149,15 @@ private:
 	
 public:
 
-	const morda::Rect2f& Rect()const noexcept{
+	const morda::Rect2f& Rect()const NOEXCEPT{
 		return this->rect;
 	}
 	
-	void MoveTo(const morda::Vec2f& newPos)noexcept{
+	void MoveTo(const morda::Vec2f& newPos)NOEXCEPT{
 		this->rect.p = newPos;
 	}
 	
-	void MoveBy(const morda::Vec2f& delta)noexcept{
+	void MoveBy(const morda::Vec2f& delta)NOEXCEPT{
 		this->rect.p += delta;
 	}
 
@@ -171,7 +171,7 @@ public:
 		this->relayoutNeeded = false;
 	}
 
-	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept{
+	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT{
 		return nullptr;
 	}
 	
@@ -185,7 +185,7 @@ public:
 	
 public:
 
-	virtual ~Widget()noexcept{}
+	virtual ~Widget()NOEXCEPT{}
 
 	virtual void Render(const morda::Matr4f& matrix)const{};
 	
@@ -204,11 +204,11 @@ public:
 		return false;
 	}
 	
-	void Focus()noexcept;
+	void Focus()NOEXCEPT;
 	
-	void Unfocus()noexcept;
+	void Unfocus()NOEXCEPT;
 	
-	bool IsFocused()const noexcept{
+	bool IsFocused()const NOEXCEPT{
 		return this->isFocused;
 	}
 	
@@ -271,7 +271,7 @@ protected:
 	
 public:
 
-	void SetRelayoutNeeded()noexcept;
+	void SetRelayoutNeeded()NOEXCEPT;
 	
 	void Hide(){
 		this->SetHidden(true);
@@ -288,23 +288,23 @@ public:
 		}
 	}
 	
-	bool IsHidden()const noexcept{
+	bool IsHidden()const NOEXCEPT{
 		return this->isHidden;
 	}
 
-	void Enable()noexcept{
+	void Enable()NOEXCEPT{
 		this->SetDisabled(false);
 	}
 
-	void Disable()noexcept{
+	void Disable()NOEXCEPT{
 		this->SetDisabled(true);
 	}
 
-	void SetDisabled(bool disabled)noexcept{
+	void SetDisabled(bool disabled)NOEXCEPT{
 		this->isDisabled = disabled;
 	}
 	
-	bool IsDisabled()const noexcept{
+	bool IsDisabled()const NOEXCEPT{
 		return this->isDisabled;
 	}
 	
@@ -314,7 +314,7 @@ public:
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
      */
-	bool Contains(const morda::Vec2f& pos)const noexcept{
+	bool Contains(const morda::Vec2f& pos)const NOEXCEPT{
 		return morda::Rect2f(morda::Vec2f(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	

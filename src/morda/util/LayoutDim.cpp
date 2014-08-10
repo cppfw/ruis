@@ -13,7 +13,7 @@ namespace{
 const char* D_Min = "min";
 const char* D_Layout = "layout";
 
-inline bool NodeHoldsFractionValue(const stob::Node& node)noexcept{
+inline bool NodeHoldsFractionValue(const stob::Node& node)NOEXCEPT{
 	size_t len = node.ValueLength();
 	return len != 0 && node.Value()[len - 1] == '%';
 }
@@ -22,7 +22,7 @@ inline bool NodeHoldsFractionValue(const stob::Node& node)noexcept{
 
 
 //static
-LayoutDim LayoutDim::FromSTOB(const stob::Node& node)noexcept{
+LayoutDim LayoutDim::FromSTOB(const stob::Node& node)NOEXCEPT{
 	LayoutDim ret;
 	
 	const stob::Node* n = node.Child();
@@ -52,7 +52,7 @@ LayoutDim LayoutDim::FromSTOB(const stob::Node& node)noexcept{
 
 
 //static
-LayoutDim LayoutDim::FromLayout(const stob::Node& layout)noexcept{
+LayoutDim LayoutDim::FromLayout(const stob::Node& layout)NOEXCEPT{
 	const stob::Node* dim = layout.Child(LayoutDim::D_Dim()).node();
 	if(!dim){
 		return LayoutDim::Default();
@@ -63,7 +63,7 @@ LayoutDim LayoutDim::FromLayout(const stob::Node& layout)noexcept{
 
 
 //static
-LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)noexcept{
+LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)NOEXCEPT{
 	const stob::Node* layout = prop.Child(D_Layout).node();
 	if(!layout){
 		return LayoutDim::Default();
@@ -73,7 +73,7 @@ LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)noexcept{
 
 
 
-Vec2f LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const noexcept{
+Vec2f LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT{
 	Vec2f ret;
 	
 	for(unsigned i = 0; i != 2; ++i){

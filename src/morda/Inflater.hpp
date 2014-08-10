@@ -63,7 +63,7 @@ public:
 	public:
 		virtual std::shared_ptr<morda::Widget> Create(const stob::Node& node)const = 0;
 
-		virtual ~WidgetFactory()noexcept{}
+		virtual ~WidgetFactory()NOEXCEPT{}
 	};
 
 private:
@@ -94,7 +94,7 @@ public:
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
 	 */
-	bool RemoveWidget(const std::string& widgetName)noexcept;
+	bool RemoveWidget(const std::string& widgetName)NOEXCEPT;
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.

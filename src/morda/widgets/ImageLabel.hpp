@@ -48,7 +48,7 @@ public:
 	
 	ImageLabel(const stob::Node& desc);
 public:
-	virtual ~ImageLabel()noexcept{}
+	virtual ~ImageLabel()NOEXCEPT{}
 	
 	void Render(const morda::Matr4f& matrix)const override;
 

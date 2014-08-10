@@ -45,7 +45,7 @@ void Inflater::AddWidgetFactory(const std::string& widgetName, std::unique_ptr<W
 
 
 
-bool Inflater::RemoveWidget(const std::string& widgetName)noexcept{
+bool Inflater::RemoveWidget(const std::string& widgetName)NOEXCEPT{
 	if(this->widgetFactories.erase(widgetName) == 0){
 		return false;
 	}

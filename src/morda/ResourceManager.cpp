@@ -74,7 +74,7 @@ void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const st
 
 
 
-Resource::~Resource()noexcept{
+Resource::~Resource()NOEXCEPT{
 	morda::App::Inst().resMan.resMap.erase(this->resMapIter);
 }
 

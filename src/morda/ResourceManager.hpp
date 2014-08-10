@@ -102,7 +102,7 @@ public:
 		{}
 	};
 
-	~ResourceManager()noexcept{
+	~ResourceManager()NOEXCEPT{
 		ASSERT(this->resMap.size() == 0)
 	}
 
@@ -122,7 +122,7 @@ protected:
 	//this can only be used as a base class
 	Resource(){}
 public:
-	virtual ~Resource()noexcept;
+	virtual ~Resource()NOEXCEPT;
 };
 
 

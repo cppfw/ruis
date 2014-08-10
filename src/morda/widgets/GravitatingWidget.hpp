@@ -55,7 +55,7 @@ protected:
 		this->SetGravity(Gravity::FromLayout(desc));
 	}
 public:
-	const Gravity& gravity()const noexcept{
+	const Gravity& gravity()const NOEXCEPT{
 		return this->widgetGravity;
 	}
 	

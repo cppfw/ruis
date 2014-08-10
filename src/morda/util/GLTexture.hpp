@@ -67,7 +67,7 @@ public:
 
 	GLTexture(){}
 
-	~GLTexture()noexcept{
+	~GLTexture()NOEXCEPT{
 		this->Destructor();
 	}
 
@@ -93,12 +93,12 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	morda::Vec2f Dim()const noexcept{
+	morda::Vec2f Dim()const NOEXCEPT{
 		return this->dim;
 	}
 
 private:
-	void Destructor()noexcept{
+	void Destructor()NOEXCEPT{
 		glDeleteTextures(1, &this->tex);
 	}
 };
