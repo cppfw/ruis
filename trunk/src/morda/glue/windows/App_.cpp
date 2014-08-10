@@ -657,7 +657,7 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 
 
 void App::PostToUIThread_ts(std::function<void()>&& msg){
-	if(PostMessage(this->window.hwnd, WM_USER, 0, new std::remove_reference<decltype(msg)>::type(std::move(msg)) == 0)){
+	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(msg)>::type(std::move(msg)))) == 0){
 		throw morda::Exc("PostMessage(): failed");
 	}
 }
