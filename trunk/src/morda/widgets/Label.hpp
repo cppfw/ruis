@@ -57,17 +57,17 @@ public:
 	
 public:
 	
-	~Label()noexcept{}
+	~Label()NOEXCEPT{}
 	
 	void SetText(const std::string& text);
 	
-	const std::string& GetText()const noexcept{
+	const std::string& GetText()const NOEXCEPT{
 		return this->text;
 	}
 	
 	void Render(const morda::Matr4f& matrix)const override;
 	
-	Vec2f ComputeMinDim()const noexcept override;
+	Vec2f ComputeMinDim()const NOEXCEPT override;
 	
 	void OnResize() override;
 };

@@ -46,11 +46,11 @@ class ZipFile : public ting::fs::File{
 public:
 	ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& path = std::string());
 
-	~ZipFile()noexcept;
+	~ZipFile()NOEXCEPT;
 
 
 	void OpenInternal(E_Mode mode) override;
-	void CloseInternal()noexcept override;
+	void CloseInternal()NOEXCEPT override;
 	size_t ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf) override;
 	bool Exists() const override;
 	std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;

@@ -133,7 +133,7 @@ void Slider::OnResize(){
 
 
 
-morda::Vec2f Slider::ComputeMinDim()const noexcept{
+morda::Vec2f Slider::ComputeMinDim()const NOEXCEPT{
 	return morda::Vec2f(30, 30);//TODO: what should it be???
 }
 

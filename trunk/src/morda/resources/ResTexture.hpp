@@ -51,9 +51,9 @@ public:
 			tex(image)
 	{}
 
-	~ResTexture()noexcept{}
+	~ResTexture()NOEXCEPT{}
 
-	const GLTexture& Tex()const noexcept{
+	const GLTexture& Tex()const NOEXCEPT{
 		return this->tex;
 	}
 

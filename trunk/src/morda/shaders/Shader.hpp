@@ -69,7 +69,7 @@ class Shader{
 	struct ShaderWrapper{
 		GLuint s;
 		ShaderWrapper(const char* code, GLenum type);
-		~ShaderWrapper()noexcept{
+		~ShaderWrapper()NOEXCEPT{
 			glDeleteShader(this->s);
 		}
 		
@@ -83,7 +83,7 @@ class Shader{
 	struct ProgramWrapper{
 		GLuint p;
 		ProgramWrapper(GLuint vertex, GLuint fragment);
-		~ProgramWrapper()noexcept{
+		~ProgramWrapper()NOEXCEPT{
 			glDeleteProgram(this->p);
 		}
 		
@@ -115,7 +115,7 @@ protected:
 public:
 	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
-	virtual ~Shader()noexcept{}
+	virtual ~Shader()NOEXCEPT{}
 
 	void Bind(){
 		glUseProgram(this->program.p);

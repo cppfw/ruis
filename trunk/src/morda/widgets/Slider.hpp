@@ -85,9 +85,9 @@ public:
 public:
 	std::function<void(float)> factorChange;
 
-	virtual ~Slider()noexcept{}
+	virtual ~Slider()NOEXCEPT{}
 	
-	float Factor()const noexcept{
+	float Factor()const NOEXCEPT{
 		return this->curFactor;
 	}
 	
@@ -96,7 +96,7 @@ public:
 private:
 	void OnResize() override;
 	
-	morda::Vec2f ComputeMinDim()const noexcept override;
+	morda::Vec2f ComputeMinDim()const NOEXCEPT override;
 	
 	void Render(const morda::Matr4f& matrix) const override;
 };

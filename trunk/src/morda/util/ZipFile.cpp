@@ -100,7 +100,7 @@ ZipFile::ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& pat
 
 
 
-ZipFile::~ZipFile()noexcept{
+ZipFile::~ZipFile()NOEXCEPT{
 	this->Close();//make sure there is no file opened inside zip file
 
 	if(unzClose(this->handle) != UNZ_OK){
@@ -134,7 +134,7 @@ void ZipFile::OpenInternal(E_Mode mode) {
 	}
 }
 
-void ZipFile::CloseInternal()noexcept{
+void ZipFile::CloseInternal()NOEXCEPT{
 	if(unzCloseCurrentFile(this->handle) == UNZ_CRCERROR){
 		TRACE(<< "[WARNING] ZipFile::Close(): CRC is not good" << std::endl)
 		ASSERT(false)

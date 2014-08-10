@@ -55,7 +55,7 @@ private:
 	bool isBlocked = false;
 	
 protected:
-	static const char* D_Layout()noexcept{
+	static const char* D_Layout()NOEXCEPT{
 		return "layout";
 	}
 	
@@ -65,7 +65,7 @@ public:
 	Container(const stob::Node& description);
 
 public:
-	~Container()noexcept{}
+	~Container()NOEXCEPT{}
 	
 	void Render(const morda::Matr4f& matrix)const override;
 
@@ -83,9 +83,9 @@ public:
 	//return true if the widget was found in children and was removed
 	void Remove(Widget& w);
 	
-	std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept override;
+	std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT override;
 	
-	const T_ChildrenList& Children()const noexcept{
+	const T_ChildrenList& Children()const NOEXCEPT{
 		return this->children;
 	}
 };

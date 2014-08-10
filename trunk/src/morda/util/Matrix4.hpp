@@ -89,7 +89,7 @@ public:
 	 * NOTE: it does not initialize the matrix with any values.
 	 * Matrix elements are undefined after the matrix is created with this constructor.
 	 */
-	inline Matrix4()noexcept{}
+	inline Matrix4()NOEXCEPT{}
 	
 	
 	
@@ -106,7 +106,7 @@ public:
 			const Vector4<T>& column1,
 			const Vector4<T>& column2,
 			const Vector4<T>& column3
-		)noexcept :
+		)NOEXCEPT :
 			c0(column0),
 			c1(column1),
 			c2(column2),
@@ -120,7 +120,7 @@ public:
 	 * Constructs matrix and initializes it to a rotation matrix from given unit quaternion.
      * @param quat - unit quaternion defining the rotation.
      */
-	inline Matrix4(const Quaternion<T>& quat)noexcept;
+	inline Matrix4(const Quaternion<T>& quat)NOEXCEPT;
 
 	
 
@@ -140,7 +140,7 @@ public:
 	 * @param col - column number, must be from 0 to 3.
 	 * @return reference to the matrix column indicated by the argument.
 	 */
-	inline Vector4<T>& operator[](unsigned col)noexcept{
+	inline Vector4<T>& operator[](unsigned col)NOEXCEPT{
 		ASSERT(col < 4)
 		return (&this->c0)[col];
 	}
@@ -151,7 +151,7 @@ public:
 	 * @param col - column number, must be from 0 to 3.
 	 * @return reference to the matrix column indicated by the argument.
 	 */
-	inline const Vector4<T>& operator[](unsigned col)const noexcept{
+	inline const Vector4<T>& operator[](unsigned col)const NOEXCEPT{
 		ASSERT(col < 4)
 		return (&this->c0)[col];
 	}
@@ -163,7 +163,7 @@ public:
 	 * @param vec - vector to transform.
      * @return Transformed vector.
      */
-	inline Vector2<T> operator*(const Vector2<T>& vec)const noexcept;
+	inline Vector2<T> operator*(const Vector2<T>& vec)const NOEXCEPT;
 	
 	/**
 	 * @brief Transform vector by matrix.
@@ -172,7 +172,7 @@ public:
 	 * @param vec - vector to transform.
      * @return Transformed vector.
      */
-	inline Vector3<T> operator*(const Vector3<T>& vec)const noexcept;
+	inline Vector3<T> operator*(const Vector3<T>& vec)const NOEXCEPT;
 
 	
 	
@@ -183,7 +183,7 @@ public:
 	 * @param vec - vector to transform.
      * @return Transformed vector.
      */
-	inline Vector4<T> operator*(const Vector4<T>& vec)const noexcept;
+	inline Vector4<T> operator*(const Vector4<T>& vec)const NOEXCEPT;
 	
 	
 	
@@ -193,7 +193,7 @@ public:
 	 * @param row - row number to get, must be from 0 to 3.
      * @return Vector4 representing the row of this matrix.
      */
-	inline Vector4<T> Row(unsigned row)const noexcept{
+	inline Vector4<T> Row(unsigned row)const NOEXCEPT{
 		ASSERT(row < 4)
 		return Vector4<T>(this->c0[row], this->c1[row], this->c2[row], this->c3[row]);
 	}
@@ -206,7 +206,7 @@ public:
 	 * @param matr - matrix to multiply by (matrix K).
      * @return New matrix as a result of matrices product.
      */
-	inline Matrix4 operator*(const Matrix4& matr)const noexcept{
+	inline Matrix4 operator*(const Matrix4& matr)const NOEXCEPT{
 		return Matrix4(
 				Vector4<T>(this->Row(0) * matr[0], this->Row(1) * matr[0], this->Row(2) * matr[0], this->Row(3) * matr[0]),
 				Vector4<T>(this->Row(0) * matr[1], this->Row(1) * matr[1], this->Row(2) * matr[1], this->Row(3) * matr[1]),
@@ -224,7 +224,7 @@ public:
 	/**
 	 * @brief Transpose matrix.
 	 */
-	inline Matrix4& Transpose()noexcept{
+	inline Matrix4& Transpose()NOEXCEPT{
 		std::swap(this->c0[1], this->c1[0]);
 		std::swap(this->c0[2], this->c2[0]);
 		std::swap(this->c0[3], this->c3[0]);
@@ -243,7 +243,7 @@ public:
 	 * Multiply this matrix M by another matrix K from the right (M  = M * K).
      * @return reference to this matrix object.
      */
-	inline Matrix4& operator*=(const Matrix4& matr)noexcept{
+	inline Matrix4& operator*=(const Matrix4& matr)NOEXCEPT{
 		return this->operator=(this->operator*(matr));
 	}
 	
@@ -256,7 +256,7 @@ public:
 	 * @param matr - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& RightMulBy(const Matrix4& matr)noexcept{
+	inline Matrix4& RightMulBy(const Matrix4& matr)NOEXCEPT{
 		return this->operator*=(matr);
 	}
 
@@ -268,7 +268,7 @@ public:
 	 * @param matr - matrix to multiply by.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& LeftMulBy(const Matrix4& matr)noexcept{
+	inline Matrix4& LeftMulBy(const Matrix4& matr)NOEXCEPT{
 		return this->operator=(matr.operator*(*this));
 	}
 
@@ -277,7 +277,7 @@ public:
 	/**
 	 * @brief Initialize this matrix with identity matrix.
 	 */
-	inline Matrix4& Identity()noexcept{
+	inline Matrix4& Identity()NOEXCEPT{
 		this->c0 = Vector4<T>(1, 0, 0, 0);
 		this->c1 = Vector4<T>(0, 1, 0, 0);
 		this->c2 = Vector4<T>(0, 0, 1, 0);
@@ -299,7 +299,7 @@ public:
 	 * @param farVal - distance to the far clipping plane. Must be positive.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Frustum(T left, T right, T bottom, T top, T nearVal, T farVal)noexcept{
+	inline Matrix4& Frustum(T left, T right, T bottom, T top, T nearVal, T farVal)NOEXCEPT{
 		T w = right - left;
 		ASSERT(w != 0)
 		
@@ -341,7 +341,7 @@ public:
      * @param quat - unit quaternion defining the rotation.
      * @return Reference to this matrix object.
      */
-	inline Matrix4& SetFrom(const Quaternion<T>& quat)noexcept;
+	inline Matrix4& SetFrom(const Quaternion<T>& quat)NOEXCEPT;
 	
 	
 	
@@ -353,7 +353,7 @@ public:
 	 * @param y - scaling factor in y direction.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(T x, T y)noexcept{
+	inline Matrix4& Scale(T x, T y)NOEXCEPT{
 		//update 0th column
 		this->c0 *= x;
 		
@@ -374,7 +374,7 @@ public:
 	 * @param z - scaling factor in z direction.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(T x, T y, T z)noexcept{
+	inline Matrix4& Scale(T x, T y, T z)NOEXCEPT{
 		//update 0th and 1st columns
 		this->Scale(x, y);
 
@@ -393,7 +393,7 @@ public:
 	 * @param scale - scaling factor to be applied in all 3 directions (x, y and z).
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(T scale)noexcept{
+	inline Matrix4& Scale(T scale)NOEXCEPT{
 		return this->Scale(scale, scale, scale);
 	}
 	
@@ -405,7 +405,7 @@ public:
 	 * @param scale - vector of scaling factors in x and y directions, scaling factor in z direction is 1.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(const Vector2<T>& scale)noexcept;
+	inline Matrix4& Scale(const Vector2<T>& scale)NOEXCEPT;
 	
 	
 	
@@ -415,7 +415,7 @@ public:
 	 * @param scale - vector of scaling factors in x, y and z directions.
 	 * @return reference to this matrix instance.
 	 */
-	inline Matrix4& Scale(const Vector3<T>& scale)noexcept;
+	inline Matrix4& Scale(const Vector3<T>& scale)NOEXCEPT;
 	
 	
 	
@@ -428,7 +428,7 @@ public:
 	 * @param y - y component of translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(T x, T y)noexcept{
+	inline Matrix4& Translate(T x, T y)NOEXCEPT{
 		//NOTE: 0th, 1st and 2nd columns remain unchanged
 
 		//calculate 3rd column
@@ -447,7 +447,7 @@ public:
 	 * @param z - z component of translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(T x, T y, T z)noexcept{
+	inline Matrix4& Translate(T x, T y, T z)NOEXCEPT{
 		//NOTE: 0th, 1st and 2nd columns remain unchanged
 		this->Translate(x, y);
 
@@ -466,7 +466,7 @@ public:
 	 * @param t - translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(const Vector2<T>& t)noexcept;
+	inline Matrix4& Translate(const Vector2<T>& t)NOEXCEPT;
 	
 	
 	
@@ -476,7 +476,7 @@ public:
 	 * @param t - translation vector.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Translate(const Vector3<T>& t)noexcept;
+	inline Matrix4& Translate(const Vector3<T>& t)NOEXCEPT;
 
 
 
@@ -486,7 +486,7 @@ public:
 	 * @param q - unit quaternion, representing the rotation.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(const Quaternion<T>& q)noexcept;
+	inline Matrix4& Rotate(const Quaternion<T>& q)NOEXCEPT;
 
 
 
@@ -498,7 +498,7 @@ public:
 	 *              the angle of rotation in radians.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(const Vector3<T>& rot)noexcept;
+	inline Matrix4& Rotate(const Vector3<T>& rot)NOEXCEPT;
 
 
 
@@ -510,7 +510,7 @@ public:
 	 * @param rot - the angle of rotation in radians.
 	 * @return reference to this matrix object.
 	 */
-	inline Matrix4& Rotate(T rot)noexcept;
+	inline Matrix4& Rotate(T rot)NOEXCEPT;
 
 
 	
@@ -552,7 +552,7 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> Vector2<T> Matrix4<T>::operator*(const Vector2<T>& vec)const noexcept{
+template <class T> Vector2<T> Matrix4<T>::operator*(const Vector2<T>& vec)const NOEXCEPT{
 	return Vector2<T>(
 			this->Row(0) * vec,
 			this->Row(1) * vec
@@ -561,7 +561,7 @@ template <class T> Vector2<T> Matrix4<T>::operator*(const Vector2<T>& vec)const 
 
 
 
-template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const noexcept{
+template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const NOEXCEPT{
 	return Vector3<T>(
 			this->Row(0) * vec,
 			this->Row(1) * vec,
@@ -571,7 +571,7 @@ template <class T> Vector3<T> Matrix4<T>::operator*(const Vector3<T>& vec)const 
 
 
 
-template <class T> inline Vector4<T> Matrix4<T>::operator*(const Vector4<T>& vec)const noexcept{
+template <class T> inline Vector4<T> Matrix4<T>::operator*(const Vector4<T>& vec)const NOEXCEPT{
 	return Vector4<T>(
 			this->Row(0) * vec,
 			this->Row(1) * vec,
@@ -582,55 +582,55 @@ template <class T> inline Vector4<T> Matrix4<T>::operator*(const Vector4<T>& vec
 
 
 
-template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector3<T>& scale)noexcept{
+template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector3<T>& scale)NOEXCEPT{
 	return this->Scale(scale.x, scale.y, scale.z);
 }
 
 
 
-template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector2<T>& scale)noexcept{
+template <class T> Matrix4<T>& Matrix4<T>::Scale(const Vector2<T>& scale)NOEXCEPT{
 	return this->Scale(scale.x, scale.y);
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector2<T>& t)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector2<T>& t)NOEXCEPT{
 	return this->Translate(t.x, t.y);
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector3<T>& t)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::Translate(const Vector3<T>& t)NOEXCEPT{
 	return this->Translate(t.x, t.y, t.z);
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Quaternion<T>& q)NOEXCEPT{
 	return this->RightMulBy(Matrix4<T>(q));
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Vector3<T>& rot)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(const Vector3<T>& rot)NOEXCEPT{
 	return this->Rotate(Quaternion<T>(rot));
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(T rot)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::Rotate(T rot)NOEXCEPT{
 	return this->Rotate(Vector3<T>(0, 0, rot));
 }
 
 
 
-template <class T> inline Matrix4<T>::Matrix4(const Quaternion<T>& quat)noexcept{
+template <class T> inline Matrix4<T>::Matrix4(const Quaternion<T>& quat)NOEXCEPT{
 	this->SetFrom(quat);
 }
 
 
 
-template <class T> inline Matrix4<T>& Matrix4<T>::SetFrom(const Quaternion<T>& quat)noexcept{
+template <class T> inline Matrix4<T>& Matrix4<T>::SetFrom(const Quaternion<T>& quat)NOEXCEPT{
 	// After about 300 trees murdered and 20 packs of chalk depleted, the
 	// mathematicians came up with these equations for a quaternion to matrix conversion:
 	//     /  1-(2y^2+2z^2)   2xy-2zw         2xz+2yw         0   \

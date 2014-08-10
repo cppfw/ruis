@@ -46,7 +46,7 @@ class SimpleSingleColoringShader : public morda::SingleColoringShader{
 
 public:
 	SimpleSingleColoringShader();
-	~SimpleSingleColoringShader()noexcept{}
+	~SimpleSingleColoringShader()NOEXCEPT{}
 };
 
 

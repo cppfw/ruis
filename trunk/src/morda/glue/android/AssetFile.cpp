@@ -46,7 +46,7 @@ void AssetFile::OpenInternal(E_Mode mode){
 
 
 //override
-void AssetFile::CloseInternal()noexcept{
+void AssetFile::CloseInternal()NOEXCEPT{
 	if(!this->IsOpened()){
 		return;
 	}

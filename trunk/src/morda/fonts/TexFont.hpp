@@ -87,11 +87,11 @@ public:
 		this->Load(fi, chars, size, outline);
 	}
 
-	~TexFont()noexcept{}
+	~TexFont()NOEXCEPT{}
 	
 	void Load(ting::fs::File& fi, const ting::ArrayAdaptor<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
-	float Size()const noexcept override{
+	float Size()const NOEXCEPT override{
 		return this->fontSize;
 	}
 

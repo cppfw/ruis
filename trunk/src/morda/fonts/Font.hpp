@@ -52,9 +52,9 @@ protected:
 	
 	virtual morda::Rect2f StringBoundingBoxInternal(const ting::ArrayAdaptor<std::uint32_t> utf32str)const = 0;
 public:
-	virtual ~Font()noexcept{}
+	virtual ~Font()NOEXCEPT{}
 	
-	virtual float Size()const noexcept = 0;
+	virtual float Size()const NOEXCEPT = 0;
 	
 	//renders the string, returns resulting string advance
 	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const;

@@ -46,7 +46,7 @@ class ResSprite : public Resource{
 public:
 	ResSprite() = default;
 	ResSprite(const ResSprite& orig) = delete;
-	virtual ~ResSprite()noexcept;
+	virtual ~ResSprite()NOEXCEPT;
 private:
 
 };

@@ -75,7 +75,7 @@ struct AndroidConfiguration{
 		this->ac = AConfiguration_new();
 	}
 
-	~AndroidConfiguration()noexcept{
+	~AndroidConfiguration()NOEXCEPT{
 		AConfiguration_delete(this->ac);
 	}
 
@@ -127,7 +127,7 @@ public:
 			);
 	}
 	
-	~JavaFunctionsWrapper()noexcept{
+	~JavaFunctionsWrapper()NOEXCEPT{
 	}
 	
 	std::uint32_t ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
@@ -197,11 +197,11 @@ public:
 		}
 	}
 
-	~FDFlag()noexcept{
+	~FDFlag()NOEXCEPT{
 		close(this->eventFD);
 	}
 
-	int GetFD()noexcept{
+	int GetFD()NOEXCEPT{
 		return this->eventFD;
 	}
 
@@ -252,7 +252,7 @@ public:
 		ASSERT(res == 0)
 	}
 
-	~LinuxTimer()noexcept{
+	~LinuxTimer()NOEXCEPT{
 		//set default handler for SIGALRM
 		struct sigaction sa;
 		sa._u._sa_handler = SIG_DFL;
@@ -572,7 +572,7 @@ const key::Key keyCodeMap[std::uint8_t(-1) + 1] = {
 
 
 
-key::Key GetKeyFromKeyEvent(AInputEvent& event)noexcept{
+key::Key GetKeyFromKeyEvent(AInputEvent& event)NOEXCEPT{
 	int32_t kc = AKeyEvent_getKeyCode(&event);
 	ASSERT(0 <= kc && kc <= std::uint8_t(-1))
 	return keyCodeMap[std::uint8_t(kc)];
@@ -692,7 +692,7 @@ App::EGLDisplayWrapper::EGLDisplayWrapper(){
 
 
 
-App::EGLDisplayWrapper::~EGLDisplayWrapper()noexcept{
+App::EGLDisplayWrapper::~EGLDisplayWrapper()NOEXCEPT{
 	eglTerminate(this->d);
 }
 
@@ -747,7 +747,7 @@ App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper
 
 
 
-App::EGLSurfaceWrapper::~EGLSurfaceWrapper()noexcept{
+App::EGLSurfaceWrapper::~EGLSurfaceWrapper()NOEXCEPT{
 	eglDestroySurface(this->d.d, this->s);
 }
 
@@ -774,7 +774,7 @@ App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper
 
 
 
-App::EGLContextWrapper::~EGLContextWrapper()noexcept{
+App::EGLContextWrapper::~EGLContextWrapper()NOEXCEPT{
 	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 	eglDestroyContext(this->d.d, this->c);
 }
@@ -805,7 +805,7 @@ std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::stri
 
 
 
-void App::ShowVirtualKeyboard()noexcept{
+void App::ShowVirtualKeyboard()NOEXCEPT{
 	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 	
 	ASSERT(javaFunctionsWrapper)
@@ -814,7 +814,7 @@ void App::ShowVirtualKeyboard()noexcept{
 
 
 
-void App::HideVirtualKeyboard()noexcept{
+void App::HideVirtualKeyboard()NOEXCEPT{
 	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 	
 	ASSERT(javaFunctionsWrapper)

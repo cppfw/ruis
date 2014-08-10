@@ -70,14 +70,14 @@ public:
 	 * It does not initialize vector components.
 	 * Their values are undefined right after construction.
 	 */
-	inline Vector2()noexcept{}
+	inline Vector2()NOEXCEPT{}
 
 	/**
 	 * @brief Create vector with given values.
 	 * Creates a vector with all components initialized to a given value.
 	 * @param xy - value to assign to all components of the vector.
 	 */
-	inline Vector2(T xy)noexcept :
+	inline Vector2(T xy)NOEXCEPT :
 			x(xy), y(xy)
 	{}
 	
@@ -86,7 +86,7 @@ public:
 	 * @param x - x component of the vector.
 	 * @param y - y component of the vector.
 	 */
-	inline Vector2(T x, T y)noexcept :
+	inline Vector2(T x, T y)NOEXCEPT :
 			x(x), y(y)
 	{}
 
@@ -98,13 +98,13 @@ public:
 	 * from x and y of given 3 dimensional vector.
 	 * @param vec - 3 dimensional vector to copy x and y from.
 	 */
-	inline Vector2(const Vector3<T>& vec)noexcept;
+	inline Vector2(const Vector3<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Access vector components.
 	 * @param i - index of the component, can be 0 or 1.
 	 */
-	inline T& operator[](unsigned i)noexcept{
+	inline T& operator[](unsigned i)NOEXCEPT{
 		ASSERT(i < 2)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -115,7 +115,7 @@ public:
 	 * @brief Access vector components.
 	 * @param i - index of the component, can be 0 or 1.
 	 */
-	inline const T& operator[](unsigned i)const noexcept{
+	inline const T& operator[](unsigned i)const NOEXCEPT{
 		ASSERT(i < 2)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -130,7 +130,7 @@ public:
 	 * @param vec - reference to the Vector3 object to assign value from.
 	 * @return reference to this Vector2 object.
 	 */
-	inline Vector2& operator=(const Vector3<T>& vec)noexcept;
+	inline Vector2& operator=(const Vector3<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Add Vector2 and Vector3.
@@ -138,7 +138,7 @@ public:
 	 * @param vec - reference to the Vector3 object to add.
 	 * @return instance of the resulting Vector2.
 	 */
-	inline Vector2 operator+(const Vector3<T>& vec)const noexcept;
+	inline Vector2 operator+(const Vector3<T>& vec)const NOEXCEPT;
 
 	/**
 	 * @brief Add and assign.
@@ -146,7 +146,7 @@ public:
 	 * @param vec - reference to the Vector2 object to add.
 	 * @return reference to this Vector2 object.
 	 */
-	inline Vector2& operator+=(const Vector2& vec)noexcept{
+	inline Vector2& operator+=(const Vector2& vec)NOEXCEPT{
 		this->x += vec.x;
 		this->y += vec.y;
 		return (*this);
@@ -157,7 +157,7 @@ public:
 	 * @param vec - reference to the Vector2 object to add.
 	 * @return instance of the resulting Vector2.
 	 */
-	inline Vector2 operator+(const Vector2& vec)const noexcept{
+	inline Vector2 operator+(const Vector2& vec)const NOEXCEPT{
 		return (Vector2(*this) += vec);
 	}
 
@@ -168,7 +168,7 @@ public:
      * @param vec - vector to subtract from this one.
      * @return Reference to this vector object.
      */
-	inline Vector2& operator-=(const Vector2& vec)noexcept{
+	inline Vector2& operator-=(const Vector2& vec)NOEXCEPT{
 		this->x -= vec.x;
 		this->y -= vec.y;
 		return (*this);
@@ -179,7 +179,7 @@ public:
      * @param vec - vector to subtract from this one.
      * @return Vector resulting from subtraction of given vector from this vector.
      */
-	inline Vector2 operator-(const Vector2& vec)const noexcept{
+	inline Vector2 operator-(const Vector2& vec)const NOEXCEPT{
 		return (Vector2(*this) -= vec);
 	}
 
@@ -190,13 +190,13 @@ public:
      * @param vec - vector to subtract from this one.
      * @return Resulting two-dimensional vector.
      */
-	inline Vector2 operator-(const Vector3<T>& vec)const noexcept;
+	inline Vector2 operator-(const Vector3<T>& vec)const NOEXCEPT;
 	
 	/**
 	 * @brief Unary minus.
 	 * @return Vector resulting from negating this vector.
 	 */
-	inline Vector2 operator-()const noexcept{
+	inline Vector2 operator-()const NOEXCEPT{
 		return Vector2(-this->x, -this->y);
 	}
 
@@ -206,7 +206,7 @@ public:
      * @param num - scalar to multiply by.
      * @return Reference to this vector object.
      */
-	inline Vector2& operator*=(T num)noexcept{
+	inline Vector2& operator*=(T num)NOEXCEPT{
 		this->x *= num;
 		this->y *= num;
 		return (*this);
@@ -217,7 +217,7 @@ public:
 	 * @param num - scalar to multiply by.
 	 * @return Vector resulting from multiplication of this vector by given scalar.
 	 */
-	inline Vector2 operator*(T num)const noexcept{
+	inline Vector2 operator*(T num)const NOEXCEPT{
 		return (Vector2(*this) *= num);
 	}
 
@@ -227,7 +227,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Vector resulting from multiplication of given scalar by given vector.
      */
-	inline friend Vector2 operator*(T num, const Vector2& vec)noexcept{
+	inline friend Vector2 operator*(T num, const Vector2& vec)NOEXCEPT{
 		return vec * num;
 	}
 
@@ -237,7 +237,7 @@ public:
      * @param num - scalar to divide by.
      * @return Reference to this vector object.
      */
-	inline Vector2& operator/=(T num)noexcept{
+	inline Vector2& operator/=(T num)NOEXCEPT{
 		ASSERT(num != 0)
 		this->x /= num;
 		this->y /= num;
@@ -249,7 +249,7 @@ public:
 	 * @param num - scalar to divide this vector by.
 	 * @return Vector resulting from dividing this vector by given scalar.
 	 */
-	inline Vector2 operator/(T num)const noexcept{
+	inline Vector2 operator/(T num)const NOEXCEPT{
 		ASSERT(num != 0)
 		return (Vector2(*this) /= num);
 	}
@@ -259,7 +259,7 @@ public:
 	 * Dot product of this vector and a given vector.
 	 * @return Dot product of two vectors (x1 * x2 + y1 * y2).
 	 */
-	inline T operator*(const Vector2& vec)const noexcept{
+	inline T operator*(const Vector2& vec)const NOEXCEPT{
 		return (this->x * vec.x + this->y * vec.y);
 	}
 
@@ -269,7 +269,7 @@ public:
 	 * @return true if corresponding components of both vectors are equal.
 	 * @return false otherwise.
 	 */
-	inline bool operator==(const Vector2& vec)const noexcept{
+	inline bool operator==(const Vector2& vec)const NOEXCEPT{
 		return this->x == vec.x && this->y == vec.y;
 	}
 
@@ -280,7 +280,7 @@ public:
 	 * @return true if any of corresponding components of two vectors are not equal.
 	 * @return false otherwise.
 	 */
-	inline bool operator!=(const Vector2& vec)const noexcept{
+	inline bool operator!=(const Vector2& vec)const NOEXCEPT{
 		return !this->operator==(vec);
 	}
 
@@ -292,7 +292,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
      */
-	inline Vector2 CompMul(const Vector2& vec)const noexcept{
+	inline Vector2 CompMul(const Vector2& vec)const NOEXCEPT{
 		return Vector2(
 				this->x * vec.x,
 				this->y * vec.y
@@ -306,7 +306,7 @@ public:
      * @param vec - vector to multiply by.
      * @return reference to this Vector2 instance.
      */
-	Vector2& CompMulBy(const Vector2& vec)noexcept{
+	Vector2& CompMulBy(const Vector2& vec)NOEXCEPT{
 		this->x *= vec.x;
 		this->y *= vec.y;
 		return *this;
@@ -317,7 +317,7 @@ public:
 	 * @return true if both vector components are zero.
 	 * @return false otherwise.
 	 */
-	inline bool IsZero()const noexcept{
+	inline bool IsZero()const NOEXCEPT{
 		return this->x == 0 && this->y == 0;
 	}
 
@@ -326,7 +326,7 @@ public:
 	 * @return true if both vector components are positive or zero.
 	 * @return false otherwise.
 	 */
-	inline bool IsPositiveOrZero()const noexcept{
+	inline bool IsPositiveOrZero()const NOEXCEPT{
 		return this->x >= 0 && this->y >= 0;
 	}
 
@@ -334,7 +334,7 @@ public:
 	 * @brief Negate this vector.
      * @return Reference to this vector object.
      */
-	inline Vector2& Negate()noexcept{
+	inline Vector2& Negate()NOEXCEPT{
 		//NOTE: this should be faster than (*this) = -(*this);
 		this->x = -this->x;
 		this->y = -this->y;
@@ -345,7 +345,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	inline T MagPow2()noexcept{
+	inline T MagPow2()NOEXCEPT{
 		return ting::math::Pow2(this->x) + ting::math::Pow2(this->y);
 	}
 
@@ -353,7 +353,7 @@ public:
 	 * @brief Calculate magnitude of the vector.
 	 * @return magnitude of this vector.
 	 */
-	inline T Magnitude()noexcept{
+	inline T Magnitude()NOEXCEPT{
 		return T(ting::math::Sqrt(this->MagPow2()));
 	}
 
@@ -362,7 +362,7 @@ public:
 	 * If the magnitude of vector is 0 then the result is vector (1, 0).
 	 * @return Reference to this vector object.
 	 */
-	Vector2& Normalize()noexcept{
+	Vector2& Normalize()NOEXCEPT{
 		T mag = this->Magnitude();
 		if(mag == 0){
 			this->x = 1;
@@ -377,7 +377,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector2& SetTo(T val)noexcept{
+	inline Vector2& SetTo(T val)NOEXCEPT{
 		this->x = val;
 		this->y = val;
 		return (*this);
@@ -390,7 +390,7 @@ public:
      * @param angle - angle of rotation in radians.
      * @return Reference to this vector object.
      */
-	Vector2& Rotate(T angle)noexcept{
+	Vector2& Rotate(T angle)NOEXCEPT{
 		T cosa = ting::math::Cos(angle);
 		T sina = ting::math::Sin(angle);
 		T tmp = this->x * cosa - this->y * sina;
@@ -406,7 +406,7 @@ public:
 	 * @param angle - angle of rotation in radians.
 	 * @return Vector resulting from rotation of this vector.
 	 */
-	inline Vector2 Rotation(T angle)const noexcept{
+	inline Vector2 Rotation(T angle)const NOEXCEPT{
 		return Vector2(*this).Rotate(angle);
 	}
 
@@ -419,7 +419,7 @@ public:
 	 * component as argument of the target type constructor.
      * @return converted Vector2.
      */
-	template <class TS> Vector2<TS> ConvertTo()const noexcept{
+	template <class TS> Vector2<TS> ConvertTo()const NOEXCEPT{
 		return Vector2<TS>(TS(this->x), TS(this->y));
 	}
 	
@@ -451,13 +451,13 @@ namespace morda{
 // inline functions implementation
 //=================================
 
-template <class T> inline Vector2<T>::Vector2(const Vector3<T>& vec)noexcept{
+template <class T> inline Vector2<T>::Vector2(const Vector3<T>& vec)NOEXCEPT{
 	this->operator=(vec);
 }
 
 
 
-template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& vec)noexcept{
+template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& vec)NOEXCEPT{
 	this->x = vec.x;
 	this->y = vec.y;
 	return (*this);
@@ -465,7 +465,7 @@ template <class T> inline Vector2<T>& Vector2<T>::operator=(const Vector3<T>& ve
 
 
 
-template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec)const noexcept{
+template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec)const NOEXCEPT{
 	return Vector2<T>(
 				this->x + vec.x,
 				this->y + vec.y
@@ -474,7 +474,7 @@ template <class T> inline Vector2<T> Vector2<T>::operator+(const Vector3<T>& vec
 
 
 
-template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec)const noexcept{
+template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec)const NOEXCEPT{
 	return Vector2<T>(
 				this->x - vec.x,
 				this->y - vec.y

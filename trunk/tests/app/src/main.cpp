@@ -221,7 +221,7 @@ public:
 
 
 class Application : public morda::App{
-	static morda::App::WindowParams GetWindowParams()noexcept{
+	static morda::App::WindowParams GetWindowParams()NOEXCEPT{
 		morda::App::WindowParams wp;
 		
 		wp.dim.x = 800;

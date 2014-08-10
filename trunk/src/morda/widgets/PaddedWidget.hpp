@@ -58,12 +58,12 @@ protected:
 	}
 	
 public:
-	void SetPadding(LeftBottomRightTop padding)noexcept{
+	void SetPadding(LeftBottomRightTop padding)NOEXCEPT{
 		this->padding = padding;
 		this->SetRelayoutNeeded();
 	}
 	
-	const LeftBottomRightTop& Padding()const noexcept{
+	const LeftBottomRightTop& Padding()const NOEXCEPT{
 		return this->padding;
 	}
 };
