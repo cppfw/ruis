@@ -49,10 +49,9 @@ void LinearContainer::OnResize(){
 	float netWeight = 0;
 	
 	{
-		Info* info = &*infoArray.begin();
-		for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
-			ASSERT(ting::ArrayAdaptor<Info>(infoArray).Overlaps(info))
-
+		auto info = infoArray.begin();
+		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i, ++info){
+			ASSERT(info != infoArray.end())
 			if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 				if(const stob::Node* weight = layout->GetProperty(D_Weight)){
 					info->weight = weight->AsFloat();
@@ -82,7 +81,7 @@ void LinearContainer::OnResize(){
 				info->margins = LeftBottomRightTop::Default();
 			}
 			
-			if(info != &*infoArray.begin()){//if not first child
+			if(info != infoArray.begin()){//if not first child
 				info->margin = std::max(
 						(info - 1)->margins[this->IsReverse() ? longIndex : (longIndex + 2)],
 						info->margins[this->IsReverse() ? (longIndex + 2) : longIndex]
@@ -102,8 +101,8 @@ void LinearContainer::OnResize(){
 		ASSERT(flexible >= 0)
 		
 		float pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
-		Info *info = &*infoArray.begin();
-		for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
+		auto info = infoArray.begin();
+		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			Vec2f newSize(info->dim);
 			
 			if(netWeight > 0){

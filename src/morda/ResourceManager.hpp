@@ -117,7 +117,7 @@ public:
 class Resource : virtual public ting::Shared{
 	friend class ResourceManager;
 	
-	decltype(ResourceManager().resMap)::iterator resMapIter;
+	decltype(ResourceManager::resMap)::iterator resMapIter;
 protected:
 	//this can only be used as a base class
 	Resource(){}

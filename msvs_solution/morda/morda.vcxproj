@@ -83,10 +83,10 @@
     <ClCompile Include="..\..\src\morda\App.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\Font.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
+    <ClCompile Include="..\..\src\morda\glue\windows\App_.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
-    <ClCompile Include="..\..\src\morda\resman\Resource.cpp" />
-    <ClCompile Include="..\..\src\morda\resman\ResourceManager.cpp" />
+    <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResTexture.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\Shader.cpp" />
@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Widget.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\morda\App.hpp" />

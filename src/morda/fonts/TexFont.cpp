@@ -307,8 +307,8 @@ inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::
 
 	shader.SetMatrix(matrix);
 
-	shader.SetPositionPointer(g.verts.begin());
-	shader.SetTexCoordPointer(g.texCoords.begin());
+	shader.SetPositionPointer(&*g.verts.begin());
+	shader.SetTexCoordPointer(&*g.texCoords.begin());
 
 	shader.DrawArrays(GL_TRIANGLE_FAN, g.verts.size());
 

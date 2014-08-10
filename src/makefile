@@ -14,7 +14,7 @@ ifeq ($(prorab_os),linux)
 else ifeq ($(prorab_os), macosx)
     this_srcs += morda/glue/macosx/main.mm
 else ifeq ($(prorab_os), windows)
-    this_srcs += morda/glue/windows/App.cpp
+    this_srcs += morda/glue/windows/App_.cpp
     this_srcs += morda/glue/windows/main.cpp
 endif
 

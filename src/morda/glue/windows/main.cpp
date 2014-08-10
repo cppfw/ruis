@@ -19,7 +19,7 @@ void Main(int argc, const char** argv){
 	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4ting12ArrayAdaptorIhEE")));
 
 	if(!f){ //try MSVC function mangling style
-		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDABV?$Buffer@$$CBE@ting@@@Z")));
+		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$ArrayAdaptor@E@ting@@@Z")));
 	}
 
 	ASSERT(f)
