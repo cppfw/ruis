@@ -10,4 +10,6 @@ override_dh_auto_test:
 .PHONY: override_dh_strip
 override_dh_strip:
 	dh_strip --dbg-package=libmorda0-dbg
-	
+
+override_dh_auto_install:
+	PREFIX=/usr dh_auto_install
