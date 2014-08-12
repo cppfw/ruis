@@ -39,6 +39,7 @@ ifeq ($(debug),true)
 endif
 
 ifeq ($(prorab_os), linux)
+    this_cflags += -fPIC
     this_cflags += `pkg-config --cflags freetype2`
     this_ldlibs += -lting -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz -lstob
 else ifeq ($(prorab_os), windows)
@@ -52,6 +53,12 @@ else ifeq ($(prorab_os), macosx)
     this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
+
+    $(prorab_this_dir)$(prorab_obj_dir)%.o: $(prorab_this_dir)%.mm
+	@echo Compiling $<...
+	$(prorab_echo)mkdir -p $(dir $@)
+	@gcc -x objective-c++ -c $(defines) -o "$@" $<
+
 endif
 
 
