@@ -42,7 +42,6 @@ ifeq ($(prorab_os), linux)
     this_cflags += `pkg-config --cflags freetype2`
     this_ldlibs += -lting -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz -lstob
 else ifeq ($(prorab_os), windows)
-    this_cflags += -fPIC # Since we are building shared library, we need Position-Independend Code
     this_cflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
     this_cflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
     this_ldflags += -L/usr/local/lib -L/usr/lib

@@ -24,7 +24,7 @@ ifeq ($(prorab_os),windows)
     this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lting -lstob -lpng -ljpeg -lz -lfreetype -mwindows
 
-    this_cflags += -I/usr/include
+    this_cflags += -I/usr/include -I/usr/local/include
 else ifeq ($(prorab_os),macosx)
     this_ldlibs += $(prorab_this_dir)../../src/libmorda.a -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
 else ifeq ($(prorab_os),linux)
