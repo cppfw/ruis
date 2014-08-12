@@ -38,14 +38,11 @@ ifeq ($(debug),true)
     this_cflags += -DDEBUG
 endif
 
-ifneq ($(prorab_os),windows)
-    this_cflags += -fPIC # Since we are building shared library, we need Position-Independend Code
-endif
-
 ifeq ($(prorab_os), linux)
     this_cflags += `pkg-config --cflags freetype2`
     this_ldlibs += -lting -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz -lstob
 else ifeq ($(prorab_os), windows)
+    this_cflags += -fPIC # Since we are building shared library, we need Position-Independend Code
     this_cflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
     this_cflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
     this_ldflags += -L/usr/local/lib -L/usr/lib
@@ -53,6 +50,8 @@ else ifeq ($(prorab_os), windows)
     #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
     this_ldlibs += -lfreetype -lstob -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32
 else ifeq ($(prorab_os), macosx)
+    this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
+    this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
 endif
 
