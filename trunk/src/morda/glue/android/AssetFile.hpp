@@ -88,7 +88,7 @@ public:
 
 	virtual size_t ReadInternal(ting::Buffer<std::uint8_t> buf)override;
 
-	virtual size_t WriteInternal(const ting::Buffer<std::uint8_t> buf)override;
+	virtual size_t WriteInternal(ting::Buffer<const std::uint8_t> buf)override;
 
 	virtual size_t SeekForwardInternal(size_t numBytesToSeek)override;
 	

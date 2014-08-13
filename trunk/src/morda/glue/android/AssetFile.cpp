@@ -26,11 +26,11 @@ void AssetFile::OpenInternal(E_Mode mode){
 	}
 	
 	switch(mode){
-		case File::WRITE:
-		case File::CREATE:
+		case File::E_Mode::WRITE:
+		case File::E_Mode::CREATE:
 			throw File::Exc("WRITE and CREATE open modes are not supported by Android assets");
 			break;
-		case File::READ:
+		case File::E_Mode::READ:
 			break;
 		default:
 			throw File::Exc("unknown mode");
@@ -73,7 +73,7 @@ size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf){
 
 
 //override
-size_t AssetFile::WriteInternal(const ting::Buffer<std::uint8_t> buf){
+size_t AssetFile::WriteInternal(ting::Buffer<const std::uint8_t> buf){
 	ASSERT(this->handle)
 	throw File::Exc("Write() is not supported by Android assets");
 	return 0;
