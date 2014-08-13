@@ -32,7 +32,7 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 #include <ting/config.hpp>
-#include <ting/ArrayAdaptor.hpp>
+#include <ting/Buffer.hpp>
 #include <ting/fs/File.hpp>
 #include <ting/mt/Thread.hpp>
 

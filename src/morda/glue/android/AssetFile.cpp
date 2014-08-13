@@ -60,7 +60,7 @@ void AssetFile::CloseInternal()NOEXCEPT{
 
 
 //override
-size_t AssetFile::ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf){
+size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf){
 	ASSERT(this->handle)
 	int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
 	if(numBytesRead < 0){//something happened
@@ -73,7 +73,7 @@ size_t AssetFile::ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf){
 
 
 //override
-size_t AssetFile::WriteInternal(const ting::ArrayAdaptor<std::uint8_t> buf){
+size_t AssetFile::WriteInternal(const ting::Buffer<std::uint8_t> buf){
 	ASSERT(this->handle)
 	throw File::Exc("Write() is not supported by Android assets");
 	return 0;

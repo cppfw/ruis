@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/ArrayAdaptor.hpp>
+#include <ting/Buffer.hpp>
 #include <ting/utf8.hpp>
 
 #include "../util/Matrix4.hpp"
@@ -46,11 +46,11 @@ class Font{
 protected:
 	Font(){}
 	
-	virtual float RenderStringInternal(const morda::Matr4f& matrix, const ting::ArrayAdaptor<std::uint32_t> utf32str)const = 0;
+	virtual float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
-	virtual float StringAdvanceInternal(const ting::ArrayAdaptor<std::uint32_t> utf32str)const = 0;
+	virtual float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
-	virtual morda::Rect2f StringBoundingBoxInternal(const ting::ArrayAdaptor<std::uint32_t> utf32str)const = 0;
+	virtual morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()NOEXCEPT{}
 	
@@ -59,7 +59,7 @@ public:
 	//renders the string, returns resulting string advance
 	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const;
 	
-	float RenderString(const morda::Matr4f& matrix, const ting::ArrayAdaptor<std::uint32_t> utf32str)const{
+	float RenderString(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->RenderStringInternal(matrix, utf32str);
 	}
 	
@@ -75,7 +75,7 @@ public:
 	
 	float StringAdvance(ting::utf8::Iterator str)const;
 	
-	float StringAdvance(const ting::ArrayAdaptor<std::uint32_t> utf32str)const{
+	float StringAdvance(const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->StringAdvanceInternal(utf32str);
 	}
 	
@@ -91,7 +91,7 @@ public:
 	
 	morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const;
 	
-	morda::Rect2f StringBoundingBox(const ting::ArrayAdaptor<std::uint32_t> utf32str)const{
+	morda::Rect2f StringBoundingBox(const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->StringBoundingBoxInternal(utf32str);
 	}
 	

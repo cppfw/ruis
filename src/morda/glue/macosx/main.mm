@@ -269,7 +269,7 @@ void morda::App::Exec(){
 namespace morda{
 
 void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::ArrayAdaptor<const std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
 
 	app->Exec();
 }

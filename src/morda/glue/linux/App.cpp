@@ -532,7 +532,7 @@ public:
 		//KeySym xkeysym;
 		std::array<char, 32> staticBuf;
 		std::vector<char> arr;
-		ting::ArrayAdaptor<char> buf = staticBuf;
+		ting::Buffer<char> buf = staticBuf;
 
 		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
@@ -738,7 +738,7 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::ArrayAdaptor<std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<std::uint8_t>(0, 0));
 
 	app->Exec();
 }
