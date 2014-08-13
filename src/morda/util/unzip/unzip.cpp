@@ -1282,10 +1282,13 @@ extern int ZEXPORT unzReadCurrentFile  (
         return UNZ_PARAMERROR;
 
 
-    if ((pfile_in_zip_read_info->read_buffer == NULL))
+    if (pfile_in_zip_read_info->read_buffer == NULL){
         return UNZ_END_OF_LIST_OF_FILE;
-    if (len==0)
+	}
+	
+    if (len==0){
         return 0;
+	}
 
     pfile_in_zip_read_info->stream.next_out = (Bytef*)buf;
 
