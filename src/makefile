@@ -49,6 +49,9 @@ else ifeq ($(prorab_os), windows)
 
     #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
     this_ldlibs += -lfreetype -lstob -lting -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32
+
+    #WORKAROUND for MinGW bug:
+    this_cflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os), macosx)
     this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
