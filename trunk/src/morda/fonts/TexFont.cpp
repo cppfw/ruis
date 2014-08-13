@@ -65,7 +65,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const ting::ArrayAdaptor<std::uint32_t> chars, unsigned size, unsigned outline){
+void TexFont::Load(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -317,7 +317,7 @@ inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::
 
 
 
-float TexFont::StringAdvanceInternal(const ting::ArrayAdaptor<std::uint32_t> str)const{
+float TexFont::StringAdvanceInternal(const ting::Buffer<std::uint32_t> str)const{
 	float ret = 0;
 
 	const std::uint32_t* s = str.begin();
@@ -337,7 +337,7 @@ float TexFont::StringAdvanceInternal(const ting::ArrayAdaptor<std::uint32_t> str
 
 
 
-morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::ArrayAdaptor<std::uint32_t> str)const{
+morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> str)const{
 	morda::Rect2f ret;
 
 	if(str.size() == 0){
@@ -422,7 +422,7 @@ void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)con
 
 
 
-float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::ArrayAdaptor<std::uint32_t> utf32str)const{
+float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 	morda::SimpleTexturingShader &shader = morda::App::Inst().Shaders().simpleTexturing;
 	shader.Bind();
 

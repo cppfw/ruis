@@ -17,7 +17,7 @@ voidpf ZCALLBACK UnzipOpen(voidpf opaque, const char* filename, int mode){
 	
 	switch(mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER){
 		case ZLIB_FILEFUNC_MODE_READ:
-			f->Open(ting::fs::File::READ);
+			f->Open(ting::fs::File::E_Mode::READ);
 			break;
 		default:
 			throw ting::fs::File::Exc("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
@@ -34,7 +34,7 @@ int ZCALLBACK UnzipClose(voidpf opaque, voidpf stream){
 
 uLong ZCALLBACK UnzipRead(voidpf opaque, voidpf stream, void* buf, uLong size){
 	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	return uLong(f->Read(ting::ArrayAdaptor<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
+	return uLong(f->Read(ting::Buffer<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
 }
 
 uLong ZCALLBACK UnzipWrite(voidpf opaque, voidpf stream, const void* buf, uLong size){
@@ -111,7 +111,7 @@ ZipFile::~ZipFile()NOEXCEPT{
 
 
 void ZipFile::OpenInternal(E_Mode mode) {
-	if(mode != File::READ){
+	if(mode != File::E_Mode::READ){
 		throw File::Exc("illegal mode requested, only READ supported inside ZIP file");
 	}
 
@@ -141,7 +141,7 @@ void ZipFile::CloseInternal()NOEXCEPT{
 	}
 }
 
-size_t ZipFile::ReadInternal(ting::ArrayAdaptor<std::uint8_t> buf) {
+size_t ZipFile::ReadInternal(ting::Buffer<std::uint8_t> buf) {
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
 	if(numBytesRead < 0){
 		throw File::Exc("ZipFile::Read(): file reading failed");

@@ -83,29 +83,29 @@ private:
 
 public:
 	
-	TexFont(ting::fs::File& fi, const ting::ArrayAdaptor<std::uint32_t> chars, unsigned size, unsigned outline = 0){
+	TexFont(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
 	~TexFont()NOEXCEPT{}
 	
-	void Load(ting::fs::File& fi, const ting::ArrayAdaptor<std::uint32_t> chars, unsigned size, unsigned outline = 0);
+	void Load(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
 	float Size()const NOEXCEPT override{
 		return this->fontSize;
 	}
 
 	
-	float RenderStringInternal(const morda::Matr4f& matrix, const ting::ArrayAdaptor<std::uint32_t> utf32str)const override;
+	float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
 	
-	float StringAdvanceInternal(const ting::ArrayAdaptor<std::uint32_t> utf32str)const override;
+	float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
-	morda::Rect2f StringBoundingBoxInternal(const ting::ArrayAdaptor<std::uint32_t> utf32str)const override;
+	morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const; )
 
