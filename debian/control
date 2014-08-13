@@ -3,7 +3,8 @@ Maintainer: Ivan Gagis <igagis@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), doxygen, libting-dev (>= 3.0.0), libstob-dev (>= 1.0.0), libpng12-dev, libjpeg8-dev, zlib1g-dev, libglew1.6-dev, libfreetype6-dev
+Build-Depends: debhelper (>= 9), libting-dev (>= 3.0.0), libstob-dev (>= 1.0.0), libpng12-dev, libjpeg8-dev, zlib1g-dev, libglew1.6-dev, libfreetype6-dev
+Build-Depends-Indep: doxygen
 
 Package: libmorda-dev
 Architecture: any
