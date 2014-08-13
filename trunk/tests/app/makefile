@@ -25,6 +25,9 @@ ifeq ($(prorab_os),windows)
     this_ldlibs +=  -lglew32 -lopengl32 -lting -lstob -lpng -ljpeg -lz -lfreetype -mwindows
 
     this_cflags += -I/usr/include -I/usr/local/include
+
+    #WORKAROUND for MinGW bug:
+    this_cflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
     this_ldlibs += $(prorab_this_dir)../../src/libmorda.a -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
 else ifeq ($(prorab_os),linux)
