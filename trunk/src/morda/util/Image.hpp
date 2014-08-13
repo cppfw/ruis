@@ -109,11 +109,11 @@ public:
 	}
 
 	ting::Buffer<std::uint8_t> Buf(){
-		return ting::Buffer<std::uint8_t>(this->buf);
+		return this->buf;
 	}
 
-	const ting::Buffer<std::uint8_t> Buf()const{
-		return ting::Buffer<std::uint8_t>(this->buf);
+	ting::Buffer<const std::uint8_t> Buf()const{
+		return this->buf;
 	}
 
 public:
