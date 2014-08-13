@@ -28,8 +28,6 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <list>
-
 #include <ting/Singleton.hpp>
 #include <ting/config.hpp>
 #include <ting/Buffer.hpp>
@@ -46,12 +44,12 @@ THE SOFTWARE. */
 #	include <EGL/egl.h>
 #else
 #	include <GL/glew.h>
-#	if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
+#	if M_OS == M_OS_LINUX
 #		include <GL/glx.h>
 #	endif
 #endif
 
-#if M_OS == M_OS_LINUX
+#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
 #	include <ting/mt/Queue.hpp>
 #endif
 
@@ -140,9 +138,6 @@ private:
 #endif
 	
 #if M_OS == M_OS_LINUX
-
-private:
-	ting::mt::Queue uiQueue;
 	
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
@@ -298,13 +293,17 @@ private:
 #	error "unsupported OS"
 #endif
 
-public:
+
 #if M_OS == M_OS_WINDOWS
+public:
 	void PostToUIThread_ts(std::function<void()>&& f);
 #else
+public:
 	void PostToUIThread_ts(std::function<void()>&& f){	
 		this->uiQueue.PushMessage(std::move(f));
 	}
+private:
+	ting::mt::Queue uiQueue;
 #endif
 
 private:
