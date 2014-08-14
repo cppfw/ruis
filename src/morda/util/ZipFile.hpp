@@ -58,6 +58,12 @@ public:
 	static std::unique_ptr<ZipFile> New(std::unique_ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
 		return std::unique_ptr<ZipFile>(new ZipFile(std::move(zipFile), path));
 	}
+	
+	std::unique_ptr<ting::fs::File> Spawn()override{
+		std::unique_ptr<ting::fs::File> zf = this->zipFile->Spawn();
+		zf->SetPath(this->zipFile->Path());
+		return New(std::move(zf));
+	}
 };
 
 
