@@ -50,10 +50,10 @@ public:
 
 
 	void OpenInternal(E_Mode mode) override;
-	void CloseInternal()NOEXCEPT override;
-	size_t ReadInternal(ting::Buffer<std::uint8_t> buf) override;
+	void CloseInternal()const NOEXCEPT override;
+	size_t ReadInternal(ting::Buffer<std::uint8_t> buf)const override;
 	bool Exists() const override;
-	std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;
+	std::vector<std::string> ListDirContents(size_t maxEntries = 0)const override;
 	
 	static std::unique_ptr<ZipFile> New(std::unique_ptr<ting::fs::File> zipFile, const std::string& path = std::string()){
 		return std::unique_ptr<ZipFile>(new ZipFile(std::move(zipFile), path));

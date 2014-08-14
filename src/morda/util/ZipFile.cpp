@@ -134,14 +134,14 @@ void ZipFile::OpenInternal(E_Mode mode) {
 	}
 }
 
-void ZipFile::CloseInternal()NOEXCEPT{
+void ZipFile::CloseInternal()const NOEXCEPT{
 	if(unzCloseCurrentFile(this->handle) == UNZ_CRCERROR){
 		TRACE(<< "[WARNING] ZipFile::Close(): CRC is not good" << std::endl)
 		ASSERT(false)
 	}
 }
 
-size_t ZipFile::ReadInternal(ting::Buffer<std::uint8_t> buf) {
+size_t ZipFile::ReadInternal(ting::Buffer<std::uint8_t> buf)const{
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
 	if(numBytesRead < 0){
 		throw File::Exc("ZipFile::Read(): file reading failed");
@@ -151,7 +151,7 @@ size_t ZipFile::ReadInternal(ting::Buffer<std::uint8_t> buf) {
 	return size_t(numBytesRead);
 }
 
-bool ZipFile::Exists() const {
+bool ZipFile::Exists()const{
 	//if directory
 	if(this->Path()[this->Path().size() - 1] == '/'){
 		return this->File::Exists();
@@ -170,7 +170,7 @@ bool ZipFile::Exists() const {
 
 
 
-std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries){
+std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries)const{
 	if(!this->IsDir()){
 		throw File::Exc("ZipFile::ListDirContents(): this is not a directory");
 	}
