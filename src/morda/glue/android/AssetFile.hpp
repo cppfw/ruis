@@ -57,7 +57,7 @@ namespace morda{
 class AssetFile : public ting::fs::File{
 	AAssetManager* manager;
 	
-	AAsset* handle = nullptr;
+	mutable AAsset* handle = nullptr;
 	
 	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
@@ -72,6 +72,19 @@ class AssetFile : public ting::fs::File{
 	
 	friend std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const;
 	
+	virtual void OpenInternal(E_Mode mode)override;
+
+	virtual void CloseInternal()const NOEXCEPT override;
+
+	virtual size_t ReadInternal(ting::Buffer<std::uint8_t> buf)const override;
+
+	virtual size_t WriteInternal(ting::Buffer<const std::uint8_t> buf)override;
+
+	virtual size_t SeekForwardInternal(size_t numBytesToSeek)const override;
+	
+	virtual size_t SeekBackwardInternal(size_t numBytesToSeek)const override;
+
+	virtual void RewindInternal()const override;
 public:
 	/**
 	 * @brief Destructor.
@@ -80,20 +93,6 @@ public:
 	~AssetFile()NOEXCEPT override{
 		this->Close();
 	}
-
-
-	virtual void OpenInternal(E_Mode mode)override;
-
-	virtual void CloseInternal()NOEXCEPT override;
-
-	virtual size_t ReadInternal(ting::Buffer<std::uint8_t> buf)override;
-
-	virtual size_t WriteInternal(ting::Buffer<const std::uint8_t> buf)override;
-
-	virtual size_t SeekForwardInternal(size_t numBytesToSeek)override;
-	
-	virtual size_t SeekBackwardInternal(size_t numBytesToSeek)override;
-
 	
 	
 	/**
@@ -102,21 +101,11 @@ public:
      * @param seekForward - if true, then the seeking will be done forward.
 	 *                      If false, then the seeking will be done backward.
      */
-	size_t Seek(size_t numBytesToSeek, bool seekForward);
+	size_t Seek(size_t numBytesToSeek, bool seekForward)const;
 	
-	
-	
-	virtual void RewindInternal() override;
-	
-
-
 	virtual bool Exists()const override;
 
-
-
-public:
-
-	virtual std::vector<std::string> ListDirContents(size_t maxEntries = 0) override;
+	virtual std::vector<std::string> ListDirContents(size_t maxEntries = 0)const override;
 };
 
 
