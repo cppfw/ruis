@@ -16,12 +16,6 @@
 //@end
 
 
-std::unique_ptr<ting::fs::File> morda::App::CreateResourceFileInterface(const std::string& path)const{
-	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
-	fi->SetRootDir("res/");
-	return fi;
-}
-
 void morda::App::ShowVirtualKeyboard()NOEXCEPT{
 	//do nothing
 }

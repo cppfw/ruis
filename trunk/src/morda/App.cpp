@@ -110,8 +110,6 @@ void App::HandleMouseHover(bool isHovered){
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	std::unique_ptr<ting::fs::FSFile> fi = ting::fs::FSFile::New(path);
-	fi->SetRootDir("res/");
-	return std::move(fi);
+	return ting::fs::FSFile::New(path, "res/");
 }
 #endif
