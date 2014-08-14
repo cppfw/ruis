@@ -106,6 +106,10 @@ public:
 	virtual bool Exists()const override;
 
 	virtual std::vector<std::string> ListDirContents(size_t maxEntries = 0)const override;
+	
+	std::unique_ptr<ting::fs::File> Spawn()override{
+		return New(this->manager);
+	}
 };
 
 
