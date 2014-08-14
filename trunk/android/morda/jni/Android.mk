@@ -6,9 +6,9 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := morda
 
-include $(LOCAL_PATH)/../../../../src/sources.mk
+include $(LOCAL_PATH)/../../../src/sources.mk
 
-PREFIX := $(LOCAL_PATH)/../../../../src/
+PREFIX := ../../../src/
 
 LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(this_srcs))
 

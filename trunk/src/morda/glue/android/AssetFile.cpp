@@ -46,7 +46,7 @@ void AssetFile::OpenInternal(E_Mode mode){
 
 
 //override
-void AssetFile::CloseInternal()NOEXCEPT{
+void AssetFile::CloseInternal()const NOEXCEPT{
 	if(!this->IsOpened()){
 		return;
 	}
@@ -60,7 +60,7 @@ void AssetFile::CloseInternal()NOEXCEPT{
 
 
 //override
-size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf){
+size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf)const{
 	ASSERT(this->handle)
 	int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
 	if(numBytesRead < 0){//something happened
@@ -81,7 +81,7 @@ size_t AssetFile::WriteInternal(ting::Buffer<const std::uint8_t> buf){
 
 
 
-size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
+size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward)const{
 	if(!this->IsOpened()){
 		throw File::Exc("file is not opened, cannot seek");
 	}
@@ -134,21 +134,21 @@ size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward){
 
 
 //override
-size_t AssetFile::SeekForwardInternal(size_t numBytesToSeek){
+size_t AssetFile::SeekForwardInternal(size_t numBytesToSeek)const{
 	return this->Seek(numBytesToSeek, true);
 }
 
 
 
 //override
-size_t AssetFile::SeekBackwardInternal(size_t numBytesToSeek){
+size_t AssetFile::SeekBackwardInternal(size_t numBytesToSeek)const{
 	return this->Seek(numBytesToSeek, false);
 }
 
 
 
 //override
-void AssetFile::RewindInternal(){
+void AssetFile::RewindInternal()const{
 	if(!this->IsOpened()){
 		throw File::Exc("file is not opened, cannot rewind");
 	}
@@ -189,7 +189,7 @@ bool AssetFile::Exists()const{
 
 
 //override
-std::vector<std::string> AssetFile::ListDirContents(size_t maxEntries){
+std::vector<std::string> AssetFile::ListDirContents(size_t maxEntries)const{
 	if(!this->IsDir()){
 		throw File::Exc("AndroidAssetFile::ListDirContents(): this is not a directory");
 	}
