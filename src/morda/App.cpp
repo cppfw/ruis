@@ -3,6 +3,7 @@
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
+#include <ting/fs/RootDirFile.hpp>
 
 
 
@@ -110,6 +111,6 @@ void App::HandleMouseHover(bool isHovered){
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	return ting::fs::FSFile::New(path, "res/");
+	return ting::fs::RootDirFile::New(ting::fs::FSFile::New(path), "res/");
 }
 #endif
