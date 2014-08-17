@@ -371,6 +371,9 @@
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-std=c++11"/>
+      </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
       <makefileType>
@@ -379,6 +382,11 @@
           <buildCommand>${MAKE} debug=true -j9</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
+          <cTool>
+            <incDir>
+              <pElem>.</pElem>
+            </incDir>
+          </cTool>
           <ccTool flags="-funsigned-char -std=c++11 -fPIC">
             <standard>8</standard>
             <preprocessorList>
@@ -459,7 +467,9 @@
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
