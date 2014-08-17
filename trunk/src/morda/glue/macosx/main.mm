@@ -1,4 +1,5 @@
 #include "../../App.hpp"
+#include "../../AppFactory.hpp"
 
 #include <ting/fs/FSFile.hpp>
 
