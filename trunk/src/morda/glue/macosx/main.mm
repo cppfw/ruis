@@ -129,6 +129,24 @@ void morda::App::SwapGLBuffers(){
 }
 
 
+void morda::App::PostToUIThread_ts(std::function<void()>&& f){	
+	NSEvent* e = [NSEvent
+			otherEventWithType: NSApplicationDefined
+			location: NSMakePoint(0, 0)
+			modifierFlags:0
+			timestamp:0
+			windowNumber:0
+			context: nil
+			subtype: 0
+			data1: reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)))
+			data2: 0
+		];
+	
+	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
+	[applicationObject postEvent:e atStart:NO];
+}
+
+
 void morda::App::Exec(){
 //    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
 //    Class principalClass = NSClassFromString([infoDictionary objectForKey:@"NSPrincipalClass"]);
@@ -174,9 +192,15 @@ void morda::App::Exec(){
 			];
 
 		if(event){
-			TRACE(<< "Event: type = "<< [event type] << std::endl)
+//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
 	
 			switch([event type]){
+				case NSApplicationDefined:
+					{
+						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>([event data1]));
+						(*m)();
+					}
+					break;
 				case NSLeftMouseDown:
 					{
 						NSPoint pos = [event locationInWindow];
@@ -258,7 +282,7 @@ void morda::App::Exec(){
 							);
 					}
 					break;
-					
+
 				//TODO:
 				
 				default:
@@ -266,7 +290,8 @@ void morda::App::Exec(){
 					[applicationObject updateWindows];
 					break;
 			}
-		}//~if(event))
+		}//~if(event)
+//		[applicationObject updateWindows];
 	}while(!quitFlag);
 }
 

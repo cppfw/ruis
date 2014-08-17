@@ -294,7 +294,7 @@ private:
 #endif
 
 
-#if M_OS == M_OS_WINDOWS
+#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
 public:
 	void PostToUIThread_ts(std::function<void()>&& f);
 #else
