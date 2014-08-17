@@ -11,7 +11,7 @@ cd glew-1.10.0
 make
 sudo make install
 }}}
-  # Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
+  # If zlib is not installed: Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
 {{{
 tar zxvf zlib-1.2.8.tar.gz
 cd zlib-1.2.8
