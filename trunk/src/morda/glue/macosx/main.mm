@@ -34,7 +34,7 @@ morda::App::ApplicationObject::~ApplicationObject()NOEXCEPT{
 morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	NSWindow* window = [[NSWindow alloc]
 			initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
-			styleMask:NSTitledWindowMask
+			styleMask:(/*NSResizableWindowMask | NSMiniaturizableWindowMask |*/ NSClosableWindowMask | NSTitledWindowMask)
 			backing:NSBackingStoreBuffered
 			defer:NO
 		];
