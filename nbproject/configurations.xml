@@ -206,7 +206,7 @@
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="4">
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
