@@ -642,20 +642,6 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-void App::ShowVirtualKeyboard()NOEXCEPT{
-	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
-}
-
-
-
-void App::HideVirtualKeyboard()NOEXCEPT{
-	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
-}
-
-
-
 void App::PostToUIThread_ts(std::function<void()>&& msg){
 	if(PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(msg)>::type(std::move(msg)))) == 0){
 		throw morda::Exc("PostMessage(): failed");
