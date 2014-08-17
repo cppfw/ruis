@@ -721,20 +721,6 @@ void App::Exec(){
 
 
 
-void App::ShowVirtualKeyboard()NOEXCEPT{
-	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
-}
-
-
-
-void App::HideVirtualKeyboard()NOEXCEPT{
-	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
-}
-
-
-
 namespace morda{
 
 inline void Main(int argc, const char** argv){

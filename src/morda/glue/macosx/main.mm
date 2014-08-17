@@ -17,10 +17,6 @@
 //@end
 
 
-void morda::App::ShowVirtualKeyboard()NOEXCEPT{
-	//do nothing
-}
-
 morda::App::ApplicationObject::ApplicationObject(){
 	NSApplication *applicationObject = [[NSApplication alloc] init];
 	this->id = applicationObject;

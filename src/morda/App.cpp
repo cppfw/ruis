@@ -113,4 +113,16 @@ void App::HandleMouseHover(bool isHovered){
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
 	return ting::fs::RootDirFile::New(ting::fs::FSFile::New(path), "res/");
 }
+
+void App::ShowVirtualKeyboard()NOEXCEPT{
+	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
+	//do nothing
+}
+
+
+
+void App::HideVirtualKeyboard()NOEXCEPT{
+	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
+	//do nothing
+}
 #endif
