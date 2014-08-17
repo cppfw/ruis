@@ -99,6 +99,18 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(windowObject.id)
 {
+	{
+		NSScreen *screen = [NSScreen mainScreen];
+		NSDictionary *description = [screen deviceDescription];
+		NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
+		CGSize displayPhysicalSize = CGDisplayScreenSize(
+				[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
+			);
+
+		this->dotsPerCm = float(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
+				(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
+	}
+	
 	this->UpdateWindowRect(
 			morda::Rect2f(
 					0,
@@ -141,6 +153,9 @@ void morda::App::Exec(){
 //	[appMenuItem setSubmenu:appMenu];
 
 	NSWindow* window = (NSWindow*)this->windowObject.id;
+	
+	NSWindowController * windowController = [[NSWindowController alloc] initWithWindow:window];
+	
 	[window setTitle:[[NSProcessInfo processInfo] processName]];
 	[window makeKeyAndOrderFront:nil];
 
@@ -151,12 +166,12 @@ void morda::App::Exec(){
 		
 		std::uint32_t millis = this->updater.Update();
 		
-		NSEvent *event =
-			[applicationObject
+		NSEvent *event = [applicationObject
 				nextEventMatchingMask:NSAnyEventMask
 				untilDate:[NSDate dateWithTimeIntervalSinceNow:(double(millis) / 1000.0)]
 				inMode:NSDefaultRunLoopMode
-				dequeue:YES];
+				dequeue:YES
+			];
 
 		if(event){
 			TRACE(<< "Event: type = "<< [event type] << std::endl)
@@ -251,7 +266,7 @@ void morda::App::Exec(){
 					[applicationObject updateWindows];
 					break;
 			}
-		}
+		}//~if(event))
 	}while(!quitFlag);
 }
 
