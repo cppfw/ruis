@@ -12,9 +12,9 @@ include $(prorab_this_dir)sources.mk
 ifeq ($(prorab_os),linux)
     this_srcs += morda/glue/linux/App.cpp
 else ifeq ($(prorab_os), macosx)
-    this_srcs += morda/glue/macosx/main.mm
+    this_mm_src := morda/glue/macosx/main.mm
 else ifeq ($(prorab_os), windows)
-    this_srcs += morda/glue/windows/App_.cpp
+    this_srcs += morda/glue/windows/App_.cpp #underscore in the file name to make VisualStudio happy.s
     this_srcs += morda/glue/windows/main.cpp
 endif
 
@@ -56,15 +56,19 @@ else ifeq ($(prorab_os), macosx)
     this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
-
-    $(prorab_this_dir)$(prorab_obj_dir)%.o: $(prorab_this_dir)%.mm
-	@echo Compiling $<...
-	$(prorab_echo)mkdir -p $(dir $@)
-	@gcc -x objective-c++ -c $(defines) -o "$@" $<
-
 endif
 
 
 
 $(eval $(prorab-build-lib))
 
+
+
+ifeq ($(prorab_os), macosx)
+    $(prorab_this_name): $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
+
+    $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o: $(prorab_this_dir)morda/glue/macosx/main.mm
+	@echo Compiling $<...
+	$(prorab_echo)mkdir -p $(dir $@)
+	$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$@" $<
+endif
