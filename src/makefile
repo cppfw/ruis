@@ -56,9 +56,10 @@ else ifeq ($(prorab_os), macosx)
     this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
-    this_objs += $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
+    
+    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
 
-    $(this_objs): $(prorab_this_dir)morda/glue/macosx/main.mm
+    $(this_mm_obj): $(prorab_this_dir)morda/glue/macosx/main.mm
 	@echo Compiling $<...
 	$(prorab_echo)mkdir -p $(dir $@)
 	$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$@" $<
@@ -66,3 +67,10 @@ endif
 
 
 $(eval $(prorab-build-lib))
+
+
+ifeq ($(prorab_os), macosx)
+    $(prorab_this_staticlib): $(this_mm_obj)
+
+    $(prorab_this_name): $(this_mm_obj)
+endif
