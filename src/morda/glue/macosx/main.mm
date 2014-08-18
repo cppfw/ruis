@@ -43,7 +43,13 @@ int main (int argc, const char** argv){
 
 
 
-@interface CocoaWindow : NSWindow <NSWindowDelegate>
+@interface CocoaWindow : NSWindow <NSWindowDelegate>{
+	NSTrackingArea* ta;
+}
+
+-(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation;
+-(void)dealloc;
+
 -(BOOL)canBecomeKeyWindow;
 
 -(void)mouseMoved: (NSEvent*)e;
@@ -59,6 +65,22 @@ int main (int argc, const char** argv){
 
 @end
 @implementation CocoaWindow
+
+-(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
+	self->ta = [[NSTrackingArea alloc]
+			initWithRect: contentRect
+			options: (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved)
+			owner: self
+			userInfo: nil
+		];
+	[[self contentView] addTrackingRect:contentRect owner:self userData:NULL assumeInside:NO];
+	return [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+}
+
+-(void)dealloc{
+	[self->ta release];
+	[super dealloc];
+}
 
 -(BOOL)canBecomeKeyWindow{
 	return YES;
@@ -89,7 +111,7 @@ int main (int argc, const char** argv){
 }
 
 -(void)mouseButton: (NSEvent*)e{
-	TRACE_ALWAYS(<< "mouseButton event!!!!!" << std::endl)
+	TRACE(<< "mouseButton event!!!!!" << std::endl)
 	morda::Widget::EMouseButton b;
 	bool isDown = false;
 	switch([e type]){
