@@ -7,14 +7,103 @@
 
 
 
-//@interface MordaApplication : NSApplication{
-//	bool shouldKeepRunning;
-//}
-//
-//- (void)run;
-//- (void)terminate:(id)sender;
-//
-//@end
+namespace morda{
+
+void Macosx_Main(int argc, const char** argv){
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
+
+	app->Exec();
+}
+
+void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id){
+	morda::App::Inst().HandleMouseMove(
+			morda::Vec2f(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+			id
+		);
+}
+
+void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
+	morda::App::Inst().HandleMouseButton(
+			isDown,
+			morda::Vec2f(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+			button,
+			id
+		);
+}
+
+}
+
+
+
+int main (int argc, const char** argv){
+	morda::Macosx_Main(argc, argv);
+
+	return 0;
+}
+
+
+
+@interface CocoaWindow : NSWindow <NSWindowDelegate>
+
+-(void)mouseDown: (NSEvent*)e;
+-(void)mouseUp: (NSEvent*)e;
+-(void)mouseMoved: (NSEvent*)e;
+
+-(void)mouseButton: (NSEvent*)e;
+
+@end
+@implementation CocoaWindow
+
+-(void)mouseDown: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)mouseUp: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)mouseButton: (NSEvent*)e{
+	TRACE_ALWAYS(<< "mouseButton event!!!!!" << std::endl)
+	morda::Widget::EMouseButton b;
+	bool isDown = false;
+	switch([e type]){
+		case NSLeftMouseDown:
+			isDown = true;
+		default:
+		case NSLeftMouseUp:
+			b = morda::Widget::LEFT;
+			break;
+		case NSRightMouseDown:
+			isDown = true;
+		case NSRightMouseUp:
+			b = morda::Widget::RIGHT;
+			break;
+		case NSOtherMouseDown:
+			isDown = true;
+		case NSOtherMouseUp:
+			b = morda::Widget::MIDDLE;
+			break;
+	}
+	
+	NSPoint pos = [e locationInWindow];
+	Macosx_HandleMouseButton(
+			isDown,
+			morda::Vec2f(pos.x, pos.y),
+			b,
+			0
+		);
+}
+
+-(void)mouseMoved: (NSEvent*)e{
+	TRACE_ALWAYS(<< "mouseMoved event!!!!!" << std::endl)
+	NSPoint pos = [e locationInWindow];
+	Macosx_HandleMouseMove(
+			morda::Vec2f(pos.x, pos.y),
+			0
+		);
+}
+
+@end
 
 
 morda::App::ApplicationObject::ApplicationObject(){
@@ -32,9 +121,9 @@ morda::App::ApplicationObject::~ApplicationObject()NOEXCEPT{
 }
 
 morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
-	NSWindow* window = [[NSWindow alloc]
+	CocoaWindow* window = [[CocoaWindow alloc]
 			initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
-			styleMask:(/*NSResizableWindowMask | NSMiniaturizableWindowMask |*/ NSClosableWindowMask | NSTitledWindowMask)
+			styleMask:(NSResizableWindowMask | NSMiniaturizableWindowMask | NSClosableWindowMask | NSTitledWindowMask)
 			backing:NSBackingStoreBuffered
 			defer:NO
 		];
@@ -45,18 +134,18 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	}
 	
 	[window setAcceptsMouseMovedEvents:YES];
-	[window becomeFirstResponder];
+	[window becomeFirstResponder];//TODO: is it needed?
 }
 
 morda::App::WindowObject::~WindowObject()NOEXCEPT{
-	NSWindow* window = (NSWindow*)this->id;
+	NSWindow* window = (CocoaWindow*)this->id;
 	[window release];
 }
 
 
 
 morda::App::OpenGLContext::OpenGLContext(void* window){
-	NSWindow *wnd = (NSWindow*)window;
+	CocoaWindow *wnd = (CocoaWindow*)window;
 	
 	static NSOpenGLPixelFormatAttribute attributes[] = {
 		NSOpenGLPFAAccelerated,
@@ -148,27 +237,7 @@ void morda::App::PostToUIThread_ts(std::function<void()>&& f){
 
 
 void morda::App::Exec(){
-//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//    Class principalClass = NSClassFromString([infoDictionary objectForKey:@"NSPrincipalClass"]);
-//	NSApplication *applicationObject = [[MordaApplication alloc] init];//[principalClass sharedApplication];
 	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
-
-//    NSString *mainNibName = [infoDictionary objectForKey:@"NSMainNibFile"];
-//    NSNib *mainNib = [[NSNib alloc] initWithNibNamed:mainNibName bundle:[NSBundle mainBundle]];
-//    [mainNib instantiateNibWithOwner:applicationObject topLevelObjects:nil];
-
-//	[NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-//	id menubar = [[NSMenu new] autorelease];
-//	id appMenuItem = [[NSMenuItem new] autorelease];
-//	[menubar addItem:appMenuItem];
-//	[NSApp setMainMenu:menubar];
-//	id appMenu = [[NSMenu new] autorelease];
-//	id appName = [[NSProcessInfo processInfo] processName];
-//	id quitTitle = [@"Quit " stringByAppendingString:appName];
-//	id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle
-//		action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
-//	[appMenu addItem:quitMenuItem];
-//	[appMenuItem setSubmenu:appMenu];
 
 	NSWindow* window = (NSWindow*)this->windowObject.id;
 	
@@ -200,117 +269,12 @@ void morda::App::Exec(){
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>([event data1]));
 						(*m)();
 					}
-					break;
-				case NSLeftMouseDown:
-					{
-						NSPoint pos = [event locationInWindow];
-						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButton(
-								true,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::LEFT,
-								0
-							);
-					}
-					break;
-				case NSLeftMouseUp:
-					{
-						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButton(
-								false,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::LEFT,
-								0
-							);
-					}
-					break;
-				case NSRightMouseDown:
-					{
-						NSPoint pos = [event locationInWindow];
-						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButton(
-								true,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::RIGHT,
-								0
-							);
-					}
-					break;
-				case NSRightMouseUp:
-					{
-						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButton(
-								false,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::RIGHT,
-								0
-							);
-					}
-					break;
-				case NSOtherMouseDown:
-					{
-						NSPoint pos = [event locationInWindow];
-						TRACE(<< "pos = " << pos.x << ", " << pos.y << std::endl)
-						this->HandleMouseButton(
-								true,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::MIDDLE,
-								0
-							);
-					}
-					break;
-				case NSOtherMouseUp:
-					{
-						NSPoint pos = [event locationInWindow];
-						this->HandleMouseButton(
-								false,
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								morda::Widget::MIDDLE,
-								0
-							);
-					}
-					break;
-					
-				case NSOtherMouseDragged:
-				case NSRightMouseDragged:
-				case NSLeftMouseDragged:
-					{
-						NSPoint pos = [event locationInWindow];
-						this->HandleMouseMove(
-								morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y),
-								0
-							);
-					}
-					break;
-
-				//TODO:
-				
+					break;				
 				default:
 					[applicationObject sendEvent:event];
 					[applicationObject updateWindows];
 					break;
 			}
 		}//~if(event)
-//		[applicationObject updateWindows];
 	}while(!quitFlag);
-}
-
-
-
-namespace morda{
-
-void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
-
-	app->Exec();
-}
-
-}
-
-
-
-int main (int argc, const char** argv){
-	morda::Main(argc, argv);
-
-	return 0;
 }
