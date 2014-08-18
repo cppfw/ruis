@@ -286,8 +286,12 @@ private:
 	
 	void SwapGLBuffers();
 	
-	friend void Main(int argc, const char** argv);
 	void Exec();
+	
+	friend void Macosx_Main(int argc, const char** argv);
+	friend void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id);
+	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	
 	
 #else
 #	error "unsupported OS"
