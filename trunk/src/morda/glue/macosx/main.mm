@@ -31,6 +31,10 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMou
 		);
 }
 
+void Macosx_UpdateWindowRect(const morda::Rect2f& r){
+	morda::App::Inst().UpdateWindowRect(r);
+}
+
 }
 
 
@@ -62,9 +66,14 @@ int main (int argc, const char** argv){
 
 -(void)mouseButton: (NSEvent*)e;
 
+-(void)mouseDragged: (NSEvent*)e;
+-(void)rightMouseDragged: (NSEvent*)e;
+-(void)otherMouseDragged: (NSEvent*)e;
 -(void)mouseMoved: (NSEvent*)e;
 -(void)mouseEntered: (NSEvent*)e;
 -(void)mouseExited: (NSEvent*)e;
+
+-(void)windowDidResize:(NSNotification*)n;
 
 @end
 @implementation CocoaWindow
@@ -76,13 +85,21 @@ int main (int argc, const char** argv){
 			owner: self
 			userInfo: nil
 		];
-	[[self contentView] addTrackingRect:contentRect owner:self userData:NULL assumeInside:NO];
+	[[self contentView] addTrackingRect:contentRect owner:self userData:nil assumeInside:NO];
 	return [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
 }
 
 -(void)dealloc{
 	[self->ta release];
 	[super dealloc];
+}
+
+-(void)windowDidResize:(NSNotification*)n{
+	TRACE(<< "window resize!!!!" << std::endl)
+	NSWindow* nsw = [n object];
+	NSRect frame = [nsw frame];
+	NSRect rect = [nsw contentRectForFrameRect:frame];
+	Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
 }
 
 -(BOOL)canBecomeKeyWindow{return YES;}
@@ -156,6 +173,18 @@ int main (int argc, const char** argv){
 		);
 }
 
+-(void)mouseDragged: (NSEvent*)e{
+	[self mouseMoved:e];
+}
+
+-(void)rightMouseDragged: (NSEvent*)e{
+	[self mouseMoved:e];
+}
+
+-(void)otherMouseDragged: (NSEvent*)e{
+	[self mouseMoved:e];
+}
+
 -(void)mouseEntered: (NSEvent*)e{
 	TRACE(<< "mouseEntered event!!!!!" << std::endl)
 }
@@ -193,6 +222,8 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	if(!this->id){
 		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
 	}
+	
+	[window setDelegate:window];
 	
 	[window becomeFirstResponder];//this is needed to get mouse move events
 	[window setAcceptsMouseMovedEvents:YES];
