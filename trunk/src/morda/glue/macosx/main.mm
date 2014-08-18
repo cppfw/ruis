@@ -44,21 +44,47 @@ int main (int argc, const char** argv){
 
 
 @interface CocoaWindow : NSWindow <NSWindowDelegate>
+-(BOOL)canBecomeKeyWindow;
+
+-(void)mouseMoved: (NSEvent*)e;
 
 -(void)mouseDown: (NSEvent*)e;
 -(void)mouseUp: (NSEvent*)e;
--(void)mouseMoved: (NSEvent*)e;
+-(void)rightMouseDown: (NSEvent*)e;
+-(void)rightMouseUp: (NSEvent*)e;
+-(void)otherMouseDown: (NSEvent*)e;
+-(void)otherMouseUp: (NSEvent*)e;
 
 -(void)mouseButton: (NSEvent*)e;
 
 @end
 @implementation CocoaWindow
 
+-(BOOL)canBecomeKeyWindow{
+	return YES;
+}
+
 -(void)mouseDown: (NSEvent*)e{
 	[self mouseButton: e];
 }
 
 -(void)mouseUp: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)rightMouseDown: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)rightMouseUp: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)otherMouseDown: (NSEvent*)e{
+	[self mouseButton: e];
+}
+
+-(void)otherMouseUp: (NSEvent*)e{
 	[self mouseButton: e];
 }
 
@@ -69,12 +95,15 @@ int main (int argc, const char** argv){
 	switch([e type]){
 		case NSLeftMouseDown:
 			isDown = true;
+			TRACE_ALWAYS(<< "left down!!!!!" << std::endl)
 		default:
+			TRACE_ALWAYS(<< "default!!!!!" << std::endl)
 		case NSLeftMouseUp:
 			b = morda::Widget::LEFT;
 			break;
 		case NSRightMouseDown:
 			isDown = true;
+			TRACE_ALWAYS(<< "right down!!!!!" << std::endl)
 		case NSRightMouseUp:
 			b = morda::Widget::RIGHT;
 			break;
@@ -133,8 +162,8 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
 	}
 	
+	[window becomeFirstResponder];//this is needed to get mouse move events
 	[window setAcceptsMouseMovedEvents:YES];
-	[window becomeFirstResponder];//TODO: is it needed?
 }
 
 morda::App::WindowObject::~WindowObject()NOEXCEPT{
