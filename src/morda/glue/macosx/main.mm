@@ -51,8 +51,7 @@ int main (int argc, const char** argv){
 -(void)dealloc;
 
 -(BOOL)canBecomeKeyWindow;
-
--(void)mouseMoved: (NSEvent*)e;
+-(BOOL)acceptsFirstResponder;
 
 -(void)mouseDown: (NSEvent*)e;
 -(void)mouseUp: (NSEvent*)e;
@@ -62,6 +61,10 @@ int main (int argc, const char** argv){
 -(void)otherMouseUp: (NSEvent*)e;
 
 -(void)mouseButton: (NSEvent*)e;
+
+-(void)mouseMoved: (NSEvent*)e;
+-(void)mouseEntered: (NSEvent*)e;
+-(void)mouseExited: (NSEvent*)e;
 
 @end
 @implementation CocoaWindow
@@ -82,9 +85,8 @@ int main (int argc, const char** argv){
 	[super dealloc];
 }
 
--(BOOL)canBecomeKeyWindow{
-	return YES;
-}
+-(BOOL)canBecomeKeyWindow{return YES;}
+-(BOOL)acceptsFirstResponder{return YES;}
 
 -(void)mouseDown: (NSEvent*)e{
 	[self mouseButton: e];
@@ -146,12 +148,20 @@ int main (int argc, const char** argv){
 }
 
 -(void)mouseMoved: (NSEvent*)e{
-	TRACE_ALWAYS(<< "mouseMoved event!!!!!" << std::endl)
+	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseMove(
 			morda::Vec2f(pos.x, pos.y),
 			0
 		);
+}
+
+-(void)mouseEntered: (NSEvent*)e{
+	TRACE(<< "mouseEntered event!!!!!" << std::endl)
+}
+
+-(void)mouseExited: (NSEvent*)e{
+	TRACE(<< "mouseExited event!!!!!" << std::endl)
 }
 
 @end
@@ -239,6 +249,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(windowObject.id)
 {
+	//init dots per cm
 	{
 		NSScreen *screen = [NSScreen mainScreen];
 		NSDictionary *description = [screen deviceDescription];
@@ -320,7 +331,10 @@ void morda::App::Exec(){
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>([event data1]));
 						(*m)();
 					}
-					break;				
+					break;
+				case NSMouseMoved:
+					TRACE(<< "NSMouseMoved event" << std::endl)
+					break;
 				default:
 					[applicationObject sendEvent:event];
 					[applicationObject updateWindows];
