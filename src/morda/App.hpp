@@ -291,6 +291,7 @@ private:
 	friend void Macosx_Main(int argc, const char** argv);
 	friend void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id);
 	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	friend void Macosx_UpdateWindowRect(const morda::Rect2f& r);
 	
 	
 #else
