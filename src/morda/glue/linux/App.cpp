@@ -605,9 +605,7 @@ void App::Exec(){
 	//So, render everything for the first time.
 	this->Render();
 	
-	bool quitFlag = false;
-	
-	while(!quitFlag){
+	while(!this->quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
 		
 		if(this->uiQueue.CanRead()){
@@ -700,7 +698,7 @@ void App::Exec(){
 						{
 							char* name = XGetAtomName(this->xDisplay.d, event.xclient.message_type);
 							if(*name == *"WM_PROTOCOLS"){
-								quitFlag = true;
+								this->quitFlag = true;
 							}
 							XFree(name);
 						}
@@ -713,7 +711,7 @@ void App::Exec(){
 		}//~if there are pending X events
 		
 		this->Render();
-	}//~while(!quitFlag)
+	}//~while(!this->quitFlag)
 	
 	waitSet.Remove(this->uiQueue);
 	waitSet.Remove(xew);
