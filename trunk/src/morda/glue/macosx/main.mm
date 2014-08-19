@@ -1,8 +1,6 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
 
-#include <ting/fs/FSFile.hpp>
-
 #import <Cocoa/Cocoa.h>
 
 
@@ -35,6 +33,10 @@ void Macosx_UpdateWindowRect(const morda::Rect2f& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
 	morda::App::Inst().UpdateWindowRect(r);
+}
+
+void Macosx_SetQuitFlag(){
+	morda::App::Inst().quitFlag = true;
 }
 
 }
@@ -76,6 +78,7 @@ int main (int argc, const char** argv){
 -(void)mouseExited: (NSEvent*)e;
 
 -(void)windowDidResize:(NSNotification*)n;
+-(BOOL)windowShouldClose:(id)sender;
 
 @end
 @implementation CocoaWindow
@@ -101,7 +104,13 @@ int main (int argc, const char** argv){
 	NSWindow* nsw = [n object];
 	NSRect frame = [nsw frame];
 	NSRect rect = [nsw contentRectForFrameRect:frame];
-	Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
+	morda::Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
+}
+
+-(BOOL)windowShouldClose:(id)sender{
+	TRACE(<< "window wants to close!!!!" << std::endl)
+	morda::Macosx_SetQuitFlag();
+	return NO;
 }
 
 -(BOOL)canBecomeKeyWindow{return YES;}
@@ -341,8 +350,6 @@ void morda::App::Exec(){
 	[window setTitle:[[NSProcessInfo processInfo] processName]];
 	[window makeKeyAndOrderFront:nil];
 
-	
-	bool quitFlag = false;
 	do{
 		this->Render();
 		
@@ -374,5 +381,5 @@ void morda::App::Exec(){
 					break;
 			}
 		}//~if(event)
-	}while(!quitFlag);
+	}while(!this->quitFlag);
 }

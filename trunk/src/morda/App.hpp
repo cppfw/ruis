@@ -292,12 +292,17 @@ private:
 	friend void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id);
 	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
 	friend void Macosx_UpdateWindowRect(const morda::Rect2f& r);
-	
+	friend void Macosx_SetQuitFlag();
 	
 #else
 #	error "unsupported OS"
 #endif
 
+	
+#if M_OS_NAME != M_IS_NAME_ANDROID
+	volatile bool quitFlag = false;
+#endif
+	
 
 #if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
 public:
