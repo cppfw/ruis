@@ -655,7 +655,7 @@ void App::Exec(){
 
 	bool quitFlag = false;
 	
-	while(!quitFlag){
+	while(!this->quitFlag){
 		std::uint32_t timeout = this->updater.Update();
 //		TRACE(<< "timeout = " << timeout << std::endl)
 
@@ -674,7 +674,7 @@ void App::Exec(){
 			while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
 //				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
 				if(msg.message == WM_QUIT){
-					quitFlag = true;
+					this->quitFlag = true;
 					break;
 				}
 				TranslateMessage(&msg);
