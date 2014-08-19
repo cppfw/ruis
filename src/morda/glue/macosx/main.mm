@@ -33,7 +33,7 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMou
 
 void Macosx_UpdateWindowRect(const morda::Rect2f& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
-	[openGLContext update];
+	[openGLContext update];//after resizing window we need to update OpenGL context
 	morda::App::Inst().UpdateWindowRect(r);
 }
 
