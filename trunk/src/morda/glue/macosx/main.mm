@@ -80,11 +80,13 @@ int main (int argc, const char** argv){
 
 -(void)windowDidResize:(NSNotification*)n;
 -(BOOL)windowShouldClose:(id)sender;
+-(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize;
 
 @end
 @implementation CocoaWindow
 
 -(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
+	NSWindow* ns = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
 	self->ta = [[NSTrackingArea alloc]
 			initWithRect: contentRect
 			options: (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved)
@@ -92,7 +94,7 @@ int main (int argc, const char** argv){
 			userInfo: nil
 		];
 	[[self contentView] addTrackingRect:contentRect owner:self userData:nil assumeInside:NO];
-	return [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+	return self;
 }
 
 -(void)dealloc{
@@ -106,6 +108,10 @@ int main (int argc, const char** argv){
 	NSRect frame = [nsw frame];
 	NSRect rect = [nsw contentRectForFrameRect:frame];
 	morda::Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
+}
+
+-(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
+	return frameSize;
 }
 
 -(BOOL)windowShouldClose:(id)sender{
@@ -200,10 +206,13 @@ int main (int argc, const char** argv){
 
 -(void)mouseEntered: (NSEvent*)e{
 	TRACE(<< "mouseEntered event!!!!!" << std::endl)
+	[self setAcceptsMouseMovedEvents:YES];
+	[self makeFirstResponder:[self contentView]];
 }
 
 -(void)mouseExited: (NSEvent*)e{
 	TRACE(<< "mouseExited event!!!!!" << std::endl)
+	[self setAcceptsMouseMovedEvents:NO];
 }
 
 @end
@@ -240,6 +249,10 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	
 	[window becomeFirstResponder];//this is needed to get mouse move events
 	[window setAcceptsMouseMovedEvents:YES];
+	
+	[window setShowsResizeIndicator:YES];
+	[window setMinSize:NSMakeSize(0, 0)];
+	[window setMaxSize:NSMakeSize(1000000000, 1000000000)];
 }
 
 morda::App::WindowObject::~WindowObject()NOEXCEPT{
