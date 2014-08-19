@@ -59,6 +59,7 @@ int main (int argc, const char** argv){
 -(void)dealloc;
 
 -(BOOL)canBecomeKeyWindow;
+-(BOOL)canBecomeMainWindow;
 -(BOOL)acceptsFirstResponder;
 
 -(void)mouseDown: (NSEvent*)e;
@@ -114,6 +115,7 @@ int main (int argc, const char** argv){
 }
 
 -(BOOL)canBecomeKeyWindow{return YES;}
+-(BOOL)canBecomeMainWindow{return YES;}
 -(BOOL)acceptsFirstResponder{return YES;}
 
 -(void)mouseDown: (NSEvent*)e{
@@ -208,7 +210,7 @@ int main (int argc, const char** argv){
 
 
 morda::App::ApplicationObject::ApplicationObject(){
-	NSApplication *applicationObject = [[NSApplication alloc] init];
+	NSApplication *applicationObject = [NSApplication sharedApplication];
 	this->id = applicationObject;
 	
 	if(!this->id){
