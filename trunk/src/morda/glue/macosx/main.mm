@@ -86,7 +86,7 @@ int main (int argc, const char** argv){
 @implementation CocoaWindow
 
 -(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
-	NSWindow* ns = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+	[super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
 	self->ta = [[NSTrackingArea alloc]
 			initWithRect: contentRect
 			options: (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved)
@@ -384,7 +384,6 @@ void morda::App::Exec(){
 		
 		do{
 	//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
-
 			switch([event type]){
 				case NSApplicationDefined:
 					{
