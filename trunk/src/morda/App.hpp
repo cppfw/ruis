@@ -299,7 +299,7 @@ private:
 #endif
 
 	
-#if M_OS_NAME != M_IS_NAME_ANDROID
+#if M_OS_NAME != M_OS_NAME_ANDROID
 	volatile bool quitFlag = false;
 #endif
 	
