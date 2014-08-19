@@ -207,7 +207,8 @@ int main (int argc, const char** argv){
 -(void)mouseEntered: (NSEvent*)e{
 	TRACE(<< "mouseEntered event!!!!!" << std::endl)
 	[self setAcceptsMouseMovedEvents:YES];
-	[self makeFirstResponder:[self contentView]];
+//	[self makeFirstResponder:[self contentView]];
+	[self makeFirstResponder:nil];
 }
 
 -(void)mouseExited: (NSEvent*)e{
@@ -247,8 +248,8 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	
 	[window setDelegate:window];
 	
-	[window becomeFirstResponder];//this is needed to get mouse move events
-	[window setAcceptsMouseMovedEvents:YES];
+//	[window becomeFirstResponder];//this is needed to get mouse move events
+//	[window setAcceptsMouseMovedEvents:YES];
 	
 	[window setShowsResizeIndicator:YES];
 	[window setMinSize:NSMakeSize(0, 0)];
@@ -377,9 +378,13 @@ void morda::App::Exec(){
 				dequeue:YES
 			];
 
-		if(event){
-//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
-	
+		if(!event){
+			continue;
+		}
+		
+		do{
+	//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
+
 			switch([event type]){
 				case NSApplicationDefined:
 					{
@@ -395,6 +400,13 @@ void morda::App::Exec(){
 					[applicationObject updateWindows];
 					break;
 			}
-		}//~if(event)
+			
+			event = [applicationObject
+					nextEventMatchingMask:NSAnyEventMask
+					untilDate:[NSDate distantPast]
+					inMode:NSDefaultRunLoopMode
+					dequeue:YES
+				];
+		}while(event);
 	}while(!this->quitFlag);
 }
