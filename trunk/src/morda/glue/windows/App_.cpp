@@ -652,8 +652,6 @@ void App::PostToUIThread_ts(std::function<void()>&& msg){
 
 void App::Exec(){
 //	TRACE(<< "App::Exec(): enter" << std::endl)
-
-	bool quitFlag = false;
 	
 	while(!this->quitFlag){
 		std::uint32_t timeout = this->updater.Update();
