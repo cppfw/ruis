@@ -438,6 +438,6 @@ void morda::App::Exec(){
 					inMode:NSDefaultRunLoopMode
 					dequeue:YES
 				];
-		}while(event);
+		}while(event && !this->quitFlag);
 	}while(!this->quitFlag);
 }
