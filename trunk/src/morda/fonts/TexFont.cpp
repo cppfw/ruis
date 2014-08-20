@@ -65,7 +65,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline){
+void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -94,7 +94,7 @@ void TexFont::Load(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, 
 		FT_Face face; // handle to face object
 		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 	public:
-		FreeTypeFaceWrapper(FT_Library& lib, ting::fs::File& fi){
+		FreeTypeFaceWrapper(FT_Library& lib, const ting::fs::File& fi){
 			this->fontFile = fi.LoadWholeFileIntoMemory();
 			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
 				throw ting::Exc("TexFont::Load(): unable to crate font face object");

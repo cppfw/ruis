@@ -10,7 +10,7 @@ using namespace morda;
 
 
 //static
-std::shared_ptr<ResTexture> ResTexture::Load(const stob::Node& el, ting::fs::File& fi){
+std::shared_ptr<ResTexture> ResTexture::Load(const stob::Node& el, const ting::fs::File& fi){
 //	TRACE(<< "ResTexture::Load(): enter" << std::endl)
 	const stob::Node* fileVal = el.GetProperty("file");
 	if(!fileVal){

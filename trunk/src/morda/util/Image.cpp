@@ -234,14 +234,14 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 
 
 //Read PNG file method
-void Image::LoadPNG(ting::fs::File& fi){
+void Image::LoadPNG(const ting::fs::File& fi){
 	ASSERT(!fi.IsOpened())
 
 	if(this->buf.size() > 0){
 		this->Reset();
 	}
 
-	ting::fs::File::Guard fileGuard(fi, ting::fs::File::E_Mode::READ);//this will guarantee that the file will be closed upon exit
+	ting::fs::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
 //	TRACE(<< "Image::LoadPNG(): file opened" << std::endl)
 
 #define PNGSIGSIZE 8 //The size of PNG signature (max 8 bytes)
@@ -272,7 +272,7 @@ void Image::LoadPNG(ting::fs::File& fi){
 	png_set_sig_bytes(pngPtr, PNGSIGSIZE);//We've already read PNGSIGSIZE bytes
 
 	//Set custom "ReadFromFile" function
-	png_set_read_fn(pngPtr, &fi, PNG_CustomReadFunction);
+	png_set_read_fn(pngPtr, const_cast<ting::fs::File*>(&fi), PNG_CustomReadFunction);
 
 	png_read_info(pngPtr, infoPtr);//Read in all information about file
 
@@ -474,7 +474,7 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 
 
 //Read JPEG function
-void Image::LoadJPG(ting::fs::File& fi){
+void Image::LoadJPG(const ting::fs::File& fi){
 	ASSERT(!fi.IsOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
@@ -482,7 +482,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 		this->Reset();
 	}
 	
-	ting::fs::File::Guard fileGuard(fi, ting::fs::File::E_Mode::READ);//this will guarantee that the file will be closed upon exit
+	ting::fs::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
 //	TRACE(<< "Image::LoadJPG(): file opened" << std::endl)
 
 	//Required JPEG structures
@@ -539,7 +539,7 @@ void Image::LoadJPG(ting::fs::File& fi){
 	src->pub.resync_to_restart = &jpeg_resync_to_restart;// use default func
 	src->pub.term_source = &JPEG_TermSource;
 	//Set the fields of our structure
-	src->fi = &fi;
+	src->fi = const_cast<ting::fs::File*>(&fi);
 	//set pointers to the buffers
 	src->pub.bytes_in_buffer = 0;//forces fill_input_buffer on first read
 	src->pub.next_input_byte = 0;//until buffer loaded
@@ -835,8 +835,8 @@ void Image::LoadTGA(File& fi){
 
 
 
-void Image::Load(ting::fs::File& fi){
-	std::string ext = fi.ExtractExtension();
+void Image::Load(const ting::fs::File& fi){
+	std::string ext = fi.Extension();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)

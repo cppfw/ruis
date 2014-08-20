@@ -77,7 +77,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting
 		}
 		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
 
-		fi.SetPath(fi.ExtractDirectory() + incPathNode->Value());
+		fi.SetPath(fi.Directory() + incPathNode->Value());
 		std::unique_ptr<stob::Node> incNodes = stob::Load(fi);
 
 		//recursive call

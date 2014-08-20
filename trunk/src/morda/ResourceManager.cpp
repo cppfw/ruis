@@ -1,3 +1,5 @@
+#include <ting/fs/RootDirFile.hpp>
+
 #include "ResourceManager.hpp"
 
 #include "util/util.hpp"
@@ -8,22 +10,40 @@ using namespace morda;
 
 
 
-void ResourceManager::MountResPack(std::unique_ptr<ting::fs::File> fi){
-	ASSERT(fi)
-	ASSERT(!fi->IsOpened())
+namespace{
+const char* D_Include = "include";
+}
 
-	ResPackEntry rpe;
 
-	rpe.fi = std::move(fi);
 
-	ASS(rpe.fi)->SetPath("main.res.stob");
+void ResourceManager::MountResPack(const ting::fs::File& fi){
+	ASSERT(!fi.IsOpened())
+	
+	std::string dir = fi.Directory();
+	
+	if(fi.Path().size() == 0){
+		fi.SetPath("main.res.stob");
+	}
 
-	std::unique_ptr<stob::Node> resScript = stob::Load(*rpe.fi);
-
+	std::unique_ptr<stob::Node> resScript = stob::Node::New();
+	resScript->SetNext(stob::Load(fi));
+	
 	//handle includes
-	resScript = std::move(std::get<0>(ResolveIncludes(*rpe.fi, std::move(resScript))));
+	for(stob::Node::NodeAndPrev np = resScript->Next(D_Include); np.node(); np = np.node()->Next(D_Include)){
+		ASSERT(np.prev())
+		auto incNode = np.prev()->RemoveNext()->RemoveChildren();
+		
+		fi.SetPath(dir + incNode->Value());
+		this->MountResPack(fi);
+	}
 
-	rpe.resScript = std::move(resScript);
+	if(!resScript->Next()){
+		return;
+	}
+	
+	ResPackEntry rpe;
+	rpe.fi = ting::fs::RootDirFile::NewConst(fi.Spawn(), dir);
+	rpe.resScript = resScript->ChopNext();
 
 	this->resPacks.push_back(std::move(rpe));
 	ASSERT(this->resPacks.back().fi)

@@ -83,13 +83,13 @@ private:
 
 public:
 	
-	TexFont(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0){
+	TexFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
 	~TexFont()NOEXCEPT{}
 	
-	void Load(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
+	void Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
 	float Size()const NOEXCEPT override{
 		return this->fontSize;

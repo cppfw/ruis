@@ -233,7 +233,7 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->resMan.MountResPack(this->CreateResourceFileInterface());
+		this->resMan.MountResPack(*this->CreateResourceFileInterface());
 //		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
