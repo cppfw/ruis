@@ -82,7 +82,7 @@ public:
 	//Creates Image object and copies a region from source image.
 	Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src);
 
-	Image(ting::fs::File& f){
+	Image(const ting::fs::File& f){
 		this->Load(f);
 	}
 
@@ -136,11 +136,11 @@ public:
 		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
-	void LoadPNG(ting::fs::File& f);//Load image from PNG-file
-	void LoadJPG(ting::fs::File& f);//Load image from JPG-file
+	void LoadPNG(const ting::fs::File& f);//Load image from PNG-file
+	void LoadJPG(const ting::fs::File& f);//Load image from JPG-file
 //	void LoadTGA(ting::fs::File& f);//Load image from TGA-file
 
-	void Load(ting::fs::File& f);
+	void Load(const ting::fs::File& f);
 
 private:
 

@@ -10,14 +10,14 @@ using namespace morda;
 
 
 
-ResFont::ResFont(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline) :
+ResFont::ResFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline) :
 		f(fi, chars, size, outline)
 {}
 
 
 
 //static
-std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, ting::fs::File& fi){
+std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, const ting::fs::File& fi){
 	//get font filename
 	const stob::Node* fileProp = el.GetProperty("file");
 	if(!fileProp){

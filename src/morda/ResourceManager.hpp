@@ -56,14 +56,14 @@ class ResourceManager{
 	class ResPackEntry{
 	public:
 		ResPackEntry() = default;
-
+		
 		//For MSVC compiler, it does not generate move constructor automatically
 		ResPackEntry(ResPackEntry&& r){
 			this->fi = std::move(r.fi);
 			this->resScript = std::move(r.resScript);
 		}
 
-		std::unique_ptr<ting::fs::File> fi;
+		std::unique_ptr<const ting::fs::File> fi;
 		std::unique_ptr<const stob::Node> resScript;
 	};
 
@@ -106,9 +106,12 @@ public:
 		ASSERT(this->resMap.size() == 0)
 	}
 
-	void MountResPack(std::unique_ptr<ting::fs::File> fi);
+	//if fi does not point to res script, then "main.res.stob" is assumed.
+	void MountResPack(const ting::fs::File& fi);
 
 	template <class T> std::shared_ptr<T> Load(const char* resName);
+	
+private:
 };
 
 

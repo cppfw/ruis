@@ -48,7 +48,7 @@ class ResFont : public morda::Resource{
 	morda::TexFont f;
 
 public:
-	ResFont(ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline);
+	ResFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline);
 
 	~ResFont()NOEXCEPT{}
 
@@ -57,7 +57,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> Load(const stob::Node& el, ting::fs::File &fi);
+	static std::shared_ptr<ResFont> Load(const stob::Node& el, const ting::fs::File &fi);
 };
 
 
