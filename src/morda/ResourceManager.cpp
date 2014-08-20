@@ -19,10 +19,10 @@ const char* D_Include = "include";
 void ResourceManager::MountResPack(const ting::fs::File& fi){
 	ASSERT(!fi.IsOpened())
 	
-	std::string dir = fi.Directory();
+	std::string dir = fi.Dir();
 	
-	if(fi.Path().size() == 0){
-		fi.SetPath("main.res.stob");
+	if(fi.NotDir().size() == 0){
+		fi.SetPath(dir + "main.res.stob");
 	}
 
 	std::unique_ptr<stob::Node> resScript = stob::Node::New();

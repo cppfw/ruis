@@ -836,7 +836,7 @@ void Image::LoadTGA(File& fi){
 
 
 void Image::Load(const ting::fs::File& fi){
-	std::string ext = fi.Extension();
+	std::string ext = fi.Ext();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)
