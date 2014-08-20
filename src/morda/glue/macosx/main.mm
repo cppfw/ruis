@@ -29,6 +29,10 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMou
 		);
 }
 
+void Macosx_HandleMouseHover(bool isHovered){
+	morda::App::Inst().HandleMouseHover(isHovered);
+}
+
 void Macosx_UpdateWindowRect(const morda::Rect2f& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
@@ -50,17 +54,12 @@ int main (int argc, const char** argv){
 }
 
 
-
-@interface CocoaWindow : NSWindow <NSWindowDelegate>{
+@interface CocoaView : NSView{
 	NSTrackingArea* ta;
 }
 
--(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation;
+-(id)initWithFrame:(NSRect)rect;
 -(void)dealloc;
-
--(BOOL)canBecomeKeyWindow;
--(BOOL)canBecomeMainWindow;
--(BOOL)acceptsFirstResponder;
 
 -(void)mouseDown: (NSEvent*)e;
 -(void)mouseUp: (NSEvent*)e;
@@ -78,22 +77,21 @@ int main (int argc, const char** argv){
 -(void)mouseEntered: (NSEvent*)e;
 -(void)mouseExited: (NSEvent*)e;
 
--(void)windowDidResize:(NSNotification*)n;
--(BOOL)windowShouldClose:(id)sender;
--(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize;
-
 @end
-@implementation CocoaWindow
+@implementation CocoaView
 
--(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
-	[super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+-(id)initWithFrame:(NSRect)rect{
+	self = [super initWithFrame:rect];
+	if(!self){
+		return nil;
+	}
 	self->ta = [[NSTrackingArea alloc]
-			initWithRect: contentRect
+			initWithRect: rect
 			options: (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved)
 			owner: self
 			userInfo: nil
 		];
-	[[self contentView] addTrackingRect:contentRect owner:self userData:nil assumeInside:NO];
+	[self addTrackingArea:self->ta];
 	return self;
 }
 
@@ -101,28 +99,6 @@ int main (int argc, const char** argv){
 	[self->ta release];
 	[super dealloc];
 }
-
--(void)windowDidResize:(NSNotification*)n{
-	TRACE(<< "window resize!!!!" << std::endl)
-	NSWindow* nsw = [n object];
-	NSRect frame = [nsw frame];
-	NSRect rect = [nsw contentRectForFrameRect:frame];
-	morda::Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
-}
-
--(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
-	return frameSize;
-}
-
--(BOOL)windowShouldClose:(id)sender{
-	TRACE(<< "window wants to close!!!!" << std::endl)
-	morda::Macosx_SetQuitFlag();
-	return NO;
-}
-
--(BOOL)canBecomeKeyWindow{return YES;}
--(BOOL)canBecomeMainWindow{return YES;}
--(BOOL)acceptsFirstResponder{return YES;}
 
 -(void)mouseDown: (NSEvent*)e{
 	[self mouseButton: e];
@@ -206,15 +182,83 @@ int main (int argc, const char** argv){
 
 -(void)mouseEntered: (NSEvent*)e{
 	TRACE(<< "mouseEntered event!!!!!" << std::endl)
-	[self setAcceptsMouseMovedEvents:YES];
-//	[self makeFirstResponder:[self contentView]];
-	[self makeFirstResponder:nil];
+	[[self window] setAcceptsMouseMovedEvents:YES];
+	[[self window] makeFirstResponder:self];
+	morda::Macosx_HandleMouseHover(true);
 }
 
 -(void)mouseExited: (NSEvent*)e{
 	TRACE(<< "mouseExited event!!!!!" << std::endl)
-	[self setAcceptsMouseMovedEvents:NO];
+	[[self window] setAcceptsMouseMovedEvents:NO];
+	morda::Macosx_HandleMouseHover(false);
 }
+
+@end
+
+
+
+@interface CocoaWindow : NSWindow <NSWindowDelegate>{
+	CocoaView* v;
+}
+
+-(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation;
+-(void)dealloc;
+
+-(BOOL)canBecomeKeyWindow;
+-(BOOL)canBecomeMainWindow;
+-(BOOL)acceptsFirstResponder;
+
+-(void)windowDidResize:(NSNotification*)n;
+-(BOOL)windowShouldClose:(id)sender;
+-(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize;
+
+@end
+@implementation CocoaWindow
+
+-(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
+	self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+	if(!self){
+		return nil;
+	}
+	[self setLevel:NSFloatingWindowLevel];
+	
+	self->v = [[CocoaView alloc] initWithFrame:[self frameRectForContentRect:contentRect]];
+	[self setContentView:self->v];
+	
+	[self setDelegate:self];
+	[self setShowsResizeIndicator:YES];
+	[self setMinSize:NSMakeSize(0, 0)];
+	[self setMaxSize:NSMakeSize(1000000000, 1000000000)];
+	[self setIgnoresMouseEvents:NO];
+	return self;
+}
+
+-(void)dealloc{
+	[self->v release];
+	[super dealloc];
+}
+
+-(void)windowDidResize:(NSNotification*)n{
+	TRACE(<< "window resize!!!!" << std::endl)
+	NSWindow* nsw = [n object];
+	NSRect frame = [nsw frame];
+	NSRect rect = [nsw contentRectForFrameRect:frame];
+	morda::Macosx_UpdateWindowRect(morda::Rect2f(0, 0, rect.size.width, rect.size.height));
+}
+
+-(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
+	return frameSize;
+}
+
+-(BOOL)windowShouldClose:(id)sender{
+	TRACE(<< "window wants to close!!!!" << std::endl)
+	morda::Macosx_SetQuitFlag();
+	return NO;
+}
+
+-(BOOL)canBecomeKeyWindow{return YES;}
+-(BOOL)canBecomeMainWindow{return YES;}
+-(BOOL)acceptsFirstResponder{return YES;}
 
 @end
 
@@ -245,15 +289,6 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	if(!this->id){
 		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
 	}
-	
-	[window setDelegate:window];
-	
-//	[window becomeFirstResponder];//this is needed to get mouse move events
-//	[window setAcceptsMouseMovedEvents:YES];
-	
-	[window setShowsResizeIndicator:YES];
-	[window setMinSize:NSMakeSize(0, 0)];
-	[window setMaxSize:NSMakeSize(1000000000, 1000000000)];
 }
 
 morda::App::WindowObject::~WindowObject()NOEXCEPT{
@@ -383,16 +418,13 @@ void morda::App::Exec(){
 		}
 		
 		do{
-	//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
+//			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
 			switch([event type]){
 				case NSApplicationDefined:
 					{
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>([event data1]));
 						(*m)();
 					}
-					break;
-				case NSMouseMoved:
-					TRACE(<< "NSMouseMoved event" << std::endl)
 					break;
 				default:
 					[applicationObject sendEvent:event];
