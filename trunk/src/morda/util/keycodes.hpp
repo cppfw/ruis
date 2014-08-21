@@ -40,6 +40,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
+//WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
 enum class EKey{
 	UNKNOWN,
 	SPACE,
@@ -126,7 +127,9 @@ enum class EKey{
 	DELETE,
 	PAUSE,
 	WINDOWS,
-	WINDOWS_MENU
+	WINDOWS_MENU,
+	
+	ENUM_SIZE
 };
 
 
