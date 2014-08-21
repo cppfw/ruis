@@ -68,14 +68,14 @@ public:
 		return true;
 	}
 	
-	bool OnKey(bool isDown, morda::key::Key keyCode) override{
+	bool OnKey(bool isDown, morda::EKey keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::key::LEFT:
+				case morda::EKey::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
-				case morda::key::A:
+				case morda::EKey::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -84,10 +84,10 @@ public:
 		}else{
 			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::key::LEFT:
+				case morda::EKey::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
-				case morda::key::A:
+				case morda::EKey::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:

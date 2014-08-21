@@ -402,7 +402,7 @@ private:
 		}
 	}
 	
-	void HandleKeyEvent(bool isDown, key::Key keyCode){
+	void HandleKeyEvent(bool isDown, EKey keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 		
 		if(auto w = this->focusedWidget.lock()){

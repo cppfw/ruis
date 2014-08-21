@@ -40,9 +40,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
-namespace key{
-
-enum Key{
+enum class EKey{
 	UNKNOWN,
 	SPACE,
 	ENTER,
@@ -130,8 +128,6 @@ enum Key{
 	WINDOWS,
 	WINDOWS_MENU
 };
-
-}//~namespace
 
 
 

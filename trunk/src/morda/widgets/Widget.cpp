@@ -114,7 +114,7 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 
 
 
-void Widget::OnKeyInternal(bool isDown, key::Key keyCode){
+void Widget::OnKeyInternal(bool isDown, EKey keyCode){
 	if(this->OnKey(isDown, keyCode)){
 		return;
 	}
