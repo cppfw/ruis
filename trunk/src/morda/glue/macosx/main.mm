@@ -62,7 +62,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 		);
 }
 
-morda::EKey keyboardMapping[0xff] = {
+std::array<morda::EKey, 0xff> keyboardMapping = {
 	EKey::A,
 	EKey::S,
 	EKey::D,
@@ -86,7 +86,7 @@ morda::EKey keyboardMapping[0xff] = {
 	EKey::THREE,
 	EKey::FOUR,
 	EKey::SIX,
-	EKey::EQALS,
+	EKey::EQUALS,
 	EKey::NINE,
 	EKey::SEVEN,
 	EKey::MINUS,
@@ -98,7 +98,7 @@ morda::EKey keyboardMapping[0xff] = {
 	EKey::LEFT_SQUARE_BRACKET,
 	EKey::I,
 	EKey::P,
-	EKey::UNKNOWN, //0x24
+	EKey::ENTER, //0x24
 	EKey::L,
 	EKey::J,
 	EKey::APOSTROPHE,
@@ -110,23 +110,23 @@ morda::EKey keyboardMapping[0xff] = {
 	EKey::N,
 	EKey::M,
 	EKey::PERIOD,
-	EKey::UNKNOWN, //0x30
-	EKey::UNKNOWN, //0x31
+	EKey::TAB, //0x30
+	EKey::SPACE, //0x31
 	EKey::GRAVE,
-	EKey::UNKNOWN, //0x33
+	EKey::DELETE, //0x33
 	EKey::UNKNOWN, //0x34
-	EKey::UNKNOWN, //0x35
+	EKey::ESCAPE, //0x35
 	EKey::UNKNOWN, //0x36
-	EKey::UNKNOWN, //0x37
-	EKey::UNKNOWN, //0x38
-	EKey::UNKNOWN, //0x39
-	EKey::UNKNOWN, //0x3A
-	EKey::UNKNOWN, //0x3B
-	EKey::UNKNOWN, //0x3C
-	EKey::UNKNOWN, //0x3D
-	EKey::UNKNOWN, //0x3E
-	EKey::UNKNOWN, //0x3F
-	EKey::UNKNOWN, //0x40
+	EKey::WINDOWS, //Command, 0x37
+	EKey::LEFT_SHIFT, //0x38
+	EKey::CAPSLOCK, //0x39
+	EKey::UNKNOWN, //Option, 0x3A
+	EKey::LEFT_CONTROL, //0x3B
+	EKey::RIGHT_SHIFT, //0x3C
+	EKey::UNKNOWN, //RightOption, 0x3D
+	EKey::RIGHT_CONTROL, //0x3E
+	EKey::FUNCTION, //0x3F
+	EKey::F17, //0x40
 	EKey::UNKNOWN, //KeypadDecimal, 0x41
 	EKey::UNKNOWN, //0x42
 	EKey::UNKNOWN, //KeypadMultiplym 0x43
@@ -134,14 +134,14 @@ morda::EKey keyboardMapping[0xff] = {
 	EKey::UNKNOWN, //KeypadPlus, 0x45
 	EKey::UNKNOWN, //0x46
 	EKey::UNKNOWN, //KeypadClear, 0x47
-	EKey::UNKNOWN, //0x48
-	EKey::UNKNOWN, //0x49
-	EKey::UNKNOWN, //0x4A
+	EKey::UNKNOWN, //VolumeUp, 0x48
+	EKey::UNKNOWN, //VolumeDown, 0x49
+	EKey::UNKNOWN, //Mute, 0x4A
 	EKey::UNKNOWN, //KeypadDivide, 0x4B
 	EKey::UNKNOWN, //KeypadEnter
 	EKey::UNKNOWN, //KeypadMinus
-	EKey::UNKNOWN, //0x4F
-	EKey::UNKNOWN, //0x50
+	EKey::F18, //0x4F
+	EKey::F19, //0x50
 	EKey::UNKNOWN, //KeypadEquals, 0x51
 	EKey::UNKNOWN, //Keypad0
 	EKey::UNKNOWN, //Keypad1
@@ -151,10 +151,172 @@ morda::EKey keyboardMapping[0xff] = {
 	EKey::UNKNOWN, //Keypad5
 	EKey::UNKNOWN, //Keypad6
 	EKey::UNKNOWN, //Keypad7, 0x59
-	EKey::UNKNOWN, //0x5A
+	EKey::F20, //0x5A
 	EKey::UNKNOWN, //Keypad8, 0x5B
 	EKey::UNKNOWN, //Keypad9, 0x5C
-	
+	EKey::UNKNOWN, //0x5D
+	EKey::UNKNOWN, //0x5E
+	EKey::UNKNOWN, //0x5F
+	EKey::F5, //0x60
+	EKey::F6, //0x61
+	EKey::F7, //0x62
+	EKey::F3, //0x63
+	EKey::F8, //0x64
+	EKey::F9, //0x65
+	EKey::UNKNOWN, //0x66
+	EKey::F11, //0x67
+	EKey::UNKNOWN, //0x68
+	EKey::F13, //0x69
+	EKey::F16, //0x6A
+	EKey::F14, //0x6B
+	EKey::UNKNOWN, //0x6C
+	EKey::F10, //0x6D
+	EKey::UNKNOWN, //0x6E
+	EKey::F12, //0x6F
+	EKey::UNKNOWN, //0x70
+	EKey::F15, //0x71
+	EKey::UNKNOWN, //Help, 0x72
+	EKey::HOME, //0x73
+	EKey::PAGE_UP, //0x74
+	EKey::BACKSPACE, //0x75
+	EKey::F4, //0x76
+	EKey::END, //0x77
+	EKey::F2, //0x78
+	EKey::PAGE_DOWN, //0x79
+	EKey::F1, //0x7A
+	EKey::LEFT, //0x7B
+	EKey::RIGHT, //0x7C
+	EKey::DOWN, //0x7D
+	EKey::UP, //0x7E
+	EKey::UNKNOWN, //0x7F
+	EKey::UNKNOWN, //0x80
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0x90
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xA0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xB0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xC0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xD0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xE0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN, //0xF0
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN,
+	EKey::UNKNOWN //0xFF
 };
 
 }
