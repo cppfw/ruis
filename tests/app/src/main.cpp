@@ -53,7 +53,7 @@ public:
 	}
 	
 	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override{
-		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << button << ", pointerId = " << pointerId << std::endl)
+		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
 		}

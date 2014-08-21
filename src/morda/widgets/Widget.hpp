@@ -214,7 +214,7 @@ public:
 	
 	//TODO: add on focus changed
 	
-	enum EMouseButton{
+	enum class EMouseButton{
 		LEFT,
 		RIGHT,
 		MIDDLE,
