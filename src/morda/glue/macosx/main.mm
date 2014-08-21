@@ -33,6 +33,10 @@ void Macosx_HandleMouseHover(bool isHovered){
 	morda::App::Inst().HandleMouseHover(isHovered);
 }
 
+void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
+	morda::App::Inst().HandleKeyEvent(isDown, keyCode);
+}
+
 void Macosx_UpdateWindowRect(const morda::Rect2f& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
@@ -114,32 +118,32 @@ int main (int argc, const char** argv){
 
 -(void)mouseDown: (NSEvent*)e{
 	TRACE(<< "left down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::LEFT);
+	MouseButton(e, true, morda::Widget::EMouseButton::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
 	TRACE(<< "left up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::LEFT);
+	MouseButton(e, false, morda::Widget::EMouseButton::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
 	TRACE(<< "right down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::RIGHT);
+	MouseButton(e, true, morda::Widget::EMouseButton::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
 	TRACE(<< "right up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::RIGHT);
+	MouseButton(e, false, morda::Widget::EMouseButton::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
 	TRACE(<< "middle down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::MIDDLE);
+	MouseButton(e, true, morda::Widget::EMouseButton::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
 	TRACE(<< "middle up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::MIDDLE);
+	MouseButton(e, false, morda::Widget::EMouseButton::MIDDLE);
 }
 
 
