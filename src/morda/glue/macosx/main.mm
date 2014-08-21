@@ -4,6 +4,8 @@
 #import <Cocoa/Cocoa.h>
 
 
+using namespace morda;
+
 
 namespace morda{
 
@@ -59,6 +61,102 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 			0
 		);
 }
+
+morda::EKey keyboardMapping[0xff] = {
+	EKey::A,
+	EKey::S,
+	EKey::D,
+	EKey::F,
+	EKey::H,
+	EKey::G,
+	EKey::Z,
+	EKey::X,
+	EKey::C,
+	EKey::V,
+	EKey::UNKNOWN, //0x0A
+	EKey::B,
+	EKey::Q,
+	EKey::W,
+	EKey::E,
+	EKey::R,
+	EKey::Y,
+	EKey::T,
+	EKey::ONE,
+	EKey::TWO,
+	EKey::THREE,
+	EKey::FOUR,
+	EKey::SIX,
+	EKey::EQALS,
+	EKey::NINE,
+	EKey::SEVEN,
+	EKey::MINUS,
+	EKey::EIGHT,
+	EKey::ZERO,
+	EKey::RIGHT_SQUARE_BRACKET,
+	EKey::O,
+	EKey::U,
+	EKey::LEFT_SQUARE_BRACKET,
+	EKey::I,
+	EKey::P,
+	EKey::UNKNOWN, //0x24
+	EKey::L,
+	EKey::J,
+	EKey::APOSTROPHE,
+	EKey::K,
+	EKey::SEMICOLON,
+	EKey::BACKSLASH,
+	EKey::COMMA,
+	EKey::SLASH,
+	EKey::N,
+	EKey::M,
+	EKey::PERIOD,
+	EKey::UNKNOWN, //0x30
+	EKey::UNKNOWN, //0x31
+	EKey::GRAVE,
+	EKey::UNKNOWN, //0x33
+	EKey::UNKNOWN, //0x34
+	EKey::UNKNOWN, //0x35
+	EKey::UNKNOWN, //0x36
+	EKey::UNKNOWN, //0x37
+	EKey::UNKNOWN, //0x38
+	EKey::UNKNOWN, //0x39
+	EKey::UNKNOWN, //0x3A
+	EKey::UNKNOWN, //0x3B
+	EKey::UNKNOWN, //0x3C
+	EKey::UNKNOWN, //0x3D
+	EKey::UNKNOWN, //0x3E
+	EKey::UNKNOWN, //0x3F
+	EKey::UNKNOWN, //0x40
+	EKey::UNKNOWN, //KeypadDecimal, 0x41
+	EKey::UNKNOWN, //0x42
+	EKey::UNKNOWN, //KeypadMultiplym 0x43
+	EKey::UNKNOWN, //0x44
+	EKey::UNKNOWN, //KeypadPlus, 0x45
+	EKey::UNKNOWN, //0x46
+	EKey::UNKNOWN, //KeypadClear, 0x47
+	EKey::UNKNOWN, //0x48
+	EKey::UNKNOWN, //0x49
+	EKey::UNKNOWN, //0x4A
+	EKey::UNKNOWN, //KeypadDivide, 0x4B
+	EKey::UNKNOWN, //KeypadEnter
+	EKey::UNKNOWN, //KeypadMinus
+	EKey::UNKNOWN, //0x4F
+	EKey::UNKNOWN, //0x50
+	EKey::UNKNOWN, //KeypadEquals, 0x51
+	EKey::UNKNOWN, //Keypad0
+	EKey::UNKNOWN, //Keypad1
+	EKey::UNKNOWN, //Keypad2
+	EKey::UNKNOWN, //Keypad3
+	EKey::UNKNOWN, //Keypad4
+	EKey::UNKNOWN, //Keypad5
+	EKey::UNKNOWN, //Keypad6
+	EKey::UNKNOWN, //Keypad7, 0x59
+	EKey::UNKNOWN, //0x5A
+	EKey::UNKNOWN, //Keypad8, 0x5B
+	EKey::UNKNOWN, //Keypad9, 0x5C
+	
+};
+
 }
 
 
