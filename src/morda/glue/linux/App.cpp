@@ -303,7 +303,7 @@ const EKey keyCodeMap[std::uint8_t(-1) + 1] = {
 	EKey::L,//46
 	EKey::SEMICOLON,//47
 	EKey::APOSTROPHE,//48
-	EKey::TICK,//49
+	EKey::GRAVE,//49
 	EKey::LEFT_SHIFT,//50
 	EKey::BACKSLASH,//51
 	EKey::Z,//52
