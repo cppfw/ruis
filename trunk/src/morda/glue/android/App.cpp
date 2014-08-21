@@ -311,7 +311,7 @@ public:
 
 
 //TODO: this mapping is not final
-const morda::EKey keyCodeMap[std::uint8_t(-1) + 1] = {
+const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::UNKNOWN, //AKEYCODE_UNKNOWN
 	EKey::LEFT, //AKEYCODE_SOFT_LEFT
 	EKey::RIGHT, //AKEYCODE_SOFT_RIGHT

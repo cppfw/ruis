@@ -14,7 +14,7 @@ using namespace morda;
 
 namespace{
 
-const morda::EKey keyCodeMap[std::uint8_t(-1) + 1] = {
+const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::UNKNOWN, //Undefined
 	EKey::UNKNOWN, //VK_LBUTTON
 	EKey::UNKNOWN, //VK_RBUTTON
