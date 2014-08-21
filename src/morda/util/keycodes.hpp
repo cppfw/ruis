@@ -128,6 +128,15 @@ enum class EKey{
 	PAUSE,
 	WINDOWS,
 	WINDOWS_MENU,
+	FUNCTION,
+	F17,
+	F18,
+	F19,
+	F20,
+	F13,
+	F16,
+	F14,
+	F15,
 	
 	ENUM_SIZE
 };
