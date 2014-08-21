@@ -62,7 +62,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 		);
 }
 
-const std::array<morda::EKey, 0xff> keyboardMapping = {
+const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::A,
 	EKey::S,
 	EKey::D,
@@ -377,38 +377,38 @@ int main (int argc, const char** argv){
 }
 
 -(void)mouseDown: (NSEvent*)e{
-	TRACE(<< "left down!!!!!" << std::endl)
+//	TRACE(<< "left down!!!!!" << std::endl)
 	MouseButton(e, true, morda::Widget::EMouseButton::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
-	TRACE(<< "left up!!!!!" << std::endl)
+//	TRACE(<< "left up!!!!!" << std::endl)
 	MouseButton(e, false, morda::Widget::EMouseButton::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
-	TRACE(<< "right down!!!!!" << std::endl)
+//	TRACE(<< "right down!!!!!" << std::endl)
 	MouseButton(e, true, morda::Widget::EMouseButton::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
-	TRACE(<< "right up!!!!!" << std::endl)
+//	TRACE(<< "right up!!!!!" << std::endl)
 	MouseButton(e, false, morda::Widget::EMouseButton::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
-	TRACE(<< "middle down!!!!!" << std::endl)
+//	TRACE(<< "middle down!!!!!" << std::endl)
 	MouseButton(e, true, morda::Widget::EMouseButton::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
-	TRACE(<< "middle up!!!!!" << std::endl)
+//	TRACE(<< "middle up!!!!!" << std::endl)
 	MouseButton(e, false, morda::Widget::EMouseButton::MIDDLE);
 }
 
 
 -(void)mouseMoved: (NSEvent*)e{
-	TRACE(<< "mouseMoved event!!!!!" << std::endl)
+//	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseMove(
 			morda::Vec2f(pos.x, pos.y),
@@ -429,23 +429,30 @@ int main (int argc, const char** argv){
 }
 
 -(void)mouseEntered: (NSEvent*)e{
-	TRACE(<< "mouseEntered event!!!!!" << std::endl)
+//	TRACE(<< "mouseEntered event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:YES];
 	morda::Macosx_HandleMouseHover(true);
 }
 
 -(void)mouseExited: (NSEvent*)e{
-	TRACE(<< "mouseExited event!!!!!" << std::endl)
+//	TRACE(<< "mouseExited event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:NO];
 	morda::Macosx_HandleMouseHover(false);
 }
 
 -(void)keyDown:(NSEvent*)e{
-	TRACE(<< "keyDown event!!!!!" << std::endl)
+//	TRACE(<< "keyDown event!!!!!" << std::endl)
+	if([e isARepeat] == YES){
+		return;
+	}
+	std::uint8_t kc = [e keyCode];
+	Macosx_HandleKeyEvent(true, keyCodeMap[kc]);
 }
 
 -(void)keyUp:(NSEvent*)e{
-	TRACE(<< "keyUp event!!!!!" << std::endl)
+//	TRACE(<< "keyUp event!!!!!" << std::endl)
+	std::uint8_t kc = [e keyCode];
+	Macosx_HandleKeyEvent(false, keyCodeMap[kc]);
 }
 
 @end
