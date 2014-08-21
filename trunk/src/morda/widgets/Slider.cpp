@@ -24,7 +24,7 @@ void Slider::SliderHandle::Render(const morda::Matr4f& matrix)const{
 	
 
 bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
-	if(button != LEFT){
+	if(button != EMouseButton::LEFT){
 		return false;
 	}
 
