@@ -14,263 +14,263 @@ using namespace morda;
 
 namespace{
 
-const key::Key keyCodeMap[std::uint8_t(-1) + 1] = {
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //VK_LBUTTON
-	key::UNKNOWN, //VK_RBUTTON
-	key::UNKNOWN, //VK_CANCEL
-	key::UNKNOWN, //VK_MBUTTON
-	key::UNKNOWN, //VK_XBUTTON1, 5
-	key::UNKNOWN, //VK_XBUTTON2
-	key::UNKNOWN, //Undefined
-	key::BACKSPACE, //VK_BACK = backspace key
-	key::TAB, //VK_TAB
-	key::UNKNOWN, //Reserved, 10
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //VK_CLEAR = clear key???
-	key::ENTER, //VK_RETURN
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined, 15
-	key::LEFT_SHIFT, //VK_SHIFT
-	key::LEFT_CONTROL, //VK_CONTROL
-	key::LEFT_ALT, //VK_MENU = alt key
-	key::PAUSE, //VK_PAUSE
-	key::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
-	key::UNKNOWN, //VK_KANA, VK_HANGUEL, VK_HANGUL
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //VK_JUNJA
-	key::UNKNOWN, //VK_FINAL
-	key::UNKNOWN, //VK_HANJA, VK_KANJI, 25
-	key::UNKNOWN, //Undefined
-	key::ESCAPE, //VK_ESCAPE
-	key::UNKNOWN, //VK_CONVERT
-	key::UNKNOWN, //VK_NONCONVERT
-	key::UNKNOWN, //VK_ACCEPT, 30
-	key::UNKNOWN, //VK_MODECHANGE
-	key::SPACE, //VK_SPACE = space bar key
-	key::PAGE_UP, //VK_PRIOR = page up key
-	key::PAGE_DOWN,//VK_NEXT = page down key
-	key::END, //VK_END, 35
-	key::HOME,//VK_HOME
-	key::LEFT,//VK_LEFT
-	key::UP, //VK_UP
-	key::RIGHT, //VK_RIGHT
-	key::DOWN, //VK_DOWN, 40
-	key::UNKNOWN, //VK_SELECT
-	key::UNKNOWN, //VK_PRINT
-	key::UNKNOWN, //VK_EXECUTE
-	key::PRINT_SCREEN,//VK_SNAPSHOT = print screen key
-	key::INSERT, //VK_INSERT, 45
-	key::DELETE, //VK_DELETE
-	key::UNKNOWN, //VK_HELP
-	key::ZERO, //0 key
-	key::ONE, //1 key
-	key::TWO, //2 key, 50
-	key::THREE, //3 key
-	key::FOUR, //4 key
-	key::FIVE, //5 key
-	key::SIX, //6 key
-	key::SEVEN, //7 key, 55
-	key::EIGHT, //8 key
-	key::NINE, //9 key
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined, 60
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined
-	key::UNKNOWN, //Undefined
-	key::A, //A key, 65
-	key::B, //B key
-	key::C, //C key
-	key::D, //D key
-	key::E, //E key
-	key::F, //F key, 70
-	key::G, //G key
-	key::H, //H key
-	key::I, //I key
-	key::J, //J key
-	key::K, //K key, 75
-	key::L, //L key
-	key::M, //M key
-	key::N, //N key
-	key::O, //O key
-	key::P, //P key, 80
-	key::Q, //Q key
-	key::R, //R key
-	key::S, //S key
-	key::T, //T key
-	key::U, //U key, 85
-	key::V, //V key
-	key::W, //W key
-	key::X, //X key
-	key::Y, //Y key
-	key::Z, //Z key, 90
-	key::WINDOWS, //VK_LWIN = left windows key
-	key::WINDOWS, //VK_RWIN = right windows key
-	key::UNKNOWN, //VK_APPS = applications key
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //VK_SLEEP = computer sleep key, 95
-	key::ZERO, //VK_NUMPAD0 = numeric keypad 0 key
-	key::ONE, //VK_NUMPAD1 = numeric keypad 1 key
-	key::TWO, //VK_NUMPAD2 = numeric keypad 2 key
-	key::THREE, //VK_NUMPAD3 = numeric keypad 3 key
-	key::FOUR, //VK_NUMPAD4 = numeric keypad 4 key, 100
-	key::FIVE, //VK_NUMPAD5 = numeric keypad 5 key
-	key::SIX, //VK_NUMPAD6 = numeric keypad 6 key
-	key::SEVEN, //VK_NUMPAD7 = numeric keypad 7 key
-	key::EIGHT, //VK_NUMPAD8 = numeric keypad 8 key
-	key::NINE, //VK_NUMPAD9 = numeric keypad 9 key, 105
-	key::UNKNOWN, //VK_MULTIPLY = multiply key
-	key::UNKNOWN, //VK_ADD
-	key::UNKNOWN, //VK_SEPARATOR
-	key::UNKNOWN, //VK_SUBTRACT
-	key::UNKNOWN, //VK_DECIMAL, 110
-	key::UNKNOWN, //VK_DIVIDE
-	key::F1, //VK_F1
-	key::F2, //VK_F2
-	key::F3, //VK_F3
-	key::F4, //VK_F4, 115
-	key::F5, //VK_F5
-	key::F6, //VK_F6
-	key::F7, //VK_F7
-	key::F8, //VK_F8
-	key::F9, //VK_F9, 120
-	key::F10, //VK_F10
-	key::F11, //VK_F11
-	key::F12, //VK_F12
-	key::UNKNOWN, //VK_F13
-	key::UNKNOWN, //VK_F14, 125
-	key::UNKNOWN, //VK_F15
-	key::UNKNOWN, //VK_F16
-	key::UNKNOWN, //VK_F17
-	key::UNKNOWN, //VK_F18
-	key::UNKNOWN, //VK_F19, 130
-	key::UNKNOWN, //VK_F20
-	key::UNKNOWN, //VK_F21
-	key::UNKNOWN, //VK_F22
-	key::UNKNOWN, //VK_F23
-	key::UNKNOWN, //VK_F24, 135
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned, 140
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //VK_NUMLOCK
-	key::UNKNOWN, //VK_SCROLL = scroll lock key, 145
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific, 150
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned, 155
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::LEFT_SHIFT, //VK_LSHIFT, 160
-	key::RIGHT_SHIFT, //VK_RSHIFT
-	key::LEFT_CONTROL, //VK_LCONTROL
-	key::RIGHT_CONTROL, //VK_RCONTROL
-	key::WINDOWS_MENU, //VK_LMENU = left menu key
-	key::WINDOWS_MENU, //VK_RMENU, 165
-	key::UNKNOWN, //VK_BROWSER_BACK
-	key::UNKNOWN, //VK_BROWSER_FORWARD
-	key::UNKNOWN, //VK_BROWSER_REFRESH
-	key::UNKNOWN, //VK_BROWSER_STOP
-	key::UNKNOWN, //VK_BROWSER_SEARCH, 170
-	key::UNKNOWN, //VK_BROWSER_FAVORITES
-	key::UNKNOWN, //VK_BROWSER_HOME
-	key::UNKNOWN, //VK_VOLUME_MUTE
-	key::UNKNOWN, //VK_VOLUME_DOWN
-	key::UNKNOWN, //VK_VOLUME_UP, 175
-	key::UNKNOWN, //VK_MEDIA_NEXT_TRACK
-	key::UNKNOWN, //VK_MEDIA_PREV_TRACK
-	key::UNKNOWN, //VK_MEDIA_STOP
-	key::UNKNOWN, //VK_MEDIA_PLAY_PAUSE
-	key::UNKNOWN, //VK_LAUNCH_MAIL, 180
-	key::UNKNOWN, //VK_LAUNCH_MEDIA_SELECT
-	key::UNKNOWN, //VK_LAUNCH_APP1
-	key::UNKNOWN, //VK_LAUNCH_APP2
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 185
-	key::UNKNOWN, //VK_OEM_1
-	key::UNKNOWN, //VK_OEM_PLUS
-	key::UNKNOWN, //VK_OEM_COMMA
-	key::UNKNOWN, //VK_OEM_MINUS
-	key::UNKNOWN, //VK_OEM_PERIOD, 190
-	key::UNKNOWN, //VK_OEM_2
-	key::UNKNOWN, //VK_OEM_3
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 195
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 200
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 205
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 210
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //Reserved, 215
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //VK_OEM_4
-	key::UNKNOWN, //VK_OEM_5, 220
-	key::UNKNOWN, //VK_OEM_6
-	key::UNKNOWN, //VK_OEM_7
-	key::UNKNOWN, //VK_OEM_8
-	key::UNKNOWN, //Reserved
-	key::UNKNOWN, //OEM specific, 225
-	key::UNKNOWN, //VK_OEM_102
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //VK_PROCESSKEY
-	key::UNKNOWN, //OEM specific, 230
-	key::UNKNOWN, //VK_PACKET
-	key::UNKNOWN, //Unassigned
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific, 235
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific, 240
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific
-	key::UNKNOWN, //OEM specific, 245
-	key::UNKNOWN, //VK_ATTN
-	key::UNKNOWN, //VK_CRSEL
-	key::UNKNOWN, //VK_EXSEL
-	key::UNKNOWN, //VK_EREOF
-	key::UNKNOWN, //VK_PLAY, 250
-	key::UNKNOWN, //VK_ZOOM
-	key::UNKNOWN, //VK_NONAME
-	key::UNKNOWN, //VK_PA1
-	key::UNKNOWN, //VK_OEM_CLEAR
-	key::UNKNOWN
+const morda::EKey keyCodeMap[std::uint8_t(-1) + 1] = {
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //VK_LBUTTON
+	EKey::UNKNOWN, //VK_RBUTTON
+	EKey::UNKNOWN, //VK_CANCEL
+	EKey::UNKNOWN, //VK_MBUTTON
+	EKey::UNKNOWN, //VK_XBUTTON1, 5
+	EKey::UNKNOWN, //VK_XBUTTON2
+	EKey::UNKNOWN, //Undefined
+	EKey::BACKSPACE, //VK_BACK = backspace key
+	EKey::TAB, //VK_TAB
+	EKey::UNKNOWN, //Reserved, 10
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //VK_CLEAR = clear key???
+	EKey::ENTER, //VK_RETURN
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined, 15
+	EKey::LEFT_SHIFT, //VK_SHIFT
+	EKey::LEFT_CONTROL, //VK_CONTROL
+	EKey::LEFT_ALT, //VK_MENU = alt key
+	EKey::PAUSE, //VK_PAUSE
+	EKey::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
+	EKey::UNKNOWN, //VK_KANA, VK_HANGUEL, VK_HANGUL
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //VK_JUNJA
+	EKey::UNKNOWN, //VK_FINAL
+	EKey::UNKNOWN, //VK_HANJA, VK_KANJI, 25
+	EKey::UNKNOWN, //Undefined
+	EKey::ESCAPE, //VK_ESCAPE
+	EKey::UNKNOWN, //VK_CONVERT
+	EKey::UNKNOWN, //VK_NONCONVERT
+	EKey::UNKNOWN, //VK_ACCEPT, 30
+	EKey::UNKNOWN, //VK_MODECHANGE
+	EKey::SPACE, //VK_SPACE = space bar key
+	EKey::PAGE_UP, //VK_PRIOR = page up key
+	EKey::PAGE_DOWN,//VK_NEXT = page down key
+	EKey::END, //VK_END, 35
+	EKey::HOME,//VK_HOME
+	EKey::LEFT,//VK_LEFT
+	EKey::UP, //VK_UP
+	EKey::RIGHT, //VK_RIGHT
+	EKey::DOWN, //VK_DOWN, 40
+	EKey::UNKNOWN, //VK_SELECT
+	EKey::UNKNOWN, //VK_PRINT
+	EKey::UNKNOWN, //VK_EXECUTE
+	EKey::PRINT_SCREEN,//VK_SNAPSHOT = print screen key
+	EKey::INSERT, //VK_INSERT, 45
+	EKey::DELETE, //VK_DELETE
+	EKey::UNKNOWN, //VK_HELP
+	EKey::ZERO, //0 key
+	EKey::ONE, //1 key
+	EKey::TWO, //2 key, 50
+	EKey::THREE, //3 key
+	EKey::FOUR, //4 key
+	EKey::FIVE, //5 key
+	EKey::SIX, //6 key
+	EKey::SEVEN, //7 key, 55
+	EKey::EIGHT, //8 key
+	EKey::NINE, //9 key
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined, 60
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined
+	EKey::UNKNOWN, //Undefined
+	EKey::A, //A key, 65
+	EKey::B, //B key
+	EKey::C, //C key
+	EKey::D, //D key
+	EKey::E, //E key
+	EKey::F, //F key, 70
+	EKey::G, //G key
+	EKey::H, //H key
+	EKey::I, //I key
+	EKey::J, //J key
+	EKey::K, //K key, 75
+	EKey::L, //L key
+	EKey::M, //M key
+	EKey::N, //N key
+	EKey::O, //O key
+	EKey::P, //P key, 80
+	EKey::Q, //Q key
+	EKey::R, //R key
+	EKey::S, //S key
+	EKey::T, //T key
+	EKey::U, //U key, 85
+	EKey::V, //V key
+	EKey::W, //W key
+	EKey::X, //X key
+	EKey::Y, //Y key
+	EKey::Z, //Z key, 90
+	EKey::WINDOWS, //VK_LWIN = left windows key
+	EKey::WINDOWS, //VK_RWIN = right windows key
+	EKey::UNKNOWN, //VK_APPS = applications key
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //VK_SLEEP = computer sleep key, 95
+	EKey::ZERO, //VK_NUMPAD0 = numeric keypad 0 key
+	EKey::ONE, //VK_NUMPAD1 = numeric keypad 1 key
+	EKey::TWO, //VK_NUMPAD2 = numeric keypad 2 key
+	EKey::THREE, //VK_NUMPAD3 = numeric keypad 3 key
+	EKey::FOUR, //VK_NUMPAD4 = numeric keypad 4 key, 100
+	EKey::FIVE, //VK_NUMPAD5 = numeric keypad 5 key
+	EKey::SIX, //VK_NUMPAD6 = numeric keypad 6 key
+	EKey::SEVEN, //VK_NUMPAD7 = numeric keypad 7 key
+	EKey::EIGHT, //VK_NUMPAD8 = numeric keypad 8 key
+	EKey::NINE, //VK_NUMPAD9 = numeric keypad 9 key, 105
+	EKey::UNKNOWN, //VK_MULTIPLY = multiply key
+	EKey::UNKNOWN, //VK_ADD
+	EKey::UNKNOWN, //VK_SEPARATOR
+	EKey::UNKNOWN, //VK_SUBTRACT
+	EKey::UNKNOWN, //VK_DECIMAL, 110
+	EKey::UNKNOWN, //VK_DIVIDE
+	EKey::F1, //VK_F1
+	EKey::F2, //VK_F2
+	EKey::F3, //VK_F3
+	EKey::F4, //VK_F4, 115
+	EKey::F5, //VK_F5
+	EKey::F6, //VK_F6
+	EKey::F7, //VK_F7
+	EKey::F8, //VK_F8
+	EKey::F9, //VK_F9, 120
+	EKey::F10, //VK_F10
+	EKey::F11, //VK_F11
+	EKey::F12, //VK_F12
+	EKey::UNKNOWN, //VK_F13
+	EKey::UNKNOWN, //VK_F14, 125
+	EKey::UNKNOWN, //VK_F15
+	EKey::UNKNOWN, //VK_F16
+	EKey::UNKNOWN, //VK_F17
+	EKey::UNKNOWN, //VK_F18
+	EKey::UNKNOWN, //VK_F19, 130
+	EKey::UNKNOWN, //VK_F20
+	EKey::UNKNOWN, //VK_F21
+	EKey::UNKNOWN, //VK_F22
+	EKey::UNKNOWN, //VK_F23
+	EKey::UNKNOWN, //VK_F24, 135
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned, 140
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //VK_NUMLOCK
+	EKey::UNKNOWN, //VK_SCROLL = scroll lock key, 145
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific, 150
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned, 155
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::LEFT_SHIFT, //VK_LSHIFT, 160
+	EKey::RIGHT_SHIFT, //VK_RSHIFT
+	EKey::LEFT_CONTROL, //VK_LCONTROL
+	EKey::RIGHT_CONTROL, //VK_RCONTROL
+	EKey::WINDOWS_MENU, //VK_LMENU = left menu key
+	EKey::WINDOWS_MENU, //VK_RMENU, 165
+	EKey::UNKNOWN, //VK_BROWSER_BACK
+	EKey::UNKNOWN, //VK_BROWSER_FORWARD
+	EKey::UNKNOWN, //VK_BROWSER_REFRESH
+	EKey::UNKNOWN, //VK_BROWSER_STOP
+	EKey::UNKNOWN, //VK_BROWSER_SEARCH, 170
+	EKey::UNKNOWN, //VK_BROWSER_FAVORITES
+	EKey::UNKNOWN, //VK_BROWSER_HOME
+	EKey::UNKNOWN, //VK_VOLUME_MUTE
+	EKey::UNKNOWN, //VK_VOLUME_DOWN
+	EKey::UNKNOWN, //VK_VOLUME_UP, 175
+	EKey::UNKNOWN, //VK_MEDIA_NEXT_TRACK
+	EKey::UNKNOWN, //VK_MEDIA_PREV_TRACK
+	EKey::UNKNOWN, //VK_MEDIA_STOP
+	EKey::UNKNOWN, //VK_MEDIA_PLAY_PAUSE
+	EKey::UNKNOWN, //VK_LAUNCH_MAIL, 180
+	EKey::UNKNOWN, //VK_LAUNCH_MEDIA_SELECT
+	EKey::UNKNOWN, //VK_LAUNCH_APP1
+	EKey::UNKNOWN, //VK_LAUNCH_APP2
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 185
+	EKey::UNKNOWN, //VK_OEM_1
+	EKey::UNKNOWN, //VK_OEM_PLUS
+	EKey::UNKNOWN, //VK_OEM_COMMA
+	EKey::UNKNOWN, //VK_OEM_MINUS
+	EKey::UNKNOWN, //VK_OEM_PERIOD, 190
+	EKey::UNKNOWN, //VK_OEM_2
+	EKey::UNKNOWN, //VK_OEM_3
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 195
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 200
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 205
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 210
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //Reserved, 215
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //VK_OEM_4
+	EKey::UNKNOWN, //VK_OEM_5, 220
+	EKey::UNKNOWN, //VK_OEM_6
+	EKey::UNKNOWN, //VK_OEM_7
+	EKey::UNKNOWN, //VK_OEM_8
+	EKey::UNKNOWN, //Reserved
+	EKey::UNKNOWN, //OEM specific, 225
+	EKey::UNKNOWN, //VK_OEM_102
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //VK_PROCESSKEY
+	EKey::UNKNOWN, //OEM specific, 230
+	EKey::UNKNOWN, //VK_PACKET
+	EKey::UNKNOWN, //Unassigned
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific, 235
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific, 240
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific
+	EKey::UNKNOWN, //OEM specific, 245
+	EKey::UNKNOWN, //VK_ATTN
+	EKey::UNKNOWN, //VK_CRSEL
+	EKey::UNKNOWN, //VK_EXSEL
+	EKey::UNKNOWN, //VK_EREOF
+	EKey::UNKNOWN, //VK_PLAY, 250
+	EKey::UNKNOWN, //VK_ZOOM
+	EKey::UNKNOWN, //VK_NONAME
+	EKey::UNKNOWN, //VK_PA1
+	EKey::UNKNOWN, //VK_OEM_CLEAR
+	EKey::UNKNOWN
 };
 
 class KeyEventUnicodeResolver{
@@ -333,7 +333,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::LEFT,
+					Widget::EMouseButton::LEFT,
 					0
 				);
 			lres = 0;
@@ -343,7 +343,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::LEFT,
+					Widget::EMouseButton::LEFT,
 					0
 				);
 			lres = 0;
@@ -353,7 +353,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::MIDDLE,
+					Widget::EMouseButton::MIDDLE,
 					0
 				);
 			lres = 0;
@@ -363,7 +363,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::MIDDLE,
+					Widget::EMouseButton::MIDDLE,
 					0
 				);
 			lres = 0;
@@ -373,7 +373,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					true,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::RIGHT,
+					Widget::EMouseButton::RIGHT,
 					0
 				);
 			lres = 0;
@@ -383,7 +383,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			app.HandleMouseButton(
 					false,
 					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					Widget::RIGHT,
+					Widget::EMouseButton::RIGHT,
 					0
 				);
 			lres = 0;
