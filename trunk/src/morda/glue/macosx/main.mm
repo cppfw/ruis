@@ -7,6 +7,28 @@
 using namespace morda;
 
 
+namespace{
+class UnicodeResolver{
+	const NSString* nsStr;
+public:
+	UnicodeResolver(const NSString* nsStr) :
+			nsStr(nsStr)
+	{}
+	
+	std::vector<std::uint32_t> Resolve()const{
+		NSUInteger len = [this->nsStr length];
+		
+		std::vector<std::uint32_t> ret(len);
+		for(unsigned i = 0; i != len; ++i){
+			ret[i] = [this->nsStr characterAtIndex:i];
+		}
+		
+		return std::move(ret);
+	}
+};
+}
+
+
 namespace morda{
 
 void Macosx_Main(int argc, const char** argv){
@@ -39,6 +61,14 @@ void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
 	morda::App::Inst().HandleKeyEvent(isDown, keyCode);
 }
 
+void Macosx_HandleCharacterInput(const void* nsstring){
+	if(!nsstring){
+		return;
+	}
+	const UnicodeResolver resolver(reinterpret_cast<const NSString*>(nsstring));
+	morda::App::Inst().HandleCharacterInput(resolver);
+}
+
 void Macosx_UpdateWindowRect(const morda::Rect2f& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
@@ -63,12 +93,12 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 }
 
 const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
-	EKey::A,
+	EKey::A, //0
 	EKey::S,
 	EKey::D,
 	EKey::F,
 	EKey::H,
-	EKey::G,
+	EKey::G, //5
 	EKey::Z,
 	EKey::X,
 	EKey::C,
@@ -78,90 +108,92 @@ const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::Q,
 	EKey::W,
 	EKey::E,
-	EKey::R,
+	EKey::R, //15
 	EKey::Y,
 	EKey::T,
 	EKey::ONE,
 	EKey::TWO,
-	EKey::THREE,
+	EKey::THREE, //20
 	EKey::FOUR,
 	EKey::SIX,
+	EKey::FIVE, //0x17
 	EKey::EQUALS,
-	EKey::NINE,
+	EKey::NINE, //25
 	EKey::SEVEN,
 	EKey::MINUS,
 	EKey::EIGHT,
 	EKey::ZERO,
-	EKey::RIGHT_SQUARE_BRACKET,
+	EKey::RIGHT_SQUARE_BRACKET, //30
 	EKey::O,
 	EKey::U,
 	EKey::LEFT_SQUARE_BRACKET,
 	EKey::I,
-	EKey::P,
+	EKey::P, //35
 	EKey::ENTER, //0x24
 	EKey::L,
 	EKey::J,
 	EKey::APOSTROPHE,
-	EKey::K,
+	EKey::K, //40
 	EKey::SEMICOLON,
 	EKey::BACKSLASH,
 	EKey::COMMA,
 	EKey::SLASH,
-	EKey::N,
+	EKey::N, //0x2D, 45
 	EKey::M,
 	EKey::PERIOD,
 	EKey::TAB, //0x30
 	EKey::SPACE, //0x31
-	EKey::GRAVE,
-	EKey::DELETE, //0x33
+	EKey::GRAVE, //50
+	EKey::BACKSPACE, //0x33
 	EKey::UNKNOWN, //0x34
 	EKey::ESCAPE, //0x35
 	EKey::UNKNOWN, //0x36
-	EKey::WINDOWS, //Command, 0x37
+	EKey::WINDOWS, //Command, 0x37, 55
 	EKey::LEFT_SHIFT, //0x38
 	EKey::CAPSLOCK, //0x39
 	EKey::UNKNOWN, //Option, 0x3A
 	EKey::LEFT_CONTROL, //0x3B
-	EKey::RIGHT_SHIFT, //0x3C
+	EKey::RIGHT_SHIFT, //0x3C, 60
 	EKey::UNKNOWN, //RightOption, 0x3D
 	EKey::RIGHT_CONTROL, //0x3E
 	EKey::FUNCTION, //0x3F
 	EKey::F17, //0x40
-	EKey::UNKNOWN, //KeypadDecimal, 0x41
+	EKey::UNKNOWN, //KeypadDecimal, 0x41, 65
 	EKey::UNKNOWN, //0x42
 	EKey::UNKNOWN, //KeypadMultiplym 0x43
 	EKey::UNKNOWN, //0x44
 	EKey::UNKNOWN, //KeypadPlus, 0x45
-	EKey::UNKNOWN, //0x46
+	EKey::UNKNOWN, //0x46, 70
 	EKey::UNKNOWN, //KeypadClear, 0x47
 	EKey::UNKNOWN, //VolumeUp, 0x48
 	EKey::UNKNOWN, //VolumeDown, 0x49
 	EKey::UNKNOWN, //Mute, 0x4A
-	EKey::UNKNOWN, //KeypadDivide, 0x4B
-	EKey::UNKNOWN, //KeypadEnter
+	EKey::UNKNOWN, //KeypadDivide, 0x4B, 75
+	EKey::UNKNOWN, //KeypadEnter, 0x4C
+	EKey::UNKNOWN, //0x4D
 	EKey::UNKNOWN, //KeypadMinus
 	EKey::F18, //0x4F
-	EKey::F19, //0x50
+	EKey::F19, //0x50, 80
 	EKey::UNKNOWN, //KeypadEquals, 0x51
 	EKey::UNKNOWN, //Keypad0
 	EKey::UNKNOWN, //Keypad1
 	EKey::UNKNOWN, //Keypad2
-	EKey::UNKNOWN, //Keypad3
+	EKey::UNKNOWN, //Keypad3, 85
 	EKey::UNKNOWN, //Keypad4
 	EKey::UNKNOWN, //Keypad5
 	EKey::UNKNOWN, //Keypad6
 	EKey::UNKNOWN, //Keypad7, 0x59
-	EKey::F20, //0x5A
+	EKey::F20, //0x5A, 90
 	EKey::UNKNOWN, //Keypad8, 0x5B
 	EKey::UNKNOWN, //Keypad9, 0x5C
 	EKey::UNKNOWN, //0x5D
 	EKey::UNKNOWN, //0x5E
-	EKey::UNKNOWN, //0x5F
+	EKey::UNKNOWN, //0x5F, 95
 	EKey::F5, //0x60
 	EKey::F6, //0x61
 	EKey::F7, //0x62
 	EKey::F3, //0x63
-	EKey::F8, //0x64
+	EKey::F8, //0x64, 100
 	EKey::F9, //0x65
 	EKey::UNKNOWN, //0x66
 	EKey::F11, //0x67
@@ -178,7 +210,7 @@ const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::UNKNOWN, //Help, 0x72
 	EKey::HOME, //0x73
 	EKey::PAGE_UP, //0x74
-	EKey::BACKSPACE, //0x75
+	EKey::DELETE, //0x75
 	EKey::F4, //0x76
 	EKey::END, //0x77
 	EKey::F2, //0x78
@@ -443,10 +475,13 @@ int main (int argc, const char** argv){
 -(void)keyDown:(NSEvent*)e{
 //	TRACE(<< "keyDown event!!!!!" << std::endl)
 	if([e isARepeat] == YES){
+		Macosx_HandleCharacterInput([e characters]);
 		return;
 	}
 	std::uint8_t kc = [e keyCode];
 	Macosx_HandleKeyEvent(true, keyCodeMap[kc]);
+	
+	Macosx_HandleCharacterInput([e characters]);
 }
 
 -(void)keyUp:(NSEvent*)e{
