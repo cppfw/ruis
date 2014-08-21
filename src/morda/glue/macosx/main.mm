@@ -45,6 +45,17 @@ void Macosx_SetQuitFlag(){
 
 }
 
+namespace{
+void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
+	NSPoint pos = [e locationInWindow];
+	Macosx_HandleMouseButton(
+			isDown,
+			morda::Vec2f(pos.x, pos.y),
+			b,
+			0
+		);
+}
+}
 
 
 int main (int argc, const char** argv){
@@ -68,14 +79,15 @@ int main (int argc, const char** argv){
 -(void)otherMouseDown: (NSEvent*)e;
 -(void)otherMouseUp: (NSEvent*)e;
 
--(void)mouseButton: (NSEvent*)e;
-
 -(void)mouseDragged: (NSEvent*)e;
 -(void)rightMouseDragged: (NSEvent*)e;
 -(void)otherMouseDragged: (NSEvent*)e;
 -(void)mouseMoved: (NSEvent*)e;
 -(void)mouseEntered: (NSEvent*)e;
 -(void)mouseExited: (NSEvent*)e;
+
+-(void)keyDown:(NSEvent*)e;
+-(void)keyUp:(NSEvent*)e;
 
 @end
 @implementation CocoaView
@@ -101,63 +113,35 @@ int main (int argc, const char** argv){
 }
 
 -(void)mouseDown: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "left down!!!!!" << std::endl)
+	MouseButton(e, true, morda::Widget::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "left up!!!!!" << std::endl)
+	MouseButton(e, false, morda::Widget::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "right down!!!!!" << std::endl)
+	MouseButton(e, true, morda::Widget::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "right up!!!!!" << std::endl)
+	MouseButton(e, false, morda::Widget::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "middle down!!!!!" << std::endl)
+	MouseButton(e, true, morda::Widget::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
-	[self mouseButton: e];
+	TRACE(<< "middle up!!!!!" << std::endl)
+	MouseButton(e, false, morda::Widget::MIDDLE);
 }
 
--(void)mouseButton: (NSEvent*)e{
-	TRACE(<< "mouseButton event!!!!!" << std::endl)
-	morda::Widget::EMouseButton b;
-	bool isDown = false;
-	switch([e type]){
-		case NSLeftMouseDown:
-			isDown = true;
-			TRACE_ALWAYS(<< "left down!!!!!" << std::endl)
-		default:
-			TRACE_ALWAYS(<< "default!!!!!" << std::endl)
-		case NSLeftMouseUp:
-			b = morda::Widget::LEFT;
-			break;
-		case NSRightMouseDown:
-			isDown = true;
-			TRACE_ALWAYS(<< "right down!!!!!" << std::endl)
-		case NSRightMouseUp:
-			b = morda::Widget::RIGHT;
-			break;
-		case NSOtherMouseDown:
-			isDown = true;
-		case NSOtherMouseUp:
-			b = morda::Widget::MIDDLE;
-			break;
-	}
-	
-	NSPoint pos = [e locationInWindow];
-	Macosx_HandleMouseButton(
-			isDown,
-			morda::Vec2f(pos.x, pos.y),
-			b,
-			0
-		);
-}
 
 -(void)mouseMoved: (NSEvent*)e{
 	TRACE(<< "mouseMoved event!!!!!" << std::endl)
@@ -183,7 +167,6 @@ int main (int argc, const char** argv){
 -(void)mouseEntered: (NSEvent*)e{
 	TRACE(<< "mouseEntered event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:YES];
-	[[self window] makeFirstResponder:self];
 	morda::Macosx_HandleMouseHover(true);
 }
 
@@ -191,6 +174,14 @@ int main (int argc, const char** argv){
 	TRACE(<< "mouseExited event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:NO];
 	morda::Macosx_HandleMouseHover(false);
+}
+
+-(void)keyDown:(NSEvent*)e{
+	TRACE(<< "keyDown event!!!!!" << std::endl)
+}
+
+-(void)keyUp:(NSEvent*)e{
+	TRACE(<< "keyUp event!!!!!" << std::endl)
 }
 
 @end
@@ -220,16 +211,21 @@ int main (int argc, const char** argv){
 	if(!self){
 		return nil;
 	}
-	[self setLevel:NSFloatingWindowLevel];
+//	[self setLevel:NSFloatingWindowLevel];
+	[self setLevel:NSNormalWindowLevel];
 	
 	self->v = [[CocoaView alloc] initWithFrame:[self frameRectForContentRect:contentRect]];
 	[self setContentView:self->v];
+	
+	[self makeFirstResponder:self->v];
 	
 	[self setDelegate:self];
 	[self setShowsResizeIndicator:YES];
 	[self setMinSize:NSMakeSize(0, 0)];
 	[self setMaxSize:NSMakeSize(1000000000, 1000000000)];
 	[self setIgnoresMouseEvents:NO];
+	[self makeKeyWindow];
+	[self makeMainWindow];
 	return self;
 }
 
@@ -289,6 +285,8 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	if(!this->id){
 		throw morda::Exc("morda::App::WindowObject::WindowObject(): failed to create Window object");
 	}
+	
+	[window setTitle:[[NSProcessInfo processInfo] processName]];
 }
 
 morda::App::WindowObject::~WindowObject()NOEXCEPT{
@@ -393,14 +391,23 @@ void morda::App::PostToUIThread_ts(std::function<void()>&& f){
 
 void morda::App::Exec(){
 	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
-
 	NSWindow* window = (NSWindow*)this->windowObject.id;
 	
-	NSWindowController * windowController = [[NSWindowController alloc] initWithWindow:window];
+	[applicationObject activateIgnoringOtherApps:YES];
 	
-	[window setTitle:[[NSProcessInfo processInfo] processName]];
 	[window makeKeyAndOrderFront:nil];
 
+	[window orderFrontRegardless];
+	
+	//in order to get keyboard events we need to be foreground application
+	{
+		ProcessSerialNumber psn = {0, kCurrentProcess};
+		OSStatus status = TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+		if(status != errSecSuccess){
+			ASSERT(false)
+		}
+	}
+	
 	do{
 		this->Render();
 		
