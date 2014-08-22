@@ -32,6 +32,7 @@ THE SOFTWARE. */
 
 #include <ting/types.hpp>
 #include <ting/Shared.hpp>
+#include <ting/util.hpp>
 
 #include "../util/keycodes.hpp"
 
@@ -163,13 +164,13 @@ public:
 	}
 
 	void Resize(const morda::Vec2f& newDims){
-		ASSERT(newDims.x >= 0)
-		ASSERT(newDims.y >= 0)
 		if(this->rect.d == newDims){
 			return;
 		}
 		
 		this->rect.d = newDims;
+		ting::util::ClampBottom(this->rect.d.x, 0.0f);
+		ting::util::ClampBottom(this->rect.d.y, 0.0f);
 		this->OnResize();//call virtual method
 		this->relayoutNeeded = false;
 	}

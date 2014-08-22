@@ -50,7 +50,7 @@ class Window :
 	
 	morda::Vec2f capturePoint;
 	
-	void FindWidgets();
+	void SetupWidgets();
 	
 public:
 	Window();
