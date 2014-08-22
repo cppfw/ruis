@@ -173,7 +173,7 @@ morda::Window::Window(const stob::Node& desc) :
 }
 
 void morda::Window::SetupWidgets(){
-	this->contentArea = std::dynamic_pointer_cast<Container>(this->FindChildByName("child_widget_area"));
+	this->contentArea = std::dynamic_pointer_cast<FrameContainer>(this->FindChildByName("child_widget_area"));
 	
 	this->caption = this->FindChildByName("morda_caption");
 	

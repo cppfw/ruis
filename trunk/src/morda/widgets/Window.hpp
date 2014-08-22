@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "LinearContainer.hpp"
-
+#include "FrameContainer.hpp"
 #include "Label.hpp"
 
 namespace morda{
@@ -42,7 +42,7 @@ class Window :
 	std::shared_ptr<Widget> caption;
 	std::shared_ptr<Label> title;
 	
-	std::shared_ptr<Container> contentArea;
+	std::shared_ptr<FrameContainer> contentArea;
 	
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
@@ -63,6 +63,10 @@ public:
 	Window(const Window& orig) = delete;
 	
 	void SetTitle(const std::string& str);
+	
+	FrameContainer& Content(){
+		return *this->contentArea;
+	}
 };
 
 }
