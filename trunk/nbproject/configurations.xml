@@ -463,8 +463,6 @@
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="0">
-        <cTool flags="2">
-        </cTool>
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -683,8 +681,6 @@
         </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">

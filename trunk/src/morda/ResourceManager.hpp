@@ -134,8 +134,8 @@ template <class T> std::shared_ptr<T> ResourceManager::FindResourceInResMap(cons
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
 		auto r = std::move((*i).second.lock());
-		ASSERT(std::dynamic_pointer_cast<T>(r))
-		return std::move(std::static_pointer_cast<T>(std::move(r)));
+		ASSERT(r)
+		return std::move(std::dynamic_pointer_cast<T>(std::move(r)));
 	}
 	return nullptr;//no resource found with given name, return invalid reference
 }
