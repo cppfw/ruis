@@ -42,6 +42,8 @@ class Window :
 	std::shared_ptr<Widget> caption;
 	std::shared_ptr<Label> title;
 	
+	std::shared_ptr<Container> contentArea;
+	
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
 	bool leftBottomResizeCaptured = false;
