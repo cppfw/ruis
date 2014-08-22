@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,47 +20,44 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
+#include "Matrix4.hpp"
+
+
 // Home page: http://morda.googlecode.com
 
 /**
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
-#include "LinearContainer.hpp"
+#include <stob/dom.hpp>
 
-#include "Label.hpp"
 
 namespace morda{
 
-class Window :
-		virtual public Widget,
-		private LinearContainer
-{
-	std::shared_ptr<Widget> caption;
-	std::shared_ptr<Label> title;
+class Background{
 	
-	bool captionCaptured = false;
-	bool leftTopResizeCaptured = false;
-	bool leftBottomResizeCaptured = false;
-	bool rightTopResizeCaptured = false;
-	bool rightBottomResizeCaptured = false;
+	std::uint32_t color = 0;
 	
-	morda::Vec2f capturePoint;
-	
-	void FindWidgets();
+	Background(const stob::Node& desc);
 	
 public:
-	Window();
+	Background() = default;
 	
-	Window(const stob::Node& desc);
+	Background(std::uint32_t color);
 	
+	static std::unique_ptr<Background> New(const stob::Node& desc){
+		return std::unique_ptr<Background>(new Background(desc));
+	}
 	
-	Window(const Window& orig) = delete;
+	Background(const Background&) = delete;
+	Background& operator=(const Background&) = delete;
 	
-	void SetTitle(const std::string& str);
+	void Render(const morda::Matr4f& matrix, const morda::Vec2f& dim)const;
+	
+private:
+
 };
 
 }

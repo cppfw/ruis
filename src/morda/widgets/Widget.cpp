@@ -9,30 +9,34 @@ using namespace morda;
 
 
 
-Widget::Widget(const stob::Node& description){
-	if(const stob::Node* p = description.Child("prop").node()){
+Widget::Widget(const stob::Node& desc){
+	if(const stob::Node* p = desc.Child("prop").node()){
 		this->prop = p->Clone();
 		this->prop->SetValue();//clear value of the prop node, we don't need it
 	}
 
-	if(const stob::Node* p = description.GetProperty("pos")){
+	if(const stob::Node* p = desc.GetProperty("pos")){
 		this->rect.p = morda::DimVec2f(p);
 	}else{
 		this->rect.p.SetTo(0);
 	}
 
-	if(const stob::Node* p = description.GetProperty("dim")){
+	if(const stob::Node* p = desc.GetProperty("dim")){
 		this->rect.d = morda::DimVec2f(p);
 	}else{
 		this->rect.d.SetTo(0);
 	}
 
-	if(const stob::Node* p = description.GetProperty("name")){
+	if(const stob::Node* p = desc.GetProperty("name")){
 		this->name = p->Value();
 	}
 
-	if(const stob::Node* p = description.GetProperty("clip")){
+	if(const stob::Node* p = desc.GetProperty("clip")){
 		this->clip = p->AsBool();
+	}
+	
+	if(const stob::Node* p = desc.GetProperty("background")){
+		this->background = Background::New(*p);
 	}
 }
 
@@ -84,6 +88,10 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 		
 		glScissor(scissor.p.x, scissor.p.y, scissor.d.x, scissor.d.y);
 		
+		if(this->background){
+			this->background->Render(matrix, this->Rect().d);
+		}
+		
 		this->Render(matrix);
 		
 		if(scissorTestWasEnabled){
@@ -92,6 +100,10 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 			glDisable(GL_SCISSOR_TEST);
 		}
 	}else{
+		if(this->background){
+			this->background->Render(matrix, this->Rect().d);
+		}
+		
 		this->Render(matrix);
 	}
 

@@ -38,6 +38,7 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
+#include "../util/Background.hpp"
 
 #include "../config.hpp"
 
@@ -170,6 +171,10 @@ public:
 		this->OnResize();//call virtual method
 		this->relayoutNeeded = false;
 	}
+	
+	void ResizeBy(const morda::Vec2f& delta){
+		this->Resize(this->Rect().d + delta);
+	}
 
 	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT{
 		return nullptr;
@@ -187,7 +192,7 @@ public:
 
 	virtual ~Widget()NOEXCEPT{}
 
-	virtual void Render(const morda::Matr4f& matrix)const{};
+	virtual void Render(const morda::Matr4f& matrix)const{}
 	
 private:
 	void RenderInternal(const morda::Matr4f& matrix)const;
@@ -318,7 +323,14 @@ public:
 		return morda::Rect2f(morda::Vec2f(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	
-protected:
+private:
+	
+	std::unique_ptr<Background> background;
+	
+public:
+	void SetBackground(std::unique_ptr<Background> b){
+		this->background = std::move(b);
+	}
 };
 
 

@@ -71,6 +71,8 @@ FrameContainer{
 	}
 
 	Label{
+		background{color{0xff00ff00}}
+
 		text {"Test Label"}
 
 		name{"Test label"}
