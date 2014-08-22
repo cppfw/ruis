@@ -150,7 +150,7 @@ morda::Window::Window() :
 		Widget(0),
 		LinearContainer(*stob::Parse(DWindowDesc))
 {
-	this->FindWidgets();
+	this->SetupWidgets();
 }
 
 
@@ -158,14 +158,14 @@ morda::Window::Window(const stob::Node& desc) :
 		Widget(desc),
 		LinearContainer(*stob::Parse(DWindowDesc))
 {
-	this->FindWidgets();
+	this->SetupWidgets();
 	
 	if(const stob::Node* t = desc.GetProperty("title")){
 		this->SetTitle(t->Value());
 	}
 }
 
-void morda::Window::FindWidgets(){
+void morda::Window::SetupWidgets(){
 	this->caption = this->FindChildByName("morda_caption");
 	
 	std::function<decltype(Widget::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){
