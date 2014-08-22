@@ -61,6 +61,15 @@ protected:
 	}
 
 public:
+	void SetColor(std::uint32_t color){
+		this->SetColor(
+				float(color & 0xff) / float(0xff),
+				float((color >> 8) & 0xff) / float(0xff),
+				float((color >> 16) & 0xff) / float(0xff),
+				float((color >> 24) & 0xff) / float(0xff)
+			);
+	}
+	
 	void SetColor(morda::Vec3f color){
 		glUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
 		ASSERT(glGetError() == GL_NO_ERROR)
@@ -70,6 +79,11 @@ public:
 		glUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
 		ASSERT(glGetError() == GL_NO_ERROR)
     }
+	
+	void SetColor(float r, float g, float b, float a){
+		glUniform4f(this->colorUniform, r, g, b, a);
+		ASSERT(glGetError() == GL_NO_ERROR)
+	}
 
 	void SetColor(const morda::Vec4f& color){
 		static_assert(sizeof(color) == sizeof(GLfloat) * 4, "size mismatch");
