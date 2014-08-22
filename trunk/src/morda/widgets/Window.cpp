@@ -1,5 +1,7 @@
 #include "Window.hpp"
 
+#include "../App.hpp"
+
 
 using namespace morda;
 
@@ -88,6 +90,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{100% 0}
 						weight{1}
 					}}
+//					background{color{0xff800080}}
 				}
 
 				//bottom border
@@ -163,9 +166,15 @@ morda::Window::Window(const stob::Node& desc) :
 	if(const stob::Node* t = desc.GetProperty("title")){
 		this->SetTitle(t->Value());
 	}
+	
+	for(const stob::Node* n = desc.ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
+		this->contentArea->Add(morda::App::Inst().inflater().Inflate(*n));
+	}
 }
 
 void morda::Window::SetupWidgets(){
+	this->contentArea = std::dynamic_pointer_cast<Container>(this->FindChildByName("child_widget_area"));
+	
 	this->caption = this->FindChildByName("morda_caption");
 	
 	std::function<decltype(Widget::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){

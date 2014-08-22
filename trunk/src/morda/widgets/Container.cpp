@@ -31,11 +31,7 @@ public:
 Container::Container(const stob::Node& description) :
 		Widget(description)
 {
-	for(const stob::Node* n = description.Child(); n; n = n->Next()){
-		if(n->IsProperty()){
-			continue;//skip properties
-		}
-		
+	for(const stob::Node* n = description.ChildNonProperty().node(); n; n = n->NextNonProperty().node()){
 		this->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }

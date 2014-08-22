@@ -34,6 +34,14 @@ FrameContainer{
 			pos{10 10}
 
 			title{"Window title"}
+
+			Label{
+				text{"inwindow text"}
+				prop{layout{
+					dim{min min}
+					gravity{50% 50%}
+				}}
+			}
 		}
 	}
 
