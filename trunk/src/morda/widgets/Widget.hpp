@@ -163,6 +163,8 @@ public:
 	}
 
 	void Resize(const morda::Vec2f& newDims){
+		ASSERT(newDims.x >= 0)
+		ASSERT(newDims.y >= 0)
 		if(this->rect.d == newDims){
 			return;
 		}
