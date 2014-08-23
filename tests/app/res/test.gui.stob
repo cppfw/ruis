@@ -169,51 +169,56 @@ FrameContainer{
 				}
 			}
 		}//~Window
+
+		Window{
+			dim{300 200}
+			pos{0 200}
+
+			title{"Sliders"}
+
+			LinearContainer{
+				vertical {false}
+
+				prop{ layout{
+					dim {100% 100%}
+				}}
+
+				ImageLabel{
+					image{tex_sample}
+
+					keepAspectRatio{true}
+
+					prop{layout{
+						dim{min 100%}
+					}}
+				}
+
+				Slider{
+		//			vertical{false}
+
+		//			reverse{true}
+
+					prop{layout{
+						dim {0 40} //TODO: min min
+						weight{1}
+						gravity {0% 0%}
+					}}
+				}
+
+				Slider{
+					name {"vertical slider"}
+
+					vertical{true}
+					reverse{true}
+
+					prop{layout{
+						dim {40 100%} //TODO: min min
+						gravity {0% 0%}
+					}}
+				}
+			}
+		}
 	}
 
-	LinearContainer{
-		dim{100 200}
-		pos{10 10}
-
-		vertical {false}
-
-		prop{ layout{
-			dim {100% 50%}
-			gravity {50% 100%}
-		}}
-
-		ImageLabel{
-			image{tex_sample}
-
-			keepAspectRatio{true}
-
-			prop{layout{
-				dim{min 100%}
-			}}
-		}
-
-		Slider{
-//			vertical{false}
-
-//			reverse{true}
-
-			prop{layout{
-				dim {0 40} //TODO: min min
-				weight{1}
-				gravity {0% 0%}
-			}}
-		}
-
-		Slider{
-			name {"vertical slider"}
-
-			vertical{true}
-			reverse{true}
-
-			prop{layout{
-				dim {40 100%} //TODO: min min
-				gravity {0% 0%}
-			}}
-		}
-	}
+	
 }
