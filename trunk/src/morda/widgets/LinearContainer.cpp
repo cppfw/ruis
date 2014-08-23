@@ -154,11 +154,11 @@ morda::Vec2f LinearContainer::ComputeMinDim()const NOEXCEPT{
 				{
 					LayoutDim ld = LayoutDim::FromLayout(*layout);
 					
-					//FRACTION min size is 0
+					//FRACTION min size is minDim
 					for(unsigned j = 0; j != 2; ++j){
 						if(ld[j].unit == LayoutDim::FRACTION){
 							ld[j].unit = LayoutDim::PIXEL;
-							ld[j].value = 0;
+							ld[j].value = dim[j];
 						}
 					}
 					

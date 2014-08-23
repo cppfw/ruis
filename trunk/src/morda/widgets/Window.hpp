@@ -39,6 +39,8 @@ class Window :
 		virtual public Widget,
 		private LinearContainer
 {
+	morda::Vec2f emptyMinDim;//minimal dimension of empty window
+	
 	std::shared_ptr<Widget> caption;
 	std::shared_ptr<Label> title;
 	
