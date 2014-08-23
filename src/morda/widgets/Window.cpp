@@ -11,7 +11,7 @@ namespace{
 const char* DWindowDesc = R"qwertyuiop(
 		{
 			//left border
-			FrameContainer{
+			LinearContainer{
 				background{color{0xff808080}}
 				vertical{true}
 				prop{layout{
@@ -21,15 +21,20 @@ const char* DWindowDesc = R"qwertyuiop(
 					name{left_top_resize}
 					prop{layout{
 						dim{100% 5mm}
-						gravity{0% 100%}
 					}}
 					background{color{0xffffff00}}
+				}
+				Widget{
+					name{left_resize}
+					prop{layout{
+						weight{1}
+						dim{100% 0}
+					}}
 				}
 				Widget{
 					name{left_bottom_resize}
 					prop{layout{
 						dim{100% 5mm}
-						gravity{0% 0%}
 					}}
 					background{color{0xffffff00}}
 				}
@@ -44,7 +49,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}}
 
 				//top border
-				FrameContainer{
+				LinearContainer{
 					background{color{0xff808080}}
 					prop{layout{
 						dim{100% 2.5mm}
@@ -53,15 +58,20 @@ const char* DWindowDesc = R"qwertyuiop(
 						name{top_left_resize}
 						prop{layout{
 							dim{2.5mm 100%}
-							gravity{0% 0%}
 						}}
 						background{color{0xffffff00}}
+					}
+					Widget{
+						name{top_resize}
+						prop{layout{
+							weight{1}
+							dim{0 100%}
+						}}
 					}
 					Widget{
 						name{top_right_resize}
 						prop{layout{
 							dim{2.5mm 100%}
-							gravity{100% 0%}
 						}}
 						background{color{0xffffff00}}
 					}
@@ -94,7 +104,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 
 				//bottom border
-				FrameContainer{
+				LinearContainer{
 					background{color{0xff808080}}
 					prop{layout{
 						dim{100% 2.5mm}
@@ -103,15 +113,20 @@ const char* DWindowDesc = R"qwertyuiop(
 						name{bottom_left_resize}
 						prop{layout{
 							dim{2.5mm 100%}
-							gravity{0% 0%}
 						}}
 						background{color{0xffffff00}}
+					}
+					Widget{
+						name{bottom_resize}
+						prop{layout{
+							weight{1}
+							dim{0 100%}
+						}}
 					}
 					Widget{
 						name{bottom_right_resize}
 						prop{layout{
 							dim{2.5mm 100%}
-							gravity{100% 0%}
 						}}
 						background{color{0xffffff00}}
 					}
@@ -119,7 +134,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			}
 
 			//right border
-			FrameContainer{
+			LinearContainer{
 				background{color{0xff808080}}
 				vertical{true}
 				prop{layout{
@@ -129,15 +144,20 @@ const char* DWindowDesc = R"qwertyuiop(
 					name{right_top_resize}
 					prop{layout{
 						dim{100% 5mm}
-						gravity{0% 100%}
 					}}
 					background{color{0xffffff00}}
 				}
 				Widget{
+						name{right_resize}
+						prop{layout{
+							weight{1}
+							dim{100% 0}
+						}}
+					}
+				Widget{
 					name{right_bottom_resize}
 					prop{layout{
 						dim{100% 5mm}
-						gravity{0% 0%}
 					}}
 					background{color{0xffffff00}}
 				}
@@ -270,6 +290,56 @@ void morda::Window::SetupWidgets(){
 		};
 		w1->onMouseMove = f;
 		w2->onMouseMove = f;
+	}
+	
+	{
+		std::shared_ptr<Widget> w = this->FindChildByName("left_resize");
+		w->onMouseButton = getButtonFunc(this->leftResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+			if(this->leftResizeCaptured){
+				morda::Vec2f d = pos - this->capturePoint;
+				this->MoveBy(morda::Vec2f(d.x, 0));
+				this->ResizeBy(morda::Vec2f(-d.x, 0));
+			}
+			return false;
+		};
+	}
+	
+	{
+		std::shared_ptr<Widget> w = this->FindChildByName("right_resize");
+		w->onMouseButton = getButtonFunc(this->rightResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+			if(this->rightResizeCaptured){
+				morda::Vec2f d = pos - this->capturePoint;
+				this->ResizeBy(morda::Vec2f(d.x, 0));
+			}
+			return false;
+		};
+	}
+	
+	{
+		std::shared_ptr<Widget> w = this->FindChildByName("top_resize");
+		w->onMouseButton = getButtonFunc(this->topResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+			if(this->topResizeCaptured){
+				morda::Vec2f d = pos - this->capturePoint;
+				this->ResizeBy(morda::Vec2f(0, d.y));
+			}
+			return false;
+		};
+	}
+	
+	{
+		std::shared_ptr<Widget> w = this->FindChildByName("bottom_resize");
+		w->onMouseButton = getButtonFunc(this->bottomResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+			if(this->bottomResizeCaptured){
+				morda::Vec2f d = pos - this->capturePoint;
+				this->MoveBy(morda::Vec2f(0, d.y));
+				this->ResizeBy(morda::Vec2f(0, -d.y));
+			}
+			return false;
+		};
 	}
 }
 
