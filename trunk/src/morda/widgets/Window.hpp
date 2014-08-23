@@ -49,6 +49,10 @@ class Window :
 	bool leftBottomResizeCaptured = false;
 	bool rightTopResizeCaptured = false;
 	bool rightBottomResizeCaptured = false;
+	bool leftResizeCaptured = false;
+	bool rightResizeCaptured = false;
+	bool topResizeCaptured = false;
+	bool bottomResizeCaptured = false;
 	
 	morda::Vec2f capturePoint;
 	
@@ -60,7 +64,7 @@ public:
 	Window(const stob::Node& desc);
 	
 	
-	Window(const Window& orig) = delete;
+	Window(const Window&) = delete;
 	
 	void SetTitle(const std::string& str);
 	
