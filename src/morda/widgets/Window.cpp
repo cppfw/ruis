@@ -198,7 +198,7 @@ void morda::Window::SetupWidgets(){
 	this->caption = this->FindChildByName("morda_caption");
 	
 	std::function<decltype(Widget::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){
-		return [this, &flag](Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		return decltype(Widget::onMouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
 			if(button != Widget::EMouseButton::LEFT){
 				return false;
 			}
@@ -210,7 +210,7 @@ void morda::Window::SetupWidgets(){
 			}
 			flag = false;
 			return false;
-		};
+		});
 	};
 	
 	this->caption->onMouseButton = getButtonFunc(this->captionCaptured);
