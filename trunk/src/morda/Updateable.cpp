@@ -132,9 +132,9 @@ std::uint32_t Updateable::Updater::Update(){
 	}else{
 		uncorrectedDt -= correction;
 		
-		//TODO: why?
-		//do the updating with 10ms steps at least
-		uncorrectedDt += (uncorrectedDt % 10 == 0 ? 0 : 10);
+		if(0 < uncorrectedDt && uncorrectedDt < 5){
+			uncorrectedDt = 5;//wait for 5ms at least, if not 0.
+		}
 		
 		return uncorrectedDt;
 	}
