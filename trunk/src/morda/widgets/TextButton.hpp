@@ -46,13 +46,11 @@ namespace morda{
 class TextButton : public Button, public Label{
 
 public:
-	TextButton(const stob::Node& description) :
-			Widget(description),
-			Button(description),
-			Label(description)
+	TextButton(const stob::Node* desc = nullptr) :
+			Widget(desc),
+			Button(desc),
+			Label(desc)
 	{}
-	
-	TextButton() : Widget(0){}
 public:
 	
 	~TextButton()NOEXCEPT{}

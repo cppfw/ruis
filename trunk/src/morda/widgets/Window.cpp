@@ -169,27 +169,22 @@ const char* DWindowDesc = R"qwertyuiop(
 
 
 
-morda::Window::Window() :
-		Widget(0),
-		LinearContainer(*stob::Parse(DWindowDesc)),
-		emptyMinDim(this->GetMinDim())
-{
-	this->SetupWidgets();
-}
-
-
-morda::Window::Window(const stob::Node& desc) :
+morda::Window::Window(const stob::Node* desc) :
 		Widget(desc),
-		LinearContainer(*stob::Parse(DWindowDesc)),
+		LinearContainer(stob::Parse(DWindowDesc).get()),
 		emptyMinDim(this->LinearContainer::GetMinDim())
 {
 	this->SetupWidgets();
 	
-	if(const stob::Node* t = desc.GetProperty("title")){
+	if(!desc){
+		return;
+	}
+	
+	if(const stob::Node* t = desc->GetProperty("title")){
 		this->SetTitle(t->Value());
 	}
 	
-	for(const stob::Node* n = desc.ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
+	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
 		this->contentArea->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }

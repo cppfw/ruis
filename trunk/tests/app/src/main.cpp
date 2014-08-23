@@ -28,8 +28,8 @@ class SimpleWidget : public morda::Widget, public morda::Updateable, public mord
 	std::shared_ptr<morda::ResFont> fnt;
 	
 public:	
-	SimpleWidget(const stob::Node& description) :
-			morda::Widget(description)
+	SimpleWidget(const stob::Node* desc) :
+			morda::Widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");

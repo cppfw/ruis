@@ -61,12 +61,11 @@ class Window :
 	void SetupWidgets();
 	
 public:
-	Window();
-	
-	Window(const stob::Node& desc);
+	Window(const stob::Node* desc = nullptr);
 	
 	
 	Window(const Window&) = delete;
+	Window& operator=(const Window&) = delete;
 	
 	void SetTitle(const std::string& str);
 	

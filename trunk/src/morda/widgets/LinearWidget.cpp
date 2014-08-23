@@ -5,14 +5,18 @@ using namespace morda;
 
 
 
-LinearWidget::LinearWidget(const stob::Node& desc) :
+LinearWidget::LinearWidget(const stob::Node* desc) :
 		Widget(desc)
 {
-	if(const stob::Node* n = desc.GetProperty("vertical")){
+	if(!desc){
+		return;
+	}
+	
+	if(const stob::Node* n = desc->GetProperty("vertical")){
 		this->isVertical = n->AsBool();
 	}
 	
-	if(const stob::Node* n = desc.GetProperty("reverse")){
+	if(const stob::Node* n = desc->GetProperty("reverse")){
 		this->isReverse = n->AsBool();
 	}
 }

@@ -9,33 +9,33 @@ using namespace morda;
 
 
 
-Widget::Widget(const stob::Node& desc){
-	if(const stob::Node* p = desc.Child("prop").node()){
+Widget::Widget(const stob::Node* desc){
+	if(!desc){
+		return;
+	}
+	
+	if(const stob::Node* p = desc->Child("prop").node()){
 		this->prop = p->Clone();
 		this->prop->SetValue();//clear value of the prop node, we don't need it
 	}
 
-	if(const stob::Node* p = desc.GetProperty("pos")){
+	if(const stob::Node* p = desc->GetProperty("pos")){
 		this->rect.p = morda::DimVec2f(p);
-	}else{
-		this->rect.p.SetTo(0);
 	}
 
-	if(const stob::Node* p = desc.GetProperty("dim")){
+	if(const stob::Node* p = desc->GetProperty("dim")){
 		this->rect.d = morda::DimVec2f(p);
-	}else{
-		this->rect.d.SetTo(0);
 	}
 
-	if(const stob::Node* p = desc.GetProperty("name")){
+	if(const stob::Node* p = desc->GetProperty("name")){
 		this->name = p->Value();
 	}
 
-	if(const stob::Node* p = desc.GetProperty("clip")){
+	if(const stob::Node* p = desc->GetProperty("clip")){
 		this->clip = p->AsBool();
 	}
 	
-	if(const stob::Node* p = desc.GetProperty("background")){
+	if(const stob::Node* p = desc->GetProperty("background")){
 		this->background = Background::New(*p);
 	}
 }

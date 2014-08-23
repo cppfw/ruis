@@ -45,12 +45,11 @@ class FrameContainer :
 		public GravitatingWidget
 {
 	
-	FrameContainer(const FrameContainer&);
-	FrameContainer& operator=(const FrameContainer&);
+	FrameContainer(const FrameContainer&) = delete;
+	FrameContainer& operator=(const FrameContainer&) = delete;
 	
 public:
-	FrameContainer() : Widget(0){}
-	FrameContainer(const stob::Node& desc);
+	FrameContainer(const stob::Node* desc = nullptr);
 	
 public:	
 	morda::Vec2f ComputeMinDim()const override;
