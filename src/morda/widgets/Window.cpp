@@ -180,6 +180,9 @@ morda::Window::Window(const stob::Node* desc) :
 		return;
 	}
 	
+	this->contentArea->SetClip(this->IsClip());
+	this->SetClip(false);
+	
 	if(const stob::Node* t = desc->GetProperty("title")){
 		this->SetTitle(t->Value());
 	}

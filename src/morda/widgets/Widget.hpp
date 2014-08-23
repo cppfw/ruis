@@ -80,7 +80,7 @@ private:
 	//clip widgets contents by widget's border if set to true
 	bool clip = false;
 public:
-	bool GetClip()const NOEXCEPT{
+	bool IsClip()const NOEXCEPT{
 		return this->clip;
 	}
 	
