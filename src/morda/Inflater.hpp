@@ -81,7 +81,7 @@ public:
 		class Factory : public WidgetFactory{
 		public:
 			std::shared_ptr<morda::Widget> Create(const stob::Node& node)const override{
-				return std::move(ting::New<T_Widget>(node));
+				return std::move(ting::New<T_Widget>(&node));
 			}
 		};
 

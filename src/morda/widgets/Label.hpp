@@ -51,9 +51,7 @@ class Label : public GravitatingWidget, public PaddedWidget{
 	morda::Vec2f pivot;
 	
 public:
-	Label(const stob::Node& description);
-	
-	Label();
+	Label(const stob::Node* desc = nullptr);
 	
 public:
 	

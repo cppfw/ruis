@@ -43,9 +43,7 @@ class LinearWidget : public virtual Widget{
 	bool isReverse = false;
 
 protected:
-	LinearWidget() : Widget(0){}
-	
-	LinearWidget(const stob::Node& desc);
+	LinearWidget(const stob::Node* desc = nullptr);
 
 	
 	//TODO: doxygen

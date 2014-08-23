@@ -184,12 +184,7 @@ public:
 	}
 	
 public:
-	//NOTE: dummy int argument to avoid implicit call of default constructor in derived classes, to avoid silent bugs.
-	Widget(int dummy) :
-			rect(0)
-	{}
-	
-	Widget(const stob::Node& description);
+	Widget(const stob::Node* desc);
 	
 public:
 

@@ -10,7 +10,7 @@ using namespace morda;
 //TODO: add margins
 
 
-FrameContainer::FrameContainer(const stob::Node& desc) :
+FrameContainer::FrameContainer(const stob::Node* desc) :
 		Widget(desc),
 		Container(desc),
 		PaddedWidget(desc),

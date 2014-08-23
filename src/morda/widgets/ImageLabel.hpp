@@ -44,9 +44,7 @@ class ImageLabel : public virtual Widget{
 	bool keepAspectRatio = false;
 	
 public:
-	ImageLabel();
-	
-	ImageLabel(const stob::Node& desc);
+	ImageLabel(const stob::Node* desc = nullptr);
 public:
 	virtual ~ImageLabel()NOEXCEPT{}
 	

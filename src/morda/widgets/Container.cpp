@@ -28,10 +28,14 @@ public:
 
 
 
-Container::Container(const stob::Node& description) :
-		Widget(description)
+Container::Container(const stob::Node* desc) :
+		Widget(desc)
 {
-	for(const stob::Node* n = description.ChildNonProperty().node(); n; n = n->NextNonProperty().node()){
+	if(!desc){
+		return;
+	}
+	
+	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){
 		this->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }

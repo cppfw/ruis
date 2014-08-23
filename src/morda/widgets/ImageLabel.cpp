@@ -6,15 +6,19 @@
 using namespace morda;
 
 
-ImageLabel::ImageLabel(const stob::Node& desc) :
+ImageLabel::ImageLabel(const stob::Node* desc) :
 		Widget(desc)
 {
-	if(const stob::Node* image = desc.GetProperty("image")){
+	if(!desc){
+		return;
+	}
+	
+	if(const stob::Node* image = desc->GetProperty("image")){
 		this->tex = App::Inst().resMan.Load<ResTexture>(image->Value());
 		this->Resize(this->tex->Tex().Dim());
 	}
 	
-	if(const stob::Node* kar = desc.GetProperty("keepAspectRatio")){
+	if(const stob::Node* kar = desc->GetProperty("keepAspectRatio")){
 		this->keepAspectRatio = kar->AsBool();
 	}
 }

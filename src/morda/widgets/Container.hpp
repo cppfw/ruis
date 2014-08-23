@@ -60,9 +60,7 @@ protected:
 	}
 	
 public:
-	Container() : Widget(0){}
-	
-	Container(const stob::Node& description);
+	Container(const stob::Node* desc = nullptr);
 
 public:
 	~Container()NOEXCEPT{}

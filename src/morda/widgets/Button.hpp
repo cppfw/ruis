@@ -43,11 +43,9 @@ class Button : public virtual Widget{
 	bool isPressed = false;
 	
 protected:
-	Button(const stob::Node& description) :
-			Widget(description)
+	Button(const stob::Node* desc = nullptr) :
+			Widget(desc)
 	{}
-	
-	Button() : Widget(0){}
 public:
 	
 	~Button()NOEXCEPT{}

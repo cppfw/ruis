@@ -40,17 +40,14 @@ namespace morda{
 class PaddedWidget : public virtual Widget{
 	LeftBottomRightTop padding;
 protected:
-	PaddedWidget() : Widget(0){}
-	
-	PaddedWidget(LeftBottomRightTop padding) :
-			Widget(0),
-			padding(padding)
-	{}
-	
-	PaddedWidget(const stob::Node& desc) :
+	PaddedWidget(const stob::Node* desc = nullptr) :
 			Widget(desc)
 	{
-		if(const stob::Node* n = desc.Child("padding").node()){
+		if(!desc){
+			return;
+		}
+		
+		if(const stob::Node* n = desc->Child("padding").node()){
 			this->padding = LeftBottomRightTop::FromSTOB(*n);
 		}else{
 			this->padding = LeftBottomRightTop::Default();

@@ -47,12 +47,11 @@ class LinearContainer :
 		public LinearWidget,
 		public GravitatingWidget
 {
-	LinearContainer(const LinearContainer&);
-	LinearContainer& operator=(const LinearContainer&);
+	LinearContainer(const LinearContainer&) = delete;
+	LinearContainer& operator=(const LinearContainer&) = delete;
 
 public:
-	LinearContainer() : Widget(0){}
-	LinearContainer(const stob::Node& desc);	
+	LinearContainer(const stob::Node* desc = nullptr);
 public:
 
 	void OnResize() override;	

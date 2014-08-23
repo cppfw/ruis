@@ -10,24 +10,23 @@ using namespace morda;
 
 
 
-Label::Label() : Widget(0){
-	this->font = App::Inst().resMan.Load<morda::ResFont>("fnt_main");
-}
-
-
-Label::Label(const stob::Node& description) :
-		Widget(description),
-		GravitatingWidget(description),
-		PaddedWidget(description)
+Label::Label(const stob::Node* desc) :
+		Widget(desc),
+		GravitatingWidget(desc),
+		PaddedWidget(desc)
 {
+	if(!desc){
+		return;
+	}
+	
 	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
-	if(const stob::Node* p = description.GetProperty("font")){
+	if(const stob::Node* p = desc->GetProperty("font")){
 		this->font = App::Inst().resMan.Load<morda::ResFont>(p->Value());
 	}else{
 		this->font = App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
-	if(const stob::Node* p = description.GetProperty("text")){
+	if(const stob::Node* p = desc->GetProperty("text")){
 		this->SetText(p->Value());
 	}
 }

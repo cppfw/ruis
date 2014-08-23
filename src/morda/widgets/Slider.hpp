@@ -78,9 +78,7 @@ class Slider :
 	};
 	
 public:
-	Slider();
-	
-	Slider(const stob::Node& description);
+	Slider(const stob::Node* desc = nullptr);
 	
 public:
 	std::function<void(float)> factorChange;
