@@ -136,11 +136,15 @@ public:
 class CubeWidget : public morda::Widget, public morda::Updateable{
 	std::shared_ptr<morda::ResTexture> tex;
 	
-	morda::Quatf rot;
+	morda::Quatf rot = morda::Quatf().Identity();
 public:
-	CubeWidget() : Widget(0){
+	CubeWidget(const stob::Node* desc) :
+			Widget(desc)
+	{
 		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
+		
+		
 	}
 	
 	void Update(std::uint32_t dt) override{
@@ -237,6 +241,7 @@ public:
 //		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
+		this->inflater().AddWidget<CubeWidget>("CubeWidget");
 
 		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(
 				*this->CreateResourceFileInterface("test.gui.stob")
@@ -258,13 +263,7 @@ public:
 				);
 		};
 		
-		
-		if(auto container = std::dynamic_pointer_cast<morda::Container>(c)){
-			auto w = ting::New<CubeWidget>();
-			w->Resize(morda::Vec2f(200, 150));
-			w->StartUpdating(30);
-			container->Add(w);
-		}
+		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
 		
 		this->SetRootWidget(c);
 	}

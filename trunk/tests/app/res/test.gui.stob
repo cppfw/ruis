@@ -17,208 +17,214 @@ style some_style{
 	}
 }
 
-FrameContainer{
-	padding{10 20 30 40}
-
-	style{some_style}
-
-	Container{
-		prop{
-			layout{
-				dim{100% 100%}
-			}
+Container{
+	prop{
+		layout{
+			dim{100% 100%}
 		}
+	}
 
-		Window{
-			dim{300 200}
-			pos{10 10}
+	Window{
+		dim{300 200}
+		pos{10 10}
 
-			title{"Window title"}
+		title{"Window title"}
+
+		Label{
+			text{"inwindow text"}
+			prop{layout{
+				dim{min min}
+				gravity{50% 50%}
+			}}
+		}
+	}
+
+	Window{
+		dim{300 200}
+		pos{300 10}
+
+		title{"LinearLayout"}
+
+		LinearContainer{
+			padding {20 30 10 40}
+			vertical {false}
+	//		reverse {true}
+
+			pos {50 100}
+			dim {220 100}
+
+			name {someContainer}
+
+			clip {true}
+
+			prop{layout{
+				dim {100% 100%}
+			}}
 
 			Label{
-				text{"inwindow text"}
-				prop{layout{
-					dim{min min}
-					gravity{50% 50%}
-				}}
+				pos {0 0}
+				name {label1}
+				text {trololo}
+				gravity {left bottom}
+				padding {10 20 30 40}
+
+				prop{
+					layout{
+						weight {0}
+						gravity {100%}
+					}
+				}
+			}
+
+			Label{
+				pos {0 0}
+				name {label2}
+				text {"blah bla"}
+				padding {0}
+
+				prop{
+					layout{
+						weight {0}
+						margins {10 10 10 10}
+					}
+				}
+			}
+
+			TextButton{
+				name {show_VK_button}
+				pos {50 80}
+				dim {10 30}
+				text {"Show VK"}
+				clip{true}
+
+				prop{
+					layout{
+						dim {30% min}
+						gravity {0% 70%}
+						weight {1}
+						margins {10 20 30 40}
+					}
+				}
+			}
+		}
+	}//~Window
+
+	Window{
+		dim{300 200}
+		pos{300 250}
+
+		title{"Image label, button, custom widget"}
+
+		clip{true}
+
+		ImageLabel{
+			image{tex_sample}
+
+	//		keepAspectRatio{true}
+
+			prop{layout{
+				dim{50 84}
+				gravity{50% 0%}
+			}}
+		}
+
+		U_SimpleWidget{
+			dim {300 300}
+		}
+
+
+		TextButton{
+			pos {10 20}
+			dim {100 50}
+			gravity {30% 70%}
+			text {"Hello world!"}
+
+			name{"Hello world button"}
+
+			prop{
+				layout{
+					dim{min 10mm}
+					gravity{0% 0%}
+				}
 			}
 		}
 
-		Window{
-			dim{300 200}
-			pos{300 10}
+		Label{
+			background{color{0xff00ff00}}
 
-			title{"LinearLayout"}
+			text {"Test Label"}
 
-			LinearContainer{
-				padding {20 30 10 40}
-				vertical {false}
-		//		reverse {true}
+			name{"Test label"}
 
-				pos {50 100}
-				dim {220 100}
-
-				name {someContainer}
-
-				clip {true}
-
-				prop{layout{
-					dim {100% 100%}
-				}}
-
-				Label{
-					pos {0 0}
-					name {label1}
-					text {trololo}
-					gravity {left bottom}
-					padding {10 20 30 40}
-
-					prop{
-						layout{
-							weight {0}
-							gravity {100%}
-						}
-					}
-				}
-
-				Label{
-					pos {0 0}
-					name {label2}
-					text {"blah bla"}
-					padding {0}
-
-					prop{
-						layout{
-							weight {0}
-							margins {10 10 10 10}
-						}
-					}
-				}
-
-				TextButton{
-					name {show_VK_button}
-					pos {50 80}
-					dim {10 30}
-					text {"Show VK"}
-					clip{true}
-
-					prop{
-						layout{
-							dim {30% min}
-							gravity {0% 70%}
-							weight {1}
-							margins {10 20 30 40}
-						}
-					}
+			prop{
+				layout{
+					dim{min 30}
+					gravity{50% 0%}
 				}
 			}
-		}//~Window
+		}
+	}//~Window
 
-		Window{
-			dim{300 200}
-			pos{300 200}
+	Window{
+		dim{300 200}
+		pos{0 250}
 
-			title{"Image label, button, custom widget"}
+		title{"Sliders"}
 
-			clip{true}
+		LinearContainer{
+			vertical {false}
+
+			prop{ layout{
+				dim {100% 100%}
+			}}
 
 			ImageLabel{
 				image{tex_sample}
 
-		//		keepAspectRatio{true}
+				keepAspectRatio{true}
 
 				prop{layout{
-					dim{50 84}
-					gravity{50% 0%}
+					dim{min 100%}
 				}}
 			}
 
-			U_SimpleWidget{
-				dim {300 300}
-			}
+			Slider{
+	//			vertical{false}
 
+	//			reverse{true}
 
-			TextButton{
-				pos {10 20}
-				dim {100 50}
-				gravity {30% 70%}
-				text {"Hello world!"}
-
-				name{"Hello world button"}
-
-				prop{
-					layout{
-						dim{min 10mm}
-						gravity{0% 0%}
-					}
-				}
-			}
-
-			Label{
-				background{color{0xff00ff00}}
-
-				text {"Test Label"}
-
-				name{"Test label"}
-
-				prop{
-					layout{
-						dim{min 30}
-						gravity{50% 0%}
-					}
-				}
-			}
-		}//~Window
-
-		Window{
-			dim{300 200}
-			pos{0 200}
-
-			title{"Sliders"}
-
-			LinearContainer{
-				vertical {false}
-
-				prop{ layout{
-					dim {100% 100%}
+				prop{layout{
+					dim {0 40} //TODO: min min
+					weight{1}
+					gravity {0% 0%}
 				}}
+			}
 
-				ImageLabel{
-					image{tex_sample}
+			Slider{
+				name {"vertical slider"}
 
-					keepAspectRatio{true}
+				vertical{true}
+				reverse{true}
 
-					prop{layout{
-						dim{min 100%}
-					}}
-				}
-
-				Slider{
-		//			vertical{false}
-
-		//			reverse{true}
-
-					prop{layout{
-						dim {0 40} //TODO: min min
-						weight{1}
-						gravity {0% 0%}
-					}}
-				}
-
-				Slider{
-					name {"vertical slider"}
-
-					vertical{true}
-					reverse{true}
-
-					prop{layout{
-						dim {40 100%} //TODO: min min
-						gravity {0% 0%}
-					}}
-				}
+				prop{layout{
+					dim {40 100%} //TODO: min min
+					gravity {0% 0%}
+				}}
 			}
 		}
 	}
 
-	
+	Window{
+		dim{300 200}
+		pos{10 500}
+
+		title{"Spinning cube"}
+
+		CubeWidget{
+			name{cube_widget}
+			prop{layout{
+				dim{100% 100%}
+			}}
+		}
+	}
 }
