@@ -171,7 +171,8 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window() :
 		Widget(0),
-		LinearContainer(*stob::Parse(DWindowDesc))
+		LinearContainer(*stob::Parse(DWindowDesc)),
+		emptyMinDim(this->GetMinDim())
 {
 	this->SetupWidgets();
 }
@@ -179,7 +180,8 @@ morda::Window::Window() :
 
 morda::Window::Window(const stob::Node& desc) :
 		Widget(desc),
-		LinearContainer(*stob::Parse(DWindowDesc))
+		LinearContainer(*stob::Parse(DWindowDesc)),
+		emptyMinDim(this->LinearContainer::GetMinDim())
 {
 	this->SetupWidgets();
 	
@@ -233,6 +235,8 @@ void morda::Window::SetupWidgets(){
 		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
+				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
 				this->MoveBy(morda::Vec2f(d.x, 0));
 				this->ResizeBy(morda::Vec2f(-d.x, d.y));
 			}
@@ -250,6 +254,8 @@ void morda::Window::SetupWidgets(){
 		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
+				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(d);
 				this->ResizeBy(morda::Vec2f(-d.x, -d.y));
 			}
@@ -267,6 +273,8 @@ void morda::Window::SetupWidgets(){
 		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
+				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
 				this->ResizeBy(d);
 			}
 			return false;
@@ -283,6 +291,8 @@ void morda::Window::SetupWidgets(){
 		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
+				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(morda::Vec2f(0, d.y));
 				this->ResizeBy(morda::Vec2f(d.x, -d.y));
 			}
@@ -298,6 +308,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
 				this->MoveBy(morda::Vec2f(d.x, 0));
 				this->ResizeBy(morda::Vec2f(-d.x, 0));
 			}
@@ -311,6 +322,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
 				this->ResizeBy(morda::Vec2f(d.x, 0));
 			}
 			return false;
@@ -323,6 +335,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
 				this->ResizeBy(morda::Vec2f(0, d.y));
 			}
 			return false;
@@ -335,6 +348,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2f d = pos - this->capturePoint;
+				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(morda::Vec2f(0, d.y));
 				this->ResizeBy(morda::Vec2f(0, -d.y));
 			}
