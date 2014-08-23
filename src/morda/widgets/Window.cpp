@@ -88,7 +88,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						name{morda_title}
 						gravity{0% 50%}
 						prop{layout{
-							dim{20mm min}
+							dim{0 min}
 							weight{1}
 						}}
 					}

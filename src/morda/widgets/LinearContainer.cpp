@@ -4,6 +4,8 @@
 #include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
 
+#include <cmath>
+
 
 using namespace morda;
 
@@ -98,7 +100,10 @@ void LinearContainer::OnResize(){
 	{
 		float flexible = this->Rect().d[longIndex] - rigid;
 		ting::util::ClampBottom(flexible, 0.0f);
-		ASSERT(flexible >= 0)
+		if(!std::isfinite(flexible)){
+			flexible = 0;
+		}
+		ASSERT_INFO(flexible >= 0, "flexible = " << flexible)
 		
 		float pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		auto info = infoArray.begin();
