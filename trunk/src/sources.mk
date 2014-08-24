@@ -37,5 +37,7 @@ this_srcs += morda/widgets/LinearContainer.cpp
 this_srcs += morda/widgets/LinearWidget.cpp
 this_srcs += morda/widgets/Slider.cpp
 this_srcs += morda/widgets/TextButton.cpp
+this_srcs += morda/widgets/TextInput.cpp
+this_srcs += morda/widgets/TextWidget.cpp
 this_srcs += morda/widgets/Widget.cpp
 this_srcs += morda/widgets/Window.cpp

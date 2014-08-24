@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,43 +28,61 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "../widgets/Widget.hpp"
+#include "Widget.hpp"
+#include "../resources/ResFont.hpp"
 
-#include "../util/LeftBottomRightTop.hpp"
-
+#include <list>
+#include <vector>
 
 namespace morda{
 
-
-
-class PaddedWidget : public virtual Widget{
-	LeftBottomRightTop padding;
-protected:
-	PaddedWidget(const stob::Node* desc) :
-			Widget(desc)
-	{
-		if(!desc){
-			return;
-		}
-		
-		if(const stob::Node* n = desc->Child("padding").node()){
-			this->padding = LeftBottomRightTop::FromSTOB(*n);
-		}else{
-			this->padding = LeftBottomRightTop::Default();
-		}
-	}
+/**
+ * @brief Abstract widget displaying a text.
+ */
+class TextWidget : public virtual Widget{
+	std::shared_ptr<ResFont> font;
 	
+	std::list<std::vector<std::uint32_t>> lines;
+	
+	morda::Rect2f bb;//text bounding box
 public:
-	void SetPadding(LeftBottomRightTop padding)NOEXCEPT{
-		this->padding = padding;
+	TextWidget() = delete;
+	TextWidget(const TextWidget&) = delete;
+	TextWidget& operator=(const TextWidget&) = delete;
+	
+	virtual ~TextWidget()NOEXCEPT{}
+	
+	void SetFont(std::shared_ptr<ResFont> font){
+		ASSERT(font)
+		this->font = font;
+		
 		this->SetRelayoutNeeded();
 	}
 	
-	const LeftBottomRightTop& Padding()const NOEXCEPT{
-		return this->padding;
+	const morda::Font& Font()const{
+		return this->font->font();
 	}
+	
+	Vec2f ComputeMinDim()const NOEXCEPT override{
+		return this->bb.d;
+	}
+	
+	void Render(const morda::Matr4f& matrix)const override;
+	
+protected:
+	TextWidget(const stob::Node* desc);
+	
+	const morda::Rect2f& TextBoundingBox(){
+		return this->bb;
+	}
+	
+	decltype(TextWidget::lines) ResetLines(){
+		return std::move(this->lines);
+	}
+	
+	void SetLines(decltype(TextWidget::lines)&& lines);
+private:
+
 };
 
-
-
-}//~namespace
+}

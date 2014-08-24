@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,43 +28,25 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "../widgets/Widget.hpp"
-
-#include "../util/LeftBottomRightTop.hpp"
+#include "Widget.hpp"
+#include "TextWidget.hpp"
 
 
 namespace morda{
 
-
-
-class PaddedWidget : public virtual Widget{
-	LeftBottomRightTop padding;
-protected:
-	PaddedWidget(const stob::Node* desc) :
-			Widget(desc)
-	{
-		if(!desc){
-			return;
-		}
-		
-		if(const stob::Node* n = desc->Child("padding").node()){
-			this->padding = LeftBottomRightTop::FromSTOB(*n);
-		}else{
-			this->padding = LeftBottomRightTop::Default();
-		}
-	}
+class TextInput : public TextWidget{
 	
 public:
-	void SetPadding(LeftBottomRightTop padding)NOEXCEPT{
-		this->padding = padding;
-		this->SetRelayoutNeeded();
-	}
+	TextInput() = delete;
+	TextInput(const TextInput&) = delete;
+	TextInput& operator=(const TextInput&) = delete;
 	
-	const LeftBottomRightTop& Padding()const NOEXCEPT{
-		return this->padding;
-	}
+	TextInput(const stob::Node* desc = nullptr);
+	
+	virtual ~TextInput()NOEXCEPT{}
+	
+private:
+
 };
 
-
-
-}//~namespace
+}

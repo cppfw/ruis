@@ -227,4 +227,19 @@ Container{
 			}}
 		}
 	}
+
+	Window{
+		dim{300 200}
+		pos{310 500}
+
+		title{"TextInput"}
+
+		TextInput{
+			name{text_input}
+			background{color{0xffffffff}}
+			prop{layout{
+				dim{100% 10}
+			}}
+		}
+	}
 }

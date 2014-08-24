@@ -13,17 +13,11 @@ using namespace morda;
 Label::Label(const stob::Node* desc) :
 		Widget(desc),
 		GravitatingWidget(desc),
-		PaddedWidget(desc)
+		PaddedWidget(desc),
+		TextWidget(desc)
 {
 	if(!desc){
 		return;
-	}
-	
-	//NOTE: font must be loaded before setting the text because it gets the string bounding box from the font.
-	if(const stob::Node* p = desc->GetProperty("font")){
-		this->font = App::Inst().resMan.Load<morda::ResFont>(p->Value());
-	}else{
-		this->font = App::Inst().resMan.Load<morda::ResFont>("fnt_main");
 	}
 	
 	if(const stob::Node* p = desc->GetProperty("text")){
@@ -36,28 +30,27 @@ Label::Label(const stob::Node* desc) :
 void Label::SetText(const std::string& text){
 	this->text = text;
 	
-	this->bb = this->font->font().StringBoundingBox(this->text);
-	
-	this->SetRelayoutNeeded();
+	this->SetLines({ting::utf8::ToUTF32(text)});
 }
 
 
 
-//override
+
 morda::Vec2f Label::ComputeMinDim()const NOEXCEPT{
 	LeftBottomRightTop padding = this->Padding();
 //	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
-	return this->bb.d + padding.lb + padding.rt;
+	return this->TextWidget::ComputeMinDim() + padding.lb + padding.rt;
 }
 
 
 
 //override
 void Label::OnResize(){
-	Vec2f p = this->gravity().PosForRect(*this, this->bb.d);
+	Vec2f p = this->gravity().PosForRect(*this, this->TextBoundingBox().d);
 	
-	this->pivot = p - this->bb.p;
+	this->pivot = p - this->TextBoundingBox().p;
 	
+	//TODO: change to round vec
 	for(unsigned i = 0; i != 2; ++i){
 		this->pivot[i] = ting::math::Round(this->pivot[i]);
 	}
@@ -67,11 +60,7 @@ void Label::OnResize(){
 
 //override
 void Label::Render(const morda::Matr4f& matrix)const{
-#ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	this->Widget::Render(matrix);
-#endif
-	
 	morda::Matr4f matr(matrix);
 	matr.Translate(this->pivot);
-	this->font->font().RenderString(matr, this->text);
+	this->TextWidget::Render(matr);
 }
