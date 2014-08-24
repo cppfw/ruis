@@ -37,6 +37,6 @@ THE SOFTWARE. */
 #endif
 
 
-#ifdef DEBUG
-#	define M_MORDA_RENDER_WIDGET_BORDERS
-#endif
+//#ifdef DEBUG
+//#	define M_MORDA_RENDER_WIDGET_BORDERS
+//#endif
