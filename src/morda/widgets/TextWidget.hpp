@@ -81,6 +81,10 @@ protected:
 	}
 	
 	void SetLines(decltype(TextWidget::lines)&& lines);
+	
+	const decltype(TextWidget::lines)& Lines(){
+		return this->lines;
+	}
 private:
 
 };
