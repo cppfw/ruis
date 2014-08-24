@@ -69,9 +69,10 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 
 		//set scissor test
 		Rect2i scissor(
-				((matrix * Vec2f(0, 0) + Vec2f(1, 1)) / 2)
-						.CompMulBy(App::Inst().viewportDim())
-						.ConvertTo<int>(),
+				RoundVec(
+						((matrix * Vec2f(0, 0) + Vec2f(1, 1)) / 2)
+								.CompMulBy(App::Inst().viewportDim())
+					).ConvertTo<int>(),
 				this->rect.d.ConvertTo<int>()
 			);
 
