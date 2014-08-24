@@ -34,6 +34,7 @@ THE SOFTWARE. */
 #include "../resources/ResFont.hpp"
 #include "GravitatingWidget.hpp"
 #include "PaddedWidget.hpp"
+#include "TextWidget.hpp"
 
 
 
@@ -41,12 +42,8 @@ namespace morda{
 
 
 
-class Label : public GravitatingWidget, public PaddedWidget{
+class Label : public GravitatingWidget, public PaddedWidget, public TextWidget{
 	std::string text;
-	
-	std::shared_ptr<morda::ResFont> font;
-	
-	morda::Rect2f bb;//text bounding box
 	
 	morda::Vec2f pivot;
 	

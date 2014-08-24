@@ -41,7 +41,7 @@ namespace morda{
 class GravitatingWidget : public virtual Widget{
 	Gravity widgetGravity;
 protected:	
-	GravitatingWidget(const stob::Node* desc = nullptr) :
+	GravitatingWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
 		if(!desc){
