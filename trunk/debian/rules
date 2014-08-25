@@ -2,13 +2,8 @@
 
 soname := $(shell cat src/soname.txt)
 
-%: debian/control
+%:
 	dh $@
-
-
-debian/control:
-	sed -e "s/\$$(soname)/$(soname)/" $@.in >> $@
-
 
 override_dh_auto_test:
 #do nothing
