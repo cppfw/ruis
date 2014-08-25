@@ -8,22 +8,22 @@ Build-Depends-Indep: doxygen
 
 Package: libmorda-dev
 Architecture: any
-Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
-Suggests: libmorda-doc, libmorda0-dbg (= ${binary:Version})
+Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends}
+Suggests: libmorda$(soname)-dbg (= ${binary:Version}), libmorda-doc
 Description: OpenGL UI framework development files
  Cross platform OpenGL UI framework written in C++.
  Development files.
 
-Package: libmorda0
+Package: libmorda$(soname)
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
 
-Package: libmorda0-dbg
+Package: libmorda$(soname)-dbg
 Section: libdevel
 Architecture: any
-Depends: libmorda0 (= ${binary:Version}), ${misc:Depends}
+Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends}
 Description: Debug symbols for the libmorda library
 
 Package: libmorda-doc

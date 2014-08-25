@@ -3,7 +3,7 @@ include prorab.mk
 
 this_name := morda
 
-this_so_name := 0
+this_soname := $(shell cat $(prorab_this_dir)/soname.txt)
 
 
 #Sources
