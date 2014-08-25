@@ -7,6 +7,6 @@
 * Check if SO-name needs increment and update debian/control file accordingly if needed
 	- src/makefile
 	- debian/control
-	- debian/libmorda*.isntall
+	- debian/libmorda*.install
 
 * generate debian package using dpkg-buildpackage
