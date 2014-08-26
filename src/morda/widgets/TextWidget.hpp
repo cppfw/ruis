@@ -44,7 +44,7 @@ class TextWidget : public virtual Widget{
 	
 	std::list<std::vector<std::uint32_t>> lines;
 	
-	morda::Rect2f bb;//text bounding box
+	morda::Rect2r bb;//text bounding box
 public:
 	TextWidget() = delete;
 	TextWidget(const TextWidget&) = delete;
@@ -72,7 +72,7 @@ public:
 protected:
 	TextWidget(const stob::Node* desc);
 	
-	const morda::Rect2f& TextBoundingBox(){
+	const morda::Rect2r& TextBoundingBox(){
 		return this->bb;
 	}
 	

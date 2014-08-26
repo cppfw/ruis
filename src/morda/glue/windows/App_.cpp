@@ -419,7 +419,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 
 		case WM_SIZE:
 			//resize GL, LoWord=Width, HiWord=Height
-			app.UpdateWindowRect(morda::Rect2f(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam)))); 
+			app.UpdateWindowRect(morda::Rect2r(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam)))); 
 			lres = 0;
 			return true;
 		
@@ -631,7 +631,7 @@ App::App(const WindowParams& requestedWindowParams) :
 			+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
 	
 	this->UpdateWindowRect(
-			morda::Rect2f(
+			morda::Rect2r(
 					0,
 					0,
 					float(requestedWindowParams.dim.x),

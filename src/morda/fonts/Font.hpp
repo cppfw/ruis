@@ -50,7 +50,7 @@ protected:
 	
 	virtual float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
-	virtual morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual morda::Rect2r StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()NOEXCEPT{}
 	
@@ -89,17 +89,17 @@ public:
 	
 	
 	
-	morda::Rect2f StringBoundingBox(ting::utf8::Iterator str)const;
+	morda::Rect2r StringBoundingBox(ting::utf8::Iterator str)const;
 	
-	morda::Rect2f StringBoundingBox(const ting::Buffer<std::uint32_t> utf32str)const{
+	morda::Rect2r StringBoundingBox(const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->StringBoundingBoxInternal(utf32str);
 	}
 	
-	morda::Rect2f StringBoundingBox(const char* str)const{
+	morda::Rect2r StringBoundingBox(const char* str)const{
 		return this->StringBoundingBox(ting::utf8::Iterator(str));
 	}
 	
-	morda::Rect2f StringBoundingBox(const std::string& str)const{
+	morda::Rect2r StringBoundingBox(const std::string& str)const{
 		return this->StringBoundingBox(str.c_str());
 	}
 	
