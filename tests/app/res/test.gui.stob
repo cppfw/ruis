@@ -179,7 +179,7 @@ Container{
 			}}
 
 			ImageLabel{
-				image{tex_sample}
+				image{tex_lattice}
 
 				keepAspectRatio{true}
 

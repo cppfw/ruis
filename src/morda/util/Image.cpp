@@ -219,8 +219,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 	ASSERT(fi)
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
-		ASSERT(png_size_t(-1) == std::uint32_t(-1))
-		ting::Buffer<png_byte> bufWrapper(data, std::uint32_t(length));
+		ting::Buffer<png_byte> bufWrapper(data, size_t(length));
 		fi->Read(bufWrapper);
 //		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	}catch(...){

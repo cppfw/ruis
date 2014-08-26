@@ -2,4 +2,8 @@ tex_sample{
 	file {texture.jpg}
 }
 
+tex_lattice{
+	file {lattice.png}
+}
+
 include{fonts/font.res.stob}
