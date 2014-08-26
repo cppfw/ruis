@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ THE SOFTWARE. */
 #include <ting/debug.hpp>
 #include <ting/math.hpp>
 
+#include "../config.hpp"
 
 
 namespace morda{
@@ -520,8 +521,12 @@ template <class T> inline Matrix4<T> Quaternion<T>::ToMatrix4()const NOEXCEPT{
 
 typedef Quaternion<float> Quatf;
 static_assert(sizeof(Quatf) == sizeof(float) * 4, "size mismatch");
+
 typedef Quaternion<double> Quatd;
 static_assert(sizeof(Quatd) == sizeof(double) * 4, "size mismatch");
+
+typedef Quaternion<real> Quatr;
+static_assert(sizeof(Quatr) == sizeof(real) * 4, "size mismatch");
 
 
 

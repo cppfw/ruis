@@ -36,6 +36,8 @@ THE SOFTWARE. */
 
 #include "Vector2.hpp"
 
+#include "../config.hpp"
+
 //Under Windows and MSVC compiler there are 'min' and 'max' macros defined for some reason, get rid of them.
 #ifdef min
 #	undef min
@@ -183,8 +185,13 @@ public:
 //=====================
 
 typedef Rectangle2<float> Rect2f;
+
 typedef Rectangle2<double> Rect2d;
+
 typedef Rectangle2<int> Rect2i;
+
 typedef Rectangle2<unsigned> Rect2u;
+
+typedef Rectangle2<real> Rect2r;
 
 }//~namespace
