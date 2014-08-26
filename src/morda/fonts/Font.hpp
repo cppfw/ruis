@@ -46,44 +46,44 @@ class Font{
 protected:
 	Font(){}
 	
-	virtual float RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual real RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
-	virtual float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual real StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
 	virtual morda::Rect2r StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()NOEXCEPT{}
 	
-	virtual float Size()const NOEXCEPT = 0;
+	virtual real Size()const NOEXCEPT = 0;
 	
 	//renders the string, returns resulting string advance
-	float RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
+	real RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
 	
-	float RenderString(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
+	real RenderString(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->RenderStringInternal(matrix, utf32str);
 	}
 	
-	float RenderString(const morda::Matr4r& matrix, const char* str)const{
+	real RenderString(const morda::Matr4r& matrix, const char* str)const{
 		return this->RenderString(matrix, ting::utf8::Iterator(str));
 	}
 	
-	float RenderString(const morda::Matr4r& matrix, const std::string& str)const{
+	real RenderString(const morda::Matr4r& matrix, const std::string& str)const{
 		return this->RenderString(matrix, str.c_str());
 	}
 	
 	
 	
-	float StringAdvance(ting::utf8::Iterator str)const;
+	real StringAdvance(ting::utf8::Iterator str)const;
 	
-	float StringAdvance(const ting::Buffer<std::uint32_t> utf32str)const{
+	real StringAdvance(const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->StringAdvanceInternal(utf32str);
 	}
 	
-	float StringAdvance(const char* str)const{
+	real StringAdvance(const char* str)const{
 		return this->StringAdvance(ting::utf8::Iterator(str));
 	}
 	
-	float StringAdvance(const std::string& str)const{
+	real StringAdvance(const std::string& str)const{
 		return this->StringAdvance(str.c_str());
 	}
 	

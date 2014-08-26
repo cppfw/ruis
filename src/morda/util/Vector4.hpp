@@ -28,8 +28,6 @@ THE SOFTWARE. */
 
 #pragma once
 
-//This macro definition is part of a workaround to prevent IDE complain about recursive includes.
-#define M_VECTOR4_HPP_INCLUDED
 
 #ifdef DEBUG
 #	include <iostream>
@@ -128,7 +126,7 @@ public:
 	 * @param z - value to use for initialization of 3rd vector component.
 	 * @param w - value to use for initialization of 4th vector component.
 	 */
-	inline Vector4(const Vector2<T>& vec, T z = 0, T w = 1)NOEXCEPT;
+	Vector4(const Vector2<T>& vec, T z = 0, T w = 1)NOEXCEPT;
 
 	/**
 	 * @brief Constructor.
@@ -136,8 +134,17 @@ public:
 	 * @param vec - 23 vector to use for initialization of first three vector components.
 	 * @param w - value to use for initialization of 4th vector component.
 	 */
-	inline Vector4(const Vector3<T>& vec, T w = 1)NOEXCEPT;
+	Vector4(const Vector3<T>& vec, T w = 1)NOEXCEPT;
 
+	
+	template <class TT> Vector4(const Vector4<TT>& v) :
+			x(v.x),
+			y(v.y),
+			z(v.z),
+			w(v.w)
+	{}
+	
+	
 	/**
 	 * @brief Access vector component.
      * @param i - component index to access, must be from 0 to 3.
@@ -176,7 +183,7 @@ public:
 	 * @param vec - 3d vector to assign first three components from.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator=(const Vector3<T>& vec)NOEXCEPT;
+	Vector4& operator=(const Vector3<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Assign from 2d vector.
@@ -186,7 +193,7 @@ public:
 	 * @param vec - 2d vector to assign first two components from.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator=(const Vector2<T>& vec)NOEXCEPT;
+	Vector4& operator=(const Vector2<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Assign a number.
@@ -222,7 +229,7 @@ public:
 	 * @param vec - 2d vector to use for addition.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator+=(const Vector2<T>& vec)NOEXCEPT;
+	Vector4& operator+=(const Vector2<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Add and assign.
@@ -231,7 +238,7 @@ public:
 	 * @param vec - 3d vector to use for addition.
 	 * @return Reference to this vector object.
 	 */
-	inline Vector4& operator+=(const Vector3<T>& vec)NOEXCEPT;
+	Vector4& operator+=(const Vector3<T>& vec)NOEXCEPT;
 
 	/**
 	 * @brief Add and assign.
@@ -443,23 +450,19 @@ public:
 
 
 
-#ifndef M_VECTOR2_HPP_INCLUDED
-#	include "Vector2.hpp"
-#endif
 
-#ifndef M_VECTOR3_HPP_INCLUDED
-#	include "Vector3.hpp"
-#endif
+#include "Vector2.hpp"
+#include "Vector3.hpp"
 
 
 
 namespace morda{
 
-//=================================
-// inline functions implementation
-//=================================
+//==========================
+// functions implementation
+//==========================
 
-template <class T> inline Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)NOEXCEPT :
+template <class T> Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)NOEXCEPT :
 		x(vec.x),
 		y(vec.y),
 		z(z),
@@ -468,7 +471,7 @@ template <class T> inline Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)NO
 
 
 
-template <class T> inline Vector4<T>::Vector4(const Vector3<T>& vec, T w)NOEXCEPT :
+template <class T> Vector4<T>::Vector4(const Vector3<T>& vec, T w)NOEXCEPT :
 		x(vec.x),
 		y(vec.y),
 		z(vec.z),
@@ -477,7 +480,7 @@ template <class T> inline Vector4<T>::Vector4(const Vector3<T>& vec, T w)NOEXCEP
 
 
 
-template <class T> inline Vector4<T>& Vector4<T>::operator=(const Vector3<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator=(const Vector3<T>& vec)NOEXCEPT{
 	this->x = vec.x;
 	this->y = vec.y;
 	this->z = vec.z;
@@ -487,7 +490,7 @@ template <class T> inline Vector4<T>& Vector4<T>::operator=(const Vector3<T>& ve
 
 
 
-template <class T> inline Vector4<T>& Vector4<T>::operator=(const Vector2<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator=(const Vector2<T>& vec)NOEXCEPT{
 	this->x = vec.x;
 	this->y = vec.y;
 	this->z = 0;
@@ -497,7 +500,7 @@ template <class T> inline Vector4<T>& Vector4<T>::operator=(const Vector2<T>& ve
 
 
 
-template <class T> inline Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& vec)NOEXCEPT{
 	this->x += vec.x;
 	this->y += vec.y;
 	return *this;
@@ -505,7 +508,7 @@ template <class T> inline Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& v
 
 
 
-template <class T> inline Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& vec)NOEXCEPT{
 	this->x += vec.x;
 	this->y += vec.y;
 	this->z += vec.z;
