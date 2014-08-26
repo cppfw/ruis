@@ -39,6 +39,7 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/math.hpp>
 
+#include "../config.hpp"
 
 
 namespace morda{
@@ -489,13 +490,18 @@ template <class T> inline Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec
 
 typedef Vector2<int> Vec2i;
 static_assert(sizeof(Vec2i) == sizeof(int) * 2, "size mismatch");
+
 typedef Vector2<unsigned> Vec2ui;
 static_assert(sizeof(Vec2ui) == sizeof(unsigned) * 2, "size mismatch");
+
 typedef Vector2<float> Vec2f;
 static_assert(sizeof(Vec2f) == sizeof(float) * 2, "size mismatch");
+
 typedef Vector2<double> Vec2d;
 static_assert(sizeof(Vec2d) == sizeof(double) * 2, "size mismatch");
 
+typedef Vector2<real> Vec2r;
+static_assert(sizeof(Vec2r) == sizeof(real) * 2, "size mismatch");
 
 
 }//~namespace

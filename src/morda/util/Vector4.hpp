@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ THE SOFTWARE. */
 #include <ting/debug.hpp>
 #include <ting/math.hpp>
 
+#include "../config.hpp"
 
 
 namespace morda{
@@ -519,8 +520,12 @@ template <class T> inline Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& v
 
 typedef Vector4<float> Vec4f;
 static_assert(sizeof(Vec4f) == sizeof(float) * 4, "size mismatch");
+
 typedef Vector4<double> Vec4d;
 static_assert(sizeof(Vec4d) == sizeof(double) * 4, "size mismatch");
+
+typedef Vector4<real> Vec4r;
+static_assert(sizeof(Vec4r) == sizeof(real) * 4, "size mismatch");
 
 
 
