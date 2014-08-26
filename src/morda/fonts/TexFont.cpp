@@ -302,7 +302,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 
 
 
-real TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const{
+real TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
 	shader.SetMatrix(matrix);
@@ -403,8 +403,8 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<std::uint32_
 
 
 #ifdef DEBUG
-void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const{
-	morda::Matr4f matr(matrix);
+void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const{
+	morda::Matr4r matr(matrix);
 	matr.Scale(this->tex.Dim());
 	shader.SetMatrix(matr);
 
@@ -422,7 +422,7 @@ void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)con
 
 
 
-real TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
+real TexFont::RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 	morda::SimpleTexturingShader &shader = morda::App::Inst().Shaders().simpleTexturing;
 	shader.Bind();
 
@@ -436,7 +436,7 @@ real TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buff
 
 	real ret = 0;
 
-	morda::Matr4f matr(matrix);
+	morda::Matr4r matr(matrix);
 
 	const std::uint32_t* s = utf32str.begin();
 	try{

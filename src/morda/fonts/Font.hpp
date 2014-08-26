@@ -46,7 +46,7 @@ class Font{
 protected:
 	Font(){}
 	
-	virtual float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual float RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
 	virtual float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
 	
@@ -57,17 +57,17 @@ public:
 	virtual float Size()const NOEXCEPT = 0;
 	
 	//renders the string, returns resulting string advance
-	float RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const;
+	float RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
 	
-	float RenderString(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
+	float RenderString(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 		return this->RenderStringInternal(matrix, utf32str);
 	}
 	
-	float RenderString(const morda::Matr4f& matrix, const char* str)const{
+	float RenderString(const morda::Matr4r& matrix, const char* str)const{
 		return this->RenderString(matrix, ting::utf8::Iterator(str));
 	}
 	
-	float RenderString(const morda::Matr4f& matrix, const std::string& str)const{
+	float RenderString(const morda::Matr4r& matrix, const std::string& str)const{
 		return this->RenderString(matrix, str.c_str());
 	}
 	

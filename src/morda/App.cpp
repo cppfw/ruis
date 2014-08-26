@@ -45,7 +45,7 @@ void App::Render(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ASSERT(glGetError() == GL_NO_ERROR)
 	
-	morda::Matr4f m;
+	morda::Matr4r m;
 	m.Identity();
 	m.Translate(-1, -1);
 	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);

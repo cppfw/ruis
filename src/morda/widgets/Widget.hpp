@@ -190,10 +190,10 @@ public:
 
 	virtual ~Widget()NOEXCEPT{}
 
-	virtual void Render(const morda::Matr4f& matrix)const{}
+	virtual void Render(const morda::Matr4r& matrix)const{}
 	
 private:
-	void RenderInternal(const morda::Matr4f& matrix)const;
+	void RenderInternal(const morda::Matr4r& matrix)const;
 	
 private:
 	void OnKeyInternal(bool isDown, EKey keyCode);

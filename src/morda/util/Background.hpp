@@ -54,7 +54,7 @@ public:
 	Background(const Background&) = delete;
 	Background& operator=(const Background&) = delete;
 	
-	void Render(const morda::Matr4f& matrix, const morda::Vec2r& dim)const;
+	void Render(const morda::Matr4r& matrix, const morda::Vec2r& dim)const;
 	
 private:
 

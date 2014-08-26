@@ -105,9 +105,9 @@ public:
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 	}
 	
-	void Render(const morda::Matr4f& matrix)const override{
+	void Render(const morda::Matr4r& matrix)const override{
 		{
-			morda::Matr4f matr(matrix);
+			morda::Matr4r matr(matrix);
 			matr.Scale(this->Rect().d);
 
 			this->tex->Tex().Bind();
@@ -125,7 +125,7 @@ public:
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
 //		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
-//		morda::Matr4f m(matrix);
+//		morda::Matr4r m(matrix);
 //		m.Translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
@@ -151,15 +151,15 @@ public:
 		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
-	void Render(const morda::Matr4f& matrix)const override{
+	void Render(const morda::Matr4r& matrix)const override{
 		this->Widget::Render(matrix);
 		
-		morda::Matr4f matr(matrix);
+		morda::Matr4r matr(matrix);
 		matr.Scale(this->Rect().d / 2);
 		matr.Translate(1, 1);
 		matr.Frustum(-2, 2, -1.5, 1.5, 2, 100);
 		
-		morda::Matr4f m(matr);
+		morda::Matr4r m(matr);
 		m.Translate(0, 0, -4);
 		
 		m.Rotate(this->rot);

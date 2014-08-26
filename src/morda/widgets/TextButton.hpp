@@ -55,7 +55,7 @@ public:
 	
 	~TextButton()NOEXCEPT{}
 	
-	void Render(const morda::Matr4f& matrix)const override;
+	void Render(const morda::Matr4r& matrix)const override;
 	
 	void OnResize() override;
 };

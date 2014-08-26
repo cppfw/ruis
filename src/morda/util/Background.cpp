@@ -19,8 +19,8 @@ Background::Background(const stob::Node& desc){
 
 
 
-void Background::Render(const morda::Matr4f& matrix, const morda::Vec2r& dim) const{
-	morda::Matr4f matr(matrix);
+void Background::Render(const morda::Matr4r& matrix, const morda::Vec2r& dim) const{
+	morda::Matr4r matr(matrix);
 	matr.Scale(dim);
 	
 	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;

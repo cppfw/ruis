@@ -96,7 +96,7 @@ public:
 	}
 
 	
-	real RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
+	real RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
@@ -107,11 +107,11 @@ public:
 
 	morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
-	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)const; )
+	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const; )
 
 private:
 
-	real RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const;
+	real RenderGlyphInternal(TexturingShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
 
 };//~class TexFont
 

@@ -11,8 +11,8 @@ using namespace morda;
 
 
 
-void Slider::SliderHandle::Render(const morda::Matr4f& matrix)const{
-	morda::Matr4f matr(matrix);
+void Slider::SliderHandle::Render(const morda::Matr4r& matrix)const{
+	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 
 	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
@@ -133,8 +133,8 @@ morda::Vec2r Slider::ComputeMinDim()const NOEXCEPT{
 
 
 
-void Slider::Render(const morda::Matr4f& matrix) const{
-	morda::Matr4f matr(matrix);
+void Slider::Render(const morda::Matr4r& matrix) const{
+	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
 	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;

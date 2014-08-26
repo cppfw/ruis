@@ -43,13 +43,13 @@ Container::Container(const stob::Node* desc) :
 
 
 //override
-void Container::Render(const morda::Matr4f& matrix)const{
+void Container::Render(const morda::Matr4r& matrix)const{
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		if((*i)->IsHidden()){
 			continue;
 		}
 		
-		morda::Matr4f matr(matrix);
+		morda::Matr4r matr(matrix);
 		matr.Translate((*i)->Rect().p);
 
 		(*i)->RenderInternal(matr);

@@ -70,7 +70,7 @@ class Slider :
 	public:
 
 	private:
-		void Render(const morda::Matr4f& matrix)const override;
+		void Render(const morda::Matr4r& matrix)const override;
 
 		bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
 
@@ -96,7 +96,7 @@ private:
 	
 	morda::Vec2r ComputeMinDim()const NOEXCEPT override;
 	
-	void Render(const morda::Matr4f& matrix) const override;
+	void Render(const morda::Matr4r& matrix) const override;
 };
 
 
