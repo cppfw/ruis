@@ -71,7 +71,7 @@ private:
 
 	bool isDisabled = false;
 
-	morda::Rect2f rect;
+	morda::Rect2r rect;
 	
 	//minimal dimensions needed to show widget's contents normally
 	morda::Vec2r minDim;
@@ -151,7 +151,7 @@ private:
 	
 public:
 
-	const morda::Rect2f& Rect()const NOEXCEPT{
+	const morda::Rect2r& Rect()const NOEXCEPT{
 		return this->rect;
 	}
 	
@@ -318,7 +318,7 @@ public:
 	 * @return false otherwise.
      */
 	bool Contains(const morda::Vec2r& pos)const NOEXCEPT{
-		return morda::Rect2f(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
+		return morda::Rect2r(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	
 private:

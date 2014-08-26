@@ -337,8 +337,8 @@ real TexFont::StringAdvanceInternal(const ting::Buffer<std::uint32_t> str)const{
 
 
 
-morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> str)const{
-	morda::Rect2f ret;
+morda::Rect2r TexFont::StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> str)const{
+	morda::Rect2r ret;
 
 	if(str.size() == 0){
 		ret.p.SetTo(0);

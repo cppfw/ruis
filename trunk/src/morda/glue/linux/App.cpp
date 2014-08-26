@@ -206,7 +206,7 @@ App::App(const WindowParams& requestedWindowParams) :
 #endif
 	
 	this->UpdateWindowRect(
-			morda::Rect2f(
+			morda::Rect2r(
 					0,
 					0,
 					float(requestedWindowParams.dim.x),
@@ -631,7 +631,7 @@ void App::Exec(){
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						this->UpdateWindowRect(morda::Rect2f(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+						this->UpdateWindowRect(morda::Rect2r(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)

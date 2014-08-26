@@ -19,7 +19,7 @@ float Font::StringAdvance(ting::utf8::Iterator str)const{
 
 
 
-morda::Rect2f Font::StringBoundingBox(ting::utf8::Iterator str)const{
+morda::Rect2r Font::StringBoundingBox(ting::utf8::Iterator str)const{
 	std::array<std::uint32_t, 4096> buf;
 	return this->StringBoundingBoxInternal(ting::Buffer<std::uint32_t>(&*buf.begin(), ting::utf8::FillBuffer(buf, str)));
 }

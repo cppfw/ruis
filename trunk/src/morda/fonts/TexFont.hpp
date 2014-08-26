@@ -79,7 +79,7 @@ public:
 
 private:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rect2f boundingBox;
+	morda::Rect2r boundingBox;
 
 public:
 	
@@ -98,14 +98,14 @@ public:
 	
 	real RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
 
-	const morda::Rect2f& FontBoundingBox()const{
+	const morda::Rect2r& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
 	
 	real StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
-	morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
+	morda::Rect2r StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const; )
 

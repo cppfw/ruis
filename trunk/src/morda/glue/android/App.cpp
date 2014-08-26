@@ -57,7 +57,7 @@ std::array<morda::Vec2r, 10> pointers;
 
 
 
-inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2r& p){
+inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2r& winRect, const morda::Vec2r& p){
 	morda::Vec2r ret(
 			p.x,
 			p.y - (curWinDim.y - winRect.d.y)
@@ -794,7 +794,7 @@ App::App(const WindowParams& requestedWindowParams) :
 	this->dotsPerCm = javaFunctionsWrapper->GetDotsPerCm();
 	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->dotsPerCm << std::endl)
 	
-	this->UpdateWindowRect(morda::Rect2f(0, 0, float(width), float(height)));
+	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
 }
 
 
@@ -823,7 +823,7 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 
 
 
-inline void UpdateWindowRect(App& app, const morda::Rect2f& rect){
+inline void UpdateWindowRect(App& app, const morda::Rect2r& rect){
 //	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
 	app.UpdateWindowRect(rect);
 }
@@ -1311,7 +1311,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 
 	UpdateWindowRect(
 			app,
-			morda::Rect2f(
+			morda::Rect2r(
 					float(rect->left),
 					curWinDim.y - float(rect->bottom),
 					float(rect->right - rect->left),
