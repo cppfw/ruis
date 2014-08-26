@@ -40,8 +40,8 @@ namespace morda{
 //TODO: doxygen
 class LeftBottomRightTop{
 public:
-	Vec2f lb;
-	Vec2f rt;
+	Vec2r lb;
+	Vec2r rt;
 	
 	LeftBottomRightTop(){}
 	

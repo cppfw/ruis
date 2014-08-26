@@ -19,7 +19,7 @@ const char* D_Weight = "weight";
 class Info{
 public:
 	float weight;
-	Vec2f dim;
+	Vec2r dim;
 	float margin;//actual margin between child widgets
 	Gravity gravity;
 	LeftBottomRightTop margins;
@@ -108,13 +108,13 @@ void LinearContainer::OnResize(){
 		float pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		auto info = infoArray.begin();
 		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
-			Vec2f newSize(info->dim);
+			Vec2r newSize(info->dim);
 			
 			if(netWeight > 0){
 				newSize[longIndex] += (info->weight / netWeight) * flexible;
 			}
 
-			Vec2f newPos;
+			Vec2r newPos;
 			if((this->IsVertical() && !this->IsReverse()) || (!this->IsVertical() && this->IsReverse())){
 				newPos[longIndex] = this->Rect().d[longIndex] - pos - info->margin - newSize[longIndex];
 			}else{
@@ -134,17 +134,17 @@ void LinearContainer::OnResize(){
 
 
 //override
-morda::Vec2f LinearContainer::ComputeMinDim()const NOEXCEPT{
+morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	
-	morda::Vec2f minDim(0);
+	morda::Vec2r minDim(0);
 	
 	float prevMargin = 0;
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
-		morda::Vec2f dim = (*i)->GetMinDim();
+		morda::Vec2r dim = (*i)->GetMinDim();
 		if((*i)->Prop()){
 			if(const stob::Node* layout = (*i)->Prop()->Child(Container::D_Layout()).node()){
 				if(const stob::Node* m = layout->Child(D_Margins).node()){

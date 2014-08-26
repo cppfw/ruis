@@ -10,9 +10,9 @@ using namespace morda;
 
 
 
-morda::Vec2f morda::Vec2fFromSTOB(const stob::Node* chain){
+morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
-	morda::Vec2f ret;
+	morda::Vec2r ret;
 	
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
@@ -29,9 +29,9 @@ morda::Vec2f morda::Vec2fFromSTOB(const stob::Node* chain){
 
 
 
-morda::Vec2f morda::DimVec2f(const stob::Node* chain){
+morda::Vec2r morda::DimVec2r(const stob::Node* chain){
 	unsigned i;
-	morda::Vec2f ret;
+	morda::Vec2r ret;
 	
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){

@@ -54,7 +54,7 @@ public:
 	
 	void Render(const morda::Matr4f& matrix)const override;
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override;
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
 	
 	void OnHoverChanged() override;
 	

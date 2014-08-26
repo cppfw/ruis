@@ -59,7 +59,7 @@ void Container::Render(const morda::Matr4f& matrix)const{
 
 
 //override
-bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
@@ -118,7 +118,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton
 
 
 //override
-bool Container::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
+bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);

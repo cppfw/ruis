@@ -289,8 +289,8 @@ private:
 	void Exec();
 	
 	friend void Macosx_Main(int argc, const char** argv);
-	friend void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id);
-	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
+	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
 	friend void Macosx_HandleMouseHover(bool isHovered);
 	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
 	friend void Macosx_HandleCharacterInput(const void* nsstring);
@@ -337,7 +337,7 @@ private:
 	morda::Rect2f curWinRect;
 
 public:
-	const morda::Vec2f& viewportDim()const NOEXCEPT{
+	const morda::Vec2r& viewportDim()const NOEXCEPT{
 		return this->curWinRect.d;
 	}
 
@@ -357,15 +357,15 @@ private:
 	void Render();
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2f NativeWindowToRootCoordinates(const morda::Vec2f& pos)const NOEXCEPT{
-		return morda::Vec2f(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
+	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2r& pos)const NOEXCEPT{
+		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 	
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseMove(const morda::Vec2f& pos, unsigned id);
+	void HandleMouseMove(const morda::Vec2r& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	void HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
 	
 	void HandleMouseHover(bool isHovered);
 
@@ -379,7 +379,7 @@ public:
 	void SetRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
 		
-		this->rootWidget->MoveTo(morda::Vec2f(0));
+		this->rootWidget->MoveTo(morda::Vec2r(0));
 		this->rootWidget->Resize(this->curWinRect.d);
 	}
 

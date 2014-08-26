@@ -19,7 +19,7 @@ Background::Background(const stob::Node& desc){
 
 
 
-void Background::Render(const morda::Matr4f& matrix, const morda::Vec2f& dim) const{
+void Background::Render(const morda::Matr4f& matrix, const morda::Vec2r& dim) const{
 	morda::Matr4f matr(matrix);
 	matr.Scale(dim);
 	

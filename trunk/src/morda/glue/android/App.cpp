@@ -31,7 +31,7 @@ ANativeActivity* nativeActivity = 0;
 
 ANativeWindow* androidWindow = 0;
 
-morda::Vec2f curWinDim(0, 0);
+morda::Vec2r curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
 
@@ -53,12 +53,12 @@ struct AppInfo{
 
 
 //array of current pointer positions, needed to detect which pointers have actually moved.
-std::array<morda::Vec2f, 10> pointers;
+std::array<morda::Vec2r, 10> pointers;
 
 
 
-inline morda::Vec2f AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2f& p){
-	morda::Vec2f ret(
+inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2f& winRect, const morda::Vec2r& p){
+	morda::Vec2r ret(
 			p.x,
 			p.y - (curWinDim.y - winRect.d.y)
 		);
@@ -891,7 +891,7 @@ void HandleInputEvents(){
 
 //								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-							morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 							pointers[pointerId] = p;
 
 							app.HandleMouseButton(
@@ -916,7 +916,7 @@ void HandleInputEvents(){
 
 //								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 
-							morda::Vec2f p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 							pointers[pointerId] = p;
 
 							app.HandleMouseButton(
@@ -939,7 +939,7 @@ void HandleInputEvents(){
 								}
 
 								//notify root Container only if there was actual movement
-								morda::Vec2f p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
+								morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 								if(pointers[pointerId] == p){
 									//pointer position did not change
 									continue;

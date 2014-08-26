@@ -50,9 +50,9 @@ public:
 	
 	void Render(const morda::Matr4f& matrix)const override;
 
-	morda::Vec2f ComputeMinDim()const override;
+	morda::Vec2r ComputeMinDim()const override;
 	
-	morda::Vec2f Measure(const Vec2f& offer)const override;
+	morda::Vec2r Measure(const Vec2r& offer)const override;
 	
 private:
 

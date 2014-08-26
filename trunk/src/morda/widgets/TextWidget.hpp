@@ -63,7 +63,7 @@ public:
 		return this->font->font();
 	}
 	
-	Vec2f ComputeMinDim()const NOEXCEPT override{
+	Vec2r ComputeMinDim()const NOEXCEPT override{
 		return this->bb.d;
 	}
 	

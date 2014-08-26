@@ -323,7 +323,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 
 		case WM_MOUSEMOVE:
 			app.HandleMouseMove(
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					0
 				);
 			lres = 0;
@@ -332,7 +332,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_LBUTTONDOWN:
 			app.HandleMouseButton(
 					true,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::LEFT,
 					0
 				);
@@ -342,7 +342,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_LBUTTONUP:
 			app.HandleMouseButton(
 					false,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::LEFT,
 					0
 				);
@@ -352,7 +352,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_MBUTTONDOWN:
 			app.HandleMouseButton(
 					true,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::MIDDLE,
 					0
 				);
@@ -362,7 +362,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_MBUTTONUP:
 			app.HandleMouseButton(
 					false,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::MIDDLE,
 					0
 				);
@@ -372,7 +372,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_RBUTTONDOWN:
 			app.HandleMouseButton(
 					true,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::RIGHT,
 					0
 				);
@@ -382,7 +382,7 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 		case WM_RBUTTONUP:
 			app.HandleMouseButton(
 					false,
-					morda::Vec2f(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					Widget::EMouseButton::RIGHT,
 					0
 				);

@@ -45,7 +45,7 @@ namespace morda{
 class Label : public GravitatingWidget, public PaddedWidget, public TextWidget{
 	std::string text;
 	
-	morda::Vec2f pivot;
+	morda::Vec2r pivot;
 	
 public:
 	Label(const stob::Node* desc = nullptr);
@@ -62,7 +62,7 @@ public:
 	
 	void Render(const morda::Matr4f& matrix)const override;
 	
-	Vec2f ComputeMinDim()const NOEXCEPT override;
+	Vec2r ComputeMinDim()const NOEXCEPT override;
 	
 	void OnResize() override;
 };

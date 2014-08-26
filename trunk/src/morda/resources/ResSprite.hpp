@@ -41,7 +41,7 @@ class ResSprite : public Resource{
 	
 	std::shared_ptr<ResTexture> tex;
 	
-	std::array<Vec2f, 4> texCoords;
+	std::array<Vec2r, 4> texCoords;
 	
 public:
 	ResSprite() = default;

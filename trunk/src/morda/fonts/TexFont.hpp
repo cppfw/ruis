@@ -62,10 +62,10 @@ namespace morda{
 
 class TexFont : public Font{
 	struct Glyph{
-		std::array<morda::Vec2f, 4> verts;
-		std::array<morda::Vec2f, 4> texCoords;
+		std::array<morda::Vec2r, 4> verts;
+		std::array<morda::Vec2r, 4> texCoords;
 
-		float advance;
+		real advance;
 	};
 
 	GLTexture tex;
@@ -74,7 +74,7 @@ class TexFont : public Font{
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
 	T_GlyphsMap glyphs;
 
-	float fontSize;
+	real fontSize;
 public:
 
 private:
@@ -91,19 +91,19 @@ public:
 	
 	void Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
-	float Size()const NOEXCEPT override{
+	real Size()const NOEXCEPT override{
 		return this->fontSize;
 	}
 
 	
-	float RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
+	real RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	const morda::Rect2f& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
 	
-	float StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
+	real StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
 	morda::Rect2f StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
 
@@ -111,7 +111,7 @@ public:
 
 private:
 
-	float RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const;
+	real RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const;
 
 };//~class TexFont
 
