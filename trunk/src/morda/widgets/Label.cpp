@@ -59,8 +59,8 @@ void Label::OnResize(){
 
 
 //override
-void Label::Render(const morda::Matr4f& matrix)const{
-	morda::Matr4f matr(matrix);
+void Label::Render(const morda::Matr4r& matrix)const{
+	morda::Matr4r matr(matrix);
 	matr.Translate(this->pivot);
 	this->TextWidget::Render(matr);
 }

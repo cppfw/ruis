@@ -23,9 +23,9 @@ ImageLabel::ImageLabel(const stob::Node* desc) :
 	}
 }
 
-void ImageLabel::Render(const morda::Matr4f& matrix) const{
+void ImageLabel::Render(const morda::Matr4r& matrix) const{
 	if(this->tex){
-		morda::Matr4f matr(matrix);
+		morda::Matr4r matr(matrix);
 		matr.Scale(this->Rect().d);
 
 		this->tex->Tex().Bind();

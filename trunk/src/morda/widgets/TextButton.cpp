@@ -8,7 +8,7 @@ using namespace morda;
 
 
 //override
-void TextButton::Render(const morda::Matr4f& matrix)const{
+void TextButton::Render(const morda::Matr4r& matrix)const{
 	this->Button::Render(matrix);
 	this->Label::Render(matrix);
 }

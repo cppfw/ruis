@@ -63,7 +63,7 @@ void Widget::SetRelayoutNeeded()NOEXCEPT{
 
 
 
-void Widget::RenderInternal(const morda::Matr4f& matrix)const{
+void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 	if(this->clip){
 //		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
@@ -112,7 +112,7 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
 	morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
-	morda::Matr4f matr(matrix);
+	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	s.SetMatrix(matr);
 

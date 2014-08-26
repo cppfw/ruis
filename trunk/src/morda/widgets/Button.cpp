@@ -8,8 +8,8 @@ using namespace morda;
 
 
 //override
-void Button::Render(const morda::Matr4f& matrix)const{
-	morda::Matr4f matr(matrix);
+void Button::Render(const morda::Matr4r& matrix)const{
+	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
 	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;

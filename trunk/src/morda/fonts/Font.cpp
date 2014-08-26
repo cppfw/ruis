@@ -5,7 +5,7 @@
 using namespace morda;
 
 
-float Font::RenderString(const morda::Matr4f& matrix, ting::utf8::Iterator str)const{
+float Font::RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const{
 	std::array<std::uint32_t, 4096> buf;
 	return this->RenderStringInternal(matrix, ting::Buffer<std::uint32_t>(&*buf.begin(), ting::utf8::FillBuffer(buf, str)));
 }

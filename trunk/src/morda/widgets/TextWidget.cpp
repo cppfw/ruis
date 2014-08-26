@@ -27,7 +27,7 @@ TextWidget::TextWidget(const stob::Node* desc) :
 	}
 }
 
-void TextWidget::Render(const morda::Matr4f& matrix)const{
+void TextWidget::Render(const morda::Matr4r& matrix)const{
 	//TODO: render multiple lines
 	for(auto l : this->lines){
 		this->Font().RenderString(matrix, l);
