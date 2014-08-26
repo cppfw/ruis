@@ -136,7 +136,7 @@ public:
 class CubeWidget : public morda::Widget, public morda::Updateable{
 	std::shared_ptr<morda::ResTexture> tex;
 	
-	morda::Quatf rot = morda::Quatf().Identity();
+	morda::Quatr rot = morda::Quatr().Identity();
 public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
@@ -148,7 +148,7 @@ public:
 	}
 	
 	void Update(std::uint32_t dt) override{
-		this->rot %= morda::Quatf().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::Quatr().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
 	void Render(const morda::Matr4r& matrix)const override{
@@ -196,24 +196,24 @@ public:
 		};
 		s.SetPositionPointer(cubePos);
 		
-		static morda::Vec2r cubeTex[] = {
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
+		static morda::Vec2f cubeTex[] = {
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+		
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
-			
-			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
-			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1)
+			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
+			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
 		};
 		s.SetTexCoordPointer(cubeTex);
 		

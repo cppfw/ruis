@@ -169,8 +169,8 @@ public:
 		}
 		
 		this->rect.d = newDims;
-		ting::util::ClampBottom(this->rect.d.x, 0.0f);
-		ting::util::ClampBottom(this->rect.d.y, 0.0f);
+		ting::util::ClampBottom(this->rect.d.x, real(0.0f));
+		ting::util::ClampBottom(this->rect.d.y, real(0.0f));
 		this->OnResize();//call virtual method
 		this->relayoutNeeded = false;
 	}

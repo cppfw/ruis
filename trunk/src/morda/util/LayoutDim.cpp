@@ -87,7 +87,7 @@ Vec2r LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const NOE
 				{
 					float padding = parent.Padding()[i] + parent.Padding()[i + 2];
 					ret[i] = v.value * (parent.Rect().d[i] - padding);
-					ting::util::ClampBottom(ret[i], 0.0f);
+					ting::util::ClampBottom(ret[i], real(0.0f));
 				}
 				break;
 			default:
