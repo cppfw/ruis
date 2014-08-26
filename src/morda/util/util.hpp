@@ -41,38 +41,38 @@ namespace morda{
 
 
 /**
- * @brief Parse chain of 2 STOB nodes as Vec2f.
- * @param chain - chain of at least two nodes holding Vec2f values.
+ * @brief Parse chain of 2 STOB nodes as Vec2r.
+ * @param chain - chain of at least two nodes holding Vec2r values.
  *                If there are less than 2 nodes in the chain then the rest of
  *                vector components will be filled with latest parsed value.
  *                If zero pointer is passed the resulting vector will be filled with zeros.
- * @return parsed Vec2f.
+ * @return parsed Vec2r.
  */
-morda::Vec2f Vec2fFromSTOB(const stob::Node* chain);
+morda::Vec2r Vec2rFromSTOB(const stob::Node* chain);
 
 
 
 /**
- * @brief Parse dimension Vec2f from STOB.
- * Same as Vec2fFromSTOB but using DimValue() to parse values.
- * @param chain - chain of at least two nodes holding Vec2f values.
+ * @brief Parse dimension Vec2r from STOB.
+ * Same as Vec2rFromSTOB but using DimValue() to parse values.
+ * @param chain - chain of at least two nodes holding Vec2r values.
  *                If there are less than 2 nodes in the chain then the rest of
  *                vector components will be filled with latest parsed value.
  *                If zero pointer is passed the resulting vector will be filled with zeroes.
- * @return parsed Vec2f.
+ * @return parsed Vec2r.
  */
-morda::Vec2f DimVec2f(const stob::Node* chain);
+morda::Vec2r DimVec2r(const stob::Node* chain);
 
 
 
 /**
- * @brief Round each component of Vec2f.
- * Call ting::math::Round() for each component of given Vec2f.
- * @param v - Vec2f to round.
- * @return Rounded Vec2f.
+ * @brief Round each component of Vec2r.
+ * Call ting::math::Round() for each component of given Vec2r.
+ * @param v - Vec2r to round.
+ * @return Rounded Vec2r.
  */
-inline morda::Vec2f RoundVec(const Vec2f& v){
-	return Vec2f(ting::math::Round(v.x), ting::math::Round(v.y));
+inline morda::Vec2r RoundVec(const Vec2r& v){
+	return Vec2r(ting::math::Round(v.x), ting::math::Round(v.y));
 }
 
 

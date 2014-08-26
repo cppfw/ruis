@@ -224,18 +224,18 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			FT_Glyph_Metrics *m = &slot->metrics;
 			
 			Glyph &g = this->glyphs[*c];
-			g.advance = float(m->horiAdvance) / (64.0f);
+			g.advance = real(m->horiAdvance) / (64.0f);
 
 			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[0] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(-float(outline), -float(outline));
-			g.verts[1] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2f(float(outline), -float(outline));
-			g.verts[2] = (morda::Vec2f(float(m->horiBearingX + m->width), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(float(outline), float(outline));
-			g.verts[3] = (morda::Vec2f(float(m->horiBearingX), float(m->horiBearingY)) / (64.0f)) + morda::Vec2f(-float(outline), float(outline));
+			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
+			g.verts[1] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
+			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
+			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
 
-			g.texCoords[0] = morda::Vec2f(float(curX), float(curY + im.Height()));
-			g.texCoords[1] = morda::Vec2f(float(curX + im.Width()), float(curY + im.Height()));
-			g.texCoords[2] = morda::Vec2f(float(curX + im.Width()), float(curY));
-			g.texCoords[3] = morda::Vec2f(float(curX), float(curY));
+			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.Height()));
+			g.texCoords[1] = morda::Vec2r(real(curX + im.Width()), real(curY + im.Height()));
+			g.texCoords[2] = morda::Vec2r(real(curX + im.Width()), real(curY));
+			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
 
 			//update bounding box if needed
 			if(left < -g.verts[0].x){
@@ -302,7 +302,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 
 
 
-inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const{
+real TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4f& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
 	shader.SetMatrix(matrix);
@@ -317,8 +317,8 @@ inline float TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::
 
 
 
-float TexFont::StringAdvanceInternal(const ting::Buffer<std::uint32_t> str)const{
-	float ret = 0;
+real TexFont::StringAdvanceInternal(const ting::Buffer<std::uint32_t> str)const{
+	real ret = 0;
 
 	const std::uint32_t* s = str.begin();
 	try{
@@ -348,9 +348,9 @@ morda::Rect2f TexFont::StringBoundingBoxInternal(const ting::Buffer<std::uint32_
 
 	const std::uint32_t* s = str.begin();
 
-	float curAdvance;
+	real curAdvance;
 
-	float left, right, top, bottom;
+	real left, right, top, bottom;
 	//init with bounding box of the first glyph
 	{
 		const Glyph& g = this->glyphs.at(*s);
@@ -422,7 +422,7 @@ void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4f& matrix)con
 
 
 
-float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
+real TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
 	morda::SimpleTexturingShader &shader = morda::App::Inst().Shaders().simpleTexturing;
 	shader.Bind();
 
@@ -434,14 +434,14 @@ float TexFont::RenderStringInternal(const morda::Matr4f& matrix, const ting::Buf
 
 	this->tex.Bind();
 
-	float ret = 0;
+	real ret = 0;
 
 	morda::Matr4f matr(matrix);
 
 	const std::uint32_t* s = utf32str.begin();
 	try{
 		for(; s != utf32str.end(); ++s){
-			float advance = this->RenderGlyphInternal(shader, matr, *s);
+			real advance = this->RenderGlyphInternal(shader, matr, *s);
 			ret += advance;
 			matr.Translate(advance, 0);
 		}

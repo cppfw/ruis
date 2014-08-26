@@ -57,7 +57,7 @@ class GLTexture {
 
 	GLuint tex = 0;
 
-	morda::Vec2f dim;
+	morda::Vec2r dim;
 
 	void Constructor(const Image& image, GLint minFilter, GLint magFilter);
 public:
@@ -93,7 +93,7 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
-	morda::Vec2f Dim()const NOEXCEPT{
+	morda::Vec2r Dim()const NOEXCEPT{
 		return this->dim;
 	}
 

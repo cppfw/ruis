@@ -39,7 +39,7 @@ class Window :
 		virtual public Widget,
 		private LinearContainer
 {
-	morda::Vec2f emptyMinDim;//minimal dimension of empty window
+	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	
 	std::shared_ptr<Widget> caption;
 	std::shared_ptr<Label> title;
@@ -56,7 +56,7 @@ class Window :
 	bool topResizeCaptured = false;
 	bool bottomResizeCaptured = false;
 	
-	morda::Vec2f capturePoint;
+	morda::Vec2r capturePoint;
 	
 	void SetupWidgets();
 	

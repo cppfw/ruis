@@ -23,7 +23,7 @@ void Slider::SliderHandle::Render(const morda::Matr4f& matrix)const{
 }
 	
 
-bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	if(button != EMouseButton::LEFT){
 		return false;
 	}
@@ -44,7 +44,7 @@ bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2f& pos, E
 }
 	
 
-bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
+bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 	if(!this->isGrabbed){
 		return false;
 	}
@@ -58,7 +58,7 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2f& pos, unsigned pointer
 	newPos += pos[longIndex] - this->clickPoint;
 	ting::util::ClampRange(newPos, 0.0f, maxPos);
 
-	morda::Vec2f newPosition(0);
+	morda::Vec2r newPosition(0);
 	newPosition[longIndex] = newPos;
 	
 	this->MoveTo(newPosition);
@@ -102,7 +102,7 @@ void Slider::SetFactor(float newFactor){
 void Slider::OnResize(){
 	unsigned longIndex = this->GetLongIndex();
 	
-	morda::Vec2f newSize(this->Rect().d);
+	morda::Vec2r newSize(this->Rect().d);
 	
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
 	ting::util::ClampBottom(newSize[longIndex], this->GetMinDim()[longIndex]);
@@ -113,7 +113,7 @@ void Slider::OnResize(){
 	//move
 	{
 		float effectiveLength = this->Rect().d[longIndex] - handle.Rect().d[longIndex];
-		morda::Vec2f newPos(0);
+		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
 			newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
 			ASSERT(newPos[longIndex] <= effectiveLength)
@@ -127,8 +127,8 @@ void Slider::OnResize(){
 
 
 
-morda::Vec2f Slider::ComputeMinDim()const NOEXCEPT{
-	return morda::Vec2f(30, 30);//TODO: what should it be???
+morda::Vec2r Slider::ComputeMinDim()const NOEXCEPT{
+	return morda::Vec2r(30, 30);//TODO: what should it be???
 }
 
 

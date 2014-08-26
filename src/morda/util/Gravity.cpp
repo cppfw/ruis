@@ -6,16 +6,16 @@ using namespace morda;
 
 
 
-Vec2f Gravity::PosForRect(const PaddedWidget& w, const Vec2f& dim)const NOEXCEPT{
+Vec2r Gravity::PosForRect(const PaddedWidget& w, const Vec2r& dim)const NOEXCEPT{
 	return PosForRect(w.Rect().d, w.Padding(), dim);
 }
 
 
 
-Vec2f Gravity::PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const NOEXCEPT{
-	Vec2f noPaddings = parentDim - padding.lb - padding.rt;
+Vec2r Gravity::PosForRect(const Vec2r& parentDim, const LeftBottomRightTop& padding, const Vec2r& dim)const NOEXCEPT{
+	Vec2r noPaddings = parentDim - padding.lb - padding.rt;
 	
-	Vec2f ret;
+	Vec2r ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
 		if(noPaddings[i] <= 0){
@@ -40,7 +40,7 @@ Vec2f Gravity::PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padd
 
 //static
 Gravity Gravity::FromSTOB(const stob::Node& gravity)NOEXCEPT{
-	return Vec2fFromSTOB(gravity.Child()) / 100;
+	return Vec2rFromSTOB(gravity.Child()) / 100;
 }
 
 

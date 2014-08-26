@@ -20,11 +20,11 @@ Widget::Widget(const stob::Node* desc){
 	}
 
 	if(const stob::Node* p = desc->GetProperty("pos")){
-		this->rect.p = morda::DimVec2f(p);
+		this->rect.p = morda::DimVec2r(p);
 	}
 
 	if(const stob::Node* p = desc->GetProperty("dim")){
-		this->rect.d = morda::DimVec2f(p);
+		this->rect.d = morda::DimVec2r(p);
 	}
 
 	if(const stob::Node* p = desc->GetProperty("name")){
@@ -70,7 +70,7 @@ void Widget::RenderInternal(const morda::Matr4f& matrix)const{
 		//set scissor test
 		Rect2i scissor(
 				RoundVec(
-						((matrix * Vec2f(0, 0) + Vec2f(1, 1)) / 2)
+						((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2)
 								.CompMulBy(App::Inst().viewportDim())
 					).ConvertTo<int>(),
 				this->rect.d.ConvertTo<int>()

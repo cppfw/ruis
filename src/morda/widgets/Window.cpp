@@ -198,7 +198,7 @@ void morda::Window::SetupWidgets(){
 	this->caption = this->FindChildByName("morda_caption");
 	
 	std::function<decltype(Widget::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){
-		return decltype(Widget::onMouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+		return decltype(Widget::onMouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 			if(button != Widget::EMouseButton::LEFT){
 				return false;
 			}
@@ -215,7 +215,7 @@ void morda::Window::SetupWidgets(){
 	
 	this->caption->onMouseButton = getButtonFunc(this->captionCaptured);
 	
-	this->caption->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+	this->caption->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 		if(this->captionCaptured){
 			this->MoveBy(pos - this->capturePoint);
 			return true;
@@ -230,13 +230,13 @@ void morda::Window::SetupWidgets(){
 		std::shared_ptr<Widget> w2 = this->FindChildByName("top_left_resize");
 		w1->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
 		w2->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
 				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
-				this->MoveBy(morda::Vec2f(d.x, 0));
-				this->ResizeBy(morda::Vec2f(-d.x, d.y));
+				this->MoveBy(morda::Vec2r(d.x, 0));
+				this->ResizeBy(morda::Vec2r(-d.x, d.y));
 			}
 			return false;
 		};
@@ -249,13 +249,13 @@ void morda::Window::SetupWidgets(){
 		std::shared_ptr<Widget> w2 = this->FindChildByName("bottom_left_resize");
 		w1->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
 		w2->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
 				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(d);
-				this->ResizeBy(morda::Vec2f(-d.x, -d.y));
+				this->ResizeBy(morda::Vec2r(-d.x, -d.y));
 			}
 			return false;
 		};
@@ -268,9 +268,9 @@ void morda::Window::SetupWidgets(){
 		std::shared_ptr<Widget> w2 = this->FindChildByName("right_top_resize");
 		w1->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
 		w2->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
 				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
 				this->ResizeBy(d);
@@ -286,13 +286,13 @@ void morda::Window::SetupWidgets(){
 		std::shared_ptr<Widget> w2 = this->FindChildByName("right_bottom_resize");
 		w1->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
 		w2->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
 				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
-				this->MoveBy(morda::Vec2f(0, d.y));
-				this->ResizeBy(morda::Vec2f(d.x, -d.y));
+				this->MoveBy(morda::Vec2r(0, d.y));
+				this->ResizeBy(morda::Vec2r(d.x, -d.y));
 			}
 			return false;
 		};
@@ -303,12 +303,12 @@ void morda::Window::SetupWidgets(){
 	{
 		std::shared_ptr<Widget> w = this->FindChildByName("left_resize");
 		w->onMouseButton = getButtonFunc(this->leftResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
-				this->MoveBy(morda::Vec2f(d.x, 0));
-				this->ResizeBy(morda::Vec2f(-d.x, 0));
+				this->MoveBy(morda::Vec2r(d.x, 0));
+				this->ResizeBy(morda::Vec2r(-d.x, 0));
 			}
 			return false;
 		};
@@ -317,11 +317,11 @@ void morda::Window::SetupWidgets(){
 	{
 		std::shared_ptr<Widget> w = this->FindChildByName("right_resize");
 		w->onMouseButton = getButtonFunc(this->rightResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
-				this->ResizeBy(morda::Vec2f(d.x, 0));
+				this->ResizeBy(morda::Vec2r(d.x, 0));
 			}
 			return false;
 		};
@@ -330,11 +330,11 @@ void morda::Window::SetupWidgets(){
 	{
 		std::shared_ptr<Widget> w = this->FindChildByName("top_resize");
 		w->onMouseButton = getButtonFunc(this->topResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
-				this->ResizeBy(morda::Vec2f(0, d.y));
+				this->ResizeBy(morda::Vec2r(0, d.y));
 			}
 			return false;
 		};
@@ -343,12 +343,12 @@ void morda::Window::SetupWidgets(){
 	{
 		std::shared_ptr<Widget> w = this->FindChildByName("bottom_resize");
 		w->onMouseButton = getButtonFunc(this->bottomResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2f& pos, unsigned pointerId){
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
-				morda::Vec2f d = pos - this->capturePoint;
+				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
-				this->MoveBy(morda::Vec2f(0, d.y));
-				this->ResizeBy(morda::Vec2f(0, -d.y));
+				this->MoveBy(morda::Vec2r(0, d.y));
+				this->ResizeBy(morda::Vec2r(0, -d.y));
 			}
 			return false;
 		};

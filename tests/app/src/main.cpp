@@ -52,7 +52,7 @@ public:
 		}
 	}
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId) override{
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -196,24 +196,24 @@ public:
 		};
 		s.SetPositionPointer(cubePos);
 		
-		static morda::Vec2f cubeTex[] = {
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+		static morda::Vec2r cubeTex[] = {
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
+			morda::Vec2r(0, 0), morda::Vec2r(1, 0), morda::Vec2r(0, 1),
+			morda::Vec2r(1, 0), morda::Vec2r(1, 1), morda::Vec2r(0, 1)
 		};
 		s.SetTexCoordPointer(cubeTex);
 		

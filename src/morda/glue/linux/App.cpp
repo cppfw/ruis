@@ -666,7 +666,7 @@ void App::Exec(){
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
 						this->HandleMouseButton(
 								true,
-								morda::Vec2f(event.xbutton.x, event.xbutton.y),
+								morda::Vec2r(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
@@ -674,7 +674,7 @@ void App::Exec(){
 					case ButtonRelease:
 						this->HandleMouseButton(
 								false,
-								morda::Vec2f(event.xbutton.x, event.xbutton.y),
+								morda::Vec2r(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
 								0
 							);
@@ -682,7 +682,7 @@ void App::Exec(){
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
 						this->HandleMouseMove(
-								morda::Vec2f(event.xmotion.x, event.xmotion.y),
+								morda::Vec2r(event.xmotion.x, event.xmotion.y),
 								0
 							);
 						break;

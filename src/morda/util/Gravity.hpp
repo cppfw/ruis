@@ -40,7 +40,7 @@ namespace morda{
 
 
 //TODO: gravity is not needed, move all to GravitatingWidget
-class Gravity : public morda::Vec2f{
+class Gravity : public morda::Vec2r{
 public:
 	/**
 	 * @brief Constructor.
@@ -55,8 +55,8 @@ public:
 	 * The values should be from range [0:1].
      * @param gravity - gravity values.
      */
-	inline Gravity(const Vec2f& gravity) :
-			Vec2f(gravity)
+	inline Gravity(const Vec2r& gravity) :
+			Vec2r(gravity)
 	{}
 	
 	/**
@@ -69,7 +69,7 @@ public:
      * @param dim - dimensions of the rectangle.
      * @return Position for the rectangle within widget.
      */
-	Vec2f PosForRect(const PaddedWidget& w, const Vec2f& dim)const NOEXCEPT;
+	Vec2r PosForRect(const PaddedWidget& w, const Vec2r& dim)const NOEXCEPT;
 	
 	/**
 	 * @brief Get position for rectangle within given parent rectangle.
@@ -80,7 +80,7 @@ public:
      * @param dim - dimensions of the rectangle to place.
      * @return Position for the rectangle within parent rectangle.
      */
-	Vec2f PosForRect(const Vec2f& parentDim, const LeftBottomRightTop& padding, const Vec2f& dim)const NOEXCEPT;
+	Vec2r PosForRect(const Vec2r& parentDim, const LeftBottomRightTop& padding, const Vec2r& dim)const NOEXCEPT;
 	
 	/**
 	 * @brief Parse the gravity property from STOB.
@@ -118,7 +118,7 @@ public:
      * @return Gravity object initialized to default gravity values.
      */
 	static Gravity Default()NOEXCEPT{
-		return Gravity(Vec2f(0.5f));
+		return Gravity(Vec2r(0.5f));
 	}
 	
 	static const char* D_Gravity()NOEXCEPT{

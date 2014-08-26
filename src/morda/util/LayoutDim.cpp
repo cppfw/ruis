@@ -73,8 +73,8 @@ LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)NOEXCEPT{
 
 
 
-Vec2f LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT{
-	Vec2f ret;
+Vec2r LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT{
+	Vec2r ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
 		const Value& v = this->operator[](i);

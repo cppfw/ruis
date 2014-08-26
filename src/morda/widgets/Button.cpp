@@ -26,7 +26,7 @@ void Button::Render(const morda::Matr4f& matrix)const{
 
 
 //override
-bool Button::OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != EMouseButton::LEFT){
 		return false;

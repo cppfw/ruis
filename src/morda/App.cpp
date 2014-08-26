@@ -79,7 +79,7 @@ void App::UpdateWindowRect(const morda::Rect2f& rect){
 
 
 
-void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
+void App::HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -89,7 +89,7 @@ void App::HandleMouseMove(const morda::Vec2f& pos, unsigned id){
 
 
 
-void App::HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
+void App::HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}

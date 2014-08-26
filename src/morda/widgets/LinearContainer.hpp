@@ -56,7 +56,7 @@ public:
 
 	void OnResize() override;	
 	
-	morda::Vec2f ComputeMinDim()const NOEXCEPT override;
+	morda::Vec2r ComputeMinDim()const NOEXCEPT override;
 private:
 };
 

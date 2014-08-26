@@ -38,7 +38,7 @@ using namespace morda;
 
 
 void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter) {
-	this->dim = morda::Vec2f(float(image.Width()), float(image.Height()));
+	this->dim = morda::Vec2r(float(image.Width()), float(image.Height()));
 
 	glGenTextures(1, &this->tex);
 	ASSERT(glGetError() == GL_NO_ERROR)

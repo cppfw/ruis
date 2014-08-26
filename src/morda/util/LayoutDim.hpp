@@ -72,7 +72,7 @@ public:
 	 * @param w - widget to get dimensions for.
 	 * @return Resulting dimensions.
 	 */
-	Vec2f ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT;
+	Vec2r ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT;
 
 	/**
 	 * @brief Parse from STOB.

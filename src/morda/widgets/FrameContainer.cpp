@@ -45,11 +45,11 @@ void FrameContainer::OnResize() {
 
 
 
-morda::Vec2f FrameContainer::ComputeMinDim()const{
-	morda::Vec2f minDim(0);
+morda::Vec2r FrameContainer::ComputeMinDim()const{
+	morda::Vec2r minDim(0);
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		morda::Vec2f dim = (*i)->GetMinDim();
+		morda::Vec2r dim = (*i)->GetMinDim();
 		if((*i)->Prop()){
 			LayoutDim ld = LayoutDim::FromPropLayout(*(*i)->Prop());
 			

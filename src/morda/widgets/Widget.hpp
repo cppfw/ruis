@@ -74,7 +74,7 @@ private:
 	morda::Rect2f rect;
 	
 	//minimal dimensions needed to show widget's contents normally
-	morda::Vec2f minDim;
+	morda::Vec2r minDim;
 	bool minDimNeedsRecomputing = true;
 	
 	//clip widgets contents by widget's border if set to true
@@ -155,15 +155,15 @@ public:
 		return this->rect;
 	}
 	
-	void MoveTo(const morda::Vec2f& newPos)NOEXCEPT{
+	void MoveTo(const morda::Vec2r& newPos)NOEXCEPT{
 		this->rect.p = newPos;
 	}
 	
-	void MoveBy(const morda::Vec2f& delta)NOEXCEPT{
+	void MoveBy(const morda::Vec2r& delta)NOEXCEPT{
 		this->rect.p += delta;
 	}
 
-	void Resize(const morda::Vec2f& newDims){
+	void Resize(const morda::Vec2r& newDims){
 		if(this->rect.d == newDims){
 			return;
 		}
@@ -175,7 +175,7 @@ public:
 		this->relayoutNeeded = false;
 	}
 	
-	void ResizeBy(const morda::Vec2f& delta){
+	void ResizeBy(const morda::Vec2r& delta){
 		this->Resize(this->Rect().d + delta);
 	}
 
@@ -227,20 +227,20 @@ public:
 		ENUM_SIZE
 	};
 
-	std::function<bool (Widget& widget, bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
+	std::function<bool (Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
 	
 	//return true to consume event
-	virtual bool OnMouseButton(bool isDown, const morda::Vec2f& pos, EMouseButton button, unsigned pointerId){
+	virtual bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 		if(this->onMouseButton){
 			return this->onMouseButton(*this, isDown, pos, button, pointerId);
 		}
 		return false;
 	}
 
-	std::function<bool (Widget& widget, const morda::Vec2f& pos, unsigned pointerId)> onMouseMove;
+	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> onMouseMove;
 	
 	//return true to consume event
-	virtual bool OnMouseMove(const morda::Vec2f& pos, unsigned pointerId){
+	virtual bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 		if(this->onMouseMove){
 			return this->onMouseMove(*this, pos, pointerId);
 		}
@@ -255,7 +255,7 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	const morda::Vec2f& GetMinDim()const{
+	const morda::Vec2r& GetMinDim()const{
 		if(this->minDimNeedsRecomputing){
 			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
 			const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->minDimNeedsRecomputing = false;
@@ -263,12 +263,12 @@ public:
 		return this->minDim;
 	}
 
-	virtual morda::Vec2f Measure(const Vec2f& offer)const{
+	virtual morda::Vec2r Measure(const Vec2r& offer)const{
 		return offer;
 	}
 	
 protected:
-	virtual morda::Vec2f ComputeMinDim()const{
+	virtual morda::Vec2r ComputeMinDim()const{
 		return this->Rect().d;
 	}
 	
@@ -317,8 +317,8 @@ public:
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
      */
-	bool Contains(const morda::Vec2f& pos)const NOEXCEPT{
-		return morda::Rect2f(morda::Vec2f(0, 0), this->Rect().d).Overlaps(pos);
+	bool Contains(const morda::Vec2r& pos)const NOEXCEPT{
+		return morda::Rect2f(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	
 private:

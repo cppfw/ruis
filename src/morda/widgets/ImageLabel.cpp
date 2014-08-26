@@ -38,15 +38,15 @@ void ImageLabel::Render(const morda::Matr4f& matrix) const{
 	}
 }
 
-morda::Vec2f ImageLabel::ComputeMinDim()const{
+morda::Vec2r ImageLabel::ComputeMinDim()const{
 	if(!this->tex){
-		return Vec2f(0);
+		return Vec2r(0);
 	}
 	return this->tex->Tex().Dim();
 }
 
 
-morda::Vec2f ImageLabel::Measure(const Vec2f& offer) const {
+morda::Vec2r ImageLabel::Measure(const Vec2r& offer) const {
 	if(!this->keepAspectRatio || !this->tex){
 		return offer;
 	}
@@ -56,9 +56,9 @@ morda::Vec2f ImageLabel::Measure(const Vec2f& offer) const {
 	float offerRatio = offer.x / offer.y;
 	
 	if(texRatio <= offerRatio){
-		return Vec2f(offer.y * texRatio, offer.y);
+		return Vec2r(offer.y * texRatio, offer.y);
 	}else{
-		return Vec2f(offer.x, offer.x / texRatio);
+		return Vec2r(offer.x, offer.x / texRatio);
 	}
 }
 

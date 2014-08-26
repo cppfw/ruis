@@ -37,17 +37,17 @@ void Macosx_Main(int argc, const char** argv){
 	app->Exec();
 }
 
-void Macosx_HandleMouseMove(const morda::Vec2f& pos, unsigned id){
+void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 	morda::App::Inst().HandleMouseMove(
-			morda::Vec2f(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
 			id
 		);
 }
 
-void Macosx_HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id){
+void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id){
 	morda::App::Inst().HandleMouseButton(
 			isDown,
-			morda::Vec2f(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
 			button,
 			id
 		);
@@ -86,7 +86,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseButton(
 			isDown,
-			morda::Vec2f(pos.x, pos.y),
+			morda::Vec2r(pos.x, pos.y),
 			b,
 			0
 		);
@@ -443,7 +443,7 @@ int main (int argc, const char** argv){
 //	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseMove(
-			morda::Vec2f(pos.x, pos.y),
+			morda::Vec2r(pos.x, pos.y),
 			0
 		);
 }
