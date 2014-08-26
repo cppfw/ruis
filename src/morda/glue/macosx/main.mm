@@ -1,5 +1,6 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
+#include "../../util/util.hpp"
 
 #import <Cocoa/Cocoa.h>
 
@@ -38,6 +39,7 @@ void Macosx_Main(int argc, const char** argv){
 }
 
 void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
+	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
 	morda::App::Inst().HandleMouseMove(
 			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
 			id
@@ -86,7 +88,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseButton(
 			isDown,
-			morda::Vec2r(pos.x, pos.y),
+			RoundVec(morda::Vec2r(pos.x, pos.y)),
 			b,
 			0
 		);
@@ -442,8 +444,9 @@ int main (int argc, const char** argv){
 -(void)mouseMoved: (NSEvent*)e{
 //	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
+//	TRACE(<< "x = " << pos.x << std::endl)
 	Macosx_HandleMouseMove(
-			morda::Vec2r(pos.x, pos.y),
+			RoundVec(morda::Vec2r(pos.x, pos.y)),
 			0
 		);
 }
