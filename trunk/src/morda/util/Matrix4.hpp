@@ -40,6 +40,8 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
+#include "../config.hpp"
+
 #include "Vector4.hpp"
 
 
@@ -673,9 +675,12 @@ template <class T> inline Matrix4<T>& Matrix4<T>::SetFrom(const Quaternion<T>& q
 
 typedef Matrix4<float> Matr4f;
 static_assert(sizeof(Matr4f) == sizeof(float) * 4 * 4, "size mismatch");
+
 typedef Matrix4<double> Matr4d;
 static_assert(sizeof(Matr4d) == sizeof(double) * 4 * 4, "size mismatch");
 
+typedef Matrix4<real> Matr4r;
+static_assert(sizeof(Matr4r) == sizeof(real) * 4 * 4, "size mismatch");
 
 
 }//~namespace

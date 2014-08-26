@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ THE SOFTWARE. */
 #include <ting/debug.hpp>
 #include <ting/math.hpp>
 
+#include "../config.hpp"
 
 
 namespace morda{
@@ -484,9 +485,11 @@ template <class T> inline Vector3<T>& Vector3<T>::Rotate(const Quaternion<T>& q)
 
 typedef Vector3<float> Vec3f;
 static_assert(sizeof(Vec3f) == sizeof(float) * 3, "size mismatch");
+
 typedef Vector3<double> Vec3d;
 static_assert(sizeof(Vec3d) == sizeof(double) * 3, "size mismatch");
 
-
+typedef Vector3<real> Vec3r;
+static_assert(sizeof(Vec3r) == sizeof(real) * 3, "size mismatch");
 
 }//~namespace

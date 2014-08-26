@@ -122,7 +122,6 @@
         <in>Updateable.hpp</in>
         <in>config.hpp</in>
       </df>
-      <in>so_name.txt</in>
     </df>
     <df root="tests" name="1">
       <df name="app">
@@ -415,8 +414,6 @@
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/so_name.txt" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -654,8 +651,6 @@
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/so_name.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -925,8 +920,6 @@
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/so_name.txt" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -1194,8 +1187,6 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/so_name.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
