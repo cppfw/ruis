@@ -112,6 +112,8 @@
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextButton.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\TextInput.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\TextWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Widget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Window.cpp" />
   </ItemGroup>
