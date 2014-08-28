@@ -147,11 +147,7 @@ void Widget::Focus()NOEXCEPT{
 		return;
 	}
 
-	if(auto w = App::Inst().focusedWidget.lock()){
-		w->isFocused = false;
-	}
-	App::Inst().focusedWidget = this->SharedFromThis(this);
-	this->isFocused = true;
+	App::Inst().SetFocusedWidget(this->SharedFromThis(this));
 }
 
 
@@ -165,6 +161,5 @@ void Widget::Unfocus()NOEXCEPT{
 
 	ASSERT(App::Inst().focusedWidget.lock() && App::Inst().focusedWidget.lock().operator->() == this)
 
-	App::Inst().focusedWidget.reset();
-	this->isFocused = false;
+	App::Inst().SetFocusedWidget(nullptr);
 }

@@ -126,3 +126,19 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 	//do nothing
 }
 #endif
+
+
+
+void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
+	if(auto prev = this->focusedWidget.lock()){
+		prev->isFocused = false;
+		prev->OnFocusedChanged();
+	}
+	
+	this->focusedWidget = w;
+	
+	if(w){
+		w->isFocused = true;
+		w->OnFocusedChanged();
+	}
+}

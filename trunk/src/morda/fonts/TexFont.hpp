@@ -96,19 +96,23 @@ public:
 	}
 
 	
-	real RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const override;
+	real RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
 
 	const morda::Rect2r& FontBoundingBox()const{
 		return this->boundingBox;
 	}
 
 	
-	real StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
+	real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
 
-	morda::Rect2r StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const override;
+	morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
 
 	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const; )
 
+
+	real CharAdvance(std::uint32_t c) const override;
+
+	
 private:
 
 	real RenderGlyphInternal(TexturingShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;

@@ -236,9 +236,12 @@ Container{
 
 		TextInput{
 			name{text_input}
-			background{color{0xffffffff}}
+
+			text{"Hello Wrodl!!!"}
+
+//			background{color{0xffffffff}}
 			prop{layout{
-				dim{100% 10}
+				dim{100% min}
 			}}
 		}
 	}

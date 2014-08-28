@@ -215,7 +215,7 @@ public:
 		return this->isFocused;
 	}
 	
-	//TODO: add on focus changed
+	virtual void OnFocusedChanged(){}
 	
 	enum class EMouseButton{
 		LEFT,
