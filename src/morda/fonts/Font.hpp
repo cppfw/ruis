@@ -46,11 +46,11 @@ class Font{
 protected:
 	Font(){}
 	
-	virtual real RenderStringInternal(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual real RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const = 0;
 	
-	virtual real StringAdvanceInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
 	
-	virtual morda::Rect2r StringBoundingBoxInternal(const ting::Buffer<std::uint32_t> utf32str)const = 0;
+	virtual morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()NOEXCEPT{}
 	
@@ -59,7 +59,7 @@ public:
 	//renders the string, returns resulting string advance
 	real RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
 	
-	real RenderString(const morda::Matr4r& matrix, const ting::Buffer<std::uint32_t> utf32str)const{
+	real RenderString(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
 		return this->RenderStringInternal(matrix, utf32str);
 	}
 	
@@ -75,7 +75,7 @@ public:
 	
 	real StringAdvance(ting::utf8::Iterator str)const;
 	
-	real StringAdvance(const ting::Buffer<std::uint32_t> utf32str)const{
+	real StringAdvance(ting::Buffer<const std::uint32_t> utf32str)const{
 		return this->StringAdvanceInternal(utf32str);
 	}
 	
@@ -89,9 +89,13 @@ public:
 	
 	
 	
+	virtual real CharAdvance(std::uint32_t c)const = 0;
+	
+	
+	
 	morda::Rect2r StringBoundingBox(ting::utf8::Iterator str)const;
 	
-	morda::Rect2r StringBoundingBox(const ting::Buffer<std::uint32_t> utf32str)const{
+	morda::Rect2r StringBoundingBox(ting::Buffer<const std::uint32_t> utf32str)const{
 		return this->StringBoundingBoxInternal(utf32str);
 	}
 	

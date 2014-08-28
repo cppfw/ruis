@@ -31,10 +31,17 @@ THE SOFTWARE. */
 #include "Widget.hpp"
 #include "TextWidget.hpp"
 
+#include "../Updateable.hpp"
+
 
 namespace morda{
 
-class TextInput : public TextWidget{
+class TextInput : public TextWidget, public Updateable{
+	
+	real cursorPos;
+	std::uint32_t cursorIndex;
+	
+	bool cursorBlinkVisible;
 	
 public:
 	TextInput() = delete;
@@ -45,8 +52,24 @@ public:
 	
 	virtual ~TextInput()NOEXCEPT{}
 	
-private:
+	
+	void SetText(const std::string& text);
 
+	virtual Vec2r ComputeMinDim()const NOEXCEPT override{
+		return Vec2r(0, this->Font().Size());
+	}
+
+	void Render(const morda::Matr4r& matrix) const override;
+
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+
+	void OnFocusedChanged()override;
+
+	
+	void Update(std::uint32_t dt)override;
+
+private:
+	void SetCursor(real toPos);
 };
 
 }

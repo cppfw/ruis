@@ -82,7 +82,7 @@ protected:
 	
 	void SetLines(decltype(TextWidget::lines)&& lines);
 	
-	const decltype(TextWidget::lines)& Lines(){
+	const decltype(TextWidget::lines)& Lines()const{
 		return this->lines;
 	}
 private:
