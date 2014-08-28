@@ -109,3 +109,31 @@ void TextInput::OnFocusedChanged(){
 		this->StopUpdating();
 	}
 }
+
+
+
+void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key){
+	switch(key){
+		case EKey::RIGHT:
+			++this->cursorIndex;
+			ting::util::ClampTop(this->cursorIndex, this->Lines().front().size());
+			this->UpdateCursorPosBasedOnIndex();
+			this->cursorBlinkVisible = true;
+			break;
+		case EKey::LEFT:
+			if(this->cursorIndex != 0){
+				--this->cursorIndex;
+				this->UpdateCursorPosBasedOnIndex();
+				this->cursorBlinkVisible = true;
+			}
+			break;
+		default:
+			break;
+		
+	}
+	
+}
+
+void TextInput::UpdateCursorPosBasedOnIndex(){
+	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(&*this->Lines().front().begin(), this->cursorIndex));
+}

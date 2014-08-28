@@ -64,7 +64,6 @@ public:
 			this->StartUpdating(30);
 		}
 		this->Focus();
-		this->FocusCharInput();
 		return true;
 	}
 	
@@ -97,7 +96,7 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(const ting::Buffer<const std::uint32_t>& unicode) override{
+	void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, morda::EKey key) override{
 		if(unicode.size() == 0){
 			return;
 		}
