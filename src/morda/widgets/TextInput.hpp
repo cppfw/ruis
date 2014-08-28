@@ -32,14 +32,15 @@ THE SOFTWARE. */
 #include "TextWidget.hpp"
 
 #include "../Updateable.hpp"
+#include "../util/CharInputFocusable.hpp"
 
 
 namespace morda{
 
-class TextInput : public TextWidget, public Updateable{
+class TextInput : public TextWidget, public Updateable, public CharInputFocusable{
 	
 	real cursorPos;
-	std::uint32_t cursorIndex;
+	size_t cursorIndex;
 	
 	bool cursorBlinkVisible;
 	
@@ -67,9 +68,13 @@ public:
 
 	
 	void Update(std::uint32_t dt)override;
+	
+	void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key)override;
 
 private:
 	void SetCursor(real toPos);
+	
+	void UpdateCursorPosBasedOnIndex();
 };
 
 }

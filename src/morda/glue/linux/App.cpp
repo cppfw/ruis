@@ -635,31 +635,37 @@ void App::Exec(){
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
-						this->HandleKeyEvent(true, keyCodeMap[std::uint8_t(event.xkey.keycode)]);
-						this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event));
+						{
+							EKey key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
+							this->HandleKeyEvent(true, key);
+							this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event), key);
+						}
 						break;
 					case KeyRelease:
 //						TRACE(<< "KeyRelease X event got" << std::endl)
-						
-						//detect auto-repeated key events
-						if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
-							XEvent nev;
-							XPeekEvent(this->xDisplay.d, &nev);
+						{
+							EKey key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 
-							if(nev.type == KeyPress
-									&& nev.xkey.time == event.xkey.time
-									&& nev.xkey.keycode == event.xkey.keycode
-								)
-							{
-								//Key wasn't actually released
-								this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev));
-								
-								XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
-								break;
+							//detect auto-repeated key events
+							if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
+								XEvent nev;
+								XPeekEvent(this->xDisplay.d, &nev);
+
+								if(nev.type == KeyPress
+										&& nev.xkey.time == event.xkey.time
+										&& nev.xkey.keycode == event.xkey.keycode
+									)
+								{
+									//Key wasn't actually released
+									this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev), key);
+
+									XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
+									break;
+								}
 							}
-						}
 
-						this->HandleKeyEvent(false, keyCodeMap[std::uint8_t(event.xkey.keycode)]);
+							this->HandleKeyEvent(false, key);
+						}
 						break;
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)

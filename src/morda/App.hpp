@@ -393,16 +393,17 @@ public:
 	
 private:
 	std::weak_ptr<Widget> focusedWidget;
-	std::weak_ptr<CharInputFocusable> focusedCharInput;
 	
 	void SetFocusedWidget(const std::shared_ptr<Widget> w);
 	
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver){
-		if(auto c = this->focusedCharInput.lock()){
+	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
+		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-			c->OnCharacterInput(unicodeResolver.Resolve());
+			if(auto c = dynamic_cast<CharInputFocusable*>(w.operator->())){
+				c->OnCharacterInput(unicodeResolver.Resolve(), key);
+			}
 		}
 	}
 	
