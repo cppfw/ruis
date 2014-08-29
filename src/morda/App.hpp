@@ -293,7 +293,7 @@ private:
 	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
 	friend void Macosx_HandleMouseHover(bool isHovered);
 	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
-	friend void Macosx_HandleCharacterInput(const void* nsstring);
+	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
 	friend void Macosx_UpdateWindowRect(const morda::Rect2r& r);
 	friend void Macosx_SetQuitFlag();
 	

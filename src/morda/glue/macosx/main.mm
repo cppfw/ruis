@@ -12,11 +12,15 @@ namespace{
 class UnicodeResolver{
 	const NSString* nsStr;
 public:
-	UnicodeResolver(const NSString* nsStr) :
+	UnicodeResolver(const NSString* nsStr = nullptr) :
 			nsStr(nsStr)
 	{}
 	
 	std::vector<std::uint32_t> Resolve()const{
+		if(!this->nsStr){
+			return std::vector<std::uint32_t>();
+		}
+		
 		NSUInteger len = [this->nsStr length];
 		
 		std::vector<std::uint32_t> ret(len);
@@ -63,12 +67,8 @@ void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
 	morda::App::Inst().HandleKeyEvent(isDown, keyCode);
 }
 
-void Macosx_HandleCharacterInput(const void* nsstring){
-	if(!nsstring){
-		return;
-	}
-	const UnicodeResolver resolver(reinterpret_cast<const NSString*>(nsstring));
-	morda::App::Inst().HandleCharacterInput(resolver);
+void Macosx_HandleCharacterInput(const void* nsstring, EKey key){
+	morda::App::Inst().HandleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
 void Macosx_UpdateWindowRect(const morda::Rect2r& r){
@@ -477,14 +477,17 @@ int main (int argc, const char** argv){
 
 -(void)keyDown:(NSEvent*)e{
 //	TRACE(<< "keyDown event!!!!!" << std::endl)
+	std::uint8_t kc = [e keyCode];
+	EKey key = keyCodeMap[kc];
+	
 	if([e isARepeat] == YES){
-		Macosx_HandleCharacterInput([e characters]);
+		Macosx_HandleCharacterInput([e characters], key);
 		return;
 	}
-	std::uint8_t kc = [e keyCode];
-	Macosx_HandleKeyEvent(true, keyCodeMap[kc]);
 	
-	Macosx_HandleCharacterInput([e characters]);
+	Macosx_HandleKeyEvent(true, key);
+	
+	Macosx_HandleCharacterInput([e characters], key);
 }
 
 -(void)keyUp:(NSEvent*)e{
