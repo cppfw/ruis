@@ -276,14 +276,18 @@ const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 class KeyEventUnicodeResolver{
 	std::uint32_t c;
 public:
-	KeyEventUnicodeResolver(std::uint32_t unicodeChar) :
+	KeyEventUnicodeResolver(std::uint32_t unicodeChar = 0) :
 			c(unicodeChar)
 	{}
 	
 	std::vector<std::uint32_t> Resolve()const{
+		if(this->c == 0){
+			return std::vector<std::uint32_t>();
+		}
+
 		std::vector<std::uint32_t> ret(1);
 		ret[0] = this->c;
-		return ret;
+		return std::move(ret);
 	}
 };
 
@@ -395,19 +399,22 @@ bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRES
 			return true;
 
 		case WM_KEYDOWN:
-			if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-				app.HandleKeyEvent(true, keyCodeMap[std::uint8_t(wParam)]);
+			{
+				morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
+				if((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
+					app.HandleKeyEvent(true, key);
+				}
+				app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
+				lres = 0;
+				return true;
 			}
-			lres = 0;
-			return true;
-
 		case WM_KEYUP:
 			app.HandleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
 			lres = 0;
 			return true;
 		
 		case WM_CHAR:
-			app.HandleCharacterInput(KeyEventUnicodeResolver(wParam));
+			app.HandleCharacterInput(KeyEventUnicodeResolver(wParam), EKey::UNKNOWN);
 			lres = 0;
 			return true;
 		case WM_PAINT:
