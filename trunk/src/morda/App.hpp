@@ -59,7 +59,7 @@ THE SOFTWARE. */
 #include "Inflater.hpp"
 #include "Updateable.hpp"
 #include "util/keycodes.hpp"
-#include "util/CharInputFocusable.hpp"
+#include "widgets/CharInputWidget.hpp"
 #include "util/Vector2.hpp"
 #include "ResourceManager.hpp"
 
@@ -78,7 +78,7 @@ class App : public ting::IntrusiveSingleton<App>{
 
 	friend class Updateable;
 	friend class Widget;
-	friend class CharInputFocusable;
+	friend class CharInputWidget;
 	
 	struct ThreadId{
 		ting::mt::Thread::T_ThreadID id;
@@ -401,7 +401,7 @@ private:
 	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
 		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-			if(auto c = dynamic_cast<CharInputFocusable*>(w.operator->())){
+			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
 				c->OnCharacterInput(unicodeResolver.Resolve(), key);
 			}
 		}

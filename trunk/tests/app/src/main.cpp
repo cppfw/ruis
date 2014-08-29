@@ -13,7 +13,7 @@
 #include "../../../src/morda/resources/ResTexture.hpp"
 #include "../../../src/morda/resources/ResFont.hpp"
 
-#include "../../../src/morda/util/CharInputFocusable.hpp"
+#include "../../../src/morda/widgets/CharInputWidget.hpp"
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
@@ -23,7 +23,7 @@
 
 
 
-class SimpleWidget : public morda::Widget, public morda::Updateable, public morda::CharInputFocusable{
+class SimpleWidget : virtual public morda::Widget, public morda::Updateable, public morda::CharInputWidget{
 	std::shared_ptr<morda::ResTexture> tex;
 	std::shared_ptr<morda::ResFont> fnt;
 	

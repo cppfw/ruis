@@ -32,12 +32,12 @@ THE SOFTWARE. */
 #include "TextWidget.hpp"
 
 #include "../Updateable.hpp"
-#include "../util/CharInputFocusable.hpp"
+#include "CharInputWidget.hpp"
 
 
 namespace morda{
 
-class TextInput : public TextWidget, public Updateable, public CharInputFocusable{
+class TextInput : public TextWidget, public Updateable, public CharInputWidget{
 	
 	real cursorPos;
 	size_t cursorIndex;

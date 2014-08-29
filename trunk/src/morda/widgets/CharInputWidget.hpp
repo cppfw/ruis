@@ -30,15 +30,21 @@ THE SOFTWARE. */
 
 #include <ting/Buffer.hpp>
 
-#include "keycodes.hpp"
+#include "Widget.hpp"
+
+#include "../util/keycodes.hpp"
 
 namespace morda{
 
 
-//TODO: rename
-class CharInputFocusable{
-public:
-	
+class CharInputWidget : virtual public Widget{
+
+protected:
+	CharInputWidget() :
+			Widget(nullptr)
+	{}
+
+public:	
 	/**
 	 * @brief Handler for character input.
      * @param unicode - unicode string of entered characters in UTF-32.
@@ -46,7 +52,7 @@ public:
      */
 	virtual void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key) = 0;
 	
-	virtual ~CharInputFocusable()NOEXCEPT{}
+	virtual ~CharInputWidget()NOEXCEPT{}
 };
 
 
