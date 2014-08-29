@@ -42,6 +42,7 @@ public:
 	/**
 	 * @brief Handler for character input.
      * @param unicode - unicode string of entered characters in UTF-32.
+	 * @param key - key code associated with character input, can be UNKNOWN.
      */
 	virtual void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key) = 0;
 	
