@@ -424,8 +424,9 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <flagsDictionary>
-        <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
+        <element flagsID="0" commonFlags="-funsigned-char -std=c++11"/>
+        <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
+        <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -443,7 +444,7 @@
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </cTool>
-          <ccTool flags="0">
+          <ccTool flags="1">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -454,7 +455,6 @@
       <folder path="0/morda/fonts">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -476,7 +476,6 @@
       <folder path="0/morda/resources">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -487,7 +486,6 @@
       <folder path="0/morda/util">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -498,7 +496,6 @@
       <folder path="0/morda/widgets">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -516,7 +513,6 @@
       <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -527,7 +523,6 @@
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -538,7 +533,6 @@
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -549,7 +543,6 @@
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -573,10 +566,10 @@
             flavor2="8">
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="8">
+        <cTool flags="2">
+        </cTool>
       </item>
       <item path="src/morda/glue/windows/App_.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -597,7 +590,6 @@
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -611,7 +603,6 @@
             flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -625,7 +616,6 @@
             flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -644,7 +634,6 @@
             flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
           <preprocessorList>
@@ -761,6 +750,8 @@
         </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="2">
+        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">
