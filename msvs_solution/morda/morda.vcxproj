@@ -96,7 +96,6 @@
     <ClCompile Include="..\..\src\morda\shaders\TexturingShader.cpp" />
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\Background.cpp" />
-    <ClCompile Include="..\..\src\morda\util\CharInputFocusable.cpp" />
     <ClCompile Include="..\..\src\morda\util\GLTexture.cpp" />
     <ClCompile Include="..\..\src\morda\util\Gravity.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />

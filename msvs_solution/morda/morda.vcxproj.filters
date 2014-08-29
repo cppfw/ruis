@@ -93,9 +93,6 @@
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\CharInputFocusable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\util\LayoutDim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
