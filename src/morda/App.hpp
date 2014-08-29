@@ -145,7 +145,7 @@ private:
 	friend void Render(App& app);
 	friend std::uint32_t Update(App& app);
 	friend void HandleInputEvents();
-	friend void HandleCharacterInputEvent(std::vector<std::uint32_t> chars);
+	friend void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars);
 	friend void HandleQueueMessages(App& app);
 	friend int GetUIQueueHandle(App& app);
 	

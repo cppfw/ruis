@@ -573,9 +573,9 @@ const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 
 
 morda::EKey GetKeyFromKeyEvent(AInputEvent& event)NOEXCEPT{
-	int32_t kc = AKeyEvent_getKeyCode(&event);
-	ASSERT(0 <= kc && kc <= std::uint8_t(-1))
-	return keyCodeMap[std::uint8_t(kc)];
+	size_t kc = size_t(AKeyEvent_getKeyCode(&event));
+	ASSERT(kc < keyCodeMap.size())
+	return keyCodeMap[kc];
 }
 
 
@@ -596,12 +596,12 @@ struct UnicodeResolver{
 
 namespace morda{
 
-void HandleCharacterInputEvent(std::vector<std::uint32_t> chars){
+void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars){
 	UnicodeResolver resolver;
-	resolver.chars = chars;
+	resolver.chars = std::move(chars);
 	
 	//notify about input event
-	morda::App::Inst().HandleCharacterInput<UnicodeResolver>(resolver);
+	morda::App::Inst().HandleCharacterInput(resolver, EKey::UNKNOWN);
 }
 
 }//~namespace
@@ -641,7 +641,7 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 		*dst = *src;
 	}
 
-	HandleCharacterInputEvent(utf32Chars);
+	HandleCharacterInputEvent(std::move(utf32Chars));
 
 	env->ReleaseStringUTFChars(chars, utf8Chars);
 }
@@ -966,6 +966,8 @@ void HandleInputEvents(){
 				{
 //						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
 
+					morda::EKey key = GetKeyFromKeyEvent(*ASS(event));
+					
 					keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
 					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
 					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
@@ -975,7 +977,7 @@ void HandleInputEvents(){
 					//detect auto-repeated key events
 					if(AKeyEvent_getRepeatCount(event) != 0){
 						if(eventAction == AKEY_EVENT_ACTION_DOWN){
-							app.HandleCharacterInput(keyUnicodeResolver);
+							app.HandleCharacterInput(keyUnicodeResolver, key);
 						}
 						break;
 					}
@@ -983,12 +985,12 @@ void HandleInputEvents(){
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
 //							TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
-							app.HandleKeyEvent(true, GetKeyFromKeyEvent(*ASS(event)));
-							app.HandleCharacterInput(keyUnicodeResolver);
+							app.HandleKeyEvent(true, key);
+							app.HandleCharacterInput(keyUnicodeResolver, key);
 							break;
 						case AKEY_EVENT_ACTION_UP:
 //							TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-							app.HandleKeyEvent(false, GetKeyFromKeyEvent(*ASS(event)));
+							app.HandleKeyEvent(false, key);
 							break;
 						default:
 							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)
