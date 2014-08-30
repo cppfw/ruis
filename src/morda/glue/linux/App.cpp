@@ -545,7 +545,7 @@ public:
 		ASSERT(buf.size() != 0)
 		ASSERT(buf.size() > unsigned(size))
 		
-		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
+//		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
 		
 		buf[size] = 0;//null-terminate
 		
