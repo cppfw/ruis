@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Vector2.hpp"
+#include "Rectangle2.hpp"
 
 #include <tuple>
 
@@ -49,6 +50,16 @@ namespace morda{
  * @return parsed Vec2r.
  */
 morda::Vec2r Vec2rFromSTOB(const stob::Node* chain);
+
+/**
+ * @brief Parse chain of 4 STOB nodes as Rect2r.
+ * @param chain - chain of at least four nodes holding Rect2r values.
+ *                If there are less than 4 nodes in the chain then the rest of
+ *                rectangle components will be filled with latest parsed value.
+ *                If zero pointer is passed the resulting rectangle will be filled with zeros.
+ * @return parsed Rect2r.
+ */
+morda::Rect2r Rect2rFromSTOB(const stob::Node* chain);
 
 
 

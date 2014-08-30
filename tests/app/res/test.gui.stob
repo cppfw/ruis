@@ -37,6 +37,17 @@ Container{
 				gravity{50% 50%}
 			}}
 		}
+
+		ImageLabel{
+			image{img_sample}
+
+	//		keepAspectRatio{true}
+
+			prop{layout{
+				dim{min min}
+				gravity{50% 0%}
+			}}
+		}
 	}
 
 	Window{
@@ -117,17 +128,6 @@ Container{
 
 		clip{true}
 
-		ImageLabel{
-			image{tex_sample}
-
-	//		keepAspectRatio{true}
-
-			prop{layout{
-				dim{50 84}
-				gravity{50% 0%}
-			}}
-		}
-
 		U_SimpleWidget{
 			dim {300 300}
 		}
@@ -179,7 +179,7 @@ Container{
 			}}
 
 			ImageLabel{
-				image{tex_lattice}
+				image{img_lattice}
 
 				keepAspectRatio{true}
 

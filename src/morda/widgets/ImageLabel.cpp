@@ -14,8 +14,8 @@ ImageLabel::ImageLabel(const stob::Node* desc) :
 	}
 	
 	if(const stob::Node* image = desc->GetProperty("image")){
-		this->tex = App::Inst().resMan.Load<ResTexture>(image->Value());
-		this->Resize(this->tex->Tex().Dim());
+		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
+		this->Resize(this->img->Dim());
 	}
 	
 	if(const stob::Node* kar = desc->GetProperty("keepAspectRatio")){
@@ -24,34 +24,33 @@ ImageLabel::ImageLabel(const stob::Node* desc) :
 }
 
 void ImageLabel::Render(const morda::Matr4r& matrix) const{
-	if(this->tex){
-		morda::Matr4r matr(matrix);
-		matr.Scale(this->Rect().d);
-
-		this->tex->Tex().Bind();
-
-		morda::SimpleTexturingShader &s = App::Inst().Shaders().simpleTexturing;
-		s.Bind();
-		s.EnablePositionPointer();
-		s.SetMatrix(matr);
-		s.DrawQuad01();
+	if(!this->img){
+		return;
 	}
+	
+	morda::Matr4r matr(matrix);
+//	matr.Scale(this->Rect().d);
+
+	morda::SimpleTexturingShader &s = App::Inst().Shaders().simpleTexturing;
+	s.Bind();
+	
+	this->img->Render(matr, s);
 }
 
 morda::Vec2r ImageLabel::ComputeMinDim()const{
-	if(!this->tex){
+	if(!this->img){
 		return Vec2r(0);
 	}
-	return this->tex->Tex().Dim();
+	return this->img->Dim();
 }
 
 
 morda::Vec2r ImageLabel::Measure(const Vec2r& offer) const {
-	if(!this->keepAspectRatio || !this->tex){
+	if(!this->keepAspectRatio || !this->img){
 		return offer;
 	}
 	
-	float texRatio = this->tex->Tex().Dim().x / this->tex->Tex().Dim().y;
+	float texRatio = this->img->Dim().x / this->img->Dim().y;
 	
 	float offerRatio = offer.x / offer.y;
 	

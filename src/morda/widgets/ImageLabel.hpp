@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
-#include "../resources/ResTexture.hpp"
+#include "../resources/ResImage.hpp"
 
 
 namespace morda{
@@ -39,7 +39,7 @@ class ImageLabel : public virtual Widget{
 	ImageLabel(const ImageLabel&);
 	ImageLabel& operator=(const ImageLabel&);
 	
-	std::shared_ptr<morda::ResTexture> tex;
+	std::shared_ptr<morda::ResImage> img;
 	
 	bool keepAspectRatio = false;
 	

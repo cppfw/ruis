@@ -28,6 +28,14 @@ morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 }
 
 
+Rect2r morda::Rect2rFromSTOB(const stob::Node* chain){
+	Vec2r p = Vec2rFromSTOB(chain);
+	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->Next()){}
+	Vec2r d = Vec2rFromSTOB(chain);
+	return Rect2r(p, d);
+}
+
+
 
 morda::Vec2r morda::DimVec2r(const stob::Node* chain){
 	unsigned i;

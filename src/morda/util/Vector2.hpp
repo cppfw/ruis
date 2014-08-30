@@ -294,7 +294,7 @@ public:
 	/**
 	 * @brief Component-wise multiplication.
 	 * Performs component-wise multiplication of two vectors.
-	 * Resulting vector is (x1 * x2, y1* y2).
+	 * Resulting vector is (x1 * x2, y1 * y2).
 	 * The result of such operation is also vector.
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
@@ -316,6 +316,34 @@ public:
 	Vector2& CompMulBy(const Vector2& vec)NOEXCEPT{
 		this->x *= vec.x;
 		this->y *= vec.y;
+		return *this;
+	}
+	
+	/**
+	 * @brief Component-wise division.
+	 * Performs component-wise division of two vectors.
+	 * Resulting vector is (x1 / x2, y1 / y2).
+	 * The result of such operation is also vector.
+     * @param v - vector to divide by.
+     * @return Vector resulting from component-wise division.
+     */
+	Vector2 CompDiv(const Vector2& v)NOEXCEPT{
+		return Vector2(
+				this->x / v.x,
+				this->y / v.y
+			);
+	}
+	
+	/**
+	 * @brief Component-wise division.
+	 * Performs component-wise division of this vector by another given vector.
+	 * See CompDiv() for details.
+     * @param v - vector to divide by.
+     * @return reference to this Vector2 instance.
+     */
+	Vector2& CompDivBy(const Vector2& v)NOEXCEPT{
+		this->x /= v.x;
+		this->y /= v.y;
 		return *this;
 	}
 
