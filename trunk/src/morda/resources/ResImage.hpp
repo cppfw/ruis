@@ -32,23 +32,35 @@ THE SOFTWARE. */
 #include "../ResourceManager.hpp"
 
 #include "ResTexture.hpp"
+#include "../util/Rectangle2.hpp"
+#include "../shaders/TexturingShader.hpp"
 
 #include <array>
 
 namespace morda{
 
-class ResSprite : public Resource{
+class ResImage : public Resource{
+	friend class ResourceManager;
 	
 	std::shared_ptr<ResTexture> tex;
 	
 	std::array<Vec2r, 4> texCoords;
 	
+	Vec2r dim;
+	
 public:
-	ResSprite() = default;
-	ResSprite(const ResSprite& orig) = delete;
-	virtual ~ResSprite()NOEXCEPT;
+	ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect);
+	
+	ResImage(const ResImage& orig) = delete;
+	ResImage& operator=(const ResImage& orig) = delete;
+	
+	const Vec2r& Dim()const NOEXCEPT{
+		return this->dim;
+	}
+	
+	void Render(const Matr4r& matrix, TexturingShader& s)const;
 private:
-
+	static std::shared_ptr<ResImage> Load(const stob::Node& r, const ting::fs::File& fi);
 };
 
 }

@@ -6,4 +6,25 @@ tex_lattice{
 	file {lattice.png}
 }
 
+img_lattice{
+	tex{tex_lattice}
+	rect{0 0 256 256}
+}
+
 include{fonts/font.res.stob}
+
+tex_images{
+	file{sample.png}
+}
+
+img_sample{
+	tex{tex_sample}
+	rect{0 0 120 90}
+}
+
+9ptch_sample{
+	tex{tex_sample}
+	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
+	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
+	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
+}
