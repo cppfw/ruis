@@ -31,7 +31,7 @@ Container{
 		title{"Window title"}
 
 		Label{
-			text{"inwindow text"}
+			text{"inwindow text, y j g q p"}
 			prop{layout{
 				dim{min min}
 				gravity{50% 50%}

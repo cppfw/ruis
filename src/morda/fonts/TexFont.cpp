@@ -346,7 +346,7 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_
 		return ret;
 	}
 
-	const std::uint32_t* s = str.begin();
+	decltype(str)::const_iterator s = str.begin();
 
 	real curAdvance;
 
@@ -371,11 +371,11 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_
 			}
 
 			if(g.verts[0].y < bottom){
-				bottom = - g.verts[0].y;
+				bottom = g.verts[0].y;
 			}
 
 			if(curAdvance + g.verts[0].x < left){
-				left = -(curAdvance + g.verts[0].x);
+				left = (curAdvance + g.verts[0].x);
 			}
 
 			if(curAdvance + g.verts[2].x > right){
