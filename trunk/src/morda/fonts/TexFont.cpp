@@ -375,7 +375,7 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_
 			}
 
 			if(curAdvance + g.verts[0].x < left){
-				left = (curAdvance + g.verts[0].x);
+				left = curAdvance + g.verts[0].x;
 			}
 
 			if(curAdvance + g.verts[2].x > right){
