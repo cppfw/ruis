@@ -81,7 +81,7 @@ void TextInput::SetCursor(real toPos){
 	this->cursorPos = 0;
 	this->cursorIndex = 0;
 	
-	for(auto c : this->Lines().front()){
+	for(auto& c : this->Lines().front()){
 		real w = this->Font().CharAdvance(c);
 		
 		if(toPos > this->cursorPos){

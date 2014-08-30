@@ -44,15 +44,15 @@ Container::Container(const stob::Node* desc) :
 
 //override
 void Container::Render(const morda::Matr4r& matrix)const{
-	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		if((*i)->IsHidden()){
+	for(auto& w: this->Children()){
+		if(w->IsHidden()){
 			continue;
 		}
 		
 		morda::Matr4r matr(matrix);
-		matr.Translate((*i)->Rect().p);
+		matr.Translate(w->Rect().p);
 
-		(*i)->RenderInternal(matr);
+		w->RenderInternal(matr);
 	}
 }
 
@@ -178,8 +178,8 @@ void Container::OnHoverChanged(){
 	
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		(*i)->SetHovered(false);
+	for(auto& w : this->Children()){
+		w->SetHovered(false);
 	}
 }
 
@@ -188,9 +188,9 @@ void Container::OnHoverChanged(){
 void Container::OnResize(){
 //	TRACE(<< "Container::OnResize(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		if((*i)->NeedsRelayout()){
-			(*i)->OnResize();
+	for(auto& w : this->Children()){
+		if(w->NeedsRelayout()){
+			w->OnResize();
 		}
 	}
 }
@@ -239,13 +239,13 @@ void Container::Remove(Widget& w){
 //override
 std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXCEPT{
 //	TRACE_AND_LOG(<< "Container::FindChildByName(): enter" << std::endl)
-	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+	for(auto& w : this->Children()){
 //		TRACE_AND_LOG(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
-		if((*i)->Name() == name){
-			return *i;
+		if(w->Name() == name){
+			return w;
 		}
 		
-		if(auto r = (*i)->FindChildByName(name)){
+		if(auto r = w->FindChildByName(name)){
 			return r;
 		}
 	}

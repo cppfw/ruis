@@ -29,7 +29,7 @@ TextWidget::TextWidget(const stob::Node* desc) :
 
 void TextWidget::Render(const morda::Matr4r& matrix)const{
 	//TODO: render multiple lines
-	for(auto l : this->lines){
+	for(auto& l : this->lines){
 		this->Font().RenderString(matrix, l);
 	}
 }
@@ -39,7 +39,7 @@ void TextWidget::SetLines(decltype(TextWidget::lines)&& lines){
 	this->lines = std::move(lines);
 
 	//TODO: recompute bounding box for multiple lines
-	for(auto l : this->lines){
+	for(auto& l : this->lines){
 		this->bb = this->Font().StringBoundingBox(l);
 	}
 

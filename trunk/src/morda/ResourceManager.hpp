@@ -133,7 +133,7 @@ public:
 template <class T> std::shared_ptr<T> ResourceManager::FindResourceInResMap(const char* resName){
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
-		auto r = std::move((*i).second.lock());
+		auto r = (*i).second.lock();
 		ASSERT(r)
 		return std::move(std::dynamic_pointer_cast<T>(std::move(r)));
 	}
@@ -144,7 +144,7 @@ template <class T> std::shared_ptr<T> ResourceManager::FindResourceInResMap(cons
 
 template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
-	if(auto r = std::move(this->FindResourceInResMap<T>(resName))){
+	if(auto r = this->FindResourceInResMap<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
 		return std::move(r);
 	}
@@ -155,7 +155,7 @@ template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	auto resource = std::move(T::Load(ret.e, *ret.rp.fi));
+	auto resource = T::Load(ret.e, *ret.rp.fi);
 
 	this->AddResource(resource, ret.e);
 
