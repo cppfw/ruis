@@ -75,6 +75,8 @@ private:
 	void SetCursor(real toPos);
 	
 	void UpdateCursorPosBasedOnIndex();
+	
+	void StartCursorBlinking();
 };
 
 }

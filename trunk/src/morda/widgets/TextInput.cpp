@@ -8,6 +8,12 @@ using namespace morda;
 
 
 
+namespace{
+std::uint32_t D_CursorBlinkPeriod = 500; //milliseconds
+}
+
+
+
 TextInput::TextInput(const stob::Node* desc) :
 		Widget(desc),
 		TextWidget(desc)
@@ -104,10 +110,15 @@ void TextInput::Update(std::uint32_t dt){
 
 void TextInput::OnFocusedChanged(){
 	if(this->IsFocused()){
-		this->StartUpdating(500);
+		this->StartCursorBlinking();
 	}else{
 		this->StopUpdating();
 	}
+}
+
+void TextInput::StartCursorBlinking(){
+	this->StopUpdating();
+	this->StartUpdating(D_CursorBlinkPeriod);
 }
 
 
