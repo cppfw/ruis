@@ -29,7 +29,7 @@ void ImageLabel::Render(const morda::Matr4r& matrix) const{
 	}
 	
 	morda::Matr4r matr(matrix);
-//	matr.Scale(this->Rect().d);
+	matr.Scale(this->Rect().d.CompDiv(this->img->Dim()));
 
 	morda::SimpleTexturingShader &s = App::Inst().Shaders().simpleTexturing;
 	s.Bind();
