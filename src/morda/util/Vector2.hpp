@@ -327,7 +327,7 @@ public:
      * @param v - vector to divide by.
      * @return Vector resulting from component-wise division.
      */
-	Vector2 CompDiv(const Vector2& v)NOEXCEPT{
+	Vector2 CompDiv(const Vector2& v)const NOEXCEPT{
 		return Vector2(
 				this->x / v.x,
 				this->y / v.y
