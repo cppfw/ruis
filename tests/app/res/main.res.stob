@@ -8,7 +8,6 @@ tex_lattice{
 
 img_lattice{
 	tex{tex_lattice}
-	rect{0 0 256 256}
 }
 
 include{fonts/font.res.stob}

@@ -35,7 +35,7 @@ std::shared_ptr<ResImage> ResImage::Load(const stob::Node& r, const ting::fs::Fi
 	if(const stob::Node* n = r.GetProperty("rect")){
 		rect = Rect2rFromSTOB(n);
 	}else{
-		throw ResourceManager::Exc("ResImage::Load(): no 'rect' property found");
+		rect = Rect2r(Vec2r(0, 0), tex->Tex().Dim());
 	}
 	
 	return ting::New<ResImage>(tex, rect);
