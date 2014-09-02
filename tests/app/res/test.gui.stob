@@ -70,6 +70,8 @@ Container{
 
 			prop{layout{
 				dim {100% 100%}
+
+				weight{7}
 			}}
 
 			Label{

@@ -109,4 +109,10 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> ResolveIncludes(ting::fs::F
 
 
 
+inline bool NodeHoldsFractionValue(const stob::Node& node)NOEXCEPT{
+	size_t len = node.ValueLength();
+	return len != 0 && node.Value()[len - 1] == '%';
+}
+
+
 }//~namespace

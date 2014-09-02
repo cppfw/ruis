@@ -13,11 +13,6 @@ namespace{
 const char* D_Min = "min";
 const char* D_Layout = "layout";
 
-inline bool NodeHoldsFractionValue(const stob::Node& node)NOEXCEPT{
-	size_t len = node.ValueLength();
-	return len != 0 && node.Value()[len - 1] == '%';
-}
-
 }//~namespace
 
 

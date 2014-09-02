@@ -269,7 +269,7 @@ public:
 	
 protected:
 	virtual morda::Vec2r ComputeMinDim()const{
-		return this->Rect().d;
+		return morda::Vec2r(0, 0);
 	}
 	
 public:

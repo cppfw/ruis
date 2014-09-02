@@ -56,10 +56,10 @@ morda::Vec2r morda::DimVec2r(const stob::Node* chain){
 
 
 
-float morda::DimValue(const stob::Node& n){
+real morda::DimValue(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
-		float ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
+		real ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
 //		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
 		return ret;
 	}
