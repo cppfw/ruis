@@ -7,6 +7,7 @@
 #include <cmath>
 
 
+
 using namespace morda;
 
 
@@ -17,12 +18,13 @@ namespace{
 	
 const char* D_Margins = "margins";
 const char* D_Weight = "weight";
+const char* D_Band = "band";
 
 class Info{
 public:
-	float weight;
+	real weight;
 	Vec2r dim;
-	float margin;//actual margin between child widgets
+	real margin;//actual margin between child widgets
 	Gravity gravity;
 	LeftBottomRightTop margins;
 };
@@ -49,8 +51,8 @@ void LinearContainer::OnResize(){
 	std::vector<Info> infoArray(this->Children().size());
 	
 	//Calculate rigid size, net weight and store weights and margins
-	float rigid = this->Padding()[longIndex] + this->Padding()[2 + longIndex];
-	float netWeight = 0;
+	real rigid = this->Padding()[longIndex] + this->Padding()[2 + longIndex];
+	real netWeight = 0;
 	
 	{
 		auto info = infoArray.begin();
@@ -66,6 +68,15 @@ void LinearContainer::OnResize(){
 
 				LayoutDim dim = LayoutDim::FromLayout(*layout);
 				info->dim = (*i)->Measure(dim.ForWidget(*this, *(*i)));
+				
+				if(const stob::Node* n = layout->GetProperty(D_Band)){
+					if(NodeHoldsFractionValue(*n)){
+						real band = n->AsFloat() / 100;
+						ting::util::ClampBottom(info->dim[transIndex], this->Rect().d[transIndex] * band);
+					}else{
+						ting::util::ClampBottom(info->dim[transIndex], std::min(DimValue(*n), this->Rect().d[transIndex]));
+					}
+				}
 				
 				if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
 					info->gravity = Gravity::FromSTOB(*g);
@@ -100,14 +111,14 @@ void LinearContainer::OnResize(){
 	
 	//arrange widgets
 	{
-		float flexible = this->Rect().d[longIndex] - rigid;
+		real flexible = this->Rect().d[longIndex] - rigid;
 		ting::util::ClampBottom(flexible, 0.0f);
 		if(!std::isfinite(flexible)){
 			flexible = 0;
 		}
 		ASSERT_INFO(flexible >= 0, "flexible = " << flexible)
 		
-		float pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
+		real pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
 		auto info = infoArray.begin();
 		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			Vec2r newSize(info->dim);
