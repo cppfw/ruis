@@ -10,6 +10,8 @@
 using namespace morda;
 
 
+//TODO: add edge margins
+
 
 namespace{
 	

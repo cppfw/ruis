@@ -7,7 +7,7 @@
 using namespace morda;
 
 
-//TODO: add margins
+//TODO: add edge margins
 
 
 FrameContainer::FrameContainer(const stob::Node* desc) :
