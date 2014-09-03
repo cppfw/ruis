@@ -24,18 +24,14 @@ LayoutDim LayoutDim::FromSTOB(const stob::Node& node)NOEXCEPT{
 	
 	for(unsigned i = 0; i != 2; ++i){
 		if(!n){
-			ret[i].unit = MIN;
+			ret[i] = -1;
 			continue;
 		}
 		
 		if(*n == D_Min){
-			ret[i].unit = MIN;
-		}else if(NodeHoldsFractionValue(*n)){
-			ret[i].unit = FRACTION;
-			ret[i].value = n->AsFloat() / 100;
+			ret[i] = -1;
 		}else{
-			ret[i].unit = PIXEL;
-			ret[i].value = DimValue(*n);
+			ret[i] = DimValue(*n);
 		}
 		
 		n = n->Next();
@@ -68,27 +64,16 @@ LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)NOEXCEPT{
 
 
 
-Vec2r LayoutDim::ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT{
+Vec2r LayoutDim::ForWidget(const Widget& w)const NOEXCEPT{
 	Vec2r ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
-		const Value& v = this->operator[](i);
+		const real& v = this->operator[](i);
 		
-		switch(v.unit){
-			case PIXEL:
-				ret[i] = v.value;
-				break;
-			case FRACTION:
-				{
-					float padding = parent.Padding()[i] + parent.Padding()[i + 2];
-					ret[i] = v.value * (parent.Rect().d[i] - padding);
-					ting::util::ClampBottom(ret[i], real(0.0f));
-				}
-				break;
-			default:
-			case MIN:
-				ret[i] = w.GetMinDim()[i];
-				break;
+		if(v < 0){
+			ret[i] = w.GetMinDim()[i];
+		}else{
+			ret[i] = v;
 		}
 	}
 	

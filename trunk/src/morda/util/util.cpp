@@ -119,3 +119,21 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting
 	return std::make_tuple(std::move(begin), n.prev());
 }
 
+
+
+morda::Vector2<bool> morda::TwoBoolsFromSTOB(const stob::Node* chain){
+	unsigned i;
+	morda::Vector2<bool> ret;
+	
+	bool v = false;
+	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
+		v = chain->AsBool();
+		ret[i] = v;
+	}
+	
+	for(; i != 2; ++i){
+		ret[i] = v;
+	}
+	
+	return ret;
+}
