@@ -43,42 +43,32 @@ public:
 		return "dim";
 	}
 
-	enum E_Unit{
-		PIXEL,
-		FRACTION, //means that the value is a fraction from parent size
-		MIN //means wrap content, value should be taken from min size
-	};
+	real x, y;//negative value means min
 
-	struct Value{
-		float value;
-		E_Unit unit;
-	}x, y;
-
-	Value& operator[](size_t i)NOEXCEPT{
+	float& operator[](size_t i)NOEXCEPT{
 		ASSERT(i < 2)
-		return reinterpret_cast<Value*>(this)[i];
+		return reinterpret_cast<real*>(this)[i];
 	}
 
-	const Value& operator[](size_t i)const NOEXCEPT{
+	const float& operator[](size_t i)const NOEXCEPT{
 		ASSERT(i < 2)
-		return reinterpret_cast<const Value*>(this)[i];
+		return reinterpret_cast<const real*>(this)[i];
 	}
 
 	/**
 	 * @brief Get actual dimensions for given widget.
 	 * Get resulting dimensions for given Widget basing on dimension description
-	 * provided by this object. 
-	 * @param parent - widget's parent.
+	 * provided by this object.
 	 * @param w - widget to get dimensions for.
 	 * @return Resulting dimensions.
 	 */
-	Vec2r ForWidget(const PaddedWidget& parent, const Widget& w)const NOEXCEPT;
+	Vec2r ForWidget(const Widget& w)const NOEXCEPT;
 
 	/**
 	 * @brief Parse from STOB.
 	 * Parse from STOB of the form:
 	 * @code
-	 * dim{min 13%}
+	 * dim{min 13}
 	 * @endcode
 	 * The value of the root node does not matter, it is ignored.
 	 * @param node - dim node.
@@ -90,7 +80,7 @@ public:
 	 * @brief Parse from STOB.
 	 * Parse from STOB of the form:
 	 * @code
-	 * dim{min 13%}
+	 * dim{min 13}
 	 * @endcode
 	 * The value of the root node does not matter, it is ignored.
 	 * @param node - dim node. If 0 pointer is passed then return default Dim.
@@ -109,7 +99,7 @@ public:
 	 * @code
 	 * layout{
 	 *     //...
-	 *     dim{134 100%}
+	 *     dim{134 100}
 	 *     //...
 	 * }
 	 * @endcode
@@ -127,7 +117,7 @@ public:
 	 *     //...
 	 *     layout{
 	 *         //...
-	 *         dim{134 100%}
+	 *         dim{134 100mm}
 	 *         //...
 	 *     }
 	 *     //...
@@ -141,8 +131,8 @@ public:
 
 	static LayoutDim Default()NOEXCEPT{
 		LayoutDim ret;
-		ret.x.unit = MIN;
-		ret.y.unit = MIN;
+		ret.x = -1;
+		ret.y = -1;
 		return ret;
 	}
 };

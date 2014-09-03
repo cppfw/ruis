@@ -1,5 +1,6 @@
 #include "FrameContainer.hpp"
 
+#include "../util/Layout.hpp"
 #include "../util/LayoutDim.hpp"
 #include "../util/Gravity.hpp"
 #include "../util/util.hpp"
@@ -23,7 +24,8 @@ void FrameContainer::OnResize() {
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LayoutDim dim;
 		Gravity gravity;
-
+		Vec2b fill;
+		
 		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 			dim = LayoutDim::FromSTOB(layout->Child(LayoutDim::D_Dim()).node());
 			
@@ -32,12 +34,27 @@ void FrameContainer::OnResize() {
 			}else{
 				gravity = this->gravity();
 			}
+			
+			if(const stob::Node* n = layout->GetProperty(Layout::D_Fill())){
+				fill = TwoBoolsFromSTOB(n);
+			}else{
+				fill = decltype(fill)(false, false);
+			}
 		}else{
 			dim = LayoutDim::Default();
 			gravity = this->gravity();
+			fill = decltype(fill)(false, false);
 		}
 		
-		(*i)->Resize((*i)->Measure(dim.ForWidget(*this, *(*i))));
+		Vec2r d = dim.ForWidget(*(*i));
+		for(unsigned i = 0; i != 2; ++i){
+			if(!fill[i]){
+				continue;
+			}
+			ting::util::ClampBottom(d[i], this->Rect().d[i]);
+		}
+		
+		(*i)->Resize((*i)->Measure(d));
 		
 		(*i)->MoveTo(gravity.PosForRect(*this, (*i)->Rect().d));
 	}
@@ -52,16 +69,8 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 		morda::Vec2r dim = (*i)->GetMinDim();
 		if((*i)->Prop()){
 			LayoutDim ld = LayoutDim::FromPropLayout(*(*i)->Prop());
-			
-			//FRACTION min size is 0.
-			for(unsigned j = 0; j != 2; ++j){
-				if(ld[j].unit == LayoutDim::FRACTION){
-					ld[j].unit = LayoutDim::PIXEL;
-					ld[j].value = 0;
-				}
-			}
 
-			dim = (*i)->Measure(ld.ForWidget(*this, *(*i)));
+			dim = (*i)->Measure(ld.ForWidget(*(*i)));
 		}
 		
 		if(dim.x > minDim.x){

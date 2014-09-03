@@ -64,6 +64,7 @@
           <in>Image.hpp</in>
           <in>LayoutDim.cpp</in>
           <in>LayoutDim.hpp</in>
+          <in>LayoutParams.hpp</in>
           <in>LeftBottomRightTop.cpp</in>
           <in>LeftBottomRightTop.hpp</in>
           <in>Matrix4.hpp</in>
@@ -288,6 +289,8 @@
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutParams.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -637,6 +640,8 @@
       </item>
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/util/LayoutParams.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
             tool="1"
@@ -826,6 +831,8 @@
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutParams.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -1084,6 +1091,8 @@
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutParams.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"

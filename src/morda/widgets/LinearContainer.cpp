@@ -1,5 +1,6 @@
 #include "LinearContainer.hpp"
 
+#include "../util/Layout.hpp"
 #include "../util/Gravity.hpp"
 #include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
@@ -18,7 +19,7 @@ namespace{
 	
 const char* D_Margins = "margins";
 const char* D_Weight = "weight";
-const char* D_Band = "band";
+
 
 class Info{
 public:
@@ -65,18 +66,23 @@ void LinearContainer::OnResize(){
 				}else{
 					info->weight = 0;
 				}
-
-				LayoutDim dim = LayoutDim::FromLayout(*layout);
-				info->dim = (*i)->Measure(dim.ForWidget(*this, *(*i)));
 				
-				if(const stob::Node* n = layout->GetProperty(D_Band)){
-					if(NodeHoldsFractionValue(*n)){
-						real band = n->AsFloat() / 100;
-						ting::util::ClampBottom(info->dim[transIndex], this->Rect().d[transIndex] * band);
-					}else{
-						ting::util::ClampBottom(info->dim[transIndex], std::min(DimValue(*n), this->Rect().d[transIndex]));
-					}
+				morda::Vector2<bool> fill;
+				
+				if(const stob::Node* n = layout->GetProperty(Layout::D_Fill())){
+					fill = TwoBoolsFromSTOB(n);
+				}else{
+					fill = morda::Vector2<bool>(false, false);
 				}
+				
+				LayoutDim dim = LayoutDim::FromLayout(*layout);
+				info->dim = dim.ForWidget(*(*i));
+				
+				if(fill[transIndex]){
+					ting::util::ClampBottom(info->dim[transIndex], this->Rect().d[transIndex]);
+				}
+				
+				info->dim = (*i)->Measure(info->dim);
 				
 				if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
 					info->gravity = Gravity::FromSTOB(*g);
@@ -167,15 +173,7 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 				{
 					LayoutDim ld = LayoutDim::FromLayout(*layout);
 					
-					//FRACTION min size is 0
-					for(unsigned j = 0; j != 2; ++j){
-						if(ld[j].unit == LayoutDim::FRACTION){
-							ld[j].unit = LayoutDim::PIXEL;
-							ld[j].value = 0;
-						}
-					}
-					
-					dim = (*i)->Measure(ld.ForWidget(*this, *(*i)));
+					dim = (*i)->Measure(ld.ForWidget(*(*i)));
 				}
 			}
 		}

@@ -520,6 +520,9 @@ template <class T> Vector2<T> Vector2<T>::operator-(const Vector3<T>& vec)const 
 // Convenient typedefs
 //=====================
 
+typedef Vector2<bool> Vec2b;
+static_assert(sizeof(Vec2b) == sizeof(bool) * 2, "size mismatch");
+
 typedef Vector2<int> Vec2i;
 static_assert(sizeof(Vec2i) == sizeof(int) * 2, "size mismatch");
 

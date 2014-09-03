@@ -20,7 +20,8 @@ style some_style{
 Container{
 	prop{
 		layout{
-			dim{100% 100%}
+			dim{0 0}
+			fill{true true}
 		}
 	}
 
@@ -69,7 +70,8 @@ Container{
 			clip {true}
 
 			prop{layout{
-				dim {100% 100%}
+				dim {0 0}
+				fill{true true}
 
 				weight{7}
 			}}
@@ -112,7 +114,7 @@ Container{
 
 				prop{
 					layout{
-						dim {30% min}
+						dim {20mm min}
 						gravity {0% 70%}
 						weight {1}
 						margins {10 20 30 40}
@@ -177,7 +179,8 @@ Container{
 			vertical {false}
 
 			prop{ layout{
-				dim {100% 100%}
+				dim {0 0}
+				fill{true true}
 			}}
 
 			ImageLabel{
@@ -186,7 +189,8 @@ Container{
 				keepAspectRatio{true}
 
 				prop{layout{
-					dim{min 100%}
+					dim{min 0}
+					fill{false true}
 				}}
 			}
 
@@ -209,7 +213,8 @@ Container{
 				reverse{true}
 
 				prop{layout{
-					dim {40 100%} //TODO: min min
+					dim {40 0} //TODO: min min
+					fill{false true}
 					gravity {0% 0%}
 				}}
 			}
@@ -225,7 +230,8 @@ Container{
 		CubeWidget{
 			name{cube_widget}
 			prop{layout{
-				dim{100% 100%}
+				dim{0 0}
+				fill{true true}
 			}}
 		}
 	}
@@ -243,7 +249,8 @@ Container{
 
 //			background{color{0xffffffff}}
 			prop{layout{
-				dim{100% min}
+				dim{0 min}
+				fill{true false}
 			}}
 		}
 	}
