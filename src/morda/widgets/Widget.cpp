@@ -36,7 +36,7 @@ Widget::Widget(const stob::Node* desc){
 	}
 	
 	if(const stob::Node* p = desc->GetProperty("color")){
-		this->color = p->AsU32();
+		this->color = p->AsUint32();
 	}
 }
 
