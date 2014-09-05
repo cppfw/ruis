@@ -1,0 +1,14 @@
+morda_tex_window{
+	file {window.png}
+}
+
+
+morda_img_window_lt{
+	tex{morda_tex_window}
+	rect{0 0 9 9}
+}
+
+morda_img_window_rt{
+	tex{morda_tex_window}
+	rect{0 0 9 9}
+}

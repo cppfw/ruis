@@ -29,7 +29,7 @@ void ResourceManager::MountResPack(const ting::fs::File& fi){
 	resScript->SetNext(stob::Load(fi));
 	
 	//handle includes
-	for(stob::Node::NodeAndPrev np = resScript->Next(D_Include); np.node(); np = np.node()->Next(D_Include)){
+	for(stob::Node::NodeAndPrev np = resScript->Next(D_Include); np.node(); np = np.prev()->Next(D_Include)){
 		ASSERT(np.prev())
 		auto incNode = np.prev()->RemoveNext()->RemoveChildren();
 		
