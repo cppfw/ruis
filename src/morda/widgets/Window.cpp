@@ -14,33 +14,32 @@ const char* DWindowDesc = R"qwertyuiop(
 			LinearContainer{
 				vertical{true}
 				prop{layout{
-					dim{2mm min}
-					fill{true true}
+					dim{min min}
+					fill{false true}
 				}}
-				Widget{
+				ImageLabel{
 					name{left_top_resize}
 					prop{layout{
-						dim{min 4mm}
-						fill{true true}
+						dim{min min}
 					}}
-					color{0xffffff00}
+					image{morda_img_window_lt}
 				}
-				Widget{
+				ImageLabel{
 					name{left_resize}
 					prop{layout{
 						weight{1}
 						dim{min 0}
-						fill{true true}
+						fill{false true}
 					}}
-					color{0xff808080}
+					image{morda_img_window_l}
 				}
-				Widget{
+				ImageLabel{
 					name{left_bottom_resize}
 					prop{layout{
-						dim{min 4mm}
+						dim{min min}
 						fill{true true}
 					}}
-					color{0xffffff00}
+					image{morda_img_window_lb}
 				}
 			}
 
@@ -54,36 +53,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				}}
 
 				//top border
-				LinearContainer{
+				ImageLabel{
+					name{top_resize}
+					image{morda_img_window_t}
 					prop{layout{
-						dim{min 2mm}
-						fill{true true}
+						dim{0 min}
+						fill{true false}
 					}}
-					Widget{
-						name{top_left_resize}
-						prop{layout{
-							dim{2mm min}
-							fill{true true}
-						}}
-						color{0xffffff00}
-					}
-					Widget{
-						name{top_resize}
-						prop{layout{
-							weight{1}
-							dim{0 min}
-							fill{true true}
-						}}
-						color{0xff808080}
-					}
-					Widget{
-						name{top_right_resize}
-						prop{layout{
-							dim{2mm min}
-							fill{true true}
-						}}
-						color{0xffffff00}
-					}
 				}
 
 				//caption
@@ -115,36 +91,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 
 				//bottom border
-				LinearContainer{
+				ImageLabel{
+					name{bottom_resize}
 					prop{layout{
-						dim{min 2mm}
-						fill{true true}
+						dim{0 min}
+						fill{true false}
 					}}
-					Widget{
-						name{bottom_left_resize}
-						prop{layout{
-							dim{2mm min}
-							fill{true true}
-						}}
-						color{0xffffff00}
-					}
-					Widget{
-						name{bottom_resize}
-						prop{layout{
-							weight{1}
-							dim{0 min}
-							fill{true true}
-						}}
-						color{0xff808080}
-					}
-					Widget{
-						name{bottom_right_resize}
-						prop{layout{
-							dim{2mm min}
-							fill{true true}
-						}}
-						color{0xffffff00}
-					}
+					image{morda_img_window_b}
 				}
 			}
 
@@ -152,33 +105,31 @@ const char* DWindowDesc = R"qwertyuiop(
 			LinearContainer{
 				vertical{true}
 				prop{layout{
-					dim{2mm min}
-					fill{true true}
+					dim{min min}
+					fill{false true}
 				}}
-				Widget{
+				ImageLabel{
 					name{right_top_resize}
+					image{morda_img_window_rt}
 					prop{layout{
-						dim{min 4mm}
-						fill{true true}
+						dim{min min}
 					}}
-					color{0xffffff00}
 				}
-				Widget{
+				ImageLabel{
 					name{right_resize}
 					prop{layout{
 						weight{1}
-						dim{0 0}
-						fill{true true}
+						dim{min 0}
+						fill{false true}
 					}}
-					color{0xff808080}
+					image{morda_img_window_r}
 				}
-				Widget{
+				ImageLabel{
 					name{right_bottom_resize}
+					image{morda_img_window_rb}
 					prop{layout{
-						dim{min 4mm}
-						fill{true true}
+						dim{min min}
 					}}
-					color{0xffffff00}
 				}
 			}
 		}
@@ -245,11 +196,9 @@ void morda::Window::SetupWidgets(){
 	this->title = std::dynamic_pointer_cast<Label>(this->caption->FindChildByName("morda_title"));
 	
 	{
-		std::shared_ptr<Widget> w1 = this->FindChildByName("left_top_resize");
-		std::shared_ptr<Widget> w2 = this->FindChildByName("top_left_resize");
-		w1->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
-		w2->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		std::shared_ptr<Widget> w = this->FindChildByName("left_top_resize");
+		w->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
@@ -259,16 +208,12 @@ void morda::Window::SetupWidgets(){
 			}
 			return false;
 		};
-		w1->onMouseMove = f;
-		w2->onMouseMove = f;
 	}
 	
 	{	
-		std::shared_ptr<Widget> w1 = this->FindChildByName("left_bottom_resize");
-		std::shared_ptr<Widget> w2 = this->FindChildByName("bottom_left_resize");
-		w1->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
-		w2->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		std::shared_ptr<Widget> w = this->FindChildByName("left_bottom_resize");
+		w->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
@@ -278,16 +223,12 @@ void morda::Window::SetupWidgets(){
 			}
 			return false;
 		};
-		w1->onMouseMove = f;
-		w2->onMouseMove = f;
 	}
 
 	{
-		std::shared_ptr<Widget> w1 = this->FindChildByName("top_right_resize");
-		std::shared_ptr<Widget> w2 = this->FindChildByName("right_top_resize");
-		w1->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
-		w2->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		std::shared_ptr<Widget> w = this->FindChildByName("right_top_resize");
+		w->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
@@ -296,16 +237,12 @@ void morda::Window::SetupWidgets(){
 			}
 			return false;
 		};
-		w1->onMouseMove = f;
-		w2->onMouseMove = f;
 	}
 	
 	{
-		std::shared_ptr<Widget> w1 = this->FindChildByName("bottom_right_resize");
-		std::shared_ptr<Widget> w2 = this->FindChildByName("right_bottom_resize");
-		w1->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
-		w2->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
-		decltype(Widget::onMouseMove) f = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		std::shared_ptr<Widget> w = this->FindChildByName("right_bottom_resize");
+		w->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
+		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
@@ -315,8 +252,6 @@ void morda::Window::SetupWidgets(){
 			}
 			return false;
 		};
-		w1->onMouseMove = f;
-		w2->onMouseMove = f;
 	}
 	
 	{

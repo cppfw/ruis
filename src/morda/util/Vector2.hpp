@@ -377,6 +377,17 @@ public:
 	}
 
 	/**
+	 * @brief Absolute vector value.
+     * @return Vector2 holding absolute values of this vector's components.
+     */
+	Vector2 Abs()const NOEXCEPT{
+		return Vector2(
+				ting::math::Abs(this->x),
+				ting::math::Abs(this->y)
+			);
+	}
+	
+	/**
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
