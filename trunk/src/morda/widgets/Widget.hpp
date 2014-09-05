@@ -39,7 +39,6 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
-#include "../util/Background.hpp"
 
 #include "../config.hpp"
 
@@ -190,7 +189,7 @@ public:
 
 	virtual ~Widget()NOEXCEPT{}
 
-	virtual void Render(const morda::Matr4r& matrix)const{}
+	virtual void Render(const morda::Matr4r& matrix)const;
 	
 private:
 	void RenderInternal(const morda::Matr4r& matrix)const;
@@ -323,11 +322,11 @@ public:
 	
 private:
 	
-	std::unique_ptr<Background> background;
+	std::uint32_t color = 0;
 	
 public:
-	void SetBackground(std::unique_ptr<Background> b){
-		this->background = std::move(b);
+	void SetColor(std::uint32_t color){
+		this->color = color;
 	}
 };
 
