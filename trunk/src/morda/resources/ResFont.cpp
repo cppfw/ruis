@@ -53,7 +53,7 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, const ting::fs::Fil
 		if(!outlineProp){
 			outline = 0;
 		}else{
-			outline = unsigned(outlineProp->AsU32());
+			outline = unsigned(outlineProp->AsUint32());
 		}
 	}
 
