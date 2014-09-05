@@ -15,7 +15,6 @@ this_srcs += morda/resources/ResFont.cpp
 this_srcs += morda/fonts/Font.cpp
 this_srcs += morda/fonts/TexFont.cpp
 
-this_srcs += morda/util/Background.cpp
 this_srcs += morda/util/GLTexture.cpp
 this_srcs += morda/util/Gravity.cpp
 this_srcs += morda/util/Image.cpp

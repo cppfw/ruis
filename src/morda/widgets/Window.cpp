@@ -12,7 +12,6 @@ const char* DWindowDesc = R"qwertyuiop(
 		{
 			//left border
 			LinearContainer{
-				background{color{0xff808080}}
 				vertical{true}
 				prop{layout{
 					dim{2mm min}
@@ -24,7 +23,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{min 4mm}
 						fill{true true}
 					}}
-					background{color{0xffffff00}}
+					color{0xffffff00}
 				}
 				Widget{
 					name{left_resize}
@@ -33,6 +32,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{min 0}
 						fill{true true}
 					}}
+					color{0xff808080}
 				}
 				Widget{
 					name{left_bottom_resize}
@@ -40,7 +40,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{min 4mm}
 						fill{true true}
 					}}
-					background{color{0xffffff00}}
+					color{0xffffff00}
 				}
 			}
 
@@ -55,7 +55,6 @@ const char* DWindowDesc = R"qwertyuiop(
 
 				//top border
 				LinearContainer{
-					background{color{0xff808080}}
 					prop{layout{
 						dim{min 2mm}
 						fill{true true}
@@ -66,7 +65,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{2mm min}
 							fill{true true}
 						}}
-						background{color{0xffffff00}}
+						color{0xffffff00}
 					}
 					Widget{
 						name{top_resize}
@@ -75,6 +74,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{0 min}
 							fill{true true}
 						}}
+						color{0xff808080}
 					}
 					Widget{
 						name{top_right_resize}
@@ -82,7 +82,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{2mm min}
 							fill{true true}
 						}}
-						background{color{0xffffff00}}
+						color{0xffffff00}
 					}
 				}
 
@@ -92,7 +92,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{0 7mm}
 						fill{true true}
 					}}
-					background{color{0xffff0000}}
+					color{0xffff0000}
 					name{morda_caption}
 					Label{
 						name{morda_title}
@@ -111,12 +111,11 @@ const char* DWindowDesc = R"qwertyuiop(
 						weight{1}
 						fill{true true}
 					}}
-//					background{color{0xff800080}}
+//					color{0xff800080}
 				}
 
 				//bottom border
 				LinearContainer{
-					background{color{0xff808080}}
 					prop{layout{
 						dim{min 2mm}
 						fill{true true}
@@ -127,7 +126,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{2mm min}
 							fill{true true}
 						}}
-						background{color{0xffffff00}}
+						color{0xffffff00}
 					}
 					Widget{
 						name{bottom_resize}
@@ -136,6 +135,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{0 min}
 							fill{true true}
 						}}
+						color{0xff808080}
 					}
 					Widget{
 						name{bottom_right_resize}
@@ -143,14 +143,13 @@ const char* DWindowDesc = R"qwertyuiop(
 							dim{2mm min}
 							fill{true true}
 						}}
-						background{color{0xffffff00}}
+						color{0xffffff00}
 					}
 				}
 			}
 
 			//right border
 			LinearContainer{
-				background{color{0xff808080}}
 				vertical{true}
 				prop{layout{
 					dim{2mm min}
@@ -162,23 +161,24 @@ const char* DWindowDesc = R"qwertyuiop(
 						dim{min 4mm}
 						fill{true true}
 					}}
-					background{color{0xffffff00}}
+					color{0xffffff00}
 				}
 				Widget{
-						name{right_resize}
-						prop{layout{
-							weight{1}
-							dim{0 0}
-							fill{true true}
-						}}
-					}
+					name{right_resize}
+					prop{layout{
+						weight{1}
+						dim{0 0}
+						fill{true true}
+					}}
+					color{0xff808080}
+				}
 				Widget{
 					name{right_bottom_resize}
 					prop{layout{
 						dim{min 4mm}
 						fill{true true}
 					}}
-					background{color{0xffffff00}}
+					color{0xffffff00}
 				}
 			}
 		}

@@ -54,8 +54,6 @@
             <in>unzip.cpp</in>
             <in>unzip.h</in>
           </df>
-          <in>Background.cpp</in>
-          <in>Background.hpp</in>
           <in>GLTexture.cpp</in>
           <in>GLTexture.hpp</in>
           <in>Gravity.cpp</in>
@@ -269,10 +267,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -630,8 +624,6 @@
           </preprocessorList>
         </ccTool>
       </item>
-      <item path="src/morda/util/Background.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
@@ -811,10 +803,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1071,10 +1059,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Background.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -44,6 +44,8 @@ Container::Container(const stob::Node* desc) :
 
 //override
 void Container::Render(const morda::Matr4r& matrix)const{
+	this->Widget::Render(matrix);
+	
 	for(auto& w: this->Children()){
 		if(w->IsHidden()){
 			continue;

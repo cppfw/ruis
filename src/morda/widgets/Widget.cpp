@@ -35,8 +35,8 @@ Widget::Widget(const stob::Node* desc){
 		this->clip = p->AsBool();
 	}
 	
-	if(const stob::Node* p = desc->GetProperty("background")){
-		this->background = Background::New(*p);
+	if(const stob::Node* p = desc->GetProperty("color")){
+		this->color = p->AsU32();
 	}
 }
 
@@ -89,10 +89,6 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 		
 		glScissor(scissor.p.x, scissor.p.y, scissor.d.x, scissor.d.y);
 		
-		if(this->background){
-			this->background->Render(matrix, this->Rect().d);
-		}
-		
 		this->Render(matrix);
 		
 		if(scissorTestWasEnabled){
@@ -101,10 +97,6 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 			glDisable(GL_SCISSOR_TEST);
 		}
 	}else{
-		if(this->background){
-			this->background->Render(matrix, this->Rect().d);
-		}
-		
 		this->Render(matrix);
 	}
 
@@ -162,4 +154,21 @@ void Widget::Unfocus()NOEXCEPT{
 	ASSERT(App::Inst().focusedWidget.lock() && App::Inst().focusedWidget.lock().operator->() == this)
 
 	App::Inst().SetFocusedWidget(nullptr);
+}
+
+
+
+void Widget::Render(const Matr4r& matrix)const{
+	if(this->color == 0){
+		return;
+	}
+	
+	morda::Matr4r matr(matrix);
+	matr.Scale(this->Rect().d);
+	
+	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	s.Bind();
+	s.SetColor(this->color);
+	s.SetMatrix(matr);
+	s.DrawQuad01();
 }
