@@ -13,12 +13,12 @@ using namespace morda;
 
 ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
 		tex(tex),
-		dim(rect.d)
+		dim(rect.d.Abs())
 {
-	this->texCoords[0] = Vec2r(rect.Left(), rect.Bottom()).CompDivBy(this->tex->Tex().Dim());
-	this->texCoords[1] = Vec2r(rect.Right(), rect.Bottom()).CompDivBy(this->tex->Tex().Dim());
-	this->texCoords[2] = Vec2r(rect.Right(), rect.Top()).CompDivBy(this->tex->Tex().Dim());
-	this->texCoords[3] = Vec2r(rect.Left(), rect.Top()).CompDivBy(this->tex->Tex().Dim());
+	this->texCoords[3] = Vec2r(rect.Left(), this->tex->Tex().Dim().y - rect.Bottom()).CompDivBy(this->tex->Tex().Dim());
+	this->texCoords[2] = Vec2r(rect.Right(), this->tex->Tex().Dim().y - rect.Bottom()).CompDivBy(this->tex->Tex().Dim());
+	this->texCoords[1] = Vec2r(rect.Right(), this->tex->Tex().Dim().y - rect.Top()).CompDivBy(this->tex->Tex().Dim());
+	this->texCoords[0] = Vec2r(rect.Left(), this->tex->Tex().Dim().y - rect.Top()).CompDivBy(this->tex->Tex().Dim());
 }
 
 
