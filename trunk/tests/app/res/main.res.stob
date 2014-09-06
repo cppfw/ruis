@@ -23,9 +23,8 @@ img_sample{
 	rect{0 0 120 90}
 }
 
-9ptch_sample{
+npt_sample{
 	tex{tex_sample}
-	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
-	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
-	rect{20 20 30 30} rect{50 20 30 30} rect{70 20 30 30}
+	rect{0 0 11 11}
+	borders{5 5 5 5}
 }
