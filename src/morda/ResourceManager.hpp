@@ -102,10 +102,6 @@ public:
 		{}
 	};
 
-	~ResourceManager()NOEXCEPT{
-		ASSERT(this->resMap.size() == 0)
-	}
-
 	//if fi does not point to res script, then "main.res.stob" is assumed.
 	void MountResPack(const ting::fs::File& fi);
 
@@ -119,13 +115,11 @@ private:
 //base class for all resources
 class Resource : virtual public ting::Shared{
 	friend class ResourceManager;
-	
-	decltype(ResourceManager::resMap)::iterator resMapIter;
 protected:
 	//this can only be used as a base class
 	Resource(){}
 public:
-	virtual ~Resource()NOEXCEPT;
+	virtual ~Resource()NOEXCEPT{}
 };
 
 
@@ -133,9 +127,9 @@ public:
 template <class T> std::shared_ptr<T> ResourceManager::FindResourceInResMap(const char* resName){
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
-		auto r = (*i).second.lock();
-		ASSERT(r)
-		return std::move(std::dynamic_pointer_cast<T>(std::move(r)));
+		if(auto r = (*i).second.lock()){
+			return std::move(std::dynamic_pointer_cast<T>(std::move(r)));
+		}
 	}
 	return nullptr;//no resource found with given name, return invalid reference
 }

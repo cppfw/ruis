@@ -82,8 +82,6 @@ void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const st
 				)
 		);
 	ASSERT(result.second)
-
-	res->resMapIter = result.first;
 	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
@@ -91,10 +89,3 @@ void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const st
 //	}
 //#endif
 }
-
-
-
-Resource::~Resource()NOEXCEPT{
-	morda::App::Inst().resMan.resMap.erase(this->resMapIter);
-}
-

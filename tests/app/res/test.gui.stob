@@ -27,7 +27,7 @@ Container{
 
 	Window{
 		dim{300 200}
-		pos{10 10}
+		pos{0 0}
 
 		title{"Window title"}
 
@@ -47,6 +47,13 @@ Container{
 			prop{layout{
 				dim{min min}
 				gravity{50% 0%}
+			}}
+		}
+
+		NinePatch{
+			image{npt_sample}
+			prop{layout{
+				dim{min min}
 			}}
 		}
 	}
