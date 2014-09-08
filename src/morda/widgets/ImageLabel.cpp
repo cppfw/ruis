@@ -61,3 +61,8 @@ morda::Vec2r ImageLabel::Measure(const Vec2r& offer) const {
 	}
 }
 
+void ImageLabel::SetImage(const std::shared_ptr<ResImage>& image) {
+	this->img = image;
+	this->SetRelayoutNeeded();
+}
+
