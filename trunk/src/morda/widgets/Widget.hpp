@@ -182,6 +182,10 @@ public:
 		return nullptr;
 	}
 	
+	template <typename T> std::shared_ptr<T> FindChildByNameAs(const std::string& name)NOEXCEPT{
+		return std::dynamic_pointer_cast<T>(this->FindChildByName(name));
+	}
+	
 public:
 	Widget(const stob::Node* desc);
 	

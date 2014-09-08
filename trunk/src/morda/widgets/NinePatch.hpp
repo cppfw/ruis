@@ -31,10 +31,13 @@ THE SOFTWARE. */
 #include "LinearContainer.hpp"
 
 #include "../resources/ResNinePatch.hpp"
+#include "ImageLabel.hpp"
 
 namespace morda{
 
 class NinePatch : private LinearContainer, public virtual Widget{
+	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
+	
 public:	
 	NinePatch(const NinePatch&) = delete;
 	NinePatch& operator=(const NinePatch&) = delete;
