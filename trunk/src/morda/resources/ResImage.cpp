@@ -24,12 +24,7 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
 
 
 std::shared_ptr<ResImage> ResImage::Load(const stob::Node& r, const ting::fs::File& fi){
-	decltype(ResImage::tex) tex;
-	if(const stob::Node* n = r.GetProperty("tex")){
-		tex = App::Inst().resMan.Load<ResTexture>(n->Value());
-	}else{
-		throw ResourceManager::Exc("ResImage::Load(): no 'tex' property found");
-	}
+	auto tex = App::Inst().resMan.Load<ResTexture>(r.get("tex").get().Value());
 	
 	Rect2r rect;
 	if(const stob::Node* n = r.GetProperty("rect")){

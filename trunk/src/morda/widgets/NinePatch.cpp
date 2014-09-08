@@ -51,6 +51,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_t}
 					prop{layout{
 						dim{0 min}
+						fill{true false}
 					}}
 				}
 				FrameContainer{
@@ -72,6 +73,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_b}
 					prop{layout{
 						dim{0 min}
+						fill{true false}
 					}}
 				}
 			}
@@ -126,12 +128,18 @@ NinePatch::NinePatch(const stob::Node* desc) :
 	this->b = this->FindChildByNameAs<ImageLabel>("morda_b");
 	this->rb = this->FindChildByNameAs<ImageLabel>("morda_rb");
 	
+	this->contentArea = this->FindChildByNameAs<FrameContainer>("morda_content_area");
+	
 	if(!desc){
 		return;
 	}
 	
 	if(const stob::Node* n = desc->GetProperty("image")){
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
+	}
+	
+	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
+		this->contentArea->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }
 
@@ -148,4 +156,6 @@ void NinePatch::SetNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->lb->SetImage(np->lb);
 	this->b->SetImage(np->b);
 	this->rb->SetImage(np->rb);
+	
+	this->SetRelayoutNeeded();
 }

@@ -23,8 +23,12 @@ img_sample{
 	rect{0 0 120 90}
 }
 
+morda_tex_ui{
+	file{ui.png}
+}
+
 npt_sample{
-	tex{tex_sample}
-	rect{0 0 11 11}
-	borders{5 5 5 5}
+	tex{morda_tex_ui}
+	rect{0 0 13 13}
+	borders{6 6 6 6}
 }
