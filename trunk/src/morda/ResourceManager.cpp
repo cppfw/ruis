@@ -81,7 +81,9 @@ void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const st
 					std::move(std::weak_ptr<Resource>(res))
 				)
 		);
-	ASSERT(result.second)
+	if(!result.second){
+		ASSERT(false)
+	}
 	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
