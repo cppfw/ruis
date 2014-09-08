@@ -63,7 +63,7 @@ public:
 			rb(rb)
 	{}
 private:
-	static std::shared_ptr<ResImage> Load(const stob::Node& r, const ting::fs::File& fi);
+	static std::shared_ptr<ResNinePatch> Load(const stob::Node& r, const ting::fs::File& fi);
 };
 
 }

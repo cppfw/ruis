@@ -113,6 +113,11 @@ NinePatch::NinePatch(const stob::Node* desc) :
 		Widget(desc),
 		LinearContainer(stob::Parse(D_NinePatchLayout).get())
 {
+	if(!desc){
+		return;
+	}
+	
+	
 	//TODO:
 }
 
