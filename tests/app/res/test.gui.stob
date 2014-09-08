@@ -55,6 +55,12 @@ Container{
 			prop{layout{
 				dim{min min}
 			}}
+			
+			Widget{
+				prop{layout{
+					dim{10mm 5mm}
+				}}
+			}
 		}
 	}
 

@@ -32,11 +32,14 @@ THE SOFTWARE. */
 
 #include "../resources/ResNinePatch.hpp"
 #include "ImageLabel.hpp"
+#include "FrameContainer.hpp"
 
 namespace morda{
 
 class NinePatch : private LinearContainer, public virtual Widget{
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
+	
+	std::shared_ptr<FrameContainer> contentArea;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -46,6 +49,9 @@ public:
 	
 	void SetNinePatch(const std::shared_ptr<ResNinePatch>& np);
 	
+	FrameContainer& Content(){
+		return *this->contentArea;
+	}
 private:
 
 };
