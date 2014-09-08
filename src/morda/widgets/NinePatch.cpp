@@ -42,7 +42,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			LinearContainer{
 				vertical{true}
 				prop{layout{
-					dim{0 min}
+					dim{min min}
 					fill{false true}
 					weight{1}
 				}}
@@ -56,7 +56,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				FrameContainer{
 					name{morda_content_area}
 					prop{layout{
-						dim{0 0}
+						dim{min min}
 						weight{1}
 						fill{true true}
 					}}
