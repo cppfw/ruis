@@ -66,6 +66,8 @@ namespace morda{
  * Vertex position attribute should be 'vec4' and named 'vertex'.
  */
 class Shader{
+	static Shader* boundShader;
+	
 	struct ShaderWrapper{
 		GLuint s;
 		ShaderWrapper(const char* code, GLenum type);
@@ -120,36 +122,47 @@ public:
 	void Bind(){
 		glUseProgram(this->program.p);
 		ASSERT(glGetError() == GL_NO_ERROR)
+		boundShader = this;
 	}
 
+	bool IsBound()const NOEXCEPT{
+		return this == boundShader;
+	}
+	
 	void SetMatrix(const morda::Matr4f &m){
+		ASSERT(this->IsBound())
 		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
 	void SetPositionPointer(const morda::Vec3f *p){
+		ASSERT(this->IsBound())
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
 	void SetPositionPointer(const morda::Vec2f *p){
+		ASSERT(this->IsBound())
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
 	void EnablePositionPointer(){
+		ASSERT(this->IsBound())
 		glEnableVertexAttribArray(this->positionAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
 	void DisablePositionPointer(){
+		ASSERT(this->IsBound())
 		glDisableVertexAttribArray(this->positionAttr);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 
 	void DrawArrays(GLenum mode, unsigned numElements){
+		ASSERT(this->IsBound())
 		glDrawArrays(mode, 0, numElements);
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}

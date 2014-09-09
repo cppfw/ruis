@@ -5,6 +5,8 @@
 using namespace morda;
 
 
+Shader* Shader::boundShader = nullptr;
+
 
 Shader::ShaderWrapper::ShaderWrapper(const char* code, GLenum type){
 	this->s = glCreateShader(type);
@@ -96,6 +98,7 @@ static morda::Vec2f quadTriangles[] = {
 
 
 void Shader::DrawQuad(GLint type){
+	ASSERT(this->IsBound())
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quadTriangles);
 	this->DrawArrays(type, 4);
@@ -112,6 +115,7 @@ static morda::Vec2f quad01Triangles[] = {
 
 
 void Shader::DrawQuad01(GLint type){
+	ASSERT(this->IsBound())
 	this->EnablePositionPointer();
 	this->SetPositionPointer(quad01Triangles);
 	this->DrawArrays(type, 4);
