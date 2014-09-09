@@ -156,6 +156,4 @@ void NinePatch::SetNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->lb->SetImage(np->lb);
 	this->b->SetImage(np->b);
 	this->rb->SetImage(np->rb);
-	
-	this->SetRelayoutNeeded();
 }
