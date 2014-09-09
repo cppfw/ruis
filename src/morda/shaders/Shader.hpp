@@ -120,6 +120,10 @@ public:
 	virtual ~Shader()NOEXCEPT{}
 
 	void Bind(){
+		if(this->IsBound()){
+			return;
+		}
+		
 		glUseProgram(this->program.p);
 		ASSERT(glGetError() == GL_NO_ERROR)
 		boundShader = this;
