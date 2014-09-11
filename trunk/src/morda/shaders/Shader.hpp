@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -61,9 +61,8 @@ namespace morda{
 
 /**
  * @brief Abstract shader.
- * Each shader has at least matrix uniform and vertex position attribute.
+ * Each shader has at least matrix uniform.
  * Matrix uniform should be 'mat4' and named 'matrix'.
- * Vertex position attribute should be 'vec4' and named 'vertex'.
  */
 class Shader{
 	static Shader* boundShader;
@@ -95,8 +94,6 @@ class Shader{
 	
 	ProgramWrapper program;
 
-	GLint positionAttr;
-
 	GLint matrixUniform;
 	
 protected:
@@ -114,9 +111,22 @@ protected:
 		}
 		return ret;
 	}
-public:
-	Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
+	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
+
+	void DrawArrays(GLenum mode, unsigned numElements){
+		ASSERT(this->IsBound())
+		glDrawArrays(mode, 0, numElements);
+		ASSERT(glGetError() == GL_NO_ERROR)
+	}
+	
+public:
+	enum class EMode{
+		TRIANGLES = GL_TRIANGLES,
+		TRIANGLE_FAN = GL_TRIANGLE_FAN,
+		LINE_LOOP = GL_LINE_LOOP
+	};
+	
 	virtual ~Shader()NOEXCEPT{}
 
 	void Bind(){
@@ -138,42 +148,6 @@ public:
 		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
-
-	void SetPositionPointer(const morda::Vec3f *p){
-		ASSERT(this->IsBound())
-		ASSERT(p)
-		glVertexAttribPointer(this->positionAttr, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
-
-	void SetPositionPointer(const morda::Vec2f *p){
-		ASSERT(this->IsBound())
-		ASSERT(p)
-		glVertexAttribPointer(this->positionAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
-
-	void EnablePositionPointer(){
-		ASSERT(this->IsBound())
-		glEnableVertexAttribArray(this->positionAttr);
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
-
-	void DisablePositionPointer(){
-		ASSERT(this->IsBound())
-		glDisableVertexAttribArray(this->positionAttr);
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
-
-	void DrawArrays(GLenum mode, unsigned numElements){
-		ASSERT(this->IsBound())
-		glDrawArrays(mode, 0, numElements);
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
-
-	void DrawQuad(GLint type = GL_TRIANGLE_FAN);
-
-	void DrawQuad01(GLint type = GL_TRIANGLE_FAN);
 };//~class Shader
 
 

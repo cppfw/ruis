@@ -52,7 +52,7 @@ THE SOFTWARE. */
 #include "../util/GLTexture.hpp"
 #include "Font.hpp"
 
-#include "../shaders/TexturingShader.hpp"
+#include "../shaders/PosTexShader.hpp"
 
 
 
@@ -107,7 +107,7 @@ public:
 
 	morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
 
-	DEBUG_CODE( void RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const; )
+	DEBUG_CODE( void RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const; )
 
 
 	real CharAdvance(std::uint32_t c) const override;
@@ -115,7 +115,7 @@ public:
 	
 private:
 
-	real RenderGlyphInternal(TexturingShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
+	real RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
 
 };//~class TexFont
 

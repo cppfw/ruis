@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@ THE SOFTWARE. */
 
 #include <ting/Singleton.hpp>
 
-#include "SingleColoringShader.hpp"
+#include "ColorShader.hpp"
+#include "PosShader.hpp"
 
 
 
@@ -38,15 +39,12 @@ namespace morda{
 
 
 
-class SimpleSingleColoringShader : public morda::SingleColoringShader{
-
-	//no copying
-	SimpleSingleColoringShader(const SimpleSingleColoringShader&);
-	SimpleSingleColoringShader& operator=(const SimpleSingleColoringShader&);
-
+class ColorPosShader : public ColorShader, public PosShader{
 public:
-	SimpleSingleColoringShader();
-	~SimpleSingleColoringShader()NOEXCEPT{}
+	ColorPosShader();
+	
+	ColorPosShader(const ColorPosShader&) = delete;
+	ColorPosShader& operator=(const ColorPosShader&) = delete;
 };
 
 
