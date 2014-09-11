@@ -112,7 +112,7 @@ public:
 			s.Bind();
 //			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
-			s.Render(s.quad01Fan, s.quadFanTexCoords);
+			s.Render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);

@@ -409,7 +409,7 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 	this->tex.Bind();
 
-	shader.Render(shader.quad01Fan, shader.quadFanTexCoords, Shader::EMode::TRIANGLE_FAN);
+	shader.Render(PosShader::quad01Fan, shader.quadFanTexCoords, Shader::EMode::TRIANGLE_FAN);
 }
 #endif
 
