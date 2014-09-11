@@ -59,7 +59,6 @@ public:
 	PosTexShader(const PosTexShader&) = delete;
 	PosTexShader& operator=(const PosTexShader&) = delete;
 	
-	//TODO: remove this
 	void SetTextureNumber(unsigned i){
 		glUniform1i(this->texNumberUniform, i);
 		ASSERT(glGetError() == GL_NO_ERROR)
