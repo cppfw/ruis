@@ -38,7 +38,10 @@ namespace morda{
 
 
 
-class PosTexShader : public PosShader{
+class PosTexShader :
+		protected PosShader,
+		virtual public Shader
+{
 	GLuint texCoordAttr;
 
 	GLuint texNumberUniform;
