@@ -7,12 +7,11 @@ using namespace morda;
 
 
 
-//override
 void Button::Render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	if(this->isPressed){
 		s.SetColor(morda::Vec3f(1, 1, 1));
@@ -20,7 +19,7 @@ void Button::Render(const morda::Matr4r& matrix)const{
 		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
 	}
 	s.SetMatrix(matr);
-	s.DrawQuad01();
+	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 }
 
 

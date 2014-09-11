@@ -48,12 +48,12 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		matr.Translate(this->cursorPos, 0);
 		matr.Scale(Vec2r(2, this->Font().Size()));
 
-		SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+		ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
 		s.SetColor(0xffffffff);
 
 		s.SetMatrix(matr);
-		s.DrawQuad01();
+		s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 	}
 }
 

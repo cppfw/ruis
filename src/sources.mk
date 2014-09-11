@@ -4,9 +4,9 @@ this_srcs += morda/Updateable.cpp
 this_srcs += morda/ResourceManager.cpp
 
 this_srcs += morda/shaders/Shader.cpp
-this_srcs += morda/shaders/SimpleSingleColoringShader.cpp
-this_srcs += morda/shaders/TexturingShader.cpp
-this_srcs += morda/shaders/SimpleTexturingShader.cpp
+this_srcs += morda/shaders/PosShader.cpp
+this_srcs += morda/shaders/PosTexShader.cpp
+this_srcs += morda/shaders/ColorPosShader.cpp
 
 this_srcs += morda/resources/ResImage.cpp
 this_srcs += morda/resources/ResNinePatch.cpp

@@ -302,15 +302,14 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 
 
 
-real TexFont::RenderGlyphInternal(TexturingShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
+real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 
+	shader.Bind();
+	
 	shader.SetMatrix(matrix);
 
-	shader.SetPositionPointer(&*g.verts.begin());
-	shader.SetTexCoordPointer(&*g.texCoords.begin());
-
-	shader.DrawArrays(GL_TRIANGLE_FAN, g.verts.size());
+	shader.Render(g.verts, g.texCoords, Shader::EMode::TRIANGLE_FAN);
 
 	return g.advance;
 }
@@ -403,34 +402,22 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_
 
 
 #ifdef DEBUG
-void TexFont::RenderTex(TexturingShader& shader, const morda::Matr4r& matrix)const{
+void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->tex.Dim());
 	shader.SetMatrix(matr);
 
 	this->tex.Bind();
 
-//	s.EnablePositionPointer();
-//	s.EnableTexCoordPointer();
-//	s.SetPositionPointer(this->verts.Buf());
-//	s.SetTexCoordPointer(this->texCoords.Buf());
-//	ASSERT(this->verts.Size() == this->texCoords.Size())
-//	shader.DrawArrays(GL_TRIANGLE_FAN, this->verts.Size());
-	shader.DrawQuad01();
+	shader.Render(shader.quad01Fan, shader.quadFanTexCoords, Shader::EMode::TRIANGLE_FAN);
 }
 #endif
 
 
 
 real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
-	morda::SimpleTexturingShader &shader = morda::App::Inst().Shaders().simpleTexturing;
-	shader.Bind();
-
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	
-	shader.EnablePositionPointer();
-	shader.EnableTexCoordPointer();
 
 	this->tex.Bind();
 
@@ -441,7 +428,7 @@ real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<con
 	const std::uint32_t* s = utf32str.begin();
 	try{
 		for(; s != utf32str.end(); ++s){
-			real advance = this->RenderGlyphInternal(shader, matr, *s);
+			real advance = this->RenderGlyphInternal(morda::App::Inst().Shaders().simpleTexturing, matr, *s);
 			ret += advance;
 			matr.Translate(advance, 0);
 		}

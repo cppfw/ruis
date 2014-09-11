@@ -45,7 +45,6 @@ Shader::Shader(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER),
 		program(this->vertexShader.s, this->fragmentShader.s)
 {
-	this->positionAttr = this->GetAttribute("vertex");
 	this->matrixUniform = this->GetUniform("matrix");
 }
 
@@ -85,38 +84,4 @@ bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 		return true;
 	}
 	return false;
-}
-
-
-
-namespace{
-static morda::Vec2f quadTriangles[] = {
-	morda::Vec2f(-1, -1), morda::Vec2f(1, -1), morda::Vec2f(1, 1), morda::Vec2f(-1, 1)
-};
-}//~namespace
-
-
-
-void Shader::DrawQuad(GLint type){
-	ASSERT(this->IsBound())
-	this->EnablePositionPointer();
-	this->SetPositionPointer(quadTriangles);
-	this->DrawArrays(type, 4);
-}
-
-
-
-namespace{
-static morda::Vec2f quad01Triangles[] = {
-	morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
-};
-}//~namespace
-
-
-
-void Shader::DrawQuad01(GLint type){
-	ASSERT(this->IsBound())
-	this->EnablePositionPointer();
-	this->SetPositionPointer(quad01Triangles);
-	this->DrawArrays(type, 4);
 }

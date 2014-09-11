@@ -63,8 +63,8 @@ THE SOFTWARE. */
 #include "util/Vector2.hpp"
 #include "ResourceManager.hpp"
 
-#include "shaders/SimpleSingleColoringShader.hpp"
-#include "shaders/SimpleTexturingShader.hpp"
+#include "shaders/ColorPosShader.hpp"
+#include "shaders/PosTexShader.hpp"
 
 
 
@@ -98,8 +98,8 @@ public:
 	}
 	
 	struct DefaultShaders{
-		SimpleSingleColoringShader simpleSingleColoring;
-		SimpleTexturingShader simpleTexturing;
+		ColorPosShader simpleSingleColoring;
+		PosTexShader simpleTexturing;
 	};
 
 

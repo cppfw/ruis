@@ -2,7 +2,6 @@
 
 #include "../App.hpp"
 #include "Container.hpp"
-#include "../shaders/SimpleSingleColoringShader.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
@@ -102,7 +101,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	morda::SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	morda::ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
@@ -166,9 +165,9 @@ void Widget::Render(const Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	s.SetColor(this->color);
 	s.SetMatrix(matr);
-	s.DrawQuad01();
+	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 }

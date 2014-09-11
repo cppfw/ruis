@@ -31,7 +31,7 @@ void ImageLabel::Render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d.CompDiv(this->img->Dim()));
 
-	morda::SimpleTexturingShader &s = App::Inst().Shaders().simpleTexturing;
+	morda::PosTexShader &s = App::Inst().Shaders().simpleTexturing;
 	s.Bind();
 	
 	this->img->Render(matr, s);

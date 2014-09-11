@@ -7,9 +7,6 @@
 #include "../../../src/morda/widgets/Button.hpp"
 #include "../../../src/morda/widgets/Label.hpp"
 
-#include "../../../src/morda/shaders/SimpleSingleColoringShader.hpp"
-#include "../../../src/morda/shaders/SimpleTexturingShader.hpp"
-
 #include "../../../src/morda/resources/ResTexture.hpp"
 #include "../../../src/morda/resources/ResFont.hpp"
 
@@ -111,12 +108,11 @@ public:
 
 			this->tex->Tex().Bind();
 
-			morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
+			morda::PosTexShader &s = morda::App::Inst().Shaders().simpleTexturing;
 			s.Bind();
-			s.EnablePositionPointer();
 //			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
-			s.DrawQuad01();
+			s.Render(s.quad01Fan, s.quadFanTexCoords);
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -165,15 +161,13 @@ public:
 
 		this->tex->Tex().Bind();
 		
-		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
+		morda::PosTexShader &s = morda::App::Inst().Shaders().simpleTexturing;
 		s.Bind();
-		s.EnablePositionPointer();
-		s.EnableTexCoordPointer();
 //		s.SetColor(morda::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
 		
 		
-		static morda::Vec3f cubePos[] = {
+		static auto cubePos = std::array<morda::Vec3r, 36>{
 			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, 1), morda::Vec3f(-1, 1, 1),
 			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(-1, 1, 1),
 			
@@ -191,11 +185,9 @@ public:
 			
 			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, 1),
 			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1)
-			
 		};
-		s.SetPositionPointer(cubePos);
 		
-		static morda::Vec2f cubeTex[] = {
+		static auto cubeTex = std::array<morda::Vec2f, 36>{
 			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
 			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
@@ -214,11 +206,10 @@ public:
 			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
 			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
 		};
-		s.SetTexCoordPointer(cubeTex);
 		
 		glEnable(GL_CULL_FACE);
 		
-		s.DrawArrays(GL_TRIANGLES, 36);
+		s.Render(cubePos, cubeTex, morda::Shader::EMode::TRIANGLES);
 	}
 };
 

@@ -69,14 +69,14 @@ public:
 	 * It does not initialize vector components.
 	 * Their values are undefined right after construction.
 	 */
-	Vector2()NOEXCEPT{}
+	constexpr Vector2()NOEXCEPT{}
 
 	/**
 	 * @brief Create vector with given values.
 	 * Creates a vector with all components initialized to a given value.
 	 * @param xy - value to assign to all components of the vector.
 	 */
-	Vector2(T xy)NOEXCEPT :
+	constexpr Vector2(T xy)NOEXCEPT :
 			x(xy), y(xy)
 	{}
 	
@@ -85,7 +85,7 @@ public:
 	 * @param x - x component of the vector.
 	 * @param y - y component of the vector.
 	 */
-	Vector2(T x, T y)NOEXCEPT :
+	constexpr Vector2(T x, T y)NOEXCEPT :
 			x(x), y(y)
 	{}
 

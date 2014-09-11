@@ -33,7 +33,7 @@ THE SOFTWARE. */
 
 #include "ResTexture.hpp"
 #include "../util/Rectangle2.hpp"
-#include "../shaders/TexturingShader.hpp"
+#include "../shaders/PosTexShader.hpp"
 
 #include <array>
 
@@ -58,7 +58,7 @@ public:
 		return this->dim;
 	}
 	
-	void Render(const Matr4r& matrix, TexturingShader& s)const;
+	void Render(const Matr4r& matrix, PosTexShader& s)const;
 private:
 	static std::shared_ptr<ResImage> Load(const stob::Node& r, const ting::fs::File& fi);
 };

@@ -4,7 +4,7 @@
 
 #include "../App.hpp"
 #include "../util/util.hpp"
-#include "../shaders/TexturingShader.hpp"
+#include "../shaders/PosTexShader.hpp"
 
 
 using namespace morda;
@@ -38,14 +38,13 @@ std::shared_ptr<ResImage> ResImage::Load(const stob::Node& r, const ting::fs::Fi
 
 
 
-void ResImage::Render(const Matr4r& matrix, TexturingShader& s) const{
+void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
 	this->tex->Tex().Bind();
 	
 	Matr4f matr(matrix);
 	matr.Scale(this->dim);
 	
+	s.Bind();
 	s.SetMatrix(matr);
-	s.EnableTexCoordPointer();
-	s.SetTexCoordPointer(&*this->texCoords.begin());
-	s.Shader::DrawQuad01();
+	s.Render(s.quad01Fan, this->texCoords, Shader::EMode::TRIANGLE_FAN);
 }

@@ -15,11 +15,11 @@ void Slider::SliderHandle::Render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 
-	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	s.SetColor(morda::Vec3f(0, 1, 1));
 	s.SetMatrix(matr);
-	s.DrawQuad01();
+	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 }
 	
 
@@ -137,11 +137,11 @@ void Slider::Render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	SimpleSingleColoringShader& s = App::Inst().Shaders().simpleSingleColoring;
+	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 	s.Bind();
 	s.SetColor(morda::Vec3f(0.5, 0.5, 0));
 	s.SetMatrix(matr);
-	s.DrawQuad01();
+	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 	
 	this->Container::Render(matrix);
 }
