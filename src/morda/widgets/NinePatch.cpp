@@ -145,6 +145,8 @@ NinePatch::NinePatch(const stob::Node* desc) :
 
 
 void NinePatch::SetNinePatch(const std::shared_ptr<ResNinePatch>& np){
+	this->image = np;
+	
 	this->lt->SetImage(np->lt);
 	this->t->SetImage(np->t);
 	this->rt->SetImage(np->rt);
