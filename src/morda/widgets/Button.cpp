@@ -37,10 +37,12 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 		//then the event about left button down will still be delivered to this widget because it has captured the mouse.
 		if(this->Contains(pos)){
 			this->isPressed = true;
+			this->OnPressedChanged();
 		}
 	}else{
 		if(this->isPressed){
 			this->isPressed = false;
+			this->OnPressedChanged();
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
 			if(this->onPressed){
 				this->onPressed();
@@ -60,5 +62,6 @@ void Button::OnHoverChanged(){
 	
 	if(!this->IsHovered()){
 		this->isPressed = false;
+		this->OnPressedChanged();
 	}
 }
