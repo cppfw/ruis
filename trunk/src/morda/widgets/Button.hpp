@@ -61,6 +61,8 @@ public:
 	bool IsPressed()const NOEXCEPT{
 		return this->isPressed;
 	}
+	
+	virtual void OnPressedChanged(){}
 };
 
 

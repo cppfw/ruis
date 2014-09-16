@@ -32,3 +32,15 @@ npt_sample{
 	rect{0 0 13 13}
 	borders{6 6 6 6}
 }
+
+npt_button{
+	tex{morda_tex_ui}
+	rect{0 0 13 13}
+	borders{6 6 6 6}
+}
+
+npt_button_pressed{
+	tex{morda_tex_ui}
+	rect{14 0 13 13}
+	borders{6 6 6 6}
+}
