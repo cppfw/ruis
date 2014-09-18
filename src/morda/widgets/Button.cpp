@@ -49,7 +49,7 @@ void AbstractButton::OnHoverChanged(){
 
 
 
-AbstractToggleButton::AbstractToggleButton(const stob::Node* desc) :
+ToggleButton::ToggleButton(const stob::Node* desc) :
 		Widget(desc)
 {
 	if(!desc){

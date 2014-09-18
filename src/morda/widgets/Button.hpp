@@ -64,7 +64,7 @@ public:
 
 class Button : public AbstractButton{
 	
-	void OnClicked()override{
+	void OnClicked()override final{
 		if(this->onClicked){
 			this->onClicked();
 		}
@@ -81,10 +81,15 @@ public:
 
 
 
-class AbstractToggleButton : public AbstractButton{
+class ToggleButton : public AbstractButton{
 	bool isChecked = false;
+	
+	void OnClicked()override final{
+		this->Toggle();
+	}
+	
 protected:
-	AbstractToggleButton(const stob::Node* desc);
+	ToggleButton(const stob::Node* desc);
 	
 	virtual void OnCheckedChanged(){}
 public:
@@ -98,6 +103,10 @@ public:
 		
 		this->isChecked = checked;
 		this->OnCheckedChanged();
+	}
+	
+	void Toggle(){
+		this->SetChecked(!this->IsChecked());
 	}
 	
 	bool IsChecked()const NOEXCEPT{
