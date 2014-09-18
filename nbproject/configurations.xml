@@ -378,10 +378,6 @@
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
-      <flagsDictionary>
-        <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
-      </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
       <makefileType>
@@ -398,7 +394,7 @@
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </cTool>
-          <ccTool flags="0">
+          <ccTool flags="-funsigned-char -std=c++11 -fPIC">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
