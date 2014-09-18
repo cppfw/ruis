@@ -39,11 +39,11 @@ namespace morda{
 
 
 
-class AbstractButton : public virtual Widget{
+class ButtonWidget : public virtual Widget{
 	bool isPressed = false;
 	
 protected:
-	AbstractButton() :
+	ButtonWidget() :
 			Widget(nullptr)
 	{}
 	
@@ -62,7 +62,7 @@ public:
 
 
 
-class Button : public AbstractButton{
+class Button : public ButtonWidget{
 	
 	void OnClicked()override final{
 		if(this->onClicked){
@@ -81,7 +81,7 @@ public:
 
 
 
-class ToggleButton : public AbstractButton{
+class ToggleButton : public ButtonWidget{
 	bool isChecked = false;
 	
 	void OnClicked()override final{
