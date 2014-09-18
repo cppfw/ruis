@@ -118,11 +118,11 @@ Container{
 				}
 			}
 
-			TextButton{
+			PushButton{
 				name {show_VK_button}
 				pos {50 80}
 				dim {10 30}
-				text {"Show VK"}
+
 				clip{true}
 
 				prop{
@@ -132,6 +132,10 @@ Container{
 						weight {1}
 						margins {10 20 30 40}
 					}
+				}
+
+				Label{
+					text {"Show VK"}
 				}
 			}
 		}
@@ -150,11 +154,10 @@ Container{
 		}
 
 
-		TextButton{
+		PushButton{
 			pos {10 20}
 			dim {100 50}
 			gravity {30% 70%}
-			text {"Hello world!"}
 
 			name{"Hello world button"}
 
@@ -163,6 +166,10 @@ Container{
 					dim{min 10mm}
 					gravity{0% 0%}
 				}
+			}
+
+			Label{
+				text {"Hello world!"}
 			}
 		}
 

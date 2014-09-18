@@ -10,6 +10,7 @@
 #include "widgets/ImageLabel.hpp"
 #include "widgets/Window.hpp"
 #include "widgets/NinePatch.hpp"
+#include "widgets/PushButton.hpp"
 #include "App.hpp"
 #include "util/util.hpp"
 
@@ -31,6 +32,7 @@ Inflater::Inflater(){
 	this->AddWidget<ImageLabel>("ImageLabel");
 	this->AddWidget<Window>("Window");
 	this->AddWidget<NinePatch>("NinePatch");
+	this->AddWidget<PushButton>("PushButton");
 }
 
 
