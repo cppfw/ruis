@@ -33,13 +33,13 @@ npt_sample{
 	borders{6 6 6 6}
 }
 
-npt_button{
+morda_npt_pushbutton{
 	tex{morda_tex_ui}
 	rect{0 0 13 13}
 	borders{6 6 6 6}
 }
 
-npt_button_pressed{
+morda_npt_pushbutton_pressed{
 	tex{morda_tex_ui}
 	rect{14 0 13 13}
 	borders{6 6 6 6}
