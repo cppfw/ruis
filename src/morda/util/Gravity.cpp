@@ -6,31 +6,17 @@ using namespace morda;
 
 
 
-Vec2r Gravity::PosForRect(const PaddedWidget& w, const Vec2r& dim)const NOEXCEPT{
-	return PosForRect(w.Rect().d, w.Padding(), dim);
-}
-
-
-
-Vec2r Gravity::PosForRect(const Vec2r& parentDim, const LeftBottomRightTop& padding, const Vec2r& dim)const NOEXCEPT{
-	Vec2r noPaddings = parentDim - padding.lb - padding.rt;
-	
+Vec2r Gravity::PosForRect(const Vec2r& parentDim, const Vec2r& dim)const NOEXCEPT{
 	Vec2r ret;
 	
 	for(unsigned i = 0; i != 2; ++i){
-		if(noPaddings[i] <= 0){
-			float paddingRatio = padding.lb[i] / (padding.lb[i] + padding.rt[i]);
-			ret[i] = parentDim[i] * paddingRatio - dim[i] / 2;
-			continue;
-		}
-		
-		float noDim = noPaddings[i] - dim[i];
+		float noDim = parentDim[i] - dim[i];
 		if(noDim <= 0){
-			ret[i] = padding.lb[i] + (noPaddings[i] - dim[i]) / 2;
+			ret[i] = (parentDim[i] - dim[i]) / 2;
 			continue;
 		}
 		
-		ret[i] = padding.lb[i] + noDim * (*this)[i];
+		ret[i] = noDim * (*this)[i];
 	}
 	
 	return RoundVec(ret);

@@ -89,7 +89,6 @@
           <in>LinearWidget.cpp</in>
           <in>LinearWidget.hpp</in>
           <in>NinePatch.cpp</in>
-          <in>PaddedWidget.hpp</in>
           <in>PushButton.cpp</in>
           <in>PushButton.hpp</in>
           <in>Slider.cpp</in>
@@ -338,8 +337,6 @@
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/PaddedWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -723,8 +720,6 @@
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/PaddedWidget.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
@@ -950,8 +945,6 @@
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/PaddedWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
       </item>

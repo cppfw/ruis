@@ -32,7 +32,6 @@ THE SOFTWARE. */
 
 #include "../util/Vector2.hpp"
 #include "../widgets/Widget.hpp"
-#include "../widgets/PaddedWidget.hpp"
 
 
 namespace morda{
@@ -46,7 +45,7 @@ public:
 	 * @brief Constructor.
 	 * Creates uninitialized Gravity object.
      */
-	inline Gravity(){}
+	Gravity(){}
 	
 	
 	/**
@@ -55,32 +54,20 @@ public:
 	 * The values should be from range [0:1].
      * @param gravity - gravity values.
      */
-	inline Gravity(const Vec2r& gravity) :
+	Gravity(const Vec2r& gravity) :
 			Vec2r(gravity)
 	{}
 	
-	/**
-	 * @brief Get position for rectangle within given padded widget.
-	 * Basing on gravity calculates the position for rectangle of given dimensions within
-	 * the given padded widget.
-	 * Widget should have the correct size already set.
-	 * Takes widget padding into account.
-     * @param w - padded widget within which the rectangle is to be placed.
-     * @param dim - dimensions of the rectangle.
-     * @return Position for the rectangle within widget.
-     */
-	Vec2r PosForRect(const PaddedWidget& w, const Vec2r& dim)const NOEXCEPT;
 	
 	/**
 	 * @brief Get position for rectangle within given parent rectangle.
 	 * Basing on gravity calculates the position for rectangle of given dimensions within
 	 * the given parent rectangle.
      * @param parentDim - dimensions of parent rectangle.
-	 * @param padding - padding to take into account.
      * @param dim - dimensions of the rectangle to place.
      * @return Position for the rectangle within parent rectangle.
      */
-	Vec2r PosForRect(const Vec2r& parentDim, const LeftBottomRightTop& padding, const Vec2r& dim)const NOEXCEPT;
+	Vec2r PosForRect(const Vec2r& parentDim, const Vec2r& dim)const NOEXCEPT;
 	
 	/**
 	 * @brief Parse the gravity property from STOB.

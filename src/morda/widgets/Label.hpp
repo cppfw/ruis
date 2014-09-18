@@ -33,7 +33,6 @@ THE SOFTWARE. */
 #include "../widgets/Widget.hpp"
 #include "../resources/ResFont.hpp"
 #include "GravitatingWidget.hpp"
-#include "PaddedWidget.hpp"
 #include "TextWidget.hpp"
 
 
@@ -42,7 +41,7 @@ namespace morda{
 
 
 
-class Label : public GravitatingWidget, public PaddedWidget, public TextWidget{
+class Label : public GravitatingWidget, public TextWidget{
 	std::string text;
 	
 	morda::Vec2r pivot;
@@ -61,8 +60,6 @@ public:
 	}
 	
 	void Render(const morda::Matr4r& matrix)const override;
-	
-	Vec2r ComputeMinDim()const NOEXCEPT override;
 	
 	void OnResize() override;
 };
