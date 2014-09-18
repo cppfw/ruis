@@ -48,7 +48,6 @@ class TextButton : public Button, public Label{
 public:
 	TextButton(const stob::Node* desc = nullptr) :
 			Widget(desc),
-			Button(desc),
 			Label(desc)
 	{}
 public:

@@ -44,9 +44,7 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 			this->isPressed = false;
 			this->OnPressedChanged();
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
-			if(this->onPressed){
-				this->onPressed();
-			}
+			this->OnClicked();
 			return true;
 		}
 	}
@@ -65,3 +63,18 @@ void Button::OnHoverChanged(){
 		this->OnPressedChanged();
 	}
 }
+
+
+
+ToggleButton::ToggleButton(const stob::Node* desc) :
+		Widget(desc)
+{
+	if(!desc){
+		return;
+	}
+	
+	if(const stob::Node* n = desc->GetProperty("checked")){
+		this->isChecked = n->AsBool();
+	}
+}
+

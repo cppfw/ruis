@@ -43,14 +43,8 @@ class Button : public virtual Widget{
 	bool isPressed = false;
 	
 protected:
-	Button(const stob::Node* desc = nullptr) :
-			Widget(desc)
-	{}
+	Button() : Widget(0){}
 public:
-	
-	~Button()NOEXCEPT{}
-	
-	std::function<void()> onPressed;
 	
 	void Render(const morda::Matr4r& matrix)const override;
 	
@@ -63,6 +57,42 @@ public:
 	}
 	
 	virtual void OnPressedChanged(){}
+	
+	virtual void OnClicked(){}
+};
+
+
+
+class PushButton : public Button{
+	
+	void OnClicked()override{
+		if(this->onClicked){
+			this->onClicked();
+		}
+	}
+
+protected:
+	PushButton() = default;
+	
+public:
+	std::function<void()> onClicked;
+};
+
+
+
+class ToggleButton : public Button{
+	bool isChecked = false;
+protected:
+	ToggleButton(const stob::Node* desc);
+	
+	virtual void OnCheckedChanged(){}
+public:
+	
+	//TODO:
+	
+	bool IsChecked()const NOEXCEPT{
+		return this->isChecked;
+	}
 };
 
 
