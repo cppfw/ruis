@@ -138,9 +138,7 @@ NinePatch::NinePatch(const stob::Node* desc) :
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
 	}
 	
-	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
-		this->contentArea->Add(morda::App::Inst().inflater().Inflate(*n));
-	}
+	this->contentArea->Add(*desc);
 }
 
 

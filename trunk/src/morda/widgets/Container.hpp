@@ -78,8 +78,12 @@ public:
 
 	void Add(const std::shared_ptr<Widget>& w);
 
+	void Add(const stob::Node& desc);
+	
 	//return true if the widget was found in children and was removed
 	void Remove(Widget& w);
+	
+	//TODO: RemoveAll()
 	
 	std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT override;
 	

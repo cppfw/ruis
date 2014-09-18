@@ -157,9 +157,7 @@ morda::Window::Window(const stob::Node* desc) :
 		this->SetTitle(t->Value());
 	}
 	
-	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){		
-		this->contentArea->Add(morda::App::Inst().inflater().Inflate(*n));
-	}
+	this->contentArea->Add(*desc);
 }
 
 void morda::Window::SetupWidgets(){
