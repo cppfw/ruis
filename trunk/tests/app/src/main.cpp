@@ -241,17 +241,17 @@ public:
 //		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
-//		std::dynamic_pointer_cast<morda::Button>(c->FindChildByName("show_VK_button"))->onPressed = [this](){
-//			this->ShowVirtualKeyboard();
-//		};
-//		
-//		std::dynamic_pointer_cast<morda::Button>(c->FindChildByName("Hello world button"))->onPressed = [this](){
-//			this->PostToUIThread_ts(
-//					[](){
-//						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
-//					}
-//				);
-//		};
+		std::dynamic_pointer_cast<morda::AbstractPushButton>(c->FindChildByName("show_VK_button"))->onClicked = [this](){
+			this->ShowVirtualKeyboard();
+		};
+		
+		std::dynamic_pointer_cast<morda::AbstractPushButton>(c->FindChildByName("Hello world button"))->onClicked = [this](){
+			this->PostToUIThread_ts(
+					[](){
+						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
+					}
+				);
+		};
 		
 		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
 		
