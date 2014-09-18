@@ -13,7 +13,6 @@ using namespace morda;
 Label::Label(const stob::Node* desc) :
 		Widget(desc),
 		GravitatingWidget(desc),
-		PaddedWidget(desc),
 		TextWidget(desc)
 {
 	if(!desc){
@@ -35,18 +34,9 @@ void Label::SetText(const std::string& text){
 
 
 
-
-morda::Vec2r Label::ComputeMinDim()const NOEXCEPT{
-	LeftBottomRightTop padding = this->Padding();
-//	TRACE(<< "Label::ComputeMinDim(): padding = (" << padding.left << ", " << padding.top << ", " << padding.right << ", " << padding.bottom << ")" << std::endl)
-	return this->TextWidget::ComputeMinDim() + padding.lb + padding.rt;
-}
-
-
-
 //override
 void Label::OnResize(){
-	Vec2r p = this->gravity().PosForRect(*this, this->TextBoundingBox().d);
+	Vec2r p = this->gravity().PosForRect(this->Rect().d, this->TextBoundingBox().d);
 	
 	this->pivot = p - this->TextBoundingBox().p;
 	

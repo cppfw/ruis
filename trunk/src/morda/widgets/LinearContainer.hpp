@@ -30,7 +30,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "PaddedWidget.hpp"
 #include "LinearWidget.hpp"
 #include "GravitatingWidget.hpp"
 
@@ -43,7 +42,6 @@ namespace morda{
 
 class LinearContainer :
 		public Container,
-		public PaddedWidget,
 		public LinearWidget,
 		public GravitatingWidget
 {

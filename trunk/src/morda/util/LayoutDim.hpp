@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "../widgets/Widget.hpp"
-#include "../widgets/PaddedWidget.hpp"
+
 
 
 namespace morda{

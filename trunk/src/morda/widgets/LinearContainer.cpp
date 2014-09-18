@@ -4,6 +4,7 @@
 #include "../util/Gravity.hpp"
 #include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
+#include "../util/LeftBottomRightTop.hpp"
 
 #include <cmath>
 
@@ -37,7 +38,6 @@ public:
 LinearContainer::LinearContainer(const stob::Node* desc) :
 		Widget(desc),
 		Container(desc),
-		PaddedWidget(desc),
 		LinearWidget(desc),
 		GravitatingWidget(desc)
 {}
@@ -52,7 +52,7 @@ void LinearContainer::OnResize(){
 	std::vector<Info> infoArray(this->Children().size());
 	
 	//Calculate rigid size, net weight and store weights and margins
-	real rigid = this->Padding()[longIndex] + this->Padding()[2 + longIndex];
+	real rigid = 0;
 	real netWeight = 0;
 	
 	{
@@ -124,7 +124,7 @@ void LinearContainer::OnResize(){
 		}
 		ASSERT_INFO(flexible >= 0, "flexible = " << flexible)
 		
-		real pos = this->Padding()[this->IsReverse() ? (longIndex + 2) : longIndex];//start arranging widgets from padding
+		real pos = 0;
 		auto info = infoArray.begin();
 		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			Vec2r newSize(info->dim);
@@ -143,7 +143,7 @@ void LinearContainer::OnResize(){
 
 			(*i)->Resize(RoundVec(newSize));
 			
-			newPos[transIndex] = info->gravity.PosForRect(*this, (*i)->Rect().d)[transIndex];
+			newPos[transIndex] = info->gravity.PosForRect(this->Rect().d, (*i)->Rect().d)[transIndex];
 			
 			(*i)->MoveTo(newPos);
 		}
@@ -193,9 +193,6 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 		
 		prevMargin = margins[this->IsReverse() ? longIndex : (longIndex + 2)];
 	}
-	
-	minDim[0] += this->Padding()[0] + this->Padding()[2];
-	minDim[1] += this->Padding()[1] + this->Padding()[3];
 	
 	return minDim;
 }

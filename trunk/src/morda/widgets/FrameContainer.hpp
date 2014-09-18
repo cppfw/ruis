@@ -31,7 +31,6 @@ THE SOFTWARE. */
 
 
 #include "Container.hpp"
-#include "PaddedWidget.hpp"
 #include "GravitatingWidget.hpp"
 
 
@@ -41,7 +40,6 @@ namespace morda{
 
 class FrameContainer :
 		public Container,
-		public PaddedWidget,
 		public GravitatingWidget
 {
 	

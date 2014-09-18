@@ -14,7 +14,6 @@ using namespace morda;
 FrameContainer::FrameContainer(const stob::Node* desc) :
 		Widget(desc),
 		Container(desc),
-		PaddedWidget(desc),
 		GravitatingWidget(desc)
 {}
 
@@ -56,7 +55,7 @@ void FrameContainer::OnResize() {
 		
 		(*i)->Resize((*i)->Measure(d));
 		
-		(*i)->MoveTo(gravity.PosForRect(*this, (*i)->Rect().d));
+		(*i)->MoveTo(gravity.PosForRect(this->Rect().d, (*i)->Rect().d));
 	}
 }
 
@@ -81,7 +80,6 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 		}
 	}
 	
-	minDim += this->Padding().lb + this->Padding().rt;
 	return minDim;
 }
 
