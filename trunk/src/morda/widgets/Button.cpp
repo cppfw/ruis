@@ -8,7 +8,7 @@ using namespace morda;
 
 
 //override
-bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool AbstractButton::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != EMouseButton::LEFT){
 		return false;
@@ -38,7 +38,7 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 
 
 //override
-void Button::OnHoverChanged(){
+void AbstractButton::OnHoverChanged(){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
 	if(!this->IsHovered()){
