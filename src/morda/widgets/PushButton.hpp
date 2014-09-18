@@ -34,7 +34,10 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class PushButton : public Button, private NinePatch{
+class PushButton :
+		public Button,
+		private NinePatch
+{
 	std::shared_ptr<ResNinePatch> imgNormal;
 	std::shared_ptr<ResNinePatch> imgPressed;
 	
