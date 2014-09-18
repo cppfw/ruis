@@ -4,7 +4,6 @@
 #include "widgets/Label.hpp"
 #include "widgets/LinearContainer.hpp"
 #include "widgets/FrameContainer.hpp"
-#include "widgets/TextButton.hpp"
 #include "widgets/TextInput.hpp"
 #include "widgets/Slider.hpp"
 #include "widgets/ImageLabel.hpp"
@@ -26,7 +25,6 @@ Inflater::Inflater(){
 	this->AddWidget<LinearContainer>("LinearContainer");
 	this->AddWidget<FrameContainer>("FrameContainer");
 	this->AddWidget<Label>("Label");
-	this->AddWidget<TextButton>("TextButton");
 	this->AddWidget<TextInput>("TextInput");
 	this->AddWidget<Slider>("Slider");
 	this->AddWidget<ImageLabel>("ImageLabel");
