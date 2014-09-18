@@ -34,7 +34,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class PushButton : public AbstractPushButton, private NinePatch{
+class PushButton : public Button, private NinePatch{
 	std::shared_ptr<ResNinePatch> imgNormal;
 	std::shared_ptr<ResNinePatch> imgPressed;
 	
@@ -49,11 +49,11 @@ private:
 	void OnPressedChanged()override;
 
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
-		return this->AbstractPushButton::OnMouseButton(isDown, pos, button, pointerId);
+		return this->Button::OnMouseButton(isDown, pos, button, pointerId);
 	}
 
 	void OnHoverChanged()override{
-		this->AbstractPushButton::OnHoverChanged();
+		this->Button::OnHoverChanged();
 	}
 };
 

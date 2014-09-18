@@ -39,11 +39,11 @@ namespace morda{
 
 
 
-class Button : public virtual Widget{
+class AbstractButton : public virtual Widget{
 	bool isPressed = false;
 	
 protected:
-	Button() :
+	AbstractButton() :
 			Widget(nullptr)
 	{}
 	
@@ -62,7 +62,7 @@ public:
 
 
 
-class AbstractPushButton : public Button{
+class Button : public AbstractButton{
 	
 	void OnClicked()override{
 		if(this->onClicked){
@@ -71,7 +71,7 @@ class AbstractPushButton : public Button{
 	}
 
 protected:
-	AbstractPushButton() :
+	Button() :
 			Widget(nullptr)
 	{}
 	
@@ -81,7 +81,7 @@ public:
 
 
 
-class AbstractToggleButton : public Button{
+class AbstractToggleButton : public AbstractButton{
 	bool isChecked = false;
 protected:
 	AbstractToggleButton(const stob::Node* desc);

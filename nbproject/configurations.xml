@@ -93,8 +93,6 @@
           <in>PushButton.hpp</in>
           <in>Slider.cpp</in>
           <in>Slider.hpp</in>
-          <in>TextButton.cpp</in>
-          <in>TextButton.hpp</in>
           <in>TextInput.cpp</in>
           <in>TextInput.hpp</in>
           <in>TextWidget.cpp</in>
@@ -346,10 +344,6 @@
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextButton.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.hpp" ex="false" tool="3" flavor2="0">
@@ -511,8 +505,6 @@
       <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -727,10 +719,6 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextButton.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -953,10 +941,6 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextButton.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextButton.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
