@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,82 +29,28 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <functional>
-
-#include "../widgets/Widget.hpp"
-
-
+#include "Button.hpp"
+#include "NinePatch.hpp"
 
 namespace morda{
 
-
-
-class Button : public virtual Widget{
-	bool isPressed = false;
-	
-protected:
-	Button() :
-			Widget(nullptr)
-	{}
-	
-	virtual void OnPressedChanged(){}
-	
-	virtual void OnClicked(){}
-	
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
-	
-	void OnHoverChanged() override;
-public:	
-	bool IsPressed()const NOEXCEPT{
-		return this->isPressed;
-	}
-};
-
-
-
-class AbstractPushButton : public Button{
-	
-	void OnClicked()override{
-		if(this->onClicked){
-			this->onClicked();
-		}
-	}
-
-protected:
-	AbstractPushButton() :
-			Widget(nullptr)
-	{}
-	
+class PushButton : public AbstractPushButton, private NinePatch{
 public:
-	std::function<void()> onClicked;
-};
 
+	PushButton(const PushButton&) = delete;
+	PushButton& operator=(const PushButton&) = delete;
+	
+	PushButton(const stob::Node* desc = nullptr);
+	
+private:
 
-
-class AbstractToggleButton : public Button{
-	bool isChecked = false;
-protected:
-	AbstractToggleButton(const stob::Node* desc);
-	
-	virtual void OnCheckedChanged(){}
-public:
-	
-	//TODO:
-	
-	void SetChecked(bool checked){
-		if(this->isChecked == checked){
-			return;
-		}
-		
-		this->isChecked = checked;
-		this->OnCheckedChanged();
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
+		return this->AbstractPushButton::OnMouseButton(isDown, pos, button, pointerId);
 	}
-	
-	bool IsChecked()const NOEXCEPT{
-		return this->isChecked;
+
+	void OnHoverChanged()override{
+		this->AbstractPushButton::OnHoverChanged();
 	}
 };
 
-
-
-}//~namespace
+}

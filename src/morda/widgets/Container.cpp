@@ -35,7 +35,13 @@ Container::Container(const stob::Node* desc) :
 		return;
 	}
 	
-	for(const stob::Node* n = desc->ChildNonProperty().node(); n; n = n->NextNonProperty().node()){
+	this->Add(*desc);
+}
+
+
+
+void Container::Add(const stob::Node& desc){
+	for(const stob::Node* n = desc.ChildNonProperty().node(); n; n = n->NextNonProperty().node()){
 		this->Add(morda::App::Inst().inflater().Inflate(*n));
 	}
 }

@@ -7,23 +7,6 @@ using namespace morda;
 
 
 
-void Button::Render(const morda::Matr4r& matrix)const{
-	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
-	
-	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
-	s.Bind();
-	if(this->isPressed){
-		s.SetColor(morda::Vec3f(1, 1, 1));
-	}else{
-		s.SetColor(morda::Vec3f(0.5, 0.5, 0.5));
-	}
-	s.SetMatrix(matr);
-	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
-}
-
-
-
 //override
 bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
@@ -66,7 +49,7 @@ void Button::OnHoverChanged(){
 
 
 
-ToggleButton::ToggleButton(const stob::Node* desc) :
+AbstractToggleButton::AbstractToggleButton(const stob::Node* desc) :
 		Widget(desc)
 {
 	if(!desc){
