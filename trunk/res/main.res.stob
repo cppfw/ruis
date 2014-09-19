@@ -1,0 +1,3 @@
+include{window.res.stob}
+include{ui.res.stob}
+include{fonts/font.res.stob}
