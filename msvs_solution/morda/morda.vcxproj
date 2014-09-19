@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -88,14 +88,14 @@
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp" />
+    <ClCompile Include="..\..\src\morda\resources\ResImage.cpp" />
+    <ClCompile Include="..\..\src\morda\resources\ResNinePatch.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResTexture.cpp" />
+    <ClCompile Include="..\..\src\morda\shaders\ColorPosShader.cpp" />
+    <ClCompile Include="..\..\src\morda\shaders\PosShader.cpp" />
+    <ClCompile Include="..\..\src\morda\shaders\PosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\Shader.cpp" />
-    <ClCompile Include="..\..\src\morda\shaders\SimpleSingleColoringShader.cpp" />
-    <ClCompile Include="..\..\src\morda\shaders\SimpleTexturingShader.cpp" />
-    <ClCompile Include="..\..\src\morda\shaders\SingleColoringShader.cpp" />
-    <ClCompile Include="..\..\src\morda\shaders\TexturingShader.cpp" />
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
-    <ClCompile Include="..\..\src\morda\util\Background.cpp" />
     <ClCompile Include="..\..\src\morda\util\GLTexture.cpp" />
     <ClCompile Include="..\..\src\morda\util\Gravity.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
@@ -109,8 +109,9 @@
     <ClCompile Include="..\..\src\morda\widgets\Label.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\NinePatch.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\PushButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\TextButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextInput.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Widget.cpp" />

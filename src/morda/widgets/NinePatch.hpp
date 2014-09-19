@@ -36,7 +36,10 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class NinePatch : private LinearContainer, public virtual Widget{
+class NinePatch :
+	public virtual Widget,
+	private LinearContainer
+{
 	std::shared_ptr<ResNinePatch> image;//hold reference to resource to avoid data duplication
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
