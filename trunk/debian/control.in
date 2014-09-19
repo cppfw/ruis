@@ -16,7 +16,7 @@ Description: OpenGL UI framework development files
 
 Package: libmorda$(soname)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libmorda-res$(soname)
 Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
 
@@ -31,3 +31,8 @@ Architecture: all
 Depends: ${misc:Depends}
 Description: Documentation for libmorda
  Doxygen docs.
+ 
+Package: libmorda-res$(soname)
+Architecture: all
+Description: Resources for libmorda UI library
+ Resources for libmorda UI library.
