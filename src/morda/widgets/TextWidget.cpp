@@ -8,7 +8,7 @@ using namespace morda;
 
 namespace{
 std::shared_ptr<ResFont> DefaultFont(){
-	return morda::App::Inst().resMan.Load<ResFont>("fnt_main");
+	return morda::App::Inst().resMan.Load<ResFont>("morda_fnt_main");
 }
 }
 
