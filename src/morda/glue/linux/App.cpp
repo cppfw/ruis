@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <array>
+#include <sstream>
 
 #include "../../AppFactory.hpp"
 
@@ -200,12 +201,18 @@ App::App(const WindowParams& requestedWindowParams) :
 	
 	//mount default resource pack
 	{
+#ifndef DEBUG
+		unsigned soname = 
+#include "../../../soname.txt"
+		;
+#endif
+		
 		std::array<std::string, 2> paths = {
 #ifdef DEBUG
 			"../../res/"
 #else
-			"/usr/local/share/morda/res/",
-			"/usr/share/morda/res/"
+			static_cast<std::stringstream&>(std::stringstream() << "/usr/local/share/morda/res" << soname << "/").str(),
+			static_cast<std::stringstream&>(std::stringstream() << "/usr/share/morda/res" << soname << "/").str()
 #endif
 		};
 		
