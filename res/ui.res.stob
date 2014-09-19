@@ -1,0 +1,15 @@
+morda_tex_ui{
+	file{ui.png}
+}
+
+morda_npt_pushbutton{
+	tex{morda_tex_ui}
+	rect{0 0 13 13}
+	borders{6 6 6 6}
+}
+
+morda_npt_pushbutton_pressed{
+	tex{morda_tex_ui}
+	rect{14 0 13 13}
+	borders{6 6 6 6}
+}
