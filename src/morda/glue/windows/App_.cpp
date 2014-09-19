@@ -627,6 +627,23 @@ void App::GLContextWrapper::Destroy()NOEXCEPT{
 }
 
 
+void App::MountDefaultResPack(){
+	std::string path =
+#ifdef DEBUG
+		"../../res/"
+#else
+		"res/"
+#endif
+		;
+
+	try{
+		ting::fs::FSFile fi(path);
+		this->resMan.MountResPack(fi);
+	}catch (ting::fs::File::Exc& e){
+		//default res pack not found, do nothing
+	}
+}
+
 
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
@@ -637,24 +654,6 @@ App::App(const WindowParams& requestedWindowParams) :
 	this->dotsPerCm = (float(GetDeviceCaps(this->deviceContext.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, HORZSIZE))
 		+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
 
-	//mount default res pack
-	{
-		std::string path =
-#ifdef DEBUG
-			"../../res/"
-#else
-			"res/"
-#endif
-		;
-
-		try{
-			ting::fs::FSFile fi(path);
-			this->resMan.MountResPack(fi);
-		}catch (ting::fs::File::Exc& e){
-			//default res pack not found, do nothing
-		}
-	}
-
 	this->UpdateWindowRect(
 			morda::Rect2r(
 					0,
@@ -663,6 +662,8 @@ App::App(const WindowParams& requestedWindowParams) :
 					float(requestedWindowParams.dim.y)
 				)
 		);
+	
+	this->MountDefaultResPack();
 }
 
 
