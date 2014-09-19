@@ -1,5 +1,3 @@
-include{window.res.stob}
-
 tex_sample{
 	file {texture.jpg}
 }
@@ -12,8 +10,6 @@ img_lattice{
 	tex{tex_lattice}
 }
 
-include{fonts/font.res.stob}
-
 tex_images{
 	file{sample.png}
 }
@@ -23,9 +19,6 @@ img_sample{
 	rect{0 0 120 90}
 }
 
-morda_tex_ui{
-	file{ui.png}
-}
 
 npt_sample{
 	tex{morda_tex_ui}
@@ -33,14 +26,3 @@ npt_sample{
 	borders{6 6 6 6}
 }
 
-morda_npt_pushbutton{
-	tex{morda_tex_ui}
-	rect{0 0 13 13}
-	borders{6 6 6 6}
-}
-
-morda_npt_pushbutton_pressed{
-	tex{morda_tex_ui}
-	rect{14 0 13 13}
-	borders{6 6 6 6}
-}

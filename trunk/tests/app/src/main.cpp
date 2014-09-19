@@ -30,7 +30,7 @@ public:
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
-		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("fnt_main");
+		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("morda_fnt_main");
 	}
 	
 	std::uint32_t timer = 0;

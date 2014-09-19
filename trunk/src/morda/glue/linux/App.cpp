@@ -201,8 +201,12 @@ App::App(const WindowParams& requestedWindowParams) :
 	//mount default resource pack
 	{
 		std::array<std::string, 2> paths = {
+#ifdef DEBUG
+			"../../res/"
+#else
 			"/usr/local/share/morda/res/",
 			"/usr/share/morda/res/"
+#endif
 		};
 		
 		for(const auto& s : paths){
