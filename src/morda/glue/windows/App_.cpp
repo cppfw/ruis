@@ -635,8 +635,26 @@ App::App(const WindowParams& requestedWindowParams) :
 		curWinRect(0, 0, -1, -1)
 {
 	this->dotsPerCm = (float(GetDeviceCaps(this->deviceContext.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, HORZSIZE))
-			+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
-	
+		+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
+
+	//mount default res pack
+	{
+		std::string path =
+#ifdef DEBUG
+			"../../res/"
+#else
+			"res/"
+#endif
+		;
+
+		try{
+			ting::fs::FSFile fi(path);
+			this->resMan.MountResPack(fi);
+		}catch (ting::fs::File::Exc& e){
+			//default res pack not found, do nothing
+		}
+	}
+
 	this->UpdateWindowRect(
 			morda::Rect2r(
 					0,
