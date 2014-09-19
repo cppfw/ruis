@@ -25,6 +25,7 @@
             <in>App_.cpp</in>
             <in>main.cpp</in>
           </df>
+          <in>linux_macosx.cpp</in>
         </df>
         <df name="resources">
           <in>ResFont.cpp</in>
@@ -265,6 +266,8 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="src/morda/glue/linux_macosx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/glue/windows/App_.cpp" ex="false" tool="1" flavor2="4">
@@ -481,6 +484,8 @@
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/glue/linux_macosx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="8">
       </item>
       <item path="src/morda/glue/windows/App_.cpp" ex="false" tool="1" flavor2="8">
@@ -628,6 +633,8 @@
             flavor2="0">
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/linux_macosx.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
@@ -850,6 +857,8 @@
             flavor2="0">
       </item>
       <item path="src/morda/glue/linux/App.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/linux_macosx.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
