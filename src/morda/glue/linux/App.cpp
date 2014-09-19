@@ -1,6 +1,7 @@
 //This file contains implementations of platform dependent methods from App class.
 
 #include <vector>
+#include <array>
 
 #include "../../AppFactory.hpp"
 
@@ -190,10 +191,29 @@ App::App(const WindowParams& requestedWindowParams) :
 		xInputMethod(xDisplay, xWindow),
 		curWinRect(0, 0, -1, -1)
 {
+	//initialize screen density
 	{
 		int scrNum = 0;
 		this->dotsPerCm = ((double(DisplayWidth(this->xDisplay.d, scrNum)) / (double(DisplayWidthMM(this->xDisplay.d, scrNum))/ 10.0))
 				+ (double(DisplayHeight(this->xDisplay.d, scrNum)) / (double(DisplayHeightMM(this->xDisplay.d, scrNum)) / 10.0))) / 2;
+	}
+	
+	//mount default resource pack
+	{
+		std::array<std::string, 2> paths = {
+			"/usr/local/share/morda/res/",
+			"/usr/share/morda/res/"
+		};
+		
+		for(const auto& s : paths){
+			try{
+				ting::fs::FSFile fi(s);
+				this->resMan.MountResPack(fi);
+			}catch(ting::fs::File::Exc& e){
+				continue;
+			}
+			break;
+		}
 	}
 	
 #ifdef DEBUG
