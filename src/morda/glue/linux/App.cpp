@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <array>
-#include <sstream>
 
 #include "../../AppFactory.hpp"
 
@@ -199,34 +198,6 @@ App::App(const WindowParams& requestedWindowParams) :
 				+ (double(DisplayHeight(this->xDisplay.d, scrNum)) / (double(DisplayHeightMM(this->xDisplay.d, scrNum)) / 10.0))) / 2;
 	}
 	
-	//mount default resource pack
-	{
-#ifndef DEBUG
-		unsigned soname = 
-#include "../../../soname.txt"
-		;
-#endif
-		
-		std::array<std::string, 2> paths = {
-#ifdef DEBUG
-			"../../res/"
-#else
-			static_cast<std::stringstream&>(std::stringstream() << "/usr/local/share/morda/res" << soname << "/").str(),
-			static_cast<std::stringstream&>(std::stringstream() << "/usr/share/morda/res" << soname << "/").str()
-#endif
-		};
-		
-		for(const auto& s : paths){
-			try{
-				ting::fs::FSFile fi(s);
-				this->resMan.MountResPack(fi);
-			}catch(ting::fs::File::Exc& e){
-				continue;
-			}
-			break;
-		}
-	}
-	
 #ifdef DEBUG
 	//print GLX version
 	{
@@ -244,6 +215,8 @@ App::App(const WindowParams& requestedWindowParams) :
 					float(requestedWindowParams.dim.y)
 				)
 		);
+	
+	this->MountDefaultResPack();
 }
 
 

@@ -11,6 +11,7 @@ include $(prorab_this_dir)sources.mk
 
 ifeq ($(prorab_os),linux)
     this_srcs += morda/glue/linux/App.cpp
+    this_srcs += morda/glue/linux_macosx.cpp
 else ifeq ($(prorab_os), macosx)
     this_mm_src := morda/glue/macosx/main.mm
 else ifeq ($(prorab_os), windows)
