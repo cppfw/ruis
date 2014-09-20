@@ -6,9 +6,9 @@ using namespace morda;
 
 
 
-decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoords = {
+decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoords = {{
 	Vec2f(0, 0), Vec2f(1, 0), Vec2f(1, 1), Vec2f(0, 1)
-};
+}};
 
 
 
