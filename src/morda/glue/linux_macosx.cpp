@@ -15,14 +15,14 @@ void App::MountDefaultResPack(){
 		;
 #endif
 		
-	std::array<std::string, 2> paths = {
+	std::array<std::string, 2> paths = {{
 #ifdef DEBUG
 		"../../res/"
 #else
 		static_cast<std::stringstream&>(std::stringstream() << "/usr/local/share/morda/res" << soname << "/").str(),
 		static_cast<std::stringstream&>(std::stringstream() << "/usr/share/morda/res" << soname << "/").str()
 #endif
-	};
+	}};
 
 	for(const auto& s : paths){
 		try{
