@@ -133,7 +133,7 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 void App::MountDefaultResPack(){
 #	ifndef DEBUG
 	unsigned soname = 
-#	include "../../soname.txt"
+#	include "../soname.txt"
 		;
 #	endif
 		
