@@ -19,7 +19,7 @@ Vec2r Gravity::PosForRect(const Vec2r& parentDim, const Vec2r& dim)const NOEXCEP
 		ret[i] = noDim * (*this)[i];
 	}
 	
-	return RoundVec(ret);
+	return ret.Rounded();
 }
 
 

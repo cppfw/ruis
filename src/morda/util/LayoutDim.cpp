@@ -76,5 +76,5 @@ Vec2r LayoutDim::ForWidget(const Widget& w)const NOEXCEPT{
 		}
 	}
 	
-	return RoundVec(ret);
+	return ret.Rounded();
 }

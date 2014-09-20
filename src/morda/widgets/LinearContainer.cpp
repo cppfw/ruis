@@ -141,7 +141,7 @@ void LinearContainer::OnResize(){
 			}
 			pos += info->margin + newSize[longIndex];
 
-			(*i)->Resize(RoundVec(newSize));
+			(*i)->Resize(newSize.Rounded());
 			
 			newPos[transIndex] = info->gravity.PosForRect(this->Rect().d, (*i)->Rect().d)[transIndex];
 			

@@ -111,7 +111,7 @@ void App::HandleMouseHover(bool isHovered){
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	return ting::fs::RootDirFile::New(ting::fs::FSFile::New(path), "res/");
+	return ting::fs::FSFile::New(path);
 }
 
 void App::ShowVirtualKeyboard()NOEXCEPT{
@@ -125,6 +125,38 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
+#endif
+
+
+#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
+
+void App::MountDefaultResPack(){
+#	ifndef DEBUG
+	unsigned soname = 
+#	include "../../soname.txt"
+		;
+#	endif
+		
+	std::array<std::string, 2> paths = {{
+#	ifdef DEBUG
+		"../../res/"
+#	else
+		static_cast<std::stringstream&>(std::stringstream() << "/usr/local/share/morda/res" << soname << "/").str(),
+		static_cast<std::stringstream&>(std::stringstream() << "/usr/share/morda/res" << soname << "/").str()
+#	endif
+	}};
+
+	for(const auto& s : paths){
+		try{
+			TRACE(<< "s = " << s << std::endl)
+			this->resMan.MountResPack(*this->CreateResourceFileInterface(s));
+		}catch(ting::fs::File::Exc& e){
+			continue;
+		}
+		break;
+	}
+}
+
 #endif
 
 
