@@ -457,6 +457,18 @@ public:
 	}
 
 	
+	Vector2& Round()NOEXCEPT{
+		this->x = ting::math::Round(this->x);
+		this->y = ting::math::Round(this->y);
+		return *this;
+	}
+	
+	
+	Vector2 Rounded()const NOEXCEPT{
+		return Vector2(*this).Round();
+	}
+	
+	
 	
 	/**
 	 * @brief Convert to Vector2 with different type of component.

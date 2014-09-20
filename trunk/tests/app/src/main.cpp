@@ -227,14 +227,14 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->resMan.MountResPack(*this->CreateResourceFileInterface());
+		this->resMan.MountResPack(*this->CreateResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
 		
 		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
 		this->inflater().AddWidget<CubeWidget>("CubeWidget");
 
 		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(
-				*this->CreateResourceFileInterface("test.gui.stob")
+				*this->CreateResourceFileInterface("res/test.gui.stob")
 			);
 
 //		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");

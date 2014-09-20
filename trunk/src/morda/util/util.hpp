@@ -78,17 +78,6 @@ morda::Vec2r DimVec2r(const stob::Node* chain);
 morda::Vector2<bool> TwoBoolsFromSTOB(const stob::Node* chain);
 
 
-/**
- * @brief Round each component of Vec2r.
- * Call ting::math::Round() for each component of given Vec2r.
- * @param v - Vec2r to round.
- * @return Rounded Vec2r.
- */
-inline morda::Vec2r RoundVec(const Vec2r& v){
-	return Vec2r(ting::math::Round(v.x), ting::math::Round(v.y));
-}
-
-
 
 /**
  * @brief Parse dimension value.

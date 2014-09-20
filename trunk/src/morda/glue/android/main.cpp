@@ -801,6 +801,12 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
+void App::MountDefaultResPack(){
+	this->resMan.MountResPack(*this->CreateResourceFileInterface("morda_res/"));
+}
+
+
+
 std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
 }
