@@ -83,7 +83,6 @@
     <ClCompile Include="..\..\src\morda\App.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\Font.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
-    <ClCompile Include="..\..\src\morda\glue\windows\App_.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
