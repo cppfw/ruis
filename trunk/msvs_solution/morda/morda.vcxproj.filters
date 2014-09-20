@@ -93,9 +93,6 @@
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\glue\windows\App_.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\widgets\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
