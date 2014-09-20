@@ -12,6 +12,8 @@
             <sourceRootList>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>tests</sourceRootElem>
+                <sourceRootElem>src</sourceRootElem>
+                <sourceRootElem>tests</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

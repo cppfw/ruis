@@ -795,6 +795,8 @@ App::App(const WindowParams& requestedWindowParams) :
 	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->dotsPerCm << std::endl)
 	
 	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
+	
+	this->MountDefaultResPack();
 }
 
 
