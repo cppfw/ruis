@@ -308,5 +308,5 @@ void morda::Window::SetupWidgets(){
 }
 
 void morda::Window::SetTitle(const std::string& str){
-	this->title->SetText(str);
+	this->title->SetText(ting::utf8::ToUTF32(str));
 }

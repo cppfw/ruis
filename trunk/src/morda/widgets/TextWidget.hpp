@@ -42,9 +42,6 @@ namespace morda{
 class TextWidget : public virtual Widget{
 	std::shared_ptr<ResFont> font;
 	
-	std::list<std::vector<std::uint32_t>> lines;
-	
-	morda::Rect2r bb;//text bounding box
 public:
 	TextWidget() = delete;
 	TextWidget(const TextWidget&) = delete;
@@ -63,30 +60,39 @@ public:
 		return this->font->font();
 	}
 	
-	Vec2r ComputeMinDim()const NOEXCEPT override{
-		return this->bb.d;
-	}
-	
-	void Render(const morda::Matr4r& matrix)const override;
-	
 protected:
 	TextWidget(const stob::Node* desc);
-	
-	const morda::Rect2r& TextBoundingBox(){
-		return this->bb;
-	}
-	
-	decltype(TextWidget::lines) ResetLines(){
-		return std::move(this->lines);
-	}
-	
-	void SetLines(decltype(TextWidget::lines)&& lines);
-	
-	const decltype(TextWidget::lines)& Lines()const{
-		return this->lines;
-	}
+
 private:
 
 };
+
+
+class SingleLineTextWidget : public TextWidget{
+	std::vector<std::uint32_t> text;
+	
+	Vec2r ComputeMinDim()const NOEXCEPT override{
+		return this->Font().StringBoundingBox(this->text).d;
+	}
+	
+protected:
+	SingleLineTextWidget(const stob::Node* desc);
+	
+public:
+	
+	void SetText(decltype(text)&& text){
+		this->text = std::move(text);
+		this->SetRelayoutNeeded();
+	}
+	
+	decltype(text) Clear(){
+		return std::move(this->text);
+	}
+	
+	const decltype(text)& Text()const NOEXCEPT{
+		return this->text;
+	}
+};
+
 
 }
