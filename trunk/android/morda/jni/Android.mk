@@ -12,7 +12,7 @@ PREFIX := ../../../src/
 
 LOCAL_SRC_FILES := $(addprefix $(PREFIX),$(this_srcs))
 
-LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/App.cpp
+LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/main.cpp
 LOCAL_SRC_FILES += $(PREFIX)morda/glue/android/AssetFile.cpp
 
 LOCAL_CFLAGS := -Wno-div-by-zero #disable integer division by zero warning as it is sometimes useful when working with templates

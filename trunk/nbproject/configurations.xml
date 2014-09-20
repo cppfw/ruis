@@ -11,7 +11,6 @@
         </df>
         <df name="glue">
           <df name="android">
-            <in>App.cpp</in>
             <in>AssetFile.cpp</in>
             <in>AssetFile.hpp</in>
           </df>
@@ -262,8 +261,6 @@
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="4">
-      </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
             tool="1"
@@ -505,8 +502,6 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
             tool="1"
@@ -720,8 +715,6 @@
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
@@ -940,8 +933,6 @@
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/App.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
