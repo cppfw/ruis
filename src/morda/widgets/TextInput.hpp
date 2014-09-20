@@ -37,7 +37,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class TextInput : public TextWidget, public Updateable, public CharInputWidget{
+class TextInput : public SingleLineTextWidget, public Updateable, public CharInputWidget{
 	
 	real cursorPos;
 	size_t cursorIndex;
@@ -52,9 +52,6 @@ public:
 	TextInput(const stob::Node* desc = nullptr);
 	
 	virtual ~TextInput()NOEXCEPT{}
-	
-	
-	void SetText(const std::string& text);
 
 	virtual Vec2r ComputeMinDim()const NOEXCEPT override{
 		return Vec2r(0, this->Font().Size());

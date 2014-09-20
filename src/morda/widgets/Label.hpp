@@ -41,23 +41,14 @@ namespace morda{
 
 
 
-class Label : public GravitatingWidget, public TextWidget{
-	std::string text;
-	
+class Label : public GravitatingWidget, public SingleLineTextWidget{
 	morda::Vec2r pivot;
 	
 public:
 	Label(const stob::Node* desc = nullptr);
 	
 public:
-	
 	~Label()NOEXCEPT{}
-	
-	void SetText(const std::string& text);
-	
-	const std::string& GetText()const NOEXCEPT{
-		return this->text;
-	}
 	
 	void Render(const morda::Matr4r& matrix)const override;
 	
