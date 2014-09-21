@@ -56,6 +56,19 @@ bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	return true;
 }
 
+void TextInput::SetCursorIndex(size_t index){
+	this->cursorIndex = index;
+	
+	ting::util::ClampTop(this->cursorIndex, this->Text().size());
+	
+	this->UpdateCursorPosBasedOnIndex();
+	
+	if(!this->IsFocused()){
+		this->Focus();
+	}
+	this->StartCursorBlinking();
+}
+
 
 
 void TextInput::SetCursor(real toPos){
@@ -91,6 +104,7 @@ void TextInput::SetCursor(real toPos){
 	if(!this->IsFocused()){
 		this->Focus();
 	}
+	this->StartCursorBlinking();
 }
 
 
@@ -109,6 +123,7 @@ void TextInput::OnFocusedChanged(){
 
 void TextInput::StartCursorBlinking(){
 	this->StopUpdating();
+	this->cursorBlinkVisible = true;
 	this->StartUpdating(D_CursorBlinkPeriod);
 }
 
@@ -117,19 +132,22 @@ void TextInput::StartCursorBlinking(){
 void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key){
 	switch(key){
 		case EKey::RIGHT:
-			++this->cursorIndex;
-			ting::util::ClampTop(this->cursorIndex, this->Text().size());
-			this->UpdateCursorPosBasedOnIndex();
-			this->cursorBlinkVisible = true;
+			this->SetCursorIndex(this->cursorIndex + 1);
 			break;
 		case EKey::LEFT:
 			if(this->cursorIndex != 0){
-				--this->cursorIndex;
-				this->UpdateCursorPosBasedOnIndex();
-				this->cursorBlinkVisible = true;
+				this->SetCursorIndex(this->cursorIndex - 1);
 			}
 			break;
 		default:
+			if(unicode.size() != 0){
+				auto t = this->Clear();
+				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
+				this->SetText(std::move(t));
+				
+				this->SetCursorIndex(this->cursorIndex + unicode.size());
+			}
+			
 			break;
 		
 	}
