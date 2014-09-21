@@ -13,6 +13,7 @@
           <df name="android">
             <in>AssetFile.cpp</in>
             <in>AssetFile.hpp</in>
+            <in>main.cpp</in>
           </df>
           <df name="linux">
             <in>main.cpp</in>
@@ -36,9 +37,14 @@
         </df>
         <df name="shaders">
           <in>ColorPosShader.cpp</in>
+          <in>ColorPosShader.hpp</in>
+          <in>ColorShader.hpp</in>
           <in>PosShader.cpp</in>
+          <in>PosShader.hpp</in>
           <in>PosTexShader.cpp</in>
+          <in>PosTexShader.hpp</in>
           <in>Shader.cpp</in>
+          <in>Shader.hpp</in>
         </df>
         <df name="util">
           <df name="unzip">
@@ -54,11 +60,14 @@
           <in>Gravity.hpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
+          <in>Layout.hpp</in>
           <in>LayoutDim.cpp</in>
           <in>LayoutDim.hpp</in>
           <in>LeftBottomRightTop.cpp</in>
           <in>LeftBottomRightTop.hpp</in>
           <in>Matrix4.hpp</in>
+          <in>Mesh.cpp</in>
+          <in>Mesh.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
           <in>Vector2.hpp</in>
@@ -73,6 +82,7 @@
         <df name="widgets">
           <in>Button.cpp</in>
           <in>Button.hpp</in>
+          <in>CharInputWidget.hpp</in>
           <in>Container.cpp</in>
           <in>Container.hpp</in>
           <in>FrameContainer.cpp</in>
@@ -87,6 +97,7 @@
           <in>LinearWidget.cpp</in>
           <in>LinearWidget.hpp</in>
           <in>NinePatch.cpp</in>
+          <in>NinePatch.hpp</in>
           <in>PushButton.cpp</in>
           <in>PushButton.hpp</in>
           <in>Slider.cpp</in>
@@ -113,16 +124,12 @@
         <in>config.hpp</in>
       </df>
     </df>
-    <df root="src" name="1">
-    </df>
-    <df root="tests" name="2">
+    <df root="tests" name="1">
       <df name="app">
         <df name="src">
           <in>main.cpp</in>
         </df>
       </df>
-    </df>
-    <df root="tests" name="3">
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -141,12 +148,265 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>tests</Elem>
-    <Elem>src</Elem>
-    <Elem>tests</Elem>
   </sourceRootList>
   <projectmakefile>makefile</projectmakefile>
   <confs>
     <conf name="Release" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -j2</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
+          <executablePath>tests/app/tests</executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/App.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/AppFactory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/Exc.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/Inflater.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/ResourceManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/Updateable.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/config.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/fonts/Font.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/glue/android/AssetFile.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResNinePatch.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResNinePatch.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Gravity.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/LeftBottomRightTop.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/util/Matrix4.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Vector2.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Vector3.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Vector4.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/ZipFile.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/keycodes.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/unzip/crypt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/unzip/ioapi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/unzip/unzip.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Button.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CharInputWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GravitatingWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Label.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInput.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Widget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug" type="0">
       <toolsSet>
         <compilerSet>default</compilerSet>
         <dependencyChecking>false</dependencyChecking>
@@ -160,221 +420,10 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -j2</buildCommand>
-          <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath>tests/app/tests</executablePath>
-        </makeTool>
-      </makefileType>
-      <folder path="0/morda/fonts">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/resources">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/shaders">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/util">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="0/morda/widgets">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-      </item>
-      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/resources/ResNinePatch.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/ColorPosShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/LeftBottomRightTop.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-    </conf>
-    <conf name="Debug" type="0">
-      <toolsSet>
-        <compilerSet>default</compilerSet>
-        <dependencyChecking>false</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
-      </toolsSet>
-      <flagsDictionary>
-        <element flagsID="0" commonFlags="-funsigned-char -std=c++11"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
-      </flagsDictionary>
-      <codeAssistance>
-      </codeAssistance>
-      <makefileType>
-        <makeTool>
-          <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} debug=true -j8</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <cTool>
-            <incDir>
-              <pElem>.</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>DEBUG</Elem>
-            </preprocessorList>
-          </cTool>
-          <ccTool flags="-funsigned-char -std=c++11 -fPIC">
+          <ccTool flags="0">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -382,55 +431,19 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <folder path="0">
-        <ccTool>
+      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </folder>
-      <folder path="1">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="2">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -441,9 +454,11 @@
             tool="1"
             flavor2="8">
       </item>
+      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
       <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -482,6 +497,8 @@
             tool="1"
             flavor2="8">
       </item>
+      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
+      </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
@@ -517,6 +534,12 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -583,6 +606,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
@@ -609,9 +636,29 @@
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/ColorPosShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -624,6 +671,8 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -640,6 +689,10 @@
             flavor2="0">
       </item>
       <item path="src/morda/util/Matrix4.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -674,6 +727,11 @@
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CharInputWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -715,6 +773,10 @@
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -799,6 +861,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
@@ -825,9 +891,29 @@
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/ColorPosShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -840,6 +926,8 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -856,6 +944,10 @@
             flavor2="0">
       </item>
       <item path="src/morda/util/Matrix4.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -890,6 +982,11 @@
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CharInputWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -931,6 +1028,10 @@
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
       </item>

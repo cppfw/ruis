@@ -59,19 +59,29 @@ bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 
 
 void TextInput::SetCursor(real toPos){
-	this->cursorPos = 0;
+	this->cursorPos = this->xOffset;
 	this->cursorIndex = 0;
 	
-	for(auto c : this->Text()){
-		real w = this->Font().CharAdvance(c);
+	for(auto i = this->Text().begin() + this->firstVisibleCharIndex; i != this->Text().end(); ++i){
+		real w = this->Font().CharAdvance(*i);
 		
-		if(toPos > this->cursorPos){
-			this->cursorPos += w;
-			++this->cursorIndex;
-			if(toPos < this->cursorPos){
+		if(toPos < this->cursorPos + w){
+			if(toPos < this->cursorPos + w / 2){
 				break;
 			}
-		}		
+			this->cursorPos += w;
+			++this->cursorIndex;
+			break;
+		}
+		
+		this->cursorPos += w;
+		++this->cursorIndex;
+		
+	}
+	
+	if(this->cursorPos < 0){
+		this->cursorPos = 0;
+		this->xOffset = 0;
 	}
 	
 //	TRACE(<< "this->cursorPos = " << this->cursorPos << std::endl)
