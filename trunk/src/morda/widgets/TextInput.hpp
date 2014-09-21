@@ -39,7 +39,11 @@ namespace morda{
 
 class TextInput : public SingleLineTextWidget, public Updateable, public CharInputWidget{
 	
+	size_t firstVisibleCharIndex = 0;
+	real xOffset = 0;
+	
 	real cursorPos;
+	
 	size_t cursorIndex;
 	
 	bool cursorBlinkVisible;
