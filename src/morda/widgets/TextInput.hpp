@@ -72,6 +72,8 @@ public:
 	
 	void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key)override;
 
+	void SetCursorIndex(size_t index);
+	
 private:
 	void SetCursor(real toPos);
 	

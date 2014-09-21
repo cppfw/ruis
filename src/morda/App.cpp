@@ -148,7 +148,7 @@ void App::MountDefaultResPack(){
 
 	for(const auto& s : paths){
 		try{
-			TRACE(<< "s = " << s << std::endl)
+//			TRACE(<< "s = " << s << std::endl)
 			this->resMan.MountResPack(*this->CreateResourceFileInterface(s));
 		}catch(ting::fs::File::Exc& e){
 			continue;
