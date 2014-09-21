@@ -139,6 +139,27 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 				this->SetCursorIndex(this->cursorIndex - 1);
 			}
 			break;
+		case EKey::END:
+			this->SetCursorIndex(this->Text().size());
+			break;
+		case EKey::HOME:
+			this->SetCursorIndex(0);
+			break;
+		case EKey::BACKSPACE:
+			if(this->cursorIndex != 0){
+				auto t = this->Clear();
+				t.erase(t.begin() + (this->cursorIndex - 1));
+				this->SetText(std::move(t));
+				this->SetCursorIndex(this->cursorIndex - 1);
+			}
+			break;
+		case EKey::DELETE:
+			if(this->cursorIndex < this->Text().size()){
+				auto t = this->Clear();
+				t.erase(t.begin() + this->cursorIndex);
+				this->SetText(std::move(t));
+			}
+			break;
 		default:
 			if(unicode.size() != 0){
 				auto t = this->Clear();
@@ -155,5 +176,5 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 }
 
 void TextInput::UpdateCursorPosBasedOnIndex(){
-	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(&*this->Text().begin(), this->cursorIndex));
+	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(&*this->Text().begin(), this->cursorIndex)) + this->xOffset;
 }
