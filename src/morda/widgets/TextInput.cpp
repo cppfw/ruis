@@ -3,6 +3,13 @@
 #include "../App.hpp"
 
 
+#if M_OS == M_OS_WINDOWS
+#	ifdef DELETE
+#		undef DELETE
+#	endif
+#endif
+
+
 
 using namespace morda;
 
