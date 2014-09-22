@@ -30,7 +30,6 @@ THE SOFTWARE. */
 
 #include <string>
 
-#include <ting/types.hpp>
 #include <ting/Shared.hpp>
 #include <ting/util.hpp>
 
