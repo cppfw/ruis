@@ -320,15 +320,17 @@ real TexFont::StringAdvanceInternal(ting::Buffer<const std::uint32_t> str)const{
 	real ret = 0;
 
 	const std::uint32_t* s = str.begin();
-	try{
-		for(; s != str.end(); ++s){
+	
+	for(; s != str.end(); ++s){
+		try{
 			const Glyph& g = this->glyphs.at(*s);
 			ret += g.advance;
+		}catch(std::out_of_range&){
+//			std::stringstream ss;
+//			ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+//			throw ting::Exc(ss.str().c_str());
+			//ignore
 		}
-	}catch(std::out_of_range&){
-		std::stringstream ss;
-		ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-		throw ting::Exc(ss.str().c_str());
 	}
 
 	return ret;
@@ -426,17 +428,20 @@ real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<con
 	morda::Matr4r matr(matrix);
 
 	const std::uint32_t* s = utf32str.begin();
-	try{
-		for(; s != utf32str.end(); ++s){
+
+	for(; s != utf32str.end(); ++s){
+		try{
 			real advance = this->RenderGlyphInternal(morda::App::Inst().Shaders().simpleTexturing, matr, *s);
 			ret += advance;
 			matr.Translate(advance, 0);
+		}catch(std::out_of_range&){
+//			std::stringstream ss;
+//			ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
+//			throw ting::Exc(ss.str());
+			//ignore
 		}
-	}catch(std::out_of_range&){
-		std::stringstream ss;
-		ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-		throw ting::Exc(ss.str());
 	}
+	
 
 	return ret;
 }
