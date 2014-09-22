@@ -131,6 +131,8 @@ void TextInput::StartCursorBlinking(){
 
 void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key){
 	switch(key){
+		case EKey::ENTER:
+			break;
 		case EKey::RIGHT:
 			this->SetCursorIndex(this->cursorIndex + 1);
 			break;
