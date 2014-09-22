@@ -29,7 +29,10 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
+
 #include "../resources/ResFont.hpp"
+
+#include "../util/Rectangle2.hpp"
 
 #include <list>
 #include <vector>
@@ -71,11 +74,14 @@ private:
 class SingleLineTextWidget : public TextWidget{
 	std::vector<std::uint32_t> text;
 	
+protected:
+	mutable Rect2r bb;
+	
 	Vec2r ComputeMinDim()const NOEXCEPT override{
-		return this->Font().StringBoundingBox(this->text).d;
+		this->bb = this->Font().StringBoundingBox(this->text);
+		return bb.d;
 	}
 	
-protected:
 	SingleLineTextWidget(const stob::Node* desc);
 	
 public:

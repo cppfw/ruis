@@ -37,7 +37,7 @@ this_objcflags :=
 
 ifeq ($(debug),true)
     this_cflags += -DDEBUG
-#    this_cflags += -DM_MORDA_RENDER_WIDGET_BORDERS
+    this_cflags += -DM_MORDA_RENDER_WIDGET_BORDERS
     this_objcflags += -DDEBUG
 endif
 

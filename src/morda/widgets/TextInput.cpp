@@ -33,7 +33,11 @@ TextInput::TextInput(const stob::Node* desc) :
 
 
 void TextInput::Render(const morda::Matr4r& matrix) const{
-	this->Font().RenderString(matrix, this->Text());
+	{
+		morda::Matr4r matr(matrix);
+		matr.Translate(-this->bb.p);
+		this->Font().RenderString(matr, this->Text());
+	}
 	
 	if(this->IsFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);

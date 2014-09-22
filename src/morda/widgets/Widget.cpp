@@ -1,3 +1,5 @@
+#include "../shaders/PosShader.hpp"
+
 #include "Widget.hpp"
 
 #include "../App.hpp"
@@ -109,7 +111,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 	}else{
 		s.SetColor(morda::Vec3f(1, 0, 1));
 	}
-	s.DrawQuad01(GL_LINE_LOOP);
+	s.Render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
 }
 
