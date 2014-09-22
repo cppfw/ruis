@@ -57,8 +57,8 @@ public:
 	
 	virtual ~TextInput()NOEXCEPT{}
 
-	virtual Vec2r ComputeMinDim()const NOEXCEPT override{
-		return Vec2r(0, this->Font().Size());
+	Vec2r ComputeMinDim()const NOEXCEPT override{
+		return Vec2r(this->SingleLineTextWidget::ComputeMinDim().x, this->Font().Size());
 	}
 
 	void Render(const morda::Matr4r& matrix) const override;
