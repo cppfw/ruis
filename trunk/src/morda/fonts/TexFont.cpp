@@ -326,9 +326,6 @@ real TexFont::StringAdvanceInternal(ting::Buffer<const std::uint32_t> str)const{
 			const Glyph& g = this->glyphs.at(*s);
 			ret += g.advance;
 		}catch(std::out_of_range&){
-//			std::stringstream ss;
-//			ss << "TexFont::StringWidthInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-//			throw ting::Exc(ss.str().c_str());
 			//ignore
 		}
 	}
@@ -435,9 +432,6 @@ real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<con
 			ret += advance;
 			matr.Translate(advance, 0);
 		}catch(std::out_of_range&){
-//			std::stringstream ss;
-//			ss << "TexFont::RenderStringInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-//			throw ting::Exc(ss.str());
 			//ignore
 		}
 	}
