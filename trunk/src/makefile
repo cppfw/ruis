@@ -14,7 +14,6 @@ ifeq ($(prorab_os),linux)
 else ifeq ($(prorab_os), macosx)
     this_mm_src := morda/glue/macosx/main.mm
 else ifeq ($(prorab_os), windows)
-    this_srcs += morda/glue/windows/App_.cpp #underscore in the file name to make VisualStudio happy.s
     this_srcs += morda/glue/windows/main.cpp
 endif
 
