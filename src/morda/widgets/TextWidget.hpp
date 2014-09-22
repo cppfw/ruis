@@ -74,15 +74,19 @@ private:
 class SingleLineTextWidget : public TextWidget{
 	std::vector<std::uint32_t> text;
 	
-protected:
 	mutable Rect2r bb;
 	
+protected:
 	Vec2r ComputeMinDim()const NOEXCEPT override{
 		this->bb = this->Font().StringBoundingBox(this->text);
 		return bb.d;
 	}
 	
 	SingleLineTextWidget(const stob::Node* desc);
+	
+	const Rect2r& TextBoundingBox()const{
+		return this->bb;
+	}
 	
 public:
 	
