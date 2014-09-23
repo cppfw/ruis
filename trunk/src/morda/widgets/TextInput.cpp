@@ -17,6 +17,8 @@ using namespace morda;
 
 namespace{
 std::uint32_t D_CursorBlinkPeriod = 500; //milliseconds
+
+real D_CursorWidth = real(2.0);
 }
 
 
@@ -36,13 +38,21 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 	{
 		morda::Matr4r matr(matrix);
 		matr.Translate(-this->TextBoundingBox().p);
-		this->Font().RenderString(matr, this->Text());
+		
+		ASSERT(this->firstVisibleCharIndex < this->Text().size())
+		this->Font().RenderString(
+				matr,
+				ting::Buffer<const std::uint32_t>(
+						&*(this->Text().begin() + this->firstVisibleCharIndex),
+						this->Text().size() - this->firstVisibleCharIndex
+					)
+			);
 	}
 	
 	if(this->IsFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.Translate(this->cursorPos, 0);
-		matr.Scale(Vec2r(2, this->Font().Size()));
+		matr.Scale(Vec2r(D_CursorWidth, this->Font().Size()));
 
 		ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
 		s.Bind();
@@ -189,5 +199,38 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 }
 
 void TextInput::UpdateCursorPosBasedOnIndex(){
-	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(&*this->Text().begin(), this->cursorIndex)) + this->xOffset;
+	if(this->cursorIndex <= this->firstVisibleCharIndex){
+		this->firstVisibleCharIndex = this->cursorIndex;
+		this->xOffset = 0;
+		this->cursorPos = 0;
+		return;
+	}
+	
+	ASSERT(this->firstVisibleCharIndex < this->Text().size())
+	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
+	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(
+			&*(this->Text().begin() + this->firstVisibleCharIndex),
+			this->cursorIndex - this->firstVisibleCharIndex
+		)) + this->xOffset;
+	
+	ASSERT(this->cursorPos > 0)
+	
+	if(this->cursorPos > this->Rect().d.x){
+		real l = this->Rect().d.x - D_CursorWidth;
+		this->firstVisibleCharIndex = this->cursorIndex;
+		//calculate advance backwards
+		for(auto i = this->Text().begin() + this->cursorIndex; i != this->Text().begin(); --i){
+			if(l < 0){
+				this->xOffset = l;
+				break;
+			}
+			
+			l -= this->Font().CharAdvance(*i);
+			ASSERT(this->firstVisibleCharIndex > 0)
+			--this->firstVisibleCharIndex;
+		}
+		
+		this->cursorPos = this->Rect().d.x - D_CursorWidth;
+	}
 }
+

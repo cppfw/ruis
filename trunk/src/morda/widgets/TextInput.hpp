@@ -66,7 +66,6 @@ public:
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 
 	void OnFocusedChanged()override;
-
 	
 	void Update(std::uint32_t dt)override;
 	
