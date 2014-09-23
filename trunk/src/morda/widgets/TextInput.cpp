@@ -37,7 +37,7 @@ TextInput::TextInput(const stob::Node* desc) :
 void TextInput::Render(const morda::Matr4r& matrix) const{
 	{
 		morda::Matr4r matr(matrix);
-		matr.Translate(-this->TextBoundingBox().p);
+		matr.Translate(-this->TextBoundingBox().p + Vec2r(this->xOffset, 0));
 		
 		ASSERT(this->firstVisibleCharIndex < this->Text().size())
 		this->Font().RenderString(
@@ -82,7 +82,41 @@ void TextInput::SetCursorIndex(size_t index){
 	
 	ting::util::ClampTop(this->cursorIndex, this->Text().size());
 	
-	this->UpdateCursorPosBasedOnIndex();
+	if(this->cursorIndex <= this->firstVisibleCharIndex){
+		this->firstVisibleCharIndex = this->cursorIndex;
+		this->xOffset = 0;
+		this->cursorPos = 0;
+		return;
+	}
+	
+	ASSERT(this->firstVisibleCharIndex <= this->Text().size())
+	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
+	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(
+			&*(this->Text().begin() + this->firstVisibleCharIndex),
+			this->cursorIndex - this->firstVisibleCharIndex
+		)) + this->xOffset;
+	
+	ASSERT(this->cursorPos >= 0)
+	
+	if(this->cursorPos > this->Rect().d.x - D_CursorWidth){
+		this->cursorPos = this->Rect().d.x - D_CursorWidth;
+		
+		this->xOffset = this->cursorPos;//start from rightmost cursor position
+		this->firstVisibleCharIndex = this->cursorIndex;
+		
+		//calculate advance backwards
+		for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex); i != this->Text().rend(); ++i){
+			if(this->xOffset < 0){
+				ASSERT(this->firstVisibleCharIndex > 0)
+				--this->firstVisibleCharIndex;
+				break;
+			}
+			
+			this->xOffset -= this->Font().CharAdvance(*i);
+			ASSERT(this->firstVisibleCharIndex > 0)
+			--this->firstVisibleCharIndex;
+		}
+	}
 	
 	if(!this->IsFocused()){
 		this->Focus();
@@ -197,40 +231,3 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 	}
 	
 }
-
-void TextInput::UpdateCursorPosBasedOnIndex(){
-	if(this->cursorIndex <= this->firstVisibleCharIndex){
-		this->firstVisibleCharIndex = this->cursorIndex;
-		this->xOffset = 0;
-		this->cursorPos = 0;
-		return;
-	}
-	
-	ASSERT(this->firstVisibleCharIndex < this->Text().size())
-	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(
-			&*(this->Text().begin() + this->firstVisibleCharIndex),
-			this->cursorIndex - this->firstVisibleCharIndex
-		)) + this->xOffset;
-	
-	ASSERT(this->cursorPos > 0)
-	
-	if(this->cursorPos > this->Rect().d.x){
-		real l = this->Rect().d.x - D_CursorWidth;
-		this->firstVisibleCharIndex = this->cursorIndex;
-		//calculate advance backwards
-		for(auto i = this->Text().begin() + this->cursorIndex; i != this->Text().begin(); --i){
-			if(l < 0){
-				this->xOffset = l;
-				break;
-			}
-			
-			l -= this->Font().CharAdvance(*i);
-			ASSERT(this->firstVisibleCharIndex > 0)
-			--this->firstVisibleCharIndex;
-		}
-		
-		this->cursorPos = this->Rect().d.x - D_CursorWidth;
-	}
-}
-
