@@ -77,6 +77,10 @@ bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	return true;
 }
 
+Vec2r TextInput::ComputeMinDim()const NOEXCEPT{
+	return Vec2r(this->SingleLineTextWidget::ComputeMinDim().x + D_CursorWidth, this->Font().Size());
+}
+
 void TextInput::SetCursorIndex(size_t index){
 	this->cursorIndex = index;
 	
@@ -105,13 +109,12 @@ void TextInput::SetCursorIndex(size_t index){
 		this->firstVisibleCharIndex = this->cursorIndex;
 		
 		//calculate advance backwards
-		for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex); i != this->Text().rend(); ++i){
-			if(this->xOffset < 0){
-				ASSERT(this->firstVisibleCharIndex > 0)
-				--this->firstVisibleCharIndex;
-				break;
-			}
-			
+		for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex);
+				this->xOffset > 0;
+				++i
+			)
+		{
+			ASSERT(i != this->Text().rend())
 			this->xOffset -= this->Font().CharAdvance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
