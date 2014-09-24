@@ -39,7 +39,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		morda::Matr4r matr(matrix);
 		matr.Translate(-this->TextBoundingBox().p + Vec2r(this->xOffset, 0));
 		
-		ASSERT(this->firstVisibleCharIndex < this->Text().size())
+		ASSERT(this->firstVisibleCharIndex <= this->Text().size())
 		this->Font().RenderString(
 				matr,
 				ting::Buffer<const std::uint32_t>(
@@ -128,7 +128,7 @@ void TextInput::SetCursorIndex(size_t index){
 
 void TextInput::SetCursor(real toPos){
 	this->cursorPos = this->xOffset;
-	this->cursorIndex = 0;
+	this->cursorIndex = this->firstVisibleCharIndex;
 	
 	for(auto i = this->Text().begin() + this->firstVisibleCharIndex; i != this->Text().end(); ++i){
 		real w = this->Font().CharAdvance(*i);
