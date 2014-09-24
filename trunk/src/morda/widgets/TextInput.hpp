@@ -48,8 +48,9 @@ class TextInput : public SingleLineTextWidget, public Updateable, public CharInp
 	
 	bool cursorBlinkVisible;
 	
+	bool ctrlPressed;
+	
 public:
-	TextInput() = delete;
 	TextInput(const TextInput&) = delete;
 	TextInput& operator=(const TextInput&) = delete;
 	
@@ -64,6 +65,8 @@ public:
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 
 	void OnFocusedChanged()override;
+	
+	bool OnKey(bool isDown, EKey keyCode)override;
 	
 	void Update(std::uint32_t dt)override;
 	

@@ -2,6 +2,8 @@
 
 #include "../App.hpp"
 
+#include <ting/util.hpp>
+
 
 #if M_OS == M_OS_WINDOWS
 #	ifdef DELETE
@@ -27,6 +29,8 @@ TextInput::TextInput(const stob::Node* desc) :
 		Widget(desc),
 		SingleLineTextWidget(desc)
 {
+	this->SetClip(true);
+	
 	if(!desc){
 		return;
 	}
@@ -86,6 +90,13 @@ void TextInput::SetCursorIndex(size_t index){
 	
 	ting::util::ClampTop(this->cursorIndex, this->Text().size());
 	
+	ting::util::ScopeExit scopeExit([this](){
+		if(!this->IsFocused()){
+			this->Focus();
+		}
+		this->StartCursorBlinking();
+	});
+	
 	if(this->cursorIndex <= this->firstVisibleCharIndex){
 		this->firstVisibleCharIndex = this->cursorIndex;
 		this->xOffset = 0;
@@ -120,11 +131,6 @@ void TextInput::SetCursorIndex(size_t index){
 			--this->firstVisibleCharIndex;
 		}
 	}
-	
-	if(!this->IsFocused()){
-		this->Focus();
-	}
-	this->StartCursorBlinking();
 }
 
 
@@ -173,6 +179,7 @@ void TextInput::Update(std::uint32_t dt){
 
 void TextInput::OnFocusedChanged(){
 	if(this->IsFocused()){
+		this->ctrlPressed = false;
 		this->StartCursorBlinking();
 	}else{
 		this->StopUpdating();
@@ -185,18 +192,70 @@ void TextInput::StartCursorBlinking(){
 	this->StartUpdating(D_CursorBlinkPeriod);
 }
 
-
+bool TextInput::OnKey(bool isDown, EKey keyCode){
+	switch(keyCode){
+		case EKey::LEFT_CONTROL:
+		case EKey::RIGHT_CONTROL:
+			this->ctrlPressed = isDown;
+			break;
+		default:
+			break;
+	}
+	return false;
+}
 
 void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key){
 	switch(key){
 		case EKey::ENTER:
 			break;
 		case EKey::RIGHT:
-			this->SetCursorIndex(this->cursorIndex + 1);
+			{
+				size_t newIndex;
+				if(this->ctrlPressed){
+					bool spaceSkipped = false;
+					newIndex = this->cursorIndex;
+					for(auto i = this->Text().begin() + this->cursorIndex; i != this->Text().end(); ++i, ++newIndex){
+						if(*i == std::uint32_t(' ')){
+							if(spaceSkipped){
+								break;
+							}
+						}else{
+							spaceSkipped = true;
+						}
+					}
+
+				}else{
+					newIndex = this->cursorIndex + 1;
+				}
+				this->SetCursorIndex(newIndex);
+			}
 			break;
 		case EKey::LEFT:
-			if(this->cursorIndex != 0){
-				this->SetCursorIndex(this->cursorIndex - 1);
+			if(this->cursorIndex == 0){
+				break;
+			}
+			{
+				size_t newIndex;
+				if(this->ctrlPressed){
+					bool spaceSkipped = false;
+					newIndex = this->cursorIndex;
+					for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex);
+							i != this->Text().rend();
+							++i, --newIndex
+						)
+					{
+						if(*i == std::uint32_t(' ')){
+							if(spaceSkipped){
+								break;
+							}
+						}else{
+							spaceSkipped = true;
+						}
+					}
+				}else{
+					newIndex = this->cursorIndex - 1;
+				}
+				this->SetCursorIndex(newIndex);
 			}
 			break;
 		case EKey::END:
