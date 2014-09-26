@@ -98,8 +98,8 @@ public:
 	}
 	
 	struct DefaultShaders{
-		ColorPosShader simpleSingleColoring;
-		PosTexShader simpleTexturing;
+		ColorPosShader colorPosShader;
+		PosTexShader posTexShader;
 	};
 
 

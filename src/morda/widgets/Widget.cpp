@@ -100,7 +100,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	morda::ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
+	morda::ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 	s.Bind();
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
@@ -164,7 +164,7 @@ void Widget::Render(const Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 	
-	ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
+	ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 	s.Bind();
 	s.SetColor(this->color);
 	s.SetMatrix(matr);

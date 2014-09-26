@@ -8,7 +8,6 @@
 #include "TexFont.hpp"
 #include "../util/Image.hpp"
 
-#include "../App.hpp"
 
 //freetype includes
 #include <ft2build.h>
@@ -414,7 +413,7 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 
 
-real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
+real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
@@ -428,7 +427,7 @@ real TexFont::RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<con
 
 	for(; s != utf32str.end(); ++s){
 		try{
-			real advance = this->RenderGlyphInternal(morda::App::Inst().Shaders().simpleTexturing, matr, *s);
+			real advance = this->RenderGlyphInternal(shader, matr, *s);
 			ret += advance;
 			matr.Translate(advance, 0);
 		}catch(std::out_of_range&){

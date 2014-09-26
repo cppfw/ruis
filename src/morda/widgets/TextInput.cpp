@@ -45,6 +45,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		
 		ASSERT(this->firstVisibleCharIndex <= this->Text().size())
 		this->Font().RenderString(
+				App::Inst().Shaders().posTexShader,
 				matr,
 				ting::Buffer<const std::uint32_t>(
 						&*(this->Text().begin() + this->firstVisibleCharIndex),
@@ -58,7 +59,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		matr.Translate(this->cursorPos, 0);
 		matr.Scale(Vec2r(D_CursorWidth, this->Font().Size()));
 
-		ColorPosShader& s = App::Inst().Shaders().simpleSingleColoring;
+		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 		s.Bind();
 		s.SetColor(0xffffffff);
 

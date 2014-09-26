@@ -96,7 +96,7 @@ public:
 	}
 
 	
-	real RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
+	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
 
 	const morda::Rect2r& FontBoundingBox()const{
 		return this->boundingBox;

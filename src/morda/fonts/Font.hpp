@@ -34,6 +34,8 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Rectangle2.hpp"
 
+#include "../shaders/PosTexShader.hpp"
+
 #include <string>
 
 namespace morda{
@@ -46,7 +48,7 @@ class Font{
 protected:
 	Font(){}
 	
-	virtual real RenderStringInternal(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const = 0;
+	virtual real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const = 0;
 	
 	virtual real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
 	
@@ -57,18 +59,18 @@ public:
 	virtual real Size()const NOEXCEPT = 0;
 	
 	//renders the string, returns resulting string advance
-	real RenderString(const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
 	
-	real RenderString(const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
-		return this->RenderStringInternal(matrix, utf32str);
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
+		return this->RenderStringInternal(shader, matrix, utf32str);
 	}
 	
-	real RenderString(const morda::Matr4r& matrix, const char* str)const{
-		return this->RenderString(matrix, ting::utf8::Iterator(str));
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
+		return this->RenderString(shader, matrix, ting::utf8::Iterator(str));
 	}
 	
-	real RenderString(const morda::Matr4r& matrix, const std::string& str)const{
-		return this->RenderString(matrix, str.c_str());
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
+		return this->RenderString(shader, matrix, str.c_str());
 	}
 	
 	
