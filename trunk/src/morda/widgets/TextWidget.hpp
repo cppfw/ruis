@@ -80,7 +80,7 @@ class SingleLineTextWidget : public TextWidget{
 protected:
 	Vec2r ComputeMinDim()const NOEXCEPT override{
 		this->bb = this->Font().StringBoundingBox(this->text);
-		return bb.d;
+		return Vec2r(bb.d.x, this->Font().Size());
 	}
 	
 	SingleLineTextWidget(const stob::Node* desc);
