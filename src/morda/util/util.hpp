@@ -106,4 +106,12 @@ inline bool NodeHoldsFractionValue(const stob::Node& node)NOEXCEPT{
 }
 
 
+inline const stob::Node* GetProperty(const stob::Node* desc, const char* property){
+	if(!desc){
+		return nullptr;
+	}
+	return desc->GetProperty(property);
+}
+
+
 }//~namespace

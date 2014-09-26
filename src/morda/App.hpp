@@ -64,6 +64,7 @@ THE SOFTWARE. */
 #include "ResourceManager.hpp"
 
 #include "shaders/ColorPosShader.hpp"
+#include "shaders/ColorPosTexShader.hpp"
 #include "shaders/PosTexShader.hpp"
 
 
@@ -99,6 +100,7 @@ public:
 	
 	struct DefaultShaders{
 		ColorPosShader colorPosShader;
+		ColorPosTexShader colorPosTexShader;
 		PosTexShader posTexShader;
 	};
 

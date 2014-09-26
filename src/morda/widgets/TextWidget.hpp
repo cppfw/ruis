@@ -45,6 +45,8 @@ namespace morda{
 class TextWidget : public virtual Widget{
 	std::shared_ptr<ResFont> font;
 	
+	std::uint32_t color;
+	
 public:
 	TextWidget() = delete;
 	TextWidget(const TextWidget&) = delete;
@@ -61,6 +63,14 @@ public:
 	
 	const morda::Font& Font()const{
 		return this->font->font();
+	}
+	
+	void SetColor(std::uint32_t color){
+		this->color = color;
+	}
+	
+	std::uint32_t Color()const NOEXCEPT{
+		return this->color;
 	}
 	
 protected:
