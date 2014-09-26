@@ -344,6 +344,14 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
@@ -695,6 +703,14 @@
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
@@ -922,6 +938,14 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1187,6 +1211,14 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>

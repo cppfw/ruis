@@ -163,24 +163,23 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
-		morda::Vec2r dim = (*i)->GetMinDim();
-		if((*i)->Prop()){
-			if(const stob::Node* layout = (*i)->Prop()->Child(Container::D_Layout()).node()){
-				if(const stob::Node* m = layout->Child(D_Margins).node()){
-					margins = LeftBottomRightTop::FromSTOB(*m);
-				}
-				
-				{
-					LayoutDim ld = LayoutDim::FromLayout(*layout);
-					
-					dim = (*i)->Measure(ld.ForWidget(*(*i)));
-				}
+		morda::Vec2r dim;
+		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
+			if(const stob::Node* m = layout->Child(D_Margins).node()){
+				margins = LeftBottomRightTop::FromSTOB(*m);
 			}
+
+			{
+				LayoutDim ld = LayoutDim::FromLayout(*layout);
+
+				dim = (*i)->Measure(ld.ForWidget(*(*i)));
+			}
+		}else{
+			 dim = (*i)->GetMinDim();
 		}
 		
-		if(minDim[transIndex] < dim[transIndex]){
-			minDim[transIndex] = dim[transIndex];
-		}
+		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
+		
 		minDim[longIndex] += dim[longIndex];
 		
 		//margin works for non-first children only

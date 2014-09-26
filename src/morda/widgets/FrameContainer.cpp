@@ -66,8 +66,8 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		morda::Vec2r dim = (*i)->GetMinDim();
-		if((*i)->Prop()){
-			LayoutDim ld = LayoutDim::FromPropLayout(*(*i)->Prop());
+		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
+			LayoutDim ld = LayoutDim::FromLayout(*layout);
 
 			dim = (*i)->Measure(ld.ForWidget(*(*i)));
 		}

@@ -11,33 +11,26 @@ using namespace morda;
 
 
 Widget::Widget(const stob::Node* desc){
-	if(!desc){
-		return;
-	}
-	
-	if(const stob::Node* p = desc->Child("prop").node()){
+	if(const stob::Node* p = GetProperty(desc, "prop")){
 		this->prop = p->Clone();
-		this->prop->SetValue();//clear value of the prop node, we don't need it
 	}
 
-	if(const stob::Node* p = desc->GetProperty("pos")){
+	if(const stob::Node* p = GetProperty(desc, "pos")){
 		this->rect.p = morda::DimVec2r(p);
 	}
 
-	if(const stob::Node* p = desc->GetProperty("dim")){
+	if(const stob::Node* p = GetProperty(desc, "dim")){
 		this->rect.d = morda::DimVec2r(p);
 	}
 
-	if(const stob::Node* p = desc->GetProperty("name")){
+	if(const stob::Node* p = GetProperty(desc, "name")){
 		this->name = p->Value();
 	}
 
-	if(const stob::Node* p = desc->GetProperty("clip")){
+	if(const stob::Node* p = GetProperty(desc, "clip")){
 		this->clip = p->AsBool();
-	}
-	
-	if(const stob::Node* p = desc->GetProperty("color")){
-		this->color = p->AsUint32();
+	}else{
+		this->clip = false;
 	}
 }
 
@@ -152,21 +145,4 @@ void Widget::Unfocus()NOEXCEPT{
 	ASSERT(App::Inst().focusedWidget.lock() && App::Inst().focusedWidget.lock().operator->() == this)
 
 	App::Inst().SetFocusedWidget(nullptr);
-}
-
-
-
-void Widget::Render(const Matr4r& matrix)const{
-	if(this->color == 0){
-		return;
-	}
-	
-	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
-	
-	ColorPosShader& s = App::Inst().Shaders().colorPosShader;
-	s.Bind();
-	s.SetColor(this->color);
-	s.SetMatrix(matr);
-	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
 }

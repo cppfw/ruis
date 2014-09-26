@@ -10,7 +10,6 @@ using namespace morda;
 namespace{
 
 const char* D_Min = "min";
-const char* D_Layout = "layout";
 
 }//~namespace
 
@@ -48,17 +47,6 @@ LayoutDim LayoutDim::FromLayout(const stob::Node& layout)NOEXCEPT{
 		return LayoutDim::Default();
 	}
 	return LayoutDim::FromSTOB(*dim);
-}
-
-
-
-//static
-LayoutDim LayoutDim::FromPropLayout(const stob::Node& prop)NOEXCEPT{
-	const stob::Node* layout = prop.Child(D_Layout).node();
-	if(!layout){
-		return LayoutDim::Default();
-	}
-	return LayoutDim::FromLayout(*layout);
 }
 
 

@@ -109,26 +109,6 @@ public:
 	 */
 	static LayoutDim FromLayout(const stob::Node& layout)NOEXCEPT;
 
-	/**
-	 * @brief Parse from properties STOB.
-	 * Parse from STOB of the form:
-	 * @code
-	 * prop{
-	 *     //...
-	 *     layout{
-	 *         //...
-	 *         dim{134 100mm}
-	 *         //...
-	 *     }
-	 *     //...
-	 * }
-	 * @endcode
-	 * The value of the root node does not matter, it is ignored.
-	 * @param prop - prop node.
-	 * @return Parsed Dim object.
-	 */
-	static LayoutDim FromPropLayout(const stob::Node& prop)NOEXCEPT;
-
 	static LayoutDim Default()NOEXCEPT{
 		LayoutDim ret;
 		ret.x = -1;
