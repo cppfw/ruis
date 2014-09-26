@@ -2,6 +2,7 @@
 
 #include "../App.hpp"
 
+#include "../util/util.hpp"
 
 using namespace morda;
 
@@ -161,18 +162,16 @@ morda::Window::Window(const stob::Node* desc) :
 {
 	this->SetupWidgets();
 	
-	if(!desc){
-		return;
-	}
-	
 	this->contentArea->SetClip(this->IsClip());
 	this->SetClip(false);
 	
-	if(const stob::Node* t = desc->GetProperty("title")){
-		this->SetTitle(t->Value());
+	if(const stob::Node* n = GetProperty(desc, "title")){
+		this->SetTitle(n->Value());
 	}
 	
-	this->contentArea->Add(*desc);
+	if(desc){
+		this->contentArea->Add(*desc);
+	}
 }
 
 void morda::Window::SetupWidgets(){
