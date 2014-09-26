@@ -26,5 +26,5 @@ Label::Label(const stob::Node* desc) :
 void Label::Render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Translate(-this->TextBoundingBox().p);
-	this->Font().RenderString(matr, this->Text());
+	this->Font().RenderString(morda::App::Inst().Shaders().posTexShader, matr, this->Text());
 }
