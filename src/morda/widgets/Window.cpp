@@ -79,7 +79,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 					LinearContainer{
 						prop{layout{
-							dim{0 7mm}
+							dim{0 min}
 							fill{true true}
 						}}
 
