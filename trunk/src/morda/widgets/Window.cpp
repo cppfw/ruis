@@ -63,20 +63,35 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 
 				//caption
-				LinearContainer{
+				FrameContainer{
 					prop{layout{
-						dim{0 7mm}
+						dim{0 min}
 						fill{true true}
 					}}
-					color{0xffff0000}
-					name{morda_caption}
-					Label{
-						name{morda_title}
-						gravity{0% 50%}
+
+					ColorLabel{
 						prop{layout{
-							dim{0 min}
-							weight{1}
+							dim{0 0}
+							fill{true true}
 						}}
+						color{0xffff0000}
+					}
+
+					LinearContainer{
+						prop{layout{
+							dim{0 7mm}
+							fill{true true}
+						}}
+
+						name{morda_caption}
+						Label{
+							name{morda_title}
+							prop{layout{
+								dim{0 min}
+								gravity{0% 50%}
+								weight{1}
+							}}
+						}
 					}
 				}
 

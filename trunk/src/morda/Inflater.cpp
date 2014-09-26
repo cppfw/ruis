@@ -1,6 +1,7 @@
 #include "Inflater.hpp"
 
 #include "widgets/Container.hpp"
+#include "widgets/ColorLabel.hpp"
 #include "widgets/Label.hpp"
 #include "widgets/LinearContainer.hpp"
 #include "widgets/FrameContainer.hpp"
@@ -31,6 +32,7 @@ Inflater::Inflater(){
 	this->AddWidget<Window>("Window");
 	this->AddWidget<NinePatch>("NinePatch");
 	this->AddWidget<PushButton>("PushButton");
+	this->AddWidget<ColorLabel>("ColorLabel");
 }
 
 

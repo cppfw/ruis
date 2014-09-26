@@ -15,18 +15,13 @@ std::shared_ptr<ResFont> DefaultFont(){
 
 
 TextWidget::TextWidget(const stob::Node* desc) :
-		Widget(desc)
+		Widget(desc),
+		ColorWidget(desc)
 {
 	if(const stob::Node* p = GetProperty(desc, "font")){
 		this->font = App::Inst().resMan.Load<morda::ResFont>(p->Value());
 	}else{
 		this->font = DefaultFont();
-	}
-	
-	if(const stob::Node* p = GetProperty(desc, "color")){
-		this->color = p->AsUint32();
-	}else{
-		this->color = 0xffffffff;
 	}
 }
 

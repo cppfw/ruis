@@ -71,12 +71,12 @@ private:
 
 	morda::Rect2r rect;
 	
-	//minimal dimensions needed to show widget's contents normally
-	morda::Vec2r minDim;
-	bool minDimNeedsRecomputing = true;
+	//cached minimal dimensions needed to show widget's contents normally
+	mutable morda::Vec2r minDim;
+	mutable bool minDimNeedsRecomputing = true;
 	
 	//clip widgets contents by widget's border if set to true
-	bool clip = false;
+	bool clip;
 public:
 	bool IsClip()const NOEXCEPT{
 		return this->clip;
@@ -95,15 +95,12 @@ private:
 	//properties from STOB description
 	std::unique_ptr<stob::Node> prop;
 public:
-	const stob::Node* Prop()const NOEXCEPT{
-		return this->prop.operator->();
-	}
-	
+
 	const stob::Node* GetPropertyNode(const char* propName)const NOEXCEPT{
-		if(!this->Prop()){
+		if(!this->prop){
 			return nullptr;
 		}
-		return this->Prop()->Child(propName).node();
+		return this->prop->ThisOrNext(propName).node();
 	}
 	
 	std::unique_ptr<stob::Node> ExtractProp()NOEXCEPT{
@@ -192,7 +189,7 @@ public:
 
 	virtual ~Widget()NOEXCEPT{}
 
-	virtual void Render(const morda::Matr4r& matrix)const;
+	virtual void Render(const morda::Matr4r& matrix)const{}
 	
 private:
 	void RenderInternal(const morda::Matr4r& matrix)const;
@@ -259,8 +256,8 @@ public:
 	
 	const morda::Vec2r& GetMinDim()const{
 		if(this->minDimNeedsRecomputing){
-			const_cast<Widget*>(this)->minDim = this->ComputeMinDim();
-			const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->minDimNeedsRecomputing = false;
+			this->minDim = this->ComputeMinDim();
+			this->minDimNeedsRecomputing = false;
 		}
 		return this->minDim;
 	}
@@ -321,15 +318,6 @@ public:
      */
 	bool Contains(const morda::Vec2r& pos)const NOEXCEPT{
 		return morda::Rect2r(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
-	}
-	
-private:
-	
-	std::uint32_t color = 0;
-	
-public:
-	void SetColor(std::uint32_t color){
-		this->color = color;
 	}
 };
 

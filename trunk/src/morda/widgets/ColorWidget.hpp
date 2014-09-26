@@ -29,79 +29,29 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
-#include "ColorWidget.hpp"
 
-#include "../resources/ResFont.hpp"
-
-#include "../util/Rectangle2.hpp"
-
-#include <list>
-#include <vector>
 
 namespace morda{
 
-/**
- * @brief Abstract widget displaying a text.
- */
-class TextWidget : public ColorWidget{
-	std::shared_ptr<ResFont> font;
-	
-public:
-	TextWidget() = delete;
-	TextWidget(const TextWidget&) = delete;
-	TextWidget& operator=(const TextWidget&) = delete;
-	
-	virtual ~TextWidget()NOEXCEPT{}
-	
-	void SetFont(std::shared_ptr<ResFont> font){
-		ASSERT(font)
-		this->font = font;
-		
-		this->SetRelayoutNeeded();
-	}
-	
-	const morda::Font& Font()const{
-		return this->font->font();
-	}
+
+
+class ColorWidget : public virtual Widget{
+	std::uint32_t color;
 	
 protected:
-	TextWidget(const stob::Node* desc);
-
-private:
-
-};
-
-
-class SingleLineTextWidget : public TextWidget{
-	std::vector<std::uint32_t> text;
-	
-	mutable Rect2r bb;
-	
-protected:
-	Vec2r ComputeMinDim()const NOEXCEPT override{
-		this->bb = this->Font().StringBoundingBox(this->text);
-		return bb.d;
-	}
-	
-	SingleLineTextWidget(const stob::Node* desc);
-	
-	const Rect2r& TextBoundingBox()const{
-		return this->bb;
-	}
+	ColorWidget(const stob::Node* desc);
 	
 public:
+	ColorWidget(const ColorWidget&) = delete;
+	ColorWidget& operator=(const ColorWidget&) = delete;
 	
-	void SetText(decltype(text)&& text){
-		this->text = std::move(text);
-		this->SetRelayoutNeeded();
+	
+	void SetColor(std::uint32_t color){
+		this->color = color;
 	}
 	
-	decltype(text) Clear(){
-		return std::move(this->text);
-	}
-	
-	const decltype(text)& Text()const NOEXCEPT{
-		return this->text;
+	std::uint32_t Color()const NOEXCEPT{
+		return this->color;
 	}
 };
 
