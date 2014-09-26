@@ -117,7 +117,7 @@ protected:
 	void DrawArrays(GLenum mode, unsigned numElements){
 		ASSERT(this->IsBound())
 		glDrawArrays(mode, 0, numElements);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		AssertOpenGLNoError();
 	}
 	
 public:
@@ -135,7 +135,7 @@ public:
 		}
 		
 		glUseProgram(this->program.p);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		AssertOpenGLNoError();
 		boundShader = this;
 	}
 
@@ -146,6 +146,10 @@ public:
 	void SetMatrix(const morda::Matr4f &m){
 		ASSERT(this->IsBound())
 		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
+		AssertOpenGLNoError();
+	}
+	
+	static void AssertOpenGLNoError(){
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 };//~class Shader
