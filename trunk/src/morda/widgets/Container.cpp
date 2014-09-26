@@ -199,6 +199,7 @@ void Container::OnResize(){
 	for(auto& w : this->Children()){
 		if(w->NeedsRelayout()){
 			w->OnResize();
+			w->relayoutNeeded = false;
 		}
 	}
 }
