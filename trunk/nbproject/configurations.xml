@@ -247,6 +247,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/shaders/ColorPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
@@ -581,6 +591,16 @@
             tool="1"
             flavor2="8">
       </item>
+      <item path="src/morda/shaders/ColorPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
@@ -802,6 +822,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/shaders/ColorPosShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1057,6 +1087,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/shaders/ColorPosShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/ColorPosTexShader.hpp"
             ex="false"
             tool="3"
             flavor2="0">
