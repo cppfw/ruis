@@ -163,7 +163,7 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LeftBottomRightTop margins = LeftBottomRightTop::Default();
-		morda::Vec2r dim;
+		morda::Vec2r dim = (*i)->GetMinDim();
 		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
 			if(const stob::Node* m = layout->Child(D_Margins).node()){
 				margins = LeftBottomRightTop::FromSTOB(*m);
