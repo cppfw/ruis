@@ -75,11 +75,6 @@ class TexFont : public Font{
 	T_GlyphsMap glyphs;
 
 	real fontSize;
-public:
-
-private:
-	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rect2r boundingBox;
 
 public:
 	
@@ -97,10 +92,6 @@ public:
 
 	
 	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
-
-	const morda::Rect2r& FontBoundingBox()const{
-		return this->boundingBox;
-	}
 
 	
 	real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
