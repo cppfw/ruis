@@ -101,15 +101,25 @@ void LinearContainer::OnResize(){
 			
 			//if not first child then select largest margin
 			if(info != infoArray.begin()){
-				info->margin = std::max(
-						(info - 1)->margins[this->IsReverse() ? longIndex : (longIndex + 2)],
-						info->margins[this->IsReverse() ? (longIndex + 2) : longIndex]
-					);
+				if(this->IsVertical()){
+					info->margin = std::max((info - 1)->margins.lb.y, info->margins.rt.y);
+				}else{
+					info->margin = std::max((info - 1)->margins.rt.x, info->margins.lb.x);
+				}
 			}else{
-				info->margin = 0;
+				if(this->IsVertical()){
+					info->margin = info->margins.rt.y;
+				}else{
+					info->margin = info->margins.lb.x;
+				}
 			}
 			
 			rigid += info->dim[longIndex] + info->margin;
+		}
+		if(this->IsVertical()){
+			rigid += infoArray.rbegin()->margins.lb.y;
+		}else{
+			rigid += infoArray.rbegin()->margins.rt.x;
 		}
 	}
 	
@@ -127,16 +137,18 @@ void LinearContainer::OnResize(){
 		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			Vec2r newSize(info->dim);
 			
+			ASSERT(netWeight >= 0)
 			if(netWeight > 0){
 				newSize[longIndex] += (info->weight / netWeight) * flexible;
 			}
 
 			Vec2r newPos;
-			if((this->IsVertical() && !this->IsReverse()) || (!this->IsVertical() && this->IsReverse())){
-				newPos[longIndex] = this->Rect().d[longIndex] - pos - info->margin - newSize[longIndex];
+			if(this->IsVertical()){
+				newPos.y = this->Rect().d.y - pos - info->margin - newSize.y;
 			}else{
-				newPos[longIndex] = pos + info->margin;
+				newPos.x = pos + info->margin;
 			}
+			
 			pos += info->margin + newSize[longIndex];
 
 			(*i)->Resize(newSize.Rounded());
@@ -159,10 +171,10 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	
 	float prevMargin = 0;
 	
-	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		LeftBottomRightTop margins;
 		
-		if(const stob::Node* n = (*i)->GetLayoutProperty(Layout::D_Margins())){
+		if(auto n = (*i)->GetLayoutProperty(Layout::D_Margins())){
 			margins = LeftBottomRightTop::FromSTOB(n);
 		}else{
 			margins = LeftBottomRightTop::Default();
@@ -179,19 +191,32 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 		}
 		
 		
-		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
+		ting::util::ClampBottom(minDim[transIndex], dim[transIndex] + margins.lb[transIndex] + margins.rt[transIndex]);
 		
 		minDim[longIndex] += dim[longIndex];
 		
-		//margin works for non-first children only
-		if(i != this->Children().begin()){//if not first child
-			minDim[longIndex] += std::max(
-					prevMargin,
-					margins[this->IsReverse() ? (longIndex + 2) : longIndex]
-				);
+		if(i == this->Children().begin()){//if first widget
+			if(this->IsVertical()){
+				minDim.y += margins.rt.y;
+			}else{
+				minDim.x += margins.lb.x;
+			}
+		}else if((++decltype(i)(i)) == this->Children().end()){//if last widget
+			if(this->IsVertical()){
+				minDim.y += margins.lb.y;
+			}else{
+				minDim.x += margins.rt.x;
+			}
+		}else{//if not first child
+			if(this->IsVertical()){
+				minDim.y += std::max(prevMargin, margins.rt.y);
+				prevMargin = margins.lb.y;
+			}else{
+				minDim.x += std::max(prevMargin, margins.lb.x);
+				prevMargin = margins.rt.x;
+			}
+			
 		}
-		
-		prevMargin = margins[this->IsReverse() ? longIndex : (longIndex + 2)];
 	}
 	
 	return minDim;

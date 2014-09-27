@@ -65,9 +65,6 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointer
 	
 	//update factor
 	this->slider.curFactor = newPos / maxPos;
-	if(this->slider.IsReverse()){
-		this->slider.curFactor = 1 - this->slider.curFactor;
-	}
 	
 	if(this->slider.factorChange){
 		this->slider.factorChange(this->slider.curFactor);
@@ -117,9 +114,6 @@ void Slider::OnResize(){
 		if(effectiveLength > 0){
 			newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
 			ASSERT(newPos[longIndex] <= effectiveLength)
-			if(this->IsReverse()){
-				newPos[longIndex] = effectiveLength - newPos[longIndex];
-			}
 		}
 		handle.MoveTo(newPos);
 	}

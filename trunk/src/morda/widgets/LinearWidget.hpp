@@ -40,33 +40,24 @@ class LinearWidget : public virtual Widget{
 	LinearWidget& operator=(const LinearWidget&);
 	
 	bool isVertical = false;
-	bool isReverse = false;
 
 protected:
 	LinearWidget(const stob::Node* desc = nullptr);
 
 	
 	//TODO: doxygen
-	inline unsigned GetLongIndex()const NOEXCEPT{
+	unsigned GetLongIndex()const NOEXCEPT{
 		return this->isVertical ? 1 : 0;
 	}
 
 	//TODO: doxygen
-	inline unsigned GetTransIndex()const NOEXCEPT{
+	unsigned GetTransIndex()const NOEXCEPT{
 		return this->isVertical ? 0 : 1;
 	}
 
 public:	
-	inline void SetReverse(bool isReverse)NOEXCEPT{
-		this->isReverse = isReverse;
-	}
-	
-	inline void SetVertical(bool isVertical)NOEXCEPT{
+	void SetVertical(bool isVertical)NOEXCEPT{
 		this->isVertical = isVertical;
-	}
-	
-	bool IsReverse()const NOEXCEPT{
-		return this->isReverse;
 	}
 	
 	bool IsVertical()const NOEXCEPT{
