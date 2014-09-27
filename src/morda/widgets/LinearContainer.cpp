@@ -17,8 +17,7 @@ using namespace morda;
 
 
 namespace{
-	
-const char* D_Margins = "margins";
+
 const char* D_Weight = "weight";
 
 
@@ -94,7 +93,7 @@ void LinearContainer::OnResize(){
 				info->gravity = this->gravity();
 			}
 			
-			if(auto n = (*i)->GetLayoutProperty(D_Margins)){
+			if(auto n = (*i)->GetLayoutProperty(Layout::D_Margins())){
 				info->margins = LeftBottomRightTop::FromSTOB(n);
 			}else{
 				info->margins = LeftBottomRightTop::Default();
@@ -163,7 +162,7 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		LeftBottomRightTop margins;
 		
-		if(const stob::Node* n = (*i)->GetLayoutProperty(D_Margins)){
+		if(const stob::Node* n = (*i)->GetLayoutProperty(Layout::D_Margins())){
 			margins = LeftBottomRightTop::FromSTOB(n);
 		}else{
 			margins = LeftBottomRightTop::Default();

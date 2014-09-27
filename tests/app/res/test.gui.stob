@@ -53,6 +53,7 @@ Container{
 			Widget{
 				layout{
 					dim{10mm 5mm}
+					margins{10 20 30 40}
 				}
 			}
 		}
