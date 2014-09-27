@@ -32,6 +32,7 @@ THE SOFTWARE. */
 
 #include "../util/Vector2.hpp"
 #include "../widgets/Widget.hpp"
+#include "LeftBottomRightTop.hpp"
 
 
 namespace morda{
@@ -65,9 +66,10 @@ public:
 	 * the given parent rectangle.
      * @param parentDim - dimensions of parent rectangle.
      * @param dim - dimensions of the rectangle to place.
+	 * @param margins - margins to take into account.
      * @return Position for the rectangle within parent rectangle.
      */
-	Vec2r PosForRect(const Vec2r& parentDim, const Vec2r& dim)const NOEXCEPT;
+	Vec2r PosForRect(const Vec2r& parentDim, const Vec2r& dim, const LeftBottomRightTop& margins = LeftBottomRightTop::Default())const NOEXCEPT;
 	
 	/**
 	 * @brief Parse the gravity property from STOB.

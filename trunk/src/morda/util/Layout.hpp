@@ -39,6 +39,9 @@ public:
 		return "fill";
 	}
 	
+	static const char* D_Margins(){
+		return "margins";
+	}
 };
 
 }
