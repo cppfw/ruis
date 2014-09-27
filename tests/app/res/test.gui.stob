@@ -2,27 +2,21 @@ class MyLabel Label{
 
 	text{"trololo"}
 
-	prop{
-		layout{
-			dim{min min}
-		}
+	layout{
+		dim{min min}
 	}
 }
 
 style some_style{
-	prop{
-		layout{
-			dim{min min}
-		}
+	layout{
+		dim{min min}
 	}
 }
 
 Container{
-	prop{
-		layout{
-			dim{0 0}
-			fill{true true}
-		}
+	layout{
+		dim{0 0}
+		fill{true true}
 	}
 
 	Window{
@@ -33,10 +27,10 @@ Container{
 
 		Label{
 			text{"inwindow text, y j g q p"}
-			prop{layout{
+			layout{
 				dim{min min}
 				gravity{50% 50%}
-			}}
+			}
 		}
 
 		ImageLabel{
@@ -44,22 +38,22 @@ Container{
 
 	//		keepAspectRatio{true}
 
-			prop{layout{
+			layout{
 				dim{min min}
 				gravity{50% 0%}
-			}}
+			}
 		}
 
 		NinePatch{
 			image{npt_sample}
-			prop{layout{
+			layout{
 				dim{min min}
-			}}
+			}
 			
 			Widget{
-				prop{layout{
+				layout{
 					dim{10mm 5mm}
-				}}
+				}
 			}
 		}
 	}
@@ -82,12 +76,12 @@ Container{
 
 			clip {true}
 
-			prop{layout{
+			layout{
 				dim {0 0}
 				fill{true true}
 
 				weight{7}
-			}}
+			}
 
 			Label{
 				pos {0 0}
@@ -96,12 +90,12 @@ Container{
 				gravity {left bottom}
 				padding {10 20 30 40}
 
-				prop{
-					layout{
-						weight {0}
-						gravity {100%}
-					}
+				
+				layout{
+					weight {0}
+					gravity {100%}
 				}
+
 			}
 
 			Label{
@@ -110,12 +104,12 @@ Container{
 				text {"blah bla"}
 				padding {0}
 
-				prop{
-					layout{
-						weight {0}
-						margins {10 10 10 10}
-					}
+				
+				layout{
+					weight {0}
+					margins {10 10 10 10}
 				}
+				
 			}
 
 			PushButton{
@@ -125,14 +119,14 @@ Container{
 
 				clip{true}
 
-				prop{
-					layout{
-						dim {20mm min}
-						gravity {0% 70%}
-						weight {1}
-						margins {10 20 30 40}
-					}
+				
+				layout{
+					dim {20mm min}
+					gravity {0% 70%}
+					weight {1}
+					margins {10 20 30 40}
 				}
+				
 
 				Label{
 					text {"Show VK"}
@@ -161,12 +155,12 @@ Container{
 
 			name{"Hello world button"}
 
-			prop{
-				layout{
-					dim{min 10mm}
-					gravity{0% 0%}
-				}
+			
+			layout{
+				dim{min 10mm}
+				gravity{0% 0%}
 			}
+			
 
 			Label{
 				text {"Hello world!"}
@@ -180,12 +174,12 @@ Container{
 
 			name{"Test label"}
 
-			prop{
-				layout{
-					dim{min 30}
-					gravity{50% 0%}
-				}
+			
+			layout{
+				dim{min 30}
+				gravity{50% 0%}
 			}
+			
 		}
 	}//~Window
 
@@ -198,20 +192,20 @@ Container{
 		LinearContainer{
 			vertical {false}
 
-			prop{ layout{
+			layout{
 				dim {0 0}
 				fill{true true}
-			}}
+			}
 
 			ImageLabel{
 				image{img_lattice}
 
 				keepAspectRatio{true}
 
-				prop{layout{
+				layout{
 					dim{min 0}
 					fill{false true}
-				}}
+				}
 			}
 
 			Slider{
@@ -219,11 +213,11 @@ Container{
 
 	//			reverse{true}
 
-				prop{layout{
+				layout{
 					dim {0 40} //TODO: min min
 					weight{1}
 					gravity {0% 0%}
-				}}
+				}
 			}
 
 			Slider{
@@ -232,11 +226,11 @@ Container{
 				vertical{true}
 				reverse{true}
 
-				prop{layout{
+				layout{
 					dim {40 0} //TODO: min min
 					fill{false true}
 					gravity {0% 0%}
-				}}
+				}
 			}
 		}
 	}
@@ -249,10 +243,10 @@ Container{
 
 		CubeWidget{
 			name{cube_widget}
-			prop{layout{
+			layout{
 				dim{0 0}
 				fill{true true}
-			}}
+			}
 		}
 	}
 
@@ -268,10 +262,10 @@ Container{
 			text{"Hello Wrodl!!!"}
 
 			color{0xff0000ff}
-			prop{layout{
+			layout{
 				dim{0 min}
 				fill{true false}
-			}}
+			}
 		}
 	}
 }

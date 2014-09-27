@@ -79,10 +79,10 @@ public:
 	 * padding{5 5 5 5}
 	 * @endcode
 	 * Value of the root node does not matter, it is ignored.
-     * @param node - STOB node to parse from.
+     * @param chain - STOB node to parse from.
      * @return Parsed LeftTopRightBottom object.
      */
-	static LeftBottomRightTop FromSTOB(const stob::Node& node)NOEXCEPT;
+	static LeftBottomRightTop FromSTOB(const stob::Node* chain)NOEXCEPT;
 	
 	/**
 	 * @brief Default values.

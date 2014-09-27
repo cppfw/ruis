@@ -121,7 +121,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting
 
 
 
-morda::Vector2<bool> morda::TwoBoolsFromSTOB(const stob::Node* chain){
+morda::Vector2<bool> morda::Vec2bFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vector2<bool> ret;
 	

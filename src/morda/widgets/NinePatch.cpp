@@ -11,100 +11,100 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			//left column
 			LinearContainer{
 				vertical{true}
-				prop{layout{
+				layout{
 					dim{min min}
 					fill{false true}
-				}}
+				}
 
 				ImageLabel{
 					name{morda_lt}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 
 				ImageLabel{
 					name{morda_l}
-					prop{layout{
+					layout{
 						dim{min 0}
 						weight{1}
-					}}
+					}
 				}
 				ImageLabel{
 					name{morda_lb}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 			}
 
 			//middle column
 			LinearContainer{
 				vertical{true}
-				prop{layout{
+				layout{
 					dim{min min}
 					fill{false true}
 					weight{1}
-				}}
+				}
 
 				ImageLabel{
 					name{morda_t}
-					prop{layout{
+					layout{
 						dim{0 min}
 						fill{true false}
-					}}
+					}
 				}
 				FrameContainer{
 					name{morda_content_area}
-					prop{layout{
+					layout{
 						dim{min min}
 						weight{1}
 						fill{true true}
-					}}
+					}
 					ImageLabel{
 						name{morda_m}
-						prop{layout{
+						layout{
 							dim{0 0}
 							fill{true true}
-						}}
+						}
 					}
 				}
 				ImageLabel{
 					name{morda_b}
-					prop{layout{
+					layout{
 						dim{0 min}
 						fill{true false}
-					}}
+					}
 				}
 			}
 
 			//right column
 			LinearContainer{
 				vertical{true}
-				prop{layout{
+				layout{
 					dim{min min}
 					fill{false true}
-				}}
+				}
 
 				ImageLabel{
 					name{morda_rt}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 
 				ImageLabel{
 					name{morda_r}
-					prop{layout{
+					layout{
 						dim{min 0}
 						weight{1}
-					}}
+					}
 				}
 				ImageLabel{
 					name{morda_rb}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 			}
 		}

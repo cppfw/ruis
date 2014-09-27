@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "../util/Gravity.hpp"
-
+#include "../util/util.hpp"
 
 
 
@@ -44,11 +44,11 @@ protected:
 	GravitatingWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
-		if(!desc){
-			return;
+		if(const stob::Node* c = GetProperty(desc, Gravity::D_Gravity())){
+			this->widgetGravity = Gravity::FromSTOB(c);
+		}else{
+			this->widgetGravity = Gravity::Default();
 		}
-		
-		this->SetGravity(Gravity::FromLayout(*desc));
 	}
 public:
 	const Gravity& gravity()const NOEXCEPT{

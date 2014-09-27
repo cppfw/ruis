@@ -92,23 +92,27 @@ private:
 	
 	bool relayoutNeeded = true;
 	
-	//properties from STOB description
-	std::unique_ptr<stob::Node> prop;
+	std::unique_ptr<stob::Node> layout;
 public:
 
-	const stob::Node* GetPropertyNode(const char* propName)const NOEXCEPT{
-		if(!this->prop){
+	const stob::Node* GetLayoutProperty(const char* propName)const NOEXCEPT{
+		if(!this->layout){
 			return nullptr;
 		}
-		return this->prop->ThisOrNext(propName).node();
+		auto n = this->layout->ThisOrNext(propName).node();
+		if(!n){
+			return nullptr;
+		}
+		return n->Child();
 	}
 	
-	std::unique_ptr<stob::Node> ExtractProp()NOEXCEPT{
-		return std::move(this->prop);
+	const stob::Node* Layout()const NOEXCEPT{
+		return this->layout.get();
 	}
 	
-	void SetProp(std::unique_ptr<stob::Node> prop)NOEXCEPT{
-		this->prop = std::move(prop);
+	std::unique_ptr<stob::Node> ResetLayout(std::unique_ptr<stob::Node> chain = nullptr)NOEXCEPT{
+		std::swap(this->layout, chain);
+		return std::move(chain);
 	}
 	
 	bool NeedsRelayout()const NOEXCEPT{

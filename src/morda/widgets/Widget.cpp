@@ -11,8 +11,8 @@ using namespace morda;
 
 
 Widget::Widget(const stob::Node* desc){
-	if(const stob::Node* p = GetProperty(desc, "prop")){
-		this->prop = p->Clone();
+	if(const stob::Node* n = desc ? desc->Child("layout").node() : nullptr){ //TODO: use constant
+		this->layout = n->Clone()->RemoveChildren();
 	}
 
 	if(const stob::Node* p = GetProperty(desc, "pos")){
