@@ -68,8 +68,6 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
-
-	this->fontSize = float(size);
 	
 	class FreeTypeLibWrapper{
 		FT_Library lib;// handle to freetype library object
@@ -145,8 +143,11 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	//and glyphs will have artifacts on their edges
 	texImg.Clear();
 
-	//init bounding box to zero
-	float left = 0, right = 0, top = 0, bottom = 0;
+	//init bounding box to invalid values
+	float left = 1000000;
+	float right = -1000000;
+	float top = -1000000;
+	float bottom = 1000000;
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
@@ -237,21 +238,10 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
 
 			//update bounding box if needed
-			if(left < -g.verts[0].x){
-				left = -g.verts[0].x;
-			}
-
-			if(right < g.verts[2].x){
-				right = g.verts[2].x;
-			}
-
-			if(bottom < -g.verts[0].y){
-				bottom = -g.verts[0].y;
-			}
-
-			if(top < g.verts[2].y){
-				top = g.verts[2].y;
-			}
+			ting::util::ClampTop(left, g.verts[0].x);
+			ting::util::ClampBottom(right, g.verts[2].x);
+			ting::util::ClampTop(bottom, g.verts[0].y);
+			ting::util::ClampBottom(top, g.verts[2].y);
 
 			ASSERT(top - bottom >= 0) //width >= 0
 			ASSERT(right - left >= 0) //height >= 0

@@ -41,7 +41,7 @@ TextInput::TextInput(const stob::Node* desc) :
 void TextInput::Render(const morda::Matr4r& matrix) const{
 	{
 		morda::Matr4r matr(matrix);
-		matr.Translate(this->TextBoundingBox().p.x + this->xOffset, this->Font().BoundingBox().p.y);
+		matr.Translate(-this->TextBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->Color() == 0xffffffff){//if white
@@ -68,7 +68,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 	if(this->IsFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.Translate(this->cursorPos, 0);
-		matr.Scale(Vec2r(D_CursorWidth, this->Font().Size()));
+		matr.Scale(Vec2r(D_CursorWidth, this->Rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 		s.Bind();
@@ -94,7 +94,7 @@ bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 }
 
 Vec2r TextInput::ComputeMinDim()const NOEXCEPT{
-	return Vec2r(this->SingleLineTextWidget::ComputeMinDim().x + D_CursorWidth, this->Font().Size());
+	return Vec2r(this->SingleLineTextWidget::ComputeMinDim().x + D_CursorWidth, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 }
 
 void TextInput::SetCursorIndex(size_t index){
