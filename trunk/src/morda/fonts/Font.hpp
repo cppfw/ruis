@@ -59,8 +59,6 @@ protected:
 public:
 	virtual ~Font()NOEXCEPT{}
 	
-	virtual real Size()const NOEXCEPT = 0;
-	
 	//renders the string, returns resulting string advance
 	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
 	

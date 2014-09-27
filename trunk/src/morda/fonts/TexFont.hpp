@@ -74,8 +74,6 @@ class TexFont : public Font{
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
 	T_GlyphsMap glyphs;
 
-	real fontSize;
-
 public:
 	
 	TexFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0){
@@ -85,10 +83,6 @@ public:
 	~TexFont()NOEXCEPT{}
 	
 	void Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
-
-	real Size()const NOEXCEPT override{
-		return this->fontSize;
-	}
 
 	
 	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
