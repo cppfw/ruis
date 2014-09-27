@@ -38,6 +38,7 @@
         <df name="shaders">
           <in>ColorPosShader.cpp</in>
           <in>ColorPosShader.hpp</in>
+          <in>ColorPosTexShader.cpp</in>
           <in>ColorShader.hpp</in>
           <in>PosShader.cpp</in>
           <in>PosShader.hpp</in>
@@ -83,6 +84,8 @@
           <in>Button.cpp</in>
           <in>Button.hpp</in>
           <in>CharInputWidget.hpp</in>
+          <in>ColorLabel.cpp</in>
+          <in>ColorWidget.cpp</in>
           <in>Container.cpp</in>
           <in>Container.hpp</in>
           <in>FrameContainer.cpp</in>
@@ -247,16 +250,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/shaders/ColorPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
@@ -343,14 +336,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -567,8 +552,12 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
@@ -584,36 +573,49 @@
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/resources/ResNinePatch.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/ColorPosShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/ColorPosTexShader.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -687,8 +689,12 @@
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -702,38 +708,58 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
-      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
-      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -842,16 +868,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/shaders/ColorPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
@@ -938,14 +954,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1115,16 +1123,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/shaders/ColorPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
@@ -1211,14 +1209,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ColorWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
