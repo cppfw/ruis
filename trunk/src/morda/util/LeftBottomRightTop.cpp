@@ -6,10 +6,10 @@ using namespace morda;
 
 
 //static
-LeftBottomRightTop LeftBottomRightTop::FromSTOB(const stob::Node& node)NOEXCEPT{
+LeftBottomRightTop LeftBottomRightTop::FromSTOB(const stob::Node* chain)NOEXCEPT{
 	LeftBottomRightTop ret;
 	
-	const stob::Node* n = node.Child();
+	const stob::Node* n = chain;
 	unsigned i = 0;
 	float curVal = 0;
 	for(; i != 4 && n; ++i, n = n->Next()){

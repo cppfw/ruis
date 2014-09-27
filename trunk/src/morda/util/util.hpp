@@ -75,7 +75,7 @@ morda::Rect2r Rect2rFromSTOB(const stob::Node* chain);
 morda::Vec2r DimVec2r(const stob::Node* chain);
 
 
-morda::Vector2<bool> TwoBoolsFromSTOB(const stob::Node* chain);
+morda::Vector2<bool> Vec2bFromSTOB(const stob::Node* chain);
 
 
 

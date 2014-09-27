@@ -79,26 +79,10 @@ public:
 	 * and second child node can have values: "top", "bottom", "center";
 	 * If one or both children are absent then default value is used which is "center".
 	 * Value of the root node does not matter, it is ignored.
-     * @param gravity - "gravity" STOB node.
+     * @param chain - chain of gravity values.
      * @return Parsed Gravity object.
      */
-	static Gravity FromSTOB(const stob::Node& gravity)NOEXCEPT;
-	
-	/**
-	 * @brief Parse the gravity property from layout STOB.
-	 * Parses gravity property from given layout properties.
-	 * @code
-	 * layout{
-	 *     //...
-	 *     gravity{right top}
-	 *     //...
-	 * }
-	 * @endcode
-	 * Value of the root node does not matter, it is ignored.
-     * @param layout - layout properties STOB node.
-     * @return Parsed Gravity object.
-     */
-	static Gravity FromLayout(const stob::Node& layout)NOEXCEPT;
+	static Gravity FromSTOB(const stob::Node* chain)NOEXCEPT;
 	
 	/**
 	 * @brief Default gravity values.

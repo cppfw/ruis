@@ -59,23 +59,24 @@ void LinearContainer::OnResize(){
 		auto info = infoArray.begin();
 		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i, ++info){
 			ASSERT(info != infoArray.end())
-			if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
-				if(const stob::Node* weight = layout->GetProperty(D_Weight)){
-					info->weight = weight->AsFloat();
-					netWeight += info->weight;
-				}else{
-					info->weight = 0;
-				}
+			
+			if(const stob::Node* weight = (*i)->GetLayoutProperty(D_Weight)){
+				info->weight = weight->AsFloat();
+				netWeight += info->weight;
+			}else{
+				info->weight = 0;
+			}
+			
+			Vec2b fill;
 				
-				morda::Vector2<bool> fill;
-				
-				if(const stob::Node* n = layout->GetProperty(Layout::D_Fill())){
-					fill = TwoBoolsFromSTOB(n);
-				}else{
-					fill = morda::Vector2<bool>(false, false);
-				}
-				
-				LayoutDim dim = LayoutDim::FromLayout(*layout);
+			if(const stob::Node* n = (*i)->GetLayoutProperty(Layout::D_Fill())){
+				fill = Vec2bFromSTOB(n);
+			}else{
+				fill = Vec2b(false, false);
+			}
+			
+			if(const  stob::Node* n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
+				LayoutDim dim = LayoutDim::FromSTOB(n);
 				info->dim = dim.ForWidget(*(*i));
 				
 				if(fill[transIndex]){
@@ -83,26 +84,24 @@ void LinearContainer::OnResize(){
 				}
 				
 				info->dim = (*i)->Measure(info->dim);
-				
-				if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
-					info->gravity = Gravity::FromSTOB(*g);
-				}else{
-					info->gravity = this->gravity();
-				}
-				
-				if(const stob::Node* margins = layout->Child(D_Margins).node()){
-					info->margins = LeftBottomRightTop::FromSTOB(*margins);
-				}else{
-					info->margins = LeftBottomRightTop::Default();
-				}
 			}else{
 				info->dim = (*i)->GetMinDim();
-				info->weight = 0;
+			}
+			
+			if(const stob::Node* n = (*i)->GetLayoutProperty(Gravity::D_Gravity())){
+				info->gravity = Gravity::FromSTOB(n);
+			}else{
 				info->gravity = this->gravity();
+			}
+			
+			if(auto n = (*i)->GetLayoutProperty(D_Margins)){
+				info->margins = LeftBottomRightTop::FromSTOB(n);
+			}else{
 				info->margins = LeftBottomRightTop::Default();
 			}
 			
-			if(info != infoArray.begin()){//if not first child
+			//if not first child then select largest margin
+			if(info != infoArray.begin()){
 				info->margin = std::max(
 						(info - 1)->margins[this->IsReverse() ? longIndex : (longIndex + 2)],
 						info->margins[this->IsReverse() ? (longIndex + 2) : longIndex]
@@ -162,21 +161,24 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	float prevMargin = 0;
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		LeftBottomRightTop margins = LeftBottomRightTop::Default();
-		morda::Vec2r dim = (*i)->GetMinDim();
-		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
-			if(const stob::Node* m = layout->Child(D_Margins).node()){
-				margins = LeftBottomRightTop::FromSTOB(*m);
-			}
-
-			{
-				LayoutDim ld = LayoutDim::FromLayout(*layout);
-
-				dim = (*i)->Measure(ld.ForWidget(*(*i)));
-			}
+		LeftBottomRightTop margins;
+		
+		if(const stob::Node* n = (*i)->GetLayoutProperty(D_Margins)){
+			margins = LeftBottomRightTop::FromSTOB(n);
 		}else{
-			 dim = (*i)->GetMinDim();
+			margins = LeftBottomRightTop::Default();
 		}
+
+		
+		morda::Vec2r dim;
+		
+		if(auto n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
+			LayoutDim ld = LayoutDim::FromSTOB(n);
+			dim = (*i)->Measure(ld.ForWidget(*(*i)));
+		}else{
+			dim = (*i)->GetMinDim();
+		}
+		
 		
 		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
 		

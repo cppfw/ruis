@@ -71,43 +71,10 @@ public:
 	 * dim{min 13}
 	 * @endcode
 	 * The value of the root node does not matter, it is ignored.
-	 * @param node - dim node.
+	 * @param chain - dim node chain.
 	 * @return Parsed Dim object.
 	 */
-	static LayoutDim FromSTOB(const stob::Node& node)NOEXCEPT;
-
-	/**
-	 * @brief Parse from STOB.
-	 * Parse from STOB of the form:
-	 * @code
-	 * dim{min 13}
-	 * @endcode
-	 * The value of the root node does not matter, it is ignored.
-	 * @param node - dim node. If 0 pointer is passed then return default Dim.
-	 * @return Parsed Dim object.
-	 */
-	static LayoutDim FromSTOB(const stob::Node* node)NOEXCEPT{
-		if(!node){
-			return Default();
-		}
-		return FromSTOB(*node);
-	}
-
-	/**
-	 * @brief Parse from layout properties STOB.
-	 * Parse from STOB of the form:
-	 * @code
-	 * layout{
-	 *     //...
-	 *     dim{134 100}
-	 *     //...
-	 * }
-	 * @endcode
-	 * The value of the root node does not matter, it is ignored.
-	 * @param layout - layout node.
-	 * @return Parsed Dim object.
-	 */
-	static LayoutDim FromLayout(const stob::Node& layout)NOEXCEPT;
+	static LayoutDim FromSTOB(const stob::Node* chain)NOEXCEPT;
 
 	static LayoutDim Default()NOEXCEPT{
 		LayoutDim ret;

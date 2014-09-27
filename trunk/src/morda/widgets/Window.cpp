@@ -14,32 +14,32 @@ const char* DWindowDesc = R"qwertyuiop(
 			//left border
 			LinearContainer{
 				vertical{true}
-				prop{layout{
+				layout{
 					dim{min min}
 					fill{false true}
-				}}
+				}
 				ImageLabel{
 					name{left_top_resize}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 					image{morda_img_window_lt}
 				}
 				ImageLabel{
 					name{left_resize}
-					prop{layout{
+					layout{
 						weight{1}
 						dim{min 0}
 						fill{false true}
-					}}
+					}
 					image{morda_img_window_l}
 				}
 				ImageLabel{
 					name{left_bottom_resize}
-					prop{layout{
+					layout{
 						dim{min min}
 						fill{true true}
-					}}
+					}
 					image{morda_img_window_lb}
 				}
 			}
@@ -47,72 +47,72 @@ const char* DWindowDesc = R"qwertyuiop(
 			LinearContainer{
 				vertical{true}
 
-				prop{layout{
+				layout{
 					weight{1}
 					dim{min min}
 					fill{true true}
-				}}
+				}
 
 				//top border
 				ImageLabel{
 					name{top_resize}
 					image{morda_img_window_t}
-					prop{layout{
+					layout{
 						dim{0 min}
 						fill{true false}
-					}}
+					}
 				}
 
 				//caption
 				FrameContainer{
-					prop{layout{
+					layout{
 						dim{0 min}
 						fill{true true}
-					}}
+					}
 
 					ColorLabel{
-						prop{layout{
+						layout{
 							dim{0 0}
 							fill{true true}
-						}}
+						}
 						color{0xffff0000}
 					}
 
 					LinearContainer{
-						prop{layout{
+						layout{
 							dim{0 min}
 							fill{true true}
-						}}
+						}
 
 						name{morda_caption}
 						Label{
 							name{morda_title}
-							prop{layout{
+							layout{
 								dim{0 min}
 								gravity{0% 50%}
 								weight{1}
-							}}
+							}
 						}
 					}
 				}
 
 				FrameContainer{
 					name{child_widget_area}
-					prop{layout{
+					layout{
 						dim{0 0}
 						weight{1}
 						fill{true true}
-					}}
+					}
 //					color{0xff800080}
 				}
 
 				//bottom border
 				ImageLabel{
 					name{bottom_resize}
-					prop{layout{
+					layout{
 						dim{0 min}
 						fill{true false}
-					}}
+					}
 					image{morda_img_window_b}
 				}
 			}
@@ -120,32 +120,32 @@ const char* DWindowDesc = R"qwertyuiop(
 			//right border
 			LinearContainer{
 				vertical{true}
-				prop{layout{
+				layout{
 					dim{min min}
 					fill{false true}
-				}}
+				}
 				ImageLabel{
 					name{right_top_resize}
 					image{morda_img_window_rt}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 				ImageLabel{
 					name{right_resize}
-					prop{layout{
+					layout{
 						weight{1}
 						dim{min 0}
 						fill{false true}
-					}}
+					}
 					image{morda_img_window_r}
 				}
 				ImageLabel{
 					name{right_bottom_resize}
 					image{morda_img_window_rb}
-					prop{layout{
+					layout{
 						dim{min min}
-					}}
+					}
 				}
 			}
 		}

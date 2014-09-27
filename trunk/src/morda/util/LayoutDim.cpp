@@ -15,10 +15,10 @@ const char* D_Min = "min";
 
 
 //static
-LayoutDim LayoutDim::FromSTOB(const stob::Node& node)NOEXCEPT{
+LayoutDim LayoutDim::FromSTOB(const stob::Node* chain)NOEXCEPT{
 	LayoutDim ret;
 	
-	const stob::Node* n = node.Child();
+	const stob::Node* n = chain;
 	
 	for(unsigned i = 0; i != 2; ++i){
 		if(!n){
@@ -36,17 +36,6 @@ LayoutDim LayoutDim::FromSTOB(const stob::Node& node)NOEXCEPT{
 	}
 	
 	return ret;
-}
-
-
-
-//static
-LayoutDim LayoutDim::FromLayout(const stob::Node& layout)NOEXCEPT{
-	const stob::Node* dim = layout.Child(LayoutDim::D_Dim()).node();
-	if(!dim){
-		return LayoutDim::Default();
-	}
-	return LayoutDim::FromSTOB(*dim);
 }
 
 

@@ -21,28 +21,28 @@ FrameContainer::FrameContainer(const stob::Node* desc) :
 
 void FrameContainer::OnResize() {
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		LayoutDim dim;
 		Gravity gravity;
+		
+		if(const stob::Node* c = (*i)->GetLayoutProperty(Gravity::D_Gravity())){
+			gravity = Gravity::FromSTOB(c);
+		}else{
+			gravity = this->gravity();
+		}
+		
 		Vec2b fill;
 		
-		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
-			dim = LayoutDim::FromSTOB(layout->Child(LayoutDim::D_Dim()).node());
-			
-			if(const stob::Node* g = layout->Child(Gravity::D_Gravity()).node()){
-				gravity = Gravity::FromSTOB(*g);
-			}else{
-				gravity = this->gravity();
-			}
-			
-			if(const stob::Node* n = layout->GetProperty(Layout::D_Fill())){
-				fill = TwoBoolsFromSTOB(n);
-			}else{
-				fill = decltype(fill)(false, false);
-			}
+		if(auto n = (*i)->GetLayoutProperty(Layout::D_Fill())){
+			fill = Vec2bFromSTOB(n);
+		}else{
+			fill = decltype(fill)(false, false);
+		}
+		
+		LayoutDim dim;
+		
+		if(const stob::Node* c = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
+			dim = LayoutDim::FromSTOB(c);
 		}else{
 			dim = LayoutDim::Default();
-			gravity = this->gravity();
-			fill = decltype(fill)(false, false);
 		}
 		
 		Vec2r d = dim.ForWidget(*(*i));
@@ -65,11 +65,12 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 	morda::Vec2r minDim(0);
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		morda::Vec2r dim = (*i)->GetMinDim();
-		if(const stob::Node* layout = (*i)->GetPropertyNode(Container::D_Layout())){
-			LayoutDim ld = LayoutDim::FromLayout(*layout);
-
+		morda::Vec2r dim;
+		if(const stob::Node* c = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
+			LayoutDim ld = LayoutDim::FromSTOB(c);
 			dim = (*i)->Measure(ld.ForWidget(*(*i)));
+		}else{
+			dim = (*i)->GetMinDim();
 		}
 		
 		if(dim.x > minDim.x){

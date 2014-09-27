@@ -25,18 +25,7 @@ Vec2r Gravity::PosForRect(const Vec2r& parentDim, const Vec2r& dim)const NOEXCEP
 
 
 //static
-Gravity Gravity::FromSTOB(const stob::Node& gravity)NOEXCEPT{
-	return Vec2rFromSTOB(gravity.Child()) / 100;
+Gravity Gravity::FromSTOB(const stob::Node* chain)NOEXCEPT{
+	return Vec2rFromSTOB(chain) / 100;
 }
 
-
-
-//static
-Gravity Gravity::FromLayout(const stob::Node& layout)NOEXCEPT{
-	const stob::Node* gravity = layout.Child(D_Gravity()).node();
-	if(!gravity){
-		return Gravity::Default();
-	}
-
-	return Gravity::FromSTOB(*gravity);
-}
