@@ -41,7 +41,7 @@ TextInput::TextInput(const stob::Node* desc) :
 void TextInput::Render(const morda::Matr4r& matrix) const{
 	{
 		morda::Matr4r matr(matrix);
-		matr.Translate(-this->TextBoundingBox().p + Vec2r(this->xOffset, 0));
+		matr.Translate(this->TextBoundingBox().p.x + this->xOffset, this->Font().BoundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->Color() == 0xffffffff){//if white

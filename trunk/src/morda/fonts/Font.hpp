@@ -46,6 +46,9 @@ class Font{
 	Font& operator=(const Font&);
 	
 protected:
+	//Bounding box holds the dimensions of the largest loaded glyph.
+	morda::Rect2r boundingBox;
+	
 	Font(){}
 	
 	virtual real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const = 0;
@@ -109,7 +112,9 @@ public:
 		return this->StringBoundingBox(str.c_str());
 	}
 	
-	
+	const morda::Rect2r& BoundingBox()const NOEXCEPT{
+		return this->boundingBox;
+	}
 	
 private:
 
