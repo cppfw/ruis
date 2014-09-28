@@ -46,9 +46,14 @@ class TextInput : public SingleLineTextWidget, public Updateable, public CharInp
 	
 	size_t cursorIndex;
 	
+	real selectionStartPos;
+	
+	size_t selectionStartIndex;
+	
 	bool cursorBlinkVisible;
 	
 	bool ctrlPressed;
+	bool shiftPressed;
 	
 public:
 	TextInput(const TextInput&) = delete;
@@ -80,6 +85,8 @@ private:
 	void UpdateCursorPosBasedOnIndex();
 	
 	void StartCursorBlinking();
+	
+	real IndexToPos(size_t index);
 };
 
 }
