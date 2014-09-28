@@ -91,6 +91,7 @@
     <ClCompile Include="..\..\src\morda\resources\ResNinePatch.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResTexture.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\ColorPosShader.cpp" />
+    <ClCompile Include="..\..\src\morda\shaders\ColorPosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\PosShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\PosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\Shader.cpp" />
@@ -102,6 +103,8 @@
     <ClCompile Include="..\..\src\morda\util\LeftBottomRightTop.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\ColorLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\ColorWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Container.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\FrameContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ImageLabel.cpp" />
