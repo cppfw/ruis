@@ -64,5 +64,5 @@
    * Check out *morda* sources to some directory, say */d/morda*:
      * {{{svn co http://morda.googlecode.com/svn/trunk/ /d/morda}}}
      * {{{cd /d/morda}}}
-     * {{{make}}}
+     * {{{make debug=true}}}
      * {{{make test}}}
