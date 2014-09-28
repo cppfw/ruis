@@ -39,6 +39,23 @@ TextInput::TextInput(const stob::Node* desc) :
 
 
 void TextInput::Render(const morda::Matr4r& matrix) const{
+	//render selection
+	if(this->cursorIndex != this->selectionStartIndex){
+		morda::Matr4r matr(matrix);
+		matr.Translate(
+				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
+				0
+			);
+		matr.Scale(Vec2r(ting::math::Abs(this->cursorPos - this->selectionStartPos), this->Rect().d.y));
+
+		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
+		s.Bind();
+		s.SetColor(0xff804040);
+
+		s.SetMatrix(matr);
+		s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
+	}
+	
 	{
 		morda::Matr4r matr(matrix);
 		matr.Translate(-this->TextBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
@@ -102,12 +119,20 @@ void TextInput::SetCursorIndex(size_t index){
 	
 	ting::util::ClampTop(this->cursorIndex, this->Text().size());
 	
+	if(this->shiftPressed){
+		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
+	}else{
+		this->selectionStartIndex = this->cursorIndex;
+	}
+	
 	ting::util::ScopeExit scopeExit([this](){
 		if(!this->IsFocused()){
 			this->Focus();
 		}
 		this->StartCursorBlinking();
 	});
+	
+//	TRACE(<< "selectionStartIndex = " << this->selectionStartIndex << std::endl)
 	
 	if(this->cursorIndex <= this->firstVisibleCharIndex){
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -147,6 +172,34 @@ void TextInput::SetCursorIndex(size_t index){
 
 
 
+real TextInput::IndexToPos(size_t index){
+	ASSERT(this->firstVisibleCharIndex <= this->Text().size())
+	
+	if(index <= this->firstVisibleCharIndex){
+		return 0;
+	}
+	
+	ting::util::ClampTop(index, this->Text().size());
+	
+	real ret = this->xOffset;
+	
+	for(auto i = this->Text().begin() + this->firstVisibleCharIndex;
+			i != this->Text().end(), index != this->firstVisibleCharIndex;
+			++i, --index
+		)
+	{
+		ret += this->Font().CharAdvance(*i);
+		if(ret >= this->Rect().d.x){
+			ret = this->Rect().d.x;
+			break;
+		}
+	}
+	
+	return ret;
+}
+
+
+
 void TextInput::SetCursor(real toPos){
 	this->cursorPos = this->xOffset;
 	this->cursorIndex = this->firstVisibleCharIndex;
@@ -173,6 +226,10 @@ void TextInput::SetCursor(real toPos){
 		this->xOffset = 0;
 	}
 	
+	if(!this->shiftPressed){
+		this->selectionStartIndex = this->cursorIndex;
+	}
+	
 //	TRACE(<< "this->cursorPos = " << this->cursorPos << std::endl)
 	
 	this->cursorBlinkVisible = true;
@@ -192,6 +249,7 @@ void TextInput::Update(std::uint32_t dt){
 void TextInput::OnFocusedChanged(){
 	if(this->IsFocused()){
 		this->ctrlPressed = false;
+		this->shiftPressed = false;
 		this->StartCursorBlinking();
 	}else{
 		this->StopUpdating();
@@ -209,6 +267,10 @@ bool TextInput::OnKey(bool isDown, EKey keyCode){
 		case EKey::LEFT_CONTROL:
 		case EKey::RIGHT_CONTROL:
 			this->ctrlPressed = isDown;
+			break;
+		case EKey::LEFT_SHIFT:
+		case EKey::RIGHT_SHIFT:
+			this->shiftPressed = isDown;
 			break;
 		default:
 			break;
@@ -244,6 +306,7 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 			break;
 		case EKey::LEFT:
 			if(this->cursorIndex == 0){
+				this->SetCursorIndex(0);//need to call it anyway to refresh selection
 				break;
 			}
 			{
