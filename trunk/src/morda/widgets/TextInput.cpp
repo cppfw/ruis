@@ -97,18 +97,28 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 }
 
 bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
-	if(!isDown){
-		return false;
-	}
-	
 	if(button != EMouseButton::LEFT){
 		return false;
 	}
+
+	this->leftMouseButtonDown = isDown;
 	
-	this->SetCursor(pos.x);
+	if(isDown){
+		this->SetCursorIndex(this->PosToIndex(pos.x));
+	}
 	
 	return true;
 }
+
+bool TextInput::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+	if(!this->leftMouseButtonDown){
+		return false;
+	}
+	
+	this->SetCursorIndex(this->PosToIndex(pos.x), true);
+	return true;
+}
+
 
 Vec2r TextInput::ComputeMinDim()const NOEXCEPT{
 	return Vec2r(this->SingleLineTextWidget::ComputeMinDim().x + D_CursorWidth, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
@@ -199,47 +209,28 @@ real TextInput::IndexToPos(size_t index){
 }
 
 
-
-void TextInput::SetCursor(real toPos){
-	this->cursorPos = this->xOffset;
-	this->cursorIndex = this->firstVisibleCharIndex;
+size_t TextInput::PosToIndex(real pos){
+	size_t index = this->firstVisibleCharIndex;
+	real p = this->xOffset;
 	
 	for(auto i = this->Text().begin() + this->firstVisibleCharIndex; i != this->Text().end(); ++i){
 		real w = this->Font().CharAdvance(*i);
 		
-		if(toPos < this->cursorPos + w){
-			if(toPos < this->cursorPos + w / 2){
+		if(pos < p + w){
+			if(pos < p + w / 2){
 				break;
 			}
-			this->cursorPos += w;
-			++this->cursorIndex;
+			p += w;
+			++index;
 			break;
 		}
 		
-		this->cursorPos += w;
-		++this->cursorIndex;
-		
+		p += w;
+		++index;
 	}
 	
-	if(this->cursorPos < 0){
-		this->cursorPos = 0;
-		this->xOffset = 0;
-	}
-	
-	if(!this->shiftPressed){
-		this->selectionStartIndex = this->cursorIndex;
-	}
-	
-//	TRACE(<< "this->cursorPos = " << this->cursorPos << std::endl)
-	
-	this->cursorBlinkVisible = true;
-	
-	if(!this->IsFocused()){
-		this->Focus();
-	}
-	this->StartCursorBlinking();
+	return index;
 }
-
 
 
 void TextInput::Update(std::uint32_t dt){
@@ -255,6 +246,11 @@ void TextInput::OnFocusedChanged(){
 		this->StopUpdating();
 	}
 }
+
+void TextInput::OnResize(){
+	this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
+}
+
 
 void TextInput::StartCursorBlinking(){
 	this->StopUpdating();

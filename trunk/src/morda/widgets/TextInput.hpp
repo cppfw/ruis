@@ -55,6 +55,8 @@ class TextInput : public SingleLineTextWidget, public Updateable, public CharInp
 	bool ctrlPressed;
 	bool shiftPressed;
 	
+	bool leftMouseButtonDown = false;
+	
 public:
 	TextInput(const TextInput&) = delete;
 	TextInput& operator=(const TextInput&) = delete;
@@ -68,10 +70,14 @@ public:
 	void Render(const morda::Matr4r& matrix) const override;
 
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void OnFocusedChanged()override;
 	
 	bool OnKey(bool isDown, EKey keyCode)override;
+	
+	void OnResize()override;
 	
 	void Update(std::uint32_t dt)override;
 	
@@ -80,11 +86,11 @@ public:
 	void SetCursorIndex(size_t index, bool selection = false);
 	
 private:
-	void SetCursor(real toPos);
-	
 	void UpdateCursorPosBasedOnIndex();
 	
 	void StartCursorBlinking();
+	
+	size_t PosToIndex(real pos);
 	
 	real IndexToPos(size_t index);
 	
