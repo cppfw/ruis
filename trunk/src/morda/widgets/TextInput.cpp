@@ -119,13 +119,13 @@ void TextInput::SetCursorIndex(size_t index){
 	
 	ting::util::ClampTop(this->cursorIndex, this->Text().size());
 	
-	if(this->shiftPressed){
-		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
-	}else{
+	if(!this->shiftPressed){
 		this->selectionStartIndex = this->cursorIndex;
 	}
 	
 	ting::util::ScopeExit scopeExit([this](){
+		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
+		
 		if(!this->IsFocused()){
 			this->Focus();
 		}
