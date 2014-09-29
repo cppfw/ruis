@@ -77,7 +77,7 @@ public:
 	
 	void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key)override;
 
-	void SetCursorIndex(size_t index);
+	void SetCursorIndex(size_t index, bool selection = false);
 	
 private:
 	void SetCursor(real toPos);
@@ -87,6 +87,13 @@ private:
 	void StartCursorBlinking();
 	
 	real IndexToPos(size_t index);
+	
+	bool ThereIsSelection()const NOEXCEPT{
+		return this->cursorIndex != this->selectionStartIndex;
+	}
+	
+	//returns new cursor index
+	size_t DeleteSelection();
 };
 
 }
