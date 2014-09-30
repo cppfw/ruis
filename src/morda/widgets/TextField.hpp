@@ -34,7 +34,10 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class TextField : public NinePatch{
+class TextField :
+		private NinePatch,
+		public virtual Widget
+{
 	std::shared_ptr<TextInput> ti;
 	
 public:

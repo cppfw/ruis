@@ -10,6 +10,4 @@ TextField::TextField(const stob::Node* desc) :
 		ti(ting::New<TextInput>(desc))
 {
 	this->Content().Add(this->ti);
-	
-	
 }
