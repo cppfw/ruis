@@ -11,6 +11,7 @@
 #include "widgets/Window.hpp"
 #include "widgets/NinePatch.hpp"
 #include "widgets/PushButton.hpp"
+#include "widgets/TextField.hpp"
 #include "App.hpp"
 #include "util/util.hpp"
 
@@ -33,6 +34,7 @@ Inflater::Inflater(){
 	this->AddWidget<NinePatch>("NinePatch");
 	this->AddWidget<PushButton>("PushButton");
 	this->AddWidget<ColorLabel>("ColorLabel");
+	this->AddWidget<TextField>("TextField");
 }
 
 
