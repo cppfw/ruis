@@ -390,6 +390,10 @@
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.hpp" ex="false" tool="3" flavor2="0">
@@ -660,6 +664,10 @@
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
@@ -906,6 +914,10 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1161,6 +1173,10 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextField.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
