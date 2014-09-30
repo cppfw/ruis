@@ -14,12 +14,6 @@ PushButton::PushButton(const stob::Node* desc) :
 	
 	//initialize nine-patch
 	this->PushButton::OnPressedChanged();
-	
-	if(!desc){
-		return;
-	}
-	
-	
 }
 
 void PushButton::OnPressedChanged(){
