@@ -44,11 +44,11 @@ class TextInput : public SingleLineTextWidget, public Updateable, public CharInp
 	
 	real cursorPos;
 	
-	size_t cursorIndex;
+	size_t cursorIndex = 0;
 	
 	real selectionStartPos;
 	
-	size_t selectionStartIndex;
+	size_t selectionStartIndex = 0;
 	
 	bool cursorBlinkVisible;
 	

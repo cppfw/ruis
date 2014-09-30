@@ -156,9 +156,8 @@ Container{
 
 			name{"Hello world button"}
 
-			
 			layout{
-				dim{min 10mm}
+				dim{min 7mm}
 				gravity{0% 0%}
 			}
 			
