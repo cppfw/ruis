@@ -258,12 +258,23 @@ Container{
 
 		title{"TextInput"}
 
+		ColorLabel{
+//			color{0xff1a2233}
+			color{0xff141a27}
+//			color{0xff10141f}
+
+			layout{
+				dim{0 0}
+				fill{true true}
+			}
+		}
+
 		TextField{
 			name{text_input}
 
 			text{"Hello Wrodl!!!"}
 
-			color{0xff0000ff}
+			color{0xffccfbff}
 
 			layout{
 				dim{0 min}

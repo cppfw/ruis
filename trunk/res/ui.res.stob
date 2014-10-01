@@ -13,3 +13,9 @@ morda_npt_pushbutton_pressed{
 	rect{16 0 15 15}
 	borders{7 7 7 7}
 }
+
+morda_npt_textfield{
+	tex{morda_tex_ui}
+	rect{32 0 13 13}
+	borders{6 6 6 6}
+}
