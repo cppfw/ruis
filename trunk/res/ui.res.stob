@@ -4,12 +4,12 @@ morda_tex_ui{
 
 morda_npt_pushbutton{
 	tex{morda_tex_ui}
-	rect{0 0 13 13}
-	borders{6 6 6 6}
+	rect{0 0 15 15}
+	borders{7 7 7 7}
 }
 
 morda_npt_pushbutton_pressed{
 	tex{morda_tex_ui}
-	rect{14 0 13 13}
-	borders{6 6 6 6}
+	rect{16 0 15 15}
+	borders{7 7 7 7}
 }
