@@ -131,6 +131,7 @@ Container{
 
 				Label{
 					text {"Show VK"}
+					color{0xffccfbff}
 				}
 			}
 		}
@@ -164,6 +165,7 @@ Container{
 
 			Label{
 				text {"Hello world!"}
+				color{0xffccfbff}
 			}
 		}
 
