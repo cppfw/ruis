@@ -130,15 +130,13 @@ NinePatch::NinePatch(const stob::Node* desc) :
 	
 	this->contentArea = this->FindChildByNameAs<FrameContainer>("morda_content_area");
 	
-	if(!desc){
-		return;
-	}
-	
-	if(const stob::Node* n = desc->GetProperty("image")){
+	if(const stob::Node* n = GetProperty(desc, "image")){
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
 	}
 	
-	this->contentArea->Add(*desc);
+	if(desc){
+		this->contentArea->Add(*desc);
+	}
 }
 
 
