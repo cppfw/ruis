@@ -89,7 +89,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 		s.Bind();
-		s.SetColor(0xffffffff);
+		s.SetColor(this->Color());
 
 		s.SetMatrix(matr);
 		s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
