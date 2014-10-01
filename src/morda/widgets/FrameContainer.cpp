@@ -54,7 +54,7 @@ void FrameContainer::OnResize() {
 			if(!fill[i]){
 				continue;
 			}
-			ting::util::ClampBottom(d[i], this->Rect().d[i] - margins.lb[i] - margins.rt[i]);
+			d[i] = this->Rect().d[i] - margins.lb[i] - margins.rt[i];
 		}
 		
 		(*i)->Resize((*i)->Measure(d));

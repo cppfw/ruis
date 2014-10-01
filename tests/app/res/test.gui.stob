@@ -29,6 +29,7 @@ Container{
 			text{"inwindow text, y j g q p"}
 			layout{
 				dim{min min}
+				fill{true false}
 				gravity{50% 50%}
 			}
 		}
@@ -36,25 +37,12 @@ Container{
 		ImageLabel{
 			image{img_sample}
 
-	//		keepAspectRatio{true}
+//			keepAspectRatio{true}
 
 			layout{
 				dim{min min}
+//				fill{true true}
 				gravity{50% 0%}
-			}
-		}
-
-		NinePatch{
-			image{npt_sample}
-			layout{
-				dim{min min}
-			}
-			
-			Widget{
-				layout{
-					dim{10mm 5mm}
-					margins{10 20 30 40}
-				}
 			}
 		}
 	}
@@ -157,6 +145,8 @@ Container{
 
 			name{"Hello world button"}
 
+			clip{true}
+
 			layout{
 				dim{min 7mm}
 				gravity{0% 0%}
@@ -206,7 +196,8 @@ Container{
 
 				layout{
 					dim{min 0}
-					fill{false true}
+					fill{true true}
+					weight{1}
 				}
 			}
 

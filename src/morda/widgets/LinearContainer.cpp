@@ -47,6 +47,8 @@ void LinearContainer::OnResize(){
 	
 	std::vector<Info> infoArray(this->Children().size());
 	
+	bool lessThanMin = this->Rect().d[longIndex] < this->GetMinDim()[longIndex];
+	
 	//Calculate rigid size, net weight and store weights and margins
 	real rigid = 0;
 	real netWeight = 0;
@@ -74,14 +76,20 @@ void LinearContainer::OnResize(){
 			if(const  stob::Node* n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
 				LayoutDim dim = LayoutDim::FromSTOB(n);
 				info->dim = dim.ForWidget(*(*i));
-				
-				if(fill[transIndex]){
-					ting::util::ClampBottom(info->dim[transIndex], this->Rect().d[transIndex]);
-				}
-				
-				info->dim = (*i)->Measure(info->dim);
 			}else{
 				info->dim = (*i)->GetMinDim();
+			}
+			
+			if(fill[transIndex]){
+				info->dim[transIndex] = this->Rect().d[transIndex];
+			}
+			
+			info->dim = (*i)->Measure(info->dim);
+			
+			if(lessThanMin){
+				if(!fill[longIndex]){
+					info->weight = 0;
+				}
 			}
 			
 			if(const stob::Node* n = (*i)->GetLayoutProperty(Gravity::D_Gravity())){
