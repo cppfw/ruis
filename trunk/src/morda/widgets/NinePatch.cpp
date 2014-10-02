@@ -28,6 +28,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					layout{
 						dim{min 0}
 						weight{1}
+						fill{false true}
 					}
 				}
 				ImageLabel{
@@ -43,7 +44,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				vertical{true}
 				layout{
 					dim{min min}
-					fill{false true}
+					fill{true true}
 					weight{1}
 				}
 
@@ -98,6 +99,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					layout{
 						dim{min 0}
 						weight{1}
+						fill{false true}
 					}
 				}
 				ImageLabel{

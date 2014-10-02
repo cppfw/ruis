@@ -23,6 +23,7 @@ public:
 	real weight;
 	Vec2r dim;
 	real margin;//actual margin between child widgets
+	bool fill;
 	Gravity gravity;
 	LeftBottomRightTop margins;
 };
@@ -51,6 +52,7 @@ void LinearContainer::OnResize(){
 	
 	//Calculate rigid size, net weight and store weights and margins
 	real rigid = 0;
+	real fillRigid = 0;
 	real netWeight = 0;
 	
 	{
@@ -73,6 +75,8 @@ void LinearContainer::OnResize(){
 				fill = Vec2b(false, false);
 			}
 			
+			info->fill = fill[longIndex];
+			
 			if(const  stob::Node* n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
 				LayoutDim dim = LayoutDim::FromSTOB(n);
 				info->dim = dim.ForWidget(*(*i));
@@ -86,10 +90,8 @@ void LinearContainer::OnResize(){
 			
 			info->dim = (*i)->Measure(info->dim);
 			
-			if(lessThanMin){
-				if(!fill[longIndex]){
-					info->weight = 0;
-				}
+			if(lessThanMin && info->fill){
+				fillRigid += info->dim[longIndex];
 			}
 			
 			if(const stob::Node* n = (*i)->GetLayoutProperty(Gravity::D_Gravity())){
@@ -129,24 +131,41 @@ void LinearContainer::OnResize(){
 	}
 	
 	//arrange widgets
-	{
+	{		
 		real flexible = this->Rect().d[longIndex] - rigid;
-		ting::util::ClampBottom(flexible, 0.0f);
-		if(!std::isfinite(flexible)){
-			flexible = 0;
-		}
-		ASSERT_INFO(flexible >= 0, "flexible = " << flexible)
+		lessThanMin = flexible < 0;
+		ASSERT_INFO((!lessThanMin && flexible >= 0) || (lessThanMin && flexible < 0), "lessThanMin = " << lessThanMin << ", flexible = " << flexible)
+		
+		bool noSpaceAvailable = flexible + fillRigid < 0;//true if there is no space can be freed from 'fill' widgets
 		
 		real pos = 0;
 		auto info = infoArray.begin();
 		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			Vec2r newSize(info->dim);
 			
-			ASSERT(netWeight >= 0)
-			if(netWeight > 0){
-				newSize[longIndex] += (info->weight / netWeight) * flexible;
+			real step = newSize[longIndex];
+			
+			if(flexible >= 0){
+				ASSERT(netWeight >= 0)
+				if(netWeight > 0){
+					step += (info->weight / netWeight) * flexible;
+				}
+				
+				if(info->fill){
+					newSize[longIndex] = step;
+				}
+			}else if(info->fill){
+				ASSERT(fillRigid >= 0)
+//				TRACE(<< "noSpaceAvailable = " << noSpaceAvailable << ", flexible = " << flexible << ", fillRigid = " << fillRigid << std::endl)
+				if(noSpaceAvailable){
+					step = 0;
+				}else if(fillRigid > 0){
+					step += (info->dim[longIndex] / fillRigid) * flexible;
+				}
+				
+				newSize[longIndex] = step;
 			}
-
+			
 			Vec2r newPos;
 			if(this->IsVertical()){
 				newPos.y = this->Rect().d.y - pos - info->margin - newSize.y;
@@ -154,7 +173,7 @@ void LinearContainer::OnResize(){
 				newPos.x = pos + info->margin;
 			}
 			
-			pos += info->margin + newSize[longIndex];
+			pos += info->margin + step;
 
 			(*i)->Resize(newSize.Rounded());
 			
