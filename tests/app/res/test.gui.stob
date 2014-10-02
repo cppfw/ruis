@@ -197,7 +197,7 @@ Container{
 				layout{
 					dim{min 0}
 					fill{true true}
-					weight{1}
+					weight{0}
 				}
 			}
 
@@ -207,7 +207,8 @@ Container{
 	//			reverse{true}
 
 				layout{
-					dim {0 40} //TODO: min min
+					dim {50 40} //TODO: min min
+					fill{true false}
 					weight{1}
 					gravity {0% 0%}
 				}
