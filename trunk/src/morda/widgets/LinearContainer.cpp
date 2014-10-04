@@ -1,10 +1,8 @@
 #include "LinearContainer.hpp"
 
 #include "../util/Layout.hpp"
-#include "../util/Gravity.hpp"
 #include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
-#include "../util/LeftBottomRightTop.hpp"
 
 #include <cmath>
 
@@ -22,10 +20,7 @@ class Info{
 public:
 	real weight;
 	Vec2r dim;
-	real margin;//actual margin between child widgets
 	bool fill;
-	Gravity gravity;
-	LeftBottomRightTop margins;
 };
 
 }//~namespace
@@ -35,8 +30,7 @@ public:
 LinearContainer::LinearContainer(const stob::Node* desc) :
 		Widget(desc),
 		Container(desc),
-		LinearWidget(desc),
-		GravitatingWidget(desc)
+		LinearWidget(desc)
 {}
 
 
@@ -94,39 +88,7 @@ void LinearContainer::OnResize(){
 				fillRigid += info->dim[longIndex];
 			}
 			
-			if(const stob::Node* n = (*i)->GetLayoutProperty(Gravity::D_Gravity())){
-				info->gravity = Gravity::FromSTOB(n);
-			}else{
-				info->gravity = this->gravity();
-			}
-			
-			if(auto n = (*i)->GetLayoutProperty(Layout::D_Margins())){
-				info->margins = LeftBottomRightTop::FromSTOB(n);
-			}else{
-				info->margins = LeftBottomRightTop::Default();
-			}
-			
-			//if not first child then select largest margin
-			if(info != infoArray.begin()){
-				if(this->IsVertical()){
-					info->margin = std::max((info - 1)->margins.lb.y, info->margins.rt.y);
-				}else{
-					info->margin = std::max((info - 1)->margins.rt.x, info->margins.lb.x);
-				}
-			}else{
-				if(this->IsVertical()){
-					info->margin = info->margins.rt.y;
-				}else{
-					info->margin = info->margins.lb.x;
-				}
-			}
-			
-			rigid += info->dim[longIndex] + info->margin;
-		}
-		if(this->IsVertical()){
-			rigid += infoArray.rbegin()->margins.lb.y;
-		}else{
-			rigid += infoArray.rbegin()->margins.rt.x;
+			rigid += info->dim[longIndex];
 		}
 	}
 	
@@ -168,16 +130,16 @@ void LinearContainer::OnResize(){
 			
 			Vec2r newPos;
 			if(this->IsVertical()){
-				newPos.y = this->Rect().d.y - pos - info->margin - newSize.y;
+				newPos.y = this->Rect().d.y - pos - newSize.y;
 			}else{
-				newPos.x = pos + info->margin;
+				newPos.x = pos;
 			}
 			
-			pos += info->margin + step;
+			pos += step;
 
 			(*i)->Resize(newSize.Rounded());
 			
-			newPos[transIndex] = info->gravity.PosForRect(this->Rect().d, (*i)->Rect().d)[transIndex];
+			newPos[transIndex] = (this->Rect().d[transIndex] - (*i)->Rect().d[transIndex]) / 2;
 			
 			(*i)->MoveTo(newPos);
 		}
@@ -193,18 +155,7 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	
 	morda::Vec2r minDim(0);
 	
-	float prevMargin = 0;
-	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		LeftBottomRightTop margins;
-		
-		if(auto n = (*i)->GetLayoutProperty(Layout::D_Margins())){
-			margins = LeftBottomRightTop::FromSTOB(n);
-		}else{
-			margins = LeftBottomRightTop::Default();
-		}
-
-		
 		morda::Vec2r dim;
 		
 		if(auto n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
@@ -215,32 +166,9 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 		}
 		
 		
-		ting::util::ClampBottom(minDim[transIndex], dim[transIndex] + margins.lb[transIndex] + margins.rt[transIndex]);
+		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
 		
 		minDim[longIndex] += dim[longIndex];
-		
-		if(i == this->Children().begin()){//if first widget
-			if(this->IsVertical()){
-				minDim.y += margins.rt.y;
-			}else{
-				minDim.x += margins.lb.x;
-			}
-		}else if((++decltype(i)(i)) == this->Children().end()){//if last widget
-			if(this->IsVertical()){
-				minDim.y += margins.lb.y;
-			}else{
-				minDim.x += margins.rt.x;
-			}
-		}else{//if not first child
-			if(this->IsVertical()){
-				minDim.y += std::max(prevMargin, margins.rt.y);
-				prevMargin = margins.lb.y;
-			}else{
-				minDim.x += std::max(prevMargin, margins.lb.x);
-				prevMargin = margins.rt.x;
-			}
-			
-		}
 	}
 	
 	return minDim;

@@ -31,7 +31,6 @@ THE SOFTWARE. */
 
 #include "Container.hpp"
 #include "LinearWidget.hpp"
-#include "GravitatingWidget.hpp"
 
 #include <ting/types.hpp>
 
@@ -42,8 +41,7 @@ namespace morda{
 
 class LinearContainer :
 		public Container,
-		public LinearWidget,
-		public GravitatingWidget
+		public LinearWidget
 {
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;

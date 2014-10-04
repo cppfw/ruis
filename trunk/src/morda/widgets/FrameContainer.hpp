@@ -31,17 +31,13 @@ THE SOFTWARE. */
 
 
 #include "Container.hpp"
-#include "GravitatingWidget.hpp"
 
 
 namespace morda{
 
 
 
-class FrameContainer :
-		public Container,
-		public GravitatingWidget
-{
+class FrameContainer : public Container{
 	
 	FrameContainer(const FrameContainer&) = delete;
 	FrameContainer& operator=(const FrameContainer&) = delete;
