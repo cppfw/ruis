@@ -57,7 +57,6 @@
           </df>
           <in>GLTexture.cpp</in>
           <in>GLTexture.hpp</in>
-          <in>Gravity.cpp</in>
           <in>Gravity.hpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
@@ -268,8 +267,6 @@
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -575,14 +572,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
@@ -788,8 +777,6 @@
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -1043,8 +1030,6 @@
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Gravity.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Gravity.hpp" ex="false" tool="3" flavor2="0">
       </item>

@@ -1,5 +1,6 @@
 #include "NinePatch.hpp"
 #include "../App.hpp"
+#include "../util/util.hpp"
 
 
 using namespace morda;

@@ -32,7 +32,6 @@ THE SOFTWARE. */
 
 #include "../widgets/Widget.hpp"
 #include "../resources/ResFont.hpp"
-#include "GravitatingWidget.hpp"
 #include "TextWidget.hpp"
 
 
