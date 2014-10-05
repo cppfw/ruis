@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,51 +26,44 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
-#include "LinearContainer.hpp"
-#include "FrameContainer.hpp"
-#include "Label.hpp"
-#include "MouseProxy.hpp"
+#include "Widget.hpp"
+
 
 namespace morda{
 
-class Window :
-		virtual public Widget,
-		private LinearContainer
-{
-	morda::Vec2r emptyMinDim;//minimal dimension of empty window
-	
-	std::shared_ptr<Label> title;
-	
-	std::shared_ptr<FrameContainer> contentArea;
-	
-	bool captionCaptured = false;
-	bool leftTopResizeCaptured = false;
-	bool leftBottomResizeCaptured = false;
-	bool rightTopResizeCaptured = false;
-	bool rightBottomResizeCaptured = false;
-	bool leftResizeCaptured = false;
-	bool rightResizeCaptured = false;
-	bool topResizeCaptured = false;
-	bool bottomResizeCaptured = false;
-	
-	morda::Vec2r capturePoint;
-	
-	void SetupWidgets();
-	
+class MouseProxy : virtual public Widget{
 public:
-	Window(const stob::Node* desc = nullptr);
+	MouseProxy(const stob::Node* desc = nullptr);
 	
+	MouseProxy(const MouseProxy&) = delete;
+	MouseProxy& operator=(const MouseProxy&) = delete;
 	
-	Window(const Window&) = delete;
-	Window& operator=(const Window&) = delete;
+	std::function<bool (Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
 	
-	void SetTitle(const std::string& str);
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
+		if(this->onMouseButton){
+			return this->onMouseButton(*this, isDown, pos, button, pointerId);
+		}
+		return false;
+	}
 	
-	FrameContainer& Content(){
-		return *this->contentArea;
+	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> onMouseMove;
+	
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override{
+		if(this->onMouseMove){
+			return this->onMouseMove(*this, pos, pointerId);
+		}
+		return false;
+	}
+	
+	std::function<void(Widget& widget)> onHoverChanged;
+	
+	void OnHoverChanged()override{
+		if(this->onHoverChanged){
+			this->onHoverChanged(*this);
+		}
 	}
 };
 

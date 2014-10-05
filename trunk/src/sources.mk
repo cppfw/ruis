@@ -35,6 +35,7 @@ this_srcs += morda/widgets/ImageLabel.cpp
 this_srcs += morda/widgets/Label.cpp
 this_srcs += morda/widgets/LinearContainer.cpp
 this_srcs += morda/widgets/LinearWidget.cpp
+this_srcs += morda/widgets/MouseProxy.cpp
 this_srcs += morda/widgets/NinePatch.cpp
 this_srcs += morda/widgets/PushButton.cpp
 this_srcs += morda/widgets/Slider.cpp
