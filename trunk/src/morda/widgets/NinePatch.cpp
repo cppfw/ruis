@@ -12,6 +12,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			//left column
 			LinearContainer{
 				vertical{true}
+				reverse{true}
 				layout{
 					dim{min min}
 					fill{false true}
@@ -43,6 +44,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			//middle column
 			LinearContainer{
 				vertical{true}
+				reverse{true}
 				layout{
 					dim{min min}
 					fill{true true}
@@ -83,6 +85,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			//right column
 			LinearContainer{
 				vertical{true}
+				reverse{true}
 				layout{
 					dim{min min}
 					fill{false true}
