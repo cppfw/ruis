@@ -9,10 +9,13 @@
 #include "widgets/Slider.hpp"
 #include "widgets/ImageLabel.hpp"
 #include "widgets/Window.hpp"
+#include "widgets/MouseProxy.hpp"
 #include "widgets/NinePatch.hpp"
 #include "widgets/PushButton.hpp"
 #include "widgets/TextField.hpp"
+
 #include "App.hpp"
+
 #include "util/util.hpp"
 
 
@@ -31,6 +34,7 @@ Inflater::Inflater(){
 	this->AddWidget<Slider>("Slider");
 	this->AddWidget<ImageLabel>("ImageLabel");
 	this->AddWidget<Window>("Window");
+	this->AddWidget<MouseProxy>("MouseProxy");
 	this->AddWidget<NinePatch>("NinePatch");
 	this->AddWidget<PushButton>("PushButton");
 	this->AddWidget<ColorLabel>("ColorLabel");

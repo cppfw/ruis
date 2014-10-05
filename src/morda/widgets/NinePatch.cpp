@@ -59,7 +59,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					}
 				}
 				FrameContainer{
-					name{morda_content_area}
+					name{morda_content}
 					layout{
 						dim{min min}
 						weight{1}
@@ -134,14 +134,14 @@ NinePatch::NinePatch(const stob::Node* desc) :
 	this->b = this->FindChildByNameAs<ImageLabel>("morda_b");
 	this->rb = this->FindChildByNameAs<ImageLabel>("morda_rb");
 	
-	this->contentArea = this->FindChildByNameAs<FrameContainer>("morda_content_area");
+	this->content = this->FindChildByNameAs<FrameContainer>("morda_content");
 	
 	if(const stob::Node* n = GetProperty(desc, "image")){
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
 	}
 	
 	if(desc){
-		this->contentArea->Add(*desc);
+		this->content->Add(*desc);
 	}
 }
 

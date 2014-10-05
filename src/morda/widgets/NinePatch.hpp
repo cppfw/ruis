@@ -44,7 +44,7 @@ class NinePatch :
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
 	
-	std::shared_ptr<FrameContainer> contentArea;
+	std::shared_ptr<FrameContainer> content;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -55,7 +55,7 @@ public:
 	void SetNinePatch(const std::shared_ptr<ResNinePatch>& np);
 	
 	FrameContainer& Content(){
-		return *this->contentArea;
+		return *this->content;
 	}
 private:
 
