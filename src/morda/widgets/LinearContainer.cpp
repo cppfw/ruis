@@ -129,10 +129,11 @@ void LinearContainer::OnResize(){
 			}
 			
 			Vec2r newPos;
-			if(this->IsVertical()){
-				newPos.y = this->Rect().d.y - pos - newSize.y;
+
+			if(this->IsReverse()){
+				newPos[longIndex] = this->Rect().d[longIndex] - pos - newSize[longIndex];
 			}else{
-				newPos.x = pos;
+				newPos[longIndex] = pos;
 			}
 			
 			pos += step;
