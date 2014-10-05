@@ -39,7 +39,9 @@ class LinearWidget : public virtual Widget{
 	LinearWidget(const LinearWidget&);
 	LinearWidget& operator=(const LinearWidget&);
 	
-	bool isVertical = false;
+	bool isVertical;
+	
+	bool isReverse;
 
 protected:
 	LinearWidget(const stob::Node* desc = nullptr);
@@ -62,6 +64,14 @@ public:
 	
 	bool IsVertical()const NOEXCEPT{
 		return this->isVertical;
+	}
+	
+	void SetReverse(bool reverse)NOEXCEPT{
+		this->isReverse = reverse;
+	}
+	
+	bool IsReverse()const NOEXCEPT{
+		return this->isReverse;
 	}
 private:
 

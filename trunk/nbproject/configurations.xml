@@ -89,7 +89,6 @@
           <in>Container.hpp</in>
           <in>FrameContainer.cpp</in>
           <in>FrameContainer.hpp</in>
-          <in>GravitatingWidget.hpp</in>
           <in>ImageLabel.cpp</in>
           <in>ImageLabel.hpp</in>
           <in>Label.cpp</in>
@@ -345,11 +344,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/GravitatingWidget.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -859,11 +853,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/GravitatingWidget.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
@@ -1108,11 +1097,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/GravitatingWidget.hpp"
             ex="false"
             tool="3"
             flavor2="0">
