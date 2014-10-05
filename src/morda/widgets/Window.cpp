@@ -14,6 +14,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			//left border
 			LinearContainer{
 				vertical{true}
+				reverse{true}
 				layout{
 					dim{min min}
 					fill{false true}
@@ -46,7 +47,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 			LinearContainer{
 				vertical{true}
-
+				reverse{true}
 				layout{
 					weight{1}
 					dim{min min}
@@ -120,6 +121,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			//right border
 			LinearContainer{
 				vertical{true}
+				reverse{true}
 				layout{
 					dim{min min}
 					fill{false true}
