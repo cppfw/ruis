@@ -42,7 +42,7 @@ void FrameContainer::OnResize() {
 		
 		(*i)->Resize((*i)->Measure(d));
 		
-		(*i)->MoveTo((this->Rect().d - (*i)->Rect().d) / 2);
+		(*i)->MoveTo(((this->Rect().d - (*i)->Rect().d) / 2).Round());
 	}
 }
 

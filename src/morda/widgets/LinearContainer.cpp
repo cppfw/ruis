@@ -140,7 +140,7 @@ void LinearContainer::OnResize(){
 
 			(*i)->Resize(newSize.Rounded());
 			
-			newPos[transIndex] = (this->Rect().d[transIndex] - (*i)->Rect().d[transIndex]) / 2;
+			newPos[transIndex] = ting::math::Round((this->Rect().d[transIndex] - (*i)->Rect().d[transIndex]) / 2);
 			
 			(*i)->MoveTo(newPos);
 		}
