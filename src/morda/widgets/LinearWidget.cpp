@@ -1,4 +1,5 @@
 #include "LinearWidget.hpp"
+#include "../util/util.hpp"
 
 
 using namespace morda;
@@ -8,12 +9,16 @@ using namespace morda;
 LinearWidget::LinearWidget(const stob::Node* desc) :
 		Widget(desc)
 {
-	if(!desc){
-		return;
+	if(const stob::Node* n = GetProperty(desc, "vertical")){
+		this->isVertical = n->AsBool();
+	}else{
+		this->isVertical = false;
 	}
 	
-	if(const stob::Node* n = desc->GetProperty("vertical")){
-		this->isVertical = n->AsBool();
+	if(const stob::Node* n = GetProperty(desc, "reverse")){
+		this->isReverse = n->AsBool();
+	}else{
+		this->isReverse = false;
 	}
 }
 
