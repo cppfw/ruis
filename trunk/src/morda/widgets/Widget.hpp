@@ -159,17 +159,7 @@ public:
 		this->rect.p += delta;
 	}
 
-	void Resize(const morda::Vec2r& newDims){
-		if(this->rect.d == newDims){
-			return;
-		}
-		
-		this->rect.d = newDims;
-		ting::util::ClampBottom(this->rect.d.x, real(0.0f));
-		ting::util::ClampBottom(this->rect.d.y, real(0.0f));
-		this->OnResize();//call virtual method
-		this->relayoutNeeded = false;
-	}
+	void Resize(const morda::Vec2r& newDims);
 	
 	void ResizeBy(const morda::Vec2r& delta){
 		this->Resize(this->Rect().d + delta);
