@@ -106,12 +106,9 @@ public:
 		return n->Child();
 	}
 	
-	const stob::Node* Layout()const NOEXCEPT{
-		return this->layout.get();
-	}
-	
 	std::unique_ptr<stob::Node> ResetLayout(std::unique_ptr<stob::Node> chain = nullptr)NOEXCEPT{
 		std::swap(this->layout, chain);
+		this->SetRelayoutNeeded();
 		return std::move(chain);
 	}
 	
