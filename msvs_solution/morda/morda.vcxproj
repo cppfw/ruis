@@ -97,10 +97,8 @@
     <ClCompile Include="..\..\src\morda\shaders\Shader.cpp" />
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\GLTexture.cpp" />
-    <ClCompile Include="..\..\src\morda\util\Gravity.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
     <ClCompile Include="..\..\src\morda\util\LayoutDim.cpp" />
-    <ClCompile Include="..\..\src\morda\util\LeftBottomRightTop.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ColorLabel.cpp" />
@@ -111,9 +109,11 @@
     <ClCompile Include="..\..\src\morda\widgets\Label.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\MouseProxy.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\NinePatch.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\PushButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\TextField.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextInput.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Widget.cpp" />
