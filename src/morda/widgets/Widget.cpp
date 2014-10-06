@@ -35,6 +35,13 @@ Widget::Widget(const stob::Node* desc){
 }
 
 
+std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT{
+	if(this->Name() == name){
+		return this->SharedFromThis(this);
+	}
+	return nullptr;
+}
+
 
 void Widget::RemoveFromParent(){
 	if(this->parent){

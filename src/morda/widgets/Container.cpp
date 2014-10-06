@@ -247,16 +247,10 @@ void Container::Remove(Widget& w){
 
 //override
 std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXCEPT{
-//	TRACE_AND_LOG(<< "Container::FindChildByName(): enter" << std::endl)
 	for(auto& w : this->Children()){
-//		TRACE_AND_LOG(<< "(*c)->Name() = " << ((*c)->Name()) << std::endl)
-		if(w->Name() == name){
-			return w;
-		}
-		
 		if(auto r = w->FindChildByName(name)){
 			return r;
 		}
 	}
-	return 0;
+	return this->Widget::FindChildByName(name);
 }
