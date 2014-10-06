@@ -37,9 +37,12 @@ bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2r& pos, E
 
 		return true;
 	}else{
-		ASSERT(this->isGrabbed)
-		this->isGrabbed = false;
-		return true;
+		if(this->isGrabbed){
+			this->isGrabbed = false;
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 	

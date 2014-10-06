@@ -175,9 +175,7 @@ public:
 		this->Resize(this->Rect().d + delta);
 	}
 
-	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT{
-		return nullptr;
-	}
+	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT;
 	
 	template <typename T> std::shared_ptr<T> FindChildByNameAs(const std::string& name)NOEXCEPT{
 		return std::dynamic_pointer_cast<T>(this->FindChildByName(name));
