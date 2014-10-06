@@ -6,9 +6,9 @@
 using namespace morda;
 
 
-ColorLabel::ColorLabel(const stob::Node* desc) :
-		Widget(desc),
-		ColorWidget(desc)
+ColorLabel::ColorLabel(const stob::Node* chain) :
+		Widget(chain),
+		ColorWidget(chain)
 {}
 
 

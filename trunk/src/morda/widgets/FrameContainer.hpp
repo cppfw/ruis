@@ -43,7 +43,7 @@ class FrameContainer : public Container{
 	FrameContainer& operator=(const FrameContainer&) = delete;
 	
 public:
-	FrameContainer(const stob::Node* desc = nullptr);
+	FrameContainer(const stob::Node* chain = nullptr);
 	
 public:	
 	morda::Vec2r ComputeMinDim()const override;

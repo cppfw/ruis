@@ -39,7 +39,7 @@ class ColorWidget : public virtual Widget{
 	std::uint32_t color;
 	
 protected:
-	ColorWidget(const stob::Node* desc);
+	ColorWidget(const stob::Node* chain);
 	
 public:
 	ColorWidget(const ColorWidget&) = delete;

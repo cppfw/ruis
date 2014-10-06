@@ -27,15 +27,11 @@ TextWidget::TextWidget(const stob::Node* desc) :
 
 
 
-SingleLineTextWidget::SingleLineTextWidget(const stob::Node* desc) :
-		Widget(desc),
-		TextWidget(desc)
+SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
+		Widget(chain),
+		TextWidget(chain)
 {
-	if(!desc){
-		return;
-	}
-
-	if(const stob::Node* p = desc->GetProperty("text")){
+	if(auto p = GetProperty(chain, "text")){
 		this->SetText(ting::utf8::ToUTF32(p->Value()));
 	}
 }

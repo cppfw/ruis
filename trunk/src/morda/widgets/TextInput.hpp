@@ -61,7 +61,7 @@ public:
 	TextInput(const TextInput&) = delete;
 	TextInput& operator=(const TextInput&) = delete;
 	
-	TextInput(const stob::Node* desc = nullptr);
+	TextInput(const stob::Node* chain = nullptr);
 	
 	virtual ~TextInput()NOEXCEPT{}
 

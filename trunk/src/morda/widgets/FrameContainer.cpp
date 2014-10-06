@@ -7,9 +7,9 @@
 using namespace morda;
 
 
-FrameContainer::FrameContainer(const stob::Node* desc) :
-		Widget(desc),
-		Container(desc)
+FrameContainer::FrameContainer(const stob::Node* chain) :
+		Widget(chain),
+		Container(chain)
 {}
 
 

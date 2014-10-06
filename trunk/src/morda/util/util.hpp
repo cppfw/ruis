@@ -106,11 +106,12 @@ inline bool NodeHoldsFractionValue(const stob::Node& node)NOEXCEPT{
 }
 
 
-inline const stob::Node* GetProperty(const stob::Node* desc, const char* property){
-	if(!desc){
+inline const stob::Node* GetProperty(const stob::Node* chain, const char* property){
+	if(!chain){
 		return nullptr;
 	}
-	return desc->GetProperty(property);
+	auto n = chain->ThisOrNext(property).node();
+	return n ? n->Child() : nullptr;
 }
 
 

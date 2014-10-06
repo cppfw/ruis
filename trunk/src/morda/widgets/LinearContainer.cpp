@@ -27,10 +27,10 @@ public:
 
 
 
-LinearContainer::LinearContainer(const stob::Node* desc) :
-		Widget(desc),
-		Container(desc),
-		LinearWidget(desc)
+LinearContainer::LinearContainer(const stob::Node* chain) :
+		Widget(chain),
+		Container(chain),
+		LinearWidget(chain)
 {}
 
 

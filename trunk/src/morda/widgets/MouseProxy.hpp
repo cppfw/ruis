@@ -35,36 +35,22 @@ namespace morda{
 
 class MouseProxy : virtual public Widget{
 public:
-	MouseProxy(const stob::Node* desc = nullptr);
+	MouseProxy(const stob::Node* chain = nullptr);
 	
 	MouseProxy(const MouseProxy&) = delete;
 	MouseProxy& operator=(const MouseProxy&) = delete;
 	
 	std::function<bool (Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
-		if(this->onMouseButton){
-			return this->onMouseButton(*this, isDown, pos, button, pointerId);
-		}
-		return false;
-	}
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 	
 	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> onMouseMove;
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override{
-		if(this->onMouseMove){
-			return this->onMouseMove(*this, pos, pointerId);
-		}
-		return false;
-	}
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 	
 	std::function<void(Widget& widget)> onHoverChanged;
 	
-	void OnHoverChanged()override{
-		if(this->onHoverChanged){
-			this->onHoverChanged(*this);
-		}
-	}
+	void OnHoverChanged()override;
 };
 
 }

@@ -172,7 +172,7 @@ public:
 	}
 	
 public:
-	Widget(const stob::Node* desc);
+	Widget(const stob::Node* chain);
 	
 public:
 

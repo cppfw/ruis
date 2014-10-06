@@ -78,9 +78,9 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointer
 
 
 
-Slider::Slider(const stob::Node* desc) :
-		Widget(desc),
-		LinearWidget(desc)
+Slider::Slider(const stob::Node* chain) :
+		Widget(chain),
+		LinearWidget(chain)
 {
 	this->Add(ting::New<SliderHandle>(*this));
 }

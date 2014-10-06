@@ -41,7 +41,7 @@ class TextField :
 	std::shared_ptr<TextInput> ti;
 	
 public:
-	TextField(const stob::Node* desc = nullptr);
+	TextField(const stob::Node* chain = nullptr);
 	
 	TextField(const TextField&) = delete;
 	TextField& operator=(const TextField&) = delete;
