@@ -53,11 +53,7 @@ private:
 	
 	//flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
-	
-protected:
-	static const char* D_Layout()NOEXCEPT{
-		return "layout";
-	}
+
 	
 public:
 	Container(const stob::Node* desc = nullptr);
