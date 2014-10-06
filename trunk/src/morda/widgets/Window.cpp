@@ -242,7 +242,7 @@ morda::Window::Window(const stob::Node* desc) :
 {
 	this->SetupWidgets();
 	
-	this->contentArea->SetClip(this->IsClip());
+	this->contentArea->SetClip(this->Clip());
 	this->SetClip(false);
 	
 	if(const stob::Node* n = GetProperty(desc, "title")){
