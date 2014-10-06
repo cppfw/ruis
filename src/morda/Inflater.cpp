@@ -123,7 +123,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
-	return std::move(i->second->Create(n->Child()));
+	return i->second->Create(n->Child());
 }
 
 
