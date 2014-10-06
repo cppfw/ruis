@@ -2,24 +2,24 @@
 
 #include "../App.hpp"
 
+#include "../util/util.hpp"
+
 
 using namespace morda;
 
 
-ImageLabel::ImageLabel(const stob::Node* desc) :
-		Widget(desc)
+ImageLabel::ImageLabel(const stob::Node* chain) :
+		Widget(chain)
 {
-	if(!desc){
-		return;
-	}
-	
-	if(const stob::Node* image = desc->GetProperty("image")){
+	if(auto image = GetProperty(chain, "image")){
 		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
 		this->Resize(this->img->Dim());
 	}
 	
-	if(const stob::Node* kar = desc->GetProperty("keepAspectRatio")){
+	if(auto kar = GetProperty(chain, "keepAspectRatio")){
 		this->keepAspectRatio = kar->AsBool();
+	}else{
+		this->keepAspectRatio = false;
 	}
 }
 

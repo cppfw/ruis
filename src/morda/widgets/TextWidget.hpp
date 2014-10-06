@@ -83,7 +83,7 @@ protected:
 		return Vec2r(bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 	}
 	
-	SingleLineTextWidget(const stob::Node* desc);
+	SingleLineTextWidget(const stob::Node* chain);
 	
 	const Rect2r& TextBoundingBox()const{
 		return this->bb;

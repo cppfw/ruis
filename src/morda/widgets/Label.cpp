@@ -10,9 +10,9 @@ using namespace morda;
 
 
 
-Label::Label(const stob::Node* desc) :
-		Widget(desc),
-		SingleLineTextWidget(desc)
+Label::Label(const stob::Node* chain) :
+		Widget(chain),
+		SingleLineTextWidget(chain)
 {}
 
 

@@ -56,7 +56,7 @@ private:
 
 	
 public:
-	Container(const stob::Node* desc = nullptr);
+	Container(const stob::Node* chain = nullptr);
 
 public:
 	~Container()NOEXCEPT{}
@@ -74,7 +74,7 @@ public:
 
 	void Add(const std::shared_ptr<Widget>& w);
 
-	void Add(const stob::Node& desc);
+	void Add(const stob::Node& chain);
 	
 	//return true if the widget was found in children and was removed
 	void Remove(Widget& w);

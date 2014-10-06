@@ -38,7 +38,7 @@ namespace morda{
 
 class ColorLabel : public ColorWidget{
 public:
-	ColorLabel(const stob::Node* desc = nullptr);
+	ColorLabel(const stob::Node* chain = nullptr);
 	
 	ColorLabel(const ColorLabel&) = delete;
 	ColorLabel& operator=(const ColorLabel&) = delete;

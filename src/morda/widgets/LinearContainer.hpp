@@ -47,7 +47,7 @@ class LinearContainer :
 	LinearContainer& operator=(const LinearContainer&) = delete;
 
 public:
-	LinearContainer(const stob::Node* desc = nullptr);
+	LinearContainer(const stob::Node* chain = nullptr);
 public:
 
 	void OnResize() override;	

@@ -41,10 +41,10 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
-	bool keepAspectRatio = false;
+	bool keepAspectRatio;
 	
 public:
-	ImageLabel(const stob::Node* desc = nullptr);
+	ImageLabel(const stob::Node* chain = nullptr);
 public:
 	virtual ~ImageLabel()NOEXCEPT{}
 	

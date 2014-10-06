@@ -8,109 +8,107 @@ using namespace morda;
 
 namespace{
 const char* D_NinePatchLayout = R"qwertyuiop(
-		{
-			//left column
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+		//left column
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				dim{min min}
+				fill{false true}
+			}
+
+			ImageLabel{
+				name{morda_lt}
 				layout{
 					dim{min min}
-					fill{false true}
-				}
-
-				ImageLabel{
-					name{morda_lt}
-					layout{
-						dim{min min}
-					}
-				}
-
-				ImageLabel{
-					name{morda_l}
-					layout{
-						dim{min 0}
-						weight{1}
-						fill{false true}
-					}
-				}
-				ImageLabel{
-					name{morda_lb}
-					layout{
-						dim{min min}
-					}
 				}
 			}
 
-			//middle column
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+			ImageLabel{
+				name{morda_l}
+				layout{
+					dim{min 0}
+					weight{1}
+					fill{false true}
+				}
+			}
+			ImageLabel{
+				name{morda_lb}
 				layout{
 					dim{min min}
-					fill{true true}
-					weight{1}
 				}
+			}
+		}
 
-				ImageLabel{
-					name{morda_t}
-					layout{
-						dim{0 min}
-						fill{true false}
-					}
+		//middle column
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				dim{min min}
+				fill{true true}
+				weight{1}
+			}
+
+			ImageLabel{
+				name{morda_t}
+				layout{
+					dim{0 min}
+					fill{true false}
 				}
-				FrameContainer{
-					name{morda_content}
+			}
+			FrameContainer{
+				name{morda_content}
+				layout{
+					dim{min min}
+					weight{1}
+					fill{true true}
+				}
+				ImageLabel{
+					name{morda_m}
 					layout{
-						dim{min min}
-						weight{1}
+						dim{0 0}
 						fill{true true}
 					}
-					ImageLabel{
-						name{morda_m}
-						layout{
-							dim{0 0}
-							fill{true true}
-						}
-					}
 				}
-				ImageLabel{
-					name{morda_b}
-					layout{
-						dim{0 min}
-						fill{true false}
-					}
+			}
+			ImageLabel{
+				name{morda_b}
+				layout{
+					dim{0 min}
+					fill{true false}
+				}
+			}
+		}
+
+		//right column
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				dim{min min}
+				fill{false true}
+			}
+
+			ImageLabel{
+				name{morda_rt}
+				layout{
+					dim{min min}
 				}
 			}
 
-			//right column
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+			ImageLabel{
+				name{morda_r}
 				layout{
-					dim{min min}
+					dim{min 0}
+					weight{1}
 					fill{false true}
 				}
-
-				ImageLabel{
-					name{morda_rt}
-					layout{
-						dim{min min}
-					}
-				}
-
-				ImageLabel{
-					name{morda_r}
-					layout{
-						dim{min 0}
-						weight{1}
-						fill{false true}
-					}
-				}
-				ImageLabel{
-					name{morda_rb}
-					layout{
-						dim{min min}
-					}
+			}
+			ImageLabel{
+				name{morda_rb}
+				layout{
+					dim{min min}
 				}
 			}
 		}
@@ -118,8 +116,8 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 }
 
 
-NinePatch::NinePatch(const stob::Node* desc) :
-		Widget(desc),
+NinePatch::NinePatch(const stob::Node* chain) :
+		Widget(chain),
 		LinearContainer(stob::Parse(D_NinePatchLayout).get())
 {
 	this->lt = this->FindChildByNameAs<ImageLabel>("morda_lt");
@@ -136,12 +134,12 @@ NinePatch::NinePatch(const stob::Node* desc) :
 	
 	this->content = this->FindChildByNameAs<FrameContainer>("morda_content");
 	
-	if(const stob::Node* n = GetProperty(desc, "image")){
+	if(const stob::Node* n = GetProperty(chain, "image")){
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
 	}
 	
-	if(desc){
-		this->content->Add(*desc);
+	if(chain){
+		this->content->Add(*chain);
 	}
 }
 

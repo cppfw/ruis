@@ -10,24 +10,24 @@ using namespace morda;
 
 
 
-Widget::Widget(const stob::Node* desc){
-	if(const stob::Node* n = desc ? desc->Child("layout").node() : nullptr){
+Widget::Widget(const stob::Node* chain){
+	if(const stob::Node* n = chain ? chain->ThisOrNext("layout").node() : nullptr){
 		this->layout = n->Child() ? n->Child()->CloneChain() : nullptr;
 	}
 
-	if(const stob::Node* p = GetProperty(desc, "pos")){
+	if(const stob::Node* p = GetProperty(chain, "pos")){
 		this->rect.p = morda::DimVec2r(p);
 	}
 
-	if(const stob::Node* p = GetProperty(desc, "dim")){
+	if(const stob::Node* p = GetProperty(chain, "dim")){
 		this->rect.d = morda::DimVec2r(p);
 	}
 
-	if(const stob::Node* p = GetProperty(desc, "name")){
+	if(const stob::Node* p = GetProperty(chain, "name")){
 		this->name = p->Value();
 	}
 
-	if(const stob::Node* p = GetProperty(desc, "clip")){
+	if(const stob::Node* p = GetProperty(chain, "clip")){
 		this->clip = p->AsBool();
 	}else{
 		this->clip = false;

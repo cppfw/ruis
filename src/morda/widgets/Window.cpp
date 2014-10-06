@@ -11,220 +11,218 @@ using namespace morda;
 namespace{
 
 const char* DWindowDesc = R"qwertyuiop(
-		{
-			//left border
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+		//left border
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				dim{min min}
+				fill{false true}
+			}
+			FrameContainer{
 				layout{
 					dim{min min}
+				}
+				ImageLabel{
+					image{morda_img_window_lt}
+				}
+				MouseProxy{
+					name{morda_lt_proxy}
+					layout{
+						fill{true true}
+					}
+				}
+			}
+			FrameContainer{
+				layout{
+					weight{1}
+					dim{min 0}
 					fill{false true}
 				}
-				FrameContainer{
+				ImageLabel{
+					image{morda_img_window_l}
 					layout{
-						dim{min min}
-					}
-					ImageLabel{
-						image{morda_img_window_lt}
-					}
-					MouseProxy{
-						name{morda_lt_proxy}
-						layout{
-							fill{true true}
-						}
-					}
-				}
-				FrameContainer{
-					layout{
-						weight{1}
-						dim{min 0}
 						fill{false true}
 					}
-					ImageLabel{
-						image{morda_img_window_l}
-						layout{
-							fill{false true}
-						}
-					}
-					MouseProxy{
-						name{morda_l_proxy}
-						layout{
-							fill{true true}
-						}
+				}
+				MouseProxy{
+					name{morda_l_proxy}
+					layout{
+						fill{true true}
 					}
 				}
-				FrameContainer{
+			}
+			FrameContainer{
+				layout{
+					dim{min min}
+				}
+				ImageLabel{
+					image{morda_img_window_lb}
+				}
+				MouseProxy{
+					name{morda_lb_proxy}
 					layout{
-						dim{min min}
+						fill{true true}
 					}
-					ImageLabel{
-						image{morda_img_window_lb}
+				}
+			}
+		}
+
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				weight{1}
+				dim{min min}
+				fill{true true}
+			}
+
+			//top border
+			FrameContainer{
+				layout{
+					dim{0 min}
+					fill{true false}
+				}
+				ImageLabel{
+					image{morda_img_window_t}
+					layout{
+						fill{true false}
 					}
-					MouseProxy{
-						name{morda_lb_proxy}
-						layout{
-							fill{true true}
-						}
+				}
+				MouseProxy{
+					name{morda_t_proxy}
+					layout{
+						fill{true true}
 					}
 				}
 			}
 
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+			//caption
+			FrameContainer{
 				layout{
-					weight{1}
-					dim{min min}
+					dim{0 min}
 					fill{true true}
 				}
 
-				//top border
-				FrameContainer{
-					layout{
-						dim{0 min}
-						fill{true false}
-					}
-					ImageLabel{
-						image{morda_img_window_t}
-						layout{
-							fill{true false}
-						}
-					}
-					MouseProxy{
-						name{morda_t_proxy}
-						layout{
-							fill{true true}
-						}
-					}
-				}
-
-				//caption
-				FrameContainer{
-					layout{
-						dim{0 min}
-						fill{true true}
-					}
-
-					ColorLabel{
-						layout{
-							dim{0 0}
-							fill{true true}
-						}
-						color{0xffff0000}
-					}
-
-					LinearContainer{
-						layout{
-							dim{0 min}
-							fill{true true}
-						}
-
-						Label{
-							name{morda_title}
-							layout{
-								dim{0 min}
-								gravity{0% 50%}
-								weight{1}
-							}
-						}
-					}
-
-					MouseProxy{
-						name{morda_caption_proxy}
-						layout{
-							fill{true true}
-						}
-					}
-				}
-
-				FrameContainer{
-					name{morda_content}
+				ColorLabel{
 					layout{
 						dim{0 0}
-						weight{1}
 						fill{true true}
 					}
-//					color{0xff800080}
+					color{0xffff0000}
 				}
 
-				//bottom border
-				FrameContainer{
+				LinearContainer{
 					layout{
 						dim{0 min}
-						fill{true false}
+						fill{true true}
 					}
-					ImageLabel{
-						image{morda_img_window_b}
+
+					Label{
+						name{morda_title}
 						layout{
-							fill{true false}
+							dim{0 min}
+							gravity{0% 50%}
+							weight{1}
 						}
 					}
-					MouseProxy{
-						name{morda_b_proxy}
-						layout{
-							fill{true true}
-						}
+				}
+
+				MouseProxy{
+					name{morda_caption_proxy}
+					layout{
+						fill{true true}
 					}
 				}
 			}
 
-			//right border
-			LinearContainer{
-				vertical{true}
-				reverse{true}
+			FrameContainer{
+				name{morda_content}
+				layout{
+					dim{0 0}
+					weight{1}
+					fill{true true}
+				}
+//					color{0xff800080}
+			}
+
+			//bottom border
+			FrameContainer{
+				layout{
+					dim{0 min}
+					fill{true false}
+				}
+				ImageLabel{
+					image{morda_img_window_b}
+					layout{
+						fill{true false}
+					}
+				}
+				MouseProxy{
+					name{morda_b_proxy}
+					layout{
+						fill{true true}
+					}
+				}
+			}
+		}
+
+		//right border
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+			layout{
+				dim{min min}
+				fill{false true}
+			}
+
+			FrameContainer{
 				layout{
 					dim{min min}
+				}
+				ImageLabel{
+					image{morda_img_window_rt}
+				}
+				MouseProxy{
+					name{morda_rt_proxy}
+					layout{
+						fill{true true}
+					}
+				}
+			}
+
+			FrameContainer{
+				layout{
+					weight{1}
+					dim{min 0}
 					fill{false true}
 				}
 
-				FrameContainer{
+				ImageLabel{
+					image{morda_img_window_r}
 					layout{
-						dim{min min}
-					}
-					ImageLabel{
-						image{morda_img_window_rt}
-					}
-					MouseProxy{
-						name{morda_rt_proxy}
-						layout{
-							fill{true true}
-						}
-					}
-				}
-
-				FrameContainer{
-					layout{
-						weight{1}
-						dim{min 0}
 						fill{false true}
 					}
-
-					ImageLabel{
-						image{morda_img_window_r}
-						layout{
-							fill{false true}
-						}
-					}
-					MouseProxy{
-						name{morda_r_proxy}
-						layout{
-							fill{true true}
-						}
+				}
+				MouseProxy{
+					name{morda_r_proxy}
+					layout{
+						fill{true true}
 					}
 				}
+			}
 
-				FrameContainer{
+			FrameContainer{
+				layout{
+					dim{min min}
+				}
+				ImageLabel{
+					image{morda_img_window_rb}
+				}
+				MouseProxy{
+					name{morda_rb_proxy}
 					layout{
-						dim{min min}
-					}
-					ImageLabel{
-						image{morda_img_window_rb}
-					}
-					MouseProxy{
-						name{morda_rb_proxy}
-						layout{
-							fill{true true}
-						}
+						fill{true true}
 					}
 				}
 			}
@@ -235,8 +233,8 @@ const char* DWindowDesc = R"qwertyuiop(
 
 
 
-morda::Window::Window(const stob::Node* desc) :
-		Widget(desc),
+morda::Window::Window(const stob::Node* chain) :
+		Widget(chain),
 		LinearContainer(stob::Parse(DWindowDesc).get()),
 		emptyMinDim(this->LinearContainer::ComputeMinDim())
 {
@@ -245,12 +243,12 @@ morda::Window::Window(const stob::Node* desc) :
 	this->contentArea->SetClip(this->Clip());
 	this->SetClip(false);
 	
-	if(const stob::Node* n = GetProperty(desc, "title")){
+	if(auto n = GetProperty(chain, "title")){
 		this->SetTitle(n->Value());
 	}
 	
-	if(desc){
-		this->contentArea->Add(*desc);
+	if(chain){
+		this->contentArea->Add(*chain);
 	}
 }
 

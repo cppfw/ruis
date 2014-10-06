@@ -46,7 +46,7 @@ public:
 	PushButton(const PushButton&) = delete;
 	PushButton& operator=(const PushButton&) = delete;
 	
-	PushButton(const stob::Node* desc = nullptr);
+	PushButton(const stob::Node* chain = nullptr);
 	
 private:
 	void OnPressedChanged()override;

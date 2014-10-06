@@ -44,7 +44,7 @@ class Label : public SingleLineTextWidget{
 	
 	
 public:
-	Label(const stob::Node* desc = nullptr);
+	Label(const stob::Node* chain = nullptr);
 	
 public:
 	~Label()NOEXCEPT{}

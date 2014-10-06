@@ -61,7 +61,7 @@ public:
 
 	class WidgetFactory{
 	public:
-		virtual std::shared_ptr<morda::Widget> Create(const stob::Node& node)const = 0;
+		virtual std::shared_ptr<morda::Widget> Create(const stob::Node* chain)const = 0;
 
 		virtual ~WidgetFactory()NOEXCEPT{}
 	};
@@ -80,8 +80,8 @@ public:
 	template <class T_Widget> void AddWidget(const std::string& widgetName){
 		class Factory : public WidgetFactory{
 		public:
-			std::shared_ptr<morda::Widget> Create(const stob::Node& node)const override{
-				return std::move(ting::New<T_Widget>(&node));
+			std::shared_ptr<morda::Widget> Create(const stob::Node* chain)const override{
+				return std::move(ting::New<T_Widget>(chain));
 			}
 		};
 

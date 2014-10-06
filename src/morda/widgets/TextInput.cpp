@@ -25,15 +25,11 @@ real D_CursorWidth = real(2.0);
 
 
 
-TextInput::TextInput(const stob::Node* desc) :
-		Widget(desc),
-		SingleLineTextWidget(desc)
+TextInput::TextInput(const stob::Node* chain) :
+		Widget(chain),
+		SingleLineTextWidget(chain)
 {
 	this->SetClip(true);
-	
-	if(!desc){
-		return;
-	}
 }
 
 

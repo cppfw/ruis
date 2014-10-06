@@ -6,9 +6,9 @@ using namespace morda;
 
 
 
-TextField::TextField(const stob::Node* desc) :
-		Widget(desc),
-		ti(ting::New<TextInput>(desc))
+TextField::TextField(const stob::Node* chain) :
+		Widget(chain),
+		ti(ting::New<TextInput>(chain))
 {
 	this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>("morda_npt_textfield"));
 	

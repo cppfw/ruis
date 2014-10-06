@@ -61,7 +61,7 @@ class Window :
 	void SetupWidgets();
 	
 public:
-	Window(const stob::Node* desc = nullptr);
+	Window(const stob::Node* chain = nullptr);
 	
 	
 	Window(const Window&) = delete;

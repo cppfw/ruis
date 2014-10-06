@@ -50,7 +50,7 @@ public:
 	NinePatch(const NinePatch&) = delete;
 	NinePatch& operator=(const NinePatch&) = delete;
 	
-	NinePatch(const stob::Node* desc = nullptr);
+	NinePatch(const stob::Node* chain = nullptr);
 	
 	void SetNinePatch(const std::shared_ptr<ResNinePatch>& np);
 	
