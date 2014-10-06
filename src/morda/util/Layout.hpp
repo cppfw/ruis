@@ -38,10 +38,7 @@ public:
 	static const char* D_Fill(){
 		return "fill";
 	}
-	
-	static const char* D_Margins(){
-		return "margins";
-	}
+
 };
 
 }
