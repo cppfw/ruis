@@ -43,6 +43,21 @@ std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT
 }
 
 
+
+void Widget::Resize(const morda::Vec2r& newDims){
+	if(this->rect.d == newDims){
+		return;
+	}
+
+	this->rect.d = newDims;
+	ting::util::ClampBottom(this->rect.d.x, real(0.0f));
+	ting::util::ClampBottom(this->rect.d.y, real(0.0f));
+	this->OnResize();//call virtual method
+	this->relayoutNeeded = false;
+}
+
+
+
 void Widget::RemoveFromParent(){
 	if(this->parent){
 		this->parent->Remove(*this);
