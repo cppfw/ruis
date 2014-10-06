@@ -41,7 +41,7 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, const ting::fs::Fil
 	//read size attribute
 	unsigned size;
 	if(const stob::Node* sizeProp = el.GetProperty("size")){
-		size = unsigned(morda::DimValue(*sizeProp));
+		size = unsigned(morda::DimValueFromSTOB(*sizeProp));
 	}else{
 		size = 13;
 	}

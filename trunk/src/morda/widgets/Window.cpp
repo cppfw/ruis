@@ -16,13 +16,9 @@ const char* DWindowDesc = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				dim{min min}
 				fill{false true}
 			}
 			FrameContainer{
-				layout{
-					dim{min min}
-				}
 				ImageLabel{
 					image{morda_img_window_lt}
 				}
@@ -36,7 +32,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			FrameContainer{
 				layout{
 					weight{1}
-					dim{min 0}
+					dim{-1 0}
 					fill{false true}
 				}
 				ImageLabel{
@@ -53,9 +49,6 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 			FrameContainer{
-				layout{
-					dim{min min}
-				}
 				ImageLabel{
 					image{morda_img_window_lb}
 				}
@@ -73,14 +66,13 @@ const char* DWindowDesc = R"qwertyuiop(
 			reverse{true}
 			layout{
 				weight{1}
-				dim{min min}
 				fill{true true}
 			}
 
 			//top border
 			FrameContainer{
 				layout{
-					dim{0 min}
+					dim{0 -1}
 					fill{true false}
 				}
 				ImageLabel{
@@ -100,7 +92,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			//caption
 			FrameContainer{
 				layout{
-					dim{0 min}
+					dim{0 -1}
 					fill{true true}
 				}
 
@@ -114,14 +106,14 @@ const char* DWindowDesc = R"qwertyuiop(
 
 				LinearContainer{
 					layout{
-						dim{0 min}
+						dim{0 -1}
 						fill{true true}
 					}
 
 					Label{
 						name{morda_title}
 						layout{
-							dim{0 min}
+							dim{0 -1}
 							gravity{0% 50%}
 							weight{1}
 						}
@@ -149,7 +141,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			//bottom border
 			FrameContainer{
 				layout{
-					dim{0 min}
+					dim{0 -1}
 					fill{true false}
 				}
 				ImageLabel{
@@ -172,14 +164,10 @@ const char* DWindowDesc = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				dim{min min}
 				fill{false true}
 			}
 
 			FrameContainer{
-				layout{
-					dim{min min}
-				}
 				ImageLabel{
 					image{morda_img_window_rt}
 				}
@@ -194,7 +182,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			FrameContainer{
 				layout{
 					weight{1}
-					dim{min 0}
+					dim{-1 0}
 					fill{false true}
 				}
 
@@ -213,9 +201,6 @@ const char* DWindowDesc = R"qwertyuiop(
 			}
 
 			FrameContainer{
-				layout{
-					dim{min min}
-				}
 				ImageLabel{
 					image{morda_img_window_rb}
 				}

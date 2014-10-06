@@ -16,11 +16,11 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "pos")){
-		this->rect.p = morda::DimVec2r(p);
+		this->rect.p = morda::DimVec2rFromSTOB(p);
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "dim")){
-		this->rect.d = morda::DimVec2r(p);
+		this->rect.d = morda::DimVec2rFromSTOB(p);
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
@@ -42,6 +42,12 @@ std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT
 	return nullptr;
 }
 
+
+std::unique_ptr<LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<LayoutParams> params)NOEXCEPT{
+	std::swap(this->layoutParams, params);
+	this->SetRelayoutNeeded();
+	return std::move(params);
+}
 
 
 void Widget::Resize(const morda::Vec2r& newDims){

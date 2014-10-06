@@ -49,9 +49,11 @@ public:
 	morda::Vec2r ComputeMinDim()const override;
 
 	void OnResize() override;
-
+	
 private:
-
+	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
+		return DimLayoutParams::New(chain);
+	}
 };
 
 

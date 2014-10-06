@@ -37,13 +37,13 @@ Rect2r morda::Rect2rFromSTOB(const stob::Node* chain){
 
 
 
-morda::Vec2r morda::DimVec2r(const stob::Node* chain){
+morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2r ret;
 	
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
-		v = DimValue(*chain);
+		v = DimValueFromSTOB(*chain);
 		ret[i] = v;
 	}
 	
@@ -56,7 +56,7 @@ morda::Vec2r morda::DimVec2r(const stob::Node* chain){
 
 
 
-real morda::DimValue(const stob::Node& n){
+real morda::DimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
 		real ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);

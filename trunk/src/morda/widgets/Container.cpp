@@ -38,6 +38,20 @@ Container::Container(const stob::Node* chain) :
 
 
 
+const LayoutParams& Container::GetLayoutParams(Widget& w)const{
+	if(w.Parent() != this){
+		throw Exc("Container::GetLayoutParams(): trying to get layout parameters of a widget from another container");
+	}
+	
+	if(!w.layoutParams){
+		w.layoutParams = this->CreateLayoutParams(w.layout.get());
+	}
+	
+	return *w.layoutParams;
+}
+
+
+
 void Container::Add(const stob::Node& chain){
 	for(const stob::Node* n = chain.ThisOrNextNonProperty().node(); n; n = n->NextNonProperty().node()){
 		this->Add(morda::App::Inst().inflater().Inflate(*n));

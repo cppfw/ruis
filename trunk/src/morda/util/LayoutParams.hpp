@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,63 +26,39 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
-#include "../widgets/Widget.hpp"
+#include "Vector2.hpp"
 
+#include <stob/dom.hpp>
 
 
 namespace morda{
 
+class Widget;
 
 
-class LayoutDim{
+class LayoutParams{
+protected:
+	LayoutParams() = default;
+
 public:
-	static const char* D_Dim()NOEXCEPT{
-		return "dim";
-	}
-
-	real x, y;//negative value means min
-
-	float& operator[](size_t i)NOEXCEPT{
-		ASSERT(i < 2)
-		return reinterpret_cast<real*>(this)[i];
-	}
-
-	const float& operator[](size_t i)const NOEXCEPT{
-		ASSERT(i < 2)
-		return reinterpret_cast<const real*>(this)[i];
-	}
-
-	/**
-	 * @brief Get actual dimensions for given widget.
-	 * Get resulting dimensions for given Widget basing on dimension description
-	 * provided by this object.
-	 * @param w - widget to get dimensions for.
-	 * @return Resulting dimensions.
-	 */
-	Vec2r ForWidget(const Widget& w)const NOEXCEPT;
-
-	/**
-	 * @brief Parse from STOB.
-	 * Parse from STOB of the form:
-	 * @code
-	 * dim{min 13}
-	 * @endcode
-	 * The value of the root node does not matter, it is ignored.
-	 * @param chain - dim node chain.
-	 * @return Parsed Dim object.
-	 */
-	static LayoutDim FromSTOB(const stob::Node* chain)NOEXCEPT;
-
-	static LayoutDim Default()NOEXCEPT{
-		LayoutDim ret;
-		ret.x = -1;
-		ret.y = -1;
-		return ret;
-	}
+	virtual ~LayoutParams()NOEXCEPT{}
 };
 
+
+class DimLayoutParams : public LayoutParams{
+protected:
+	DimLayoutParams(const stob::Node* chain);
+public:
+	Vec2r dim; //negative value means 'min'
+	Vec2b fill;
+	
+	static std::unique_ptr<DimLayoutParams> New(const stob::Node* chain = nullptr){
+		return std::unique_ptr<DimLayoutParams>(new DimLayoutParams(chain));
+	}
+	
+	Vec2r DimForWidget(const Widget& w)const NOEXCEPT;
+};
 
 }

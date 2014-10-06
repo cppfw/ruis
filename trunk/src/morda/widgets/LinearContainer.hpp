@@ -53,7 +53,22 @@ public:
 	void OnResize() override;	
 	
 	morda::Vec2r ComputeMinDim()const NOEXCEPT override;
+	
+	
+	class LayoutParams : public DimLayoutParams{
+	protected:
+		LayoutParams(const stob::Node* chain);
+	public:
+		real weight;
+		
+		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
+			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
+		}
+	};
 private:
+	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
+		return LayoutParams::New(chain);
+	}
 };
 
 

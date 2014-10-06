@@ -1,16 +1,10 @@
 class MyLabel Label{
 
 	text{"trololo"}
-
-	layout{
-		dim{min min}
-	}
 }
 
 style some_style{
-	layout{
-		dim{min min}
-	}
+	
 }
 
 Container{
@@ -28,7 +22,6 @@ Container{
 		Label{
 			text{"inwindow text, y j g q p"}
 			layout{
-				dim{min min}
 				fill{true false}
 			}
 		}
@@ -39,7 +32,6 @@ Container{
 //			keepAspectRatio{true}
 
 			layout{
-				dim{min min}
 //				fill{true true}
 			}
 		}
@@ -105,7 +97,7 @@ Container{
 
 				
 				layout{
-					dim {20mm min}
+					dim {20mm -1}
 					weight {1}
 				}
 				
@@ -140,7 +132,7 @@ Container{
 			clip{true}
 
 			layout{
-				dim{min 7mm}
+				dim{-1 7mm}
 			}
 			
 
@@ -159,7 +151,7 @@ Container{
 
 			
 			layout{
-				dim{min 30}
+				dim{-1 30}
 			}
 			
 		}
@@ -185,7 +177,7 @@ Container{
 				keepAspectRatio{true}
 
 				layout{
-					dim{min 0}
+					dim{-1 0}
 					fill{true true}
 					weight{0}
 				}
@@ -197,7 +189,7 @@ Container{
 	//			reverse{true}
 
 				layout{
-					dim {50 40} //TODO: min min
+					dim {50 40} //TODO: -1 -1
 					fill{true false}
 					weight{1}
 				}
@@ -210,7 +202,7 @@ Container{
 				reverse{true}
 
 				layout{
-					dim {40 0} //TODO: min min
+					dim {40 0} //TODO: -1 -1
 					fill{false true}
 				}
 			}
@@ -257,7 +249,7 @@ Container{
 			color{0xffccfbff}
 
 			layout{
-				dim{0 min}
+				dim{0 -1}
 				fill{true false}
 			}
 		}

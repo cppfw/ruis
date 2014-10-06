@@ -1,7 +1,5 @@
 #include "LinearContainer.hpp"
 
-#include "../util/Layout.hpp"
-#include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
 
 #include <cmath>
@@ -13,9 +11,6 @@ using namespace morda;
 
 namespace{
 
-const char* D_Weight = "weight";
-
-
 class Info{
 public:
 	real weight;
@@ -24,6 +19,18 @@ public:
 };
 
 }//~namespace
+
+
+LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
+		DimLayoutParams(chain)
+{
+	if(auto n = GetProperty(chain, "weight")){
+		this->weight = n->AsFloat();
+	}else{
+		this->weight = 0;
+	}
+}
+
 
 
 
@@ -54,31 +61,16 @@ void LinearContainer::OnResize(){
 		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i, ++info){
 			ASSERT(info != infoArray.end())
 			
-			if(const stob::Node* weight = (*i)->GetLayoutProperty(D_Weight)){
-				info->weight = weight->AsFloat();
-				netWeight += info->weight;
-			}else{
-				info->weight = 0;
-			}
+			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 			
-			Vec2b fill;
-				
-			if(const stob::Node* n = (*i)->GetLayoutProperty(Layout::D_Fill())){
-				fill = Vec2bFromSTOB(n);
-			}else{
-				fill = Vec2b(false, false);
-			}
+			info->weight = lp.weight;
+			netWeight += info->weight;
 			
-			info->fill = fill[longIndex];
+			info->fill = lp.fill[longIndex];
 			
-			if(const  stob::Node* n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
-				LayoutDim dim = LayoutDim::FromSTOB(n);
-				info->dim = dim.ForWidget(*(*i));
-			}else{
-				info->dim = (*i)->GetMinDim();
-			}
+			info->dim = lp.DimForWidget(**i);
 			
-			if(fill[transIndex]){
+			if(lp.fill[transIndex]){
 				info->dim[transIndex] = this->Rect().d[transIndex];
 			}
 			
@@ -157,15 +149,9 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	morda::Vec2r minDim(0);
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		morda::Vec2r dim;
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
-		if(auto n = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
-			LayoutDim ld = LayoutDim::FromSTOB(n);
-			dim = (*i)->Measure(ld.ForWidget(*(*i)));
-		}else{
-			dim = (*i)->GetMinDim();
-		}
-		
+		morda::Vec2r dim = (*i)->Measure(lp.DimForWidget(**i));
 		
 		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
 		
