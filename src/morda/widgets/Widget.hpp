@@ -38,6 +38,7 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
+#include "../util/LayoutParams.hpp"
 
 #include "../config.hpp"
 
@@ -93,24 +94,10 @@ private:
 	bool relayoutNeeded = true;
 	
 	std::unique_ptr<stob::Node> layout;
-public:
-
-	const stob::Node* GetLayoutProperty(const char* propName)const NOEXCEPT{
-		if(!this->layout){
-			return nullptr;
-		}
-		auto n = this->layout->ThisOrNext(propName).node();
-		if(!n){
-			return nullptr;
-		}
-		return n->Child();
-	}
 	
-	std::unique_ptr<stob::Node> ResetLayout(std::unique_ptr<stob::Node> chain = nullptr)NOEXCEPT{
-		std::swap(this->layout, chain);
-		this->SetRelayoutNeeded();
-		return std::move(chain);
-	}
+	std::unique_ptr<LayoutParams> layoutParams;
+public:
+	std::unique_ptr<LayoutParams> ResetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)NOEXCEPT;
 	
 	bool NeedsRelayout()const NOEXCEPT{
 		return this->relayoutNeeded;

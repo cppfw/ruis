@@ -13,30 +13,23 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				dim{min min}
 				fill{false true}
 			}
 
 			ImageLabel{
 				name{morda_lt}
-				layout{
-					dim{min min}
-				}
 			}
 
 			ImageLabel{
 				name{morda_l}
 				layout{
-					dim{min 0}
+					dim{-1 0}
 					weight{1}
 					fill{false true}
 				}
 			}
 			ImageLabel{
 				name{morda_lb}
-				layout{
-					dim{min min}
-				}
 			}
 		}
 
@@ -45,7 +38,6 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				dim{min min}
 				fill{true true}
 				weight{1}
 			}
@@ -53,14 +45,13 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_t}
 				layout{
-					dim{0 min}
+					dim{0 -1}
 					fill{true false}
 				}
 			}
 			FrameContainer{
 				name{morda_content}
 				layout{
-					dim{min min}
 					weight{1}
 					fill{true true}
 				}
@@ -75,7 +66,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_b}
 				layout{
-					dim{0 min}
+					dim{0 -1}
 					fill{true false}
 				}
 			}
@@ -86,30 +77,23 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				dim{min min}
 				fill{false true}
 			}
 
 			ImageLabel{
 				name{morda_rt}
-				layout{
-					dim{min min}
-				}
 			}
 
 			ImageLabel{
 				name{morda_r}
 				layout{
-					dim{min 0}
+					dim{-1 0}
 					weight{1}
 					fill{false true}
 				}
 			}
 			ImageLabel{
 				name{morda_rb}
-				layout{
-					dim{min min}
-				}
 			}
 		}
 	)qwertyuiop";

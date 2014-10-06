@@ -31,15 +31,13 @@ THE SOFTWARE. */
 #include <map>
 #include <list>
 
+#include "../Exc.hpp"
 #include "Widget.hpp"
 
+#include "../util/LayoutParams.hpp"
 
 
 namespace morda{
-
-
-
-class Layout;
 
 
 
@@ -53,7 +51,21 @@ private:
 	
 	//flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
-
+	
+protected:
+	virtual std::unique_ptr<LayoutParams> CreateLayoutParams(const stob::Node* chain = nullptr)const{
+		throw Exc("Container::CreateLayoutParams(): simple Container cannot have layout params");
+	}
+	
+	const LayoutParams& GetLayoutParams(Widget& w)const;
+	
+	template <class T> const T& GetLayoutParamsAs(Widget& w)const{
+		auto p = dynamic_cast<const T*>(&this->GetLayoutParams(w));
+		if(!p){
+			throw Exc("Container::GetLayoutParamsAs(): could not cast widget's layout parameters to a requested class");
+		}
+		return *p;
+	}
 	
 public:
 	Container(const stob::Node* chain = nullptr);

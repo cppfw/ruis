@@ -1,7 +1,5 @@
 #include "FrameContainer.hpp"
 
-#include "../util/Layout.hpp"
-#include "../util/LayoutDim.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
@@ -16,25 +14,11 @@ FrameContainer::FrameContainer(const stob::Node* chain) :
 
 void FrameContainer::OnResize() {
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		Vec2b fill;
+		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
 		
-		if(auto n = (*i)->GetLayoutProperty(Layout::D_Fill())){
-			fill = Vec2bFromSTOB(n);
-		}else{
-			fill = decltype(fill)(false, false);
-		}
-		
-		LayoutDim dim;
-		
-		if(auto c = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
-			dim = LayoutDim::FromSTOB(c);
-		}else{
-			dim = LayoutDim::Default();
-		}
-		
-		Vec2r d = dim.ForWidget(*(*i));
+		Vec2r d = lp.DimForWidget(**i);
 		for(unsigned i = 0; i != 2; ++i){
-			if(!fill[i]){
+			if(!lp.fill[i]){
 				continue;
 			}
 			d[i] = this->Rect().d[i];
@@ -52,16 +36,12 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 	morda::Vec2r minDim(0);
 	
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
-		morda::Vec2r dim;
-		if(auto c = (*i)->GetLayoutProperty(LayoutDim::D_Dim())){
-			LayoutDim ld = LayoutDim::FromSTOB(c);
-			dim = (*i)->Measure(ld.ForWidget(*(*i)));
-		}else{
-			dim = (*i)->GetMinDim();
-		}
+		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
 		
-		ting::util::ClampBottom(minDim.x, dim.x);
-		ting::util::ClampBottom(minDim.y, dim.y);
+		morda::Vec2r d = (*i)->Measure(lp.DimForWidget(**i));
+		
+		ting::util::ClampBottom(minDim.x, d.x);
+		ting::util::ClampBottom(minDim.y, d.y);
 	}
 	
 	return minDim;

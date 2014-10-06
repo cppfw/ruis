@@ -61,8 +61,6 @@
           <in>Image.cpp</in>
           <in>Image.hpp</in>
           <in>Layout.hpp</in>
-          <in>LayoutDim.cpp</in>
-          <in>LayoutDim.hpp</in>
           <in>LeftBottomRightTop.cpp</in>
           <in>LeftBottomRightTop.hpp</in>
           <in>Matrix4.hpp</in>
@@ -274,12 +272,6 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -579,12 +571,17 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/util/LayoutParams.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
@@ -621,17 +618,27 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -644,9 +651,7 @@
       </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/MouseProxy.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -786,12 +791,6 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -1038,12 +1037,6 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Layout.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/LayoutDim.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"

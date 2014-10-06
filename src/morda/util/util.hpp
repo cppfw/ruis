@@ -72,9 +72,18 @@ morda::Rect2r Rect2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting vector will be filled with zeroes.
  * @return parsed Vec2r.
  */
-morda::Vec2r DimVec2r(const stob::Node* chain);
+morda::Vec2r DimVec2rFromSTOB(const stob::Node* chain);
 
 
+
+/**
+ * @brief Parse chain of 2 STOB nodes as Vec2b.
+ * @param chain - chain of at least two nodes holding Vec2b values.
+ *                If there are less than 2 nodes in the chain then the rest of
+ *                vector components will be filled with latest parsed value.
+ *                If zero pointer is passed the resulting vector will be filled with false's.
+ * @return parsed Vec2b.
+ */
 morda::Vector2<bool> Vec2bFromSTOB(const stob::Node* chain);
 
 
@@ -86,7 +95,7 @@ morda::Vector2<bool> Vec2bFromSTOB(const stob::Node* chain);
  * @param n - stob node holding the value.
  * @return Parsed value in pixels.
  */
-float DimValue(const stob::Node& n);
+float DimValueFromSTOB(const stob::Node& n);
 
 
 
