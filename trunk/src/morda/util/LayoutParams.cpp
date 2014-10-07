@@ -10,16 +10,28 @@ using namespace morda;
 
 
 DimLayoutParams::DimLayoutParams(const stob::Node* chain){
-	if(auto n = GetProperty(chain, "dim")){
-		this->dim = DimVec2rFromSTOB(n);
+	if(auto n = GetProperty(chain, "dimX")){
+		this->dim.x = DimValueFromSTOB(*n);
 	}else{
-		this->dim = Vec2r(-1, -1);
+		this->dim.x = -1;
 	}
 	
-	if(auto n = GetProperty(chain, "fill")){
-		this->fill = Vec2bFromSTOB(n);
+	if(auto n = GetProperty(chain, "dimY")){
+		this->dim.y = DimValueFromSTOB(*n);
 	}else{
-		this->fill = Vec2b(false, false);
+		this->dim.y = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "fillX")){
+		this->fill.x = n->AsBool();
+	}else{
+		this->fill.x = false;
+	}
+	
+	if(auto n = GetProperty(chain, "fillY")){
+		this->fill.y = n->AsBool();
+	}else{
+		this->fill.y = false;
 	}
 }
 

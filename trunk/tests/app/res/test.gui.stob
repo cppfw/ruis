@@ -9,8 +9,8 @@ style some_style{
 
 Container{
 	layout{
-		dim{0 0}
-		fill{true true}
+		dimX{0} dimY{0}
+		fillX{true} fillY{true}
 	}
 
 	Window{
@@ -22,8 +22,7 @@ Container{
 		Label{
 			text{"inwindow text, y j g q p"}
 			layout{
-				fillX{true} fillY{true}
-//				fill{true false}
+				fillX{true} fillY{false}
 			}
 		}
 
@@ -33,7 +32,7 @@ Container{
 //			keepAspectRatio{true}
 
 			layout{
-//				fill{true true}
+//				fillX{true} fillY{true}
 			}
 		}
 	}
@@ -57,8 +56,8 @@ Container{
 			clip {true}
 
 			layout{
-				dimX{0 0}
-				fill{true true}
+				dimX{0} dimY{0}
+				fillX{true} fillY{true}
 
 				weight{7}
 			}
@@ -96,7 +95,7 @@ Container{
 
 				
 				layout{
-					dim {20mm -1}
+					dimX{20mm} dimY{-1}
 					weight {1}
 				}
 				
@@ -131,7 +130,7 @@ Container{
 			clip{true}
 
 			layout{
-				dim{-1 7mm}
+				dimX{-1} dimY{7mm}
 			}
 			
 
@@ -150,7 +149,7 @@ Container{
 
 			
 			layout{
-				dim{-1 30}
+				dimX{-1} dimY{30}
 			}
 			
 		}
@@ -166,8 +165,8 @@ Container{
 			vertical {false}
 
 			layout{
-				dim {0 0}
-				fill{true true}
+				dimX{0} dimY{0}
+				fillX{true} fillY{true}
 			}
 
 			ImageLabel{
@@ -176,8 +175,8 @@ Container{
 				keepAspectRatio{true}
 
 				layout{
-					dim{-1 0}
-					fill{true true}
+					dimX{-1} dimY{0}
+					fillX{true} fillY{true}
 					weight{0}
 				}
 			}
@@ -188,8 +187,8 @@ Container{
 	//			reverse{true}
 
 				layout{
-					dim {50 40} //TODO: -1 -1
-					fill{true false}
+					dimX{50} dimY{40} //TODO: -1 -1
+					fillX{true} fillY{false}
 					weight{1}
 				}
 			}
@@ -201,8 +200,8 @@ Container{
 				reverse{true}
 
 				layout{
-					dim {40 0} //TODO: -1 -1
-					fill{false true}
+					dimX{40} dimY{0} //TODO: -1 -1
+					fillX{false} fillY{true}
 				}
 			}
 		}
@@ -217,8 +216,8 @@ Container{
 		CubeWidget{
 			name{cube_widget}
 			layout{
-				dim{0 0}
-				fill{true true}
+				dimX{0} dimY{0}
+				fillX{true} fillY{true}
 			}
 		}
 	}
@@ -235,8 +234,8 @@ Container{
 //			color{0xff10141f}
 
 			layout{
-				dim{0 0}
-				fill{true true}
+				dimX{0} dimY{0}
+				fillX{true} fillY{true}
 			}
 		}
 
@@ -248,8 +247,8 @@ Container{
 			color{0xffccfbff}
 
 			layout{
-				dim{0 -1}
-				fill{true false}
+				dimX{0} dimY{-1}
+				fillX{true} fillY{false}
 			}
 		}
 	}

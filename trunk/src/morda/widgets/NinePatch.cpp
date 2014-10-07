@@ -13,7 +13,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				fill{false true}
+				fillY{true}
 			}
 
 			ImageLabel{
@@ -23,9 +23,9 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_l}
 				layout{
-					dim{-1 0}
+					dimY{0}
 					weight{1}
-					fill{false true}
+					fillY{true}
 				}
 			}
 			ImageLabel{
@@ -38,36 +38,36 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				fill{true true}
+				fillX{true} fillY{true}
 				weight{1}
 			}
 
 			ImageLabel{
 				name{morda_t}
 				layout{
-					dim{0 -1}
-					fill{true false}
+					dimX{0}
+					fillX{true}
 				}
 			}
 			FrameContainer{
 				name{morda_content}
 				layout{
 					weight{1}
-					fill{true true}
+					fillX{true} fillY{true}
 				}
 				ImageLabel{
 					name{morda_m}
 					layout{
-						dim{0 0}
-						fill{true true}
+						dimX{0} dimY{0}
+						fillX{true} fillY{true}
 					}
 				}
 			}
 			ImageLabel{
 				name{morda_b}
 				layout{
-					dim{0 -1}
-					fill{true false}
+					dimX{0}
+					fillX{true}
 				}
 			}
 		}
@@ -77,7 +77,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			vertical{true}
 			reverse{true}
 			layout{
-				fill{false true}
+				fillY{true}
 			}
 
 			ImageLabel{
@@ -87,9 +87,9 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_r}
 				layout{
-					dim{-1 0}
+					dimY{0}
 					weight{1}
-					fill{false true}
+					fillY{true}
 				}
 			}
 			ImageLabel{
