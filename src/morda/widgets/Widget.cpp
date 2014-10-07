@@ -15,16 +15,28 @@ Widget::Widget(const stob::Node* chain){
 		this->layout = n->CloneChain();
 	}
 
-	if(const stob::Node* p = GetProperty(chain, "pos")){
-		this->rect.p = morda::DimVec2rFromSTOB(p);
+	if(const stob::Node* n = GetProperty(chain, "posX")){
+		this->rect.p.x = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.p = Vec2r(0, 0);
+		this->rect.p.x = 0;
+	}
+	
+	if(const stob::Node* n = GetProperty(chain, "posY")){
+		this->rect.p.y = morda::DimValueFromSTOB(*n);
+	}else{
+		this->rect.p.y = 0;
 	}
 
-	if(const stob::Node* p = GetProperty(chain, "dim")){
-		this->rect.d = morda::DimVec2rFromSTOB(p);
+	if(const stob::Node* n = GetProperty(chain, "dimX")){
+		this->rect.d.x = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.d = Vec2r(0, 0);
+		this->rect.d.x = 0;
+	}
+	
+	if(const stob::Node* n = GetProperty(chain, "dimY")){
+		this->rect.d.y = morda::DimValueFromSTOB(*n);
+	}else{
+		this->rect.d.y = 0;
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
