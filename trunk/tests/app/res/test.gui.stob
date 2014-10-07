@@ -14,11 +14,8 @@ Container{
 	}
 
 	Window{
-//		posX{0} posY{0}
-//		dimX{300} dimY{200}
-
-		dim{300 200}
-		pos{0 0}
+		posX{0} posY{0}
+		dimX{300} dimY{200}
 
 		title{"Window title"}
 
@@ -42,8 +39,8 @@ Container{
 	}
 
 	Window{
-		dim{300 200}
-		pos{300 10}
+		dimX{300} dimY{200}
+		posX{300} posY{10}
 
 		title{"LinearLayout"}
 
@@ -52,22 +49,21 @@ Container{
 			vertical {false}
 	//		reverse {true}
 
-			pos {50 100}
-			dim {220 100}
+			posX{50} posY{100}
+			dimX{220} dimY{100}
 
 			name {someContainer}
 
 			clip {true}
 
 			layout{
-				dim {0 0}
+				dimX{0 0}
 				fill{true true}
 
 				weight{7}
 			}
 
 			Label{
-				pos {0 0}
 				name {label1}
 				text {trololo}
 				padding {10 20 30 40}
@@ -80,7 +76,6 @@ Container{
 			}
 
 			Label{
-				pos {0 0}
 				name {label2}
 				text {"blah bla"}
 				padding {0}
@@ -94,8 +89,8 @@ Container{
 
 			PushButton{
 				name {show_VK_button}
-				pos {50 80}
-				dim {10 30}
+				posX{50} posY{80}
+				dimX{10} dimY{30}
 
 				clip{true}
 
@@ -115,21 +110,21 @@ Container{
 	}//~Window
 
 	Window{
-		dim{300 200}
-		pos{300 250}
+		dimX{300} dimY{200}
+		posX{300} posY{250}
 
 		title{"Image label, button, custom widget"}
 
 		clip{true}
 
 		U_SimpleWidget{
-			dim {300 300}
+			dimX{300} dimY{300}
 		}
 
 
 		PushButton{
-			pos {10 20}
-			dim {100 50}
+			posX{10} posY{20}
+			dimX{100} dimY{50}
 
 			name{"Hello world button"}
 
@@ -162,8 +157,8 @@ Container{
 	}//~Window
 
 	Window{
-		dim{300 200}
-		pos{0 250}
+		dimX{300} dimY{200}
+		posX{0} posY{250}
 
 		title{"Sliders"}
 
@@ -214,8 +209,8 @@ Container{
 	}
 
 	Window{
-		dim{300 200}
-		pos{10 500}
+		dimX{300} dimY{200}
+		posX{10} posY{500}
 
 		title{"Spinning cube"}
 
@@ -229,8 +224,8 @@ Container{
 	}
 
 	Window{
-		dim{300 200}
-		pos{310 500}
+		dimX{300} dimY{200}
+		posX{310} posY{500}
 
 		title{"TextInput"}
 
