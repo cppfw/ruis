@@ -14,6 +14,9 @@ Container{
 	}
 
 	Window{
+//		posX{0} posY{0}
+//		dimX{300} dimY{200}
+
 		dim{300 200}
 		pos{0 0}
 
@@ -22,7 +25,8 @@ Container{
 		Label{
 			text{"inwindow text, y j g q p"}
 			layout{
-				fill{true false}
+				fillX{true} fillY{true}
+//				fill{true false}
 			}
 		}
 
