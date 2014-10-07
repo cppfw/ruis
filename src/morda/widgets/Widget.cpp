@@ -11,16 +11,20 @@ using namespace morda;
 
 
 Widget::Widget(const stob::Node* chain){
-	if(const stob::Node* n = chain ? chain->ThisOrNext("layout").node() : nullptr){
-		this->layout = n->Child() ? n->Child()->CloneChain() : nullptr;
+	if(const stob::Node* n = GetProperty(chain, "layout")){
+		this->layout = n->CloneChain();
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "pos")){
 		this->rect.p = morda::DimVec2rFromSTOB(p);
+	}else{
+		this->rect.p = Vec2r(0, 0);
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "dim")){
 		this->rect.d = morda::DimVec2rFromSTOB(p);
+	}else{
+		this->rect.d = Vec2r(0, 0);
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
