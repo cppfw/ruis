@@ -1,11 +1,9 @@
-class MyLabel Label{
-
-	text{"trololo"}
+templates{
+	Label Label{
+		text{"trololo"}
+	}
 }
 
-style some_style{
-	
-}
 
 Container{
 	layout{
