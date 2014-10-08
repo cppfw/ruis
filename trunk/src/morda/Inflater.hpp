@@ -98,17 +98,17 @@ public:
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
-	 * @param gui - GUI script to use.
+	 * @param chain - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> Inflate(const stob::Node& gui)const;
+	std::shared_ptr<morda::Widget> Inflate(const stob::Node& chain);
 
 	/**
 	 * @brief Inflate widget described in GUI script.
 	 * @param fi - file interface to get the GUI script from.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> Inflate(ting::fs::File& fi)const;
+	std::shared_ptr<morda::Widget> Inflate(ting::fs::File& fi);
 
 	/**
 	 * @brief Load GUI script.
@@ -117,6 +117,17 @@ public:
 	 * @return Pointer to a root node of the GUI hierarchy.
 	 */
 	static std::unique_ptr<stob::Node> Load(ting::fs::File& fi);
+	
+private:
+	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> templates;
+	
+	const stob::Node* FindTemplate(const std::string& name)const;
+public:
+	
+	//returns true if templates were pushed to templates stack
+	bool PushTemplates(std::unique_ptr<stob::Node> chain);
+	
+	void PopTemplates();
 };
 
 

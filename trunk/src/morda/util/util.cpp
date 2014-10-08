@@ -71,7 +71,7 @@ real morda::DimValueFromSTOB(const stob::Node& n){
 
 std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting::fs::File& fi, std::unique_ptr<stob::Node> begin){
 	if(!begin){
-		return std::make_tuple(std::unique_ptr<stob::Node>(), nullptr);
+		return std::make_tuple(nullptr, nullptr);
 	}
 	
 	const char* DIncludeTag = "include";

@@ -66,7 +66,7 @@ bool Inflater::RemoveWidget(const std::string& widgetName)NOEXCEPT{
 
 
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
+std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) {
 	std::unique_ptr<stob::Node> root = this->Load(fi);
 	ASSERT(root)
 
@@ -74,45 +74,22 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) const{
 }
 
 
+namespace{
+const char* D_Templates = "templates";
+}
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
+
+std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 	if(!App::Inst().ThisIsUIThread()){
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}
 	
-	const stob::Node* n = &gui;
-	for(; ; n = n->Next()){
-		if(!n){
-			return 0;
-		}
-		
-		if(!n->IsProperty()){
-			break;
-		}
-		
-		if(*n == "class"){
-			n = n->Next();
-			if(!n){
-				TRACE(<< "Inflater::Inflate(): unexpected end of document after class keyword"<< std::endl)
-				return 0;
-			}
-			
-			if(n->IsProperty()){
-				TRACE(<< "Inflater::Inflate(): class keyword is not followed by a class name (Should start with capital letter)"<< std::endl)
-				return 0;
-			}
-			
-			//TODO: save class name
-			
-			n = n->Next();
-			if(!n){
-				TRACE(<< "Inflater::Inflate(): unexpected end of document after class name"<< std::endl)
-				return 0;
-			}
-			
-			//TODO: search for inherited class existence
-			
-			//TODO: add new class
+	const stob::Node* n = &chain;
+	for(; n && n->IsProperty(); n = n->Next()){
+		if(*n == D_Templates && n->Child()){
+			this->PushTemplates(n->Child()->CloneChain());
+		}else{
+			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
 		}
 	}
 	
@@ -120,9 +97,22 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& gui)const{
 
 	if(i == this->widgetFactories.end()){
 		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
-		throw Inflater::Exc("Failed to inflate, no matching factory found for requested widget name");
+		throw Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
+	bool needPop = false;
+	ting::util::ScopeExit scopeExit([this, &needPop](){
+		if(needPop){
+			this->PopTemplates();
+		}
+	});
+	
+	if(auto t = n->Child(D_Templates).node()){
+		if(auto c = t->Child()){
+			needPop = this->PushTemplates(c->CloneChain());
+		}
+	}
+	
 	return i->second->Create(n->Child());
 }
 
@@ -135,3 +125,76 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 
 	return ret;
 }
+
+
+
+namespace{
+
+std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_ptr<stob::Node> to){
+	//TODO:
+	
+	return to;
+}
+
+}
+
+
+bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
+	decltype(this->templates)::value_type m;
+	
+	for(; chain; chain = chain->ChopNext()){
+		if(chain->Child()){
+			throw Exc("Inflater::PushTemplates(): template name has children, error.");
+		}
+		
+		if(!chain->Next()){
+			throw Exc("Inflater::PushTemplates(): template name is not followed by template definition, error.");
+		}
+		
+		if(!chain->Next()->Child()){
+			continue; //empty template definition
+		}
+		
+		std::string name = chain->Value();
+		
+		if(!m.insert(std::make_pair(std::move(name), chain->RemoveNext())).second){
+			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
+		}
+	}
+	
+	if(m.size() == 0){
+		return false;
+	}
+	
+	for(auto i = m.begin(); i != m.end(); ++i){
+		if(auto s = this->FindTemplate(i->first)){
+			i->second = MergeGUIChain(*s, std::move(i->second));
+		}
+	}
+	
+	this->templates.push_back(std::move(m));
+	
+	return true;
+}
+
+
+
+void Inflater::PopTemplates(){
+	if(this->templates.size() != 0){
+		this->templates.pop_back();
+	}
+}
+
+
+
+const stob::Node* Inflater::FindTemplate(const std::string& name)const{
+	for(auto i = this->templates.rbegin(); i != this->templates.rend(); ++i){
+		auto r = i->find(name);
+		if(r != i->end()){
+			return r->second.get();
+		}
+	}
+	
+	return nullptr;
+}
+
