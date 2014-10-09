@@ -678,6 +678,14 @@ namespace morda{
 
 
 
+App::DotsPerCmWrapper::DotsPerCmWrapper(){
+	ASSERT(javaFunctionsWrapper)
+	this->value = javaFunctionsWrapper->GetDotsPerCm();
+//	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->value << std::endl)
+}
+
+
+
 App::EGLDisplayWrapper::EGLDisplayWrapper(){
 	this->d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	if(this->d == EGL_NO_DISPLAY){
@@ -753,18 +761,6 @@ App::EGLSurfaceWrapper::~EGLSurfaceWrapper()NOEXCEPT{
 
 
 
-App::DotsPerCmWrapper::DotsPerCmWrapper(EGLDisplayWrapper& display, EGLSurfaceWrapper& surface){
-	EGLint width, height;
-	eglQuerySurface(display.d, surface.s, EGL_WIDTH, &width);
-	eglQuerySurface(display.d, surface.s, EGL_HEIGHT, &height);
-
-	ASSERT(javaFunctionsWrapper)
-	this->value = javaFunctionsWrapper->GetDotsPerCm();
-//	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->value << std::endl)
-}
-
-
-
 App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
 		d(d)
 {
@@ -796,9 +792,12 @@ App::EGLContextWrapper::~EGLContextWrapper()NOEXCEPT{
 App::App(const WindowParams& requestedWindowParams) :
 		eglConfig(requestedWindowParams, eglDisplay),
 		eglSurface(eglDisplay, eglConfig),
-		dotsPerCm(eglDisplay, eglSurface),
 		eglContext(eglDisplay, eglConfig, eglSurface)
-{	
+{
+	EGLint width, height;
+	eglQuerySurface(display.d, surface.s, EGL_WIDTH, &width);
+	eglQuerySurface(display.d, surface.s, EGL_HEIGHT, &height);
+	
 	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
 	
 	this->MountDefaultResPack();
