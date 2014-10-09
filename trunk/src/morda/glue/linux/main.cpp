@@ -184,20 +184,21 @@ void App::XInputMethodWrapper::Destroy()NOEXCEPT{
 }
 
 
+App::DotsPerCmWrapper::DotsPerCmWrapper(XDisplayWrapper& display){
+	int scrNum = 0;
+	this->value = ((double(DisplayWidth(display.d, scrNum)) / (double(DisplayWidthMM(display.d, scrNum))/ 10.0))
+			+ (double(DisplayHeight(display.d, scrNum)) / (double(DisplayHeightMM(display.d, scrNum)) / 10.0))) / 2;
+}
+
+
 App::App(const WindowParams& requestedWindowParams) :
+		dotsPerCm(xDisplay),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xInputMethod(xDisplay, xWindow),
 		curWinRect(0, 0, -1, -1)
 {
-	//initialize screen density
-	{
-		int scrNum = 0;
-		this->dotsPerCm = ((double(DisplayWidth(this->xDisplay.d, scrNum)) / (double(DisplayWidthMM(this->xDisplay.d, scrNum))/ 10.0))
-				+ (double(DisplayHeight(this->xDisplay.d, scrNum)) / (double(DisplayHeightMM(this->xDisplay.d, scrNum)) / 10.0))) / 2;
-	}
-	
 #ifdef DEBUG
 	//print GLX version
 	{
