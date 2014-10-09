@@ -210,6 +210,16 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	
 	this->templates.push_back(std::move(m));
 	
+#ifdef DEBUG
+	TRACE(<< "Templates Stack:" << std::endl)
+	for(auto i = this->templates.begin(); i != this->templates.end(); ++i){
+		TRACE(<< "\tTemplates:" << std::endl)
+		for(auto j = i->begin(); j != i->end(); ++j){
+			TRACE(<< "\t\t" << j->second->ChainToString() << std::endl)
+		}
+	}
+#endif
+	
 	return true;
 }
 
