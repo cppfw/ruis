@@ -108,6 +108,12 @@ public:
 
 #ifdef M_MORDA_OGLES2
 private:
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper();
+	} dotsPerCm;
+	
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -126,12 +132,6 @@ private:
 		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
 		~EGLSurfaceWrapper()NOEXCEPT;
 	} eglSurface;
-	
-	struct DotsPerCmWrapper{
-		float value;
-		
-		DotsPerCmWrapper(EGLDisplayWrapper& display, EGLSurfaceWrapper& surface);
-	} dotsPerCm;
 
 	struct EGLContextWrapper{
 		EGLDisplayWrapper& d;
