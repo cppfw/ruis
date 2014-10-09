@@ -134,6 +134,12 @@ private:
 		~EGLContextWrapper()NOEXCEPT;
 	} eglContext;
 
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper();
+	} dotsPerCm;
+	
 	void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 	}
@@ -158,6 +164,12 @@ private:
 		~XDisplayWrapper()NOEXCEPT;
 	} xDisplay;
 
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper(XDisplayWrapper& display);
+	} dotsPerCm;
+	
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
 		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
@@ -240,6 +252,12 @@ private:
 		void Destroy()NOEXCEPT;
 	} deviceContext;
 	
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper();
+	} dotsPerCm;
+	
 	struct GLContextWrapper{
 		HGLRC hrc;
 		
@@ -275,6 +293,12 @@ private:
 		WindowObject(const morda::App::WindowParams& wp);
 		~WindowObject()NOEXCEPT;
 	} windowObject;
+	
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper();
+	} dotsPerCm;
 	
 	struct OpenGLContext{
 		void *id;
@@ -426,14 +450,10 @@ private:
 		}
 	}
 	
-	
-private:
-	float dotsPerCm;
-	
 public:
 	
 	float DotsPerCm()const NOEXCEPT{
-		return this->dotsPerCm;
+		return this->dotsPerCm.value;
 	}
 };
 

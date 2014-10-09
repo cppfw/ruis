@@ -647,10 +647,10 @@ void App::MountDefaultResPack(){
 
 
 App::App(const WindowParams& requestedWindowParams) :
-window(requestedWindowParams, windowClass),
-deviceContext(requestedWindowParams, window),
-glContext(deviceContext),
-curWinRect(0, 0, -1, -1)
+		window(requestedWindowParams, windowClass),
+		deviceContext(requestedWindowParams, window),
+		glContext(deviceContext),
+		curWinRect(0, 0, -1, -1)
 {
 	this->dotsPerCm = (float(GetDeviceCaps(this->deviceContext.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, HORZSIZE))
 		+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
