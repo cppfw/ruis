@@ -1,11 +1,15 @@
 templates{
-	Label Label{
+	MyLabel Label{
 		text{"trololo"}
 
 		dimX{34}
 
+		Child{wedwe}
+		Child{ewweewfew}
+
 		layout{
 			weight{1}
+			dimX{32}
 		}
 	}
 }
@@ -18,7 +22,16 @@ Container{
 	}
 
 	templates{
-		Label Label{
+		My1Label MyLabel{
+			Child{1234}
+			Child{5678}
+
+			dimY{34}
+			text{f}
+			layout{
+				fillX{true}
+				dimX{18}
+			}
 		}
 	}
 
