@@ -795,8 +795,8 @@ App::App(const WindowParams& requestedWindowParams) :
 		eglContext(eglDisplay, eglConfig, eglSurface)
 {
 	EGLint width, height;
-	eglQuerySurface(display.d, surface.s, EGL_WIDTH, &width);
-	eglQuerySurface(display.d, surface.s, EGL_HEIGHT, &height);
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
+	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
 	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
 	
