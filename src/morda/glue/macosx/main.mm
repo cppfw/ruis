@@ -648,23 +648,24 @@ void morda::App::OpenGLContext::Destroy()NOEXCEPT{
 
 
 
+App::DotsPerCmWrapper::DotsPerCmWrapper(){
+	NSScreen *screen = [NSScreen mainScreen];
+	NSDictionary *description = [screen deviceDescription];
+	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
+	CGSize displayPhysicalSize = CGDisplayScreenSize(
+			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
+		);
+
+	this->value = float(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
+			(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
+}
+
+
+
 morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(windowObject.id)
 {
-	//init dots per cm
-	{
-		NSScreen *screen = [NSScreen mainScreen];
-		NSDictionary *description = [screen deviceDescription];
-		NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
-		CGSize displayPhysicalSize = CGDisplayScreenSize(
-				[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
-			);
-
-		this->dotsPerCm = float(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
-				(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
-	}
-	
 	this->UpdateWindowRect(
 			morda::Rect2r(
 					0,
