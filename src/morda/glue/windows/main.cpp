@@ -582,7 +582,7 @@ w(w)
 
 
 App::DotsPerCmWrapper::DotsPerCmWrapper(DeviceContextWrapper& dc){
-	this->vlaue = (float(GetDeviceCaps(dc.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, HORZSIZE))
+	this->value = (float(GetDeviceCaps(dc.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, HORZSIZE))
 		+ float(GetDeviceCaps(dc.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, VERTSIZE))) / 2.0f;
 }
 
