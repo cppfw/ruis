@@ -75,60 +75,10 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) {
 
 
 namespace{
+
 const char* D_Templates = "templates";
-}
 
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
-	if(!App::Inst().ThisIsUIThread()){
-		throw Inflater::Exc("Inflate called not from UI thread");
-	}
-	
-	const stob::Node* n = &chain;
-	for(; n && n->IsProperty(); n = n->Next()){
-		if(*n == D_Templates && n->Child()){
-			this->PushTemplates(n->Child()->CloneChain());
-		}else{
-			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
-		}
-	}
-	
-	T_FactoryMap::const_iterator i = this->widgetFactories.find(n->Value());
-
-	if(i == this->widgetFactories.end()){
-		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
-		throw Exc("Failed to inflate, no matching factory found for requested widget name");
-	}
-
-	bool needPop = false;
-	ting::util::ScopeExit scopeExit([this, &needPop](){
-		if(needPop){
-			this->PopTemplates();
-		}
-	});
-	
-	if(auto t = n->Child(D_Templates).node()){
-		if(auto c = t->Child()){
-			needPop = this->PushTemplates(c->CloneChain());
-		}
-	}
-	
-	return i->second->Create(n->Child());
-}
-
-
-
-std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
-	std::unique_ptr<stob::Node> ret = stob::Load(fi);
-	
-	ret = std::move(std::get<0>(ResolveIncludes(fi, std::move(ret))));
-
-	return ret;
-}
-
-
-
-namespace{
 
 std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
 	if(!to){
@@ -179,8 +129,69 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 
 }
 
+std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
+	if(!App::Inst().ThisIsUIThread()){
+		throw Inflater::Exc("Inflate called not from UI thread");
+	}
+	
+	const stob::Node* n = &chain;
+	for(; n && n->IsProperty(); n = n->Next()){
+		if(*n == D_Templates && n->Child()){
+			this->PushTemplates(n->Child()->CloneChain());
+		}else{
+			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
+		}
+	}
+	
+	if(!n){
+		return nullptr;
+	}
+	
+	std::unique_ptr<stob::Node> node;
+	if(auto t = this->FindTemplate(n->Value())){
+		node = stob::Node::New(t->Value());
+		node->SetChildren(MergeGUIChain(t->Child(), n->Child() ? n->Child()->CloneChain() : nullptr));
+		n = node.get();
+	}
+	
+	
+	T_FactoryMap::const_iterator i = this->widgetFactories.find(n->Value());
 
-bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
+	if(i == this->widgetFactories.end()){
+		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
+		throw Exc("Failed to inflate, no matching factory found for requested widget name");
+	}
+
+	bool needPop = false;
+	ting::util::ScopeExit scopeExit([this, &needPop](){
+		if(needPop){
+			this->PopTemplates();
+		}
+	});
+	
+	if(auto t = n->Child(D_Templates).node()){
+		if(auto c = t->Child()){
+			this->PushTemplates(c->CloneChain());
+			needPop = true;
+		}
+	}
+	
+	return i->second->Create(n->Child());
+}
+
+
+
+std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
+	std::unique_ptr<stob::Node> ret = stob::Load(fi);
+	
+	ret = std::move(std::get<0>(ResolveIncludes(fi, std::move(ret))));
+
+	return ret;
+}
+
+
+
+void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	decltype(this->templates)::value_type m;
 	
 	for(; chain; chain = chain->ChopNext()){
@@ -197,10 +208,6 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 		}
 	}
 	
-	if(m.size() == 0){
-		return false;
-	}
-	
 	for(auto i = m.begin(); i != m.end(); ++i){
 		if(auto s = this->FindTemplate(i->second->Value())){
 			i->second->SetValue(s->Value());
@@ -211,17 +218,15 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	
 	this->templates.push_back(std::move(m));
 	
-#ifdef DEBUG
-	TRACE(<< "Templates Stack:" << std::endl)
-	for(auto i = this->templates.begin(); i != this->templates.end(); ++i){
-		TRACE(<< "\tTemplates:" << std::endl)
-		for(auto j = i->begin(); j != i->end(); ++j){
-			TRACE(<< "\t\t" << j->first << " = " << j->second->ChainToString() << std::endl)
-		}
-	}
-#endif
-	
-	return true;
+//#ifdef DEBUG
+//	TRACE(<< "Templates Stack:" << std::endl)
+//	for(auto i = this->templates.begin(); i != this->templates.end(); ++i){
+//		TRACE(<< "\tTemplates:" << std::endl)
+//		for(auto j = i->begin(); j != i->end(); ++j){
+//			TRACE(<< "\t\t" << j->first << " = " << j->second->ChainToString() << std::endl)
+//		}
+//	}
+//#endif
 }
 
 

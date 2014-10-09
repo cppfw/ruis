@@ -1,16 +1,10 @@
 templates{
-	MyLabel Label{
+	Label Label{
 		text{"trololo"}
 
+		color{0xff0000ff}
+
 		dimX{34}
-
-		Child{wedwe}
-		Child{ewweewfew}
-
-		layout{
-			weight{1}
-			dimX{32}
-		}
 	}
 }
 
@@ -21,20 +15,6 @@ Container{
 		fillX{true} fillY{true}
 	}
 
-	templates{
-		My1Label MyLabel{
-			Child{1234}
-			Child{5678}
-
-			dimY{34}
-			text{f}
-			layout{
-				fillX{true}
-				dimX{18}
-			}
-		}
-	}
-
 	Window{
 		posX{0} posY{0}
 		dimX{300} dimY{200}
@@ -42,6 +22,25 @@ Container{
 		title{"Window title"}
 
 		Label{
+
+			templates{
+				My1Label MyLabel{
+					Child{1234}
+					Child{5678}
+
+					dimY{34}
+					text{f}
+					layout{
+						fillX{true}
+						dimX{18}
+					}
+				}
+
+				My2Label MyLabel{
+					dimX{98}
+				}
+			}
+
 			text{"inwindow text, y j g q p"}
 			layout{
 				fillX{true} fillY{false}
@@ -49,6 +48,13 @@ Container{
 		}
 
 		ImageLabel{
+
+			templates{
+				My3Label MyLabel{
+					dimX{98}
+				}
+			}
+
 			image{img_sample}
 
 //			keepAspectRatio{true}
