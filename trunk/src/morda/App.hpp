@@ -282,6 +282,12 @@ private:
 
 #elif M_OS == M_OS_MACOSX	
 private:
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper();
+	} dotsPerCm;
+	
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();
@@ -293,12 +299,6 @@ private:
 		WindowObject(const morda::App::WindowParams& wp);
 		~WindowObject()NOEXCEPT;
 	} windowObject;
-	
-	struct DotsPerCmWrapper{
-		float value;
-		
-		DotsPerCmWrapper();
-	} dotsPerCm;
 	
 	struct OpenGLContext{
 		void *id;
