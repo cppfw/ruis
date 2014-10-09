@@ -131,7 +131,16 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 namespace{
 
 std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_ptr<stob::Node> to){
-	//TODO:
+	
+	for(auto s = &from; s; s = s->Next()){
+		auto d = to->ThisOrNext(s->Value()).node();
+		if(!d){
+			to->InsertNext(s->Clone());
+			continue;
+		}
+		
+		//TODO:
+	}
 	
 	return to;
 }
@@ -170,6 +179,7 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 		if(auto s = this->FindTemplate(i->second->Value())){
 			i->second->SetValue(s->Value());
 			ASSERT(s->Child())
+			ASSERT(i->second->Child())
 			i->second->SetChildren(MergeGUIChain(*s->Child(), i->second->RemoveChildren()));
 		}
 	}
