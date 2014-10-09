@@ -1,6 +1,12 @@
 templates{
 	Label Label{
 		text{"trololo"}
+
+		dimX{34}
+
+		layout{
+			weight{1}
+		}
 	}
 }
 
@@ -9,6 +15,11 @@ Container{
 	layout{
 		dimX{0} dimY{0}
 		fillX{true} fillY{true}
+	}
+
+	templates{
+		Label Label{
+		}
 	}
 
 	Window{

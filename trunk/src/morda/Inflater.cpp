@@ -130,10 +130,17 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 
 namespace{
 
-std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_ptr<stob::Node> to){
+std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
+	if(!to){
+		if(!from){
+			return nullptr;
+		}
+		return from->CloneChain();
+	}
+	
 	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
 	
-	for(auto s = &from; s; s = s->Next()){
+	for(auto s = from; s; s = s->Next()){
 		if(!s->IsProperty()){
 			auto c = s->Clone();
 			c->SetNext(std::move(children));
@@ -155,7 +162,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_pt
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		d->SetChildren(MergeGUIChain(*s->Child(), d->RemoveChildren()));
+		d->SetChildren(MergeGUIChain(s->Child(), d->RemoveChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
@@ -184,13 +191,7 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 			throw Exc("Inflater::PushTemplates(): template name is not followed by template definition, error.");
 		}
 		
-		if(!chain->Next()->Child()){
-			continue; //empty template definition
-		}
-		
-		std::string name = chain->Value();
-		
-		if(!m.insert(std::make_pair(std::move(name), chain->RemoveNext())).second){
+		if(!m.insert(std::make_pair(chain->Value(), chain->RemoveNext())).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
@@ -203,8 +204,7 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 		if(auto s = this->FindTemplate(i->second->Value())){
 			i->second->SetValue(s->Value());
 			ASSERT(s->Child())
-			ASSERT(i->second->Child())
-			i->second->SetChildren(MergeGUIChain(*s->Child(), i->second->RemoveChildren()));
+			i->second->SetChildren(MergeGUIChain(s->Child(), i->second->RemoveChildren()));
 		}
 	}
 	
