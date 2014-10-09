@@ -167,8 +167,10 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	}
 	
 	for(auto i = m.begin(); i != m.end(); ++i){
-		if(auto s = this->FindTemplate(i->first)){
-			i->second = MergeGUIChain(*s, std::move(i->second));
+		if(auto s = this->FindTemplate(i->second->Value())){
+			i->second->SetValue(s->Value());
+			ASSERT(s->Child())
+			i->second->SetChildren(MergeGUIChain(*s->Child(), i->second->RemoveChildren()));
 		}
 	}
 	
