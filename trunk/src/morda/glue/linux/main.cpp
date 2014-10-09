@@ -216,8 +216,6 @@ App::App(const WindowParams& requestedWindowParams) :
 					float(requestedWindowParams.dim.y)
 				)
 		);
-	
-	this->MountDefaultResPack();
 }
 
 

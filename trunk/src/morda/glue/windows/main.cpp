@@ -634,7 +634,7 @@ void App::GLContextWrapper::Destroy()NOEXCEPT{
 }
 
 
-void App::MountDefaultResPack(){
+App::ResMan::ResMan(){
 	std::string path =
 #ifdef DEBUG
 		"../../res/"
@@ -645,7 +645,7 @@ void App::MountDefaultResPack(){
 
 	try{
 		ting::fs::FSFile fi(path);
-		this->resMan.MountResPack(fi);
+		this->MountResPack(fi);
 	}
 	catch (ting::fs::File::Exc& e){
 		//default res pack not found, do nothing
@@ -661,15 +661,13 @@ App::App(const WindowParams& requestedWindowParams) :
 		curWinRect(0, 0, -1, -1)
 {
 	this->UpdateWindowRect(
-		morda::Rect2r(
-		0,
-		0,
-		float(requestedWindowParams.dim.x),
-		float(requestedWindowParams.dim.y)
-		)
+			morda::Rect2r(
+					0,
+					0,
+					float(requestedWindowParams.dim.x),
+					float(requestedWindowParams.dim.y)
+				)
 		);
-
-	this->MountDefaultResPack();
 }
 
 
