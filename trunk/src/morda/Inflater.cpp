@@ -131,15 +131,39 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 namespace{
 
 std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_ptr<stob::Node> to){
+	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
 	
 	for(auto s = &from; s; s = s->Next()){
+		if(!s->IsProperty()){
+			auto c = s->Clone();
+			c->SetNext(std::move(children));
+			children = std::move(c);
+			continue;
+		}
+		
+		if(!s->Child()){
+			continue;
+		}
+		
 		auto d = to->ThisOrNext(s->Value()).node();
 		if(!d){
 			to->InsertNext(s->Clone());
 			continue;
 		}
 		
-		//TODO:
+		if(!d->Child()){
+			continue;
+		}
+		
+		d->SetChildren(MergeGUIChain(*s->Child(), d->RemoveChildren()));
+	}
+	
+	//add children in reverse order again, so it will be in normal order in the end
+	for(; children;){
+		auto c = std::move(children);
+		children = c->ChopNext();
+		
+		to->InsertNext(std::move(c));
 	}
 	
 	return to;
