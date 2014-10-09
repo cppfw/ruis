@@ -142,7 +142,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_pt
 		}
 		
 		if(!s->Child()){
-			continue;
+			return to;//no children means that it is a property value, stop further processing of this chain
 		}
 		
 		auto d = to->ThisOrNext(s->Value()).node();
@@ -152,7 +152,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node& from, std::unique_pt
 		}
 		
 		if(!d->Child()){
-			continue;
+			continue;//no children means that the property is removed in derived template
 		}
 		
 		d->SetChildren(MergeGUIChain(*s->Child(), d->RemoveChildren()));
