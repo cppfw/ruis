@@ -170,7 +170,8 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 		auto c = std::move(children);
 		children = c->ChopNext();
 		
-		to->InsertNext(std::move(c));
+		c->SetNext(std::move(to));
+		to = std::move(c);
 	}
 	
 	return to;
@@ -215,7 +216,7 @@ bool Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	for(auto i = this->templates.begin(); i != this->templates.end(); ++i){
 		TRACE(<< "\tTemplates:" << std::endl)
 		for(auto j = i->begin(); j != i->end(); ++j){
-			TRACE(<< "\t\t" << j->second->ChainToString() << std::endl)
+			TRACE(<< "\t\t" << j->first << " = " << j->second->ChainToString() << std::endl)
 		}
 	}
 #endif
