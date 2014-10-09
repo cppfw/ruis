@@ -581,6 +581,13 @@ w(w)
 
 
 
+App::DotsPerCmWrapper::DotsPerCmWrapper(DeviceContextWrapper& dc){
+	this->vlaue = (float(GetDeviceCaps(dc.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, HORZSIZE))
+		+ float(GetDeviceCaps(dc.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, VERTSIZE))) / 2.0f;
+}
+
+
+
 void App::DeviceContextWrapper::Destroy()NOEXCEPT{
 	if (!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
@@ -649,12 +656,10 @@ void App::MountDefaultResPack(){
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
+		dotsPerCm(deviceContext),
 		glContext(deviceContext),
 		curWinRect(0, 0, -1, -1)
 {
-	this->dotsPerCm = (float(GetDeviceCaps(this->deviceContext.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, HORZSIZE))
-		+ float(GetDeviceCaps(this->deviceContext.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(this->deviceContext.hdc, VERTSIZE))) / 2.0f;
-
 	this->UpdateWindowRect(
 		morda::Rect2r(
 		0,

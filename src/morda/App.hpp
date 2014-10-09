@@ -255,7 +255,7 @@ private:
 	struct DotsPerCmWrapper{
 		float value;
 		
-		DotsPerCmWrapper();
+		DotsPerCmWrapper(DeviceContextWrapper& dc);
 	} dotsPerCm;
 	
 	struct GLContextWrapper{
