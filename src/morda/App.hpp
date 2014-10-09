@@ -126,6 +126,12 @@ private:
 		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
 		~EGLSurfaceWrapper()NOEXCEPT;
 	} eglSurface;
+	
+	struct DotsPerCmWrapper{
+		float value;
+		
+		DotsPerCmWrapper(EGLDisplayWrapper& display, EGLSurfaceWrapper& surface);
+	} dotsPerCm;
 
 	struct EGLContextWrapper{
 		EGLDisplayWrapper& d;
@@ -133,12 +139,6 @@ private:
 		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
 		~EGLContextWrapper()NOEXCEPT;
 	} eglContext;
-
-	struct DotsPerCmWrapper{
-		float value;
-		
-		DotsPerCmWrapper();
-	} dotsPerCm;
 	
 	void SwapGLBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
