@@ -122,10 +122,8 @@ private:
 	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> templates;
 	
 	const stob::Node* FindTemplate(const std::string& name)const;
-public:
 	
-	//returns true if templates were pushed to templates stack
-	bool PushTemplates(std::unique_ptr<stob::Node> chain);
+	void PushTemplates(std::unique_ptr<stob::Node> chain);
 	
 	void PopTemplates();
 };
