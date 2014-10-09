@@ -674,8 +674,6 @@ morda::App::App(const morda::App::WindowParams& wp) :
 					float(wp.dim.y)
 				)
 		);
-	
-	this->MountDefaultResPack();
 }
 
 

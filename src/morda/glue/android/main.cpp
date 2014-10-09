@@ -799,14 +799,12 @@ App::App(const WindowParams& requestedWindowParams) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
 	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
-	
-	this->MountDefaultResPack();
 }
 
 
 
-void App::MountDefaultResPack(){
-	this->resMan.MountResPack(*this->CreateResourceFileInterface("morda_res/"));
+App::ResMan::ResMan(){
+	this->MountResPack(*morda::App::Inst().CreateResourceFileInterface("morda_res/"));
 }
 
 

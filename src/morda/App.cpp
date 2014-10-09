@@ -130,7 +130,9 @@ void App::HideVirtualKeyboard()NOEXCEPT{
 
 #if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
 
-void App::MountDefaultResPack(){
+App::ResMan::ResMan(){
+	//mount default resource pack
+	
 #	ifndef DEBUG
 	unsigned soname = 
 #	include "../soname.txt"
@@ -149,7 +151,7 @@ void App::MountDefaultResPack(){
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			this->resMan.MountResPack(*this->CreateResourceFileInterface(s));
+			this->MountResPack(*morda::App::Inst().CreateResourceFileInterface(s));
 		}catch(ting::fs::File::Exc& e){
 			continue;
 		}

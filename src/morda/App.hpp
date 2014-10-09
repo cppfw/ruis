@@ -368,11 +368,12 @@ public:
 	}
 
 public:
-	ResourceManager resMan;
+	class ResMan : public ResourceManager{
+		friend class App;
+		ResMan();
+	} resMan;
 
 private:
-	void MountDefaultResPack();
-	
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources
 
 private:
