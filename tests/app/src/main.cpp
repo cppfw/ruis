@@ -167,7 +167,7 @@ public:
 		s.SetMatrix(m);
 		
 		
-		static std::array<morda::Vec3r, 36> cubePos = {
+		static std::array<morda::Vec3r, 36> cubePos = {{
 			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, 1), morda::Vec3f(-1, 1, 1),
 			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(-1, 1, 1),
 			
@@ -185,9 +185,9 @@ public:
 			
 			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, 1),
 			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1)
-		};
+		}};
 		
-		static std::array<morda::Vec2f, 36> cubeTex = {
+		static std::array<morda::Vec2f, 36> cubeTex = {{
 			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
 			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
 			
@@ -205,7 +205,7 @@ public:
 			
 			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
 			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
-		};
+		}};
 		
 		glEnable(GL_CULL_FACE);
 		

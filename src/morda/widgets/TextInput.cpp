@@ -190,7 +190,7 @@ real TextInput::IndexToPos(size_t index){
 	real ret = this->xOffset;
 	
 	for(auto i = this->Text().begin() + this->firstVisibleCharIndex;
-			i != this->Text().end(), index != this->firstVisibleCharIndex;
+			i != this->Text().end() && index != this->firstVisibleCharIndex;
 			++i, --index
 		)
 	{

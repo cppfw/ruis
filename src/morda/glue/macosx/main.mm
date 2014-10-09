@@ -43,7 +43,7 @@ void Macosx_Main(int argc, const char** argv){
 }
 
 void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
-	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
+//	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
 	morda::App::Inst().HandleMouseMove(
 			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
 			id
