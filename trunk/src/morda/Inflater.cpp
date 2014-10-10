@@ -264,9 +264,14 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 
 
 const std::string* Inflater::FindVariable(const std::string& name)const{
+	std::string n = name;
 	for(auto& i : this->variables){
-		auto r = i.find(name);
+		auto r = i.find(n);
 		if(r != i.end()){
+			if(r->second.size() != 0 && r->second[0] == '@'){
+				n = std::string(r->second, 1);
+				continue;
+			}
 			return &r->second;
 		}
 	}
@@ -287,7 +292,23 @@ void Inflater::PushVariables(const stob::Node* chain){
 	decltype(this->variables)::value_type m;
 	
 	for(; chain; chain = chain->Next()){
-		//TODO:
+		std::string value;
+		
+		if(chain->Child()){
+			if(chain->Child()->Child()){
+				throw Exc("Inflater::PushVariables(): variable value has children, error");
+			}
+			
+			if(chain->Child()->Next()){
+				throw Exc("Inflater::PushVariables(): variable has several values, error");
+			}
+			
+			value = chain->Child()->Value();
+		}
+		
+		if(!m.insert(std::make_pair(chain->Value(), std::move(value))).second){
+			throw Exc("Inflater::PushVariables(): failed to add variable, variable with same name is already defined in this variables block");
+		}
 	}
 	
 	this->variables.push_front(std::move(m));
