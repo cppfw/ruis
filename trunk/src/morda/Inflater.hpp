@@ -126,6 +126,16 @@ private:
 	void PushTemplates(std::unique_ptr<stob::Node> chain);
 	
 	void PopTemplates();
+	
+	
+	
+	std::list<std::map<std::string, std::string>> variables;
+	
+	const std::string* FindVariable(const std::string& name)const;
+	
+	void PushVariables(const stob::Node* chain);
+	
+	void PopVariables();
 };
 
 

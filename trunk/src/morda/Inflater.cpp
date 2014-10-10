@@ -224,7 +224,7 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 		}
 	}
 	
-	this->templates.push_back(std::move(m));
+	this->templates.push_front(std::move(m));
 	
 //#ifdef DEBUG
 //	TRACE(<< "Templates Stack:" << std::endl)
@@ -240,17 +240,16 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 
 
 void Inflater::PopTemplates(){
-	if(this->templates.size() != 0){
-		this->templates.pop_back();
-	}
+	ASSERT(this->templates.size() != 0)
+	this->templates.pop_front();
 }
 
 
 
 const stob::Node* Inflater::FindTemplate(const std::string& name)const{
-	for(auto i = this->templates.rbegin(); i != this->templates.rend(); ++i){
-		auto r = i->find(name);
-		if(r != i->end()){
+	for(auto& i : this->templates){
+		auto r = i.find(name);
+		if(r != i.end()){
 			return r->second.get();
 		}
 	}
@@ -258,3 +257,20 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 	return nullptr;
 }
 
+
+
+const std::string* Inflater::FindVariable(const std::string& name)const{
+	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
+		auto r = i->find(name);
+		if(r != i->end()){
+			return &r->second;
+		}
+	}
+	
+	return nullptr;
+}
+
+void Inflater::PopVariables(){
+	ASSERT(this->variables.size() != 0)
+	this->variables.pop_back();
+}
