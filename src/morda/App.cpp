@@ -1,5 +1,6 @@
 #include "App.hpp"
 
+#include "resources/ResGui.hpp"
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
@@ -174,5 +175,19 @@ void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
 	if(w){
 		w->isFocused = true;
 		w->OnFocusedChanged();
+	}
+}
+
+
+App::Inflater::Inflater(){
+	try{
+		auto t = morda::App::Inst().resMan.Load<ResGui>("morda_gui_templates");
+		
+		if(t->Gui()){
+			this->Inflate(*t->Gui());
+		}
+		
+	}catch(ResourceManager::Exc& e){
+		//ignore
 	}
 }

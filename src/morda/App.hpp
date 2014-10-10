@@ -374,10 +374,14 @@ public:
 	} resMan;
 
 private:
-	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources
-
+	class Inflater : public morda::Inflater{
+		friend class App;
+		Inflater();
+	} guiInflater;
+	
 private:
-	Inflater guiInflater;
+	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
+
 
 	void UpdateGLViewport();
 

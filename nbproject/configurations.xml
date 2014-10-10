@@ -28,6 +28,8 @@
         <df name="resources">
           <in>ResFont.cpp</in>
           <in>ResFont.hpp</in>
+          <in>ResGui.cpp</in>
+          <in>ResGui.hpp</in>
           <in>ResImage.cpp</in>
           <in>ResImage.hpp</in>
           <in>ResNinePatch.cpp</in>
@@ -220,6 +222,10 @@
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -499,6 +505,10 @@
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResNinePatch.cpp"
@@ -763,6 +773,10 @@
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
@@ -1008,6 +1022,10 @@
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
