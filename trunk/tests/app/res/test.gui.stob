@@ -277,9 +277,7 @@ Container{
 		title{"TextInput"}
 
 		ColorLabel{
-//			color{0xff1a2233}
-			color{0xff141a27}
-//			color{0xff10141f}
+			color{ @{morda_bg_color} }
 
 			layout{
 				dimX{0} dimY{0}

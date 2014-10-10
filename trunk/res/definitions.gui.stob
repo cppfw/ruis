@@ -1,5 +1,6 @@
 vars{
 	morda_text_color{0xffccfbff}
+	morda_bg_color{0xff141a27}
 }
 
 templates{
