@@ -98,7 +98,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 			continue;
 		}
 		
-		if(!s->Child()){
+		if(!s->Child() || *s == "@"){ //@ means reference to a variable
 			//No children means that it is a property value, stop further processing of this chain.
 			
 			//Check that it is the only node in the chain
@@ -264,15 +264,15 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 
 
 const std::string* Inflater::FindVariable(const std::string& name)const{
-	std::string n = name;
+	const std::string* n = &name;
 	for(auto& i : this->variables){
-		auto r = i.find(n);
+		auto r = i.find(*n);
 		if(r != i.end()){
-			if(r->second.size() != 0 && r->second[0] == '@'){
-				n = std::string(r->second, 1);
+			if(r->second.first){
+				n = &r->second.second;
 				continue;
 			}
-			return &r->second;
+			return &r->second.second;
 		}
 	}
 	
@@ -293,20 +293,32 @@ void Inflater::PushVariables(const stob::Node* chain){
 	
 	for(; chain; chain = chain->Next()){
 		std::string value;
+		bool isVar = false;
 		
-		if(chain->Child()){
-			if(chain->Child()->Child()){
-				throw Exc("Inflater::PushVariables(): variable value has children, error");
-			}
-			
-			if(chain->Child()->Next()){
+		for(auto child = chain->Child(); child;){
+			if(child->Next()){
 				throw Exc("Inflater::PushVariables(): variable has several values, error");
 			}
 			
-			value = chain->Child()->Value();
+			if(!isVar && *child == "@" && child->Child()){
+				child = child->Child();
+				isVar = true;
+				continue;
+			}
+			
+			if(child->Child()){
+				throw Exc("Inflater::PushVariables(): variable value has children, error");
+			}
+			
+			value = child->Value();
+			break;
 		}
 		
-		if(!m.insert(std::make_pair(chain->Value(), std::move(value))).second){
+		if(!m.insert(std::make_pair(
+				chain->Value(),
+				std::make_pair(isVar, std::move(value))
+			)).second)
+		{
 			throw Exc("Inflater::PushVariables(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}

@@ -129,7 +129,8 @@ private:
 	
 	
 	
-	std::list<std::map<std::string, std::string>> variables;
+	//in the value pair the 'first' is a boolean indicating if variable refers to another variable (true) or not (false).
+	std::list<std::map<std::string, std::pair<bool, std::string>>> variables;
 	
 	const std::string* FindVariable(const std::string& name)const;
 	
