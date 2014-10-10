@@ -77,6 +77,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) {
 namespace{
 
 const char* D_Templates = "templates";
+const char* D_Vars = "vars";
 
 
 
@@ -146,6 +147,10 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 			if(n->Child()){
 				this->PushTemplates(n->Child()->CloneChain());
 			}
+		}else if(*n == D_Vars){
+			if(n->Child()){
+				this->PushVariables(*n->Child());
+			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
 		}
@@ -155,11 +160,11 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 		return nullptr;
 	}
 	
-	std::unique_ptr<stob::Node> node;
+	std::unique_ptr<stob::Node> cloned;
 	if(auto t = this->FindTemplate(n->Value())){
-		node = stob::Node::New(t->Value());
-		node->SetChildren(MergeGUIChain(t->Child(), n->Child() ? n->Child()->CloneChain() : nullptr));
-		n = node.get();
+		cloned = stob::Node::New(t->Value());
+		cloned->SetChildren(MergeGUIChain(t->Child(), n->Child() ? n->Child()->CloneChain() : nullptr));
+		n = cloned.get();
 	}
 	
 	
@@ -170,21 +175,43 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 		throw Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
-	bool needPop = false;
-	ting::util::ScopeExit scopeExit([this, &needPop](){
-		if(needPop){
+	bool needPopTemplates = false;
+	bool needPopVariables = false;
+	ting::util::ScopeExit scopeExit([this, &needPopTemplates, &needPopVariables](){
+		if(needPopTemplates){
 			this->PopTemplates();
+		}
+		if(needPopVariables){
+			this->PopVariables();
 		}
 	});
 	
 	if(auto t = n->Child(D_Templates).node()){
 		if(auto c = t->Child()){
 			this->PushTemplates(c->CloneChain());
-			needPop = true;
+			needPopTemplates = true;
+		}
+	}
+	if(auto v = n->Child(D_Vars).node()){
+		if(v->Child()){
+			this->PushVariables(*v->Child());
+			needPopVariables = true;
 		}
 	}
 	
-	return i->second->Create(n->Child());
+	{
+		if(cloned){
+			cloned = cloned->RemoveChildren();
+		}else{
+			if(n->Child()){
+				cloned = n->Child()->CloneChain();
+			}
+		}
+		
+		this->SubstituteVariables(cloned.get());
+		
+		return i->second->Create(cloned.get());
+	}
 }
 
 
@@ -230,15 +257,15 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	
 	this->templates.push_front(std::move(m));
 	
-//#ifdef DEBUG
-//	TRACE(<< "Templates Stack:" << std::endl)
-//	for(auto i = this->templates.begin(); i != this->templates.end(); ++i){
-//		TRACE(<< "\tTemplates:" << std::endl)
-//		for(auto j = i->begin(); j != i->end(); ++j){
-//			TRACE(<< "\t\t" << j->first << " = " << j->second->ChainToString() << std::endl)
-//		}
-//	}
-//#endif
+#ifdef DEBUG
+	TRACE(<< "Templates Stack:" << std::endl)
+	for(auto& i : this->templates){
+		TRACE(<< "\tTemplates:" << std::endl)
+		for(auto& j : i){
+			TRACE(<< "\t\t" << j.first << " = " << j.second->ChainToString() << std::endl)
+		}
+	}
+#endif
 }
 
 
@@ -257,7 +284,7 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 			return r->second.get();
 		}
 	}
-	
+//	TRACE(<< "Inflater::FindTemplate(): template '" << name <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 
@@ -275,7 +302,7 @@ const std::string* Inflater::FindVariable(const std::string& name)const{
 			return &r->second.second;
 		}
 	}
-	
+	TRACE(<< "Inflater::FindVariable(): variable '" << *n <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 
@@ -288,14 +315,14 @@ void Inflater::PopVariables(){
 
 
 
-void Inflater::PushVariables(const stob::Node* chain){
+void Inflater::PushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
-	for(; chain; chain = chain->Next()){
+	for(auto n = &chain; n; n = n->Next()){
 		std::string value;
 		bool isVar = false;
 		
-		for(auto child = chain->Child(); child;){
+		for(auto child = n->Child(); child;){
 			if(child->Next()){
 				throw Exc("Inflater::PushVariables(): variable has several values, error");
 			}
@@ -315,7 +342,7 @@ void Inflater::PushVariables(const stob::Node* chain){
 		}
 		
 		if(!m.insert(std::make_pair(
-				chain->Value(),
+				n->Value(),
 				std::make_pair(isVar, std::move(value))
 			)).second)
 		{
@@ -324,4 +351,53 @@ void Inflater::PushVariables(const stob::Node* chain){
 	}
 	
 	this->variables.push_front(std::move(m));
+	
+//#ifdef DEBUG
+//	TRACE(<< "Variables Stack:" << std::endl)
+//	for(auto& i : this->variables){
+//		TRACE(<< "\tVariables:" << std::endl)
+//		for(auto& j : i){
+//			TRACE(<< "\t\t" << j.second.first << "|" << j.first << " = " << j.second.second << std::endl)
+//		}
+//	}
+//#endif
+}
+
+
+
+void Inflater::SubstituteVariables(stob::Node* to)const{
+	if(!to){
+		return;
+	}
+	
+	if(*to == "@"){
+		if(to->Next()){
+			throw Exc("Inflater::SubstituteVariables(): error: property value holds something else besides reference to a variable");
+		}
+		
+		if(!to->Child()){
+			throw Exc("Inflater::SubstituteVariables(): error: reference to a variable holds no variable name");
+		}
+		
+		if(to->Child()->Next()){
+			throw Exc("Inflater::SubstituteVariables(): error: reference to variable holds more than one variable name");
+		}
+		
+		if(to->Child()->Child()){
+			throw Exc("Inflater::SubstituteVariables(): error: variable name has children");
+		}
+		
+		if(auto var = this->FindVariable(to->Child()->Value())){
+			to->SetValue(var->c_str());
+			to->RemoveChildren();
+		}
+		
+		return;
+	}
+		
+	for(; to; to = to->Next()){
+		if(to->Child()){
+			this->SubstituteVariables(to->Child());
+		}
+	}
 }

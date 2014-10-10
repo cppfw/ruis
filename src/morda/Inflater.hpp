@@ -134,9 +134,11 @@ private:
 	
 	const std::string* FindVariable(const std::string& name)const;
 	
-	void PushVariables(const stob::Node* chain);
+	void PushVariables(const stob::Node& chain);
 	
 	void PopVariables();
+	
+	void SubstituteVariables(stob::Node* to)const;
 };
 
 
