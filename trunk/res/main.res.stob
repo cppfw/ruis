@@ -2,6 +2,6 @@ include{window.res.stob}
 include{ui.res.stob}
 include{fonts/font.res.stob}
 
-morda_gui_templates{
-  file{templates.gui.stob}
+morda_gui_definitions{
+  file{definitions.gui.stob}
 }
