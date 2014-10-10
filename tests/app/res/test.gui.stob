@@ -8,6 +8,12 @@ templates{
 	}
 }
 
+/*
+vars{
+	variable{and_its_value}
+	trololo{"tro lo lo"}
+}
+*/
 
 Container{
 	layout{
