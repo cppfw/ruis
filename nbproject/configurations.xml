@@ -152,6 +152,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>tests</Elem>
+    <Elem>res</Elem>
   </sourceRootList>
   <projectmakefile>makefile</projectmakefile>
   <confs>
@@ -499,7 +500,7 @@
       </item>
       <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="8">
+      <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
