@@ -257,15 +257,15 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	
 	this->templates.push_front(std::move(m));
 	
-#ifdef DEBUG
-	TRACE(<< "Templates Stack:" << std::endl)
-	for(auto& i : this->templates){
-		TRACE(<< "\tTemplates:" << std::endl)
-		for(auto& j : i){
-			TRACE(<< "\t\t" << j.first << " = " << j.second->ChainToString() << std::endl)
-		}
-	}
-#endif
+//#ifdef DEBUG
+//	TRACE(<< "Templates Stack:" << std::endl)
+//	for(auto& i : this->templates){
+//		TRACE(<< "\tTemplates:" << std::endl)
+//		for(auto& j : i){
+//			TRACE(<< "\t\t" << j.first << " = " << j.second->ChainToString() << std::endl)
+//		}
+//	}
+//#endif
 }
 
 
@@ -396,7 +396,7 @@ void Inflater::SubstituteVariables(stob::Node* to)const{
 	}
 		
 	for(; to; to = to->Next()){
-		if(to->Child()){
+		if(to->IsProperty() && to->Child()){
 			this->SubstituteVariables(to->Child());
 		}
 	}
