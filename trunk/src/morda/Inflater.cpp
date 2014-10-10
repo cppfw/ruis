@@ -99,7 +99,13 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 		}
 		
 		if(!s->Child()){
-			return to;//no children means that it is a property value, stop further processing of this chain
+			//No children means that it is a property value, stop further processing of this chain.
+			
+			//Check that it is the only node in the chain
+			if(s != from || s->Next()){
+				throw Inflater::Exc("malformed gui script: property with several values encountered");
+			}
+			return to;
 		}
 		
 		auto d = to->ThisOrNext(s->Value()).node();
