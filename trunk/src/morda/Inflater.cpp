@@ -136,8 +136,10 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 	
 	const stob::Node* n = &chain;
 	for(; n && n->IsProperty(); n = n->Next()){
-		if(*n == D_Templates && n->Child()){
-			this->PushTemplates(n->Child()->CloneChain());
+		if(*n == D_Templates){
+			if(n->Child()){
+				this->PushTemplates(n->Child()->CloneChain());
+			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
 		}

@@ -9,6 +9,7 @@ this_srcs += morda/shaders/PosTexShader.cpp
 this_srcs += morda/shaders/ColorPosShader.cpp
 this_srcs += morda/shaders/ColorPosTexShader.cpp
 
+this_srcs += morda/resources/ResGui.cpp
 this_srcs += morda/resources/ResImage.cpp
 this_srcs += morda/resources/ResNinePatch.cpp
 this_srcs += morda/resources/ResTexture.cpp

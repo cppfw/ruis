@@ -2,7 +2,7 @@ templates{
 	Label Label{
 		text{"trololo"}
 
-		color{0xff0000ff}
+//		color{0xff0000ff}
 
 		dimX{34}
 	}
