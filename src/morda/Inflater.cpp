@@ -203,6 +203,10 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	decltype(this->templates)::value_type m;
 	
 	for(; chain; chain = chain->ChopNext()){
+		if(chain->IsProperty()){
+			throw Exc("Inflater::PushTemplates(): template name does not start with capital latin letter, error.");
+		}
+		
 		if(chain->Child()){
 			throw Exc("Inflater::PushTemplates(): template name has children, error.");
 		}
@@ -260,9 +264,9 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 
 
 const std::string* Inflater::FindVariable(const std::string& name)const{
-	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
-		auto r = i->find(name);
-		if(r != i->end()){
+	for(auto& i : this->variables){
+		auto r = i.find(name);
+		if(r != i.end()){
 			return &r->second;
 		}
 	}
@@ -270,7 +274,21 @@ const std::string* Inflater::FindVariable(const std::string& name)const{
 	return nullptr;
 }
 
+
+
 void Inflater::PopVariables(){
 	ASSERT(this->variables.size() != 0)
-	this->variables.pop_back();
+	this->variables.pop_front();
+}
+
+
+
+void Inflater::PushVariables(const stob::Node* chain){
+	decltype(this->variables)::value_type m;
+	
+	for(; chain; chain = chain->Next()){
+		//TODO:
+	}
+	
+	this->variables.push_front(std::move(m));
 }
