@@ -34,22 +34,22 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class ResGui : public Resource{
+class ResSTOB : public Resource{
 	friend class ResourceManager;
 	
-	std::unique_ptr<stob::Node> gui;
+	std::unique_ptr<stob::Node> s;
 public:
-	ResGui(std::unique_ptr<stob::Node> gui);
+	ResSTOB(std::unique_ptr<stob::Node> gui);
 	
-	ResGui(const ResGui&) = delete;
-	ResGui& operator=(const ResGui&) = delete;
+	ResSTOB(const ResSTOB&) = delete;
+	ResSTOB& operator=(const ResSTOB&) = delete;
 	
-	const stob::Node* Gui()const{
-		return this->gui.get();
+	const stob::Node* STOB()const{
+		return this->s.get();
 	}
 	
 private:
-	static std::shared_ptr<ResGui> Load(const stob::Node& r, const ting::fs::File& fi);
+	static std::shared_ptr<ResSTOB> Load(const stob::Node& r, const ting::fs::File& fi);
 };
 
 }
