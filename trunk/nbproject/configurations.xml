@@ -28,12 +28,12 @@
         <df name="resources">
           <in>ResFont.cpp</in>
           <in>ResFont.hpp</in>
-          <in>ResGui.cpp</in>
-          <in>ResGui.hpp</in>
           <in>ResImage.cpp</in>
           <in>ResImage.hpp</in>
           <in>ResNinePatch.cpp</in>
           <in>ResNinePatch.hpp</in>
+          <in>ResSTOB.cpp</in>
+          <in>ResSTOB.hpp</in>
           <in>ResTexture.cpp</in>
           <in>ResTexture.hpp</in>
         </df>
@@ -223,10 +223,6 @@
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
@@ -240,6 +236,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -505,16 +505,16 @@
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResNinePatch.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -773,10 +773,6 @@
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
@@ -790,6 +786,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1023,10 +1023,6 @@
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/resources/ResGui.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResGui.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResImage.hpp" ex="false" tool="3" flavor2="0">
@@ -1040,6 +1036,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>

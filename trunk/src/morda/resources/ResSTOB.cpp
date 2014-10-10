@@ -1,6 +1,6 @@
 #include <stob/dom.hpp>
 
-#include "ResGui.hpp"
+#include "ResSTOB.hpp"
 #include "../ResourceManager.hpp"
 
 
@@ -8,13 +8,13 @@ using namespace morda;
 
 
 
-ResGui::ResGui(std::unique_ptr<stob::Node> gui) :
-		gui(std::move(gui))
+ResSTOB::ResSTOB(std::unique_ptr<stob::Node> gui) :
+		s(std::move(gui))
 {}
 
 
 
-std::shared_ptr<ResGui> ResGui::Load(const stob::Node& r, const ting::fs::File& fi){
+std::shared_ptr<ResSTOB> ResSTOB::Load(const stob::Node& r, const ting::fs::File& fi){
 	auto fileName = r.GetProperty("file");
 	if(!fileName){
 		throw ResourceManager::Exc("ResGui::Load(): 'file' property not found in resource description");
@@ -22,5 +22,5 @@ std::shared_ptr<ResGui> ResGui::Load(const stob::Node& r, const ting::fs::File& 
 	
 	fi.SetPath(fileName->Value());
 	
-	return ting::New<ResGui>(stob::Load(fi));
+	return ting::New<ResSTOB>(stob::Load(fi));
 }
