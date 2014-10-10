@@ -373,11 +373,10 @@ public:
 		ResMan();
 	} resMan;
 
-private:
 	class Inflater : public morda::Inflater{
 		friend class App;
 		Inflater();
-	} guiInflater;
+	} inflater;
 	
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
@@ -414,10 +413,6 @@ public:
 		
 		this->rootWidget->MoveTo(morda::Vec2r(0));
 		this->rootWidget->Resize(this->curWinRect.d);
-	}
-
-	Inflater& inflater()NOEXCEPT{
-		return this->guiInflater;
 	}
 	
 	void ShowVirtualKeyboard()NOEXCEPT;

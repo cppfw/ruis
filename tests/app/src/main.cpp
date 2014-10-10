@@ -230,10 +230,10 @@ public:
 		this->resMan.MountResPack(*this->CreateResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
 		
-		this->inflater().AddWidget<SimpleWidget>("U_SimpleWidget");
-		this->inflater().AddWidget<CubeWidget>("CubeWidget");
+		this->inflater.AddWidget<SimpleWidget>("U_SimpleWidget");
+		this->inflater.AddWidget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(
+		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater.Inflate(
 				*this->CreateResourceFileInterface("res/test.gui.stob")
 			);
 
