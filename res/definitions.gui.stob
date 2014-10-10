@@ -1,5 +1,9 @@
+vars{
+	morda_text_color{0xffccfbff}
+}
+
 templates{
-//	Label Label{
-//		color{0xff00ff00}
-//	}
+	Label Label{
+		color{ @{morda_text_color} }
+	}
 }

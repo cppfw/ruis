@@ -292,7 +292,7 @@ Container{
 
 			text{"Hello Wrodl!!!"}
 
-			color{0xffccfbff}
+			color{ @{morda_text_color} }
 
 			layout{
 				dimX{0} dimY{-1}

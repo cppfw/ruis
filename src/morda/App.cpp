@@ -181,7 +181,7 @@ void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
 
 App::Inflater::Inflater(){
 	try{
-		auto t = morda::App::Inst().resMan.Load<ResSTOB>("morda_gui_templates");
+		auto t = morda::App::Inst().resMan.Load<ResSTOB>("morda_gui_definitions");
 		
 		if(t->STOB()){
 			this->Inflate(*t->STOB());
@@ -189,5 +189,6 @@ App::Inflater::Inflater(){
 		
 	}catch(ResourceManager::Exc& e){
 		//ignore
+		TRACE(<< "App::Inflater::Inflater(): could not load morda_gui_definitions" << std::endl)
 	}
 }
