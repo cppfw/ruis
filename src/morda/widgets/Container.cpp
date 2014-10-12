@@ -65,7 +65,7 @@ void Container::Render(const morda::Matr4r& matrix)const{
 	this->Widget::Render(matrix);
 	
 	for(auto& w: this->Children()){
-		if(w->IsHidden()){
+		if(!w->IsVisible()){
 			continue;
 		}
 		
@@ -110,7 +110,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
-		if((*i)->IsHidden() || (*i)->IsDisabled()){
+		if(!(*i)->IsVisible() || !(*i)->IsEnabled()){
 			continue;
 		}
 		
@@ -163,7 +163,7 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
-		if((*i)->isHidden){
+		if(!(*i)->IsVisible() || !(*i)->IsEnabled()){
 			ASSERT(!(*i)->IsHovered())
 			continue;
 		}
@@ -259,10 +259,14 @@ void Container::Remove(Widget& w){
 
 //override
 std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXCEPT{
+	if(auto r = this->Widget::FindChildByName(name)){
+		return std::move(r);
+	}
+	
 	for(auto& w : this->Children()){
 		if(auto r = w->FindChildByName(name)){
 			return r;
 		}
 	}
-	return this->Widget::FindChildByName(name);
+	return nullptr;
 }

@@ -66,9 +66,9 @@ private:
 	
 	bool isHovered = false;
 
-	bool isHidden = false;
+	bool isVisible;
 
-	bool isDisabled = false;
+	bool isEnabled;
 
 	morda::Rect2r rect;
 	
@@ -242,40 +242,24 @@ protected:
 public:
 
 	void SetRelayoutNeeded()NOEXCEPT;
-	
-	void Hide(){
-		this->SetHidden(true);
-	}
 
-	void Show(){
-		this->SetHidden(false);
-	}
-
-	void SetHidden(bool hidden){
-		this->isHidden = hidden;
-		if(this->isHidden){
+	void SetVisible(bool visible){
+		this->isVisible = visible;
+		if(!this->isVisible){
 			this->SetHovered(false);
 		}
 	}
 	
-	bool IsHidden()const NOEXCEPT{
-		return this->isHidden;
+	bool IsVisible()const NOEXCEPT{
+		return this->isVisible;
 	}
 
-	void Enable()NOEXCEPT{
-		this->SetDisabled(false);
-	}
-
-	void Disable()NOEXCEPT{
-		this->SetDisabled(true);
-	}
-
-	void SetDisabled(bool disabled)NOEXCEPT{
-		this->isDisabled = disabled;
+	void SetEnabled(bool enable)NOEXCEPT{
+		this->isEnabled = enable;
 	}
 	
-	bool IsDisabled()const NOEXCEPT{
-		return this->isDisabled;
+	bool IsEnabled()const NOEXCEPT{
+		return this->isEnabled;
 	}
 	
 	/**

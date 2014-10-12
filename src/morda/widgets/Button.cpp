@@ -1,6 +1,8 @@
 #include "Button.hpp"
+
 #include "../App.hpp"
 
+#include "../util/util.hpp"
 
 
 using namespace morda;
@@ -49,15 +51,13 @@ void ButtonWidget::OnHoverChanged(){
 
 
 
-ToggleButton::ToggleButton(const stob::Node* desc) :
-		Widget(desc)
+ToggleButton::ToggleButton(const stob::Node* chain) :
+		Widget(chain)
 {
-	if(!desc){
-		return;
-	}
-	
-	if(const stob::Node* n = desc->GetProperty("checked")){
+	if(const stob::Node* n = GetProperty(chain, "checked")){
 		this->isChecked = n->AsBool();
+	}else{
+		this->isChecked = false;
 	}
 }
 

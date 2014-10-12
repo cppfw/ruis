@@ -39,6 +39,16 @@ Container{
 			clr{@{another_color}}
 		}
 
+		ColorLabel{
+			color{ @{morda_bg_color} }
+
+			layout{
+				dimX{0} dimY{0}
+				fillX{true} fillY{true}
+			}
+		}
+
+/*
 		Label{
 
 			templates{
@@ -65,8 +75,9 @@ Container{
 			}
 
 			color{@{clr}}
-		}
+		}*/
 
+/*
 		ImageLabel{
 
 			templates{
@@ -82,6 +93,11 @@ Container{
 			layout{
 //				fillX{true} fillY{true}
 			}
+		}
+*/
+
+		CheckBox{
+			""
 		}
 	}
 

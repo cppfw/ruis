@@ -82,14 +82,14 @@ public:
 
 
 class ToggleButton : public ButtonWidget{
-	bool isChecked = false;
+	bool isChecked;
 	
 	void OnClicked()override final{
 		this->Toggle();
 	}
 	
 protected:
-	ToggleButton(const stob::Node* desc);
+	ToggleButton(const stob::Node* chain);
 	
 	virtual void OnCheckedChanged(){
 		if(this->onCheckedChanged){
@@ -97,9 +97,7 @@ protected:
 		}
 	}
 public:
-	
-	//TODO:
-	
+
 	void SetChecked(bool checked){
 		if(this->isChecked == checked){
 			return;
