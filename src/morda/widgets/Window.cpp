@@ -130,6 +130,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 			FrameContainer{
 				name{morda_content}
+				clip{true}
 				layout{
 					dimX{0} dimY{0}
 					weight{1}
@@ -223,9 +224,6 @@ morda::Window::Window(const stob::Node* chain) :
 		emptyMinDim(this->LinearContainer::ComputeMinDim())
 {
 	this->SetupWidgets();
-	
-	this->contentArea->SetClip(this->Clip());
-	this->SetClip(false);
 	
 	if(auto n = GetProperty(chain, "title")){
 		this->SetTitle(n->Value());
