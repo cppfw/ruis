@@ -96,12 +96,21 @@ const char* DWindowDesc = R"qwertyuiop(
 					fillX{true} fillY{true}
 				}
 
+				clip{true}
+
+				MouseProxy{
+					name{morda_caption_proxy}
+					layout{
+						fillX{true} fillY{true}
+					}
+				}
+
 				ColorLabel{
 					layout{
 						dimX{0} dimY{0}
 						fillX{true} fillY{true}
 					}
-					color{@{morda_bg_color_window_title}}
+					color{ @{morda_bg_color_window_title} }
 				}
 
 				LinearContainer{
@@ -117,13 +126,6 @@ const char* DWindowDesc = R"qwertyuiop(
 							gravity{0% 50%}
 							weight{1}
 						}
-					}
-				}
-
-				MouseProxy{
-					name{morda_caption_proxy}
-					layout{
-						fillX{true} fillY{true}
 					}
 				}
 			}
