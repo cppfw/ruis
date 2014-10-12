@@ -13,6 +13,7 @@
 #include "widgets/NinePatch.hpp"
 #include "widgets/PushButton.hpp"
 #include "widgets/TextField.hpp"
+#include "widgets/CheckBox.hpp"
 
 #include "App.hpp"
 
@@ -39,6 +40,7 @@ Inflater::Inflater(){
 	this->AddWidget<PushButton>("PushButton");
 	this->AddWidget<ColorLabel>("ColorLabel");
 	this->AddWidget<TextField>("TextField");
+	this->AddWidget<CheckBox>("CheckBox");
 }
 
 

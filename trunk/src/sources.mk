@@ -28,6 +28,7 @@ this_srcs += morda/util/unzip/ioapi.cpp
 this_srcs += morda/util/unzip/unzip.cpp
 
 this_srcs += morda/widgets/Button.cpp
+this_srcs += morda/widgets/CheckBox.cpp
 this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
 this_srcs += morda/widgets/ColorLabel.cpp
