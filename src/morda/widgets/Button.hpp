@@ -91,7 +91,11 @@ class ToggleButton : public ButtonWidget{
 protected:
 	ToggleButton(const stob::Node* desc);
 	
-	virtual void OnCheckedChanged(){}
+	virtual void OnCheckedChanged(){
+		if(this->onCheckedChanged){
+			this->onCheckedChanged(this->IsChecked());
+		}
+	}
 public:
 	
 	//TODO:
@@ -112,6 +116,8 @@ public:
 	bool IsChecked()const NOEXCEPT{
 		return this->isChecked;
 	}
+	
+	std::function<void(bool)> onCheckedChanged;
 };
 
 

@@ -85,6 +85,8 @@
           <in>Button.cpp</in>
           <in>Button.hpp</in>
           <in>CharInputWidget.hpp</in>
+          <in>CheckBox.cpp</in>
+          <in>CheckBox.hpp</in>
           <in>ColorLabel.cpp</in>
           <in>ColorWidget.cpp</in>
           <in>Container.cpp</in>
@@ -337,6 +339,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
@@ -565,6 +571,10 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="8">
         <ccTool>
@@ -887,6 +897,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
@@ -1136,6 +1150,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
