@@ -48,6 +48,18 @@ Widget::Widget(const stob::Node* chain){
 	}else{
 		this->clip = false;
 	}
+	
+	if(const stob::Node* p = GetProperty(chain, "visible")){
+		this->isVisible = p->AsBool();
+	}else{
+		this->isVisible = true;
+	}
+	
+	if(const stob::Node* p = GetProperty(chain, "enabled")){
+		this->isEnabled = p->AsBool();
+	}else{
+		this->isEnabled = true;
+	}
 }
 
 
