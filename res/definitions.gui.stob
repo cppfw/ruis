@@ -1,6 +1,10 @@
 vars{
 	morda_text_color{0xffccfbff}
-	morda_bg_color{0xff141a27}
+
+//	morda_bg_color{0xff141a27}
+	morda_bg_color{0xff1a2233}
+
+	morda_bg_color_window_title{0xff903a42}
 }
 
 templates{

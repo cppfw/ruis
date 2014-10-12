@@ -101,7 +101,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						dimX{0} dimY{0}
 						fillX{true} fillY{true}
 					}
-					color{0xffff0000}
+					color{@{morda_bg_color_window_title}}
 				}
 
 				LinearContainer{
