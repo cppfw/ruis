@@ -57,9 +57,16 @@ protected:
 		return this->isVertical ? 0 : 1;
 	}
 
+	virtual void OnOrientationChanged(){}
+	virtual void OnDirectionChanged(){}
+	
 public:	
 	void SetVertical(bool isVertical)NOEXCEPT{
+		if(this->isVertical == isVertical){
+			return;
+		}
 		this->isVertical = isVertical;
+		this->OnOrientationChanged();
 	}
 	
 	bool IsVertical()const NOEXCEPT{
@@ -67,7 +74,11 @@ public:
 	}
 	
 	void SetReverse(bool reverse)NOEXCEPT{
+		if(this->isReverse == isReverse){
+			return;
+		}
 		this->isReverse = reverse;
+		this->OnDirectionChanged();
 	}
 	
 	bool IsReverse()const NOEXCEPT{
