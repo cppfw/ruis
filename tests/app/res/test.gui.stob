@@ -40,7 +40,7 @@ Container{
 		}
 
 		ColorLabel{
-			color{ @{morda_bg_color} }
+			color{ @{morda_color_bg} }
 
 			layout{
 				dimX{0} dimY{0}
@@ -293,7 +293,7 @@ Container{
 		title{"TextInput"}
 
 		ColorLabel{
-			color{ @{morda_bg_color} }
+			color{ @{morda_color_bg} }
 
 			layout{
 				dimX{0} dimY{0}
