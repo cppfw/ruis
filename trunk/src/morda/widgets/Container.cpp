@@ -238,7 +238,7 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 	this->SetRelayoutNeeded();
 	
 	if(this->children.size() > 1){
-		(*(++this->children.rend()))->OnTopmostChanged();
+		(*(++this->children.rbegin()))->OnTopmostChanged();
 	}
 	
 	w->OnTopmostChanged();
@@ -308,7 +308,7 @@ void Container::MakeChildTopmost(Widget& w){
 	this->children.push_back(std::move(p));
 	w.parentIter = --this->children.end();
 	
-	(*(++this->children.rend()))->OnTopmostChanged();
+	(*(++this->children.rbegin()))->OnTopmostChanged();
 	w.OnTopmostChanged();
 	
 	this->SetRelayoutNeeded();
