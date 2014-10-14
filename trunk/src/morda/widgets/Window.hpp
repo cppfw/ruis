@@ -33,6 +33,7 @@ THE SOFTWARE. */
 #include "FrameContainer.hpp"
 #include "Label.hpp"
 #include "MouseProxy.hpp"
+#include "ColorLabel.hpp"
 
 namespace morda{
 
@@ -41,6 +42,10 @@ class Window :
 		private LinearContainer
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
+	
+	std::shared_ptr<ColorLabel> titleBg;
+	std::uint32_t titleBgColorTopmost;
+	std::uint32_t titleBgColorNonTopmost;
 	
 	std::shared_ptr<Label> title;
 	
@@ -72,6 +77,14 @@ public:
 	FrameContainer& Content(){
 		return *this->contentArea;
 	}
+	
+
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+
+	void OnTopmostChanged()override;
+
 };
 
 }

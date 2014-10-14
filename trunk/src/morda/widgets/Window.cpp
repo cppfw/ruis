@@ -106,11 +106,11 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 
 				ColorLabel{
+					name{morda_window_title_bg}
 					layout{
 						dimX{0} dimY{0}
 						fillX{true} fillY{true}
 					}
-					color{ @{morda_bg_color_window_title} }
 				}
 
 				LinearContainer{
@@ -231,6 +231,21 @@ morda::Window::Window(const stob::Node* chain) :
 		this->SetTitle(n->Value());
 	}
 	
+	//TODO: this does not work!
+	if(auto a = GetProperty(chain, "appearance")){
+		if(auto n = GetProperty(a, "titleColorTopmost")){
+			this->titleBgColorTopmost = n->AsUint32();
+		}else{
+			this->titleBgColorTopmost = 0xffff0000;
+		}
+		
+		if(auto n = GetProperty(a, "titleColorNonTopmost")){
+			this->titleBgColorNonTopmost = n->AsUint32();
+		}else{
+			this->titleBgColorNonTopmost = 0xff808080;
+		}
+	}
+	
 	if(chain){
 		this->contentArea->Add(*chain);
 	}
@@ -239,6 +254,12 @@ morda::Window::Window(const stob::Node* chain) :
 void morda::Window::SetupWidgets(){
 	this->contentArea = this->FindChildByNameAs<FrameContainer>("morda_content");
 	ASSERT(this->contentArea)
+	
+	this->title = this->FindChildByNameAs<Label>("morda_title");
+	ASSERT(this->title)
+	
+	this->titleBg = this->FindChildByNameAs<ColorLabel>("morda_window_title_bg");
+	ASSERT(this->titleBg);
 	
 	std::function<decltype(MouseProxy::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){
 		return decltype(MouseProxy::onMouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
@@ -270,9 +291,6 @@ void morda::Window::SetupWidgets(){
 			return false;
 		};
 	}
-	
-	this->title = this->FindChildByNameAs<Label>("morda_title");
-	ASSERT(this->title)
 	
 	{
 		auto w = this->FindChildByNameAs<MouseProxy>("morda_lt_proxy");
@@ -396,6 +414,33 @@ void morda::Window::SetupWidgets(){
 	}
 }
 
+
+
 void morda::Window::SetTitle(const std::string& str){
 	this->title->SetText(ting::utf8::ToUTF32(str));
+}
+
+
+
+bool morda::Window::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+	morda::App::Inst().PostToUIThread_ts(
+			[this](){
+				this->MakeTopmost();
+			}
+		);
+	
+	this->Container::OnMouseButton(isDown, pos, button, pointerId);
+	
+	return true;
+}
+
+
+
+bool morda::Window::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+	this->Container::OnMouseMove(pos, pointerId);
+	return true;
+}
+
+void morda::Window::OnTopmostChanged(){
+	this->titleBg->SetColor(this->IsTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
 }

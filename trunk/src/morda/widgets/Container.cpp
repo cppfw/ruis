@@ -224,12 +224,24 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
 	}
 
+	if(this->isBlocked){
+		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
+	}
+	
 	this->children.push_back(w);
+	
 	w->parentIter = --this->children.end();
 	
 	w->parent = this;
 
+	w->SetRelayoutNeeded();
 	this->SetRelayoutNeeded();
+	
+	if(this->children.size() > 1){
+		(*(++this->children.rend()))->OnTopmostChanged();
+	}
+	
+	w->OnTopmostChanged();
 	
 	ASSERT(!w->IsHovered())
 }
@@ -269,4 +281,35 @@ std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXC
 		}
 	}
 	return nullptr;
+}
+
+
+
+void Container::MakeChildTopmost(Widget& w){
+	if(this->isBlocked){
+		throw morda::Exc("Container::MakeChildTopmost(): cannot modify children list while iterating through children, try deferring the operation.");
+	}
+	
+	ASSERT(w.Parent() == this)
+	ASSERT(w.parentIter != this->children.end())
+	
+	ASSERT(this->children.size() != 0)
+	
+	if(&w == this->children.back().get()){
+		return;//already topmost
+	}
+	
+	ASSERT(this->children.size() > 1)
+	
+	auto p = std::move(*w.parentIter);
+	
+	this->children.erase(w.parentIter);
+
+	this->children.push_back(std::move(p));
+	w.parentIter = --this->children.end();
+	
+	(*(++this->children.rend()))->OnTopmostChanged();
+	w.OnTopmostChanged();
+	
+	this->SetRelayoutNeeded();
 }

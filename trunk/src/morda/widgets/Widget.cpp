@@ -202,3 +202,27 @@ void Widget::Unfocus()NOEXCEPT{
 
 	App::Inst().SetFocusedWidget(nullptr);
 }
+
+
+
+bool Widget::IsTopmost()const NOEXCEPT{
+	if(!this->Parent()){
+		return false;
+	}
+	
+	ASSERT(this->Parent()->Children().size() != 0)
+	
+	return this->Parent()->Children().back().get() == this;
+}
+
+
+
+void Widget::MakeTopmost(){
+	if(!this->Parent()){
+		return;
+	}
+	
+	ASSERT(this->Parent()->Children().size() != 0)
+	
+	this->Parent()->MakeChildTopmost(*this);
+}

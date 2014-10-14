@@ -271,6 +271,13 @@ public:
 	bool Contains(const morda::Vec2r& pos)const NOEXCEPT{
 		return morda::Rect2r(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
 	}
+	
+	
+	virtual void OnTopmostChanged(){}
+	
+	bool IsTopmost()const NOEXCEPT;
+	
+	void MakeTopmost();
 };
 
 
