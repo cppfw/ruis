@@ -42,6 +42,7 @@ namespace morda{
 
 
 class Container : virtual public Widget{
+	friend class Widget;
 private:
 	T_ChildrenList children;
 	
@@ -98,6 +99,9 @@ public:
 	const T_ChildrenList& Children()const NOEXCEPT{
 		return this->children;
 	}
+	
+private:
+	void MakeChildTopmost(Widget& w);
 };
 
 
