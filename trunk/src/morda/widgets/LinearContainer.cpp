@@ -51,7 +51,7 @@ void LinearContainer::OnResize(){
 	
 	bool lessThanMin = this->Rect().d[longIndex] < this->GetMinDim()[longIndex];
 	
-	//Calculate rigid size, net weight and store weights and margins
+	//Calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real fillRigid = 0;
 	real netWeight = 0;
