@@ -76,12 +76,12 @@ public:
 	
 	void Render(const morda::Matr4r& matrix)const override;
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
 public:
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId) override;
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
 	
-	void OnHoverChanged()override;
+	void OnHoverChanged(unsigned pointerID)override;
 	
 	void OnResize()override;
 

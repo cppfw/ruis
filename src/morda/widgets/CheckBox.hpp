@@ -53,8 +53,8 @@ public:
 	}
 	
 
-	void OnHoverChanged()override{
-		this->ToggleButton::OnHoverChanged();
+	void OnHoverChanged(unsigned pointerID)override{
+		this->ToggleButton::OnHoverChanged(pointerID);
 	}
 
 

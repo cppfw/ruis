@@ -399,7 +399,7 @@ private:
 	//pos is in usual window coordinates, y goes down.
 	void HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
 	
-	void HandleMouseHover(bool isHovered);
+	void HandleMouseHover(bool isHovered, unsigned pointerID);
 
 protected:
 	App(const WindowParams& requestedWindowParams);

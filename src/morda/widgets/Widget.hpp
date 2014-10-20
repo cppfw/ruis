@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <string>
+#include <set>
 
 #include <ting/Shared.hpp>
 #include <ting/util.hpp>
@@ -64,7 +65,7 @@ private:
 	Container* parent = nullptr;
 	T_ChildrenList::iterator parentIter;
 	
-	bool isHovered = false;
+	std::set<unsigned> hovered;
 
 	bool isVisible;
 
@@ -118,20 +119,47 @@ public:
 	//NOTE: if only parent holds Ref then object may be deleted
 	void RemoveFromParent();
 	
+	/**
+	 * @brief Check if widget is hovered by any pointer.
+     * @return true if hovered by any pointer.
+	 * @return false otherwise.
+     */
 	bool IsHovered()const NOEXCEPT{
-		return this->isHovered;
+		return this->hovered.size() != 0;
+	}
+	
+	/**
+	 * @brief Check if widget is hovered by given pointer.
+     * @param pointerID - pointer ID to check against.
+     * @return true if widget is hovered by given pointer ID.
+	 * @return false otherwise.
+     */
+	bool IsHovered(unsigned pointerID)const NOEXCEPT{
+		return this->hovered.find(pointerID) != this->hovered.end();
 	}
 	
 private:
-	void SetHovered(bool isHovered){
-		if(this->isHovered == isHovered){
-			return;
+	void SetHovered(bool isHovered, unsigned pointerID){
+		if(isHovered){
+			if(this->IsHovered(pointerID)){
+				return;
+			}
+			
+			this->hovered.insert(pointerID);
+		}else{
+			if(!this->IsHovered(pointerID)){
+				return;
+			}
+			
+			this->hovered.erase(pointerID);
 		}
 		
-		this->isHovered = isHovered;
-		this->OnHoverChanged();
+		this->OnHoverChanged(pointerID);
 	}
 	
+	void SetUnhovered(){
+		this->hovered.clear();
+	}
 public:
 
 	const morda::Rect2r& Rect()const NOEXCEPT{
@@ -214,7 +242,7 @@ public:
 		return false;
 	}
 
-	virtual void OnHoverChanged(){
+	virtual void OnHoverChanged(unsigned pointerID){
 //		TRACE(<< "Widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
@@ -246,7 +274,7 @@ public:
 	void SetVisible(bool visible){
 		this->isVisible = visible;
 		if(!this->isVisible){
-			this->SetHovered(false);
+			this->SetUnhovered();
 		}
 	}
 	

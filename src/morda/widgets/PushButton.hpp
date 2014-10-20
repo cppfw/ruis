@@ -55,8 +55,8 @@ private:
 		return this->Button::OnMouseButton(isDown, pos, button, pointerId);
 	}
 
-	void OnHoverChanged()override{
-		this->Button::OnHoverChanged();
+	void OnHoverChanged(unsigned pointerID)override{
+		this->Button::OnHoverChanged(pointerID);
 	}
 };
 

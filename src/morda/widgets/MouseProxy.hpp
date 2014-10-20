@@ -48,9 +48,9 @@ public:
 	
 	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 	
-	std::function<void(Widget& widget)> onHoverChanged;
+	std::function<void(Widget& widget, unsigned pointerID)> onHoverChanged;
 	
-	void OnHoverChanged()override;
+	void OnHoverChanged(unsigned pointerID)override;
 };
 
 }
