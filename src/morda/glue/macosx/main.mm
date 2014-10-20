@@ -60,7 +60,7 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMou
 }
 
 void Macosx_HandleMouseHover(bool isHovered){
-	morda::App::Inst().HandleMouseHover(isHovered);
+	morda::App::Inst().HandleMouseHover(isHovered, 0);
 }
 
 void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
