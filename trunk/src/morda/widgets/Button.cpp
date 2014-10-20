@@ -40,10 +40,12 @@ bool ButtonWidget::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseBut
 
 
 //override
-void ButtonWidget::OnHoverChanged(){
+void ButtonWidget::OnHoverChanged(unsigned pointerID){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
-	if(!this->IsHovered()){
+	//TODO: check if was hovered by the same pointer
+	
+	if(!this->IsHovered(pointerID)){
 		this->isPressed = false;
 		this->OnPressedChanged();
 	}

@@ -28,8 +28,8 @@ bool MouseProxy::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 
 
 
-void MouseProxy::OnHoverChanged(){
+void MouseProxy::OnHoverChanged(unsigned pointerID){
 	if(this->onHoverChanged){
-		this->onHoverChanged(*this);
+		this->onHoverChanged(*this, pointerID);
 	}
 }

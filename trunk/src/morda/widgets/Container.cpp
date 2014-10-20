@@ -79,18 +79,18 @@ void Container::Render(const morda::Matr4r& matrix)const{
 
 
 //override
-bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
 	//check if mouse captured
 	{
-		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
+		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->SetHovered(w->Rect().Overlaps(pos));
-				w->OnMouseButton(isDown, pos - w->Rect().p, button, pointerId);
+				w->SetHovered(w->Rect().Overlaps(pos), pointerID);
+				w->OnMouseButton(isDown, pos - w->Rect().p, button, pointerID);
 				
 				unsigned& n = i->second.second;
 				if(isDown){
@@ -120,39 +120,39 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		(*i)->SetHovered(true);
-		if((*i)->OnMouseButton(isDown, pos - (*i)->Rect().p, button, pointerId)){
-			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
+		(*i)->SetHovered(true, pointerID);
+		if((*i)->OnMouseButton(isDown, pos - (*i)->Rect().p, button, pointerID)){
+			ASSERT(this->mouseCaptureMap.find(pointerID) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<Widget>(*i), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerID, std::make_pair(std::weak_ptr<Widget>(*i), 1)));
 			}
 			
 			return true;
 		}
 	}
 	
-	return this->Widget::OnMouseButton(isDown, pos, button, pointerId);
+	return this->Widget::OnMouseButton(isDown, pos, button, pointerID);
 }
 
 
 
 //override
-bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
 	//check if mouse captured
 	{
-		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
+		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->OnMouseMove(pos - w->Rect().p, pointerId);
+				w->OnMouseMove(pos - w->Rect().p, pointerID);
 		
 				//set hovered goes after move notification because position of widget could change
 				//during handling the notification, so need to check after that for hovering
-				w->SetHovered(w->Rect().Overlaps(pos));
+				w->SetHovered(w->Rect().Overlaps(pos), pointerID);
 
 				return true;//doesn't matter what to return
 			}else{
@@ -169,37 +169,37 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 		}
 		
 		if(!(*i)->Rect().Overlaps(pos)){
-			(*i)->SetHovered(false);
+			(*i)->SetHovered(false, pointerID);
 			continue;
 		}
 		
-		(*i)->SetHovered(true);
+		(*i)->SetHovered(true, pointerID);
 		
-		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerId)){//consumed mouse move event
+		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerID)){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->Children().rend(); ++i){
-				(*i)->SetHovered(false);
+				(*i)->SetHovered(false, pointerID);
 			}
 			return true;
 		}		
 	}
 	
-	return this->Widget::OnMouseMove(pos, pointerId);
+	return this->Widget::OnMouseMove(pos, pointerID);
 }
 
 
 
-void Container::OnHoverChanged(){
+void Container::OnHoverChanged(unsigned pointerID){
 	//TODO: if some child removed during iterating?
 	
-	if(this->IsHovered()){
+	if(this->IsHovered(pointerID)){
 		return;
 	}
 	
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->Children()){
-		w->SetHovered(false);
+		w->SetHovered(false, pointerID);
 	}
 }
 
@@ -262,7 +262,7 @@ void Container::Remove(Widget& w){
 	this->children.erase(w.parentIter);
 	
 	w.parent = nullptr;
-	w.SetHovered(false);
+	w.SetUnhovered();
 	
 	this->SetRelayoutNeeded();
 }

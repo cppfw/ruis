@@ -422,7 +422,6 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -442,9 +441,6 @@
           </cTool>
           <ccTool flags="0">
             <standard>8</standard>
-            <incDir>
-              <pElem>.</pElem>
-            </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
             </preprocessorList>
@@ -462,6 +458,17 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="1/morda/glue/android">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -469,6 +476,17 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="1/morda/glue/windows">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -476,27 +494,50 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="1/morda/shaders">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="1/morda/util/unzip">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="1/morda/widgets">
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="2">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -506,6 +547,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
@@ -514,6 +558,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
@@ -522,6 +569,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
@@ -530,6 +580,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
@@ -610,6 +663,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
@@ -618,6 +674,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/LayoutParams.cpp" ex="false" tool="1" flavor2="8">
@@ -626,6 +685,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
@@ -651,6 +713,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
@@ -667,6 +732,9 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>M_MORDA_RENDER_WIDGET_BORDERS</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
@@ -752,8 +820,6 @@
         </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">

@@ -696,10 +696,10 @@ void App::Exec(){
 							);
 						break;
 					case EnterNotify:
-						this->HandleMouseHover(true);
+						this->HandleMouseHover(true, 0);
 						break;
 					case LeaveNotify:
-						this->HandleMouseHover(false);
+						this->HandleMouseHover(false, 0);
 						break;
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)
