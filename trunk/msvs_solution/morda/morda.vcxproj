@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResImage.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResNinePatch.cpp" />
+    <ClCompile Include="..\..\src\morda\resources\ResSTOB.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResTexture.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\ColorPosShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\ColorPosTexShader.cpp" />
@@ -98,9 +99,10 @@
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\GLTexture.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
-    <ClCompile Include="..\..\src\morda\util\LayoutDim.cpp" />
+    <ClCompile Include="..\..\src\morda\util\LayoutParams.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\CheckBox.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ColorLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ColorWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Container.cpp" />

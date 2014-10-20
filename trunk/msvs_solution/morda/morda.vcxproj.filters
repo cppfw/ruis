@@ -72,9 +72,6 @@
     <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\LayoutDim.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +127,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\morda\widgets\MouseProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\CheckBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\resources\ResSTOB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\util\LayoutParams.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
