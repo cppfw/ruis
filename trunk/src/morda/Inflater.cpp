@@ -325,10 +325,7 @@ void Inflater::PushVariables(const stob::Node& chain){
 			
 			if(*child == "@" && child->Child()){
 				auto r = child->Child();
-				if(!r){
-					throw Exc("Inflater::PushVariables(): variable reference has no value, error");
-				}
-				
+
 				if(r->Next()){
 					throw Exc("Inflater::PushVariables(): variable reference has several values, error");
 				}
