@@ -293,18 +293,13 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 
 
 const std::string* Inflater::FindVariable(const std::string& name)const{
-	const std::string* n = &name;
 	for(auto& i : this->variables){
-		auto r = i.find(*n);
+		auto r = i.find(name);
 		if(r != i.end()){
-			if(r->second.first){
-				n = &r->second.second;
-				continue;
-			}
-			return &r->second.second;
+			return &r->second;
 		}
 	}
-	TRACE(<< "Inflater::FindVariable(): variable '" << *n <<"' not found!!!" << std::endl)
+	TRACE(<< "Inflater::FindVariable(): variable '" << name <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 
@@ -322,17 +317,29 @@ void Inflater::PushVariables(const stob::Node& chain){
 	
 	for(auto n = &chain; n; n = n->Next()){
 		std::string value;
-		bool isVar = false;
 		
 		for(auto child = n->Child(); child;){
 			if(child->Next()){
 				throw Exc("Inflater::PushVariables(): variable has several values, error");
 			}
 			
-			if(!isVar && *child == "@" && child->Child()){
-				child = child->Child();
-				isVar = true;
-				continue;
+			if(*child == "@" && child->Child()){
+				auto r = child->Child();
+				if(!r){
+					throw Exc("Inflater::PushVariables(): variable reference has no value, error");
+				}
+				
+				if(r->Next()){
+					throw Exc("Inflater::PushVariables(): variable reference has several values, error");
+				}
+				
+				if(auto var = this->FindVariable(r->Value())){
+					value = *var;
+				}else{
+					throw Exc("Inflater::PushVariables(): variable reference could not be resolved, error");
+				}
+				
+				break;
 			}
 			
 			if(child->Child()){
@@ -343,10 +350,9 @@ void Inflater::PushVariables(const stob::Node& chain){
 			break;
 		}
 		
-		if(!m.insert(std::make_pair(
-				n->Value(),
-				std::make_pair(isVar, std::move(value))
-			)).second)
+		if(!m.insert(
+				std::make_pair(n->Value(),std::move(value))
+			).second)
 		{
 			throw Exc("Inflater::PushVariables(): failed to add variable, variable with same name is already defined in this variables block");
 		}

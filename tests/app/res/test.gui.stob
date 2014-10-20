@@ -8,6 +8,10 @@ templates{
 	}
 }
 
+vars{
+	trololo{"saf"}
+}
+
 
 vars{
 	variable{and_its_value}
@@ -75,7 +79,8 @@ Container{
 			}
 
 			color{@{clr}}
-		}*/
+		}
+*/
 
 /*
 		ImageLabel{
