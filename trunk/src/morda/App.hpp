@@ -66,6 +66,7 @@ THE SOFTWARE. */
 #include "shaders/ColorPosShader.hpp"
 #include "shaders/ColorPosTexShader.hpp"
 #include "shaders/PosTexShader.hpp"
+#include "shaders/SimpleGrayscalePosTexShader.hpp"
 
 
 
@@ -102,6 +103,7 @@ public:
 		ColorPosShader colorPosShader;
 		ColorPosTexShader colorPosTexShader;
 		PosTexShader posTexShader;
+		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
 	};
 
 

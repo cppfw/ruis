@@ -14,6 +14,7 @@
 #include "widgets/PushButton.hpp"
 #include "widgets/TextField.hpp"
 #include "widgets/CheckBox.hpp"
+#include "widgets/GreyscaleGlass.hpp"
 
 #include "App.hpp"
 
@@ -41,6 +42,7 @@ Inflater::Inflater(){
 	this->AddWidget<ColorLabel>("ColorLabel");
 	this->AddWidget<TextField>("TextField");
 	this->AddWidget<CheckBox>("CheckBox");
+	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
 }
 
 
