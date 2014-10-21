@@ -8,6 +8,7 @@ this_srcs += morda/shaders/PosShader.cpp
 this_srcs += morda/shaders/PosTexShader.cpp
 this_srcs += morda/shaders/ColorPosShader.cpp
 this_srcs += morda/shaders/ColorPosTexShader.cpp
+this_srcs += morda/shaders/SimpleGrayscalePosTexShader.cpp
 
 this_srcs += morda/resources/ResImage.cpp
 this_srcs += morda/resources/ResNinePatch.cpp
@@ -33,6 +34,7 @@ this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
 this_srcs += morda/widgets/ColorLabel.cpp
 this_srcs += morda/widgets/FrameContainer.cpp
+this_srcs += morda/widgets/GreyscaleGlass.cpp
 this_srcs += morda/widgets/ImageLabel.cpp
 this_srcs += morda/widgets/Label.cpp
 this_srcs += morda/widgets/LinearContainer.cpp

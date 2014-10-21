@@ -47,7 +47,6 @@ Container{
 			color{ @{morda_color_bg} }
 
 			layout{
-				dimX{0} dimY{0}
 				fillX{true} fillY{true}
 			}
 		}
@@ -111,6 +110,12 @@ Container{
 		posX{300} posY{10}
 
 		title{"LinearLayout"}
+
+		GreyscaleGlass{
+			layout{
+				fillX{true} fillY{true}
+			}
+		}
 
 		LinearContainer{
 			padding {20 30 10 40}

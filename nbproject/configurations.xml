@@ -274,6 +274,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
@@ -353,6 +363,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -602,6 +622,20 @@
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
@@ -677,6 +711,20 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -826,6 +874,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
@@ -905,6 +963,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1080,6 +1148,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
@@ -1159,6 +1237,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/GreyscaleGlass.hpp"
             ex="false"
             tool="3"
             flavor2="0">
