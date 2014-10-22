@@ -18,6 +18,7 @@ SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 						attribute highp vec2 textureCoord;
 						uniform highp mat4 matrix;
 						varying highp vec2 texCoord;
+						
 						void main(void){
 							gl_Position = matrix * vertex;
 							texCoord = textureCoord;
@@ -30,15 +31,28 @@ SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 						#	define lowp
 						#endif
 						uniform sampler2D textureNumber;
+						
+						uniform highp vec2 texStep;
+						
 						varying highp vec2 texCoord;
+		
 						void main(void){
-							vec4 c = texture2D(textureNumber, texCoord);
-							
-							//TODO:
-							
-							float g = (c.r + c.g + c.b) / 3.0;
-							gl_FragColor = vec4(g, g, g, c.a);
+							vec4 c = texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y - texStep.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y - texStep.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y - texStep.y)) / 9;
+		
+							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y)) / 9;
+							c += texture2D(textureNumber, texCoord) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y)) / 9;
+		
+							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y + texStep.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y + texStep.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y + texStep.y)) / 9;
+		
+							gl_FragColor = c;
 						}
 					)qwertyuiop"
 			)
-{}
+{
+	this->texStepUniform =  this->GetUniform("texStep");
+}
