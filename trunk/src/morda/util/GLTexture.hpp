@@ -103,6 +103,7 @@ public:
 
 private:
 	void Destructor()NOEXCEPT{
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glDeleteTextures(1, &this->tex);
 	}
 };

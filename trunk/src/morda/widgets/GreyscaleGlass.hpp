@@ -43,7 +43,6 @@ public:
 private:
 
 	void Render(const morda::Matr4r& matrix) const override;
-
 };
 
 }
