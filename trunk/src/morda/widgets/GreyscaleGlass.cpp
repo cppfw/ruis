@@ -17,6 +17,8 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
+//	GLTexture
+	
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 

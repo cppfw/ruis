@@ -59,10 +59,10 @@ class GLTexture {
 
 	morda::Vec2r dim;
 
-	void Constructor(const Image& image, GLint minFilter, GLint magFilter);
+	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter);
 public:
 	GLTexture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
-		this->Constructor(image, minFilter, magFilter);
+		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 
 	GLTexture(){}
@@ -76,7 +76,7 @@ public:
 			this->Destructor();
 		}
 
-		this->Constructor(image, minFilter, magFilter);
+		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 
 	void Bind()const{

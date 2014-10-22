@@ -37,8 +37,8 @@ using namespace morda;
 
 
 
-void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter) {
-	this->dim = morda::Vec2r(float(image.Width()), float(image.Height()));
+void GLTexture::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter) {
+	this->dim = d;
 
 	glGenTextures(1, &this->tex);
 	ASSERT(glGetError() == GL_NO_ERROR)
@@ -50,7 +50,7 @@ void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter
 	ASSERT(glGetError() == GL_NO_ERROR)
 
 	GLint internalFormat;
-	switch(image.NumChannels()){
+	switch(numChannels){
 		default:
 			ASSERT(false)
 		case 1:
@@ -67,6 +67,7 @@ void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter
 			break;
 	}
 
+	//we will be passing pixels to OpenGL which are 1-byte aligned.
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	ASSERT(glGetError() == GL_NO_ERROR)
 
@@ -74,12 +75,12 @@ void GLTexture::Constructor(const Image& image, GLint minFilter, GLint magFilter
 			GL_TEXTURE_2D,
 			0,//0th level, no mipmaps
 			internalFormat, //internal format
-			image.Width(),
-			image.Height(),
+			d.x,
+			d.y,
 			0,//border, should be 0!
 			internalFormat, //format of the texel data
 			GL_UNSIGNED_BYTE,
-			image.Buf().begin()
+			&*data.begin()
 		);
 	ASSERT(glGetError() == GL_NO_ERROR)
 

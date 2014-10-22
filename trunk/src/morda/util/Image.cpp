@@ -52,32 +52,33 @@ using namespace morda;
 
 
 
-void Image::Init(unsigned width, unsigned height, EType typeOfImage){
+void Image::Init(Vec2ui dimensions, EType typeOfImage){
 	this->Reset();
-	this->w = width;
-	this->h = height;
+	this->dim = dimensions;
 	this->type = typeOfImage;
-	this->buf.resize(this->w * this->h * this->NumChannels());
+	this->buf.resize(this->Dim().x * this->Dim().y * this->NumChannels());
 }
 
 
 
-Image::Image(unsigned width, unsigned height, EType typeOfImage, const std::uint8_t* srcBuf){
+Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
-	this->Init(width, height, typeOfImage);
+	this->Init(dimensions, typeOfImage);
 	memcpy(&*this->buf.begin(), srcBuf, this->buf.size() * sizeof(this->buf[0]));
 }
 
 
 
-Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src){
-	if(src.Width() == 0 || src.Height() == 0)
+Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
+	if(src.Dim().x == 0 || src.Dim().y == 0){
 		throw ting::Exc("Image::Image(): source image has zero dimensions");
+	}
 
-	if( src.Width() <= x || src.Height() <= y || src.Width() < (x + width) || src.Height() < (y + height) )
+	if( src.Dim().x <= pos.x || src.Dim().y <= pos.y || src.Dim().x < (pos.x + dimensions.x) || src.Dim().y < (pos.y + dimensions.y) ){
 		throw ting::Exc("Image::Image(): incorrect dimensions of given images");
+	}
 
-	this->Init(width, height, src.Type());
+	this->Init(dimensions, src.Type());
 
 	//copy image data
 	throw ting::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
@@ -89,7 +90,7 @@ Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Imag
 
 //copy constructor
 Image::Image(const Image& im){
-	this->Init(im.Width(), im.Height(), im.Type());
+	this->Init(im.Dim(), im.Type());
 	ASSERT(this->buf.size() * sizeof(this->buf[0]) == im.buf.size() * sizeof(im.buf[0]))
 	memcpy(this->Buf().begin(), im.Buf().begin(), this->buf.size() * sizeof(this->buf[0]));
 }
@@ -111,7 +112,7 @@ void Image::Clear(std::uint8_t  val){
 
 
 void Image::Clear(unsigned chan, std::uint8_t val){
-	for(unsigned i = 0; i < this->Width() * this->Height(); ++i){
+	for(unsigned i = 0; i < this->Dim().x * this->Dim().y; ++i){
 		this->buf[i * this->NumChannels() + chan] = val;
 	}
 }
@@ -120,8 +121,7 @@ void Image::Clear(unsigned chan, std::uint8_t val){
 
 //Null all data
 void Image::Reset(){
-	this->w = 0;
-	this->h = 0;
+	this->dim.SetTo(0);
 	this->type = UNKNOWN;
 	this->buf.clear();
 }
@@ -137,14 +137,14 @@ void Image::FlipVertical(){
 		return;//nothing to flip
 	}
 
-	unsigned stride = this->NumChannels() * this->Width();//stride
+	unsigned stride = this->NumChannels() * this->Dim().x;//stride
 	std::vector<std::uint8_t> line(stride);
 
 	//TODO: use iterators
-	for(unsigned i = 0; i < this->Height() / 2; ++i){
+	for(unsigned i = 0; i < this->Dim().y / 2; ++i){
 		memcpy(&*line.begin(), &*this->buf.begin() + stride * i, stride);//move line to temp
-		memcpy(&*this->buf.begin() + stride * i, &*this->buf.begin() + stride * (this->Height() - i - 1), stride);//move bottom line to top
-		memcpy(&*this->buf.begin() + stride * (this->Height() - i - 1), &*line.begin(), stride);
+		memcpy(&*this->buf.begin() + stride * i, &*this->buf.begin() + stride * (this->Dim().y - i - 1), stride);//move bottom line to top
+		memcpy(&*this->buf.begin() + stride * (this->Dim().y - i - 1), &*line.begin(), stride);
 	}
 }
 
@@ -156,8 +156,8 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 		throw ting::Exc("Image::Blit(): bits per pixel values do not match");
 	}
 
-	unsigned blitAreaW = std::min(src.Width(), this->Width() - x);
-	unsigned blitAreaH = std::min(src.Height(), this->Height() - y);
+	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);
+	unsigned blitAreaH = std::min(src.Dim().y, this->Dim().y - y);
 
 	//TODO: implement blitting for all image types
 	switch(this->Type()){
@@ -194,8 +194,8 @@ void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, uns
 		throw ting::Exc("Image::Blit(): source channel index is greater than number of channels in the image");
 	}
 
-	unsigned blitAreaW = std::min(src.Width(), this->Width() - x);
-	unsigned blitAreaH = std::min(src.Height(), this->Height() - y);
+	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);
+	unsigned blitAreaH = std::min(src.Dim().y, this->Dim().y - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
@@ -334,7 +334,7 @@ void Image::LoadPNG(const ting::fs::File& fi){
 	//Great! Number of channels and bits per pixel are initialized now!
 
 	//set image dimensions and set buffer size
-	this->Init(width, height, imageType);//Set buf array size (allocate memory)
+	this->Init(Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
 	//Great! height and width are initialized and buffer memory allocated
 
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
@@ -343,7 +343,7 @@ void Image::LoadPNG(const ting::fs::File& fi){
 	png_uint_32 bytesPerRow = png_get_rowbytes(pngPtr, infoPtr);//get bytes per row
 
 	//check that our expectations are correct
-	if(bytesPerRow != this->Width() * this->NumChannels()){
+	if(bytesPerRow != this->Dim().x * this->NumChannels()){
 		throw Image::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
@@ -351,11 +351,11 @@ void Image::LoadPNG(const ting::fs::File& fi){
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->Height() && this->buf.size())
-		std::vector<png_bytep> rows(this->Height());
+		ASSERT(this->Dim().y && this->buf.size())
+		std::vector<png_bytep> rows(this->Dim().y);
 		//initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
-		for(unsigned i = 0; i < this->Height(); ++i){
+		for(unsigned i = 0; i < this->Dim().y; ++i){
 			rows[i] = &*this->buf.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
@@ -578,10 +578,10 @@ void Image::LoadJPG(const ting::fs::File& fi){
 	}
 	
 	//Set buffer size (allocate memory for image)
-	this->Init(cinfo.output_width, cinfo.output_height, imageType);
+	this->Init(Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	//calculate the size of a row in bytes
-	int bytesRow = this->Width() * this->NumChannels();
+	int bytesRow = this->Dim().x * this->NumChannels();
 
 	//TODO: remove this comment
 	//Allocate memory for the pic
@@ -599,7 +599,7 @@ void Image::LoadJPG(const ting::fs::File& fi){
 	memset(*buffer, 0, sizeof(JSAMPLE) * bytesRow);
 
 	int y = 0;
-	while(cinfo.output_scanline < h){
+	while(cinfo.output_scanline < this->Dim().y){
 		//read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		//copy the data to an image
