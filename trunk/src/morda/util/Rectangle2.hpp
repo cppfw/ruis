@@ -185,7 +185,7 @@ public:
      * @return converted Vector2.
      */
 	template <class TS> Rectangle2<TS> ConvertTo()const NOEXCEPT{
-		return Rectangle2<TS>(this->p.ConvertTo<TS>(), this->d.ConvertTo<TS>());
+		return Rectangle2<TS>(*this);
 	}
 	
 #ifdef DEBUG  
