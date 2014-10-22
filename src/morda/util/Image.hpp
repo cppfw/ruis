@@ -32,6 +32,8 @@ THE SOFTWARE. */
 #include <ting/types.hpp>
 #include <ting/fs/File.hpp>
 
+#include "Vector2.hpp"
+
 
 
 namespace morda{
@@ -57,30 +59,27 @@ public:
 	
 private:
 	EType type;
-	unsigned w;//The width of the image in pixels
-	unsigned h;//The height of the image in pixels
+	Vec2ui dim = Vec2ui(0);
 	std::vector<std::uint8_t> buf;//image pixels data
 
 public:
 	//default constructor
 	Image() :
-			type(UNKNOWN),
-			w(0),
-			h(0)
+			type(UNKNOWN)
 	{}
 
 	//copy constructor
 	Image(const Image& im);
 
 	//Creates Image object with initialized image.
-	Image(unsigned width, unsigned height, EType imageType){
-		this->Init(width, height, imageType);
+	Image(Vec2ui dimensions, EType imageType){
+		this->Init(dimensions, imageType);
 	}
 
-	Image(unsigned width, unsigned height, EType typeOfImage, const std::uint8_t* srcBuf);
+	Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
 
 	//Creates Image object and copies a region from source image.
-	Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src);
+	Image(Vec2ui pos, Vec2ui dimensions, const Image& src);
 
 	Image(const ting::fs::File& f){
 		this->Load(f);
@@ -88,12 +87,8 @@ public:
 
 	~Image();
 
-	unsigned Width()const{
-		return this->w;
-	}
-
-	unsigned Height()const{
-		return this->h;
+	const Vec2ui& Dim()const NOEXCEPT{
+		return this->dim;
 	}
 
 	unsigned BitsPerPixel()const{
@@ -117,7 +112,7 @@ public:
 	}
 
 public:
-	void Init(unsigned width, unsigned height, EType typeOfImage);
+	void Init(Vec2ui dimensions, EType typeOfImage);
 	void Reset();//destroys all image data
 	void Clear(std::uint8_t  val = 0);//fills each image channel with specified value
 	void Clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value
@@ -129,11 +124,11 @@ public:
 	void Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
 	const std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan)const{
-		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.size())];
+		return this->buf[ASSCOND((y * this->Dim().x + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
 	std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan){
-		return this->buf[ASSCOND((y * this->Width() + x) * this->NumChannels() + chan, < this->buf.size())];
+		return this->buf[ASSCOND((y * this->Dim().x + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
 	void LoadPNG(const ting::fs::File& f);//Load image from PNG-file

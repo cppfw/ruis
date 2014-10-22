@@ -32,8 +32,8 @@ static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsign
 	ASSERT(dstChan < dst.NumChannels())
 	ASSERT(srcChan < src.NumChannels())
 
-	unsigned blitAreaW = std::min(src.Width(), dst.Width() - x);
-	unsigned blitAreaH = std::min(src.Height(), dst.Height() - y);
+	unsigned blitAreaW = std::min(src.Dim().x, dst.Dim().x - x);
+	unsigned blitAreaH = std::min(src.Dim().y, dst.Dim().y - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
@@ -138,7 +138,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	unsigned curY = DYGap;
 	unsigned maxHeightInRow = 0;
 
-	Image texImg(texWidth, curTexHeight, Image::GREYA);
+	Image texImg(Vec2ui(texWidth, curTexHeight), Image::GREYA);
 	//clear the image because image buffer may contain trash data
 	//and glyphs will have artifacts on their edges
 	texImg.Clear();
@@ -171,9 +171,9 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			}
 			continue;
 		}
-		Image glyphim(slot->bitmap.width, slot->bitmap.rows, Image::GREY, slot->bitmap.buffer);
+		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::GREY, slot->bitmap.buffer);
 
-		Image im(glyphim.Width() + 2 * outline, glyphim.Height() + 2 * outline, Image::GREYA);
+		Image im(Vec2ui(glyphim.Dim().x + 2 * outline, glyphim.Dim().y + 2 * outline), Image::GREYA);
 		im.Clear();
 		if(outline == 0){
 			im.Blit(0, 0, glyphim, 1, 0);
@@ -194,15 +194,15 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 
 //		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
 
-		if(texImg.Width() < curX + im.Width() + DXGap){
+		if(texImg.Dim().x < curX + im.Dim().x + DXGap){
 			curX = DXGap;
 			curY += maxHeightInRow + DYGap;
 			maxHeightInRow = 0;
 		}
 
-		if(texImg.Height() < curY + im.Height() + DYGap){
+		if(texImg.Dim().y < curY + im.Dim().y + DYGap){
 			//grow texture size
-			unsigned newHeight = FindNextPowOf2(curY + im.Height() + DYGap);
+			unsigned newHeight = FindNextPowOf2(curY + im.Dim().y + DYGap);
 			if(newHeight > maxTexSize){//if it is impossible to grow texture image height anymore
 				throw ting::Exc("TexFont::Load(): there's not enough room on the texture for all the glyphs of the requested size");
 			}
@@ -210,13 +210,13 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			//TODO: optimize somehow?
 			//resize texture image
 			Image copy(texImg);
-			texImg.Init(copy.Width(), newHeight, copy.Type());
+			texImg.Init(Vec2ui(copy.Dim().x, newHeight), copy.Type());
 			texImg.Clear();
 			texImg.Blit(0, 0, copy);
 		}
 
-		if(im.Height() > maxHeightInRow){
-			maxHeightInRow = im.Height();
+		if(im.Dim().y > maxHeightInRow){
+			maxHeightInRow = im.Dim().y;
 		}
 
 		//record glyph information
@@ -232,9 +232,9 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
 			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
 
-			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.Height()));
-			g.texCoords[1] = morda::Vec2r(real(curX + im.Width()), real(curY + im.Height()));
-			g.texCoords[2] = morda::Vec2r(real(curX + im.Width()), real(curY));
+			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.Dim().y));
+			g.texCoords[1] = morda::Vec2r(real(curX + im.Dim().x), real(curY + im.Dim().y));
+			g.texCoords[2] = morda::Vec2r(real(curX + im.Dim().x), real(curY));
 			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
 
 			//update bounding box if needed
@@ -248,7 +248,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 		}
 
 		texImg.Blit(curX, curY, im);
-		curX += im.Width() + DXGap;
+		curX += im.Dim().x + DXGap;
 	}//~for
 	
 	//save bounding box
@@ -265,7 +265,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 		//TODO: optimize somehow?
 		//resize
 		Image copy(texImg);
-		texImg.Init(FindNextPowOf2(curX), copy.Height(), copy.Type());
+		texImg.Init(Vec2ui(FindNextPowOf2(curX), copy.Dim().y), copy.Type());
 		texImg.Clear();
 		texImg.Blit(0, 0, copy);
 	}
@@ -280,8 +280,8 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-			i->second.texCoords[j].x /= texImg.Width();
-			i->second.texCoords[j].y /= texImg.Height();
+			i->second.texCoords[j].x /= texImg.Dim().x;//TODO: use CompDivBy()
+			i->second.texCoords[j].y /= texImg.Dim().y;
 		}
 	}
 
