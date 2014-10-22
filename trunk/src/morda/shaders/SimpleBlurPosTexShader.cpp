@@ -37,17 +37,17 @@ SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 						varying highp vec2 texCoord;
 		
 						void main(void){
-							vec4 c = texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y - texStep.y)) / 9;
-							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y - texStep.y)) / 9;
-							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y - texStep.y)) / 9;
+							vec4 c = texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y - texStep.y)) * 1 / 16;
+							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y - texStep.y)) * 2 / 16;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y - texStep.y)) * 1 / 16;
 		
-							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y)) / 9;
-							c += texture2D(textureNumber, texCoord) / 9;
-							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y)) * 2 / 16;
+							c += texture2D(textureNumber, texCoord) * 4 / 16;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y)) * 2 / 16;
 		
-							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y + texStep.y)) / 9;
-							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y + texStep.y)) / 9;
-							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y + texStep.y)) / 9;
+							c += texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y + texStep.y)) * 1 / 16;
+							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y + texStep.y)) * 2 / 16;
+							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y + texStep.y)) * 1 / 16;
 		
 							gl_FragColor = c;
 						}
