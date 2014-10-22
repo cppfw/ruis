@@ -190,10 +190,18 @@ Container{
 
 		clip{true}
 
+/*
 		U_SimpleWidget{
 			dimX{300} dimY{300}
 		}
+*/
 
+
+		BlurGlass{
+			layout{
+				fillX{true} fillY{true}
+			}
+		}
 
 		PushButton{
 			posX{10} posY{20}

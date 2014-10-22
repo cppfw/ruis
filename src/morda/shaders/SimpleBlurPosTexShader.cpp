@@ -1,12 +1,11 @@
-#include "SimpleGrayscalePosTexShader.hpp"
-
+#include "SimpleBlurPosTexShader.hpp"
 
 
 using namespace morda;
 
 
 
-SimpleGrayscalePosTexShader::SimpleGrayscalePosTexShader() :
+SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 		Shader(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -34,6 +33,9 @@ SimpleGrayscalePosTexShader::SimpleGrayscalePosTexShader() :
 						varying highp vec2 texCoord;
 						void main(void){
 							vec4 c = texture2D(textureNumber, texCoord);
+							
+							//TODO:
+							
 							float g = (c.r + c.g + c.b) / 3.0;
 							gl_FragColor = vec4(g, g, g, c.a);
 						}

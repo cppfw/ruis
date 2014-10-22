@@ -15,6 +15,7 @@
 #include "widgets/TextField.hpp"
 #include "widgets/CheckBox.hpp"
 #include "widgets/GreyscaleGlass.hpp"
+#include "widgets/BlurGlass.hpp"
 
 #include "App.hpp"
 
@@ -43,6 +44,7 @@ Inflater::Inflater(){
 	this->AddWidget<TextField>("TextField");
 	this->AddWidget<CheckBox>("CheckBox");
 	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
+	this->AddWidget<BlurGlass>("BlurGlass");
 }
 
 

@@ -274,6 +274,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
@@ -329,6 +339,10 @@
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -560,6 +574,16 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
             ex="false"
             tool="1"
@@ -598,6 +622,10 @@
         </ccTool>
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -812,6 +840,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/GLTexture.hpp" ex="false" tool="3" flavor2="0">
@@ -867,6 +905,10 @@
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1076,6 +1118,16 @@
       </item>
       <item path="src/morda/shaders/Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/shaders/SimpleBlurPosTexShader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
             ex="false"
             tool="1"
@@ -1136,6 +1188,10 @@
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/BlurGlass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="0">
       </item>
