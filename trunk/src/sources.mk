@@ -9,6 +9,7 @@ this_srcs += morda/shaders/PosTexShader.cpp
 this_srcs += morda/shaders/ColorPosShader.cpp
 this_srcs += morda/shaders/ColorPosTexShader.cpp
 this_srcs += morda/shaders/SimpleGrayscalePosTexShader.cpp
+this_srcs += morda/shaders/SimpleBlurPosTexShader.cpp
 
 this_srcs += morda/resources/ResImage.cpp
 this_srcs += morda/resources/ResNinePatch.cpp
@@ -29,6 +30,7 @@ this_srcs += morda/util/unzip/ioapi.cpp
 this_srcs += morda/util/unzip/unzip.cpp
 
 this_srcs += morda/widgets/Button.cpp
+this_srcs += morda/widgets/BlurGlass.cpp
 this_srcs += morda/widgets/CheckBox.cpp
 this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp

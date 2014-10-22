@@ -31,18 +31,20 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 
+
 namespace morda{
 
-class GreyscaleGlass : virtual public Widget{
+class BlurGlass : virtual public Widget{
 public:
-	GreyscaleGlass(const stob::Node* chain = nullptr);
+	BlurGlass(const stob::Node* chain = nullptr);
 	
-	GreyscaleGlass(const GreyscaleGlass&) = delete;
-	GreyscaleGlass& operator=(const GreyscaleGlass&) = delete;
+	BlurGlass(const BlurGlass&) = delete;
+	BlurGlass& operator=(const BlurGlass&) = delete;
+	
+	
+	void Render(const morda::Matr4r& matrix) const override;
 	
 private:
-
-	void Render(const morda::Matr4r& matrix) const override;
 
 };
 

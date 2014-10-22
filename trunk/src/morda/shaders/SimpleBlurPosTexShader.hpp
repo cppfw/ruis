@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,23 +26,22 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
-#include "Widget.hpp"
+#include "PosTexShader.hpp"
+
 
 namespace morda{
 
-class GreyscaleGlass : virtual public Widget{
+
+class SimpleBlurPosTexShader : public PosTexShader{
 public:
-	GreyscaleGlass(const stob::Node* chain = nullptr);
+	SimpleBlurPosTexShader();
 	
-	GreyscaleGlass(const GreyscaleGlass&) = delete;
-	GreyscaleGlass& operator=(const GreyscaleGlass&) = delete;
+	SimpleBlurPosTexShader(const SimpleBlurPosTexShader&) = delete;
+	SimpleBlurPosTexShader& operator=(const SimpleBlurPosTexShader&) = delete;
 	
 private:
-
-	void Render(const morda::Matr4r& matrix) const override;
 
 };
 

@@ -1,4 +1,4 @@
-#include "GreyscaleGlass.hpp"
+#include "BlurGlass.hpp"
 
 #include "../util/GLTexture.hpp"
 
@@ -9,13 +9,12 @@ using namespace morda;
 
 
 
-GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
+BlurGlass::BlurGlass(const stob::Node* chain) :
 		Widget(chain)
 {}
 
 
-
-void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
+void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	GLTexture texture(this->Rect().d.ConvertTo<unsigned>(), 4, GL_NEAREST, GL_NEAREST);
 	//texture is bound right after creation
 	
@@ -35,7 +34,7 @@ void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 
-	morda::PosTexShader &s = App::Inst().Shaders().simpleGrayscalePosTexShader;
+	morda::PosTexShader &s = App::Inst().Shaders().simpleBlurPosTexShader;
 	s.Bind();
 	s.SetMatrix(matr);
 	
