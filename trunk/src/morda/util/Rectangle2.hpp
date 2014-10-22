@@ -57,6 +57,8 @@ namespace morda{
  */
 template <class T> class Rectangle2{
 public:
+	typedef T T_Component;
+	
 	//TODO: doxygen
 	Vector2<T> p; //Left-Bottom corner
 	
@@ -82,6 +84,11 @@ public:
 	Rectangle2(Vector2<T> leftBottom, Vector2<T> dimensions)NOEXCEPT :
 			p(leftBottom),
 			d(dimensions)
+	{}
+	
+	template <class TT> explicit Rectangle2(const Rectangle2<TT>& r) :
+			p(r.p),
+			d(r.d)
 	{}
 	
 	//TODO: doxygen
@@ -168,6 +175,17 @@ public:
 	//TODO: doxygen
 	bool operator==(const Rectangle2& r)const NOEXCEPT{
 		return this->p == r.p && this->d == r.d;
+	}
+	
+	/**
+	 * @brief Convert to Rectangle2 with different type of component.
+	 * Convert this Rectangle2 to a Rectangle2 whose component type is different from T.
+	 * Components are converted using constructor of target type passing the source
+	 * component as argument of the target type constructor.
+     * @return converted Vector2.
+     */
+	template <class TS> Rectangle2<TS> ConvertTo()const NOEXCEPT{
+		return Rectangle2<TS>(this->p.ConvertTo<TS>(), this->d.ConvertTo<TS>());
 	}
 	
 #ifdef DEBUG  

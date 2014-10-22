@@ -38,7 +38,7 @@ using namespace morda;
 
 
 void GLTexture::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter) {
-	this->dim = d;
+	this->dim = d.ConvertTo<real>();
 
 	glGenTextures(1, &this->tex);
 	ASSERT(glGetError() == GL_NO_ERROR)

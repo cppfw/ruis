@@ -54,6 +54,8 @@ template <class T> class Vector3;
  */
 template <class T> class Vector2{
 public:
+	typedef T T_Component;
+	
 	/**
 	 * @brief 0th vector component.
 	 */
@@ -100,7 +102,7 @@ public:
 	Vector2(const Vector3<T>& vec)NOEXCEPT;
 
 	
-	template <class TT> Vector2(const Vector2<TT>& v) :
+	template <class TT> explicit Vector2(const Vector2<TT>& v) :
 			x(v.x),
 			y(v.y)
 	{}

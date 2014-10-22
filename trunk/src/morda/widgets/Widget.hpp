@@ -166,6 +166,8 @@ public:
 		return this->rect;
 	}
 	
+	morda::Rect2i ComputeViewportRect(const Matr4r& matrix)const NOEXCEPT;
+	
 	void MoveTo(const morda::Vec2r& newPos)NOEXCEPT{
 		this->rect.p = newPos;
 	}
