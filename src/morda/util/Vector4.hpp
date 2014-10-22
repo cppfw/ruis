@@ -137,7 +137,7 @@ public:
 	Vector4(const Vector3<T>& vec, T w = 1)NOEXCEPT;
 
 	
-	template <class TT> Vector4(const Vector4<TT>& v) :
+	template <class TT> explicit Vector4(const Vector4<TT>& v) :
 			x(v.x),
 			y(v.y),
 			z(v.z),

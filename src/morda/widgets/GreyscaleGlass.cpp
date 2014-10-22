@@ -17,7 +17,20 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
-//	GLTexture
+	GLTexture texture(this->Rect().d.ConvertTo<unsigned>(), 4, GL_NEAREST, GL_NEAREST);
+	
+	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
+	
+	glCopyTexSubImage2D(
+			GL_TEXTURE_2D,
+			0, //level
+			0, //xoffset
+			0, //yoffset
+			viewPortRect.p.x,
+			viewPortRect.p.y,
+			viewPortRect.d.x,
+			viewPortRect.d.y
+		);
 	
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
@@ -25,7 +38,7 @@ void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
 	morda::PosTexShader &s = App::Inst().Shaders().simpleGrayscalePosTexShader;
 	s.Bind();
 	s.SetMatrix(matr);
-	this->tex->Tex().Bind();
+//	this->tex->Tex().Bind();
 	
 	s.Render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 }

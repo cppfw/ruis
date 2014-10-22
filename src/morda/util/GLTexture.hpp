@@ -65,7 +65,9 @@ public:
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 	
-//	GLTexture(Vec2ui dimensions, unsigned numChannels, )
+	GLTexture(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+		this->Constructor(dimensions, numChannels, ting::Buffer<const std::uint8_t>(), minFilter, magFilter);
+	}
 
 	GLTexture(){}
 

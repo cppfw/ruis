@@ -112,7 +112,7 @@ public:
 
 	
 	
-	template <class TT> Vector3(const Vector3<TT>& v) :
+	template <class TT> explicit Vector3(const Vector3<TT>& v) :
 			x(v.x),
 			y(v.y),
 			z(v.z)

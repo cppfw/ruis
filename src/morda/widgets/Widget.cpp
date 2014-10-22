@@ -118,10 +118,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 //		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 		//set scissor test
-		Rect2i scissor(
-				((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().viewportDim()).Rounded().ConvertTo<int>(),
-				this->rect.d.ConvertTo<int>()
-			);
+		Rect2i scissor = this->ComputeViewportRect(matrix);
 
 		Rect2i oldScissor;
 		bool scissorTestWasEnabled = glIsEnabled(GL_SCISSOR_TEST) ? true : false;
@@ -225,4 +222,13 @@ void Widget::MakeTopmost(){
 	ASSERT(this->Parent()->Children().size() != 0)
 	
 	this->Parent()->MakeChildTopmost(*this);
+}
+
+
+
+morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
+	return Rect2i(
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().viewportDim()).Rounded().ConvertTo<int>(),
+			this->Rect().d.ConvertTo<int>()
+		);
 }
