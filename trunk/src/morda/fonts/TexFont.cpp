@@ -138,7 +138,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	unsigned curY = DYGap;
 	unsigned maxHeightInRow = 0;
 
-	Image texImg(Vec2ui(texWidth, curTexHeight), Image::GREYA);
+	Image texImg(Vec2ui(texWidth, curTexHeight), Image::EType::GREYA);
 	//clear the image because image buffer may contain trash data
 	//and glyphs will have artifacts on their edges
 	texImg.Clear();
@@ -171,9 +171,9 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			}
 			continue;
 		}
-		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::GREY, slot->bitmap.buffer);
+		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::EType::GREY, slot->bitmap.buffer);
 
-		Image im(Vec2ui(glyphim.Dim().x + 2 * outline, glyphim.Dim().y + 2 * outline), Image::GREYA);
+		Image im(Vec2ui(glyphim.Dim().x + 2 * outline, glyphim.Dim().y + 2 * outline), Image::EType::GREYA);
 		im.Clear();
 		if(outline == 0){
 			im.Blit(0, 0, glyphim, 1, 0);
