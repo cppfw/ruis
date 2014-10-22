@@ -35,11 +35,18 @@ namespace morda{
 
 
 class SimpleBlurPosTexShader : public PosTexShader{
+	GLuint texStepUniform;
+	
 public:
 	SimpleBlurPosTexShader();
 	
 	SimpleBlurPosTexShader(const SimpleBlurPosTexShader&) = delete;
 	SimpleBlurPosTexShader& operator=(const SimpleBlurPosTexShader&) = delete;
+	
+	void SetTextureStep(Vec2f step){
+		ASSERT(this->IsBound())
+		glUniform2f(this->texStepUniform, step.x, step.y);
+	}
 	
 private:
 
