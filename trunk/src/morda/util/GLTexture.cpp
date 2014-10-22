@@ -42,7 +42,6 @@ void GLTexture::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const s
 
 	glGenTextures(1, &this->tex);
 	ASSERT(glGetError() == GL_NO_ERROR)
-	ASSERT(this->tex != GL_INVALID_VALUE)
 	ASSERT(this->tex != 0)
 	glActiveTexture(GL_TEXTURE0);
 	ASSERT(glGetError() == GL_NO_ERROR)
