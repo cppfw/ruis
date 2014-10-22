@@ -122,7 +122,7 @@ void Image::Clear(unsigned chan, std::uint8_t val){
 //Null all data
 void Image::Reset(){
 	this->dim.SetTo(0);
-	this->type = UNKNOWN;
+	this->type = EType::UNKNOWN;
 	this->buf.clear();
 }
 
@@ -161,14 +161,14 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 
 	//TODO: implement blitting for all image types
 	switch(this->Type()){
-		case GREY:
+		case EType::GREY:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
 					this->PixChan(i + x, j + y, 0) = src.PixChan(i, j, 0);
 				}
 			}
 			break;
-		case GREYA:
+		case EType::GREYA:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
 					this->PixChan(i + x, j + y, 0) = src.PixChan(i, j, 0);
@@ -316,16 +316,16 @@ void Image::LoadPNG(const ting::fs::File& fi){
 	Image::EType imageType;
 	switch(colorType){
 		case PNG_COLOR_TYPE_GRAY:
-			imageType = Image::GREY;
+			imageType = Image::EType::GREY;
 			break;
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			imageType = Image::GREYA;
+			imageType = Image::EType::GREYA;
 			break;
 		case PNG_COLOR_TYPE_RGB:
-			imageType = Image::RGB;
+			imageType = Image::EType::RGB;
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			imageType = Image::RGBA;
+			imageType = Image::EType::RGBA;
 			break;
 		default:
 			throw Image::Exc("Image::LoadPNG(): unknown colorType");
@@ -561,16 +561,16 @@ void Image::LoadJPG(const ting::fs::File& fi){
 	Image::EType imageType;
 	switch(cinfo.output_components){
 		case 1:
-			imageType = Image::GREY;
+			imageType = Image::EType::GREY;
 			break;
 		case 2:
-			imageType = Image::GREYA;
+			imageType = Image::EType::GREYA;
 			break;
 		case 3:
-			imageType = Image::RGB;
+			imageType = Image::EType::RGB;
 			break;
 		case 4:
-			imageType = Image::RGBA;
+			imageType = Image::EType::RGBA;
 			break;
 		default:
 			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")

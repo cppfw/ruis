@@ -42,7 +42,7 @@ namespace morda{
 
 class Image{
 public:
-	enum EType{
+	enum class EType{
 		UNKNOWN = 0,
 		GREY  = 1, //1 channel. Only Grey channel
 		GREYA = 2, //2 channels. Grey with Alpha channel
@@ -65,7 +65,7 @@ private:
 public:
 	//default constructor
 	Image() :
-			type(UNKNOWN)
+			type(EType::UNKNOWN)
 	{}
 
 	//copy constructor
