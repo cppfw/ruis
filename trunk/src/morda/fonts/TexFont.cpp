@@ -280,8 +280,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-			i->second.texCoords[j].x /= texImg.Dim().x;//TODO: use CompDivBy()
-			i->second.texCoords[j].y /= texImg.Dim().y;
+			i->second.texCoords[j].CompDivBy(texImg.Dim());
 		}
 	}
 
