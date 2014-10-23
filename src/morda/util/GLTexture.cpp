@@ -89,4 +89,7 @@ void GLTexture::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const s
 	ASSERT(glGetError() == GL_NO_ERROR)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
 	ASSERT(glGetError() == GL_NO_ERROR)
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
