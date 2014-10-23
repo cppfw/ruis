@@ -475,20 +475,12 @@
         </ccTool>
       </folder>
       <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -540,27 +532,17 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/LayoutParams.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/LeftBottomRightTop.cpp"
             ex="false"
@@ -570,20 +552,14 @@
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -604,8 +580,6 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -637,8 +611,6 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">
