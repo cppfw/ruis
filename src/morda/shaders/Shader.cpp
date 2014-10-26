@@ -59,8 +59,10 @@ bool Shader::ShaderWrapper::CheckForCompileErrors(GLuint shader){
 		if(logLen > 1){//1 char is a terminating 0
 			std::vector<char> log(logLen);
 			GLint len;
-			glGetShaderInfoLog(shader, log.size(), &len, &log[0]);
+			glGetShaderInfoLog(shader, log.size(), &len, &*log.begin());
 			TRACE(<< "===Compile log===\n" << &*log.begin() << std::endl)
+		}else{
+			TRACE(<< "Shader compile log is empty" << std::endl)
 		}
 		return true;
 	}
@@ -78,7 +80,7 @@ bool Shader::ProgramWrapper::CheckForLinkErrors(GLuint program){
 		if(logLen > 1){ //1 is for terminating 0 character.
 			std::vector<char> log(logLen);
 			GLint len;
-			glGetProgramInfoLog(program, log.size(), &len, &log[0]);
+			glGetProgramInfoLog(program, log.size(), &len, &*log.begin());
 			TRACE(<< "===Link log===\n" << &*log.begin() << std::endl)
 		}
 		return true;

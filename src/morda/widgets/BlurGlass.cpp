@@ -29,7 +29,7 @@ void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	
 	s.SetTextureStep(Vec2f(1).CompDiv(viewPortRect.d.ConvertTo<float>()));
 	
-	for(unsigned i = 0; i != 1; ++i){
+	for(unsigned i = 0; i != 3; ++i){
 		glCopyTexSubImage2D(
 				GL_TEXTURE_2D,
 				0, //level
