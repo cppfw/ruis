@@ -37,7 +37,7 @@ SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 						varying highp vec2 texCoord;
 		
 						void main(void){
-							vec4 c = texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y - texStep.y)) * 1.0 / 16.0;
+							lowp vec4 c = texture2D(textureNumber, vec2(texCoord.x - texStep.x, texCoord.y - texStep.y)) * 1.0 / 16.0;
 							c += texture2D(textureNumber, vec2(texCoord.x, texCoord.y - texStep.y)) * 2.0 / 16.0;
 							c += texture2D(textureNumber, vec2(texCoord.x + texStep.x, texCoord.y - texStep.y)) * 1.0 / 16.0;
 		
