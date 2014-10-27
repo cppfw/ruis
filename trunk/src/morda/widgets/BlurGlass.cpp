@@ -17,7 +17,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
 	
-	GLTexture texture(this->Rect().d.ConvertTo<unsigned>(), 4, GL_NEAREST, GL_NEAREST);
+	GLTexture texture(this->Rect().d.ConvertTo<unsigned>(), 3, GL_NEAREST, GL_NEAREST);
 	//texture is bound right after creation
 	
 	morda::Matr4r matr(matrix);
