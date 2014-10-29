@@ -2,13 +2,12 @@
 
 = How to build morda in Mac OS X =
 
-Make sure you have clang 5 or higher installed:
+== Step by step instructions ==
+
+  #Make sure you have clang 5 or higher installed:
 {{{
 clang --version
 }}}
-
-== Step by step instructions ==
-
   # Install *homebrew* if it is not installed yet. Refer to [http://brew.sh homebrew homepage] in case of problems.
 {{{
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
