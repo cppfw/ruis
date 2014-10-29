@@ -4,45 +4,17 @@
 
 == Step by step instructions ==
 
-  # Download .tgz file of *GLEW* from [http://sourceforge.net/projects/glew/files/glew/1.10.0/glew-1.10.0.tgz/download here]. Install it:
+  # Install *homebrew* if it is not installed yet. Refer to [http://brew.sh homebrew homepage] in case of problems.
 {{{
-tar zxvf glew-1.10.0.tar
-cd glew-1.10.0
-make
-sudo make install
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }}}
-  # If zlib is not installed: Download *zlib* from [http://zlib.net/zlib-1.2.8.tar.gz here] and install it:
+  # run brew doctor and fix reported problems if possible
 {{{
-tar zxvf zlib-1.2.8.tar.gz
-cd zlib-1.2.8
-./configure
-make
-sudo make install
+sudo brew doctor
 }}}
-  # Download *libpng* from [http://sourceforge.net/projects/libpng/files/libpng16/1.6.6/libpng-1.6.6.tar.gz/download here] and install:
+  # Install necessary libraries
 {{{
-tar zxvf libpng-1.6.6
-cd libpng-1.6.6
-./configure
-make
-sudo make install
-}}}
-  # Download *libjpeg* from [http://ijg.org/files/jpegsrc.v9.tar.gz here] and install it:
-{{{
-tar zxvf jpegsrc.v9.tar
-cd jpeg-9
-./configure
-make
-sudo make install
-}}}
-  # Download *libfreetype* from [http://sourceforge.net/projects/freetype/files/freetype2/2.4.11/freetype-2.4.11.tar.gz/download here] and install:
-{{{
-tar zxvf freetype-2.4.11.tar
-cd freetype-2.4.11
-./configure
-make
-sudo make install
-sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype
+brew install lzlib libpng jpeg glew freetype
 }}}
   # Check out *ting* sources and install:
 {{{
