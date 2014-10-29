@@ -57,6 +57,7 @@ else ifeq ($(prorab_os), windows)
     this_cflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os), macosx)
     this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
+    this_cflags += -I/usr/local/include/freetype2
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lting -lpng -lfreetype -ljpeg -lstob -lGLEW
     
