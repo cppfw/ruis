@@ -62,5 +62,5 @@ make install
 {{{
 svn co http://morda.googlecode.com/svn/trunk/ morda
 cd morda
-make test
+make debug=true test
 }}}
