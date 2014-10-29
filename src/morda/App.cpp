@@ -141,14 +141,22 @@ App::ResMan::ResMan(){
 		;
 #	endif
 		
-	std::array<std::string, 2> paths = {{
+	std::vector<std::string> paths;
+	
 #	ifdef DEBUG
-		"../../res/"
+		paths.push_back("../../res/");
 #	else
-		static_cast<std::stringstream&>(std::stringstream() << "/usr/local/share/morda/res" << soname << "/").str(),
-		static_cast<std::stringstream&>(std::stringstream() << "/usr/share/morda/res" << soname << "/").str()
+		{
+			std::stringstream ss;
+			ss << "/usr/local/share/morda/res" << soname << "/";
+			paths.push_back(ss.str());
+		}
+		{
+			std::stringstream ss;
+			ss << "/usr/share/morda/res" << soname << "/";
+			paths.push_back(ss.str());
+		}
 #	endif
-	}};
 
 	for(const auto& s : paths){
 		try{
