@@ -4,7 +4,7 @@
 
 == Step by step instructions ==
 
-  #Install command line tools
+  #Install command line tools. This is needed to make compilers look for headers in /usr/local/include
 {{{
 xcode-select --install
 }}}
