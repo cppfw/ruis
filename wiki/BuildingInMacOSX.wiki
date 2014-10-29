@@ -4,11 +4,11 @@
 
 == Step by step instructions ==
 
-  #Install command line tools. This is needed to make compilers look for headers in /usr/local/include
+  # Install command line tools. This is needed to make compilers look for headers in /usr/local/include
 {{{
 xcode-select --install
 }}}
-  #Make sure you have clang 5 or higher installed:
+  # Make sure you have clang 5 or higher installed:
 {{{
 clang --version
 }}}
