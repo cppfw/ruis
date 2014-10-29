@@ -1,0 +1,6 @@
+morda_fnt_main{
+	file {vera.ttf}
+	chars {" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;?!()"}
+	size {5mm}
+	outline {0}
+}

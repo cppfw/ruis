@@ -1,0 +1,22 @@
+vars{
+	morda_color_text{0xffccfbff}
+
+//	morda_color_bg{0xff141a27}
+	morda_color_bg{0xff1a2233}
+
+	morda_color_bg_window_title{0xff903a42}
+	morda_color_bg_window_title_nontopmost{0xff404040}
+}
+
+templates{
+	Label Label{
+		color{ @{morda_color_text} }
+	}
+
+	Window Window{
+		appearance{
+			titleColorTopmost{ @{morda_color_bg_window_title} }
+			titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
+		}
+	}
+}
