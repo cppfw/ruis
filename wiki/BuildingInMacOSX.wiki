@@ -15,7 +15,6 @@ sudo brew doctor
   # Install necessary libraries
 {{{
 brew install lzlib libpng jpeg glew freetype
-sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype
 }}}
   # Check out *ting* sources and install:
 {{{
