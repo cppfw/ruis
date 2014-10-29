@@ -4,6 +4,10 @@
 
 == Step by step instructions ==
 
+  #Install command line tools
+{{{
+xcode-select --install
+}}}
   #Make sure you have clang 5 or higher installed:
 {{{
 clang --version
