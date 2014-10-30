@@ -29,14 +29,14 @@ brew install lzlib libpng jpeg glew freetype
 svn co http://ting.googlecode.com/svn/trunk/ ting
 cd ting
 make
-make install
+sudo make install
 }}}
   # Check out *stob* sources and install:
 {{{
 svn co http://stob.googlecode.com/svn/trunk/ stob
 cd stob
 make
-make install
+sudo make install
 }}}
   # Check out *morda* sources, install it and run test app:
 {{{
