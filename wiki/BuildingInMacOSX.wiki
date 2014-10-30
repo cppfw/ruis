@@ -1,4 +1,4 @@
-#summary How to build morda in mac os x.
+#summary How to build and install morda in mac os x.
 
 = How to build morda in Mac OS X =
 
@@ -42,5 +42,7 @@ make install
 {{{
 svn co http://morda.googlecode.com/svn/trunk/ morda
 cd morda
-make debug=true test
+make
+sudo make install
+make test
 }}}
