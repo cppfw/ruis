@@ -8,7 +8,7 @@
 {{{
 xcode-select --install
 }}}
-  # Make sure you have clang 5 or higher installed:
+  # Make sure you have clang 5.1 or higher installed:
 {{{
 clang --version
 }}}
