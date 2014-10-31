@@ -6,7 +6,7 @@
 
   # Install necessary libraries
 {{{
-sudo apt-get install libpng12-dev libglew-dev libjpeg8-dev libfreetype6-dev
+sudo apt-get install libpng12-dev libglew-dev libjpeg8-dev libfreetype6-dev doxygen
 }}}
   # Check out *ting* sources and install:
 {{{
