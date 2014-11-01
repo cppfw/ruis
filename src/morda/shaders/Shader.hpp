@@ -100,10 +100,13 @@ protected:
 	GLint GetAttribute(const char* n){
 		GLint ret = glGetAttribLocation(this->program.p, n);
 		if(ret < 0){
-			throw ting::Exc("No attribute found in the shader program");
+			std::stringstream ss;
+			ss << "No attribute found in the shader program: " << n;
+			throw ting::Exc(ss.str());
 		}
 		return ret;
 	}
+	
 	GLint GetUniform(const char* n){
 		GLint ret = glGetUniformLocation(this->program.p, n);
 		if(ret < 0){

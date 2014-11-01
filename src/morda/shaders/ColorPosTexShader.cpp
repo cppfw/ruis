@@ -13,17 +13,17 @@ ColorPosTexShader::ColorPosTexShader() :
 						#	define lowp
 						#endif
 
-						attribute highp vec4 vertex;
-						attribute highp vec2 textureCoord;
+						attribute highp vec4 pos;
+
+						attribute highp vec2 texCoord0;
 
 						uniform highp mat4 matrix;
-						uniform highp vec4 uniformColor;
 
-						varying highp vec2 texCoord;
+						varying highp vec2 tc0;
 
 						void main(void){
-							gl_Position = matrix * vertex;
-							texCoord = textureCoord;
+							gl_Position = matrix * pos;
+							tc0 = texCoord0;
 						}
 					)qwertyuiop",
 				R"qwertyuiop(
@@ -34,12 +34,13 @@ ColorPosTexShader::ColorPosTexShader() :
 						#endif
 		
 						uniform sampler2D textureNumber;
+		
 						uniform highp vec4 uniformColor;
 		
-						varying highp vec2 texCoord;
+						varying highp vec2 tc0;
 		
 						void main(void){
-							gl_FragColor = texture2D(textureNumber, texCoord) * uniformColor;
+							gl_FragColor = texture2D(textureNumber, tc0) * uniformColor;
 						}
 					)qwertyuiop"
 			)
