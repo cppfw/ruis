@@ -38,7 +38,7 @@ namespace morda{
 	
 /**
  * @brief Position shader.
- * Vertex position attribute should be 'vec4' and named 'vertex'.
+ * Vertex position attribute should be 'vec4' and named 'pos'.
  */
 class PosShader : virtual public Shader{
 	GLint positionAttr;
@@ -56,7 +56,7 @@ public:
 	
 protected:
 	PosShader(){
-		this->positionAttr = this->GetAttribute("vertex");
+		this->positionAttr = this->GetAttribute("pos");
 	}
 	
 	void SetPositionPointer(const morda::Vec3f *p){
