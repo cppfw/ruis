@@ -41,8 +41,6 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
-	bool keepAspectRatio;
-	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
@@ -51,8 +49,6 @@ public:
 	void Render(const morda::Matr4r& matrix)const override;
 
 	morda::Vec2r ComputeMinDim()const override;
-	
-	morda::Vec2r Measure(const Vec2r& offer)const override;
 	
 	void SetImage(const std::shared_ptr<ResImage>& image);
 	

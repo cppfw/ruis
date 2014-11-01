@@ -15,13 +15,12 @@ ColorPosShader::ColorPosShader() :
 						#	define lowp
 						#endif
 
-						attribute highp vec4 vertex;
-						uniform lowp vec4 uniformColor;
+						attribute highp vec4 pos;
+
 						uniform highp mat4 matrix;
-						varying lowp vec4 clr;
+						
 						void main(void){
-							gl_Position = matrix * vertex;
-							clr = uniformColor;
+							gl_Position = matrix * pos;
 						}
 					)qwertyuiop",
 				R"qwertyuiop(
@@ -31,9 +30,10 @@ ColorPosShader::ColorPosShader() :
 						#	define lowp
 						#endif
 		
-						varying lowp vec4 clr;
+						uniform lowp vec4 uniformColor;
+		
 						void main(void){
-							gl_FragColor = clr;
+							gl_FragColor = uniformColor;
 						}
 				)qwertyuiop"
 			)

@@ -29,6 +29,9 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/config.hpp>
+#include <ting/types.hpp>
+#include <ting/Singleton.hpp>
+#include <ting/Buffer.hpp>
 
 #include "../config.hpp"
 
@@ -49,9 +52,6 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector3.hpp"
 #include "../util/Vector2.hpp"
-
-#include <ting/types.hpp>
-#include <ting/Singleton.hpp>
 
 
 
@@ -100,10 +100,13 @@ protected:
 	GLint GetAttribute(const char* n){
 		GLint ret = glGetAttribLocation(this->program.p, n);
 		if(ret < 0){
-			throw ting::Exc("No attribute found in the shader program");
+			std::stringstream ss;
+			ss << "No attribute found in the shader program: " << n;
+			throw ting::Exc(ss.str());
 		}
 		return ret;
 	}
+	
 	GLint GetUniform(const char* n){
 		GLint ret = glGetUniformLocation(this->program.p, n);
 		if(ret < 0){
@@ -117,6 +120,12 @@ protected:
 	void DrawArrays(GLenum mode, unsigned numElements){
 		ASSERT(this->IsBound())
 		glDrawArrays(mode, 0, numElements);
+		AssertOpenGLNoError();
+	}
+	
+	void DrawElements(GLenum mode, ting::Buffer<const std::uint16_t> i){
+		ASSERT(this->IsBound())
+		glDrawElements(mode, i.size(), GL_UNSIGNED_SHORT, &*i.begin());
 		AssertOpenGLNoError();
 	}
 	

@@ -74,8 +74,6 @@ void LinearContainer::OnResize(){
 				info->dim[transIndex] = this->Rect().d[transIndex];
 			}
 			
-			info->dim = (*i)->Measure(info->dim);
-			
 			if(lessThanMin && info->fill){
 				fillRigid += info->dim[longIndex];
 			}

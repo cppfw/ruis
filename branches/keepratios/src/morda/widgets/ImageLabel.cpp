@@ -15,12 +15,6 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
 		this->Resize(this->img->Dim());
 	}
-	
-	if(auto kar = GetProperty(chain, "keepAspectRatio")){
-		this->keepAspectRatio = kar->AsBool();
-	}else{
-		this->keepAspectRatio = false;
-	}
 }
 
 void ImageLabel::Render(const morda::Matr4r& matrix) const{
@@ -45,21 +39,6 @@ morda::Vec2r ImageLabel::ComputeMinDim()const{
 }
 
 
-morda::Vec2r ImageLabel::Measure(const Vec2r& offer) const {
-	if(!this->keepAspectRatio || !this->img){
-		return offer;
-	}
-	
-	float texRatio = this->img->Dim().x / this->img->Dim().y;
-	
-	float offerRatio = offer.x / offer.y;
-	
-	if(texRatio <= offerRatio){
-		return Vec2r(offer.y * texRatio, offer.y);
-	}else{
-		return Vec2r(offer.x, offer.x / texRatio);
-	}
-}
 
 void ImageLabel::SetImage(const std::shared_ptr<ResImage>& image) {
 	if(this->img && image && this->img->Dim() != image->Dim()){

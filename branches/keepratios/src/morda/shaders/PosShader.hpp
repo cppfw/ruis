@@ -38,7 +38,7 @@ namespace morda{
 	
 /**
  * @brief Position shader.
- * Vertex position attribute should be 'vec4' and named 'vertex'.
+ * Vertex position attribute should be 'vec4' and named 'pos'.
  */
 class PosShader : virtual public Shader{
 	GLint positionAttr;
@@ -56,7 +56,7 @@ public:
 	
 protected:
 	PosShader(){
-		this->positionAttr = this->GetAttribute("vertex");
+		this->positionAttr = this->GetAttribute("pos");
 	}
 	
 	void SetPositionPointer(const morda::Vec3f *p){
@@ -87,10 +87,23 @@ public:
 		this->Render<Vec3f>(p, mode);
 	}
 	
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, EMode mode = EMode::TRIANGLE_FAN){
+		this->Render<Vec2f>(i, p, mode);
+	}
+	
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, EMode mode = EMode::TRIANGLE_FAN){
+		this->Render<Vec3f>(i, p, mode);
+	}
+	
 private:
 	template <class V> void Render(ting::Buffer<const V> p, EMode mode){
 		this->SetPositionPointer(&*p.begin());
 		this->DrawArrays(GLint(mode), p.size());
+	}
+	
+	template <class V> void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, EMode mode){
+		this->SetPositionPointer(&*p.begin());
+		this->DrawElements(GLint(mode), i);
 	}
 };
 
