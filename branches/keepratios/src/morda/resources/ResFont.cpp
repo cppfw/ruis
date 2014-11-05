@@ -17,30 +17,18 @@ ResFont::ResFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> cha
 
 
 //static
-std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, const ting::fs::File& fi){
-	//get font filename
-	const stob::Node* fileProp = el.GetProperty("file");
-	if(!fileProp){
-		throw morda::Exc("ResFont::Load(): no 'file' property in resource description");
-	}
-
+std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const ting::fs::File& fi){
 	//read chars attribute
 	std::vector<std::uint32_t> wideChars;
-	{
-		const stob::Node* charsProp = el.GetProperty("chars");
-		if(!charsProp){
-			throw morda::Exc("ResFont::Load(): no 'chars' property in resource description");
-		}
-		
-		for(ting::utf8::Iterator i(charsProp->Value()); i.IsNotEnd(); ++i){
-			wideChars.push_back(i.Char());
-		}
+	for(ting::utf8::Iterator i(chain.side("chars").up().Value()); i.IsNotEnd(); ++i){
+		wideChars.push_back(i.Char());
 	}
+
 	ASSERT(wideChars.size() > 0)
 
 	//read size attribute
 	unsigned size;
-	if(const stob::Node* sizeProp = el.GetProperty("size")){
+	if(auto sizeProp = chain.ChildOfThisOrNext("size")){
 		size = unsigned(morda::DimValueFromSTOB(*sizeProp));
 	}else{
 		size = 13;
@@ -48,16 +36,13 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& el, const ting::fs::Fil
 	
 	//read outline attribute
 	unsigned outline;
-	{
-		const stob::Node* outlineProp = el.GetProperty("outline");
-		if(!outlineProp){
-			outline = 0;
-		}else{
-			outline = unsigned(outlineProp->AsUint32());
-		}
+	if(auto outlineProp = chain.ChildOfThisOrNext("outline")){
+		outline = unsigned(outlineProp->AsUint32());
+	}else{
+		outline = 0;
 	}
 
-	fi.SetPath(fileProp->Value());
+	fi.SetPath(chain.side("file").up().Value());
 
 	return std::move(ting::New<ResFont>(fi, ting::Buffer<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
 }

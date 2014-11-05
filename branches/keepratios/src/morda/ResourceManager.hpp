@@ -149,7 +149,11 @@ template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	auto resource = T::Load(ret.e, *ret.rp.fi);
+	if(!ret.e.Child()){
+		throw Exc("ResourceManager::Load(): resource description is empty");
+	}
+	
+	auto resource = T::Load(*ret.e.Child(), *ret.rp.fi);
 
 	this->AddResource(resource, ret.e);
 

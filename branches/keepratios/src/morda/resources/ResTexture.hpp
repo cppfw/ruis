@@ -58,7 +58,7 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> Load(const stob::Node& el, const ting::fs::File& fi);
+	static std::shared_ptr<ResTexture> Load(const stob::Node& chain, const ting::fs::File& fi);
 };
 
 

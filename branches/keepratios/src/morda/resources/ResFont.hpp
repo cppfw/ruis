@@ -57,7 +57,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> Load(const stob::Node& el, const ting::fs::File &fi);
+	static std::shared_ptr<ResFont> Load(const stob::Node& chain, const ting::fs::File &fi);
 };
 
 

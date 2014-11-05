@@ -7,12 +7,12 @@ using namespace morda;
 
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::Load(const stob::Node& r, const ting::fs::File& fi){
-	auto tex = morda::App::Inst().resMan.Load<ResTexture>(r.get("tex").get().Value());
+std::shared_ptr<ResNinePatch> ResNinePatch::Load(const stob::Node& chain, const ting::fs::File& fi){
+	auto tex = morda::App::Inst().resMan.Load<ResTexture>(chain.side("tex").up().Value());
 	
-	auto rect = Rect2rFromSTOB(&r.get("rect").get());
+	auto rect = Rect2rFromSTOB(&chain.side("rect").up());
 	
-	auto borders = Rect2rFromSTOB(&r.get("borders").get());
+	auto borders = Rect2rFromSTOB(&chain.side("borders").up());
 	
 	return ting::New<ResNinePatch>(
 			ting::New<ResImage>(tex, Rect2r(rect.p, borders.p)), //lt
