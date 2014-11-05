@@ -14,8 +14,8 @@ ResSTOB::ResSTOB(std::unique_ptr<stob::Node> gui) :
 
 
 
-std::shared_ptr<ResSTOB> ResSTOB::Load(const stob::Node& r, const ting::fs::File& fi){
-	auto fileName = r.GetProperty("file");
+std::shared_ptr<ResSTOB> ResSTOB::Load(const stob::Node& chain, const ting::fs::File& fi){
+	auto fileName = chain.ChildOfThisOrNext("file");
 	if(!fileName){
 		throw ResourceManager::Exc("ResGui::Load(): 'file' property not found in resource description");
 	}

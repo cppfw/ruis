@@ -23,11 +23,11 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
 
 
 
-std::shared_ptr<ResImage> ResImage::Load(const stob::Node& r, const ting::fs::File& fi){
-	auto tex = App::Inst().resMan.Load<ResTexture>(r.get("tex").get().Value());
+std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const ting::fs::File& fi){
+	auto tex = App::Inst().resMan.Load<ResTexture>(chain.getThisOrNext("tex").getChild().Value());
 	
 	Rect2r rect;
-	if(const stob::Node* n = r.GetProperty("rect")){
+	if(auto n = chain.ChildOfThisOrNext("rect")){
 		rect = Rect2rFromSTOB(n);
 	}else{
 		rect = Rect2r(Vec2r(0, 0), tex->Tex().Dim());
