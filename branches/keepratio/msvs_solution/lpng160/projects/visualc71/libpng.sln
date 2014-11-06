@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng", "libpng.vcxproj", "{0008960E-E0DD-41A6-8265-00B31DDB4C21}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngtest", "pngtest.vcxproj", "{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib.vcxproj", "{2D4F8105-7D21-454C-9932-B47CAB71A5C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DLL Debug|Win32 = DLL Debug|Win32
+		DLL Release|Win32 = DLL Release|Win32
+		DLL VB|Win32 = DLL VB|Win32
+		LIB Debug|Win32 = LIB Debug|Win32
+		LIB Release|Win32 = LIB Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL Debug|Win32.ActiveCfg = DLL Debug|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL Debug|Win32.Build.0 = DLL Debug|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL Release|Win32.ActiveCfg = DLL Release|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL Release|Win32.Build.0 = DLL Release|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL VB|Win32.ActiveCfg = DLL VB|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.DLL VB|Win32.Build.0 = DLL VB|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.LIB Debug|Win32.ActiveCfg = LIB Debug|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.LIB Debug|Win32.Build.0 = LIB Debug|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.LIB Release|Win32.ActiveCfg = LIB Release|Win32
+		{0008960E-E0DD-41A6-8265-00B31DDB4C21}.LIB Release|Win32.Build.0 = LIB Release|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL Debug|Win32.ActiveCfg = DLL Debug|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL Debug|Win32.Build.0 = DLL Debug|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL Release|Win32.ActiveCfg = DLL Release|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL Release|Win32.Build.0 = DLL Release|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL VB|Win32.ActiveCfg = DLL VB|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.DLL VB|Win32.Build.0 = DLL VB|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.LIB Debug|Win32.ActiveCfg = LIB Debug|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.LIB Debug|Win32.Build.0 = LIB Debug|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.LIB Release|Win32.ActiveCfg = LIB Release|Win32
+		{FD1C2F86-9EEF-47BD-95A4-530917E17FDA}.LIB Release|Win32.Build.0 = LIB Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL Debug|Win32.ActiveCfg = DLL Debug|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL Debug|Win32.Build.0 = DLL Debug|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL Release|Win32.ActiveCfg = DLL Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL Release|Win32.Build.0 = DLL Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL VB|Win32.ActiveCfg = DLL Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.DLL VB|Win32.Build.0 = DLL Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.LIB Debug|Win32.ActiveCfg = LIB Debug|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.LIB Debug|Win32.Build.0 = LIB Debug|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.LIB Release|Win32.ActiveCfg = LIB Release|Win32
+		{2D4F8105-7D21-454C-9932-B47CAB71A5C0}.LIB Release|Win32.Build.0 = LIB Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
