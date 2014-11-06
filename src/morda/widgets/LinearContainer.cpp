@@ -74,7 +74,7 @@ void LinearContainer::OnResize(){
 				info->dim[transIndex] = this->Rect().d[transIndex];
 			}
 			
-			info->dim = (*i)->Measure(info->dim);
+			info->dim = info->dim;
 			
 			if(lessThanMin && info->fill){
 				fillRigid += info->dim[longIndex];
@@ -151,7 +151,7 @@ morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
-		morda::Vec2r dim = (*i)->Measure(lp.DimForWidget(**i));
+		morda::Vec2r dim = lp.DimForWidget(**i);
 		
 		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
 		

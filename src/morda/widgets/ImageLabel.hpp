@@ -52,8 +52,6 @@ public:
 
 	morda::Vec2r ComputeMinDim()const override;
 	
-	morda::Vec2r Measure(const Vec2r& offer)const override;
-	
 	void SetImage(const std::shared_ptr<ResImage>& image);
 	
 private:
