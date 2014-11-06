@@ -24,7 +24,7 @@ void FrameContainer::OnResize() {
 			d[i] = this->Rect().d[i];
 		}
 		
-		(*i)->Resize((*i)->Measure(d));
+		(*i)->Resize(d);
 		
 		(*i)->MoveTo(((this->Rect().d - (*i)->Rect().d) / 2).Round());
 	}
@@ -38,7 +38,7 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 	for(Widget::T_ChildrenList::const_iterator i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
 		
-		morda::Vec2r d = (*i)->Measure(lp.DimForWidget(**i));
+		morda::Vec2r d = lp.DimForWidget(**i);
 		
 		ting::util::ClampBottom(minDim.x, d.x);
 		ting::util::ClampBottom(minDim.y, d.y);

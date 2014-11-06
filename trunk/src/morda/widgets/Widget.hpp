@@ -259,10 +259,6 @@ public:
 		}
 		return this->minDim;
 	}
-
-	virtual morda::Vec2r Measure(const Vec2r& offer)const{
-		return offer;
-	}
 	
 protected:
 	virtual morda::Vec2r ComputeMinDim()const{
