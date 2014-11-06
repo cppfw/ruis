@@ -15,12 +15,6 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
 		this->Resize(this->img->Dim());
 	}
-	
-	if(auto kar = GetProperty(chain, "keepAspectRatio")){
-		this->keepAspectRatio = kar->AsBool();
-	}else{
-		this->keepAspectRatio = false;
-	}
 }
 
 void ImageLabel::Render(const morda::Matr4r& matrix) const{
