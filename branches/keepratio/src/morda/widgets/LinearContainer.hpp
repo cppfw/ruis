@@ -60,6 +60,7 @@ public:
 		LayoutParams(const stob::Node* chain);
 	public:
 		real weight;
+		bool keepRatio;
 		
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));

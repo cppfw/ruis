@@ -29,6 +29,12 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 	}else{
 		this->weight = 0;
 	}
+	
+	if(auto n = GetProperty(chain, "keepRatio")){
+		this->keepRatio = n->AsBool();
+	}else{
+		this->keepRatio = false;
+	}
 }
 
 
