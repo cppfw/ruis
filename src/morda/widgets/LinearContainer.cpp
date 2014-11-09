@@ -21,6 +21,7 @@ public:
 }//~namespace
 
 
+
 LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 		DimLayoutParams(chain)
 {
@@ -42,7 +43,6 @@ LinearContainer::LinearContainer(const stob::Node* chain) :
 
 
 
-//override
 void LinearContainer::OnResize(){
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
@@ -139,7 +139,6 @@ void LinearContainer::OnResize(){
 
 
 
-//override
 morda::Vec2r LinearContainer::ComputeMinDim()const NOEXCEPT{
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
