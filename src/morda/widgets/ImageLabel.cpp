@@ -16,19 +16,16 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		this->Resize(this->img->Dim());
 	}
 	
-	if(auto n = GetProperty(chain, "minDim")){
-		ASSERT(n)
-		if(auto x = n->ChildOfThisOrNext("x")){
-			this->minDim.x = morda::DimValueFromSTOB(*x);
-		}
-		
-		if(auto y = n->ChildOfThisOrNext("y")){
-			this->minDim.y = morda::DimValueFromSTOB(*y);
-		}
-		
-		if(auto k = n->ChildOfThisOrNext("keepRatio")){
-			this->keepMinDimRatio = k->AsBool();
-		}
+	if(auto n = GetProperty(chain, "fitX")){
+		this->fitDim.x = morda::DimValueFromSTOB(*n);
+	}else{
+		this->fitDim.x = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "fitY")){
+		this->fitDim.y = morda::DimValueFromSTOB(*n);
+	}else{
+		this->fitDim.y = -1;
 	}
 }
 
@@ -47,26 +44,20 @@ void ImageLabel::Render(const morda::Matr4r& matrix) const{
 }
 
 morda::Vec2r ImageLabel::ComputeMinDim()const{
-	if(!this->img){
+	if(!this->img || this->fitDim.x == 0 || this->fitDim.y == 0){
 		return Vec2r(0);
 	}
 	
+	ASSERT(this->img->Dim().IsPositive())
+	
 	Vec2r ret = this->img->Dim();
 	
-	if(this->minDim.x >= 0){
-		ret.x = this->minDim.x;
+	if(this->fitDim.x > 0){
+		ret.x = this->fitDim.x;
 	}
 	
-	if(this->minDim.y >= 0){
-		ret.y = this->minDim.y;
-	}
-	
-	if(!this->keepMinDimRatio){
-		return ret;
-	}
-	
-	if(this->img->Dim().x == 0 || this->img->Dim().y == 0 || ret.x == 0 || ret.y == 0){
-		return ret;
+	if(this->fitDim.y > 0){
+		ret.y = this->fitDim.y;
 	}
 	
 	real ratio = this->img->Dim().x / this->img->Dim().y;

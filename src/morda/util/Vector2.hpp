@@ -366,6 +366,24 @@ public:
 	bool IsPositiveOrZero()const NOEXCEPT{
 		return this->x >= 0 && this->y >= 0;
 	}
+	
+	/**
+	 * @brief Check if both vector components are positive.
+	 * @return true if both vector components are positive.
+     * @return false otherwise.
+     */
+	bool IsPositive()const NOEXCEPT{
+		return this->x > 0 && this->y > 0;
+	}
+	
+	/**
+	 * @brief Check if both vector components are negative.
+	 * @return true if both vector components are negative.
+     * @return false otherwise.
+     */
+	bool IsNegative()const NOEXCEPT{
+		return this->x < 0 && this->y < 0;
+	}
 
 	/**
 	 * @brief Negate this vector.

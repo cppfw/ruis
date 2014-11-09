@@ -252,15 +252,12 @@ Container{
 			ImageLabel{
 				image{img_lattice}
 
-				minDim{
-					x{10mm}
-					y{-1}
-					keepRatio{true}
-				}
+//				fitX{10mm}
+//				fitY{-1}
 
 				layout{
 					dimX{-1} dimY{-1}
-					fillX{false} fillY{false}
+					fillX{true} fillY{false}
 					weight{0}
 				}
 			}
