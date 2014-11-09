@@ -41,8 +41,6 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
-	bool keepAspectRatio;
-	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
