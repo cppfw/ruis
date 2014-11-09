@@ -1,0 +1,12 @@
+* add new entry to debian/changelog file
+
+* update the PROJECT_NUMBER variable in the docs/doxygen.cfg file to latest version number
+
+* update Version in pkg-config/morda.pc file
+
+* Check if SO-name needs increment and update debian/control file accordingly if needed
+	- src/makefile
+	- debian/control
+	- debian/libmorda*.install
+
+* generate debian package using dpkg-buildpackage

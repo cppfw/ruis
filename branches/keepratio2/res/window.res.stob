@@ -1,0 +1,39 @@
+morda_img_window_lt{
+	tex{morda_tex_ui}
+	rect{0 16 6 6}
+}
+
+morda_img_window_t{
+	tex{morda_tex_ui}
+	rect{7 16 1 6}
+}
+
+morda_img_window_rt{
+	tex{morda_tex_ui}
+	rect{8 16 6 6}
+}
+
+morda_img_window_l{
+	tex{morda_tex_ui}
+	rect{0 23 6 1}
+}
+
+morda_img_window_r{
+	tex{morda_tex_ui}
+	rect{8 23 6 1}
+}
+
+morda_img_window_lb{
+	tex{morda_tex_ui}
+	rect{0 24 6 6}
+}
+
+morda_img_window_b{
+	tex{morda_tex_ui}
+	rect{7 24 1 6}
+}
+
+morda_img_window_rb{
+	tex{morda_tex_ui}
+	rect{8 24 6 6}
+}
