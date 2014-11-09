@@ -41,6 +41,9 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
+	Vec2r minDim = Vec2r(-1);
+	bool keepMinDimRatio = false;
+	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
