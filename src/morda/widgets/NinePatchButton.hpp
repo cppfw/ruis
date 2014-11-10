@@ -34,7 +34,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class PushButton :
+class NinePatchButton :
 		public Button,
 		private NinePatch
 {
@@ -43,10 +43,10 @@ class PushButton :
 	
 public:
 
-	PushButton(const PushButton&) = delete;
-	PushButton& operator=(const PushButton&) = delete;
+	NinePatchButton(const NinePatchButton&) = delete;
+	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
-	PushButton(const stob::Node* chain = nullptr);
+	NinePatchButton(const stob::Node* chain = nullptr);
 	
 private:
 	void OnPressedChanged()override;

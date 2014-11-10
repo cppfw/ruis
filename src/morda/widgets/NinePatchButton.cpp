@@ -1,11 +1,11 @@
-#include "PushButton.hpp"
+#include "NinePatchButton.hpp"
 #include "../App.hpp"
 
 
 using namespace morda;
 
 
-PushButton::PushButton(const stob::Node* chain) :
+NinePatchButton::NinePatchButton(const stob::Node* chain) :
 		Widget(chain),
 		NinePatch(chain)
 {
@@ -13,9 +13,9 @@ PushButton::PushButton(const stob::Node* chain) :
 	this->imgPressed = morda::App::Inst().resMan.Load<ResNinePatch>("morda_npt_pushbutton_pressed");
 	
 	//initialize nine-patch
-	this->PushButton::OnPressedChanged();
+	this->NinePatchButton::OnPressedChanged();
 }
 
-void PushButton::OnPressedChanged(){
+void NinePatchButton::OnPressedChanged(){
 	this->SetNinePatch(this->IsPressed() ? this->imgPressed : this->imgNormal);
 }
