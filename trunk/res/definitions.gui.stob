@@ -19,4 +19,6 @@ templates{
 			titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
 		}
 	}
+
+	Button NinePatchButton
 }

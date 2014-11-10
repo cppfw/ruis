@@ -106,8 +106,8 @@
           <in>MouseProxy.hpp</in>
           <in>NinePatch.cpp</in>
           <in>NinePatch.hpp</in>
-          <in>PushButton.cpp</in>
-          <in>PushButton.hpp</in>
+          <in>NinePatchButton.cpp</in>
+          <in>NinePatchButton.hpp</in>
           <in>Slider.cpp</in>
           <in>Slider.hpp</in>
           <in>TextField.cpp</in>
@@ -376,9 +376,15 @@
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -572,7 +578,10 @@
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/widgets/NinePatchButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -804,9 +813,15 @@
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1046,9 +1061,15 @@
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/PushButton.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/NinePatchButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
