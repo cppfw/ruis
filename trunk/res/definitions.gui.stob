@@ -20,5 +20,5 @@ templates{
 		}
 	}
 
-	Button NinePatchButton
+	PushButton NinePatchButton
 }
