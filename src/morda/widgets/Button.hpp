@@ -39,11 +39,11 @@ namespace morda{
 
 
 
-class ButtonWidget : public virtual Widget{
+class Button : public virtual Widget{
 	bool isPressed = false;
 	
 protected:
-	ButtonWidget() :
+	Button() :
 			Widget(nullptr)
 	{}
 	
@@ -62,7 +62,7 @@ public:
 
 
 
-class Button : public ButtonWidget{
+class PushButton : public Button{
 	
 	void OnClicked()override final{
 		if(this->onClicked){
@@ -71,7 +71,7 @@ class Button : public ButtonWidget{
 	}
 
 protected:
-	Button() :
+	PushButton() :
 			Widget(nullptr)
 	{}
 	
@@ -81,7 +81,7 @@ public:
 
 
 
-class ToggleButton : public ButtonWidget{
+class ToggleButton : public Button{
 	bool isChecked;
 	
 	void OnClicked()override final{

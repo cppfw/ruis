@@ -10,7 +10,7 @@ using namespace morda;
 
 
 //override
-bool ButtonWidget::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != EMouseButton::LEFT){
 		return false;
@@ -40,7 +40,7 @@ bool ButtonWidget::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseBut
 
 
 //override
-void ButtonWidget::OnHoverChanged(unsigned pointerID){
+void Button::OnHoverChanged(unsigned pointerID){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
 	//TODO: check if was hovered by the same pointer
