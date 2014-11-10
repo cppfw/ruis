@@ -158,7 +158,7 @@ Container{
 				
 			}
 
-			Button{
+			PushButton{
 				name {show_VK_button}
 				posX{50} posY{80}
 				dimX{10} dimY{30}
@@ -201,7 +201,7 @@ Container{
 			}
 		}
 
-		Button{
+		PushButton{
 			posX{10} posY{20}
 			dimX{100} dimY{50}
 
