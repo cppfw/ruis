@@ -29,30 +29,20 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Widget.hpp"
-#include "../resources/ResImage.hpp"
+#include "../Widget.hpp"
 
 
 namespace morda{
 
-class ImageLabel : public virtual Widget{
-	ImageLabel(const ImageLabel&);
-	ImageLabel& operator=(const ImageLabel&);
-	
-	std::shared_ptr<morda::ResImage> img;
-	
-	Vec2r fitDim;
-	
+class BlurGlass : virtual public Widget{
 public:
-	ImageLabel(const stob::Node* chain = nullptr);
-public:
-	virtual ~ImageLabel()NOEXCEPT{}
+	BlurGlass(const stob::Node* chain = nullptr);
 	
-	void Render(const morda::Matr4r& matrix)const override;
-
-	morda::Vec2r ComputeMinDim()const override;
+	BlurGlass(const BlurGlass&) = delete;
+	BlurGlass& operator=(const BlurGlass&) = delete;
 	
-	void SetImage(const std::shared_ptr<ResImage>& image);
+	
+	void Render(const morda::Matr4r& matrix) const override;
 	
 private:
 

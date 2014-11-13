@@ -5,7 +5,7 @@
 #include "../../../src/morda/widgets/Container.hpp"
 
 #include "../../../src/morda/widgets/Button.hpp"
-#include "../../../src/morda/widgets/Label.hpp"
+#include "../../../src/morda/widgets/labels/Label.hpp"
 
 #include "../../../src/morda/resources/ResTexture.hpp"
 #include "../../../src/morda/resources/ResFont.hpp"

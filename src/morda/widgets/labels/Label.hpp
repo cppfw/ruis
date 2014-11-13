@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2012-2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,23 +29,29 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "ColorWidget.hpp"
+
+#include "../Widget.hpp"
+#include "../../resources/ResFont.hpp"
+#include "../TextWidget.hpp"
+
 
 
 namespace morda{
 
 
 
-class ColorLabel : public ColorWidget{
-public:
-	ColorLabel(const stob::Node* chain = nullptr);
+class Label : public SingleLineTextWidget{
 	
-	ColorLabel(const ColorLabel&) = delete;
-	ColorLabel& operator=(const ColorLabel&) = delete;
+	
+public:
+	Label(const stob::Node* chain = nullptr);
+	
+public:
+	~Label()NOEXCEPT{}
 	
 	void Render(const morda::Matr4r& matrix)const override;
 };
 
 
 
-}
+}//~namespace
