@@ -31,9 +31,9 @@ THE SOFTWARE. */
 
 #include "LinearContainer.hpp"
 #include "FrameContainer.hpp"
-#include "Label.hpp"
+#include "labels/Label.hpp"
+#include "labels/ColorLabel.hpp"
 #include "MouseProxy.hpp"
-#include "ColorLabel.hpp"
 
 namespace morda{
 

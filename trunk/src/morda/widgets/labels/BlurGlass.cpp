@@ -1,8 +1,8 @@
 #include "BlurGlass.hpp"
 
-#include "../util/GLTexture.hpp"
+#include "../../util/GLTexture.hpp"
 
-#include "../App.hpp"
+#include "../../App.hpp"
 
 
 using namespace morda;

@@ -31,7 +31,7 @@ THE SOFTWARE. */
 #include "LinearContainer.hpp"
 
 #include "../resources/ResNinePatch.hpp"
-#include "ImageLabel.hpp"
+#include "labels/ImageLabel.hpp"
 #include "FrameContainer.hpp"
 
 namespace morda{

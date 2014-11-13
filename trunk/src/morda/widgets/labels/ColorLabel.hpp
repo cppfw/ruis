@@ -29,20 +29,23 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Widget.hpp"
+#include "../ColorWidget.hpp"
+
 
 namespace morda{
 
-class GreyscaleGlass : virtual public Widget{
-public:
-	GreyscaleGlass(const stob::Node* chain = nullptr);
-	
-	GreyscaleGlass(const GreyscaleGlass&) = delete;
-	GreyscaleGlass& operator=(const GreyscaleGlass&) = delete;
-	
-private:
 
-	void Render(const morda::Matr4r& matrix) const override;
+
+class ColorLabel : public ColorWidget{
+public:
+	ColorLabel(const stob::Node* chain = nullptr);
+	
+	ColorLabel(const ColorLabel&) = delete;
+	ColorLabel& operator=(const ColorLabel&) = delete;
+	
+	void Render(const morda::Matr4r& matrix)const override;
 };
+
+
 
 }

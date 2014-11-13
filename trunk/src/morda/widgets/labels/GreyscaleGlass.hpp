@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis
+Copyright (c) 2014 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,29 +29,20 @@ THE SOFTWARE. */
 
 #pragma once
 
-
-#include "../widgets/Widget.hpp"
-#include "../resources/ResFont.hpp"
-#include "TextWidget.hpp"
-
-
+#include "../Widget.hpp"
 
 namespace morda{
 
-
-
-class Label : public SingleLineTextWidget{
-	
-	
+class GreyscaleGlass : virtual public Widget{
 public:
-	Label(const stob::Node* chain = nullptr);
+	GreyscaleGlass(const stob::Node* chain = nullptr);
 	
-public:
-	~Label()NOEXCEPT{}
+	GreyscaleGlass(const GreyscaleGlass&) = delete;
+	GreyscaleGlass& operator=(const GreyscaleGlass&) = delete;
 	
-	void Render(const morda::Matr4r& matrix)const override;
+private:
+
+	void Render(const morda::Matr4r& matrix) const override;
 };
 
-
-
-}//~namespace
+}

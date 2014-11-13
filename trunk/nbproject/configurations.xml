@@ -81,23 +81,23 @@
           <in>util.hpp</in>
         </df>
         <df name="widgets">
-          <in>BlurGlass.cpp</in>
+          <df name="labels">
+            <in>BlurGlass.cpp</in>
+            <in>ColorLabel.cpp</in>
+            <in>GreyscaleGlass.cpp</in>
+            <in>ImageLabel.cpp</in>
+            <in>Label.cpp</in>
+          </df>
           <in>Button.cpp</in>
           <in>Button.hpp</in>
           <in>CharInputWidget.hpp</in>
           <in>CheckBox.cpp</in>
           <in>CheckBox.hpp</in>
-          <in>ColorLabel.cpp</in>
           <in>ColorWidget.cpp</in>
           <in>Container.cpp</in>
           <in>Container.hpp</in>
           <in>FrameContainer.cpp</in>
           <in>FrameContainer.hpp</in>
-          <in>GreyscaleGlass.cpp</in>
-          <in>ImageLabel.cpp</in>
-          <in>ImageLabel.hpp</in>
-          <in>Label.cpp</in>
-          <in>Label.hpp</in>
           <in>LinearContainer.cpp</in>
           <in>LinearContainer.hpp</in>
           <in>LinearWidget.cpp</in>
@@ -346,14 +346,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
             tool="1"
@@ -415,6 +407,10 @@
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
+        <element flagsID="1" commonFlags="-std=c++11"/>
+      </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
       <makefileType>
@@ -431,7 +427,7 @@
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </cTool>
-          <ccTool flags="-funsigned-char -std=c++11 -fPIC">
+          <ccTool flags="0">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -481,6 +477,8 @@
       <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
       </item>
@@ -541,61 +539,112 @@
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/widgets/BlurGlass.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/ColorLabel.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-      </item>
-      <item path="src/morda/widgets/GreyscaleGlass.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatchButton.cpp"
             ex="false"
             tool="1"
             flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/labels/BlurGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/labels/ColorLabel.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/labels/GreyscaleGlass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/labels/ImageLabel.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/labels/Label.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">
@@ -782,14 +831,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"
@@ -1030,14 +1071,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ImageLabel.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Label.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearContainer.cpp"
             ex="false"

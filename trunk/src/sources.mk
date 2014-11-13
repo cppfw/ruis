@@ -30,15 +30,10 @@ this_srcs += morda/util/unzip/ioapi.cpp
 this_srcs += morda/util/unzip/unzip.cpp
 
 this_srcs += morda/widgets/Button.cpp
-this_srcs += morda/widgets/BlurGlass.cpp
 this_srcs += morda/widgets/CheckBox.cpp
 this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
-this_srcs += morda/widgets/ColorLabel.cpp
 this_srcs += morda/widgets/FrameContainer.cpp
-this_srcs += morda/widgets/GreyscaleGlass.cpp
-this_srcs += morda/widgets/ImageLabel.cpp
-this_srcs += morda/widgets/Label.cpp
 this_srcs += morda/widgets/LinearContainer.cpp
 this_srcs += morda/widgets/LinearWidget.cpp
 this_srcs += morda/widgets/MouseProxy.cpp
@@ -50,3 +45,9 @@ this_srcs += morda/widgets/TextInput.cpp
 this_srcs += morda/widgets/TextWidget.cpp
 this_srcs += morda/widgets/Widget.cpp
 this_srcs += morda/widgets/Window.cpp
+
+this_srcs += morda/widgets/labels/BlurGlass.cpp
+this_srcs += morda/widgets/labels/ColorLabel.cpp
+this_srcs += morda/widgets/labels/GreyscaleGlass.cpp
+this_srcs += morda/widgets/labels/ImageLabel.cpp
+this_srcs += morda/widgets/labels/Label.cpp
