@@ -16,6 +16,7 @@
 #include "widgets/CheckBox.hpp"
 #include "widgets/labels/GreyscaleGlass.hpp"
 #include "widgets/labels/BlurGlass.hpp"
+#include "widgets/ScrollArea.hpp"
 
 #include "App.hpp"
 
@@ -45,6 +46,7 @@ Inflater::Inflater(){
 	this->AddWidget<CheckBox>("CheckBox");
 	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
 	this->AddWidget<BlurGlass>("BlurGlass");
+	this->AddWidget<ScrollArea>("ScrollArea");
 }
 
 

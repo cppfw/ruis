@@ -39,6 +39,7 @@ this_srcs += morda/widgets/LinearWidget.cpp
 this_srcs += morda/widgets/MouseProxy.cpp
 this_srcs += morda/widgets/NinePatch.cpp
 this_srcs += morda/widgets/NinePatchButton.cpp
+this_srcs += morda/widgets/ScrollArea.cpp
 this_srcs += morda/widgets/Slider.cpp
 this_srcs += morda/widgets/TextField.cpp
 this_srcs += morda/widgets/TextInput.cpp
