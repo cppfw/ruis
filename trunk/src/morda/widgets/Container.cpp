@@ -61,9 +61,7 @@ void Container::Add(const stob::Node& chain){
 
 
 //override
-void Container::Render(const morda::Matr4r& matrix)const{
-	this->Widget::Render(matrix);
-	
+void Container::Render(const morda::Matr4r& matrix)const{	
 	for(auto& w: this->Children()){
 		if(!w->IsVisible()){
 			continue;

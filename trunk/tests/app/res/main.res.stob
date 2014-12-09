@@ -15,8 +15,8 @@ tex_images{
 }
 
 img_sample{
-	tex{tex_images}
-	rect{0 0 120 90}
+	tex{tex_sample}
+//	rect{0 0 120 90}
 }
 
 

@@ -29,18 +29,41 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
+#include "Container.hpp"
 
 
 namespace morda{
 
 
 
-class ScrollArea : virtual public Widget{
+class ScrollArea :
+		virtual public Widget,
+		private Container
+{
+	Vec2r scrollPos = Vec2r(0);
+	
 public:
 	ScrollArea(const stob::Node* chain = nullptr);
 	
 	ScrollArea(const ScrollArea&) = delete;
 	ScrollArea& operator=(const ScrollArea&) = delete;
+	
+
+	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;
+	
+	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
+	
+	void Render(const morda::Matr4r& matrix) const override;
+	
+	const Vec2r& ScrollPos()const{
+		return this->scrollPos;
+	}
+	
+	void SetScrollPos(Vec2r newScrollPos);
+	
+	void SetScrollFactor(Vec2r factor);
+	
+	Vec2r ScrollFactor()const;
 	
 private:
 

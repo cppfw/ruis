@@ -331,4 +331,83 @@ Container{
 			}
 		}
 	}
+
+	Window{
+		dimX{300} dimY{200}
+		posX{620} posY{500}
+
+		title{"ScrollArea"}
+
+		LinearContainer{
+			vertical{true}
+			reverse{true}
+
+			layout{
+				fillX{true} fillY{true}
+				dimX{0} dimY{0}
+			}
+
+			LinearContainer{
+				vertical{false}
+
+				layout{
+					dimX{0} dimY{0}
+					fillX{true} fillY{true}
+					weight{1}
+				}
+
+				ScrollArea{
+					color{0xffffffff}
+
+					name{scroll_area}
+
+					layout{
+						dimX{0} dimY{0}
+						fillX{true} fillY{true}
+						weight{1}
+					}
+
+					ImageLabel{
+						image{img_sample}
+
+		//				fitX{10mm}
+		//				fitY{-1}
+
+						layout{
+							dimX{-1} dimY{-1}
+							fillX{true} fillY{false}
+							weight{0}
+						}
+					}
+
+					Label{
+						posX{0} posY{0}
+						dimX{100mm} dimY{10mm}
+						text{"Hello World!!!"}
+					}
+				}
+				
+				Slider{
+					vertical{true}
+
+					name{scroll_area_vertical_slider}
+
+					layout{
+						dimX{-1} dimY{0}
+						fillY{true} fillX{false}
+					}
+				}
+			}
+
+			Slider{
+				name{scroll_area_horizontal_slider}
+
+				layout{
+					dimX{0} dimY{-1}
+					fillX{true} fillY{false}
+				}
+			}
+		}
+	}
+
 }

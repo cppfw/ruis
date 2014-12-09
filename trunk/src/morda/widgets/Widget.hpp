@@ -235,12 +235,12 @@ public:
 	
 	
 	//return true to consume event
-	virtual bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+	virtual bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
 		return false;
 	}
 	
 	//return true to consume event
-	virtual bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+	virtual bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		return false;
 	}
 

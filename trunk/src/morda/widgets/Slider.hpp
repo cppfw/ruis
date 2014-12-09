@@ -81,7 +81,7 @@ public:
 	Slider(const stob::Node* chain = nullptr);
 	
 public:
-	std::function<void(float)> factorChange;
+	std::function<void(Slider&)> factorChange;
 
 	virtual ~Slider()NOEXCEPT{}
 	
