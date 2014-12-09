@@ -12,6 +12,9 @@
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 
+#include "../../../src/morda/widgets/ScrollArea.hpp"
+#include "../../../src/morda/widgets/Slider.hpp"
+
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
 #include <ting/util.hpp>
@@ -222,7 +225,7 @@ class Application : public morda::App{
 	static morda::App::WindowParams GetWindowParams()NOEXCEPT{
 		morda::App::WindowParams wp;
 		
-		wp.dim.x = 800;
+		wp.dim.x = 1024;
 		wp.dim.y = 800;
 		
 		return wp;
@@ -240,6 +243,8 @@ public:
 		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater.Inflate(
 				*this->CreateResourceFileInterface("res/test.gui.stob")
 			);
+		this->SetRootWidget(c);
+		
 
 //		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
@@ -259,7 +264,28 @@ public:
 		
 		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
 		
-		this->SetRootWidget(c);
+		{
+			std::weak_ptr<morda::ScrollArea> sa = c->FindChildByNameAs<morda::ScrollArea>("scroll_area");
+			
+			auto vs = c->FindChildByNameAs<morda::Slider>("scroll_area_vertical_slider");
+			auto hs = c->FindChildByNameAs<morda::Slider>("scroll_area_horizontal_slider");
+			
+			vs->factorChange = [sa](morda::Slider& slider){
+				if(auto s = sa.lock()){
+					auto sf = s->ScrollFactor();
+					sf.y = slider.Factor();
+					s->SetScrollFactor(sf);
+				}
+			};
+			
+			hs->factorChange = [sa](morda::Slider& slider){
+				if(auto s = sa.lock()){
+					auto sf = s->ScrollFactor();
+					sf.x = slider.Factor();
+					s->SetScrollFactor(sf);
+				}
+			};
+		}
 	}
 };
 

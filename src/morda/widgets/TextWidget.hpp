@@ -54,15 +54,22 @@ public:
 	virtual ~TextWidget()NOEXCEPT{}
 	
 	void SetFont(std::shared_ptr<ResFont> font){
-		ASSERT(font)
-		this->font = font;
+		if(!font){
+			throw morda::Exc("TextWidget::SetFont(): passed argument is null");
+		}
+		
+		this->font = std::move(font);
 		
 		this->SetRelayoutNeeded();
+		
+		this->OnFontChanged();
 	}
 	
 	const morda::Font& Font()const{
 		return this->font->font();
 	}
+	
+	virtual void OnFontChanged(){}
 	
 protected:
 	TextWidget(const stob::Node* desc);
@@ -79,8 +86,7 @@ class SingleLineTextWidget : public TextWidget{
 	
 protected:
 	Vec2r ComputeMinDim()const NOEXCEPT override{
-		this->bb = this->Font().StringBoundingBox(this->text);
-		return Vec2r(bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
+		return Vec2r(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 	}
 	
 	SingleLineTextWidget(const stob::Node* chain);
@@ -89,12 +95,22 @@ protected:
 		return this->bb;
 	}
 	
+	void RecomputeBoundingBox(){
+		this->bb = this->Font().StringBoundingBox(this->text);
+	}
 public:
 	
 	void SetText(decltype(text)&& text){
 		this->text = std::move(text);
 		this->SetRelayoutNeeded();
+		this->RecomputeBoundingBox();
 	}
+	
+
+	void OnFontChanged()override{
+		this->RecomputeBoundingBox();
+	}
+
 	
 	decltype(text) Clear(){
 		return std::move(this->text);

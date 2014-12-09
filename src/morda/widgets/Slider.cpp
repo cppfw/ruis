@@ -70,7 +70,7 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointer
 	this->slider.curFactor = newPos / maxPos;
 	
 	if(this->slider.factorChange){
-		this->slider.factorChange(this->slider.curFactor);
+		this->slider.factorChange(this->slider);
 	}
 	
 	return true;
@@ -93,7 +93,7 @@ void Slider::SetFactor(float newFactor){
 	this->Slider::OnResize();
 	
 	if(this->factorChange){
-		this->factorChange(this->curFactor);
+		this->factorChange(*this);
 	}
 }
 
