@@ -54,11 +54,6 @@ void ScrollArea::SetScrollPos(Vec2r newScrollPos) {
 	}
 	
 	this->scrollPos = newScrollPos.Rounded();
-	
-	auto effectiveDim = this->CalculateEffectiveDim();
-	
-	ting::util::ClampTop(this->scrollPos.x, effectiveDim.x);
-	ting::util::ClampTop(this->scrollPos.y, effectiveDim.y);
 }
 
 
@@ -86,7 +81,12 @@ Vec2r ScrollArea::ScrollFactor()const{
 	
 	auto effectiveDim = this->CalculateEffectiveDim();
 	
-	return this->ScrollPos().CompDiv(effectiveDim);
+	auto factor = this->ScrollPos().CompDiv(effectiveDim);
+	
+	ting::util::ClampTop(factor.x, decltype(factor)::T_Component(1));
+	ting::util::ClampTop(factor.y, decltype(factor)::T_Component(1));
+	
+	return factor;
 }
 
 
