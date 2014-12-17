@@ -33,6 +33,7 @@ this_srcs += morda/widgets/Button.cpp
 this_srcs += morda/widgets/CheckBox.cpp
 this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
+this_srcs += morda/widgets/DimContainer.cpp
 this_srcs += morda/widgets/FrameContainer.cpp
 this_srcs += morda/widgets/LinearContainer.cpp
 this_srcs += morda/widgets/LinearWidget.cpp

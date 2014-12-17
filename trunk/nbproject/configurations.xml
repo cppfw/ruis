@@ -96,6 +96,8 @@
           <in>ColorWidget.cpp</in>
           <in>Container.cpp</in>
           <in>Container.hpp</in>
+          <in>DimContainer.cpp</in>
+          <in>DimContainer.hpp</in>
           <in>FrameContainer.cpp</in>
           <in>FrameContainer.hpp</in>
           <in>LinearContainer.cpp</in>
@@ -338,6 +340,10 @@
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
             tool="1"
@@ -546,6 +552,10 @@
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
@@ -783,6 +793,10 @@
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
@@ -1027,6 +1041,10 @@
       <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/FrameContainer.cpp"
             ex="false"
