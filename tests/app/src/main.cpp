@@ -12,7 +12,7 @@
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 
-#include "../../../src/morda/widgets/ScrollArea.hpp"
+#include "../../../src/morda/widgets/ScrollContainer.hpp"
 #include "../../../src/morda/widgets/Slider.hpp"
 
 #include <ting/debug.hpp>
@@ -265,7 +265,7 @@ public:
 		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
 		
 		{
-			std::weak_ptr<morda::ScrollArea> sa = c->FindChildByNameAs<morda::ScrollArea>("scroll_area");
+			std::weak_ptr<morda::ScrollContainer> sa = c->FindChildByNameAs<morda::ScrollContainer>("scroll_area");
 			
 			auto vs = c->FindChildByNameAs<morda::Slider>("scroll_area_vertical_slider");
 			auto hs = c->FindChildByNameAs<morda::Slider>("scroll_area_horizontal_slider");

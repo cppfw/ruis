@@ -110,8 +110,8 @@
           <in>NinePatch.hpp</in>
           <in>NinePatchButton.cpp</in>
           <in>NinePatchButton.hpp</in>
-          <in>ScrollArea.cpp</in>
-          <in>ScrollArea.hpp</in>
+          <in>ScrollContainer.cpp</in>
+          <in>ScrollContainer.hpp</in>
           <in>Slider.cpp</in>
           <in>Slider.hpp</in>
           <in>TextField.cpp</in>
@@ -386,9 +386,15 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -578,9 +584,15 @@
             tool="1"
             flavor2="8">
       </item>
-      <item path="src/morda/widgets/ScrollArea.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -840,9 +852,15 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1088,9 +1106,15 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/morda/widgets/ScrollArea.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/widgets/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="0">
       </item>

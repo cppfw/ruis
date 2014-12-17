@@ -36,17 +36,17 @@ namespace morda{
 
 
 
-class ScrollArea :
+class ScrollContainer :
 		virtual public Widget,
 		private DimContainer
 {
 	Vec2r scrollPos = Vec2r(0);
 	
 public:
-	ScrollArea(const stob::Node* chain = nullptr);
+	ScrollContainer(const stob::Node* chain = nullptr);
 	
-	ScrollArea(const ScrollArea&) = delete;
-	ScrollArea& operator=(const ScrollArea&) = delete;
+	ScrollContainer(const ScrollContainer&) = delete;
+	ScrollContainer& operator=(const ScrollContainer&) = delete;
 	
 
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;

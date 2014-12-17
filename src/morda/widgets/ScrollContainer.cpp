@@ -1,4 +1,4 @@
-#include "ScrollArea.hpp"
+#include "ScrollContainer.hpp"
 #include "../App.hpp"
 
 
@@ -6,7 +6,7 @@ using namespace morda;
 
 
 
-ScrollArea::ScrollArea(const stob::Node* chain) :
+ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(chain){
@@ -16,13 +16,13 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 	}
 }
 
-morda::Vec2r ScrollArea::ComputeMinDim() const {
+morda::Vec2r ScrollContainer::ComputeMinDim() const {
 	return Vec2r(0);
 }
 
 
 
-bool ScrollArea::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
+bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	//TODO:
 	
 	return this->Container::OnMouseButton(isDown, pos - this->scrollPos, button, pointerID);
@@ -30,13 +30,13 @@ bool ScrollArea::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButto
 
 
 
-bool ScrollArea::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 	return this->Container::OnMouseMove(pos - this->scrollPos, pointerID);
 }
 
 
 
-void ScrollArea::Render(const morda::Matr4r& matrix) const {
+void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.Translate(-this->scrollPos);
 	
@@ -45,7 +45,7 @@ void ScrollArea::Render(const morda::Matr4r& matrix) const {
 
 
 
-void ScrollArea::SetScrollPos(Vec2r newScrollPos) {
+void ScrollContainer::SetScrollPos(Vec2r newScrollPos) {
 	if(this->Children().size() == 0){
 		this->scrollPos = Vec2r(0);
 		return;
@@ -56,7 +56,7 @@ void ScrollArea::SetScrollPos(Vec2r newScrollPos) {
 
 
 
-void ScrollArea::SetScrollFactor(Vec2r factor) {
+void ScrollContainer::SetScrollFactor(Vec2r factor) {
 	if(
 			factor.x < 0 || 1 < factor.x ||
 			factor.y < 0 || 1 < factor.y
@@ -72,7 +72,7 @@ void ScrollArea::SetScrollFactor(Vec2r factor) {
 
 
 
-Vec2r ScrollArea::ScrollFactor()const{
+Vec2r ScrollContainer::ScrollFactor()const{
 	if(this->Children().size() == 0){
 		return Vec2r(0);
 	}
