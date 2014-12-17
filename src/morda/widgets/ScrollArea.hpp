@@ -29,7 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
-#include "Container.hpp"
+#include "DimContainer.hpp"
 
 
 namespace morda{
@@ -38,7 +38,7 @@ namespace morda{
 
 class ScrollArea :
 		virtual public Widget,
-		private Container
+		private DimContainer
 {
 	Vec2r scrollPos = Vec2r(0);
 	
@@ -54,8 +54,6 @@ public:
 	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
 	
 	void Render(const morda::Matr4r& matrix) const override;
-	
-	void OnResize()override;
 
 	
 	const Vec2r& ScrollPos()const{

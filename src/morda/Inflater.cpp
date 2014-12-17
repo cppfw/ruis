@@ -17,6 +17,7 @@
 #include "widgets/labels/GreyscaleGlass.hpp"
 #include "widgets/labels/BlurGlass.hpp"
 #include "widgets/ScrollArea.hpp"
+#include "widgets/DimContainer.hpp"
 
 #include "App.hpp"
 
@@ -47,6 +48,7 @@ Inflater::Inflater(){
 	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
 	this->AddWidget<BlurGlass>("BlurGlass");
 	this->AddWidget<ScrollArea>("ScrollArea");
+	this->AddWidget<DimContainer>("DimContainer");
 }
 
 

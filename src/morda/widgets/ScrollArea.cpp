@@ -18,12 +18,6 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 
 
 
-void ScrollArea::OnResize() {
-	//TODO:
-}
-
-
-
 bool ScrollArea::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	//TODO:
 	
