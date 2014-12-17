@@ -7,14 +7,10 @@ using namespace morda;
 
 
 ScrollContainer::ScrollContainer(const stob::Node* chain) :
-		Widget(chain)
-{
-	if(chain){
-		if(auto n = chain->ThisOrNextNonProperty().node()){
-			this->Add(morda::App::Inst().inflater.Inflate(*n));
-		}
-	}
-}
+		Widget(chain),
+		DimContainer(chain)
+
+{}
 
 morda::Vec2r ScrollContainer::ComputeMinDim() const {
 	return Vec2r(0);
@@ -25,13 +21,15 @@ morda::Vec2r ScrollContainer::ComputeMinDim() const {
 bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	//TODO:
 	
-	return this->Container::OnMouseButton(isDown, pos - this->scrollPos, button, pointerID);
+	return this->DimContainer::OnMouseButton(isDown, pos - this->scrollPos, button, pointerID);
 }
 
 
 
 bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
-	return this->Container::OnMouseMove(pos - this->scrollPos, pointerID);
+	//TODO:
+	
+	return this->DimContainer::OnMouseMove(pos - this->scrollPos, pointerID);
 }
 
 
@@ -40,7 +38,7 @@ void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.Translate(-this->scrollPos);
 	
-	this->Container::Render(matr);
+	this->DimContainer::Render(matr);
 }
 
 
