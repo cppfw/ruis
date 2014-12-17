@@ -356,7 +356,7 @@ Container{
 					weight{1}
 				}
 
-				ScrollArea{
+				ScrollContainer{
 					color{0xffffffff}
 
 					name{scroll_area}
