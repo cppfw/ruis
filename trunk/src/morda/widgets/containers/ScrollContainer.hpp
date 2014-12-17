@@ -73,7 +73,7 @@ public:
 private:
 	
 	Vec2r CalculateEffectiveDim()const{
-		return this->Children().front()->Rect().d - this->Rect().d;
+		return this->DimContainer::ComputeMinDim() - this->Rect().d;
 	}
 
 };
