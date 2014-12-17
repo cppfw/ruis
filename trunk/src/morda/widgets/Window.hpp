@@ -29,8 +29,8 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "LinearContainer.hpp"
-#include "FrameContainer.hpp"
+#include "containers/LinearContainer.hpp"
+#include "containers/FrameContainer.hpp"
 #include "labels/Label.hpp"
 #include "labels/ColorLabel.hpp"
 #include "MouseProxy.hpp"

@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "LinearWidget.hpp"
+#include "../LinearWidget.hpp"
 
 #include <ting/types.hpp>
 

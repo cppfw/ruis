@@ -31,7 +31,7 @@ THE SOFTWARE. */
 #include <ting/util.hpp>
 
 #include "Widget.hpp"
-#include "Container.hpp"
+#include "containers/Container.hpp"
 #include "LinearWidget.hpp"
 
 

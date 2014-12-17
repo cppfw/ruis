@@ -2,7 +2,7 @@
 
 #include "../../../src/morda/AppFactory.hpp"
 #include "../../../src/morda/widgets/Widget.hpp"
-#include "../../../src/morda/widgets/Container.hpp"
+#include "../../../src/morda/widgets/containers/Container.hpp"
 
 #include "../../../src/morda/widgets/Button.hpp"
 #include "../../../src/morda/widgets/labels/Label.hpp"
@@ -12,7 +12,7 @@
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 
-#include "../../../src/morda/widgets/ScrollContainer.hpp"
+#include "../../../src/morda/widgets/containers/ScrollContainer.hpp"
 #include "../../../src/morda/widgets/Slider.hpp"
 
 #include <ting/debug.hpp>

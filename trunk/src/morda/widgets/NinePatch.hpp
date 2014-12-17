@@ -28,11 +28,11 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "LinearContainer.hpp"
+#include "containers/LinearContainer.hpp"
+#include "containers/FrameContainer.hpp"
 
 #include "../resources/ResNinePatch.hpp"
 #include "labels/ImageLabel.hpp"
-#include "FrameContainer.hpp"
 
 namespace morda{
 

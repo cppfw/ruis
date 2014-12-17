@@ -31,22 +31,23 @@ this_srcs += morda/util/unzip/unzip.cpp
 
 this_srcs += morda/widgets/Button.cpp
 this_srcs += morda/widgets/CheckBox.cpp
-this_srcs += morda/widgets/Container.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
-this_srcs += morda/widgets/DimContainer.cpp
-this_srcs += morda/widgets/FrameContainer.cpp
-this_srcs += morda/widgets/LinearContainer.cpp
 this_srcs += morda/widgets/LinearWidget.cpp
 this_srcs += morda/widgets/MouseProxy.cpp
 this_srcs += morda/widgets/NinePatch.cpp
 this_srcs += morda/widgets/NinePatchButton.cpp
-this_srcs += morda/widgets/ScrollContainer.cpp
 this_srcs += morda/widgets/Slider.cpp
 this_srcs += morda/widgets/TextField.cpp
 this_srcs += morda/widgets/TextInput.cpp
 this_srcs += morda/widgets/TextWidget.cpp
 this_srcs += morda/widgets/Widget.cpp
 this_srcs += morda/widgets/Window.cpp
+
+this_srcs += morda/widgets/containers/Container.cpp
+this_srcs += morda/widgets/containers/DimContainer.cpp
+this_srcs += morda/widgets/containers/FrameContainer.cpp
+this_srcs += morda/widgets/containers/LinearContainer.cpp
+this_srcs += morda/widgets/containers/ScrollContainer.cpp
 
 this_srcs += morda/widgets/labels/BlurGlass.cpp
 this_srcs += morda/widgets/labels/ColorLabel.cpp

@@ -1,23 +1,25 @@
 #include "Inflater.hpp"
 
-#include "widgets/Container.hpp"
+#include "widgets/containers/Container.hpp"
+#include "widgets/containers/LinearContainer.hpp"
+#include "widgets/containers/FrameContainer.hpp"
+#include "widgets/containers/ScrollContainer.hpp"
+#include "widgets/containers/DimContainer.hpp"
+
 #include "widgets/labels/ColorLabel.hpp"
 #include "widgets/labels/Label.hpp"
-#include "widgets/LinearContainer.hpp"
-#include "widgets/FrameContainer.hpp"
+#include "widgets/labels/ImageLabel.hpp"
+#include "widgets/labels/GreyscaleGlass.hpp"
+#include "widgets/labels/BlurGlass.hpp"
+
 #include "widgets/TextInput.hpp"
 #include "widgets/Slider.hpp"
-#include "widgets/labels/ImageLabel.hpp"
 #include "widgets/Window.hpp"
 #include "widgets/MouseProxy.hpp"
 #include "widgets/NinePatch.hpp"
 #include "widgets/NinePatchButton.hpp"
 #include "widgets/TextField.hpp"
 #include "widgets/CheckBox.hpp"
-#include "widgets/labels/GreyscaleGlass.hpp"
-#include "widgets/labels/BlurGlass.hpp"
-#include "widgets/ScrollContainer.hpp"
-#include "widgets/DimContainer.hpp"
 
 #include "App.hpp"
 

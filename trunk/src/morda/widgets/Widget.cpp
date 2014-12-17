@@ -3,7 +3,7 @@
 #include "Widget.hpp"
 
 #include "../App.hpp"
-#include "Container.hpp"
+#include "containers/Container.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
