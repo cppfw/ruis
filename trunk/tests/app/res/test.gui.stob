@@ -375,8 +375,7 @@ Container{
 
 						layout{
 							dimX{-1} dimY{-1}
-							fillX{true} fillY{false}
-							weight{0}
+							fillX{false} fillY{false}
 						}
 					}
 

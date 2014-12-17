@@ -16,6 +16,10 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 	}
 }
 
+morda::Vec2r ScrollArea::ComputeMinDim() const {
+	return Vec2r(0);
+}
+
 
 
 bool ScrollArea::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
