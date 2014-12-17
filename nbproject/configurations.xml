@@ -81,6 +81,18 @@
           <in>util.hpp</in>
         </df>
         <df name="widgets">
+          <df name="containers">
+            <in>Container.cpp</in>
+            <in>Container.hpp</in>
+            <in>DimContainer.cpp</in>
+            <in>DimContainer.hpp</in>
+            <in>FrameContainer.cpp</in>
+            <in>FrameContainer.hpp</in>
+            <in>LinearContainer.cpp</in>
+            <in>LinearContainer.hpp</in>
+            <in>ScrollContainer.cpp</in>
+            <in>ScrollContainer.hpp</in>
+          </df>
           <df name="labels">
             <in>BlurGlass.cpp</in>
             <in>ColorLabel.cpp</in>
@@ -94,14 +106,6 @@
           <in>CheckBox.cpp</in>
           <in>CheckBox.hpp</in>
           <in>ColorWidget.cpp</in>
-          <in>Container.cpp</in>
-          <in>Container.hpp</in>
-          <in>DimContainer.cpp</in>
-          <in>DimContainer.hpp</in>
-          <in>FrameContainer.cpp</in>
-          <in>FrameContainer.hpp</in>
-          <in>LinearContainer.cpp</in>
-          <in>LinearContainer.hpp</in>
           <in>LinearWidget.cpp</in>
           <in>LinearWidget.hpp</in>
           <in>MouseProxy.cpp</in>
@@ -110,8 +114,6 @@
           <in>NinePatch.hpp</in>
           <in>NinePatchButton.cpp</in>
           <in>NinePatchButton.hpp</in>
-          <in>ScrollContainer.cpp</in>
-          <in>ScrollContainer.hpp</in>
           <in>Slider.cpp</in>
           <in>Slider.hpp</in>
           <in>TextField.cpp</in>
@@ -336,34 +338,6 @@
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
@@ -382,16 +356,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatchButton.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -415,6 +379,56 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -557,22 +571,6 @@
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
@@ -583,16 +581,6 @@
             ex="false"
             tool="1"
             flavor2="8">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -605,6 +593,41 @@
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/labels/BlurGlass.cpp"
             ex="false"
@@ -802,34 +825,6 @@
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
@@ -848,16 +843,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatchButton.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -881,6 +866,56 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1056,34 +1091,6 @@
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Container.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/DimContainer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/FrameContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearContainer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
@@ -1102,16 +1109,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatchButton.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ScrollContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1135,6 +1132,56 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/Container.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/DimContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/FrameContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>

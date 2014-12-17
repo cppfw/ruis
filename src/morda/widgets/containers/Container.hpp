@@ -31,10 +31,10 @@ THE SOFTWARE. */
 #include <map>
 #include <list>
 
-#include "../Exc.hpp"
-#include "Widget.hpp"
+#include "../../Exc.hpp"
+#include "../Widget.hpp"
 
-#include "../util/LayoutParams.hpp"
+#include "../../util/LayoutParams.hpp"
 
 
 namespace morda{

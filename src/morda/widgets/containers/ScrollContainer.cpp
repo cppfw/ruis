@@ -1,5 +1,5 @@
 #include "ScrollContainer.hpp"
-#include "../App.hpp"
+#include "../../App.hpp"
 
 
 using namespace morda;
