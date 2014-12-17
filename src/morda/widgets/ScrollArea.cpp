@@ -18,6 +18,12 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 
 
 
+void ScrollArea::OnResize() {
+	//TODO:
+}
+
+
+
 bool ScrollArea::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	//TODO:
 	
@@ -49,7 +55,7 @@ void ScrollArea::SetScrollPos(Vec2r newScrollPos) {
 	
 	this->scrollPos = newScrollPos.Rounded();
 	
-	auto effectiveDim = this->Children().front()->Rect().d - this->Rect().d;
+	auto effectiveDim = this->CalculateEffectiveDim();
 	
 	ting::util::ClampTop(this->scrollPos.x, effectiveDim.x);
 	ting::util::ClampTop(this->scrollPos.y, effectiveDim.y);
@@ -66,7 +72,7 @@ void ScrollArea::SetScrollFactor(Vec2r factor) {
 		throw morda::Exc("ScrollArea::SetScrollFactor(): ");
 	}
 	
-	auto effectiveDim = this->Children().front()->Rect().d - this->Rect().d;
+	auto effectiveDim = this->CalculateEffectiveDim();
 	
 	this->SetScrollPos(effectiveDim.CompMul(factor));
 }
@@ -78,7 +84,7 @@ Vec2r ScrollArea::ScrollFactor()const{
 		return Vec2r(0);
 	}
 	
-	auto effectiveDim = this->Children().front()->Rect().d - this->Rect().d;
+	auto effectiveDim = this->CalculateEffectiveDim();
 	
 	return this->ScrollPos().CompDiv(effectiveDim);
 }

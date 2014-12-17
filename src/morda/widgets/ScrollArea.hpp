@@ -55,6 +55,9 @@ public:
 	
 	void Render(const morda::Matr4r& matrix) const override;
 	
+	void OnResize()override;
+
+	
 	const Vec2r& ScrollPos()const{
 		return this->scrollPos;
 	}
@@ -66,6 +69,10 @@ public:
 	Vec2r ScrollFactor()const;
 	
 private:
+	
+	Vec2r CalculateEffectiveDim()const{
+		return this->Children().front()->Rect().d - this->Rect().d;
+	}
 
 };
 
