@@ -19,17 +19,13 @@ morda::Vec2r ScrollContainer::ComputeMinDim() const {
 
 
 bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
-	//TODO:
-	
-	return this->DimContainer::OnMouseButton(isDown, pos - this->scrollPos, button, pointerID);
+	return this->DimContainer::OnMouseButton(isDown, pos + this->scrollPos, button, pointerID);
 }
 
 
 
 bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
-	//TODO:
-	
-	return this->DimContainer::OnMouseMove(pos - this->scrollPos, pointerID);
+	return this->DimContainer::OnMouseMove(pos + this->scrollPos, pointerID);
 }
 
 

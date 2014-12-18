@@ -379,11 +379,16 @@ Container{
 						}
 					}
 
-					Label{
-						posX{0} posY{0}
-						dimX{100mm} dimY{10mm}
-						text{"Hello World!!!"}
+					PushButton{
+						posX{10mm} posY{20mm}
+
+						Label{
+							posX{0} posY{0}
+							dimX{100mm} dimY{10mm}
+							text{"Hello World!!!"}
+						}
 					}
+					
 				}
 				
 				Slider{
