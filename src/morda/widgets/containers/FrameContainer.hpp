@@ -30,14 +30,14 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include "Container.hpp"
+#include "DimContainer.hpp"
 
 
 namespace morda{
 
 
 
-class FrameContainer : public Container{
+class FrameContainer : public DimContainer{
 	
 	FrameContainer(const FrameContainer&) = delete;
 	FrameContainer& operator=(const FrameContainer&) = delete;
@@ -49,11 +49,6 @@ public:
 	morda::Vec2r ComputeMinDim()const override;
 
 	void OnResize() override;
-	
-private:
-	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
-		return DimLayoutParams::New(chain);
-	}
 };
 
 

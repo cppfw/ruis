@@ -31,6 +31,7 @@ THE SOFTWARE. */
 
 #include "Container.hpp"
 #include "../LinearWidget.hpp"
+#include "DimContainer.hpp"
 
 #include <ting/types.hpp>
 
@@ -40,7 +41,7 @@ namespace morda{
 
 
 class LinearContainer :
-		public Container,
+		public DimContainer,
 		public LinearWidget
 {
 	LinearContainer(const LinearContainer&) = delete;
@@ -55,7 +56,7 @@ public:
 	morda::Vec2r ComputeMinDim()const NOEXCEPT override;
 	
 	
-	class LayoutParams : public DimLayoutParams{
+	class LayoutParams : public DimContainer::LayoutParams{
 	protected:
 		LayoutParams(const stob::Node* chain);
 	public:

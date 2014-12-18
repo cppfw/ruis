@@ -23,7 +23,7 @@ public:
 
 
 LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
-		DimLayoutParams(chain)
+		DimContainer::LayoutParams(chain)
 {
 	if(auto n = GetProperty(chain, "weight")){
 		this->weight = n->AsFloat();
@@ -37,7 +37,7 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 LinearContainer::LinearContainer(const stob::Node* chain) :
 		Widget(chain),
-		Container(chain),
+		DimContainer(chain),
 		LinearWidget(chain)
 {}
 

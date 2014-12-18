@@ -1,5 +1,6 @@
 #include "DimContainer.hpp"
 #include "../../util/LayoutParams.hpp"
+#include "../../util/util.hpp"
 
 using namespace morda;
 
@@ -14,7 +15,7 @@ DimContainer::DimContainer(const stob::Node* chain) :
 
 void DimContainer::OnResize() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
 		Vec2r d = lp.DimForWidget(**i);
 		for(unsigned i = 0; i != 2; ++i){
@@ -32,7 +33,7 @@ morda::Vec2r DimContainer::ComputeMinDim() const {
 	morda::Vec2r minDim(0);
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
 		morda::Vec2r d = lp.DimForWidget(**i) + (*i)->Rect().p;
 		
@@ -46,5 +47,52 @@ morda::Vec2r DimContainer::ComputeMinDim() const {
 
 
 std::unique_ptr<LayoutParams> DimContainer::CreateLayoutParams(const stob::Node* chain) const {
-	return DimLayoutParams::New(chain);
+	return LayoutParams::New(chain);
 }
+
+
+
+DimContainer::LayoutParams::LayoutParams(const stob::Node* chain){
+	if(auto n = GetProperty(chain, "dimX")){
+		this->dim.x = DimValueFromSTOB(*n);
+	}else{
+		this->dim.x = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "dimY")){
+		this->dim.y = DimValueFromSTOB(*n);
+	}else{
+		this->dim.y = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "fillX")){
+		this->fill.x = n->AsBool();
+	}else{
+		this->fill.x = false;
+	}
+	
+	if(auto n = GetProperty(chain, "fillY")){
+		this->fill.y = n->AsBool();
+	}else{
+		this->fill.y = false;
+	}
+}
+
+
+
+Vec2r DimContainer::LayoutParams::DimForWidget(const Widget& w)const NOEXCEPT{
+	Vec2r ret;
+
+	for(unsigned i = 0; i != 2; ++i){
+		const real& v = this->dim[i];
+
+		if(v < 0){
+			ret[i] = w.GetMinDim()[i];
+		}else{
+			ret[i] = v;
+		}
+	}
+
+	return ret;
+}
+
