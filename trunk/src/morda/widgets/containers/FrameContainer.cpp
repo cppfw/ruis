@@ -7,14 +7,14 @@ using namespace morda;
 
 FrameContainer::FrameContainer(const stob::Node* chain) :
 		Widget(chain),
-		Container(chain)
+		DimContainer(chain)
 {}
 
 
 
 void FrameContainer::OnResize() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
+		auto& lp = this->GetLayoutParamsAs<DimContainer::LayoutParams>(**i);
 		
 		Vec2r d = lp.DimForWidget(**i);
 		for(unsigned i = 0; i != 2; ++i){
@@ -36,7 +36,7 @@ morda::Vec2r FrameContainer::ComputeMinDim()const{
 	morda::Vec2r minDim(0);
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimLayoutParams>(**i);
+		auto& lp = this->GetLayoutParamsAs<DimContainer::LayoutParams>(**i);
 		
 		morda::Vec2r d = lp.DimForWidget(**i);
 		

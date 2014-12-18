@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
+#include "../../util/LayoutParams.hpp"
 
 namespace morda{
 
@@ -41,8 +42,21 @@ public:
 	
 	void OnResize()override;
 	
+	class LayoutParams : public morda::LayoutParams{
+	protected:
+		LayoutParams(const stob::Node* chain);
+	public:
+		Vec2r dim; //negative value means 'min'
+		Vec2b fill;
 
-	std::unique_ptr<LayoutParams> CreateLayoutParams(const stob::Node* chain) const override;
+		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
+			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
+		}
+
+		Vec2r DimForWidget(const Widget& w)const NOEXCEPT;
+	};
+
+	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain) const override;
 	
 
 	morda::Vec2r ComputeMinDim() const override;

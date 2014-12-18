@@ -28,14 +28,9 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Vector2.hpp"
-
-#include <stob/dom.hpp>
-
+#include <ting/util.hpp>
 
 namespace morda{
-
-class Widget;
 
 
 class LayoutParams{
@@ -44,21 +39,6 @@ protected:
 
 public:
 	virtual ~LayoutParams()NOEXCEPT{}
-};
-
-
-class DimLayoutParams : public LayoutParams{
-protected:
-	DimLayoutParams(const stob::Node* chain);
-public:
-	Vec2r dim; //negative value means 'min'
-	Vec2b fill;
-	
-	static std::unique_ptr<DimLayoutParams> New(const stob::Node* chain = nullptr){
-		return std::unique_ptr<DimLayoutParams>(new DimLayoutParams(chain));
-	}
-	
-	Vec2r DimForWidget(const Widget& w)const NOEXCEPT;
 };
 
 }
