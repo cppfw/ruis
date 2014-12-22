@@ -1,5 +1,6 @@
 #include "ScrollContainer.hpp"
 #include "../../App.hpp"
+#include "../../util/util.hpp"
 
 
 using namespace morda;
@@ -10,7 +11,15 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		Widget(chain),
 		DimContainer(chain)
 
-{}
+{
+	if(auto n = GetProperty(chain, "reverseX")){
+		this->reverse.x = n->AsBool();
+	}
+	
+	if(auto n = GetProperty(chain, "reverseY")){
+		this->reverse.y = n->AsBool();
+	}
+}
 
 morda::Vec2r ScrollContainer::ComputeMinDim() const {
 	return Vec2r(0);

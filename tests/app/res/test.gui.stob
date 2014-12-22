@@ -357,7 +357,7 @@ Container{
 				}
 
 				ScrollContainer{
-					color{0xffffffff}
+					reverseY{true}
 
 					name{scroll_area}
 
