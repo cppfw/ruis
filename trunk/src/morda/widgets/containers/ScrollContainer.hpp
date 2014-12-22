@@ -41,6 +41,8 @@ class ScrollContainer :
 {
 	Vec2r scrollPos = Vec2r(0);
 	
+	Vec2b reverse; //TODO:implement
+	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
 	
