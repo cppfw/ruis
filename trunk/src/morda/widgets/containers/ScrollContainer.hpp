@@ -41,7 +41,7 @@ class ScrollContainer :
 {
 	Vec2r scrollPos = Vec2r(0);
 	
-	Vec2b reverse; //TODO:implement
+	Vec2b reverse;
 	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
@@ -73,7 +73,7 @@ public:
 	
 private:
 	
-	Vec2r CalculateEffectiveDim()const{
+	Vec2r ComputeEffectiveDim()const{
 		return this->DimContainer::ComputeMinDim() - this->Rect().d;
 	}
 

@@ -68,7 +68,7 @@ void ScrollContainer::SetScrollFactor(Vec2r factor) {
 		throw morda::Exc("ScrollArea::SetScrollFactor(): ");
 	}
 	
-	auto effectiveDim = this->CalculateEffectiveDim();
+	auto effectiveDim = this->ComputeEffectiveDim();
 	
 	this->SetScrollPos(effectiveDim.CompMul(factor));
 }
@@ -80,7 +80,7 @@ Vec2r ScrollContainer::ScrollFactor()const{
 		return Vec2r(0);
 	}
 	
-	auto effectiveDim = this->CalculateEffectiveDim();
+	auto effectiveDim = this->ComputeEffectiveDim();
 	
 	auto factor = this->ScrollPos().CompDiv(effectiveDim);
 	

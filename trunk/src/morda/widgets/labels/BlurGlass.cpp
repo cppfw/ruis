@@ -29,6 +29,10 @@ void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	
 	s.SetTextureStep(Vec2f(1).CompDiv(viewPortRect.d.ConvertTo<float>()));
 	
+	if(!viewPortRect.d.IsPositive()){
+		return;
+	}
+	
 	for(unsigned i = 0; i != 3; ++i){
 		glCopyTexSubImage2D(
 				GL_TEXTURE_2D,
@@ -40,6 +44,7 @@ void BlurGlass::Render(const morda::Matr4r& matrix)const{
 				viewPortRect.d.x,
 				viewPortRect.d.y
 			);
+		Shader::AssertOpenGLNoError();
 		
 		s.Render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 	}
