@@ -71,10 +71,10 @@ protected:
 	void SetPositionPointer(const morda::Vec2f *p){
 		ASSERT(this->IsBound())
 		glEnableVertexAttribArray(this->positionAttr);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->AssertOpenGLNoError();
 		ASSERT(p)
 		glVertexAttribPointer(this->positionAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->AssertOpenGLNoError();
 	}
 	
 	
