@@ -33,6 +33,11 @@ THE SOFTWARE. */
 
 namespace morda{
 
+/**
+ * @brief Container which manages dimensions of its children.
+ * This container will respect dimensions of its children which those have in their
+ * 'layout' declarations.
+ */
 class DimContainer : public Container{
 public:
 	DimContainer(const stob::Node* chain = nullptr);

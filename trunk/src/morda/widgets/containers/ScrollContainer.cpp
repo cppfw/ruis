@@ -48,7 +48,7 @@ void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 
 
 
-void ScrollContainer::SetScrollPos(Vec2r newScrollPos) {
+void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
 	if(this->Children().size() == 0){
 		this->scrollPos = Vec2r(0);
 		return;
@@ -59,7 +59,7 @@ void ScrollContainer::SetScrollPos(Vec2r newScrollPos) {
 
 
 
-void ScrollContainer::SetScrollFactor(Vec2r factor) {
+void ScrollContainer::SetScrollFactor(const Vec2r& factor) {
 	if(
 			factor.x < 0 || 1 < factor.x ||
 			factor.y < 0 || 1 < factor.y
