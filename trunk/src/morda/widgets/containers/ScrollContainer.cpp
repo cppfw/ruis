@@ -82,6 +82,9 @@ Vec2r ScrollContainer::ScrollFactor()const{
 	
 	auto effectiveDim = this->ComputeEffectiveDim();
 	
+	ASSERT(effectiveDim.x >= 0)
+	ASSERT(effectiveDim.y >= 0)
+	
 	auto factor = this->ScrollPos().CompDiv(effectiveDim);
 	
 	ting::util::ClampTop(factor.x, decltype(factor)::T_Component(1));
