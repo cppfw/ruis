@@ -29,13 +29,12 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "../widgets/Widget.hpp"
-
+#include <stob/dom.hpp>
 
 namespace morda{
 
 
-class Orientable : public virtual Widget{
+class Orientable{
 	Orientable(const Orientable&);
 	Orientable& operator=(const Orientable&);
 	
@@ -58,6 +57,8 @@ protected:
 	virtual void OnOrientationChanged(){}
 	
 public:	
+	virtual ~Orientable()NOEXCEPT{}
+	
 	void SetVertical(bool isVertical)NOEXCEPT{
 		if(this->isVertical == isVertical){
 			return;
