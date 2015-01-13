@@ -12,13 +12,7 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		DimContainer(chain)
 
 {
-	if(auto n = GetProperty(chain, "reverseX")){
-		this->reverse.x = n->AsBool();
-	}
-	
-	if(auto n = GetProperty(chain, "reverseY")){
-		this->reverse.y = n->AsBool();
-	}
+
 }
 
 morda::Vec2r ScrollContainer::ComputeMinDim() const {
