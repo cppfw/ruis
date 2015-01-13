@@ -38,7 +38,7 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 LinearContainer::LinearContainer(const stob::Node* chain) :
 		Widget(chain),
 		DimContainer(chain),
-		LinearWidget(chain)
+		Orientable(chain)
 {}
 
 
@@ -120,7 +120,7 @@ void LinearContainer::OnResize(){
 			
 			Vec2r newPos;
 
-			if(this->IsReverse()){
+			if(this->IsVertical()){
 				newPos[longIndex] = this->Rect().d[longIndex] - pos - newSize[longIndex];
 			}else{
 				newPos[longIndex] = pos;

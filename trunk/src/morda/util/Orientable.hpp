@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014-2015 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,22 +29,20 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "Widget.hpp"
+#include "../widgets/Widget.hpp"
 
 
 namespace morda{
 
 
-class LinearWidget : public virtual Widget{
-	LinearWidget(const LinearWidget&);
-	LinearWidget& operator=(const LinearWidget&);
+class Orientable : public virtual Widget{
+	Orientable(const Orientable&);
+	Orientable& operator=(const Orientable&);
 	
 	bool isVertical;
-	
-	bool isReverse;
 
 protected:
-	LinearWidget(const stob::Node* chain = nullptr);
+	Orientable(const stob::Node* chain = nullptr);
 
 	
 	//TODO: doxygen
@@ -58,7 +56,6 @@ protected:
 	}
 
 	virtual void OnOrientationChanged(){}
-	virtual void OnDirectionChanged(){}
 	
 public:	
 	void SetVertical(bool isVertical)NOEXCEPT{
@@ -71,18 +68,6 @@ public:
 	
 	bool IsVertical()const NOEXCEPT{
 		return this->isVertical;
-	}
-	
-	void SetReverse(bool reverse)NOEXCEPT{
-		if(this->isReverse == isReverse){
-			return;
-		}
-		this->isReverse = reverse;
-		this->OnDirectionChanged();
-	}
-	
-	bool IsReverse()const NOEXCEPT{
-		return this->isReverse;
 	}
 private:
 

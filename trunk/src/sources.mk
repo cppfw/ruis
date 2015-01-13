@@ -20,6 +20,7 @@ this_srcs += morda/resources/ResSTOB.cpp
 this_srcs += morda/fonts/Font.cpp
 this_srcs += morda/fonts/TexFont.cpp
 
+this_srcs += morda/util/Orientable.cpp
 this_srcs += morda/util/GLTexture.cpp
 this_srcs += morda/util/Image.cpp
 this_srcs += morda/util/LayoutParams.cpp
@@ -32,7 +33,6 @@ this_srcs += morda/util/unzip/unzip.cpp
 this_srcs += morda/widgets/Button.cpp
 this_srcs += morda/widgets/CheckBox.cpp
 this_srcs += morda/widgets/ColorWidget.cpp
-this_srcs += morda/widgets/LinearWidget.cpp
 this_srcs += morda/widgets/MouseProxy.cpp
 this_srcs += morda/widgets/NinePatch.cpp
 this_srcs += morda/widgets/NinePatchButton.cpp

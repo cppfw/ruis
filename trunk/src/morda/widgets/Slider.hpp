@@ -32,7 +32,7 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "containers/Container.hpp"
-#include "LinearWidget.hpp"
+#include "../util/Orientable.hpp"
 
 
 //diable stupid warnings
@@ -47,7 +47,7 @@ namespace morda{
 class Slider :
 		public virtual Widget,
 		private Container, //users do not need to know that it is a container
-		public LinearWidget
+		public Orientable
 {
 	//no copying
 	Slider(const Slider&);

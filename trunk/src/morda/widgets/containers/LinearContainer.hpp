@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "../LinearWidget.hpp"
+#include "../../util/Orientable.hpp"
 #include "DimContainer.hpp"
 
 #include <ting/types.hpp>
@@ -42,7 +42,7 @@ namespace morda{
 
 class LinearContainer :
 		public DimContainer,
-		public LinearWidget
+		public Orientable
 {
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;
