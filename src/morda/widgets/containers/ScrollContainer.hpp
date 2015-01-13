@@ -64,9 +64,9 @@ public:
 		return this->scrollPos;
 	}
 	
-	void SetScrollPos(Vec2r newScrollPos);
+	void SetScrollPos(const Vec2r& newScrollPos);
 	
-	void SetScrollFactor(Vec2r factor);
+	void SetScrollFactor(const Vec2r& factor);
 	
 	Vec2r ScrollFactor()const;
 	
