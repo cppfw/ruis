@@ -69,6 +69,8 @@
           <in>Matrix4.hpp</in>
           <in>Mesh.cpp</in>
           <in>Mesh.hpp</in>
+          <in>Orientable.cpp</in>
+          <in>Orientable.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
           <in>Vector2.hpp</in>
@@ -106,8 +108,6 @@
           <in>CheckBox.cpp</in>
           <in>CheckBox.hpp</in>
           <in>ColorWidget.cpp</in>
-          <in>LinearWidget.cpp</in>
-          <in>LinearWidget.hpp</in>
           <in>MouseProxy.cpp</in>
           <in>MouseProxy.hpp</in>
           <in>NinePatch.cpp</in>
@@ -295,6 +295,10 @@
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
@@ -337,10 +341,6 @@
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -557,6 +557,8 @@
       </item>
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="8">
+      </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
@@ -570,8 +572,6 @@
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -782,6 +782,10 @@
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
@@ -824,10 +828,6 @@
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1048,6 +1048,10 @@
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
@@ -1090,10 +1094,6 @@
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/CheckBox.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/LinearWidget.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="0">
       </item>
