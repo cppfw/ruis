@@ -6,9 +6,7 @@ using namespace morda;
 
 
 
-Orientable::Orientable(const stob::Node* chain) :
-		Widget(chain)
-{
+Orientable::Orientable(const stob::Node* chain){
 	if(const stob::Node* n = GetProperty(chain, "vertical")){
 		this->isVertical = n->AsBool();
 	}else{
