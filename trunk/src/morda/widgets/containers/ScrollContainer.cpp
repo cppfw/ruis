@@ -46,6 +46,20 @@ void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 	this->DimContainer::Render(matr);
 }
 
+void ScrollContainer::ClampScrollPos(const Vec2r& effectiveDim) {
+	if(effectiveDim.x < 0){
+		this->scrollPos.x = 0;
+	}
+	
+	if(effectiveDim.y < 0){
+		this->scrollPos.y = effectiveDim.y;
+	}
+}
+
+void ScrollContainer::OnResize() {
+	this->ClampScrollPos(this->ComputeEffectiveDim());
+}
+
 
 
 void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
@@ -55,6 +69,8 @@ void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
 	}
 	
 	this->scrollPos = newScrollPos.Rounded();
+	
+	this->ClampScrollPos(this->ComputeEffectiveDim());
 }
 
 
@@ -65,12 +81,14 @@ void ScrollContainer::SetScrollFactor(const Vec2r& factor) {
 			factor.y < 0 || 1 < factor.y
 		)
 	{
-		throw morda::Exc("ScrollArea::SetScrollFactor(): ");
+		throw morda::Exc("ScrollArea::SetScrollFactor(): factor is out of [0:1] range.");
 	}
 	
 	auto effectiveDim = this->ComputeEffectiveDim();
 	
-	this->SetScrollPos(effectiveDim.CompMul(factor));
+	this->scrollPos = effectiveDim.CompMul(factor).Rounded();
+	
+	this->ClampScrollPos(effectiveDim);
 }
 
 
@@ -81,9 +99,6 @@ Vec2r ScrollContainer::ScrollFactor()const{
 	}
 	
 	auto effectiveDim = this->ComputeEffectiveDim();
-	
-	ASSERT(effectiveDim.x >= 0)
-	ASSERT(effectiveDim.y >= 0)
 	
 	auto factor = this->ScrollPos().CompDiv(effectiveDim);
 	

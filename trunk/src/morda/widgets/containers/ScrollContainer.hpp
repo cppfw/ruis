@@ -58,6 +58,8 @@ public:
 
 	morda::Vec2r ComputeMinDim() const override;
 
+	void OnResize()override;
+
 	
 	
 	const Vec2r& ScrollPos()const{
@@ -77,6 +79,7 @@ private:
 		return this->DimContainer::ComputeMinDim() - this->Rect().d;
 	}
 
+	void ClampScrollPos(const Vec2r& effectiveDim);
 };
 
 
