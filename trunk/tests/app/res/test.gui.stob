@@ -357,8 +357,6 @@ Container{
 				}
 
 				ScrollContainer{
-					reverseY{true}
-
 					name{scroll_area}
 
 					layout{
