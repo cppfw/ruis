@@ -41,6 +41,8 @@ class ScrollContainer :
 {
 	Vec2r scrollPos = Vec2r(0);
 	
+	Vec2r scrollFactor = 0;
+	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
 	
@@ -64,11 +66,14 @@ public:
 		return this->scrollPos;
 	}
 	
+	const Vec2r& ScrollFactor()const{
+		return this->scrollFactor;
+	}
+	
 	void SetScrollPos(const Vec2r& newScrollPos);
 	
 	void SetScrollFactor(const Vec2r& factor);
 	
-	Vec2r ScrollFactor()const;
 	
 	
 private:
@@ -78,6 +83,8 @@ private:
 	}
 
 	void ClampScrollPos(const Vec2r& effectiveDim);
+	
+	void UpdateScrollPosFromScrollFactor();
 };
 
 

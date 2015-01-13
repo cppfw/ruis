@@ -48,6 +48,11 @@ void ScrollContainer::ClampScrollPos(const Vec2r& effectiveDim) {
 	if(effectiveDim.y < 0){
 		this->scrollPos.y = effectiveDim.y;
 	}
+	
+	this->scrollFactor = this->ScrollPos().CompDiv(effectiveDim);
+	
+	ting::util::ClampTop(this->scrollFactor.x, decltype(this->scrollFactor)::T_Component(1));
+	ting::util::ClampTop(this->scrollFactor.y, decltype(this->scrollFactor)::T_Component(1));
 }
 
 void ScrollContainer::OnResize() {
@@ -67,6 +72,16 @@ void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
 	this->ClampScrollPos(this->ComputeEffectiveDim());
 }
 
+void ScrollContainer::UpdateScrollPosFromScrollFactor() {
+	auto effectiveDim = this->ComputeEffectiveDim();
+	
+	ASSERT(0 <= this->scrollFactor.x && this->scrollFactor.x <= 1)
+	ASSERT(0 <= this->scrollFactor.y && this->scrollFactor.y <= 1)
+	
+	this->scrollPos = effectiveDim.CompMul(this->scrollFactor).Rounded();
+	
+	this->ClampScrollPos(effectiveDim);
+}
 
 
 void ScrollContainer::SetScrollFactor(const Vec2r& factor) {
@@ -78,28 +93,7 @@ void ScrollContainer::SetScrollFactor(const Vec2r& factor) {
 		throw morda::Exc("ScrollArea::SetScrollFactor(): factor is out of [0:1] range.");
 	}
 	
-	auto effectiveDim = this->ComputeEffectiveDim();
+	this->scrollFactor = factor;
 	
-	this->scrollPos = effectiveDim.CompMul(factor).Rounded();
-	
-	this->ClampScrollPos(effectiveDim);
+	this->UpdateScrollPosFromScrollFactor();
 }
-
-
-
-Vec2r ScrollContainer::ScrollFactor()const{
-	if(this->Children().size() == 0){
-		return Vec2r(0);
-	}
-	
-	auto effectiveDim = this->ComputeEffectiveDim();
-	
-	auto factor = this->ScrollPos().CompDiv(effectiveDim);
-	
-	ting::util::ClampTop(factor.x, decltype(factor)::T_Component(1));
-	ting::util::ClampTop(factor.y, decltype(factor)::T_Component(1));
-	
-	return factor;
-}
-
-
