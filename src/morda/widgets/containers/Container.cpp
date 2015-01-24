@@ -242,6 +242,8 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 	w->OnTopmostChanged();
 	
 	ASSERT(!w->IsHovered())
+	
+	this->OnChildrenListChanged();
 }
 
 
@@ -263,6 +265,8 @@ void Container::Remove(Widget& w){
 	w.SetUnhovered();
 	
 	this->SetRelayoutNeeded();
+	
+	this->OnChildrenListChanged();
 }
 
 

@@ -100,6 +100,8 @@ public:
 		return this->children;
 	}
 	
+	virtual void OnChildrenListChanged(){}
+	
 private:
 	void MakeChildTopmost(Widget& w);
 };
