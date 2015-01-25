@@ -235,6 +235,8 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 	w->SetRelayoutNeeded();
 	this->SetRelayoutNeeded();
 	
+	this->OnChildrenListChanged();
+	
 	if(this->children.size() > 1){
 		(*(++this->children.rbegin()))->OnTopmostChanged();
 	}
@@ -242,8 +244,6 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 	w->OnTopmostChanged();
 	
 	ASSERT(!w->IsHovered())
-	
-	this->OnChildrenListChanged();
 }
 
 

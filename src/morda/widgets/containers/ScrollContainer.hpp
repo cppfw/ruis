@@ -39,9 +39,16 @@ class ScrollContainer :
 		virtual public Widget,
 		private DimContainer
 {
+	//offset from top left corner
 	Vec2r scrollPos = Vec2r(0);
 	
-	Vec2r scrollFactor = 0;
+	//cached effectiveDim
+	Vec2r effectiveDim;
+	
+	//cached scroll factor
+	Vec2r scrollFactor;
+	
+	bool wasOnResizeCalled = false;
 	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
@@ -58,33 +65,43 @@ public:
 
 	morda::Vec2r ComputeMinDim() const override;
 
-	void OnResize()override;
+	void OnResize()override{
+		//check if OnResize is called for the first time and arrange children if so
+		if(!this->wasOnResizeCalled){
+			this->DimContainer::OnResize();
+			this->wasOnResizeCalled = true;
+		}
+		
+		this->UpdateContentsDim();
+	}
 
-	
+	void OnChildrenListChanged()override{
+		this->DimContainer::OnResize();
+		this->UpdateContentsDim();
+	}
 	
 	const Vec2r& ScrollPos()const{
 		return this->scrollPos;
 	}
 	
+	
+	void SetScrollPos(const Vec2r& newScrollPos);
+	
+	void SetScrollPosAsFactor(const Vec2r& factor);
+	
 	const Vec2r& ScrollFactor()const{
 		return this->scrollFactor;
 	}
 	
-	void SetScrollPos(const Vec2r& newScrollPos);
-	
-	void SetScrollFactor(const Vec2r& factor);
-	
-	
-	
 private:
-	
-	Vec2r ComputeEffectiveDim()const{
-		return this->DimContainer::ComputeMinDim() - this->Rect().d;
+	void UpdateContentsDim(){
+		this->effectiveDim = this->DimContainer::ComputeMinDim() - this->Rect().d;
+		this->UpdateScrollFactor();
 	}
-
-	void ClampScrollPos(const Vec2r& effectiveDim);
 	
-	void UpdateScrollPosFromScrollFactor();
+	void UpdateScrollFactor();
+
+	void ClampScrollPos();
 };
 
 

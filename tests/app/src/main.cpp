@@ -274,7 +274,7 @@ public:
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.y = slider.Factor();
-					s->SetScrollFactor(sf);
+					s->SetScrollPosAsFactor(sf);
 				}
 			};
 			
@@ -282,7 +282,7 @@ public:
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.x = slider.Factor();
-					s->SetScrollFactor(sf);
+					s->SetScrollPosAsFactor(sf);
 				}
 			};
 		}

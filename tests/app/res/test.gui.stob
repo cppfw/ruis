@@ -378,6 +378,7 @@ Container{
 					}
 
 					PushButton{
+						name{push_button_in_scroll_container}
 						posX{10mm} posY{20mm}
 
 						Label{
