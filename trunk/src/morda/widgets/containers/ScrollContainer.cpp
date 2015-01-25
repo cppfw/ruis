@@ -11,9 +11,7 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		Widget(chain),
 		DimContainer(chain)
 
-{
-
-}
+{}
 
 morda::Vec2r ScrollContainer::ComputeMinDim() const {
 	return Vec2r(0);
@@ -22,78 +20,63 @@ morda::Vec2r ScrollContainer::ComputeMinDim() const {
 
 
 bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
-	return this->DimContainer::OnMouseButton(isDown, pos + this->scrollPos, button, pointerID);
+	Vec2r d = this->scrollPos;
+	d.y -= this->effectiveDim.y;
+	d.x = -d.x;
+	return this->DimContainer::OnMouseButton(isDown, pos - d, button, pointerID);
 }
 
 
 
 bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
-	return this->DimContainer::OnMouseMove(pos + this->scrollPos, pointerID);
+	Vec2r d = this->scrollPos;
+	d.y -= this->effectiveDim.y;
+	d.x = -d.x;
+	return this->DimContainer::OnMouseMove(pos - d, pointerID);
 }
 
 
 
 void ScrollContainer::Render(const morda::Matr4r& matrix) const {
+	Vec2r d = this->scrollPos;
+	d.y -= this->effectiveDim.y;
+	d.x = -d.x;
+	
 	Matr4r matr(matrix);
-	matr.Translate(-this->scrollPos);
+	matr.Translate(d);
 	
 	this->DimContainer::Render(matr);
 }
 
-void ScrollContainer::ClampScrollPos(const Vec2r& effectiveDim) {
-	if(effectiveDim.x < 0){
+void ScrollContainer::ClampScrollPos() {
+	if(this->effectiveDim.x < 0){
 		this->scrollPos.x = 0;
 	}
 	
-	if(effectiveDim.y < 0){
-		this->scrollPos.y = effectiveDim.y;
+	if(this->effectiveDim.y < 0){
+		this->scrollPos.y = 0;
 	}
-	
-	this->scrollFactor = this->ScrollPos().CompDiv(effectiveDim);
-	
-	ting::util::ClampTop(this->scrollFactor.x, decltype(this->scrollFactor)::T_Component(1));
-	ting::util::ClampTop(this->scrollFactor.y, decltype(this->scrollFactor)::T_Component(1));
-}
-
-void ScrollContainer::OnResize() {
-	this->ClampScrollPos(this->ComputeEffectiveDim());
 }
 
 
 
 void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
-	if(this->Children().size() == 0){
-		this->scrollPos = Vec2r(0);
-		return;
-	}
-	
 	this->scrollPos = newScrollPos.Rounded();
 	
-	this->ClampScrollPos(this->ComputeEffectiveDim());
-}
-
-void ScrollContainer::UpdateScrollPosFromScrollFactor() {
-	auto effectiveDim = this->ComputeEffectiveDim();
-	
-	ASSERT(0 <= this->scrollFactor.x && this->scrollFactor.x <= 1)
-	ASSERT(0 <= this->scrollFactor.y && this->scrollFactor.y <= 1)
-	
-	this->scrollPos = effectiveDim.CompMul(this->scrollFactor).Rounded();
-	
-	this->ClampScrollPos(effectiveDim);
+	this->ClampScrollPos();
+	this->UpdateScrollFactor();
 }
 
 
-void ScrollContainer::SetScrollFactor(const Vec2r& factor) {
-	if(
-			factor.x < 0 || 1 < factor.x ||
-			factor.y < 0 || 1 < factor.y
-		)
-	{
-		throw morda::Exc("ScrollArea::SetScrollFactor(): factor is out of [0:1] range.");
-	}
+
+void ScrollContainer::SetScrollPosAsFactor(const Vec2r& factor){	
+	Vec2r newScrollPos = this->effectiveDim.CompMul(factor);
 	
-	this->scrollFactor = factor;
-	
-	this->UpdateScrollPosFromScrollFactor();
+	this->SetScrollPos(newScrollPos);
+}
+
+
+void ScrollContainer::UpdateScrollFactor(){
+	//at this point effective dimension should be updated			
+	this->scrollFactor = this->scrollPos.CompDiv(this->effectiveDim);
 }
