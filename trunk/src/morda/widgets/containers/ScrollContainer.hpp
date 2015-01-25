@@ -48,8 +48,6 @@ class ScrollContainer :
 	//cached scroll factor
 	Vec2r scrollFactor;
 	
-	bool wasOnResizeCalled = false;
-	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
 	
@@ -66,12 +64,7 @@ public:
 	morda::Vec2r ComputeMinDim() const override;
 
 	void OnResize()override{
-		//check if OnResize is called for the first time and arrange children if so
-		if(!this->wasOnResizeCalled){
-			this->DimContainer::OnResize();
-			this->wasOnResizeCalled = true;
-		}
-		
+		this->DimContainer::OnResize();
 		this->UpdateContentsDim();
 	}
 
