@@ -265,12 +265,26 @@ public:
 		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
 		
 		{
-			std::weak_ptr<morda::ScrollContainer> sa = c->FindChildByNameAs<morda::ScrollContainer>("scroll_area");
+			auto scrollArea = c->FindChildByNameAs<morda::ScrollContainer>("scroll_area");
+			std::weak_ptr<morda::ScrollContainer> sa = scrollArea;
 			
-			auto vs = c->FindChildByNameAs<morda::Slider>("scroll_area_vertical_slider");
-			auto hs = c->FindChildByNameAs<morda::Slider>("scroll_area_horizontal_slider");
+			auto vertSlider = c->FindChildByNameAs<morda::Slider>("scroll_area_vertical_slider");
+			std::weak_ptr<morda::Slider> vs = vertSlider;
 			
-			vs->factorChange = [sa](morda::Slider& slider){
+			auto horiSlider = c->FindChildByNameAs<morda::Slider>("scroll_area_horizontal_slider");
+			std::weak_ptr<morda::Slider> hs = horiSlider;
+			
+			scrollArea->onScrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
+				if(auto v = vs.lock()){
+					v->SetFactor(sc.ScrollFactor().y);
+				}
+				if(auto h = hs.lock()){
+					h->SetFactor(sc.ScrollFactor().x);
+				}
+			};
+			
+			
+			vertSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.y = slider.Factor();
@@ -278,7 +292,7 @@ public:
 				}
 			};
 			
-			hs->factorChange = [sa](morda::Slider& slider){
+			horiSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.x = slider.Factor();

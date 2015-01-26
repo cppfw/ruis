@@ -77,8 +77,24 @@ void ScrollContainer::SetScrollPosAsFactor(const Vec2r& factor){
 
 
 void ScrollContainer::UpdateScrollFactor(){
-	//at this point effective dimension should be updated			
-	this->scrollFactor = this->scrollPos.CompDiv(this->effectiveDim);
+	//at this point effective dimension should be updated
+	Vec2r factor = this->scrollPos.CompDiv(this->effectiveDim);
+	
+	if(this->scrollFactor == factor){
+		return;
+	}
+	
+	for(unsigned i = 0; i != 2; ++i){
+		if(this->effectiveDim[i] <= 0){
+			this->scrollFactor[i] = 0;
+		}else{
+			this->scrollFactor[i] = this->scrollPos[i] / this->effectiveDim[i];
+		}
+	}
+	
+	if(this->onScrollFactorChanged){
+		this->onScrollFactorChanged(*this);
+	}
 }
 
 void ScrollContainer::OnResize(){

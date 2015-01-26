@@ -30,6 +30,8 @@ THE SOFTWARE. */
 
 #include "DimContainer.hpp"
 
+#include <functional>
+
 
 namespace morda{
 
@@ -79,6 +81,8 @@ public:
 	const Vec2r& ScrollFactor()const{
 		return this->scrollFactor;
 	}
+	
+	std::function<void(ScrollContainer&)> onScrollFactorChanged;
 	
 private:
 	void UpdateEffectiveDim();
