@@ -63,15 +63,9 @@ public:
 
 	morda::Vec2r ComputeMinDim() const override;
 
-	void OnResize()override{
-		this->DimContainer::OnResize();
-		this->UpdateContentsDim();
-	}
+	void OnResize()override;
 
-	void OnChildrenListChanged()override{
-		this->DimContainer::OnResize();
-		this->UpdateContentsDim();
-	}
+	void OnChildrenListChanged()override;
 	
 	const Vec2r& ScrollPos()const{
 		return this->scrollPos;
@@ -87,10 +81,7 @@ public:
 	}
 	
 private:
-	void UpdateContentsDim(){
-		this->effectiveDim = this->DimContainer::ComputeMinDim() - this->Rect().d;
-		this->UpdateScrollFactor();
-	}
+	void UpdateEffectiveDim();
 	
 	void UpdateScrollFactor();
 
