@@ -80,3 +80,37 @@ void ScrollContainer::UpdateScrollFactor(){
 	//at this point effective dimension should be updated			
 	this->scrollFactor = this->scrollPos.CompDiv(this->effectiveDim);
 }
+
+void ScrollContainer::OnResize(){
+	this->DimContainer::OnResize();
+	this->UpdateEffectiveDim();
+
+	//distance of content's bottom right corner from bottom right corner of the ScrollContainer
+	Vec2r br = this->scrollPos - this->effectiveDim;
+
+	if(br.x > 0){
+		if(br.x <= this->scrollPos.x){
+			this->scrollPos.x -= br.x;
+		}else{
+			this->scrollPos.x = 0;
+		}
+	}
+	
+	if(br.y > 0){
+		if(br.y <= this->scrollPos.y){
+			this->scrollPos.y -= br.y;
+		}else{
+			this->scrollPos.y = 0;
+		}
+	}
+}
+
+void ScrollContainer::OnChildrenListChanged(){
+	this->DimContainer::OnResize();
+	this->UpdateEffectiveDim();
+}
+
+void ScrollContainer::UpdateEffectiveDim(){
+	this->effectiveDim = this->DimContainer::ComputeMinDim() - this->Rect().d;
+	this->UpdateScrollFactor();
+}
