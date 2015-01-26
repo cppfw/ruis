@@ -88,7 +88,13 @@ Slider::Slider(const stob::Node* chain) :
 
 
 void Slider::SetFactor(float newFactor){
-	this->curFactor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
+	real factor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
+	
+	if(this->curFactor == factor){
+		return;
+	}
+	
+	this->curFactor = factor;
 	
 	this->Slider::OnResize();
 	
