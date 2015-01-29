@@ -94,6 +94,8 @@
             <in>LinearContainer.hpp</in>
             <in>ScrollContainer.cpp</in>
             <in>ScrollContainer.hpp</in>
+            <in>TableContainer.cpp</in>
+            <in>TableContainer.hpp</in>
           </df>
           <df name="labels">
             <in>BlurGlass.cpp</in>
@@ -430,6 +432,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/containers/TableContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -625,6 +637,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -917,6 +939,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/containers/TableContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -1179,6 +1211,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/ScrollContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/TableContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">

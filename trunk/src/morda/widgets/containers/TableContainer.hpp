@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014-2015 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,65 +28,20 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "DimContainer.hpp"
-
 #include <functional>
 
+#include "Container.hpp"
 
 namespace morda{
 
+//TODO:
 
-
-class ScrollContainer : public DimContainer{
-	//offset from top left corner
-	Vec2r scrollPos = Vec2r(0);
-	
-	//cached effectiveDim
-	Vec2r effectiveDim;
-	
-	//cached scroll factor
-	Vec2r scrollFactor;
-	
+class TableContainer : public Container{	
 public:
-	ScrollContainer(const stob::Node* chain = nullptr);
+	TableContainer(const stob::Node* chain = nullptr);
 	
-	ScrollContainer(const ScrollContainer&) = delete;
-	ScrollContainer& operator=(const ScrollContainer&) = delete;
-	
-
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;
-	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
-	
-	void Render(const morda::Matr4r& matrix) const override;
-
-	morda::Vec2r ComputeMinDim() const override;
-
-	void OnResize()override;
-
-	void OnChildrenListChanged()override;
-	
-	const Vec2r& ScrollPos()const{
-		return this->scrollPos;
-	}
-	
-	
-	void SetScrollPos(const Vec2r& newScrollPos);
-	
-	void SetScrollPosAsFactor(const Vec2r& factor);
-	
-	const Vec2r& ScrollFactor()const{
-		return this->scrollFactor;
-	}
-	
-	std::function<void(ScrollContainer&)> onScrollFactorChanged;
-	
-private:
-	void UpdateEffectiveDim();
-	
-	void UpdateScrollFactor();
-
-	void ClampScrollPos();
+	TableContainer(const TableContainer&) = delete;
+	TableContainer& operator=(const TableContainer&) = delete;
 };
 
 

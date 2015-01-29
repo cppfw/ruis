@@ -10,7 +10,6 @@ using namespace morda;
 ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		Widget(chain),
 		DimContainer(chain)
-
 {}
 
 morda::Vec2r ScrollContainer::ComputeMinDim() const {
