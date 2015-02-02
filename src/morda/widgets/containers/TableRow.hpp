@@ -28,25 +28,19 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <functional>
-
 #include "LinearContainer.hpp"
 
 namespace morda{
 
-//TODO:
-
-class TableContainer :
-		public virtual Widget,
-		private VerticalContainer
-{
+class TableRow : public HorizontalContainer{
 public:
-	TableContainer(const stob::Node* chain = nullptr);
+	TableRow(const stob::Node* chain = nullptr);
 	
-	TableContainer(const TableContainer&) = delete;
-	TableContainer& operator=(const TableContainer&) = delete;
+	TableRow(const TableRow&) = delete;
+	TableRow& operator=(const TableRow&) = delete;
+	
+private:
+
 };
-
-
 
 }

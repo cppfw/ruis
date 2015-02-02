@@ -47,6 +47,8 @@ this_srcs += morda/widgets/containers/DimContainer.cpp
 this_srcs += morda/widgets/containers/FrameContainer.cpp
 this_srcs += morda/widgets/containers/LinearContainer.cpp
 this_srcs += morda/widgets/containers/ScrollContainer.cpp
+this_srcs += morda/widgets/containers/TableContainer.cpp
+this_srcs += morda/widgets/containers/TableRow.cpp
 
 this_srcs += morda/widgets/labels/BlurGlass.cpp
 this_srcs += morda/widgets/labels/ColorLabel.cpp
