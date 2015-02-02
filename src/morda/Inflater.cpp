@@ -34,7 +34,8 @@ using namespace morda;
 Inflater::Inflater(){
 	this->AddWidget<Widget>("Widget");
 	this->AddWidget<Container>("Container");
-	this->AddWidget<LinearContainer>("LinearContainer");
+	this->AddWidget<HorizontalContainer>("HorizontalContainer");
+	this->AddWidget<VerticalContainer>("VerticalContainer");
 	this->AddWidget<FrameContainer>("FrameContainer");
 	this->AddWidget<Label>("Label");
 	this->AddWidget<TextInput>("TextInput");

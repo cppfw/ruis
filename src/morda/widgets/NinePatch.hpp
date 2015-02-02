@@ -38,7 +38,7 @@ namespace morda{
 
 class NinePatch :
 	public virtual Widget,
-	private LinearContainer
+	private HorizontalContainer
 {
 	std::shared_ptr<ResNinePatch> image;//hold reference to resource to avoid data duplication
 	
