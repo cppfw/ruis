@@ -32,7 +32,7 @@ bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2r& pos, E
 		ASSERT(!this->isGrabbed)
 		this->isGrabbed = true;
 
-		unsigned longIndex = this->slider.IsVertical() ? 1 : 0;
+		unsigned longIndex = this->slider.isVertical ? 1 : 0;
 		this->clickPoint = pos[longIndex];
 
 		return true;
@@ -78,9 +78,9 @@ bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointer
 
 
 
-Slider::Slider(const stob::Node* chain) :
+Slider::Slider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
-		Orientable(chain)
+		isVertical(isVertical)
 {
 	this->Add(ting::New<SliderHandle>(*this));
 }

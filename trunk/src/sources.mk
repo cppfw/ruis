@@ -20,7 +20,6 @@ this_srcs += morda/resources/ResSTOB.cpp
 this_srcs += morda/fonts/Font.cpp
 this_srcs += morda/fonts/TexFont.cpp
 
-this_srcs += morda/util/Orientable.cpp
 this_srcs += morda/util/GLTexture.cpp
 this_srcs += morda/util/Image.cpp
 this_srcs += morda/util/LayoutParams.cpp

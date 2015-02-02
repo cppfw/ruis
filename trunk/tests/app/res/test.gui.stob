@@ -259,11 +259,7 @@ Container{
 				}
 			}
 
-			Slider{
-	//			vertical{false}
-
-	//			reverse{true}
-
+			HorizontalSlider{
 				layout{
 					dimX{50} dimY{40} //TODO: -1 -1
 					fillX{true} fillY{false}
@@ -271,11 +267,8 @@ Container{
 				}
 			}
 
-			Slider{
+			VerticalSlider{
 				name {"vertical slider"}
-
-				vertical{true}
-				reverse{true}
 
 				layout{
 					dimX{40} dimY{0} //TODO: -1 -1
@@ -385,8 +378,7 @@ Container{
 					
 				}
 				
-				Slider{
-					vertical{true}
+				VerticalSlider{
 
 					name{scroll_area_vertical_slider}
 
@@ -397,7 +389,7 @@ Container{
 				}
 			}
 
-			Slider{
+			HorizontalSlider{
 				name{scroll_area_horizontal_slider}
 
 				layout{

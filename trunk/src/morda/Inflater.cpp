@@ -39,7 +39,8 @@ Inflater::Inflater(){
 	this->AddWidget<FrameContainer>("FrameContainer");
 	this->AddWidget<Label>("Label");
 	this->AddWidget<TextInput>("TextInput");
-	this->AddWidget<Slider>("Slider");
+	this->AddWidget<VerticalSlider>("VerticalSlider");
+	this->AddWidget<HorizontalSlider>("HorizontalSlider");
 	this->AddWidget<ImageLabel>("ImageLabel");
 	this->AddWidget<Window>("Window");
 	this->AddWidget<MouseProxy>("MouseProxy");

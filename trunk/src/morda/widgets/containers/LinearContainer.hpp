@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014-2015 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "../../util/Orientable.hpp"
 #include "DimContainer.hpp"
 
 #include <ting/types.hpp>
@@ -55,7 +54,7 @@ class LinearContainer : public DimContainer{
 	}
 	
 protected:
-	LinearContainer(bool isVertical, const stob::Node* chain = nullptr);
+	LinearContainer(bool isVertical, const stob::Node* chain);
 public:
 
 	void OnResize() override;	
