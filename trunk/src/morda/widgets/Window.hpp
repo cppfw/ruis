@@ -39,7 +39,7 @@ namespace morda{
 
 class Window :
 		virtual public Widget,
-		private LinearContainer
+		private HorizontalContainer
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	

@@ -9,8 +9,7 @@ using namespace morda;
 namespace{
 const char* D_NinePatchLayout = R"qwertyuiop(
 		//left column
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				fillY{true}
@@ -34,8 +33,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 		}
 
 		//middle column
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				fillX{true} fillY{true}
@@ -73,8 +71,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 		}
 
 		//right column
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				fillY{true}
@@ -102,7 +99,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		LinearContainer(stob::Parse(D_NinePatchLayout).get())
+		HorizontalContainer(stob::Parse(D_NinePatchLayout).get())
 {
 	this->lt = this->FindChildByNameAs<ImageLabel>("morda_lt");
 	this->t = this->FindChildByNameAs<ImageLabel>("morda_t");

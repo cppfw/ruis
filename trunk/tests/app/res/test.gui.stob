@@ -107,7 +107,7 @@ Container{
 		dimX{300} dimY{200}
 		posX{300} posY{10}
 
-		title{"LinearLayout"}
+		title{"HorizontalLayout"}
 
 		GreyscaleGlass{
 			layout{
@@ -115,10 +115,8 @@ Container{
 			}
 		}
 
-		LinearContainer{
+		HorizontalContainer{
 			padding {20 30 10 40}
-			vertical {false}
-	//		reverse {true}
 
 			posX{50} posY{100}
 			dimX{220} dimY{100}
@@ -241,8 +239,7 @@ Container{
 
 		title{"Sliders"}
 
-		LinearContainer{
-			vertical {false}
+		HorizontalContainer{
 
 			layout{
 				dimX{0} dimY{0}
@@ -338,8 +335,7 @@ Container{
 
 		title{"ScrollArea"}
 
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 
 			layout{
@@ -347,8 +343,7 @@ Container{
 				dimX{0} dimY{0}
 			}
 
-			LinearContainer{
-				vertical{false}
+			HorizontalContainer{
 
 				layout{
 					dimX{0} dimY{0}

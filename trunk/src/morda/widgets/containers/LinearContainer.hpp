@@ -40,15 +40,22 @@ namespace morda{
 
 
 
-class LinearContainer :
-		public DimContainer,
-		public Orientable
-{
+class LinearContainer : public DimContainer{
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;
 
-public:
-	LinearContainer(const stob::Node* chain = nullptr);
+	bool isVertical;
+	
+	unsigned GetLongIndex()const NOEXCEPT{
+		return this->isVertical ? 1 : 0;
+	}
+
+	unsigned GetTransIndex()const NOEXCEPT{
+		return this->isVertical ? 0 : 1;
+	}
+	
+protected:
+	LinearContainer(bool isVertical, const stob::Node* chain = nullptr);
 public:
 
 	void OnResize() override;	
@@ -70,6 +77,32 @@ private:
 	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
 		return LayoutParams::New(chain);
 	}
+};
+
+
+
+class VerticalContainer : public LinearContainer{
+public:
+	VerticalContainer(const stob::Node* chain = nullptr) :
+			Widget(chain),
+			LinearContainer(true, chain)
+	{}
+	
+	VerticalContainer(const VerticalContainer&) = delete;
+	VerticalContainer& operator=(const VerticalContainer&) = delete;
+};
+
+
+
+class HorizontalContainer : public LinearContainer{
+public:
+	HorizontalContainer(const stob::Node* chain = nullptr) :
+			Widget(chain),
+			LinearContainer(false, chain)
+	{}
+	
+	HorizontalContainer(const HorizontalContainer&) = delete;
+	HorizontalContainer& operator=(const HorizontalContainer&) = delete;
 };
 
 

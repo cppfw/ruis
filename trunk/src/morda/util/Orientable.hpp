@@ -34,6 +34,7 @@ THE SOFTWARE. */
 namespace morda{
 
 
+//TODO: eliminate
 class Orientable{
 	Orientable(const Orientable&);
 	Orientable& operator=(const Orientable&);

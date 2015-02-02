@@ -12,8 +12,7 @@ namespace{
 
 const char* DWindowDesc = R"qwertyuiop(
 		//left border
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				fillY{true}
@@ -61,8 +60,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			}
 		}
 
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				weight{1}
@@ -113,7 +111,7 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 
-				LinearContainer{
+				HorizontalContainer{
 					layout{
 						dimX{0}
 						fillX{true} fillY{true}
@@ -162,8 +160,7 @@ const char* DWindowDesc = R"qwertyuiop(
 		}
 
 		//right border
-		LinearContainer{
-			vertical{true}
+		VerticalContainer{
 			reverse{true}
 			layout{
 				fillY{true}
@@ -222,7 +219,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		LinearContainer(stob::Parse(DWindowDesc).get()),
+		HorizontalContainer(stob::Parse(DWindowDesc).get()),
 		emptyMinDim(this->LinearContainer::ComputeMinDim())
 {
 	this->SetupWidgets();
