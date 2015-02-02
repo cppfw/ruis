@@ -31,6 +31,7 @@ THE SOFTWARE. */
 #include <functional>
 
 #include "LinearContainer.hpp"
+#include "TableRow.hpp"
 
 namespace morda{
 
@@ -45,6 +46,18 @@ public:
 	
 	TableContainer(const TableContainer&) = delete;
 	TableContainer& operator=(const TableContainer&) = delete;
+	
+	void Add(const std::shared_ptr<TableRow>& r){
+		this->VerticalContainer::Add(r);
+	}
+	
+	void Remove(TableRow& r){
+		this->VerticalContainer::Remove(r);
+	}
+	
+
+	void OnResize()override;
+
 };
 
 
