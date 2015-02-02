@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,6 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "containers/Container.hpp"
-#include "../util/Orientable.hpp"
 
 
 //diable stupid warnings
@@ -46,8 +45,7 @@ namespace morda{
 
 class Slider :
 		public virtual Widget,
-		private Container, //users do not need to know that it is a container
-		public Orientable
+		private Container //users do not need to know that it is a container
 {
 	//no copying
 	Slider(const Slider&);
@@ -77,8 +75,18 @@ class Slider :
 		bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId) override;
 	};
 	
-public:
-	Slider(const stob::Node* chain = nullptr);
+	bool isVertical;
+	
+	unsigned GetLongIndex()const NOEXCEPT{
+		return this->isVertical ? 1 : 0;
+	}
+
+	unsigned GetTransIndex()const NOEXCEPT{
+		return this->isVertical ? 0 : 1;
+	}
+	
+protected:
+	Slider(bool isVertical, const stob::Node* chain);
 	
 public:
 	std::function<void(Slider&)> factorChange;
@@ -100,5 +108,28 @@ private:
 };
 
 
+
+class VerticalSlider : public Slider{
+public:
+	VerticalSlider(const stob::Node* chain = nullptr) : 
+			Widget(chain),
+			Slider(true, chain)
+	{}
+	
+	VerticalSlider(const VerticalSlider&) = delete;
+	VerticalSlider& operator=(const VerticalSlider&) = delete;
+};
+
+
+class HorizontalSlider : public Slider{
+public:
+	HorizontalSlider(const stob::Node* chain = nullptr) : 
+			Widget(chain),
+			Slider(false, chain)
+	{}
+	
+	HorizontalSlider(const HorizontalSlider&) = delete;
+	HorizontalSlider& operator=(const HorizontalSlider&) = delete;
+};
 
 }//~namespace

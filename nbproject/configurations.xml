@@ -69,8 +69,6 @@
           <in>Matrix4.hpp</in>
           <in>Mesh.cpp</in>
           <in>Mesh.hpp</in>
-          <in>Orientable.cpp</in>
-          <in>Orientable.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
           <in>Vector2.hpp</in>
@@ -296,10 +294,6 @@
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -569,8 +563,6 @@
       </item>
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
@@ -803,10 +795,6 @@
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -1079,10 +1067,6 @@
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Orientable.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
