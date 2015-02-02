@@ -63,10 +63,8 @@ public:
 	
 	
 	class LayoutParams : public DimContainer::LayoutParams{
-	protected:
-		LayoutParams(const stob::Node* chain);
 	public:
-		LayoutParams(const LayoutParams&) = default;
+		LayoutParams(const stob::Node* chain);
 		
 		real weight;
 		

@@ -48,9 +48,9 @@ public:
 	void OnResize()override;
 	
 	class LayoutParams : public morda::LayoutParams{
-	protected:
-		LayoutParams(const stob::Node* chain);
 	public:
+		LayoutParams(const stob::Node* chain);
+		
 		Vec2r dim; //negative value means 'min'
 		Vec2b fill;
 

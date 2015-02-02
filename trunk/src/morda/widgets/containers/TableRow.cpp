@@ -12,6 +12,6 @@ TableRow::TableRow(const stob::Node* chain) :
 
 TableRow::LayoutParams::LayoutParams(const stob::Node* chain) :
 		HorizontalContainer::LayoutParams(chain),
-		modifiedParams(*this)
+		modifiedParams(nullptr)
 {
 }
