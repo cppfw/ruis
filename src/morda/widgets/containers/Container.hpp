@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ protected:
 		throw Exc("Container::CreateLayoutParams(): simple Container cannot have layout params");
 	}
 	
-	const LayoutParams& GetLayoutParams(Widget& w)const;
+	virtual const LayoutParams& GetLayoutParams(Widget& w)const;
 	
 	template <class T> const T& GetLayoutParamsAs(Widget& w)const{
 		auto p = dynamic_cast<const T*>(&this->GetLayoutParams(w));
