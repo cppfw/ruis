@@ -66,6 +66,8 @@ public:
 	protected:
 		LayoutParams(const stob::Node* chain);
 	public:
+		LayoutParams(const LayoutParams&) = default;
+		
 		real weight;
 		
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
