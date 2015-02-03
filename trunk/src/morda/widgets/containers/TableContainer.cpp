@@ -7,10 +7,9 @@ using namespace morda;
 
 
 TableContainer::TableContainer(const stob::Node* chain) :
-		Widget(chain)
-{
-	//TODO: add rows from STOB chain
-}
+		Widget(chain),
+		VerticalContainer(chain)
+{}
 
 
 
