@@ -32,3 +32,11 @@ void TableContainer::OnResize(){
 	
 	this->VerticalContainer::OnResize();
 }
+
+morda::LayoutParams& TableContainer::GetLayoutParams(Widget& w){
+	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::GetLayoutParams(w));
+	
+	layoutParams.fill.x = true;
+	
+	return layoutParams;
+}

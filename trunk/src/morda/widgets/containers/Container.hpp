@@ -58,10 +58,14 @@ protected:
 		throw Exc("Container::CreateLayoutParams(): simple Container cannot have layout params");
 	}
 	
-	virtual const LayoutParams& GetLayoutParams(Widget& w)const;
+	virtual LayoutParams& GetLayoutParams(Widget& w);
+	
+	const LayoutParams& GetLayoutParams(Widget& w)const{
+		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->GetLayoutParams(w);
+	}
 	
 	template <class T> const T& GetLayoutParamsAs(Widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->GetLayoutParams(w));
+		const auto p = dynamic_cast<const T*>(&this->GetLayoutParams(w));
 		if(!p){
 			throw Exc("Container::GetLayoutParamsAs(): could not cast widget's layout parameters to a requested class");
 		}
