@@ -46,6 +46,11 @@ public:
 	TableContainer& operator=(const TableContainer&) = delete;
 	
 	void OnResize()override;
+	
+protected:
+
+	morda::LayoutParams& GetLayoutParams(Widget& w)override;
+
 };
 
 
