@@ -41,10 +41,8 @@ public:
 	
 	class LayoutParams : public HorizontalContainer::LayoutParams{
 		HorizontalContainer::LayoutParams modifiedParams;
-	protected:
-		LayoutParams(const stob::Node* chain);
 	public:
-		real weight;
+		LayoutParams(const stob::Node* chain);
 		
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
