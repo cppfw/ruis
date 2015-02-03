@@ -329,8 +329,6 @@ Container{
 		title{"ScrollArea"}
 
 		VerticalContainer{
-			reverse{true}
-
 			layout{
 				fillX{true} fillY{true}
 				dimX{0} dimY{0}
@@ -396,6 +394,37 @@ Container{
 					dimX{0} dimY{-1}
 					fillX{true} fillY{false}
 				}
+			}
+		}
+	}
+
+
+	Window{
+		dimX{300} dimY{200}
+		posX{620} posY{250}
+
+		title{"TableContainer"}
+
+		TableContainer{
+			layout{
+				fillX{true} fillY{true}
+				dimX{0} dimY{0}
+			}
+
+			TableRow{
+				ColorLabel{
+					color{0xff00ff}
+					layout{
+						dimX{200} dimY{100}
+					}
+				}
+
+				layout{
+					dimX{200} dimY{200}
+				}
+			}
+
+			TableRow{
 			}
 		}
 	}

@@ -37,9 +37,7 @@ namespace morda{
 
 //TODO:
 
-class TableContainer :
-		public virtual Widget,
-		private VerticalContainer
+class TableContainer : public  VerticalContainer
 {
 public:
 	TableContainer(const stob::Node* chain = nullptr);
@@ -47,17 +45,7 @@ public:
 	TableContainer(const TableContainer&) = delete;
 	TableContainer& operator=(const TableContainer&) = delete;
 	
-	void Add(const std::shared_ptr<TableRow>& r){
-		this->VerticalContainer::Add(r);
-	}
-	
-	void Remove(TableRow& r){
-		this->VerticalContainer::Remove(r);
-	}
-	
-
 	void OnResize()override;
-
 };
 
 
