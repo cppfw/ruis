@@ -40,6 +40,8 @@ public:
 	TableRow& operator=(const TableRow&) = delete;
 	
 	class LayoutParams : public HorizontalContainer::LayoutParams{
+		friend class TableRow;
+		
 		HorizontalContainer::LayoutParams modifiedParams;
 	public:
 		LayoutParams(const stob::Node* chain);
@@ -49,6 +51,9 @@ public:
 		}
 	};
 	
+protected:
+	const morda::LayoutParams& GetLayoutParams(Widget& w) const override;
+
 private:
 	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
 		return LayoutParams::New(chain);
