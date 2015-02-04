@@ -28,8 +28,9 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "containers/LinearContainer.hpp"
+
 #include "containers/FrameContainer.hpp"
+#include "containers/TableContainer.hpp"
 
 #include "../resources/ResNinePatch.hpp"
 #include "labels/ImageLabel.hpp"
@@ -38,7 +39,7 @@ namespace morda{
 
 class NinePatch :
 	public virtual Widget,
-	private HorizontalContainer
+	private TableContainer
 {
 	std::shared_ptr<ResNinePatch> image;//hold reference to resource to avoid data duplication
 	
