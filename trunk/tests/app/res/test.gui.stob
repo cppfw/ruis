@@ -398,7 +398,12 @@ Container{
 						fillX{true} fillY{false}
 					}
 				}
-				Widget{}
+				ColorLabel{
+					color{@{morda_color_bg}}
+					layout{
+						fillX{true} fillY{true}
+					}
+				}
 			}
 		}
 	}
