@@ -11,11 +11,9 @@ using namespace morda;
 TableContainer::TableContainer(const stob::Node* chain) :
 		Widget(chain),
 		VerticalContainer(chain)
-{}
+{ }
 
-
-
-void TableContainer::OnResize(){
+void TableContainer::UpdateRowsLayoutParam()const{
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, TableRow::LayoutParams*>> iterators;
 	iterators.reserve(this->Children().size());
 	
@@ -67,9 +65,21 @@ void TableContainer::OnResize(){
 			++iter;
 		}
 	}
-	
+}
+
+
+
+void TableContainer::OnResize(){
+	this->UpdateRowsLayoutParam();
 	this->VerticalContainer::OnResize();
 }
+
+
+morda::Vec2r TableContainer::ComputeMinDim() const NOEXCEPT{
+	this->UpdateRowsLayoutParam();
+	return this->VerticalContainer::ComputeMinDim();
+}
+
 
 morda::LayoutParams& TableContainer::GetLayoutParams(Widget& w){
 	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::GetLayoutParams(w));

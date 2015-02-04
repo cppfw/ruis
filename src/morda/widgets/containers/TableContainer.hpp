@@ -46,10 +46,13 @@ public:
 	
 	void OnResize()override;
 	
+	morda::Vec2r ComputeMinDim()const NOEXCEPT override;
+	
 protected:
-
 	morda::LayoutParams& GetLayoutParams(Widget& w)override;
-
+	
+private:
+	void UpdateRowsLayoutParam()const;
 };
 
 
