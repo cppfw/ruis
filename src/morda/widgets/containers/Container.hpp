@@ -65,7 +65,9 @@ protected:
 	}
 	
 	template <class T> const T& GetLayoutParamsAs(Widget& w)const{
-		const auto p = dynamic_cast<const T*>(&this->GetLayoutParams(w));
+		const auto lp = &this->GetLayoutParams(w);
+		
+		const auto p = dynamic_cast<const T*>(lp);
 		if(!p){
 			throw Exc("Container::GetLayoutParamsAs(): could not cast widget's layout parameters to a requested class");
 		}

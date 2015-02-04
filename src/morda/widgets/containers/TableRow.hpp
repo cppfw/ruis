@@ -29,10 +29,12 @@ THE SOFTWARE. */
 #pragma once
 
 #include "LinearContainer.hpp"
+#include "TableContainer.hpp"
 
 namespace morda{
 
 class TableRow : public HorizontalContainer{
+	friend class TableContainer;
 public:
 	TableRow(const stob::Node* chain = nullptr);
 	
