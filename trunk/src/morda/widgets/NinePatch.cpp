@@ -8,36 +8,10 @@ using namespace morda;
 
 namespace{
 const char* D_NinePatchLayout = R"qwertyuiop(
-		//left column
-		VerticalContainer{
-			reverse{true}
-			layout{
-				fillY{true}
-			}
-
+		//1st row
+		TableRow{
 			ImageLabel{
 				name{morda_lt}
-			}
-
-			ImageLabel{
-				name{morda_l}
-				layout{
-					dimY{0}
-					weight{1}
-					fillY{true}
-				}
-			}
-			ImageLabel{
-				name{morda_lb}
-			}
-		}
-
-		//middle column
-		VerticalContainer{
-			reverse{true}
-			layout{
-				fillX{true} fillY{true}
-				weight{1}
 			}
 
 			ImageLabel{
@@ -47,6 +21,26 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					fillX{true}
 				}
 			}
+
+			ImageLabel{
+				name{morda_rt}
+			}
+		}
+
+		//2nd row
+		TableRow{
+			layout{
+				fillY{true}
+				weight{1}
+			}
+			ImageLabel{
+				name{morda_l}
+				layout{
+					dimY{0}
+					fillY{true}
+				}
+			}
+
 			FrameContainer{
 				name{morda_content}
 				layout{
@@ -61,6 +55,22 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					}
 				}
 			}
+
+			ImageLabel{
+				name{morda_r}
+				layout{
+					dimY{0}
+					fillY{true}
+				}
+			}
+		}
+
+		//3rd row
+		TableRow{
+			ImageLabel{
+				name{morda_lb}
+			}
+
 			ImageLabel{
 				name{morda_b}
 				layout{
@@ -68,27 +78,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					fillX{true}
 				}
 			}
-		}
 
-		//right column
-		VerticalContainer{
-			reverse{true}
-			layout{
-				fillY{true}
-			}
-
-			ImageLabel{
-				name{morda_rt}
-			}
-
-			ImageLabel{
-				name{morda_r}
-				layout{
-					dimY{0}
-					weight{1}
-					fillY{true}
-				}
-			}
 			ImageLabel{
 				name{morda_rb}
 			}
@@ -99,7 +89,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalContainer(stob::Parse(D_NinePatchLayout).get())
+		TableContainer(stob::Parse(D_NinePatchLayout).get())
 {
 	this->lt = this->FindChildByNameAs<ImageLabel>("morda_lt");
 	this->t = this->FindChildByNameAs<ImageLabel>("morda_t");
