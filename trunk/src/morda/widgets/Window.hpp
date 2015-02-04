@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014-2015 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "containers/LinearContainer.hpp"
 #include "containers/FrameContainer.hpp"
 #include "labels/Label.hpp"
 #include "labels/ColorLabel.hpp"
 #include "MouseProxy.hpp"
+#include "containers/TableContainer.hpp"
 
 namespace morda{
 
 class Window :
 		virtual public Widget,
-		private HorizontalContainer
+		private TableContainer
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	

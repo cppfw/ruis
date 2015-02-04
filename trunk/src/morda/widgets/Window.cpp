@@ -11,12 +11,8 @@ using namespace morda;
 namespace{
 
 const char* DWindowDesc = R"qwertyuiop(
-		//left border
-		VerticalContainer{
-			reverse{true}
-			layout{
-				fillY{true}
-			}
+		//1st row
+		TableRow{
 			FrameContainer{
 				ImageLabel{
 					image{morda_img_window_lt}
@@ -28,46 +24,7 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 			}
-			FrameContainer{
-				layout{
-					weight{1}
-					dimY{0}
-					fillY{true}
-				}
-				ImageLabel{
-					image{morda_img_window_l}
-					layout{
-						fillY{true}
-					}
-				}
-				MouseProxy{
-					name{morda_l_proxy}
-					layout{
-						fillX{true} fillY{true}
-					}
-				}
-			}
-			FrameContainer{
-				ImageLabel{
-					image{morda_img_window_lb}
-				}
-				MouseProxy{
-					name{morda_lb_proxy}
-					layout{
-						fillX{true} fillY{true}
-					}
-				}
-			}
-		}
 
-		VerticalContainer{
-			reverse{true}
-			layout{
-				weight{1}
-				fillX{true} fillY{true}
-			}
-
-			//top border
 			FrameContainer{
 				layout{
 					dimX{0}
@@ -87,58 +44,138 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			//caption
+			FrameContainer{
+				ImageLabel{
+					image{morda_img_window_rt}
+				}
+				MouseProxy{
+					name{morda_rt_proxy}
+					layout{
+						fillX{true} fillY{true}
+					}
+				}
+			}
+		}//~TableRow
+
+		//2nd row
+		TableRow{
+			layout{
+				weight{1}
+				fillY{true}
+			}
 			FrameContainer{
 				layout{
-					dimX{0}
+					fillY{true}
+				}
+				ImageLabel{
+					image{morda_img_window_l}
+					layout{
+						fillY{true}
+					}
+				}
+				MouseProxy{
+					name{morda_l_proxy}
+					layout{
+						fillX{true} fillY{true}
+					}
+				}
+			}
+
+
+			//middle
+			VerticalContainer{
+				layout{
+					weight{1}
 					fillX{true} fillY{true}
 				}
 
-				clip{true}
-
-				MouseProxy{
-					name{morda_caption_proxy}
-					layout{
-						fillX{true} fillY{true}
-					}
-				}
-
-				ColorLabel{
-					name{morda_window_title_bg}
-					layout{
-						dimX{0} dimY{0}
-						fillX{true} fillY{true}
-					}
-				}
-
-				HorizontalContainer{
+				//caption
+				FrameContainer{
 					layout{
 						dimX{0}
 						fillX{true} fillY{true}
 					}
 
-					Label{
-						name{morda_title}
+					clip{true}
+
+					MouseProxy{
+						name{morda_caption_proxy}
+						layout{
+							fillX{true} fillY{true}
+						}
+					}
+
+					ColorLabel{
+						name{morda_window_title_bg}
+						layout{
+							fillX{true} fillY{true}
+						}
+					}
+
+					HorizontalContainer{
 						layout{
 							dimX{0}
-							gravity{0% 50%}
-							weight{1}
+							fillX{true} fillY{true}
 						}
+
+						Label{
+							name{morda_title}
+							layout{
+								dimX{0}
+								gravity{0% 50%}
+								weight{1}
+							}
+						}
+					}
+				}
+
+				FrameContainer{
+					name{morda_content}
+					clip{true}
+					layout{
+						dimX{0} dimY{0}
+						weight{1}
+						fillX{true} fillY{true}
 					}
 				}
 			}
 
+
 			FrameContainer{
-				name{morda_content}
-				clip{true}
 				layout{
-					dimX{0} dimY{0}
-					weight{1}
-					fillX{true} fillY{true}
+					dimY{0}
+					fillY{true}
+				}
+
+				ImageLabel{
+					image{morda_img_window_r}
+					layout{
+						fillY{true}
+					}
+				}
+				MouseProxy{
+					name{morda_r_proxy}
+					layout{
+						fillX{true} fillY{true}
+					}
+				}
+			}
+		}
+
+		//3rd row
+		TableRow{
+			FrameContainer{
+				ImageLabel{
+					image{morda_img_window_lb}
+				}
+				MouseProxy{
+					name{morda_lb_proxy}
+					layout{
+						fillX{true} fillY{true}
+					}
 				}
 			}
 
-			//bottom border
 			FrameContainer{
 				layout{
 					dimX{0}
@@ -157,47 +194,6 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 			}
-		}
-
-		//right border
-		VerticalContainer{
-			reverse{true}
-			layout{
-				fillY{true}
-			}
-
-			FrameContainer{
-				ImageLabel{
-					image{morda_img_window_rt}
-				}
-				MouseProxy{
-					name{morda_rt_proxy}
-					layout{
-						fillX{true} fillY{true}
-					}
-				}
-			}
-
-			FrameContainer{
-				layout{
-					weight{1}
-					dimY{0}
-					fillY{true}
-				}
-
-				ImageLabel{
-					image{morda_img_window_r}
-					layout{
-						fillY{true}
-					}
-				}
-				MouseProxy{
-					name{morda_r_proxy}
-					layout{
-						fillX{true} fillY{true}
-					}
-				}
-			}
 
 			FrameContainer{
 				ImageLabel{
@@ -210,7 +206,7 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 			}
-		}
+		}//~TableRow
 	)qwertyuiop";
 
 }
@@ -219,8 +215,8 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalContainer(stob::Parse(DWindowDesc).get()),
-		emptyMinDim(this->LinearContainer::ComputeMinDim())
+		TableContainer(stob::Parse(DWindowDesc).get()),
+		emptyMinDim(this->TableContainer::ComputeMinDim())
 {
 	this->SetupWidgets();
 	
