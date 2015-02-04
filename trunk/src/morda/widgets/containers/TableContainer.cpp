@@ -39,13 +39,15 @@ void TableContainer::OnResize(){
 			auto& iter = std::get<1>(i);
 			auto& lpptr = std::get<2>(i);
 
-			if(iter != tr->Children().end()){
-				notEnd = true;
-				lpptr = &tr->GetTableRowLayoutParams(**iter);
-				real x = lpptr->dim.x < 0 ? (*iter)->GetMinDim().x : lpptr->dim.x;
-				ting::util::ClampBottom(maxDimX, x);
-				ting::util::ClampBottom(maxWeight, lpptr->weight);
+			if(iter == tr->Children().end()){
+				break;
 			}
+			
+			notEnd = true;
+			lpptr = &tr->GetTableRowLayoutParams(**iter);
+			real x = lpptr->dim.x < 0 ? (*iter)->GetMinDim().x : lpptr->dim.x;
+			ting::util::ClampBottom(maxDimX, x);
+			ting::util::ClampBottom(maxWeight, lpptr->weight);
 		}
 
 		for(auto& i : iterators){
@@ -53,14 +55,16 @@ void TableContainer::OnResize(){
 			auto& iter = std::get<1>(i);
 			auto& lpptr = std::get<2>(i);
 
-			if(iter != tr->Children().end()){
-				ASSERT(lpptr)
-				lpptr->modifiedParams.fill = lpptr->fill;
-				lpptr->modifiedParams.dim.x = maxDimX;
-				lpptr->modifiedParams.dim.y = lpptr->dim.y;
-				lpptr->modifiedParams.weight = maxWeight;
-				++iter;
+			if(iter == tr->Children().end()){
+				break;
 			}
+			
+			ASSERT(lpptr)
+			lpptr->modifiedParams.fill = lpptr->fill;
+			lpptr->modifiedParams.dim.x = maxDimX;
+			lpptr->modifiedParams.dim.y = lpptr->dim.y;
+			lpptr->modifiedParams.weight = maxWeight;
+			++iter;
 		}
 	}
 	

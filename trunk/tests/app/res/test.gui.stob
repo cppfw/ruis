@@ -328,13 +328,13 @@ Container{
 
 		title{"ScrollArea"}
 
-		VerticalContainer{
+		TableContainer{
 			layout{
 				fillX{true} fillY{true}
 				dimX{0} dimY{0}
 			}
 
-			HorizontalContainer{
+			TableRow{
 
 				layout{
 					dimX{0} dimY{0}
@@ -344,6 +344,8 @@ Container{
 
 				ScrollContainer{
 					name{scroll_area}
+
+					clip{true}
 
 					layout{
 						dimX{0} dimY{0}
@@ -382,18 +384,21 @@ Container{
 
 					layout{
 						dimX{-1} dimY{0}
-						fillY{true} fillX{false}
+						fillX{false} fillY{true}
 					}
 				}
 			}
 
-			HorizontalSlider{
-				name{scroll_area_horizontal_slider}
+			TableRow{
+				HorizontalSlider{
+					name{scroll_area_horizontal_slider}
 
-				layout{
-					dimX{0} dimY{-1}
-					fillX{true} fillY{false}
+					layout{
+						dimX{0} dimY{-1}
+						fillX{true} fillY{false}
+					}
 				}
+				Widget{}
 			}
 		}
 	}
