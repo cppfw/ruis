@@ -60,8 +60,10 @@ protected:
 	
 	virtual LayoutParams& GetLayoutParams(Widget& w);
 	
-	const LayoutParams& GetLayoutParams(Widget& w)const{
-		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->GetLayoutParams(w);
+	const LayoutParams& GetLayoutParams(const Widget& w)const{
+		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->GetLayoutParams(
+				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
+			);
 	}
 	
 	template <class T> const T& GetLayoutParamsAs(Widget& w)const{

@@ -423,6 +423,14 @@ Container{
 					color{0xffff0000}
 					layout{
 						dimX{70} dimY{20}
+						weight{1}
+					}
+				}
+
+				ColorLabel{
+					color{0xffffffff}
+					layout{
+						dimX{10} dimY{20}
 					}
 				}
 			}
@@ -439,7 +447,12 @@ Container{
 					color{0xffffff00}
 					layout{
 						dimX{90} dimY{20}
+						fillX{true}
 					}
+				}
+
+				Label{
+					text{"Long text"}
 				}
 			}
 
