@@ -26,3 +26,13 @@ morda::LayoutParams& TableRow::GetLayoutParams(Widget& w){
 	
 	return lp->modifiedParams;
 }
+
+
+
+TableRow::LayoutParams& TableRow::GetTableRowLayoutParams(Widget& w) {
+	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::GetLayoutParams(w));
+	if(!lp){
+		throw morda::Exc("TableRow: layout parameters can only be of type TableRow::LayoutParams, other type found");
+	}
+	return *lp;
+}

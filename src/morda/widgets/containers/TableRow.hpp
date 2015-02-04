@@ -43,6 +43,7 @@ public:
 	
 	class LayoutParams : public HorizontalContainer::LayoutParams{
 		friend class TableRow;
+		friend class TableContainer;
 		
 		HorizontalContainer::LayoutParams modifiedParams;
 	public:
@@ -60,6 +61,8 @@ private:
 	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
 		return LayoutParams::New(chain);
 	}
+	
+	LayoutParams& GetTableRowLayoutParams(Widget& w);
 };
 
 }
