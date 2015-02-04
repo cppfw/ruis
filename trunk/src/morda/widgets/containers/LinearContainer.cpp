@@ -49,11 +49,8 @@ void LinearContainer::OnResize(){
 	
 	std::vector<Info> infoArray(this->Children().size());
 	
-	bool lessThanMin = this->Rect().d[longIndex] < this->GetMinDim()[longIndex];
-	
 	//Calculate rigid size, net weight and store weights
 	real rigid = 0;
-	real fillRigid = 0;
 	real netWeight = 0;
 	
 	{
@@ -73,11 +70,7 @@ void LinearContainer::OnResize(){
 			if(lp.fill[transIndex]){
 				info->dim[transIndex] = this->Rect().d[transIndex];
 			}
-			
-			if(lessThanMin && info->fill){
-				fillRigid += info->dim[longIndex];
-			}
-			
+						
 			rigid += info->dim[longIndex];
 		}
 	}
@@ -85,10 +78,6 @@ void LinearContainer::OnResize(){
 	//arrange widgets
 	{		
 		real flexible = this->Rect().d[longIndex] - rigid;
-		lessThanMin = flexible < 0;
-		ASSERT_INFO((!lessThanMin && flexible >= 0) || (lessThanMin && flexible < 0), "lessThanMin = " << lessThanMin << ", flexible = " << flexible)
-		
-		bool noSpaceAvailable = flexible + fillRigid < 0;//true if there is no space can be freed from 'fill' widgets
 		
 		real pos = 0;
 		auto info = infoArray.begin();
@@ -106,16 +95,6 @@ void LinearContainer::OnResize(){
 				if(info->fill){
 					newSize[longIndex] = step;
 				}
-			}else if(info->fill){
-				ASSERT(fillRigid >= 0)
-//				TRACE(<< "noSpaceAvailable = " << noSpaceAvailable << ", flexible = " << flexible << ", fillRigid = " << fillRigid << std::endl)
-				if(noSpaceAvailable){
-					step = 0;
-				}else if(fillRigid > 0){
-					step += (info->dim[longIndex] / fillRigid) * flexible;
-				}
-				
-				newSize[longIndex] = step;
 			}
 			
 			Vec2r newPos;

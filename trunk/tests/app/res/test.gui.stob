@@ -249,8 +249,8 @@ Container{
 			ImageLabel{
 				image{img_lattice}
 
-//				fitX{10mm}
-//				fitY{-1}
+				fitX{10mm}
+				fitY{-1}
 
 				layout{
 					dimX{-1} dimY{-1}

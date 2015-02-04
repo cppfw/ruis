@@ -35,10 +35,9 @@ THE SOFTWARE. */
 
 namespace morda{
 
-//TODO:
 
-class TableContainer : public  VerticalContainer
-{
+
+class TableContainer : public  VerticalContainer{
 public:
 	TableContainer(const stob::Node* chain = nullptr);
 	
