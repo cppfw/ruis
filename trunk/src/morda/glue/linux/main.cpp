@@ -595,6 +595,10 @@ public:
 }//~namespace
 
 
+void App::Quit()NOEXCEPT{
+	this->quitFlag = true;
+}
+
 
 void App::Exec(){
 	XEventWaitable xew(this->xDisplay.d);

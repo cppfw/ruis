@@ -351,7 +351,9 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 			}
 			this->StartCursorBlinking();
 			break;
-			
+		case EKey::ESCAPE:
+			//do nothing
+			break;
 		case EKey::A:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;

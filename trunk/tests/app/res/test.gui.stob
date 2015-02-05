@@ -24,6 +24,7 @@ vars{
 	clr{0xff0000ff}
 }
 
+KeyProxyContainer{
 
 Container{
 	layout{
@@ -470,4 +471,40 @@ Container{
 		}
 	}
 
+	Window{
+		dimX{300} dimY{200}
+		posX{620} posY{0}
+
+		title{"VerticalList"}
+
+		HorizontalContainer{
+			layout{
+				fillX{true} fillY{true}
+			}
+			VerticalList{
+				name{vertical_list}
+				layout{
+					fillX{true} fillY{true}
+					weight{1}
+				}
+
+				Label{
+					text{item_1}
+				}
+
+				Label{
+					text{item_2}
+				}
+			}
+			VerticalSlider{
+				name{vertical_list_slider}
+				layout{
+					fillY{true}
+				}
+			}
+		}
+	}
+
 }
+
+}//~KeyProxyContainer
