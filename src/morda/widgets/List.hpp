@@ -33,9 +33,9 @@ THE SOFTWARE. */
 namespace morda{
 
 class List : public virtual Widget{
+protected:
+	List(bool isVertical, const stob::Node* chain = nullptr);
 public:
-	List(const stob::Node* chain = nullptr);
-	
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
 	
