@@ -29,12 +29,20 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
+#include "containers/DimContainer.hpp"
 
 namespace morda{
 
-class List : public virtual Widget{
+class List :
+		public virtual Widget,
+		private DimContainer
+{
+	size_t posIndex = 0;
+	real posOffset = real(0);
+	
+	bool isVertical;
 protected:
-	List(bool isVertical, const stob::Node* chain = nullptr);
+	List(bool isVertical, const stob::Node* chain);
 public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
@@ -52,15 +60,45 @@ public:
 		virtual void recycle(std::shared_ptr<Widget> w){}
 	};
 	
-	void notifyDataSetChanged();
+	void notifyDataSetChanged(){
+		this->SetRelayoutNeeded();
+	}
 	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr){
 		this->provider = std::move(provider);
 		this->notifyDataSetChanged();
 	}
 	
+
+	void OnResize()override;
+	
 private:
 	std::shared_ptr<ItemsProvider> provider;
+};
+
+
+
+class HorizontalList : public List{
+public:
+	HorizontalList(const stob::Node* chain = nullptr) :
+			Widget(chain),
+			List(false, chain)
+	{}
+	
+	HorizontalList(const HorizontalList&) = delete;
+	HorizontalList& operator=(const HorizontalList&) = delete;
+};
+
+
+class VerticalList : public List{
+public:
+	VerticalList(const stob::Node* chain = nullptr) :
+			Widget(chain),
+			List(true, chain)
+	{}
+	
+	VerticalList(const VerticalList&) = delete;
+	VerticalList& operator=(const VerticalList&) = delete;
 };
 
 }

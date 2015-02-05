@@ -22,6 +22,7 @@
 #include "widgets/NinePatchButton.hpp"
 #include "widgets/TextField.hpp"
 #include "widgets/CheckBox.hpp"
+#include "widgets/List.hpp"
 
 #include "App.hpp"
 
@@ -57,6 +58,8 @@ Inflater::Inflater(){
 	this->AddWidget<DimContainer>("DimContainer");
 	this->AddWidget<TableContainer>("TableContainer");
 	this->AddWidget<TableRow>("TableRow");
+	this->AddWidget<HorizontalList>("HorizontalList");
+	this->AddWidget<VerticalList>("VerticalList");
 }
 
 
