@@ -41,6 +41,12 @@ class List :
 	real posOffset = real(0);
 	
 	bool isVertical;
+	
+
+	morda::Vec2r ComputeMinDim() const override{
+		return Vec2r(0);
+	}
+
 protected:
 	List(bool isVertical, const stob::Node* chain);
 public:
@@ -48,6 +54,9 @@ public:
 	List& operator=(const List&) = delete;
 	
 	class ItemsProvider : virtual public ting::Shared{
+		friend class List;
+		
+		List* list = nullptr;
 	protected:
 		ItemsProvider(){}
 	public:
@@ -58,19 +67,34 @@ public:
 		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
 		
 		virtual void recycle(std::shared_ptr<Widget> w){}
+		
+		void notifyDataSetChanged(){
+			if(this->list){
+				this->list->notifyDataSetChanged();
+			}
+		}
 	};
 	
 	void notifyDataSetChanged(){
 		this->SetRelayoutNeeded();
 	}
 	
-	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr){
-		this->provider = std::move(provider);
-		this->notifyDataSetChanged();
-	}
+	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
 
 	void OnResize()override;
+	
+	size_t count()const{
+		if(this->provider){
+			return this->provider->count();
+		}
+		return 0;
+	}
+	
+	size_t visibleCount()const{
+		//TODO:
+		return 0;
+	}
 	
 private:
 	std::shared_ptr<ItemsProvider> provider;

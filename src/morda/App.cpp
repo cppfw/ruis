@@ -109,6 +109,21 @@ void App::HandleMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->SetHovered(isHovered, pointerID);
 }
 
+void App::HandleKeyEvent(bool isDown, EKey keyCode){
+	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
+
+	if(auto w = this->focusedWidget.lock()){
+		//			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
+		w->OnKeyInternal(isDown, keyCode);
+	}else{
+		//			TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
+		if(this->rootWidget){
+			this->rootWidget->OnKeyInternal(isDown, keyCode);
+		}
+	}
+}
+
+
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID

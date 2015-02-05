@@ -7,6 +7,7 @@
 #include "widgets/containers/DimContainer.hpp"
 #include "widgets/containers/TableContainer.hpp"
 #include "widgets/containers/TableRow.hpp"
+#include "widgets/containers/KeyProxyContainer.hpp"
 
 #include "widgets/labels/ColorLabel.hpp"
 #include "widgets/labels/Label.hpp"
@@ -60,6 +61,7 @@ Inflater::Inflater(){
 	this->AddWidget<TableRow>("TableRow");
 	this->AddWidget<HorizontalList>("HorizontalList");
 	this->AddWidget<VerticalList>("VerticalList");
+	this->AddWidget<KeyProxyContainer>("KeyProxyContainer");
 }
 
 

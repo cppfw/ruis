@@ -3,6 +3,7 @@
 #include "../../../src/morda/AppFactory.hpp"
 #include "../../../src/morda/widgets/Widget.hpp"
 #include "../../../src/morda/widgets/containers/Container.hpp"
+#include "../../../src/morda/widgets/containers/KeyProxyContainer.hpp"
 
 #include "../../../src/morda/widgets/Button.hpp"
 #include "../../../src/morda/widgets/labels/Label.hpp"
@@ -245,6 +246,14 @@ public:
 			);
 		this->SetRootWidget(c);
 		
+		std::dynamic_pointer_cast<morda::KeyProxyContainer>(c)->onKey = [this](bool isDown, morda::EKey keyCode) -> bool{
+			if(isDown){
+				if(keyCode == morda::EKey::ESCAPE){
+					this->Quit();
+				}
+			}
+			return false;
+		};
 
 //		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
