@@ -39,7 +39,28 @@ public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
 	
-	std::function<std::shared_ptr<Widget>(size_t index)> onItemWidgetNeeded;
+	class ItemsProvider : virtual public ting::Shared{
+	protected:
+		ItemsProvider(){}
+	public:
+		virtual ~ItemsProvider()NOEXCEPT{}
+		
+		virtual size_t count()const NOEXCEPT = 0;
+		
+		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
+		
+		virtual void recycle(std::shared_ptr<Widget> w){}
+	};
+	
+	void notifyDataSetChanged();
+	
+	void setItemsProvider(std::shared_ptr<ItemsProvider> provider){
+		this->provider = std::move(provider);
+		this->notifyDataSetChanged();
+	}
+	
+private:
+	std::shared_ptr<ItemsProvider> provider;
 };
 
 }
