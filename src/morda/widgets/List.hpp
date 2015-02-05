@@ -54,7 +54,7 @@ public:
 	
 	void notifyDataSetChanged();
 	
-	void setItemsProvider(std::shared_ptr<ItemsProvider> provider){
+	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr){
 		this->provider = std::move(provider);
 		this->notifyDataSetChanged();
 	}
