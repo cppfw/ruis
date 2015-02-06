@@ -100,5 +100,13 @@ void List::setScrollPosAsFactor(real factor){
 }
 
 void List::updateChildrenList(){
+	if(this->posIndex >= this->count()){
+		this->posIndex = 0;
+		this->posOffset = 0;
+		this->removeAll();
+		return;
+	}
+	
+	
 	//TODO:
 }

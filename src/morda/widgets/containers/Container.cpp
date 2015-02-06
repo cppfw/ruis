@@ -271,6 +271,14 @@ void Container::Remove(Widget& w){
 
 
 
+void Container::removeAll() {
+	while(this->Children().size()){
+		this->Remove(*this->Children().front());
+	}
+}
+
+
+
 //override
 std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXCEPT{
 	if(auto r = this->Widget::FindChildByName(name)){
