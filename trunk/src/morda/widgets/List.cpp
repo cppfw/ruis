@@ -58,9 +58,9 @@ List::List(bool isVertical, const stob::Node* chain):
 
 
 void List::OnResize() {
-	//TODO:
+	this->updateChildrenList();
 	
-	this->Container::OnResize();
+	this->DimContainer::OnResize();
 }
 
 
@@ -79,10 +79,26 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 real List::scrollFactor()const NOEXCEPT{
 	//TODO:
-	return 0;
+	return real(this->posIndex) / real(this->count() - this->visibleCount());
 }
 
 
 void List::setScrollPosAsFactor(real factor){
+	this->posIndex = factor * real(this->count());
+	
+	real intFactor = real(this->posIndex) / real(this->count());
+	
+	if(this->Children().size() != 0){
+		this->posOffset = this->Children().front()->Rect().d.y * ((factor - intFactor) * real(this->count()));
+	}else{
+		this->posOffset = 0;
+	}
+	
+	//TODO: clamp
+	
+	this->SetRelayoutNeeded();
+}
+
+void List::updateChildrenList(){
 	//TODO:
 }
