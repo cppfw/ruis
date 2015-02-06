@@ -92,9 +92,12 @@ public:
 	}
 	
 	size_t visibleCount()const{
-		//TODO:
-		return 0;
+		return this->Children().size();
 	}
+	
+	void setScrollPosAsFactor(real factor);
+	
+	real scrollFactor()const NOEXCEPT;
 	
 private:
 	std::shared_ptr<ItemsProvider> provider;

@@ -74,3 +74,15 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	}
 	this->notifyDataSetChanged();
 }
+
+
+
+real List::scrollFactor()const NOEXCEPT{
+	//TODO:
+	return 0;
+}
+
+
+void List::setScrollPosAsFactor(real factor){
+	//TODO:
+}
