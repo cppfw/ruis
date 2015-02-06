@@ -100,7 +100,7 @@ public:
 	//return true if the widget was found in children and was removed
 	void Remove(Widget& w);
 	
-	//TODO: RemoveAll()
+	void removeAll();
 	
 	std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT override;
 	
