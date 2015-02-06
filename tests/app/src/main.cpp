@@ -12,9 +12,9 @@
 #include "../../../src/morda/resources/ResFont.hpp"
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
-
 #include "../../../src/morda/widgets/containers/ScrollContainer.hpp"
 #include "../../../src/morda/widgets/Slider.hpp"
+#include "../../../src/morda/widgets/List.hpp"
 
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
@@ -306,6 +306,20 @@ public:
 					auto sf = s->ScrollFactor();
 					sf.x = slider.Factor();
 					s->SetScrollPosAsFactor(sf);
+				}
+			};
+		}
+		
+		{
+			auto verticalList = c->FindChildByNameAs<morda::VerticalList>("vertical_list");
+			std::weak_ptr<morda::VerticalList> vl = verticalList;
+			
+			auto verticalSlider = c->FindChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
+			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
+			
+			verticalSlider->factorChange = [vl](morda::Slider& slider){
+				if(auto l = vl.lock()){
+					l->setScrollPosAsFactor(slider.Factor());
 				}
 			};
 		}
