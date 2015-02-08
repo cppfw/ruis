@@ -32,7 +32,7 @@ void FrameContainer::OnResize() {
 
 
 
-morda::Vec2r FrameContainer::ComputeMinDim()const{
+morda::Vec2r FrameContainer::ComputeMinDim(const morda::Vec2r& quotum)const{
 	morda::Vec2r minDim(0);
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){

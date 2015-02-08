@@ -252,16 +252,20 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	const morda::Vec2r& GetMinDim()const{
-		if(this->minDimNeedsRecomputing){
-			this->minDim = this->ComputeMinDim();
-			this->minDimNeedsRecomputing = false;
+	morda::Vec2r Measure(const morda::Vec2r& quotum = morda::Vec2r(-1))const{
+		if(quotum == morda::Vec2r(-1)){
+			if(this->minDimNeedsRecomputing){
+				this->minDim = this->ComputeMinDim(quotum);
+				this->minDimNeedsRecomputing = false;
+			}
+			return this->minDim;
+		}else{
+			return this->ComputeMinDim(quotum);
 		}
-		return this->minDim;
 	}
 	
 protected:
-	virtual morda::Vec2r ComputeMinDim()const{
+	virtual morda::Vec2r ComputeMinDim(const Vec2r& quotum)const{
 		return morda::Vec2r(0, 0);
 	}
 	

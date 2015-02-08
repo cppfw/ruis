@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ public:
 	FrameContainer(const stob::Node* chain = nullptr);
 	
 public:	
-	morda::Vec2r ComputeMinDim()const override;
+	morda::Vec2r ComputeMinDim(const morda::Vec2r& quotum)const override;
 
 	void OnResize() override;
 };

@@ -111,7 +111,7 @@ void Slider::OnResize(){
 	morda::Vec2r newSize(this->Rect().d);
 	
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
-	ting::util::ClampBottom(newSize[longIndex], this->GetMinDim()[longIndex]);
+	ting::util::ClampBottom(newSize[longIndex], this->Measure()[longIndex]);
 	
 	Widget& handle = *(*this->Children().begin());
 	handle.Resize(newSize);
@@ -130,7 +130,7 @@ void Slider::OnResize(){
 
 
 
-morda::Vec2r Slider::ComputeMinDim()const NOEXCEPT{
+morda::Vec2r Slider::ComputeMinDim(const morda::Vec2r& quotum)const NOEXCEPT{
 	return morda::Vec2r(30, 30);//TODO: what should it be???
 }
 

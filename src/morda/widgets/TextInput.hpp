@@ -65,7 +65,7 @@ public:
 	
 	virtual ~TextInput()NOEXCEPT{}
 
-	Vec2r ComputeMinDim()const NOEXCEPT override;
+	Vec2r ComputeMinDim(const morda::Vec2r& quotum)const NOEXCEPT override;
 
 	void Render(const morda::Matr4r& matrix) const override;
 
