@@ -43,7 +43,7 @@ class List :
 	bool isVertical;
 	
 
-	morda::Vec2r ComputeMinDim() const override{
+	morda::Vec2r ComputeMinDim(const morda::Vec2r& quotum) const override{
 		return Vec2r(0);
 	}
 

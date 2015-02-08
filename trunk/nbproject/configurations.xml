@@ -481,7 +481,6 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -1367,7 +1366,6 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -1626,8 +1624,6 @@
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
       </item>
