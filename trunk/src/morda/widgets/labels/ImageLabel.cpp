@@ -43,7 +43,7 @@ void ImageLabel::Render(const morda::Matr4r& matrix) const{
 	this->img->Render(matr, s);
 }
 
-morda::Vec2r ImageLabel::ComputeMinDim(const morda::Vec2r& quotum)const{
+morda::Vec2r ImageLabel::Measure(const morda::Vec2r& quotum)const{
 	if(!this->img || this->fitDim.x == 0 || this->fitDim.y == 0){
 		return Vec2r(0);
 	}

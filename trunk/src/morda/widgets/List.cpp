@@ -60,7 +60,7 @@ List::List(bool isVertical, const stob::Node* chain):
 void List::OnResize() {
 	this->updateChildrenList();
 	
-	this->DimContainer::OnResize();
+	//TODO:
 }
 
 

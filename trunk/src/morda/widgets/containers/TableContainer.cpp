@@ -43,7 +43,7 @@ void TableContainer::UpdateRowsLayoutParam()const{
 			
 			notEnd = true;
 			lpptr = &tr->GetTableRowLayoutParams(**iter);
-			real x = lpptr->dim.x < 0 ? (*iter)->Measure().x : lpptr->dim.x;
+			real x = lpptr->dim.x < 0 ? (*iter)->Measure(Vec2r(-1)).x : lpptr->dim.x;
 			ting::util::ClampBottom(maxDimX, x);
 			ting::util::ClampBottom(maxWeight, lpptr->weight);
 		}
@@ -75,9 +75,9 @@ void TableContainer::OnResize(){
 }
 
 
-morda::Vec2r TableContainer::ComputeMinDim(const morda::Vec2r& quotum) const NOEXCEPT{
+morda::Vec2r TableContainer::Measure(const morda::Vec2r& quotum) const NOEXCEPT{
 	this->UpdateRowsLayoutParam();
-	return this->VerticalContainer::ComputeMinDim(quotum);
+	return this->VerticalContainer::Measure(quotum);
 }
 
 

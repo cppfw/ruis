@@ -73,11 +73,6 @@ private:
 
 	morda::Rect2r rect;
 	
-	//cached minimal dimensions needed to show widget's contents normally
-	mutable morda::Vec2r minDim;
-	mutable bool minDimNeedsRecomputing = true;
-	mutable Vec2r cachedQuotum;
-	
 	//clip widgets contents by widget's border if set to true
 	bool clip;
 public:
@@ -253,21 +248,7 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	morda::Vec2r Measure(const morda::Vec2r& quotum = morda::Vec2r(-1))const{
-		if(!this->minDimNeedsRecomputing && quotum == this->cachedQuotum){
-			return this->minDim;
-		}else{
-			this->minDim = this->ComputeMinDim(quotum);
-			this->minDimNeedsRecomputing = false;
-			this->cachedQuotum = quotum;
-			return this->minDim;
-		}
-	}
-	
-protected:
-	virtual morda::Vec2r ComputeMinDim(const Vec2r& quotum)const{
-		return morda::Vec2r(0, 0);
-	}
+	virtual morda::Vec2r Measure(const morda::Vec2r& quotum)const;
 	
 public:
 
