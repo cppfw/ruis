@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2008-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -70,6 +70,14 @@ public:
      */
 	T z;
 
+	/**
+	 * @brief Get number of vector components.
+     * @return Number of vector components.
+     */
+	size_t size()const{
+		return 3;
+	}
+	
 	/**
 	 * @brief Default constructor.
 	 * Default constructor does not initialize vector components to any values.

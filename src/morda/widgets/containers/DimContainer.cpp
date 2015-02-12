@@ -29,12 +29,12 @@ void DimContainer::OnResize() {
 	}
 }
 
-morda::Vec2r DimContainer::ComputeMinDim(const morda::Vec2r& quotum) const {
+morda::Vec2r DimContainer::Measure(const morda::Vec2r& quotum) const {
 	morda::Vec2r minDim(0);
-	
+
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
-		
+
 		morda::Vec2r d = lp.DimForWidget(**i) + (*i)->Rect().p;
 		
 		ting::util::ClampBottom(minDim.x, d.x);
@@ -87,7 +87,7 @@ Vec2r DimContainer::LayoutParams::DimForWidget(const Widget& w)const NOEXCEPT{
 		const real& v = this->dim[i];
 
 		if(v < 0){
-			ret[i] = w.Measure()[i];
+			ret[i] = w.Measure(Vec2r(-1))[i];
 		}else{
 			ret[i] = v;
 		}

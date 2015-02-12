@@ -46,7 +46,7 @@ public:
 	
 	void OnResize()override;
 	
-	morda::Vec2r ComputeMinDim(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r Measure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 protected:
 	morda::LayoutParams& GetLayoutParams(Widget& w)override;

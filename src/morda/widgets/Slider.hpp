@@ -102,7 +102,7 @@ public:
 private:
 	void OnResize() override;
 	
-	morda::Vec2r ComputeMinDim(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r Measure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 	void Render(const morda::Matr4r& matrix) const override;
 };

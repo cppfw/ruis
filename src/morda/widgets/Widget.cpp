@@ -101,7 +101,6 @@ void Widget::RemoveFromParent(){
 
 
 void Widget::SetRelayoutNeeded()NOEXCEPT{
-	this->minDimNeedsRecomputing = true;
 	if(this->relayoutNeeded){
 		return;
 	}
@@ -231,4 +230,15 @@ morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().viewportDim()).Rounded().ConvertTo<int>(),
 			this->Rect().d.ConvertTo<int>()
 		);
+}
+
+
+Vec2r Widget::Measure(const morda::Vec2r& quotum) const{
+	Vec2r ret(quotum);
+	for(unsigned i = 0; i != ret.size(); ++i){
+		if(ret[i] < 0){
+			ret[i] = 0;
+		}
+	}
+	return ret;
 }

@@ -29,23 +29,18 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
-#include "containers/DimContainer.hpp"
+#include "containers/Container.hpp"
 
 namespace morda{
 
 class List :
 		public virtual Widget,
-		private DimContainer
+		private Container
 {
 	size_t posIndex = 0;
 	real posOffset = real(0);
 	
 	bool isVertical;
-	
-
-	morda::Vec2r ComputeMinDim(const morda::Vec2r& quotum) const override{
-		return Vec2r(0);
-	}
 
 protected:
 	List(bool isVertical, const stob::Node* chain);

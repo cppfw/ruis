@@ -12,10 +12,6 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		DimContainer(chain)
 {}
 
-morda::Vec2r ScrollContainer::ComputeMinDim(const morda::Vec2r& quotum) const {
-	return Vec2r(0);
-}
-
 
 
 bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
@@ -126,6 +122,6 @@ void ScrollContainer::OnChildrenListChanged(){
 }
 
 void ScrollContainer::UpdateEffectiveDim(){
-	this->effectiveDim = this->DimContainer::ComputeMinDim(Vec2r(-1)) - this->Rect().d;
+	this->effectiveDim = this->DimContainer::Measure(Vec2r(-1)) - this->Rect().d;
 	this->UpdateScrollFactor();
 }
