@@ -60,7 +60,9 @@ public:
 		Vec2r DimForWidget(const Widget& w)const NOEXCEPT;
 	};
 
-	std::unique_ptr<Widget::LayoutParams> CreateLayoutParams(const stob::Node* chain) const override;
+	std::unique_ptr<Widget::LayoutParams> CreateLayoutParams(const stob::Node* chain) const override{
+		return LayoutParams::New(chain);
+	}
 		
 
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum) const override;

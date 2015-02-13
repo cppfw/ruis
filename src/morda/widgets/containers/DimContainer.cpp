@@ -45,16 +45,6 @@ morda::Vec2r DimContainer::onMeasure(const morda::Vec2r& quotum) const {
 
 
 
-std::unique_ptr<Widget::LayoutParams> DimContainer::CreateLayoutParams(const stob::Node* chain) const {
-	return LayoutParams::New(chain);
-}
-
-
-
-
-
-
-
 Vec2r DimContainer::LayoutParams::DimForWidget(const Widget& w)const NOEXCEPT{
 	Vec2r ret;
 
