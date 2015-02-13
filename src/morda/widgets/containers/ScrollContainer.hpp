@@ -60,8 +60,8 @@ public:
 	
 	void Render(const morda::Matr4r& matrix) const override;
 
-	morda::Vec2r Measure(const morda::Vec2r& quotum) const override{
-		return this->Widget::Measure(quotum);
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum) const override{
+		return this->Widget::onMeasure(quotum);
 	}
 
 	void OnResize()override;

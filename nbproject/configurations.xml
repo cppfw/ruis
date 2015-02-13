@@ -481,7 +481,6 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="1" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -625,12 +624,8 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/glue/android/AssetFile.cpp"
             ex="false"
@@ -640,75 +635,49 @@
       <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResNinePatch.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/ColorPosShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/ColorPosTexShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/Shader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -751,12 +720,8 @@
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -767,144 +732,92 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatchButton.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/DimContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/FrameContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/LinearContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/ScrollContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/TableContainer.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/containers/TableRow.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/labels/BlurGlass.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/labels/ColorLabel.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/labels/GreyscaleGlass.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/labels/ImageLabel.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/morda/widgets/labels/Label.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
       </item>
     </conf>
     <conf name="Android" type="0">

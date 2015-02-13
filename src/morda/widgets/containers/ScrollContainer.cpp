@@ -122,6 +122,6 @@ void ScrollContainer::OnChildrenListChanged(){
 }
 
 void ScrollContainer::UpdateEffectiveDim(){
-	this->effectiveDim = this->DimContainer::Measure(Vec2r(-1)) - this->Rect().d;
+	this->effectiveDim = this->DimContainer::measure(Vec2r(-1)) - this->Rect().d;
 	this->UpdateScrollFactor();
 }

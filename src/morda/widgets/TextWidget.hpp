@@ -85,7 +85,7 @@ class SingleLineTextWidget : public TextWidget{
 	mutable Rect2r bb;
 	
 protected:
-	Vec2r Measure(const morda::Vec2r& quotum)const NOEXCEPT override{
+	Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override{
 		return Vec2r(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 	}
 	
