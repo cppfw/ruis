@@ -53,7 +53,7 @@ private:
 	
 protected:
 	virtual std::unique_ptr<LayoutParams> CreateLayoutParams(const stob::Node* chain = nullptr)const{
-		throw Exc("Container::CreateLayoutParams(): simple Container cannot have layout params");
+		return Widget::LayoutParams::New(chain);
 	}
 	
 	virtual LayoutParams& GetLayoutParams(Widget& w);

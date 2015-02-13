@@ -48,9 +48,6 @@ public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
 	
-	class LayoutParams : public DimContainer::LayoutParams{
-		
-	};
 	
 	class ItemsProvider : virtual public ting::Shared{
 		friend class List;
