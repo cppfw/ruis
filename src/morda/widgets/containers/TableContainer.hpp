@@ -49,7 +49,7 @@ public:
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 protected:
-	morda::LayoutParams& GetLayoutParams(Widget& w)override;
+	Widget::LayoutParams& GetLayoutParams(Widget& w)override;
 	
 private:
 	void UpdateRowsLayoutParam()const;

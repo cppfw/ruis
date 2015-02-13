@@ -22,10 +22,9 @@ this_srcs += morda/fonts/TexFont.cpp
 
 this_srcs += morda/util/GLTexture.cpp
 this_srcs += morda/util/Image.cpp
-this_srcs += morda/util/LayoutParams.cpp
 this_srcs += morda/util/util.cpp
-
 this_srcs += morda/util/ZipFile.cpp
+
 this_srcs += morda/util/unzip/ioapi.cpp
 this_srcs += morda/util/unzip/unzip.cpp
 

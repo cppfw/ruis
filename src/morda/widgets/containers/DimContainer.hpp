@@ -29,7 +29,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "../../util/LayoutParams.hpp"
 
 namespace morda{
 
@@ -38,6 +37,7 @@ namespace morda{
  * This container will respect dimensions of its children which those have in their
  * 'layout' declarations.
  */
+//TODO: remove?
 class DimContainer : public Container{
 public:
 	DimContainer(const stob::Node* chain = nullptr);
@@ -47,12 +47,11 @@ public:
 	
 	void OnResize()override;
 	
-	class LayoutParams : public morda::LayoutParams{
+	class LayoutParams : public Widget::LayoutParams{
 	public:
-		LayoutParams(const stob::Node* chain);
-		
-		Vec2r dim; //negative value means 'min'
-		Vec2b fill;
+		LayoutParams(const stob::Node* chain) :
+				Widget::LayoutParams(chain)
+		{}
 
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
@@ -61,7 +60,7 @@ public:
 		Vec2r DimForWidget(const Widget& w)const NOEXCEPT;
 	};
 
-	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain) const override;
+	std::unique_ptr<Widget::LayoutParams> CreateLayoutParams(const stob::Node* chain) const override;
 		
 
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum) const override;

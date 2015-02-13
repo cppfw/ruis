@@ -34,8 +34,6 @@ THE SOFTWARE. */
 #include "../../Exc.hpp"
 #include "../Widget.hpp"
 
-#include "../../util/LayoutParams.hpp"
-
 
 namespace morda{
 

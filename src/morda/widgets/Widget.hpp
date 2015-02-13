@@ -39,7 +39,6 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
-#include "../util/LayoutParams.hpp"
 
 #include "../config.hpp"
 
@@ -61,6 +60,25 @@ class Widget : virtual public ting::Shared{
 public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
 	
+	class LayoutParams{
+	public:
+		LayoutParams(Vec2r dim = Vec2r(-1), Vec2b fill = Vec2b(false)) :
+				dim(dim),
+				fill(fill)
+		{}
+		
+		LayoutParams(const stob::Node* chain);
+		
+		Vec2r dim; //negative value means 'min'
+		Vec2b fill;
+
+		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
+			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
+		}
+		
+		virtual ~LayoutParams()NOEXCEPT{}
+	};
+
 private:
 	Container* parent = nullptr;
 	T_ChildrenList::iterator parentIter;

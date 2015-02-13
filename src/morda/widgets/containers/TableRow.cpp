@@ -17,7 +17,7 @@ TableRow::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 
 
-morda::LayoutParams& TableRow::GetLayoutParams(Widget& w){
+Widget::LayoutParams& TableRow::GetLayoutParams(Widget& w){
 	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::GetLayoutParams(w));
 	
 	if(!lp){
