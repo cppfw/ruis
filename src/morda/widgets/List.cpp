@@ -107,6 +107,15 @@ void List::updateChildrenList(){
 		return;
 	}
 	
+	//remove unnecessary widgets
+	if(this->Children().size() != 0){
+		if(this->addedIndex < this->posIndex){
+			for(; this->posIndex != this->addedIndex && this->Children().size() != 0; ++this->addedIndex){
+				this->Remove(*this->Children().front());
+			}
+		}
+	}
+	
 	
 	//TODO:
 }

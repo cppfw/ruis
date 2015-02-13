@@ -33,10 +33,9 @@ THE SOFTWARE. */
 
 namespace morda{
 
-class List :
-		public virtual Widget,
-		private Container
-{
+class List : public Container{
+	size_t addedIndex = 0;
+	
 	size_t posIndex = 0;
 	real posOffset = real(0);
 	
