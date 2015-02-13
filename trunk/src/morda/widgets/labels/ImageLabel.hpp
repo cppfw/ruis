@@ -50,7 +50,7 @@ public:
 	
 	void Render(const morda::Matr4r& matrix)const override;
 
-	morda::Vec2r Measure(const morda::Vec2r& quotum)const override;
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 	
 	void SetImage(const std::shared_ptr<ResImage>& image);
 	

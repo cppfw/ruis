@@ -59,7 +59,7 @@ public:
 
 	void OnResize() override;	
 	
-	morda::Vec2r Measure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 	
 	class LayoutParams : public DimContainer::LayoutParams{

@@ -248,7 +248,11 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 	}
 	
-	virtual morda::Vec2r Measure(const morda::Vec2r& quotum)const;
+	virtual morda::Vec2r onMeasure(const morda::Vec2r& quotum)const;
+	
+	morda::Vec2r measure(const morda::Vec2r& quotum)const{
+		return this->onMeasure(quotum);
+	}
 	
 public:
 
