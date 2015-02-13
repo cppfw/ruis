@@ -38,7 +38,7 @@ Container::Container(const stob::Node* chain) :
 
 
 
-LayoutParams& Container::GetLayoutParams(Widget& w){
+Widget::LayoutParams& Container::GetLayoutParams(Widget& w){
 	if(w.Parent() != this){
 		throw Exc("Container::GetLayoutParams(): trying to get layout parameters of a widget from another container");
 	}

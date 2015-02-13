@@ -55,10 +55,10 @@ public:
 	};
 	
 protected:
-	morda::LayoutParams& GetLayoutParams(Widget& w) override;
+	Widget::LayoutParams& GetLayoutParams(Widget& w) override;
 
 private:
-	std::unique_ptr<morda::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
+	std::unique_ptr<Widget::LayoutParams> CreateLayoutParams(const stob::Node* chain)const override{
 		return LayoutParams::New(chain);
 	}
 	

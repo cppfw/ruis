@@ -63,6 +63,35 @@ Widget::Widget(const stob::Node* chain){
 }
 
 
+
+Widget::LayoutParams::LayoutParams(const stob::Node* chain){
+	if(auto n = GetProperty(chain, "dimX")){
+		this->dim.x = DimValueFromSTOB(*n);
+	}else{
+		this->dim.x = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "dimY")){
+		this->dim.y = DimValueFromSTOB(*n);
+	}else{
+		this->dim.y = -1;
+	}
+	
+	if(auto n = GetProperty(chain, "fillX")){
+		this->fill.x = n->AsBool();
+	}else{
+		this->fill.x = false;
+	}
+	
+	if(auto n = GetProperty(chain, "fillY")){
+		this->fill.y = n->AsBool();
+	}else{
+		this->fill.y = false;
+	}
+}
+
+
+
 std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT{
 	if(this->Name() == name){
 		return this->SharedFromThis(this);
@@ -71,7 +100,7 @@ std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT
 }
 
 
-std::unique_ptr<LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<LayoutParams> params)NOEXCEPT{
+std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)NOEXCEPT{
 	std::swap(this->layoutParams, params);
 	this->SetRelayoutNeeded();
 	return std::move(params);

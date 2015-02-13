@@ -67,7 +67,6 @@
           <in>GLTexture.hpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
-          <in>LayoutParams.cpp</in>
           <in>Matrix4.hpp</in>
           <in>Mesh.cpp</in>
           <in>Mesh.hpp</in>
@@ -182,9 +181,6 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>src</Elem>
-    <Elem>tests</Elem>
-    <Elem>res</Elem>
     <Elem>src</Elem>
     <Elem>tests</Elem>
     <Elem>res</Elem>
@@ -688,14 +684,6 @@
         </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/LayoutParams.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -1600,14 +1588,6 @@
         </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/LayoutParams.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>

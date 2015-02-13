@@ -1,5 +1,4 @@
 #include "DimContainer.hpp"
-#include "../../util/LayoutParams.hpp"
 #include "../../util/util.hpp"
 
 using namespace morda;
@@ -46,37 +45,13 @@ morda::Vec2r DimContainer::onMeasure(const morda::Vec2r& quotum) const {
 
 
 
-std::unique_ptr<LayoutParams> DimContainer::CreateLayoutParams(const stob::Node* chain) const {
+std::unique_ptr<Widget::LayoutParams> DimContainer::CreateLayoutParams(const stob::Node* chain) const {
 	return LayoutParams::New(chain);
 }
 
 
 
-DimContainer::LayoutParams::LayoutParams(const stob::Node* chain){
-	if(auto n = GetProperty(chain, "dimX")){
-		this->dim.x = DimValueFromSTOB(*n);
-	}else{
-		this->dim.x = -1;
-	}
-	
-	if(auto n = GetProperty(chain, "dimY")){
-		this->dim.y = DimValueFromSTOB(*n);
-	}else{
-		this->dim.y = -1;
-	}
-	
-	if(auto n = GetProperty(chain, "fillX")){
-		this->fill.x = n->AsBool();
-	}else{
-		this->fill.x = false;
-	}
-	
-	if(auto n = GetProperty(chain, "fillY")){
-		this->fill.y = n->AsBool();
-	}else{
-		this->fill.y = false;
-	}
-}
+
 
 
 

@@ -81,7 +81,7 @@ morda::Vec2r TableContainer::onMeasure(const morda::Vec2r& quotum) const NOEXCEP
 }
 
 
-morda::LayoutParams& TableContainer::GetLayoutParams(Widget& w){
+Widget::LayoutParams& TableContainer::GetLayoutParams(Widget& w){
 	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::GetLayoutParams(w));
 	
 	layoutParams.fill.x = true;
