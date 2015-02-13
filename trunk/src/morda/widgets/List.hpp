@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include "Widget.hpp"
 #include "containers/Container.hpp"
-#include "containers/DimContainer.hpp"
+
 
 namespace morda{
 
