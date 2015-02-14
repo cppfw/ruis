@@ -99,6 +99,8 @@ private:
 	std::shared_ptr<ItemsProvider> provider;
 	
 	void updateChildrenList();
+	
+	void addWidgetsAbove();
 };
 
 
