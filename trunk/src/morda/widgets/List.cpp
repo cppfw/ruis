@@ -116,6 +116,29 @@ void List::updateChildrenList(){
 		}
 	}
 	
+	this->addWidgetsAbove();
 	
 	//TODO:
+}
+
+
+
+void List::addWidgetsAbove(){
+	if(!this->provider){
+		return;
+	}
+	
+	for(; this->addedIndex > this->posIndex; --this->addedIndex){
+		auto w = this->provider->getWidget(this->addedIndex - 1);
+		
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+		
+		Vec2r dim = this->dimForWidget(*w, lp);
+		
+		this->Add(w, true);
+		
+		w->Resize(dim);
+		
+		//TODO: check that need to add more
+	}
 }

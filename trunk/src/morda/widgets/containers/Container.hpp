@@ -64,7 +64,7 @@ protected:
 			);
 	}
 	
-	template <class T> const T& GetLayoutParamsAs(Widget& w)const{
+	template <class T> const T& GetLayoutParamsAs(const Widget& w)const{
 		const auto lp = &this->GetLayoutParams(w);
 		
 		const auto p = dynamic_cast<const T*>(lp);
@@ -73,6 +73,8 @@ protected:
 		}
 		return *p;
 	}
+	
+	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 	
 public:
 	Container(const stob::Node* chain = nullptr);
@@ -90,8 +92,8 @@ public:
 	void OnHoverChanged(unsigned pointerID)override;
 	
 	void OnResize()override;
-
-	void Add(const std::shared_ptr<Widget>& w);
+	
+	void Add(const std::shared_ptr<Widget>& w, bool addToFront = false);
 
 	void Add(const stob::Node& chain);
 	

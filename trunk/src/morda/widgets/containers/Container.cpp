@@ -216,7 +216,7 @@ void Container::OnResize(){
 
 
 
-void Container::Add(const std::shared_ptr<Widget>& w){
+void Container::Add(const std::shared_ptr<Widget>& w,  bool addToFront){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->Parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -226,7 +226,11 @@ void Container::Add(const std::shared_ptr<Widget>& w){
 		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
 	}
 	
-	this->children.push_back(w);
+	if(addToFront){
+		this->children.push_front(w);
+	}else{
+		this->children.push_back(w);
+	}
 	
 	w->parentIter = --this->children.end();
 	
@@ -322,4 +326,20 @@ void Container::MakeChildTopmost(Widget& w){
 	w.OnTopmostChanged();
 	
 	this->SetRelayoutNeeded();
+}
+
+
+
+Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
+	Vec2r ret = lp.dim;
+	
+	for(unsigned i = 0; i != ret.size(); ++i){
+		if(lp.fill[i]){
+			ret[i] = this->Rect().d[i];
+		}
+	}
+	
+	ret = w.measure(ret);
+
+	return ret;
 }
