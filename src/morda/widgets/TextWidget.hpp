@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2014-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -85,9 +85,7 @@ class SingleLineTextWidget : public TextWidget{
 	mutable Rect2r bb;
 	
 protected:
-	Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override{
-		return Vec2r(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
-	}
+	Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 	SingleLineTextWidget(const stob::Node* chain);
 	

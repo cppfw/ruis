@@ -37,7 +37,7 @@ namespace morda{
 
 
 
-class FrameContainer : public DimContainer{
+class FrameContainer : public Container{
 	
 	FrameContainer(const FrameContainer&) = delete;
 	FrameContainer& operator=(const FrameContainer&) = delete;

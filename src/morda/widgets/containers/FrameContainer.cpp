@@ -7,24 +7,25 @@ using namespace morda;
 
 FrameContainer::FrameContainer(const stob::Node* chain) :
 		Widget(chain),
-		DimContainer(chain)
+		Container(chain)
 {}
 
 
 
 void FrameContainer::OnResize() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimContainer::LayoutParams>(**i);
+		auto& lp = this->GetLayoutParamsAs<Container::LayoutParams>(**i);
 		
-		Vec2r d = lp.DimForWidget(**i);
-		for(unsigned i = 0; i != 2; ++i){
-			if(!lp.fill[i]){
+		Vec2r d;
+		for(unsigned j = 0; j != 2; ++j){
+			if(lp.fill[j]){
+				d[j] = this->Rect().d[j];
 				continue;
 			}
-			d[i] = this->Rect().d[i];
+			d[j] = lp.dim[j];
 		}
 		
-		(*i)->Resize(d);
+		(*i)->Resize((*i)->measure(d));
 		
 		(*i)->MoveTo(((this->Rect().d - (*i)->Rect().d) / 2).Round());
 	}
@@ -33,17 +34,34 @@ void FrameContainer::OnResize() {
 
 
 morda::Vec2r FrameContainer::onMeasure(const morda::Vec2r& quotum)const{
-	morda::Vec2r minDim(0);
-	
-	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<DimContainer::LayoutParams>(**i);
-		
-		morda::Vec2r d = lp.DimForWidget(**i);
-		
-		ting::util::ClampBottom(minDim.x, d.x);
-		ting::util::ClampBottom(minDim.y, d.y);
+	std::remove_const<std::remove_reference<decltype(quotum)>::type>::type ret(quotum);
+	for(unsigned i = 0; i != ret.size(); ++i){
+		ting::util::ClampBottom(ret[i], real(0));
 	}
 	
-	return minDim;
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		auto& lp = this->GetLayoutParamsAs<Container::LayoutParams>(**i);
+		
+		morda::Vec2r d;
+		
+		for(unsigned j = 0; j != d.size(); ++j){
+			if(lp.fill[j] && quotum[j] >= 0){
+				d[j] = quotum[j];
+				continue;
+			}
+			
+			d[j] = lp.dim[j];
+		}
+		
+		d = (*i)->measure(d);
+		
+		for(unsigned j = 0; j != d.size(); ++j){
+			if(quotum[j] < 0){
+				ting::util::ClampBottom(ret[j], d[j]);
+			}
+		}
+	}
+	
+	return ret;
 }
 
