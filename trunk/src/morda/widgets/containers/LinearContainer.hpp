@@ -39,7 +39,7 @@ namespace morda{
 
 
 
-class LinearContainer : public DimContainer{
+class LinearContainer : public Container{
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;
 
@@ -62,7 +62,7 @@ public:
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
 	
 	
-	class LayoutParams : public DimContainer::LayoutParams{
+	class LayoutParams : public Container::LayoutParams{
 	public:
 		LayoutParams(const stob::Node* chain);
 		
