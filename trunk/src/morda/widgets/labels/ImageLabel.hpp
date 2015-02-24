@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2014 Ivan Gagis
+Copyright (c) 2014-2015 Ivan Gagis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,6 @@ class ImageLabel : public virtual Widget{
 	ImageLabel& operator=(const ImageLabel&);
 	
 	std::shared_ptr<morda::ResImage> img;
-	
-	Vec2r fitDim;
 	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
