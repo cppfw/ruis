@@ -23,7 +23,7 @@ public:
 
 
 LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
-		DimContainer::LayoutParams(chain)
+		Container::LayoutParams(chain)
 {
 	if(auto n = GetProperty(chain, "weight")){
 		this->weight = n->AsFloat();
@@ -37,7 +37,7 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 LinearContainer::LinearContainer(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
-		DimContainer(chain),
+		Container(chain),
 		isVertical(isVertical)
 {}
 
@@ -70,7 +70,7 @@ void LinearContainer::OnResize(){
 			if(lp.fill[transIndex]){
 				info->dim[transIndex] = this->Rect().d[transIndex];
 			}
-						
+			
 			rigid += info->dim[longIndex];
 		}
 	}
@@ -122,19 +122,80 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	
-	morda::Vec2r minDim(0);
+	
+	//calculate rigid length
+	real rigidLength = 0;
+	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
+	real sumWeight = 0;
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
-		morda::Vec2r dim = lp.DimForWidget(**i);
+		if(lp.weight != 0){
+			sumWeight += lp.weight;
+			continue;
+		}
 		
-		ting::util::ClampBottom(minDim[transIndex], dim[transIndex]);
+		if(lp.fill[longIndex]){
+			TRACE_ALWAYS(<< "LinearContainer::onMeasure(): mistake: fill in longitudional direction" << std::endl);
+			continue;
+		}
 		
-		minDim[longIndex] += dim[longIndex];
+		Vec2r d;
+		if(quotum[transIndex] >= 0 && lp.fill[transIndex]){
+			d[transIndex] = quotum[transIndex];
+		}else{
+			d[transIndex] = lp.dim[transIndex];
+		}
+		
+		ASSERT(!lp.fill[longIndex])
+		d[longIndex] = lp.dim[longIndex];
+		
+		d = (*i)->measure(d);
+		
+		rigidLength += d[longIndex];
+		
+		if(quotum[transIndex] < 0){
+			ting::util::ClampBottom(height, d[transIndex]);
+		}
 	}
 	
-	return minDim;
+	Vec2r ret;
+	
+	real flexLen;
+	
+	if(quotum[longIndex] < 0){
+		ret[longIndex] = rigidLength;
+		flexLen = 0;
+	}else{
+		ret[longIndex] = quotum[longIndex];
+		flexLen = quotum[longIndex] - rigidLength;
+	}
+	
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
+		ASSERT(lp.weight >= 0)
+		if(lp.weight == 0){
+			continue;
+		}
+		
+		ASSERT(sumWeight > 0)
+		
+		Vec2r d;
+		if(flexLen < 0){
+			d[longIndex] = 0;
+		}else{
+			d[longIndex] = flexLen * lp.weight / sumWeight;
+		}
+		d[transIndex] = lp.dim[transIndex];
+		d = (*i)->measure(d);
+		if(quotum[transIndex] < 0){
+			ting::util::ClampBottom(height, d[transIndex]);
+		}
+	}
+	
+	ret[transIndex] = height;
+	return ret;
 }
 
 
