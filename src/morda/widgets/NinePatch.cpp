@@ -16,10 +16,6 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 			ImageLabel{
 				name{morda_t}
-				layout{
-					dimX{0}
-					fillX{true}
-				}
 			}
 
 			ImageLabel{
@@ -30,7 +26,6 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 		//2nd row
 		TableRow{
 			layout{
-				fillY{true}
 				weight{1}
 			}
 			ImageLabel{
@@ -45,7 +40,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				name{morda_content}
 				layout{
 					weight{1}
-					fillX{true} fillY{true}
+					fillY{true}
 				}
 				ImageLabel{
 					name{morda_m}
@@ -73,10 +68,6 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 			ImageLabel{
 				name{morda_b}
-				layout{
-					dimX{0}
-					fillX{true}
-				}
 			}
 
 			ImageLabel{

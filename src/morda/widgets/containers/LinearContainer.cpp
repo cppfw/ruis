@@ -9,18 +9,6 @@
 using namespace morda;
 
 
-namespace{
-
-class Info{
-public:
-	real weight;
-	Vec2r dim;
-	bool fill;
-};
-
-}//~namespace
-
-
 
 LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 		Container::LayoutParams(chain)
@@ -47,67 +35,74 @@ void LinearContainer::OnResize(){
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	
-	std::vector<Info> infoArray(this->Children().size());
-	
 	//Calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real netWeight = 0;
 	
 	{
-		auto info = infoArray.begin();
-		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i, ++info){
-			ASSERT(info != infoArray.end())
-			
+		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i){
 			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 			
-			info->weight = lp.weight;
-			netWeight += info->weight;
+			netWeight += lp.weight;
 			
-			info->fill = lp.fill[longIndex];
-			
-			info->dim = lp.DimForWidget(**i);
-			
-			if(lp.fill[transIndex]){
-				info->dim[transIndex] = this->Rect().d[transIndex];
+			if(lp.weight != 0){
+				continue;
 			}
 			
-			rigid += info->dim[longIndex];
+			Vec2r d;
+			d[longIndex] = lp.dim[longIndex];
+			if(lp.fill[transIndex]){
+				d[transIndex] = this->Rect().d[transIndex];
+			}else{
+				d[transIndex] = lp.dim[transIndex];
+			}
+			
+			d = (*i)->measure(d);
+			
+			rigid += d[longIndex];
+			
+			if(lp.fill[transIndex]){
+				d[transIndex] = this->Rect().d[transIndex];
+			}
+			
+			(*i)->Resize(d);
 		}
 	}
 	
 	//arrange widgets
-	{		
+	{
 		real flexible = this->Rect().d[longIndex] - rigid;
 		
 		real pos = 0;
-		auto info = infoArray.begin();
-		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
-			Vec2r newSize(info->dim);
+		
+		for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 			
-			real step = newSize[longIndex];
-			
-			if(flexible >= 0){
-				ASSERT(netWeight >= 0)
-				if(netWeight > 0){
-					step += (info->weight / netWeight) * flexible;
+			if(lp.weight != 0){
+				Vec2r d;
+				if(flexible < 0){
+					d[longIndex] = 0;
+				}else{
+					d[longIndex] = flexible * lp.weight / netWeight;
 				}
-				
-				if(info->fill){
-					newSize[longIndex] = step;
+				if(lp.fill[transIndex]){
+					d[transIndex] = this->Rect().d[transIndex];
+				}else{
+					d[transIndex] = lp.dim[transIndex];
+					d = (*i)->measure(d);
 				}
+				(*i)->Resize(d.Rounded());
 			}
 			
 			Vec2r newPos;
 
 			if(this->isVertical){
-				newPos[longIndex] = this->Rect().d[longIndex] - pos - newSize[longIndex];
+				newPos[longIndex] = this->Rect().d[longIndex] - pos - (*i)->Rect().d[longIndex];
 			}else{
 				newPos[longIndex] = pos;
 			}
 			
-			pos += step;
-
-			(*i)->Resize(newSize.Rounded());
+			pos += (*i)->Rect().d[longIndex];
 			
 			newPos[transIndex] = ting::math::Round((this->Rect().d[transIndex] - (*i)->Rect().d[transIndex]) / 2);
 			
@@ -126,18 +121,18 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 	//calculate rigid length
 	real rigidLength = 0;
 	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
-	real sumWeight = 0;
+	real netWeight = 0;
 	
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
 		if(lp.weight != 0){
-			sumWeight += lp.weight;
+			netWeight += lp.weight;
 			continue;
 		}
 		
 		if(lp.fill[longIndex]){
-			TRACE_ALWAYS(<< "LinearContainer::onMeasure(): mistake: fill in longitudional direction" << std::endl);
+			//throw morda::Exc("LinearContainer::onMeasure(): mistake: fill in longitudional direction");
 			continue;
 		}
 		
@@ -179,13 +174,13 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 			continue;
 		}
 		
-		ASSERT(sumWeight > 0)
+		ASSERT(netWeight > 0)
 		
 		Vec2r d;
 		if(flexLen < 0){
 			d[longIndex] = 0;
 		}else{
-			d[longIndex] = flexLen * lp.weight / sumWeight;
+			d[longIndex] = flexLen * lp.weight / netWeight;
 		}
 		d[transIndex] = lp.dim[transIndex];
 		d = (*i)->measure(d);
