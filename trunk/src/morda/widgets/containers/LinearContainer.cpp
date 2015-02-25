@@ -126,10 +126,7 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 		
-		if(lp.weight != 0){
-			netWeight += lp.weight;
-			continue;
-		}
+		netWeight += lp.weight;
 		
 		if(lp.fill[longIndex]){
 			//throw morda::Exc("LinearContainer::onMeasure(): mistake: fill in longitudional direction");
@@ -150,8 +147,10 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 		
 		rigidLength += d[longIndex];
 		
-		if(quotum[transIndex] < 0){
-			ting::util::ClampBottom(height, d[transIndex]);
+		if(lp.weight == 0){
+			if(quotum[transIndex] < 0){
+				ting::util::ClampBottom(height, d[transIndex]);
+			}
 		}
 	}
 	
