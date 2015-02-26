@@ -45,8 +45,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				ImageLabel{
 					name{morda_m}
 					layout{
-						dimX{0} dimY{0}
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}

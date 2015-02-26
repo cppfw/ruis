@@ -28,8 +28,7 @@ KeyProxyContainer{
 
 Container{
 	layout{
-		dimX{0} dimY{0}
-		fillX{true} fillY{true}
+		dimX{max} dimY{max}
 	}
 
 	Window{
@@ -48,7 +47,7 @@ Container{
 			color{ @{morda_color_bg} }
 
 			layout{
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 		}
 
@@ -127,8 +126,7 @@ Container{
 			clip {true}
 
 			layout{
-				dimX{0} dimY{0}
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 
 				weight{7}
 			}
@@ -196,7 +194,7 @@ Container{
 
 		BlurGlass{
 			layout{
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 		}
 
@@ -209,7 +207,7 @@ Container{
 			clip{true}
 
 			layout{
-				dimX{-1} dimY{7mm}
+				dimX{min} dimY{7mm}
 			}
 			
 
@@ -228,7 +226,7 @@ Container{
 
 			
 			layout{
-				dimX{-1} dimY{30}
+				dimX{min} dimY{30}
 			}
 			
 		}
@@ -243,7 +241,7 @@ Container{
 		HorizontalContainer{
 
 			layout{
-				dimX{0} dimY{0}
+				dimX{max} dimY{max}
 				fillX{true} fillY{true}
 			}
 
@@ -288,8 +286,7 @@ Container{
 		CubeWidget{
 			name{cube_widget}
 			layout{
-				dimX{0} dimY{0}
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 		}
 	}
@@ -304,8 +301,7 @@ Container{
 			color{ @{morda_color_bg} }
 
 			layout{
-				dimX{0} dimY{0}
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 		}
 
@@ -317,8 +313,7 @@ Container{
 			color{ @{morda_color_text} }
 
 			layout{
-				dimX{0} dimY{-1}
-				fillX{true} fillY{false}
+				dimX{max} dimY{min}
 			}
 		}
 	}
@@ -331,8 +326,7 @@ Container{
 
 		TableContainer{
 			layout{
-				fillX{true} fillY{true}
-				dimX{0} dimY{0}
+				dimX{max} dimY{max}
 			}
 
 			TableRow{
@@ -418,8 +412,7 @@ Container{
 
 		TableContainer{
 			layout{
-				fillX{true} fillY{true}
-				dimX{0} dimY{0}
+				dimX{max} dimY{max}
 			}
 
 			TableRow{
@@ -479,7 +472,7 @@ Container{
 
 		HorizontalContainer{
 			layout{
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 			VerticalList{
 				name{vertical_list}
