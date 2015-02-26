@@ -20,7 +20,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_lt_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -33,13 +33,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				ImageLabel{
 					image{morda_img_window_t}
 					layout{
-						fillX{true}
+						dimX{max}
 					}
 				}
 				MouseProxy{
 					name{morda_t_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -51,7 +51,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_rt_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -70,13 +70,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				ImageLabel{
 					image{morda_img_window_l}
 					layout{
-						fillY{true}
+						dimY{max}
 					}
 				}
 				MouseProxy{
 					name{morda_l_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -101,21 +101,20 @@ const char* DWindowDesc = R"qwertyuiop(
 					MouseProxy{
 						name{morda_caption_proxy}
 						layout{
-							fillX{true} fillY{true}
+							dimX{max} dimY{max}
 						}
 					}
 
 					ColorLabel{
 						name{morda_window_title_bg}
 						layout{
-							fillX{true} fillY{true}
+							dimX{max} dimY{max}
 						}
 					}
 
 					HorizontalContainer{
 						layout{
-							dimX{0}
-							fillX{true} fillY{true}
+							dimX{max} dimY{max}
 						}
 
 						Label{
@@ -150,13 +149,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				ImageLabel{
 					image{morda_img_window_r}
 					layout{
-						fillY{true}
+						dimY{max}
 					}
 				}
 				MouseProxy{
 					name{morda_r_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -171,7 +170,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_lb_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -184,13 +183,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				ImageLabel{
 					image{morda_img_window_b}
 					layout{
-						fillX{true}
+						dimX{max}
 					}
 				}
 				MouseProxy{
 					name{morda_b_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}
@@ -202,7 +201,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_rb_proxy}
 					layout{
-						fillX{true} fillY{true}
+						dimX{max} dimY{max}
 					}
 				}
 			}

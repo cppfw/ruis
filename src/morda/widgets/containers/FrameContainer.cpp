@@ -18,11 +18,13 @@ void FrameContainer::OnResize() {
 		
 		Vec2r d;
 		for(unsigned j = 0; j != 2; ++j){
-			if(lp.fill[j]){
+			if(lp.dim[j] == LayoutParams::D_Max){
 				d[j] = this->Rect().d[j];
-				continue;
+			}else if(lp.dim[j] == LayoutParams::D_Min || lp.dim[j] < 0){
+				d[j] = -1;
+			}else{
+				d[j] = lp.dim[j];
 			}
-			d[j] = lp.dim[j];
 		}
 		
 		(*i)->Resize((*i)->measure(d));
@@ -34,7 +36,7 @@ void FrameContainer::OnResize() {
 
 
 morda::Vec2r FrameContainer::onMeasure(const morda::Vec2r& quotum)const{
-	std::remove_const<std::remove_reference<decltype(quotum)>::type>::type ret(quotum);
+	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		ting::util::ClampBottom(ret[i], real(0));
 	}
@@ -45,12 +47,17 @@ morda::Vec2r FrameContainer::onMeasure(const morda::Vec2r& quotum)const{
 		morda::Vec2r d;
 		
 		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.fill[j] && quotum[j] >= 0){
-				d[j] = quotum[j];
-				continue;
+			if(lp.dim[j] == LayoutParams::D_Max){
+				if(quotum[j] >= 0){
+					d[j] = quotum[j];
+				}else{
+					d[j] = -1;
+				}
+			}else if(lp.dim[j] == LayoutParams::D_Min || lp.dim[j] < 0){
+				d[j] = -1;
+			}else{
+				d[j] = lp.dim[j];
 			}
-			
-			d[j] = lp.dim[j];
 		}
 		
 		d = (*i)->measure(d);
