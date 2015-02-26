@@ -30,7 +30,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Container.hpp"
-#include "DimContainer.hpp"
 
 #include <ting/types.hpp>
 

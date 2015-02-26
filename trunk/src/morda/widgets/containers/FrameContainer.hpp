@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 
-#include "DimContainer.hpp"
+#include "Container.hpp"
 
 
 namespace morda{
