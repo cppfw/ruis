@@ -16,18 +16,7 @@ void FrameContainer::OnResize() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<Container::LayoutParams>(**i);
 		
-		Vec2r d;
-		for(unsigned j = 0; j != 2; ++j){
-			if(lp.dim[j] == LayoutParams::D_Max){
-				d[j] = this->Rect().d[j];
-			}else if(lp.dim[j] == LayoutParams::D_Min || lp.dim[j] < 0){
-				d[j] = -1;
-			}else{
-				d[j] = lp.dim[j];
-			}
-		}
-		
-		(*i)->Resize((*i)->measure(d));
+		(*i)->Resize(this->dimForWidget(**i, lp));
 		
 		(*i)->MoveTo(((this->Rect().d - (*i)->Rect().d) / 2).Round());
 	}
