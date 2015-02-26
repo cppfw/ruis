@@ -13,19 +13,7 @@ DimContainer::DimContainer(const stob::Node* chain) :
 
 
 void DimContainer::OnResize() {
-	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
-		
-		Vec2r d = lp.DimForWidget(**i);
-		for(unsigned i = 0; i != 2; ++i){
-			if(!lp.fill[i]){
-				continue;
-			}
-			d[i] = this->Rect().d[i];
-		}
-		
-		(*i)->Resize(d);
-	}
+	
 }
 
 morda::Vec2r DimContainer::onMeasure(const morda::Vec2r& quotum) const {

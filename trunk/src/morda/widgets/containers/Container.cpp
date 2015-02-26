@@ -331,15 +331,15 @@ void Container::MakeChildTopmost(Widget& w){
 
 
 Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
-	Vec2r ret = lp.dim;
-	
-	for(unsigned i = 0; i != ret.size(); ++i){
-		if(lp.fill[i]){
-			ret[i] = this->Rect().d[i];
+	Vec2r d;
+	for(unsigned i = 0; i != 2; ++i){
+		if(lp.dim[i] == LayoutParams::D_Max){
+			d[i] = this->Rect().d[i];
+		}else if(lp.dim[i] == LayoutParams::D_Min || lp.dim[i] < 0){
+			d[i] = -1;
+		}else{
+			d[i] = lp.dim[i];
 		}
 	}
-	
-	ret = w.measure(ret);
-
-	return ret;
+	return w.measure(d);
 }

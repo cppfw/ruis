@@ -37,7 +37,7 @@ namespace morda{
 
 
 
-class ScrollContainer : public DimContainer{
+class ScrollContainer : public Container{
 	//offset from top left corner
 	Vec2r scrollPos = Vec2r(0);
 	
@@ -89,6 +89,8 @@ private:
 	void UpdateScrollFactor();
 
 	void ClampScrollPos();
+	
+	void arrangeWidgets();
 };
 
 

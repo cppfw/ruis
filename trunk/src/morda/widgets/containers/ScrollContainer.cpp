@@ -9,7 +9,7 @@ using namespace morda;
 
 ScrollContainer::ScrollContainer(const stob::Node* chain) :
 		Widget(chain),
-		DimContainer(chain)
+		Container(chain)
 {}
 
 
@@ -18,7 +18,7 @@ bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouse
 	Vec2r d = this->scrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
-	return this->DimContainer::OnMouseButton(isDown, pos - d, button, pointerID);
+	return this->Container::OnMouseButton(isDown, pos - d, button, pointerID);
 }
 
 
@@ -27,7 +27,7 @@ bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 	Vec2r d = this->scrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
-	return this->DimContainer::OnMouseMove(pos - d, pointerID);
+	return this->Container::OnMouseMove(pos - d, pointerID);
 }
 
 
@@ -40,7 +40,7 @@ void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.Translate(d);
 	
-	this->DimContainer::Render(matr);
+	this->Container::Render(matr);
 }
 
 void ScrollContainer::ClampScrollPos() {
@@ -92,8 +92,19 @@ void ScrollContainer::UpdateScrollFactor(){
 	}
 }
 
+void ScrollContainer::arrangeWidgets() {
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
+		
+		auto d = this->dimForWidget(**i, lp);
+		
+		(*i)->Resize(d);
+	}
+}
+
+
 void ScrollContainer::OnResize(){
-	this->DimContainer::OnResize();
+	this->arrangeWidgets();
 	this->UpdateEffectiveDim();
 
 	//distance of content's bottom right corner from bottom right corner of the ScrollContainer
@@ -117,11 +128,22 @@ void ScrollContainer::OnResize(){
 }
 
 void ScrollContainer::OnChildrenListChanged(){
-	this->DimContainer::OnResize();
+	this->arrangeWidgets();
 	this->UpdateEffectiveDim();
 }
 
 void ScrollContainer::UpdateEffectiveDim(){
-	this->effectiveDim = this->DimContainer::onMeasure(Vec2r(-1)) - this->Rect().d;
+	morda::Vec2r minDim(0);
+
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
+
+		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->Rect().p;
+		
+		ting::util::ClampBottom(minDim.x, d.x);
+		ting::util::ClampBottom(minDim.y, d.y);
+	}	
+	
+	this->effectiveDim = minDim - this->Rect().d;
 	this->UpdateScrollFactor();
 }
