@@ -31,16 +31,30 @@ LinearContainer::LinearContainer(bool isVertical, const stob::Node* chain) :
 
 
 
+namespace{
+
+class Info{
+public:
+	Vec2r measuredDim;
+};
+
+}
+
+
+
 void LinearContainer::OnResize(){
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
+	
+	std::vector<Info> infoArray(this->Children().size());
 	
 	//Calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real netWeight = 0;
 	
 	{
-		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i){
+		auto info = infoArray.begin();
+		for(auto i = this->Children().cbegin(); i != this->Children().cend(); ++i, ++info){
 			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 			
 			netWeight += lp.weight;
@@ -58,6 +72,7 @@ void LinearContainer::OnResize(){
 			}
 			
 			d = (*i)->measure(d);
+			info->measuredDim = d;
 			
 			rigid += d[longIndex];
 			
@@ -75,15 +90,15 @@ void LinearContainer::OnResize(){
 		
 		real pos = 0;
 		
-		for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		auto info = infoArray.begin();
+		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
 			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
 			
 			if(lp.weight != 0){
 				Vec2r d;
-				if(flexible < 0){
-					d[longIndex] = 0;
-				}else{
-					d[longIndex] = flexible * lp.weight / netWeight;
+				d[longIndex] = info->measuredDim[longIndex];
+				if(flexible > 0){
+					d[longIndex] += flexible * lp.weight / netWeight;
 				}
 				if(lp.fill[transIndex]){
 					d[transIndex] = this->Rect().d[transIndex];
@@ -117,39 +132,45 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	
+	std::vector<Info> infoArray(this->Children().size());
 	
 	//calculate rigid length
 	real rigidLength = 0;
 	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
 	real netWeight = 0;
 	
-	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
-		
-		netWeight += lp.weight;
-		
-		if(lp.fill[longIndex]){
-			//throw morda::Exc("LinearContainer::onMeasure(): mistake: fill in longitudional direction");
-			continue;
-		}
-		
-		Vec2r d;
-		if(quotum[transIndex] >= 0 && lp.fill[transIndex]){
-			d[transIndex] = quotum[transIndex];
-		}else{
-			d[transIndex] = lp.dim[transIndex];
-		}
-		
-		ASSERT(!lp.fill[longIndex])
-		d[longIndex] = lp.dim[longIndex];
-		
-		d = (*i)->measure(d);
-		
-		rigidLength += d[longIndex];
-		
-		if(lp.weight == 0){
-			if(quotum[transIndex] < 0){
-				ting::util::ClampBottom(height, d[transIndex]);
+	{
+		auto info = infoArray.begin();
+		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
+			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
+
+			netWeight += lp.weight;
+
+			if(lp.fill[longIndex]){
+				//TODO:
+				//throw morda::Exc("LinearContainer::onMeasure(): mistake: fill in longitudional direction");
+				continue;
+			}
+
+			Vec2r d;
+			if(quotum[transIndex] >= 0 && lp.fill[transIndex]){
+				d[transIndex] = quotum[transIndex];
+			}else{
+				d[transIndex] = lp.dim[transIndex];
+			}
+
+			ASSERT(!lp.fill[longIndex])
+			d[longIndex] = lp.dim[longIndex];
+
+			d = (*i)->measure(d);
+			info->measuredDim = d;
+
+			rigidLength += d[longIndex];
+
+			if(lp.weight == 0){
+				if(quotum[transIndex] < 0){
+					ting::util::ClampBottom(height, d[transIndex]);
+				}
 			}
 		}
 	}
@@ -166,25 +187,28 @@ morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEP
 		flexLen = quotum[longIndex] - rigidLength;
 	}
 	
-	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
-		ASSERT(lp.weight >= 0)
-		if(lp.weight == 0){
-			continue;
-		}
-		
-		ASSERT(netWeight > 0)
-		
-		Vec2r d;
-		if(flexLen < 0){
-			d[longIndex] = 0;
-		}else{
-			d[longIndex] = flexLen * lp.weight / netWeight;
-		}
-		d[transIndex] = lp.dim[transIndex];
-		d = (*i)->measure(d);
-		if(quotum[transIndex] < 0){
-			ting::util::ClampBottom(height, d[transIndex]);
+	{
+		auto info = infoArray.begin();
+		for(auto i = this->Children().begin(); i != this->Children().end(); ++i, ++info){
+			auto& lp = this->GetLayoutParamsAs<LayoutParams>(**i);
+			ASSERT(lp.weight >= 0)
+			if(lp.weight == 0){
+				continue;
+			}
+
+			ASSERT(netWeight > 0)
+
+			Vec2r d;
+			d[longIndex] = info->measuredDim[longIndex];
+			
+			if(flexLen > 0){
+				d[longIndex] += flexLen * lp.weight / netWeight;
+			}
+			d[transIndex] = lp.dim[transIndex];
+			d = (*i)->measure(d);
+			if(quotum[transIndex] < 0){
+				ting::util::ClampBottom(height, d[transIndex]);
+			}
 		}
 	}
 	

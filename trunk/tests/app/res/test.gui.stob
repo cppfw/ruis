@@ -255,7 +255,7 @@ Container{
 
 				layout{
 					dimX{-1} dimY{-1}
-					fillX{true} fillY{false}
+					fillY{false}
 					weight{0}
 				}
 			}
@@ -263,7 +263,7 @@ Container{
 			HorizontalSlider{
 				layout{
 					dimX{50} dimY{40} //TODO: -1 -1
-					fillX{true} fillY{false}
+					fillY{false}
 					weight{1}
 				}
 			}
@@ -273,7 +273,7 @@ Container{
 
 				layout{
 					dimX{40} dimY{0} //TODO: -1 -1
-					fillX{false} fillY{true}
+					fillY{true}
 				}
 			}
 		}
@@ -350,7 +350,7 @@ Container{
 
 					layout{
 						dimX{0} dimY{0}
-						fillX{true} fillY{true}
+						fillY{true}
 						weight{1}
 					}
 
@@ -396,13 +396,13 @@ Container{
 
 					layout{
 						dimX{0} dimY{-1}
-						fillX{true} fillY{false}
+						fillY{false}
 					}
 				}
 				ColorLabel{
 					color{@{morda_color_bg}}
 					layout{
-						fillX{true} fillY{true}
+						fillY{true}
 					}
 				}
 			}
