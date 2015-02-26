@@ -4,7 +4,6 @@
 #include "widgets/containers/LinearContainer.hpp"
 #include "widgets/containers/FrameContainer.hpp"
 #include "widgets/containers/ScrollContainer.hpp"
-#include "widgets/containers/DimContainer.hpp"
 #include "widgets/containers/TableContainer.hpp"
 #include "widgets/containers/TableRow.hpp"
 #include "widgets/containers/KeyProxyContainer.hpp"
@@ -56,7 +55,6 @@ Inflater::Inflater(){
 	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
 	this->AddWidget<BlurGlass>("BlurGlass");
 	this->AddWidget<ScrollContainer>("ScrollContainer");
-	this->AddWidget<DimContainer>("DimContainer");
 	this->AddWidget<TableContainer>("TableContainer");
 	this->AddWidget<TableRow>("TableRow");
 	this->AddWidget<HorizontalList>("HorizontalList");

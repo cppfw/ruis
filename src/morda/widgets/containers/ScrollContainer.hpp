@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include "DimContainer.hpp"
+#include "Container.hpp"
 
 #include <functional>
 
