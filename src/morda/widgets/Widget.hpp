@@ -62,7 +62,10 @@ public:
 	
 	class LayoutParams{
 	public:
-		LayoutParams(Vec2r dim = Vec2r(-1), Vec2b fill = Vec2b(false)) :
+		constexpr static const real D_Min = real(-1);
+		constexpr static const real D_Max = real(-2);
+		
+		LayoutParams(Vec2r dim = Vec2r(D_Min), Vec2b fill = Vec2b(false)) :
 				dim(dim),
 				fill(fill)
 		{}
