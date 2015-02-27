@@ -239,6 +239,8 @@ Container{
 
 		HorizontalContainer{
 
+			name{horizontal_container}
+
 			layout{
 				dimX{max} dimY{max}
 			}
@@ -247,8 +249,7 @@ Container{
 				image{img_lattice}
 
 				layout{
-					dimX{-1} dimY{-1}
-					weight{0}
+					dimX{min} dimY{min}
 				}
 			}
 
