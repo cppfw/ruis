@@ -83,6 +83,8 @@
         </df>
         <df name="widgets">
           <df name="containers">
+            <in>BlackHoleContainer.cpp</in>
+            <in>BlackHoleContainer.hpp</in>
             <in>Container.cpp</in>
             <in>Container.hpp</in>
             <in>FrameContainer.cpp</in>
@@ -393,6 +395,16 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
@@ -736,6 +748,16 @@
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
             tool="1"
@@ -999,6 +1021,16 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
@@ -1271,6 +1303,16 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
@@ -1614,6 +1656,16 @@
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/BlackHoleContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.cpp"
             ex="false"
