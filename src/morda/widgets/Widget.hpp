@@ -65,15 +65,13 @@ public:
 		constexpr static const real D_Min = real(-1);
 		constexpr static const real D_Max = real(-2);
 		
-		LayoutParams(Vec2r dim = Vec2r(D_Min), Vec2b fill = Vec2b(false)) :
-				dim(dim),
-				fill(fill)
+		LayoutParams(Vec2r dim = Vec2r(D_Min)) :
+				dim(dim)
 		{}
 		
 		LayoutParams(const stob::Node* chain);
 		
-		Vec2r dim; //negative value means 'min'
-		Vec2b fill;
+		Vec2r dim;
 
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));

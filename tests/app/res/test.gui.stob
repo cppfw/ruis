@@ -62,7 +62,6 @@ Container{
 					dimY{34}
 					text{f}
 					layout{
-						fillX{true}
 						dimX{18}
 					}
 				}
@@ -74,7 +73,7 @@ Container{
 
 			text{"inwindow text, y j g q p"}
 			layout{
-				fillX{true} fillY{false}
+				
 			}
 
 			color{@{clr}}
@@ -93,7 +92,7 @@ Container{
 			image{img_sample}
 
 			layout{
-//				fillX{true} fillY{true}
+
 			}
 		}
 */
@@ -111,7 +110,7 @@ Container{
 
 		GreyscaleGlass{
 			layout{
-				fillX{true} fillY{true}
+				dimX{max} dimY{max}
 			}
 		}
 
@@ -164,7 +163,7 @@ Container{
 
 				
 				layout{
-					dimX{20mm} dimY{-1}
+					dimX{20mm} dimY{min}
 					weight {1}
 				}
 				
@@ -242,26 +241,20 @@ Container{
 
 			layout{
 				dimX{max} dimY{max}
-				fillX{true} fillY{true}
 			}
 
 			ImageLabel{
 				image{img_lattice}
 
-				fitX{10mm}
-				fitY{-1}
-
 				layout{
 					dimX{-1} dimY{-1}
-					fillY{false}
 					weight{0}
 				}
 			}
 
 			HorizontalSlider{
 				layout{
-					dimX{50} dimY{40} //TODO: -1 -1
-					fillY{false}
+					dimX{50} dimY{40} //TODO: min min
 					weight{1}
 				}
 			}
@@ -270,8 +263,7 @@ Container{
 				name {"vertical slider"}
 
 				layout{
-					dimX{40} dimY{0} //TODO: -1 -1
-					fillY{true}
+					dimX{40} dimY{max} //TODO: min min
 				}
 			}
 		}
@@ -333,7 +325,6 @@ Container{
 
 				layout{
 					dimX{0} dimY{0}
-					fillX{true} fillY{true}
 					weight{1}
 				}
 
@@ -343,20 +334,15 @@ Container{
 					clip{true}
 
 					layout{
-						dimX{0} dimY{0}
-						fillY{true}
+						dimX{0} dimY{max}
 						weight{1}
 					}
 
 					ImageLabel{
 						image{img_sample}
 
-		//				fitX{10mm}
-		//				fitY{-1}
-
 						layout{
 							dimX{-1} dimY{-1}
-							fillX{false} fillY{false}
 						}
 					}
 
@@ -378,8 +364,7 @@ Container{
 					name{scroll_area_vertical_slider}
 
 					layout{
-						dimX{-1} dimY{0}
-						fillX{false} fillY{true}
+						dimX{min} dimY{max}
 					}
 				}
 			}
@@ -389,14 +374,13 @@ Container{
 					name{scroll_area_horizontal_slider}
 
 					layout{
-						dimX{0} dimY{-1}
-						fillY{false}
+						dimX{0}
 					}
 				}
 				ColorLabel{
 					color{@{morda_color_bg}}
 					layout{
-						fillY{true}
+						dimY{max}
 					}
 				}
 			}
@@ -451,7 +435,6 @@ Container{
 					color{0xffffff00}
 					layout{
 						dimX{90} dimY{20}
-						fillX{true}
 					}
 				}
 
@@ -477,7 +460,7 @@ Container{
 			VerticalList{
 				name{vertical_list}
 				layout{
-					fillX{true} fillY{true}
+					dimX{0} dimY{max}
 					weight{1}
 				}
 
@@ -492,7 +475,7 @@ Container{
 			VerticalSlider{
 				name{vertical_list_slider}
 				layout{
-					fillY{true}
+					dimY{max}
 				}
 			}
 		}

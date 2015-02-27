@@ -11,7 +11,7 @@ using namespace morda;
 TableContainer::TableContainer(const stob::Node* chain) :
 		Widget(chain),
 		VerticalContainer(chain)
-{ }
+{}
 
 void TableContainer::UpdateRowsLayoutParam()const{
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, TableRow::LayoutParams*>> iterators;
@@ -58,7 +58,6 @@ void TableContainer::UpdateRowsLayoutParam()const{
 			}
 			
 			ASSERT(lpptr)
-			lpptr->modifiedParams.fill = lpptr->fill;
 			lpptr->modifiedParams.dim.x = maxDimX;
 			lpptr->modifiedParams.dim.y = lpptr->dim.y;
 			lpptr->modifiedParams.weight = maxWeight;
@@ -84,7 +83,7 @@ morda::Vec2r TableContainer::onMeasure(const morda::Vec2r& quotum) const NOEXCEP
 Widget::LayoutParams& TableContainer::GetLayoutParams(Widget& w){
 	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::GetLayoutParams(w));
 	
-	layoutParams.fill.x = true;
+	layoutParams.dim.x = LayoutParams::D_Max;
 	
 	return layoutParams;
 }

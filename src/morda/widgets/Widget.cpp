@@ -89,18 +89,6 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 	}else{
 		this->dim.y = LayoutParams::D_Min;
 	}
-	
-	if(auto n = GetProperty(chain, "fillX")){
-		this->fill.x = n->AsBool();
-	}else{
-		this->fill.x = false;
-	}
-	
-	if(auto n = GetProperty(chain, "fillY")){
-		this->fill.y = n->AsBool();
-	}else{
-		this->fill.y = false;
-	}
 }
 
 
