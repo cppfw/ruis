@@ -124,16 +124,20 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 
-				FrameContainer{
-					name{morda_content}
-					clip{true}
+				BlackHoleContainer{
 					layout{
 						dimX{max} dimY{0}
 						weight{1}
 					}
+					FrameContainer{
+						name{morda_content}
+						clip{true}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
 				}
 			}
-
 
 			FrameContainer{
 				layout{
