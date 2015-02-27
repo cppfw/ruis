@@ -14,7 +14,6 @@ const char* DWindowDesc = R"qwertyuiop(
 		//1st row
 		TableRow{
 			FrameContainer{
-				clip{true}
 				ImageLabel{
 					image{morda_img_window_lt}
 				}
