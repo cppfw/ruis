@@ -95,7 +95,14 @@ void LinearContainer::OnResize(){
 					}else{
 						d[transIndex] = lp.dim[transIndex];
 					}
-					d = (*i)->measure(d);
+					if(d.x < 0 || d.y < 0){
+						Vec2r md = (*i)->measure(d);
+						for(unsigned i = 0; i != md.size(); ++i){
+							if(d[i] < 0){
+								d[i] = md[i];
+							}
+						}
+					}
 				}
 				(*i)->Resize(d.Rounded());
 			}else{

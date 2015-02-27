@@ -117,7 +117,21 @@ bool TextInput::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 
 
 Vec2r TextInput::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
-	return Vec2r(this->SingleLineTextWidget::onMeasure(Vec2r(-1)).x + D_CursorWidth, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
+	Vec2r ret;
+	
+	if(quotum.x < 0){
+		ret.x = this->SingleLineTextWidget::onMeasure(Vec2r(-1)).x + D_CursorWidth;
+	}else{
+		ret.x = quotum.x;
+	}
+	
+	if(quotum.y < 0){
+		ret.y = this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y;
+	}else{
+		ret.y = quotum.y;
+	}
+	
+	return ret;
 }
 
 void TextInput::SetCursorIndex(size_t index, bool selection){

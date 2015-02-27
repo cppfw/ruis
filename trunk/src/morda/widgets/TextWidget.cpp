@@ -39,7 +39,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 
 
 Vec2r SingleLineTextWidget::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
-	std::remove_const<std::remove_reference<decltype(quotum)>::type>::type ret(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
+	Vec2r ret(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 	
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){

@@ -341,5 +341,14 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 			d[i] = lp.dim[i];
 		}
 	}
-	return w.measure(d);
+	if(d.x < 0 || d.y < 0){
+		Vec2r md = w.measure(d);
+		for(unsigned i = 0; i != md.size(); ++i){
+			if(d[i] < 0){
+				d[i] = md[i];
+			}
+		}
+		return d;
+	}
+	return d;
 }
