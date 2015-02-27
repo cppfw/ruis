@@ -43,7 +43,7 @@ void TableContainer::UpdateRowsLayoutParam()const{
 			
 			notEnd = true;
 			lpptr = &tr->GetTableRowLayoutParams(**iter);
-			real x = lpptr->dim.x < 0 ? (*iter)->measure(Vec2r(-1)).x : lpptr->dim.x;
+			real x = lpptr->dim.x < 0 ? (*iter)->measure(Vec2r(-1)).x : lpptr->dim.x; //TODO: rewise
 			ting::util::ClampBottom(maxDimX, x);
 			ting::util::ClampBottom(maxWeight, lpptr->weight);
 		}
