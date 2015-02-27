@@ -14,6 +14,7 @@ const char* DWindowDesc = R"qwertyuiop(
 		//1st row
 		TableRow{
 			FrameContainer{
+				clip{true}
 				ImageLabel{
 					image{morda_img_window_lt}
 				}
@@ -28,7 +29,6 @@ const char* DWindowDesc = R"qwertyuiop(
 			FrameContainer{
 				layout{
 					dimX{0}
-					fillX{true}
 				}
 				ImageLabel{
 					image{morda_img_window_t}
@@ -61,11 +61,10 @@ const char* DWindowDesc = R"qwertyuiop(
 		TableRow{
 			layout{
 				weight{1}
-				fillY{true}
 			}
 			FrameContainer{
 				layout{
-					fillY{true}
+					dimY{max}
 				}
 				ImageLabel{
 					image{morda_img_window_l}
@@ -86,14 +85,13 @@ const char* DWindowDesc = R"qwertyuiop(
 			VerticalContainer{
 				layout{
 					weight{1}
-					fillX{true} fillY{true}
+					dimY{max}
 				}
 
 				//caption
 				FrameContainer{
 					layout{
-						dimX{0}
-						fillX{true} fillY{true}
+						dimX{max}
 					}
 
 					clip{true}
@@ -121,7 +119,6 @@ const char* DWindowDesc = R"qwertyuiop(
 							name{morda_title}
 							layout{
 								dimX{0}
-								gravity{0% 50%}
 								weight{1}
 							}
 						}
@@ -132,9 +129,8 @@ const char* DWindowDesc = R"qwertyuiop(
 					name{morda_content}
 					clip{true}
 					layout{
-						dimX{0} dimY{0}
+						dimX{max} dimY{0}
 						weight{1}
-						fillX{true} fillY{true}
 					}
 				}
 			}
@@ -142,8 +138,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 			FrameContainer{
 				layout{
-					dimY{0}
-					fillY{true}
+					dimY{max}
 				}
 
 				ImageLabel{
@@ -178,7 +173,6 @@ const char* DWindowDesc = R"qwertyuiop(
 			FrameContainer{
 				layout{
 					dimX{0}
-					fillX{true}
 				}
 				ImageLabel{
 					image{morda_img_window_b}
