@@ -131,7 +131,13 @@ void Slider::OnResize(){
 
 
 morda::Vec2r Slider::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
-	return morda::Vec2r(30, 30);//TODO: what should it be???
+	Vec2r ret = quotum;
+	for(unsigned i = 0; i != ret.size(); ++i){
+		if(ret[i] < 0){
+			ret[i] = 30; //TODO: what should it be???
+		}
+	}
+	return ret;
 }
 
 
