@@ -15,6 +15,12 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
 		this->Resize(this->img->Dim());
 	}
+	
+	if(auto n = GetProperty(chain, "keepAspectRatio")){
+		this->keepAspectRatio = n->AsBool();
+	}else{
+		this->keepAspectRatio = false;
+	}
 }
 
 void ImageLabel::Render(const morda::Matr4r& matrix) const{
@@ -38,26 +44,43 @@ morda::Vec2r ImageLabel::onMeasure(const morda::Vec2r& quotum)const{
 	
 	ASSERT(this->img->Dim().IsPositive())
 	
-	Vec2r ret = this->img->Dim();
-	
-	for(unsigned i = 0; i != ret.size(); ++i){
-		if(quotum[i] >= 0){
-			ret[i] = quotum[i];
+	if(!keepAspectRatio){
+		Vec2r ret = this->img->Dim();
+		
+		for(unsigned i = 0; i != ret.size(); ++i){
+			if(quotum[i] >= 0){
+				ret[i] = quotum[i];
+			}
 		}
+
+		return ret;
 	}
 	
-	//TODO: keep aspect ratio
-//	real ratio = this->img->Dim().x / this->img->Dim().y;
-//	
-//	real offeredRatio = ret.x / ret.y;
-//	
-//	if(ratio < offeredRatio){
-//		ret.x = ret.y * ratio;
-//	}else{
-//		ret.y = ret.x / ratio;
-//	}
+	ASSERT(this->img)
+	ASSERT(this->img->Dim().y > 0)
 	
-	return ret;
+	real ratio = this->img->Dim().x / this->img->Dim().y;
+	
+	if(quotum.x < 0 && quotum.y < 0){
+		return this->img->Dim();
+	}else if(quotum.x < 0){
+		ASSERT(quotum.y >= 0)
+		
+		Vec2r ret;
+		ret.y = quotum.y;
+		ret.x = ratio * quotum.y;
+		return ret;
+	}else{
+		ASSERT(quotum.x >= 0)
+		ASSERT(quotum.y < 0)
+		
+		ASSERT(ratio > 0)
+		
+		Vec2r ret;
+		ret.x = quotum.x;
+		ret.y = quotum.x / ratio;
+		return ret;
+	}
 }
 
 

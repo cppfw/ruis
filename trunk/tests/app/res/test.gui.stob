@@ -248,8 +248,10 @@ Container{
 			ImageLabel{
 				image{img_lattice}
 
+				keepAspectRatio{true}
+
 				layout{
-					dimX{min} dimY{min}
+					dimX{min} dimY{max}
 				}
 			}
 
