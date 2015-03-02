@@ -13,7 +13,7 @@ TableContainer::TableContainer(const stob::Node* chain) :
 		VerticalContainer(chain)
 {}
 
-void TableContainer::UpdateRowsLayoutParam()const{
+void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, TableRow::LayoutParams*>> iterators;
 	iterators.reserve(this->Children().size());
 	
@@ -43,8 +43,32 @@ void TableContainer::UpdateRowsLayoutParam()const{
 			
 			notEnd = true;
 			lpptr = &tr->GetTableRowLayoutParams(**iter);
-			real x = lpptr->dim.x < 0 ? (*iter)->measure(Vec2r(-1)).x : lpptr->dim.x; //TODO: rewise
-			ting::util::ClampBottom(maxDimX, x);
+			
+			Vec2r d;
+			
+			if(lpptr->dim.x == LayoutParams::D_Max){
+				throw morda::Exc("TableContainer::UpdateRowsLayoutParam(): \"max\" in horizontal direction: mistake");
+			}
+			
+			if(lpptr->dim.y == LayoutParams::D_Max){
+				if(constraint.y >= 0){
+					d.y = constraint.y;
+				}else{
+					d.y = -1;
+				}
+			}else if(lpptr->dim.y == LayoutParams::D_Min || lpptr->dim.y < 0){
+				d.y = -1;
+			}else{
+				d.y = lpptr->dim.y;
+			}
+			
+			if(lpptr->dim.x == LayoutParams::D_Min || lpptr->dim.x < 0){
+				d.x = -1;
+			}else{
+				d.x = lpptr->dim.x;
+			}
+			
+			ting::util::ClampBottom(maxDimX, (*iter)->measure(d).x);
 			ting::util::ClampBottom(maxWeight, lpptr->weight);
 		}
 
@@ -69,13 +93,13 @@ void TableContainer::UpdateRowsLayoutParam()const{
 
 
 void TableContainer::OnResize(){
-	this->UpdateRowsLayoutParam();
+	this->UpdateRowsLayoutParam(this->Rect().d);
 	this->VerticalContainer::OnResize();
 }
 
 
 morda::Vec2r TableContainer::onMeasure(const morda::Vec2r& quotum) const NOEXCEPT{
-	this->UpdateRowsLayoutParam();
+	this->UpdateRowsLayoutParam(quotum);
 	return this->VerticalContainer::onMeasure(quotum);
 }
 

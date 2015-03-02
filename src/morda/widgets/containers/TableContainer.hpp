@@ -52,7 +52,7 @@ protected:
 	Widget::LayoutParams& GetLayoutParams(Widget& w)override;
 	
 private:
-	void UpdateRowsLayoutParam()const;
+	void UpdateRowsLayoutParam(const morda::Vec2r& constraint)const;
 };
 
 
