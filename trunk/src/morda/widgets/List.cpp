@@ -128,6 +128,14 @@ void List::addWidgetsAbove(){
 		return;
 	}
 	
+	real pos;
+	
+	if(this->isVertical){
+		pos = this->Rect().d.y + this->posOffset;
+	}else{
+		pos = -this->posOffset;
+	}
+	
 	for(; this->addedIndex > this->posIndex; --this->addedIndex){
 		auto w = this->provider->getWidget(this->addedIndex - 1);
 		
@@ -135,10 +143,23 @@ void List::addWidgetsAbove(){
 		
 		Vec2r dim = this->dimForWidget(*w, lp);
 		
-		this->Add(w, true);
-		
 		w->Resize(dim);
 		
+		if(this->isVertical){
+			w->MoveTo(Vec2r(0, pos - w->Rect().d.y));
+			pos -= w->Rect().d.y;
+			
+			if(pos < this->Rect().d.y){
+				this->Add(w, true);
+			}
+		}else{
+			w->MoveTo(Vec2r(pos, 0));
+			pos += w->Rect().d.x;
+			
+			if(pos > 0){
+				this->Add(w, true);
+			}
+		}
 		//TODO: check that need to add more
 	}
 }
