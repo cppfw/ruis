@@ -191,7 +191,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 	}
 	
 	
-	T_FactoryMap::const_iterator i = this->widgetFactories.find(n->Value());
+	auto i = this->widgetFactories.find(n->Value());
 
 	if(i == this->widgetFactories.end()){
 		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
