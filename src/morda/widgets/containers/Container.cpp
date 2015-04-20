@@ -39,10 +39,6 @@ Container::Container(const stob::Node* chain) :
 
 
 Widget::LayoutParams& Container::GetLayoutParams(Widget& w){
-	if(w.Parent() != this){
-		throw Exc("Container::GetLayoutParams(): trying to get layout parameters of a widget from another container");
-	}
-	
 	if(!w.layoutParams){
 		w.layoutParams = this->CreateLayoutParams(w.layout.get());
 	}
@@ -228,11 +224,11 @@ void Container::Add(const std::shared_ptr<Widget>& w,  bool addToFront){
 	
 	if(addToFront){
 		this->children.push_front(w);
+		w->parentIter = this->children.begin();
 	}else{
 		this->children.push_back(w);
+		w->parentIter = --this->children.end();
 	}
-	
-	w->parentIter = --this->children.end();
 	
 	w->parent = this;
 
@@ -260,6 +256,7 @@ void Container::Remove(Widget& w){
 	if(this->isBlocked){
 		throw morda::Exc("Container::Remove(): cannot remove child while iterating through children, try deferred removing.");
 	}
+//	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
 	
 	ASSERT(w.parent == this)
 	
@@ -277,6 +274,7 @@ void Container::Remove(Widget& w){
 
 void Container::removeAll() {
 	while(this->Children().size()){
+//		TRACE(<< "Container::removeAll(): w = " << (this->Children().front().get()) << std::endl)
 		this->Remove(*this->Children().front());
 	}
 }

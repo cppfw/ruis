@@ -474,6 +474,38 @@ Container{
 				Label{
 					text{item_2}
 				}
+
+				Label{
+					text{item_3}
+				}
+
+				Label{
+					text{item_4}
+				}
+
+				Label{
+					text{item_5}
+				}
+
+				Label{
+					text{item_6}
+				}
+
+				Label{
+					text{item_7}
+				}
+
+				Label{
+					text{item_8}
+				}
+
+				Label{
+					text{item_9}
+				}
+
+				Label{
+					text{item_10}
+				}
 			}
 			VerticalSlider{
 				name{vertical_list_slider}

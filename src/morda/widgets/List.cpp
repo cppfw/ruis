@@ -100,31 +100,12 @@ void List::setScrollPosAsFactor(real factor){
 }
 
 void List::updateChildrenList(){
-	if(this->posIndex >= this->count()){
+	this->removeAll();
+	this->addedIndex = 0;
+	
+	if(!this->provider){
 		this->posIndex = 0;
 		this->posOffset = 0;
-		this->removeAll();
-		return;
-	}
-	
-	//remove unnecessary widgets
-	if(this->Children().size() != 0){
-		if(this->addedIndex < this->posIndex){
-			for(; this->posIndex != this->addedIndex && this->Children().size() != 0; ++this->addedIndex){
-				this->Remove(*this->Children().front());
-			}
-		}
-	}
-	
-	this->addWidgetsAbove();
-	
-	//TODO:
-}
-
-
-
-void List::addWidgetsAbove(){
-	if(!this->provider){
 		return;
 	}
 	
@@ -136,8 +117,8 @@ void List::addWidgetsAbove(){
 		pos = -this->posOffset;
 	}
 	
-	for(; this->addedIndex > this->posIndex; --this->addedIndex){
-		auto w = this->provider->getWidget(this->addedIndex - 1);
+	for(size_t i = this->posIndex; i < this->count(); ++i){
+		auto w = this->provider->getWidget(i);
 		
 		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
 		
@@ -152,6 +133,10 @@ void List::addWidgetsAbove(){
 			if(pos < this->Rect().d.y){
 				this->Add(w, true);
 			}
+			
+			if(w->Rect().p.y <= 0){
+				break;
+			}
 		}else{
 			w->MoveTo(Vec2r(pos, 0));
 			pos += w->Rect().d.x;
@@ -159,7 +144,10 @@ void List::addWidgetsAbove(){
 			if(pos > 0){
 				this->Add(w, true);
 			}
+			
+			if(w->Rect().Right() >= this->Rect().d.x){
+				break;
+			}
 		}
-		//TODO: check that need to add more
 	}
 }
