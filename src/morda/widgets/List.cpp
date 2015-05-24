@@ -19,6 +19,7 @@ public:
 	}
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
+//		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		return this->widgets[index];
 	}
 	
