@@ -132,7 +132,7 @@ void List::updateChildrenList(){
 			pos -= w->Rect().d.y;
 			
 			if(pos < this->Rect().d.y){
-				this->Add(w, true);
+				this->Add(w);
 			}
 			
 			if(w->Rect().p.y <= 0){
@@ -143,7 +143,7 @@ void List::updateChildrenList(){
 			pos += w->Rect().d.x;
 			
 			if(pos > 0){
-				this->Add(w, true);
+				this->Add(w);
 			}
 			
 			if(w->Rect().Right() >= this->Rect().d.x){
