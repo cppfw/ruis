@@ -42,6 +42,13 @@ class List : public Container{
 	
 	bool isVertical;
 
+	
+	real factor = real(0);
+	
+	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
+	real firstTailItemOffset = real(0);
+	
+	
 protected:
 	List(bool isVertical, const stob::Node* chain);
 public:
@@ -99,6 +106,8 @@ private:
 	std::shared_ptr<ItemsProvider> provider;
 	
 	void updateChildrenList();
+	
+	void updateTailItemsInfo();
 };
 
 

@@ -20,6 +20,7 @@ public:
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
+		//TODO: inflate new widget each time
 		return this->widgets[index];
 	}
 	
@@ -59,6 +60,8 @@ List::List(bool isVertical, const stob::Node* chain):
 
 
 void List::OnResize() {
+	this->numTailItems = 0;//indicate that number of tail items has to be recomputed
+	
 	this->updateChildrenList();
 	
 	//TODO:
@@ -81,10 +84,13 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 real List::scrollFactor()const NOEXCEPT{
 	//TODO:
 	return real(this->posIndex) / real(this->count() - this->visibleCount());
+//	return this->factor;
 }
 
 
 void List::setScrollPosAsFactor(real factor){
+	this->factor = factor;
+
 	this->posIndex = factor * real(this->count());
 	
 	real intFactor = real(this->posIndex) / real(this->count());
@@ -101,6 +107,10 @@ void List::setScrollPosAsFactor(real factor){
 }
 
 void List::updateChildrenList(){
+	
+	//TODO:
+	
+	
 	this->removeAll();
 	this->addedIndex = 0;
 	
@@ -150,5 +160,48 @@ void List::updateChildrenList(){
 				break;
 			}
 		}
+	}
+}
+
+
+
+void List::updateTailItemsInfo(){
+	this->numTailItems = 0;
+	
+	if(!this->provider || this->provider->count() == 0){
+		return;
+	}
+	
+	real dim;
+	
+	if(this->isVertical){
+		dim = this->Rect().d.y;
+	}else{
+		dim = this->Rect().d.x;
+	}
+	
+	ASSERT(this->provider)
+	ASSERT(this->provider->count() > 0)
+	
+	for(size_t i = this->provider->count(); i != 0 && dim > 0; --i){
+		++this->numTailItems;
+		
+		auto w = this->provider->getWidget(i - 1);
+		
+		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+		
+		Vec2r d = this->dimForWidget(*w, lp);
+		
+		if(this->isVertical){
+			dim -= d.y;
+		}else{
+			dim -= d.x;
+		}
+	}
+	
+	if(dim > 0){
+		this->firstTailItemOffset = -1;
+	}else{
+		this->firstTailItemOffset = -dim;
 	}
 }
