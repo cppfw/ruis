@@ -41,9 +41,6 @@ class List : public Container{
 	real posOffset = real(0);
 	
 	bool isVertical;
-
-	
-	real factor = real(0);
 	
 	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
 	real firstTailItemOffset = real(0);
@@ -80,6 +77,7 @@ public:
 	
 	void notifyDataSetChanged(){
 		this->SetRelayoutNeeded();
+		this->numTailItems = 0;//means that it needs to be recomputed
 	}
 	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);

@@ -60,11 +60,9 @@ List::List(bool isVertical, const stob::Node* chain):
 
 
 void List::OnResize() {
-	this->numTailItems = 0;//indicate that number of tail items has to be recomputed
+	this->numTailItems = 0;//means that it needs to be recomputed
 	
 	this->updateChildrenList();
-	
-	//TODO:
 }
 
 
@@ -82,43 +80,59 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 
 real List::scrollFactor()const NOEXCEPT{
-	//TODO:
 	return real(this->posIndex) / real(this->count() - this->visibleCount());
-//	return this->factor;
 }
 
 
 void List::setScrollPosAsFactor(real factor){
-	this->factor = factor;
-
-	this->posIndex = factor * real(this->count());
-	
-	real intFactor = real(this->posIndex) / real(this->count());
-	
-	if(this->Children().size() != 0){
-		this->posOffset = this->Children().front()->Rect().d.y * ((factor - intFactor) * real(this->count()));
-	}else{
-		this->posOffset = 0;
+	if(this->numTailItems == 0){
+		this->updateTailItemsInfo();
 	}
 	
-	//TODO: clamp
+	this->posIndex = factor * real(this->count() - this->numTailItems);
 	
-	this->SetRelayoutNeeded();
+	if(this->count() != this->numTailItems){
+		real intFactor = real(this->posIndex) / real(this->count() - this->numTailItems);
+
+		if(this->Children().size() != 0){
+			real d;
+			if(this->isVertical){
+				d = this->Children().front()->Rect().d.y;
+			}else{
+				d = this->Children().front()->Rect().d.x;
+			}
+			
+			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->count() - this->numTailItems) + factor * this->firstTailItemOffset);
+		}else{
+			this->posOffset = 0;
+		}
+	}else{
+		ASSERT(this->posIndex == 0)
+		this->posOffset = ting::math::Round(factor * this->firstTailItemOffset);
+	}
+	
+	this->updateChildrenList();
 }
 
 void List::updateChildrenList(){
+	if(!this->provider){
+		this->posIndex = 0;
+		this->posOffset = 0;
+		
+		this->removeAll();
+		this->addedIndex = 0;
+		return;
+	}
 	
-	//TODO:
+	if(this->numTailItems == 0){
+		this->updateTailItemsInfo();
+	}
+	
+	
 	
 	
 	this->removeAll();
 	this->addedIndex = 0;
-	
-	if(!this->provider){
-		this->posIndex = 0;
-		this->posOffset = 0;
-		return;
-	}
 	
 	real pos;
 	
