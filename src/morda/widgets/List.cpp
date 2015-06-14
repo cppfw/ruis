@@ -11,7 +11,7 @@ using namespace morda;
 namespace{
 
 class StaticProvider : public List::ItemsProvider{
-	std::vector<std::shared_ptr<Widget>> widgets;
+	std::vector<std::unique_ptr<stob::Node>> widgets;
 public:
 
 	size_t count() const NOEXCEPT override{
@@ -20,11 +20,10 @@ public:
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
-		//TODO: inflate new widget each time
-		return this->widgets[index];
+		return morda::App::Inst().inflater.Inflate(*(this->widgets[index]));
 	}
 	
-	void add(std::shared_ptr<Widget> w){
+	void add(std::unique_ptr<stob::Node> w){
 		this->widgets.push_back(std::move(w));
 	}
 };
@@ -51,7 +50,7 @@ List::List(bool isVertical, const stob::Node* chain):
 	std::shared_ptr<StaticProvider> p = ting::New<StaticProvider>();
 	
 	for(; n; n = n->NextNonProperty().node()){
-		p->add(morda::App::Inst().inflater.Inflate(*n));
+		p->add(n->Clone());
 	}
 	
 	this->setItemsProvider(std::move(p));

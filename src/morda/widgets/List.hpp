@@ -66,7 +66,7 @@ public:
 		
 		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
 		
-		virtual void recycle(std::shared_ptr<Widget> w){}
+		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
 		
 		void notifyDataSetChanged(){
 			if(this->list){
@@ -74,11 +74,6 @@ public:
 			}
 		}
 	};
-	
-	void notifyDataSetChanged(){
-		this->SetRelayoutNeeded();
-		this->numTailItems = 0;//means that it needs to be recomputed
-	}
 	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
@@ -106,6 +101,15 @@ private:
 	void updateChildrenList();
 	
 	void updateTailItemsInfo();
+	
+	void notifyDataSetChanged(){
+		this->numTailItems = 0;//means that it needs to be recomputed
+		
+		this->removeAll();
+		this->addedIndex = 0;
+		
+		this->updateChildrenList();
+	}
 };
 
 
