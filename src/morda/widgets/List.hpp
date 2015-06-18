@@ -80,13 +80,6 @@ public:
 
 	void OnResize()override;
 	
-	size_t count()const{
-		if(this->provider){
-			return this->provider->count();
-		}
-		return 0;
-	}
-	
 	size_t visibleCount()const{
 		return this->Children().size();
 	}

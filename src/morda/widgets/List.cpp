@@ -79,19 +79,26 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 
 real List::scrollFactor()const NOEXCEPT{
-	return real(this->posIndex) / real(this->count() - this->visibleCount());
+	if(!this->provider || this->provider->count() == 0){
+		return 0;
+	}
+	return real(this->posIndex) / real(this->provider->count() - this->visibleCount());
 }
 
 
 void List::setScrollPosAsFactor(real factor){
+	if(!this->provider || this->provider->count() == 0){
+		return;
+	}
+	
 	if(this->numTailItems == 0){
 		this->updateTailItemsInfo();
 	}
 	
-	this->posIndex = factor * real(this->count() - this->numTailItems);
+	this->posIndex = factor * real(this->provider->count() - this->numTailItems);
 	
-	if(this->count() != this->numTailItems){
-		real intFactor = real(this->posIndex) / real(this->count() - this->numTailItems);
+	if(this->provider->count() != this->numTailItems){
+		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
 		if(this->Children().size() != 0){
 			real d;
@@ -101,7 +108,7 @@ void List::setScrollPosAsFactor(real factor){
 				d = this->Children().front()->Rect().d.x;
 			}
 			
-			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->count() - this->numTailItems) + factor * this->firstTailItemOffset);
+			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
 		}else{
 			this->posOffset = 0;
 		}
@@ -191,7 +198,7 @@ void List::updateChildrenList(){
 	this->removeAll();
 	this->addedIndex = 0;
 	
-	for(size_t i = this->posIndex; i < this->count(); ++i){
+	for(size_t i = this->posIndex; i < this->provider->count(); ++i){
 		auto w = this->provider->getWidget(i);
 		
 		if(this->arrangeWidget(w, pos, false, i)){
