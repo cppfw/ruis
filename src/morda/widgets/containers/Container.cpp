@@ -212,7 +212,7 @@ void Container::OnResize(){
 
 
 
-void Container::Add(const std::shared_ptr<Widget>& w,  bool addToFront){
+Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w,  T_ChildrenList::iterator insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->Parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -222,14 +222,13 @@ void Container::Add(const std::shared_ptr<Widget>& w,  bool addToFront){
 		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
 	}
 	
-	if(addToFront){
-		this->children.push_front(w);
-		w->parentIter = this->children.begin();
-	}else{
-		this->children.push_back(w);
-		w->parentIter = --this->children.end();
+	if(insertBefore != this->children.end() && (*insertBefore)->parent != this){
+		throw morda::Exc("Container::Add(): cannot insert after provided iterator, it points to a different container");
 	}
+
+	T_ChildrenList::iterator ret = this->children.insert(insertBefore, w);
 	
+	w->parentIter = ret;
 	w->parent = this;
 
 	w->SetRelayoutNeeded();
@@ -244,6 +243,7 @@ void Container::Add(const std::shared_ptr<Widget>& w,  bool addToFront){
 	w->OnTopmostChanged();
 	
 	ASSERT(!w->IsHovered())
+	return ret;
 }
 
 

@@ -93,7 +93,11 @@ public:
 	
 	void OnResize()override;
 	
-	void Add(const std::shared_ptr<Widget>& w, bool addToFront = false);
+	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w){
+		return this->Add(w, this->children.end());
+	}
+	
+	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, T_ChildrenList::iterator insertBefore);
 
 	void Add(const stob::Node& chain);
 	

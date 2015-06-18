@@ -194,11 +194,23 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
+	size_t i;
+	
+	//add widgets before added
+//	for(i = this->posIndex; i != this->provider->count() && i < this->addedIndex; ++i){
+//		auto w = this->provider->getWidget(i);
+//		
+//		if(this->arrangeWidget(w, pos, false, i)){
+//			return;
+//		}
+//	}
+	
+	
 	//TODO:
 	this->removeAll();
 	this->addedIndex = 0;
 	
-	for(size_t i = this->posIndex; i < this->provider->count(); ++i){
+	for(i = this->posIndex; i < this->provider->count(); ++i){
 		auto w = this->provider->getWidget(i);
 		
 		if(this->arrangeWidget(w, pos, false, i)){
