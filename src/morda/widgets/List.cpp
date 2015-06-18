@@ -113,6 +113,58 @@ void List::setScrollPosAsFactor(real factor){
 	this->updateChildrenList();
 }
 
+bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index){
+	auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+		
+	Vec2r dim = this->dimForWidget(*w, lp);
+
+	w->Resize(dim);
+
+	if(this->isVertical){
+		pos -= w->Rect().d.y;
+		w->MoveTo(Vec2r(0, pos));
+
+		if(pos < this->Rect().d.y){
+			if(!added){
+				this->Add(w);
+			}
+			if(this->addedIndex == 0){
+				this->addedIndex = index;
+			}
+		}else{
+			if(added){
+				this->Remove(*w);
+			}
+		}
+
+		if(w->Rect().p.y <= 0){
+			return true;
+		}
+	}else{
+		w->MoveTo(Vec2r(pos, 0));
+		pos += w->Rect().d.x;
+
+		if(pos > 0){
+			if(!added){
+				this->Add(w);
+			}
+			if(this->addedIndex == 0){
+				this->addedIndex = index;
+			}
+		}else{
+			if(added){
+				this->Remove(*w);
+			}
+		}
+
+		if(w->Rect().Right() >= this->Rect().d.x){
+			return true;
+		}
+	}
+	return false;
+}
+
+
 void List::updateChildrenList(){
 	if(!this->provider){
 		this->posIndex = 0;
@@ -127,12 +179,6 @@ void List::updateChildrenList(){
 		this->updateTailItemsInfo();
 	}
 	
-	
-	
-	
-	this->removeAll();
-	this->addedIndex = 0;
-	
 	real pos;
 	
 	if(this->isVertical){
@@ -141,37 +187,15 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
+	//TODO:
+	this->removeAll();
+	this->addedIndex = 0;
+	
 	for(size_t i = this->posIndex; i < this->count(); ++i){
 		auto w = this->provider->getWidget(i);
 		
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
-		
-		Vec2r dim = this->dimForWidget(*w, lp);
-		
-		w->Resize(dim);
-		
-		if(this->isVertical){
-			w->MoveTo(Vec2r(0, pos - w->Rect().d.y));
-			pos -= w->Rect().d.y;
-			
-			if(pos < this->Rect().d.y){
-				this->Add(w);
-			}
-			
-			if(w->Rect().p.y <= 0){
-				break;
-			}
-		}else{
-			w->MoveTo(Vec2r(pos, 0));
-			pos += w->Rect().d.x;
-			
-			if(pos > 0){
-				this->Add(w);
-			}
-			
-			if(w->Rect().Right() >= this->Rect().d.x){
-				break;
-			}
+		if(this->arrangeWidget(w, pos, false, i)){
+			break;
 		}
 	}
 }
