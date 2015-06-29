@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "morda", "morda\morda.vcxproj", "{60B1A3D5-E01C-4D88-9657-E6BE1BA9A66E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stob", "..\..\stob\msvs_solution\stob\stob.vcxproj", "{762457C4-9C2E-4ED3-A7FE-0BC7E0079E01}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ting", "..\..\ting\msvs_solution\ting\ting.vcxproj", "{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "freetype-2.4.11\builds\win32\vc2010\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
 EndProject
@@ -143,51 +141,6 @@ Global
 		{762457C4-9C2E-4ED3-A7FE-0BC7E0079E01}.Template|Win32.ActiveCfg = Release|Win32
 		{762457C4-9C2E-4ED3-A7FE-0BC7E0079E01}.Template|Win32.Build.0 = Release|Win32
 		{762457C4-9C2E-4ED3-A7FE-0BC7E0079E01}.Template|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Multithreaded|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Multithreaded|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Multithreaded|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug MX|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug MX|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug MX|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Singlethreaded|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Singlethreaded|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug Singlethreaded|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Debug|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Debug|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Debug|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Debug|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Release|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Release|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL Release|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL VB|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL VB|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.DLL VB|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Debug|Win32.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Debug|Win32.Build.0 = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Debug|x64.ActiveCfg = Debug|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Release|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Release|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.LIB Release|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Multithreaded|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Multithreaded|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Multithreaded|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release MX|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release MX|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release MX|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Singlethreaded|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Singlethreaded|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release Singlethreaded|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Release|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.ReleaseWithoutAsm|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.ReleaseWithoutAsm|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.ReleaseWithoutAsm|x64.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Template|Win32.ActiveCfg = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Template|Win32.Build.0 = Release|Win32
-		{3D4F1751-0F6E-460C-8D66-4A6D3C802E86}.Template|x64.ActiveCfg = Release|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug Multithreaded|Win32.ActiveCfg = Debug Multithreaded|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug Multithreaded|Win32.Build.0 = Debug Multithreaded|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug Multithreaded|x64.ActiveCfg = Debug Multithreaded|Win32
