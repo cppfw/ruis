@@ -39,15 +39,22 @@ THE SOFTWARE. */
 #include "config.hpp"
 
 
-#ifdef M_MORDA_OGLES2
-#	include <GLES2/gl2.h>
-#	include <EGL/egl.h>
-#else
-#	include <GL/glew.h>
-#	if M_OS == M_OS_LINUX
-#		include <GL/glx.h>
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+#	ifdef M_MORDA_OGLES2
+#		include <GLES2/gl2.h>
+#		include <EGL/egl.h>
+#	else
+#		include <GL/glew.h>
+
+#		if M_OS == M_OS_LINUX
+#			include <GL/glx.h>
+#		endif
 #	endif
+
+#else
+#	error "Unknown OS"
 #endif
+
 
 #if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
 #	include <ting/mt/Queue.hpp>

@@ -29,6 +29,9 @@
             <in>main.cpp</in>
           </df>
         </df>
+        <df name="render">
+          <in>Render.hpp</in>
+        </df>
         <df name="resources">
           <in>ResFont.cpp</in>
           <in>ResFont.hpp</in>
@@ -319,6 +322,8 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -733,6 +738,8 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
@@ -973,6 +980,8 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1255,6 +1264,8 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1641,6 +1652,8 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
