@@ -60,6 +60,7 @@ class Widget : virtual public ting::Shared{
 public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
 	
+public:
 	class LayoutParams{
 	public:
 		constexpr static const real D_Min = real(-1);
@@ -73,6 +74,7 @@ public:
 		
 		Vec2r dim;
 
+	public:
 		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
 		}

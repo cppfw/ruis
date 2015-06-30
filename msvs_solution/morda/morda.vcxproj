@@ -165,9 +165,6 @@
     <ClInclude Include="..\..\src\morda\widgets\Widget.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\stob\msvs_solution\stob\stob.vcxproj">
-      <Project>{762457c4-9c2e-4ed3-a7fe-0bc7e0079e01}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\freetype-2.4.11\builds\win32\vc2010\freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
     </ProjectReference>
@@ -185,12 +182,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\libting.4.0.0.0\build\native\libting.targets" Condition="Exists('..\packages\libting.4.0.0.0\build\native\libting.targets')" />
+    <Import Project="..\packages\libting.4.0.0.1\build\native\libting.targets" Condition="Exists('..\packages\libting.4.0.0.1\build\native\libting.targets')" />
+    <Import Project="..\packages\libstob.2.0.0.1\build\native\libstob.targets" Condition="Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\libting.4.0.0.0\build\native\libting.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.4.0.0.0\build\native\libting.targets'))" />
+    <Error Condition="!Exists('..\packages\libting.4.0.0.1\build\native\libting.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.4.0.0.1\build\native\libting.targets'))" />
+    <Error Condition="!Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libstob.2.0.0.1\build\native\libstob.targets'))" />
   </Target>
 </Project>
