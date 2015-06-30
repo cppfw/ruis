@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,32 @@ THE SOFTWARE. */
 
 
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
-#	define M_MORDA_OGLES2
+#define M_MORDA_RENDER_OPENGL				0
+#define M_MORDA_RENDER_DIRECTX				1
+#define M_MORDA_RENDER_GNM					2
+
+
+#if M_OS == M_OS_LINUX
+
+#	if M_OS_NAME == M_OS_NAME_ANDROID
+#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+#		define M_MORDA_OGLES2
+#	else
+#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+#	endif
+
+#elif M_OS == M_OS_WINDOWS
+
+#	ifdef M_MORDA_ENFORCE_OPENGL_UNDER_WINDOWS
+#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+#	else
+#		define M_MORDA_RENDER M_MORDA_RENDER_DIRECTX
+#	endif
+
+#else
+#	error "unknown OS"
 #endif
+
 
 
 //#ifdef DEBUG
