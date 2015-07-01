@@ -84,7 +84,6 @@ public:
 	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void OnTopmostChanged()override;
-
 };
 
 }

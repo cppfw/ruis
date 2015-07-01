@@ -80,13 +80,6 @@ public:
 
 	void OnResize()override;
 	
-	size_t count()const{
-		if(this->provider){
-			return this->provider->count();
-		}
-		return 0;
-	}
-	
 	size_t visibleCount()const{
 		return this->Children().size();
 	}
@@ -99,6 +92,9 @@ private:
 	std::shared_ptr<ItemsProvider> provider;
 	
 	void updateChildrenList();
+	
+	bool arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool add, size_t index);//returns true if it was the last visible widget
+	
 	
 	void updateTailItemsInfo();
 	

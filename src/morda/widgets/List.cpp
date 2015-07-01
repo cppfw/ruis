@@ -79,19 +79,26 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 
 real List::scrollFactor()const NOEXCEPT{
-	return real(this->posIndex) / real(this->count() - this->visibleCount());
+	if(!this->provider || this->provider->count() == 0){
+		return 0;
+	}
+	return real(this->posIndex) / real(this->provider->count() - this->visibleCount());
 }
 
 
 void List::setScrollPosAsFactor(real factor){
+	if(!this->provider || this->provider->count() == 0){
+		return;
+	}
+	
 	if(this->numTailItems == 0){
 		this->updateTailItemsInfo();
 	}
 	
-	this->posIndex = factor * real(this->count() - this->numTailItems);
+	this->posIndex = factor * real(this->provider->count() - this->numTailItems);
 	
-	if(this->count() != this->numTailItems){
-		real intFactor = real(this->posIndex) / real(this->count() - this->numTailItems);
+	if(this->provider->count() != this->numTailItems){
+		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
 		if(this->Children().size() != 0){
 			real d;
@@ -101,7 +108,7 @@ void List::setScrollPosAsFactor(real factor){
 				d = this->Children().front()->Rect().d.x;
 			}
 			
-			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->count() - this->numTailItems) + factor * this->firstTailItemOffset);
+			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
 		}else{
 			this->posOffset = 0;
 		}
@@ -112,6 +119,58 @@ void List::setScrollPosAsFactor(real factor){
 	
 	this->updateChildrenList();
 }
+
+bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index){
+	auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+		
+	Vec2r dim = this->dimForWidget(*w, lp);
+
+	w->Resize(dim);
+
+	if(this->isVertical){
+		pos -= w->Rect().d.y;
+		w->MoveTo(Vec2r(0, pos));
+
+		if(pos < this->Rect().d.y){
+			if(!added){
+				this->Add(w);
+			}
+			if(this->addedIndex == 0){
+				this->addedIndex = index;
+			}
+		}else{
+			if(added){
+				this->Remove(*w);
+			}
+		}
+
+		if(w->Rect().p.y <= 0){
+			return true;
+		}
+	}else{
+		w->MoveTo(Vec2r(pos, 0));
+		pos += w->Rect().d.x;
+
+		if(pos > 0){
+			if(!added){
+				this->Add(w);
+			}
+			if(this->addedIndex == 0){
+				this->addedIndex = index;
+			}
+		}else{
+			if(added){
+				this->Remove(*w);
+			}
+		}
+
+		if(w->Rect().Right() >= this->Rect().d.x){
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void List::updateChildrenList(){
 	if(!this->provider){
@@ -127,12 +186,6 @@ void List::updateChildrenList(){
 		this->updateTailItemsInfo();
 	}
 	
-	
-	
-	
-	this->removeAll();
-	this->addedIndex = 0;
-	
 	real pos;
 	
 	if(this->isVertical){
@@ -141,37 +194,27 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
-	for(size_t i = this->posIndex; i < this->count(); ++i){
+	size_t i;
+	
+	//add widgets before added
+//	for(i = this->posIndex; i != this->provider->count() && i < this->addedIndex; ++i){
+//		auto w = this->provider->getWidget(i);
+//		
+//		if(this->arrangeWidget(w, pos, false, i)){
+//			return;
+//		}
+//	}
+	
+	
+	//TODO:
+	this->removeAll();
+	this->addedIndex = 0;
+	
+	for(i = this->posIndex; i < this->provider->count(); ++i){
 		auto w = this->provider->getWidget(i);
 		
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
-		
-		Vec2r dim = this->dimForWidget(*w, lp);
-		
-		w->Resize(dim);
-		
-		if(this->isVertical){
-			w->MoveTo(Vec2r(0, pos - w->Rect().d.y));
-			pos -= w->Rect().d.y;
-			
-			if(pos < this->Rect().d.y){
-				this->Add(w);
-			}
-			
-			if(w->Rect().p.y <= 0){
-				break;
-			}
-		}else{
-			w->MoveTo(Vec2r(pos, 0));
-			pos += w->Rect().d.x;
-			
-			if(pos > 0){
-				this->Add(w);
-			}
-			
-			if(w->Rect().Right() >= this->Rect().d.x){
-				break;
-			}
+		if(this->arrangeWidget(w, pos, false, i)){
+			break;
 		}
 	}
 }
