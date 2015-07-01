@@ -44,7 +44,6 @@ public:
 	SimpleBlurPosTexShader& operator=(const SimpleBlurPosTexShader&) = delete;
 	
 	void SetTextureStep(Vec2f step){
-		ASSERT(this->IsBound())
 		this->setUniform2f(this->texStepUniform, step);
 	}
 	

@@ -292,8 +292,6 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 
 real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
-
-	shader.Bind();
 	
 	shader.SetMatrix(matrix);
 

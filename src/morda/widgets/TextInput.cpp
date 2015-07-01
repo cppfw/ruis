@@ -45,7 +45,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		matr.Scale(Vec2r(ting::math::Abs(this->cursorPos - this->selectionStartPos), this->Rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
-		s.Bind();
+
 		s.SetColor(0xff804040);
 
 		s.SetMatrix(matr);
@@ -61,7 +61,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 				return morda::App::Inst().Shaders().posTexShader;
 			}else{
 				ColorPosTexShader& s = morda::App::Inst().Shaders().colorPosTexShader;
-				s.Bind();
+
 				s.SetColor(this->Color());
 				return s;
 			}
@@ -84,7 +84,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		matr.Scale(Vec2r(D_CursorWidth, this->Rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
-		s.Bind();
+
 		s.SetColor(this->Color());
 
 		s.SetMatrix(matr);

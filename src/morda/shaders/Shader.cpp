@@ -6,7 +6,7 @@ using namespace morda;
 
 
 Shader* Shader::boundShader = nullptr;
-
+bool Shader::renderIsInProgress = false;
 
 
 

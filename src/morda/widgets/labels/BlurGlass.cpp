@@ -24,7 +24,7 @@ void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	matr.Scale(this->Rect().d);
 
 	morda::SimpleBlurPosTexShader &s = App::Inst().Shaders().simpleBlurPosTexShader;
-	s.Bind();
+
 	s.SetMatrix(matr);
 	
 	s.SetTextureStep(Vec2f(1).CompDiv(viewPortRect.d.ConvertTo<float>()));

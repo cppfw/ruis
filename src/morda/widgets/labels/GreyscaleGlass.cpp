@@ -41,7 +41,7 @@ void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
 	matr.Scale(this->Rect().d);
 
 	morda::PosTexShader &s = App::Inst().Shaders().simpleGrayscalePosTexShader;
-	s.Bind();
+
 	s.SetMatrix(matr);
 	
 	s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);

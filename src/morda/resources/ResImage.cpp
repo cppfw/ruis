@@ -44,7 +44,6 @@ void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
 	Matr4f matr(matrix);
 	matr.Scale(this->dim);
 	
-	s.Bind();
 	s.SetMatrix(matr);
 	s.render(PosShader::quad01Fan, this->texCoords);
 }

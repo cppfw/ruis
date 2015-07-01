@@ -115,7 +115,7 @@ public:
 			this->tex->Tex().Bind();
 
 			morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
-			s.Bind();
+
 //			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
 			s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
@@ -168,7 +168,7 @@ public:
 		this->tex->Tex().Bind();
 		
 		morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
-		s.Bind();
+
 //		s.SetColor(morda::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
 		

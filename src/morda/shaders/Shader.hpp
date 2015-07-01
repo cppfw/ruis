@@ -39,29 +39,7 @@ THE SOFTWARE. */
 #include "../util/Vector3.hpp"
 #include "../util/Vector2.hpp"
 
-
-
-//TODO: remove
-#include "../config.hpp"
-
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-#	include <GL/glew.h>
-
-#	if M_OS == M_OS_LINUX
-#		include <GL/glx.h>
-#	else
-#		include <ting/windows.hpp>
-#	endif
-
-#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-#		include <GLES2/gl2.h>
-#		include <EGL/egl.h>
-#else
-#	error "unknown render API"
-#endif
-
-
-
+#include "../Exc.hpp"
 
 
 
@@ -78,11 +56,26 @@ class Shader{
 	friend class Render;
 	
 	static Shader* boundShader;
-	
+	static bool renderIsInProgress;
 	
 	std::unique_ptr<Render::Program> program;
 
 	const Render::InputID matrixUniform;
+	
+	void Bind(){
+		if(this == boundShader){
+			return;
+		}
+		
+		if(renderIsInProgress){
+			throw morda::Exc("Shader: cannot bind shader because another shader is bound and one of its render() methods was not called");
+		}
+		
+		renderIsInProgress = true;
+		
+		Render::bindShader(*this->program);
+		boundShader = this;
+	}
 	
 protected:
 	Render::InputID getAttribute(const char* n){
@@ -96,69 +89,56 @@ protected:
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
 
 	void renderArrays(Render::EMode mode, unsigned numElements){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::renderArrays(mode, numElements);
+		this->renderIsInProgress = false;
 	}
 	
 	void renderElements(Render::EMode mode, ting::Buffer<const std::uint16_t> i){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::renderElements(mode, i);
+		this->renderIsInProgress = false;
 	}
 	
 	void setUniformMatrix4f(Render::InputID id, const morda::Matr4f& m){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setUniformMatrix4f(id, m);
 	}
 	
 	void setUniform1i(Render::InputID id, int i){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setUniform1i(id, i);
 	}
 	
 	void setUniform2f(Render::InputID id, Vec2f v){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setUniform2f(id, v);
 	}
 	
 	void setUniform4f(Render::InputID id, float x, float y, float z, float a){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setUniform4f(id, x, y, z, a);
 	}
 	
 	void setUniform4f(Render::InputID id, ting::Buffer<const Vec4f> v){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setUniform4f(id, v);
 	}
 	
 	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec3f> a){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 	
 	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec2f> a){
-		ASSERT(this->IsBound())
+		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 public:
 	
-	
 	virtual ~Shader()NOEXCEPT{}
-
-	void Bind(){//TODO: make private
-		if(this->IsBound()){
-			return;
-		}
-		
-		Render::bindShader(*this->program);
-		boundShader = this;
-	}
-
-	bool IsBound()const NOEXCEPT{//TODO: make private
-		return this == boundShader;
-	}
 	
 	void SetMatrix(const morda::Matr4f &m){
-		ASSERT(this->IsBound())
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 };//~class Shader

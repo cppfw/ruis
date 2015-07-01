@@ -28,7 +28,7 @@ void Label::Render(const morda::Matr4r& matrix)const{
 			return morda::App::Inst().Shaders().posTexShader;
 		}else{
 			ColorPosTexShader& s = morda::App::Inst().Shaders().colorPosTexShader;
-			s.Bind();
+
 			s.SetColor(this->Color());
 			return s;
 		}
