@@ -51,8 +51,10 @@ class Render{
 	Render();
 	
 public:
-	//NOTE: do not change order!!!
+	
 	enum class EMode{
+		//NOTE: do not change order!!!
+		
 		TRIANGLES,
 		TRIANGLE_FAN,
 		LINE_LOOP
