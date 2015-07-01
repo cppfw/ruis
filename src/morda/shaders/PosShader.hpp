@@ -98,12 +98,12 @@ public:
 private:
 	template <class V> void Render(ting::Buffer<const V> p, Render::EMode mode){
 		this->SetPositionPointer(&*p.begin());
-		this->DrawArrays(GLint(mode), p.size());
+		this->DrawArrays(mode, p.size());
 	}
 	
 	template <class V> void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, Render::EMode mode){
 		this->SetPositionPointer(&*p.begin());
-		this->DrawElements(GLint(mode), i);
+		this->DrawElements(mode, i);
 	}
 };
 

@@ -41,6 +41,30 @@ THE SOFTWARE. */
 
 
 
+//TODO: remove
+#include "../config.hpp"
+
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+#	include <GL/glew.h>
+
+#	if M_OS == M_OS_LINUX
+#		include <GL/glx.h>
+#	else
+#		include <ting/windows.hpp>
+#	endif
+
+#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
+#		include <GLES2/gl2.h>
+#		include <EGL/egl.h>
+#else
+#	error "unknown render API"
+#endif
+
+
+
+
+
+
 namespace morda{
 
 
@@ -103,16 +127,14 @@ protected:
 
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
 
-	void DrawArrays(GLenum mode, unsigned numElements){
+	void DrawArrays(Render::EMode mode, unsigned numElements){
 		ASSERT(this->IsBound())
-		glDrawArrays(mode, 0, numElements);
-		AssertOpenGLNoError();
+		Render::drawArrays(mode, numElements);
 	}
 	
-	void DrawElements(GLenum mode, ting::Buffer<const std::uint16_t> i){
+	void DrawElements(Render::EMode mode, ting::Buffer<const std::uint16_t> i){
 		ASSERT(this->IsBound())
-		glDrawElements(mode, i.size(), GL_UNSIGNED_SHORT, &*i.begin());
-		AssertOpenGLNoError();
+		Render::drawElements(mode, i);
 	}
 	
 public:
@@ -142,7 +164,7 @@ public:
 	
 	//TODO: remove
 	static void AssertOpenGLNoError(){
-		Render::AssertOpenGLNoError();
+
 	}
 };//~class Shader
 
