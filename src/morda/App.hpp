@@ -83,12 +83,7 @@ class App : public ting::IntrusiveSingleton<App>{
 	friend class Widget;
 	friend class CharInputWidget;
 	
-	struct ThreadId{
-		ting::mt::Thread::T_ThreadID id;
-		ThreadId() :
-				id(ting::mt::Thread::GetCurrentThreadID())
-		{}
-	} uiThreadId;
+	ting::mt::Thread::T_ThreadID uiThreadId = ting::mt::Thread::GetCurrentThreadID();
 
 public:
 	struct WindowParams{
@@ -97,7 +92,7 @@ public:
 	
 	
 	bool ThisIsUIThread()const NOEXCEPT{
-		return this->uiThreadId.id == ting::mt::Thread::GetCurrentThreadID();
+		return this->uiThreadId == ting::mt::Thread::GetCurrentThreadID();
 	}
 	
 	struct DefaultShaders{
