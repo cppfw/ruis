@@ -34,6 +34,8 @@ THE SOFTWARE. */
 namespace morda{
 
 
+class Shader;
+
 
 class Render{
 	friend class Shader;
@@ -46,11 +48,17 @@ public:
 		LINE_LOOP
 	};
 	
+	
+	//=== functions to be used by Shader class internally
 private:
+	static void renderArrays(EMode mode, unsigned numElements);
 	
-	static void drawArrays(EMode mode, unsigned numElements);
+	static void renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i);
 	
-	static void drawElements(EMode mode, const ting::Buffer<const std::uint16_t>& i);
+	static void bindShader(Shader& s);
+	
+	//=== ~~~
+	
 	
 public:
 	

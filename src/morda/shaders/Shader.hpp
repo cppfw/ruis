@@ -75,6 +75,8 @@ namespace morda{
  * Matrix uniform should be 'mat4' and named 'matrix'.
  */
 class Shader{
+	friend class Render;
+	
 	static Shader* boundShader;
 	
 	struct ShaderWrapper{
@@ -88,12 +90,11 @@ class Shader{
 		static bool CheckForCompileErrors(GLuint shader);
 	};
 	
-	ShaderWrapper vertexShader;
-	ShaderWrapper fragmentShader;
-	
 	struct ProgramWrapper{
+		ShaderWrapper vertexShader;
+		ShaderWrapper fragmentShader;
 		GLuint p;
-		ProgramWrapper(GLuint vertex, GLuint fragment);
+		ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode);
 		~ProgramWrapper()NOEXCEPT{
 			glDeleteProgram(this->p);
 		}
@@ -127,14 +128,14 @@ protected:
 
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
 
-	void DrawArrays(Render::EMode mode, unsigned numElements){
+	void renderArrays(Render::EMode mode, unsigned numElements){
 		ASSERT(this->IsBound())
-		Render::drawArrays(mode, numElements);
+		Render::renderArrays(mode, numElements);
 	}
 	
-	void DrawElements(Render::EMode mode, ting::Buffer<const std::uint16_t> i){
+	void renderElements(Render::EMode mode, ting::Buffer<const std::uint16_t> i){
 		ASSERT(this->IsBound())
-		Render::drawElements(mode, i);
+		Render::renderElements(mode, i);
 	}
 	
 public:
@@ -142,17 +143,16 @@ public:
 	
 	virtual ~Shader()NOEXCEPT{}
 
-	void Bind(){
+	void Bind(){//TODO: make private
 		if(this->IsBound()){
 			return;
 		}
 		
-		glUseProgram(this->program.p);
-		AssertOpenGLNoError();
+		Render::bindShader(*this);
 		boundShader = this;
 	}
 
-	bool IsBound()const NOEXCEPT{
+	bool IsBound()const NOEXCEPT{//TODO: make private
 		return this == boundShader;
 	}
 	

@@ -91,7 +91,7 @@ private:
 		}
 		this->SetPositionPointer(&*p.begin());
 		this->SetTexCoordPointer(&*t.begin());
-		this->DrawArrays(mode, p.size());
+		this->renderArrays(mode, p.size());
 	}
 	
 	template <class V> void RenderInternal(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, ting::Buffer<const Vec2f> t, Render::EMode mode){
@@ -101,7 +101,7 @@ private:
 		}
 		this->SetPositionPointer(&*p.begin());
 		this->SetTexCoordPointer(&*t.begin());
-		this->DrawElements(mode, i);
+		this->renderElements(mode, i);
 	}
 };
 

@@ -21,6 +21,9 @@
 #endif
 
 
+#include "../shaders/Shader.hpp"
+
+
 using namespace morda;
 
 
@@ -70,7 +73,7 @@ GLenum modeMap[] = {
 
 
 
-void Render::drawArrays(EMode mode, unsigned numElements) {
+void Render::renderArrays(EMode mode, unsigned numElements) {
 	GLenum m = modeMap[unsigned(mode)];
 	
 	glDrawArrays(m, 0, numElements);
@@ -79,10 +82,16 @@ void Render::drawArrays(EMode mode, unsigned numElements) {
 
 
 
-void Render::drawElements(EMode mode, const ting::Buffer<const std::uint16_t>& i) {
+void Render::renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i) {
 	GLenum m = modeMap[unsigned(mode)];
 	
 	glDrawElements(m, i.size(), GL_UNSIGNED_SHORT, &*i.begin());
 	AssertOpenGLNoError();
 }
+
+void Render::bindShader(Shader& s) {
+	glUseProgram(s.program.p);
+	AssertOpenGLNoError();
+}
+
 

@@ -26,13 +26,16 @@ Shader::ShaderWrapper::ShaderWrapper(const char* code, GLenum type){
 
 
 
-Shader::ProgramWrapper::ProgramWrapper(GLuint vertex, GLuint fragment){
+Shader::ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
+		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
+		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
+{
 	this->p = glCreateProgram();
-	glAttachShader(this->p, vertex);
-	glAttachShader(this->p, fragment);
+	glAttachShader(this->p, vertexShader.s);
+	glAttachShader(this->p, fragmentShader.s);
 	glLinkProgram(this->p);
 	if(this->CheckForLinkErrors(this->p)){
-		TRACE(<< "Error while linking shader program" << std::endl)
+		TRACE(<< "Error while linking shader program" << vertexShaderCode << std::endl << fragmentShaderCode << std::endl)
 		glDeleteProgram(this->p);
 		throw ting::Exc("Error linking shader program");
 	}
@@ -41,9 +44,7 @@ Shader::ProgramWrapper::ProgramWrapper(GLuint vertex, GLuint fragment){
 
 
 Shader::Shader(const char* vertexShaderCode, const char* fragmentShaderCode) :
-		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
-		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER),
-		program(this->vertexShader.s, this->fragmentShader.s)
+		program(vertexShaderCode, fragmentShaderCode)
 {
 	this->matrixUniform = this->GetUniform("matrix");
 }
