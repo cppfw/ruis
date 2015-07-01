@@ -365,10 +365,10 @@ public:
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
-	morda::Rect2r curWinRect;
+	morda::Rect2f curWinRect;
 
 public:
-	const morda::Vec2r& viewportDim()const NOEXCEPT{
+	const morda::Vec2f& viewportDim()const NOEXCEPT{
 		return this->curWinRect.d;
 	}
 
@@ -386,23 +386,20 @@ public:
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 
-
-	void UpdateGLViewport();
-
-	void UpdateWindowRect(const morda::Rect2r& rect);
+	void UpdateWindowRect(const morda::Rect2f& rect);
 
 	void Render();
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2r& pos)const NOEXCEPT{
+	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2f& pos)const NOEXCEPT{
 		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 	
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseMove(const morda::Vec2r& pos, unsigned id);
+	void HandleMouseMove(const morda::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
+	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
 	
 	void HandleMouseHover(bool isHovered, unsigned pointerID);
 

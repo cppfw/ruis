@@ -246,3 +246,7 @@ void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
 	AssertOpenGLNoError();
 }
 
+void Render::setViewport(Rect2i r){
+	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
+	AssertOpenGLNoError();
+}

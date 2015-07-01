@@ -16,18 +16,6 @@ ting::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 
-void App::UpdateGLViewport(){
-	TRACE(<< "App::UpdateGLViewport(): this->curWinRect = " << this->curWinRect << std::endl)
-	glViewport(
-			int(this->curWinRect.p.x),
-			int(this->curWinRect.p.y),
-			int(this->curWinRect.d.x),
-			int(this->curWinRect.d.y)
-		);
-}
-
-
-
 void App::Render(){
 	//TODO: render only if needed?
 	
@@ -62,14 +50,20 @@ void App::Render(){
 
 
 
-void App::UpdateWindowRect(const morda::Rect2r& rect){
+void App::UpdateWindowRect(const morda::Rect2f& rect){
 	if(this->curWinRect == rect){
 		return;
 	}
 	
 	this->curWinRect = rect;
 
-	this->UpdateGLViewport();
+	TRACE(<< "App::UpdateGLViewport(): this->curWinRect = " << this->curWinRect << std::endl)
+	Render::setViewport(Rect2i(
+			int(this->curWinRect.p.x),
+			int(this->curWinRect.p.y),
+			int(this->curWinRect.d.x),
+			int(this->curWinRect.d.y)
+		));
 	
 	if(!this->rootWidget){
 		return;

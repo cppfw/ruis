@@ -34,6 +34,7 @@ THE SOFTWARE. */
 #include <ting/Void.hpp>
 
 #include "../util/Matrix4.hpp"
+#include "../util/Rectangle2.hpp"
 
 
 namespace morda{
@@ -97,7 +98,7 @@ private:
 	
 public:
 	
-	
+	static void setViewport(Rect2i r);
 };
 
 
