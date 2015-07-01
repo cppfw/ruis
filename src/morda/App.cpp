@@ -25,14 +25,12 @@ void App::render(){
 		return;
 	}
 	
-	ASSERT(glGetError() == GL_NO_ERROR)
 
-	glClearColor(0.0f, 0, 0.0f, 1.0f);
-	ASSERT(glGetError() == GL_NO_ERROR)
+	Render::setClearColor(Vec4f(0.0f, 0, 0.0f, 1.0f));
 	
 	//TODO: clear depth if depth buffer is created, and stencil also, and whatever else
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	ASSERT(glGetError() == GL_NO_ERROR)
+	Render::clear(Render::EBuffer::COLOR);
+	Render::clear(Render::EBuffer::DEPTH);
 	
 	morda::Matr4r m;
 	m.Identity();

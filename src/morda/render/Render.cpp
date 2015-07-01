@@ -251,7 +251,10 @@ void Render::setViewport(Rect2i r){
 	AssertOpenGLNoError();
 }
 
-
+void Render::setClearColor(Vec4f c){
+	glClearColor(c.x, c.y, c.z, c.w);
+	AssertOpenGLNoError();
+}
 
 Render::Render(){
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
@@ -259,4 +262,26 @@ Render::Render(){
 		throw morda::Exc("GLEW initialization failed");
 	}
 #endif
+	AssertOpenGLNoError();
+}
+
+void Render::clear(EBuffer b) {
+	GLbitfield bf = 0;
+	switch(b){
+		default:
+		case EBuffer::COLOR:
+			bf = GL_COLOR_BUFFER_BIT;
+			break;
+		case EBuffer::DEPTH:
+			bf = GL_DEPTH_BUFFER_BIT;
+			break;
+		case EBuffer::ACCUM:
+			bf = GL_ACCUM_BUFFER_BIT;
+			break;
+		case EBuffer::STENCIL:
+			bf = GL_STENCIL_BUFFER_BIT;
+			break;
+	}
+	glClear(bf);
+	AssertOpenGLNoError();
 }

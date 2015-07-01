@@ -58,6 +58,13 @@ public:
 		LINE_LOOP
 	};
 	
+	enum class EBuffer{
+		COLOR,
+		DEPTH,
+		STENCIL,
+		ACCUM
+	};
+	
 	class InputID{
 		friend class morda::Render;
 		std::int64_t id;
@@ -103,6 +110,10 @@ private:
 public:
 	
 	static void setViewport(Rect2i r);
+	
+	static void setClearColor(Vec4f c);
+	
+	static void clear(EBuffer b);
 };
 
 
