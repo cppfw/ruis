@@ -114,7 +114,7 @@ struct ShaderWrapper{
 };
 
 
-struct ProgramWrapper : public Render::Program{
+struct ProgramWrapper : public ting::Void{
 	ShaderWrapper vertexShader;
 	ShaderWrapper fragmentShader;
 	GLuint p;
@@ -176,17 +176,17 @@ void Render::renderElements(EMode mode, const ting::Buffer<const std::uint16_t>&
 	AssertOpenGLNoError();
 }
 
-void Render::bindShader(Program& p) {
+void Render::bindShader(ting::Void& p) {
 	glUseProgram(static_cast<ProgramWrapper&>(p).p);
 	AssertOpenGLNoError();
 }
 
-std::unique_ptr<Render::Program> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
+std::unique_ptr<ting::Void> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
 	return std::unique_ptr<ProgramWrapper>(new ProgramWrapper(vertexShaderCode, fragmentShaderCode));
 }
 
 
-Render::InputID Render::getAttribute(Program& p, const char* n) {
+Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
 	GLint ret = glGetAttribLocation(static_cast<ProgramWrapper&>(p).p, n);
 	if(ret < 0){
 		std::stringstream ss;
@@ -196,7 +196,7 @@ Render::InputID Render::getAttribute(Program& p, const char* n) {
 	return InputID(ret);
 }
 
-Render::InputID Render::getUniform(Program& p, const char* n) {
+Render::InputID Render::getUniform(ting::Void& p, const char* n) {
 	GLint ret = glGetUniformLocation(static_cast<ProgramWrapper&>(p).p, n);
 	if(ret < 0){
 		throw ting::Exc("No uniform found in the shader program");

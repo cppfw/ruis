@@ -31,6 +31,7 @@ THE SOFTWARE. */
 #include <memory>
 
 #include <ting/Buffer.hpp>
+#include <ting/Void.hpp>
 
 #include "../util/Matrix4.hpp"
 
@@ -52,11 +53,6 @@ public:
 		LINE_LOOP
 	};
 	
-	class Program{
-	public:
-		virtual ~Program()noexcept{}
-	};
-	
 	class InputID{
 		friend class morda::Render;
 		std::int64_t id;
@@ -75,13 +71,13 @@ private:
 	static void renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i);
 	
 	//returns pointer to shader object
-	static std::unique_ptr<Program> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
+	static std::unique_ptr<ting::Void> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
-	static void bindShader(Program& p);
+	static void bindShader(ting::Void& p);
 	
-	static InputID getAttribute(Program& p, const char* n);
+	static InputID getAttribute(ting::Void& p, const char* n);
 	
-	static InputID getUniform(Program& p, const char* n);
+	static InputID getUniform(ting::Void& p, const char* n);
 	
 	static void setUniformMatrix4f(InputID id, const Matr4f& m);
 	

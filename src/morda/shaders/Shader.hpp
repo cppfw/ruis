@@ -58,7 +58,7 @@ class Shader{
 	static Shader* boundShader;
 	static bool renderIsInProgress;
 	
-	std::unique_ptr<Render::Program> program;
+	std::unique_ptr<ting::Void> program;
 
 	const Render::InputID matrixUniform;
 	
