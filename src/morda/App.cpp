@@ -16,7 +16,7 @@ ting::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 
-void App::Render(){
+void App::render(){
 	//TODO: render only if needed?
 	
 //	TRACE(<< "App::Render(): invoked" << std::endl)

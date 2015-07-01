@@ -614,11 +614,6 @@ App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
 	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
 
 	TRACE_AND_LOG(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
-
-	if (glewInit() != GLEW_OK){
-		this->Destroy();
-		throw morda::Exc("GLEW initialization failed");
-	}
 }
 
 

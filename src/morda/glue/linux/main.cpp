@@ -132,11 +132,6 @@ App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrap
 	glXMakeCurrent(this->d.d, this->w.w, this->glxContext);
 	
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
-	
-	if(glewInit() != GLEW_OK){
-		this->Destroy();
-		throw morda::Exc("GLEW initialization failed");
-	}
 }
 
 
@@ -610,7 +605,7 @@ void App::Exec(){
 	
 	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
 	//So, render everything for the first time.
-	this->Render();
+	this->render();
 	
 	while(!this->quitFlag){
 		waitSet.WaitWithTimeout(this->updater.Update());
@@ -634,7 +629,7 @@ void App::Exec(){
 						if(event.xexpose.count != 0){
 							break;//~switch()
 						}
-						this->Render();
+						this->render();
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
@@ -723,7 +718,7 @@ void App::Exec(){
 			}//~while()
 		}//~if there are pending X events
 		
-		this->Render();
+		this->render();
 	}//~while(!this->quitFlag)
 	
 	waitSet.Remove(this->uiQueue);

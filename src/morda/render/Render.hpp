@@ -45,6 +45,10 @@ class Shader;
 
 class Render{
 	friend class Shader;
+	friend class App;
+	
+	
+	Render();
 	
 public:
 	//NOTE: do not change order!!!

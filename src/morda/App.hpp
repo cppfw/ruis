@@ -332,8 +332,12 @@ private:
 #	error "unsupported OS"
 #endif
 
+private:
+	Render renderer; //This should init the rendering
+	
 	
 #if M_OS_NAME != M_OS_NAME_ANDROID
+private:
 	volatile bool quitFlag = false;
 #endif
 	
@@ -388,7 +392,7 @@ private:
 
 	void UpdateWindowRect(const morda::Rect2r& rect);
 
-	void Render();
+	void render();
 
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2f& pos)const NOEXCEPT{

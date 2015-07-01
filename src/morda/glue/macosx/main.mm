@@ -634,11 +634,6 @@ morda::App::OpenGLContext::OpenGLContext(void* window){
 	
 	[openGLContext setView:[wnd contentView]];
 	[openGLContext makeCurrentContext];
-	
-	if(glewInit() != GLEW_OK){
-		this->Destroy();
-		throw morda::Exc("GLEW initialization failed");
-	}
 }
 
 void morda::App::OpenGLContext::Destroy()NOEXCEPT{

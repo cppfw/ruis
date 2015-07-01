@@ -250,3 +250,13 @@ void Render::setViewport(Rect2i r){
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
 }
+
+
+
+Render::Render(){
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+	if(glewInit() != GLEW_OK){
+		throw morda::Exc("GLEW initialization failed");
+	}
+#endif
+}
