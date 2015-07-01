@@ -35,7 +35,7 @@ void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
 			viewPortRect.d.x,
 			viewPortRect.d.y
 		);
-	Shader::AssertOpenGLNoError();
+//	Shader::AssertOpenGLNoError();
 	
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);

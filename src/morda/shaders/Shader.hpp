@@ -161,11 +161,6 @@ public:
 		ASSERT(this->IsBound())
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
-	
-	//TODO: remove
-	static void AssertOpenGLNoError(){
-
-	}
 };//~class Shader
 
 
