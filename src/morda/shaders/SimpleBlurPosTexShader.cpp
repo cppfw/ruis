@@ -56,7 +56,6 @@ SimpleBlurPosTexShader::SimpleBlurPosTexShader() :
 							gl_FragColor = c;
 						}
 					)qwertyuiop"
-			)
-{
-	this->texStepUniform =  this->GetUniform("texStep");
-}
+			),
+		texStepUniform(this->getUniform("texStep"))
+{}

@@ -35,7 +35,7 @@ namespace morda{
 
 
 class SimpleBlurPosTexShader : public PosTexShader{
-	GLuint texStepUniform;
+	Render::InputID texStepUniform;
 	
 public:
 	SimpleBlurPosTexShader();
@@ -45,7 +45,7 @@ public:
 	
 	void SetTextureStep(Vec2f step){
 		ASSERT(this->IsBound())
-		glUniform2f(this->texStepUniform, step.x, step.y);
+		this->setUniform2f(this->texStepUniform, step);
 	}
 	
 private:

@@ -118,7 +118,7 @@ public:
 			s.Bind();
 //			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
-			s.Render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
+			s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -219,7 +219,7 @@ public:
 		
 		glEnable(GL_CULL_FACE);
 		
-		s.Render(indices, cubePos, cubeTex, morda::Render::EMode::TRIANGLES);
+		s.render(indices, cubePos, cubeTex, morda::Render::EMode::TRIANGLES);
 	}
 };
 

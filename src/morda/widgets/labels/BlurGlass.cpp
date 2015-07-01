@@ -46,6 +46,6 @@ void BlurGlass::Render(const morda::Matr4r& matrix)const{
 			);
 		Shader::AssertOpenGLNoError();
 		
-		s.Render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
+		s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 	}
 }

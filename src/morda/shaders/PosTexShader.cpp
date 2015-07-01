@@ -48,8 +48,7 @@ PosTexShader::PosTexShader() :
 							gl_FragColor = texture2D(textureNumber, tc0);
 						}
 					)qwertyuiop"
-			)
-{
-	this->texCoordAttr = this->GetAttribute("texCoord0");
-	this->texNumberUniform = this->GetUniform("textureNumber");
-}
+			),
+		texCoordAttr(this->getAttribute("texCoord0")),
+		texNumberUniform(this->getUniform("textureNumber"))
+{}

@@ -28,7 +28,11 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include <memory>
+
 #include <ting/Buffer.hpp>
+
+#include "../util/Matrix4.hpp"
 
 
 namespace morda{
@@ -48,6 +52,21 @@ public:
 		LINE_LOOP
 	};
 	
+	class Program{
+	public:
+		virtual ~Program()noexcept{}
+	};
+	
+	class InputID{
+		friend class morda::Render;
+		std::int64_t id;
+		void* data;
+	public:
+		InputID(std::int64_t id, void* data = nullptr) :
+			id(id),
+			data(data)
+		{}
+	};
 	
 	//=== functions to be used by Shader class internally
 private:
@@ -55,8 +74,28 @@ private:
 	
 	static void renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i);
 	
-	static void bindShader(Shader& s);
+	//returns pointer to shader object
+	static std::unique_ptr<Program> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
+	static void bindShader(Program& p);
+	
+	static InputID getAttribute(Program& p, const char* n);
+	
+	static InputID getUniform(Program& p, const char* n);
+	
+	static void setUniformMatrix4f(InputID id, const Matr4f& m);
+	
+	static void setUniform1i(InputID id, int i);
+	
+	static void setUniform2f(InputID id, Vec2f v);
+	
+	static void setUniform4f(InputID id, float x, float y, float z, float a);
+	
+	static void setUniform4f(InputID id, ting::Buffer<const Vec4f> v);
+	
+	static void setVertexAttribArray(InputID id, const Vec3f* a);
+	
+	static void setVertexAttribArray(InputID id, const Vec2f* a);
 	//=== ~~~
 	
 	

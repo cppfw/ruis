@@ -42,18 +42,12 @@ class PosTexShader :
 		protected PosShader,
 		virtual public Shader
 {
-	GLuint texCoordAttr;
+	Render::InputID texCoordAttr;
 
-	GLuint texNumberUniform;
+	Render::InputID texNumberUniform;
 	
 protected:
-	void SetTexCoordPointer(const morda::Vec2f *p){
-		glEnableVertexAttribArray(this->texCoordAttr);
-		ASSERT(glGetError() == GL_NO_ERROR)
-		ASSERT(p)
-		glVertexAttribPointer(this->texCoordAttr, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(p));
-		ASSERT(glGetError() == GL_NO_ERROR)
-	}
+
 public:
 	static const std::array<Vec2f, 4> quadFanTexCoords;
 	
@@ -63,23 +57,22 @@ public:
 	PosTexShader& operator=(const PosTexShader&) = delete;
 	
 	void SetTextureNumber(unsigned i){
-		glUniform1i(this->texNumberUniform, i);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->setUniform1i(this->texNumberUniform, i);
 	}
 	
-	void Render(ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+	void render(ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec2f>(p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+	void render(ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec3f>(p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+	void render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec2f>(i, p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+	void render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec3f>(i, p, t, mode);
 	}
 	
@@ -89,8 +82,8 @@ private:
 			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
 			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");
 		}
-		this->SetPositionPointer(&*p.begin());
-		this->SetTexCoordPointer(&*t.begin());
+		this->setVertexAttribArray(this->positionAttr, p);
+		this->setVertexAttribArray(this->texCoordAttr, t);
 		this->renderArrays(mode, p.size());
 	}
 	
@@ -99,8 +92,8 @@ private:
 			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
 			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");
 		}
-		this->SetPositionPointer(&*p.begin());
-		this->SetTexCoordPointer(&*t.begin());
+		this->setVertexAttribArray(this->positionAttr, p);
+		this->setVertexAttribArray(this->texCoordAttr, t);
 		this->renderElements(mode, i);
 	}
 };

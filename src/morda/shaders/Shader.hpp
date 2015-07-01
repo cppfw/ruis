@@ -79,51 +79,18 @@ class Shader{
 	
 	static Shader* boundShader;
 	
-	struct ShaderWrapper{
-		GLuint s;
-		ShaderWrapper(const char* code, GLenum type);
-		~ShaderWrapper()NOEXCEPT{
-			glDeleteShader(this->s);
-		}
-		
-		//return true if not compiled
-		static bool CheckForCompileErrors(GLuint shader);
-	};
 	
-	struct ProgramWrapper{
-		ShaderWrapper vertexShader;
-		ShaderWrapper fragmentShader;
-		GLuint p;
-		ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode);
-		~ProgramWrapper()NOEXCEPT{
-			glDeleteProgram(this->p);
-		}
-		
-		//return true if not linked
-		static bool CheckForLinkErrors(GLuint program);
-	};
-	
-	ProgramWrapper program;
+	std::unique_ptr<Render::Program> program;
 
-	GLint matrixUniform;
+	const Render::InputID matrixUniform;
 	
 protected:
-	GLint GetAttribute(const char* n){
-		GLint ret = glGetAttribLocation(this->program.p, n);
-		if(ret < 0){
-			std::stringstream ss;
-			ss << "No attribute found in the shader program: " << n;
-			throw ting::Exc(ss.str());
-		}
-		return ret;
+	Render::InputID getAttribute(const char* n){
+		return Render::getAttribute(*this->program, n);
 	}
 	
-	GLint GetUniform(const char* n){
-		GLint ret = glGetUniformLocation(this->program.p, n);
-		if(ret < 0){
-			throw ting::Exc("No uniform found in the shader program");
-		}
-		return ret;
+	Render::InputID getUniform(const char* n){
+		return Render::getUniform(*this->program, n);
 	}
 
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
@@ -138,6 +105,40 @@ protected:
 		Render::renderElements(mode, i);
 	}
 	
+	void setUniformMatrix4f(Render::InputID id, const morda::Matr4f& m){
+		ASSERT(this->IsBound())
+		Render::setUniformMatrix4f(id, m);
+	}
+	
+	void setUniform1i(Render::InputID id, int i){
+		ASSERT(this->IsBound())
+		Render::setUniform1i(id, i);
+	}
+	
+	void setUniform2f(Render::InputID id, Vec2f v){
+		ASSERT(this->IsBound())
+		Render::setUniform2f(id, v);
+	}
+	
+	void setUniform4f(Render::InputID id, float x, float y, float z, float a){
+		ASSERT(this->IsBound())
+		Render::setUniform4f(id, x, y, z, a);
+	}
+	
+	void setUniform4f(Render::InputID id, ting::Buffer<const Vec4f> v){
+		ASSERT(this->IsBound())
+		Render::setUniform4f(id, v);
+	}
+	
+	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec3f> a){
+		ASSERT(this->IsBound())
+		Render::setVertexAttribArray(id, &*a.begin());
+	}
+	
+	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec2f> a){
+		ASSERT(this->IsBound())
+		Render::setVertexAttribArray(id, &*a.begin());
+	}
 public:
 	
 	
@@ -148,7 +149,7 @@ public:
 			return;
 		}
 		
-		Render::bindShader(*this);
+		Render::bindShader(*this->program);
 		boundShader = this;
 	}
 
@@ -158,8 +159,7 @@ public:
 	
 	void SetMatrix(const morda::Matr4f &m){
 		ASSERT(this->IsBound())
-		glUniformMatrix4fv(this->matrixUniform, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
-		AssertOpenGLNoError();
+		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 	
 	//TODO: remove

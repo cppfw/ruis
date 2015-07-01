@@ -51,12 +51,12 @@ class ColorShader : virtual public Shader{
 	ColorShader(const ColorShader&);
 	ColorShader& operator=(const ColorShader&);
 
-	GLint colorUniform;
+	Render::InputID colorUniform;
 
 protected:
-	ColorShader(){
-		this->colorUniform = this->GetUniform("uniformColor");
-	}
+	ColorShader() :
+			colorUniform(this->getUniform("uniformColor"))
+	{}
 
 public:
 	void SetColor(std::uint32_t color){
@@ -69,24 +69,19 @@ public:
 	}
 	
 	void SetColor(morda::Vec3f color){
-		glUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->setUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
     }
 
 	void SetColor(morda::Vec3f color, float alpha){
-		glUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->setUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
     }
 	
 	void SetColor(float r, float g, float b, float a){
-		glUniform4f(this->colorUniform, r, g, b, a);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->setUniform4f(this->colorUniform, r, g, b, a);
 	}
 
 	void SetColor(const morda::Vec4f& color){
-		static_assert(sizeof(color) == sizeof(GLfloat) * 4, "size mismatch");
-		glUniform4fv(this->colorUniform, 1, reinterpret_cast<const GLfloat*>(&color));
-		ASSERT(glGetError() == GL_NO_ERROR)
+		this->setUniform4f(this->colorUniform, ting::Buffer<const Vec4f>(&color, 1));
     }
 };
 

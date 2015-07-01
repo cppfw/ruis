@@ -49,7 +49,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		s.SetColor(0xff804040);
 
 		s.SetMatrix(matr);
-		s.Render(s.quad01Fan);
+		s.render(s.quad01Fan);
 	}
 	
 	{
@@ -88,7 +88,7 @@ void TextInput::Render(const morda::Matr4r& matrix) const{
 		s.SetColor(this->Color());
 
 		s.SetMatrix(matr);
-		s.Render(s.quad01Fan);
+		s.render(s.quad01Fan);
 	}
 }
 
