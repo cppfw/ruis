@@ -365,10 +365,10 @@ public:
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
-	morda::Rect2f curWinRect;
+	morda::Rect2r curWinRect;
 
 public:
-	const morda::Vec2f& viewportDim()const NOEXCEPT{
+	const morda::Vec2r& viewportDim()const NOEXCEPT{
 		return this->curWinRect.d;
 	}
 
@@ -386,7 +386,7 @@ public:
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 
-	void UpdateWindowRect(const morda::Rect2f& rect);
+	void UpdateWindowRect(const morda::Rect2r& rect);
 
 	void Render();
 

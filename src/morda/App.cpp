@@ -50,7 +50,7 @@ void App::Render(){
 
 
 
-void App::UpdateWindowRect(const morda::Rect2f& rect){
+void App::UpdateWindowRect(const morda::Rect2r& rect){
 	if(this->curWinRect == rect){
 		return;
 	}
