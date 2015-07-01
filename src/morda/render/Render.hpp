@@ -54,6 +54,14 @@ namespace morda{
 
 class Render : ting::Singleton<Render>{
 	friend class Shader;
+	
+public:
+	enum class EMode{
+		TRIANGLES = GL_TRIANGLES,
+		TRIANGLE_FAN = GL_TRIANGLE_FAN,
+		LINE_LOOP = GL_LINE_LOOP
+	};
+	
 private:
 	
 	static void AssertOpenGLNoError(){

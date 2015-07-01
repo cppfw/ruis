@@ -67,24 +67,24 @@ public:
 		ASSERT(glGetError() == GL_NO_ERROR)
 	}
 	
-	void Render(ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec2f>(p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec3f>(p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec2f>(i, p, t, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec3f>(i, p, t, mode);
 	}
 	
 private:
-	template <class V> void RenderInternal(ting::Buffer<const V> p, ting::Buffer<const Vec2f> t, EMode mode){
+	template <class V> void RenderInternal(ting::Buffer<const V> p, ting::Buffer<const Vec2f> t, Render::EMode mode){
 		if(p.size() != t.size()){
 			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
 			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");
@@ -94,7 +94,7 @@ private:
 		this->DrawArrays(GLint(mode), p.size());
 	}
 	
-	template <class V> void RenderInternal(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, ting::Buffer<const Vec2f> t, EMode mode){
+	template <class V> void RenderInternal(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, ting::Buffer<const Vec2f> t, Render::EMode mode){
 		if(p.size() != t.size()){
 			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
 			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");

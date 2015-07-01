@@ -16,6 +16,8 @@
 #include "../../../src/morda/widgets/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
 
+#include "../../../src/morda/render/Render.hpp"
+
 #include <ting/debug.hpp>
 #include <ting/fs/FSFile.hpp>
 #include <ting/util.hpp>
@@ -217,7 +219,7 @@ public:
 		
 		glEnable(GL_CULL_FACE);
 		
-		s.Render(indices, cubePos, cubeTex, morda::Shader::EMode::TRIANGLES);
+		s.Render(indices, cubePos, cubeTex, morda::Render::EMode::TRIANGLES);
 	}
 };
 

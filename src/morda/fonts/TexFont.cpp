@@ -297,7 +297,7 @@ real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& mat
 	
 	shader.SetMatrix(matrix);
 
-	shader.Render(g.verts, g.texCoords, Shader::EMode::TRIANGLE_FAN);
+	shader.Render(g.verts, g.texCoords);
 
 	return g.advance;
 }
@@ -396,7 +396,7 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 	this->tex.Bind();
 
-	shader.Render(PosShader::quad01Fan, shader.quadFanTexCoords, Shader::EMode::TRIANGLE_FAN);
+	shader.Render(PosShader::quad01Fan, shader.quadFanTexCoords);
 }
 #endif
 

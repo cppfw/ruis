@@ -79,29 +79,29 @@ protected:
 	
 	
 public:
-	void Render(ting::Buffer<const Vec2f> p, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->Render<Vec2f>(p, mode);
 	}
 	
-	void Render(ting::Buffer<const Vec3f> p, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->Render<Vec3f>(p, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->Render<Vec2f>(i, p, mode);
 	}
 	
-	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, EMode mode = EMode::TRIANGLE_FAN){
+	void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->Render<Vec3f>(i, p, mode);
 	}
 	
 private:
-	template <class V> void Render(ting::Buffer<const V> p, EMode mode){
+	template <class V> void Render(ting::Buffer<const V> p, Render::EMode mode){
 		this->SetPositionPointer(&*p.begin());
 		this->DrawArrays(GLint(mode), p.size());
 	}
 	
-	template <class V> void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, EMode mode){
+	template <class V> void Render(ting::Buffer<const std::uint16_t> i, ting::Buffer<const V> p, Render::EMode mode){
 		this->SetPositionPointer(&*p.begin());
 		this->DrawElements(GLint(mode), i);
 	}

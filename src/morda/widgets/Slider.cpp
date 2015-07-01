@@ -19,7 +19,7 @@ void Slider::SliderHandle::Render(const morda::Matr4r& matrix)const{
 	s.Bind();
 	s.SetColor(morda::Vec3f(0, 1, 1));
 	s.SetMatrix(matr);
-	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
+	s.Render(s.quad01Fan);
 }
 	
 
@@ -150,7 +150,7 @@ void Slider::Render(const morda::Matr4r& matrix) const{
 	s.Bind();
 	s.SetColor(morda::Vec3f(0.5, 0.5, 0));
 	s.SetMatrix(matr);
-	s.Render(s.quad01Fan, Shader::EMode::TRIANGLE_FAN);
+	s.Render(s.quad01Fan);
 	
 	this->Container::Render(matrix);
 }

@@ -116,11 +116,7 @@ protected:
 	}
 	
 public:
-	enum class EMode{
-		TRIANGLES = GL_TRIANGLES,
-		TRIANGLE_FAN = GL_TRIANGLE_FAN,
-		LINE_LOOP = GL_LINE_LOOP
-	};
+	
 	
 	virtual ~Shader()NOEXCEPT{}
 
