@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,12 +35,14 @@ THE SOFTWARE. */
 
 #include "../config.hpp"
 
-#ifdef M_MORDA_OGLES2
-#	include <GLES2/gl2.h>
-#	include <EGL/egl.h>
-#elif M_OS == M_OS_LINUX
-#	include <GL/glew.h>
-#	include <GL/glx.h>
+#if M_OS == M_OS_LINUX
+#	ifdef M_MORDA_OGLES2
+#		include <GLES2/gl2.h>
+#		include <EGL/egl.h>
+#	else
+#		include <GL/glew.h>
+#		include <GL/glx.h>
+#	endif
 #elif M_OS == M_OS_WINDOWS
 #	include <GL/glew.h>
 #elif M_OS == M_OS_MACOSX
