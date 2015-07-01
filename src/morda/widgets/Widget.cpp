@@ -154,24 +154,22 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 		Rect2i scissor = this->ComputeViewportRect(matrix);
 
 		Rect2i oldScissor;
-		bool scissorTestWasEnabled = glIsEnabled(GL_SCISSOR_TEST) ? true : false;
+		bool scissorTestWasEnabled = Render::isScissorEnabled();
 		if(scissorTestWasEnabled){
-			GLint osb[4];
-			glGetIntegerv(GL_SCISSOR_BOX, osb);
-			oldScissor = Rect2i(osb[0], osb[1], osb[2], osb[3]);
+			oldScissor = Render::getScissorRect();
 			scissor.Intersect(oldScissor);
 		}else{
-			glEnable(GL_SCISSOR_TEST);
+			Render::setScissorEnabled(true);
 		}
 		
-		glScissor(scissor.p.x, scissor.p.y, scissor.d.x, scissor.d.y);
+		Render::setScissorRect(scissor);
 		
 		this->Render(matrix);
 		
 		if(scissorTestWasEnabled){
-			glScissor(oldScissor.p.x, oldScissor.p.y, oldScissor.d.x, oldScissor.d.y);
+			Render::setScissorRect(oldScissor);
 		}else{
-			glDisable(GL_SCISSOR_TEST);
+			Render::setScissorEnabled(false);
 		}
 	}else{
 		this->Render(matrix);
@@ -190,7 +188,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 	}else{
 		s.SetColor(morda::Vec3f(1, 0, 1));
 	}
-	s.Render(s.quad01Fan, Shader::EMode::LINE_LOOP);
+	s.render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
 }
 

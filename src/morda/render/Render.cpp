@@ -285,3 +285,28 @@ void Render::clear(EBuffer b) {
 	glClear(bf);
 	AssertOpenGLNoError();
 }
+
+bool Render::isScissorEnabled() {
+	return glIsEnabled(GL_SCISSOR_TEST);
+}
+
+Rect2i Render::getScissorRect() {
+	GLint osb[4];
+	glGetIntegerv(GL_SCISSOR_BOX, osb);
+	return Rect2i(osb[0], osb[1], osb[2], osb[3]);
+}
+
+void Render::setScissorEnabled(bool enabled) {
+	if(enabled){
+		glEnable(GL_SCISSOR_TEST);
+	}else{
+		glDisable(GL_SCISSOR_TEST);
+	}
+}
+
+void Render::setScissorRect(Rect2i r) {
+	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
+	AssertOpenGLNoError();
+}
+
+

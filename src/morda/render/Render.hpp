@@ -114,6 +114,14 @@ public:
 	static void setClearColor(Vec4f c);
 	
 	static void clear(EBuffer b);
+	
+	static bool isScissorEnabled();
+	
+	static Rect2i getScissorRect();
+	
+	static void setScissorEnabled(bool enabled);
+	
+	static void setScissorRect(Rect2i r);
 };
 
 
