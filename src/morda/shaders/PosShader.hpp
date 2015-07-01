@@ -43,12 +43,12 @@ namespace morda{
 class PosShader : virtual public Shader{
 	GLint positionAttr;
 	
-public:	
+public:
 	
 	static const std::array<Vec2f, 4> quadFan;
 	
 	static const std::array<Vec2f, 4> quad01Fan;
-		
+	
 	
 	PosShader(const PosShader&) = delete;
 	PosShader& operator=(const PosShader&) = delete;

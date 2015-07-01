@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include "../config.hpp"
 
-#ifdef M_MORDA_OGLES2
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 #	include <GLES2/gl2.h>
 #else
 #	include <GL/glew.h>

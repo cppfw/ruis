@@ -33,23 +33,7 @@ THE SOFTWARE. */
 #include <ting/Singleton.hpp>
 #include <ting/Buffer.hpp>
 
-#include "../config.hpp"
-
-#if M_OS == M_OS_LINUX
-#	ifdef M_MORDA_OGLES2
-#		include <GLES2/gl2.h>
-#		include <EGL/egl.h>
-#	else
-#		include <GL/glew.h>
-#		include <GL/glx.h>
-#	endif
-#elif M_OS == M_OS_WINDOWS
-#	include <GL/glew.h>
-#elif M_OS == M_OS_MACOSX
-#	include <GL/glew.h>
-#else
-#	error "unknown os"
-#endif
+#include "../render/Render.hpp"
 
 #include "../util/Matrix4.hpp"
 #include "../util/Vector3.hpp"
@@ -160,32 +144,9 @@ public:
 		AssertOpenGLNoError();
 	}
 	
+	//TODO: remove
 	static void AssertOpenGLNoError(){
-#ifdef DEBUG
-		GLenum error = glGetError();
-		switch(error){
-			case GL_NO_ERROR:
-				return;
-			case GL_INVALID_ENUM:
-				ASSERT_INFO(false, "OpenGL error: GL_INVALID_ENUM")
-				break;
-			case GL_INVALID_VALUE:
-				ASSERT_INFO(false, "OpenGL error: GL_INVALID_VALUE")
-				break;
-			case GL_INVALID_OPERATION:
-				ASSERT_INFO(false, "OpenGL error: GL_INVALID_OPERATION")
-				break;
-			case GL_INVALID_FRAMEBUFFER_OPERATION:
-				ASSERT_INFO(false, "OpenGL error: GL_INVALID_FRAMEBUFFER_OPERATION")
-				break;
-			case GL_OUT_OF_MEMORY:
-				ASSERT_INFO(false, "OpenGL error: GL_OUT_OF_MEMORY")
-				break;
-			default:
-				ASSERT_INFO(false, "Unknown OpenGL error, code = " << int(error))
-				break;
-		}
-#endif
+		Render::AssertOpenGLNoError();
 	}
 };//~class Shader
 

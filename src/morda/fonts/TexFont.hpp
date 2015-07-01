@@ -43,10 +43,12 @@ THE SOFTWARE. */
 
 #include "../config.hpp"
 
-#ifdef M_MORDA_OGLES2
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 #	include <GLES2/gl2.h>
-#else
+#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
 #	include <GL/glew.h>
+#else
+#	error "unknown render API"
 #endif
 
 #include "../util/GLTexture.hpp"

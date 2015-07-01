@@ -40,16 +40,15 @@ THE SOFTWARE. */
 
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-#	ifdef M_MORDA_OGLES2
-#		include <GLES2/gl2.h>
-#		include <EGL/egl.h>
-#	else
-#		include <GL/glew.h>
+#	include <GL/glew.h>
 
-#		if M_OS == M_OS_LINUX
-#			include <GL/glx.h>
-#		endif
+#	if M_OS == M_OS_LINUX
+#		include <GL/glx.h>
 #	endif
+
+#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
+#	include <GLES2/gl2.h>
+#	include <EGL/egl.h>
 
 #else
 #	error "Unknown OS"
@@ -112,7 +111,7 @@ public:
 
 
 
-#ifdef M_MORDA_OGLES2
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 private:
 	struct DotsPerCmWrapper{
 		float value;

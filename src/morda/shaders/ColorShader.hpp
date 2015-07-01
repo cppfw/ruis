@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012-2014 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -88,7 +88,7 @@ public:
 		glUniform4fv(this->colorUniform, 1, reinterpret_cast<const GLfloat*>(&color));
 		ASSERT(glGetError() == GL_NO_ERROR)
     }
-};//~class SingleColoringShader
+};
 
 
 
