@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -48,7 +48,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;GLEW_STATIC;M_MORDA_ENFORCE_OPENGL_UNDER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.10.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -86,6 +86,7 @@
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
+    <ClCompile Include="..\..\src\morda\render\Render.cpp" />
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResImage.cpp" />
@@ -100,21 +101,18 @@
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\GLTexture.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
-    <ClCompile Include="..\..\src\morda\util\LayoutParams.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\CheckBox.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\ColorLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ColorWidget.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\Container.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\FrameContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\ImageLabel.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\Label.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\LinearContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\containers\Container.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\containers\FrameContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\containers\LinearContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\labels\ColorLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\labels\ImageLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\labels\Label.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\MouseProxy.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\NinePatch.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\PushButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextField.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextInput.cpp" />
@@ -182,14 +180,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\libting.4.0.0.1\build\native\libting.targets" Condition="Exists('..\packages\libting.4.0.0.1\build\native\libting.targets')" />
     <Import Project="..\packages\libstob.2.0.0.1\build\native\libstob.targets" Condition="Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" />
+    <Import Project="..\packages\libting.4.0.0.2\build\native\libting.targets" Condition="Exists('..\packages\libting.4.0.0.2\build\native\libting.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\libting.4.0.0.1\build\native\libting.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.4.0.0.1\build\native\libting.targets'))" />
     <Error Condition="!Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libstob.2.0.0.1\build\native\libstob.targets'))" />
+    <Error Condition="!Exists('..\packages\libting.4.0.0.2\build\native\libting.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.4.0.0.2\build\native\libting.targets'))" />
   </Target>
 </Project>

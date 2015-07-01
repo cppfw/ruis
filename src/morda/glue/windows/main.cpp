@@ -612,8 +612,6 @@ App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
 	}
 
 	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-
-	TRACE_AND_LOG(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }
 
 
@@ -705,7 +703,7 @@ void App::Exec(){
 			}
 		}
 
-		this->Render();
+		this->render();
 		//		TRACE(<< "loop" << std::endl)
 	}
 }

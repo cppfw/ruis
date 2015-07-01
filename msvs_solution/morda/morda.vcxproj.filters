@@ -30,12 +30,6 @@
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\Container.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\widgets\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,19 +57,7 @@
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\FrameContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\LinearContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\LinearWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\ImageLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\morda\fonts\Font.cpp">
@@ -102,9 +84,6 @@
     <ClCompile Include="..\..\src\morda\shaders\PosTexShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\PushButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\shaders\ColorPosShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,9 +91,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\morda\resources\ResNinePatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\ColorLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\morda\widgets\ColorWidget.cpp">
@@ -135,7 +111,25 @@
     <ClCompile Include="..\..\src\morda\resources\ResSTOB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\LayoutParams.cpp">
+    <ClCompile Include="..\..\src\morda\widgets\containers\LinearContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\labels\ImageLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\containers\FrameContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\labels\ColorLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\labels\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\widgets\containers\Container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\render\Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -49,6 +49,7 @@ THE SOFTWARE. */
 #elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 #	include <GLES2/gl2.h>
 #	include <EGL/egl.h>
+#elif M_MORDA_RENDER == M_MORDA_RENDER_DIRECTX
 
 #else
 #	error "Unknown OS"
