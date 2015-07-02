@@ -48,10 +48,10 @@ namespace morda{
 
 
 
-class Texture{
+class Texture2D{
 	
-	Texture(const Texture& tex) = delete;
-	Texture& operator=(const Texture& tex) = delete;
+	Texture2D(const Texture2D& tex) = delete;
+	Texture2D& operator=(const Texture2D& tex) = delete;
 
 	GLuint tex = 0;
 
@@ -59,17 +59,17 @@ class Texture{
 
 	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter);
 public:
-	Texture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture2D(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 	
-	Texture(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture2D(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
 		this->Constructor(dimensions, numChannels, ting::Buffer<const std::uint8_t>(), minFilter, magFilter);
 	}
 
-	Texture(){}
+	Texture2D(){}
 
-	~Texture()NOEXCEPT{
+	~Texture2D()NOEXCEPT{
 		this->Destructor();
 	}
 

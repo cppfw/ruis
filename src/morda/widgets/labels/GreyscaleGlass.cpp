@@ -1,6 +1,6 @@
 #include "GreyscaleGlass.hpp"
 
-#include "../../util/Texture.hpp"
+#include "../../util/Texture2D.hpp"
 
 #include "../../App.hpp"
 
@@ -16,7 +16,7 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
-	Texture texture(this->Rect().d.ConvertTo<unsigned>(), 3, GL_NEAREST, GL_NEAREST);
+	Texture2D texture(this->Rect().d.ConvertTo<unsigned>(), 3, GL_NEAREST, GL_NEAREST);
 	//texture is bound right after creation
 	
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);

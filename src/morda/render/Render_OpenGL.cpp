@@ -5,6 +5,10 @@
 #endif
 
 #include <ting/Exc.hpp>
+#include <ting/Void.hpp>
+#include <bits/unique_ptr.h>
+#include <ting/PoolStored.hpp>
+#include <ting/Buffer.hpp>
 
 #include "../Exc.hpp"
 
@@ -291,4 +295,98 @@ void Render::setScissorEnabled(bool enabled) {
 void Render::setScissorRect(Rect2i r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
+}
+
+
+namespace{
+
+GLint texFilterMap[] = {
+	GL_NEAREST,
+	GL_LINEAR
+};
+
+struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>{
+	GLuint tex;
+	
+	GLTexture2D(){
+		glGenTextures(1, &this->tex);
+		AssertOpenGLNoError();
+		ASSERT(this->tex != 0)
+	}
+	
+	virtual ~GLTexture2D()noexcept{
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDeleteTextures(1, &this->tex);
+	}
+	
+	void bind(unsigned unitNum){
+		glActiveTexture(GL_TEXTURE0 + unitNum);
+		AssertOpenGLNoError();
+		glBindTexture(GL_TEXTURE_2D, this->tex);
+		AssertOpenGLNoError();
+	}
+};
+
+}//~namespace
+
+std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+	ASSERT(data.size() >= dim.x * dim.y * numChannels)
+	
+	GLint minFilterGL = texFilterMap[unsigned(minFilter)];
+	GLint magFilterGL = texFilterMap[unsigned(magFilter)];
+	
+	std::unique_ptr<GLTexture2D> ret(new GLTexture2D());
+	
+	
+	GLint internalFormat;
+	switch(numChannels){
+		default:
+			ASSERT(false)
+		case 1:
+			internalFormat = GL_LUMINANCE;
+			break;
+		case 2:
+			internalFormat = GL_LUMINANCE_ALPHA;
+			break;
+		case 3:
+			internalFormat = GL_RGB;
+			break;
+		case 4:
+			internalFormat = GL_RGBA;
+			break;
+	}
+
+	//we will be passing pixels to OpenGL which are 1-byte aligned.
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	AssertOpenGLNoError();
+
+	glTexImage2D(
+			GL_TEXTURE_2D,
+			0,//0th level, no mipmaps
+			internalFormat, //internal format
+			dim.x,
+			dim.y,
+			0,//border, should be 0!
+			internalFormat, //format of the texel data
+			GL_UNSIGNED_BYTE,
+			&*data.begin()
+		);
+	AssertOpenGLNoError();
+
+	//NOTE: on OpenGL ES 2 it is necessary to set the filter parameters
+	//      for every texture!!! Otherwise it may not work!
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilterGL);
+	AssertOpenGLNoError();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilterGL);
+	AssertOpenGLNoError();
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	
+	
+	return std::move(ret);
+}
+
+void Render::bindTexture(ting::Void& tex, unsigned unitNum){
+	static_cast<GLTexture2D&>(tex).bind(unitNum);
 }

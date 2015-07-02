@@ -1,4 +1,4 @@
-#include "Texture.hpp"
+#include "Texture2D.hpp"
 
 
 
@@ -7,7 +7,7 @@ using namespace morda;
 
 
 
-void Texture::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter) {
+void Texture2D::Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter) {
 	this->dim = d.ConvertTo<real>();
 
 	glGenTextures(1, &this->tex);

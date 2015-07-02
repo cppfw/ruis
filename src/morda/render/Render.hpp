@@ -124,6 +124,17 @@ public:
 	static void setScissorEnabled(bool enabled);
 	
 	static void setScissorRect(Rect2i r);
+	
+	enum class ETexFilter{
+		//NOTE: do not change the order!!!
+		
+		NEAREST,
+		LINEAR
+	};
+	
+	static std::unique_ptr<ting::Void> create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
+	
+	static void bindTexture(ting::Void& tex, unsigned unitNum);
 };
 
 

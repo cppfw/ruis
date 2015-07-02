@@ -53,7 +53,7 @@ THE SOFTWARE. */
 #	error "unknown render API"
 #endif
 
-#include "../util/Texture.hpp"
+#include "../util/Texture2D.hpp"
 #include "Font.hpp"
 
 #include "../shaders/PosTexShader.hpp"
@@ -72,7 +72,7 @@ class TexFont : public Font{
 		real advance;
 	};
 
-	Texture tex;
+	Texture2D tex;
 
 	typedef std::map<wchar_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;

@@ -1,6 +1,6 @@
 #include "BlurGlass.hpp"
 
-#include "../../util/Texture.hpp"
+#include "../../util/Texture2D.hpp"
 
 #include "../../App.hpp"
 
@@ -17,7 +17,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 void BlurGlass::Render(const morda::Matr4r& matrix)const{
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
 	
-	Texture texture(this->Rect().d.ConvertTo<unsigned>(), 3, GL_NEAREST, GL_NEAREST);
+	Texture2D texture(this->Rect().d.ConvertTo<unsigned>(), 3, GL_NEAREST, GL_NEAREST);
 	//texture is bound right after creation
 	
 	morda::Matr4r matr(matrix);

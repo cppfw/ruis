@@ -24,7 +24,7 @@ this_srcs += morda/fonts/TexFont.cpp
 
 this_srcs += morda/util/Image.cpp
 this_srcs += morda/util/util.cpp
-this_srcs += morda/util/Texture.cpp
+this_srcs += morda/util/Texture2D.cpp
 this_srcs += morda/util/ZipFile.cpp
 
 this_srcs += morda/util/unzip/ioapi.cpp
