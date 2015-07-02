@@ -128,7 +128,7 @@ void LinearContainer::OnResize(){
 
 
 
-morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
+morda::Vec2r LinearContainer::onMeasure(const morda::Vec2r& quotum)const{
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	

@@ -58,7 +58,7 @@ public:
 
 	void OnResize() override;	
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 	
 	
 	class LayoutParams : public Container::LayoutParams{

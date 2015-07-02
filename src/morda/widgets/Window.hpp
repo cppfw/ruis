@@ -84,6 +84,11 @@ public:
 	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void OnTopmostChanged()override;
+
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override {
+		return this->TableContainer::onMeasure(quotum);
+	}
+
 };
 
 }

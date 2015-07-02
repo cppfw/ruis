@@ -46,7 +46,7 @@ public:
 	
 	void OnResize()override;
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 	
 protected:
 	Widget::LayoutParams& GetLayoutParams(Widget& w)override;

@@ -98,7 +98,7 @@ void TableContainer::OnResize(){
 }
 
 
-morda::Vec2r TableContainer::onMeasure(const morda::Vec2r& quotum) const NOEXCEPT{
+morda::Vec2r TableContainer::onMeasure(const morda::Vec2r& quotum) const{
 	this->UpdateRowsLayoutParam(quotum);
 	return this->VerticalContainer::onMeasure(quotum);
 }
