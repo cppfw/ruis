@@ -36,9 +36,6 @@
     <ClCompile Include="..\..\src\morda\widgets\Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\GLTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\util\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -160,6 +157,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\morda\widgets\NinePatchButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\util\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

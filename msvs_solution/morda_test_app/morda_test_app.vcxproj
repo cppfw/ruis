@@ -111,6 +111,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\libstob.2.0.0.1\build\native\libstob.targets" />
     <Import Project="..\packages\libting.4.0.0.2\build\native\libting.targets" />
+    <Import Project="..\packages\libting.symbols.4.0.0.2\build\native\libting.symbols.targets" Condition="Exists('..\packages\libting.symbols.4.0.0.2\build\native\libting.symbols.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -118,5 +119,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\libting.4.0.0.2\build\native\libting.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.4.0.0.2\build\native\libting.targets'))" />
     <Error Condition="!Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libstob.2.0.0.1\build\native\libstob.targets'))" />
+    <Error Condition="!Exists('..\packages\libting.symbols.4.0.0.2\build\native\libting.symbols.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libting.symbols.4.0.0.2\build\native\libting.symbols.targets'))" />
   </Target>
 </Project>
