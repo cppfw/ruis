@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
-#include "../util/GLTexture.hpp"
+#include "../util/Texture.hpp"
 
 
 #include "../ResourceManager.hpp"
@@ -44,7 +44,7 @@ namespace morda{
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	GLTexture tex;
+	Texture tex;
 
 public:
 	ResTexture(const Image& image) :
@@ -53,7 +53,7 @@ public:
 
 	~ResTexture()NOEXCEPT{}
 
-	const GLTexture& Tex()const NOEXCEPT{
+	const Texture& Tex()const NOEXCEPT{
 		return this->tex;
 	}
 

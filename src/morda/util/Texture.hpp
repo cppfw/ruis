@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2012-2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,12 +48,10 @@ namespace morda{
 
 
 
-class GLTexture {
-	//no copying
-	GLTexture(const GLTexture& tex);
-
-	//no assigning
-	GLTexture& operator=(const GLTexture& tex);
+class Texture{
+	
+	Texture(const Texture& tex) = delete;
+	Texture& operator=(const Texture& tex) = delete;
 
 	GLuint tex = 0;
 
@@ -61,17 +59,17 @@ class GLTexture {
 
 	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter);
 public:
-	GLTexture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 	
-	GLTexture(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
 		this->Constructor(dimensions, numChannels, ting::Buffer<const std::uint8_t>(), minFilter, magFilter);
 	}
 
-	GLTexture(){}
+	Texture(){}
 
-	~GLTexture()NOEXCEPT{
+	~Texture()NOEXCEPT{
 		this->Destructor();
 	}
 
