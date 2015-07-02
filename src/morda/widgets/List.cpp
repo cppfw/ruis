@@ -95,7 +95,7 @@ void List::setScrollPosAsFactor(real factor){
 		this->updateTailItemsInfo();
 	}
 	
-	this->posIndex = factor * real(this->provider->count() - this->numTailItems);
+	this->posIndex = size_t(factor * real(this->provider->count() - this->numTailItems));
 	
 	if(this->provider->count() != this->numTailItems){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
