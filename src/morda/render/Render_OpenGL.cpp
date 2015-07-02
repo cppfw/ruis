@@ -271,7 +271,7 @@ void Render::clear(EBuffer b) {
 }
 
 bool Render::isScissorEnabled() {
-	return glIsEnabled(GL_SCISSOR_TEST);
+	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
 }
 
 Rect2i Render::getScissorRect() {

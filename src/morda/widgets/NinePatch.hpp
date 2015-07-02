@@ -37,6 +37,7 @@ THE SOFTWARE. */
 
 namespace morda{
 
+
 class NinePatch :
 	public virtual Widget,
 	private TableContainer

@@ -34,6 +34,8 @@ THE SOFTWARE. */
 
 namespace morda{
 
+
+
 class TextField :
 		virtual public Widget,
 		private NinePatch
