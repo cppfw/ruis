@@ -40,7 +40,7 @@ namespace morda{
 
 
 class Container : virtual public Widget{
-	friend class Widget;
+
 private:
 	T_ChildrenList children;
 	
@@ -93,16 +93,11 @@ public:
 	
 	void OnResize()override;
 	
-	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w){
-		return this->Add(w, this->children.end());
-	}
-	
-	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, T_ChildrenList::iterator insertBefore);
+	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore = nullptr);
 
 	void Add(const stob::Node& chain);
 	
-	//return true if the widget was found in children and was removed
-	void Remove(Widget& w);
+	std::shared_ptr<Widget> Remove(Widget& w);
 	
 	void removeAll();
 	
@@ -113,9 +108,6 @@ public:
 	}
 	
 	virtual void OnChildrenListChanged(){}
-	
-private:
-	void MakeChildTopmost(Widget& w);
 };
 
 

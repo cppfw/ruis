@@ -133,8 +133,7 @@ public:
 		return this->parent;
 	}
 	
-	//NOTE: if only parent holds Ref then object may be deleted
-	void RemoveFromParent();
+	std::shared_ptr<Widget> RemoveFromParent();
 	
 	/**
 	 * @brief Check if widget is hovered by any pointer.

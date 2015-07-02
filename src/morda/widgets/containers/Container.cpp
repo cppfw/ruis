@@ -212,7 +212,7 @@ void Container::OnResize(){
 
 
 
-Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w,  T_ChildrenList::iterator insertBefore){
+Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->Parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -222,11 +222,19 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
 	}
 	
-	if(insertBefore != this->children.end() && (*insertBefore)->parent != this){
+	if(insertBefore && insertBefore->Parent() != this){
 		throw morda::Exc("Container::Add(): cannot insert after provided iterator, it points to a different container");
 	}
 
-	T_ChildrenList::iterator ret = this->children.insert(insertBefore, w);
+	T_ChildrenList::iterator ret;
+	
+	if(insertBefore){
+		ret = this->children.insert(insertBefore->parentIter, w);
+	}else{
+		this->children.push_back(w);
+		ret = this->children.end();
+		--ret;
+	}
 	
 	w->parentIter = ret;
 	w->parent = this;
@@ -248,7 +256,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 
 
 
-void Container::Remove(Widget& w){
+std::shared_ptr<Widget> Container::Remove(Widget& w){
 	if(w.parent != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
@@ -260,6 +268,8 @@ void Container::Remove(Widget& w){
 	
 	ASSERT(w.parent == this)
 	
+	auto ret = *w.parentIter;
+	
 	this->children.erase(w.parentIter);
 	
 	w.parent = nullptr;
@@ -268,6 +278,8 @@ void Container::Remove(Widget& w){
 	this->SetRelayoutNeeded();
 	
 	this->OnChildrenListChanged();
+	
+	return std::move(ret);
 }
 
 
@@ -293,37 +305,6 @@ std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXC
 		}
 	}
 	return nullptr;
-}
-
-
-
-void Container::MakeChildTopmost(Widget& w){
-	if(this->isBlocked){
-		throw morda::Exc("Container::MakeChildTopmost(): cannot modify children list while iterating through children, try deferring the operation.");
-	}
-	
-	ASSERT(w.Parent() == this)
-	ASSERT(w.parentIter != this->children.end())
-	
-	ASSERT(this->children.size() != 0)
-	
-	if(&w == this->children.back().get()){
-		return;//already topmost
-	}
-	
-	ASSERT(this->children.size() > 1)
-	
-	auto p = std::move(*w.parentIter);
-	
-	this->children.erase(w.parentIter);
-
-	this->children.push_back(std::move(p));
-	w.parentIter = --this->children.end();
-	
-	(*(++this->children.rbegin()))->OnTopmostChanged();
-	w.OnTopmostChanged();
-	
-	this->SetRelayoutNeeded();
 }
 
 
