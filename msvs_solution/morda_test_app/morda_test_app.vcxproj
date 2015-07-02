@@ -63,6 +63,9 @@
       <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>C:\prj\morda\msvs_solution\glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -112,8 +115,8 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\libting.4.0.0.2\build\native\libting.targets" Condition="Exists('..\packages\libting.4.0.0.2\build\native\libting.targets')" />
-    <Import Project="..\packages\libstob.2.0.0.1\build\native\libstob.targets" Condition="Exists('..\packages\libstob.2.0.0.1\build\native\libstob.targets')" />
+    <Import Project="..\packages\libstob.2.0.0.1\build\native\libstob.targets" />
+    <Import Project="..\packages\libting.4.0.0.2\build\native\libting.targets" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
