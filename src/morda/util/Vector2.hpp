@@ -79,7 +79,9 @@ public:
 	 * It does not initialize vector components.
 	 * Their values are undefined right after construction.
 	 */
-	constexpr Vector2()NOEXCEPT{}
+	constexpr Vector2()NOEXCEPT :
+			x(0), y(0) //TODO: remove initialization list when C++14 is supported by all compilers
+	{}
 
 	/**
 	 * @brief Create vector with given values.
