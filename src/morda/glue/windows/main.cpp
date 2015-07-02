@@ -640,7 +640,7 @@ App::ResMan::ResMan(){
 		ting::fs::FSFile fi(path);
 		this->MountResPack(fi);
 	}
-	catch (ting::fs::File::Exc& e){
+	catch (ting::fs::File::Exc&){
 		//default res pack not found, do nothing
 	}
 }

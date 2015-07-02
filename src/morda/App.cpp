@@ -203,7 +203,7 @@ App::Inflater::Inflater(){
 			this->Inflate(*t->STOB());
 		}
 		
-	}catch(ResourceManager::Exc& e){
+	}catch(ResourceManager::Exc&){
 		//ignore
 		TRACE(<< "App::Inflater::Inflater(): could not load morda_gui_definitions" << std::endl)
 	}

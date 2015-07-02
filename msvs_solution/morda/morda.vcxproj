@@ -49,7 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;GLEW_STATIC;M_MORDA_ENFORCE_OPENGL_UNDER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.10.0\include;$(SolutionDir)\..\..\stob\src;$(SolutionDir)\..\..\ting\src;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\jpeg-9;$(SolutionDir)\freetype-2.4.11\include;$(SolutionDir)\glew-1.10.0\include;$(SolutionDir)\lpng160;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
