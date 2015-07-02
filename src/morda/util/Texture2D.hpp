@@ -42,7 +42,7 @@ THE SOFTWARE. */
 
 #include "Image.hpp"
 
-
+#include "../render/Render.hpp"
 
 namespace morda{
 
@@ -53,46 +53,32 @@ class Texture2D{
 	Texture2D(const Texture2D& tex) = delete;
 	Texture2D& operator=(const Texture2D& tex) = delete;
 
-	GLuint tex = 0;
+	std::unique_ptr<ting::Void> tex;
 
 	morda::Vec2r dim;
 
-	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, GLint minFilter, GLint magFilter);
+	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
 public:
-	Texture2D(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture2D(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 	
-	Texture2D(Vec2ui dimensions, unsigned numChannels, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
+	Texture2D(Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(dimensions, numChannels, ting::Buffer<const std::uint8_t>(), minFilter, magFilter);
 	}
 
 	Texture2D(){}
 
-	~Texture2D()NOEXCEPT{
-		this->Destructor();
-	}
-
-	void Init(const Image& image, GLint minFilter = GL_LINEAR, GLint magFilter = GL_LINEAR){
-		if(this->tex != 0){
-			this->Destructor();
-		}
-
+	void Init(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
 
 	void Bind()const{
-		ASSERT(glGetError() == GL_NO_ERROR)
-		glBindTexture(GL_TEXTURE_2D, this->tex);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		Render::bindTexture(*this->tex, 0);
 	}
 	
 	void Bind(unsigned texUnitNum)const{
-		ASSERT(glGetError() == GL_NO_ERROR)
-		glActiveTexture(GL_TEXTURE0 + texUnitNum);
-		ASSERT(glGetError() == GL_NO_ERROR)
-		glBindTexture(GL_TEXTURE_2D, this->tex);
-		ASSERT(glGetError() == GL_NO_ERROR)
+		Render::bindTexture(*this->tex, texUnitNum);
 	}
 
 	morda::Vec2r Dim()const NOEXCEPT{
@@ -100,10 +86,6 @@ public:
 	}
 
 private:
-	void Destructor()NOEXCEPT{
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glDeleteTextures(1, &this->tex);
-	}
 };
 
 

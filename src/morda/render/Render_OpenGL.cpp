@@ -330,13 +330,14 @@ struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>
 }//~namespace
 
 std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
-	ASSERT(data.size() >= dim.x * dim.y * numChannels)
+	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	
 	GLint minFilterGL = texFilterMap[unsigned(minFilter)];
 	GLint magFilterGL = texFilterMap[unsigned(magFilter)];
 	
 	std::unique_ptr<GLTexture2D> ret(new GLTexture2D());
 	
+	ret->bind(0);
 	
 	GLint internalFormat;
 	switch(numChannels){
