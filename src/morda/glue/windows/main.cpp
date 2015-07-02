@@ -708,7 +708,9 @@ void App::Exec(){
 	}
 }
 
-
+void App::Quit()NOEXCEPT {
+	this->quitFlag = true;
+}
 
 namespace morda{
 
