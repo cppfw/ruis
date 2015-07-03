@@ -532,7 +532,7 @@ App::WindowWrapper::~WindowWrapper()NOEXCEPT{
 
 
 App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w) :
-w(w)
+		w(w)
 {
 	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): enter" << std::endl)
 
@@ -563,7 +563,7 @@ w(w)
 		0, 0, 0 //layer masks ignored
 	};
 
-	GLuint pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
+	int pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
 	if (!pixelFormat){
 		this->Destroy();
 		throw morda::Exc("Could not find suitable pixel format");
