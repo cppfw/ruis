@@ -275,6 +275,10 @@ void Render::clear(EBuffer b) {
 	AssertOpenGLNoError();
 }
 
+Render::~Render()noexcept{
+	
+}
+
 bool Render::isScissorEnabled() {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
 }

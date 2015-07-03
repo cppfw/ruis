@@ -51,6 +51,7 @@ class Render{
 	
 	
 	Render();
+	~Render()noexcept;
 	
 public:
 	

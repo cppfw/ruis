@@ -97,6 +97,10 @@ Render::Render(){
 	//TODO:
 }
 
+Render::~Render()noexcept{
+	
+}
+
 void Render::clear(EBuffer b) {
 	/*
 	GLbitfield bf = 0;
