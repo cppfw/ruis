@@ -49,6 +49,7 @@ class Render{
 	
 	friend class App;
 	
+	std::unique_ptr<ting::Void> pimpl;
 	
 	Render();
 	~Render()noexcept;

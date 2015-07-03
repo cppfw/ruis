@@ -86,6 +86,7 @@ class App : public ting::IntrusiveSingleton<App>{
 	friend class ting::IntrusiveSingleton<App>;
 	static ting::IntrusiveSingleton<App>::T_Instance instance;
 
+	friend class Render;
 	friend class Updateable;
 	friend class Widget;
 	friend class CharInputWidget;
@@ -263,18 +264,6 @@ private:
 		
 		DotsPerCmWrapper(DeviceContextWrapper& dc);
 	} dotsPerCm;
-	
-	struct GLContextWrapper{
-		HGLRC hrc;
-		
-		GLContextWrapper(const DeviceContextWrapper& dc);
-		~GLContextWrapper()NOEXCEPT{
-			this->Destroy();
-		}
-		
-	private:
-		void Destroy()NOEXCEPT;
-	} glContext;
 
 	void SwapGLBuffers(){
 		SwapBuffers(this->deviceContext.hdc);

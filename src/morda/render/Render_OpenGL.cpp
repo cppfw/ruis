@@ -4,6 +4,10 @@
 #	include <GL/glew.h>
 #endif
 
+#if M_OS == M_OS_WINDOWS
+#	include <ting/windows.hpp>
+#endif
+
 #include <memory>
 
 #include <ting/Exc.hpp>
@@ -12,6 +16,7 @@
 #include <ting/Buffer.hpp>
 
 #include "../Exc.hpp"
+#include "../App.hpp"
 
 using namespace morda;
 
@@ -244,7 +249,60 @@ void Render::setClearColor(Vec4f c){
 	AssertOpenGLNoError();
 }
 
-Render::Render(){
+
+namespace {
+
+#if M_OS == M_OS_WINDOWS
+
+struct OpenGLContext : public ting::Void{
+	HGLRC hrc;
+public:
+	OpenGLContext(HDC hdc) {
+		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
+
+		this->hrc = wglCreateContext(hdc);
+		if (!this->hrc) {
+			throw morda::Exc("Failed to create OpenGL rendering context");
+		}
+
+		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
+
+		if (!wglMakeCurrent(hdc, this->hrc)) {
+			this->Destroy();
+			throw morda::Exc("Failed to activate OpenGL rendering context");
+		}
+
+		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
+	}
+
+	~OpenGLContext()noexcept {
+		this->Destroy();
+	}
+
+	void Destroy() {
+		if (!wglMakeCurrent(NULL, NULL)) {
+			ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
+		}
+
+		if (!wglDeleteContext(this->hrc)) {
+			ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
+		}
+	}
+};
+
+#else
+
+#endif
+
+}//~namespace
+
+Render::Render() :
+		pimpl(
+#if M_OS == M_OS_WINDOWS
+				new OpenGLContext(morda::App::Inst().deviceContext.hdc)
+#endif
+			)
+{
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
 	if(glewInit() != GLEW_OK){
 		throw morda::Exc("GLEW initialization failed");
@@ -252,6 +310,10 @@ Render::Render(){
 #endif
 	AssertOpenGLNoError();
 	TRACE_AND_LOG(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
+}
+
+Render::~Render()noexcept {
+
 }
 
 void Render::clear(EBuffer b) {
@@ -273,10 +335,6 @@ void Render::clear(EBuffer b) {
 	}
 	glClear(bf);
 	AssertOpenGLNoError();
-}
-
-Render::~Render()noexcept{
-	
 }
 
 bool Render::isScissorEnabled() {

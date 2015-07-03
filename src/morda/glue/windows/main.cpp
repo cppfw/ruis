@@ -596,36 +596,6 @@ void App::DeviceContextWrapper::Destroy()NOEXCEPT{
 
 
 
-App::GLContextWrapper::GLContextWrapper(const DeviceContextWrapper& dc){
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
-
-	this->hrc = wglCreateContext(dc.hdc);
-	if (!this->hrc){
-		throw morda::Exc("Failed to create OpenGL rendering context");
-	}
-
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-
-	if (!wglMakeCurrent(dc.hdc, this->hrc)){
-		this->Destroy();
-		throw morda::Exc("Failed to activate OpenGL rendering context");
-	}
-
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-}
-
-
-
-void App::GLContextWrapper::Destroy()NOEXCEPT{
-	if (!wglMakeCurrent(NULL, NULL)){
-		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
-	}
-
-	if (!wglDeleteContext(this->hrc)){
-		ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
-	}
-}
-
 
 App::ResMan::ResMan(){
 	std::string path =
@@ -650,7 +620,6 @@ App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
 		dotsPerCm(deviceContext),
-		glContext(deviceContext),
 		curWinRect(0, 0, -1, -1)
 {
 	this->UpdateWindowRect(
