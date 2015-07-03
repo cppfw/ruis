@@ -159,7 +159,7 @@
     <ClCompile Include="..\..\src\morda\widgets\NinePatchButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\Texture.cpp">
+    <ClCompile Include="..\..\src\morda\util\Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
