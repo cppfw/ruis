@@ -54,6 +54,9 @@ THE SOFTWARE. */
 #		define M_MORDA_RENDER M_MORDA_RENDER_DIRECTX
 #	endif
 
+#elif M_OS == M_OS_MACOSX
+#	define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+
 #else
 #	error "unknown OS"
 #endif

@@ -450,7 +450,7 @@ public:
 		return this->dotsPerCm.value;
 	}
 	
-	void Quit()NOEXCEPT;
+	void Quit()noexcept;
 };
 
 

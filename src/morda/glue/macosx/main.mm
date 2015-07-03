@@ -77,8 +77,8 @@ void Macosx_UpdateWindowRect(const morda::Rect2r& r){
 	morda::App::Inst().UpdateWindowRect(r);
 }
 
-void Macosx_SetQuitFlag(){
-	morda::App::Inst().quitFlag = true;
+void morda::App::Quit()noexcept{
+	this->quitFlag = true;
 }
 
 }
@@ -560,7 +560,7 @@ int main (int argc, const char** argv){
 
 -(BOOL)windowShouldClose:(id)sender{
 	TRACE(<< "window wants to close!!!!" << std::endl)
-	morda::Macosx_SetQuitFlag();
+	morda::App::Inst().Quit();
 	return NO;
 }
 
@@ -717,7 +717,7 @@ void morda::App::Exec(){
 	}
 	
 	do{
-		this->Render();
+		this->render();
 		
 		std::uint32_t millis = this->updater.Update();
 		
