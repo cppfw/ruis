@@ -467,3 +467,10 @@ void Render::copyColorBufferToTexture(Vec2i dst, Rect2i src){
 	);
 	AssertOpenGLNoError();
 }
+
+unsigned Render::getMaxTextureSize(){
+	GLint val;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &val);
+	ASSERT(val > 0)
+	return unsigned(val);
+}

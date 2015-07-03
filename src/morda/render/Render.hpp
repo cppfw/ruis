@@ -129,6 +129,8 @@ public:
 	
 	static void setScissorRect(Rect2i r);
 	
+	static unsigned getMaxTextureSize();
+	
 	enum class ETexFilter{
 		//NOTE: do not change the order!!!
 		

@@ -120,13 +120,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 		}
 	}
 
-	unsigned maxTexSize;
-	{
-		GLint val;
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &val);
-		ASSERT(val > 0)
-		maxTexSize = unsigned(val);
-	}
+	unsigned maxTexSize = Render::getMaxTextureSize();
 
 	//guess for texture width
 	unsigned texWidth;
