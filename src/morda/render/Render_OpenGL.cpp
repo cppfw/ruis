@@ -384,10 +384,23 @@ std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChan
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
-	
 	return std::move(ret);
 }
 
 void Render::bindTexture(ting::Void& tex, unsigned unitNum){
 	static_cast<GLTexture2D&>(tex).bind(unitNum);
+}
+
+void Render::copyColorBufferToTexture(Vec2i dst, Rect2i src){
+	glCopyTexSubImage2D(
+		GL_TEXTURE_2D,
+		0, //level
+		dst.x, //xoffset
+		dst.y, //yoffset
+		src.p.x,
+		src.p.y,
+		src.d.x,
+		src.d.y
+	);
+	AssertOpenGLNoError();
 }

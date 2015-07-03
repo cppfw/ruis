@@ -25,17 +25,7 @@ void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
 		return;
 	}
 	
-	glCopyTexSubImage2D(
-			GL_TEXTURE_2D,
-			0, //level
-			0, //xoffset
-			0, //yoffset
-			viewPortRect.p.x,
-			viewPortRect.p.y,
-			viewPortRect.d.x,
-			viewPortRect.d.y
-		);
-//	Shader::AssertOpenGLNoError();
+	Render::copyColorBufferToTexture(Vec2i(0), viewPortRect);
 	
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);

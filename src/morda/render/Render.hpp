@@ -45,6 +45,8 @@ class Shader;
 
 class Render{
 	friend class Shader;
+	friend class Texture2D;
+	
 	friend class App;
 	
 	
@@ -132,9 +134,16 @@ public:
 		LINEAR
 	};
 	
+	//=== functions to be used by Texture class
+private:
 	static std::unique_ptr<ting::Void> create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
 	
 	static void bindTexture(ting::Void& tex, unsigned unitNum);
+	//=== ~~~
+	
+public:
+	
+	static void copyColorBufferToTexture(Vec2i dst, Rect2i src);
 };
 
 
