@@ -4,9 +4,10 @@
 #	include <GL/glew.h>
 #endif
 
+#include <memory>
+
 #include <ting/Exc.hpp>
 #include <ting/Void.hpp>
-#include <bits/unique_ptr.h>
 #include <ting/PoolStored.hpp>
 #include <ting/Buffer.hpp>
 
