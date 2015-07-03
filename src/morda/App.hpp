@@ -147,7 +147,7 @@ private:
 		~EGLContextWrapper()NOEXCEPT;
 	} eglContext;
 	
-	void SwapGLBuffers(){
+	void SwapFrameBuffers(){
 		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 	}
 #endif
@@ -224,7 +224,7 @@ private:
 	friend void Main(int argc, const char** argv);
 	void Exec();
 
-	void SwapGLBuffers(){
+	void SwapFrameBuffers(){
 		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 	}
 #	endif
@@ -265,7 +265,7 @@ private:
 		DotsPerCmWrapper(DeviceContextWrapper& dc);
 	} dotsPerCm;
 
-	void SwapGLBuffers(){
+	void SwapFrameBuffers(){
 		SwapBuffers(this->deviceContext.hdc);
 	}
 
@@ -305,7 +305,7 @@ private:
 		void Destroy()NOEXCEPT;
 	} openGLContext;
 	
-	void SwapGLBuffers();
+	void SwapFrameBuffers();
 	
 	void Exec();
 	

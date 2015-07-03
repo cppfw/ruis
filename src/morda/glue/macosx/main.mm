@@ -673,7 +673,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 
-void morda::App::SwapGLBuffers(){
+void morda::App::SwapFrameBuffers(){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->openGLContext.id;
 	[openGLContext flushBuffer];
 }
