@@ -13,8 +13,83 @@
 
 using namespace morda;
 
-namespace{
 
+namespace {
+
+struct Direct3DContext : public ting::Void {
+	IDXGISwapChain *swapchain;
+	ID3D11Device *dev;
+	ID3D11DeviceContext *ctx;
+
+	ID3D11RenderTargetView *renderTarget;
+
+	Direct3DContext(HWND hwnd) {
+		HRESULT result;
+
+		// create a struct to hold information about the swap chain
+		DXGI_SWAP_CHAIN_DESC scd;
+
+		// clear out the struct for use
+		ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
+
+		// fill the swap chain description struct
+		scd.BufferCount = 1;                                    // one back buffer
+		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
+		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
+		scd.OutputWindow = hwnd;                                // the window to be used
+		scd.SampleDesc.Count = 4;                               // how many multisamples
+		scd.Windowed = TRUE;                                    // windowed/full-screen mode
+
+																// create a device, device context and swap chain using the information in the scd struct
+		result = D3D11CreateDeviceAndSwapChain(NULL,
+			D3D_DRIVER_TYPE_HARDWARE,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			D3D11_SDK_VERSION,
+			&scd,
+			&this->swapchain,
+			&this->dev,
+			NULL,
+			&this->ctx);
+		if (FAILED(result)) {
+			throw morda::Exc("Direct3D init: creating device failed");
+		}
+
+		// get the address of the back buffer
+		ID3D11Texture2D *pBackBuffer;
+		result = swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		if (FAILED(result)) {
+			this->swapchain->Release();
+			this->dev->Release();
+			this->ctx->Release();
+			throw morda::Exc("Direct3D init: creating device failed");
+		}
+
+		// use the back buffer address to create the render target
+		result = dev->CreateRenderTargetView(pBackBuffer, NULL, &this->renderTarget);
+		pBackBuffer->Release();
+		if (FAILED(result)) {
+			this->swapchain->Release();
+			this->dev->Release();
+			this->ctx->Release();
+			throw morda::Exc("Direct3D init: creating render target failed");
+		}
+
+		// set the render target as the back buffer
+		this->ctx->OMSetRenderTargets(1, &this->renderTarget, NULL);
+	}
+
+	~Direct3DContext()noexcept {
+		this->renderTarget->Release();
+		this->swapchain->Release();
+		this->dev->Release();
+		this->ctx->Release();
+	}
+
+	morda::Vec4f curClearColor;
+} *d3dCtx;
 
 
 //GLenum modeMap[] = {
@@ -24,8 +99,7 @@ namespace{
 //};
 
 
-
-}
+}//~namespace
 
 
 
@@ -88,63 +162,26 @@ void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
 }
 
 void Render::setViewport(Rect2i r){
-	//TODO:
+	D3D11_VIEWPORT viewport;
+	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+
+	viewport.TopLeftX = FLOAT(r.p.x);
+	viewport.TopLeftY = FLOAT(r.p.y);
+	viewport.Width = FLOAT(r.d.x);
+	viewport.Height = FLOAT(r.d.y);
+
+	d3dCtx->ctx->RSSetViewports(1, &viewport);
 }
 
 void Render::setClearColor(Vec4f c){
-	//TODO:
+	d3dCtx->curClearColor = c;
 }
 
-namespace {
 
-struct Direct3DContext : public ting::Void {
-	IDXGISwapChain *swapchain;
-	ID3D11Device *dev;
-	ID3D11DeviceContext *ctx;
 
-	Direct3DContext(HWND hwnd) {
-		// create a struct to hold information about the swap chain
-		DXGI_SWAP_CHAIN_DESC scd;
-
-		// clear out the struct for use
-		ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
-
-		// fill the swap chain description struct
-		scd.BufferCount = 1;                                    // one back buffer
-		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
-		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
-		scd.OutputWindow = hwnd;                                // the window to be used
-		scd.SampleDesc.Count = 4;                               // how many multisamples
-		scd.Windowed = TRUE;                                    // windowed/full-screen mode
-
-																// create a device, device context and swap chain using the information in the scd struct
-		D3D11CreateDeviceAndSwapChain(NULL,
-			D3D_DRIVER_TYPE_HARDWARE,
-			NULL,
-			NULL,
-			NULL,
-			NULL,
-			D3D11_SDK_VERSION,
-			&scd,
-			&this->swapchain,
-			&this->dev,
-			NULL,
-			&this->ctx);
-	}
-
-	~Direct3DContext()noexcept {
-		swapchain->Release();
-		dev->Release();
-		ctx->Release();
-	}
-};
-
-}//~namespace
-
-Render::Render() :
-		pimpl(new Direct3DContext(morda::App::Inst().window.hwnd))
-{
-	//TODO:
+Render::Render(){
+	d3dCtx = new Direct3DContext(morda::App::Inst().window.hwnd);
+	this->pimpl.reset(d3dCtx);
 }
 
 Render::~Render()noexcept{
@@ -169,7 +206,14 @@ void Render::clear(EBuffer b) {
 			bf = GL_STENCIL_BUFFER_BIT;
 			break;
 	}*/
-	//TODO:
+	//TODO: clear depth and other buffers
+	FLOAT clr[4] = {
+			d3dCtx->curClearColor.x,
+			d3dCtx->curClearColor.y,
+			d3dCtx->curClearColor.z,
+			d3dCtx->curClearColor.w
+		};
+	d3dCtx->ctx->ClearRenderTargetView(d3dCtx->renderTarget, clr);
 }
 
 bool Render::isScissorEnabled() {
@@ -302,5 +346,5 @@ unsigned Render::getMaxTextureSize(){
 
 
 void Render::swapFrameBuffers() {
-	//TODO:
+	static_cast<Direct3DContext*>(morda::App::Inst().renderer.pimpl.get())->swapchain->Present(0, 0);
 }
