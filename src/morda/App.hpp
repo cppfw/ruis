@@ -147,9 +147,6 @@ private:
 		~EGLContextWrapper()NOEXCEPT;
 	} eglContext;
 	
-	void SwapFrameBuffers(){
-		eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
-	}
 #endif
 	
 #if M_OS == M_OS_LINUX
@@ -224,9 +221,6 @@ private:
 	friend void Main(int argc, const char** argv);
 	void Exec();
 
-	void SwapFrameBuffers(){
-		glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
-	}
 #	endif
 	
 #elif M_OS == M_OS_WINDOWS
@@ -264,10 +258,6 @@ private:
 		
 		DotsPerCmWrapper(DeviceContextWrapper& dc);
 	} dotsPerCm;
-
-	void SwapFrameBuffers(){
-		SwapBuffers(this->deviceContext.hdc);
-	}
 
 	friend void Main(int argc, const char** argv);
 	void Exec();

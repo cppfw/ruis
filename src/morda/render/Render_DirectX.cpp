@@ -299,3 +299,8 @@ unsigned Render::getMaxTextureSize(){
 	//TODO:
 	return 1024;
 }
+
+
+void Render::swapFrameBuffers() {
+	//TODO:
+}

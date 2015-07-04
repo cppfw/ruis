@@ -148,6 +148,8 @@ private:
 public:
 	
 	static void copyColorBufferToTexture(Vec2i dst, Rect2i src);
+
+	static void swapFrameBuffers();
 };
 
 

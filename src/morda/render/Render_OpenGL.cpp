@@ -474,3 +474,18 @@ unsigned Render::getMaxTextureSize(){
 	ASSERT(val > 0)
 	return unsigned(val);
 }
+
+void Render::swapFrameBuffers() {
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
+	eglSwapBuffers(morda::App::Inst().eglDisplay.d, morda::App::Inst().eglSurface.s);
+#else
+	static_assert(M_MORDA_RENDER == M_MORDA_RENDER_OPENGL, "Unexpected render API");
+#	if M_OS == M_OS_WINDOWS
+	SwapBuffers(morda::App::Inst().deviceContext.hdc);
+#	elif M_OS == M_OS_LINUX
+	glXSwapBuffers(morda::App::Inst().xDisplay.d, morda::App::Inst().xWindow.w);
+#	else
+#		error "unknown OS"
+#	endif
+#endif
+}

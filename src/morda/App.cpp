@@ -43,7 +43,7 @@ void App::render(){
 	
 	this->rootWidget->RenderInternal(m);
 	
-	this->SwapFrameBuffers();
+	Render::swapFrameBuffers();
 }
 
 
