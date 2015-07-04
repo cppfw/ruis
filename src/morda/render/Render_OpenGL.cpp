@@ -484,6 +484,8 @@ void Render::swapFrameBuffers() {
 	SwapBuffers(morda::App::Inst().deviceContext.hdc);
 #	elif M_OS == M_OS_LINUX
 	glXSwapBuffers(morda::App::Inst().xDisplay.d, morda::App::Inst().xWindow.w);
+#	elif M_OS == M_OS_MACOSX
+	morda::App::Inst().macosx_SwapFrameBuffers();
 #	else
 #		error "unknown OS"
 #	endif

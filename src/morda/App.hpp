@@ -293,7 +293,7 @@ private:
 		void Destroy()NOEXCEPT;
 	} openGLContext;
 	
-	void SwapFrameBuffers();
+	void macosx_SwapFrameBuffers();
 	
 	void Exec();
 	
