@@ -35,7 +35,7 @@ THE SOFTWARE. */
 #define M_MORDA_RENDER_OPENGL				0
 #define M_MORDA_RENDER_OPENGLES				1
 #define M_MORDA_RENDER_DIRECTX				2
-#define M_MORDA_RENDER_GNM					3
+#define M_MORDA_RENDER_GCM					3
 
 
 #if M_OS == M_OS_LINUX
