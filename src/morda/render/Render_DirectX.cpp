@@ -244,3 +244,8 @@ void Render::bindTexture(ting::Void& tex, unsigned unitNum){
 void Render::copyColorBufferToTexture(Vec2i dst, Rect2i src){
 	//TODO:
 }
+
+unsigned Render::getMaxTextureSize(){
+	//TODO:
+	return 1024;
+}

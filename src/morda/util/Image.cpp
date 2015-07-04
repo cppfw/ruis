@@ -106,6 +106,9 @@ Image::~Image(){
 
 //Fills image buffer with zeroes
 void Image::Clear(std::uint8_t  val){
+	if (this->buf.size() == 0) {
+		return;
+	}
 	memset(&*this->buf.begin(), val, this->buf.size() * sizeof(this->buf[0]));
 }
 
@@ -151,7 +154,7 @@ void Image::FlipVertical(){
 
 
 void Image::Blit(unsigned x, unsigned y, const Image& src){
-	ASSERT(this->buf.size())
+	ASSERT(this->buf.size() != 0)
 	if(this->Type() != src.Type()){
 		throw ting::Exc("Image::Blit(): bits per pixel values do not match");
 	}
