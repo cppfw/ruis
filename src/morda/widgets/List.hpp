@@ -95,7 +95,6 @@ private:
 	
 	bool arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool add, size_t index);//returns true if it was the last visible widget
 	
-	
 	void updateTailItemsInfo();
 	
 	void notifyDataSetChanged(){

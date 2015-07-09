@@ -194,7 +194,31 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
-	size_t i;
+	
+	
+	//remove widgets from top
+	for(; this->Children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
+		auto w = (*this->Children().begin())->RemoveFromParent();
+		if(this->provider){
+			this->provider->recycle(this->addedIndex, w);
+		}
+	}
+	
+	this->addedIndex = 0;
+	
+//	size_t notArrangedAddedIndex = 0;
+	
+	size_t i = this->posIndex;
+//	
+//	for(; i < oldAddedIndex && i < this->provider->count(); ++i){
+//		auto w = this->provider->getWidget(i);
+//		
+//		++notArrangedAddedIndex;
+//		
+//		if(this->arrangeWidget(w, pos, false, i)){
+//			break;
+//		}
+//	}
 	
 	//add widgets before added
 //	for(i = this->posIndex; i != this->provider->count() && i < this->addedIndex; ++i){
@@ -208,7 +232,6 @@ void List::updateChildrenList(){
 	
 	//TODO:
 	this->removeAll();
-	this->addedIndex = 0;
 	
 	for(i = this->posIndex; i < this->provider->count(); ++i){
 		auto w = this->provider->getWidget(i);
@@ -218,6 +241,7 @@ void List::updateChildrenList(){
 		}
 	}
 }
+
 
 
 
