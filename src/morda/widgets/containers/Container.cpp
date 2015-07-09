@@ -211,6 +211,9 @@ void Container::OnResize(){
 }
 
 
+Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
+	return this->Add(w, (*insertBefore).get());
+}
 
 Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
@@ -238,11 +241,8 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	
 	w->parentIter = ret;
 	w->parent = this;
-
-	w->SetRelayoutNeeded();
-	this->SetRelayoutNeeded();
 	
-	this->OnChildrenListChanged();
+	this->onChildrenListChanged();
 	
 	if(this->children.size() > 1){
 		(*(++this->children.rbegin()))->OnTopmostChanged();
@@ -254,6 +254,9 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	return ret;
 }
 
+std::shared_ptr<Widget> Container::Remove(T_ChildrenList::const_iterator iter){
+	return this->Remove(**iter);
+}
 
 
 std::shared_ptr<Widget> Container::Remove(Widget& w){
@@ -275,9 +278,7 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	w.parent = nullptr;
 	w.SetUnhovered();
 	
-	this->SetRelayoutNeeded();
-	
-	this->OnChildrenListChanged();
+	this->onChildrenListChanged();
 	
 	return std::move(ret);
 }

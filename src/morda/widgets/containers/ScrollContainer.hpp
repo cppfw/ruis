@@ -66,7 +66,7 @@ public:
 
 	void OnResize()override;
 
-	void OnChildrenListChanged()override;
+	void onChildrenListChanged()override;
 	
 	const Vec2r& ScrollPos()const{
 		return this->scrollPos;

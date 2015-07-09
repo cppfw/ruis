@@ -468,6 +468,10 @@ Container{
 				}
 
 				Label{
+					text{item_0}
+				}
+
+				Label{
 					text{item_1}
 				}
 

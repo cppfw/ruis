@@ -19,9 +19,15 @@ public:
 	}
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
-//		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
+		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		return morda::App::Inst().inflater.Inflate(*(this->widgets[index]));
 	}
+	
+
+	void recycle(size_t index, std::shared_ptr<Widget> w)override{
+		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
+	}
+
 	
 	void add(std::unique_ptr<stob::Node> w){
 		this->widgets.push_back(std::move(w));
@@ -97,6 +103,8 @@ void List::setScrollPosAsFactor(real factor){
 	
 	this->posIndex = size_t(factor * real(this->provider->count() - this->numTailItems));
 	
+//	TRACE(<< "List::setScrollPosAsFactor(): this->posIndex = " << this->posIndex << std::endl)
+	
 	if(this->provider->count() != this->numTailItems){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
@@ -133,14 +141,22 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos < this->Rect().d.y){
 			if(!added){
-				this->Add(w);
+				if(index < this->addedIndex){
+					this->Add(w, this->Children().begin());
+				}else{
+					this->Add(w);
+				}
 			}
-			if(this->addedIndex == 0){
+			if(this->addedIndex > index){
 				this->addedIndex = index;
 			}
 		}else{
 			if(added){
-				this->Remove(*w);
+				auto widget = this->Remove(*w);
+				if(this->provider){
+					this->provider->recycle(index, widget);
+				}
+				++this->addedIndex;
 			}
 		}
 
@@ -153,14 +169,22 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos > 0){
 			if(!added){
-				this->Add(w);
+				if(index < this->addedIndex){
+					this->Add(w, this->Children().begin());
+				}else{
+					this->Add(w);
+				}
 			}
-			if(this->addedIndex == 0){
+			if(this->addedIndex > index){
 				this->addedIndex = index;
 			}
 		}else{
 			if(added){
-				this->Remove(*w);
+				auto widget = this->Remove(*w);
+				if(this->provider){
+					this->provider->recycle(index, widget);
+				}
+				++this->addedIndex;
 			}
 		}
 
@@ -178,7 +202,7 @@ void List::updateChildrenList(){
 		this->posOffset = 0;
 		
 		this->removeAll();
-		this->addedIndex = 0;
+		this->addedIndex = size_t(-1);
 		return;
 	}
 	
@@ -194,7 +218,7 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
-	
+	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
 	
 	//remove widgets from top
 	for(; this->Children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
@@ -204,42 +228,46 @@ void List::updateChildrenList(){
 		}
 	}
 	
-	this->addedIndex = 0;
-	
-//	size_t notArrangedAddedIndex = 0;
-	
-	size_t i = this->posIndex;
-//	
-//	for(; i < oldAddedIndex && i < this->provider->count(); ++i){
-//		auto w = this->provider->getWidget(i);
-//		
-//		++notArrangedAddedIndex;
-//		
-//		if(this->arrangeWidget(w, pos, false, i)){
-//			break;
-//		}
-//	}
-	
-	//add widgets before added
-//	for(i = this->posIndex; i != this->provider->count() && i < this->addedIndex; ++i){
-//		auto w = this->provider->getWidget(i);
-//		
-//		if(this->arrangeWidget(w, pos, false, i)){
-//			return;
-//		}
-//	}
-	
-	
-	//TODO:
-	this->removeAll();
-	
-	for(i = this->posIndex; i < this->provider->count(); ++i){
-		auto w = this->provider->getWidget(i);
+	auto iter = this->Children().begin();
+	size_t index = this->posIndex;
+	for(; index < this->provider->count();){
+		std::shared_ptr<Widget> w;
+		bool isAdded;
+		if(this->addedIndex <= index && index < this->addedIndex + this->Children().size() && iter != this->Children().end()){
+			w = *iter;
+			++iter;
+			isAdded = true;
+		}else{
+			w = this->provider->getWidget(index);
+			isAdded = false;
+		}
 		
-		if(this->arrangeWidget(w, pos, false, i)){
+		if(this->arrangeWidget(w, pos, isAdded, index)){
+			++index;
 			break;
 		}
+		++index;
 	}
+	
+	//remove rest
+	if(iter != this->Children().end()){
+		for(;; ++index){
+			auto i = iter;
+			++i;
+			if(i == this->Children().end()){
+				break;
+			}
+			auto w = this->Remove(i);
+			if(this->provider){
+				this->provider->recycle(index, w);
+			}
+		}
+		auto w = this->Remove(iter);
+		if(this->provider){
+			this->provider->recycle(index, w);
+		}
+	}
+	
 }
 
 

@@ -127,7 +127,8 @@ void ScrollContainer::OnResize(){
 	}
 }
 
-void ScrollContainer::OnChildrenListChanged(){
+void ScrollContainer::onChildrenListChanged(){
+	this->Container::onChildrenListChanged();
 	this->arrangeWidgets();
 	this->UpdateEffectiveDim();
 }

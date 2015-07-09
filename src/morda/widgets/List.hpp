@@ -35,7 +35,7 @@ THE SOFTWARE. */
 namespace morda{
 
 class List : public Container{
-	size_t addedIndex = 0;
+	size_t addedIndex = size_t(-1);
 	
 	size_t posIndex = 0;
 	real posOffset = real(0);
@@ -101,10 +101,15 @@ private:
 		this->numTailItems = 0;//means that it needs to be recomputed
 		
 		this->removeAll();
-		this->addedIndex = 0;
+		this->addedIndex = size_t(-1);
 		
 		this->updateChildrenList();
 	}
+	
+
+	void onChildrenListChanged()override{
+	}
+
 };
 
 
