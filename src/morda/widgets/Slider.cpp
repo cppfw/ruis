@@ -15,19 +15,30 @@ using namespace morda;
 namespace{
 
 const char* DDescription = R"qwertyuiop(
-		FrameContainer{
-			name{handle}
-			ColorLabel{
-				color{ 0xff00ffff }
-
-				layout{
-					dimX{max} dimY{max}
-				}
+		NinePatch{
+			image{morda_npt_slider}
+			layout{
+				dimX{max} dimY{max}
 			}
-			MouseProxy{
-				name{morda_handle_proxy}
-				layout{
-					dimX{max} dimY{max}
+		}
+		Container{
+			layout{
+				dimX{max} dimY{max}
+			}
+			FrameContainer{
+				name{handle}
+				NinePatch{
+					image{morda_npt_slider_handle}
+
+					layout{
+						dimX{max} dimY{max}
+					}
+				}
+				MouseProxy{
+					name{morda_handle_proxy}
+					layout{
+						dimX{max} dimY{max}
+					}
 				}
 			}
 		}
@@ -39,7 +50,7 @@ const char* DDescription = R"qwertyuiop(
 
 Slider::Slider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
-		Container(stob::Parse(DDescription).get()),
+		FrameContainer(stob::Parse(DDescription).get()),
 		handle(*this->FindChildByName("handle")),
 		isVertical(isVertical)
 {
@@ -123,6 +134,8 @@ void Slider::SetFactor(float newFactor){
 
 
 void Slider::OnResize(){
+	this->FrameContainer::OnResize();
+	
 	unsigned longIndex = this->GetLongIndex();
 	
 	morda::Vec2r newSize(this->Rect().d);
@@ -160,18 +173,4 @@ morda::Vec2r Slider::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
 	return ret;
 }
 
-
-
-void Slider::Render(const morda::Matr4r& matrix) const{
-	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
-	
-	ColorPosShader& s = App::Inst().Shaders().colorPosShader;
-
-	s.SetColor(morda::Vec3f(0.5, 0.5, 0));
-	s.SetMatrix(matr);
-	s.render(s.quad01Fan);
-	
-	this->Container::Render(matrix);
-}
 	

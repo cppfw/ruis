@@ -212,6 +212,9 @@ void Container::OnResize(){
 
 
 Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
+	if(insertBefore == this->Children().end()){
+		return this->Add(w);
+	}
 	return this->Add(w, (*insertBefore).get());
 }
 
@@ -226,7 +229,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	}
 	
 	if(insertBefore && insertBefore->Parent() != this){
-		throw morda::Exc("Container::Add(): cannot insert after provided iterator, it points to a different container");
+		throw morda::Exc("Container::Add(): cannot insert before provided iterator, it points to a different container");
 	}
 
 	T_ChildrenList::iterator ret;

@@ -20,9 +20,6 @@ morda_npt_textfield{
 	borders{6 6 6 6}
 }
 
-
-
-
 morda_npt_checkbox{
 	tex{morda_tex_ui}
 	rect{46 0 11 11}
@@ -34,3 +31,15 @@ morda_img_checkbox{
 	rect{0 49 15 15}
 }
 
+
+morda_npt_slider{
+	tex{morda_tex_ui}
+	rect{16 16 9 9}
+	borders{4 4 4 4}
+}
+
+morda_npt_slider_handle{
+	tex{morda_tex_ui}
+	rect{26 16 11 11}
+	borders{4 4 4 4}
+}

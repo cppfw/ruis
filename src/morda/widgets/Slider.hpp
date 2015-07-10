@@ -31,7 +31,7 @@ THE SOFTWARE. */
 #include <ting/util.hpp>
 
 #include "Widget.hpp"
-#include "containers/Container.hpp"
+#include "containers/FrameContainer.hpp"
 
 
 //disable stupid warnings
@@ -45,7 +45,7 @@ namespace morda{
 
 class Slider :
 		public virtual Widget,
-		private Container //users do not need to know that it is a container
+		private FrameContainer //users do not need to know that it is a container
 {
 	//no copying
 	Slider(const Slider&);
@@ -87,8 +87,6 @@ private:
 	void OnResize() override;
 	
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
-	
-	void Render(const morda::Matr4r& matrix) const override;
 };
 
 
