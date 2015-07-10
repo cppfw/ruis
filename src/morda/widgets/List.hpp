@@ -43,6 +43,7 @@ class List : public Container{
 	bool isVertical;
 	
 	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
+	size_t firstTailItemIndex = 0;
 	real firstTailItemOffset = real(0);
 	
 	

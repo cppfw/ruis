@@ -19,13 +19,13 @@ public:
 	}
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
-		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
+//		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		return morda::App::Inst().inflater.Inflate(*(this->widgets[index]));
 	}
 	
 
 	void recycle(size_t index, std::shared_ptr<Widget> w)override{
-		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
+//		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 
 	
@@ -214,6 +214,15 @@ void List::updateChildrenList(){
 		this->updateTailItemsInfo();
 	}
 	
+	if(this->posIndex == this->firstTailItemIndex){
+		if(this->posOffset > this->firstTailItemOffset){
+			this->posOffset = this->firstTailItemOffset;
+		}
+	}else if(this->posIndex > this->firstTailItemIndex){
+		this->posIndex = this->firstTailItemIndex;
+		this->posOffset = this->firstTailItemOffset;
+	}
+	
 	real pos;
 	
 	if(this->isVertical){
@@ -222,7 +231,7 @@ void List::updateChildrenList(){
 		pos = -this->posOffset;
 	}
 	
-	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
+//	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
 	
 	//remove widgets from top
 	for(; this->Children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
@@ -315,6 +324,8 @@ void List::updateTailItemsInfo(){
 			dim -= d.x;
 		}
 	}
+	
+	this->firstTailItemIndex = this->provider->count() - this->numTailItems;
 	
 	if(dim > 0){
 		this->firstTailItemOffset = -1;
