@@ -34,7 +34,7 @@ THE SOFTWARE. */
 #include "containers/Container.hpp"
 
 
-//diable stupid warnings
+//disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC
 #	pragma warning(disable : 4250)
 #endif
@@ -54,29 +54,6 @@ class Slider :
 	float curFactor = 0; //Current position from 0 to 1
 	float handleSizeFactor = 0; //Current handle size factor from 0 to 1
 	
-	class SliderHandle : public Widget{
-		Slider& slider;
-
-		bool isGrabbed = false;
-		float clickPoint;
-
-	public:
-		SliderHandle(Slider& slider) :
-				Widget(0),
-				slider(slider)
-		{}
-	public:
-
-	private:
-		void Render(const morda::Matr4r& matrix)const override;
-
-		bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
-
-		bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId) override;
-	};
-	
-	bool isVertical;
-	
 	unsigned GetLongIndex()const NOEXCEPT{
 		return this->isVertical ? 1 : 0;
 	}
@@ -84,6 +61,13 @@ class Slider :
 	unsigned GetTransIndex()const NOEXCEPT{
 		return this->isVertical ? 0 : 1;
 	}
+	
+	Widget& handle;
+	
+	bool isVertical;
+	
+	bool isGrabbed = false;
+	float clickPoint;
 	
 protected:
 	Slider(bool isVertical, const stob::Node* chain);

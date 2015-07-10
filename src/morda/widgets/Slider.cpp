@@ -2,6 +2,7 @@
 
 #include "../App.hpp"
 #include "../util/util.hpp"
+#include "MouseProxy.hpp"
 
 #include <ting/math.hpp>
 #include <ting/util.hpp>
@@ -11,78 +12,94 @@ using namespace morda;
 
 
 
-void Slider::SliderHandle::Render(const morda::Matr4r& matrix)const{
-	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
+namespace{
 
-	ColorPosShader& s = App::Inst().Shaders().colorPosShader;
+const char* DDescription = R"qwertyuiop(
+		FrameContainer{
+			name{handle}
+			ColorLabel{
+				color{ 0xff00ffff }
 
-	s.SetColor(morda::Vec3f(0, 1, 1));
-	s.SetMatrix(matr);
-	s.render(s.quad01Fan);
-}
-	
-
-bool Slider::SliderHandle::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
-	if(button != EMouseButton::LEFT){
-		return false;
-	}
-
-	if(isDown){
-		ASSERT(!this->isGrabbed)
-		this->isGrabbed = true;
-
-		unsigned longIndex = this->slider.isVertical ? 1 : 0;
-		this->clickPoint = pos[longIndex];
-
-		return true;
-	}else{
-		if(this->isGrabbed){
-			this->isGrabbed = false;
-			return true;
-		}else{
-			return false;
+				layout{
+					dimX{max} dimY{max}
+				}
+			}
+			MouseProxy{
+				name{morda_handle_proxy}
+				layout{
+					dimX{max} dimY{max}
+				}
+			}
 		}
-	}
-}
-	
+	)qwertyuiop";
 
-bool Slider::SliderHandle::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
-	if(!this->isGrabbed){
-		return false;
-	}
-
-	unsigned longIndex = this->slider.GetLongIndex();
-
-	float maxPos = this->slider.Rect().d[longIndex] - this->Rect().d[longIndex];
-	ASSERT(maxPos >= 0)
-
-	float newPos = this->Rect().p[longIndex];
-	newPos += pos[longIndex] - this->clickPoint;
-	ting::util::ClampRange(newPos, 0.0f, maxPos);
-
-	morda::Vec2r newPosition(0);
-	newPosition[longIndex] = newPos;
-	
-	this->MoveTo(newPosition);
-	
-	//update factor
-	this->slider.curFactor = newPos / maxPos;
-	
-	if(this->slider.factorChange){
-		this->slider.factorChange(this->slider);
-	}
-	
-	return true;
 }
 
 
 
 Slider::Slider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
+		Container(stob::Parse(DDescription).get()),
+		handle(*this->FindChildByName("handle")),
 		isVertical(isVertical)
 {
-	this->Add(ting::New<SliderHandle>(*this));
+	auto hp = this->FindChildByNameAs<MouseProxy>("morda_handle_proxy");
+	hp->onMouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
+		if(button != EMouseButton::LEFT){
+			return false;
+		}
+
+		if(isDown){
+			ASSERT(!this->isGrabbed)
+			this->isGrabbed = true;
+
+			unsigned longIndex = this->isVertical ? 1 : 0;
+			this->clickPoint = pos[longIndex];
+
+			return true;
+		}else{
+			if(this->isGrabbed){
+				this->isGrabbed = false;
+				return true;
+			}else{
+				return false;
+			}
+		}
+	};
+	
+	hp->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
+		if(!this->isGrabbed){
+			return false;
+		}
+
+		unsigned longIndex = this->GetLongIndex();
+
+		float maxPos = this->Rect().d[longIndex] - this->handle.Rect().d[longIndex];
+		ASSERT(maxPos >= 0)
+
+		float newPos = this->handle.Rect().p[longIndex];
+		newPos += pos[longIndex] - this->clickPoint;
+		ting::util::ClampRange(newPos, 0.0f, maxPos);
+
+		morda::Vec2r newPosition(0);
+		newPosition[longIndex] = newPos;
+
+		//update factor
+		if(this->isVertical){
+			this->curFactor = (maxPos - newPos) / maxPos;
+		}else{
+			
+			this->curFactor = newPos / maxPos;
+		}
+		
+		this->handle.MoveTo(newPosition);
+
+		if(this->factorChange){
+			this->factorChange(*this);
+		}
+
+		return true;
+	};
 }
 
 
@@ -113,18 +130,21 @@ void Slider::OnResize(){
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
 	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
-	Widget& handle = *(*this->Children().begin());
-	handle.Resize(newSize);
+	this->handle.Resize(newSize);
 	
 	//move
 	{
-		float effectiveLength = this->Rect().d[longIndex] - handle.Rect().d[longIndex];
+		float effectiveLength = this->Rect().d[longIndex] - this->handle.Rect().d[longIndex];
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
-			newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
+			if(this->isVertical){
+				newPos[longIndex] = this->Rect().d.y - this->handle.Rect().d.y - ting::math::Round(effectiveLength * this->curFactor);
+			}else{
+				newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
+			}
 			ASSERT(newPos[longIndex] <= effectiveLength)
 		}
-		handle.MoveTo(newPos);
+		this->handle.MoveTo(newPos);
 	}
 }
 
