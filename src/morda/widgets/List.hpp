@@ -93,7 +93,7 @@ private:
 	
 	void updateChildrenList();
 	
-	bool arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool add, size_t index);//returns true if it was the last visible widget
+	bool arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool add, size_t index, T_ChildrenList::const_iterator insertBefore);//returns true if it was the last visible widget
 	
 	void updateTailItemsInfo();
 	

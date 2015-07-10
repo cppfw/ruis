@@ -128,7 +128,7 @@ void List::setScrollPosAsFactor(real factor){
 	this->updateChildrenList();
 }
 
-bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index){
+bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, T_ChildrenList::const_iterator insertBefore){
 	auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
 		
 	Vec2r dim = this->dimForWidget(*w, lp);
@@ -141,11 +141,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos < this->Rect().d.y){
 			if(!added){
-				if(index < this->addedIndex){
-					this->Add(w, this->Children().begin());
-				}else{
-					this->Add(w);
-				}
+				this->Add(w, insertBefore);
 			}
 			if(this->addedIndex > index){
 				this->addedIndex = index;
@@ -158,6 +154,8 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 				}
 				++this->addedIndex;
 			}
+			++this->posIndex;
+			this->posOffset -= w->Rect().d.y;
 		}
 
 		if(w->Rect().p.y <= 0){
@@ -169,11 +167,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos > 0){
 			if(!added){
-				if(index < this->addedIndex){
-					this->Add(w, this->Children().begin());
-				}else{
-					this->Add(w);
-				}
+				this->Add(w, insertBefore);
 			}
 			if(this->addedIndex > index){
 				this->addedIndex = index;
@@ -186,6 +180,8 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 				}
 				++this->addedIndex;
 			}
+			++this->posIndex;
+			this->posOffset -= w->Rect().d.x;
 		}
 
 		if(w->Rect().Right() >= this->Rect().d.x){
@@ -230,11 +226,12 @@ void List::updateChildrenList(){
 	
 	auto iter = this->Children().begin();
 	size_t iterIndex = this->addedIndex;
+	size_t iterEndIndex = iterIndex + this->Children().size();
 	size_t index = this->posIndex;
 	for(; index < this->provider->count();){
 		std::shared_ptr<Widget> w;
 		bool isAdded;
-		if(this->addedIndex <= index && index < this->addedIndex + this->Children().size() && iter != this->Children().end()){
+		if(iterIndex <= index && index < iterEndIndex && iter != this->Children().end()){
 			w = *iter;
 			++iter;
 			++iterIndex;
@@ -244,7 +241,7 @@ void List::updateChildrenList(){
 			isAdded = false;
 		}
 		
-		if(this->arrangeWidget(w, pos, isAdded, index)){
+		if(this->arrangeWidget(w, pos, isAdded, index, iter)){
 			++index;
 			break;
 		}
@@ -252,9 +249,9 @@ void List::updateChildrenList(){
 	}
 	
 	//remove rest
-	if(iter != this->Children().end()){
+	if(iterIndex < iterEndIndex){
 		size_t oldIterIndex = iterIndex;
-		for(;; ++index){
+		for(;;){
 			auto i = iter;
 			++i;
 			++iterIndex;
