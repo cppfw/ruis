@@ -229,6 +229,7 @@ void List::updateChildrenList(){
 	}
 	
 	auto iter = this->Children().begin();
+	size_t iterIndex = this->addedIndex;
 	size_t index = this->posIndex;
 	for(; index < this->provider->count();){
 		std::shared_ptr<Widget> w;
@@ -236,6 +237,7 @@ void List::updateChildrenList(){
 		if(this->addedIndex <= index && index < this->addedIndex + this->Children().size() && iter != this->Children().end()){
 			w = *iter;
 			++iter;
+			++iterIndex;
 			isAdded = true;
 		}else{
 			w = this->provider->getWidget(index);
@@ -251,20 +253,22 @@ void List::updateChildrenList(){
 	
 	//remove rest
 	if(iter != this->Children().end()){
+		size_t oldIterIndex = iterIndex;
 		for(;; ++index){
 			auto i = iter;
 			++i;
+			++iterIndex;
 			if(i == this->Children().end()){
 				break;
 			}
 			auto w = this->Remove(i);
 			if(this->provider){
-				this->provider->recycle(index, w);
+				this->provider->recycle(iterIndex, w);
 			}
 		}
 		auto w = this->Remove(iter);
 		if(this->provider){
-			this->provider->recycle(index, w);
+			this->provider->recycle(oldIterIndex, w);
 		}
 	}
 	
