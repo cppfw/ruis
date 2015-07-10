@@ -25,12 +25,9 @@ void App::render(){
 		return;
 	}
 	
-
-	Render::setClearColor(Vec4f(0.0f, 0, 0.0f, 1.0f));
-	
 	//TODO: clear depth if depth buffer is created, and stencil also, and whatever else
-	Render::clear(Render::EBuffer::COLOR);
-	Render::clear(Render::EBuffer::DEPTH);
+	Render::clearColor();
+	Render::clearDepth();
 	
 	morda::Matr4r m;
 	m.Identity();

@@ -64,13 +64,6 @@ public:
 		LINE_LOOP
 	};
 	
-	enum class EBuffer{
-		COLOR,
-		DEPTH,
-		STENCIL,
-		ACCUM
-	};
-	
 	class InputID{
 		friend class morda::Render;
 		std::int64_t id;
@@ -117,9 +110,9 @@ public:
 	
 	static void setViewport(Rect2i r);
 	
-	static void setClearColor(Vec4f c);
+	static void clearColor(Vec4f c = Vec4f(0.0f, 0, 0.0f, 1.0f));
 	
-	static void clear(EBuffer b);
+	static void clearDepth(float d = 0.0f);
 	
 	static bool isScissorEnabled();
 	

@@ -244,10 +244,7 @@ void Render::setViewport(Rect2i r){
 	AssertOpenGLNoError();
 }
 
-void Render::setClearColor(Vec4f c){
-	glClearColor(c.x, c.y, c.z, c.w);
-	AssertOpenGLNoError();
-}
+
 
 
 namespace {
@@ -316,26 +313,18 @@ Render::~Render()noexcept {
 
 }
 
-void Render::clear(EBuffer b) {
-	GLbitfield bf = 0;
-	switch(b){
-		default:
-		case EBuffer::COLOR:
-			bf = GL_COLOR_BUFFER_BIT;
-			break;
-		case EBuffer::DEPTH:
-			bf = GL_DEPTH_BUFFER_BIT;
-			break;
-		case EBuffer::ACCUM:
-			bf = GL_ACCUM_BUFFER_BIT;
-			break;
-		case EBuffer::STENCIL:
-			bf = GL_STENCIL_BUFFER_BIT;
-			break;
-	}
-	glClear(bf);
+void Render::clearColor(Vec4f c) {
+	glClearColor(c.x, c.y, c.z, c.w);
+	AssertOpenGLNoError();
+	glClear(GL_COLOR_BUFFER_BIT);
 	AssertOpenGLNoError();
 }
+
+void Render::clearDepth(float d) {
+	glClear(GL_DEPTH_BUFFER_BIT);
+	AssertOpenGLNoError();
+}
+
 
 bool Render::isScissorEnabled() {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
