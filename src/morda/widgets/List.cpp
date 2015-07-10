@@ -147,15 +147,19 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 				this->addedIndex = index;
 			}
 		}else{
+			++this->posIndex;
+			this->posOffset -= w->Rect().d.y;
 			if(added){
 				auto widget = this->Remove(*w);
 				if(this->provider){
 					this->provider->recycle(index, widget);
 				}
 				++this->addedIndex;
+			}else{
+				if(this->provider){
+					this->provider->recycle(index, w);
+				}
 			}
-			++this->posIndex;
-			this->posOffset -= w->Rect().d.y;
 		}
 
 		if(w->Rect().p.y <= 0){
@@ -173,15 +177,19 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 				this->addedIndex = index;
 			}
 		}else{
+			++this->posIndex;
+			this->posOffset -= w->Rect().d.x;
 			if(added){
 				auto widget = this->Remove(*w);
 				if(this->provider){
 					this->provider->recycle(index, widget);
 				}
 				++this->addedIndex;
+			}else{
+				if(this->provider){
+					this->provider->recycle(index, w);
+				}
 			}
-			++this->posIndex;
-			this->posOffset -= w->Rect().d.x;
 		}
 
 		if(w->Rect().Right() >= this->Rect().d.x){
