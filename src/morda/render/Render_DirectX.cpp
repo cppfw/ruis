@@ -87,8 +87,6 @@ struct Direct3DContext : public ting::Void {
 		this->dev->Release();
 		this->ctx->Release();
 	}
-
-	morda::Vec4f curClearColor;
 } *d3dCtx;
 
 
@@ -173,10 +171,6 @@ void Render::setViewport(Rect2i r){
 	d3dCtx->ctx->RSSetViewports(1, &viewport);
 }
 
-void Render::setClearColor(Vec4f c){
-	d3dCtx->curClearColor = c;
-}
-
 
 
 Render::Render(){
@@ -188,33 +182,20 @@ Render::~Render()noexcept{
 	
 }
 
-void Render::clear(EBuffer b) {
-	/*
-	GLbitfield bf = 0;
-	switch(b){
-		default:
-		case EBuffer::COLOR:
-			bf = GL_COLOR_BUFFER_BIT;
-			break;
-		case EBuffer::DEPTH:
-			bf = GL_DEPTH_BUFFER_BIT;
-			break;
-		case EBuffer::ACCUM:
-			bf = GL_ACCUM_BUFFER_BIT;
-			break;
-		case EBuffer::STENCIL:
-			bf = GL_STENCIL_BUFFER_BIT;
-			break;
-	}*/
-	//TODO: clear depth and other buffers
+void Render::clearColor(Vec4f color) {
 	FLOAT clr[4] = {
-			d3dCtx->curClearColor.x,
-			d3dCtx->curClearColor.y,
-			d3dCtx->curClearColor.z,
-			d3dCtx->curClearColor.w
+			color.x,
+			color.y,
+			color.z,
+			color.w
 		};
 	d3dCtx->ctx->ClearRenderTargetView(d3dCtx->renderTarget, clr);
 }
+
+void Render::clearDepth(float d) {
+	d3dCtx->ctx->ClearDepthStencilView(NULL, D3D11_CLEAR_DEPTH, FLOAT(d), 0);//TODO: NULL?
+}
+
 
 bool Render::isScissorEnabled() {
 	//TODO:
