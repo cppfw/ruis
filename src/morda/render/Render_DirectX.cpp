@@ -87,7 +87,7 @@ struct Direct3DContext : public ting::Void {
 		this->dev->Release();
 		this->ctx->Release();
 	}
-} *d3dCtx;
+} *d3d;
 
 
 //GLenum modeMap[] = {
@@ -168,14 +168,14 @@ void Render::setViewport(Rect2i r){
 	viewport.Width = FLOAT(r.d.x);
 	viewport.Height = FLOAT(r.d.y);
 
-	d3dCtx->ctx->RSSetViewports(1, &viewport);
+	d3d->ctx->RSSetViewports(1, &viewport);
 }
 
 
 
 Render::Render(){
-	d3dCtx = new Direct3DContext(morda::App::Inst().window.hwnd);
-	this->pimpl.reset(d3dCtx);
+	d3d = new Direct3DContext(morda::App::Inst().window.hwnd);
+	this->pimpl.reset(d3d);
 }
 
 Render::~Render()noexcept{
@@ -189,11 +189,11 @@ void Render::clearColor(Vec4f color) {
 			color.z,
 			color.w
 		};
-	d3dCtx->ctx->ClearRenderTargetView(d3dCtx->renderTarget, clr);
+	d3d->ctx->ClearRenderTargetView(d3d->renderTarget, clr);
 }
 
 void Render::clearDepth(float d) {
-	d3dCtx->ctx->ClearDepthStencilView(NULL, D3D11_CLEAR_DEPTH, FLOAT(d), 0);//TODO: NULL?
+	d3d->ctx->ClearDepthStencilView(NULL, D3D11_CLEAR_DEPTH, FLOAT(d), 0);//TODO: NULL?
 }
 
 
@@ -327,5 +327,5 @@ unsigned Render::getMaxTextureSize(){
 
 
 void Render::swapFrameBuffers() {
-	static_cast<Direct3DContext*>(morda::App::Inst().renderer.pimpl.get())->swapchain->Present(0, 0);
+	d3d->swapchain->Present(0, 0);
 }
