@@ -9,6 +9,7 @@
 #endif
 
 #include <memory>
+#include <sstream>
 
 #include <ting/Exc.hpp>
 #include <ting/Void.hpp>
@@ -63,6 +64,43 @@ GLenum modeMap[] = {
 
 
 
+const char* shaderDefs =
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
+	R"qwertyuiop(
+		#define MAT4F highp mat4
+		#define VEC2F highp vec2
+		#define VEC4F highp vec4
+	)qwertyuiop"
+#else
+	R"qwertyuiop(
+		#define MAT4F mat4
+		#define VEC2F vec2
+		#define VEC4F vec4
+	)qwertyuiop"
+#endif
+
+	R"qwertyuiop(
+		#define UNIFORM uniform
+
+		#define ATTRIB attribute
+
+		#define ATTRIB_BEGIN
+		#define ATTRIB_END
+
+		#define VARYING varying
+
+		#define VARYING_BEGIN
+		#define VARYING_END
+
+		#define VERTEX_MAIN_BEGIN void main(void){
+
+		#define VERTEX_MAIN_END }
+
+		#define FRAG_MAIN_BEGIN void main(void){
+		
+		#define FRAG_MAIN_END }
+	)qwertyuiop";
+
 
 struct ShaderWrapper{
 	GLuint s;
@@ -73,12 +111,17 @@ struct ShaderWrapper{
 			throw ting::Exc("glCreateShader() failed");
 		}
 
-		glShaderSource(this->s, 1, &code, 0);
+		std::stringstream ss;
+		ss << shaderDefs << code;
+		auto cstr = ss.str();
+		const char* c = cstr.c_str();
+
+		glShaderSource(this->s, 1, &c, 0);
 		glCompileShader(this->s);
 		if(this->CheckForCompileErrors(this->s)){
-			TRACE(<< "Error while compiling:\n" << code << std::endl)
+			TRACE(<< "Error while compiling:\n" << c << std::endl)
 			glDeleteShader(this->s);
-			throw ting::Exc("Error compiling vertex shader");
+			throw ting::Exc("Error compiling shader");
 		}
 	}
 	~ShaderWrapper()NOEXCEPT{

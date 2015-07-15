@@ -15,38 +15,30 @@ decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoords = {{
 PosTexShader::PosTexShader() :
 		Shader(
 				R"qwertyuiop(
-						#ifndef GL_ES
-						#	define highp
-						#	define mediump
-						#	define lowp
-						#endif
+						UNIFORM MAT4F matrix;
 
-						attribute highp vec4 pos;
-						attribute highp vec2 texCoord0;
+						ATTRIB_BEGIN
+							ATTRIB VEC4F pos;
+							ATTRIB VEC2F texCoord0;
+						ATTRIB_END
 
-						uniform highp mat4 matrix;
+						VARYING_BEGIN
+							VARYING VEC2F tc0;
+						VARYING_END
 
-						varying highp vec2 tc0;
-
-						void main(void){
+						VERTEX_MAIN_BEGIN
 							gl_Position = matrix * pos;
 							tc0 = texCoord0;
-						}
+						VERTEX_MAIN_END
 					)qwertyuiop",
 				R"qwertyuiop(
-						#ifndef GL_ES
-						#	define highp
-						#	define mediump
-						#	define lowp
-						#endif
+						UNIFORM sampler2D textureNumber;
 		
-						uniform sampler2D textureNumber;
+						VARYING VEC2F tc0;
 		
-						varying highp vec2 tc0;
-		
-						void main(void){
+						FRAG_MAIN_BEGIN
 							gl_FragColor = texture2D(textureNumber, tc0);
-						}
+						FRAG_MAIN_END
 					)qwertyuiop"
 			),
 		texCoordAttr(this->getAttribute("texCoord0")),
