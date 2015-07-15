@@ -34,7 +34,9 @@ PosTexShader::PosTexShader() :
 				R"qwertyuiop(
 						UNIFORM sampler2D textureNumber;
 		
-						VARYING VEC2F tc0;
+						VARYING_BEGIN
+							VARYING VEC2F tc0;
+						VARYING_END
 		
 						FRAG_MAIN_BEGIN
 							gl_FragColor = texture2D(textureNumber, tc0);
