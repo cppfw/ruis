@@ -82,6 +82,9 @@ R"qwertyuiop(
 	R"qwertyuiop(
 		#define UNIFORM(type, name) uniform type name;
 
+		#define UNIFORM_BEGIN
+		#define UNIFORM_END
+
 		#define ATTRIB(type, name) attribute type name;
 
 		#define ATTRIB_BEGIN

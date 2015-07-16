@@ -15,7 +15,9 @@ decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoords = {{
 PosTexShader::PosTexShader() :
 		Shader(
 				R"qwertyuiop(
-						UNIFORM(MAT4F, matrix)
+						UNIFORM_BEGIN
+							UNIFORM(MAT4F, matrix)
+						UNIFORM_END
 
 						ATTRIB_BEGIN
 							ATTRIB(VEC4F, pos)
