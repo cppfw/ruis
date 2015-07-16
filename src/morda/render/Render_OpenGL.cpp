@@ -66,13 +66,13 @@ GLenum modeMap[] = {
 
 const char* shaderDefs =
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-	R"qwertyuiop(
+R"qwertyuiop(
 		#define MAT4F highp mat4
 		#define VEC2F highp vec2
 		#define VEC4F highp vec4
 	)qwertyuiop"
 #else
-	R"qwertyuiop(
+R"qwertyuiop(
 		#define MAT4F mat4
 		#define VEC2F vec2
 		#define VEC4F vec4
@@ -80,14 +80,14 @@ const char* shaderDefs =
 #endif
 
 	R"qwertyuiop(
-		#define UNIFORM uniform
+		#define UNIFORM(type, name) uniform type name;
 
-		#define ATTRIB attribute
+		#define ATTRIB(type, name) attribute type name;
 
 		#define ATTRIB_BEGIN
 		#define ATTRIB_END
 
-		#define VARYING varying
+		#define VARYING(type, name) varying type name;
 
 		#define VARYING_BEGIN
 		#define VARYING_END
@@ -99,6 +99,13 @@ const char* shaderDefs =
 		#define FRAG_MAIN_BEGIN void main(void){
 		
 		#define FRAG_MAIN_END }
+
+		#define OUT(varying_name) varying_name
+
+		#define VARYING_POS
+
+		#define OUT_POS gl_Position
+		#define OUT_FRAGCOLOR gl_FragColor
 	)qwertyuiop";
 
 
