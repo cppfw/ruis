@@ -33,17 +33,19 @@ PosTexShader::PosTexShader() :
 						VERTEX_MAIN_END
 					)qwertyuiop",
 				R"qwertyuiop(
-						UNIFORM(sampler2D, textureNumber)
+						UNIFORM(sampler2D, texture0)
 		
 						VARYING_BEGIN
 							VARYING(VEC2F, tc0)
 						VARYING_END
 		
 						FRAG_MAIN_BEGIN
-							OUT_FRAGCOLOR = texture2D(textureNumber, tc0);
+							OUT_FRAGCOLOR = texture2D(texture0, tc0);
 						FRAG_MAIN_END
 					)qwertyuiop"
 			),
-		texCoordAttr(this->getAttribute("texCoord0")),
-		texNumberUniform(this->getUniform("textureNumber"))
-{}
+		texCoordAttr(this->getAttribute("texCoord0"))
+{
+	this->setUniform1i(this->getUniform("texture0"), 0); //this needs to be done only once and then it becomes part of the shader state
+	this->unbind();
+}

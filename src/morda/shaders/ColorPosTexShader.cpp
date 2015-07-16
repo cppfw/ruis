@@ -33,14 +33,14 @@ ColorPosTexShader::ColorPosTexShader() :
 						#	define lowp
 						#endif
 		
-						uniform sampler2D textureNumber;
+						uniform sampler2D texture0;
 		
 						uniform highp vec4 uniformColor;
 		
 						varying highp vec2 tc0;
 		
 						void main(void){
-							gl_FragColor = texture2D(textureNumber, tc0) * uniformColor;
+							gl_FragColor = texture2D(texture0, tc0) * uniformColor;
 						}
 					)qwertyuiop"
 			)

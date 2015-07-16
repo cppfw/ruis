@@ -35,12 +35,12 @@ SimpleGrayscalePosTexShader::SimpleGrayscalePosTexShader() :
 						#	define lowp
 						#endif
 		
-						uniform sampler2D textureNumber;
+						uniform sampler2D texture0;
 		
 						varying highp vec2 tc0;
 		
 						void main(void){
-							lowp vec4 c = texture2D(textureNumber, tc0);
+							lowp vec4 c = texture2D(texture0, tc0);
 							lowp float g = (c.r + c.g + c.b) / 3.0;
 							gl_FragColor = vec4(g, g, g, c.a);
 						}

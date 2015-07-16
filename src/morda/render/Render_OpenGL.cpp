@@ -106,6 +106,8 @@ R"qwertyuiop(
 
 		#define OUT_POS gl_Position
 		#define OUT_FRAGCOLOR gl_FragColor
+
+		#define TEXTURE2D(name) sampler2D name;
 	)qwertyuiop";
 
 

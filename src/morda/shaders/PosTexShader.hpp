@@ -43,8 +43,6 @@ class PosTexShader :
 		virtual public Shader
 {
 	Render::InputID texCoordAttr;
-
-	Render::InputID texNumberUniform;
 	
 protected:
 
@@ -55,10 +53,6 @@ public:
 	
 	PosTexShader(const PosTexShader&) = delete;
 	PosTexShader& operator=(const PosTexShader&) = delete;
-	
-	void SetTextureNumber(unsigned i){
-		this->setUniform1i(this->texNumberUniform, i);
-	}
 	
 	void render(ting::Buffer<const Vec2f> p, ting::Buffer<const Vec2f> t, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
 		this->RenderInternal<Vec2f>(p, t, mode);

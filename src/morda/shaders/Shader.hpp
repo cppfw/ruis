@@ -77,7 +77,16 @@ class Shader{
 		boundShader = this;
 	}
 	
+	
 protected:
+	void unbind() {
+		if (this != boundShader) {
+			throw morda::Exc("Shader::Unbind(): another shader is bound");
+		}
+		renderIsInProgress = false;
+		boundShader = nullptr;
+	}
+
 	Render::InputID getAttribute(const char* n){
 		return Render::getAttribute(*this->program, n);
 	}
