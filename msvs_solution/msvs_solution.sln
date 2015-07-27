@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "morda", "morda\morda.vcxproj", "{60B1A3D5-E01C-4D88-9657-E6BE1BA9A66E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1} = {019DBD2A-273D-4BA4-BF86-B5EFE2ED76B1}
+		{745DEC58-EBB3-47A9-A9B8-4C6627C01BF8} = {745DEC58-EBB3-47A9-A9B8-4C6627C01BF8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "freetype-2.4.11\builds\win32\vc2010\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
 EndProject

@@ -30,12 +30,6 @@ THE SOFTWARE. */
 
 #include "../config.hpp"
 
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-#	include <GLES2/gl2.h>
-#else
-#	include <GL/glew.h>
-#endif
-
 #include <ting/debug.hpp>
 
 #include "Vector2.hpp"
