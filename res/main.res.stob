@@ -3,5 +3,5 @@ include{ui.res.stob}
 include{fonts/font.res.stob}
 
 morda_gui_definitions{
-  file{definitions.gui.stob}
+	file{definitions.gui.stob}
 }
