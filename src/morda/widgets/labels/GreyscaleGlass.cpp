@@ -15,7 +15,7 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 
-void GreyscaleGlass::Render(const morda::Matr4r& matrix) const{
+void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	Texture2D texture(this->Rect().d.ConvertTo<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
 	//texture is bound right after creation
 	

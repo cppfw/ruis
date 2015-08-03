@@ -107,7 +107,7 @@ public:
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 	}
 	
-	void Render(const morda::Matr4r& matrix)const override{
+	void render(const morda::Matr4r& matrix)const override{
 		{
 			morda::Matr4r matr(matrix);
 			matr.Scale(this->Rect().d);
@@ -152,8 +152,8 @@ public:
 		this->rot %= morda::Quatr().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
-	void Render(const morda::Matr4r& matrix)const override{
-		this->Widget::Render(matrix);
+	void render(const morda::Matr4r& matrix)const override{
+		this->Widget::render(matrix);
 		
 		morda::Matr4r matr(matrix);
 		matr.Scale(this->Rect().d / 2);

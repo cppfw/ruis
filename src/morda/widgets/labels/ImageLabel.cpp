@@ -23,7 +23,7 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 	}
 }
 
-void ImageLabel::Render(const morda::Matr4r& matrix) const{
+void ImageLabel::render(const morda::Matr4r& matrix) const{
 	if(!this->img){
 		return;
 	}

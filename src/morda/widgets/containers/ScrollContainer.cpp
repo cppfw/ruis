@@ -32,7 +32,7 @@ bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 
 
 
-void ScrollContainer::Render(const morda::Matr4r& matrix) const {
+void ScrollContainer::render(const morda::Matr4r& matrix) const {
 	Vec2r d = this->scrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
@@ -40,7 +40,7 @@ void ScrollContainer::Render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.Translate(d);
 	
-	this->Container::Render(matr);
+	this->Container::render(matr);
 }
 
 void ScrollContainer::ClampScrollPos() {

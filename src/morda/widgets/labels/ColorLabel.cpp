@@ -13,7 +13,7 @@ ColorLabel::ColorLabel(const stob::Node* chain) :
 
 
 
-void ColorLabel::Render(const morda::Matr4r& matrix)const{
+void ColorLabel::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->Rect().d);
 

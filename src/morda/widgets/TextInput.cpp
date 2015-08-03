@@ -34,7 +34,7 @@ TextInput::TextInput(const stob::Node* chain) :
 
 
 
-void TextInput::Render(const morda::Matr4r& matrix) const{
+void TextInput::render(const morda::Matr4r& matrix) const{
 	//render selection
 	if(this->cursorIndex != this->selectionStartIndex){
 		morda::Matr4r matr(matrix);

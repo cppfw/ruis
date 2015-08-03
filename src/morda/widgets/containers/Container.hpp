@@ -82,7 +82,7 @@ public:
 public:
 	~Container()NOEXCEPT{}
 	
-	void Render(const morda::Matr4r& matrix)const override;
+	void render(const morda::Matr4r& matrix)const override;
 
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
 public:

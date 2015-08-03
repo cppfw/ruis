@@ -171,7 +171,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 		
 		Render::setScissorRect(scissor);
 		
-		this->Render(matrix);
+		this->render(matrix);
 		
 		if(scissorTestWasEnabled){
 			Render::setScissorRect(oldScissor);
@@ -179,7 +179,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 			Render::setScissorEnabled(false);
 		}
 	}else{
-		this->Render(matrix);
+		this->render(matrix);
 	}
 
 	//render border

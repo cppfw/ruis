@@ -42,7 +42,7 @@ public:
 	BlurGlass& operator=(const BlurGlass&) = delete;
 	
 	
-	void Render(const morda::Matr4r& matrix) const override;
+	void render(const morda::Matr4r& matrix) const override;
 	
 private:
 

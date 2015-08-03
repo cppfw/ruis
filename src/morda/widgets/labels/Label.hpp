@@ -49,7 +49,7 @@ public:
 public:
 	~Label()NOEXCEPT{}
 	
-	void Render(const morda::Matr4r& matrix)const override;
+	void render(const morda::Matr4r& matrix)const override;
 };
 
 

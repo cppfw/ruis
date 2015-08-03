@@ -14,7 +14,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 {}
 
 
-void BlurGlass::Render(const morda::Matr4r& matrix)const{
+void BlurGlass::render(const morda::Matr4r& matrix)const{
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
 	
 	Texture2D texture(this->Rect().d.ConvertTo<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);

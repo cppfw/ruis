@@ -47,7 +47,7 @@ public:
 public:
 	virtual ~ImageLabel()NOEXCEPT{}
 	
-	void Render(const morda::Matr4r& matrix)const override;
+	void render(const morda::Matr4r& matrix)const override;
 
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 	

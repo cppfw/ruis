@@ -19,7 +19,7 @@ Label::Label(const stob::Node* chain) :
 
 
 //override
-void Label::Render(const morda::Matr4r& matrix)const{
+void Label::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Translate(-this->TextBoundingBox().p.x, -this->Font().BoundingBox().p.y);
 	

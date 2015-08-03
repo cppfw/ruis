@@ -230,7 +230,7 @@ public:
 
 	virtual ~Widget()NOEXCEPT{}
 
-	virtual void Render(const morda::Matr4r& matrix)const{}
+	virtual void render(const morda::Matr4r& matrix)const{}
 	
 private:
 	void RenderInternal(const morda::Matr4r& matrix)const;
