@@ -149,11 +149,6 @@
       </df>
     </df>
     <df root="src" name="3">
-      <df name="morda">
-        <df name="render">
-          <in>Render_OpenGL.inc</in>
-        </df>
-      </df>
     </df>
     <df root="tests" name="4">
       <df name="app">
@@ -914,8 +909,6 @@
       </item>
       <item path="src/morda/render/Render_OpenGL.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/morda/render/Render_OpenGL.inc" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
@@ -1199,8 +1192,6 @@
       <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Render_OpenGL.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render_OpenGL.inc" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1589,8 +1580,6 @@
       <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Render_OpenGL.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render_OpenGL.inc" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>

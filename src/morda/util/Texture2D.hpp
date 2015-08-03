@@ -63,6 +63,7 @@ public:
 
 	Texture2D(){}
 
+	//TODO: remove
 	void Init(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}

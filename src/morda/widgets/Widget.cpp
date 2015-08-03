@@ -49,6 +49,12 @@ Widget::Widget(const stob::Node* chain){
 		this->clip = false;
 	}
 	
+	if(const stob::Node* p = GetProperty(chain, "cache")){
+		this->cache = p->AsBool();
+	}else{
+		this->cache = false;
+	}
+	
 	if(const stob::Node* p = GetProperty(chain, "visible")){
 		this->isVisible = p->AsBool();
 	}else{
@@ -191,6 +197,15 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 	}
 	s.render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
+}
+
+std::unique_ptr<Texture2D> Widget::renderToTexture() const {
+	//TODO:
+	return nullptr;
+}
+
+void Widget::renderFromCache(const Matr4f& matrix) const {
+	//TODO:
 }
 
 

@@ -30,6 +30,7 @@ THE SOFTWARE. */
 
 #include <string>
 #include <set>
+#include <memory>
 
 #include <ting/Shared.hpp>
 #include <ting/util.hpp>
@@ -39,6 +40,8 @@ THE SOFTWARE. */
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
+
+#include "../util/Texture2D.hpp"
 
 #include "../config.hpp"
 
@@ -104,6 +107,22 @@ public:
 	void SetClip(bool clip)NOEXCEPT{
 		this->clip = clip;
 	}
+	
+	
+private:
+	bool cache;
+	
+	std::unique_ptr<Texture2D> cacheTex;
+
+	void renderFromCache(const Matr4f& matrix)const;
+	
+protected:
+	void clearCache(){
+		this->cacheTex.reset();
+	}
+	
+public:
+	std::unique_ptr<Texture2D> renderToTexture()const;
 	
 private:
 	//logical ID of the widget
