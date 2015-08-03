@@ -122,7 +122,7 @@ protected:
 	}
 	
 public:
-	std::unique_ptr<Texture2D> renderToTexture()const;
+	std::unique_ptr<Texture2D> renderToTexture(std::unique_ptr<Texture2D> reuse = nullptr)const;
 	
 private:
 	//logical ID of the widget

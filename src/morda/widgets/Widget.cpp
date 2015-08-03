@@ -199,7 +199,7 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::unique_ptr<Texture2D> Widget::renderToTexture() const {
+std::unique_ptr<Texture2D> Widget::renderToTexture(std::unique_ptr<Texture2D> reuse) const {
 	//TODO:
 	return nullptr;
 }
