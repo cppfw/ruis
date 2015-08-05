@@ -66,7 +66,6 @@
             <in>unzip.cpp</in>
             <in>unzip.h</in>
           </df>
-          <in>GLTexture.cpp</in>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
           <in>Matrix4.hpp</in>
@@ -680,14 +679,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="src/morda/util/GLTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">

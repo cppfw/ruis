@@ -84,7 +84,7 @@ public:
 	void SetFactor(float newFactor);
 	
 private:
-	void OnResize() override;
+	void layOut() override;
 	
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
 };

@@ -103,7 +103,7 @@ void ScrollContainer::arrangeWidgets() {
 }
 
 
-void ScrollContainer::OnResize(){
+void ScrollContainer::layOut(){
 	this->arrangeWidgets();
 	this->UpdateEffectiveDim();
 

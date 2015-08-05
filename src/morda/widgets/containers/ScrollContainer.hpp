@@ -64,7 +64,7 @@ public:
 		return this->Widget::onMeasure(quotum);
 	}
 
-	void OnResize()override;
+	void layOut()override;
 
 	void onChildrenListChanged()override;
 	

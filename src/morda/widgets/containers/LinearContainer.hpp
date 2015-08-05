@@ -56,7 +56,7 @@ protected:
 	LinearContainer(bool isVertical, const stob::Node* chain);
 public:
 
-	void OnResize() override;	
+	void layOut() override;	
 	
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 	

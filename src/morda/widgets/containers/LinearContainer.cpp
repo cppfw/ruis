@@ -42,7 +42,7 @@ public:
 
 
 
-void LinearContainer::OnResize(){
+void LinearContainer::layOut(){
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	

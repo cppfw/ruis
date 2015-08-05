@@ -285,6 +285,7 @@ public:
 
 	virtual void OnResize(){
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
+		this->layOut();
 	}
 	
 	virtual morda::Vec2r onMeasure(const morda::Vec2r& quotum)const;
@@ -297,6 +298,8 @@ public:
 
 	void SetRelayoutNeeded()NOEXCEPT;
 
+	virtual void layOut(){}
+	
 	void SetVisible(bool visible){
 		this->isVisible = visible;
 		if(!this->isVisible){

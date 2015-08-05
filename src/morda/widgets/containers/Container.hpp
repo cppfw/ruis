@@ -91,7 +91,7 @@ public:
 	
 	void OnHoverChanged(unsigned pointerID)override;
 	
-	void OnResize()override;
+	void layOut()override;
 	
 	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore);
 	

@@ -124,7 +124,7 @@ void Slider::SetFactor(float newFactor){
 	
 	this->curFactor = factor;
 	
-	this->Slider::OnResize();
+	this->Slider::layOut();
 	
 	if(this->factorChange){
 		this->factorChange(*this);
@@ -133,8 +133,8 @@ void Slider::SetFactor(float newFactor){
 
 
 
-void Slider::OnResize(){
-	this->FrameContainer::OnResize();
+void Slider::layOut(){
+	this->FrameContainer::layOut();
 	
 	unsigned longIndex = this->GetLongIndex();
 	

@@ -117,7 +117,7 @@ std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<
 void Widget::Resize(const morda::Vec2r& newDims){
 	if(this->rect.d == newDims){
 		if(this->relayoutNeeded){
-			this->OnResize();
+			this->layOut();
 			this->relayoutNeeded = false;
 		}
 		return;

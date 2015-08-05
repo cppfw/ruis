@@ -12,7 +12,7 @@ FrameContainer::FrameContainer(const stob::Node* chain) :
 
 
 
-void FrameContainer::OnResize() {
+void FrameContainer::layOut() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->GetLayoutParamsAs<Container::LayoutParams>(**i);
 		

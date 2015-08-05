@@ -48,7 +48,7 @@ public:
 public:	
 	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
 
-	void OnResize() override;
+	void layOut() override;
 };
 
 

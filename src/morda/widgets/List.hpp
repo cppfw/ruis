@@ -79,7 +79,7 @@ public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
 
-	void OnResize()override;
+	void layOut()override;
 	
 	size_t visibleCount()const{
 		return this->Children().size();

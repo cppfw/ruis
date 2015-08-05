@@ -64,7 +64,7 @@ List::List(bool isVertical, const stob::Node* chain):
 
 
 
-void List::OnResize() {
+void List::layOut() {
 	this->numTailItems = 0;//means that it needs to be recomputed
 	
 	this->updateChildrenList();

@@ -199,12 +199,12 @@ void Container::OnHoverChanged(unsigned pointerID){
 
 
 
-void Container::OnResize(){
-//	TRACE(<< "Container::OnResize(): invoked" << std::endl)
+void Container::layOut(){
+//	TRACE(<< "Container::layOut(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->Children()){
 		if(w->NeedsRelayout()){
-			w->OnResize();
+			w->layOut();
 			w->relayoutNeeded = false;
 		}
 	}
