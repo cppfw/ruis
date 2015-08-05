@@ -41,7 +41,7 @@ THE SOFTWARE. */
 #include "../util/Vector2.hpp"
 #include "../util/Rectangle2.hpp"
 
-#include "../util/Texture2D.hpp"
+#include "../render/Texture2D.hpp"
 
 #include "../config.hpp"
 

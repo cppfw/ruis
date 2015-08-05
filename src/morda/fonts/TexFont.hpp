@@ -53,7 +53,7 @@ THE SOFTWARE. */
 #	error "unknown render API"
 #endif
 
-#include "../util/Texture2D.hpp"
+#include "../render/Texture2D.hpp"
 #include "Font.hpp"
 
 #include "../shaders/PosTexShader.hpp"

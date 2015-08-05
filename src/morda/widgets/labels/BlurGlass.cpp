@@ -1,6 +1,6 @@
 #include "BlurGlass.hpp"
 
-#include "../../util/Texture2D.hpp"
+#include "../../render/Texture2D.hpp"
 
 #include "../../App.hpp"
 

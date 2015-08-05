@@ -31,6 +31,7 @@
           <in>Render.cpp</in>
           <in>Render.hpp</in>
           <in>Render_OpenGL.cpp</in>
+          <in>Texture2D.cpp</in>
         </df>
         <df name="resources">
           <in>ResFont.cpp</in>
@@ -73,7 +74,6 @@
           <in>Mesh.hpp</in>
           <in>Quaternion.hpp</in>
           <in>Rectangle2.hpp</in>
-          <in>Texture2D.cpp</in>
           <in>Vector2.hpp</in>
           <in>Vector3.hpp</in>
           <in>Vector4.hpp</in>
@@ -270,6 +270,14 @@
       </item>
       <item path="src/morda/render/Render_OpenGL.cpp" ex="false" tool="1" flavor2="4">
       </item>
+      <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/local/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
@@ -318,14 +326,6 @@
         </ccTool>
       </item>
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/util/Texture2D.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/local/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -618,6 +618,14 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -694,14 +702,6 @@
           <incDir>
             <pElem>.</pElem>
             <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/Texture2D.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>

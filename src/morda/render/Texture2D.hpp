@@ -32,9 +32,9 @@ THE SOFTWARE. */
 
 #include <ting/debug.hpp>
 
-#include "Vector2.hpp"
+#include "../util/Vector2.hpp"
 
-#include "Image.hpp"
+#include "../util/Image.hpp"
 
 #include "../render/Render.hpp"
 

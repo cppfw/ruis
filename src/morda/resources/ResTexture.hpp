@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include <stob/dom.hpp>
 
-#include "../util/Texture2D.hpp"
+#include "../render/Texture2D.hpp"
 
 
 #include "../ResourceManager.hpp"
