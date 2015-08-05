@@ -11,6 +11,7 @@ this_srcs += morda/shaders/ColorPosTexShader.cpp
 this_srcs += morda/shaders/SimpleGrayscalePosTexShader.cpp
 this_srcs += morda/shaders/SimpleBlurPosTexShader.cpp
 
+this_srcs += morda/render/FrameBuffer.cpp
 this_srcs += morda/render/Render.cpp
 this_srcs += morda/render/Texture2D.cpp
 

@@ -28,6 +28,8 @@
           </df>
         </df>
         <df name="render">
+          <in>FrameBuffer.cpp</in>
+          <in>FrameBuffer.hpp</in>
           <in>Render.cpp</in>
           <in>Render.hpp</in>
           <in>Render_OpenGL.cpp</in>
@@ -260,6 +262,10 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
@@ -481,61 +487,6 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/fonts">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/android">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/windows">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/resources">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/shaders">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/util/unzip">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/widgets">
-        <ccTool>
-          <incDir>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -549,34 +500,18 @@
       </folder>
       <item path="src/morda/App.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="8">
@@ -602,28 +537,18 @@
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Render_OpenGL.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
@@ -691,26 +616,12 @@
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-        </ccTool>
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
@@ -723,10 +634,6 @@
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
@@ -933,6 +840,10 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1217,6 +1128,10 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1553,6 +1468,10 @@
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
       </item>
       <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
