@@ -535,3 +535,11 @@ void Render::swapFrameBuffers() {
 #	endif
 #endif
 }
+
+void Render::setCullEnabled(bool enable) {
+	if(enable){
+		glEnable(GL_CULL_FACE);
+	}else{
+		glDisable(GL_CULL_FACE);
+	}
+}

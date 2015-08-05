@@ -131,6 +131,8 @@ public:
 		LINEAR
 	};
 	
+	static void setCullEnabled(bool enable);
+	
 	//=== functions to be used by Texture class
 private:
 	static std::unique_ptr<ting::Void> create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
