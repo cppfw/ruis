@@ -287,7 +287,7 @@ void Widget::MakeTopmost(){
 
 morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
 	return Rect2i(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().viewportDim()).Rounded().ConvertTo<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().winRect().d).Rounded().ConvertTo<int>(),
 			this->Rect().d.ConvertTo<int>()
 		);
 }

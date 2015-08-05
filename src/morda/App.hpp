@@ -350,8 +350,8 @@ private:
 	morda::Rect2r curWinRect;
 
 public:
-	const morda::Vec2r& viewportDim()const NOEXCEPT{
-		return this->curWinRect.d;
+	const morda::Rect2r& winRect()const noexcept{
+		return this->curWinRect;
 	}
 
 public:
