@@ -33,7 +33,7 @@ THE SOFTWARE. */
 
 #include "../util/Vector4.hpp"
 
-#include "Shader.hpp"
+#include "../render/Shader.hpp"
 
 
 

@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include <ting/Buffer.hpp>
 
-#include "Shader.hpp"
+#include "../render/Shader.hpp"
 
 
 namespace morda{
