@@ -376,6 +376,7 @@ void Render::clearColor(Vec4f c) {
 }
 
 void Render::clearDepth(float d) {
+	glClearDepth(d);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	AssertOpenGLNoError();
 }
