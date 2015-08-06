@@ -279,7 +279,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	}
 
 //	TRACE(<< "TexFont::Load(): initing texture" << std::endl)
-	this->tex.Init(texImg);
+	this->tex = Texture2D(texImg);
 }
 
 
