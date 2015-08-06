@@ -154,8 +154,6 @@ private:
 	static void bindFrameBuffer(ting::Void* fbo);
 	
 	static void attachColorTexture2DToFrameBuffer(ting::Void* tex);
-	
-	static ting::Void* getCurrentFrameBuffer();
 	//=== ~~~
 	
 };

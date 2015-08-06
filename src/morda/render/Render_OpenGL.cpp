@@ -563,8 +563,6 @@ struct OpenGLFrameBuffer : public ting::Void{
 	}
 };
 
-ting::Void* curBoundFBO = nullptr;
-
 }
 
 std::unique_ptr<ting::Void> Render::createFrameBuffer(){
@@ -597,6 +595,3 @@ void Render::attachColorTexture2DToFrameBuffer(ting::Void* tex){
 	AssertOpenGLNoError();
 }
 
-ting::Void* Render::getCurrentFrameBuffer(){
-	return curBoundFBO;
-}

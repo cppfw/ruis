@@ -28,15 +28,26 @@ THE SOFTWARE. */
 
 #pragma once
 
+#include "Render.hpp"
+
+#include "Texture2D.hpp"
 
 namespace morda{
 
 
 class FrameBuffer {
+	ting::Void* prevFBO = nullptr;
+	std::unique_ptr<ting::Void> fbo;
+	
+	Texture2D color;
 public:
 	FrameBuffer();
-	FrameBuffer(const FrameBuffer& orig);
-	virtual ~FrameBuffer();
+	
+	FrameBuffer(Texture2D&& color);
+
+	void bind();
+	
+	void unbind();
 private:
 
 };

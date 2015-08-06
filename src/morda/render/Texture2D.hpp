@@ -43,6 +43,7 @@ namespace morda{
 
 
 class Texture2D{
+	friend class FrameBuffer;
 	
 	Texture2D(const Texture2D& tex) = delete;
 	Texture2D& operator=(const Texture2D& tex) = delete;
@@ -53,6 +54,8 @@ class Texture2D{
 
 	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
 public:
+	Texture2D& operator=(Texture2D&&) = default;
+	
 	Texture2D(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
 	}
