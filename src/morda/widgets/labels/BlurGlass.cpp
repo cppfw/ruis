@@ -17,7 +17,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 void BlurGlass::render(const morda::Matr4r& matrix)const{
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
 	
-	Texture2D texture(this->Rect().d.ConvertTo<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
+	Texture2D texture(this->Rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
 	//texture is bound right after creation
 	
 	morda::Matr4r matr(matrix);
@@ -27,7 +27,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 
 	s.SetMatrix(matr);
 	
-	s.SetTextureStep(Vec2f(1).CompDiv(viewPortRect.d.ConvertTo<float>()));
+	s.SetTextureStep(Vec2f(1).CompDiv(viewPortRect.d.to<float>()));
 	
 	if(!viewPortRect.d.IsPositive()){
 		return;

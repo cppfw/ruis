@@ -184,7 +184,7 @@ public:
 	 * component as argument of the target type constructor.
      * @return converted Vector2.
      */
-	template <class TS> Rectangle2<TS> ConvertTo()const NOEXCEPT{
+	template <class TS> Rectangle2<TS> to()const NOEXCEPT{
 		return Rectangle2<TS>(*this);
 	}
 	

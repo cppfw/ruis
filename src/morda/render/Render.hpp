@@ -143,6 +143,8 @@ private:
 	
 public:
 	
+	static void unbindTexture(unsigned unitNum);
+	
 	static void copyColorBufferToTexture(Vec2i dst, Rect2i src);
 
 	static void swapFrameBuffers();

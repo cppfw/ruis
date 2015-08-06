@@ -111,18 +111,17 @@ public:
 	
 private:
 	bool cache;
-	
-	std::unique_ptr<Texture2D> cacheTex;
+	mutable Texture2D cacheTex;
 
 	void renderFromCache(const Matr4f& matrix)const;
 	
 protected:
 	void clearCache(){
-		this->cacheTex.reset();
+		this->cacheTex = Texture2D();
 	}
 	
 public:
-	std::unique_ptr<Texture2D> renderToTexture(std::unique_ptr<Texture2D> reuse = nullptr)const;
+	Texture2D renderToTexture(Texture2D&& reuse = Texture2D())const;
 	
 private:
 	//logical ID of the widget
@@ -233,7 +232,7 @@ public:
 	virtual void render(const morda::Matr4r& matrix)const{}
 	
 private:
-	void RenderInternal(const morda::Matr4r& matrix)const;
+	void renderInternal(const morda::Matr4r& matrix)const;
 	
 private:
 	void OnKeyInternal(bool isDown, EKey keyCode);

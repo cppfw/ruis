@@ -397,6 +397,8 @@ Container{
 
 		title{"TableContainer"}
 
+		cache{true}
+
 		TableContainer{
 			layout{
 				dimX{max} dimY{max}

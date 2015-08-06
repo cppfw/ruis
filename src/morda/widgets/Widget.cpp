@@ -1,9 +1,12 @@
 #include "../shaders/PosShader.hpp"
 
+#include "../render/FrameBuffer.hpp"
+
 #include "Widget.hpp"
 
-#include "../App.hpp"
 #include "containers/Container.hpp"
+
+#include "../App.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
@@ -123,6 +126,7 @@ void Widget::Resize(const morda::Vec2r& newDims){
 		return;
 	}
 
+	this->clearCache();
 	this->rect.d = newDims;
 	ting::util::ClampBottom(this->rect.d.x, real(0.0f));
 	ting::util::ClampBottom(this->rect.d.y, real(0.0f));
@@ -153,33 +157,40 @@ void Widget::SetRelayoutNeeded()NOEXCEPT{
 
 
 
-void Widget::RenderInternal(const morda::Matr4r& matrix)const{
-	if(this->clip){
-//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
-
-		//set scissor test
-		Rect2i scissor = this->ComputeViewportRect(matrix);
-
-		Rect2i oldScissor;
-		bool scissorTestWasEnabled = Render::isScissorEnabled();
-		if(scissorTestWasEnabled){
-			oldScissor = Render::getScissorRect();
-			scissor.Intersect(oldScissor);
-		}else{
-			Render::setScissorEnabled(true);
+void Widget::renderInternal(const morda::Matr4r& matrix)const{
+	if(this->cache){
+		if(!this->cacheTex){
+			this->cacheTex = this->renderToTexture();//TODO: make reusing the tex
 		}
-		
-		Render::setScissorRect(scissor);
-		
-		this->render(matrix);
-		
-		if(scissorTestWasEnabled){
-			Render::setScissorRect(oldScissor);
-		}else{
-			Render::setScissorEnabled(false);
-		}
+		this->renderFromCache(matrix);
 	}else{
-		this->render(matrix);
+		if(this->clip){
+	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
+
+			//set scissor test
+			Rect2i scissor = this->ComputeViewportRect(matrix);
+
+			Rect2i oldScissor;
+			bool scissorTestWasEnabled = Render::isScissorEnabled();
+			if(scissorTestWasEnabled){
+				oldScissor = Render::getScissorRect();
+				scissor.Intersect(oldScissor);
+			}else{
+				Render::setScissorEnabled(true);
+			}
+
+			Render::setScissorRect(scissor);
+
+			this->render(matrix);
+
+			if(scissorTestWasEnabled){
+				Render::setScissorRect(oldScissor);
+			}else{
+				Render::setScissorEnabled(false);
+			}
+		}else{
+			this->render(matrix);
+		}
 	}
 
 	//render border
@@ -199,13 +210,59 @@ void Widget::RenderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::unique_ptr<Texture2D> Widget::renderToTexture(std::unique_ptr<Texture2D> reuse) const {
-	//TODO:
-	return nullptr;
+Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
+	Texture2D tex;
+	
+	if(reuse && reuse.Dim() == this->Rect().d){
+		tex = std::move(reuse);
+	}else{
+		tex = Texture2D(
+				this->Rect().d.to<unsigned>(),
+				4,
+				Render::ETexFilter::NEAREST,
+				Render::ETexFilter::NEAREST
+			);
+	}
+	
+	Render::unbindTexture(0);
+	
+	FrameBuffer fb;
+	
+	fb.bind();
+	
+	fb.attachColor(std::move(tex));
+	
+	Render::setViewport(Rect2i(0, 0, tex.Dim().x, tex.Dim().y));
+	
+	Render::clearColor(Vec4f(0.0f));
+	
+	Matr4r matrix;
+	matrix.Identity();
+	matrix.Translate(-1, -1);
+	matrix.Scale(2.0f / this->Rect().d.x, 2.0f / this->Rect().d.y);
+	
+	this->render(matrix);
+	
+	tex = fb.detachColor();
+	
+	fb.unbind();
+	Render::setViewport(App::Inst().winRect().to<int>());
+	
+	return std::move(tex);
 }
 
 void Widget::renderFromCache(const Matr4f& matrix) const {
-	//TODO:
+	morda::Matr4r matr(matrix);
+	matr.Scale(this->Rect().d);
+	
+	morda::PosTexShader &s = App::Inst().Shaders().posTexShader;
+
+	ASSERT(this->cacheTex)
+	this->cacheTex.bind();
+	
+	s.SetMatrix(matr);
+	
+	s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 }
 
 
@@ -287,8 +344,8 @@ void Widget::MakeTopmost(){
 
 morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
 	return Rect2i(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().winRect().d).Rounded().ConvertTo<int>(),
-			this->Rect().d.ConvertTo<int>()
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().winRect().d).Rounded().to<int>(),
+			this->Rect().d.to<int>()
 		);
 }
 
