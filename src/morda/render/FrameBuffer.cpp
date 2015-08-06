@@ -44,10 +44,6 @@ Texture2D FrameBuffer::detachColor(){
 	return std::move(this->color);
 }
 
-bool FrameBuffer::isBound(){
-	return curFBO == this->fbo.get();
-}
-
 void FrameBuffer::bind(){
 	if(this->isBound()){
 		throw morda::Exc("FrameBuffer::bind(): framebuffer is already bound");
@@ -56,6 +52,7 @@ void FrameBuffer::bind(){
 	Render::bindFrameBuffer(this->fbo.get());
 	this->prevFBO = curFBO;
 	curFBO = this->fbo.get();
+	this->isBound_var = true;
 }
 
 void FrameBuffer::unbind(){
@@ -66,4 +63,5 @@ void FrameBuffer::unbind(){
 	Render::bindFrameBuffer(this->prevFBO);
 	curFBO = this->prevFBO;
 	this->prevFBO = nullptr;
+	this->isBound_var = false;
 }

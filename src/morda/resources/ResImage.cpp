@@ -39,7 +39,7 @@ std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const ting::fs
 
 
 void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
-	this->tex->Tex().Bind();
+	this->tex->Tex().bind();
 	
 	Matr4f matr(matrix);
 	matr.Scale(this->dim);

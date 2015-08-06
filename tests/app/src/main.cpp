@@ -112,7 +112,7 @@ public:
 			morda::Matr4r matr(matrix);
 			matr.Scale(this->Rect().d);
 
-			this->tex->Tex().Bind();
+			this->tex->Tex().bind();
 
 			morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
 
@@ -165,7 +165,7 @@ public:
 		
 		m.Rotate(this->rot);
 
-		this->tex->Tex().Bind();
+		this->tex->Tex().bind();
 		
 		morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
 

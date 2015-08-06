@@ -386,7 +386,7 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	matr.Scale(this->tex.Dim());
 	shader.SetMatrix(matr);
 
-	this->tex.Bind();
+	this->tex.bind();
 
 	shader.render(PosShader::quad01Fan, shader.quadFanTexCoords);
 }
@@ -398,7 +398,7 @@ real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	this->tex.Bind();
+	this->tex.bind();
 
 	real ret = 0;
 

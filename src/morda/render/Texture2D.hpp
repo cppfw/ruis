@@ -67,11 +67,11 @@ public:
 
 	Texture2D(){}
 
-	void Bind()const{
+	void bind()const{
 		Render::bindTexture(*this->tex, 0);
 	}
 	
-	void Bind(unsigned texUnitNum)const{
+	void bind(unsigned texUnitNum)const{
 		Render::bindTexture(*this->tex, texUnitNum);
 	}
 

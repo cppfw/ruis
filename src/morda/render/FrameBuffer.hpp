@@ -36,6 +36,8 @@ namespace morda{
 
 
 class FrameBuffer {
+	bool isBound_var = false;
+	
 	ting::Void* prevFBO = nullptr;
 	std::unique_ptr<ting::Void> fbo;
 	
@@ -47,7 +49,9 @@ public:
 	
 	void unbind();
 	
-	bool isBound();
+	bool isBound(){
+		return this->isBound_var;
+	}
 	
 	void attachColor(Texture2D&& color);
 	
