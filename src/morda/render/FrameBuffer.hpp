@@ -42,12 +42,16 @@ class FrameBuffer {
 	Texture2D color;
 public:
 	FrameBuffer();
-	
-	FrameBuffer(Texture2D&& color);
 
 	void bind();
 	
 	void unbind();
+	
+	bool isBound();
+	
+	void attachColor(Texture2D&& color);
+	
+	Texture2D detachColor();
 private:
 
 };

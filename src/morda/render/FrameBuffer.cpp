@@ -17,19 +17,39 @@ ting::Void* curFBO = nullptr;
 
 FrameBuffer::FrameBuffer(){
 	this->fbo = Render::createFrameBuffer();
-	this->bind();
 }
 
 
-FrameBuffer::FrameBuffer(Texture2D&& tex) :
-		FrameBuffer()
-{
+void FrameBuffer::attachColor(Texture2D&& tex){
+	if(!this->isBound()){
+		throw morda::Exc("FrameBuffer::attachColor(): framebuffer is not bound");
+	}
+	
+	if(this->color.tex){
+		throw morda::Exc("FrameBuffer::attachColor(): color attachment is already attached");
+	}
+	
+	Render::attachColorTexture2DToFrameBuffer(tex.tex.get());
+	
 	this->color = std::move(tex);
-	Render::attachColorTexture2DToFrameBuffer(this->color.tex.get());
+}
+
+Texture2D FrameBuffer::detachColor(){
+	if(!this->isBound()){
+		throw morda::Exc("FrameBuffer::detachColor(): framebuffer is not bound");
+	}
+	
+	Render::attachColorTexture2DToFrameBuffer(nullptr);
+	
+	return std::move(this->color);
+}
+
+bool FrameBuffer::isBound(){
+	return curFBO == this->fbo.get();
 }
 
 void FrameBuffer::bind(){
-	if(curFBO == this->fbo.get()){
+	if(this->isBound()){
 		throw morda::Exc("FrameBuffer::bind(): framebuffer is already bound");
 	}
 	
@@ -39,7 +59,7 @@ void FrameBuffer::bind(){
 }
 
 void FrameBuffer::unbind(){
-	if(curFBO != this->fbo.get()){
+	if(!this->isBound()){
 		throw morda::Exc("FrameBuffer::unbind(): framebuffer is not bound");
 	}
 	

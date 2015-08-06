@@ -54,6 +54,7 @@ class Texture2D{
 
 	void Constructor(Vec2ui d, unsigned numChannels, ting::Buffer<const std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
 public:
+	Texture2D(Texture2D&& tex) = default;
 	Texture2D& operator=(Texture2D&&) = default;
 	
 	Texture2D(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
