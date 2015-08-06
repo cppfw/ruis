@@ -544,3 +544,59 @@ void Render::setCullEnabled(bool enable) {
 		glDisable(GL_CULL_FACE);
 	}
 }
+
+
+
+namespace{
+
+struct OpenGLFrameBuffer : public ting::Void{
+	GLuint fbo;
+
+	OpenGLFrameBuffer(){
+		glGenFramebuffers(1, &this->fbo);
+		AssertOpenGLNoError();
+	}
+	
+	~OpenGLFrameBuffer()noexcept override{
+		glDeleteFramebuffers(1, &this->fbo);
+		AssertOpenGLNoError();
+	}
+};
+
+ting::Void* curBoundFBO = nullptr;
+
+}
+
+std::unique_ptr<ting::Void> Render::createFrameBuffer(){
+	return  std::unique_ptr<ting::Void>(new OpenGLFrameBuffer());
+}
+
+void Render::bindFrameBuffer(ting::Void* fbo){
+	if(!fbo){
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		AssertOpenGLNoError();
+		return;
+	}
+	ASSERT(fbo)
+	OpenGLFrameBuffer& fb = *static_cast<OpenGLFrameBuffer*>(fbo);
+	
+	glBindFramebuffer(GL_FRAMEBUFFER, fb.fbo);
+	AssertOpenGLNoError();
+}
+
+void Render::attachColorTexture2DToFrameBuffer(ting::Void* tex){
+	if(!tex){
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 0, 0);
+		AssertOpenGLNoError();
+		return;
+	}
+	ASSERT(tex)
+	GLTexture2D& t = static_cast<GLTexture2D&>(*tex);
+	
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, t.tex, 0);
+	AssertOpenGLNoError();
+}
+
+ting::Void* Render::getCurrentFrameBuffer(){
+	return curBoundFBO;
+}

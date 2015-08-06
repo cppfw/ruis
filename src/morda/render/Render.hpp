@@ -46,6 +46,7 @@ class Shader;
 class Render{
 	friend class Shader;
 	friend class Texture2D;
+	friend class FrameBuffer;
 	
 	friend class App;
 	
@@ -145,6 +146,18 @@ public:
 	static void copyColorBufferToTexture(Vec2i dst, Rect2i src);
 
 	static void swapFrameBuffers();
+	
+	//=== functions to be used by FrameBuffer class
+private:
+	static std::unique_ptr<ting::Void> createFrameBuffer();
+	
+	static void bindFrameBuffer(ting::Void* fbo);
+	
+	static void attachColorTexture2DToFrameBuffer(ting::Void* tex);
+	
+	static ting::Void* getCurrentFrameBuffer();
+	//=== ~~~
+	
 };
 
 
