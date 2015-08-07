@@ -160,7 +160,12 @@ void Widget::SetRelayoutNeeded()NOEXCEPT{
 void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	if(this->cache){
 		if(!this->cacheTex){
+			bool scissorTestWasEnabled = Render::isScissorEnabled();
+			Render::setScissorEnabled(false);
+			
 			this->cacheTex = this->renderToTexture();//TODO: make reusing the tex
+			
+			Render::setScissorEnabled(scissorTestWasEnabled);
 		}
 		this->renderFromCache(matrix);
 	}else{
@@ -344,9 +349,9 @@ void Widget::MakeTopmost(){
 
 
 
-morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
+morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
 	return Rect2i(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().winRect().d).Rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(Render::getViewport().d.to<real>()).Rounded().to<int>(),
 			this->Rect().d.to<int>()
 		);
 }

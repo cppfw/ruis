@@ -299,6 +299,13 @@ void Render::setViewport(Rect2i r){
 	AssertOpenGLNoError();
 }
 
+Rect2i Render::getViewport() {
+	GLint vp[4];
+
+	glGetIntegerv(GL_VIEWPORT, vp);
+	
+	return Rect2i(vp[0], vp[1], vp[2], vp[3]);
+}
 
 
 

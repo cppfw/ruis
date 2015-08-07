@@ -35,8 +35,6 @@ Container{
 		posX{0} posY{0}
 		dimX{300} dimY{200}
 
-		
-
 		title{"Window title"}
 
 		vars{
@@ -47,8 +45,6 @@ Container{
 
 		ColorLabel{
 			color{ @{morda_color_bg} }
-
-			cache{true}
 
 			layout{
 				dimX{max} dimY{max}
@@ -195,9 +191,9 @@ Container{
 		dimX{300} dimY{200}
 		posX{300} posY{250}
 
-		title{"Image label, button, custom widget"}
+		cache{true}
 
-		clip{true}
+		title{"Image label, button, custom widget"}
 
 /*
 		U_SimpleWidget{
@@ -409,6 +405,8 @@ Container{
 	Window{
 		dimX{300} dimY{200}
 		posX{620} posY{250}
+
+		clip{true}
 
 		title{"TableContainer"}
 
