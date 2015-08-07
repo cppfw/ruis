@@ -395,7 +395,7 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 
 real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE); //TODO: move to Render
 	Render::setBlendEnabled(true);
 
 	this->tex.bind();
