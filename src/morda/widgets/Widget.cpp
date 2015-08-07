@@ -161,7 +161,12 @@ void Widget::SetRelayoutNeeded()NOEXCEPT{
 void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	if(this->cache){
 		if(!this->cacheTex){
+			bool scissorTestWasEnabled = Render::isScissorEnabled();
+			Render::setScissorEnabled(false);
+			
 			this->cacheTex = this->renderToTexture();//TODO: make reusing the tex
+			
+			Render::setScissorEnabled(scissorTestWasEnabled);
 		}
 		this->renderFromCache(matrix);
 	}else{
@@ -233,14 +238,16 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	fb.attachColor(std::move(tex));
 	
-	Render::setViewport(Rect2i(0, 0, tex.Dim().x, tex.Dim().y));
+	ASSERT(Render::isBoundFrameBufferComplete())
+	
+	Render::setViewport(Rect2i(Vec2i(0), this->Rect().d.to<int>()));
 	
 	Render::clearColor(Vec4f(0.0f));
 	
 	Matr4r matrix;
 	matrix.Identity();
 	matrix.Translate(-1, -1);
-	matrix.Scale(2.0f / this->Rect().d.x, 2.0f / this->Rect().d.y);
+	matrix.Scale(Vec2r(2.0f).CompDivBy(this->Rect().d));
 	
 	this->render(matrix);
 	
@@ -346,9 +353,9 @@ void Widget::MakeTopmost(){
 
 
 
-morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const NOEXCEPT{
+morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
 	return Rect2i(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(App::Inst().winRect().d).Rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(Render::getViewport().d.to<real>()).Rounded().to<int>(),
 			this->Rect().d.to<int>()
 		);
 }

@@ -111,6 +111,8 @@ public:
 	
 	static void setViewport(Rect2i r);
 	
+	static Rect2i getViewport();
+	
 	static void clearColor(Vec4f c = Vec4f(0.0f, 0, 0.0f, 1.0f));
 	
 	static void clearDepth(float d = 0.0f);
@@ -161,6 +163,9 @@ private:
 	
 public:
 	static void setBlendEnabled(bool enable);
+
+	static bool isBoundFrameBufferComplete();
+
 };
 
 

@@ -299,6 +299,13 @@ void Render::setViewport(Rect2i r){
 	AssertOpenGLNoError();
 }
 
+Rect2i Render::getViewport() {
+	GLint vp[4];
+
+	glGetIntegerv(GL_VIEWPORT, vp);
+	
+	return Rect2i(vp[0], vp[1], vp[2], vp[3]);
+}
 
 
 
@@ -477,7 +484,7 @@ std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChan
 			0,//border, should be 0!
 			internalFormat, //format of the texel data
 			GL_UNSIGNED_BYTE,
-			&*data.begin()
+			data.size() == 0 ? nullptr : &*data.begin()
 		);
 	AssertOpenGLNoError();
 
@@ -608,4 +615,8 @@ void Render::setBlendEnabled(bool enable){
 	}else{
 		glDisable(GL_BLEND);
 	}
+}
+
+bool Render::isBoundFrameBufferComplete(){
+	return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 }

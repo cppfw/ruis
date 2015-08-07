@@ -99,8 +99,19 @@ Container{
 		}
 */
 
-		CheckBox{
-			""
+		HorizontalContainer{
+			layout{
+				dimX{max} dimY{max}
+			}
+			CheckBox{
+				""
+			}
+			Widget{
+				layout{
+					dimX{0} dimY{0}
+					weight{1}
+				}
+			}
 		}
 	}
 
@@ -182,9 +193,9 @@ Container{
 		dimX{300} dimY{200}
 		posX{300} posY{250}
 
-		title{"Image label, button, custom widget"}
+		cache{true}
 
-		clip{true}
+		title{"Image label, button, custom widget"}
 
 /*
 		U_SimpleWidget{
@@ -396,6 +407,8 @@ Container{
 	Window{
 		dimX{300} dimY{200}
 		posX{620} posY{250}
+
+		clip{true}
 
 		title{"TableContainer"}
 
