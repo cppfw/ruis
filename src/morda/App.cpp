@@ -32,7 +32,7 @@ void App::render(){
 	morda::Matr4r m;
 	m.Identity();
 	m.Translate(-1, -1);
-	m.Scale(2.0f / this->curWinRect.d.x, 2.0f / this->curWinRect.d.y);
+	m.Scale(Vec2r(2.0f).CompDivBy(this->curWinRect.d));
 	
 	if(this->rootWidget->relayoutNeeded){
 		this->rootWidget->layOut();

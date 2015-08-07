@@ -56,6 +56,8 @@ public:
 	void attachColor(Texture2D&& color);
 	
 	Texture2D detachColor();
+	
+	bool isComplete();
 private:
 
 };

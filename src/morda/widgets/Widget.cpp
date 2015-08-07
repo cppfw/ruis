@@ -232,14 +232,16 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	fb.attachColor(std::move(tex));
 	
-	Render::setViewport(Rect2i(0, 0, tex.Dim().x, tex.Dim().y));
+	ASSERT(Render::isBoundFrameBufferComplete())
+	
+	Render::setViewport(Rect2i(Vec2i(0), this->Rect().d.to<int>()));
 	
 	Render::clearColor(Vec4f(0.0f));
 	
 	Matr4r matrix;
 	matrix.Identity();
 	matrix.Translate(-1, -1);
-	matrix.Scale(2.0f / this->Rect().d.x, 2.0f / this->Rect().d.y);
+	matrix.Scale(Vec2r(2.0f).CompDivBy(this->Rect().d));
 	
 	this->render(matrix);
 	

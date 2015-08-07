@@ -158,6 +158,8 @@ private:
 	static void attachColorTexture2DToFrameBuffer(ting::Void* tex);
 	//=== ~~~
 	
+public:
+	static bool isBoundFrameBufferComplete();
 };
 
 

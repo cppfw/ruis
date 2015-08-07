@@ -477,7 +477,7 @@ std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChan
 			0,//border, should be 0!
 			internalFormat, //format of the texel data
 			GL_UNSIGNED_BYTE,
-			&*data.begin()
+			data.size() == 0 ? nullptr : &*data.begin()
 		);
 	AssertOpenGLNoError();
 
@@ -602,3 +602,8 @@ void Render::attachColorTexture2DToFrameBuffer(ting::Void* tex){
 	AssertOpenGLNoError();
 }
 
+
+
+bool Render::isBoundFrameBufferComplete(){
+	return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+}

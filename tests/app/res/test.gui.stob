@@ -35,6 +35,8 @@ Container{
 		posX{0} posY{0}
 		dimX{300} dimY{200}
 
+		
+
 		title{"Window title"}
 
 		vars{
@@ -45,6 +47,8 @@ Container{
 
 		ColorLabel{
 			color{ @{morda_color_bg} }
+
+			cache{true}
 
 			layout{
 				dimX{max} dimY{max}
@@ -97,8 +101,19 @@ Container{
 		}
 */
 
-		CheckBox{
-			""
+		HorizontalContainer{
+			layout{
+				dimX{max} dimY{max}
+			}
+			CheckBox{
+				""
+			}
+			Widget{
+				layout{
+					dimX{0} dimY{0}
+					weight{1}
+				}
+			}
 		}
 	}
 
@@ -396,8 +411,6 @@ Container{
 		posX{620} posY{250}
 
 		title{"TableContainer"}
-
-		cache{true}
 
 		TableContainer{
 			layout{
