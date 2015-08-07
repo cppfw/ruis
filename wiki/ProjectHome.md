@@ -11,5 +11,6 @@ W.I.P.
   * iOS (planned)
 
 # Building from sources #
+  * [how to build in Linux](BuildingInLinux.md)
   * [how to build in Windows](BuildingInMSYS.md)
   * [how to build in MacOS X](BuildingInMacOSX.md)
