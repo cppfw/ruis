@@ -154,6 +154,7 @@ void Widget::SetRelayoutNeeded()NOEXCEPT{
 	if(this->parent){
 		this->parent->SetRelayoutNeeded();
 	}
+	this->cacheTex = Texture2D();
 }
 
 
@@ -275,6 +276,9 @@ void Widget::renderFromCache(const Matr4f& matrix) const {
 
 void Widget::clearCache(){
 	this->cacheTex = Texture2D();
+	if(this->parent){
+		this->parent->clearCache();
+	}
 }
 
 

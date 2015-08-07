@@ -40,7 +40,7 @@ namespace morda{
 
 
 class Button : public virtual Widget{
-	bool isPressed = false;
+	bool isPressed_var = false;
 	
 protected:
 	Button() :
@@ -55,8 +55,8 @@ protected:
 	
 	void OnHoverChanged(unsigned pointerID) override;
 public:	
-	bool IsPressed()const NOEXCEPT{
-		return this->isPressed;
+	bool isPressed()const NOEXCEPT{
+		return this->isPressed_var;
 	}
 };
 

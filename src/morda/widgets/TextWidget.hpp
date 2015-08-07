@@ -85,7 +85,7 @@ class SingleLineTextWidget : public TextWidget{
 	mutable Rect2r bb;
 	
 protected:
-	Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	Vec2r onMeasure(const morda::Vec2r& quotum)const noexcept override;
 	
 	SingleLineTextWidget(const stob::Node* chain);
 	

@@ -37,5 +37,6 @@ CheckBox::CheckBox(const stob::Node* chain) :
 
 void CheckBox::OnCheckedChanged(){
 	this->checkWidget->SetVisible(this->IsChecked());
+	this->clearCache();
 	this->ToggleButton::OnCheckedChanged();
 }
