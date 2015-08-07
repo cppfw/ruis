@@ -120,6 +120,7 @@ std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<
 void Widget::Resize(const morda::Vec2r& newDims){
 	if(this->rect.d == newDims){
 		if(this->relayoutNeeded){
+			this->clearCache();
 			this->layOut();
 			this->relayoutNeeded = false;
 		}
@@ -265,6 +266,9 @@ void Widget::renderFromCache(const Matr4f& matrix) const {
 	s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
 }
 
+void Widget::clearCache(){
+	this->cacheTex = Texture2D();
+}
 
 
 void Widget::OnKeyInternal(bool isDown, EKey keyCode){

@@ -116,9 +116,7 @@ private:
 	void renderFromCache(const Matr4f& matrix)const;
 	
 protected:
-	void clearCache(){
-		this->cacheTex = Texture2D();
-	}
+	void clearCache();
 	
 public:
 	Texture2D renderToTexture(Texture2D&& reuse = Texture2D())const;

@@ -158,6 +158,9 @@ private:
 	static void attachColorTexture2DToFrameBuffer(ting::Void* tex);
 	//=== ~~~
 	
+	
+public:
+	static void setBlendEnabled(bool enable);
 };
 
 

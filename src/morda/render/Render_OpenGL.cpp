@@ -602,3 +602,10 @@ void Render::attachColorTexture2DToFrameBuffer(ting::Void* tex){
 	AssertOpenGLNoError();
 }
 
+void Render::setBlendEnabled(bool enable){
+	if(enable){
+		glEnable(GL_BLEND);
+	}else{
+		glDisable(GL_BLEND);
+	}
+}

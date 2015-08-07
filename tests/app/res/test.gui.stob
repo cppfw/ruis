@@ -37,6 +37,8 @@ Container{
 
 		title{"Window title"}
 
+		cache{true}
+
 		vars{
 			bbb{dDd}
 //			clr{0xffff0000}
@@ -396,8 +398,6 @@ Container{
 		posX{620} posY{250}
 
 		title{"TableContainer"}
-
-		cache{true}
 
 		TableContainer{
 			layout{
