@@ -5,7 +5,7 @@ W.I.P.
 
 # Supported platforms #
   * Linux (gcc-4.8 or higher)
-  * Windows (VS2013/MinGW gcc-4.8 or higher)
+  * Windows (VS2015/MinGW gcc-4.8 or higher)
   * MacOS X (clang 5.1 or higher)
   * Android 2.3+ (gcc-4.8 or higher)
   * iOS (planned)
