@@ -42,9 +42,6 @@
     <ClCompile Include="..\..\src\morda\util\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\shaders\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,7 +156,13 @@
     <ClCompile Include="..\..\src\morda\widgets\NinePatchButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\util\Texture2D.cpp">
+    <ClCompile Include="..\..\src\morda\render\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\render\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\morda\render\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

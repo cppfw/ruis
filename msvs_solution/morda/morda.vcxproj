@@ -104,7 +104,10 @@
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
     <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
+    <ClCompile Include="..\..\src\morda\render\FrameBuffer.cpp" />
     <ClCompile Include="..\..\src\morda\render\Render.cpp" />
+    <ClCompile Include="..\..\src\morda\render\Shader.cpp" />
+    <ClCompile Include="..\..\src\morda\render\Texture2D.cpp" />
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResFont.cpp" />
     <ClCompile Include="..\..\src\morda\resources\ResImage.cpp" />
@@ -115,12 +118,10 @@
     <ClCompile Include="..\..\src\morda\shaders\ColorPosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\PosShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\PosTexShader.cpp" />
-    <ClCompile Include="..\..\src\morda\shaders\Shader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\SimpleBlurPosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\shaders\SimpleGrayscalePosTexShader.cpp" />
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
-    <ClCompile Include="..\..\src\morda\util\Texture2D.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\CheckBox.cpp" />
