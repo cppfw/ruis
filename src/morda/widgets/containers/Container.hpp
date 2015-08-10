@@ -66,9 +66,12 @@ protected:
 	}
 	
 	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
-		const auto lp = &this->getLayoutParams_internal(w);
+		auto p = dynamic_cast<const T*>(&this->getLayoutParams_internal(w));
+		if(!p){
+			w.layoutParams.reset();
+			p = dynamic_cast<const T*>(&this->getLayoutParams_internal(w));
+		}
 		
-		const auto p = dynamic_cast<const T*>(lp);
 		ASSERT(p)
 		return *p;
 	}

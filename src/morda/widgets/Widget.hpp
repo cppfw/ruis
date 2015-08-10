@@ -129,7 +129,7 @@ private:
 	
 	std::unique_ptr<stob::Node> layout;
 	
-	std::unique_ptr<LayoutParams> layoutParams;
+	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
 	std::unique_ptr<LayoutParams> ResetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)noexcept;
 	
