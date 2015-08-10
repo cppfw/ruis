@@ -45,6 +45,10 @@ public:
 	BlackHoleContainer& operator=(const BlackHoleContainer&) = delete;
 	
 	Vec2r onMeasure(const morda::Vec2r& constraint)const override;
+	
+	void setShrink(Vec2b shrink){
+		this->shrink = shrink;
+	}
 };
 
 }

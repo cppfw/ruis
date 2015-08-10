@@ -278,6 +278,7 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	
 	this->children.erase(w.parentIter);
 	
+	w.layoutParams.reset();
 	w.parent = nullptr;
 	w.SetUnhovered();
 	

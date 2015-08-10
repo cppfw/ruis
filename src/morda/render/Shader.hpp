@@ -144,6 +144,12 @@ protected:
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 public:
+	/**
+	 * @brief Terminates render sequence.
+     */
+	void renderNothing(){
+		this->renderIsInProgress = false;
+	}
 	
 	virtual ~Shader()noexcept{}
 	

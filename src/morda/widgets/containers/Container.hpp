@@ -51,12 +51,15 @@ private:
 	//flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
 	
+	
 protected:
 	virtual std::unique_ptr<LayoutParams> CreateLayoutParams(const stob::Node* chain = nullptr)const{
 		return Widget::LayoutParams::New(chain);
 	}
 	
 	virtual LayoutParams& GetLayoutParams(Widget& w);
+	
+	
 	
 	const LayoutParams& GetLayoutParams(const Widget& w)const{
 		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->GetLayoutParams(
@@ -75,6 +78,16 @@ protected:
 	}
 	
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
+	
+public:
+	LayoutParams& getLayoutParams(Widget& w){
+		if(w.Parent() != this){
+			throw Exc("Container::getLayoutParams(): the widget is not added to this container");
+		}
+		this->SetRelayoutNeeded();
+		return this->GetLayoutParams(w);
+	}
+	
 	
 public:
 	Container(const stob::Node* chain = nullptr);
