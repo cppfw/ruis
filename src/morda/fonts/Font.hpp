@@ -57,7 +57,7 @@ protected:
 	
 	virtual morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
 public:
-	virtual ~Font()NOEXCEPT{}
+	virtual ~Font()noexcept{}
 	
 	//renders the string, returns resulting string advance
 	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
@@ -110,7 +110,7 @@ public:
 		return this->StringBoundingBox(str.c_str());
 	}
 	
-	const morda::Rect2r& BoundingBox()const NOEXCEPT{
+	const morda::Rect2r& BoundingBox()const noexcept{
 		return this->boundingBox;
 	}
 	

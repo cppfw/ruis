@@ -145,7 +145,7 @@ protected:
 	}
 public:
 	
-	virtual ~Shader()NOEXCEPT{}
+	virtual ~Shader()noexcept{}
 	
 	void SetMatrix(const morda::Matr4f &m){
 		this->setUniformMatrix4f(this->matrixUniform, m);

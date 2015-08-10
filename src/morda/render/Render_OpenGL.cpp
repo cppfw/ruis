@@ -136,7 +136,7 @@ struct ShaderWrapper{
 			throw ting::Exc("Error compiling shader");
 		}
 	}
-	~ShaderWrapper()NOEXCEPT{
+	~ShaderWrapper()noexcept{
 		glDeleteShader(this->s);
 	}
 
@@ -181,7 +181,7 @@ struct ProgramWrapper : public ting::Void{
 		}
 	}
 
-	virtual ~ProgramWrapper()NOEXCEPT{
+	virtual ~ProgramWrapper()noexcept{
 		glDeleteProgram(this->p);
 	}
 

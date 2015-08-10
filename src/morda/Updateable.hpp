@@ -91,7 +91,7 @@ private:
 	
 	std::uint32_t startedAt; //timestamp when update timer started.
 	
-	std::uint32_t EndAt()const NOEXCEPT{
+	std::uint32_t EndAt()const noexcept{
 		return this->startedAt + std::uint32_t(this->dt);
 	}
 	
@@ -112,15 +112,15 @@ public:
 		{}
 	};
 	
-	~Updateable()NOEXCEPT{}
+	~Updateable()noexcept{}
 	
-	bool IsUpdating()const NOEXCEPT{
+	bool IsUpdating()const noexcept{
 		return this->isUpdating;
 	}
 	
 	void StartUpdating(std::uint16_t dt = 30);
 	
-	void StopUpdating()NOEXCEPT;
+	void StopUpdating()noexcept;
 	
 	virtual void Update(std::uint32_t dt) = 0;
 };

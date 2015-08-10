@@ -487,7 +487,7 @@ App::WindowClassWrapper::WindowClassWrapper(){
 
 
 
-App::WindowClassWrapper::~WindowClassWrapper()NOEXCEPT{
+App::WindowClassWrapper::~WindowClassWrapper()noexcept{
 	if (!UnregisterClass(this->name.c_str(), GetModuleHandle(NULL))){
 		ASSERT_INFO(false, "Failed to unregister window class")
 	}
@@ -523,7 +523,7 @@ App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClass
 
 
 
-App::WindowWrapper::~WindowWrapper()NOEXCEPT{
+App::WindowWrapper::~WindowWrapper()noexcept{
 	if (!DestroyWindow(this->hwnd)){
 		ASSERT_INFO(false, "Failed to destroy window")
 	}
@@ -588,7 +588,7 @@ App::DotsPerCmWrapper::DotsPerCmWrapper(DeviceContextWrapper& dc){
 
 
 
-void App::DeviceContextWrapper::Destroy()NOEXCEPT{
+void App::DeviceContextWrapper::Destroy()noexcept{
 	if (!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
 	}
@@ -677,7 +677,7 @@ void App::Exec(){
 	}
 }
 
-void App::Quit()NOEXCEPT {
+void App::Quit()noexcept {
 	this->quitFlag = true;
 }
 

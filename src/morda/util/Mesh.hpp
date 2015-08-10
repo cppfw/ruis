@@ -39,7 +39,7 @@ public:
 	Mesh(){}
 	Mesh(const Mesh&) = default;
 	
-	virtual ~Mesh()NOEXCEPT;
+	virtual ~Mesh()noexcept;
 
 private:
 

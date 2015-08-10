@@ -75,7 +75,7 @@ public:
 		Render::bindTexture(*this->tex, texUnitNum);
 	}
 
-	morda::Vec2r Dim()const NOEXCEPT{
+	morda::Vec2r Dim()const noexcept{
 		return this->dim;
 	}
 

@@ -54,11 +54,11 @@ class Slider :
 	float curFactor = 0; //Current position from 0 to 1
 	float handleSizeFactor = 0; //Current handle size factor from 0 to 1
 	
-	unsigned GetLongIndex()const NOEXCEPT{
+	unsigned GetLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
 	}
 
-	unsigned GetTransIndex()const NOEXCEPT{
+	unsigned GetTransIndex()const noexcept{
 		return this->isVertical ? 0 : 1;
 	}
 	
@@ -75,9 +75,9 @@ protected:
 public:
 	std::function<void(Slider&)> factorChange;
 
-	virtual ~Slider()NOEXCEPT{}
+	virtual ~Slider()noexcept{}
 	
-	float Factor()const NOEXCEPT{
+	float Factor()const noexcept{
 		return this->curFactor;
 	}
 	
@@ -86,7 +86,7 @@ public:
 private:
 	void layOut() override;
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const noexcept override;
 };
 
 

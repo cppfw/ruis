@@ -48,7 +48,7 @@ public:
 	TextField(const TextField&) = delete;
 	TextField& operator=(const TextField&) = delete;
 	
-	TextInput& textInput()NOEXCEPT{
+	TextInput& textInput()noexcept{
 		return *this->ti;
 	}
 	

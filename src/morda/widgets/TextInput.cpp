@@ -116,7 +116,7 @@ bool TextInput::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 }
 
 
-Vec2r TextInput::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
+Vec2r TextInput::onMeasure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){

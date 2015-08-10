@@ -63,9 +63,9 @@ public:
 	
 	TextInput(const stob::Node* chain = nullptr);
 	
-	virtual ~TextInput()NOEXCEPT{}
+	virtual ~TextInput()noexcept{}
 
-	Vec2r onMeasure(const morda::Vec2r& quotum)const NOEXCEPT override;
+	Vec2r onMeasure(const morda::Vec2r& quotum)const noexcept override;
 
 	void render(const morda::Matr4r& matrix) const override;
 
@@ -94,7 +94,7 @@ private:
 	
 	real IndexToPos(size_t index);
 	
-	bool ThereIsSelection()const NOEXCEPT{
+	bool ThereIsSelection()const noexcept{
 		return this->cursorIndex != this->selectionStartIndex;
 	}
 	

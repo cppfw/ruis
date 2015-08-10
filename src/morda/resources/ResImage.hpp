@@ -54,7 +54,7 @@ public:
 	ResImage(const ResImage& orig) = delete;
 	ResImage& operator=(const ResImage& orig) = delete;
 	
-	const Vec2r& Dim()const NOEXCEPT{
+	const Vec2r& Dim()const noexcept{
 		return this->dim;
 	}
 	

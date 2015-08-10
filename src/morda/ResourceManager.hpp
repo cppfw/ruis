@@ -119,7 +119,7 @@ protected:
 	//this can only be used as a base class
 	Resource(){}
 public:
-	virtual ~Resource()NOEXCEPT{}
+	virtual ~Resource()noexcept{}
 };
 
 

@@ -52,7 +52,7 @@ public:
      */
 	virtual void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key) = 0;
 	
-	virtual ~CharInputWidget()NOEXCEPT{}
+	virtual ~CharInputWidget()noexcept{}
 };
 
 

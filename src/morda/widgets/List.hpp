@@ -61,9 +61,9 @@ public:
 	protected:
 		ItemsProvider(){}
 	public:
-		virtual ~ItemsProvider()NOEXCEPT{}
+		virtual ~ItemsProvider()noexcept{}
 		
-		virtual size_t count()const NOEXCEPT = 0;
+		virtual size_t count()const noexcept = 0;
 		
 		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
 		
@@ -87,7 +87,7 @@ public:
 	
 	void setScrollPosAsFactor(real factor);
 	
-	real scrollFactor()const NOEXCEPT;
+	real scrollFactor()const noexcept;
 	
 private:
 	std::shared_ptr<ItemsProvider> provider;

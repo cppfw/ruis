@@ -20,7 +20,7 @@ public:
 		this->blocked = true;
 	}
 	
-	~BlockedFlagGuard()NOEXCEPT{
+	~BlockedFlagGuard()noexcept{
 		this->blocked = false;
 	}
 };
@@ -298,7 +298,7 @@ void Container::removeAll() {
 
 
 //override
-std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)NOEXCEPT{
+std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)noexcept{
 	if(auto r = this->Widget::FindChildByName(name)){
 		return std::move(r);
 	}

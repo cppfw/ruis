@@ -176,7 +176,7 @@ void Updateable::StartUpdating(std::uint16_t dt){
 
 
 
-void Updateable::StopUpdating()NOEXCEPT{
+void Updateable::StopUpdating()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 	
 	if(this->queue){

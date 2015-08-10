@@ -47,7 +47,7 @@ public:
 	Label(const stob::Node* chain = nullptr);
 	
 public:
-	~Label()NOEXCEPT{}
+	~Label()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 };

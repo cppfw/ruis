@@ -51,7 +51,7 @@ public:
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
 	
-	virtual ~TextWidget()NOEXCEPT{}
+	virtual ~TextWidget()noexcept{}
 	
 	void SetFont(std::shared_ptr<ResFont> font){
 		if(!font){
@@ -114,7 +114,7 @@ public:
 		return std::move(this->text);
 	}
 	
-	const decltype(text)& Text()const NOEXCEPT{
+	const decltype(text)& Text()const noexcept{
 		return this->text;
 	}
 };

@@ -50,9 +50,9 @@ class ResFont : public morda::Resource{
 public:
 	ResFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline);
 
-	~ResFont()NOEXCEPT{}
+	~ResFont()noexcept{}
 
-	const morda::Font& font()NOEXCEPT{
+	const morda::Font& font()noexcept{
 		return this->f;
 	}
 	

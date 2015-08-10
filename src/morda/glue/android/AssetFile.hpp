@@ -74,7 +74,7 @@ class AssetFile : public ting::fs::File{
 	
 	virtual void OpenInternal(E_Mode mode)override;
 
-	virtual void CloseInternal()const NOEXCEPT override;
+	virtual void CloseInternal()const noexcept override;
 
 	virtual size_t ReadInternal(ting::Buffer<std::uint8_t> buf)const override;
 
@@ -90,7 +90,7 @@ public:
 	 * @brief Destructor.
 	 * This destructor calls the Close() method.
 	 */
-	~AssetFile()NOEXCEPT override{
+	~AssetFile()noexcept override{
 		this->Close();
 	}
 	

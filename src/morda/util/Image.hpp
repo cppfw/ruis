@@ -87,7 +87,7 @@ public:
 
 	~Image();
 
-	const Vec2ui& Dim()const NOEXCEPT{
+	const Vec2ui& Dim()const noexcept{
 		return this->dim;
 	}
 

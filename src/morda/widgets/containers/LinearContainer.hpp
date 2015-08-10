@@ -44,11 +44,11 @@ class LinearContainer : public Container{
 
 	bool isVertical;
 	
-	unsigned GetLongIndex()const NOEXCEPT{
+	unsigned GetLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
 	}
 
-	unsigned GetTransIndex()const NOEXCEPT{
+	unsigned GetTransIndex()const noexcept{
 		return this->isVertical ? 0 : 1;
 	}
 	

@@ -580,7 +580,7 @@ morda::App::ApplicationObject::ApplicationObject(){
 	}
 }
 
-morda::App::ApplicationObject::~ApplicationObject()NOEXCEPT{
+morda::App::ApplicationObject::~ApplicationObject()noexcept{
 	NSApplication *applicationObject = (NSApplication*)this->id;
 	[applicationObject release];
 }
@@ -601,7 +601,7 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	[window setTitle:[[NSProcessInfo processInfo] processName]];
 }
 
-morda::App::WindowObject::~WindowObject()NOEXCEPT{
+morda::App::WindowObject::~WindowObject()noexcept{
 	NSWindow* window = (CocoaWindow*)this->id;
 	[window release];
 }
@@ -636,7 +636,7 @@ morda::App::OpenGLContext::OpenGLContext(void* window){
 	[openGLContext makeCurrentContext];
 }
 
-void morda::App::OpenGLContext::Destroy()NOEXCEPT{
+void morda::App::OpenGLContext::Destroy()noexcept{
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->id;
 	[openGLContext release];
 }

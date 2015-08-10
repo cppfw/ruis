@@ -14,7 +14,7 @@ class StaticProvider : public List::ItemsProvider{
 	std::vector<std::unique_ptr<stob::Node>> widgets;
 public:
 
-	size_t count() const NOEXCEPT override{
+	size_t count() const noexcept override{
 		return this->widgets.size();
 	}
 	
@@ -84,7 +84,7 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 
 
-real List::scrollFactor()const NOEXCEPT{
+real List::scrollFactor()const noexcept{
 	if(!this->provider || this->provider->count() == 0){
 		return 0;
 	}

@@ -84,7 +84,7 @@ public:
 		this->Load(fi, chars, size, outline);
 	}
 
-	~TexFont()NOEXCEPT{}
+	~TexFont()noexcept{}
 	
 	void Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 

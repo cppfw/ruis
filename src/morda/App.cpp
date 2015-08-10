@@ -120,14 +120,14 @@ std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::stri
 	return ting::fs::FSFile::New(path);
 }
 
-void App::ShowVirtualKeyboard()NOEXCEPT{
+void App::ShowVirtualKeyboard()noexcept{
 	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 
 
 
-void App::HideVirtualKeyboard()NOEXCEPT{
+void App::HideVirtualKeyboard()noexcept{
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }

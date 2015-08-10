@@ -163,7 +163,7 @@ void Slider::layOut(){
 
 
 
-morda::Vec2r Slider::onMeasure(const morda::Vec2r& quotum)const NOEXCEPT{
+morda::Vec2r Slider::onMeasure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret = quotum;
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){

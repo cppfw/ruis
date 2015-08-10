@@ -55,7 +55,7 @@ protected:
 	
 	void OnHoverChanged(unsigned pointerID) override;
 public:	
-	bool isPressed()const NOEXCEPT{
+	bool isPressed()const noexcept{
 		return this->isPressed_var;
 	}
 };
@@ -111,7 +111,7 @@ public:
 		this->SetChecked(!this->IsChecked());
 	}
 	
-	bool IsChecked()const NOEXCEPT{
+	bool IsChecked()const noexcept{
 		return this->isChecked;
 	}
 	

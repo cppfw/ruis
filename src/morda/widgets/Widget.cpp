@@ -102,7 +102,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT{
+std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)noexcept{
 	if(this->Name() == name){
 		return this->SharedFromThis(this);
 	}
@@ -110,7 +110,7 @@ std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)NOEXCEPT
 }
 
 
-std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)NOEXCEPT{
+std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)noexcept{
 	std::swap(this->layoutParams, params);
 	this->SetRelayoutNeeded();
 	return std::move(params);
@@ -146,7 +146,7 @@ std::shared_ptr<Widget> Widget::RemoveFromParent(){
 
 
 
-void Widget::SetRelayoutNeeded()NOEXCEPT{
+void Widget::SetRelayoutNeeded()noexcept{
 	if(this->relayoutNeeded){
 		return;
 	}
@@ -295,7 +295,7 @@ void Widget::OnKeyInternal(bool isDown, EKey keyCode){
 
 
 
-void Widget::Focus()NOEXCEPT{
+void Widget::Focus()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 
 	if(this->IsFocused()){
@@ -307,7 +307,7 @@ void Widget::Focus()NOEXCEPT{
 
 
 
-void Widget::Unfocus()NOEXCEPT{
+void Widget::Unfocus()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 
 	if(!this->IsFocused()){
@@ -321,7 +321,7 @@ void Widget::Unfocus()NOEXCEPT{
 
 
 
-bool Widget::IsTopmost()const NOEXCEPT{
+bool Widget::IsTopmost()const noexcept{
 	if(!this->Parent()){
 		return false;
 	}

@@ -82,7 +82,7 @@ public:
 			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
 		}
 		
-		virtual ~LayoutParams()NOEXCEPT{}
+		virtual ~LayoutParams()noexcept{}
 	};
 
 private:
@@ -100,11 +100,11 @@ private:
 	//clip widgets contents by widget's border if set to true
 	bool clip;
 public:
-	bool Clip()const NOEXCEPT{
+	bool Clip()const noexcept{
 		return this->clip;
 	}
 	
-	void SetClip(bool clip)NOEXCEPT{
+	void SetClip(bool clip)noexcept{
 		this->clip = clip;
 	}
 	
@@ -131,21 +131,21 @@ private:
 	
 	std::unique_ptr<LayoutParams> layoutParams;
 public:
-	std::unique_ptr<LayoutParams> ResetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)NOEXCEPT;
+	std::unique_ptr<LayoutParams> ResetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)noexcept;
 	
-	bool NeedsRelayout()const NOEXCEPT{
+	bool NeedsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
 	
-	const std::string& Name()const NOEXCEPT{
+	const std::string& Name()const noexcept{
 		return this->name;
 	}
 	
-	const Container* Parent()const NOEXCEPT{
+	const Container* Parent()const noexcept{
 		return this->parent;
 	}
 	
-	Container* Parent()NOEXCEPT{
+	Container* Parent()noexcept{
 		return this->parent;
 	}
 	
@@ -156,7 +156,7 @@ public:
      * @return true if hovered by any pointer.
 	 * @return false otherwise.
      */
-	bool IsHovered()const NOEXCEPT{
+	bool IsHovered()const noexcept{
 		return this->hovered.size() != 0;
 	}
 	
@@ -166,7 +166,7 @@ public:
      * @return true if widget is hovered by given pointer ID.
 	 * @return false otherwise.
      */
-	bool IsHovered(unsigned pointerID)const NOEXCEPT{
+	bool IsHovered(unsigned pointerID)const noexcept{
 		return this->hovered.find(pointerID) != this->hovered.end();
 	}
 	
@@ -194,17 +194,17 @@ private:
 	}
 public:
 
-	const morda::Rect2r& Rect()const NOEXCEPT{
+	const morda::Rect2r& Rect()const noexcept{
 		return this->rect;
 	}
 	
 	morda::Rect2i ComputeViewportRect(const Matr4r& matrix)const noexcept;
 	
-	void MoveTo(const morda::Vec2r& newPos)NOEXCEPT{
+	void MoveTo(const morda::Vec2r& newPos)noexcept{
 		this->rect.p = newPos;
 	}
 	
-	void MoveBy(const morda::Vec2r& delta)NOEXCEPT{
+	void MoveBy(const morda::Vec2r& delta)noexcept{
 		this->rect.p += delta;
 	}
 
@@ -214,9 +214,9 @@ public:
 		this->Resize(this->Rect().d + delta);
 	}
 
-	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT;
+	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept;
 	
-	template <typename T> std::shared_ptr<T> FindChildByNameAs(const std::string& name)NOEXCEPT{
+	template <typename T> std::shared_ptr<T> FindChildByNameAs(const std::string& name)noexcept{
 		return std::dynamic_pointer_cast<T>(this->FindChildByName(name));
 	}
 	
@@ -225,7 +225,7 @@ public:
 	
 public:
 
-	virtual ~Widget()NOEXCEPT{}
+	virtual ~Widget()noexcept{}
 
 	virtual void render(const morda::Matr4r& matrix)const{}
 	
@@ -244,11 +244,11 @@ public:
 		return false;
 	}
 	
-	void Focus()NOEXCEPT;
+	void Focus()noexcept;
 	
-	void Unfocus()NOEXCEPT;
+	void Unfocus()noexcept;
 	
-	bool IsFocused()const NOEXCEPT{
+	bool IsFocused()const noexcept{
 		return this->isFocused;
 	}
 	
@@ -293,7 +293,7 @@ public:
 	
 public:
 
-	void SetRelayoutNeeded()NOEXCEPT;
+	void SetRelayoutNeeded()noexcept;
 
 	virtual void layOut(){}
 	
@@ -304,15 +304,15 @@ public:
 		}
 	}
 	
-	bool IsVisible()const NOEXCEPT{
+	bool IsVisible()const noexcept{
 		return this->isVisible;
 	}
 
-	void SetEnabled(bool enable)NOEXCEPT{
+	void SetEnabled(bool enable)noexcept{
 		this->isEnabled = enable;
 	}
 	
-	bool IsEnabled()const NOEXCEPT{
+	bool IsEnabled()const noexcept{
 		return this->isEnabled;
 	}
 	
@@ -322,14 +322,14 @@ public:
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
      */
-	bool Contains(const morda::Vec2r& pos)const NOEXCEPT{
+	bool Contains(const morda::Vec2r& pos)const noexcept{
 		return morda::Rect2r(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
 	}
 	
 	
 	virtual void OnTopmostChanged(){}
 	
-	bool IsTopmost()const NOEXCEPT;
+	bool IsTopmost()const noexcept;
 	
 	void MakeTopmost();
 };

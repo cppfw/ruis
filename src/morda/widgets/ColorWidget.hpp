@@ -50,7 +50,7 @@ public:
 		this->color_var = color;
 	}
 	
-	std::uint32_t color()const NOEXCEPT{
+	std::uint32_t color()const noexcept{
 		return this->color_var;
 	}
 };

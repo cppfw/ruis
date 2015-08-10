@@ -45,7 +45,7 @@ class ImageLabel : public virtual Widget{
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
-	virtual ~ImageLabel()NOEXCEPT{}
+	virtual ~ImageLabel()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 

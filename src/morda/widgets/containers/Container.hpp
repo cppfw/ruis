@@ -80,7 +80,7 @@ public:
 	Container(const stob::Node* chain = nullptr);
 
 public:
-	~Container()NOEXCEPT{}
+	~Container()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 
@@ -105,9 +105,9 @@ public:
 	
 	void removeAll();
 	
-	std::shared_ptr<Widget> FindChildByName(const std::string& name)NOEXCEPT override;
+	std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept override;
 	
-	const T_ChildrenList& Children()const NOEXCEPT{
+	const T_ChildrenList& Children()const noexcept{
 		return this->children;
 	}
 	

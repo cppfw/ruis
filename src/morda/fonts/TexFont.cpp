@@ -77,7 +77,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 				throw ting::Exc("TexFont::Load(): unable to init freetype library");
 			}
 		}
-		~FreeTypeLibWrapper()NOEXCEPT{
+		~FreeTypeLibWrapper()noexcept{
 			FT_Done_FreeType(this->lib);
 		}
 		operator FT_Library& (){
@@ -97,7 +97,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 				throw ting::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}
-		~FreeTypeFaceWrapper()NOEXCEPT{
+		~FreeTypeFaceWrapper()noexcept{
 			FT_Done_Face(this->face);
 		}
 		operator FT_Face& (){

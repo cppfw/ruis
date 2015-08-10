@@ -99,7 +99,7 @@ public:
 	};
 	
 	
-	bool ThisIsUIThread()const NOEXCEPT{
+	bool ThisIsUIThread()const noexcept{
 		return this->uiThreadId == ting::mt::Thread::GetCurrentThreadID();
 	}
 	
@@ -124,27 +124,27 @@ private:
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
-		~EGLDisplayWrapper()NOEXCEPT;
+		~EGLDisplayWrapper()noexcept;
 	} eglDisplay;
 
 	struct EGLConfigWrapper{
 		EGLConfig c;
 		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
-		~EGLConfigWrapper()NOEXCEPT{}
+		~EGLConfigWrapper()noexcept{}
 	} eglConfig;
 
 	struct EGLSurfaceWrapper{
 		EGLDisplayWrapper& d;
 		EGLSurface s;
 		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
-		~EGLSurfaceWrapper()NOEXCEPT;
+		~EGLSurfaceWrapper()noexcept;
 	} eglSurface;
 
 	struct EGLContextWrapper{
 		EGLDisplayWrapper& d;
 		EGLContext c;
 		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
-		~EGLContextWrapper()NOEXCEPT;
+		~EGLContextWrapper()noexcept;
 	} eglContext;
 	
 #endif
@@ -165,7 +165,7 @@ private:
 	struct XDisplayWrapper{
 		Display* d;
 		XDisplayWrapper();
-		~XDisplayWrapper()NOEXCEPT;
+		~XDisplayWrapper()noexcept;
 	} xDisplay;
 
 	struct DotsPerCmWrapper{
@@ -177,7 +177,7 @@ private:
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
 		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
-		~XVisualInfoWrapper()NOEXCEPT;
+		~XVisualInfoWrapper()noexcept;
 	} xVisualInfo;
 
 	struct XWindowWrapper{
@@ -186,7 +186,7 @@ private:
 		XDisplayWrapper& d;
 
 		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
-		~XWindowWrapper()NOEXCEPT;
+		~XWindowWrapper()noexcept;
 	} xWindow;
 
 	struct GLXContextWrapper{
@@ -196,11 +196,11 @@ private:
 		XWindowWrapper& w;
 
 		GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo);
-		~GLXContextWrapper()NOEXCEPT{
+		~GLXContextWrapper()noexcept{
 			this->Destroy();
 		}
 
-		void Destroy()NOEXCEPT;
+		void Destroy()noexcept;
 	} glxContex;
 
 	struct XInputMethodWrapper{
@@ -211,11 +211,11 @@ private:
 		XWindowWrapper& w;
 		
 		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XInputMethodWrapper()NOEXCEPT{
+		~XInputMethodWrapper()noexcept{
 			this->Destroy();
 		}
 		
-		void Destroy()NOEXCEPT;
+		void Destroy()noexcept;
 	} xInputMethod;
 
 	friend void Main(int argc, const char** argv);
@@ -230,14 +230,14 @@ private:
 		std::string name;
 		
 		WindowClassWrapper();
-		~WindowClassWrapper()NOEXCEPT;
+		~WindowClassWrapper()noexcept;
 	} windowClass;
 	
 	struct WindowWrapper{
 		HWND hwnd;
 		
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
-		~WindowWrapper()NOEXCEPT;
+		~WindowWrapper()noexcept;
 	} window;
 	
 	struct DeviceContextWrapper{
@@ -245,12 +245,12 @@ private:
 		HDC hdc;
 		
 		DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w);
-		~DeviceContextWrapper()NOEXCEPT{
+		~DeviceContextWrapper()noexcept{
 			this->Destroy();
 		}
 		
 	private:
-		void Destroy()NOEXCEPT;
+		void Destroy()noexcept;
 	} deviceContext;
 	
 	struct DotsPerCmWrapper{
@@ -274,23 +274,23 @@ private:
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();
-		~ApplicationObject()NOEXCEPT;
+		~ApplicationObject()noexcept;
 	} applicationObject;
 	
 	struct WindowObject{
 		void* id;
 		WindowObject(const morda::App::WindowParams& wp);
-		~WindowObject()NOEXCEPT;
+		~WindowObject()noexcept;
 	} windowObject;
 	
 	struct OpenGLContext{
 		void *id;
 		OpenGLContext(void* window);
-		~OpenGLContext()NOEXCEPT{
+		~OpenGLContext()noexcept{
 			this->Destroy();
 		}
 		
-		void Destroy()NOEXCEPT;
+		void Destroy()noexcept;
 	} openGLContext;
 	
 	void macosx_SwapFrameBuffers();
@@ -339,7 +339,7 @@ private:
 	DefaultShaders shaders;
 
 public:
-	DefaultShaders& Shaders()NOEXCEPT{
+	DefaultShaders& Shaders()noexcept{
 		return this->shaders;
 	}
 
@@ -373,7 +373,7 @@ private:
 	void render();
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2f& pos)const NOEXCEPT{
+	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2f& pos)const noexcept{
 		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 	
@@ -390,7 +390,7 @@ protected:
 
 public:
 
-	virtual ~App()NOEXCEPT{}
+	virtual ~App()noexcept{}
 
 	void SetRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
@@ -399,9 +399,9 @@ public:
 		this->rootWidget->Resize(this->curWinRect.d);
 	}
 	
-	void ShowVirtualKeyboard()NOEXCEPT;
+	void ShowVirtualKeyboard()noexcept;
 	
-	void HideVirtualKeyboard()NOEXCEPT;
+	void HideVirtualKeyboard()noexcept;
 	
 private:
 	std::weak_ptr<Widget> focusedWidget;
@@ -423,7 +423,7 @@ private:
 	
 public:
 	
-	float DotsPerCm()const NOEXCEPT{
+	float DotsPerCm()const noexcept{
 		return this->dotsPerCm.value;
 	}
 	

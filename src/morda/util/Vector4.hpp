@@ -86,7 +86,7 @@ public:
 	 * @brief Default constructor.
 	 * Default constructor does not initialize vector components to any values.
 	 */
-	Vector4()NOEXCEPT{}
+	Vector4()noexcept{}
 
 	/**
 	 * @brief Constructor.
@@ -96,7 +96,7 @@ public:
      * @param z - value for third vector component.
      * @param w - value for fourth vector component.
      */
-	Vector4(T x, T y, T z, T w)NOEXCEPT :
+	Vector4(T x, T y, T z, T w)noexcept :
 			x(x),
 			y(y),
 			z(z),
@@ -110,7 +110,7 @@ public:
 	 * Initializes all vector components to a given value.
      * @param num - value to initialize all vector components with.
      */
-	Vector4(T num)NOEXCEPT{
+	Vector4(T num)noexcept{
 		this->operator=(num);
 	}
 
@@ -120,7 +120,7 @@ public:
      * @param num - value to use for initialization of first three vector components.
      * @param w - value to use for initialization of fourth vector component.
      */
-	Vector4(T num, T w)NOEXCEPT :
+	Vector4(T num, T w)noexcept :
 			x(num),
 			y(num),
 			z(num),
@@ -134,7 +134,7 @@ public:
 	 * @param z - value to use for initialization of 3rd vector component.
 	 * @param w - value to use for initialization of 4th vector component.
 	 */
-	Vector4(const Vector2<T>& vec, T z = 0, T w = 1)NOEXCEPT;
+	Vector4(const Vector2<T>& vec, T z = 0, T w = 1)noexcept;
 
 	/**
 	 * @brief Constructor.
@@ -142,7 +142,7 @@ public:
 	 * @param vec - 23 vector to use for initialization of first three vector components.
 	 * @param w - value to use for initialization of 4th vector component.
 	 */
-	Vector4(const Vector3<T>& vec, T w = 1)NOEXCEPT;
+	Vector4(const Vector3<T>& vec, T w = 1)noexcept;
 
 	
 	template <class TT> explicit Vector4(const Vector4<TT>& v) :
@@ -158,7 +158,7 @@ public:
      * @param i - component index to access, must be from 0 to 3.
      * @return Reference to the requested vector component.
      */
-	T& operator[](unsigned i)NOEXCEPT{
+	T& operator[](unsigned i)noexcept{
 		ASSERT(i < 4)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -173,7 +173,7 @@ public:
      * @param i - component index to access, must be from 0 to 3.
      * @return constant reference to the requested vector component.
      */
-	const T& operator[](unsigned i)const NOEXCEPT{
+	const T& operator[](unsigned i)const noexcept{
 		ASSERT(i < 4)
 		ASSERT( &((&this->x)[0]) == &this->x)
 		ASSERT( &((&this->x)[1]) == &this->y)
@@ -191,7 +191,7 @@ public:
 	 * @param vec - 3d vector to assign first three components from.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator=(const Vector3<T>& vec)NOEXCEPT;
+	Vector4& operator=(const Vector3<T>& vec)noexcept;
 
 	/**
 	 * @brief Assign from 2d vector.
@@ -201,7 +201,7 @@ public:
 	 * @param vec - 2d vector to assign first two components from.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator=(const Vector2<T>& vec)NOEXCEPT;
+	Vector4& operator=(const Vector2<T>& vec)noexcept;
 
 	/**
 	 * @brief Assign a number.
@@ -209,7 +209,7 @@ public:
      * @param num - number to use for assignment.
      * @return Reference to this vector object.
      */
-	Vector4& operator=(T num)NOEXCEPT{
+	Vector4& operator=(T num)noexcept{
 		this->x = num;
 		this->y = num;
 		this->z = num;
@@ -222,7 +222,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& SetTo(T val)NOEXCEPT{
+	Vector4& SetTo(T val)noexcept{
 		this->x = val;
 		this->y = val;
 		this->z = val;
@@ -237,7 +237,7 @@ public:
 	 * @param vec - 2d vector to use for addition.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator+=(const Vector2<T>& vec)NOEXCEPT;
+	Vector4& operator+=(const Vector2<T>& vec)noexcept;
 
 	/**
 	 * @brief Add and assign.
@@ -246,7 +246,7 @@ public:
 	 * @param vec - 3d vector to use for addition.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator+=(const Vector3<T>& vec)NOEXCEPT;
+	Vector4& operator+=(const Vector3<T>& vec)noexcept;
 
 	/**
 	 * @brief Add and assign.
@@ -254,7 +254,7 @@ public:
 	 * @param vec - vector to add.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator+=(const Vector4& vec)NOEXCEPT{
+	Vector4& operator+=(const Vector4& vec)noexcept{
 		this->x += vec.x;
 		this->y += vec.y;
 		this->z += vec.z;
@@ -268,7 +268,7 @@ public:
 	 * @param vec - vector to add.
 	 * @return Vector resulting from vector addition.
 	 */
-	Vector4 operator+(const Vector4& vec)const NOEXCEPT{
+	Vector4 operator+(const Vector4& vec)const noexcept{
 		return (Vector4(*this) += vec);
 	}
 
@@ -278,7 +278,7 @@ public:
 	 * @param vec - vector to subtract.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator-=(const Vector4& vec)NOEXCEPT{
+	Vector4& operator-=(const Vector4& vec)noexcept{
 		this->x -= vec.x;
 		this->y -= vec.y;
 		this->z -= vec.z;
@@ -292,7 +292,7 @@ public:
 	 * @param vec - vector to subtract.
 	 * @return Vector resulting from vector subtraction.
 	 */
-	Vector4 operator-(const Vector4& vec)const NOEXCEPT{
+	Vector4 operator-(const Vector4& vec)const noexcept{
 		return (Vector4(*this) -= vec);
 	}
 
@@ -300,7 +300,7 @@ public:
 	 * @brief Unary minus.
      * @return Negated vector.
      */
-	Vector4 operator-()const NOEXCEPT{
+	Vector4 operator-()const noexcept{
 		return Vector4(*this).Negate();
 	}
 
@@ -310,7 +310,7 @@ public:
      * @param num - scalar to multiply by.
      * @return Reference to this vector object.
      */
-	Vector4& operator*=(T num)NOEXCEPT{
+	Vector4& operator*=(T num)noexcept{
 		this->x *= num;
 		this->y *= num;
 		this->z *= num;
@@ -324,7 +324,7 @@ public:
      * @param num - scalar to multiply by.
      * @return Vector resulting from multiplication of this vector by scalar.
      */
-	Vector4 operator*(T num)const NOEXCEPT{
+	Vector4 operator*(T num)const noexcept{
 		return (Vector4(*this) *= num);
 	}
 
@@ -334,7 +334,7 @@ public:
 	 * @param vec - vector to multiply by.
 	 * @return Vector resulting from multiplication of given scalar by given vector.
 	 */
-	friend Vector4 operator*(T num, const Vector4& vec)NOEXCEPT{
+	friend Vector4 operator*(T num, const Vector4& vec)noexcept{
 		return vec * num;
 	}
 
@@ -344,7 +344,7 @@ public:
 	 * @param num - scalar to divide by.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& operator/=(T num)NOEXCEPT{
+	Vector4& operator/=(T num)noexcept{
 		ASSERT_INFO(num != 0, "Vector4::operator/=(): division by 0")
 		this->x /= num;
 		this->y /= num;
@@ -359,7 +359,7 @@ public:
 	 * @param num - scalar to divide by.
 	 * @return Vector resulting from division of this vector by scalars.
 	 */
-	Vector4 operator/(T num)NOEXCEPT{
+	Vector4 operator/(T num)noexcept{
 		ASSERT_INFO(num != 0, "Vector4::operator/(): division by 0")
 		return (Vector4(*this) /= num);
 	}
@@ -369,7 +369,7 @@ public:
      * @param vec -vector to multiply by.
      * @return Dot product of this vector and given vector.
      */
-	T operator*(const Vector4& vec)const NOEXCEPT{
+	T operator*(const Vector4& vec)const noexcept{
 		return this->x * vec.x
 				+ this->y * vec.y
 				+ this->z * vec.z
@@ -384,7 +384,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Four-dimensional vector resulting from the cross product.
      */
-	Vector4 operator%(const Vector4& vec)const NOEXCEPT{
+	Vector4 operator%(const Vector4& vec)const noexcept{
 		return Vector4(
 				this->y * vec.z - this->z * vec.y,
 				this->z * vec.x - this->x * vec.z,
@@ -398,7 +398,7 @@ public:
 	 * Negates this vector.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& Negate()NOEXCEPT{
+	Vector4& Negate()noexcept{
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -410,7 +410,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	T MagPow2()const NOEXCEPT{
+	T MagPow2()const noexcept{
 		return ting::math::Pow2(this->x)
 				+ ting::math::Pow2(this->y)
 				+ ting::math::Pow2(this->z)
@@ -421,7 +421,7 @@ public:
 	 * @brief Calculate vector magnitude.
 	 * @return Vector magnitude.
 	 */
-	T Magnitude()const NOEXCEPT{
+	T Magnitude()const noexcept{
 		return ting::math::Sqrt(this->MagPow2());
 	}
 
@@ -431,7 +431,7 @@ public:
 	 * If magnitude is 0 then the result is vector (1, 0, 0, 0).
 	 * @return Reference to this vector object.
 	 */
-	Vector4& Normalize()NOEXCEPT{
+	Vector4& Normalize()noexcept{
 		T mag = this->Magnitude();
 		if(mag == 0){
 			this->x = 1;
@@ -470,7 +470,7 @@ namespace morda{
 // functions implementation
 //==========================
 
-template <class T> Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)NOEXCEPT :
+template <class T> Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)noexcept :
 		x(vec.x),
 		y(vec.y),
 		z(z),
@@ -479,7 +479,7 @@ template <class T> Vector4<T>::Vector4(const Vector2<T>& vec, T z, T w)NOEXCEPT 
 
 
 
-template <class T> Vector4<T>::Vector4(const Vector3<T>& vec, T w)NOEXCEPT :
+template <class T> Vector4<T>::Vector4(const Vector3<T>& vec, T w)noexcept :
 		x(vec.x),
 		y(vec.y),
 		z(vec.z),
@@ -488,7 +488,7 @@ template <class T> Vector4<T>::Vector4(const Vector3<T>& vec, T w)NOEXCEPT :
 
 
 
-template <class T> Vector4<T>& Vector4<T>::operator=(const Vector3<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator=(const Vector3<T>& vec)noexcept{
 	this->x = vec.x;
 	this->y = vec.y;
 	this->z = vec.z;
@@ -498,7 +498,7 @@ template <class T> Vector4<T>& Vector4<T>::operator=(const Vector3<T>& vec)NOEXC
 
 
 
-template <class T> Vector4<T>& Vector4<T>::operator=(const Vector2<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator=(const Vector2<T>& vec)noexcept{
 	this->x = vec.x;
 	this->y = vec.y;
 	this->z = 0;
@@ -508,7 +508,7 @@ template <class T> Vector4<T>& Vector4<T>::operator=(const Vector2<T>& vec)NOEXC
 
 
 
-template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& vec)noexcept{
 	this->x += vec.x;
 	this->y += vec.y;
 	return *this;
@@ -516,7 +516,7 @@ template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector2<T>& vec)NOEX
 
 
 
-template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& vec)NOEXCEPT{
+template <class T> Vector4<T>& Vector4<T>::operator+=(const Vector3<T>& vec)noexcept{
 	this->x += vec.x;
 	this->y += vec.y;
 	this->z += vec.z;
