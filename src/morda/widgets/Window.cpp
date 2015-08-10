@@ -435,5 +435,5 @@ bool morda::Window::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 }
 
 void morda::Window::OnTopmostChanged(){
-	this->titleBg->SetColor(this->IsTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
+	this->titleBg->setColor(this->IsTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
 }

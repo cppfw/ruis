@@ -36,7 +36,7 @@ namespace morda{
 
 
 class ColorWidget : public virtual Widget{
-	std::uint32_t color;
+	std::uint32_t color_var;
 	
 protected:
 	ColorWidget(const stob::Node* chain);
@@ -46,12 +46,12 @@ public:
 	ColorWidget& operator=(const ColorWidget&) = delete;
 	
 	
-	void SetColor(std::uint32_t color){
-		this->color = color;
+	void setColor(std::uint32_t color){
+		this->color_var = color;
 	}
 	
-	std::uint32_t Color()const NOEXCEPT{
-		return this->color;
+	std::uint32_t color()const NOEXCEPT{
+		return this->color_var;
 	}
 };
 

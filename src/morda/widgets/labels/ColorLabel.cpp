@@ -19,7 +19,7 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 
 	ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 
-	s.SetColor(this->Color());
+	s.SetColor(this->color());
 	s.SetMatrix(matr);
 	s.render(s.quad01Fan);
 }

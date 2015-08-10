@@ -57,12 +57,12 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		matr.Translate(-this->TextBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
-			if(this->Color() == 0xffffffff){//if white
+			if(this->color() == 0xffffffff){//if white
 				return morda::App::Inst().Shaders().posTexShader;
 			}else{
 				ColorPosTexShader& s = morda::App::Inst().Shaders().colorPosTexShader;
 
-				s.SetColor(this->Color());
+				s.SetColor(this->color());
 				return s;
 			}
 		}();
@@ -85,7 +85,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 
-		s.SetColor(this->Color());
+		s.SetColor(this->color());
 
 		s.SetMatrix(matr);
 		s.render(s.quad01Fan);
