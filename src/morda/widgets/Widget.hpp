@@ -331,7 +331,7 @@ public:
 	
 	bool IsTopmost()const noexcept;
 	
-	void MakeTopmost();
+	void makeTopmost();
 };
 
 

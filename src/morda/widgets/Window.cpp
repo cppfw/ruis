@@ -413,7 +413,7 @@ bool morda::Window::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseBu
 	if(isDown){
 		morda::App::Inst().PostToUIThread_ts(
 				[this](){
-					this->MakeTopmost();
+					this->makeTopmost();
 				}
 			);
 

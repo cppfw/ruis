@@ -333,7 +333,7 @@ bool Widget::IsTopmost()const noexcept{
 
 
 
-void Widget::MakeTopmost(){
+void Widget::makeTopmost(){
 	if(!this->Parent()){
 		return;
 	}
