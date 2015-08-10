@@ -49,5 +49,5 @@ PosTexShader::PosTexShader() :
 		texCoordAttr(this->getAttribute("texCoord0"))
 {
 	this->setUniform1i(this->getUniform("texture0"), 0); //this needs to be done only once and then it becomes part of the shader state
-	this->unbind();
+	this->renderNothing();
 }

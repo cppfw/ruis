@@ -79,14 +79,6 @@ class Shader{
 	
 	
 protected:
-	void unbind() {
-		if (this != boundShader) {
-			throw morda::Exc("Shader::Unbind(): another shader is bound");
-		}
-		renderIsInProgress = false;
-		boundShader = nullptr;
-	}
-
 	Render::InputID getAttribute(const char* n){
 		return Render::getAttribute(*this->program, n);
 	}
@@ -148,7 +140,10 @@ public:
 	 * @brief Terminates render sequence.
      */
 	void renderNothing(){
-		this->renderIsInProgress = false;
+		if (this != boundShader) {
+			throw morda::Exc("Shader::Unbind(): another shader is bound");
+		}
+		renderIsInProgress = false;
 	}
 	
 	virtual ~Shader()noexcept{}
