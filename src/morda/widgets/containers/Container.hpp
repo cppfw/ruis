@@ -53,27 +53,23 @@ private:
 	
 	
 protected:
-	virtual std::unique_ptr<LayoutParams> CreateLayoutParams(const stob::Node* chain = nullptr)const{
+	virtual std::unique_ptr<LayoutParams> createLayoutParams(const stob::Node* chain = nullptr)const{
 		return Widget::LayoutParams::New(chain);
 	}
 	
-	virtual LayoutParams& GetLayoutParams(Widget& w);
+	virtual LayoutParams& getLayoutParams_internal(Widget& w);
 	
-	
-	
-	const LayoutParams& GetLayoutParams(const Widget& w)const{
-		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->GetLayoutParams(
+	const LayoutParams& getLayoutParams_internal(const Widget& w)const{
+		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParams_internal(
 				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
 			);
 	}
 	
-	template <class T> const T& GetLayoutParamsAs(const Widget& w)const{
-		const auto lp = &this->GetLayoutParams(w);
+	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
+		const auto lp = &this->getLayoutParams_internal(w);
 		
 		const auto p = dynamic_cast<const T*>(lp);
-		if(!p){
-			throw Exc("Container::GetLayoutParamsAs(): could not cast widget's layout parameters to a requested class");
-		}
+		ASSERT(p)
 		return *p;
 	}
 	
@@ -83,9 +79,9 @@ public:
 	LayoutParams& getLayoutParams(Widget& w){
 		if(w.Parent() != this){
 			throw Exc("Container::getLayoutParams(): the widget is not added to this container");
-		}
+		}		
 		this->SetRelayoutNeeded();
-		return this->GetLayoutParams(w);
+		return this->getLayoutParams_internal(w);
 	}
 	
 	

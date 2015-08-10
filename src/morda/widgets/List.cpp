@@ -129,7 +129,7 @@ void List::setScrollPosAsFactor(real factor){
 }
 
 bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, T_ChildrenList::const_iterator insertBefore){
-	auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 		
 	Vec2r dim = this->dimForWidget(*w, lp);
 
@@ -314,7 +314,7 @@ void List::updateTailItemsInfo(){
 		
 		auto w = this->provider->getWidget(i - 1);
 		
-		auto& lp = this->GetLayoutParamsAs<LayoutParams>(*w);
+		auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 		
 		Vec2r d = this->dimForWidget(*w, lp);
 		

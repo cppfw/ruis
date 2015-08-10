@@ -38,9 +38,9 @@ Container::Container(const stob::Node* chain) :
 
 
 
-Widget::LayoutParams& Container::GetLayoutParams(Widget& w){
+Widget::LayoutParams& Container::getLayoutParams_internal(Widget& w){
 	if(!w.layoutParams){
-		w.layoutParams = this->CreateLayoutParams(w.layout.get());
+		w.layoutParams = this->createLayoutParams(w.layout.get());
 	}
 	
 	return *w.layoutParams;
