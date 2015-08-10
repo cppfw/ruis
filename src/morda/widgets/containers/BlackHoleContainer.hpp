@@ -32,6 +32,10 @@ THE SOFTWARE. */
 
 namespace morda{
 
+
+/**
+ * @brief Container which makes minimal size to be zero.
+ */
 class BlackHoleContainer : public FrameContainer{
 	Vec2b shrink;
 public:
