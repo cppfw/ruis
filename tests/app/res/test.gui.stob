@@ -193,7 +193,7 @@ Container{
 		dimX{300} dimY{200}
 		posX{300} posY{250}
 
-		cache{true}
+		//cache{true}
 
 		title{"Image label, button, custom widget"}
 
