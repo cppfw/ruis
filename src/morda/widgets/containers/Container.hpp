@@ -141,7 +141,7 @@ template <class T> T* Widget::findParent(const char* name){
 	}
 
 	auto p = dynamic_cast<T*>(this->Parent());
-	if(p && p->name() == name){
+	if(p && (!name || p->name() == name)){
 		return p;
 	}
 
