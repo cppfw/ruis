@@ -149,7 +149,7 @@ public:
 		return this->parentContainer;
 	}
 	
-	std::shared_ptr<Widget> RemoveFromParent();
+	std::shared_ptr<Widget> removeFromParent();
 	
 	/**
 	 * @brief Check if widget is hovered by any pointer.

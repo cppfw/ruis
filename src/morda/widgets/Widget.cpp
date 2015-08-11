@@ -137,7 +137,7 @@ void Widget::Resize(const morda::Vec2r& newDims){
 
 
 
-std::shared_ptr<Widget> Widget::RemoveFromParent(){
+std::shared_ptr<Widget> Widget::removeFromParent(){
 	if(!this->parentContainer){
 		throw morda::Exc("Widget::RemoveFromParent(): widget is not added to the parent");
 	}
@@ -350,7 +350,7 @@ void Widget::makeTopmost(){
 	
 	Container* p = this->parent();
 	
-	auto w = this->RemoveFromParent();
+	auto w = this->removeFromParent();
 	
 	p->Add(w);
 }
