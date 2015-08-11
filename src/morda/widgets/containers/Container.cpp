@@ -244,6 +244,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	
 	w->parentIter = ret;
 	w->parent = this;
+	w->onParentChanged();
 	
 	this->onChildrenListChanged();
 	
@@ -280,6 +281,8 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	
 	w.parent = nullptr;
 	w.SetUnhovered();
+	
+	w.onParentChanged();
 	
 	this->onChildrenListChanged();
 	

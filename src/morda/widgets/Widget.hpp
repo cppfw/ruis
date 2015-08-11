@@ -252,6 +252,9 @@ public:
 		return this->isFocused;
 	}
 	
+	/**
+	 * @brief Called when keyboard input focus changes.
+     */
 	virtual void OnFocusedChanged(){}
 	
 	enum class EMouseButton{
@@ -284,6 +287,13 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 		this->layOut();
 	}
+	
+	/**
+	 * @brief Called when parent of this widget changes.
+	 * Called when parent of the widget changes. This happens when widget is
+	 * added to or removed from a Container.
+     */
+	virtual void onParentChanged(){}
 	
 	virtual morda::Vec2r onMeasure(const morda::Vec2r& quotum)const;
 	
