@@ -26,6 +26,11 @@ vars{
 
 KeyProxyContainer{
 
+OverlayContainer{
+	layout{
+		dimX{max} dimY{max}
+	}
+
 Container{
 	layout{
 		dimX{max} dimY{max}
@@ -536,5 +541,5 @@ Container{
 	}
 
 }
-
+}//~OverlayContainer
 }//~KeyProxyContainer

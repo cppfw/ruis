@@ -268,7 +268,7 @@ void TextInput::StartCursorBlinking(){
 	this->StartUpdating(D_CursorBlinkPeriod);
 }
 
-bool TextInput::OnKey(bool isDown, EKey keyCode){
+bool TextInput::onKey(bool isDown, EKey keyCode){
 	switch(keyCode){
 		case EKey::LEFT_CONTROL:
 		case EKey::RIGHT_CONTROL:

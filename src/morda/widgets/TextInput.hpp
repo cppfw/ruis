@@ -75,7 +75,7 @@ public:
 
 	void OnFocusedChanged()override;
 	
-	bool OnKey(bool isDown, EKey keyCode)override;
+	bool onKey(bool isDown, EKey keyCode)override;
 	
 	void OnResize()override;
 	

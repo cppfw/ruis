@@ -95,6 +95,8 @@
             <in>FrameContainer.hpp</in>
             <in>LinearContainer.cpp</in>
             <in>LinearContainer.hpp</in>
+            <in>OverlayContainer.cpp</in>
+            <in>OverlayContainer.hpp</in>
             <in>ScrollContainer.cpp</in>
             <in>ScrollContainer.hpp</in>
             <in>TableContainer.cpp</in>
@@ -401,6 +403,16 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/ScrollContainer.cpp"
             ex="false"
@@ -719,6 +731,16 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/containers/ScrollContainer.cpp"
             ex="false"
             tool="1"
@@ -1032,6 +1054,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/containers/ScrollContainer.cpp"
             ex="false"
             tool="1"
@@ -1316,6 +1348,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/LinearContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1607,6 +1649,16 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/containers/OverlayContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/ScrollContainer.cpp"
             ex="false"

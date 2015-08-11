@@ -240,7 +240,7 @@ private:
 public:
 	
 	//return true to consume
-	virtual bool OnKey(bool isDown, morda::EKey keyCode){
+	virtual bool onKey(bool isDown, morda::EKey keyCode){
 		return false;
 	}
 	

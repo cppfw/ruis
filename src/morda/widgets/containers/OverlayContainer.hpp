@@ -26,31 +26,35 @@ THE SOFTWARE. */
  * @author Ivan Gagis <igagis@gmail.com>
  */
 
-
 #pragma once
 
 #include "FrameContainer.hpp"
 
 namespace morda{
 
-class KeyProxyContainer : public FrameContainer{
+
+class OverlayContainer :
+		virtual public Widget,
+		private FrameContainer
+{
+	std::shared_ptr<Container> overlayContainer;
+	std::shared_ptr<FrameContainer> contentContainer;
 public:
-	KeyProxyContainer(const stob::Node* chain = nullptr) :
-			Widget(chain),
-			FrameContainer(chain)
-	{}
+	OverlayContainer(const stob::Node* chain = nullptr);
 	
-	KeyProxyContainer(const KeyProxyContainer&) = delete;
-	KeyProxyContainer& operator=(const KeyProxyContainer&) = delete;
+	OverlayContainer(const OverlayContainer&) = delete;
+	OverlayContainer& operator=(const OverlayContainer&) = delete;
 	
-	std::function<bool(bool isDown, morda::EKey keyCode)> key;
-	
-	virtual bool onKey(bool isDown, morda::EKey keyCode)override{
-		if(this->key){
-			return this->key(isDown, keyCode);
-		}
-		return false;
+	Container& overlay(){
+		return *this->overlayContainer;
 	}
+	
+	FrameContainer& content(){
+		return *this->contentContainer;
+	}
+	
+private:
+
 };
 
 }

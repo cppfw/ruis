@@ -283,7 +283,7 @@ void Widget::clearCache(){
 
 
 void Widget::OnKeyInternal(bool isDown, EKey keyCode){
-	if(this->OnKey(isDown, keyCode)){
+	if(this->onKey(isDown, keyCode)){
 		return;
 	}
 

@@ -70,7 +70,7 @@ public:
 		return true;
 	}
 	
-	bool OnKey(bool isDown, morda::EKey keyCode) override{
+	bool onKey(bool isDown, morda::EKey keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
@@ -248,7 +248,7 @@ public:
 			);
 		this->SetRootWidget(c);
 		
-		std::dynamic_pointer_cast<morda::KeyProxyContainer>(c)->onKey = [this](bool isDown, morda::EKey keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::KeyProxyContainer>(c)->key = [this](bool isDown, morda::EKey keyCode) -> bool{
 			if(isDown){
 				if(keyCode == morda::EKey::ESCAPE){
 					this->Quit();
