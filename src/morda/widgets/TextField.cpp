@@ -23,13 +23,15 @@ TextField::TextField(const stob::Node* chain) :
 	{
 		auto& lp = bhc->getLayoutParams(*this->ti);
 		lp.dim.x = Widget::LayoutParams::D_Max;
-		lp.dim.y = Widget::LayoutParams::D_Max;
+		lp.dim.y = Widget::LayoutParams::D_Min;
 	}
 	
 	this->Content().Add(bhc);
 	
-	auto& lp = this->Content().getLayoutParams(*bhc);
-	
-	lp.dim.x = Widget::LayoutParams::D_Max;
-	lp.dim.y = Widget::LayoutParams::D_Min;
+	{
+		auto& lp = this->Content().getLayoutParams(*bhc);
+
+		lp.dim.x = Widget::LayoutParams::D_Max;
+		lp.dim.y = Widget::LayoutParams::D_Min;
+	}
 }
