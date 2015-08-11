@@ -93,7 +93,7 @@ void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 
 
 void TableContainer::layOut(){
-	this->UpdateRowsLayoutParam(this->Rect().d);
+	this->UpdateRowsLayoutParam(this->rect().d);
 	this->VerticalContainer::layOut();
 }
 

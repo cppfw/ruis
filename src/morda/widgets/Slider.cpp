@@ -85,10 +85,10 @@ Slider::Slider(bool isVertical, const stob::Node* chain) :
 
 		unsigned longIndex = this->GetLongIndex();
 
-		float maxPos = this->Rect().d[longIndex] - this->handle.Rect().d[longIndex];
+		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		ASSERT(maxPos >= 0)
 
-		float newPos = this->handle.Rect().p[longIndex];
+		float newPos = this->handle.rect().p[longIndex];
 		newPos += pos[longIndex] - this->clickPoint;
 		ting::util::ClampRange(newPos, 0.0f, maxPos);
 
@@ -138,7 +138,7 @@ void Slider::layOut(){
 	
 	unsigned longIndex = this->GetLongIndex();
 	
-	morda::Vec2r newSize(this->Rect().d);
+	morda::Vec2r newSize(this->rect().d);
 	
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
 	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
@@ -147,11 +147,11 @@ void Slider::layOut(){
 	
 	//move
 	{
-		float effectiveLength = this->Rect().d[longIndex] - this->handle.Rect().d[longIndex];
+		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
 			if(this->isVertical){
-				newPos[longIndex] = this->Rect().d.y - this->handle.Rect().d.y - ting::math::Round(effectiveLength * this->curFactor);
+				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ting::math::Round(effectiveLength * this->curFactor);
 			}else{
 				newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
 			}

@@ -286,8 +286,8 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
-				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
+				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->MoveBy(morda::Vec2r(d.x, 0));
 				this->ResizeBy(morda::Vec2r(-d.x, d.y));
 			}
@@ -302,8 +302,8 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
-				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
+				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(d);
 				this->ResizeBy(morda::Vec2r(-d.x, -d.y));
 			}
@@ -318,8 +318,8 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
-				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
+				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->ResizeBy(d);
 			}
 			return false;
@@ -333,8 +333,8 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
-				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
+				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(morda::Vec2r(0, d.y));
 				this->ResizeBy(morda::Vec2r(d.x, -d.y));
 			}
@@ -349,7 +349,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->Rect().d.x - this->emptyMinDim.x);
+				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
 				this->MoveBy(morda::Vec2r(d.x, 0));
 				this->ResizeBy(morda::Vec2r(-d.x, 0));
 			}
@@ -364,7 +364,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->Rect().d.x - this->emptyMinDim.x));
+				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
 				this->ResizeBy(morda::Vec2r(d.x, 0));
 			}
 			return false;
@@ -378,7 +378,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.y, -(this->Rect().d.y - this->emptyMinDim.y));
+				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->ResizeBy(morda::Vec2r(0, d.y));
 			}
 			return false;
@@ -392,7 +392,7 @@ void morda::Window::SetupWidgets(){
 		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.y, this->Rect().d.y - this->emptyMinDim.y);
+				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->MoveBy(morda::Vec2r(0, d.y));
 				this->ResizeBy(morda::Vec2r(0, -d.y));
 			}

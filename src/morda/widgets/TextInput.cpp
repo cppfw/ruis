@@ -42,7 +42,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
 			);
-		matr.Scale(Vec2r(ting::math::Abs(this->cursorPos - this->selectionStartPos), this->Rect().d.y));
+		matr.Scale(Vec2r(ting::math::Abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 
@@ -81,7 +81,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	if(this->IsFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.Translate(this->cursorPos, 0);
-		matr.Scale(Vec2r(D_CursorWidth, this->Rect().d.y));
+		matr.Scale(Vec2r(D_CursorWidth, this->rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 
@@ -170,8 +170,8 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->Rect().d.x - D_CursorWidth){
-		this->cursorPos = this->Rect().d.x - D_CursorWidth;
+	if(this->cursorPos > this->rect().d.x - D_CursorWidth){
+		this->cursorPos = this->rect().d.x - D_CursorWidth;
 		
 		this->xOffset = this->cursorPos;//start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -209,8 +209,8 @@ real TextInput::IndexToPos(size_t index){
 		)
 	{
 		ret += this->Font().CharAdvance(*i);
-		if(ret >= this->Rect().d.x){
-			ret = this->Rect().d.x;
+		if(ret >= this->rect().d.x){
+			ret = this->rect().d.x;
 			break;
 		}
 	}

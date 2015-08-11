@@ -16,7 +16,7 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
-	Texture2D texture(this->Rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
+	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
 	//texture is bound right after creation
 	
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
@@ -28,7 +28,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	Render::copyColorBufferToTexture(Vec2i(0), viewPortRect);
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
+	matr.Scale(this->rect().d);
 
 	morda::PosTexShader &s = App::Inst().Shaders().simpleGrayscalePosTexShader;
 

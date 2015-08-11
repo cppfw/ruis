@@ -86,7 +86,7 @@ public:
 	};
 
 private:
-	Container* parent = nullptr;
+	Container* parentContainer = nullptr;
 	T_ChildrenList::iterator parentIter;
 	
 	std::set<unsigned> hovered;
@@ -95,7 +95,7 @@ private:
 
 	bool isEnabled;
 
-	morda::Rect2r rect;
+	morda::Rect2r rectangle;
 	
 	//clip widgets contents by widget's border if set to true
 	bool clip;
@@ -123,7 +123,7 @@ public:
 	
 private:
 	//logical ID of the widget
-	std::string name_var;
+	std::string nameOfWidget;
 	
 	bool relayoutNeeded = true;
 	
@@ -138,15 +138,15 @@ public:
 	}
 	
 	const std::string& name()const noexcept{
-		return this->name_var;
+		return this->nameOfWidget;
 	}
 	
-	const Container* Parent()const noexcept{
-		return this->parent;
+	const Container* parent()const noexcept{
+		return this->parentContainer;
 	}
 	
-	Container* Parent()noexcept{
-		return this->parent;
+	Container* parent()noexcept{
+		return this->parentContainer;
 	}
 	
 	std::shared_ptr<Widget> RemoveFromParent();
@@ -194,24 +194,24 @@ private:
 	}
 public:
 
-	const morda::Rect2r& Rect()const noexcept{
-		return this->rect;
+	const morda::Rect2r& rect()const noexcept{
+		return this->rectangle;
 	}
 	
 	morda::Rect2i ComputeViewportRect(const Matr4r& matrix)const noexcept;
 	
 	void MoveTo(const morda::Vec2r& newPos)noexcept{
-		this->rect.p = newPos;
+		this->rectangle.p = newPos;
 	}
 	
 	void MoveBy(const morda::Vec2r& delta)noexcept{
-		this->rect.p += delta;
+		this->rectangle.p += delta;
 	}
 
 	void Resize(const morda::Vec2r& newDims);
 	
 	void ResizeBy(const morda::Vec2r& delta){
-		this->Resize(this->Rect().d + delta);
+		this->Resize(this->rect().d + delta);
 	}
 
 	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept;
@@ -333,7 +333,7 @@ public:
 	 * @return false otherwise.
      */
 	bool Contains(const morda::Vec2r& pos)const noexcept{
-		return morda::Rect2r(morda::Vec2r(0, 0), this->Rect().d).Overlaps(pos);
+		return morda::Rect2r(morda::Vec2r(0, 0), this->rect().d).Overlaps(pos);
 	}
 	
 	
@@ -345,6 +345,16 @@ public:
 	
 	
 	template <class T> T* findParent(const char* name = nullptr); //defined in Container.hpp
+	
+	
+	/**
+	 * @brief Calculate position in parent coordinates.
+     * @param pos - position to translate to parent coordinates.
+     * @param parent - parent of the widget hierarchy relatively to which the translation is to be done.
+	 *        If null then it will go down till the root widget.
+     * @return translated position.
+     */
+	Vec2r calcPosInParent(Vec2r pos, const Widget* parent = nullptr);
 };
 
 

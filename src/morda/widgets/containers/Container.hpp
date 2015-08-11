@@ -80,7 +80,7 @@ protected:
 	
 public:
 	LayoutParams& getLayoutParams(Widget& w){
-		if(w.Parent() != this){
+		if(w.parent() != this){
 			throw Exc("Container::getLayoutParams(): the widget is not added to this container");
 		}		
 		this->SetRelayoutNeeded();
@@ -136,16 +136,16 @@ public:
 
 
 template <class T> T* Widget::findParent(const char* name){
-	if(!this->Parent()){
+	if(!this->parent()){
 		return nullptr;
 	}
 
-	auto p = dynamic_cast<T*>(this->Parent());
+	auto p = dynamic_cast<T*>(this->parent());
 	if(p && (!name || p->name() == name)){
 		return p;
 	}
 
-	return this->Parent()->findParent<T>();
+	return this->parent()->findParent<T>();
 }
 
 

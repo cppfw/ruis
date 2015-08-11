@@ -70,7 +70,7 @@ void LinearContainer::layOut(){
 	
 	//arrange widgets
 	{
-		real flexible = this->Rect().d[longIndex] - rigid;
+		real flexible = this->rect().d[longIndex] - rigid;
 		
 		real pos = 0;
 		
@@ -88,7 +88,7 @@ void LinearContainer::layOut(){
 				}
 				
 				if(lp.dim[transIndex] == LayoutParams::D_Max){
-					d[transIndex] = this->Rect().d[transIndex];
+					d[transIndex] = this->rect().d[transIndex];
 				}else{
 					if(lp.dim[transIndex] == LayoutParams::D_Min || lp.dim[transIndex] < 0){
 						d[transIndex] = -1;
@@ -112,14 +112,14 @@ void LinearContainer::layOut(){
 			Vec2r newPos;
 
 			if(this->isVertical){
-				newPos[longIndex] = this->Rect().d[longIndex] - pos - (*i)->Rect().d[longIndex];
+				newPos[longIndex] = this->rect().d[longIndex] - pos - (*i)->rect().d[longIndex];
 			}else{
 				newPos[longIndex] = pos;
 			}
 			
-			pos += (*i)->Rect().d[longIndex];
+			pos += (*i)->rect().d[longIndex];
 			
-			newPos[transIndex] = ting::math::Round((this->Rect().d[transIndex] - (*i)->Rect().d[transIndex]) / 2);
+			newPos[transIndex] = ting::math::Round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 			
 			(*i)->MoveTo(newPos);
 		}

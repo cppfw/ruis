@@ -73,7 +73,7 @@ void App::HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
-	this->rootWidget->SetHovered(this->rootWidget->Rect().Overlaps(pos), id);
+	this->rootWidget->SetHovered(this->rootWidget->rect().Overlaps(pos), id);
 	this->rootWidget->OnMouseMove(this->NativeWindowToRootCoordinates(pos), id);
 }
 
@@ -84,7 +84,7 @@ void App::HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouse
 		return;
 	}
 
-	this->rootWidget->SetHovered(this->rootWidget->Rect().Overlaps(pos), pointerID);
+	this->rootWidget->SetHovered(this->rootWidget->rect().Overlaps(pos), pointerID);
 	this->rootWidget->OnMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, pointerID);
 }
 

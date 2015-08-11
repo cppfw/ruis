@@ -19,31 +19,31 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* n = GetProperty(chain, "posX")){
-		this->rect.p.x = morda::DimValueFromSTOB(*n);
+		this->rectangle.p.x = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.p.x = 0;
+		this->rectangle.p.x = 0;
 	}
 	
 	if(const stob::Node* n = GetProperty(chain, "posY")){
-		this->rect.p.y = morda::DimValueFromSTOB(*n);
+		this->rectangle.p.y = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.p.y = 0;
+		this->rectangle.p.y = 0;
 	}
 
 	if(const stob::Node* n = GetProperty(chain, "dimX")){
-		this->rect.d.x = morda::DimValueFromSTOB(*n);
+		this->rectangle.d.x = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.d.x = 0;
+		this->rectangle.d.x = 0;
 	}
 	
 	if(const stob::Node* n = GetProperty(chain, "dimY")){
-		this->rect.d.y = morda::DimValueFromSTOB(*n);
+		this->rectangle.d.y = morda::DimValueFromSTOB(*n);
 	}else{
-		this->rect.d.y = 0;
+		this->rectangle.d.y = 0;
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
-		this->name_var = p->Value();
+		this->nameOfWidget = p->Value();
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "clip")){
@@ -118,7 +118,7 @@ std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<
 
 
 void Widget::Resize(const morda::Vec2r& newDims){
-	if(this->rect.d == newDims){
+	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
 			this->clearCache();
 			this->layOut();
@@ -128,9 +128,9 @@ void Widget::Resize(const morda::Vec2r& newDims){
 	}
 
 	this->clearCache();
-	this->rect.d = newDims;
-	ting::util::ClampBottom(this->rect.d.x, real(0.0f));
-	ting::util::ClampBottom(this->rect.d.y, real(0.0f));
+	this->rectangle.d = newDims;
+	ting::util::ClampBottom(this->rectangle.d.x, real(0.0f));
+	ting::util::ClampBottom(this->rectangle.d.y, real(0.0f));
 	this->OnResize();//call virtual method
 	this->relayoutNeeded = false;
 }
@@ -138,10 +138,10 @@ void Widget::Resize(const morda::Vec2r& newDims){
 
 
 std::shared_ptr<Widget> Widget::RemoveFromParent(){
-	if(!this->parent){
+	if(!this->parentContainer){
 		throw morda::Exc("Widget::RemoveFromParent(): widget is not added to the parent");
 	}
-	return this->parent->Remove(*this);
+	return this->parentContainer->Remove(*this);
 }
 
 
@@ -151,8 +151,8 @@ void Widget::SetRelayoutNeeded()noexcept{
 		return;
 	}
 	this->relayoutNeeded = true;
-	if(this->parent){
-		this->parent->SetRelayoutNeeded();
+	if(this->parentContainer){
+		this->parentContainer->SetRelayoutNeeded();
 	}
 	this->cacheTex = Texture2D();
 }
@@ -205,7 +205,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	morda::ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 	s.Bind();
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
+	matr.Scale(this->rect().d);
 	s.SetMatrix(matr);
 
 	if(this->IsHovered()){
@@ -220,11 +220,11 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	Texture2D tex;
 	
-	if(reuse && reuse.Dim() == this->Rect().d){
+	if(reuse && reuse.Dim() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = Texture2D(
-				this->Rect().d.to<unsigned>(),
+				this->rect().d.to<unsigned>(),
 				4,
 				Render::ETexFilter::NEAREST,
 				Render::ETexFilter::NEAREST
@@ -241,14 +241,14 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	ASSERT(Render::isBoundFrameBufferComplete())
 	
-	Render::setViewport(Rect2i(Vec2i(0), this->Rect().d.to<int>()));
+	Render::setViewport(Rect2i(Vec2i(0), this->rect().d.to<int>()));
 	
 	Render::clearColor(Vec4f(0.0f));
 	
 	Matr4r matrix;
 	matrix.Identity();
 	matrix.Translate(-1, -1);
-	matrix.Scale(Vec2r(2.0f).CompDivBy(this->Rect().d));
+	matrix.Scale(Vec2r(2.0f).CompDivBy(this->rect().d));
 	
 	this->render(matrix);
 	
@@ -262,7 +262,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 
 void Widget::renderFromCache(const Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
+	matr.Scale(this->rect().d);
 	
 	morda::PosTexShader &s = App::Inst().Shaders().posTexShader;
 
@@ -276,8 +276,8 @@ void Widget::renderFromCache(const Matr4f& matrix) const {
 
 void Widget::clearCache(){
 	this->cacheTex = Texture2D();
-	if(this->parent){
-		this->parent->clearCache();
+	if(this->parentContainer){
+		this->parentContainer->clearCache();
 	}
 }
 
@@ -288,8 +288,8 @@ void Widget::OnKeyInternal(bool isDown, EKey keyCode){
 	}
 
 	//pass key event to parent
-	if(this->Parent()){
-		this->Parent()->OnKeyInternal(isDown, keyCode);
+	if(this->parent()){
+		this->parent()->OnKeyInternal(isDown, keyCode);
 	}
 }
 
@@ -322,33 +322,33 @@ void Widget::Unfocus()noexcept{
 
 
 bool Widget::IsTopmost()const noexcept{
-	if(!this->Parent()){
+	if(!this->parent()){
 		return false;
 	}
 	
-	ASSERT(this->Parent()->Children().size() != 0)
+	ASSERT(this->parent()->Children().size() != 0)
 	
-	return this->Parent()->Children().back().get() == this;
+	return this->parent()->Children().back().get() == this;
 }
 
 
 
 void Widget::makeTopmost(){
-	if(!this->Parent()){
+	if(!this->parent()){
 		return;
 	}
 	
-	ASSERT(this->Parent()->Children().size() != 0)
+	ASSERT(this->parent()->Children().size() != 0)
 	
-	if(this->Parent()->Children().size() == 1){
+	if(this->parent()->Children().size() == 1){
 		return;
 	}
 	
-	if(this->Parent()->Children().rbegin()->get() == this){
+	if(this->parent()->Children().rbegin()->get() == this){
 		return;//already topmost
 	}
 	
-	Container* p = this->Parent();
+	Container* p = this->parent();
 	
 	auto w = this->RemoveFromParent();
 	
@@ -360,7 +360,7 @@ void Widget::makeTopmost(){
 morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
 	return Rect2i(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).CompMulBy(Render::getViewport().d.to<real>()).Rounded().to<int>(),
-			this->Rect().d.to<int>()
+			this->rect().d.to<int>()
 		);
 }
 
@@ -373,4 +373,15 @@ Vec2r Widget::onMeasure(const morda::Vec2r& quotum) const{
 		}
 	}
 	return ret;
+}
+
+
+Vec2r Widget::calcPosInParent(Vec2r pos, const Widget* parent) {
+	if(parent == this || !this->parent()){
+		return pos;
+	}
+	
+	ASSERT(this->parent())
+	
+	return this->parent()->calcPosInParent(this->rect().p + pos, parent);
 }

@@ -110,7 +110,7 @@ public:
 	void render(const morda::Matr4r& matrix)const override{
 		{
 			morda::Matr4r matr(matrix);
-			matr.Scale(this->Rect().d);
+			matr.Scale(this->rect().d);
 
 			this->tex->Tex().bind();
 
@@ -156,7 +156,7 @@ public:
 		this->Widget::render(matrix);
 		
 		morda::Matr4r matr(matrix);
-		matr.Scale(this->Rect().d / 2);
+		matr.Scale(this->rect().d / 2);
 		matr.Translate(1, 1);
 		matr.Frustum(-2, 2, -1.5, 1.5, 2, 100);
 		

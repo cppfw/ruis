@@ -21,11 +21,11 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 		return;
 	}
 	
-	Texture2D texture(this->Rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
+	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
 	//texture is bound right after creation
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->Rect().d);
+	matr.Scale(this->rect().d);
 
 	morda::SimpleBlurPosTexShader &s = App::Inst().Shaders().simpleBlurPosTexShader;
 

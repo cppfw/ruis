@@ -111,9 +111,9 @@ void List::setScrollPosAsFactor(real factor){
 		if(this->Children().size() != 0){
 			real d;
 			if(this->isVertical){
-				d = this->Children().front()->Rect().d.y;
+				d = this->Children().front()->rect().d.y;
 			}else{
-				d = this->Children().front()->Rect().d.x;
+				d = this->Children().front()->rect().d.x;
 			}
 			
 			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
@@ -136,10 +136,10 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 	w->Resize(dim);
 
 	if(this->isVertical){
-		pos -= w->Rect().d.y;
+		pos -= w->rect().d.y;
 		w->MoveTo(Vec2r(0, pos));
 
-		if(pos < this->Rect().d.y){
+		if(pos < this->rect().d.y){
 			if(!added){
 				this->Add(w, insertBefore);
 			}
@@ -148,7 +148,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			}
 		}else{
 			++this->posIndex;
-			this->posOffset -= w->Rect().d.y;
+			this->posOffset -= w->rect().d.y;
 			if(added){
 				auto widget = this->Remove(*w);
 				if(this->provider){
@@ -162,12 +162,12 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			}
 		}
 
-		if(w->Rect().p.y <= 0){
+		if(w->rect().p.y <= 0){
 			return true;
 		}
 	}else{
 		w->MoveTo(Vec2r(pos, 0));
-		pos += w->Rect().d.x;
+		pos += w->rect().d.x;
 
 		if(pos > 0){
 			if(!added){
@@ -178,7 +178,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			}
 		}else{
 			++this->posIndex;
-			this->posOffset -= w->Rect().d.x;
+			this->posOffset -= w->rect().d.x;
 			if(added){
 				auto widget = this->Remove(*w);
 				if(this->provider){
@@ -192,7 +192,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			}
 		}
 
-		if(w->Rect().Right() >= this->Rect().d.x){
+		if(w->rect().Right() >= this->rect().d.x){
 			return true;
 		}
 	}
@@ -226,7 +226,7 @@ void List::updateChildrenList(){
 	real pos;
 	
 	if(this->isVertical){
-		pos = this->Rect().d.y + this->posOffset;
+		pos = this->rect().d.y + this->posOffset;
 	}else{
 		pos = -this->posOffset;
 	}
@@ -301,9 +301,9 @@ void List::updateTailItemsInfo(){
 	real dim;
 	
 	if(this->isVertical){
-		dim = this->Rect().d.y;
+		dim = this->rect().d.y;
 	}else{
-		dim = this->Rect().d.x;
+		dim = this->rect().d.x;
 	}
 	
 	ASSERT(this->provider)

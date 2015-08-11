@@ -139,12 +139,12 @@ void ScrollContainer::UpdateEffectiveDim(){
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
 
-		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->Rect().p;
+		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
 		
 		ting::util::ClampBottom(minDim.x, d.x);
 		ting::util::ClampBottom(minDim.y, d.y);
 	}	
 	
-	this->effectiveDim = minDim - this->Rect().d;
+	this->effectiveDim = minDim - this->rect().d;
 	this->UpdateScrollFactor();
 }

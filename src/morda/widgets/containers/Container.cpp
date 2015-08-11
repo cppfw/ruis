@@ -64,7 +64,7 @@ void Container::render(const morda::Matr4r& matrix)const{
 		}
 		
 		morda::Matr4r matr(matrix);
-		matr.Translate(w->Rect().p);
+		matr.Translate(w->rect().p);
 
 		w->renderInternal(matr);
 	}
@@ -83,8 +83,8 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->SetHovered(w->Rect().Overlaps(pos), pointerID);
-				w->OnMouseButton(isDown, pos - w->Rect().p, button, pointerID);
+				w->SetHovered(w->rect().Overlaps(pos), pointerID);
+				w->OnMouseButton(isDown, pos - w->rect().p, button, pointerID);
 				
 				unsigned& n = i->second.second;
 				if(isDown){
@@ -108,14 +108,14 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 			continue;
 		}
 		
-		if(!(*i)->Rect().Overlaps(pos)){
+		if(!(*i)->rect().Overlaps(pos)){
 			continue;
 		}
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
 		(*i)->SetHovered(true, pointerID);
-		if((*i)->OnMouseButton(isDown, pos - (*i)->Rect().p, button, pointerID)){
+		if((*i)->OnMouseButton(isDown, pos - (*i)->rect().p, button, pointerID)){
 			ASSERT(this->mouseCaptureMap.find(pointerID) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
@@ -142,11 +142,11 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->OnMouseMove(pos - w->Rect().p, pointerID);
+				w->OnMouseMove(pos - w->rect().p, pointerID);
 		
 				//set hovered goes after move notification because position of widget could change
 				//during handling the notification, so need to check after that for hovering
-				w->SetHovered(w->Rect().Overlaps(pos), pointerID);
+				w->SetHovered(w->rect().Overlaps(pos), pointerID);
 
 				return true;//doesn't matter what to return
 			}else{
@@ -162,14 +162,14 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 			continue;
 		}
 		
-		if(!(*i)->Rect().Overlaps(pos)){
+		if(!(*i)->rect().Overlaps(pos)){
 			(*i)->SetHovered(false, pointerID);
 			continue;
 		}
 		
 		(*i)->SetHovered(true, pointerID);
 		
-		if((*i)->OnMouseMove(pos - (*i)->Rect().p, pointerID)){//consumed mouse move event
+		if((*i)->OnMouseMove(pos - (*i)->rect().p, pointerID)){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->Children().rend(); ++i){
 				(*i)->SetHovered(false, pointerID);
@@ -220,7 +220,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 
 Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
-	if(w->Parent()){
+	if(w->parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
 	}
 
@@ -228,7 +228,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
 	}
 	
-	if(insertBefore && insertBefore->Parent() != this){
+	if(insertBefore && insertBefore->parent() != this){
 		throw morda::Exc("Container::Add(): cannot insert before provided iterator, it points to a different container");
 	}
 
@@ -243,7 +243,7 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	}
 	
 	w->parentIter = ret;
-	w->parent = this;
+	w->parentContainer = this;
 	w->onParentChanged();
 	
 	this->onChildrenListChanged();
@@ -264,7 +264,7 @@ std::shared_ptr<Widget> Container::Remove(T_ChildrenList::const_iterator iter){
 
 
 std::shared_ptr<Widget> Container::Remove(Widget& w){
-	if(w.parent != this){
+	if(w.parentContainer != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
 	
@@ -273,13 +273,13 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	}
 //	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
 	
-	ASSERT(w.parent == this)
+	ASSERT(w.parentContainer == this)
 	
 	auto ret = *w.parentIter;
 	
 	this->children.erase(w.parentIter);
 	
-	w.parent = nullptr;
+	w.parentContainer = nullptr;
 	w.SetUnhovered();
 	
 	w.onParentChanged();
@@ -320,7 +320,7 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dim[i] == LayoutParams::D_Max){
-			d[i] = this->Rect().d[i];
+			d[i] = this->rect().d[i];
 		}else if(lp.dim[i] == LayoutParams::D_Min || lp.dim[i] < 0){
 			d[i] = -1;
 		}else{
