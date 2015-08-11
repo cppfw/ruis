@@ -65,7 +65,7 @@ void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
 
 
 void ScrollContainer::SetScrollPosAsFactor(const Vec2r& factor){	
-	Vec2r newScrollPos = this->effectiveDim.CompMul(factor);
+	Vec2r newScrollPos = this->effectiveDim.compMul(factor);
 	
 	this->SetScrollPos(newScrollPos);
 }

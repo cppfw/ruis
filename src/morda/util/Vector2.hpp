@@ -311,7 +311,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
      */
-	Vector2 CompMul(const Vector2& vec)const noexcept{
+	Vector2 compMul(const Vector2& vec)const noexcept{
 		return Vector2(
 				this->x * vec.x,
 				this->y * vec.y
@@ -325,7 +325,7 @@ public:
      * @param vec - vector to multiply by.
      * @return reference to this Vector2 instance.
      */
-	Vector2& CompMulBy(const Vector2& vec)noexcept{
+	Vector2& compMulBy(const Vector2& vec)noexcept{
 		this->x *= vec.x;
 		this->y *= vec.y;
 		return *this;
