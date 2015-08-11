@@ -20,6 +20,12 @@ TextField::TextField(const stob::Node* chain) :
 	bhc->setShrink(Vec2b(true, false));
 	bhc->Add(this->ti);
 	
+	{
+		auto& lp = bhc->getLayoutParams(*this->ti);
+		lp.dim.x = Widget::LayoutParams::D_Max;
+		lp.dim.y = Widget::LayoutParams::D_Max;
+	}
+	
 	this->Content().Add(bhc);
 	
 	auto& lp = this->Content().getLayoutParams(*bhc);
