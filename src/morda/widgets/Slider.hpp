@@ -43,6 +43,8 @@ THE SOFTWARE. */
 namespace morda{
 
 
+//TODO: make abstract Slider and HandleSlider and their implementations
+
 class Slider :
 		public virtual Widget,
 		private FrameContainer //users do not need to know that it is a container

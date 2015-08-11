@@ -65,8 +65,8 @@ public:
 class PushButton : public Button{
 	
 	void OnClicked()override final{
-		if(this->onClicked){
-			this->onClicked();
+		if(this->clicked){
+			this->clicked();
 		}
 	}
 
@@ -76,7 +76,7 @@ protected:
 	{}
 	
 public:
-	std::function<void()> onClicked;
+	std::function<void()> clicked;
 };
 
 
@@ -92,8 +92,8 @@ protected:
 	ToggleButton(const stob::Node* chain);
 	
 	virtual void OnCheckedChanged(){
-		if(this->onCheckedChanged){
-			this->onCheckedChanged(this->IsChecked());
+		if(this->checkedChanged){
+			this->checkedChanged(this->IsChecked());
 		}
 	}
 public:
@@ -115,7 +115,7 @@ public:
 		return this->isChecked;
 	}
 	
-	std::function<void(bool)> onCheckedChanged;
+	std::function<void(bool)> checkedChanged;
 };
 
 
