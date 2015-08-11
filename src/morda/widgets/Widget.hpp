@@ -123,7 +123,7 @@ public:
 	
 private:
 	//logical ID of the widget
-	std::string name;
+	std::string name_var;
 	
 	bool relayoutNeeded = true;
 	
@@ -137,8 +137,8 @@ public:
 		return this->relayoutNeeded;
 	}
 	
-	const std::string& Name()const noexcept{
-		return this->name;
+	const std::string& name()const noexcept{
+		return this->name_var;
 	}
 	
 	const Container* Parent()const noexcept{
@@ -342,6 +342,9 @@ public:
 	bool IsTopmost()const noexcept;
 	
 	void makeTopmost();
+	
+	
+	template <class T> T* findParent(const char* name = nullptr); //defined in Container.hpp
 };
 
 

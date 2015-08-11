@@ -134,4 +134,20 @@ public:
 
 
 
+
+template <class T> T* Widget::findParent(const char* name){
+	if(!this->Parent()){
+		return nullptr;
+	}
+
+	auto p = dynamic_cast<T*>(this->Parent());
+	if(p && p->name() == name){
+		return p;
+	}
+
+	return this->Parent()->findParent<T>();
+}
+
+
+
 }//~namespace

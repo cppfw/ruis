@@ -43,7 +43,7 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
-		this->name = p->Value();
+		this->name_var = p->Value();
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "clip")){
@@ -103,7 +103,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)noexcept{
-	if(this->Name() == name){
+	if(this->name() == name){
 		return this->SharedFromThis(this);
 	}
 	return nullptr;
