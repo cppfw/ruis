@@ -32,7 +32,9 @@ THE SOFTWARE. */
 
 namespace morda{
 
-
+/**
+ * @brief Overlay container for displaying widgets on top of anything.
+ */
 class OverlayContainer :
 		virtual public Widget,
 		private FrameContainer
