@@ -38,7 +38,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 
 
 
-Vec2r SingleLineTextWidget::onMeasure(const morda::Vec2r& quotum)const noexcept{
+Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
 	
 	for(unsigned i = 0; i != ret.size(); ++i){

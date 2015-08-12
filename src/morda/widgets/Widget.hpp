@@ -295,11 +295,7 @@ public:
      */
 	virtual void onParentChanged(){}
 	
-	virtual morda::Vec2r onMeasure(const morda::Vec2r& quotum)const;
-	
-	morda::Vec2r measure(const morda::Vec2r& quotum)const{
-		return this->onMeasure(quotum);
-	}
+	virtual morda::Vec2r measure(const morda::Vec2r& quotum)const;
 	
 public:
 

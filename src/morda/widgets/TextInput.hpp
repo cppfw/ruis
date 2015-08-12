@@ -65,7 +65,7 @@ public:
 	
 	virtual ~TextInput()noexcept{}
 
-	Vec2r onMeasure(const morda::Vec2r& quotum)const noexcept override;
+	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
 	void render(const morda::Matr4r& matrix) const override;
 

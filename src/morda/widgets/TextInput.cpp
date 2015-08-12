@@ -116,11 +116,11 @@ bool TextInput::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 }
 
 
-Vec2r TextInput::onMeasure(const morda::Vec2r& quotum)const noexcept{
+Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->SingleLineTextWidget::onMeasure(Vec2r(-1)).x + D_CursorWidth;
+		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + D_CursorWidth;
 	}else{
 		ret.x = quotum.x;
 	}

@@ -36,7 +36,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	this->img->Render(matr, s);
 }
 
-morda::Vec2r ImageLabel::onMeasure(const morda::Vec2r& quotum)const{
+morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 	if(!this->img){
 		return Vec2r(0);
 	}

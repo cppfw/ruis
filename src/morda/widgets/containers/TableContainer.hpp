@@ -49,7 +49,7 @@ public:
 	
 	void layOut()override;
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
+	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 	
 protected:
 	Widget::LayoutParams& getLayoutParams_internal(Widget& w)override;

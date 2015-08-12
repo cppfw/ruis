@@ -129,7 +129,7 @@ public:
 private:
 	void layOut() override;
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const noexcept override;
+	morda::Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 };
 
 

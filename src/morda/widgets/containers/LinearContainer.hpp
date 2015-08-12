@@ -58,7 +58,7 @@ public:
 
 	void layOut() override;	
 	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
+	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 	
 	
 	class LayoutParams : public Container::LayoutParams{

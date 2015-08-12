@@ -24,7 +24,7 @@ void FrameContainer::layOut() {
 
 
 
-morda::Vec2r FrameContainer::onMeasure(const morda::Vec2r& quotum)const{
+morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		ting::util::ClampBottom(ret[i], real(0));

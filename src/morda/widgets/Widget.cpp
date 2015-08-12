@@ -365,7 +365,7 @@ morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
 }
 
 
-Vec2r Widget::onMeasure(const morda::Vec2r& quotum) const{
+Vec2r Widget::measure(const morda::Vec2r& quotum) const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){

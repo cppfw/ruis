@@ -148,7 +148,7 @@ void HandleSlider::layOut(){
 
 
 
-morda::Vec2r HandleSlider::onMeasure(const morda::Vec2r& quotum)const noexcept{
+morda::Vec2r HandleSlider::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret = quotum;
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){

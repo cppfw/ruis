@@ -46,7 +46,7 @@ public:
 	FrameContainer(const stob::Node* chain = nullptr);
 	
 public:	
-	morda::Vec2r onMeasure(const morda::Vec2r& quotum)const override;
+	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 
 	void layOut() override;
 };
