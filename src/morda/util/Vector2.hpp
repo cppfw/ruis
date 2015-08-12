@@ -113,8 +113,8 @@ public:
 
 	
 	template <class TT> explicit Vector2(const Vector2<TT>& v) :
-			x(v.x),
-			y(v.y)
+			x(T(v.x)),
+			y(T(v.y))
 	{}
 	
 	

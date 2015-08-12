@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\src\morda\widgets\containers\Container.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\containers\FrameContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\containers\LinearContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\containers\OverlayContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\containers\ScrollContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\containers\TableContainer.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\containers\TableRow.cpp" />
