@@ -335,3 +335,31 @@ void List::updateTailItemsInfo(){
 		this->firstTailItemOffset = -dim;
 	}
 }
+
+morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
+	unsigned longIndex, transIndex;
+	
+	if(this->isVertical){
+		longIndex = 1;
+		transIndex = 0;
+	}else{
+		longIndex = 0;
+		transIndex = 1;
+	}
+	
+	Vec2r ret(quotum);
+	
+	ting::util::ClampBottom(ret[longIndex], real(0));
+	
+	if(ret[transIndex] > 0){
+		return ret;
+	}
+	
+	ret[transIndex] = 0;
+	
+	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+		ting::util::ClampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
+	}
+	
+	return ret;
+}

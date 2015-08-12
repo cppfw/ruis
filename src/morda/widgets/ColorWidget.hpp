@@ -47,7 +47,12 @@ public:
 	
 	
 	void setColor(std::uint32_t color){
+		if(this->color_var == color){
+			return;
+		}
+		
 		this->color_var = color;
+		this->clearCache();
 	}
 	
 	std::uint32_t color()const noexcept{

@@ -483,20 +483,20 @@ Container{
 			VerticalList{
 				name{vertical_list}
 				layout{
-					dimX{0} dimY{max}
-					weight{1}
+					dimX{min} dimY{max}
+					weight{0}
 				}
 
 				Label{
-					text{item_0}
+					text{item0}
 				}
 
 				Label{
-					text{item_1}
+					text{item_1_iequwgfiew}
 				}
 
 				Label{
-					text{item_2}
+					text{item_2_werf}
 				}
 
 				Label{
@@ -524,7 +524,7 @@ Container{
 				}
 
 				Label{
-					text{item_9}
+					text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
 				}
 
 				Label{

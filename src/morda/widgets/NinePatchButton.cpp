@@ -17,5 +17,6 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 }
 
 void NinePatchButton::OnPressedChanged(){
+	this->PushButton::OnPressedChanged();
 	this->SetNinePatch(this->isPressed() ? this->imgPressed : this->imgNormal);
 }

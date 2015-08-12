@@ -81,6 +81,9 @@ public:
 
 	void layOut()override;
 	
+	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
+
+	
 	size_t visibleCount()const{
 		return this->Children().size();
 	}

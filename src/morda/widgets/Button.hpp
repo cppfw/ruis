@@ -47,9 +47,11 @@ protected:
 			Widget(nullptr)
 	{}
 	
-	virtual void OnPressedChanged(){}
-	
-	virtual void OnClicked(){}
+	virtual void OnPressedChanged(){
+		if(this->pressedChanged){
+			this->pressedChanged(*this);
+		}
+	}
 	
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
 	
@@ -58,42 +60,47 @@ public:
 	bool isPressed()const noexcept{
 		return this->isPressed_var;
 	}
+	
+	std::function<void(Button&)> pressedChanged;
 };
 
 
 
 class PushButton : public Button{
-	
-	void OnClicked()override final{
-		if(this->clicked){
-			this->clicked();
-		}
-	}
+	bool currentlyPressed = false;
 
 protected:
+	void OnPressedChanged()override;
+	
+	virtual void OnClicked(){
+		if(this->clicked){
+			this->clicked(*this);
+		}
+	}
+	
 	PushButton() :
 			Widget(nullptr)
 	{}
 	
 public:
-	std::function<void()> clicked;
+	std::function<void(PushButton&)> clicked;
 };
 
 
 
-class ToggleButton : public Button{
+class ToggleButton : public PushButton{
 	bool isChecked;
 	
-	void OnClicked()override final{
+protected:
+	void OnClicked()override{
 		this->Toggle();
 	}
 	
-protected:
 	ToggleButton(const stob::Node* chain);
 	
 	virtual void OnCheckedChanged(){
 		if(this->checkedChanged){
-			this->checkedChanged(this->IsChecked());
+			this->checkedChanged(*this, this->IsChecked());
 		}
 	}
 public:
@@ -115,7 +122,7 @@ public:
 		return this->isChecked;
 	}
 	
-	std::function<void(bool)> checkedChanged;
+	std::function<void(ToggleButton&, bool)> checkedChanged;
 };
 
 

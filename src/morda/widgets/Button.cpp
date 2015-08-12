@@ -11,6 +11,8 @@ using namespace morda;
 
 //override
 bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+	//TODO: multitouch support
+	
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	if(button != EMouseButton::LEFT){
 		return false;
@@ -29,7 +31,6 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 			this->isPressed_var = false;
 			this->OnPressedChanged();
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
-			this->OnClicked();
 		}
 	}
 
@@ -48,6 +49,18 @@ void Button::OnHoverChanged(unsigned pointerID){
 		this->isPressed_var = false;
 		this->OnPressedChanged();
 	}
+}
+
+
+void PushButton::OnPressedChanged() {
+	this->Button::OnPressedChanged();
+	
+	if(this->currentlyPressed && this->IsHovered()){
+		ASSERT(!this->isPressed())
+		this->OnClicked();
+	}
+	
+	this->currentlyPressed = this->isPressed();
 }
 
 
