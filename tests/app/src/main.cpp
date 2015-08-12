@@ -295,7 +295,7 @@ public:
 			};
 			
 			
-			vertSlider->factorChange = [sa](morda::HandleSlider& slider){
+			vertSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.y = slider.factor();
@@ -303,7 +303,7 @@ public:
 				}
 			};
 			
-			horiSlider->factorChange = [sa](morda::HandleSlider& slider){
+			horiSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
 					sf.x = slider.factor();
@@ -319,7 +319,7 @@ public:
 			auto verticalSlider = c->FindChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
 			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
 			
-			verticalSlider->factorChange = [vl](morda::HandleSlider& slider){
+			verticalSlider->factorChange = [vl](morda::Slider& slider){
 				if(auto l = vl.lock()){
 					l->setScrollPosAsFactor(slider.factor());
 				}

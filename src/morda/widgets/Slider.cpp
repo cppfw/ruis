@@ -104,10 +104,6 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 			this->setFactor(newPos / maxPos);
 		}
 
-		if(this->factorChange){
-			this->factorChange(*this);
-		}
-
 		return true;
 	};
 }
@@ -117,9 +113,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 void HandleSlider::onFactorChange() {
 	this->HandleSlider::layOut();
 	
-	if(this->factorChange){
-		this->factorChange(*this);
-	}
+	this->Slider::onFactorChange();
 }
 
 

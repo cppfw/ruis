@@ -50,8 +50,14 @@ protected:
 			Widget(chain)
 	{}
 	
-	virtual void onFactorChange(){}
+	virtual void onFactorChange(){
+		if(this->factorChange){
+			this->factorChange(*this);
+		}
+	}
 public:
+	std::function<void(Slider&)> factorChange;
+	
 	float factor()const noexcept{
 		return this->curFactor;
 	}
@@ -116,7 +122,7 @@ protected:
 	virtual void onFactorChange();
 
 public:
-	std::function<void(HandleSlider&)> factorChange;
+	
 
 	virtual ~HandleSlider()noexcept{}
 	
