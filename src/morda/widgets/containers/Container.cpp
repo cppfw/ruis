@@ -204,8 +204,8 @@ void Container::layOut(){
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->Children()){
 		if(w->NeedsRelayout()){
-			w->layOut();
 			w->relayoutNeeded = false;
+			w->layOut();
 		}
 	}
 }

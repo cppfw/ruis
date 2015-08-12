@@ -34,7 +34,10 @@ void App::render(){
 	m.Translate(-1, -1);
 	m.Scale(Vec2r(2.0f).CompDivBy(this->curWinRect.d));
 	
-	if(this->rootWidget->relayoutNeeded){
+	ASSERT(this->rootWidget)
+	
+	if(this->rootWidget->NeedsRelayout()){
+		this->rootWidget->relayoutNeeded = false;
 		this->rootWidget->layOut();
 	}
 	

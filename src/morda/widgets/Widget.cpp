@@ -121,8 +121,8 @@ void Widget::Resize(const morda::Vec2r& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
 			this->clearCache();
-			this->layOut();
 			this->relayoutNeeded = false;
+			this->layOut();
 		}
 		return;
 	}
@@ -131,8 +131,8 @@ void Widget::Resize(const morda::Vec2r& newDims){
 	this->rectangle.d = newDims;
 	ting::util::ClampBottom(this->rectangle.d.x, real(0.0f));
 	ting::util::ClampBottom(this->rectangle.d.y, real(0.0f));
-	this->OnResize();//call virtual method
 	this->relayoutNeeded = false;
+	this->OnResize();//call virtual method
 }
 
 

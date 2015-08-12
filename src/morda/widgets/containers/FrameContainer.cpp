@@ -13,6 +13,7 @@ FrameContainer::FrameContainer(const stob::Node* chain) :
 
 
 void FrameContainer::layOut() {
+//	TRACE(<< "FrameContainer::layOut(): invoked" << std::endl)
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
 		
