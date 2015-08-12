@@ -58,7 +58,7 @@ public:
 	}
 
 
-	void OnCheckedChanged()override;
+	void onCheckedChanged()override;
 
 private:
 

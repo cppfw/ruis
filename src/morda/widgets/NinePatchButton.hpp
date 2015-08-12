@@ -49,7 +49,7 @@ public:
 	NinePatchButton(const stob::Node* chain = nullptr);
 	
 private:
-	void OnPressedChanged()override;
+	void onPressedChanged()override;
 
 	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
 		return this->PushButton::OnMouseButton(isDown, pos, button, pointerId);

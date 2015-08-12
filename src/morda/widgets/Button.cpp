@@ -24,12 +24,12 @@ bool Button::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 		//then the event about left button down will still be delivered to this widget because it has captured the mouse.
 		if(this->Contains(pos)){
 			this->isPressed_var = true;
-			this->OnPressedChanged();
+			this->onPressedChanged();
 		}
 	}else{
 		if(this->isPressed_var){
 			this->isPressed_var = false;
-			this->OnPressedChanged();
+			this->onPressedChanged();
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
 		}
 	}
@@ -47,17 +47,17 @@ void Button::OnHoverChanged(unsigned pointerID){
 	
 	if(!this->IsHovered(pointerID)){
 		this->isPressed_var = false;
-		this->OnPressedChanged();
+		this->onPressedChanged();
 	}
 }
 
 
-void PushButton::OnPressedChanged() {
-	this->Button::OnPressedChanged();
+void PushButton::onPressedChanged() {
+	this->Button::onPressedChanged();
 	
 	if(this->currentlyPressed && this->IsHovered()){
 		ASSERT(!this->isPressed())
-		this->OnClicked();
+		this->onClicked();
 	}
 	
 	this->currentlyPressed = this->isPressed();
@@ -69,9 +69,9 @@ ToggleButton::ToggleButton(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(const stob::Node* n = GetProperty(chain, "checked")){
-		this->isChecked = n->AsBool();
+		this->isChecked_var = n->AsBool();
 	}else{
-		this->isChecked = false;
+		this->isChecked_var = false;
 	}
 }
 

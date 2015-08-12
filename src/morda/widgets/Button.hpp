@@ -47,7 +47,7 @@ protected:
 			Widget(nullptr)
 	{}
 	
-	virtual void OnPressedChanged(){
+	virtual void onPressedChanged(){
 		if(this->pressedChanged){
 			this->pressedChanged(*this);
 		}
@@ -70,9 +70,9 @@ class PushButton : public Button{
 	bool currentlyPressed = false;
 
 protected:
-	void OnPressedChanged()override;
+	void onPressedChanged()override;
 	
-	virtual void OnClicked(){
+	virtual void onClicked(){
 		if(this->clicked){
 			this->clicked(*this);
 		}
@@ -89,37 +89,37 @@ public:
 
 
 class ToggleButton : public PushButton{
-	bool isChecked;
+	bool isChecked_var;
 	
 protected:
-	void OnClicked()override{
-		this->Toggle();
+	void onClicked()override{
+		this->toggle();
 	}
 	
 	ToggleButton(const stob::Node* chain);
 	
-	virtual void OnCheckedChanged(){
+	virtual void onCheckedChanged(){
 		if(this->checkedChanged){
-			this->checkedChanged(*this, this->IsChecked());
+			this->checkedChanged(*this, this->isChecked());
 		}
 	}
 public:
 
-	void SetChecked(bool checked){
-		if(this->isChecked == checked){
+	void setChecked(bool checked){
+		if(this->isChecked_var == checked){
 			return;
 		}
 		
-		this->isChecked = checked;
-		this->OnCheckedChanged();
+		this->isChecked_var = checked;
+		this->onCheckedChanged();
 	}
 	
-	void Toggle(){
-		this->SetChecked(!this->IsChecked());
+	void toggle(){
+		this->setChecked(!this->isChecked());
 	}
 	
-	bool IsChecked()const noexcept{
-		return this->isChecked;
+	bool isChecked()const noexcept{
+		return this->isChecked_var;
 	}
 	
 	std::function<void(ToggleButton&, bool)> checkedChanged;
