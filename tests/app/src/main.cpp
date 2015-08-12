@@ -279,34 +279,34 @@ public:
 			auto scrollArea = c->FindChildByNameAs<morda::ScrollContainer>("scroll_area");
 			std::weak_ptr<morda::ScrollContainer> sa = scrollArea;
 			
-			auto vertSlider = c->FindChildByNameAs<morda::Slider>("scroll_area_vertical_slider");
-			std::weak_ptr<morda::Slider> vs = vertSlider;
+			auto vertSlider = c->FindChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");
+			std::weak_ptr<morda::HandleSlider> vs = vertSlider;
 			
-			auto horiSlider = c->FindChildByNameAs<morda::Slider>("scroll_area_horizontal_slider");
-			std::weak_ptr<morda::Slider> hs = horiSlider;
+			auto horiSlider = c->FindChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
+			std::weak_ptr<morda::HandleSlider> hs = horiSlider;
 			
 			scrollArea->onScrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
 				if(auto v = vs.lock()){
-					v->SetFactor(sc.ScrollFactor().y);
+					v->setFactor(sc.ScrollFactor().y);
 				}
 				if(auto h = hs.lock()){
-					h->SetFactor(sc.ScrollFactor().x);
+					h->setFactor(sc.ScrollFactor().x);
 				}
 			};
 			
 			
-			vertSlider->factorChange = [sa](morda::Slider& slider){
+			vertSlider->factorChange = [sa](morda::HandleSlider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
-					sf.y = slider.Factor();
+					sf.y = slider.factor();
 					s->SetScrollPosAsFactor(sf);
 				}
 			};
 			
-			horiSlider->factorChange = [sa](morda::Slider& slider){
+			horiSlider->factorChange = [sa](morda::HandleSlider& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->ScrollFactor();
-					sf.x = slider.Factor();
+					sf.x = slider.factor();
 					s->SetScrollPosAsFactor(sf);
 				}
 			};
@@ -319,9 +319,9 @@ public:
 			auto verticalSlider = c->FindChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
 			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
 			
-			verticalSlider->factorChange = [vl](morda::Slider& slider){
+			verticalSlider->factorChange = [vl](morda::HandleSlider& slider){
 				if(auto l = vl.lock()){
-					l->setScrollPosAsFactor(slider.Factor());
+					l->setScrollPosAsFactor(slider.factor());
 				}
 			};
 		}

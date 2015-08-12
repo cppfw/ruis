@@ -43,18 +43,57 @@ THE SOFTWARE. */
 namespace morda{
 
 
-//TODO: make abstract Slider and HandleSlider and their implementations
+class Slider : public virtual Widget{
+	float curFactor = 0; //Current position from 0 to 1
+protected:
+	Slider(const stob::Node* chain = nullptr) :
+			Widget(chain)
+	{}
+	
+	virtual void onFactorChange(){}
+public:
+	float factor()const noexcept{
+		return this->curFactor;
+	}
+	
+	void setFactor(float newFactor){
+		real factor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
+	
+		if(this->curFactor == factor){
+			return;
+		}
 
-class Slider :
-		public virtual Widget,
+		this->curFactor = factor;
+		
+		this->onFactorChange();
+	}
+};
+
+
+class AreaSlider : public Slider{
+	float curAreaSizeFactor = 0; //Current area size factor from 0 to 1
+protected:
+	AreaSlider(const stob::Node* chain = nullptr) :
+			Widget(chain)
+	{}
+	
+public:
+	
+	real areaSizeFactor()const noexcept{
+		return this->curAreaSizeFactor;
+	}
+	
+	//TODO:
+};
+
+
+class HandleSlider :
+		public AreaSlider,
 		private FrameContainer //users do not need to know that it is a container
 {
 	//no copying
-	Slider(const Slider&);
-	Slider& operator=(const Slider&);
-	
-	float curFactor = 0; //Current position from 0 to 1
-	float handleSizeFactor = 0; //Current handle size factor from 0 to 1
+	HandleSlider(const HandleSlider&);
+	HandleSlider& operator=(const HandleSlider&);
 	
 	unsigned GetLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
@@ -72,18 +111,14 @@ class Slider :
 	float clickPoint;
 	
 protected:
-	Slider(bool isVertical, const stob::Node* chain);
-	
-public:
-	std::function<void(Slider&)> factorChange;
+	HandleSlider(bool isVertical, const stob::Node* chain);
 
-	virtual ~Slider()noexcept{}
-	
-	float Factor()const noexcept{
-		return this->curFactor;
-	}
-	
-	void SetFactor(float newFactor);
+	virtual void onFactorChange();
+
+public:
+	std::function<void(HandleSlider&)> factorChange;
+
+	virtual ~HandleSlider()noexcept{}
 	
 private:
 	void layOut() override;
@@ -93,11 +128,11 @@ private:
 
 
 
-class VerticalSlider : public Slider{
+class VerticalSlider : public HandleSlider{
 public:
 	VerticalSlider(const stob::Node* chain = nullptr) : 
 			Widget(chain),
-			Slider(true, chain)
+			HandleSlider(true, chain)
 	{}
 	
 	VerticalSlider(const VerticalSlider&) = delete;
@@ -105,11 +140,11 @@ public:
 };
 
 
-class HorizontalSlider : public Slider{
+class HorizontalSlider : public HandleSlider{
 public:
 	HorizontalSlider(const stob::Node* chain = nullptr) : 
 			Widget(chain),
-			Slider(false, chain)
+			HandleSlider(false, chain)
 	{}
 	
 	HorizontalSlider(const HorizontalSlider&) = delete;

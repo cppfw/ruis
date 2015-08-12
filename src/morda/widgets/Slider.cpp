@@ -48,7 +48,7 @@ const char* DDescription = R"qwertyuiop(
 
 
 
-Slider::Slider(bool isVertical, const stob::Node* chain) :
+HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(stob::Parse(DDescription).get()),
 		handle(*this->FindChildByName("handle")),
@@ -95,15 +95,14 @@ Slider::Slider(bool isVertical, const stob::Node* chain) :
 		morda::Vec2r newPosition(0);
 		newPosition[longIndex] = newPos;
 
+		this->handle.MoveTo(newPosition);
+		
 		//update factor
 		if(this->isVertical){
-			this->curFactor = (maxPos - newPos) / maxPos;
+			this->setFactor((maxPos - newPos) / maxPos);
 		}else{
-			
-			this->curFactor = newPos / maxPos;
+			this->setFactor(newPos / maxPos);
 		}
-		
-		this->handle.MoveTo(newPosition);
 
 		if(this->factorChange){
 			this->factorChange(*this);
@@ -115,16 +114,8 @@ Slider::Slider(bool isVertical, const stob::Node* chain) :
 
 
 
-void Slider::SetFactor(float newFactor){
-	real factor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
-	
-	if(this->curFactor == factor){
-		return;
-	}
-	
-	this->curFactor = factor;
-	
-	this->Slider::layOut();
+void HandleSlider::onFactorChange() {
+	this->HandleSlider::layOut();
 	
 	if(this->factorChange){
 		this->factorChange(*this);
@@ -133,14 +124,14 @@ void Slider::SetFactor(float newFactor){
 
 
 
-void Slider::layOut(){
+void HandleSlider::layOut(){
 	this->FrameContainer::layOut();
 	
 	unsigned longIndex = this->GetLongIndex();
 	
 	morda::Vec2r newSize(this->rect().d);
 	
-	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->handleSizeFactor);
+	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->areaSizeFactor());
 	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
 	this->handle.Resize(newSize);
@@ -151,9 +142,9 @@ void Slider::layOut(){
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
 			if(this->isVertical){
-				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ting::math::Round(effectiveLength * this->curFactor);
+				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ting::math::Round(effectiveLength * this->factor());
 			}else{
-				newPos[longIndex] = ting::math::Round(effectiveLength * this->curFactor);
+				newPos[longIndex] = ting::math::Round(effectiveLength * this->factor());
 			}
 			ASSERT(newPos[longIndex] <= effectiveLength)
 		}
@@ -163,7 +154,7 @@ void Slider::layOut(){
 
 
 
-morda::Vec2r Slider::onMeasure(const morda::Vec2r& quotum)const noexcept{
+morda::Vec2r HandleSlider::onMeasure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret = quotum;
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){
