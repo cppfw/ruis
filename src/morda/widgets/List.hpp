@@ -106,11 +106,6 @@ private:
 		
 		this->updateChildrenList();
 	}
-	
-
-	void onChildrenListChanged()override{
-	}
-
 };
 
 
