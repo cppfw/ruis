@@ -32,7 +32,7 @@ std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index) const {
 	return nullptr;
 }
 
-size_t TreeView::ItemsProvider::count() const {
+size_t TreeView::ItemsProvider::count() const noexcept{
 	//TODO:
 	return 0;
 }

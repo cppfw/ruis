@@ -57,7 +57,7 @@ public:
 		
 		std::shared_ptr<Widget> getWidget(size_t index)const override;
 		
-		size_t count() const override;
+		size_t count() const noexcept override;
 		
 	protected:
 		ItemsProvider(){}
