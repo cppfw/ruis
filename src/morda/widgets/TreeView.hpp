@@ -55,7 +55,6 @@ public:
 	{
 		friend class TreeView;
 		
-		TreeView* treeView = nullptr;
 	protected:
 		ItemsProvider(){}
 	public:
@@ -68,7 +67,7 @@ public:
 		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
 		
 		void notifyDataSetChanged(){
-			this->notifyDataSetChanged();
+			this->List::ItemsProvider::notifyDataSetChanged();
 		}
 		
 		//TODO:
