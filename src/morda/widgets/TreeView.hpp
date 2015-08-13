@@ -29,6 +29,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
+#include "List.hpp"
 
 #include "containers/ScrollContainer.hpp"
 
@@ -40,6 +41,7 @@ class TreeView :
 		virtual public Widget,
 		private ScrollContainer
 {
+	std::shared_ptr<List> list;
 public:
 	TreeView(const stob::Node* chain = nullptr);
 	
