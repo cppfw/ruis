@@ -55,12 +55,23 @@ public:
 	{
 		friend class TreeView;
 		
+		void recycle(size_t index, std::shared_ptr<Widget> w) const override;
+		
 		std::shared_ptr<Widget> getWidget(size_t index)const override;
 		
 		size_t count() const noexcept override;
 		
+		mutable size_t numVisibleItems = 0;
+		
+		struct Item{
+			std::vector<Item> children;
+		};
+		
+		mutable std::vector<Item> visibleItemsTree;
+		
 	protected:
-		ItemsProvider(){}
+		ItemsProvider(){
+		}
 	public:
 		
 		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path)const = 0;
@@ -69,9 +80,7 @@ public:
 		
 		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
 		
-		void notifyDataSetChanged(){
-			this->List::ItemsProvider::notifyDataSetChanged();
-		}
+		void notifyDataSetChanged();
 		
 		//TODO:
 	};

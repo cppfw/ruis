@@ -26,13 +26,27 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 		);
 }
 
+void TreeView::ItemsProvider::notifyDataSetChanged() {
+	this->numVisibleItems = 0;
+	this->visibleItemsTree.clear();
+	this->List::ItemsProvider::notifyDataSetChanged();
+}
+
+
+size_t TreeView::ItemsProvider::count() const noexcept{
+	if (this->numVisibleItems == 0) {
+		this->numVisibleItems = this->count(std::vector<size_t>());
+		this->visibleItemsTree.resize(this->numVisibleItems);
+	}
+	return this->numVisibleItems;
+}
+
 
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index) const {
 	//TODO:
 	return nullptr;
 }
 
-size_t TreeView::ItemsProvider::count() const noexcept{
+void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w) const {
 	//TODO:
-	return 0;
 }
