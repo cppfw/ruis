@@ -19,12 +19,9 @@ TreeView::TreeView(const stob::Node* chain) :
 }
 
 void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
-	if(this->provider){
-		this->provider->treeView = nullptr;
-	}
-	this->provider = std::move(provider);
-	if(this->provider){
-		this->provider->treeView = this;
-	}
-	this->notifyDataSetChanged();
+	this->list->setItemsProvider(
+			std::shared_ptr<List::ItemsProvider>(
+					static_cast<List::ItemsProvider*>(provider.get())
+				)
+		);
 }

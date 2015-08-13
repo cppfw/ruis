@@ -49,7 +49,10 @@ public:
 	TreeView& operator=(const TreeView&) = delete;
 	
 	
-	class ItemsProvider : public virtual ting::Shared{
+	class ItemsProvider :
+			public virtual ting::Shared,
+			private List::ItemsProvider
+	{
 		friend class TreeView;
 		
 		TreeView* treeView = nullptr;
@@ -62,23 +65,16 @@ public:
 		
 		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
 		
-		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
+		virtual size_t count(const std::vector<size_t>& path = std::vector<size_t>())const noexcept = 0;
 		
 		void notifyDataSetChanged(){
-			if(this->treeView){
-				this->treeView->notifyDataSetChanged();
-			}
+			this->notifyDataSetChanged();
 		}
 		
 		//TODO:
 	};
 private:
 
-	std::shared_ptr<ItemsProvider> provider;
-	
-	void notifyDataSetChanged(){
-		//TODO:
-	}
 public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
