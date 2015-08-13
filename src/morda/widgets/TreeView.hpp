@@ -48,6 +48,8 @@ public:
 	
 	
 	class ItemsProvider : public virtual ting::Shared{
+		friend class TreeView;
+		
 		TreeView* treeView = nullptr;
 	protected:
 		ItemsProvider(){}
@@ -60,10 +62,25 @@ public:
 		
 		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
 		
+		void notifyDataSetChanged(){
+			if(this->treeView){
+				this->treeView->notifyDataSetChanged();
+			}
+		}
+		
 		//TODO:
 	};
 private:
 
+	std::shared_ptr<ItemsProvider> provider;
+	
+	void notifyDataSetChanged(){
+		//TODO:
+	}
+public:
+	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
+	
+	
 };
 
 

@@ -12,3 +12,14 @@ TreeView::TreeView(const stob::Node* chain) :
 {
 	this->Add(ting::New<VerticalList>());
 }
+
+void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
+	if(this->provider){
+		this->provider->treeView = nullptr;
+	}
+	this->provider = std::move(provider);
+	if(this->provider){
+		this->provider->treeView = this;
+	}
+	this->notifyDataSetChanged();
+}
