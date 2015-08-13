@@ -617,6 +617,28 @@ void Render::setBlendEnabled(bool enable){
 	}
 }
 
+namespace{
+
+GLenum blendFunc[] = {
+	GL_ONE,
+	GL_SRC_ALPHA,
+	GL_ONE_MINUS_SRC_ALPHA,
+	GL_ONE_MINUS_DST_ALPHA
+};
+
+}
+
+void Render::setBlendFunc(EBlendFactor srcClr, EBlendFactor dstClr, EBlendFactor srcAlpha, EBlendFactor dstAlpha) {
+	glBlendFuncSeparate(
+			blendFunc[unsigned(srcClr)],
+			blendFunc[unsigned(dstClr)],
+			blendFunc[unsigned(srcAlpha)],
+			blendFunc[unsigned(dstAlpha)]
+		);
+}
+
+
+
 bool Render::isBoundFrameBufferComplete(){
 	return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 }

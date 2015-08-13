@@ -163,6 +163,17 @@ private:
 	
 public:
 	static void setBlendEnabled(bool enable);
+	
+	enum class EBlendFactor{
+		//NOTE: do not change order
+		
+		ONE,
+		SRC_ALPHA,
+		ONE_MINUS_SRC_ALPHA,
+		ONE_MINUS_DST_ALPHA
+	};
+	
+	static void setBlendFunc(EBlendFactor srcClr, EBlendFactor dstClr, EBlendFactor srcAlpha, EBlendFactor dstAlpha);
 
 	static bool isBoundFrameBufferComplete();
 

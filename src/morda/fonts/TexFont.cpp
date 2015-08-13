@@ -400,7 +400,12 @@ real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 		return 0;
 	}
 	
-	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_ONE); //TODO: move to Render
+	Render::setBlendFunc(
+			Render::EBlendFactor::SRC_ALPHA,
+			Render::EBlendFactor::ONE_MINUS_SRC_ALPHA,
+			Render::EBlendFactor::ONE_MINUS_DST_ALPHA,
+			Render::EBlendFactor::ONE
+		);
 	Render::setBlendEnabled(true);
 
 	this->tex.bind();
