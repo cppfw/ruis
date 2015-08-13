@@ -1,30 +1,25 @@
-# How to build and install morda in Linux #
+# How to build morda in Linux #
 
 ## Step by step instructions ##
 
-  1. Install necessary libraries
+  * Install necessary libraries
 ```
 sudo apt-get install libpng12-dev libglew-dev libjpeg8-dev libfreetype6-dev doxygen
 ```
-  1. Check out **ting** sources and install:
+  * Add
 ```
-svn co http://ting.googlecode.com/svn/trunk/ ting
-cd ting
-make deb
-sudo dpkg -i ../libting*
+deb https://repo.fury.io/igagis/ /
 ```
-  1. Check out **stob** sources and install:
+  to APT sources and install **ting** and **stob**
+
 ```
-svn co http://stob.googlecode.com/svn/trunk/ stob
-cd stob
-make deb
-sudo dpkg -i ../libstob*
+  sudo apt-get update
+  sudo apt-get install libting-dev libstob-dev
 ```
-  1. Check out **morda** sources, install it and run test app:
+  * Check out **morda** sources, install it and run test app:
 ```
-svn co http://morda.googlecode.com/svn/trunk/ morda
+git clone https://github.com/igagis/morda.git
 cd morda
-make deb
-sudo dpkg -i ../libmorda*
+make
 make test
 ```
