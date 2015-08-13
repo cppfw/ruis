@@ -69,15 +69,15 @@ public:
 
 	void render(const morda::Matr4r& matrix) const override;
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void OnFocusedChanged()override;
+	void onFocusedChanged()override;
 	
 	bool onKey(bool isDown, EKey keyCode)override;
 	
-	void OnResize()override;
+	void onResize()override;
 	
 	void Update(std::uint32_t dt)override;
 	

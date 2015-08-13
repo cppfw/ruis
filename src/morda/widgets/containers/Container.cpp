@@ -59,7 +59,7 @@ void Container::Add(const stob::Node& chain){
 //override
 void Container::render(const morda::Matr4r& matrix)const{	
 	for(auto& w: this->Children()){
-		if(!w->IsVisible()){
+		if(!w->isVisible()){
 			continue;
 		}
 		
@@ -73,7 +73,7 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 
 //override
-bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
+bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
@@ -83,8 +83,8 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->SetHovered(w->rect().Overlaps(pos), pointerID);
-				w->OnMouseButton(isDown, pos - w->rect().p, button, pointerID);
+				w->setHovered(w->rect().Overlaps(pos), pointerID);
+				w->onMouseButton(isDown, pos - w->rect().p, button, pointerID);
 				
 				unsigned& n = i->second.second;
 				if(isDown){
@@ -104,7 +104,7 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
-		if(!(*i)->IsVisible() || !(*i)->IsEnabled()){
+		if(!(*i)->isVisible() || !(*i)->isEnabled()){
 			continue;
 		}
 		
@@ -114,8 +114,8 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		(*i)->SetHovered(true, pointerID);
-		if((*i)->OnMouseButton(isDown, pos - (*i)->rect().p, button, pointerID)){
+		(*i)->setHovered(true, pointerID);
+		if((*i)->onMouseButton(isDown, pos - (*i)->rect().p, button, pointerID)){
 			ASSERT(this->mouseCaptureMap.find(pointerID) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
@@ -126,13 +126,13 @@ bool Container::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		}
 	}
 	
-	return this->Widget::OnMouseButton(isDown, pos, button, pointerID);
+	return this->Widget::onMouseButton(isDown, pos, button, pointerID);
 }
 
 
 
 //override
-bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
+bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
@@ -142,11 +142,11 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->OnMouseMove(pos - w->rect().p, pointerID);
+				w->onMouseMove(pos - w->rect().p, pointerID);
 		
 				//set hovered goes after move notification because position of widget could change
 				//during handling the notification, so need to check after that for hovering
-				w->SetHovered(w->rect().Overlaps(pos), pointerID);
+				w->setHovered(w->rect().Overlaps(pos), pointerID);
 
 				return true;//doesn't matter what to return
 			}else{
@@ -157,43 +157,43 @@ bool Container::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
-		if(!(*i)->IsVisible() || !(*i)->IsEnabled()){
-			ASSERT(!(*i)->IsHovered())
+		if(!(*i)->isVisible() || !(*i)->isEnabled()){
+			ASSERT(!(*i)->isHovered())
 			continue;
 		}
 		
 		if(!(*i)->rect().Overlaps(pos)){
-			(*i)->SetHovered(false, pointerID);
+			(*i)->setHovered(false, pointerID);
 			continue;
 		}
 		
-		(*i)->SetHovered(true, pointerID);
+		(*i)->setHovered(true, pointerID);
 		
-		if((*i)->OnMouseMove(pos - (*i)->rect().p, pointerID)){//consumed mouse move event
+		if((*i)->onMouseMove(pos - (*i)->rect().p, pointerID)){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->Children().rend(); ++i){
-				(*i)->SetHovered(false, pointerID);
+				(*i)->setHovered(false, pointerID);
 			}
 			return true;
 		}		
 	}
 	
-	return this->Widget::OnMouseMove(pos, pointerID);
+	return this->Widget::onMouseMove(pos, pointerID);
 }
 
 
 
-void Container::OnHoverChanged(unsigned pointerID){
+void Container::onHoverChanged(unsigned pointerID){
 	//TODO: if some child removed during iterating?
 	
-	if(this->IsHovered(pointerID)){
+	if(this->isHovered(pointerID)){
 		return;
 	}
 	
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->Children()){
-		w->SetHovered(false, pointerID);
+		w->setHovered(false, pointerID);
 	}
 }
 
@@ -203,7 +203,7 @@ void Container::layOut(){
 //	TRACE(<< "Container::layOut(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->Children()){
-		if(w->NeedsRelayout()){
+		if(w->needsRelayout()){
 			w->relayoutNeeded = false;
 			w->layOut();
 		}
@@ -249,12 +249,12 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	this->onChildrenListChanged();
 	
 	if(this->children.size() > 1){
-		(*(++this->children.rbegin()))->OnTopmostChanged();
+		(*(++this->children.rbegin()))->onTopmostChanged();
 	}
 	
-	w->OnTopmostChanged();
+	w->onTopmostChanged();
 	
-	ASSERT(!w->IsHovered())
+	ASSERT(!w->isHovered())
 	return ret;
 }
 
@@ -280,7 +280,7 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	this->children.erase(w.parentIter);
 	
 	w.parentContainer = nullptr;
-	w.SetUnhovered();
+	w.setUnhovered();
 	
 	w.onParentChanged();
 	
@@ -301,13 +301,13 @@ void Container::removeAll() {
 
 
 //override
-std::shared_ptr<Widget> Container::FindChildByName(const std::string& name)noexcept{
-	if(auto r = this->Widget::FindChildByName(name)){
+std::shared_ptr<Widget> Container::findChildByName(const std::string& name)noexcept{
+	if(auto r = this->Widget::findChildByName(name)){
 		return std::move(r);
 	}
 	
 	for(auto& w : this->Children()){
-		if(auto r = w->FindChildByName(name)){
+		if(auto r = w->findChildByName(name)){
 			return r;
 		}
 	}

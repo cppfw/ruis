@@ -30,8 +30,8 @@ OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(stob::Parse(DDesc).get())
 {
-	this->contentContainer = this->FindChildByNameAs<FrameContainer>("morda_content");
-	this->overlayContainer = this->FindChildByNameAs<Container>("morda_overlay");
+	this->contentContainer = this->findChildByNameAs<FrameContainer>("morda_content");
+	this->overlayContainer = this->findChildByNameAs<Container>("morda_overlay");
 	
 	if(chain){
 		ASSERT(this->contentContainer);

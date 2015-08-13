@@ -53,9 +53,9 @@ protected:
 		}
 	}
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override;
 	
-	void OnHoverChanged(unsigned pointerID) override;
+	void onHoverChanged(unsigned pointerID) override;
 public:	
 	bool isPressed()const noexcept{
 		return this->isPressed_var;

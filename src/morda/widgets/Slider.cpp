@@ -51,11 +51,11 @@ const char* DDescription = R"qwertyuiop(
 HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(stob::Parse(DDescription).get()),
-		handle(*this->FindChildByName("handle")),
+		handle(*this->findChildByName("handle")),
 		isVertical(isVertical)
 {
-	auto hp = this->FindChildByNameAs<MouseProxy>("morda_handle_proxy");
-	hp->onMouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
+	auto hp = this->findChildByNameAs<MouseProxy>("morda_handle_proxy");
+	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
 		if(button != EMouseButton::LEFT){
 			return false;
 		}
@@ -78,7 +78,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		}
 	};
 	
-	hp->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
+	hp->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
 		if(!this->isGrabbed){
 			return false;
 		}
@@ -95,7 +95,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		morda::Vec2r newPosition(0);
 		newPosition[longIndex] = newPos;
 
-		this->handle.MoveTo(newPosition);
+		this->handle.moveTo(newPosition);
 		
 		//update factor
 		if(this->isVertical){
@@ -128,7 +128,7 @@ void HandleSlider::layOut(){
 	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->areaSizeFactor());
 	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
-	this->handle.Resize(newSize);
+	this->handle.resize(newSize);
 	
 	//move
 	{
@@ -142,7 +142,7 @@ void HandleSlider::layOut(){
 			}
 			ASSERT(newPos[longIndex] <= effectiveLength)
 		}
-		this->handle.MoveTo(newPos);
+		this->handle.moveTo(newPos);
 	}
 }
 

@@ -239,17 +239,17 @@ morda::Window::Window(const stob::Node* chain) :
 }
 
 void morda::Window::SetupWidgets(){
-	this->contentArea = this->FindChildByNameAs<FrameContainer>("morda_content");
+	this->contentArea = this->findChildByNameAs<FrameContainer>("morda_content");
 	ASSERT(this->contentArea)
 	
-	this->title = this->FindChildByNameAs<Label>("morda_title");
+	this->title = this->findChildByNameAs<Label>("morda_title");
 	ASSERT(this->title)
 	
-	this->titleBg = this->FindChildByNameAs<ColorLabel>("morda_window_title_bg");
+	this->titleBg = this->findChildByNameAs<ColorLabel>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 	
-	std::function<decltype(MouseProxy::onMouseButton)(bool&)> getButtonFunc = [this](bool& flag){
-		return decltype(MouseProxy::onMouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
+		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 			if(button != Widget::EMouseButton::LEFT){
 				return false;
 			}
@@ -265,14 +265,14 @@ void morda::Window::SetupWidgets(){
 	};
 	
 	{
-		auto caption = this->FindChildByNameAs<MouseProxy>("morda_caption_proxy");
+		auto caption = this->findChildByNameAs<MouseProxy>("morda_caption_proxy");
 		ASSERT(caption)
 	
-		caption->onMouseButton = getButtonFunc(this->captionCaptured);
+		caption->mouseButton = getButtonFunc(this->captionCaptured);
 
-		caption->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		caption->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->captionCaptured){
-				this->MoveBy(pos - this->capturePoint);
+				this->moveBy(pos - this->capturePoint);
 				return true;
 			}
 			return false;
@@ -280,121 +280,121 @@ void morda::Window::SetupWidgets(){
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_lt_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_lt_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->leftTopResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->leftTopResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
 				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->MoveBy(morda::Vec2r(d.x, 0));
-				this->ResizeBy(morda::Vec2r(-d.x, d.y));
+				this->moveBy(morda::Vec2r(d.x, 0));
+				this->resizeBy(morda::Vec2r(-d.x, d.y));
 			}
 			return false;
 		};
 	}
 	
 	{	
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_lb_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_lb_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->leftBottomResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->leftBottomResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
 				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->MoveBy(d);
-				this->ResizeBy(morda::Vec2r(-d.x, -d.y));
+				this->moveBy(d);
+				this->resizeBy(morda::Vec2r(-d.x, -d.y));
 			}
 			return false;
 		};
 	}
 
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_rt_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_rt_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->rightTopResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->rightTopResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
 				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->ResizeBy(d);
+				this->resizeBy(d);
 			}
 			return false;
 		};
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_rb_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_rb_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->rightBottomResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->rightBottomResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
 				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->MoveBy(morda::Vec2r(0, d.y));
-				this->ResizeBy(morda::Vec2r(d.x, -d.y));
+				this->moveBy(morda::Vec2r(0, d.y));
+				this->resizeBy(morda::Vec2r(d.x, -d.y));
 			}
 			return false;
 		};
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_l_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_l_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->leftResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->leftResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				this->MoveBy(morda::Vec2r(d.x, 0));
-				this->ResizeBy(morda::Vec2r(-d.x, 0));
+				this->moveBy(morda::Vec2r(d.x, 0));
+				this->resizeBy(morda::Vec2r(-d.x, 0));
 			}
 			return false;
 		};
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_r_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_r_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->rightResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->rightResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				this->ResizeBy(morda::Vec2r(d.x, 0));
+				this->resizeBy(morda::Vec2r(d.x, 0));
 			}
 			return false;
 		};
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_t_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_t_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->topResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->topResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->ResizeBy(morda::Vec2r(0, d.y));
+				this->resizeBy(morda::Vec2r(0, d.y));
 			}
 			return false;
 		};
 	}
 	
 	{
-		auto w = this->FindChildByNameAs<MouseProxy>("morda_b_proxy");
+		auto w = this->findChildByNameAs<MouseProxy>("morda_b_proxy");
 		ASSERT(w)
-		w->onMouseButton = getButtonFunc(this->bottomResizeCaptured);
-		w->onMouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseButton = getButtonFunc(this->bottomResizeCaptured);
+		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->MoveBy(morda::Vec2r(0, d.y));
-				this->ResizeBy(morda::Vec2r(0, -d.y));
+				this->moveBy(morda::Vec2r(0, d.y));
+				this->resizeBy(morda::Vec2r(0, -d.y));
 			}
 			return false;
 		};
@@ -409,7 +409,7 @@ void morda::Window::SetTitle(const std::string& str){
 
 
 
-bool morda::Window::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	if(isDown){
 		morda::App::Inst().PostToUIThread_ts(
 				[this](){
@@ -417,23 +417,23 @@ bool morda::Window::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseBu
 				}
 			);
 
-		if(!this->IsTopmost()){
-			this->Focus();
+		if(!this->isTopmost()){
+			this->focus();
 		}
 	}
 	
-	this->Container::OnMouseButton(isDown, pos, button, pointerId);
+	this->Container::onMouseButton(isDown, pos, button, pointerId);
 	
 	return true;
 }
 
 
 
-bool morda::Window::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
-	this->Container::OnMouseMove(pos, pointerId);
+bool morda::Window::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+	this->Container::onMouseMove(pos, pointerId);
 	return true;
 }
 
-void morda::Window::OnTopmostChanged(){
-	this->titleBg->setColor(this->IsTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
+void morda::Window::onTopmostChanged(){
+	this->titleBg->setColor(this->isTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
 }

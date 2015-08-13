@@ -14,20 +14,20 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 
 
 
-bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
+bool ScrollContainer::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
-	return this->Container::OnMouseButton(isDown, pos - d, button, pointerID);
+	return this->Container::onMouseButton(isDown, pos - d, button, pointerID);
 }
 
 
 
-bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool ScrollContainer::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
-	return this->Container::OnMouseMove(pos - d, pointerID);
+	return this->Container::onMouseMove(pos - d, pointerID);
 }
 
 
@@ -98,7 +98,7 @@ void ScrollContainer::arrangeWidgets() {
 		
 		auto d = this->dimForWidget(**i, lp);
 		
-		(*i)->Resize(d);
+		(*i)->resize(d);
 	}
 }
 

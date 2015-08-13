@@ -104,9 +104,9 @@ void LinearContainer::layOut(){
 						}
 					}
 				}
-				(*i)->Resize(d.Rounded());
+				(*i)->resize(d.Rounded());
 			}else{
-				(*i)->Resize(info->measuredDim);
+				(*i)->resize(info->measuredDim);
 			}
 			
 			Vec2r newPos;
@@ -121,7 +121,7 @@ void LinearContainer::layOut(){
 			
 			newPos[transIndex] = ting::math::Round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 			
-			(*i)->MoveTo(newPos);
+			(*i)->moveTo(newPos);
 		}
 	}
 }

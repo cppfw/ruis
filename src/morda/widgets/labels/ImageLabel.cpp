@@ -13,7 +13,7 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 {
 	if(auto image = GetProperty(chain, "image")){
 		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
-		this->Resize(this->img->Dim());
+		this->resize(this->img->Dim());
 	}
 	
 	if(auto n = GetProperty(chain, "keepAspectRatio")){
@@ -86,7 +86,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 
 void ImageLabel::SetImage(const std::shared_ptr<ResImage>& image) {
 	if(this->img && image && this->img->Dim() != image->Dim()){
-		this->SetRelayoutNeeded();
+		this->setRelayoutNeeded();
 	}
 	
 	this->img = image;

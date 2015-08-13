@@ -135,11 +135,11 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 		
 	Vec2r dim = this->dimForWidget(*w, lp);
 
-	w->Resize(dim);
+	w->resize(dim);
 
 	if(this->isVertical){
 		pos -= w->rect().d.y;
-		w->MoveTo(Vec2r(0, pos));
+		w->moveTo(Vec2r(0, pos));
 
 		if(pos < this->rect().d.y){
 			if(!added){
@@ -168,7 +168,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			return true;
 		}
 	}else{
-		w->MoveTo(Vec2r(pos, 0));
+		w->moveTo(Vec2r(pos, 0));
 		pos += w->rect().d.x;
 
 		if(pos > 0){

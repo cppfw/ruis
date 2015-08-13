@@ -55,7 +55,7 @@ public:
 		}
 	}
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override{
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -66,7 +66,7 @@ public:
 		}else{
 			this->StartUpdating(30);
 		}
-		this->Focus();
+		this->focus();
 		return true;
 	}
 	
@@ -261,11 +261,11 @@ public:
 //		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
 		
 		
-		std::dynamic_pointer_cast<morda::PushButton>(c->FindChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
+		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
 			this->ShowVirtualKeyboard();
 		};
 		
-		std::dynamic_pointer_cast<morda::PushButton>(c->FindChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
+		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
 			this->PostToUIThread_ts(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
@@ -273,16 +273,16 @@ public:
 				);
 		};
 		
-		std::dynamic_pointer_cast<CubeWidget>(c->FindChildByName("cube_widget"))->StartUpdating(30);
+		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->StartUpdating(30);
 		
 		{
-			auto scrollArea = c->FindChildByNameAs<morda::ScrollContainer>("scroll_area");
+			auto scrollArea = c->findChildByNameAs<morda::ScrollContainer>("scroll_area");
 			std::weak_ptr<morda::ScrollContainer> sa = scrollArea;
 			
-			auto vertSlider = c->FindChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");
+			auto vertSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");
 			std::weak_ptr<morda::HandleSlider> vs = vertSlider;
 			
-			auto horiSlider = c->FindChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
+			auto horiSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
 			std::weak_ptr<morda::HandleSlider> hs = horiSlider;
 			
 			scrollArea->scrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
@@ -313,10 +313,10 @@ public:
 		}
 		
 		{
-			auto verticalList = c->FindChildByNameAs<morda::VerticalList>("vertical_list");
+			auto verticalList = c->findChildByNameAs<morda::VerticalList>("vertical_list");
 			std::weak_ptr<morda::VerticalList> vl = verticalList;
 			
-			auto verticalSlider = c->FindChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
+			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
 			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
 			
 			verticalSlider->factorChange = [vl](morda::Slider& slider){

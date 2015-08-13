@@ -91,21 +91,21 @@ private:
 	
 	std::set<unsigned> hovered;
 
-	bool isVisible;
+	bool isVisible_var;
 
-	bool isEnabled;
+	bool isEnabled_var;
 
 	morda::Rect2r rectangle;
 	
 	//clip widgets contents by widget's border if set to true
-	bool clip;
+	bool clip_var;
 public:
-	bool Clip()const noexcept{
-		return this->clip;
+	bool clip()const noexcept{
+		return this->clip_var;
 	}
 	
-	void SetClip(bool clip)noexcept{
-		this->clip = clip;
+	void setClip(bool clip)noexcept{
+		this->clip_var = clip;
 	}
 	
 	
@@ -131,9 +131,9 @@ private:
 	
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
-	std::unique_ptr<LayoutParams> ResetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)noexcept;
+	std::unique_ptr<LayoutParams> resetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)noexcept; //TODO: ?
 	
-	bool NeedsRelayout()const noexcept{
+	bool needsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
 	
@@ -156,7 +156,7 @@ public:
      * @return true if hovered by any pointer.
 	 * @return false otherwise.
      */
-	bool IsHovered()const noexcept{
+	bool isHovered()const noexcept{
 		return this->hovered.size() != 0;
 	}
 	
@@ -166,30 +166,30 @@ public:
      * @return true if widget is hovered by given pointer ID.
 	 * @return false otherwise.
      */
-	bool IsHovered(unsigned pointerID)const noexcept{
+	bool isHovered(unsigned pointerID)const noexcept{
 		return this->hovered.find(pointerID) != this->hovered.end();
 	}
 	
 private:
-	void SetHovered(bool isHovered, unsigned pointerID){
+	void setHovered(bool isHovered, unsigned pointerID){
 		if(isHovered){
-			if(this->IsHovered(pointerID)){
+			if(this->isHovered(pointerID)){
 				return;
 			}
 			
 			this->hovered.insert(pointerID);
 		}else{
-			if(!this->IsHovered(pointerID)){
+			if(!this->isHovered(pointerID)){
 				return;
 			}
 			
 			this->hovered.erase(pointerID);
 		}
 		
-		this->OnHoverChanged(pointerID);
+		this->onHoverChanged(pointerID);
 	}
 	
-	void SetUnhovered(){
+	void setUnhovered(){
 		this->hovered.clear();
 	}
 public:
@@ -200,24 +200,24 @@ public:
 	
 	morda::Rect2i ComputeViewportRect(const Matr4r& matrix)const noexcept;
 	
-	void MoveTo(const morda::Vec2r& newPos)noexcept{
+	void moveTo(const morda::Vec2r& newPos)noexcept{
 		this->rectangle.p = newPos;
 	}
 	
-	void MoveBy(const morda::Vec2r& delta)noexcept{
+	void moveBy(const morda::Vec2r& delta)noexcept{
 		this->rectangle.p += delta;
 	}
 
-	void Resize(const morda::Vec2r& newDims);
+	void resize(const morda::Vec2r& newDims);
 	
-	void ResizeBy(const morda::Vec2r& delta){
-		this->Resize(this->rect().d + delta);
+	void resizeBy(const morda::Vec2r& delta){
+		this->resize(this->rect().d + delta);
 	}
 
-	virtual std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept;
+	virtual std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept;
 	
-	template <typename T> std::shared_ptr<T> FindChildByNameAs(const std::string& name)noexcept{
-		return std::dynamic_pointer_cast<T>(this->FindChildByName(name));
+	template <typename T> std::shared_ptr<T> findChildByNameAs(const std::string& name)noexcept{
+		return std::dynamic_pointer_cast<T>(this->findChildByName(name));
 	}
 	
 public:
@@ -233,10 +233,10 @@ private:
 	void renderInternal(const morda::Matr4r& matrix)const;
 	
 private:
-	void OnKeyInternal(bool isDown, EKey keyCode);
+	void onKeyInternal(bool isDown, EKey keyCode);
 	
 private:
-	bool isFocused = false;
+	bool isFocused_var = false;
 public:
 	
 	//return true to consume
@@ -244,18 +244,18 @@ public:
 		return false;
 	}
 	
-	void Focus()noexcept;
+	void focus()noexcept;
 	
-	void Unfocus()noexcept;
+	void unfocus()noexcept;
 	
-	bool IsFocused()const noexcept{
-		return this->isFocused;
+	bool isFocused()const noexcept{
+		return this->isFocused_var;
 	}
 	
 	/**
 	 * @brief Called when keyboard input focus changes.
      */
-	virtual void OnFocusedChanged(){}
+	virtual void onFocusedChanged(){}
 	
 	enum class EMouseButton{
 		LEFT,
@@ -270,20 +270,20 @@ public:
 	
 	
 	//return true to consume event
-	virtual bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
+	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
 		return false;
 	}
 	
 	//return true to consume event
-	virtual bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID){
+	virtual bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		return false;
 	}
 
-	virtual void OnHoverChanged(unsigned pointerID){
+	virtual void onHoverChanged(unsigned pointerID){
 //		TRACE(<< "Widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
-	virtual void OnResize(){
+	virtual void onResize(){
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 		this->layOut();
 	}
@@ -299,27 +299,27 @@ public:
 	
 public:
 
-	void SetRelayoutNeeded()noexcept;
+	void setRelayoutNeeded()noexcept;
 
 	virtual void layOut(){}
 	
-	void SetVisible(bool visible){
-		this->isVisible = visible;
-		if(!this->isVisible){
-			this->SetUnhovered();
+	void setVisible(bool visible){
+		this->isVisible_var = visible;
+		if(!this->isVisible_var){
+			this->setUnhovered();
 		}
 	}
 	
-	bool IsVisible()const noexcept{
-		return this->isVisible;
+	bool isVisible()const noexcept{
+		return this->isVisible_var;
 	}
 
-	void SetEnabled(bool enable)noexcept{
-		this->isEnabled = enable;
+	void setEnabled(bool enable)noexcept{
+		this->isEnabled_var = enable;
 	}
 	
-	bool IsEnabled()const noexcept{
-		return this->isEnabled;
+	bool isEnabled()const noexcept{
+		return this->isEnabled_var;
 	}
 	
 	/**
@@ -328,14 +328,14 @@ public:
      * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
      */
-	bool Contains(const morda::Vec2r& pos)const noexcept{
+	bool contains(const morda::Vec2r& pos)const noexcept{
 		return morda::Rect2r(morda::Vec2r(0, 0), this->rect().d).Overlaps(pos);
 	}
 	
 	
-	virtual void OnTopmostChanged(){}
+	virtual void onTopmostChanged(){}
 	
-	bool IsTopmost()const noexcept;
+	bool isTopmost()const noexcept;
 	
 	void makeTopmost();
 	

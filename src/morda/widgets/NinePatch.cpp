@@ -79,19 +79,19 @@ NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
 		TableContainer(stob::Parse(D_NinePatchLayout).get())
 {
-	this->lt = this->FindChildByNameAs<ImageLabel>("morda_lt");
-	this->t = this->FindChildByNameAs<ImageLabel>("morda_t");
-	this->rt = this->FindChildByNameAs<ImageLabel>("morda_rt");
+	this->lt = this->findChildByNameAs<ImageLabel>("morda_lt");
+	this->t = this->findChildByNameAs<ImageLabel>("morda_t");
+	this->rt = this->findChildByNameAs<ImageLabel>("morda_rt");
 	
-	this->l = this->FindChildByNameAs<ImageLabel>("morda_l");
-	this->m = this->FindChildByNameAs<ImageLabel>("morda_m");
-	this->r = this->FindChildByNameAs<ImageLabel>("morda_r");
+	this->l = this->findChildByNameAs<ImageLabel>("morda_l");
+	this->m = this->findChildByNameAs<ImageLabel>("morda_m");
+	this->r = this->findChildByNameAs<ImageLabel>("morda_r");
 	
-	this->lb = this->FindChildByNameAs<ImageLabel>("morda_lb");
-	this->b = this->FindChildByNameAs<ImageLabel>("morda_b");
-	this->rb = this->FindChildByNameAs<ImageLabel>("morda_rb");
+	this->lb = this->findChildByNameAs<ImageLabel>("morda_lb");
+	this->b = this->findChildByNameAs<ImageLabel>("morda_b");
+	this->rb = this->findChildByNameAs<ImageLabel>("morda_rb");
 	
-	this->content = this->FindChildByNameAs<FrameContainer>("morda_content");
+	this->content = this->findChildByNameAs<FrameContainer>("morda_content");
 	
 	if(const stob::Node* n = GetProperty(chain, "image")){
 		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));

@@ -17,9 +17,9 @@ void FrameContainer::layOut() {
 	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
 		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
 		
-		(*i)->Resize(this->dimForWidget(**i, lp));
+		(*i)->resize(this->dimForWidget(**i, lp));
 		
-		(*i)->MoveTo(((this->rect().d - (*i)->rect().d) / 2).Round());
+		(*i)->moveTo(((this->rect().d - (*i)->rect().d) / 2).Round());
 	}
 }
 

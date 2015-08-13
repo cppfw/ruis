@@ -60,7 +60,7 @@ public:
 		
 		this->font = std::move(font);
 		
-		this->SetRelayoutNeeded();
+		this->setRelayoutNeeded();
 		
 		this->OnFontChanged();
 	}
@@ -100,7 +100,7 @@ public:
 	
 	void SetText(decltype(text)&& text){
 		this->text = std::move(text);
-		this->SetRelayoutNeeded();
+		this->setRelayoutNeeded();
 		this->RecomputeBoundingBox();
 	}
 	

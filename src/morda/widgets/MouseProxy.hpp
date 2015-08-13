@@ -40,17 +40,17 @@ public:
 	MouseProxy(const MouseProxy&) = delete;
 	MouseProxy& operator=(const MouseProxy&) = delete;
 	
-	std::function<bool (Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)> onMouseButton;
+	std::function<bool (Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)> mouseButton;
 	
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 	
-	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> onMouseMove;
+	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> mouseMove;
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 	
-	std::function<void(Widget& widget, unsigned pointerID)> onHoverChanged;
+	std::function<void(Widget& widget, unsigned pointerID)> hoverChanged;
 	
-	void OnHoverChanged(unsigned pointerID)override;
+	void onHoverChanged(unsigned pointerID)override;
 };
 
 }

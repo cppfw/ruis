@@ -51,12 +51,12 @@ public:
 private:
 	void onPressedChanged()override;
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
-		return this->PushButton::OnMouseButton(isDown, pos, button, pointerId);
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
+		return this->PushButton::onMouseButton(isDown, pos, button, pointerId);
 	}
 
-	void OnHoverChanged(unsigned pointerID)override{
-		this->PushButton::OnHoverChanged(pointerID);
+	void onHoverChanged(unsigned pointerID)override{
+		this->PushButton::onHoverChanged(pointerID);
 	}
 };
 

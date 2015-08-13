@@ -36,7 +36,7 @@ void App::render(){
 	
 	ASSERT(this->rootWidget)
 	
-	if(this->rootWidget->NeedsRelayout()){
+	if(this->rootWidget->needsRelayout()){
 		this->rootWidget->relayoutNeeded = false;
 		this->rootWidget->layOut();
 	}
@@ -67,7 +67,7 @@ void App::UpdateWindowRect(const morda::Rect2r& rect){
 		return;
 	}
 	
-	this->rootWidget->Resize(this->curWinRect.d);
+	this->rootWidget->resize(this->curWinRect.d);
 }
 
 
@@ -76,8 +76,8 @@ void App::HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
-	this->rootWidget->SetHovered(this->rootWidget->rect().Overlaps(pos), id);
-	this->rootWidget->OnMouseMove(this->NativeWindowToRootCoordinates(pos), id);
+	this->rootWidget->setHovered(this->rootWidget->rect().Overlaps(pos), id);
+	this->rootWidget->onMouseMove(this->NativeWindowToRootCoordinates(pos), id);
 }
 
 
@@ -87,8 +87,8 @@ void App::HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouse
 		return;
 	}
 
-	this->rootWidget->SetHovered(this->rootWidget->rect().Overlaps(pos), pointerID);
-	this->rootWidget->OnMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, pointerID);
+	this->rootWidget->setHovered(this->rootWidget->rect().Overlaps(pos), pointerID);
+	this->rootWidget->onMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, pointerID);
 }
 
 
@@ -98,7 +98,7 @@ void App::HandleMouseHover(bool isHovered, unsigned pointerID){
 		return;
 	}
 	
-	this->rootWidget->SetHovered(isHovered, pointerID);
+	this->rootWidget->setHovered(isHovered, pointerID);
 }
 
 void App::HandleKeyEvent(bool isDown, EKey keyCode){
@@ -106,11 +106,11 @@ void App::HandleKeyEvent(bool isDown, EKey keyCode){
 
 	if(auto w = this->focusedWidget.lock()){
 		//			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->OnKeyInternal(isDown, keyCode);
+		w->onKeyInternal(isDown, keyCode);
 	}else{
 		//			TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
 		if(this->rootWidget){
-			this->rootWidget->OnKeyInternal(isDown, keyCode);
+			this->rootWidget->onKeyInternal(isDown, keyCode);
 		}
 	}
 }
@@ -182,15 +182,15 @@ App::ResMan::ResMan(){
 
 void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
 	if(auto prev = this->focusedWidget.lock()){
-		prev->isFocused = false;
-		prev->OnFocusedChanged();
+		prev->isFocused_var = false;
+		prev->onFocusedChanged();
 	}
 	
 	this->focusedWidget = w;
 	
 	if(w){
-		w->isFocused = true;
-		w->OnFocusedChanged();
+		w->isFocused_var = true;
+		w->onFocusedChanged();
 	}
 }
 

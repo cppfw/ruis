@@ -47,9 +47,9 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "clip")){
-		this->clip = p->AsBool();
+		this->clip_var = p->AsBool();
 	}else{
-		this->clip = false;
+		this->clip_var = false;
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "cache")){
@@ -59,15 +59,15 @@ Widget::Widget(const stob::Node* chain){
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "visible")){
-		this->isVisible = p->AsBool();
+		this->isVisible_var = p->AsBool();
 	}else{
-		this->isVisible = true;
+		this->isVisible_var = true;
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "enabled")){
-		this->isEnabled = p->AsBool();
+		this->isEnabled_var = p->AsBool();
 	}else{
-		this->isEnabled = true;
+		this->isEnabled_var = true;
 	}
 }
 
@@ -102,7 +102,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)noexcept{
+std::shared_ptr<Widget> Widget::findChildByName(const std::string& name)noexcept{
 	if(this->name() == name){
 		return this->SharedFromThis(this);
 	}
@@ -110,14 +110,14 @@ std::shared_ptr<Widget> Widget::FindChildByName(const std::string& name)noexcept
 }
 
 
-std::unique_ptr<Widget::LayoutParams> Widget::ResetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)noexcept{
+std::unique_ptr<Widget::LayoutParams> Widget::resetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)noexcept{
 	std::swap(this->layoutParams, params);
-	this->SetRelayoutNeeded();
+	this->setRelayoutNeeded();
 	return std::move(params);
 }
 
 
-void Widget::Resize(const morda::Vec2r& newDims){
+void Widget::resize(const morda::Vec2r& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
 			this->clearCache();
@@ -132,7 +132,7 @@ void Widget::Resize(const morda::Vec2r& newDims){
 	ting::util::ClampBottom(this->rectangle.d.x, real(0.0f));
 	ting::util::ClampBottom(this->rectangle.d.y, real(0.0f));
 	this->relayoutNeeded = false;
-	this->OnResize();//call virtual method
+	this->onResize();//call virtual method
 }
 
 
@@ -146,13 +146,13 @@ std::shared_ptr<Widget> Widget::removeFromParent(){
 
 
 
-void Widget::SetRelayoutNeeded()noexcept{
+void Widget::setRelayoutNeeded()noexcept{
 	if(this->relayoutNeeded){
 		return;
 	}
 	this->relayoutNeeded = true;
 	if(this->parentContainer){
-		this->parentContainer->SetRelayoutNeeded();
+		this->parentContainer->setRelayoutNeeded();
 	}
 	this->cacheTex = Texture2D();
 }
@@ -171,7 +171,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 		}
 		this->renderFromCache(matrix);
 	}else{
-		if(this->clip){
+		if(this->clip_var){
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
@@ -208,7 +208,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	matr.Scale(this->rect().d);
 	s.SetMatrix(matr);
 
-	if(this->IsHovered()){
+	if(this->isHovered()){
 		s.SetColor(morda::Vec3f(0, 1, 0));
 	}else{
 		s.SetColor(morda::Vec3f(1, 0, 1));
@@ -282,23 +282,23 @@ void Widget::clearCache(){
 }
 
 
-void Widget::OnKeyInternal(bool isDown, EKey keyCode){
+void Widget::onKeyInternal(bool isDown, EKey keyCode){
 	if(this->onKey(isDown, keyCode)){
 		return;
 	}
 
 	//pass key event to parent
 	if(this->parent()){
-		this->parent()->OnKeyInternal(isDown, keyCode);
+		this->parent()->onKeyInternal(isDown, keyCode);
 	}
 }
 
 
 
-void Widget::Focus()noexcept{
+void Widget::focus()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 
-	if(this->IsFocused()){
+	if(this->isFocused()){
 		return;
 	}
 
@@ -307,10 +307,10 @@ void Widget::Focus()noexcept{
 
 
 
-void Widget::Unfocus()noexcept{
+void Widget::unfocus()noexcept{
 	ASSERT(App::Inst().ThisIsUIThread())
 
-	if(!this->IsFocused()){
+	if(!this->isFocused()){
 		return;
 	}
 
@@ -321,7 +321,7 @@ void Widget::Unfocus()noexcept{
 
 
 
-bool Widget::IsTopmost()const noexcept{
+bool Widget::isTopmost()const noexcept{
 	if(!this->parent()){
 		return false;
 	}

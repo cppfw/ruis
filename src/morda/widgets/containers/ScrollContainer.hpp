@@ -54,9 +54,9 @@ public:
 	ScrollContainer& operator=(const ScrollContainer&) = delete;
 	
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
 	
 	void render(const morda::Matr4r& matrix) const override;
 

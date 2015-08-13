@@ -81,11 +81,11 @@ public:
 	}
 	
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void OnTopmostChanged()override;
+	void onTopmostChanged()override;
 };
 
 }

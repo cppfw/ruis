@@ -395,8 +395,8 @@ public:
 	void SetRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
 		
-		this->rootWidget->MoveTo(morda::Vec2r(0));
-		this->rootWidget->Resize(this->curWinRect.d);
+		this->rootWidget->moveTo(morda::Vec2r(0));
+		this->rootWidget->resize(this->curWinRect.d);
 	}
 	
 	void ShowVirtualKeyboard()noexcept;

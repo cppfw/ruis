@@ -29,7 +29,7 @@ TextInput::TextInput(const stob::Node* chain) :
 		Widget(chain),
 		SingleLineTextWidget(chain)
 {
-	this->SetClip(true);
+	this->setClip(true);
 }
 
 
@@ -78,7 +78,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 			);
 	}
 	
-	if(this->IsFocused() && this->cursorBlinkVisible){
+	if(this->isFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.Translate(this->cursorPos, 0);
 		matr.Scale(Vec2r(D_CursorWidth, this->rect().d.y));
@@ -92,7 +92,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	if(button != EMouseButton::LEFT){
 		return false;
 	}
@@ -106,7 +106,7 @@ bool TextInput::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	return true;
 }
 
-bool TextInput::OnMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+bool TextInput::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
@@ -146,8 +146,8 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 	ting::util::ScopeExit scopeExit([this](){
 		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
 		
-		if(!this->IsFocused()){
-			this->Focus();
+		if(!this->isFocused()){
+			this->focus();
 		}
 		this->StartCursorBlinking();
 	});
@@ -247,8 +247,8 @@ void TextInput::Update(std::uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
-void TextInput::OnFocusedChanged(){
-	if(this->IsFocused()){
+void TextInput::onFocusedChanged(){
+	if(this->isFocused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;
 		this->StartCursorBlinking();
@@ -257,7 +257,7 @@ void TextInput::OnFocusedChanged(){
 	}
 }
 
-void TextInput::OnResize(){
+void TextInput::onResize(){
 	this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
 }
 

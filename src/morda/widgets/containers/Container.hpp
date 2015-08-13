@@ -83,7 +83,7 @@ public:
 		if(w.parent() != this){
 			throw Exc("Container::getLayoutParams(): the widget is not added to this container");
 		}		
-		this->SetRelayoutNeeded();
+		this->setRelayoutNeeded();
 		return this->getLayoutParams_internal(w);
 	}
 	
@@ -96,12 +96,12 @@ public:
 	
 	void render(const morda::Matr4r& matrix)const override;
 
-	bool OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
 public:
 	
-	bool OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
 	
-	void OnHoverChanged(unsigned pointerID)override;
+	void onHoverChanged(unsigned pointerID)override;
 	
 	void layOut()override;
 	
@@ -117,7 +117,7 @@ public:
 	
 	void removeAll();
 	
-	std::shared_ptr<Widget> FindChildByName(const std::string& name)noexcept override;
+	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept override;
 	
 	const T_ChildrenList& Children()const noexcept{
 		return this->children;
@@ -128,7 +128,7 @@ public:
 	 * Default implementation requests re-layout.
      */
 	virtual void onChildrenListChanged(){
-		this->SetRelayoutNeeded();
+		this->setRelayoutNeeded();
 	}
 };
 
