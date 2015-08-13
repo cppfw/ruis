@@ -15,7 +15,7 @@ ScrollContainer::ScrollContainer(const stob::Node* chain) :
 
 
 bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
-	Vec2r d = this->scrollPos;
+	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
 	return this->Container::OnMouseButton(isDown, pos - d, button, pointerID);
@@ -24,7 +24,7 @@ bool ScrollContainer::OnMouseButton(bool isDown, const morda::Vec2r& pos, EMouse
 
 
 bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
-	Vec2r d = this->scrollPos;
+	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
 	return this->Container::OnMouseMove(pos - d, pointerID);
@@ -33,7 +33,7 @@ bool ScrollContainer::OnMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 
 
 void ScrollContainer::render(const morda::Matr4r& matrix) const {
-	Vec2r d = this->scrollPos;
+	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
 	
@@ -45,18 +45,18 @@ void ScrollContainer::render(const morda::Matr4r& matrix) const {
 
 void ScrollContainer::ClampScrollPos() {
 	if(this->effectiveDim.x < 0){
-		this->scrollPos.x = 0;
+		this->curScrollPos.x = 0;
 	}
 	
 	if(this->effectiveDim.y < 0){
-		this->scrollPos.y = 0;
+		this->curScrollPos.y = 0;
 	}
 }
 
 
 
-void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
-	this->scrollPos = newScrollPos.Rounded();
+void ScrollContainer::setScrollPos(const Vec2r& newScrollPos) {
+	this->curScrollPos = newScrollPos.Rounded();
 	
 	this->ClampScrollPos();
 	this->UpdateScrollFactor();
@@ -64,31 +64,31 @@ void ScrollContainer::SetScrollPos(const Vec2r& newScrollPos) {
 
 
 
-void ScrollContainer::SetScrollPosAsFactor(const Vec2r& factor){	
+void ScrollContainer::setScrollPosAsFactor(const Vec2r& factor){	
 	Vec2r newScrollPos = this->effectiveDim.compMul(factor);
 	
-	this->SetScrollPos(newScrollPos);
+	this->setScrollPos(newScrollPos);
 }
 
 
 void ScrollContainer::UpdateScrollFactor(){
 	//at this point effective dimension should be updated
-	Vec2r factor = this->scrollPos.CompDiv(this->effectiveDim);
+	Vec2r factor = this->curScrollPos.CompDiv(this->effectiveDim);
 	
-	if(this->scrollFactor == factor){
+	if(this->curScrollFactor == factor){
 		return;
 	}
 	
 	for(unsigned i = 0; i != 2; ++i){
 		if(this->effectiveDim[i] <= 0){
-			this->scrollFactor[i] = 0;
+			this->curScrollFactor[i] = 0;
 		}else{
-			this->scrollFactor[i] = this->scrollPos[i] / this->effectiveDim[i];
+			this->curScrollFactor[i] = this->curScrollPos[i] / this->effectiveDim[i];
 		}
 	}
 	
-	if(this->onScrollFactorChanged){
-		this->onScrollFactorChanged(*this);
+	if(this->scrollFactorChanged){
+		this->scrollFactorChanged(*this);
 	}
 }
 
@@ -108,21 +108,21 @@ void ScrollContainer::layOut(){
 	this->UpdateEffectiveDim();
 
 	//distance of content's bottom right corner from bottom right corner of the ScrollContainer
-	Vec2r br = this->scrollPos - this->effectiveDim;
+	Vec2r br = this->curScrollPos - this->effectiveDim;
 
 	if(br.x > 0){
-		if(br.x <= this->scrollPos.x){
-			this->scrollPos.x -= br.x;
+		if(br.x <= this->curScrollPos.x){
+			this->curScrollPos.x -= br.x;
 		}else{
-			this->scrollPos.x = 0;
+			this->curScrollPos.x = 0;
 		}
 	}
 	
 	if(br.y > 0){
-		if(br.y <= this->scrollPos.y){
-			this->scrollPos.y -= br.y;
+		if(br.y <= this->curScrollPos.y){
+			this->curScrollPos.y -= br.y;
 		}else{
-			this->scrollPos.y = 0;
+			this->curScrollPos.y = 0;
 		}
 	}
 }

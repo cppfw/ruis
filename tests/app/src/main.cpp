@@ -285,29 +285,29 @@ public:
 			auto horiSlider = c->FindChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
 			std::weak_ptr<morda::HandleSlider> hs = horiSlider;
 			
-			scrollArea->onScrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
+			scrollArea->scrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
 				if(auto v = vs.lock()){
-					v->setFactor(sc.ScrollFactor().y);
+					v->setFactor(sc.scrollFactor().y);
 				}
 				if(auto h = hs.lock()){
-					h->setFactor(sc.ScrollFactor().x);
+					h->setFactor(sc.scrollFactor().x);
 				}
 			};
 			
 			
 			vertSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
-					auto sf = s->ScrollFactor();
+					auto sf = s->scrollFactor();
 					sf.y = slider.factor();
-					s->SetScrollPosAsFactor(sf);
+					s->setScrollPosAsFactor(sf);
 				}
 			};
 			
 			horiSlider->factorChange = [sa](morda::Slider& slider){
 				if(auto s = sa.lock()){
-					auto sf = s->ScrollFactor();
+					auto sf = s->scrollFactor();
 					sf.x = slider.factor();
-					s->SetScrollPosAsFactor(sf);
+					s->setScrollPosAsFactor(sf);
 				}
 			};
 		}

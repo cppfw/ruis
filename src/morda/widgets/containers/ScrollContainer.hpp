@@ -39,13 +39,13 @@ namespace morda{
 
 class ScrollContainer : public Container{
 	//offset from top left corner
-	Vec2r scrollPos = Vec2r(0);
+	Vec2r curScrollPos = Vec2r(0);
 	
 	//cached effectiveDim
 	Vec2r effectiveDim;
 	
 	//cached scroll factor
-	Vec2r scrollFactor;
+	Vec2r curScrollFactor;
 	
 public:
 	ScrollContainer(const stob::Node* chain = nullptr);
@@ -68,20 +68,20 @@ public:
 
 	void onChildrenListChanged()override;
 	
-	const Vec2r& ScrollPos()const{
-		return this->scrollPos;
+	const Vec2r& scrollPos()const{
+		return this->curScrollPos;
 	}
 	
 	
-	void SetScrollPos(const Vec2r& newScrollPos);
+	void setScrollPos(const Vec2r& newScrollPos);
 	
-	void SetScrollPosAsFactor(const Vec2r& factor);
+	void setScrollPosAsFactor(const Vec2r& factor);
 	
-	const Vec2r& ScrollFactor()const{
-		return this->scrollFactor;
+	const Vec2r& scrollFactor()const{
+		return this->curScrollFactor;
 	}
 	
-	std::function<void(ScrollContainer&)> onScrollFactorChanged;
+	std::function<void(ScrollContainer&)> scrollFactorChanged;
 	
 private:
 	void UpdateEffectiveDim();

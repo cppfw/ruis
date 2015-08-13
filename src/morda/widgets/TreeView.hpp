@@ -29,13 +29,18 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
+#include "List.hpp"
 
+#include "containers/ScrollContainer.hpp"
 
 namespace morda{
 
 
 
-class TreeView : virtual public Widget{
+class TreeView :
+		virtual public Widget,
+		private ScrollContainer
+{
 public:
 	TreeView(const stob::Node* chain = nullptr);
 	
