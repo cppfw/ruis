@@ -58,7 +58,6 @@ public:
 	protected:
 		ItemsProvider(){}
 	public:
-		virtual ~ItemsProvider()noexcept{}
 		
 		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path)const = 0;
 		

@@ -61,7 +61,6 @@ public:
 	protected:
 		ItemsProvider(){}
 	public:
-		virtual ~ItemsProvider()noexcept{}
 		
 		virtual size_t count()const noexcept = 0;
 		
