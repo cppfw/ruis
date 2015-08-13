@@ -200,14 +200,7 @@ Container{
 
 		//cache{true}
 
-		title{"Image label, button, custom widget"}
-
-/*
-		U_SimpleWidget{
-			dimX{300} dimY{300}
-		}
-*/
-
+		title{"TreeView"}
 
 		BlurGlass{
 			layout{
@@ -215,37 +208,46 @@ Container{
 			}
 		}
 
-		PushButton{
-			posX{10} posY{20}
-			dimX{100} dimY{50}
-
-			name{"Hello world button"}
-
-			clip{true}
-
+		TableContainer{
 			layout{
-				dimX{min} dimY{7mm}
+				dimX{max} dimY{max}
 			}
-			
 
-			Label{
-				text {"Hello world!"}
-				color{0xffccfbff}
+			TableRow{
+
+				layout{
+					dimX{0} dimY{0}
+					weight{1}
+				}
+
+				TreeView{
+					name{treeview_widget}
+					layout{
+						dimX{0} dimY{max}
+						weight{1}
+					}
+				}
+				
+				VerticalSlider{
+
+					name{treeview_vertical_slider}
+
+					layout{
+						dimX{min} dimY{max}
+					}
+				}
 			}
-		}
 
-		Label{
-			color{0xff00ff00}
+			TableRow{
+				HorizontalSlider{
+					name{treeview_horizontal_slider}
 
-			text {"Test Label"}
-
-			name{"Test label"}
-
-			
-			layout{
-				dimX{min} dimY{30}
+					layout{
+						dimX{0}
+					}
+				}
+				Widget{}
 			}
-			
 		}
 	}//~Window
 

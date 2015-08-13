@@ -265,7 +265,7 @@ public:
 			this->ShowVirtualKeyboard();
 		};
 		
-		std::dynamic_pointer_cast<morda::PushButton>(c->FindChildByName("Hello world button"))->clicked = [this](morda::PushButton&){
+		std::dynamic_pointer_cast<morda::PushButton>(c->FindChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
 			this->PostToUIThread_ts(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
