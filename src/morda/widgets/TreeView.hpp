@@ -33,6 +33,8 @@ THE SOFTWARE. */
 
 #include "containers/ScrollContainer.hpp"
 
+#include <ting/Buffer.hpp>
+
 namespace morda{
 
 
@@ -61,28 +63,40 @@ public:
 		
 		size_t count() const noexcept override;
 		
-		mutable size_t numVisibleItems = 0;
-		
 		struct Item{
+			size_t numUnderlyingVisible = 0;
 			std::vector<Item> children;
+			
+			void reset(){
+				this->numUnderlyingVisible = 0;
+				this->children.clear();
+			}
+			
+			void init(size_t numVisible){
+				this->children.resize(numVisible);
+				this->numUnderlyingVisible = numVisible;
+			}
 		};
 		
-		mutable std::vector<Item> visibleItemsTree;
+		mutable Item visibleItemsTree;
 		
 	protected:
 		ItemsProvider(){
 		}
 	public:
 		
-		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path)const = 0;
+		virtual std::shared_ptr<Widget> getWidget(ting::Buffer<const size_t> path)const = 0;
 		
-		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
+		virtual void recycle(ting::Buffer<const size_t> path, std::shared_ptr<Widget> w)const{}
 		
-		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
+		virtual size_t count(ting::Buffer<const size_t> path)const noexcept = 0;
 		
 		void notifyDataSetChanged();
 		
 		//TODO:
+		
+	private:
+		static void pathFromPlainIndex(size_t index, const std::vector<Item>& items, std::vector<size_t>& path);
 	};
 private:
 

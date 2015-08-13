@@ -27,18 +27,17 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 }
 
 void TreeView::ItemsProvider::notifyDataSetChanged() {
-	this->numVisibleItems = 0;
-	this->visibleItemsTree.clear();
+	this->visibleItemsTree.reset();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 
 size_t TreeView::ItemsProvider::count() const noexcept{
-	if (this->numVisibleItems == 0) {
-		this->numVisibleItems = this->count(std::vector<size_t>());
-		this->visibleItemsTree.resize(this->numVisibleItems);
+	if (this->visibleItemsTree.numUnderlyingVisible == 0) {
+		ASSERT(this->visibleItemsTree.children.size() == 0)
+		this->visibleItemsTree.init(this->count(ting::Buffer<const size_t>()));
 	}
-	return this->numVisibleItems;
+	return this->visibleItemsTree.numUnderlyingVisible;
 }
 
 
@@ -48,5 +47,35 @@ std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index) const {
 }
 
 void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w) const {
+	std::vector<size_t> path;
+	
 	//TODO:
 }
+
+
+void TreeView::ItemsProvider::pathFromPlainIndex(size_t index, const std::vector<Item>& items, std::vector<size_t>& path) {
+	//TODO:
+//	size_t idx = 0;
+//	
+//	for(Item i : items){
+//		if(index == 0){
+//			path.push_back(idx);
+//			return;
+//		}
+//		--index;
+//		if(i.children.size() != 0){
+//			
+//		}
+//		
+//		
+//		if(index < i.children.size()){
+//			path.push_back(idx);
+//			//TODO:
+//		}else{
+//			index -= i.children.size();
+//			++idx;
+//		}
+//	}
+}
+
+
