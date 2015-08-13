@@ -25,3 +25,14 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 				)
 		);
 }
+
+
+std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index) const {
+	//TODO:
+	return nullptr;
+}
+
+size_t TreeView::ItemsProvider::count() const {
+	//TODO:
+	return 0;
+}

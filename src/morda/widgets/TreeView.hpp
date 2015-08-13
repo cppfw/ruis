@@ -55,6 +55,10 @@ public:
 	{
 		friend class TreeView;
 		
+		std::shared_ptr<Widget> getWidget(size_t index)const override;
+		
+		size_t count() const override;
+		
 	protected:
 		ItemsProvider(){}
 	public:
