@@ -110,12 +110,6 @@ std::shared_ptr<Widget> Widget::findChildByName(const std::string& name)noexcept
 }
 
 
-std::unique_ptr<Widget::LayoutParams> Widget::resetLayoutParams(std::unique_ptr<Widget::LayoutParams> params)noexcept{
-	std::swap(this->layoutParams, params);
-	this->setRelayoutNeeded();
-	return std::move(params);
-}
-
 
 void Widget::resize(const morda::Vec2r& newDims){
 	if(this->rectangle.d == newDims){

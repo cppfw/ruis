@@ -131,8 +131,6 @@ private:
 	
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
-	std::unique_ptr<LayoutParams> resetLayoutParams(std::unique_ptr<LayoutParams> params = nullptr)noexcept; //TODO: ?
-	
 	bool needsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
