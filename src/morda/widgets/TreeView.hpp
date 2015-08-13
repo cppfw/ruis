@@ -85,7 +85,7 @@ public:
 		}
 	public:
 		
-		virtual std::shared_ptr<Widget> getWidget(ting::Buffer<const size_t> path)const = 0;
+		virtual std::shared_ptr<Widget> getWidget(ting::Buffer<const size_t> path, bool isCollapsed)const = 0;
 		
 		virtual void recycle(ting::Buffer<const size_t> path, std::shared_ptr<Widget> w)const{}
 		
