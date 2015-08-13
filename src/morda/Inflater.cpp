@@ -23,6 +23,7 @@
 #include "widgets/NinePatch.hpp"
 #include "widgets/NinePatchButton.hpp"
 #include "widgets/TextField.hpp"
+#include "widgets/TreeView.hpp"
 #include "widgets/CheckBox.hpp"
 #include "widgets/List.hpp"
 
@@ -64,6 +65,7 @@ Inflater::Inflater(){
 	this->AddWidget<KeyProxyContainer>("KeyProxyContainer");
 	this->AddWidget<BlackHoleContainer>("BlackHoleContainer");
 	this->AddWidget<OverlayContainer>("OverlayContainer");
+	this->AddWidget<TreeView>("TreeView");
 }
 
 
