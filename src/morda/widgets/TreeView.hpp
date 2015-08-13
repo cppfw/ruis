@@ -65,7 +65,7 @@ public:
 		
 		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
 		
-		virtual size_t count(const std::vector<size_t>& path = std::vector<size_t>())const noexcept = 0;
+		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
 		
 		void notifyDataSetChanged(){
 			this->notifyDataSetChanged();
