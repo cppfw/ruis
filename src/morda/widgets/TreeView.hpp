@@ -29,7 +29,6 @@ THE SOFTWARE. */
 #pragma once
 
 #include "Widget.hpp"
-#include "List.hpp"
 
 #include "containers/ScrollContainer.hpp"
 
@@ -47,6 +46,22 @@ public:
 	TreeView(const TreeView&) = delete;
 	TreeView& operator=(const TreeView&) = delete;
 	
+	
+	class ItemsProvider : public virtual ting::Shared{
+		TreeView* treeView = nullptr;
+	protected:
+		ItemsProvider(){}
+	public:
+		virtual ~ItemsProvider()noexcept{}
+		
+		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path)const = 0;
+		
+		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
+		
+		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
+		
+		//TODO:
+	};
 private:
 
 };

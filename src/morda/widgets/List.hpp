@@ -65,9 +65,9 @@ public:
 		
 		virtual size_t count()const noexcept = 0;
 		
-		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<Widget> getWidget(size_t index)const = 0;
 		
-		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
+		virtual void recycle(size_t index, std::shared_ptr<Widget> w)const{}
 		
 		void notifyDataSetChanged(){
 			if(this->list){
