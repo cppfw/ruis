@@ -46,13 +46,13 @@ public:
 	class Iterator{
 		friend class Tree;
 		
-		std::vector<size_t> path;
+		std::vector<size_t> pathIdx;
 		std::vector<Tree*> pathPtr;
 		
 		Iterator(Tree* node, size_t idx){
 			ASSERT(node)
 			this->pathPtr.push_back(node);
-			this->path.push_back(idx);
+			this->pathIdx.push_back(idx);
 		}
 	public:
 		Iterator() = default;
@@ -60,9 +60,12 @@ public:
 		Iterator(const Iterator&) = default;
 		Iterator& operator=(const Iterator&) = default;
 		
+		const decltype(pathIdx)& path()const noexcept{
+			return this->pathIdx;
+		}
 		
 		bool operator==(const Iterator& i){
-			return this->path == i.path;
+			return this->pathIdx == i.pathIdx;
 		}
 		
 		bool operator!=(const Iterator& i){
@@ -70,34 +73,34 @@ public:
 		}
 		
 		Tree& operator*(){
-			return this->pathPtr.back()->children[this->path.back()];
+			return this->pathPtr.back()->children[this->pathIdx.back()];
 		}
 		
 		Iterator& operator++(){
-			if(this->path.size() == 0){
+			if(this->pathIdx.size() == 0){
 				return *this;
 			}
 			
 			{
 				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->path.back();
+				auto& idx = this->pathIdx.back();
 
 				if(list[idx].children.size() != 0){
 					this->pathPtr.push_back(&list[idx]);
-					this->path.push_back(0);
+					this->pathIdx.push_back(0);
 					return *this;
 				}
 			}
 
-			for(; this->path.size() != 0;){
+			for(; this->pathIdx.size() != 0;){
 				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->path.back();
+				auto& idx = this->pathIdx.back();
 				
 				++idx;
 				
 				if(idx == list.size()){
 					this->pathPtr.pop_back();
-					this->path.pop_back();
+					this->pathIdx.pop_back();
 				}else{
 					break;
 				}
@@ -107,29 +110,29 @@ public:
 		}
 		
 		Iterator& operator--(){
-			if(this->path.size() == 0){
+			if(this->pathIdx.size() == 0){
 				return *this;
 			}
 			
 			{
-				auto& idx = this->path.back();
+				auto& idx = this->pathIdx.back();
 
 				if(idx == 0){
 					this->pathPtr.pop_back();
-					this->path.pop_back();
+					this->pathIdx.pop_back();
 					return *this;
 				}
 			}
 			
 			for(;;){
 				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->path.back();
+				auto& idx = this->pathIdx.back();
 				
 				--idx;
 				
 				if(list[idx].children.size() != 0){
 					this->pathPtr.push_back(&list[idx]);
-					this->path.push_back(list[idx].children.size());
+					this->pathIdx.push_back(list[idx].children.size());
 				}else{
 					break;
 				}
@@ -140,23 +143,21 @@ public:
 		
 		Iterator& descentTo(size_t index){
 			if(index >= this->operator*().children.size()){
-				this->path.clear();
-				this->pathPtr.clear();
 				return *this;
 			}
-			this->path.push_back(index);
+			this->pathIdx.push_back(index);
 			this->pathPtr.push_back(&this->operator *().children[index]);
 		}
 		
 		Iterator& operator+=(size_t d){
-			for(decltype(d) i = 0; i != d && this->path.size() != 0; ++i){
+			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
 				this->operator++();
 			}
 			return *this;
 		}
 		
 		Iterator& operator-=(size_t d){
-			for(decltype(d) i = 0; i != d && this->path.size() != 0; ++i){
+			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
 				this->operator--();
 			}
 			return *this;

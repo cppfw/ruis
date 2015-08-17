@@ -16,6 +16,29 @@ TreeView::TreeView(const stob::Node* chain) :
 	
 	lp.dim.y = Widget::LayoutParams::D_Max;
 	lp.dim.x = Widget::LayoutParams::D_Min;
+	
+	
+	
+	
+	
+	Tree t;
+	
+	t.children.resize(4);
+	
+	t.children[0].children.resize(1);
+	
+	t.children[2].children.resize(3);
+	
+	t.children[2].children[1].children.resize(2);
+	
+	
+	for(auto i = t.begin(); i != t.end(); ++i){
+		for(auto s : i.path()){
+			TRACE_ALWAYS(<< s << " ")
+		}
+		TRACE_ALWAYS(<< std::endl)
+	}
+	
 }
 
 void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
