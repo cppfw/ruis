@@ -64,6 +64,46 @@ public:
 		bool operator!=(const Iterator& i){
 			return !this->operator==(i);
 		}
+		
+		Tree& operator*(){
+			return *this->pathPtr.back();
+		}
+		
+		Iterator& operator++(){
+			{
+				auto& list = this->pathPtr.back()->children;
+				auto& idx = this->path.back();
+
+				if(list[idx].children.size() != 0){
+					this->pathPtr.push_back(&list[idx]);
+					this->path.push_back(0);
+					return *this;
+				}
+			}
+
+			for(; this->path.size() != 0;){
+				auto& list = this->pathPtr.back()->children;
+				auto& idx = this->path.back();
+				
+				++idx;
+				
+				if(idx == list.size()){
+					this->pathPtr.pop_back();
+					this->path.pop_back();
+				}else{
+					break;
+				}
+			}
+			
+			return *this;
+		}
+		
+		Iterator& operator--(){
+			
+			
+			//TODO:
+			return *this;
+		}
 	};
 	
 	Iterator begin(){
