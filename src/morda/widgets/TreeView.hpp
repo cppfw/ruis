@@ -57,6 +57,10 @@ public:
 	public:
 		Iterator() = default;
 		
+		Iterator(const Iterator&) = default;
+		Iterator& operator=(const Iterator&) = default;
+		
+		
 		bool operator==(const Iterator& i){
 			return this->path == i.path;
 		}
@@ -66,10 +70,14 @@ public:
 		}
 		
 		Tree& operator*(){
-			return *this->pathPtr.back();
+			return this->pathPtr.back()->children[this->path.back()];
 		}
 		
 		Iterator& operator++(){
+			if(this->path.size() == 0){
+				return *this;
+			}
+			
 			{
 				auto& list = this->pathPtr.back()->children;
 				auto& idx = this->path.back();
@@ -99,9 +107,58 @@ public:
 		}
 		
 		Iterator& operator--(){
+			if(this->path.size() == 0){
+				return *this;
+			}
 			
+			{
+				auto& idx = this->path.back();
+
+				if(idx == 0){
+					this->pathPtr.pop_back();
+					this->path.pop_back();
+					return *this;
+				}
+			}
 			
-			//TODO:
+			for(;;){
+				auto& list = this->pathPtr.back()->children;
+				auto& idx = this->path.back();
+				
+				--idx;
+				
+				if(list[idx].children.size() != 0){
+					this->pathPtr.push_back(&list[idx]);
+					this->path.push_back(list[idx].children.size());
+				}else{
+					break;
+				}
+			}
+			
+			return *this;
+		}
+		
+		Iterator& descentTo(size_t index){
+			if(index >= this->operator*().children.size()){
+				this->path.clear();
+				this->pathPtr.clear();
+				return *this;
+			}
+			this->path.push_back(index);
+			this->pathPtr.push_back(&this->operator *().children[index]);
+		}
+		
+		Iterator& operator+=(size_t d){
+			for(decltype(d) i = 0; i != d && this->path.size() != 0; ++i){
+				this->operator++();
+			}
+			return *this;
+		}
+		
+		Iterator& operator-=(size_t d){
+			for(decltype(d) i = 0; i != d && this->path.size() != 0; ++i){
+				this->operator--();
+			}
 			return *this;
 		}
 	};
@@ -110,12 +167,28 @@ public:
 		if(this->children.size() == 0){
 			return Iterator();
 		}
-		return Iterator(&this->children[0], 0);
+		return Iterator(this, 0);
 	}
 	
 	Iterator end(){
 		return Iterator();
 	}
+	
+	Iterator pos(const std::vector<size_t> path){
+		Iterator ret;
+		
+		for(auto i = path.begin(); i != path.end(); ++i){
+			ret.descentTo(*i);
+			if(ret == this->end()){
+				return this->end();
+			}
+		}
+		
+		return std::move(ret);
+	}
+	
+private:
+
 };
 
 
