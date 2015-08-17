@@ -35,7 +35,38 @@ THE SOFTWARE. */
 
 #include <ting/Buffer.hpp>
 
+
 namespace morda{
+
+
+class Tree{
+public:
+	std::vector<Tree> children;
+	
+	class Iterator{
+		friend class Tree;
+		
+		std::vector<std::tuple<Tree*, size_t>> path;
+		
+		Iterator(Tree* node, size_t idx){
+			ASSERT(node)
+			this->path.push_back(std::make_tuple(node, idx));
+		}
+	public:
+		Iterator() = default;
+	};
+	
+	Iterator begin(){
+		if(this->children.size() == 0){
+			return Iterator();
+		}
+		return Iterator(&this->children[0], 0);
+	}
+	
+	Iterator end(){
+		return Iterator();
+	}
+};
 
 
 
@@ -80,6 +111,10 @@ public:
 		
 		mutable Item visibleItemsTree;
 		
+		//cached values for faster lookup by index
+		size_t curIndex = 0;
+		std::vector<size_t> curPath;
+		
 	protected:
 		ItemsProvider(){
 		}
@@ -96,7 +131,7 @@ public:
 		//TODO:
 		
 	private:
-		static void pathFromPlainIndex(size_t index, const std::vector<Item>& items, std::vector<size_t>& path);
+		
 	};
 private:
 

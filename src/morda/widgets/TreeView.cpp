@@ -28,6 +28,8 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 void TreeView::ItemsProvider::notifyDataSetChanged() {
 	this->visibleItemsTree.reset();
+	this->curIndex = 0;
+	this->curPath.clear();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
@@ -51,31 +53,3 @@ void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w) c
 	
 	//TODO:
 }
-
-
-void TreeView::ItemsProvider::pathFromPlainIndex(size_t index, const std::vector<Item>& items, std::vector<size_t>& path) {
-	//TODO:
-//	size_t idx = 0;
-//	
-//	for(Item i : items){
-//		if(index == 0){
-//			path.push_back(idx);
-//			return;
-//		}
-//		--index;
-//		if(i.children.size() != 0){
-//			
-//		}
-//		
-//		
-//		if(index < i.children.size()){
-//			path.push_back(idx);
-//			//TODO:
-//		}else{
-//			index -= i.children.size();
-//			++idx;
-//		}
-//	}
-}
-
-
