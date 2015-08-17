@@ -46,14 +46,24 @@ public:
 	class Iterator{
 		friend class Tree;
 		
-		std::vector<std::tuple<Tree*, size_t>> path;
+		std::vector<size_t> path;
+		std::vector<Tree*> pathPtr;
 		
 		Iterator(Tree* node, size_t idx){
 			ASSERT(node)
-			this->path.push_back(std::make_tuple(node, idx));
+			this->pathPtr.push_back(node);
+			this->path.push_back(idx);
 		}
 	public:
 		Iterator() = default;
+		
+		bool operator==(const Iterator& i){
+			return this->path == i.path;
+		}
+		
+		bool operator!=(const Iterator& i){
+			return !this->operator==(i);
+		}
 	};
 	
 	Iterator begin(){
