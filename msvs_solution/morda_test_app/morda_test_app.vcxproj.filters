@@ -21,5 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\tests\app\res\test.gui.stob">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

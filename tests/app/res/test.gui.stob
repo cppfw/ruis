@@ -501,8 +501,12 @@ Container{
 					text{item_2_werf}
 				}
 
-				Label{
-					text{item_3}
+				PushButton{
+					Label{
+						text {"item3"}
+						color{0xffccfbff}
+					}
+				//	text{item_3}
 				}
 
 				Label{
