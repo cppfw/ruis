@@ -65,7 +65,7 @@ List::List(bool isVertical, const stob::Node* chain):
 
 
 void List::layOut() {
-	TRACE(<< "List::layOut(): invoked" << std::endl)
+//	TRACE(<< "List::layOut(): invoked" << std::endl)
 	
 	this->numTailItems = 0;//means that it needs to be recomputed
 	
