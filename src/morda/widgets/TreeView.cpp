@@ -60,7 +60,7 @@ void TreeView::ItemsProvider::notifyDataSetChanged() {
 size_t TreeView::ItemsProvider::count() const noexcept{
 	if (this->visibleItemsTree.numUnderlyingVisible == 0) {
 		ASSERT(this->visibleItemsTree.children.size() == 0)
-		this->visibleItemsTree.init(this->count(ting::Buffer<const size_t>()));
+		this->visibleItemsTree.init(this->count(ting::Buffer<size_t>()));
 	}
 	return this->visibleItemsTree.numUnderlyingVisible;
 }
