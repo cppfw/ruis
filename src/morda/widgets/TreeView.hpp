@@ -170,7 +170,7 @@ public:
 				return *this;
 			}
 			
-			if(index >= this->operator*().children.size()){
+			if(this->pathIdx.back() >= this->pathPtr.back()->children.size()){
 				return *this;
 			}
 			this->pathPtr.push_back(&this->operator*());
