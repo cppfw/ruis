@@ -613,22 +613,10 @@
         </ccTool>
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/ting</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/widgets/containers</pElem>
-            <pElem>/usr/include/ting/mt</pElem>
-            <pElem>/usr/include/ting/fs</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/resources</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-          </incDir>
+        <ccTool flags="0">
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">

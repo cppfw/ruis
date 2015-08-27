@@ -143,19 +143,7 @@ public:
 			return *this;
 		}
 		
-		Iterator& descentTo(size_t index){
-			if(this->pathIdx.size() == 0){
-				this->pathIdx.push_back(index);
-				return *this;
-			}
-			
-			if(index >= this->operator*().children.size()){
-				return *this;
-			}
-			this->pathPtr.push_back(&this->pathPtr.back()->children[this->pathIdx.back()]);
-			this->pathIdx.push_back(index);
-			return *this;
-		}
+		
 		
 		Iterator& operator+=(size_t d){
 			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
@@ -168,6 +156,21 @@ public:
 			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
 				this->operator--();
 			}
+			return *this;
+		}
+		
+	private:
+		Iterator& descentTo(size_t index){
+			if(this->pathIdx.size() == 0){
+				this->pathIdx.push_back(index);
+				return *this;
+			}
+			
+			if(index >= this->operator*().children.size()){
+				return *this;
+			}
+			this->pathPtr.push_back(&this->operator*());
+			this->pathIdx.push_back(index);
 			return *this;
 		}
 	};
