@@ -193,7 +193,7 @@ public:
 		this->size_var += numChildrenToAdd;
 	}
 	
-	void removeAllChildren(Iterator from){
+	void removeAll(Iterator from){
 		size_t numChildrenToRemove = (*from).children.size();
 		(*from).children.clear();
 		(*from).size_var -= numChildrenToRemove;
@@ -201,6 +201,11 @@ public:
 			ASSERT(t->size_var >= numChildrenToRemove)
 			t->size_var -= numChildrenToRemove;
 		}
+	}
+	
+	void removeAll(){
+		this->children.clear();
+		this->size_var = 0;
 	}
 	
 	decltype(size_var) size()const noexcept{
@@ -263,26 +268,11 @@ public:
 		
 		size_t count() const noexcept override;
 		
-		struct Item{
-			size_t numUnderlyingVisible = 0;
-			std::vector<Item> children;
-			
-			void reset(){
-				this->numUnderlyingVisible = 0;
-				this->children.clear();
-			}
-			
-			void init(size_t numVisible){
-				this->children.resize(numVisible);
-				this->numUnderlyingVisible = numVisible;
-			}
-		};
-		
-		mutable Item visibleItemsTree;
+		mutable Tree visibleTree;
 		
 		//cached values for faster lookup by index
-		size_t curIndex = 0;
-		std::vector<size_t> curPath;
+		size_t iterIndex = 0;
+		decltype(visibleTree)::Iterator iter;
 		
 	protected:
 		ItemsProvider(){

@@ -52,19 +52,15 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 }
 
 void TreeView::ItemsProvider::notifyDataSetChanged() {
-	this->visibleItemsTree.reset();
-	this->curIndex = 0;
-	this->curPath.clear();
+	this->visibleTree.removeAll();
+	this->iterIndex = 0;
+	this->iter = this->visibleTree.begin();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 
 size_t TreeView::ItemsProvider::count() const noexcept{
-	if (this->visibleItemsTree.numUnderlyingVisible == 0) {
-		ASSERT(this->visibleItemsTree.children.size() == 0)
-		this->visibleItemsTree.init(this->count(ting::Buffer<size_t>()));
-	}
-	return this->visibleItemsTree.numUnderlyingVisible;
+	return this->visibleTree.size();
 }
 
 
