@@ -40,9 +40,11 @@ namespace morda{
 
 
 class Tree{
-public:
+	size_t size_var = 0;
+	
 	std::vector<Tree> children;
 	
+public:
 	class Iterator{
 		friend class Tree;
 		
@@ -142,11 +144,17 @@ public:
 		}
 		
 		Iterator& descentTo(size_t index){
+			if(this->pathIdx.size() == 0){
+				this->pathIdx.push_back(index);
+				return *this;
+			}
+			
 			if(index >= this->operator*().children.size()){
 				return *this;
 			}
+			this->pathPtr.push_back(&this->pathPtr.back()->children[this->pathIdx.back()]);
 			this->pathIdx.push_back(index);
-			this->pathPtr.push_back(&this->operator *().children[index]);
+			return *this;
 		}
 		
 		Iterator& operator+=(size_t d){
@@ -164,6 +172,34 @@ public:
 		}
 	};
 	
+	void add(Iterator addTo, size_t numChildrenToAdd){
+		for(auto t : addTo.pathPtr){
+			TRACE(<< "t = " << t << std::endl)
+			t->size_var += numChildrenToAdd;
+		}
+		
+		(*addTo).add(numChildrenToAdd);
+	}
+	
+	void add(size_t numChildrenToAdd){
+		this->children.resize(this->children.size() + numChildrenToAdd);
+		this->size_var += numChildrenToAdd;
+	}
+	
+	void removeAllChildren(Iterator from){
+		size_t numChildrenToRemove = (*from).children.size();
+		(*from).children.clear();
+		(*from).size_var -= numChildrenToRemove;
+		for(auto t : from.pathPtr){
+			ASSERT(t->size_var >= numChildrenToRemove)
+			t->size_var -= numChildrenToRemove;
+		}
+	}
+	
+	decltype(size_var) size()const noexcept{
+		return this->size_var;
+	}
+	
 	Iterator begin(){
 		if(this->children.size() == 0){
 			return Iterator();
@@ -177,12 +213,14 @@ public:
 	
 	Iterator pos(const std::vector<size_t> path){
 		Iterator ret;
+		ret.pathPtr.push_back(this);
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
 			ret.descentTo(*i);
-			if(ret == this->end()){
-				return this->end();
-			}
+//			if(ret == this->end()){
+//				return this->end();
+//			}
+			//TODO: detect if index was out of bounds
 		}
 		
 		return std::move(ret);

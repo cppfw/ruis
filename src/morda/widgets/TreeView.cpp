@@ -23,13 +23,13 @@ TreeView::TreeView(const stob::Node* chain) :
 	
 	Tree t;
 	
-	t.children.resize(4);
+	t.add(4);
 	
-	t.children[0].children.resize(1);
+	t.add(t.pos({0}), 1);
 	
-	t.children[2].children.resize(3);
+	t.add(t.pos({2}), 3);
 	
-	t.children[2].children[1].children.resize(2);
+	t.add(t.pos({2, 1}), 2);
 	
 	
 	for(auto i = t.begin(); i != t.end(); ++i){
@@ -38,6 +38,8 @@ TreeView::TreeView(const stob::Node* chain) :
 		}
 		TRACE_ALWAYS(<< std::endl)
 	}
+	
+	TRACE_ALWAYS(<< "total size = " << t.size() << std::endl)
 	
 }
 
