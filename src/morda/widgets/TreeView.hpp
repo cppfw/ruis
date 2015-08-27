@@ -62,6 +62,10 @@ public:
 		Iterator(const Iterator&) = default;
 		Iterator& operator=(const Iterator&) = default;
 		
+		size_t depth()const noexcept{
+			return this->pathIdx.size();
+		}
+		
 		const decltype(pathIdx)& path()const noexcept{
 			return this->pathIdx;
 		}
@@ -219,11 +223,11 @@ public:
 		ret.pathPtr.push_back(this);
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
+			auto oldDepth = ret.depth();
 			ret.descentTo(*i);
-//			if(ret == this->end()){
-//				return this->end();
-//			}
-			//TODO: detect if index was out of bounds
+			if(oldDepth == ret.depth()){
+				break;
+			}
 		}
 		
 		return std::move(ret);
