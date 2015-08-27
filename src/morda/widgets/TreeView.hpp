@@ -179,13 +179,13 @@ public:
 		}
 	};
 	
-	void add(Iterator addTo, size_t numChildrenToAdd){
-		for(auto t : addTo.pathPtr){
+	void add(Iterator addInto, size_t numChildrenToAdd){
+		for(auto t : addInto.pathPtr){
 			TRACE(<< "t = " << t << std::endl)
 			t->size_var += numChildrenToAdd;
 		}
 		
-		(*addTo).add(numChildrenToAdd);
+		(*addInto).add(numChildrenToAdd);
 	}
 	
 	void add(size_t numChildrenToAdd){
