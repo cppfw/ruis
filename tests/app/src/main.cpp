@@ -227,7 +227,40 @@ public:
 
 
 class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
+	std::unique_ptr<stob::Node> root;
+	
 public:
+	
+	TreeViewItemsProvider(){
+		this->root = stob::Parse(R"qwertyuiop(
+				root1{
+					subroot1{
+						subsubroot1
+						subsubroot2
+						subsubroot3
+						subsubroot4
+					}
+					subroot2
+					subroot3{
+						subsubroot0
+						subsubroot1{
+							subsubsubroot1
+							subsubsubroot2
+						}
+						subsubroot2
+					}
+				}
+				root2{
+					subsubroot1
+					subsubroot2{
+						trololo
+						"hello world!"
+					}
+				}
+				root3
+				root4
+			)qwertyuiop");
+	}
 	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) const override{
 		//TODO:
@@ -235,6 +268,8 @@ public:
 	}
 	
 	size_t count(const std::vector<size_t>& path) const noexcept override{
+//		this->root->
+		
 		//TODO:
 		return 0;
 	}
