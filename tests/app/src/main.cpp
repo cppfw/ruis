@@ -15,6 +15,7 @@
 #include "../../../src/morda/widgets/containers/ScrollContainer.hpp"
 #include "../../../src/morda/widgets/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
+#include "../../../src/morda/widgets/TreeView.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
 
@@ -224,6 +225,23 @@ public:
 };
 
 
+
+class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
+public:
+	
+	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) const override{
+		//TODO:
+		return nullptr;
+	}
+	
+	size_t count(const std::vector<size_t>& path) const noexcept override{
+		//TODO:
+		return 0;
+	}
+
+};
+
+
 class Application : public morda::App{
 	static morda::App::WindowParams GetWindowParams()noexcept{
 		morda::App::WindowParams wp;
@@ -324,6 +342,11 @@ public:
 					l->setScrollPosAsFactor(slider.factor());
 				}
 			};
+		}
+		
+		{
+			auto tv = c->findChildByNameAs<morda::TreeView>("treeview_widget");
+			tv->setItemsProvider(ting::New<TreeViewItemsProvider>());
 		}
 	}
 };

@@ -60,17 +60,35 @@ void TreeView::ItemsProvider::notifyDataSetChanged() {
 
 
 size_t TreeView::ItemsProvider::count() const noexcept{
+	if(this->visibleTree.size() == 0){
+		auto size = this->count(std::vector<size_t>());
+		this->visibleTree.add(size);
+	}
 	return this->visibleTree.size();
 }
 
 
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index) const {
-	//TODO:
-	return nullptr;
+	auto i = this->iterForIndex(index);
+	
+	return this->getWidget(i.path(), (*i).numChildren() == 0);
 }
 
 void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w) const {
-	std::vector<size_t> path;
+	auto i = this->iterForIndex(index);
 	
-	//TODO:
+	this->recycle(i.path(), std::move(w));
+}
+
+const decltype(TreeView::ItemsProvider::iter) TreeView::ItemsProvider::iterForIndex(size_t index) const {
+	if(index != this->iterIndex){
+		if(index > this->iterIndex){
+			this->iter += index - this->iterIndex;
+		}else{ ASSERT(index < this->iterIndex)
+			this->iter -= this->iterIndex - index;
+		}
+		this->iterIndex = index;
+	}
+	
+	return this->iter;
 }

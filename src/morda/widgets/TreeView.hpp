@@ -212,6 +212,10 @@ public:
 		return this->size_var;
 	}
 	
+	size_t numChildren()const noexcept{
+		return this->children.size();
+	}
+	
 	Iterator begin(){
 		if(this->children.size() == 0){
 			return Iterator();
@@ -271,23 +275,25 @@ public:
 		mutable Tree visibleTree;
 		
 		//cached values for faster lookup by index
-		size_t iterIndex = 0;
-		decltype(visibleTree)::Iterator iter;
+		mutable size_t iterIndex = 0;
+		mutable decltype(visibleTree)::Iterator iter;
+		
+		const decltype(iter) iterForIndex(size_t index)const;
 		
 	protected:
 		ItemsProvider(){
 		}
 	public:
 		
-		virtual std::shared_ptr<Widget> getWidget(const ting::Buffer<size_t> path, bool isCollapsed)const = 0;
+		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)const = 0;
 		
-		virtual void recycle(const ting::Buffer<size_t> path, std::shared_ptr<Widget> w)const{}
+		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
 		
-		virtual size_t count(const ting::Buffer<size_t> path)const noexcept = 0;
+		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
 		
 		void notifyDataSetChanged();
 		
-		//TODO:
+		//TODO: add notification functions for insert/change/delete
 		
 	private:
 		
