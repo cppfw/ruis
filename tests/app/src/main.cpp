@@ -268,7 +268,9 @@ public:
 	}
 	
 	size_t count(const std::vector<size_t>& path) const noexcept override{
-//		this->root->
+		for(auto i = path.begin(); i != path.end(); ++i){
+			//TODO:
+		}
 		
 		//TODO:
 		return 0;
