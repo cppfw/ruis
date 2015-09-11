@@ -45,9 +45,7 @@ TreeView::TreeView(const stob::Node* chain) :
 
 void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	this->list->setItemsProvider(
-			std::shared_ptr<List::ItemsProvider>(
-					static_cast<List::ItemsProvider*>(provider.get())
-				)
+			std::static_pointer_cast<List::ItemsProvider>(provider)
 		);
 }
 
@@ -63,6 +61,8 @@ size_t TreeView::ItemsProvider::count() const noexcept{
 	if(this->visibleTree.size() == 0){
 		auto size = this->count(std::vector<size_t>());
 		this->visibleTree.add(size);
+		this->iter = this->visibleTree.begin();
+		this->iterIndex = 0;
 	}
 	return this->visibleTree.size();
 }
@@ -81,6 +81,8 @@ void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w) c
 }
 
 const decltype(TreeView::ItemsProvider::iter) TreeView::ItemsProvider::iterForIndex(size_t index) const {
+	ASSERT(this->iter.path().size() != 0)
+	
 	if(index != this->iterIndex){
 		if(index > this->iterIndex){
 			this->iter += index - this->iterIndex;

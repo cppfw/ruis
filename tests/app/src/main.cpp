@@ -233,47 +233,72 @@ public:
 	
 	TreeViewItemsProvider(){
 		this->root = stob::Parse(R"qwertyuiop(
-				root1{
-					subroot1{
-						subsubroot1
-						subsubroot2
-						subsubroot3
-						subsubroot4
-					}
-					subroot2
-					subroot3{
-						subsubroot0
-						subsubroot1{
-							subsubsubroot1
-							subsubsubroot2
+				{
+					root1{
+						subroot1{
+							subsubroot1
+							subsubroot2
+							subsubroot3
+							subsubroot4
 						}
-						subsubroot2
+						subroot2
+						subroot3{
+							subsubroot0
+							subsubroot1{
+								subsubsubroot1
+								subsubsubroot2
+							}
+							subsubroot2
+						}
 					}
-				}
-				root2{
-					subsubroot1
-					subsubroot2{
-						trololo
-						"hello world!"
+					root2{
+						subsubroot1
+						subsubroot2{
+							trololo
+							"hello world!"
+						}
 					}
+					root3
+					root4
 				}
-				root3
-				root4
 			)qwertyuiop");
 	}
 	
+	~TreeViewItemsProvider(){
+		
+	}
+	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) const override{
-		//TODO:
-		return nullptr;
+		std::stringstream ss;
+		
+		for(unsigned i = 0; i != path.size(); ++i){
+			ss << "*";
+		}
+		
+		ss << (isCollapsed ? "+" : "-");
+		
+		auto n = this->root.get();
+		
+		for(auto i = path.begin(); i != path.end(); ++i){
+			n = n->child(*i);
+		}
+		
+		ss << n->Value();
+		
+		auto w = ting::New<morda::Label>();
+		w->setText(ss.str());
+		
+		return w;
 	}
 	
 	size_t count(const std::vector<size_t>& path) const noexcept override{
+		auto n = this->root.get();
+		
 		for(auto i = path.begin(); i != path.end(); ++i){
-			//TODO:
+			n = n->child(*i);
 		}
 		
-		//TODO:
-		return 0;
+		return n->count();
 	}
 
 };
@@ -382,8 +407,21 @@ public:
 		}
 		
 		{
-			auto tv = c->findChildByNameAs<morda::TreeView>("treeview_widget");
-			tv->setItemsProvider(ting::New<TreeViewItemsProvider>());
+			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");
+			ASSERT(treeview)
+			treeview->setItemsProvider(ting::New<TreeViewItemsProvider>());
+			std::weak_ptr<morda::TreeView> tv = treeview;
+			
+			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("treeview_vertical_slider");
+			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
+			
+			verticalSlider->factorChange = [tv](morda::Slider& slider){
+				if(auto t = tv.lock()){
+					t->setScrollPosAsFactor(slider.factor());
+				}
+			};
+			
+			//TODO: connect horizontal slider
 		}
 	}
 };

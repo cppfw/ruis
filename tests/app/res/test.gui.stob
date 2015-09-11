@@ -220,6 +220,7 @@ Container{
 					weight{1}
 				}
 
+
 				TreeView{
 					name{treeview_widget}
 					layout{
@@ -227,6 +228,7 @@ Container{
 						weight{1}
 					}
 				}
+
 				
 				VerticalSlider{
 
@@ -482,6 +484,7 @@ Container{
 			layout{
 				dimX{max} dimY{max}
 			}
+
 			VerticalList{
 				name{vertical_list}
 				layout{
@@ -537,6 +540,7 @@ Container{
 					text{item_10}
 				}
 			}
+
 			VerticalSlider{
 				name{vertical_list_slider}
 				layout{

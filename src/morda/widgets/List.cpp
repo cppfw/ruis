@@ -315,6 +315,7 @@ void List::updateTailItemsInfo(){
 		++this->numTailItems;
 		
 		auto w = this->provider->getWidget(i - 1);
+		ASSERT(w)
 		
 		auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 		

@@ -65,6 +65,8 @@ public:
 	void setFactor(float newFactor){
 		real factor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
 	
+		ASSERT_INFO(0 <= factor && factor <= 1, factor)
+		
 		if(this->curFactor == factor){
 			return;
 		}

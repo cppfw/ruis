@@ -86,22 +86,28 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		unsigned longIndex = this->GetLongIndex();
 
 		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
-		ASSERT(maxPos >= 0)
+		ting::util::ClampBottom(maxPos, 0.0f);
 
 		float newPos = this->handle.rect().p[longIndex];
 		newPos += pos[longIndex] - this->clickPoint;
 		ting::util::ClampRange(newPos, 0.0f, maxPos);
 
+		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
+		
 		morda::Vec2r newPosition(0);
 		newPosition[longIndex] = newPos;
 
 		this->handle.moveTo(newPosition);
 		
-		//update factor
-		if(this->isVertical){
-			this->setFactor((maxPos - newPos) / maxPos);
-		}else{
-			this->setFactor(newPos / maxPos);
+		ASSERT(maxPos >= 0)
+				
+		if(maxPos > 0){
+			//update factor
+			if(this->isVertical){
+				this->setFactor((maxPos - newPos) / maxPos);
+			}else{
+				this->setFactor(newPos / maxPos);
+			}
 		}
 
 		return true;
@@ -140,7 +146,12 @@ void HandleSlider::layOut(){
 			}else{
 				newPos[longIndex] = ting::math::Round(effectiveLength * this->factor());
 			}
-			ASSERT(newPos[longIndex] <= effectiveLength)
+			ASSERT_INFO(
+					newPos[longIndex] <= effectiveLength,
+					"newPos[longIndex] = " << newPos[longIndex]
+							<< ", effectiveLength = " << effectiveLength
+							<< ", this->factor() = " << this->factor()
+				)
 		}
 		this->handle.moveTo(newPos);
 	}

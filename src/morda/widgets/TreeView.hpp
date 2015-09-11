@@ -166,6 +166,7 @@ public:
 	private:
 		Iterator& descentTo(size_t index){
 			if(this->pathIdx.size() == 0){
+				ASSERT(this->pathPtr.size() == 1)
 				this->pathIdx.push_back(index);
 				return *this;
 			}
@@ -265,6 +266,7 @@ public:
 			private List::ItemsProvider
 	{
 		friend class TreeView;
+		friend std::shared_ptr<List::ItemsProvider> std::static_pointer_cast<List::ItemsProvider>(const std::shared_ptr<ItemsProvider>&);
 		
 		void recycle(size_t index, std::shared_ptr<Widget> w) const override;
 		
@@ -275,7 +277,7 @@ public:
 		mutable Tree visibleTree;
 		
 		//cached values for faster lookup by index
-		mutable size_t iterIndex = 0;
+		mutable size_t iterIndex;
 		mutable decltype(visibleTree)::Iterator iter;
 		
 		const decltype(iter) iterForIndex(size_t index)const;
@@ -303,7 +305,9 @@ private:
 public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
-	
+	void setScrollPosAsFactor(real factor){
+		this->list->setScrollPosAsFactor(factor);
+	}
 };
 
 

@@ -104,6 +104,9 @@ public:
 		this->RecomputeBoundingBox();
 	}
 	
+	void setText(const std::string& text){
+		this->SetText(ting::utf8::ToUTF32(text));
+	}
 
 	void OnFontChanged()override{
 		this->RecomputeBoundingBox();
