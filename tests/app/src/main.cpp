@@ -271,7 +271,7 @@ public:
 		
 	}
 	
-	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) const override{
+	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 		
 		const char* DItem = R"qwertyuiop(
@@ -318,6 +318,8 @@ public:
 			if(!isDown){
 				return false;
 			}
+			
+			this->uncollapse(path);
 			
 			TRACE_ALWAYS(<< "plus clicked:")
 			for(auto i = path.begin(); i != path.end(); ++i){

@@ -268,9 +268,9 @@ public:
 		friend class TreeView;
 		friend std::shared_ptr<List::ItemsProvider> std::static_pointer_cast<List::ItemsProvider>(const std::shared_ptr<ItemsProvider>&);
 		
-		void recycle(size_t index, std::shared_ptr<Widget> w) const override;
+		void recycle(size_t index, std::shared_ptr<Widget> w)override;
 		
-		std::shared_ptr<Widget> getWidget(size_t index)const override;
+		std::shared_ptr<Widget> getWidget(size_t index)override;
 		
 		size_t count() const noexcept override;
 		
@@ -287,11 +287,14 @@ public:
 		}
 	public:
 		
-		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)const = 0;
+		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) = 0;
 		
-		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w)const{}
+		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w){}
 		
 		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
+		
+		void uncollapse(const std::vector<size_t>& path);
+		void collapse(const std::vector<size_t>& path);
 		
 		void notifyDataSetChanged();
 		

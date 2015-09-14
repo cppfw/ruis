@@ -18,13 +18,13 @@ public:
 		return this->widgets.size();
 	}
 	
-	std::shared_ptr<Widget> getWidget(size_t index)const override{
+	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		return morda::App::Inst().inflater.Inflate(*(this->widgets[index]));
 	}
 	
 
-	void recycle(size_t index, std::shared_ptr<Widget> w)const override{
+	void recycle(size_t index, std::shared_ptr<Widget> w)override{
 //		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 
