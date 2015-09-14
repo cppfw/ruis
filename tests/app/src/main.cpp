@@ -302,6 +302,10 @@ public:
 		auto indent = w->findChildByNameAs<morda::HorizontalContainer>("indentaion");
 		ASSERT(indent)
 		
+		for(unsigned i = 1; i != path.size(); ++i){
+			indent->Add(*stob::Parse("Widget{layout{dimX{5mm}dimzY{0}}}"));
+		}
+		
 		auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
 		ASSERT(plusminus)
 		plusminus->setText(isCollapsed ? "+" : "-");
@@ -311,7 +315,7 @@ public:
 		
 		auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
 		ASSERT(plusminusMouseProxy)
-		plusminusMouseProxy->mouseButton = [this, path](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+		plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
 			if(button != morda::Widget::EMouseButton::LEFT){
 				return false;
 			}
@@ -319,7 +323,11 @@ public:
 				return false;
 			}
 			
-			this->uncollapse(path);
+			if(isCollapsed){
+				this->uncollapse(path);
+			}else{
+				this->collapse(path);
+			}
 			
 			TRACE_ALWAYS(<< "plus clicked:")
 			for(auto i = path.begin(); i != path.end(); ++i){

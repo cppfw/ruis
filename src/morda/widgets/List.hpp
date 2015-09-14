@@ -68,11 +68,7 @@ public:
 		
 		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
 		
-		void notifyDataSetChanged(){
-			if(this->list){
-				this->list->notifyDataSetChanged();
-			}
-		}
+		void notifyDataSetChanged();
 	};
 	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
@@ -100,7 +96,7 @@ private:
 	
 	void updateTailItemsInfo();
 	
-	void notifyDataSetChanged(){
+	void handleDataSetChanged(){
 		this->numTailItems = 0;//means that it needs to be recomputed
 		
 		this->removeAll();

@@ -1,4 +1,5 @@
 #include "TreeView.hpp"
+#include "../App.hpp"
 
 
 
@@ -100,10 +101,18 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 }
 
 void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
+	auto s = this->count(path);
+	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
+	if(s == 0){
+		return;
+	}
 	
+	auto i = this->visibleTree.pos(path);
+	ASSERT(i != this->visibleTree.end())
 	
+	ASSERT((*i).numChildren() == 0)
 	
-//	auto s = this->count(path);
+	this->visibleTree.add(i, s);
 	
-	//TODO:
+	this->List::ItemsProvider::notifyDataSetChanged();
 }

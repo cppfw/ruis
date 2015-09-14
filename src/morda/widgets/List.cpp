@@ -81,7 +81,7 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(this->provider){
 		this->provider->list = this;
 	}
-	this->notifyDataSetChanged();
+	this->handleDataSetChanged();
 }
 
 
@@ -363,4 +363,16 @@ morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	}
 	
 	return ret;
+}
+
+void List::ItemsProvider::notifyDataSetChanged() {
+	if (!this->list) {
+		return;
+	}
+	
+	App::Inst().PostToUIThread_ts(
+		[this](){
+			this->list->handleDataSetChanged();
+		}
+	);
 }
