@@ -13,9 +13,11 @@
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/containers/ScrollContainer.hpp"
+#include "../../../src/morda/widgets/containers/LinearContainer.hpp"
 #include "../../../src/morda/widgets/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
+#include "../../../src/morda/widgets/MouseProxy.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
 
@@ -24,6 +26,7 @@
 #include <ting/util.hpp>
 
 #include "../../../src/morda/util/ZipFile.hpp"
+
 
 
 
@@ -269,13 +272,63 @@ public:
 	}
 	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) const override{
+		ASSERT(path.size() >= 1)
+		
+		const char* DItem = R"qwertyuiop(
+				HorizontalContainer{
+					HorizontalContainer{
+						name{indentaion}
+					}
+					FrameContainer{
+						Label{
+							name{plusminus}
+						}
+						MouseProxy{
+							layout{
+								dimX{max} dimY{max}
+							}
+							name{plusminus_mouseproxy}
+						}
+					}
+					Label{
+						name{value}
+					}
+				}
+			)qwertyuiop";
+		
+		auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(DItem));
+		ASSERT(w)
+		
+		auto indent = w->findChildByNameAs<morda::HorizontalContainer>("indentaion");
+		ASSERT(indent)
+		
+		auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
+		ASSERT(plusminus)
+		plusminus->setText(isCollapsed ? "+" : "-");
+		
+		auto value = w->findChildByNameAs<morda::Label>("value");
+		ASSERT(value)
+		
+		auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
+		ASSERT(plusminusMouseProxy)
+		plusminusMouseProxy->mouseButton = [this, path](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+			if(button != morda::Widget::EMouseButton::LEFT){
+				return false;
+			}
+			if(!isDown){
+				return false;
+			}
+			
+			TRACE_ALWAYS(<< "plus clicked:")
+			for(auto i = path.begin(); i != path.end(); ++i){
+				TRACE_ALWAYS(<< " " << (*i))
+			}
+			TRACE_ALWAYS(<< std::endl)
+			
+			return true;
+		};
+		
 		std::stringstream ss;
-		
-		for(unsigned i = 0; i != path.size(); ++i){
-			ss << "*";
-		}
-		
-		ss << (isCollapsed ? "+" : "-");
 		
 		auto n = this->root.get();
 		
@@ -285,8 +338,7 @@ public:
 		
 		ss << n->Value();
 		
-		auto w = ting::New<morda::Label>();
-		w->setText(ss.str());
+		value->setText(ss.str());
 		
 		return w;
 	}
