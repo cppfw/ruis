@@ -70,14 +70,6 @@ public:
 			return this->pathIdx;
 		}
 		
-		bool operator==(const Iterator& i){
-			return this->pathIdx == i.pathIdx;
-		}
-		
-		bool operator!=(const Iterator& i){
-			return !this->operator==(i);
-		}
-		
 		Tree& operator*(){
 			return this->pathPtr.back()->children[this->pathIdx.back()];
 		}
@@ -161,6 +153,22 @@ public:
 				this->operator--();
 			}
 			return *this;
+		}
+		
+		bool operator==(const Iterator& i){
+			return this->pathIdx == i.pathIdx;
+		}
+		
+		bool operator!=(const Iterator& i){
+			return !this->operator==(i);
+		}
+		
+		bool operator>(const Iterator& i){
+			return this->pathIdx > i.pathIdx;
+		}
+		
+		bool operator<(const Iterator& i){
+			return this->pathIdx < i.pathIdx;
 		}
 		
 	private:
