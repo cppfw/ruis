@@ -417,11 +417,19 @@ public:
 			
 			verticalSlider->factorChange = [tv](morda::Slider& slider){
 				if(auto t = tv.lock()){
-					t->setScrollPosAsFactor(slider.factor());
+					t->setVerticalScrollPosAsFactor(slider.factor());
 				}
 			};
 			
-			//TODO: connect horizontal slider
+			auto horizontalSlider = c->findChildByNameAs<morda::HorizontalSlider>("treeview_horizontal_slider");
+			ASSERT(horizontalSlider)
+			std::weak_ptr<morda::HorizontalSlider> hs = horizontalSlider;
+			
+			horizontalSlider->factorChange = [tv](morda::Slider& slider){
+				if(auto t = tv.lock()){
+					t->setHorizontalScrollPosAsFactor(slider.factor());
+				}
+			};
 		}
 	}
 };

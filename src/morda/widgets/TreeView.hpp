@@ -305,8 +305,12 @@ private:
 public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
-	void setScrollPosAsFactor(real factor){
+	void setVerticalScrollPosAsFactor(real factor){
 		this->list->setScrollPosAsFactor(factor);
+	}
+	
+	void setHorizontalScrollPosAsFactor(real factor){
+		this->setScrollPosAsFactor(Vec2r(factor, 0));
 	}
 };
 
