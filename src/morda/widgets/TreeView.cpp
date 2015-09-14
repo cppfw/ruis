@@ -112,6 +112,8 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 	
 	ASSERT((*i).numChildren() == 0)
 	
+	//TODO: check if iterIndex needs to be corrected
+	
 	this->visibleTree.add(i, s);
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
