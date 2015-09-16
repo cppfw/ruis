@@ -306,45 +306,47 @@ public:
 			indent->Add(*stob::Parse("Widget{layout{dimX{5mm}dimzY{0}}}"));
 		}
 		
-		auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
-		ASSERT(plusminus)
-		plusminus->setText(isCollapsed ? "+" : "-");
-		
-		auto value = w->findChildByNameAs<morda::Label>("value");
-		ASSERT(value)
-		
-		auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
-		ASSERT(plusminusMouseProxy)
-		plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
-			if(button != morda::Widget::EMouseButton::LEFT){
-				return false;
-			}
-			if(!isDown){
-				return false;
-			}
-			
-			if(isCollapsed){
-				this->uncollapse(path);
-			}else{
-				this->collapse(path);
-			}
-			
-			TRACE_ALWAYS(<< "plus clicked:")
-			for(auto i = path.begin(); i != path.end(); ++i){
-				TRACE_ALWAYS(<< " " << (*i))
-			}
-			TRACE_ALWAYS(<< std::endl)
-			
-			return true;
-		};
-		
-		std::stringstream ss;
-		
 		auto n = this->root.get();
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
 			n = n->child(*i);
 		}
+		
+		if(n->Child()){
+			auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
+			ASSERT(plusminus)
+			plusminus->setText(isCollapsed ? "+" : "-");
+
+			auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
+			ASSERT(plusminusMouseProxy)
+			plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+				if(button != morda::Widget::EMouseButton::LEFT){
+					return false;
+				}
+				if(!isDown){
+					return false;
+				}
+
+				if(isCollapsed){
+					this->uncollapse(path);
+				}else{
+					this->collapse(path);
+				}
+
+				TRACE_ALWAYS(<< "plus clicked:")
+				for(auto i = path.begin(); i != path.end(); ++i){
+					TRACE_ALWAYS(<< " " << (*i))
+				}
+				TRACE_ALWAYS(<< std::endl)
+
+				return true;
+			};
+		}
+		
+		auto value = w->findChildByNameAs<morda::Label>("value");
+		ASSERT(value)
+		
+		std::stringstream ss;
 		
 		ss << n->Value();
 		

@@ -62,14 +62,14 @@ public:
 		
 		this->setRelayoutNeeded();
 		
-		this->OnFontChanged();
+		this->onFontChanged();
 	}
 	
 	const morda::Font& Font()const{
 		return this->font->font();
 	}
 	
-	virtual void OnFontChanged(){}
+	virtual void onFontChanged(){}
 	
 protected:
 	TextWidget(const stob::Node* desc);
@@ -80,7 +80,7 @@ private:
 
 
 class SingleLineTextWidget : public TextWidget{
-	std::vector<std::uint32_t> text;
+	std::vector<std::uint32_t> text_var;
 	
 	mutable Rect2r bb;
 	
@@ -89,36 +89,36 @@ protected:
 	
 	SingleLineTextWidget(const stob::Node* chain);
 	
-	const Rect2r& TextBoundingBox()const{
+	const Rect2r& textBoundingBox()const{
 		return this->bb;
 	}
 	
-	void RecomputeBoundingBox(){
-		this->bb = this->Font().StringBoundingBox(this->text);
+	void recomputeBoundingBox(){
+		this->bb = this->Font().StringBoundingBox(this->text_var);
 	}
 public:
 	
-	void SetText(decltype(text)&& text){
-		this->text = std::move(text);
+	void setText(decltype(text_var)&& text){
+		this->text_var = std::move(text);
 		this->setRelayoutNeeded();
-		this->RecomputeBoundingBox();
+		this->recomputeBoundingBox();
 	}
 	
 	void setText(const std::string& text){
-		this->SetText(ting::utf8::ToUTF32(text));
+		this->setText(ting::utf8::ToUTF32(text));
 	}
 
-	void OnFontChanged()override{
-		this->RecomputeBoundingBox();
+	void onFontChanged()override{
+		this->recomputeBoundingBox();
 	}
 
 	
-	decltype(text) Clear(){
-		return std::move(this->text);
+	decltype(text_var) clear(){
+		return std::move(this->text_var);
 	}
 	
-	const decltype(text)& Text()const noexcept{
-		return this->text;
+	const decltype(text_var)& text()const noexcept{
+		return this->text_var;
 	}
 };
 

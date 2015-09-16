@@ -32,7 +32,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 		TextWidget(chain)
 {
 	if(auto p = GetProperty(chain, "text")){
-		this->SetText(ting::utf8::ToUTF32(p->Value()));
+		this->setText(ting::utf8::ToUTF32(p->Value()));
 	}
 }
 

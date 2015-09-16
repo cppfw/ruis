@@ -21,7 +21,7 @@ Label::Label(const stob::Node* chain) :
 //override
 void Label::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
-	matr.Translate(-this->TextBoundingBox().p.x, -this->Font().BoundingBox().p.y);
+	matr.Translate(-this->textBoundingBox().p.x, -this->Font().BoundingBox().p.y);
 	
 	PosTexShader& s = [this]() -> PosTexShader&{
 		if(this->color() == 0xffffffff){//if white
@@ -34,5 +34,5 @@ void Label::render(const morda::Matr4r& matrix)const{
 		}
 	}();
 	
-	this->Font().RenderString(s, matr, this->Text());
+	this->Font().RenderString(s, matr, this->text());
 }

@@ -54,7 +54,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	
 	{
 		morda::Matr4r matr(matrix);
-		matr.Translate(-this->TextBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
+		matr.Translate(-this->textBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->color() == 0xffffffff){//if white
@@ -67,13 +67,13 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 			}
 		}();
 		
-		ASSERT(this->firstVisibleCharIndex <= this->Text().size())
+		ASSERT(this->firstVisibleCharIndex <= this->text().size())
 		this->Font().RenderString(
 				s,
 				matr,
 				ting::Buffer<const std::uint32_t>(
-						&*(this->Text().begin() + this->firstVisibleCharIndex),
-						this->Text().size() - this->firstVisibleCharIndex
+						&*(this->text().begin() + this->firstVisibleCharIndex),
+						this->text().size() - this->firstVisibleCharIndex
 					)
 			);
 	}
@@ -137,7 +137,7 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 void TextInput::SetCursorIndex(size_t index, bool selection){
 	this->cursorIndex = index;
 	
-	ting::util::ClampTop(this->cursorIndex, this->Text().size());
+	ting::util::ClampTop(this->cursorIndex, this->text().size());
 	
 	if(!selection){
 		this->selectionStartIndex = this->cursorIndex;
@@ -161,10 +161,10 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 		return;
 	}
 	
-	ASSERT(this->firstVisibleCharIndex <= this->Text().size())
+	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
 	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(
-			&*(this->Text().begin() + this->firstVisibleCharIndex),
+			&*(this->text().begin() + this->firstVisibleCharIndex),
 			this->cursorIndex - this->firstVisibleCharIndex
 		)) + this->xOffset;
 	
@@ -177,12 +177,12 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 		this->firstVisibleCharIndex = this->cursorIndex;
 		
 		//calculate advance backwards
-		for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex);
+		for(auto i = this->text().rbegin() + (this->text().size() - this->cursorIndex);
 				this->xOffset > 0;
 				++i
 			)
 		{
-			ASSERT(i != this->Text().rend())
+			ASSERT(i != this->text().rend())
 			this->xOffset -= this->Font().CharAdvance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
@@ -193,18 +193,18 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 
 
 real TextInput::IndexToPos(size_t index){
-	ASSERT(this->firstVisibleCharIndex <= this->Text().size())
+	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	
 	if(index <= this->firstVisibleCharIndex){
 		return 0;
 	}
 	
-	ting::util::ClampTop(index, this->Text().size());
+	ting::util::ClampTop(index, this->text().size());
 	
 	real ret = this->xOffset;
 	
-	for(auto i = this->Text().begin() + this->firstVisibleCharIndex;
-			i != this->Text().end() && index != this->firstVisibleCharIndex;
+	for(auto i = this->text().begin() + this->firstVisibleCharIndex;
+			i != this->text().end() && index != this->firstVisibleCharIndex;
 			++i, --index
 		)
 	{
@@ -223,7 +223,7 @@ size_t TextInput::PosToIndex(real pos){
 	size_t index = this->firstVisibleCharIndex;
 	real p = this->xOffset;
 	
-	for(auto i = this->Text().begin() + this->firstVisibleCharIndex; i != this->Text().end(); ++i){
+	for(auto i = this->text().begin() + this->firstVisibleCharIndex; i != this->text().end(); ++i){
 		real w = this->Font().CharAdvance(*i);
 		
 		if(pos < p + w){
@@ -289,12 +289,12 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 		case EKey::ENTER:
 			break;
 		case EKey::RIGHT:
-			if(this->cursorIndex != this->Text().size()){
+			if(this->cursorIndex != this->text().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
 					bool spaceSkipped = false;
 					newIndex = this->cursorIndex;
-					for(auto i = this->Text().begin() + this->cursorIndex; i != this->Text().end(); ++i, ++newIndex){
+					for(auto i = this->text().begin() + this->cursorIndex; i != this->text().end(); ++i, ++newIndex){
 						if(*i == std::uint32_t(' ')){
 							if(spaceSkipped){
 								break;
@@ -316,8 +316,8 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 				if(this->ctrlPressed){
 					bool spaceSkipped = false;
 					newIndex = this->cursorIndex;
-					for(auto i = this->Text().rbegin() + (this->Text().size() - this->cursorIndex);
-							i != this->Text().rend();
+					for(auto i = this->text().rbegin() + (this->text().size() - this->cursorIndex);
+							i != this->text().rend();
 							++i, --newIndex
 						)
 					{
@@ -336,7 +336,7 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 			}
 			break;
 		case EKey::END:
-			this->SetCursorIndex(this->Text().size(), this->shiftPressed);
+			this->SetCursorIndex(this->text().size(), this->shiftPressed);
 			break;
 		case EKey::HOME:
 			this->SetCursorIndex(0, this->shiftPressed);
@@ -346,9 +346,9 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 				this->SetCursorIndex(this->DeleteSelection());
 			}else{
 				if(this->cursorIndex != 0){
-					auto t = this->Clear();
+					auto t = this->clear();
 					t.erase(t.begin() + (this->cursorIndex - 1));
-					this->SetText(std::move(t));
+					this->setText(std::move(t));
 					this->SetCursorIndex(this->cursorIndex - 1);
 				}
 			}
@@ -357,10 +357,10 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 			if(this->ThereIsSelection()){
 				this->SetCursorIndex(this->DeleteSelection());
 			}else{
-				if(this->cursorIndex < this->Text().size()){
-					auto t = this->Clear();
+				if(this->cursorIndex < this->text().size()){
+					auto t = this->clear();
 					t.erase(t.begin() + this->cursorIndex);
-					this->SetText(std::move(t));
+					this->setText(std::move(t));
 				}
 			}
 			this->StartCursorBlinking();
@@ -371,7 +371,7 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 		case EKey::A:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
-				this->SetCursorIndex(this->Text().size(), true);
+				this->SetCursorIndex(this->text().size(), true);
 				break;
 			}
 			//fall through
@@ -381,9 +381,9 @@ void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey
 					this->cursorIndex = this->DeleteSelection();
 				}
 				
-				auto t = this->Clear();
+				auto t = this->clear();
 				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
-				this->SetText(std::move(t));
+				this->setText(std::move(t));
 				
 				this->SetCursorIndex(this->cursorIndex + unicode.size());
 			}
@@ -408,9 +408,9 @@ size_t TextInput::DeleteSelection(){
 		end = this->cursorIndex;
 	}
 	
-	auto t = this->Clear();
+	auto t = this->clear();
 	t.erase(t.begin() + start, t.begin() + end);
-	this->SetText(std::move(t));
+	this->setText(std::move(t));
 	
 	return start;
 }
