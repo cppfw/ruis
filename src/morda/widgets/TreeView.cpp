@@ -141,3 +141,14 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
+
+void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
+	//TODO:
+	this->List::ItemsProvider::notifyDataSetChanged();
+}
+
+void TreeView::ItemsProvider::notifyItemDeleted(const std::vector<size_t>& path) {
+	//TODO:
+	this->List::ItemsProvider::notifyDataSetChanged();
+}
+

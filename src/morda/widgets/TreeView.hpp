@@ -175,6 +175,10 @@ public:
 			return this->pathIdx < i.pathIdx;
 		}
 		
+		explicit operator bool()const{
+			return this->path().size() == 0;
+		}
+		
 		Iterator& goUp(){
 			this->pathIdx.pop_back();
 			this->pathPtr.pop_back();
@@ -209,10 +213,28 @@ public:
 		this->size_var += numChildrenToAdd;
 	}
 	
+	void remove(Iterator i){
+		if(!i){
+			return;
+		}
+		
+		size_t index = i.path().back();
+		i.goUp();
+		Tree* node;
+		if(!i){
+			node = this;
+		}else{
+			node = &(*i);
+		}
+		ASSERT(index < node->children.size())
+		node->children.erase(node->children.begin() + index);
+	}
+	
 	void removeAll(Iterator& from){
 		size_t numChildrenToRemove = (*from).size();
 		(*from).children.clear();
 		(*from).size_var -= numChildrenToRemove;
+		ASSERT((*from).size() == 0)
 		for(auto t : from.pathPtr){
 			ASSERT(t->size_var >= numChildrenToRemove)
 			t->size_var -= numChildrenToRemove;
@@ -318,7 +340,13 @@ public:
 		
 		void notifyDataSetChanged();
 		
-		//TODO: add notification functions for insert/change/delete
+		void notifyItemChanged(){
+			this->List::ItemsProvider::notifyDataSetChanged();
+		}
+		
+		void notifyItemDeleted(const std::vector<size_t>& path);
+		
+		void notifyItemAdded(const std::vector<size_t>& path);
 		
 	private:
 		

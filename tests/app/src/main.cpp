@@ -274,45 +274,71 @@ public:
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 		
-		const char* DItem = R"qwertyuiop(
-				HorizontalContainer{
-					HorizontalContainer{
-						name{indentaion}
-					}
-					FrameContainer{
-						Label{
-							name{plusminus}
-						}
-						MouseProxy{
-							layout{
-								dimX{max} dimY{max}
-							}
-							name{plusminus_mouseproxy}
-						}
-					}
-					Label{
-						name{value}
-					}
-				}
-			)qwertyuiop";
-		
-		auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(DItem));
-		ASSERT(w)
-		
-		auto indent = w->findChildByNameAs<morda::HorizontalContainer>("indentaion");
-		ASSERT(indent)
-		
-		for(unsigned i = 1; i != path.size(); ++i){
-			indent->Add(*stob::Parse("Widget{layout{dimX{5mm}dimzY{0}}}"));
-		}
-		
 		auto n = this->root.get();
+		
+		std::vector<bool> isLast;
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
 			n = n->child(*i);
+			isLast.push_back(n->Next() == nullptr);
 		}
 		
+		auto ret = ting::New<morda::HorizontalContainer>();
+		
+		for(unsigned i = 0; i != path.size() - 1; ++i){
+			ASSERT(isLast.size() == path.size())
+			std::unique_ptr<stob::Node> indentWigdet;
+			if(isLast[i]){
+				indentWigdet = stob::Parse("Widget{layout{dimX{5mm}dimY{0}}}");
+			}else{
+				if(isLast[i + 1]){
+					indentWigdet = stob::Parse(R"qwertyuiop(
+							FrameContainer{
+								layout{
+									dimX{5mm} dimY{min}
+								}
+								Label{
+									text{\}
+								}
+							}
+						)qwertyuiop");
+				}else{
+					indentWigdet = stob::Parse(R"qwertyuiop(
+							FrameContainer{
+								layout{
+									dimX{5mm} dimY{min}
+								}
+								Label{
+									text{|}
+								}
+							}
+						)qwertyuiop");
+				}
+			}
+			ret->Add(*indentWigdet);
+		}
+		
+		
 		if(n->Child()){
+			auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(
+					R"qwertyuiop(
+							FrameContainer{
+								layout{
+									dimX{5mm} dimY{5mm}
+								}
+								Label{
+									name{plusminus}
+								}
+								MouseProxy{
+									layout{
+										dimX{max} dimY{max}
+									}
+									name{plusminus_mouseproxy}
+								}
+							}
+						)qwertyuiop"
+				));
+			
 			auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
 			ASSERT(plusminus)
 			plusminus->setText(isCollapsed ? "+" : "-");
@@ -341,9 +367,10 @@ public:
 
 				return true;
 			};
+			ret->Add(w);
 		}
 		
-		auto value = w->findChildByNameAs<morda::Label>("value");
+		auto value = ting::New<morda::Label>();
 		ASSERT(value)
 		
 		std::stringstream ss;
@@ -352,7 +379,9 @@ public:
 		
 		value->setText(ss.str());
 		
-		return w;
+		ret->Add(value);
+		
+		return ret;
 	}
 	
 	size_t count(const std::vector<size_t>& path) const noexcept override{
