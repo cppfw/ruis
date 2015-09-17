@@ -33,8 +33,6 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 {
 	if(auto p = GetProperty(chain, "text")){
 		this->setText(ting::utf8::ToUTF32(p->Value()));
-	}else{
-		TRACE(<< "SingleLineTextWidget::SingleLineTextWidget(): size = " << this->text().size() << std::endl)
 	}
 }
 
