@@ -318,7 +318,6 @@ public:
 			ret->Add(*indentWigdet);
 		}
 		
-		
 		if(n->Child()){
 			auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(
 					R"qwertyuiop(
@@ -368,6 +367,8 @@ public:
 				return true;
 			};
 			ret->Add(w);
+		}else{
+			
 		}
 		
 		auto value = ting::New<morda::Label>();

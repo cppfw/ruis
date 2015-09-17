@@ -251,8 +251,6 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 	return ret;
 }
 
-
-
 void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	decltype(this->templates)::value_type m;
 	
