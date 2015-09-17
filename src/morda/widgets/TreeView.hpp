@@ -107,6 +107,10 @@ public:
 			return *this;
 		}
 		
+		Iterator operator+(size_t i)const{
+			return Iterator(*this) += i;
+		}
+		
 		Iterator& operator--(){
 			if(this->pathIdx.size() == 0){
 				return *this;
@@ -155,27 +159,30 @@ public:
 			return *this;
 		}
 		
-		bool operator==(const Iterator& i){
+		bool operator==(const Iterator& i)const{
 			return this->pathIdx == i.pathIdx;
 		}
 		
-		bool operator!=(const Iterator& i){
+		bool operator!=(const Iterator& i)const{
 			return !this->operator==(i);
 		}
 		
-		bool operator>(const Iterator& i){
+		bool operator>(const Iterator& i)const{
 			return this->pathIdx > i.pathIdx;
 		}
 		
-		bool operator<(const Iterator& i){
+		bool operator<(const Iterator& i)const{
 			return this->pathIdx < i.pathIdx;
 		}
 		
-	private:
+		Iterator& goUp(){
+			this->pathIdx.pop_back();
+			this->pathPtr.pop_back();
+			return *this;
+		}
+		
 		Iterator& descentTo(size_t index){
 			if(this->pathIdx.size() == 0){
-				ASSERT(this->pathPtr.size() == 1)
-				this->pathIdx.push_back(index);
 				return *this;
 			}
 			
@@ -202,8 +209,8 @@ public:
 		this->size_var += numChildrenToAdd;
 	}
 	
-	void removeAll(Iterator from){
-		size_t numChildrenToRemove = (*from).children.size();
+	void removeAll(Iterator& from){
+		size_t numChildrenToRemove = (*from).size();
 		(*from).children.clear();
 		(*from).size_var -= numChildrenToRemove;
 		for(auto t : from.pathPtr){
@@ -237,10 +244,15 @@ public:
 	}
 	
 	Iterator pos(const std::vector<size_t> path){
-		Iterator ret;
-		ret.pathPtr.push_back(this);
+		auto i = path.begin();
+		if(i == path.end()){
+			return this->end();
+		}
 		
-		for(auto i = path.begin(); i != path.end(); ++i){
+		Iterator ret(this, *i);
+		++i;
+		
+		for(; i != path.end(); ++i){
 			auto oldDepth = ret.depth();
 			ret.descentTo(*i);
 			if(oldDepth == ret.depth()){

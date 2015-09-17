@@ -97,7 +97,28 @@ const decltype(TreeView::ItemsProvider::iter) TreeView::ItemsProvider::iterForIn
 }
 
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
-	//TODO:
+	auto i = this->visibleTree.pos(path);
+	ASSERT(i != this->visibleTree.end())
+	
+	auto s = (*i).size();
+	
+	if(this->iter > i){
+		auto pnext = path;
+		++pnext.back();
+		
+		if(this->iter.path() < pnext){
+			while(this->iter != i){
+				--this->iter;
+				--this->iterIndex;
+			}
+		}else{
+			this->iterIndex -= s;
+		}
+	}
+	
+	this->visibleTree.removeAll(i);
+	
+	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
