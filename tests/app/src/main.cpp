@@ -419,8 +419,22 @@ public:
 		
 		ret->Add(value);
 		
-		
-		ret->Add(*stob::Parse(R"qwertyuiop(PushButton{})qwertyuiop"));
+		{
+			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::Inst().inflater.Inflate(*stob::Parse(
+					R"qwertyuiop(
+							PushButton{
+								ColorLabel{
+									color{0xff0000ff}
+									layout{dimX{2mm}dimY{0.5mm}}
+								}
+							}
+						)qwertyuiop"
+				)));
+			b->clicked = [](morda::PushButton& button){
+				//TODO:
+			};
+			ret->Add(b);
+		}
 		
 		return ret;
 	}
