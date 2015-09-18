@@ -489,8 +489,8 @@ Container{
 			VerticalList{
 				name{vertical_list}
 				layout{
-					dimX{min} dimY{max}
-					weight{0}
+					dimX{0} dimY{max}
+					weight{1}
 				}
 
 				Label{

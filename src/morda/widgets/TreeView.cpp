@@ -17,6 +17,12 @@ TreeView::TreeView(const stob::Node* chain) :
 	
 	lp.dim.y = Widget::LayoutParams::D_Max;
 	lp.dim.x = Widget::LayoutParams::D_Min;
+	
+	this->ScrollContainer::scrollFactorChanged = [this](ScrollContainer& sc){
+		if(this->scrollFactorChanged){
+			this->scrollFactorChanged(*this);
+		}
+	};
 }
 
 void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){

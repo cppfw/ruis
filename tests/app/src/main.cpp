@@ -431,7 +431,7 @@ public:
 						)qwertyuiop"
 				)));
 			b->clicked = [](morda::PushButton& button){
-				//TODO:
+				//TODO: remove item
 			};
 			ret->Add(b);
 		}
@@ -503,6 +503,7 @@ public:
 		
 		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->StartUpdating(30);
 		
+		//ScrollContainer
 		{
 			auto scrollArea = c->findChildByNameAs<morda::ScrollContainer>("scroll_area");
 			std::weak_ptr<morda::ScrollContainer> sa = scrollArea;
@@ -540,6 +541,7 @@ public:
 			};
 		}
 		
+		//VerticalList
 		{
 			auto verticalList = c->findChildByNameAs<morda::VerticalList>("vertical_list");
 			std::weak_ptr<morda::VerticalList> vl = verticalList;
@@ -552,8 +554,16 @@ public:
 					l->setScrollPosAsFactor(slider.factor());
 				}
 			};
+			
+//			verticalList->scrollPosChanged = [vs](morda::List& list){
+//				if(auto s = vs.lock()){
+//					TRACE(<< "list = " << list.scrollFactor() << " slider = " << s->factor() << std::endl)
+//					s->setFactor(list.scrollFactor());
+//				}
+//			};
 		}
 		
+		//TreeView
 		{
 			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
@@ -578,6 +588,8 @@ public:
 					t->setHorizontalScrollPosAsFactor(slider.factor());
 				}
 			};
+			
+//			treeview->scrollFactorChanged
 		}
 	}
 };
