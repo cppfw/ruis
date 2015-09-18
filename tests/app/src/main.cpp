@@ -419,6 +419,9 @@ public:
 		
 		ret->Add(value);
 		
+		
+		ret->Add(*stob::Parse(R"qwertyuiop(PushButton{})qwertyuiop"));
+		
 		return ret;
 	}
 	

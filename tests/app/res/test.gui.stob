@@ -223,6 +223,7 @@ Container{
 
 				TreeView{
 					name{treeview_widget}
+					clip{true}
 					layout{
 						dimX{0} dimY{max}
 						weight{1}
