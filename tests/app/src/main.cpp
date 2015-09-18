@@ -271,6 +271,83 @@ public:
 		
 	}
 	
+	const char* DPlusMinus = R"qwertyuiop(
+			FrameContainer{
+				layout{
+					dimX{5mm} dimY{5mm}
+				}
+
+				ColorLabel{
+					layout{dimX{3mm}dimY{3mm}}
+					color{0xa0808080}
+				}
+
+				Label{
+					name{plusminus}
+				}
+				MouseProxy{
+					layout{
+						dimX{max} dimY{max}
+					}
+					name{plusminus_mouseproxy}
+				}
+			}
+		)qwertyuiop";
+	
+	const char* DLine = R"qwertyuiop(
+			FrameContainer{
+				layout{dimX{5mm} dimY{max}}
+				ColorLabel{
+					layout{dimX{0.5mm}dimY{max}}
+					color{0xffff0000}
+				}
+			}
+		)qwertyuiop";
+	
+	const char* DLineEnd = R"qwertyuiop(
+			FrameContainer{
+				layout{dimX{5mm} dimY{max}}
+				VerticalContainer{
+					layout{dimX{max}dimY{max}}
+					ColorLabel{
+						layout{dimX{0.5mm}dimY{0}weight{1}}
+						color{0xffff0000}
+					}
+					Widget{layout{dimX{max}dimY{0}weight{1}}}
+				}
+				HorizontalContainer{
+					layout{dimX{max}dimY{max}}
+					Widget{layout{dimX{0}dimY{max}weight{1}}}
+					ColorLabel{
+						layout{dimX{0}dimY{0.5mm}weight{1}}
+						color{0xffff0000}
+					}
+				}
+			}
+		)qwertyuiop";
+	
+	const char* DLineMiddle = R"qwertyuiop(
+			FrameContainer{
+				layout{dimX{5mm} dimY{max}}
+				ColorLabel{
+					layout{dimX{0.5mm}dimY{max}}
+					color{0xffff0000}
+				}
+				HorizontalContainer{
+					layout{dimX{max}dimY{max}}
+					Widget{layout{dimX{0}dimY{max}weight{1}}}
+					ColorLabel{
+						layout{dimX{0}dimY{0.5mm}weight{1}}
+						color{0xffff0000}
+					}
+				}
+			}
+		)qwertyuiop";
+	
+	const char* DEmpty = R"qwertyuiop(
+			Widget{layout{dimX{5mm}dimY{0}}}
+		)qwertyuiop";
+	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 		
@@ -284,91 +361,51 @@ public:
 		}
 		
 		auto ret = ting::New<morda::HorizontalContainer>();
+
+		ASSERT(isLast.size() == path.size())
 		
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ASSERT(isLast.size() == path.size())
-			std::unique_ptr<stob::Node> indentWigdet;
-			if(isLast[i]){
-				indentWigdet = stob::Parse("Widget{layout{dimX{5mm}dimY{0}}}");
-			}else{
-				if(isLast[i + 1]){
-					indentWigdet = stob::Parse(R"qwertyuiop(
-							FrameContainer{
-								layout{
-									dimX{5mm} dimY{min}
-								}
-								Label{
-									text{\}
-								}
-							}
-						)qwertyuiop");
-				}else{
-					indentWigdet = stob::Parse(R"qwertyuiop(
-							FrameContainer{
-								layout{
-									dimX{5mm} dimY{min}
-								}
-								Label{
-									text{|}
-								}
-							}
-						)qwertyuiop");
-				}
-			}
-			ret->Add(*indentWigdet);
+			ret->Add(*(isLast[i] ? stob::Parse(DEmpty) : stob::Parse(DLine)));
 		}
 		
-		if(n->Child()){
-			auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(
-					R"qwertyuiop(
-							FrameContainer{
-								layout{
-									dimX{5mm} dimY{5mm}
-								}
-								Label{
-									name{plusminus}
-								}
-								MouseProxy{
-									layout{
-										dimX{max} dimY{max}
-									}
-									name{plusminus_mouseproxy}
-								}
-							}
-						)qwertyuiop"
-				));
+		{
+			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::Inst().inflater.Inflate(*stob::Parse(isLast.back() ? DLineEnd : DLineMiddle)));
+			ASSERT(widget)
 			
-			auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
-			ASSERT(plusminus)
-			plusminus->setText(isCollapsed ? "+" : "-");
+			if(n->Child()){
+				auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(DPlusMinus));
 
-			auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
-			ASSERT(plusminusMouseProxy)
-			plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
-				if(button != morda::Widget::EMouseButton::LEFT){
-					return false;
-				}
-				if(!isDown){
-					return false;
-				}
+				auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
+				ASSERT(plusminus)
+				plusminus->setText(isCollapsed ? "+" : "-");
 
-				if(isCollapsed){
-					this->uncollapse(path);
-				}else{
-					this->collapse(path);
-				}
+				auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
+				ASSERT(plusminusMouseProxy)
+				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+					if(button != morda::Widget::EMouseButton::LEFT){
+						return false;
+					}
+					if(!isDown){
+						return false;
+					}
 
-				TRACE_ALWAYS(<< "plus clicked:")
-				for(auto i = path.begin(); i != path.end(); ++i){
-					TRACE_ALWAYS(<< " " << (*i))
-				}
-				TRACE_ALWAYS(<< std::endl)
+					if(isCollapsed){
+						this->uncollapse(path);
+					}else{
+						this->collapse(path);
+					}
 
-				return true;
-			};
-			ret->Add(w);
-		}else{
-			
+					TRACE_ALWAYS(<< "plusminus clicked:")
+					for(auto i = path.begin(); i != path.end(); ++i){
+						TRACE_ALWAYS(<< " " << (*i))
+					}
+					TRACE_ALWAYS(<< std::endl)
+
+					return true;
+				};
+				widget->Add(w);
+			}
+			ret->Add(widget);
 		}
 		
 		auto value = ting::New<morda::Label>();
