@@ -90,6 +90,11 @@ real List::scrollFactor()const noexcept{
 	if(!this->provider || this->provider->count() == 0){
 		return 0;
 	}
+	
+	if(this->provider->count() == this->visibleCount()){
+		return 0;
+	}
+	
 	return real(this->posIndex) / real(this->provider->count() - this->visibleCount());
 }
 

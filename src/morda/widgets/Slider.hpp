@@ -65,6 +65,12 @@ public:
 	void setFactor(float newFactor){
 		real factor = ting::util::ClampedRange(newFactor, 0.0f, 1.0f);
 	
+		//in case of nan or inf
+		if(!(0 <= factor && factor <= 1)){
+			TRACE(<< "factor = " << factor << std::endl)
+			throw morda::IllegalValueExc("Factor should be in [0:1]");
+		}
+		
 		ASSERT_INFO(0 <= factor && factor <= 1, factor)
 		
 		if(this->curFactor == factor){

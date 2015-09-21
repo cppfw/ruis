@@ -86,10 +86,6 @@ void ScrollContainer::UpdateScrollFactor(){
 			this->curScrollFactor[i] = this->curScrollPos[i] / this->effectiveDim[i];
 		}
 	}
-	
-	if(this->scrollFactorChanged){
-		this->scrollFactorChanged(*this);
-	}
 }
 
 void ScrollContainer::arrangeWidgets() {

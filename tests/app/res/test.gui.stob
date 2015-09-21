@@ -221,12 +221,23 @@ Container{
 				}
 
 
-				TreeView{
-					name{treeview_widget}
-					clip{true}
+				FrameContainer{
 					layout{
 						dimX{0} dimY{max}
 						weight{1}
+					}
+					TreeView{
+						name{treeview_widget}
+						clip{true}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+					ResizeProxy{
+						layout{
+							dimX{max} dimY{max}
+						}
+						name{treeview_resize_proxy}
 					}
 				}
 
@@ -354,35 +365,45 @@ Container{
 					weight{1}
 				}
 
-				ScrollContainer{
-					name{scroll_area}
-
-					clip{true}
-
+				FrameContainer{
 					layout{
 						dimX{0} dimY{max}
 						weight{1}
 					}
+					ScrollContainer{
+						name{scroll_area}
 
-					ImageLabel{
-						image{img_sample}
+						clip{true}
 
 						layout{
-							dimX{-1} dimY{-1}
+							dimX{max} dimY{max}
+						}
+
+						ImageLabel{
+							image{img_sample}
+
+							layout{
+								dimX{min} dimY{min}
+							}
+						}
+
+						PushButton{
+							name{push_button_in_scroll_container}
+							posX{10mm} posY{20mm}
+
+							Label{
+								posX{0} posY{0}
+								dimX{100mm} dimY{10mm}
+								text{"Hello World!!!"}
+							}
 						}
 					}
-
-					PushButton{
-						name{push_button_in_scroll_container}
-						posX{10mm} posY{20mm}
-
-						Label{
-							posX{0} posY{0}
-							dimX{100mm} dimY{10mm}
-							text{"Hello World!!!"}
+					ResizeProxy{
+						layout{
+							dimX{max} dimY{max}
 						}
+						name{scroll_area_resize_proxy}
 					}
-					
 				}
 				
 				VerticalSlider{
@@ -486,59 +507,71 @@ Container{
 				dimX{max} dimY{max}
 			}
 
-			VerticalList{
-				name{vertical_list}
+
+			FrameContainer{
 				layout{
 					dimX{0} dimY{max}
 					weight{1}
 				}
-
-				Label{
-					text{item0}
-				}
-
-				Label{
-					text{item_1_iequwgfiew}
-				}
-
-				Label{
-					text{item_2_werf}
-				}
-
-				PushButton{
-					Label{
-						text {"item3"}
-						color{0xffccfbff}
+				VerticalList{
+					name{vertical_list}
+					layout{
+						dimX{max} dimY{max}
 					}
-				//	text{item_3}
-				}
 
-				Label{
-					text{item_4}
-				}
+					Label{
+						text{item0}
+					}
 
-				Label{
-					text{item_5}
-				}
+					Label{
+						text{item_1_iequwgfiew}
+					}
 
-				Label{
-					text{item_6}
-				}
+					Label{
+						text{item_2_werf}
+					}
 
-				Label{
-					text{item_7}
-				}
+					PushButton{
+						Label{
+							text {"item3"}
+							color{0xffccfbff}
+						}
+					//	text{item_3}
+					}
 
-				Label{
-					text{item_8}
-				}
+					Label{
+						text{item_4}
+					}
 
-				Label{
-					text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
-				}
+					Label{
+						text{item_5}
+					}
 
-				Label{
-					text{item_10}
+					Label{
+						text{item_6}
+					}
+
+					Label{
+						text{item_7}
+					}
+
+					Label{
+						text{item_8}
+					}
+
+					Label{
+						text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
+					}
+
+					Label{
+						text{item_10}
+					}
+				}
+				ResizeProxy{
+					layout{
+						dimX{max} dimY{max}
+					}
+					name{vertical_list_resize_proxy}
 				}
 			}
 

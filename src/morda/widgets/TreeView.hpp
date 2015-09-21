@@ -364,8 +364,6 @@ public:
 		this->setScrollPosAsFactor(Vec2r(factor, 0));
 	}
 	
-	std::function<void(TreeView&)> scrollFactorChanged;
-	
 	Vec2r scrollFactor()const{
 		return Vec2r(this->ScrollContainer::scrollFactor().x, this->list->scrollFactor());
 	}

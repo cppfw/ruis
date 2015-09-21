@@ -38,6 +38,7 @@ this_srcs += morda/widgets/List.cpp
 this_srcs += morda/widgets/MouseProxy.cpp
 this_srcs += morda/widgets/NinePatch.cpp
 this_srcs += morda/widgets/NinePatchButton.cpp
+this_srcs += morda/widgets/ResizeProxy.cpp
 this_srcs += morda/widgets/Slider.cpp
 this_srcs += morda/widgets/TextField.cpp
 this_srcs += morda/widgets/TextInput.cpp

@@ -1,6 +1,6 @@
 /* The MIT License:
 
-Copyright (c) 2012 Ivan Gagis <igagis@gmail.com>
+Copyright (c) 2015 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
-// Home page: http://morda.googlecode.com
+// Home page: https://github.com/igagis/morda
 
 /**
  * @author Ivan Gagis <igagis@gmail.com>
@@ -28,26 +28,23 @@ THE SOFTWARE. */
 
 #pragma once
 
-
-#include <ting/Exc.hpp>
-
+#include "Widget.hpp"
 
 
 namespace morda{
 
-class Exc : public ting::Exc{
+class ResizeProxy : virtual public Widget{
 public:
-	Exc(const std::string& message) :
-			ting::Exc(message)
+	ResizeProxy(const stob::Node* chain = nullptr) :
+			Widget(chain)
 	{}
+	
+	ResizeProxy(const ResizeProxy&) = delete;
+	ResizeProxy& operator=(const ResizeProxy&) = delete;
+	
+	void onResize() override;
+
+	std::function<void(const Vec2r&)> resized;
 };
 
-class IllegalValueExc : public Exc{
-public:
-	IllegalValueExc(const std::string& message) :
-			Exc(message)
-	{}
-};
-
-
-}//~namespace
+}

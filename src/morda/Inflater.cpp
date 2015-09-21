@@ -26,6 +26,7 @@
 #include "widgets/TreeView.hpp"
 #include "widgets/CheckBox.hpp"
 #include "widgets/List.hpp"
+#include "widgets/ResizeProxy.hpp"
 
 #include "App.hpp"
 
@@ -66,6 +67,7 @@ Inflater::Inflater(){
 	this->AddWidget<BlackHoleContainer>("BlackHoleContainer");
 	this->AddWidget<OverlayContainer>("OverlayContainer");
 	this->AddWidget<TreeView>("TreeView");
+	this->AddWidget<ResizeProxy>("ResizeProxy");
 }
 
 

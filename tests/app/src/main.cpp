@@ -18,6 +18,7 @@
 #include "../../../src/morda/widgets/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
 #include "../../../src/morda/widgets/MouseProxy.hpp"
+#include "../../../src/morda/widgets/ResizeProxy.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
 
@@ -452,6 +453,7 @@ public:
 };
 
 
+
 class Application : public morda::App{
 	static morda::App::WindowParams GetWindowParams()noexcept{
 		morda::App::WindowParams wp;
@@ -506,20 +508,28 @@ public:
 		//ScrollContainer
 		{
 			auto scrollArea = c->findChildByNameAs<morda::ScrollContainer>("scroll_area");
-			std::weak_ptr<morda::ScrollContainer> sa = scrollArea;
+			auto sa = ting::makeWeak(scrollArea);
 			
 			auto vertSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");
-			std::weak_ptr<morda::HandleSlider> vs = vertSlider;
+			auto vs = ting::makeWeak(vertSlider);
 			
 			auto horiSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
-			std::weak_ptr<morda::HandleSlider> hs = horiSlider;
+			auto hs = ting::makeWeak(horiSlider);
 			
-			scrollArea->scrollFactorChanged = [vs, hs](morda::ScrollContainer& sc){
+			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("scroll_area_resize_proxy");
+			auto rp = ting::makeWeak(resizeProxy);
+			
+			resizeProxy->resized = [vs, hs, sa](const morda::Vec2r& newSize){
+				auto sc = sa.lock();
+				if(!sc){
+					return;
+				}
+				
 				if(auto v = vs.lock()){
-					v->setFactor(sc.scrollFactor().y);
+					v->setFactor(sc->scrollFactor().y);
 				}
 				if(auto h = hs.lock()){
-					h->setFactor(sc.scrollFactor().x);
+					h->setFactor(sc->scrollFactor().x);
 				}
 			};
 			
@@ -555,12 +565,18 @@ public:
 				}
 			};
 			
-//			verticalList->scrollPosChanged = [vs](morda::List& list){
-//				if(auto s = vs.lock()){
-//					TRACE(<< "list = " << list.scrollFactor() << " slider = " << s->factor() << std::endl)
-//					s->setFactor(list.scrollFactor());
-//				}
-//			};
+			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("vertical_list_resize_proxy");
+			ASSERT(resizeProxy)
+			
+			resizeProxy->resized = [vs, vl](const morda::Vec2r& newSize){
+				auto l = vl.lock();
+				if(!l){
+					return;
+				}
+				if(auto s = vs.lock()){
+					s->setFactor(l->scrollFactor());
+				}
+			};
 		}
 		
 		//TreeView
@@ -589,7 +605,21 @@ public:
 				}
 			};
 			
-//			treeview->scrollFactorChanged
+			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("treeview_resize_proxy");
+			ASSERT(resizeProxy)
+			
+			resizeProxy->resized = [vs, hs, tv](const morda::Vec2r& newSize){
+				auto t = tv.lock();
+				if(!t){
+					return;
+				}
+				if(auto h = hs.lock()){
+					h->setFactor(t->scrollFactor().x);
+				}
+				if(auto v = vs.lock()){
+					v->setFactor(t->scrollFactor().y);
+				}
+			};
 		}
 	}
 };

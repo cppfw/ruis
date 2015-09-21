@@ -81,8 +81,6 @@ public:
 		return this->curScrollFactor;
 	}
 	
-	std::function<void(ScrollContainer&)> scrollFactorChanged;
-	
 private:
 	void UpdateEffectiveDim();
 	
