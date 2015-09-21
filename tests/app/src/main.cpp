@@ -607,6 +607,7 @@ public:
 			
 			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("treeview_resize_proxy");
 			ASSERT(resizeProxy)
+			auto rp = ting::makeWeak(resizeProxy);
 			
 			resizeProxy->resized = [vs, hs, tv](const morda::Vec2r& newSize){
 				auto t = tv.lock();
@@ -618,6 +619,14 @@ public:
 				}
 				if(auto v = vs.lock()){
 					v->setFactor(t->scrollFactor().y);
+				}
+			};
+			
+			treeview->dataSetChanged = [rp](morda::TreeView&){
+				if(auto r = rp.lock()){
+					if(r->resized){
+						r->resized(morda::Vec2r());
+					}
 				}
 			};
 		}

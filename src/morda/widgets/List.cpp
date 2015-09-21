@@ -381,3 +381,16 @@ void List::ItemsProvider::notifyDataSetChanged() {
 		}
 	);
 }
+
+void List::handleDataSetChanged() {
+	this->numTailItems = 0; //means that it needs to be recomputed
+
+	this->removeAll();
+	this->addedIndex = size_t(-1);
+
+	this->updateChildrenList();
+
+	if (this->dataSetChanged) {
+		this->dataSetChanged(*this);
+	}
+}

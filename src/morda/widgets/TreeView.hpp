@@ -351,9 +351,10 @@ public:
 	private:
 		
 	};
-private:
 
 public:
+	std::function<void(TreeView&)> dataSetChanged;
+	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
 	void setVerticalScrollPosAsFactor(real factor){

@@ -17,6 +17,12 @@ TreeView::TreeView(const stob::Node* chain) :
 	
 	lp.dim.y = Widget::LayoutParams::D_Max;
 	lp.dim.x = Widget::LayoutParams::D_Min;
+	
+	this->list->dataSetChanged = [this](List&){
+		if(this->dataSetChanged){
+			this->dataSetChanged(*this);
+		}
+	};
 }
 
 void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){

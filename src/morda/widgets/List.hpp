@@ -87,6 +87,8 @@ public:
 	
 	real scrollFactor()const noexcept;
 	
+	std::function<void(List&)> dataSetChanged;
+	
 private:
 	std::shared_ptr<ItemsProvider> provider;
 	
@@ -96,14 +98,7 @@ private:
 	
 	void updateTailItemsInfo();
 	
-	void handleDataSetChanged(){
-		this->numTailItems = 0;//means that it needs to be recomputed
-		
-		this->removeAll();
-		this->addedIndex = size_t(-1);
-		
-		this->updateChildrenList();
-	}
+	void handleDataSetChanged();
 };
 
 
