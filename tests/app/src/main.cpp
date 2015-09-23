@@ -353,10 +353,12 @@ public:
 		ASSERT(path.size() >= 1)
 		
 		auto n = this->root.get();
+		decltype(n) parent = nullptr;
 		
 		std::vector<bool> isLast;
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
+			parent = n;
 			n = n->child(*i);
 			isLast.push_back(n->Next() == nullptr);
 		}
@@ -431,8 +433,10 @@ public:
 							}
 						)qwertyuiop"
 				)));
-			b->clicked = [](morda::PushButton& button){
-				//TODO: remove item
+			b->clicked = [this, path, n, parent](morda::PushButton& button){
+				ASSERT(parent)
+				parent->removeChild(n);
+				this->notifyItemRemoved(path);
 			};
 			ret->Add(b);
 		}

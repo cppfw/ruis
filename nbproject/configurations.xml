@@ -529,7 +529,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="1/morda/glue/android">
+      <folder path="1/morda/glue">
         <ccTool>
           <preprocessorList>
             <Elem>DEBUG</Elem>
@@ -553,13 +553,6 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/glue</pElem>
           </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/windows">
-        <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="1/morda/resources">

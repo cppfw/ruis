@@ -175,8 +175,16 @@ public:
 			return this->pathIdx < i.pathIdx;
 		}
 		
+		bool operator>=(const Iterator& i)const{
+			return this->operator>(i) || this->operator ==(i);
+		}
+		
+		bool operator<=(const Iterator& i)const{
+			return this->operator<(i) || this->operator ==(i);
+		}
+		
 		explicit operator bool()const{
-			return this->path().size() == 0;
+			return this->path().size() != 0;
 		}
 		
 		Iterator& goUp(){
@@ -216,6 +224,12 @@ public:
 	void remove(Iterator i){
 		if(!i){
 			return;
+		}
+		
+		size_t numNodesToRemove = (*i).size() + 1;
+		
+		for(auto p : i.pathPtr){
+			p->size_var -= numNodesToRemove;
 		}
 		
 		size_t index = i.path().back();
@@ -265,7 +279,7 @@ public:
 		return Iterator();
 	}
 	
-	Iterator pos(const std::vector<size_t> path){
+	Iterator pos(const std::vector<size_t>& path){
 		auto i = path.begin();
 		if(i == path.end()){
 			return this->end();
@@ -344,7 +358,7 @@ public:
 			this->List::ItemsProvider::notifyDataSetChanged();
 		}
 		
-		void notifyItemDeleted(const std::vector<size_t>& path);
+		void notifyItemRemoved(const std::vector<size_t>& path);
 		
 		void notifyItemAdded(const std::vector<size_t>& path);
 		

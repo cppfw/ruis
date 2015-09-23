@@ -128,8 +128,29 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
-void TreeView::ItemsProvider::notifyItemDeleted(const std::vector<size_t>& path) {
-	//TODO:
+void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path) {
+	auto i = this->visibleTree.pos(path);
+	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
+	
+	if(this->iter > i){
+		auto s = (*i).size();
+		
+		auto pnext = path;
+		++pnext.back();
+		
+		if(this->iter.path() < pnext){
+			while(this->iter != i){
+				ASSERT(this->iterIndex != 0)
+				--this->iter;
+				--this->iterIndex;
+			}
+		}else{
+			this->iterIndex -= s;
+		}
+	}
+	
+	this->visibleTree.remove(i);
+	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
