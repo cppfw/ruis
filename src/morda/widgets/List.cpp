@@ -140,10 +140,11 @@ void List::setScrollPosAsFactor(real factor){
 		if(this->children().size() != 0){
 			real d;
 			if(this->isVertical){
-				d = this->children().front()->rect().d.y;
+				d = this->rect().d.y;
 			}else{
-				d = this->children().front()->rect().d.x;
+				d = this->rect().d.x;
 			}
+			d = (d + this->firstTailItemOffset) / this->numTailItems;
 			
 			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
 		}else{
