@@ -574,7 +574,9 @@ public:
 					return;
 				}
 				if(auto s = vs.lock()){
+//					auto f = std::move(s->factorChange);
 					s->setFactor(l->scrollFactor());
+//					s->factorChange = std::move(f);
 				}
 			};
 		}

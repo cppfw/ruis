@@ -117,7 +117,7 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 	
-	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d - this->firstTailItemOffset);
+	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d + this->firstTailItemOffset);
 }
 
 
