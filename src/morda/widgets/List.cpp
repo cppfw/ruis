@@ -103,15 +103,21 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 	
-//	real d;
-//	if(this->isVertical){
-//		d = this->children().front()->rect().d.y;
-//	}else{
-//		d = this->children().front()->rect().d.x;
-//	}
-//	
-//	return ((real(this->posIndex) / real(length)) * d + this->posOffset) / (d + this->firstTailItemOffset);
-	return real(this->posIndex) / real(length);
+	ASSERT(this->numTailItems != 0)
+	
+	real d;
+	if(this->isVertical){
+		d = this->rect().d.y;
+	}else{
+		d = this->rect().d.x;
+	}
+	d = (d + this->firstTailItemOffset) / this->numTailItems;
+	
+	if(d <= 0){
+		return 0;
+	}
+	
+	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d - this->firstTailItemOffset);
 }
 
 
