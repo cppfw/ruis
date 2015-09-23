@@ -91,11 +91,27 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 	
-	if(this->provider->count() == this->visibleCount()){
+	if(this->children().size() == 0){
 		return 0;
 	}
 	
-	return real(this->posIndex) / real(this->provider->count() - this->visibleCount());
+	ASSERT(this->provider->count() >= this->numTailItems)
+	
+	size_t length = this->provider->count() - this->numTailItems;
+	
+	if(length == 0){
+		return 0;
+	}
+	
+//	real d;
+//	if(this->isVertical){
+//		d = this->children().front()->rect().d.y;
+//	}else{
+//		d = this->children().front()->rect().d.x;
+//	}
+//	
+//	return ((real(this->posIndex) / real(length)) * d + this->posOffset) / (d + this->firstTailItemOffset);
+	return real(this->posIndex) / real(length);
 }
 
 
@@ -115,12 +131,12 @@ void List::setScrollPosAsFactor(real factor){
 	if(this->provider->count() != this->numTailItems){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
-		if(this->Children().size() != 0){
+		if(this->children().size() != 0){
 			real d;
 			if(this->isVertical){
-				d = this->Children().front()->rect().d.y;
+				d = this->children().front()->rect().d.y;
 			}else{
-				d = this->Children().front()->rect().d.x;
+				d = this->children().front()->rect().d.x;
 			}
 			
 			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
@@ -241,21 +257,21 @@ void List::updateChildrenList(){
 //	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
 	
 	//remove widgets from top
-	for(; this->Children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
-		auto w = (*this->Children().begin())->removeFromParent();
+	for(; this->children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
+		auto w = (*this->children().begin())->removeFromParent();
 		if(this->provider){
 			this->provider->recycle(this->addedIndex, w);
 		}
 	}
 	
-	auto iter = this->Children().begin();
+	auto iter = this->children().begin();
 	size_t iterIndex = this->addedIndex;
-	size_t iterEndIndex = iterIndex + this->Children().size();
+	size_t iterEndIndex = iterIndex + this->children().size();
 	size_t index = this->posIndex;
 	for(; index < this->provider->count();){
 		std::shared_ptr<Widget> w;
 		bool isAdded;
-		if(iterIndex <= index && index < iterEndIndex && iter != this->Children().end()){
+		if(iterIndex <= index && index < iterEndIndex && iter != this->children().end()){
 			w = *iter;
 			++iter;
 			++iterIndex;
@@ -279,7 +295,7 @@ void List::updateChildrenList(){
 			auto i = iter;
 			++i;
 			++iterIndex;
-			if(i == this->Children().end()){
+			if(i == this->children().end()){
 				break;
 			}
 			auto w = this->Remove(i);
@@ -363,7 +379,7 @@ morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	
 	ret[transIndex] = 0;
 	
-	for(auto i = this->Children().begin(); i != this->Children().end(); ++i){
+	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		ting::util::ClampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
 	}
 	

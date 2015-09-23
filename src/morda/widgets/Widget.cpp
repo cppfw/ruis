@@ -320,9 +320,9 @@ bool Widget::isTopmost()const noexcept{
 		return false;
 	}
 	
-	ASSERT(this->parent()->Children().size() != 0)
+	ASSERT(this->parent()->children().size() != 0)
 	
-	return this->parent()->Children().back().get() == this;
+	return this->parent()->children().back().get() == this;
 }
 
 
@@ -332,13 +332,13 @@ void Widget::makeTopmost(){
 		return;
 	}
 	
-	ASSERT(this->parent()->Children().size() != 0)
+	ASSERT(this->parent()->children().size() != 0)
 	
-	if(this->parent()->Children().size() == 1){
+	if(this->parent()->children().size() == 1){
 		return;
 	}
 	
-	if(this->parent()->Children().rbegin()->get() == this){
+	if(this->parent()->children().rbegin()->get() == this){
 		return;//already topmost
 	}
 	

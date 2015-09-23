@@ -80,7 +80,7 @@ public:
 
 	
 	size_t visibleCount()const{
-		return this->Children().size();
+		return this->children().size();
 	}
 	
 	void setScrollPosAsFactor(real factor);

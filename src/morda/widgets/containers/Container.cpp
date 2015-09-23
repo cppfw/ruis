@@ -58,7 +58,7 @@ void Container::Add(const stob::Node& chain){
 
 //override
 void Container::render(const morda::Matr4r& matrix)const{	
-	for(auto& w: this->Children()){
+	for(auto& w: this->children()){
 		if(!w->isVisible()){
 			continue;
 		}
@@ -103,7 +103,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	}
 	
 	//call children in reverse order
-	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
+	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
 		if(!(*i)->isVisible() || !(*i)->isEnabled()){
 			continue;
 		}
@@ -156,7 +156,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	}
 	
 	//call children in reverse order
-	for(Widget::T_ChildrenList::const_reverse_iterator i = this->Children().rbegin(); i != this->Children().rend(); ++i){
+	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
 		if(!(*i)->isVisible() || !(*i)->isEnabled()){
 			ASSERT(!(*i)->isHovered())
 			continue;
@@ -171,7 +171,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		
 		if((*i)->onMouseMove(pos - (*i)->rect().p, pointerID)){//consumed mouse move event
 			//un-hover rest of the children
-			for(++i; i != this->Children().rend(); ++i){
+			for(++i; i != this->children().rend(); ++i){
 				(*i)->setHovered(false, pointerID);
 			}
 			return true;
@@ -192,7 +192,7 @@ void Container::onHoverChanged(unsigned pointerID){
 	
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	for(auto& w : this->Children()){
+	for(auto& w : this->children()){
 		w->setHovered(false, pointerID);
 	}
 }
@@ -202,7 +202,7 @@ void Container::onHoverChanged(unsigned pointerID){
 void Container::layOut(){
 //	TRACE(<< "Container::layOut(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	for(auto& w : this->Children()){
+	for(auto& w : this->children()){
 		if(w->needsRelayout()){
 			w->relayoutNeeded = false;
 			w->layOut();
@@ -212,7 +212,7 @@ void Container::layOut(){
 
 
 Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
-	if(insertBefore == this->Children().end()){
+	if(insertBefore == this->children().end()){
 		return this->Add(w);
 	}
 	return this->Add(w, (*insertBefore).get());
@@ -235,10 +235,10 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	T_ChildrenList::iterator ret;
 	
 	if(insertBefore){
-		ret = this->children.insert(insertBefore->parentIter, w);
+		ret = this->children_var.insert(insertBefore->parentIter, w);
 	}else{
-		this->children.push_back(w);
-		ret = this->children.end();
+		this->children_var.push_back(w);
+		ret = this->children_var.end();
 		--ret;
 	}
 	
@@ -248,8 +248,8 @@ Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w
 	
 	this->onChildrenListChanged();
 	
-	if(this->children.size() > 1){
-		(*(++this->children.rbegin()))->onTopmostChanged();
+	if(this->children_var.size() > 1){
+		(*(++this->children_var.rbegin()))->onTopmostChanged();
 	}
 	
 	w->onTopmostChanged();
@@ -277,7 +277,7 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 	
 	auto ret = *w.parentIter;
 	
-	this->children.erase(w.parentIter);
+	this->children_var.erase(w.parentIter);
 	
 	w.parentContainer = nullptr;
 	w.setUnhovered();
@@ -292,9 +292,9 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 
 
 void Container::removeAll() {
-	while(this->Children().size()){
+	while(this->children().size()){
 //		TRACE(<< "Container::removeAll(): w = " << (this->Children().front().get()) << std::endl)
-		this->Remove(*this->Children().front());
+		this->Remove(*this->children().front());
 	}
 }
 
@@ -306,7 +306,7 @@ std::shared_ptr<Widget> Container::findChildByName(const std::string& name)noexc
 		return std::move(r);
 	}
 	
-	for(auto& w : this->Children()){
+	for(auto& w : this->children()){
 		if(auto r = w->findChildByName(name)){
 			return r;
 		}

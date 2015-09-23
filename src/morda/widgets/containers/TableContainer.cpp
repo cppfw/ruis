@@ -15,15 +15,15 @@ TableContainer::TableContainer(const stob::Node* chain) :
 
 void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, TableRow::LayoutParams*>> iterators;
-	iterators.reserve(this->Children().size());
+	iterators.reserve(this->children().size());
 	
-	for(auto& c : this->Children()){
+	for(auto& c : this->children()){
 		auto tr = dynamic_cast<TableRow*>(c.get());
 		if(!tr){
 			throw morda::Exc("TableContainer: non-TableRow child found, TableContainer can only hold TableRow children");
 		}
 		
-		iterators.push_back(std::make_tuple(tr, tr->Children().begin(), nullptr));
+		iterators.push_back(std::make_tuple(tr, tr->children().begin(), nullptr));
 	}
 	
 	for(bool notEnd = true; notEnd;){
@@ -37,7 +37,7 @@ void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 			auto& iter = std::get<1>(i);
 			auto& lpptr = std::get<2>(i);
 
-			if(iter == tr->Children().end()){
+			if(iter == tr->children().end()){
 				break;
 			}
 			
@@ -77,7 +77,7 @@ void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 			auto& iter = std::get<1>(i);
 			auto& lpptr = std::get<2>(i);
 
-			if(iter == tr->Children().end()){
+			if(iter == tr->children().end()){
 				break;
 			}
 			

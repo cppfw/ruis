@@ -42,7 +42,7 @@ namespace morda{
 class Container : virtual public Widget{
 
 private:
-	T_ChildrenList children;
+	T_ChildrenList children_var;
 	
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
@@ -119,8 +119,8 @@ public:
 	
 	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept override;
 	
-	const T_ChildrenList& Children()const noexcept{
-		return this->children;
+	const T_ChildrenList& children()const noexcept{
+		return this->children_var;
 	}
 	
 	/**
