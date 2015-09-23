@@ -624,7 +624,7 @@ public:
 				}
 			};
 			
-			treeview->dataSetChanged = [rp](morda::TreeView&){
+			treeview->viewChanged = [rp](morda::TreeView&){
 				if(auto r = rp.lock()){
 					if(r->resized){
 						r->resized(morda::Vec2r());

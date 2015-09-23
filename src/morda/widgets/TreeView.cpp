@@ -19,8 +19,8 @@ TreeView::TreeView(const stob::Node* chain) :
 	lp.dim.x = Widget::LayoutParams::D_Min;
 	
 	this->list->dataSetChanged = [this](List&){
-		if(this->dataSetChanged){
-			this->dataSetChanged(*this);
+		if(this->viewChanged){
+			this->viewChanged(*this);
 		}
 	};
 }

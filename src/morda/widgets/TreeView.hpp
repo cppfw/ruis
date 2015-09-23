@@ -353,7 +353,11 @@ public:
 	};
 
 public:
-	std::function<void(TreeView&)> dataSetChanged;
+	/**
+	 * @brief Invoked when view Changes.
+	 * For example on collapse/uncollapse.
+	 */
+	std::function<void(TreeView&)> viewChanged;
 	
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
