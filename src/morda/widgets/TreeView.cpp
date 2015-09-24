@@ -130,7 +130,7 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
 
 void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path) {
 	auto i = this->visibleTree.pos(path);
-	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
+//	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
 	
 	if(this->iter > i){
 		auto s = (*i).size();

@@ -187,13 +187,13 @@ public:
 			return this->path().size() != 0;
 		}
 		
-		Iterator& goUp(){
+		Iterator& ascent(){
 			this->pathIdx.pop_back();
 			this->pathPtr.pop_back();
 			return *this;
 		}
 		
-		Iterator& descentTo(size_t index){
+		Iterator& descent(size_t index){
 			if(this->pathIdx.size() == 0){
 				return *this;
 			}
@@ -233,7 +233,7 @@ public:
 		}
 		
 		size_t index = i.path().back();
-		i.goUp();
+		i.ascent();
 		Tree* node;
 		if(!i){
 			node = this;
@@ -290,7 +290,7 @@ public:
 		
 		for(; i != path.end(); ++i){
 			auto oldDepth = ret.depth();
-			ret.descentTo(*i);
+			ret.descent(*i);
 			if(oldDepth == ret.depth()){
 				break;
 			}
@@ -358,8 +358,17 @@ public:
 			this->List::ItemsProvider::notifyDataSetChanged();
 		}
 		
+		/**
+		 * @brief Notify that an item has been removed.
+		 * @param path - index path of the removed item.
+		 */
 		void notifyItemRemoved(const std::vector<size_t>& path);
 		
+		/**
+		 * @brief Notify that a new item has been added.
+		 * @param path - index path to a newly added item. Essentially, it is a path
+		 *               to an item before which a new item has been added.
+		 */
 		void notifyItemAdded(const std::vector<size_t>& path);
 		
 	private:
