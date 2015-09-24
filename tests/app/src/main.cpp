@@ -19,6 +19,7 @@
 #include "../../../src/morda/widgets/TreeView.hpp"
 #include "../../../src/morda/widgets/MouseProxy.hpp"
 #include "../../../src/morda/widgets/ResizeProxy.hpp"
+#include "../../../src/morda/widgets/labels/ColorLabel.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
 
@@ -411,16 +412,56 @@ public:
 			ret->Add(widget);
 		}
 		
-		auto value = ting::New<morda::Label>();
-		ASSERT(value)
-		
-		std::stringstream ss;
-		
-		ss << n->Value();
-		
-		value->setText(ss.str());
-		
-		ret->Add(value);
+		{
+			auto v = morda::App::Inst().inflater.Inflate(*stob::Parse(
+					R"qwertyuiop(
+							FrameContainer{
+								ColorLabel{
+									name{selection}
+									layout{dimX{max}dimY{max}}
+									color{0}
+								}
+								Label{
+									name{value}
+								}
+								MouseProxy{
+									name{mouse_proxy}
+									layout{dimX{max}dimY{max}}
+								}
+							}
+						)qwertyuiop"
+				));
+			
+			{
+				auto value = v->findChildByNameAs<morda::Label>("value");
+				ASSERT(value)
+				value->setText(n->Value());
+			}
+			{
+				auto colorLabel = v->findChildByNameAs<morda::ColorLabel>("selection");
+				auto cl = ting::makeWeak(colorLabel);
+				
+				auto mp = v->findChildByNameAs<morda::MouseProxy>("mouse_proxy");
+				ASSERT(mp)
+				mp->mouseButton = [this, cl](morda::Widget&, bool isDown, const morda::Vec2r&, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+					if(!isDown || button != morda::Widget::EMouseButton::LEFT){
+						return false;
+					}
+					
+					if(auto c = cl.lock()){
+						c->setColor(0xff800000);
+					}else{
+						ASSERT(false)
+					}
+					
+					//TODO:
+					
+					return true;
+				};
+			}
+
+			ret->Add(v);
+		}
 		
 		{
 			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::Inst().inflater.Inflate(*stob::Parse(

@@ -116,20 +116,16 @@ public:
 				return *this;
 			}
 			
-			{
-				auto& idx = this->pathIdx.back();
-
-				if(idx == 0){
-					this->pathPtr.pop_back();
-					this->pathIdx.pop_back();
-					return *this;
-				}
+			if(this->pathIdx.back() == 0){
+				this->pathPtr.pop_back();
+				this->pathIdx.pop_back();
+				return *this;
 			}
-			
+						
 			for(;;){
 				auto& list = this->pathPtr.back()->children;
 				auto& idx = this->pathIdx.back();
-				
+				ASSERT(idx != 0)
 				--idx;
 				
 				if(list[idx].children.size() != 0){
@@ -336,7 +332,7 @@ public:
 		mutable size_t iterIndex;
 		mutable decltype(visibleTree)::Iterator iter;
 		
-		const decltype(iter) iterForIndex(size_t index)const;
+		const decltype(iter)& iterForIndex(size_t index)const;
 		
 	protected:
 		ItemsProvider(){

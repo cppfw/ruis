@@ -214,12 +214,10 @@ Container{
 			}
 
 			TableRow{
-
 				layout{
 					dimX{0} dimY{0}
 					weight{1}
 				}
-
 
 				FrameContainer{
 					layout{
@@ -261,6 +259,22 @@ Container{
 					}
 				}
 				Widget{}
+			}
+			TableRow{
+				HorizontalContainer{
+					PushButton{
+						name{insert_before}
+						Label{
+							text{"Ins before"}
+						}
+					}
+					PushButton{
+						name{insert_after}
+						Label{
+							text{"Ins after"}
+						}
+					}
+				}
 			}
 		}
 	}//~Window

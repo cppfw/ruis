@@ -62,7 +62,7 @@ void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
 	this->recycle(i.path(), std::move(w));
 }
 
-const decltype(TreeView::ItemsProvider::iter) TreeView::ItemsProvider::iterForIndex(size_t index) const {
+const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iterForIndex(size_t index) const {
 	ASSERT(this->iter.path().size() != 0)
 	
 	if(index != this->iterIndex){
@@ -81,8 +81,6 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 	auto i = this->visibleTree.pos(path);
 	ASSERT(i != this->visibleTree.end())
 	
-	auto s = (*i).size();
-	
 	if(this->iter > i){
 		auto pnext = path;
 		++pnext.back();
@@ -93,7 +91,7 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 				--this->iterIndex;
 			}
 		}else{
-			this->iterIndex -= s;
+			this->iterIndex -= (*i).size();
 		}
 	}
 	
@@ -133,8 +131,6 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 //	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
 	
 	if(this->iter > i){
-		auto s = (*i).size();
-		
 		auto pnext = path;
 		++pnext.back();
 		
@@ -145,7 +141,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 				--this->iterIndex;
 			}
 		}else{
-			this->iterIndex -= s;
+			this->iterIndex -= ((*i).size() + 1);
 		}
 	}
 	
@@ -153,4 +149,3 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
-
