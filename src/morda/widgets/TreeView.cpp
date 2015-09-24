@@ -146,7 +146,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 	}
 	
 	this->visibleTree.remove(i);
-	this->visibleTree.correctIteratorAfterDeletionOf(this->iter, i.path());
+	this->visibleTree.correctIteratorAfterDeletion(this->iter, i.path());
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }

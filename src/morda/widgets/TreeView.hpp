@@ -221,12 +221,12 @@ public:
 		}
 	};
 	
-	void correctIteratorAfterDeletionOf(Iterator& iter, const std::vector<size_t>& path){
+	void correctIteratorAfterDeletion(Iterator& iter, const std::vector<size_t>& deletedPath){
 		auto i = iter.pathIdx.begin();
-		auto j = path.begin();
-		for(; i != iter.pathIdx.end() && j != path.end(); ++i, ++j){
+		auto j = deletedPath.begin();
+		for(; i != iter.pathIdx.end() && j != deletedPath.end(); ++i, ++j){
 			if(*i != *j){
-				if(j != path.end() - 1){
+				if(j != deletedPath.end() - 1){
 					break;//items are in different branches, no correction is needed
 				}
 
@@ -235,8 +235,8 @@ public:
 				}
 				break;
 			}else{
-				if(j == path.end() - 1){
-					iter.pathIdx = path;
+				if(j == deletedPath.end() - 1){
+					iter.pathIdx = deletedPath;
 					break;
 				}
 			}
