@@ -141,19 +141,12 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 				--this->iterIndex;
 			}
 		}else{
-			TRACE(<< "i[0] = " << i.path()[0] << std::endl)
-			TRACE(<< "iter = " << this->iter.path()[0] << " " << this->iter.path()[1] << std::endl)
-			TRACE(<< "iterIndex = " << this->iterIndex << std::endl)
 			this->iterIndex -= ((*i).size() + 1);
 		}
 	}
 	
 	this->visibleTree.remove(i);
 	this->visibleTree.correctIteratorAfterDeletionOf(this->iter, i.path());
-	
-	TRACE(<< "i[0] = " << i.path()[0] << std::endl)
-	TRACE(<< "iter = " << this->iter.path()[0] << " " << this->iter.path()[1] << std::endl)
-	TRACE(<< "iterIndex = " << this->iterIndex << std::endl)
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
