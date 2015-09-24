@@ -102,7 +102,7 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 
 void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 	auto s = this->count(path);
-	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
+//	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
 	if(s == 0){
 		return;
 	}

@@ -33,8 +33,6 @@ THE SOFTWARE. */
 
 #include "containers/ScrollContainer.hpp"
 
-#include <ting/Buffer.hpp>
-
 
 namespace morda{
 
