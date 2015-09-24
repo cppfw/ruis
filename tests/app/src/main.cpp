@@ -350,6 +350,10 @@ public:
 			Widget{layout{dimX{5mm}dimY{0}}}
 		)qwertyuiop";
 	
+private:
+	std::vector<size_t> selectedItem;
+	
+public:
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 		
@@ -439,21 +443,22 @@ public:
 			}
 			{
 				auto colorLabel = v->findChildByNameAs<morda::ColorLabel>("selection");
-				auto cl = ting::makeWeak(colorLabel);
+				
+				if(this->selectedItem == path){
+					colorLabel->setColor(0xff800000);
+				}else{
+					colorLabel->setColor(0);
+				}
 				
 				auto mp = v->findChildByNameAs<morda::MouseProxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouseButton = [this, cl](morda::Widget&, bool isDown, const morda::Vec2r&, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
+				mp->mouseButton = [this, path](morda::Widget&, bool isDown, const morda::Vec2r&, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
 					if(!isDown || button != morda::Widget::EMouseButton::LEFT){
 						return false;
 					}
 					
-					if(auto c = cl.lock()){
-						c->setColor(0xff800000);
-					}else{
-						ASSERT(false)
-					}
-					
+					this->selectedItem = path;
+					this->notifyItemChanged();
 					//TODO:
 					
 					return true;

@@ -107,6 +107,26 @@ public:
 			return *this;
 		}
 		
+		Iterator& moveToNext(){
+			if(!this->operator bool()){
+				return *this;
+			}
+			ASSERT(this->pathIdx.size() != 0)
+			ASSERT(this->pathPtr.size() == this->pathIdx.size())
+			++this->pathIdx.back();
+			return *this;
+		}
+		
+		Iterator& moveToPrev(){
+			if(!this->operator bool()){
+				return *this;
+			}
+			ASSERT(this->pathIdx.size() != 0)
+			ASSERT(this->pathPtr.size() == this->pathIdx.size())
+			--this->pathIdx.back();
+			return *this;
+		}
+		
 		Iterator operator+(size_t i)const{
 			return Iterator(*this) += i;
 		}
@@ -202,6 +222,37 @@ public:
 			return *this;
 		}
 	};
+	
+	void correctIteratorAfterDeletionOf(Iterator& iter, const std::vector<size_t>& path){
+		auto i = iter.pathIdx.begin();
+		auto j = path.begin();
+		for(; i != iter.pathIdx.end() && j != path.end(); ++i, ++j){
+			if(*i != *j){
+				if(j != path.end() - 1){
+					break;//items are in different branches, no correction is needed
+				}
+
+				if(*i > *j){
+					--(*i);
+				}
+				break;
+			}else{
+				if(j == path.end() - 1){
+					iter.pathIdx = path;
+					break;
+				}
+			}
+		}
+		iter.pathPtr = std::move(this->pos(iter.path()).pathPtr);
+		ASSERT(iter.pathPtr.size() != 0 && iter.pathIdx.size() == iter.pathPtr.size())
+		ASSERT_INFO(iter.pathPtr.back()->numChildren() >= iter.pathIdx.back(), "given iterator was malformed")
+		if(iter.pathPtr.back()->numChildren() == iter.pathIdx.back()){
+			iter.ascent();
+			if(iter.pathIdx.size() != 0){
+				++iter.pathIdx.back();
+			}
+		}
+	}
 	
 	void add(Iterator addInto, size_t numChildrenToAdd){
 		for(auto t : addInto.pathPtr){

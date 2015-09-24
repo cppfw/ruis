@@ -130,7 +130,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 	auto i = this->visibleTree.pos(path);
 //	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
 	
-	if(this->iter > i){
+	if(this->iter >= i){
 		auto pnext = path;
 		++pnext.back();
 		
@@ -141,11 +141,19 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 				--this->iterIndex;
 			}
 		}else{
+			TRACE(<< "i[0] = " << i.path()[0] << std::endl)
+			TRACE(<< "iter = " << this->iter.path()[0] << " " << this->iter.path()[1] << std::endl)
+			TRACE(<< "iterIndex = " << this->iterIndex << std::endl)
 			this->iterIndex -= ((*i).size() + 1);
 		}
 	}
 	
 	this->visibleTree.remove(i);
+	this->visibleTree.correctIteratorAfterDeletionOf(this->iter, i.path());
+	
+	TRACE(<< "i[0] = " << i.path()[0] << std::endl)
+	TRACE(<< "iter = " << this->iter.path()[0] << " " << this->iter.path()[1] << std::endl)
+	TRACE(<< "iterIndex = " << this->iterIndex << std::endl)
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
