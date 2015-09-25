@@ -425,10 +425,6 @@ public:
 	}
 	
 	void insertChild(){
-		if(this->selectedItem.size() == 0){
-			return;
-		}
-		
 		auto n = this->root.get();
 		if(!n){
 			return;
@@ -439,8 +435,8 @@ public:
 			n = next.node();
 		}
 		
-		if(!n){
-			this->selectedItem = {{0}};
+		if(!n || this->selectedItem.size() == 0){
+			this->selectedItem.clear();
 			n = this->root.get();
 		}
 		
