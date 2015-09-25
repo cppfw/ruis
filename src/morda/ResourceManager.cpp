@@ -31,7 +31,7 @@ void ResourceManager::MountResPack(const ting::fs::File& fi){
 	//handle includes
 	for(stob::Node::NodeAndPrev np = resScript->Next(D_Include); np.node(); np = np.prev()->Next(D_Include)){
 		ASSERT(np.prev())
-		auto incNode = np.prev()->RemoveNext()->RemoveChildren();
+		auto incNode = np.prev()->RemoveNext()->removeChildren();
 		
 		fi.SetPath(dir + incNode->Value());
 		this->MountResPack(fi);

@@ -353,7 +353,69 @@ public:
 private:
 	std::vector<size_t> selectedItem;
 	
+	unsigned newItemNumber = 0;
+	
+	std::string generateNewItemValue(){
+		std::stringstream ss;
+		ss << "newItem" << newItemNumber;
+		++newItemNumber;
+		return ss.str();
+	}
+	
 public:
+	void insertBefore(){
+		if(this->selectedItem.size() == 0){
+			return;
+		}
+		
+		auto n = this->root.get();
+		if(!n){
+			return;
+		}
+		
+		decltype(n) parent = nullptr;
+		decltype(n) prev = nullptr;
+		
+		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
+			parent = n;
+			auto next = n->child(*i);
+			
+			n = next.node();
+			prev = next.prev();
+		}
+		
+		if(prev){
+			prev->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
+		}else{
+			parent->addAsFirstChild(this->generateNewItemValue().c_str());
+		}
+		
+		this->notifyItemAdded(this->selectedItem);
+		++this->selectedItem.back();
+	}
+	
+	void insertAfter(){
+		if(this->selectedItem.size() == 0){
+			return;
+		}
+		
+		auto n = this->root.get();
+		if(!n){
+			return;
+		}
+		
+		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
+			auto next = n->child(*i);
+			n = next.node();
+		}
+		
+		n->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
+		
+		++this->selectedItem.back();
+		this->notifyItemAdded(this->selectedItem);
+		--this->selectedItem.back();
+	}
+	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 		
@@ -364,7 +426,7 @@ public:
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
 			parent = n;
-			n = n->child(*i);
+			n = n->child(*i).node();
 			isLast.push_back(n->Next() == nullptr);
 		}
 		
@@ -494,7 +556,7 @@ public:
 		auto n = this->root.get();
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
-			n = n->child(*i);
+			n = n->child(*i).node();
 		}
 		
 		return n->count();
@@ -635,7 +697,8 @@ public:
 		{
 			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
-			treeview->setItemsProvider(ting::New<TreeViewItemsProvider>());
+			auto provider = ting::New<TreeViewItemsProvider>();
+			treeview->setItemsProvider(provider);
 			std::weak_ptr<morda::TreeView> tv = treeview;
 			
 			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("treeview_vertical_slider");
@@ -679,6 +742,23 @@ public:
 					if(r->resized){
 						r->resized(morda::Vec2r());
 					}
+				}
+			};
+			
+			
+			auto insertBeforeButton = c->findChildByNameAs<morda::PushButton>("insert_before");
+			auto insertAfterButton = c->findChildByNameAs<morda::PushButton>("insert_after");
+			
+			auto prvdr = ting::makeWeak(provider);
+			insertBeforeButton->clicked = [prvdr](morda::PushButton& b){
+				if(auto p = prvdr.lock()){
+					p->insertBefore();
+				}
+			};
+			
+			insertAfterButton->clicked = [prvdr](morda::PushButton& b){
+				if(auto p = prvdr.lock()){
+					p->insertAfter();
 				}
 			};
 		}

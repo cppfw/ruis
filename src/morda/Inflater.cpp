@@ -148,7 +148,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		d->SetChildren(MergeGUIChain(s->Child(), d->RemoveChildren()));
+		d->SetChildren(MergeGUIChain(s->Child(), d->removeChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
@@ -230,7 +230,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 	
 	{
 		if(cloned){
-			cloned = cloned->RemoveChildren();
+			cloned = cloned->removeChildren();
 		}else{
 			if(n->Child()){
 				cloned = n->Child()->CloneChain();
@@ -278,7 +278,7 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 		if(auto s = this->FindTemplate(i->second->Value())){
 			i->second->SetValue(s->Value());
 			ASSERT(s->Child())
-			i->second->SetChildren(MergeGUIChain(s->Child(), i->second->RemoveChildren()));
+			i->second->SetChildren(MergeGUIChain(s->Child(), i->second->removeChildren()));
 		}
 	}
 	
@@ -419,7 +419,7 @@ void Inflater::SubstituteVariables(stob::Node* to)const{
 		
 		if(auto var = this->FindVariable(to->Child()->Value())){
 			to->SetValue(var->c_str());
-			to->RemoveChildren();
+			to->removeChildren();
 		}
 		
 		return;
