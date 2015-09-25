@@ -127,6 +127,11 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
 		return;
 	}
 	
+	if(i.parent().numChildren() == 0){
+		this->List::ItemsProvider::notifyDataSetChanged();
+		return;
+	}
+	
 	if(this->iter >= i){
 		++this->iterIndex;
 	}

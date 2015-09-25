@@ -262,16 +262,25 @@ Container{
 			}
 			TableRow{
 				HorizontalContainer{
+					Label{
+						text{Insert:}
+					}
 					PushButton{
 						name{insert_before}
 						Label{
-							text{"Ins before"}
+							text{"before"}
 						}
 					}
 					PushButton{
 						name{insert_after}
 						Label{
-							text{"Ins after"}
+							text{"after"}
+						}
+					}
+					PushButton{
+						name{insert_child}
+						Label{
+							text{"child"}
 						}
 					}
 				}

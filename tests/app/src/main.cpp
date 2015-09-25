@@ -384,6 +384,10 @@ public:
 			prev = next.prev();
 		}
 		
+		if(!n){
+			return;
+		}
+		
 		if(prev){
 			prev->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
 		}else{
@@ -409,11 +413,42 @@ public:
 			n = next.node();
 		}
 		
+		if(!n){
+			return;
+		}
+		
 		n->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
 		
 		++this->selectedItem.back();
 		this->notifyItemAdded(this->selectedItem);
 		--this->selectedItem.back();
+	}
+	
+	void insertChild(){
+		if(this->selectedItem.size() == 0){
+			return;
+		}
+		
+		auto n = this->root.get();
+		if(!n){
+			return;
+		}
+		
+		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
+			auto next = n->child(*i);
+			n = next.node();
+		}
+		
+		if(!n){
+			this->selectedItem = {{0}};
+			n = this->root.get();
+		}
+		
+		n->addAsFirstChild(this->generateNewItemValue().c_str());
+		
+		this->selectedItem.push_back(0);
+		this->notifyItemAdded(this->selectedItem);
+		this->selectedItem.pop_back();
 	}
 	
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
@@ -748,6 +783,7 @@ public:
 			
 			auto insertBeforeButton = c->findChildByNameAs<morda::PushButton>("insert_before");
 			auto insertAfterButton = c->findChildByNameAs<morda::PushButton>("insert_after");
+			auto insertChild = c->findChildByNameAs<morda::PushButton>("insert_child");
 			
 			auto prvdr = ting::makeWeak(provider);
 			insertBeforeButton->clicked = [prvdr](morda::PushButton& b){
@@ -759,6 +795,12 @@ public:
 			insertAfterButton->clicked = [prvdr](morda::PushButton& b){
 				if(auto p = prvdr.lock()){
 					p->insertAfter();
+				}
+			};
+			
+			insertChild->clicked = [prvdr](morda::PushButton& b){
+				if(auto p = prvdr.lock()){
+					p->insertChild();
 				}
 			};
 		}
