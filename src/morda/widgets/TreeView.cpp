@@ -122,7 +122,14 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 }
 
 void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
+	auto i = this->visibleTree.pos(path);
+	if(!i || i.path().back() > i.parent().numChildren()){
+		return;
+	}
+	
 	//TODO:
+	
+	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 

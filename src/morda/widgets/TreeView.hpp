@@ -68,7 +68,14 @@ public:
 			return this->pathIdx;
 		}
 		
+		Tree& parent(){
+			ASSERT(this->pathPtr.size() != 0)
+			return *this->pathPtr.back();
+		}
+		
 		Tree& operator*(){
+			ASSERT(this->pathPtr.size() != 0)
+			ASSERT(this->pathIdx.size() == this->pathPtr.size())
 			return this->pathPtr.back()->children[this->pathIdx.back()];
 		}
 		
