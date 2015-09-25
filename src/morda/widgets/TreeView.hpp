@@ -259,18 +259,57 @@ public:
 		}
 	}
 	
-	void add(Iterator addInto, size_t numChildrenToAdd){
-		for(auto t : addInto.pathPtr){
-			TRACE(<< "t = " << t << std::endl)
-			t->size_var += numChildrenToAdd;
+	void correctIteratorAfterAddition(Iterator& iter, const std::vector<size_t>& addedPath){
+		auto i = iter.pathIdx.begin();
+		auto j = addedPath.begin();
+		for(; i != iter.pathIdx.end() && j != addedPath.end(); ++i, ++j){
+			if(*i != *j){
+				if(j != addedPath.end() - 1){
+					break;//items are in different branches, no correction needed
+				}
+				
+				if(*i > *j){
+					++(*i);
+				}
+				break;
+			}else{
+				if(j == addedPath.end() - 1){
+					++(*i);
+					break;
+				}
+			}
 		}
-		
-		(*addInto).add(numChildrenToAdd);
+		iter.pathPtr = std::move(this->pos(iter.path()).pathPtr);
 	}
 	
-	void add(size_t numChildrenToAdd){
-		this->children.resize(this->children.size() + numChildrenToAdd);
-		this->size_var += numChildrenToAdd;
+	void resetChildren(Iterator childrenOf, size_t numberOfChildren){
+		for(auto t : childrenOf.pathPtr){
+//			TRACE(<< "t = " << t << std::endl)
+			t->size_var -= (*childrenOf).size();
+			t->size_var += numberOfChildren;
+		}
+		
+		(*childrenOf).resetChildren(numberOfChildren);
+	}
+	
+	void resetChildren(size_t numberOfChildren){
+		this->children.clear();
+		this->children.resize(this->children.size() + numberOfChildren);
+		this->size_var = numberOfChildren;
+	}
+	
+	void add(size_t before){
+		this->children.insert(this->children.begin() + before, Tree());
+		++this->size_var;
+	}
+	
+	void add(Iterator before){
+		for(auto t : before.pathPtr){
+//			TRACE(<< "t = " << t << std::endl)
+			++t->size_var;
+		}
+		
+		before.parent().children.insert(before.parent().children.begin() + before.path().back(), Tree());
 	}
 	
 	void remove(Iterator i){

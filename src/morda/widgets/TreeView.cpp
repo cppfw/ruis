@@ -42,7 +42,7 @@ void TreeView::ItemsProvider::notifyDataSetChanged() {
 size_t TreeView::ItemsProvider::count() const noexcept{
 	if(this->visibleTree.size() == 0){
 		auto size = this->count(std::vector<size_t>());
-		this->visibleTree.add(size);
+		this->visibleTree.resetChildren(size);
 		this->iter = this->visibleTree.begin();
 		this->iterIndex = 0;
 	}
@@ -116,7 +116,7 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 		this->iterIndex += s;
 	}
 	
-	this->visibleTree.add(i, s);
+	this->visibleTree.resetChildren(i, s);
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
@@ -127,8 +127,12 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
 		return;
 	}
 	
-	//TODO:
+	if(this->iter >= i){
+		++this->iterIndex;
+	}
 	
+	this->visibleTree.add(i);
+	this->visibleTree.correctIteratorAfterAddition(this->iter, i.path());
 	
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
