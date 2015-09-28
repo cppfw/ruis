@@ -119,7 +119,7 @@ void LinearContainer::layOut(){
 			
 			pos += (*i)->rect().d[longIndex];
 			
-			newPos[transIndex] = ting::math::Round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
+			newPos[transIndex] = ::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 			
 			(*i)->moveTo(newPos);
 		}

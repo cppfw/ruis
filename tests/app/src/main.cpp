@@ -23,8 +23,8 @@
 
 #include "../../../src/morda/render/Render.hpp"
 
-#include <ting/debug.hpp>
-#include <ting/fs/FSFile.hpp>
+#include <utki/debug.hpp>
+#include <papki/FSFile.hpp>
 #include <ting/util.hpp>
 
 #include "../../../src/morda/util/ZipFile.hpp"

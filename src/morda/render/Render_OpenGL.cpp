@@ -11,10 +11,10 @@
 #include <memory>
 #include <sstream>
 
-#include <ting/Exc.hpp>
+#include <utki/Exc.hpp>
 #include <ting/Void.hpp>
 #include <ting/PoolStored.hpp>
-#include <ting/Buffer.hpp>
+#include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
 #include "../App.hpp"
@@ -120,7 +120,7 @@ struct ShaderWrapper{
 		this->s = glCreateShader(type);
 	
 		if(this->s == 0){
-			throw ting::Exc("glCreateShader() failed");
+			throw utki::Exc("glCreateShader() failed");
 		}
 
 		std::stringstream ss;
@@ -133,7 +133,7 @@ struct ShaderWrapper{
 		if(this->CheckForCompileErrors(this->s)){
 			TRACE(<< "Error while compiling:\n" << c << std::endl)
 			glDeleteShader(this->s);
-			throw ting::Exc("Error compiling shader");
+			throw utki::Exc("Error compiling shader");
 		}
 	}
 	~ShaderWrapper()noexcept{
@@ -177,7 +177,7 @@ struct ProgramWrapper : public ting::Void{
 		if(this->CheckForLinkErrors(this->p)){
 			TRACE(<< "Error while linking shader program" << vertexShaderCode << std::endl << fragmentShaderCode << std::endl)
 			glDeleteProgram(this->p);
-			throw ting::Exc("Error linking shader program");
+			throw utki::Exc("Error linking shader program");
 		}
 	}
 
@@ -239,7 +239,7 @@ Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
 	if(ret < 0){
 		std::stringstream ss;
 		ss << "No attribute found in the shader program: " << n;
-		throw ting::Exc(ss.str());
+		throw utki::Exc(ss.str());
 	}
 	return InputID(ret);
 }
@@ -247,7 +247,7 @@ Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
 Render::InputID Render::getUniform(ting::Void& p, const char* n) {
 	GLint ret = glGetUniformLocation(static_cast<ProgramWrapper&>(p).p, n);
 	if(ret < 0){
-		throw ting::Exc("No uniform found in the shader program");
+		throw utki::Exc("No uniform found in the shader program");
 	}
 	return InputID(ret);
 }

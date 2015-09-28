@@ -2,9 +2,9 @@
 
 #include "resources/ResSTOB.hpp"
 
-#include <ting/debug.hpp>
-#include <ting/fs/FSFile.hpp>
-#include <ting/fs/RootDirFile.hpp>
+#include <utki/debug.hpp>
+#include <papki/FSFile.hpp>
+#include <papki/RootDirFile.hpp>
 
 
 

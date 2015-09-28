@@ -28,8 +28,8 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/debug.hpp>
-#include <ting/fs/File.hpp>
+#include <utki/debug.hpp>
+#include <papki/File.hpp>
 #include <ting/util.hpp>
 #include <ting/types.hpp>
 

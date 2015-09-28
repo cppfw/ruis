@@ -409,7 +409,7 @@ public:
 	
 	
 	class ItemsProvider :
-			public virtual ting::Shared,
+			public virtual utki::Shared,
 			private List::ItemsProvider
 	{
 		friend class TreeView;

@@ -6,7 +6,7 @@
 #include "../../AppFactory.hpp"
 
 #include <ting/WaitSet.hpp>
-#include <ting/fs/FSFile.hpp>
+#include <papki/FSFile.hpp>
 #include <ting/utf8.hpp>
 #include <ting/util.hpp>
 

@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <ting/Singleton.hpp>
-#include <ting/config.hpp>
-#include <ting/Buffer.hpp>
-#include <ting/fs/File.hpp>
-#include <ting/mt/Thread.hpp>
+#include <utki/Singleton.hpp>
+#include <utki/config.hpp>
+#include <utki/Buf.hpp>
+#include <papki/File.hpp>
+#include <nitki/Thread.hpp>
 
 #include <memory>
 
@@ -33,7 +33,7 @@
 
 
 #if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
-#	include <ting/mt/Queue.hpp>
+#	include <nitki/Queue.hpp>
 #endif
 
 

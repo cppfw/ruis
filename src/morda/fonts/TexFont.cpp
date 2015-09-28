@@ -3,7 +3,7 @@
 // File description:
 //	Texture font class
 
-#include <ting/debug.hpp>
+#include <utki/debug.hpp>
 
 #include "TexFont.hpp"
 #include "../util/Image.hpp"
@@ -74,7 +74,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	public:
 		FreeTypeLibWrapper(){
 			if(FT_Init_FreeType(&this->lib)){
-				throw ting::Exc("TexFont::Load(): unable to init freetype library");
+				throw utki::Exc("TexFont::Load(): unable to init freetype library");
 			}
 		}
 		~FreeTypeLibWrapper()noexcept{
@@ -94,7 +94,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 		FreeTypeFaceWrapper(FT_Library& lib, const ting::fs::File& fi){
 			this->fontFile = fi.LoadWholeFileIntoMemory();
 			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
-				throw ting::Exc("TexFont::Load(): unable to crate font face object");
+				throw utki::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}
 		~FreeTypeFaceWrapper()noexcept{
@@ -116,7 +116,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			); // pixel_height
 
 		if(error != 0){
-			throw ting::Exc("TexFont::Load(): unable to set char size");
+			throw utki::Exc("TexFont::Load(): unable to set char size");
 		}
 	}
 
@@ -148,7 +148,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 	//print all the glyphs to the image
 	for(const std::uint32_t* c = chars.begin(); c != chars.end(); ++c){
 		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
-			throw ting::Exc("TexFont::Load(): unable to load char");
+			throw utki::Exc("TexFont::Load(): unable to load char");
 		}
 		
 //		TRACE(<< "TexFont::Load(): char loaded" << std::endl)
@@ -178,7 +178,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 				for(unsigned x = 0; x < 2 * outline + 1; ++x){
 					int dx = int(x) - int(outline);
 					int dy = int(y) - int(outline);
-					if(ting::math::Pow2(dx) + ting::math::Pow2(dy) <= int(ting::math::Pow2(outline))){
+					if(utki::pow2(dx) + utki::pow2(dy) <= int(utki::pow2(outline))){
 //					if(ting::Abs(dx) + ting::Abs(dy) <= int(outline)){
 						BlitIfGreater(im, 1, glyphim, 0, x, y);
 					}
@@ -198,7 +198,7 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			//grow texture size
 			unsigned newHeight = FindNextPowOf2(curY + im.Dim().y + DYGap);
 			if(newHeight > maxTexSize){//if it is impossible to grow texture image height anymore
-				throw ting::Exc("TexFont::Load(): there's not enough room on the texture for all the glyphs of the requested size");
+				throw utki::Exc("TexFont::Load(): there's not enough room on the texture for all the glyphs of the requested size");
 			}
 
 			//TODO: optimize somehow?
@@ -365,7 +365,7 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_
 	}catch(std::out_of_range&){
 		std::stringstream ss;
 		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-		throw ting::Exc(ss.str().c_str());
+		throw utki::Exc(ss.str().c_str());
 	}
 
 	ret.p.x = left;

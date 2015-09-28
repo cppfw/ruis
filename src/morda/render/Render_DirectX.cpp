@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <ting/Exc.hpp>
+#include <utki/Exc.hpp>
 #include <ting/Void.hpp>
 #include <ting/PoolStored.hpp>
-#include <ting/Buffer.hpp>
+#include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
 

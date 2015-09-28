@@ -1,4 +1,4 @@
-#include <ting/Singleton.hpp>
+#include <utki/Singleton.hpp>
 
 #include "ResImage.hpp"
 

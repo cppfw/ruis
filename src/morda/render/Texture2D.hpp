@@ -30,7 +30,7 @@ THE SOFTWARE. */
 
 #include "../config.hpp"
 
-#include <ting/debug.hpp>
+#include <utki/debug.hpp>
 
 #include "../util/Vector2.hpp"
 

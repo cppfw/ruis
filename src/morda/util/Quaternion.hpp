@@ -1,27 +1,3 @@
-/* The MIT License:
-
-Copyright (c) 2008-2014 Ivan Gagis <igagis@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-
-// Home page: http://morda.googlecode.com
-
 /**
  * @author Ivan Gagis <igagis@gmail.com>
  */
@@ -33,8 +9,7 @@ THE SOFTWARE. */
 #	include <iostream>
 #endif
 
-#include <ting/debug.hpp>
-#include <ting/math.hpp>
+#include <utki/debug.hpp>
 
 #include "../config.hpp"
 
@@ -321,7 +296,7 @@ public:
 	 * @return quaternion magnitude.
 	 */
 	T Magnitude()const noexcept{
-		return ting::math::Sqrt(this->MagPow2());
+		return ::sqrt(this->MagPow2());
 	}
 
 
@@ -349,8 +324,8 @@ public:
      * @return Reference to this quaternion object.
      */
 	Quaternion& InitRot(T axisX, T axisY, T axisZ, T angle)noexcept{
-		T sina2 = ting::math::Sin(angle / 2);
-		this->w = ting::math::Cos(angle / 2);
+		T sina2 = ::sin(angle / 2);
+		this->w = ::cos(angle / 2);
 		this->x = axisX * sina2;
 		this->y = axisY * sina2;
 		this->z = axisZ * sina2;
@@ -437,12 +412,12 @@ public:
 		//We made threshold for cos(alpha) > 0.9f (if cos(alpha) == 1 then alpha is 0).
 		if(cosalpha > T(0.9f)){
 			//Get the angle alpha between the 2 quaternions, and then store the sin(alpha)
-			T alpha = ting::math::Acos(cosalpha);
-			T sinalpha = ting::math::Sin(alpha);
+			T alpha = std::acos(cosalpha);
+			T sinalpha = ::sin(alpha);
 
 			//Calculate the scales for q1 and q2, according to the angle and it's sine value
-			sc1 = ting::math::Sin((1 - t) * alpha) / sinalpha;
-			sc2 = ting::math::Sin(t * alpha) / sinalpha;
+			sc1 = ::sin((1 - t) * alpha) / sinalpha;
+			sc2 = ::sin(t * alpha) / sinalpha;
 		}else{
 			sc1 = (1 - t);
 			sc2 = t;

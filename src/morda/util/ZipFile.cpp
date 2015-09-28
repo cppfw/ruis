@@ -3,7 +3,7 @@
 #include "unzip/unzip.h"
 
 #include <sstream>
-#include <ting/fs/FSFile.hpp>
+#include <papki/FSFile.hpp>
 
 
 using namespace morda;

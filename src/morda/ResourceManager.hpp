@@ -30,8 +30,8 @@ THE SOFTWARE. */
 
 #include <map>
 
-#include <ting/Shared.hpp>
-#include <ting/fs/File.hpp>
+#include <utki/Shared.hpp>
+#include <papki/File.hpp>
 
 #include <stob/dom.hpp>
 
@@ -113,7 +113,7 @@ private:
 
 
 //base class for all resources
-class Resource : virtual public ting::Shared{
+class Resource : virtual public utki::Shared{
 	friend class ResourceManager;
 protected:
 	//this can only be used as a base class

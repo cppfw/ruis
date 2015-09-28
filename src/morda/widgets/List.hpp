@@ -54,7 +54,7 @@ public:
 	List& operator=(const List&) = delete;
 	
 	
-	class ItemsProvider : virtual public ting::Shared{
+	class ItemsProvider : virtual public utki::Shared{
 		friend class List;
 		
 		List* list = nullptr;

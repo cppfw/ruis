@@ -3,7 +3,7 @@
 #include "../App.hpp"
 
 #include <ting/math.hpp>
-#include <ting/debug.hpp>
+#include <utki/debug.hpp>
 
 
 using namespace morda;
@@ -59,7 +59,7 @@ morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
 real morda::DimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
-		real ret = ting::math::Round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
+		real ret = ::round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
 //		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
 		return ret;
 	}

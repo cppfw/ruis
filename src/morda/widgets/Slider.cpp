@@ -131,7 +131,7 @@ void HandleSlider::layOut(){
 	
 	morda::Vec2r newSize(this->rect().d);
 	
-	newSize[longIndex] = ting::math::Round(newSize[longIndex] * this->areaSizeFactor());
+	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFactor());
 	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
 	this->handle.resize(newSize);
@@ -142,9 +142,9 @@ void HandleSlider::layOut(){
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
 			if(this->isVertical){
-				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ting::math::Round(effectiveLength * this->factor());
+				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ::round(effectiveLength * this->factor());
 			}else{
-				newPos[longIndex] = ting::math::Round(effectiveLength * this->factor());
+				newPos[longIndex] = ::round(effectiveLength * this->factor());
 			}
 			ASSERT_INFO(
 					newPos[longIndex] <= effectiveLength,

@@ -42,7 +42,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
 			);
-		matr.Scale(Vec2r(ting::math::Abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
+		matr.Scale(Vec2r(::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
 		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
 

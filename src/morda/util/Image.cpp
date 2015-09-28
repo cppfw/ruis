@@ -31,7 +31,7 @@ THE SOFTWARE. */
 
 #include <ting/types.hpp>
 #include <ting/math.hpp>
-#include <ting/Exc.hpp>
+#include <utki/Exc.hpp>
 
 #include <png.h>
 
@@ -71,17 +71,17 @@ Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 
 Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
 	if(src.Dim().x == 0 || src.Dim().y == 0){
-		throw ting::Exc("Image::Image(): source image has zero dimensions");
+		throw utki::Exc("Image::Image(): source image has zero dimensions");
 	}
 
 	if( src.Dim().x <= pos.x || src.Dim().y <= pos.y || src.Dim().x < (pos.x + dimensions.x) || src.Dim().y < (pos.y + dimensions.y) ){
-		throw ting::Exc("Image::Image(): incorrect dimensions of given images");
+		throw utki::Exc("Image::Image(): incorrect dimensions of given images");
 	}
 
 	this->Init(dimensions, src.Type());
 
 	//copy image data
-	throw ting::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
+	throw utki::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
 	//for(unsigned j=0; j<this->H(); ++j)
 	//    memcpy(data+j*w*channels,src->data+((j+y)*src->w+x)*channels,w*channels);
 }
@@ -156,7 +156,7 @@ void Image::FlipVertical(){
 void Image::Blit(unsigned x, unsigned y, const Image& src){
 	ASSERT(this->buf.size() != 0)
 	if(this->Type() != src.Type()){
-		throw ting::Exc("Image::Blit(): bits per pixel values do not match");
+		throw utki::Exc("Image::Blit(): bits per pixel values do not match");
 	}
 
 	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);
@@ -190,11 +190,11 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf.size())
 	if(dstChan >= this->NumChannels()){
-		throw ting::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
+		throw utki::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
 	}
 
 	if(srcChan >= src.NumChannels()){
-		throw ting::Exc("Image::Blit(): source channel index is greater than number of channels in the image");
+		throw utki::Exc("Image::Blit(): source channel index is greater than number of channels in the image");
 	}
 
 	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);

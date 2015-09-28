@@ -1,27 +1,3 @@
-/* The MIT License:
-
-Copyright (c) 2008-2015 Ivan Gagis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-
-// Home page: http://morda.googlecode.com
-
 /**
  * @author Ivan Gagis <igagis@gmail.com>
  */
@@ -29,8 +5,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/types.hpp>
-#include <ting/fs/File.hpp>
+#include <papki/File.hpp>
 
 #include "Vector2.hpp"
 
@@ -50,10 +25,10 @@ public:
 		RGBA  = 4  //4 channels. RGBA format (4 channels)
 	};
 
-	class Exc : public ting::Exc{
+	class Exc : public utki::Exc{
 	public:
 		Exc(const std::string& msg) :
-				ting::Exc(msg.c_str())
+				utki::Exc(msg.c_str())
 		{}
 	};
 	

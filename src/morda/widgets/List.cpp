@@ -146,13 +146,13 @@ void List::setScrollPosAsFactor(real factor){
 			}
 			d = (d + this->firstTailItemOffset) / this->numTailItems;
 			
-			this->posOffset = ting::math::Round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
+			this->posOffset = ::round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
 		}else{
 			this->posOffset = 0;
 		}
 	}else{
 		ASSERT(this->posIndex == 0)
-		this->posOffset = ting::math::Round(factor * this->firstTailItemOffset);
+		this->posOffset = ::round(factor * this->firstTailItemOffset);
 	}
 	
 	this->updateChildrenList();

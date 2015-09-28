@@ -28,7 +28,7 @@ THE SOFTWARE. */
 
 #pragma once
 
-#include <ting/Buffer.hpp>
+#include <utki/Buf.hpp>
 
 #include "Widget.hpp"
 

@@ -193,7 +193,7 @@ public:
 			std::stringstream ss;
 			ss << "FDFlag::FDFlag(): could not create eventFD (*nix) for implementing Waitable,"
 					<< " error code = " << errno << ": " << strerror(errno);
-			throw ting::Exc(ss.str().c_str());
+			throw utki::Exc(ss.str().c_str());
 		}
 	}
 

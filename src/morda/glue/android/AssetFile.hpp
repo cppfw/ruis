@@ -30,7 +30,7 @@ THE SOFTWARE. */
 #pragma once
 
 #include <ting/util.hpp>
-#include <ting/config.hpp>
+#include <utki/config.hpp>
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
@@ -39,8 +39,8 @@ THE SOFTWARE. */
 
 #include <android/asset_manager.h>
 
-#include <ting/debug.hpp>
-#include <ting/fs/File.hpp>
+#include <utki/debug.hpp>
+#include <papki/File.hpp>
 
 #include "../../App.hpp"
 
