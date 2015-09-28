@@ -521,6 +521,13 @@
           </incDir>
         </ccTool>
       </folder>
+      <folder path="1/morda/fonts">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="1/morda/glue/android">
         <ccTool>
           <preprocessorList>
@@ -597,7 +604,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/resources</pElem>
-            <pElem>src</pElem>
             <pElem>/usr/include/nitki</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
@@ -640,8 +646,12 @@
             <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -652,12 +662,12 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/nitki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/nitki</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
@@ -672,7 +682,6 @@
           <incDir>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/fonts</pElem>
-            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>.</pElem>
@@ -682,7 +691,6 @@
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
-            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
@@ -791,6 +799,8 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -953,8 +963,8 @@
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -1018,9 +1028,12 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -1163,9 +1176,12 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -1243,9 +1259,12 @@
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/containers</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -1260,10 +1279,10 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/nitki</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/nitki</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
@@ -1400,9 +1419,12 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
             <pElem>src/morda</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>

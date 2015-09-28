@@ -42,7 +42,7 @@ void ResourceManager::MountResPack(const papki::File& fi){
 	}
 	
 	ResPackEntry rpe;
-	rpe.fi = utki::makeUnique<const papki::RootDirFile>(std::unique_ptr<papki::File>(const_cast<papki::File*>(fi.spawn().release())), dir);
+	rpe.fi = papki::RootDirFile::makeUniqueConst(fi.spawn(), dir);
 	rpe.resScript = resScript->chopNext();
 
 	this->resPacks.push_back(std::move(rpe));
