@@ -299,7 +299,7 @@ namespace{
 namespace morda{
 
 	bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres){
-		morda::App& app = morda::App::Inst();
+		morda::App& app = morda::App::inst();
 
 		switch (msg){
 		case WM_ACTIVATE:
@@ -607,10 +607,10 @@ App::ResMan::ResMan(){
 		;
 
 	try{
-		ting::fs::FSFile fi(path);
+		papki::FSFile fi(path);
 		this->MountResPack(fi);
 	}
-	catch (ting::fs::File::Exc&){
+	catch (papki::File::Exc&){
 		//default res pack not found, do nothing
 	}
 }
@@ -684,7 +684,7 @@ void App::Quit()noexcept {
 namespace morda{
 
 void Main(int argc, const char** argv){
-	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const ting::Buffer<const std::uint8_t>&);
+	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const const utki::Buf<std::uint8_t>&);
 
 	Factory f;
 	
@@ -696,7 +696,7 @@ void Main(int argc, const char** argv){
 	}
 
 	ASSERT(f)
-	std::unique_ptr<morda::App> a = f(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> a = f(argc, argv, const utki::Buf<std::uint8_t>(0, 0));
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
 	

@@ -1,6 +1,5 @@
 #include "Label.hpp"
 
-#include <ting/math.hpp>
 
 #include "../../App.hpp"
 
@@ -25,14 +24,14 @@ void Label::render(const morda::Matr4r& matrix)const{
 	
 	PosTexShader& s = [this]() -> PosTexShader&{
 		if(this->color() == 0xffffffff){//if white
-			return morda::App::Inst().Shaders().posTexShader;
+			return morda::App::inst().Shaders().posTexShader;
 		}else{
-			ColorPosTexShader& s = morda::App::Inst().Shaders().colorPosTexShader;
+			ColorPosTexShader& s = morda::App::inst().Shaders().colorPosTexShader;
 
 			s.SetColor(this->color());
 			return s;
 		}
 	}();
 	
-	this->Font().RenderString(s, matr, this->text());
+	this->Font().RenderString(s, matr, utki::wrapBuf(this->text()));
 }

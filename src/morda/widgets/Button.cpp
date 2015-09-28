@@ -69,7 +69,7 @@ ToggleButton::ToggleButton(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(const stob::Node* n = GetProperty(chain, "checked")){
-		this->isChecked_var = n->AsBool();
+		this->isChecked_var = n->asBool();
 	}else{
 		this->isChecked_var = false;
 	}

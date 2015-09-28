@@ -60,7 +60,7 @@ public:
 	
 	void Render(const Matr4r& matrix, PosTexShader& s)const;
 private:
-	static std::shared_ptr<ResImage> Load(const stob::Node& chain, const ting::fs::File& fi);
+	static std::shared_ptr<ResImage> Load(const stob::Node& chain, const papki::File& fi);
 };
 
 }

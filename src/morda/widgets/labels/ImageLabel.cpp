@@ -12,12 +12,12 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(auto image = GetProperty(chain, "image")){
-		this->img = App::Inst().resMan.Load<ResImage>(image->Value());
+		this->img = App::inst().resMan.Load<ResImage>(image->value());
 		this->resize(this->img->Dim());
 	}
 	
 	if(auto n = GetProperty(chain, "keepAspectRatio")){
-		this->keepAspectRatio = n->AsBool();
+		this->keepAspectRatio = n->asBool();
 	}else{
 		this->keepAspectRatio = false;
 	}
@@ -31,7 +31,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->rect().d.CompDiv(this->img->Dim()));
 
-	morda::PosTexShader &s = App::Inst().Shaders().posTexShader;
+	morda::PosTexShader &s = App::inst().Shaders().posTexShader;
 	
 	this->img->Render(matr, s);
 }

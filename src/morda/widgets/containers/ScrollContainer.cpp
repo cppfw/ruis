@@ -137,8 +137,8 @@ void ScrollContainer::UpdateEffectiveDim(){
 
 		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
 		
-		ting::util::ClampBottom(minDim.x, d.x);
-		ting::util::ClampBottom(minDim.y, d.y);
+		utki::clampBottom(minDim.x, d.x);
+		utki::clampBottom(minDim.y, d.y);
 	}	
 	
 	this->effectiveDim = minDim - this->rect().d;

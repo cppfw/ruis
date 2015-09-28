@@ -25,12 +25,12 @@ const char* D_Layout = R"qwertyuiop(
 CheckBox::CheckBox(const stob::Node* chain) :
 		Widget(chain),
 		ToggleButton(chain),
-		NinePatch(stob::Parse(D_Layout).get())
+		NinePatch(stob::parse(D_Layout).get())
 {
 	this->checkWidget = this->Content().findChildByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isChecked());
 	
-	this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>("morda_npt_checkbox"));
+	this->SetNinePatch(morda::App::inst().resMan.Load<ResNinePatch>("morda_npt_checkbox"));
 }
 
 

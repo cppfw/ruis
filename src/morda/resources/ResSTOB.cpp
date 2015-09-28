@@ -14,8 +14,8 @@ ResSTOB::ResSTOB(std::unique_ptr<stob::Node> gui) :
 
 
 
-std::shared_ptr<ResSTOB> ResSTOB::Load(const stob::Node& chain, const ting::fs::File& fi){
-	fi.SetPath(chain.side("file").up().Value());
+std::shared_ptr<ResSTOB> ResSTOB::Load(const stob::Node& chain, const papki::File& fi){
+	fi.setPath(chain.side("file").up().value());
 	
-	return ting::New<ResSTOB>(stob::Load(fi));
+	return utki::makeShared<ResSTOB>(stob::load(fi));
 }

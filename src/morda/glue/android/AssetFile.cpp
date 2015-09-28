@@ -60,7 +60,7 @@ void AssetFile::CloseInternal()const noexcept{
 
 
 //override
-size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf)const{
+size_t AssetFile::ReadInternal(utki::Buf<std::uint8_t> buf)const{
 	ASSERT(this->handle)
 	int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
 	if(numBytesRead < 0){//something happened
@@ -73,7 +73,7 @@ size_t AssetFile::ReadInternal(ting::Buffer<std::uint8_t> buf)const{
 
 
 //override
-size_t AssetFile::WriteInternal(ting::Buffer<const std::uint8_t> buf){
+size_t AssetFile::WriteInternal(const utki::Buf<std::uint8_t> buf){
 	ASSERT(this->handle)
 	throw File::Exc("Write() is not supported by Android assets");
 	return 0;
@@ -97,9 +97,9 @@ size_t AssetFile::Seek(size_t numBytesToSeek, bool seekForward)const{
 			
 	if(seekForward){
 		ASSERT(size_t(assetSize) >= this->CurPos())
-		ting::util::ClampTop(numBytesToSeek, size_t(assetSize) - this->CurPos());
+		utki::clampTop(numBytesToSeek, size_t(assetSize) - this->CurPos());
 	}else{
-		ting::util::ClampTop(numBytesToSeek, this->CurPos());
+		utki::clampTop(numBytesToSeek, this->CurPos());
 	}
 	
 	typedef off_t T_FSeekOffset;

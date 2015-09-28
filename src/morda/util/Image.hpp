@@ -56,7 +56,7 @@ public:
 	//Creates Image object and copies a region from source image.
 	Image(Vec2ui pos, Vec2ui dimensions, const Image& src);
 
-	Image(const ting::fs::File& f){
+	Image(const papki::File& f){
 		this->Load(f);
 	}
 
@@ -78,12 +78,12 @@ public:
 		return this->type;
 	}
 
-	ting::Buffer<std::uint8_t> Buf(){
-		return this->buf;
+	utki::Buf<std::uint8_t> Buf(){
+		return utki::wrapBuf(this->buf);
 	}
 
-	ting::Buffer<const std::uint8_t> Buf()const{
-		return this->buf;
+	const utki::Buf<std::uint8_t> Buf()const{
+		return utki::wrapBuf(this->buf);
 	}
 
 public:
@@ -106,11 +106,11 @@ public:
 		return this->buf[ASSCOND((y * this->Dim().x + x) * this->NumChannels() + chan, < this->buf.size())];
 	}
 
-	void LoadPNG(const ting::fs::File& f);//Load image from PNG-file
-	void LoadJPG(const ting::fs::File& f);//Load image from JPG-file
-//	void LoadTGA(ting::fs::File& f);//Load image from TGA-file
+	void LoadPNG(const papki::File& f);//Load image from PNG-file
+	void LoadJPG(const papki::File& f);//Load image from JPG-file
+//	void LoadTGA(papki::File& f);//Load image from TGA-file
 
-	void Load(const ting::fs::File& f);
+	void Load(const papki::File& f);
 
 private:
 

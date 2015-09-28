@@ -20,7 +20,7 @@ public:
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
-		return morda::App::Inst().inflater.Inflate(*(this->widgets[index]));
+		return morda::App::inst().inflater.Inflate(*(this->widgets[index]));
 	}
 	
 
@@ -47,16 +47,16 @@ List::List(bool isVertical, const stob::Node* chain):
 		return;
 	}
 	
-	const stob::Node* n = chain->ThisOrNextNonProperty().node();
+	const stob::Node* n = chain->thisOrNextNonProperty().node();
 	
 	if(!n){
 		return;
 	}
 	
-	std::shared_ptr<StaticProvider> p = ting::New<StaticProvider>();
+	std::shared_ptr<StaticProvider> p = utki::makeShared<StaticProvider>();
 	
-	for(; n; n = n->NextNonProperty().node()){
-		p->add(n->Clone());
+	for(; n; n = n->nextNonProperty().node()){
+		p->add(n->clone());
 	}
 	
 	this->setItemsProvider(std::move(p));
@@ -378,7 +378,7 @@ morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	
 	Vec2r ret(quotum);
 	
-	ting::util::ClampBottom(ret[longIndex], real(0));
+	utki::clampBottom(ret[longIndex], real(0));
 	
 	if(ret[transIndex] > 0){
 		return ret;
@@ -387,7 +387,7 @@ morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	ret[transIndex] = 0;
 	
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		ting::util::ClampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
+		utki::clampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
 	}
 	
 	return ret;
@@ -398,7 +398,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 		return;
 	}
 	
-	App::Inst().PostToUIThread_ts(
+	App::inst().PostToUIThread_ts(
 		[this](){
 			this->list->handleDataSetChanged();
 		}

@@ -68,8 +68,8 @@ void TableContainer::UpdateRowsLayoutParam(const morda::Vec2r& constraint)const{
 				d.x = lpptr->dim.x;
 			}
 			
-			ting::util::ClampBottom(maxDimX, (*iter)->measure(d).x);
-			ting::util::ClampBottom(maxWeight, lpptr->weight);
+			utki::clampBottom(maxDimX, (*iter)->measure(d).x);
+			utki::clampBottom(maxWeight, lpptr->weight);
 		}
 
 		for(auto& i : iterators){

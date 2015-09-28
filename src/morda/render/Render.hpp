@@ -26,7 +26,7 @@ class Render{
 	
 	friend class App;
 	
-	std::unique_ptr<ting::Void> pimpl;
+	std::unique_ptr<utki::Void> pimpl;
 	
 	Render();
 	~Render()noexcept;
@@ -56,16 +56,16 @@ public:
 private:
 	static void renderArrays(EMode mode, unsigned numElements);
 	
-	static void renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i);
+	static void renderElements(EMode mode, const utki::Buf<std::uint16_t>& i);
 	
 	//returns pointer to shader object
-	static std::unique_ptr<ting::Void> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
+	static std::unique_ptr<utki::Void> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
-	static void bindShader(ting::Void& p);
+	static void bindShader(utki::Void& p);
 	
-	static InputID getAttribute(ting::Void& p, const char* n);
+	static InputID getAttribute(utki::Void& p, const char* n);
 	
-	static InputID getUniform(ting::Void& p, const char* n);
+	static InputID getUniform(utki::Void& p, const char* n);
 	
 	static void setUniformMatrix4f(InputID id, const Matr4f& m);
 	
@@ -75,7 +75,7 @@ private:
 	
 	static void setUniform4f(InputID id, float x, float y, float z, float a);
 	
-	static void setUniform4f(InputID id, ting::Buffer<const Vec4f> v);
+	static void setUniform4f(InputID id, const utki::Buf<Vec4f> v);
 	
 	static void setVertexAttribArray(InputID id, const Vec3f* a);
 	
@@ -114,9 +114,9 @@ public:
 	
 	//=== functions to be used by Texture class
 private:
-	static std::unique_ptr<ting::Void> create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
+	static std::unique_ptr<utki::Void> create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
 	
-	static void bindTexture(ting::Void& tex, unsigned unitNum);
+	static void bindTexture(utki::Void& tex, unsigned unitNum);
 	//=== ~~~
 	
 public:
@@ -129,11 +129,11 @@ public:
 	
 	//=== functions to be used by FrameBuffer class
 private:
-	static std::unique_ptr<ting::Void> createFrameBuffer();
+	static std::unique_ptr<utki::Void> createFrameBuffer();
 	
-	static void bindFrameBuffer(ting::Void* fbo);
+	static void bindFrameBuffer(utki::Void* fbo);
 	
-	static void attachColorTexture2DToFrameBuffer(ting::Void* tex);
+	static void attachColorTexture2DToFrameBuffer(utki::Void* tex);
 	//=== ~~~
 	
 	

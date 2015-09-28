@@ -49,7 +49,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResSTOB> Load(const stob::Node& chain, const ting::fs::File& fi);
+	static std::shared_ptr<ResSTOB> Load(const stob::Node& chain, const papki::File& fi);
 };
 
 }

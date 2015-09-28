@@ -12,7 +12,7 @@ using namespace morda;
 
 
 
-ting::IntrusiveSingleton<App>::T_Instance App::instance;
+utki::IntrusiveSingleton<App>::T_Instance App::instance;
 
 
 
@@ -119,8 +119,8 @@ void App::HandleKeyEvent(bool isDown, EKey keyCode){
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
-std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
-	return ting::fs::FSFile::New(path);
+std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string& path)const{
+	return utki::makeUnique<papki::FSFile>(path);
 }
 
 void App::ShowVirtualKeyboard()noexcept{
@@ -168,8 +168,8 @@ App::ResMan::ResMan(){
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			this->MountResPack(*morda::App::Inst().CreateResourceFileInterface(s));
-		}catch(ting::fs::File::Exc& e){
+			this->MountResPack(*morda::App::inst().CreateResourceFileInterface(s));
+		}catch(papki::Exc& e){
 			continue;
 		}
 		break;
@@ -197,7 +197,7 @@ void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
 
 App::Inflater::Inflater(){
 	try{
-		auto t = morda::App::Inst().resMan.Load<ResSTOB>("morda_gui_definitions");
+		auto t = morda::App::inst().resMan.Load<ResSTOB>("morda_gui_definitions");
 		
 		if(t->STOB()){
 			this->Inflate(*t->STOB());

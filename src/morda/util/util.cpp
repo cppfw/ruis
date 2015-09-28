@@ -2,7 +2,6 @@
 
 #include "../App.hpp"
 
-#include <ting/math.hpp>
 #include <utki/debug.hpp>
 
 
@@ -15,8 +14,8 @@ morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 	morda::Vec2r ret;
 	
 	float v = 0;
-	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
-		v = chain->AsFloat();
+	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
+		v = chain->asFloat();
 		ret[i] = v;
 	}
 	
@@ -30,7 +29,7 @@ morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 
 Rect2r morda::Rect2rFromSTOB(const stob::Node* chain){
 	Vec2r p = Vec2rFromSTOB(chain);
-	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->Next()){}
+	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
 	Vec2r d = Vec2rFromSTOB(chain);
 	return Rect2r(p, d);
 }
@@ -42,7 +41,7 @@ morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
 	morda::Vec2r ret;
 	
 	float v = 0;
-	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
+	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
 		v = DimValueFromSTOB(*chain);
 		ret[i] = v;
 	}
@@ -58,35 +57,35 @@ morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
 
 real morda::DimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
-	if(n.ValueLength() >= 2 && n.Value()[n.ValueLength() - 1] == 'm' && n.Value()[n.ValueLength() - 2] == 'm'){
-		real ret = ::round(n.AsFloat() * App::Inst().DotsPerCm() / 10.0f);
-//		TRACE_ALWAYS(<< "ParseDistanceValue(): mm, ret = " << ret << std::endl)
+	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
+		real ret = ::round(n.asFloat() * App::inst().DotsPerCm() / 10.0f);
+//		TRACE_ALWAYS(<< "ParseDistancevalue(): mm, ret = " << ret << std::endl)
 		return ret;
 	}
 	
-	return n.AsFloat();
+	return n.asFloat();
 }
 
 
 
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting::fs::File& fi, std::unique_ptr<stob::Node> begin){
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin){
 	if(!begin){
 		return std::make_tuple(nullptr, nullptr);
 	}
 	
 	const char* DIncludeTag = "include";
 	
-	stob::Node::NodeAndPrev n = begin->ThisOrNext(DIncludeTag);
+	auto n = begin->thisOrNext(DIncludeTag);
 	for(; n.node();){
 		ASSERT(n.node())
-		stob::Node* incPathNode = n.node()->Child();
+		stob::Node* incPathNode = n.node()->child();
 		if(!incPathNode){
 			throw Exc("include tag without value encountered in resource script");
 		}
-		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->Value() << std::endl)
+		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->value() << std::endl)
 
-		fi.SetPath(fi.Dir() + incPathNode->Value());
-		std::unique_ptr<stob::Node> incNodes = stob::Load(fi);
+		fi.setPath(fi.dir() + incPathNode->value());
+		std::unique_ptr<stob::Node> incNodes = stob::load(fi);
 
 		//recursive call
 		auto ri = ResolveIncludes(fi, std::move(incNodes));
@@ -98,22 +97,22 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(ting
 			if(!n.prev()){
 				//include tag is the very first tag
 
-				ASSERT(!lastChild->Next())
-				lastChild->InsertNext(std::move(n.node()->ChopNext()));
+				ASSERT(!lastChild->next())
+				lastChild->insertNext(std::move(n.node()->chopNext()));
 				begin = std::move(std::get<0>(ri));
 			}else{
 				//include tag is not the first one
 
-				n.prev()->RemoveNext();
+				n.prev()->removeNext();
 
-				ASSERT(!lastChild->Next())
-				std::unique_ptr<stob::Node> tail = n.prev()->ChopNext();
-				n.prev()->SetNext(std::move(std::get<0>(ri)));
-				lastChild->SetNext(std::move(tail));
+				ASSERT(!lastChild->next())
+				std::unique_ptr<stob::Node> tail = n.prev()->chopNext();
+				n.prev()->setNext(std::move(std::get<0>(ri)));
+				lastChild->setNext(std::move(tail));
 			}
-			n = lastChild->Next(DIncludeTag);
+			n = lastChild->next(DIncludeTag);
 		}else{
-			n = n.node()->Next(DIncludeTag);
+			n = n.node()->next(DIncludeTag);
 		}
 	}
 	return std::make_tuple(std::move(begin), n.prev());
@@ -126,8 +125,8 @@ morda::Vector2<bool> morda::Vec2bFromSTOB(const stob::Node* chain){
 	morda::Vector2<bool> ret;
 	
 	bool v = false;
-	for(i = 0; i != 2 && chain; ++i, chain = chain->Next()){
-		v = chain->AsBool();
+	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
+		v = chain->asBool();
 		ret[i] = v;
 	}
 	

@@ -38,8 +38,8 @@ namespace morda{
 class FrameBuffer {
 	bool isBound_var = false;
 	
-	ting::Void* prevFBO = nullptr;
-	std::unique_ptr<ting::Void> fbo;
+	utki::Void* prevFBO = nullptr;
+	std::unique_ptr<utki::Void> fbo;
 	
 	Texture2D color;
 public:

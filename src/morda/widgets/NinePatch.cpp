@@ -77,7 +77,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		TableContainer(stob::Parse(D_NinePatchLayout).get())
+		TableContainer(stob::parse(D_NinePatchLayout).get())
 {
 	this->lt = this->findChildByNameAs<ImageLabel>("morda_lt");
 	this->t = this->findChildByNameAs<ImageLabel>("morda_t");
@@ -94,7 +94,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->content = this->findChildByNameAs<FrameContainer>("morda_content");
 	
 	if(const stob::Node* n = GetProperty(chain, "image")){
-		this->SetNinePatch(morda::App::Inst().resMan.Load<ResNinePatch>(n->Value()));
+		this->SetNinePatch(morda::App::inst().resMan.Load<ResNinePatch>(n->value()));
 	}
 	
 	if(chain){

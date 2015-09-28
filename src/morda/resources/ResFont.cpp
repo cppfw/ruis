@@ -4,31 +4,31 @@
 #include "../App.hpp"
 #include "../util/util.hpp"
 
-#include <ting/utf8.hpp>
+#include <unikod/utf8.hpp>
 
 using namespace morda;
 
 
 
-ResFont::ResFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline) :
+ResFont::ResFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline) :
 		f(fi, chars, size, outline)
 {}
 
 
 
 //static
-std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const ting::fs::File& fi){
+std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const papki::File& fi){
 	//read chars attribute
 	std::vector<std::uint32_t> wideChars;
-	for(ting::utf8::Iterator i(chain.side("chars").up().Value()); i.IsNotEnd(); ++i){
-		wideChars.push_back(i.Char());
+	for(unikod::Utf8Iterator i(chain.side("chars").up().value()); !i.isEnd(); ++i){
+		wideChars.push_back(i.character());
 	}
 
 	ASSERT(wideChars.size() > 0)
 
 	//read size attribute
 	unsigned size;
-	if(auto sizeProp = chain.ChildOfThisOrNext("size")){
+	if(auto sizeProp = chain.childOfThisOrNext("size")){
 		size = unsigned(morda::DimValueFromSTOB(*sizeProp));
 	}else{
 		size = 13;
@@ -36,14 +36,14 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const ting::fs::
 	
 	//read outline attribute
 	unsigned outline;
-	if(auto outlineProp = chain.ChildOfThisOrNext("outline")){
-		outline = unsigned(outlineProp->AsUint32());
+	if(auto outlineProp = chain.childOfThisOrNext("outline")){
+		outline = unsigned(outlineProp->asUint32());
 	}else{
 		outline = 0;
 	}
 
-	fi.SetPath(chain.side("file").up().Value());
+	fi.setPath(chain.side("file").up().value());
 
-	return std::move(ting::New<ResFont>(fi, ting::Buffer<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
+	return std::move(utki::makeShared<ResFont>(fi, utki::Buf<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
 }
 

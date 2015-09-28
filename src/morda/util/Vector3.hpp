@@ -10,8 +10,10 @@
 #endif
 
 #include <utki/debug.hpp>
+#include <utki/math.hpp>
 
 #include "../config.hpp"
+
 
 
 namespace morda{
@@ -360,7 +362,7 @@ public:
 	 * @return Vector magnitude.
 	 */
 	T Magnitude()const noexcept{
-		return ::sqrt(this->MagPow2());
+		return std::sqrt(this->MagPow2());
 	}
 
 	/**

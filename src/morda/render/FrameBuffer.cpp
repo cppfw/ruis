@@ -10,7 +10,7 @@ using namespace morda;
 
 namespace{
 
-ting::Void* curFBO = nullptr;
+utki::Void* curFBO = nullptr;
 
 }
 

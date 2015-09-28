@@ -11,13 +11,13 @@ BlackHoleContainer::BlackHoleContainer(const stob::Node* chain) :
 		FrameContainer(chain)
 {
 	if(auto n = GetProperty(chain, "shrinkX")){
-		this->shrink.x = n->AsBool();
+		this->shrink.x = n->asBool();
 	}else{
 		this->shrink.x = true;
 	}
 	
 	if(auto n = GetProperty(chain, "shrinkY")){
-		this->shrink.y = n->AsBool();
+		this->shrink.y = n->asBool();
 	}else{
 		this->shrink.y = true;
 	}

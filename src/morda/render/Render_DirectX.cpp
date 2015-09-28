@@ -3,8 +3,8 @@
 #include <memory>
 
 #include <utki/Exc.hpp>
-#include <ting/Void.hpp>
-#include <ting/PoolStored.hpp>
+#include <utki/Void.hpp>
+#include <utki/PoolStored.hpp>
 #include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
@@ -16,7 +16,7 @@ using namespace morda;
 
 namespace {
 
-struct Direct3DContext : public ting::Void {
+struct Direct3DContext : public utki::Void {
 	IDXGISwapChain *swapchain;
 	ID3D11Device *dev;
 	ID3D11DeviceContext *ctx;
@@ -107,26 +107,26 @@ void Render::renderArrays(EMode mode, unsigned numElements) {
 
 
 
-void Render::renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i) {
+void Render::renderElements(EMode mode, const const utki::Buf<std::uint16_t>& i) {
 	//TODO:
 }
 
-void Render::bindShader(ting::Void& p) {
+void Render::bindShader(utki::Void& p) {
 	//TODO:
 }
 
-std::unique_ptr<ting::Void> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
+std::unique_ptr<utki::Void> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
 	//TODO:
 	return nullptr;
 }
 
 
-Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
+Render::InputID Render::getAttribute(utki::Void& p, const char* n) {
 	//TODO:
 	return InputID(0);
 }
 
-Render::InputID Render::getUniform(ting::Void& p, const char* n) {
+Render::InputID Render::getUniform(utki::Void& p, const char* n) {
 	//TODO:
 	return InputID(0);
 }
@@ -147,7 +147,7 @@ void Render::setUniform4f(InputID id, float x, float y, float z, float a) {
 	//TODO:
 }
 
-void Render::setUniform4f(InputID id, ting::Buffer<const Vec4f> v) {
+void Render::setUniform4f(InputID id, const utki::Buf<Vec4f> v) {
 	//TODO:
 }
 
@@ -174,7 +174,7 @@ void Render::setViewport(Rect2i r){
 
 
 Render::Render(){
-	d3d = new Direct3DContext(morda::App::Inst().window.hwnd);
+	d3d = new Direct3DContext(morda::App::inst().window.hwnd);
 	this->pimpl.reset(d3d);
 }
 
@@ -226,7 +226,7 @@ GLint texFilterMap[] = {
 */
 
 /*
-struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>{
+struct GLTexture2D : public utki::Void, public ting::PoolStored<GLTexture2D, 32>{
 	GLuint tex;
 	
 	GLTexture2D(){
@@ -250,7 +250,7 @@ struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>
 
 }//~namespace
 
-std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+std::unique_ptr<utki::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
 	/*
 	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	
@@ -312,7 +312,7 @@ std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChan
 	return nullptr;
 }
 
-void Render::bindTexture(ting::Void& tex, unsigned unitNum){
+void Render::bindTexture(utki::Void& tex, unsigned unitNum){
 	//TODO:
 }
 

@@ -28,7 +28,7 @@ const char* DDesc = R"qwertyuiop(
 
 OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
-		FrameContainer(stob::Parse(DDesc).get())
+		FrameContainer(stob::parse(DDesc).get())
 {
 	this->contentContainer = this->findChildByNameAs<FrameContainer>("morda_content");
 	this->overlayContainer = this->findChildByNameAs<Container>("morda_overlay");

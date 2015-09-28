@@ -76,7 +76,7 @@ void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateab
 
 
 std::uint32_t Updateable::Updater::Update(){
-	std::uint32_t curTime = ting::timer::GetTicks();
+	std::uint32_t curTime = aika::getTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
@@ -125,7 +125,7 @@ std::uint32_t Updateable::Updater::Update(){
 	
 	std::uint32_t uncorrectedDt = closestTime - curTime;
 	
-	std::uint32_t correction = ting::timer::GetTicks() - curTime;
+	std::uint32_t correction = aika::getTicks() - curTime;
 	
 	if(correction >= uncorrectedDt){
 		return 0;
@@ -157,7 +157,7 @@ void Updateable::Updater::RemoveFromToAdd(Updateable* u){
 
 
 void Updateable::StartUpdating(std::uint16_t dt){
-	ASSERT(App::Inst().ThisIsUIThread())
+	ASSERT(App::inst().ThisIsUIThread())
 
 //	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
@@ -166,24 +166,24 @@ void Updateable::StartUpdating(std::uint16_t dt){
 	}
 	
 	this->dt = dt;
-	this->startedAt = ting::timer::GetTicks();
+	this->startedAt = aika::getTicks();
 	this->isUpdating = true;
 	
 	this->pendingAddition = true;
 	
-	App::Inst().updater.toAdd.push_front(this->SharedFromThis(this));
+	App::inst().updater.toAdd.push_front(this->sharedFromThis(this));
 }
 
 
 
 void Updateable::StopUpdating()noexcept{
-	ASSERT(App::Inst().ThisIsUIThread())
+	ASSERT(App::inst().ThisIsUIThread())
 	
 	if(this->queue){
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		App::Inst().updater.RemoveFromToAdd(this);
+		App::inst().updater.RemoveFromToAdd(this);
 	}
 
 	this->isUpdating = false;

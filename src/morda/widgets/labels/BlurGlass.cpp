@@ -27,7 +27,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->rect().d);
 
-	morda::SimpleBlurPosTexShader &s = App::Inst().Shaders().simpleBlurPosTexShader;
+	morda::SimpleBlurPosTexShader &s = App::inst().Shaders().simpleBlurPosTexShader;
 
 	s.SetMatrix(matr);
 	
@@ -36,6 +36,6 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	for(unsigned i = 0; i != 3; ++i){
 		Render::copyColorBufferToTexture(Vec2i(0), viewPortRect);
 		
-		s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
+		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 	}
 }

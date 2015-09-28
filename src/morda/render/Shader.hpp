@@ -33,7 +33,7 @@ class Shader{
 	static Shader* boundShader;
 	static bool renderIsInProgress;
 	
-	std::unique_ptr<ting::Void> program;
+	std::unique_ptr<utki::Void> program;
 
 	const Render::InputID matrixUniform;
 	
@@ -70,7 +70,7 @@ protected:
 		this->renderIsInProgress = false;
 	}
 	
-	void renderElements(Render::EMode mode, ting::Buffer<const std::uint16_t> i){
+	void renderElements(Render::EMode mode, const utki::Buf<std::uint16_t> i){
 		this->Bind();
 		Render::renderElements(mode, i);
 		this->renderIsInProgress = false;
@@ -96,17 +96,17 @@ protected:
 		Render::setUniform4f(id, x, y, z, a);
 	}
 	
-	void setUniform4f(Render::InputID id, ting::Buffer<const Vec4f> v){
+	void setUniform4f(Render::InputID id, const utki::Buf<Vec4f> v){
 		this->Bind();
 		Render::setUniform4f(id, v);
 	}
 	
-	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec3f> a){
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<Vec3f> a){
 		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 	
-	void setVertexAttribArray(Render::InputID id, ting::Buffer<const Vec2f> a){
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<Vec2f> a){
 		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}

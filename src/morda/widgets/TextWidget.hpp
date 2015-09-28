@@ -94,7 +94,7 @@ protected:
 	}
 	
 	void recomputeBoundingBox(){
-		this->bb = this->Font().StringBoundingBox(this->text_var);
+		this->bb = this->Font().StringBoundingBox(utki::wrapBuf(this->text_var));
 	}
 public:
 	
@@ -105,7 +105,7 @@ public:
 	}
 	
 	void setText(const std::string& text){
-		this->setText(ting::utf8::ToUTF32(text));
+		this->setText(unikod::toUtf32(text));
 	}
 
 	void onFontChanged()override{

@@ -54,21 +54,21 @@ class TexFont : public Font{
 
 public:
 	
-	TexFont(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0){
+	TexFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0){
 		this->Load(fi, chars, size, outline);
 	}
 
 	~TexFont()noexcept{}
 	
-	void Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline = 0);
+	void Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
 	
-	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const override;
+	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const override;
 
 	
-	real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
+	real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const override;
 
-	morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const override;
+	morda::Rect2r StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const override;
 
 	DEBUG_CODE( void RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const; )
 

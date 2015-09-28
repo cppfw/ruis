@@ -2,7 +2,6 @@
 
 #include "../App.hpp"
 
-#include <ting/util.hpp>
 
 
 #if M_OS == M_OS_WINDOWS
@@ -44,12 +43,12 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 			);
 		matr.Scale(Vec2r(::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
-		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
+		ColorPosShader& s = App::inst().Shaders().colorPosShader;
 
 		s.SetColor(0xff804040);
 
 		s.SetMatrix(matr);
-		s.render(s.quad01Fan);
+		s.render(utki::wrapBuf(s.quad01Fan));
 	}
 	
 	{
@@ -58,9 +57,9 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->color() == 0xffffffff){//if white
-				return morda::App::Inst().Shaders().posTexShader;
+				return morda::App::inst().Shaders().posTexShader;
 			}else{
-				ColorPosTexShader& s = morda::App::Inst().Shaders().colorPosTexShader;
+				ColorPosTexShader& s = morda::App::inst().Shaders().colorPosTexShader;
 
 				s.SetColor(this->color());
 				return s;
@@ -71,7 +70,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		this->Font().RenderString(
 				s,
 				matr,
-				ting::Buffer<const std::uint32_t>(
+				utki::wrapBuf(
 						&*(this->text().begin() + this->firstVisibleCharIndex),
 						this->text().size() - this->firstVisibleCharIndex
 					)
@@ -83,12 +82,12 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		matr.Translate(this->cursorPos, 0);
 		matr.Scale(Vec2r(D_CursorWidth, this->rect().d.y));
 
-		ColorPosShader& s = App::Inst().Shaders().colorPosShader;
+		ColorPosShader& s = App::inst().Shaders().colorPosShader;
 
 		s.SetColor(this->color());
 
 		s.SetMatrix(matr);
-		s.render(s.quad01Fan);
+		s.render(utki::wrapBuf(s.quad01Fan));
 	}
 }
 
@@ -137,13 +136,13 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 void TextInput::SetCursorIndex(size_t index, bool selection){
 	this->cursorIndex = index;
 	
-	ting::util::ClampTop(this->cursorIndex, this->text().size());
+	utki::clampTop(this->cursorIndex, this->text().size());
 	
 	if(!selection){
 		this->selectionStartIndex = this->cursorIndex;
 	}
 	
-	ting::util::ScopeExit scopeExit([this](){
+	utki::ScopeExit scopeExit([this](){
 		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
 		
 		if(!this->isFocused()){
@@ -163,7 +162,7 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = this->Font().StringAdvance(ting::Buffer<const std::uint32_t>(
+	this->cursorPos = this->Font().StringAdvance(utki::wrapBuf(
 			&*(this->text().begin() + this->firstVisibleCharIndex),
 			this->cursorIndex - this->firstVisibleCharIndex
 		)) + this->xOffset;
@@ -199,7 +198,7 @@ real TextInput::IndexToPos(size_t index){
 		return 0;
 	}
 	
-	ting::util::ClampTop(index, this->text().size());
+	utki::clampTop(index, this->text().size());
 	
 	real ret = this->xOffset;
 	
@@ -284,7 +283,7 @@ bool TextInput::onKey(bool isDown, EKey keyCode){
 	return false;
 }
 
-void TextInput::OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, EKey key){
+void TextInput::OnCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key){
 	switch(key){
 		case EKey::ENTER:
 			break;

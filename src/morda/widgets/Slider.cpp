@@ -4,8 +4,6 @@
 #include "../util/util.hpp"
 #include "MouseProxy.hpp"
 
-#include <ting/math.hpp>
-#include <ting/util.hpp>
 
 
 using namespace morda;
@@ -50,7 +48,7 @@ const char* DDescription = R"qwertyuiop(
 
 HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
-		FrameContainer(stob::Parse(DDescription).get()),
+		FrameContainer(stob::parse(DDescription).get()),
 		handle(*this->findChildByName("handle")),
 		isVertical(isVertical)
 {
@@ -86,11 +84,11 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		unsigned longIndex = this->GetLongIndex();
 
 		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
-		ting::util::ClampBottom(maxPos, 0.0f);
+		utki::clampBottom(maxPos, 0.0f);
 
 		float newPos = this->handle.rect().p[longIndex];
 		newPos += pos[longIndex] - this->clickPoint;
-		ting::util::ClampRange(newPos, 0.0f, maxPos);
+		utki::clampRange(newPos, 0.0f, maxPos);
 
 		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
 		
@@ -132,7 +130,7 @@ void HandleSlider::layOut(){
 	morda::Vec2r newSize(this->rect().d);
 	
 	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFactor());
-	ting::util::ClampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
+	utki::clampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
 	this->handle.resize(newSize);
 	

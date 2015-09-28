@@ -9,6 +9,8 @@
 #	include <iostream>
 #endif
 
+#include <cmath>
+
 #include <utki/debug.hpp>
 
 #include "../config.hpp"
@@ -296,7 +298,7 @@ public:
 	 * @return quaternion magnitude.
 	 */
 	T Magnitude()const noexcept{
-		return ::sqrt(this->MagPow2());
+		return std::sqrt(this->MagPow2());
 	}
 
 

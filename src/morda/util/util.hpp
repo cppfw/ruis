@@ -40,7 +40,7 @@ morda::Rect2r Rect2rFromSTOB(const stob::Node* chain);
 
 /**
  * @brief Parse dimension Vec2r from STOB.
- * Same as Vec2rFromSTOB but using DimValue() to parse values.
+ * Same as Vec2rFromSTOB but using Dimvalue() to parse values.
  * @param chain - chain of at least two nodes holding Vec2r values.
  *                If there are less than 2 nodes in the chain then the rest of
  *                vector components will be filled with latest parsed value.
@@ -80,13 +80,13 @@ float DimValueFromSTOB(const stob::Node& n);
  * @param begin - first node of the original STOB document.
  * @return New first node and pointer to the last child node of the script.
  */
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> ResolveIncludes(ting::fs::File& fi, std::unique_ptr<stob::Node> begin);
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> ResolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin);
 
 
 
 inline bool NodeHoldsFractionValue(const stob::Node& node)noexcept{
-	size_t len = node.ValueLength();
-	return len != 0 && node.Value()[len - 1] == '%';
+	size_t len = node.length();
+	return len != 0 && node.value()[len - 1] == '%';
 }
 
 
@@ -94,8 +94,8 @@ inline const stob::Node* GetProperty(const stob::Node* chain, const char* proper
 	if(!chain){
 		return nullptr;
 	}
-	auto n = chain->ThisOrNext(property).node();
-	return n ? n->Child() : nullptr;
+	auto n = chain->thisOrNext(property).node();
+	return n ? n->child() : nullptr;
 }
 
 

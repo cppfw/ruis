@@ -37,44 +37,44 @@ public:
 namespace morda{
 
 void Macosx_Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<const std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, const utki::Buf<std::uint8_t>(0, 0));
 
 	app->Exec();
 }
 
 void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
-	morda::App::Inst().HandleMouseMove(
-			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+	morda::App::inst().HandleMouseMove(
+			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
 			id
 		);
 }
 
 void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id){
-	morda::App::Inst().HandleMouseButton(
+	morda::App::inst().HandleMouseButton(
 			isDown,
-			morda::Vec2r(pos.x, morda::App::Inst().curWinRect.d.y - pos.y),
+			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
 			button,
 			id
 		);
 }
 
 void Macosx_HandleMouseHover(bool isHovered){
-	morda::App::Inst().HandleMouseHover(isHovered, 0);
+	morda::App::inst().HandleMouseHover(isHovered, 0);
 }
 
 void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
-	morda::App::Inst().HandleKeyEvent(isDown, keyCode);
+	morda::App::inst().HandleKeyEvent(isDown, keyCode);
 }
 
 void Macosx_HandleCharacterInput(const void* nsstring, EKey key){
-	morda::App::Inst().HandleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
+	morda::App::inst().HandleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
 void Macosx_UpdateWindowRect(const morda::Rect2r& r){
-	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::Inst().openGLContext.id;
+	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
-	morda::App::Inst().UpdateWindowRect(r);
+	morda::App::inst().UpdateWindowRect(r);
 }
 
 void morda::App::Quit()noexcept{
@@ -560,7 +560,7 @@ int main (int argc, const char** argv){
 
 -(BOOL)windowShouldClose:(id)sender{
 	TRACE(<< "window wants to close!!!!" << std::endl)
-	morda::App::Inst().Quit();
+	morda::App::inst().Quit();
 	return NO;
 }
 

@@ -16,34 +16,34 @@ const char* D_Include = "include";
 
 
 
-void ResourceManager::MountResPack(const ting::fs::File& fi){
-	ASSERT(!fi.IsOpened())
+void ResourceManager::MountResPack(const papki::File& fi){
+	ASSERT(!fi.isOpened())
 	
-	std::string dir = fi.Dir();
+	std::string dir = fi.dir();
 	
-	if(fi.NotDir().size() == 0){
-		fi.SetPath(dir + "main.res.stob");
+	if(fi.notDir().size() == 0){
+		fi.setPath(dir + "main.res.stob");
 	}
 
-	std::unique_ptr<stob::Node> resScript = stob::Node::New();
-	resScript->SetNext(stob::Load(fi));
+	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();
+	resScript->setNext(stob::load(fi));
 	
 	//handle includes
-	for(stob::Node::NodeAndPrev np = resScript->Next(D_Include); np.node(); np = np.prev()->Next(D_Include)){
+	for(auto np = resScript->next(D_Include); np.node(); np = np.prev()->next(D_Include)){
 		ASSERT(np.prev())
-		auto incNode = np.prev()->RemoveNext()->removeChildren();
+		auto incNode = np.prev()->removeNext()->removeChildren();
 		
-		fi.SetPath(dir + incNode->Value());
+		fi.setPath(dir + incNode->value());
 		this->MountResPack(fi);
 	}
 
-	if(!resScript->Next()){
+	if(!resScript->next()){
 		return;
 	}
 	
 	ResPackEntry rpe;
-	rpe.fi = ting::fs::RootDirFile::NewConst(fi.Spawn(), dir);
-	rpe.resScript = resScript->ChopNext();
+	rpe.fi = utki::makeUnique<const papki::RootDirFile>(std::unique_ptr<papki::File>(const_cast<papki::File*>(fi.spawn().release())), dir);
+	rpe.resScript = resScript->chopNext();
 
 	this->resPacks.push_back(std::move(rpe));
 	ASSERT(this->resPacks.back().fi)
@@ -56,8 +56,8 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
-		for(const stob::Node* e = i->resScript.operator->(); e; e = e->Next()){
-			if(resName.compare(e->Value()) == 0){
+		for(const stob::Node* e = i->resScript.operator->(); e; e = e->next()){
+			if(resName.compare(e->value()) == 0){
 //				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
 				return FindInScriptRet(*i, *e);
 			}
@@ -72,12 +72,12 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
 	ASSERT(res)
 
-	ASSERT(this->resMap.find(node.Value()) == this->resMap.end())
+	ASSERT(this->resMap.find(node.value()) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
 	auto result = this->resMap.insert(
 			std::pair<const char*, std::weak_ptr<Resource>>(
-					node.Value(),
+					node.value(),
 					std::move(std::weak_ptr<Resource>(res))
 				)
 		);

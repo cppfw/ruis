@@ -10,6 +10,7 @@
 #endif
 
 #include <utki/debug.hpp>
+#include <utki/math.hpp>
 
 #include "../config.hpp"
 

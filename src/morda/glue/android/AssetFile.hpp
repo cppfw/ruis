@@ -52,9 +52,9 @@ namespace morda{
 
 /**
  * @brief Android assets implementation of File interface.
- * Implementation of a ting::fs::File interface for Android assets file system.
+ * Implementation of a papki::File interface for Android assets file system.
  */
-class AssetFile : public ting::fs::File{
+class AssetFile : public papki::File{
 	AAssetManager* manager;
 	
 	mutable AAsset* handle = nullptr;
@@ -70,15 +70,15 @@ class AssetFile : public ting::fs::File{
 		return std::unique_ptr<AssetFile>(new AssetFile(manager, pathName));
 	}
 	
-	friend std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const;
+	friend std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string& path)const;
 	
 	virtual void OpenInternal(E_Mode mode)override;
 
 	virtual void CloseInternal()const noexcept override;
 
-	virtual size_t ReadInternal(ting::Buffer<std::uint8_t> buf)const override;
+	virtual size_t ReadInternal(utki::Buf<std::uint8_t> buf)const override;
 
-	virtual size_t WriteInternal(ting::Buffer<const std::uint8_t> buf)override;
+	virtual size_t WriteInternal(const utki::Buf<std::uint8_t> buf)override;
 
 	virtual size_t SeekForwardInternal(size_t numBytesToSeek)const override;
 	
@@ -107,7 +107,7 @@ public:
 
 	virtual std::vector<std::string> ListDirContents(size_t maxEntries = 0)const override;
 	
-	std::unique_ptr<ting::fs::File> Spawn()override{
+	std::unique_ptr<papki::File> Spawn()override{
 		return New(this->manager);
 	}
 };

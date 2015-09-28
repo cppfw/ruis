@@ -28,7 +28,7 @@ void FrameContainer::layOut() {
 morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
-		ting::util::ClampBottom(ret[i], real(0));
+		utki::clampBottom(ret[i], real(0));
 	}
 	
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
@@ -54,7 +54,7 @@ morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
 		
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){
-				ting::util::ClampBottom(ret[j], d[j]);
+				utki::clampBottom(ret[j], d[j]);
 			}
 		}
 	}

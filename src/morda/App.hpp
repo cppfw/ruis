@@ -58,16 +58,16 @@ namespace morda{
 
 
 
-class App : public ting::IntrusiveSingleton<App>{
-	friend class ting::IntrusiveSingleton<App>;
-	static ting::IntrusiveSingleton<App>::T_Instance instance;
+class App : public utki::IntrusiveSingleton<App>{
+	friend class utki::IntrusiveSingleton<App>;
+	static utki::IntrusiveSingleton<App>::T_Instance instance;
 
 	friend class Render;
 	friend class Updateable;
 	friend class Widget;
 	friend class CharInputWidget;
 	
-	ting::mt::Thread::T_ThreadID uiThreadId = ting::mt::Thread::GetCurrentThreadID();
+	nitki::Thread::T_ThreadID uiThreadId = nitki::Thread::getCurrentThreadID();
 
 public:
 	struct WindowParams{
@@ -76,7 +76,7 @@ public:
 	
 	
 	bool ThisIsUIThread()const noexcept{
-		return this->uiThreadId == ting::mt::Thread::GetCurrentThreadID();
+		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
 	}
 	
 	struct DefaultShaders{
@@ -302,10 +302,10 @@ public:
 #else
 public:
 	void PostToUIThread_ts(std::function<void()>&& f){	
-		this->uiQueue.PushMessage(std::move(f));
+		this->uiQueue.pushMessage(std::move(f));
 	}
 private:
-	ting::mt::Queue uiQueue;
+	nitki::Queue uiQueue;
 #endif
 
 private:
@@ -319,7 +319,7 @@ public:
 		return this->shaders;
 	}
 
-	std::unique_ptr<ting::fs::File> CreateResourceFileInterface(const std::string& path = std::string())const;
+	std::unique_ptr<papki::File> CreateResourceFileInterface(const std::string& path = std::string())const;
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
@@ -390,7 +390,7 @@ private:
 		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-				c->OnCharacterInput(unicodeResolver.Resolve(), key);
+				c->OnCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
 			}
 		}
 	}

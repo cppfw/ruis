@@ -54,7 +54,7 @@ public:
 		class Factory : public WidgetFactory{
 		public:
 			std::shared_ptr<morda::Widget> Create(const stob::Node* chain)const override{
-				return ting::New<T_Widget>(chain);
+				return utki::makeShared<T_Widget>(chain);
 			}
 		};
 
@@ -81,7 +81,7 @@ public:
 	 * @param fi - file interface to get the GUI script from.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> Inflate(ting::fs::File& fi);
+	std::shared_ptr<morda::Widget> Inflate(papki::File& fi);
 
 	/**
 	 * @brief Load GUI script.
@@ -89,7 +89,7 @@ public:
 	 * @param fi - file interface providing GUI script and its dependencies.
 	 * @return Pointer to a root node of the GUI hierarchy.
 	 */
-	static std::unique_ptr<stob::Node> Load(ting::fs::File& fi);
+	static std::unique_ptr<stob::Node> Load(papki::File& fi);
 	
 private:
 	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> templates;

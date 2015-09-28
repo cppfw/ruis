@@ -12,8 +12,8 @@
 #include <sstream>
 
 #include <utki/Exc.hpp>
-#include <ting/Void.hpp>
-#include <ting/PoolStored.hpp>
+#include <utki/Void.hpp>
+#include <utki/PoolStored.hpp>
 #include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
@@ -162,7 +162,7 @@ struct ShaderWrapper{
 };
 
 
-struct ProgramWrapper : public ting::Void{
+struct ProgramWrapper : public utki::Void{
 	ShaderWrapper vertexShader;
 	ShaderWrapper fragmentShader;
 	GLuint p;
@@ -217,24 +217,24 @@ void Render::renderArrays(EMode mode, unsigned numElements) {
 
 
 
-void Render::renderElements(EMode mode, const ting::Buffer<const std::uint16_t>& i) {
+void Render::renderElements(EMode mode, const utki::Buf<std::uint16_t>& i) {
 	GLenum m = modeMap[unsigned(mode)];
 	
 	glDrawElements(m, i.size(), GL_UNSIGNED_SHORT, &*i.begin());
 	AssertOpenGLNoError();
 }
 
-void Render::bindShader(ting::Void& p) {
+void Render::bindShader(utki::Void& p) {
 	glUseProgram(static_cast<ProgramWrapper&>(p).p);
 	AssertOpenGLNoError();
 }
 
-std::unique_ptr<ting::Void> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
+std::unique_ptr<utki::Void> Render::compileShader(const char* vertexShaderCode, const char* fragmentShaderCode) {
 	return std::unique_ptr<ProgramWrapper>(new ProgramWrapper(vertexShaderCode, fragmentShaderCode));
 }
 
 
-Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
+Render::InputID Render::getAttribute(utki::Void& p, const char* n) {
 	GLint ret = glGetAttribLocation(static_cast<ProgramWrapper&>(p).p, n);
 	if(ret < 0){
 		std::stringstream ss;
@@ -244,7 +244,7 @@ Render::InputID Render::getAttribute(ting::Void& p, const char* n) {
 	return InputID(ret);
 }
 
-Render::InputID Render::getUniform(ting::Void& p, const char* n) {
+Render::InputID Render::getUniform(utki::Void& p, const char* n) {
 	GLint ret = glGetUniformLocation(static_cast<ProgramWrapper&>(p).p, n);
 	if(ret < 0){
 		throw utki::Exc("No uniform found in the shader program");
@@ -272,7 +272,7 @@ void Render::setUniform4f(InputID id, float x, float y, float z, float a) {
 	AssertOpenGLNoError();
 }
 
-void Render::setUniform4f(InputID id, ting::Buffer<const Vec4f> v) {
+void Render::setUniform4f(InputID id, const utki::Buf<Vec4f> v) {
 	static_assert(sizeof(v[0]) == sizeof(GLfloat) * 4, "size mismatch");
 	glUniform4fv(GLint(id.id), v.size(), reinterpret_cast<const GLfloat*>(&*v.begin()));
 	AssertOpenGLNoError();
@@ -313,7 +313,7 @@ namespace {
 
 #if M_OS == M_OS_WINDOWS
 
-struct OpenGLContext : public ting::Void{
+struct OpenGLContext : public utki::Void{
 	HGLRC hrc;
 public:
 	OpenGLContext(HDC hdc) {
@@ -358,7 +358,7 @@ public:
 Render::Render() :
 		pimpl(
 #if M_OS == M_OS_WINDOWS
-				new OpenGLContext(morda::App::Inst().deviceContext.hdc)
+				new OpenGLContext(morda::App::inst().deviceContext.hdc)
 #endif
 			)
 {
@@ -420,7 +420,7 @@ GLint texFilterMap[] = {
 	GL_LINEAR
 };
 
-struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>{
+struct GLTexture2D : public utki::Void, public utki::PoolStored<GLTexture2D, 32>{
 	GLuint tex;
 	
 	GLTexture2D(){
@@ -443,7 +443,7 @@ struct GLTexture2D : public ting::Void, public ting::PoolStored<GLTexture2D, 32>
 
 }//~namespace
 
-std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, ting::Buffer<const std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+std::unique_ptr<utki::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
 	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	
 	GLint minFilterGL = texFilterMap[unsigned(minFilter)];
@@ -501,7 +501,7 @@ std::unique_ptr<ting::Void> Render::create2DTexture(Vec2ui dim, unsigned numChan
 	return std::move(ret);
 }
 
-void Render::bindTexture(ting::Void& tex, unsigned unitNum){
+void Render::bindTexture(utki::Void& tex, unsigned unitNum){
 	static_cast<GLTexture2D&>(tex).bind(unitNum);
 }
 
@@ -536,15 +536,15 @@ unsigned Render::getMaxTextureSize(){
 
 void Render::swapFrameBuffers() {
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-	eglSwapBuffers(morda::App::Inst().eglDisplay.d, morda::App::Inst().eglSurface.s);
+	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
 #else
 	static_assert(M_MORDA_RENDER == M_MORDA_RENDER_OPENGL, "Unexpected render API");
 #	if M_OS == M_OS_WINDOWS
-	SwapBuffers(morda::App::Inst().deviceContext.hdc);
+	SwapBuffers(morda::App::inst().deviceContext.hdc);
 #	elif M_OS == M_OS_LINUX
-	glXSwapBuffers(morda::App::Inst().xDisplay.d, morda::App::Inst().xWindow.w);
+	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
 #	elif M_OS == M_OS_MACOSX
-	morda::App::Inst().macosx_SwapFrameBuffers();
+	morda::App::inst().macosx_SwapFrameBuffers();
 #	else
 #		error "unknown OS"
 #	endif
@@ -563,7 +563,7 @@ void Render::setCullEnabled(bool enable) {
 
 namespace{
 
-struct OpenGLFrameBuffer : public ting::Void{
+struct OpenGLFrameBuffer : public utki::Void{
 	GLuint fbo;
 
 	OpenGLFrameBuffer(){
@@ -579,11 +579,11 @@ struct OpenGLFrameBuffer : public ting::Void{
 
 }
 
-std::unique_ptr<ting::Void> Render::createFrameBuffer(){
-	return  std::unique_ptr<ting::Void>(new OpenGLFrameBuffer());
+std::unique_ptr<utki::Void> Render::createFrameBuffer(){
+	return  std::unique_ptr<utki::Void>(new OpenGLFrameBuffer());
 }
 
-void Render::bindFrameBuffer(ting::Void* fbo){
+void Render::bindFrameBuffer(utki::Void* fbo){
 	if(!fbo){
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		AssertOpenGLNoError();
@@ -596,7 +596,7 @@ void Render::bindFrameBuffer(ting::Void* fbo){
 	AssertOpenGLNoError();
 }
 
-void Render::attachColorTexture2DToFrameBuffer(ting::Void* tex){
+void Render::attachColorTexture2DToFrameBuffer(utki::Void* tex){
 	if(!tex){
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
 		AssertOpenGLNoError();

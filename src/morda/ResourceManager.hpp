@@ -63,7 +63,7 @@ class ResourceManager{
 			this->resScript = std::move(r.resScript);
 		}
 
-		std::unique_ptr<const ting::fs::File> fi;
+		std::unique_ptr<const papki::File> fi;
 		std::unique_ptr<const stob::Node> resScript;
 	};
 
@@ -103,7 +103,7 @@ public:
 	};
 
 	//if fi does not point to res script, then "main.res.stob" is assumed.
-	void MountResPack(const ting::fs::File& fi);
+	void MountResPack(const papki::File& fi);
 
 	template <class T> std::shared_ptr<T> Load(const char* resName);
 	
@@ -149,11 +149,11 @@ template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	if(!ret.e.Child()){
+	if(!ret.e.child()){
 		throw Exc("ResourceManager::Load(): resource description is empty");
 	}
 	
-	auto resource = T::Load(*ret.e.Child(), *ret.rp.fi);
+	auto resource = T::Load(*ret.e.child(), *ret.rp.fi);
 
 	this->AddResource(resource, ret.e);
 

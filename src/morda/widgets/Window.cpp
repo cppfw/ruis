@@ -211,13 +211,13 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		TableContainer(stob::Parse(DWindowDesc).get()),
+		TableContainer(stob::parse(DWindowDesc).get()),
 		emptyMinDim(this->TableContainer::measure(Vec2r(-1)))
 {
 	this->SetupWidgets();
 	
 	if(auto n = GetProperty(chain, "title")){
-		this->SetTitle(n->Value());
+		this->SetTitle(n->value());
 	}
 	
 	this->titleBgColorTopmost = 0xffff0000;
@@ -225,11 +225,11 @@ morda::Window::Window(const stob::Node* chain) :
 	
 	if(auto a = GetProperty(chain, "appearance")){
 		if(auto n = GetProperty(a, "titleColorTopmost")){
-			this->titleBgColorTopmost = n->AsUint32();
+			this->titleBgColorTopmost = n->asUint32();
 		}
 		
 		if(auto n = GetProperty(a, "titleColorNonTopmost")){
-			this->titleBgColorNonTopmost = n->AsUint32();
+			this->titleBgColorNonTopmost = n->asUint32();
 		}
 	}
 	
@@ -286,8 +286,8 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->moveBy(morda::Vec2r(d.x, 0));
 				this->resizeBy(morda::Vec2r(-d.x, d.y));
 			}
@@ -302,8 +302,8 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->moveBy(d);
 				this->resizeBy(morda::Vec2r(-d.x, -d.y));
 			}
@@ -318,8 +318,8 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->resizeBy(d);
 			}
 			return false;
@@ -333,8 +333,8 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->moveBy(morda::Vec2r(0, d.y));
 				this->resizeBy(morda::Vec2r(d.x, -d.y));
 			}
@@ -349,7 +349,7 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
 				this->moveBy(morda::Vec2r(d.x, 0));
 				this->resizeBy(morda::Vec2r(-d.x, 0));
 			}
@@ -364,7 +364,7 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
 				this->resizeBy(morda::Vec2r(d.x, 0));
 			}
 			return false;
@@ -378,7 +378,7 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
 				this->resizeBy(morda::Vec2r(0, d.y));
 			}
 			return false;
@@ -392,7 +392,7 @@ void morda::Window::SetupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				ting::util::ClampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
 				this->moveBy(morda::Vec2r(0, d.y));
 				this->resizeBy(morda::Vec2r(0, -d.y));
 			}
@@ -404,14 +404,14 @@ void morda::Window::SetupWidgets(){
 
 
 void morda::Window::SetTitle(const std::string& str){
-	this->title->setText(ting::utf8::ToUTF32(str));
+	this->title->setText(unikod::toUtf32(str));
 }
 
 
 
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	if(isDown){
-		morda::App::Inst().PostToUIThread_ts(
+		morda::App::inst().PostToUIThread_ts(
 				[this](){
 					this->makeTopmost();
 				}

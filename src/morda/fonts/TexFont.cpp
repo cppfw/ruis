@@ -64,7 +64,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> chars, unsigned size, unsigned outline){
+void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -91,8 +91,8 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 		FT_Face face; // handle to face object
 		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 	public:
-		FreeTypeFaceWrapper(FT_Library& lib, const ting::fs::File& fi){
-			this->fontFile = fi.LoadWholeFileIntoMemory();
+		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi){
+			this->fontFile = fi.loadWholeFileIntoMemory();
 			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
 				throw utki::Exc("TexFont::Load(): unable to crate font face object");
 			}
@@ -232,10 +232,10 @@ void TexFont::Load(const ting::fs::File& fi, const ting::Buffer<std::uint32_t> c
 			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
 
 			//update bounding box if needed
-			ting::util::ClampTop(left, g.verts[0].x);
-			ting::util::ClampBottom(right, g.verts[2].x);
-			ting::util::ClampTop(bottom, g.verts[0].y);
-			ting::util::ClampBottom(top, g.verts[2].y);
+			utki::clampTop(left, g.verts[0].x);
+			utki::clampBottom(right, g.verts[2].x);
+			utki::clampTop(bottom, g.verts[0].y);
+			utki::clampBottom(top, g.verts[2].y);
 
 			ASSERT(top - bottom >= 0) //width >= 0
 			ASSERT(right - left >= 0) //height >= 0
@@ -289,14 +289,14 @@ real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& mat
 	
 	shader.SetMatrix(matrix);
 
-	shader.render(g.verts, g.texCoords);
+	shader.render(utki::wrapBuf(g.verts), utki::wrapBuf(g.texCoords));
 
 	return g.advance;
 }
 
 
 
-real TexFont::StringAdvanceInternal(ting::Buffer<const std::uint32_t> str)const{
+real TexFont::StringAdvanceInternal(const utki::Buf<std::uint32_t> str)const{
 	real ret = 0;
 
 	const std::uint32_t* s = str.begin();
@@ -315,7 +315,7 @@ real TexFont::StringAdvanceInternal(ting::Buffer<const std::uint32_t> str)const{
 
 
 
-morda::Rect2r TexFont::StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> str)const{
+morda::Rect2r TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> str)const{
 	morda::Rect2r ret;
 
 	if(str.size() == 0){
@@ -388,13 +388,13 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 	this->tex.bind();
 
-	shader.render(PosShader::quad01Fan, shader.quadFanTexCoords);
+	shader.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(shader.quadFanTexCoords));
 }
 #endif
 
 
 
-real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
+real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const{
 	if(utf32str.size() == 0){
 		shader.renderNothing();
 		return 0;

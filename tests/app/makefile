@@ -22,18 +22,19 @@ ifeq ($(prorab_os),windows)
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension)
     this_ldflags += -L/usr/lib -L/usr/local/lib
-    this_ldlibs +=  -lglew32 -lopengl32 -lting -lstob -lpng -ljpeg -lz -lfreetype -mwindows
+    this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
     this_cflags += -I/usr/include -I/usr/local/include
 
     #WORKAROUND for MinGW bug:
     this_cflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lstob -lting -lpng -ljpeg -lfreetype
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 else ifeq ($(prorab_os),linux)
-    this_ldlibs += -lting $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -lstob -pthread -lGL
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL
 endif
 
+this_ldlibs += -lnitki -laika -lpogodi -lstob
 
 
 $(eval $(prorab-build-app))

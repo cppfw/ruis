@@ -27,23 +27,23 @@ protected:
 	
 	Font(){}
 	
-	virtual real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const = 0;
+	virtual real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const = 0;
 	
-	virtual real StringAdvanceInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
+	virtual real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
 	
-	virtual morda::Rect2r StringBoundingBoxInternal(ting::Buffer<const std::uint32_t> utf32str)const = 0;
+	virtual morda::Rect2r StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()noexcept{}
 	
 	//renders the string, returns resulting string advance
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::utf8::Iterator str)const;
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, unikod::Utf8Iterator str)const;
 	
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, ting::Buffer<const std::uint32_t> utf32str)const{
+	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const{
 		return this->RenderStringInternal(shader, matrix, utf32str);
 	}
 	
 	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
-		return this->RenderString(shader, matrix, ting::utf8::Iterator(str));
+		return this->RenderString(shader, matrix, unikod::Utf8Iterator(str));
 	}
 	
 	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
@@ -52,14 +52,14 @@ public:
 	
 	
 	
-	real StringAdvance(ting::utf8::Iterator str)const;
+	real StringAdvance(unikod::Utf8Iterator str)const;
 	
-	real StringAdvance(ting::Buffer<const std::uint32_t> utf32str)const{
+	real StringAdvance(const utki::Buf<std::uint32_t> utf32str)const{
 		return this->StringAdvanceInternal(utf32str);
 	}
 	
 	real StringAdvance(const char* str)const{
-		return this->StringAdvance(ting::utf8::Iterator(str));
+		return this->StringAdvance(unikod::Utf8Iterator(str));
 	}
 	
 	real StringAdvance(const std::string& str)const{
@@ -72,14 +72,14 @@ public:
 	
 	
 	
-	morda::Rect2r StringBoundingBox(ting::utf8::Iterator str)const;
+	morda::Rect2r StringBoundingBox(unikod::Utf8Iterator str)const;
 	
-	morda::Rect2r StringBoundingBox(ting::Buffer<const std::uint32_t> utf32str)const{
+	morda::Rect2r StringBoundingBox(const utki::Buf<std::uint32_t> utf32str)const{
 		return this->StringBoundingBoxInternal(utf32str);
 	}
 	
 	morda::Rect2r StringBoundingBox(const char* str)const{
-		return this->StringBoundingBox(ting::utf8::Iterator(str));
+		return this->StringBoundingBox(unikod::Utf8Iterator(str));
 	}
 	
 	morda::Rect2r StringBoundingBox(const std::string& str)const{

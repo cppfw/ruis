@@ -23,17 +23,17 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
 
 
 
-std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const ting::fs::File& fi){
-	auto tex = App::Inst().resMan.Load<ResTexture>(chain.side("tex").up().Value());
+std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const papki::File& fi){
+	auto tex = App::inst().resMan.Load<ResTexture>(chain.side("tex").up().value());
 	
 	Rect2r rect;
-	if(auto n = chain.ChildOfThisOrNext("rect")){
+	if(auto n = chain.childOfThisOrNext("rect")){
 		rect = Rect2rFromSTOB(n);
 	}else{
 		rect = Rect2r(Vec2r(0, 0), tex->Tex().Dim());
 	}
 	
-	return ting::New<ResImage>(tex, rect);
+	return utki::makeShared<ResImage>(tex, rect);
 }
 
 
@@ -45,5 +45,5 @@ void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
 	matr.Scale(this->dim);
 	
 	s.SetMatrix(matr);
-	s.render(PosShader::quad01Fan, this->texCoords);
+	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }

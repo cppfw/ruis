@@ -1,25 +1,3 @@
-/* The MIT License:
-
-Copyright (c) 2008-2014 Ivan Gagis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-
 /**
  * @file Image class
  * @author Ivan Gagis <igagis@gmail.com>
@@ -29,8 +7,6 @@ THE SOFTWARE. */
 #include <cstring>
 #include <algorithm>
 
-#include <ting/types.hpp>
-#include <ting/math.hpp>
 #include <utki/Exc.hpp>
 
 #include <png.h>
@@ -218,12 +194,12 @@ void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, uns
 namespace{
 
 void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t length){
-	ting::fs::File* fi = reinterpret_cast<ting::fs::File*>(png_get_io_ptr(pngPtr));
+	papki::File* fi = reinterpret_cast<papki::File*>(png_get_io_ptr(pngPtr));
 	ASSERT(fi)
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
-		ting::Buffer<png_byte> bufWrapper(data, size_t(length));
-		fi->Read(bufWrapper);
+		utki::Buf<png_byte> bufWrapper(data, size_t(length));
+		fi->read(bufWrapper);
 //		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	}catch(...){
 		//do not let any exception get out of this function
@@ -236,14 +212,14 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 
 
 //Read PNG file method
-void Image::LoadPNG(const ting::fs::File& fi){
-	ASSERT(!fi.IsOpened())
+void Image::LoadPNG(const papki::File& fi){
+	ASSERT(!fi.isOpened())
 
 	if(this->buf.size() > 0){
 		this->Reset();
 	}
 
-	ting::fs::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
+	papki::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
 //	TRACE(<< "Image::LoadPNG(): file opened" << std::endl)
 
 #define PNGSIGSIZE 8 //The size of PNG signature (max 8 bytes)
@@ -254,7 +230,7 @@ void Image::LoadPNG(const ting::fs::File& fi){
 #ifdef DEBUG
 		unsigned ret = //TODO:???
 #endif
-		fi.Read(sig);
+		fi.read(utki::wrapBuf(sig));
 		ASSERT(ret == sig.size() * sizeof(sig[0]))
 	}
 
@@ -274,7 +250,7 @@ void Image::LoadPNG(const ting::fs::File& fi){
 	png_set_sig_bytes(pngPtr, PNGSIGSIZE);//We've already read PNGSIGSIZE bytes
 
 	//Set custom "ReadFromFile" function
-	png_set_read_fn(pngPtr, const_cast<ting::fs::File*>(&fi), PNG_CustomReadFunction);
+	png_set_read_fn(pngPtr, const_cast<papki::File*>(&fi), PNG_CustomReadFunction);
 
 	png_read_info(pngPtr, infoPtr);//Read in all information about file
 
@@ -395,7 +371,7 @@ const size_t DJpegInputBufferSize = 4096;
 
 struct DataManagerJPEGSource{
 	jpeg_source_mgr pub;
-	ting::fs::File *fi;
+	papki::File *fi;
 	JOCTET *buffer;
 	bool sof;//true if the file was just opened
 };
@@ -421,9 +397,9 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	int nbytes;
 
 	try{
-		ting::Buffer<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
-		nbytes = ASS(src->fi)->Read(bufWrapper);
-	}catch(ting::fs::File::Exc&){
+		utki::Buf<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
+		nbytes = ASS(src->fi)->read(bufWrapper);
+	}catch(papki::Exc&){
 		if(src->sof){
 			return FALSE;//the specified file is empty
 		}
@@ -476,15 +452,15 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 
 
 //Read JPEG function
-void Image::LoadJPG(const ting::fs::File& fi){
-	ASSERT(!fi.IsOpened())
+void Image::LoadJPG(const papki::File& fi){
+	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
 	if(this->buf.size()){
 		this->Reset();
 	}
 	
-	ting::fs::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
+	papki::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
 //	TRACE(<< "Image::LoadJPG(): file opened" << std::endl)
 
 	//Required JPEG structures
@@ -541,7 +517,7 @@ void Image::LoadJPG(const ting::fs::File& fi){
 	src->pub.resync_to_restart = &jpeg_resync_to_restart;// use default func
 	src->pub.term_source = &JPEG_TermSource;
 	//Set the fields of our structure
-	src->fi = const_cast<ting::fs::File*>(&fi);
+	src->fi = const_cast<papki::File*>(&fi);
 	//set pointers to the buffers
 	src->pub.bytes_in_buffer = 0;//forces fill_input_buffer on first read
 	src->pub.next_input_byte = 0;//until buffer loaded
@@ -653,7 +629,7 @@ void Image::LoadTGA(File& fi){
 	// Read in the length in bytes from the header to the pixel data
 	std::uint8_t length = 0;//The length in bytes to the pixels
 	{
-		ting::Buffer<std::uint8_t> bufWrapper(&length, sizeof(length));
+		utki::Buf<std::uint8_t> bufWrapper(&length, sizeof(length));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -664,7 +640,7 @@ void Image::LoadTGA(File& fi){
 	// Read in the imageType (RLE, RGB, etc...)
 	std::uint8_t imageType = 0;//The image type (RLE, RGB, Alpha...)
 	{
-		ting::Buffer<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
+		utki::Buf<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -837,8 +813,8 @@ void Image::LoadTGA(File& fi){
 
 
 
-void Image::Load(const ting::fs::File& fi){
-	std::string ext = fi.Ext();
+void Image::Load(const papki::File& fi){
+	std::string ext = fi.ext();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)

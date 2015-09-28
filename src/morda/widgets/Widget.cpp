@@ -15,7 +15,7 @@ using namespace morda;
 
 Widget::Widget(const stob::Node* chain){
 	if(const stob::Node* n = GetProperty(chain, "layout")){
-		this->layout = n->CloneChain();
+		this->layout = n->cloneChain();
 	}
 
 	if(const stob::Node* n = GetProperty(chain, "posX")){
@@ -43,29 +43,29 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "name")){
-		this->nameOfWidget = p->Value();
+		this->nameOfWidget = p->value();
 	}
 
 	if(const stob::Node* p = GetProperty(chain, "clip")){
-		this->clip_var = p->AsBool();
+		this->clip_var = p->asBool();
 	}else{
 		this->clip_var = false;
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "cache")){
-		this->cache = p->AsBool();
+		this->cache = p->asBool();
 	}else{
 		this->cache = false;
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "visible")){
-		this->isVisible_var = p->AsBool();
+		this->isVisible_var = p->asBool();
 	}else{
 		this->isVisible_var = true;
 	}
 	
 	if(const stob::Node* p = GetProperty(chain, "enabled")){
-		this->isEnabled_var = p->AsBool();
+		this->isEnabled_var = p->asBool();
 	}else{
 		this->isEnabled_var = true;
 	}
@@ -104,7 +104,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 std::shared_ptr<Widget> Widget::findChildByName(const std::string& name)noexcept{
 	if(this->name() == name){
-		return this->SharedFromThis(this);
+		return this->sharedFromThis(this);
 	}
 	return nullptr;
 }
@@ -123,8 +123,8 @@ void Widget::resize(const morda::Vec2r& newDims){
 
 	this->clearCache();
 	this->rectangle.d = newDims;
-	ting::util::ClampBottom(this->rectangle.d.x, real(0.0f));
-	ting::util::ClampBottom(this->rectangle.d.y, real(0.0f));
+	utki::clampBottom(this->rectangle.d.x, real(0.0f));
+	utki::clampBottom(this->rectangle.d.y, real(0.0f));
 	this->relayoutNeeded = false;
 	this->onResize();//call virtual method
 }
@@ -196,7 +196,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	morda::ColorPosShader& s = App::Inst().Shaders().colorPosShader;
+	morda::ColorPosShader& s = App::inst().Shaders().colorPosShader;
 	s.Bind();
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->rect().d);
@@ -249,7 +249,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	tex = fb.detachColor();
 	
 	fb.unbind();
-	Render::setViewport(App::Inst().winRect().to<int>());
+	Render::setViewport(App::inst().winRect().to<int>());
 	
 	return std::move(tex);
 }
@@ -258,14 +258,14 @@ void Widget::renderFromCache(const Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.Scale(this->rect().d);
 	
-	morda::PosTexShader &s = App::Inst().Shaders().posTexShader;
+	morda::PosTexShader &s = App::inst().Shaders().posTexShader;
 
 	ASSERT(this->cacheTex)
 	this->cacheTex.bind();
 	
 	s.SetMatrix(matr);
 	
-	s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
+	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 }
 
 void Widget::clearCache(){
@@ -290,27 +290,27 @@ void Widget::onKeyInternal(bool isDown, EKey keyCode){
 
 
 void Widget::focus()noexcept{
-	ASSERT(App::Inst().ThisIsUIThread())
+	ASSERT(App::inst().ThisIsUIThread())
 
 	if(this->isFocused()){
 		return;
 	}
 
-	App::Inst().SetFocusedWidget(this->SharedFromThis(this));
+	App::inst().SetFocusedWidget(this->sharedFromThis(this));
 }
 
 
 
 void Widget::unfocus()noexcept{
-	ASSERT(App::Inst().ThisIsUIThread())
+	ASSERT(App::inst().ThisIsUIThread())
 
 	if(!this->isFocused()){
 		return;
 	}
 
-	ASSERT(App::Inst().focusedWidget.lock() && App::Inst().focusedWidget.lock().operator->() == this)
+	ASSERT(App::inst().focusedWidget.lock() && App::inst().focusedWidget.lock().operator->() == this)
 
-	App::Inst().SetFocusedWidget(nullptr);
+	App::inst().SetFocusedWidget(nullptr);
 }
 
 

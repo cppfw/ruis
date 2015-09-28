@@ -13,28 +13,28 @@ using namespace morda;
 namespace{
 
 voidpf ZCALLBACK UnzipOpen(voidpf opaque, const char* filename, int mode){
-	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(opaque);
+	papki::File* f = reinterpret_cast<papki::File*>(opaque);
 	
 	switch(mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER){
 		case ZLIB_FILEFUNC_MODE_READ:
-			f->Open(ting::fs::File::E_Mode::READ);
+			f->open(papki::File::E_Mode::READ);
 			break;
 		default:
-			throw ting::fs::File::Exc("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
+			throw papki::Exc("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
 	}
 	
 	return f;
 }
 
 int ZCALLBACK UnzipClose(voidpf opaque, voidpf stream){
-	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	f->Close();
+	papki::File* f = reinterpret_cast<papki::File*>(stream);
+	f->close();
 	return 0;
 }
 
 uLong ZCALLBACK UnzipRead(voidpf opaque, voidpf stream, void* buf, uLong size){
-	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	return uLong(f->Read(ting::Buffer<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
+	papki::File* f = reinterpret_cast<papki::File*>(stream);
+	return uLong(f->read(utki::Buf<std::uint8_t>(reinterpret_cast<std::uint8_t*>(buf), size)));
 }
 
 uLong ZCALLBACK UnzipWrite(voidpf opaque, voidpf stream, const void* buf, uLong size){
@@ -47,20 +47,20 @@ int ZCALLBACK UnzipError(voidpf opaque, voidpf stream){
 }
 
 long ZCALLBACK UnzipSeek(voidpf  opaque, voidpf stream, uLong offset, int origin){
-	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
+	papki::File* f = reinterpret_cast<papki::File*>(stream);
 	
 	//Assume that offset can only be positive, since its type is unsigned
 	
 	switch(origin){
 		case ZLIB_FILEFUNC_SEEK_CUR:
-			f->SeekForward(offset);
+			f->seekForward(offset);
 			return 0;
 		case ZLIB_FILEFUNC_SEEK_END:
-			f->SeekForward(size_t(-1));
+			f->seekForward(size_t(-1));
 			return 0;
 		case ZLIB_FILEFUNC_SEEK_SET:
-			f->Rewind();
-			f->SeekForward(offset);
+			f->rewind();
+			f->seekForward(offset);
 			return 0;
 		default:
 			return -1;
@@ -68,8 +68,8 @@ long ZCALLBACK UnzipSeek(voidpf  opaque, voidpf stream, uLong offset, int origin
 }
 
 long ZCALLBACK UnzipTell(voidpf opaque, voidpf stream){
-	ting::fs::File* f = reinterpret_cast<ting::fs::File*>(stream);
-	return long(f->CurPos());
+	papki::File* f = reinterpret_cast<papki::File*>(stream);
+	return long(f->curPos());
 }
 
 }
@@ -77,8 +77,8 @@ long ZCALLBACK UnzipTell(voidpf opaque, voidpf stream){
 
 
 
-ZipFile::ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& path) :
-		ting::fs::File(path),
+ZipFile::ZipFile(std::unique_ptr<papki::File> zipFile, const std::string& path) :
+		papki::File(path),
 		zipFile(std::move(zipFile))
 {
 	zlib_filefunc_def ff;
@@ -91,17 +91,17 @@ ZipFile::ZipFile(std::unique_ptr<ting::fs::File> zipFile, const std::string& pat
 	ff.zerror_file = &UnzipError;
 	ff.ztell_file = &UnzipTell;
 	
-	this->handle = unzOpen2(this->zipFile->Path().c_str(), &ff);
+	this->handle = unzOpen2(this->zipFile->path().c_str(), &ff);
 
 	if(!this->handle){
-		throw File::Exc("ZipFile::OpenZipFile(): opening zip file failed");
+		throw papki::Exc("ZipFile::OpenZipFile(): opening zip file failed");
 	}
 }
 
 
 
 ZipFile::~ZipFile()noexcept{
-	this->Close();//make sure there is no file opened inside zip file
+	this->close();//make sure there is no file opened inside zip file
 
 	if(unzClose(this->handle) != UNZ_OK){
 		ASSERT(false)
@@ -110,76 +110,76 @@ ZipFile::~ZipFile()noexcept{
 
 
 
-void ZipFile::OpenInternal(E_Mode mode) {
+void ZipFile::openInternal(E_Mode mode) {
 	if(mode != File::E_Mode::READ){
-		throw File::Exc("illegal mode requested, only READ supported inside ZIP file");
+		throw papki::Exc("illegal mode requested, only READ supported inside ZIP file");
 	}
 
-	if(unzLocateFile(this->handle, this->Path().c_str(), 0) != UNZ_OK){
+	if(unzLocateFile(this->handle, this->path().c_str(), 0) != UNZ_OK){
 		std::stringstream ss;
-		ss << "ZipFile::OpenInternal(): file not found: " << this->Path();
-		throw File::Exc(ss.str());
+		ss << "ZipFile::OpenInternal(): file not found: " << this->path();
+		throw papki::Exc(ss.str());
 	}
 
 	{
 		unz_file_info zipFileInfo;
 
 		if(unzGetCurrentFileInfo(this->handle, &zipFileInfo, 0, 0, 0, 0, 0, 0) != UNZ_OK){
-			throw File::Exc("failed obtaining file info");
+			throw papki::Exc("failed obtaining file info");
 		}
 	}
 
 	if(unzOpenCurrentFile(this->handle) != UNZ_OK){
-		throw File::Exc("file opening failed");
+		throw papki::Exc("file opening failed");
 	}
 }
 
-void ZipFile::CloseInternal()const noexcept{
+void ZipFile::closeInternal()const noexcept{
 	if(unzCloseCurrentFile(this->handle) == UNZ_CRCERROR){
 		TRACE(<< "[WARNING] ZipFile::Close(): CRC is not good" << std::endl)
 		ASSERT(false)
 	}
 }
 
-size_t ZipFile::ReadInternal(ting::Buffer<std::uint8_t> buf)const{
+size_t ZipFile::readInternal(utki::Buf<std::uint8_t> buf)const{
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
 	if(numBytesRead < 0){
-		throw File::Exc("ZipFile::Read(): file reading failed");
+		throw papki::Exc("ZipFile::Read(): file reading failed");
 	}
 
 	ASSERT(numBytesRead >= 0)
 	return size_t(numBytesRead);
 }
 
-bool ZipFile::Exists()const{
+bool ZipFile::exists()const{
 	//if directory
-	if(this->Path()[this->Path().size() - 1] == '/'){
-		return this->File::Exists();
+	if(this->path()[this->path().size() - 1] == '/'){
+		return this->File::exists();
 	}
 	
-	if(this->Path().size() == 0){
+	if(this->path().size() == 0){
 		return false;
 	}
 
-	if(this->IsOpened()){
+	if(this->isOpened()){
 		return true;
 	}
 	
-	return unzLocateFile(this->handle, this->Path().c_str(), 0) == UNZ_OK;
+	return unzLocateFile(this->handle, this->path().c_str(), 0) == UNZ_OK;
 }
 
 
 
-std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries)const{
-	if(!this->IsDir()){
-		throw File::Exc("ZipFile::ListDirContents(): this is not a directory");
+std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
+	if(!this->isDir()){
+		throw papki::Exc("ZipFile::ListDirContents(): this is not a directory");
 	}
 
 	//if path refers to directory then there should be no files opened
-	ASSERT(!this->IsOpened())
+	ASSERT(!this->isOpened())
 
 	if(!this->handle){
-		throw File::Exc("ZipFile::ListDirContents(): zip file is not opened");
+		throw papki::Exc("ZipFile::ListDirContents(): zip file is not opened");
 	}
 
 	std::vector<std::string> files;
@@ -190,7 +190,7 @@ std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries)const{
 		int ret = unzGoToFirstFile(this->handle);
 
 		if(ret != UNZ_OK){
-			throw File::Exc("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
+			throw papki::Exc("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
 		}
 
 		do{
@@ -207,24 +207,24 @@ std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries)const{
 					0
 				) != UNZ_OK)
 			{
-				throw File::Exc("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
+				throw papki::Exc("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
 			}
 
 			fileNameBuf[fileNameBuf.size() - 1] = 0;//null-terminate, just to be on a safe side
 
 			std::string fn(fileNameBuf.begin());//filename
 
-			if(fn.size() <= this->Path().size()){
+			if(fn.size() <= this->path().size()){
 				continue;
 			}
 
 			//check if full file path starts with the this->Path() string
-			if(fn.compare(0, this->Path().size(), this->Path()) != 0){
+			if(fn.compare(0, this->path().size(), this->path()) != 0){
 				continue;
 			}
 
-			ASSERT(fn.size() > this->Path().size())
-			std::string subfn(fn, this->Path().size(), fn.size() - this->Path().size());//subfilename
+			ASSERT(fn.size() > this->path().size())
+			std::string subfn(fn, this->path().size(), fn.size() - this->path().size());//subfilename
 
 			size_t slashPos = subfn.find_first_of('/');
 
@@ -246,7 +246,7 @@ std::vector<std::string> ZipFile::ListDirContents(size_t maxEntries)const{
 		}while((ret = unzGoToNextFile(this->handle)) == UNZ_OK);
 
 		if(ret != UNZ_END_OF_LIST_OF_FILE && ret != UNZ_OK){
-			throw File::Exc("ZipFile::ListDirContents(): unzGoToNextFile() failed.");
+			throw papki::Exc("ZipFile::ListDirContents(): unzGoToNextFile() failed.");
 		}
 	}
 

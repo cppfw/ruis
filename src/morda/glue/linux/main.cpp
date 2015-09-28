@@ -5,10 +5,10 @@
 
 #include "../../AppFactory.hpp"
 
-#include <ting/WaitSet.hpp>
+#include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
-#include <ting/utf8.hpp>
-#include <ting/util.hpp>
+#include <unikod/utf8.hpp>
+
 
 
 
@@ -217,10 +217,10 @@ App::App(const WindowParams& requestedWindowParams) :
 
 namespace{
 
-class XEventWaitable : public ting::Waitable{
+class XEventWaitable : public pogodi::Waitable{
 	int fd;
 	
-	int GetHandle() override{
+	int getHandle() override{
 		return this->fd;
 	}
 public:
@@ -228,8 +228,8 @@ public:
 		this->fd = XConnectionNumber(d);
 	}
 	
-	inline void ClearCanReadFlag(){
-		this->ting::Waitable::ClearCanReadFlag();
+	void clearCanReadFlag(){
+		this->pogodi::Waitable::clearCanReadFlag();
 	}
 };
 
@@ -530,13 +530,13 @@ public:
 		//KeySym xkeysym;
 		std::array<char, 32> staticBuf;
 		std::vector<char> arr;
-		ting::Buffer<char> buf = staticBuf;
+		auto buf = utki::wrapBuf(staticBuf);
 
 		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
 			//allocate enough memory
 			arr.resize(size + 1);
-			buf = arr;
+			buf = utki::wrapBuf(arr);
 			size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		}
 		ASSERT(size >= 0)
@@ -558,8 +558,8 @@ public:
 					typedef std::vector<std::uint32_t> T_Vector;
 					T_Vector utf32;
 					
-					for(ting::utf8::Iterator i(buf.begin()); i.IsNotEnd(); ++i){
-						utf32.push_back(i.Char());
+					for(unikod::Utf8Iterator i(buf.begin()); !i.isEnd(); ++i){
+						utf32.push_back(i.character());
 					}
 					
 					std::vector<std::uint32_t> ret(utf32.size());
@@ -598,27 +598,27 @@ void App::Quit()noexcept{
 void App::Exec(){
 	XEventWaitable xew(this->xDisplay.d);
 	
-	ting::WaitSet waitSet(2);
+	pogodi::WaitSet waitSet(2);
 	
-	waitSet.Add(xew, ting::Waitable::READ);
-	waitSet.Add(this->uiQueue, ting::Waitable::READ);
+	waitSet.add(xew, pogodi::Waitable::READ);
+	waitSet.add(this->uiQueue, pogodi::Waitable::READ);
 	
 	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
 	//So, render everything for the first time.
 	this->render();
 	
 	while(!this->quitFlag){
-		waitSet.WaitWithTimeout(this->updater.Update());
+		waitSet.waitWithTimeout(this->updater.Update());
 		
-		if(this->uiQueue.CanRead()){
-			while(auto m = this->uiQueue.PeekMsg()){
+		if(this->uiQueue.canRead()){
+			while(auto m = this->uiQueue.peekMsg()){
 				m();
 			}
-			ASSERT(!this->uiQueue.CanRead())
+			ASSERT(!this->uiQueue.canRead())
 		}
 		
-		if(xew.CanRead()){
-			xew.ClearCanReadFlag();
+		if(xew.canRead()){
+			xew.clearCanReadFlag();
 			while(XPending(this->xDisplay.d) > 0){
 				XEvent event;
 				XNextEvent(this->xDisplay.d, &event);
@@ -721,8 +721,8 @@ void App::Exec(){
 		this->render();
 	}//~while(!this->quitFlag)
 	
-	waitSet.Remove(this->uiQueue);
-	waitSet.Remove(xew);
+	waitSet.remove(this->uiQueue);
+	waitSet.remove(xew);
 }
 
 
@@ -730,7 +730,7 @@ void App::Exec(){
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, ting::Buffer<std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = morda::CreateApp(argc, argv, utki::Buf<std::uint8_t>(0, 0));
 
 	app->Exec();
 }

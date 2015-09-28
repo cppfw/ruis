@@ -601,7 +601,7 @@ void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars){
 	resolver.chars = std::move(chars);
 	
 	//notify about input event
-	morda::App::Inst().HandleCharacterInput(resolver, EKey::UNKNOWN);
+	morda::App::inst().HandleCharacterInput(resolver, EKey::UNKNOWN);
 }
 
 }//~namespace
@@ -630,7 +630,7 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 	typedef std::vector<std::uint32_t> T_Vector;
 	T_Vector utf32;
 
-	for(ting::utf8::Iterator i(utf8Chars); i.IsNotEnd(); ++i){
+	for(unikod::Utf8Iterator i(utf8Chars); i.IsNotEnd(); ++i){
 		utf32.push_back(i.Char());
 	}
 	
@@ -804,12 +804,12 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 App::ResMan::ResMan(){
-	this->MountResPack(*morda::App::Inst().CreateResourceFileInterface("morda_res/"));
+	this->MountResPack(*morda::App::inst().CreateResourceFileInterface("morda_res/"));
 }
 
 
 
-std::unique_ptr<ting::fs::File> App::CreateResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
 }
 
@@ -861,13 +861,13 @@ inline void HandleQueueMessages(App& app){
 
 
 inline int GetUIQueueHandle(App& app){
-	return static_cast<ting::Waitable&>(app.uiQueue).GetHandle();
+	return static_cast<pogodi::Waitable&>(app.uiQueue).GetHandle();
 }
 
 
 
 void HandleInputEvents(){
-	morda::App& app = morda::App::Inst();
+	morda::App& app = morda::App::inst();
 
 	//Read and handle input events
 	AInputEvent* event;
@@ -1137,7 +1137,7 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-	std::uint32_t dt = Update(App::Inst());
+	std::uint32_t dt = Update(App::inst());
 	if(dt == 0){
 		//do not arm the timer and do not clear the flag
 	}else{
@@ -1145,7 +1145,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 		timer.Arm(dt);
 	}
 	
-	Render(App::Inst());//after updating need to re-render everything
+	Render(App::inst());//after updating need to re-render everything
 
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
@@ -1155,7 +1155,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 
 int OnQueueHasMessages(int fd, int events, void* data){
-	HandleQueueMessages(App::Inst());
+	HandleQueueMessages(App::inst());
 	
 	return 1; //1 means do not remove descriptor from looper
 }

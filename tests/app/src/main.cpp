@@ -25,7 +25,6 @@
 
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
-#include <ting/util.hpp>
 
 #include "../../../src/morda/util/ZipFile.hpp"
 
@@ -41,8 +40,8 @@ public:
 			morda::Widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
-		this->fnt = morda::App::Inst().resMan.Load<morda::ResFont>("morda_fnt_main");
+		this->tex = morda::App::inst().resMan.Load<morda::ResTexture>("tex_sample");
+		this->fnt = morda::App::inst().resMan.Load<morda::ResFont>("morda_fnt_main");
 	}
 	
 	std::uint32_t timer = 0;
@@ -105,7 +104,7 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(ting::Buffer<const std::uint32_t> unicode, morda::EKey key) override{
+	void OnCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::EKey key) override{
 		if(unicode.size() == 0){
 			return;
 		}
@@ -120,18 +119,18 @@ public:
 
 			this->tex->Tex().bind();
 
-			morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
+			morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
 
 //			s.SetColor(morda::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
-			s.render(morda::PosShader::quad01Fan, s.quadFanTexCoords);
+			s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
 		
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
-//		morda::SimpleTexturingShader &s = morda::App::Inst().Shaders().simpleTexturing;
+//		morda::SimpleTexturingShader &s = morda::App::inst().Shaders().simpleTexturing;
 //		morda::Matr4r m(matrix);
 //		m.Translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
@@ -148,7 +147,7 @@ public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
-		this->tex = morda::App::Inst().resMan.Load<morda::ResTexture>("tex_sample");
+		this->tex = morda::App::inst().resMan.Load<morda::ResTexture>("tex_sample");
 		this->rot.Identity();
 		
 		
@@ -173,7 +172,7 @@ public:
 
 		this->tex->Tex().bind();
 		
-		morda::PosTexShader &s = morda::App::Inst().Shaders().posTexShader;
+		morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
 
 //		s.SetColor(morda::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
@@ -225,7 +224,7 @@ public:
 		
 		morda::Render::setCullEnabled(true);
 		
-		s.render(indices, cubePos, cubeTex, morda::Render::EMode::TRIANGLES);
+		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::EMode::TRIANGLES);
 	}
 };
 
@@ -237,7 +236,7 @@ class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
 public:
 	
 	TreeViewItemsProvider(){
-		this->root = stob::Parse(R"qwertyuiop(
+		this->root = stob::parse(R"qwertyuiop(
 				{
 					root1{
 						subroot1{
@@ -355,7 +354,7 @@ private:
 	
 	unsigned newItemNumber = 0;
 	
-	std::string generateNewItemValue(){
+	std::string generateNewItemvalue(){
 		std::stringstream ss;
 		ss << "newItem" << newItemNumber;
 		++newItemNumber;
@@ -389,9 +388,9 @@ public:
 		}
 		
 		if(prev){
-			prev->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
+			prev->insertNext(utki::makeUnique<stob::Node>(this->generateNewItemvalue().c_str()));
 		}else{
-			parent->addAsFirstChild(this->generateNewItemValue().c_str());
+			parent->addAsFirstChild(this->generateNewItemvalue().c_str());
 		}
 		
 		this->notifyItemAdded(this->selectedItem);
@@ -417,7 +416,7 @@ public:
 			return;
 		}
 		
-		n->InsertNext(stob::Node::New(this->generateNewItemValue().c_str()));
+		n->insertNext(utki::makeUnique<stob::Node>(this->generateNewItemvalue().c_str()));
 		
 		++this->selectedItem.back();
 		this->notifyItemAdded(this->selectedItem);
@@ -440,7 +439,7 @@ public:
 			n = this->root.get();
 		}
 		
-		n->addAsFirstChild(this->generateNewItemValue().c_str());
+		n->addAsFirstChild(this->generateNewItemvalue().c_str());
 		
 		this->selectedItem.push_back(0);
 		this->notifyItemAdded(this->selectedItem);
@@ -458,23 +457,23 @@ public:
 		for(auto i = path.begin(); i != path.end(); ++i){
 			parent = n;
 			n = n->child(*i).node();
-			isLast.push_back(n->Next() == nullptr);
+			isLast.push_back(n->next() == nullptr);
 		}
 		
-		auto ret = ting::New<morda::HorizontalContainer>();
+		auto ret = utki::makeShared<morda::HorizontalContainer>();
 
 		ASSERT(isLast.size() == path.size())
 		
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->Add(*(isLast[i] ? stob::Parse(DEmpty) : stob::Parse(DLine)));
+			ret->Add(*(isLast[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::Inst().inflater.Inflate(*stob::Parse(isLast.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::inst().inflater.Inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
-			if(n->Child()){
-				auto w = morda::App::Inst().inflater.Inflate(*stob::Parse(DPlusMinus));
+			if(n->child()){
+				auto w = morda::App::inst().inflater.Inflate(*stob::parse(DPlusMinus));
 
 				auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
 				ASSERT(plusminus)
@@ -510,7 +509,7 @@ public:
 		}
 		
 		{
-			auto v = morda::App::Inst().inflater.Inflate(*stob::Parse(
+			auto v = morda::App::inst().inflater.Inflate(*stob::parse(
 					R"qwertyuiop(
 							FrameContainer{
 								ColorLabel{
@@ -532,7 +531,7 @@ public:
 			{
 				auto value = v->findChildByNameAs<morda::Label>("value");
 				ASSERT(value)
-				value->setText(n->Value());
+				value->setText(n->value());
 			}
 			{
 				auto colorLabel = v->findChildByNameAs<morda::ColorLabel>("selection");
@@ -562,7 +561,7 @@ public:
 		}
 		
 		{
-			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::Inst().inflater.Inflate(*stob::Parse(
+			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::inst().inflater.Inflate(*stob::parse(
 					R"qwertyuiop(
 							PushButton{
 								ColorLabel{
@@ -611,12 +610,12 @@ public:
 			App(GetWindowParams())
 	{
 		this->resMan.MountResPack(*this->CreateResourceFileInterface("res/"));
-//		this->ResMan().MountResPack(morda::ZipFile::New(ting::fs::FSFile::New("res.zip")));
+//		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		
 		this->inflater.AddWidget<SimpleWidget>("U_SimpleWidget");
 		this->inflater.AddWidget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater.Inflate(
+		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater.Inflate(
 				*this->CreateResourceFileInterface("res/test.gui.stob")
 			);
 		this->SetRootWidget(c);
@@ -630,8 +629,8 @@ public:
 			return false;
 		};
 
-//		morda::ZipFile zf(ting::fs::FSFile::New("res.zip"), "test.gui.stob");
-//		std::shared_ptr<morda::Widget> c = morda::App::Inst().inflater().Inflate(zf);
+//		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
+//		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater().Inflate(zf);
 		
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
@@ -651,16 +650,16 @@ public:
 		//ScrollContainer
 		{
 			auto scrollArea = c->findChildByNameAs<morda::ScrollContainer>("scroll_area");
-			auto sa = ting::makeWeak(scrollArea);
+			auto sa = utki::makeWeak(scrollArea);
 			
 			auto vertSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");
-			auto vs = ting::makeWeak(vertSlider);
+			auto vs = utki::makeWeak(vertSlider);
 			
 			auto horiSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_horizontal_slider");
-			auto hs = ting::makeWeak(horiSlider);
+			auto hs = utki::makeWeak(horiSlider);
 			
 			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("scroll_area_resize_proxy");
-			auto rp = ting::makeWeak(resizeProxy);
+			auto rp = utki::makeWeak(resizeProxy);
 			
 			resizeProxy->resized = [vs, hs, sa](const morda::Vec2r& newSize){
 				auto sc = sa.lock();
@@ -728,7 +727,7 @@ public:
 		{
 			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
-			auto provider = ting::New<TreeViewItemsProvider>();
+			auto provider = utki::makeShared<TreeViewItemsProvider>();
 			treeview->setItemsProvider(provider);
 			std::weak_ptr<morda::TreeView> tv = treeview;
 			
@@ -753,7 +752,7 @@ public:
 			
 			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("treeview_resize_proxy");
 			ASSERT(resizeProxy)
-			auto rp = ting::makeWeak(resizeProxy);
+			auto rp = utki::makeWeak(resizeProxy);
 			
 			resizeProxy->resized = [vs, hs, tv](const morda::Vec2r& newSize){
 				auto t = tv.lock();
@@ -781,7 +780,7 @@ public:
 			auto insertAfterButton = c->findChildByNameAs<morda::PushButton>("insert_after");
 			auto insertChild = c->findChildByNameAs<morda::PushButton>("insert_child");
 			
-			auto prvdr = ting::makeWeak(provider);
+			auto prvdr = utki::makeWeak(provider);
 			insertBeforeButton->clicked = [prvdr](morda::PushButton& b){
 				if(auto p = prvdr.lock()){
 					p->insertBefore();
@@ -805,6 +804,6 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, ting::Buffer<const std::uint8_t> savedState){
+std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	return std::unique_ptr<Application>(new Application());
 }

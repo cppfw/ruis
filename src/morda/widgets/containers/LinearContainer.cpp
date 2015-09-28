@@ -14,7 +14,7 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 		Container::LayoutParams(chain)
 {
 	if(auto n = GetProperty(chain, "weight")){
-		this->weight = n->AsFloat();
+		this->weight = n->asFloat();
 	}else{
 		this->weight = 0;
 	}
@@ -177,7 +177,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 
 			if(lp.weight == 0){
 				if(quotum[transIndex] < 0){
-					ting::util::ClampBottom(height, d[transIndex]);
+					utki::clampBottom(height, d[transIndex]);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			
 			d = (*i)->measure(d);
 			if(quotum[transIndex] < 0){
-				ting::util::ClampBottom(height, d[transIndex]);
+				utki::clampBottom(height, d[transIndex]);
 			}
 		}
 	}

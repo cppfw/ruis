@@ -95,7 +95,7 @@ bool Inflater::RemoveWidget(const std::string& widgetName)noexcept{
 
 
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(ting::fs::File& fi) {
+std::shared_ptr<morda::Widget> Inflater::Inflate(papki::File& fi) {
 	std::unique_ptr<stob::Node> root = this->Load(fi);
 	ASSERT(root)
 
@@ -115,48 +115,48 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 		if(!from){
 			return nullptr;
 		}
-		return from->CloneChain();
+		return from->cloneChain();
 	}
 	
 	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
 	
-	for(auto s = from; s; s = s->Next()){
-		if(!s->IsProperty()){
-			auto c = s->Clone();
-			c->SetNext(std::move(children));
+	for(auto s = from; s; s = s->next()){
+		if(!s->isProperty()){
+			auto c = s->clone();
+			c->setNext(std::move(children));
 			children = std::move(c);
 			continue;
 		}
 		
-		if(!s->Child() || *s == "@"){ //@ means reference to a variable
+		if(!s->child() || *s == "@"){ //@ means reference to a variable
 			//No children means that it is a property value, stop further processing of this chain.
 			
 			//Check that it is the only node in the chain
-			if(s != from || s->Next()){
+			if(s != from || s->next()){
 				throw Inflater::Exc("malformed gui script: property with several values encountered");
 			}
 			return to;
 		}
 		
-		auto d = to->ThisOrNext(s->Value()).node();
+		auto d = to->thisOrNext(s->value()).node();
 		if(!d){
-			to->InsertNext(s->Clone());
+			to->insertNext(s->clone());
 			continue;
 		}
 		
-		if(!d->Child()){
+		if(!d->child()){
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		d->SetChildren(MergeGUIChain(s->Child(), d->removeChildren()));
+		d->setChildren(MergeGUIChain(s->child(), d->removeChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
 	for(; children;){
 		auto c = std::move(children);
-		children = c->ChopNext();
+		children = c->chopNext();
 		
-		c->SetNext(std::move(to));
+		c->setNext(std::move(to));
 		to = std::move(c);
 	}
 	
@@ -166,19 +166,19 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 }
 
 std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
-	if(!App::Inst().ThisIsUIThread()){
+	if(!App::inst().ThisIsUIThread()){
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}
 	
 	const stob::Node* n = &chain;
-	for(; n && n->IsProperty(); n = n->Next()){
+	for(; n && n->isProperty(); n = n->next()){
 		if(*n == D_Templates){
-			if(n->Child()){
-				this->PushTemplates(n->Child()->CloneChain());
+			if(n->child()){
+				this->PushTemplates(n->child()->cloneChain());
 			}
 		}else if(*n == D_Vars){
-			if(n->Child()){
-				this->PushVariables(*n->Child());
+			if(n->child()){
+				this->PushVariables(*n->child());
 			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
@@ -190,23 +190,23 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 	}
 	
 	std::unique_ptr<stob::Node> cloned;
-	if(auto t = this->FindTemplate(n->Value())){
-		cloned = stob::Node::New(t->Value());
-		cloned->SetChildren(MergeGUIChain(t->Child(), n->Child() ? n->Child()->CloneChain() : nullptr));
+	if(auto t = this->FindTemplate(n->value())){
+		cloned = utki::makeUnique<stob::Node>(t->value());
+		cloned->setChildren(MergeGUIChain(t->child(), n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
 	}
 	
 	
-	auto i = this->widgetFactories.find(n->Value());
+	auto i = this->widgetFactories.find(n->value());
 
 	if(i == this->widgetFactories.end()){
-		TRACE(<< "Inflater::Inflate(): n->Value() = " << n->Value() << std::endl)
+		TRACE(<< "Inflater::Inflate(): n->value() = " << n->value() << std::endl)
 		throw Exc("Failed to inflate, no matching factory found for requested widget name");
 	}
 
 	bool needPopTemplates = false;
 	bool needPopVariables = false;
-	ting::util::ScopeExit scopeExit([this, &needPopTemplates, &needPopVariables](){
+	utki::ScopeExit scopeExit([this, &needPopTemplates, &needPopVariables](){
 		if(needPopTemplates){
 			this->PopTemplates();
 		}
@@ -215,15 +215,15 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 		}
 	});
 	
-	if(auto t = n->Child(D_Templates).node()){
-		if(auto c = t->Child()){
-			this->PushTemplates(c->CloneChain());
+	if(auto t = n->child(D_Templates).node()){
+		if(auto c = t->child()){
+			this->PushTemplates(c->cloneChain());
 			needPopTemplates = true;
 		}
 	}
-	if(auto v = n->Child(D_Vars).node()){
-		if(v->Child()){
-			this->PushVariables(*v->Child());
+	if(auto v = n->child(D_Vars).node()){
+		if(v->child()){
+			this->PushVariables(*v->child());
 			needPopVariables = true;
 		}
 	}
@@ -232,8 +232,8 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 		if(cloned){
 			cloned = cloned->removeChildren();
 		}else{
-			if(n->Child()){
-				cloned = n->Child()->CloneChain();
+			if(n->child()){
+				cloned = n->child()->cloneChain();
 			}
 		}
 		
@@ -245,8 +245,8 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 
 
 
-std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
-	std::unique_ptr<stob::Node> ret = stob::Load(fi);
+std::unique_ptr<stob::Node> Inflater::Load(papki::File& fi){
+	std::unique_ptr<stob::Node> ret = stob::load(fi);
 	
 	ret = std::move(std::get<0>(ResolveIncludes(fi, std::move(ret))));
 
@@ -256,29 +256,29 @@ std::unique_ptr<stob::Node> Inflater::Load(ting::fs::File& fi){
 void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	decltype(this->templates)::value_type m;
 	
-	for(; chain; chain = chain->ChopNext()){
-		if(chain->IsProperty()){
+	for(; chain; chain = chain->chopNext()){
+		if(chain->isProperty()){
 			throw Exc("Inflater::PushTemplates(): template name does not start with capital latin letter, error.");
 		}
 		
-		if(chain->Child()){
+		if(chain->child()){
 			throw Exc("Inflater::PushTemplates(): template name has children, error.");
 		}
 		
-		if(!chain->Next()){
+		if(!chain->next()){
 			throw Exc("Inflater::PushTemplates(): template name is not followed by template definition, error.");
 		}
 		
-		if(!m.insert(std::make_pair(chain->Value(), chain->RemoveNext())).second){
+		if(!m.insert(std::make_pair(chain->value(), chain->removeNext())).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
 	
 	for(auto i = m.begin(); i != m.end(); ++i){
-		if(auto s = this->FindTemplate(i->second->Value())){
-			i->second->SetValue(s->Value());
-			ASSERT(s->Child())
-			i->second->SetChildren(MergeGUIChain(s->Child(), i->second->removeChildren()));
+		if(auto s = this->FindTemplate(i->second->value())){
+			i->second->setValue(s->value());
+			ASSERT(s->child())
+			i->second->setChildren(MergeGUIChain(s->child(), i->second->removeChildren()));
 		}
 	}
 	
@@ -340,22 +340,22 @@ void Inflater::PopVariables(){
 void Inflater::PushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
-	for(auto n = &chain; n; n = n->Next()){
+	for(auto n = &chain; n; n = n->next()){
 		std::string value;
 		
-		for(auto child = n->Child(); child;){
-			if(child->Next()){
+		for(auto child = n->child(); child;){
+			if(child->next()){
 				throw Exc("Inflater::PushVariables(): variable has several values, error");
 			}
 			
-			if(*child == "@" && child->Child()){
-				auto r = child->Child();
+			if(*child == "@" && child->child()){
+				auto r = child->child();
 
-				if(r->Next()){
+				if(r->next()){
 					throw Exc("Inflater::PushVariables(): variable reference has several values, error");
 				}
 				
-				if(auto var = this->FindVariable(r->Value())){
+				if(auto var = this->FindVariable(r->value())){
 					value = *var;
 				}else{
 					throw Exc("Inflater::PushVariables(): variable reference could not be resolved, error");
@@ -364,16 +364,16 @@ void Inflater::PushVariables(const stob::Node& chain){
 				break;
 			}
 			
-			if(child->Child()){
+			if(child->child()){
 				throw Exc("Inflater::PushVariables(): variable value has children, error");
 			}
 			
-			value = child->Value();
+			value = child->value();
 			break;
 		}
 		
 		if(!m.insert(
-				std::make_pair(n->Value(),std::move(value))
+				std::make_pair(n->value(),std::move(value))
 			).second)
 		{
 			throw Exc("Inflater::PushVariables(): failed to add variable, variable with same name is already defined in this variables block");
@@ -401,33 +401,33 @@ void Inflater::SubstituteVariables(stob::Node* to)const{
 	}
 	
 	if(*to == "@"){
-		if(to->Next()){
+		if(to->next()){
 			throw Exc("Inflater::SubstituteVariables(): error: property value holds something else besides reference to a variable");
 		}
 		
-		if(!to->Child()){
+		if(!to->child()){
 			throw Exc("Inflater::SubstituteVariables(): error: reference to a variable holds no variable name");
 		}
 		
-		if(to->Child()->Next()){
+		if(to->child()->next()){
 			throw Exc("Inflater::SubstituteVariables(): error: reference to variable holds more than one variable name");
 		}
 		
-		if(to->Child()->Child()){
+		if(to->child()->child()){
 			throw Exc("Inflater::SubstituteVariables(): error: variable name has children");
 		}
 		
-		if(auto var = this->FindVariable(to->Child()->Value())){
-			to->SetValue(var->c_str());
+		if(auto var = this->FindVariable(to->child()->value())){
+			to->setValue(var->c_str());
 			to->removeChildren();
 		}
 		
 		return;
 	}
 		
-	for(; to; to = to->Next()){
-		if(to->IsProperty() && to->Child()){
-			this->SubstituteVariables(to->Child());
+	for(; to; to = to->next()){
+		if(to->isProperty() && to->child()){
+			this->SubstituteVariables(to->child());
 		}
 	}
 }
