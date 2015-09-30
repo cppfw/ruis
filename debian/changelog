@@ -1,5 +1,6 @@
-libmorda (0.1.0) UNRELEASED; urgency=low
+libmorda (0.1.1-1) unstable; urgency=low
 
   * Initial release.
+  * bump
 
- -- Ivan Gagis <igagis@gmail.com>  Mon, 16 Jun 2014 15:39:26 +0300
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 30 Sep 2015 15:26:46 +0300

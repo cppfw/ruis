@@ -1,6 +1,6 @@
 Name: morda   # human-readable name
 Description: C++ OpenGL GUI library
-Version: 0.1.0
+Version: 0.1.1
 URL: http://morda.googlecode.com
 Requires:
 Conflicts:
