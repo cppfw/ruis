@@ -805,5 +805,5 @@ public:
 
 
 std::unique_ptr<morda::App> morda::CreateApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
-	return std::unique_ptr<Application>(new Application());
+	return utki::makeUnique<Application>();
 }

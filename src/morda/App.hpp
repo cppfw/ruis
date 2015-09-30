@@ -7,7 +7,10 @@
 #include <utki/Singleton.hpp>
 #include <utki/config.hpp>
 #include <utki/Buf.hpp>
+#include <utki/Unique.hpp>
+
 #include <papki/File.hpp>
+
 #include <nitki/Thread.hpp>
 
 #include <memory>
@@ -38,13 +41,15 @@
 
 
 #include "Exc.hpp"
-#include "widgets/Widget.hpp"
 #include "Inflater.hpp"
 #include "Updateable.hpp"
-#include "util/keycodes.hpp"
-#include "widgets/CharInputWidget.hpp"
-#include "util/Vector2.hpp"
 #include "ResourceManager.hpp"
+
+#include "util/keycodes.hpp"
+#include "util/Vector2.hpp"
+
+#include "widgets/Widget.hpp"
+#include "widgets/CharInputWidget.hpp"
 
 #include "shaders/ColorPosShader.hpp"
 #include "shaders/ColorPosTexShader.hpp"
@@ -58,7 +63,7 @@ namespace morda{
 
 
 
-class App : public utki::IntrusiveSingleton<App>{
+class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 	friend class utki::IntrusiveSingleton<App>;
 	static utki::IntrusiveSingleton<App>::T_Instance instance;
 
