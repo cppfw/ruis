@@ -72,7 +72,7 @@ else ifeq ($(prorab_os), macosx)
     $(eval $(this_rules))
 endif
 
- this_ldlibs += -lnitki
+ this_ldlibs += -lnitki -lpogodi -lpapki
 
 $(eval $(prorab-build-lib))
 
