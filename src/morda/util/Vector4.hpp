@@ -5,9 +5,7 @@
 #pragma once
 
 
-#ifdef DEBUG
-#	include <iostream>
-#endif
+#include <iostream>
 
 #include <utki/debug.hpp>
 #include <utki/math.hpp>
@@ -198,7 +196,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& SetTo(T val)noexcept{
+	Vector4& set(T val)noexcept{
 		this->x = val;
 		this->y = val;
 		this->z = val;
@@ -277,7 +275,7 @@ public:
      * @return Negated vector.
      */
 	Vector4 operator-()const noexcept{
-		return Vector4(*this).Negate();
+		return Vector4(*this).negate();
 	}
 
 	/**
@@ -374,7 +372,7 @@ public:
 	 * Negates this vector.
 	 * @return Reference to this vector object.
 	 */
-	Vector4& Negate()noexcept{
+	Vector4& negate()noexcept{
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -386,7 +384,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	T MagPow2()const noexcept{
+	T magPow2()const noexcept{
 		return utki::pow2(this->x)
 				+ utki::pow2(this->y)
 				+ utki::pow2(this->z)
@@ -397,8 +395,8 @@ public:
 	 * @brief Calculate vector magnitude.
 	 * @return Vector magnitude.
 	 */
-	T Magnitude()const noexcept{
-		return sqrt(this->MagPow2());
+	T magnitude()const noexcept{
+		return sqrt(this->magPow2());
 	}
 
 	/**
@@ -407,8 +405,8 @@ public:
 	 * If magnitude is 0 then the result is vector (1, 0, 0, 0).
 	 * @return Reference to this vector object.
 	 */
-	Vector4& Normalize()noexcept{
-		T mag = this->Magnitude();
+	Vector4& normalize()noexcept{
+		T mag = this->magnitude();
 		if(mag == 0){
 			this->x = 1;
 			this->y = 0;
@@ -417,16 +415,15 @@ public:
 			return *this;
 		}
 		
-		return (*this) /= this->Magnitude();
+		return (*this) /= this->magnitude();
 	}
 
-#ifdef DEBUG
+
 	friend std::ostream& operator<<(std::ostream& s, const Vector4<T>& vec){
 		s << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
 		return s;
 	}
-#endif
-};//~class Vector4
+};//~class
 
 
 
