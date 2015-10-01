@@ -461,7 +461,7 @@ template <class T> Quaternion<T>::Quaternion(const Vector3<T>& rot)noexcept{
 
 
 template <class T> Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& rot)noexcept{
-	T mag = rot.Magnitude();
+	T mag = rot.magnitude();
 	if(mag != 0){
 		this->InitRot(rot.x / mag, rot.y / mag, rot.z / mag, mag);
 	}else{

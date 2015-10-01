@@ -154,7 +154,7 @@ public:
 	}
 	
 	void Update(std::uint32_t dt) override{
-		this->rot %= morda::Quatr().InitRot(morda::Vec3f(1, 2, 1).Normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::Quatr().InitRot(morda::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
 	void render(const morda::Matr4r& matrix)const override{

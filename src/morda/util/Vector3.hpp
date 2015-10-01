@@ -5,9 +5,8 @@
 #pragma once
 
 
-#ifdef DEBUG
-#	include <iostream>
-#endif
+#include <iostream>
+
 
 #include <utki/debug.hpp>
 #include <utki/math.hpp>
@@ -161,7 +160,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	Vector3& SetTo(T val)noexcept{
+	Vector3& set(T val)noexcept{
 		this->x = val;
 		this->y = val;
 		this->z = val;
@@ -228,7 +227,7 @@ public:
      * @return Negated vector.
      */
 	Vector3 operator-()const noexcept{
-		return Vector3(*this).Negate();
+		return Vector3(*this).negate();
 	}
 
 	/**
@@ -307,7 +306,7 @@ public:
      * @param vec - vector to multiply by.
      * @return Vector resulting from component-wise multiplication.
      */
-	Vector3 CompMul(const Vector3& vec)const noexcept{
+	Vector3 compMul(const Vector3& vec)const noexcept{
 		return Vector3(
 				this->x * vec.x,
 				this->y * vec.y,
@@ -333,7 +332,7 @@ public:
      * @return true if all components of this vector are zero.
 	 * @return false otherwise.
      */
-	bool IsZero()const noexcept{
+	bool isZero()const noexcept{
 		return (this->x == 0 && this->y == 0 && this->z == 0);
 	}
 
@@ -342,7 +341,7 @@ public:
 	 * Negates this vector.
 	 * @return Reference to this vector object.
 	 */
-	Vector3& Negate()noexcept{
+	Vector3& negate()noexcept{
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -353,7 +352,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	T MagPow2()const noexcept{
+	T magPow2()const noexcept{
 		return utki::pow2(this->x) + utki::pow2(this->y) + utki::pow2(this->z);
 	}
 
@@ -361,8 +360,8 @@ public:
 	 * @brief Calculate vector magnitude.
 	 * @return Vector magnitude.
 	 */
-	T Magnitude()const noexcept{
-		return std::sqrt(this->MagPow2());
+	T magnitude()const noexcept{
+		return std::sqrt(this->magPow2());
 	}
 
 	/**
@@ -371,8 +370,8 @@ public:
 	 * If magnitude is 0 then the result is vector (1, 0, 0).
 	 * @return Reference to this vector object.
 	 */
-	Vector3& Normalize()noexcept{
-		T mag = this->Magnitude();
+	Vector3& normalize()noexcept{
+		T mag = this->magnitude();
 		if(mag == 0){
 			this->x = 1;
 			this->y = 0;
@@ -380,7 +379,7 @@ public:
 			return *this;
 		}
 		
-		return (*this) /= this->Magnitude();
+		return (*this) /= this->magnitude();
 	}
 
 	/**
@@ -388,9 +387,9 @@ public:
      * @param vec - vector to project onto, it does not have to be normalized.
      * @return Reference to this vector object.
      */
-	Vector3& ProjectOnto(const Vector3& vec)noexcept{
-		ASSERT(this->MagPow2() != 0)
-		(*this) = vec * (vec * (*this)) / vec.MagPow2();
+	Vector3& projectOnto(const Vector3& vec)noexcept{
+		ASSERT(this->magPow2() != 0)
+		(*this) = vec * (vec * (*this)) / vec.magPow2();
 		return (*this);
 	}
 
@@ -400,17 +399,15 @@ public:
 	 * @param q - quaternion which defines the rotation.
 	 * @return Reference to this vector object.
 	 */
-	Vector3<T>& Rotate(const Quaternion<T>& q)noexcept;
+	Vector3<T>& rotate(const Quaternion<T>& q)noexcept;
 
 
 
-#ifdef DEBUG  
 	friend std::ostream& operator<<(std::ostream& s, const Vector3<T>& vec){
 		s << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
 		return s;
 	}
-#endif
-};//~class Vector3
+};//~class
 
 
 
@@ -455,7 +452,7 @@ template <class T> Vector3<T>& Vector3<T>::operator+=(const Vector2<T>& vec)noex
 
 
 
-template <class T> Vector3<T>& Vector3<T>::Rotate(const Quaternion<T>& q)noexcept{
+template <class T> Vector3<T>& Vector3<T>::rotate(const Quaternion<T>& q)noexcept{
 	*this = q.ToMatrix4() * (*this);
 	return *this;
 }

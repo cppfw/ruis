@@ -426,7 +426,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	Vector2& setTo(T val)noexcept{
+	Vector2& set(T val)noexcept{
 		this->x = val;
 		this->y = val;
 		return (*this);
