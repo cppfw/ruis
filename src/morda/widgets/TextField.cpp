@@ -18,7 +18,7 @@ TextField::TextField(const stob::Node* chain) :
 	
 	auto bhc = utki::makeShared<BlackHoleContainer>();
 	bhc->setShrink(Vec2b(true, false));
-	bhc->Add(this->ti);
+	bhc->add(this->ti);
 	
 	{
 		auto& lp = bhc->getLayoutParams(*this->ti);
@@ -26,7 +26,7 @@ TextField::TextField(const stob::Node* chain) :
 		lp.dim.y = Widget::LayoutParams::D_Min;
 	}
 	
-	this->Content().Add(bhc);
+	this->Content().add(bhc);
 	
 	{
 		auto& lp = this->Content().getLayoutParams(*bhc);

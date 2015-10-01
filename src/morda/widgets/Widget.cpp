@@ -347,7 +347,7 @@ void Widget::makeTopmost(){
 	
 	auto w = this->removeFromParent();
 	
-	p->Add(w);
+	p->add(w);
 }
 
 

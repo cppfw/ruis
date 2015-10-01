@@ -32,7 +32,7 @@ Container::Container(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(chain){
-		this->Add(*chain);
+		this->add(*chain);
 	}
 }
 
@@ -48,9 +48,9 @@ Widget::LayoutParams& Container::getLayoutParams_internal(Widget& w){
 
 
 
-void Container::Add(const stob::Node& chain){
+void Container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().node(); n; n = n->nextNonProperty().node()){
-		this->Add(morda::App::inst().inflater.Inflate(*n));
+		this->add(morda::App::inst().inflater.Inflate(*n));
 	}
 }
 
@@ -209,14 +209,14 @@ void Container::layOut(){
 }
 
 
-Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
+Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
 	if(insertBefore == this->children().end()){
-		return this->Add(w);
+		return this->add(w);
 	}
-	return this->Add(w, (*insertBefore).get());
+	return this->add(w, (*insertBefore).get());
 }
 
-Widget::T_ChildrenList::iterator Container::Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
+Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");

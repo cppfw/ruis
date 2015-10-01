@@ -234,7 +234,7 @@ morda::Window::Window(const stob::Node* chain) :
 	}
 	
 	if(chain){
-		this->contentArea->Add(*chain);
+		this->contentArea->add(*chain);
 	}
 }
 

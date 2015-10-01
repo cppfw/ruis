@@ -35,6 +35,6 @@ OverlayContainer::OverlayContainer(const stob::Node* chain) :
 	
 	if(chain){
 		ASSERT(this->contentContainer);
-		this->contentContainer->Add(*chain);
+		this->contentContainer->add(*chain);
 	}
 }

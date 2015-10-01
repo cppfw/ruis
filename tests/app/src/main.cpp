@@ -465,7 +465,7 @@ public:
 		ASSERT(isLast.size() == path.size())
 		
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->Add(*(isLast[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
+			ret->add(*(isLast[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
 		}
 		
 		{
@@ -503,9 +503,9 @@ public:
 
 					return true;
 				};
-				widget->Add(w);
+				widget->add(w);
 			}
-			ret->Add(widget);
+			ret->add(widget);
 		}
 		
 		{
@@ -557,7 +557,7 @@ public:
 				};
 			}
 
-			ret->Add(v);
+			ret->add(v);
 		}
 		
 		{
@@ -576,7 +576,7 @@ public:
 				parent->removeChild(n);
 				this->notifyItemRemoved(path);
 			};
-			ret->Add(b);
+			ret->add(b);
 		}
 		
 		return ret;

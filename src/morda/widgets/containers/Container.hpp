@@ -81,11 +81,11 @@ public:
 	
 	void layOut()override;
 	
-	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore);
+	T_ChildrenList::iterator add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore);
 	
-	T_ChildrenList::iterator Add(const std::shared_ptr<Widget>& w, const Widget* insertBefore = nullptr);
+	T_ChildrenList::iterator add(const std::shared_ptr<Widget>& w, const Widget* insertBefore = nullptr);
 
-	void Add(const stob::Node& chain);
+	void add(const stob::Node& chain);
 	
 	std::shared_ptr<Widget> Remove(T_ChildrenList::const_iterator iter);
 	

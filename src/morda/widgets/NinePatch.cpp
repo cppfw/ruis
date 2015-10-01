@@ -98,7 +98,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	}
 	
 	if(chain){
-		this->content->Add(*chain);
+		this->content->add(*chain);
 	}
 }
 

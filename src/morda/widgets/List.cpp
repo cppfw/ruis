@@ -171,7 +171,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos < this->rect().d.y){
 			if(!added){
-				this->Add(w, insertBefore);
+				this->add(w, insertBefore);
 			}
 			if(this->addedIndex > index){
 				this->addedIndex = index;
@@ -201,7 +201,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 		if(pos > 0){
 			if(!added){
-				this->Add(w, insertBefore);
+				this->add(w, insertBefore);
 			}
 			if(this->addedIndex > index){
 				this->addedIndex = index;
