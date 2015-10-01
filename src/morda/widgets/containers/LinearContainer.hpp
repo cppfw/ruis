@@ -37,17 +37,13 @@ public:
 	
 	class LayoutParams : public Container::LayoutParams{
 	public:
-		LayoutParams(const stob::Node* chain);
+		LayoutParams(const stob::Node* chain = nullptr);
 		
 		real weight;
-		
-		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
-			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
-		}
 	};
 private:
 	std::unique_ptr<Widget::LayoutParams> createLayoutParams(const stob::Node* chain)const override{
-		return LayoutParams::New(chain);
+		return utki::makeUnique<LayoutParams>(chain);
 	}
 };
 

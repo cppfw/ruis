@@ -39,7 +39,7 @@ public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
 	
 public:
-	class LayoutParams{
+	class LayoutParams : public utki::Unique{
 	public:
 		constexpr static const real D_Min = real(-1);
 		constexpr static const real D_Max = real(-2);
@@ -48,14 +48,10 @@ public:
 				dim(dim)
 		{}
 		
-		LayoutParams(const stob::Node* chain);
-		
 		Vec2r dim;
 
 	public:
-		static std::unique_ptr<LayoutParams> New(const stob::Node* chain = nullptr){
-			return std::unique_ptr<LayoutParams>(new LayoutParams(chain));
-		}
+		LayoutParams(const stob::Node* chain = nullptr);
 		
 		virtual ~LayoutParams()noexcept{}
 	};
