@@ -3,6 +3,8 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="res" name="0">
     </df>
+    <df root="res" name="3">
+    </df>
     <df root="src" name="1">
       <df name="morda">
         <df name="fonts">
@@ -153,6 +155,8 @@
         <in>config.hpp</in>
       </df>
     </df>
+    <df root="src" name="4">
+    </df>
     <df root="tests" name="2">
       <df name="app">
         <df name="src">
@@ -160,6 +164,14 @@
         </df>
       </df>
     </df>
+    <df root="tests" name="5">
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -169,6 +181,9 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
+    <Elem>src</Elem>
+    <Elem>tests</Elem>
+    <Elem>res</Elem>
     <Elem>src</Elem>
     <Elem>tests</Elem>
     <Elem>res</Elem>
