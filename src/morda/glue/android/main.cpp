@@ -63,7 +63,7 @@ inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2r& wi
 			p.y - (curWinDim.y - winRect.d.y)
 		);
 //	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
-	return ret.Rounded();
+	return ret.rounded();
 }
 
 

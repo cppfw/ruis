@@ -21,7 +21,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	
 	Rect2i viewPortRect = this->ComputeViewportRect(matrix);
 	
-	if(!viewPortRect.d.IsPositive()){
+	if(!viewPortRect.d.isPositive()){
 		return;
 	}
 	

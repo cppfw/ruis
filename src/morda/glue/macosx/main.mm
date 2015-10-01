@@ -88,7 +88,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseButton(
 			isDown,
-			morda::Vec2r(pos.x, pos.y).Rounded(),
+			morda::Vec2r(pos.x, pos.y).rounded(),
 			b,
 			0
 		);
@@ -446,7 +446,7 @@ int main (int argc, const char** argv){
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
 	Macosx_HandleMouseMove(
-			morda::Vec2r(pos.x, pos.y).Rounded(),
+			morda::Vec2r(pos.x, pos.y).rounded(),
 			0
 		);
 }

@@ -242,7 +242,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	Matr4r matrix;
 	matrix.Identity();
 	matrix.Translate(-1, -1);
-	matrix.Scale(Vec2r(2.0f).CompDivBy(this->rect().d));
+	matrix.Scale(Vec2r(2.0f).compDivBy(this->rect().d));
 	
 	this->render(matrix);
 	
@@ -354,7 +354,7 @@ void Widget::makeTopmost(){
 
 morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
 	return Rect2i(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).Rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 }

@@ -5,9 +5,7 @@
 #pragma once
 
 
-#ifdef DEBUG
-#	include <iostream>
-#endif
+#include <iostream>
 
 #include <utki/debug.hpp>
 #include <utki/math.hpp>
@@ -314,7 +312,7 @@ public:
      * @param v - vector to divide by.
      * @return Vector resulting from component-wise division.
      */
-	Vector2 CompDiv(const Vector2& v)const noexcept{
+	Vector2 compDiv(const Vector2& v)const noexcept{
 		return Vector2(
 				this->x / v.x,
 				this->y / v.y
@@ -328,7 +326,7 @@ public:
      * @param v - vector to divide by.
      * @return reference to this Vector2 instance.
      */
-	Vector2& CompDivBy(const Vector2& v)noexcept{
+	Vector2& compDivBy(const Vector2& v)noexcept{
 		this->x /= v.x;
 		this->y /= v.y;
 		return *this;
@@ -339,7 +337,7 @@ public:
 	 * @return true if both vector components are zero.
 	 * @return false otherwise.
 	 */
-	bool IsZero()const noexcept{
+	bool isZero()const noexcept{
 		return this->x == 0 && this->y == 0;
 	}
 
@@ -348,7 +346,7 @@ public:
 	 * @return true if both vector components are positive or zero.
 	 * @return false otherwise.
 	 */
-	bool IsPositiveOrZero()const noexcept{
+	bool isPositiveOrZero()const noexcept{
 		return this->x >= 0 && this->y >= 0;
 	}
 	
@@ -357,7 +355,7 @@ public:
 	 * @return true if both vector components are positive.
      * @return false otherwise.
      */
-	bool IsPositive()const noexcept{
+	bool isPositive()const noexcept{
 		return this->x > 0 && this->y > 0;
 	}
 	
@@ -366,7 +364,7 @@ public:
 	 * @return true if both vector components are negative.
      * @return false otherwise.
      */
-	bool IsNegative()const noexcept{
+	bool isNegative()const noexcept{
 		return this->x < 0 && this->y < 0;
 	}
 
@@ -374,7 +372,7 @@ public:
 	 * @brief Negate this vector.
      * @return Reference to this vector object.
      */
-	Vector2& Negate()noexcept{
+	Vector2& negate()noexcept{
 		//NOTE: this should be faster than (*this) = -(*this);
 		this->x = -this->x;
 		this->y = -this->y;
@@ -385,10 +383,10 @@ public:
 	 * @brief Absolute vector value.
      * @return Vector2 holding absolute values of this vector's components.
      */
-	Vector2 Abs()const noexcept{
+	Vector2 abs()const noexcept{
 		return Vector2(
-				::abs(this->x),
-				::abs(this->y)
+				std::abs(this->x),
+				std::abs(this->y)
 			);
 	}
 	
@@ -396,7 +394,7 @@ public:
 	 * @brief Calculate power 2 of vector magnitude.
 	 * @return Power 2 of this vector magnitude.
 	 */
-	T MagPow2()noexcept{
+	T magPow2()noexcept{
 		return utki::pow2(this->x) + utki::pow2(this->y);
 	}
 
@@ -404,8 +402,8 @@ public:
 	 * @brief Calculate magnitude of the vector.
 	 * @return magnitude of this vector.
 	 */
-	T Magnitude()noexcept{
-		return T(::sqrt(this->MagPow2()));
+	T magnitude()noexcept{
+		return T(std::sqrt(this->magPow2()));
 	}
 
 	/**
@@ -413,14 +411,14 @@ public:
 	 * If the magnitude of vector is 0 then the result is vector (1, 0).
 	 * @return Reference to this vector object.
 	 */
-	Vector2& Normalize()noexcept{
-		T mag = this->Magnitude();
+	Vector2& normalize()noexcept{
+		T mag = this->magnitude();
 		if(mag == 0){
 			this->x = 1;
 			this->y = 0;
 			return *this;
 		}
-		return (*this) /= this->Magnitude();
+		return (*this) /= this->magnitude();
 	}
 
 	/**
@@ -428,7 +426,7 @@ public:
 	 * @param val - value to set vector components to.
 	 * @return Reference to this vector object.
 	 */
-	Vector2& SetTo(T val)noexcept{
+	Vector2& setTo(T val)noexcept{
 		this->x = val;
 		this->y = val;
 		return (*this);
@@ -441,9 +439,9 @@ public:
      * @param angle - angle of rotation in radians.
      * @return Reference to this vector object.
      */
-	Vector2& Rotate(T angle)noexcept{
-		T cosa = ::cos(angle);
-		T sina = ::sin(angle);
+	Vector2& rotate(T angle)noexcept{
+		T cosa = std::cos(angle);
+		T sina = std::sin(angle);
 		T tmp = this->x * cosa - this->y * sina;
 		this->y = this->y * cosa + this->x * sina;
 		this->x = tmp;
@@ -457,20 +455,20 @@ public:
 	 * @param angle - angle of rotation in radians.
 	 * @return Vector resulting from rotation of this vector.
 	 */
-	Vector2 Rotation(T angle)const noexcept{
-		return Vector2(*this).Rotate(angle);
+	Vector2 rotation(T angle)const noexcept{
+		return Vector2(*this).rotate(angle);
 	}
 
 	
-	Vector2& Round()noexcept{
-		this->x = ::round(this->x);
-		this->y = ::round(this->y);
+	Vector2& round()noexcept{
+		this->x = std::round(this->x);
+		this->y = std::round(this->y);
 		return *this;
 	}
 	
 	
-	Vector2 Rounded()const noexcept{
-		return Vector2(*this).Round();
+	Vector2 rounded()const noexcept{
+		return Vector2(*this).round();
 	}
 	
 	
@@ -488,13 +486,11 @@ public:
 	
 
 	
-#ifdef DEBUG  
 	friend std::ostream& operator<<(std::ostream& s, const Vector2<T>& vec){
 		s << "(" << vec.x << ", " << vec.y << ")";
 		return s;
 	}
-#endif
-};//~class Vector2
+};//~class
 
 
 

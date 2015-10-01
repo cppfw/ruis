@@ -29,7 +29,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	}
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d.CompDiv(this->img->Dim()));
+	matr.Scale(this->rect().d.compDiv(this->img->Dim()));
 
 	morda::PosTexShader &s = App::inst().Shaders().posTexShader;
 	
@@ -41,7 +41,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	ASSERT(this->img->Dim().IsPositive())
+	ASSERT(this->img->Dim().isPositive())
 	
 	if(!keepAspectRatio){
 		Vec2r ret = this->img->Dim();

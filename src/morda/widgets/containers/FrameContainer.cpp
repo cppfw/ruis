@@ -19,7 +19,7 @@ void FrameContainer::layOut() {
 		
 		(*i)->resize(this->dimForWidget(**i, lp));
 		
-		(*i)->moveTo(((this->rect().d - (*i)->rect().d) / 2).Round());
+		(*i)->moveTo(((this->rect().d - (*i)->rect().d) / 2).round());
 	}
 }
 

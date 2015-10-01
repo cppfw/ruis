@@ -104,7 +104,7 @@ void LinearContainer::layOut(){
 						}
 					}
 				}
-				(*i)->resize(d.Rounded());
+				(*i)->resize(d.rounded());
 			}else{
 				(*i)->resize(info->measuredDim);
 			}

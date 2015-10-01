@@ -32,7 +32,7 @@ void App::render(){
 	morda::Matr4r m;
 	m.Identity();
 	m.Translate(-1, -1);
-	m.Scale(Vec2r(2.0f).CompDivBy(this->curWinRect.d));
+	m.Scale(Vec2r(2.0f).compDivBy(this->curWinRect.d));
 	
 	ASSERT(this->rootWidget)
 	

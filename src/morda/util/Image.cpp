@@ -100,7 +100,7 @@ void Image::Clear(unsigned chan, std::uint8_t val){
 
 //Null all data
 void Image::Reset(){
-	this->dim.SetTo(0);
+	this->dim.setTo(0);
 	this->type = EType::UNKNOWN;
 	this->buf.clear();
 }

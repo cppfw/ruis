@@ -160,8 +160,8 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
 			ASSERT(g.verts.size() == g.texCoords.size())
 			for(unsigned i = 0; i < g.verts.size(); ++i){
-				g.verts[i].SetTo(0);
-				g.texCoords[i].SetTo(0);
+				g.verts[i].setTo(0);
+				g.texCoords[i].setTo(0);
 			}
 			continue;
 		}
@@ -274,7 +274,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-			i->second.texCoords[j].CompDivBy(texImg.Dim().to<float>());
+			i->second.texCoords[j].compDivBy(texImg.Dim().to<float>());
 		}
 	}
 
@@ -319,8 +319,8 @@ morda::Rect2r TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> 
 	morda::Rect2r ret;
 
 	if(str.size() == 0){
-		ret.p.SetTo(0);
-		ret.d.SetTo(0);
+		ret.p.setTo(0);
+		ret.d.setTo(0);
 		return ret;
 	}
 
