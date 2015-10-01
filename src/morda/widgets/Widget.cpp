@@ -135,7 +135,7 @@ std::shared_ptr<Widget> Widget::removeFromParent(){
 	if(!this->parentContainer){
 		throw morda::Exc("Widget::RemoveFromParent(): widget is not added to the parent");
 	}
-	return this->parentContainer->Remove(*this);
+	return this->parentContainer->remove(*this);
 }
 
 

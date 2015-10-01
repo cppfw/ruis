@@ -87,9 +87,9 @@ public:
 
 	void add(const stob::Node& chain);
 	
-	std::shared_ptr<Widget> Remove(T_ChildrenList::const_iterator iter);
+	std::shared_ptr<Widget> remove(T_ChildrenList::const_iterator iter);
 	
-	std::shared_ptr<Widget> Remove(Widget& w);
+	std::shared_ptr<Widget> remove(Widget& w);
 	
 	void removeAll();
 	

@@ -180,7 +180,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			++this->posIndex;
 			this->posOffset -= w->rect().d.y;
 			if(added){
-				auto widget = this->Remove(*w);
+				auto widget = this->remove(*w);
 				if(this->provider){
 					this->provider->recycle(index, widget);
 				}
@@ -210,7 +210,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			++this->posIndex;
 			this->posOffset -= w->rect().d.x;
 			if(added){
-				auto widget = this->Remove(*w);
+				auto widget = this->remove(*w);
 				if(this->provider){
 					this->provider->recycle(index, widget);
 				}
@@ -305,12 +305,12 @@ void List::updateChildrenList(){
 			if(i == this->children().end()){
 				break;
 			}
-			auto w = this->Remove(i);
+			auto w = this->remove(i);
 			if(this->provider){
 				this->provider->recycle(iterIndex, w);
 			}
 		}
-		auto w = this->Remove(iter);
+		auto w = this->remove(iter);
 		if(this->provider){
 			this->provider->recycle(oldIterIndex, w);
 		}

@@ -256,12 +256,12 @@ Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w
 	return ret;
 }
 
-std::shared_ptr<Widget> Container::Remove(T_ChildrenList::const_iterator iter){
-	return this->Remove(**iter);
+std::shared_ptr<Widget> Container::remove(T_ChildrenList::const_iterator iter){
+	return this->remove(**iter);
 }
 
 
-std::shared_ptr<Widget> Container::Remove(Widget& w){
+std::shared_ptr<Widget> Container::remove(Widget& w){
 	if(w.parentContainer != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
@@ -292,7 +292,7 @@ std::shared_ptr<Widget> Container::Remove(Widget& w){
 void Container::removeAll() {
 	while(this->children().size()){
 //		TRACE(<< "Container::removeAll(): w = " << (this->Children().front().get()) << std::endl)
-		this->Remove(*this->children().front());
+		this->remove(*this->children().front());
 	}
 }
 
