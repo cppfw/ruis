@@ -71,7 +71,7 @@ void Macosx_HandleCharacterInput(const void* nsstring, EKey key){
 	morda::App::inst().HandleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
-void Macosx_UpdateWindowRect(const morda::Rect2r& r){
+void Macosx_UpdateWindowRect(const morda::Rectr& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
 	morda::App::inst().UpdateWindowRect(r);
@@ -551,7 +551,7 @@ int main (int argc, const char** argv){
 	NSWindow* nsw = [n object];
 	NSRect frame = [nsw frame];
 	NSRect rect = [nsw contentRectForFrameRect:frame];
-	morda::Macosx_UpdateWindowRect(morda::Rect2r(0, 0, rect.size.width, rect.size.height));
+	morda::Macosx_UpdateWindowRect(morda::Rectr(0, 0, rect.size.width, rect.size.height));
 }
 
 -(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
@@ -662,7 +662,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		openGLContext(windowObject.id)
 {
 	this->UpdateWindowRect(
-			morda::Rect2r(
+			morda::Rectr(
 					0,
 					0,
 					float(wp.dim.x),

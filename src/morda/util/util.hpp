@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Vector2.hpp"
-#include "Rectangle2.hpp"
+#include "Rectangle.hpp"
 
 #include <tuple>
 
@@ -34,7 +34,7 @@ morda::Vec2r Vec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed Rect2r.
  */
-morda::Rect2r Rect2rFromSTOB(const stob::Node* chain);
+morda::Rectr Rect2rFromSTOB(const stob::Node* chain);
 
 
 

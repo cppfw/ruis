@@ -27,11 +27,11 @@ morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 }
 
 
-Rect2r morda::Rect2rFromSTOB(const stob::Node* chain){
+Rectr morda::Rect2rFromSTOB(const stob::Node* chain){
 	Vec2r p = Vec2rFromSTOB(chain);
 	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
 	Vec2r d = Vec2rFromSTOB(chain);
-	return Rect2r(p, d);
+	return Rectr(p, d);
 }
 
 

@@ -75,7 +75,7 @@
           <in>Mesh.cpp</in>
           <in>Mesh.hpp</in>
           <in>Quaternion.hpp</in>
-          <in>Rectangle2.hpp</in>
+          <in>Rectangle.hpp</in>
           <in>Vector2.hpp</in>
           <in>Vector3.hpp</in>
           <in>Vector4.hpp</in>
@@ -966,7 +966,7 @@
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/util/Rectangle.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Vector2.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -1276,7 +1276,7 @@
       </item>
       <item path="src/morda/util/Quaternion.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/util/Rectangle2.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/util/Rectangle.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Vector2.hpp" ex="false" tool="3" flavor2="0">
       </item>

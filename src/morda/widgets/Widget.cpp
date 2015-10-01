@@ -169,13 +169,13 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
-			Rect2i scissor = this->ComputeViewportRect(matrix);
+			Recti scissor = this->ComputeViewportRect(matrix);
 
-			Rect2i oldScissor;
+			Recti oldScissor;
 			bool scissorTestWasEnabled = Render::isScissorEnabled();
 			if(scissorTestWasEnabled){
 				oldScissor = Render::getScissorRect();
-				scissor.Intersect(oldScissor);
+				scissor.intersect(oldScissor);
 			}else{
 				Render::setScissorEnabled(true);
 			}
@@ -235,7 +235,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	ASSERT(Render::isBoundFrameBufferComplete())
 	
-	Render::setViewport(Rect2i(Vec2i(0), this->rect().d.to<int>()));
+	Render::setViewport(Recti(Vec2i(0), this->rect().d.to<int>()));
 	
 	Render::clearColor(Vec4f(0.0f));
 	
@@ -352,8 +352,8 @@ void Widget::makeTopmost(){
 
 
 
-morda::Rect2i Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
-	return Rect2i(
+morda::Recti Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
+	return Recti(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);

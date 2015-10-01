@@ -294,17 +294,17 @@ void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
 	AssertOpenGLNoError();
 }
 
-void Render::setViewport(Rect2i r){
+void Render::setViewport(Recti r){
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
 }
 
-Rect2i Render::getViewport() {
+Recti Render::getViewport() {
 	GLint vp[4];
 
 	glGetIntegerv(GL_VIEWPORT, vp);
 	
-	return Rect2i(vp[0], vp[1], vp[2], vp[3]);
+	return Recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
 
@@ -393,10 +393,10 @@ bool Render::isScissorEnabled() {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
 }
 
-Rect2i Render::getScissorRect() {
+Recti Render::getScissorRect() {
 	GLint osb[4];
 	glGetIntegerv(GL_SCISSOR_BOX, osb);
-	return Rect2i(osb[0], osb[1], osb[2], osb[3]);
+	return Recti(osb[0], osb[1], osb[2], osb[3]);
 }
 
 void Render::setScissorEnabled(bool enabled) {
@@ -407,7 +407,7 @@ void Render::setScissorEnabled(bool enabled) {
 	}
 }
 
-void Render::setScissorRect(Rect2i r) {
+void Render::setScissorRect(Recti r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
 }
@@ -513,7 +513,7 @@ void Render::unbindTexture(unsigned unitNum){
 }
 
 
-void Render::copyColorBufferToTexture(Vec2i dst, Rect2i src){
+void Render::copyColorBufferToTexture(Vec2i dst, Recti src){
 	glCopyTexSubImage2D(
 		GL_TEXTURE_2D,
 		0, //level

@@ -33,7 +33,7 @@ THE SOFTWARE. */
 
 #include "../resources/ResFont.hpp"
 
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 
 #include <list>
 #include <vector>
@@ -82,14 +82,14 @@ private:
 class SingleLineTextWidget : public TextWidget{
 	std::vector<std::uint32_t> text_var;
 	
-	mutable Rect2r bb;
+	mutable Rectr bb;
 	
 protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 	
 	SingleLineTextWidget(const stob::Node* chain);
 	
-	const Rect2r& textBoundingBox()const{
+	const Rectr& textBoundingBox()const{
 		return this->bb;
 	}
 	

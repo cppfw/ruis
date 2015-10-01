@@ -8,7 +8,7 @@
 #include <unikod/utf8.hpp>
 
 #include "../util/Matrix4.hpp"
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 
 #include "../shaders/PosTexShader.hpp"
 
@@ -23,7 +23,7 @@ class Font{
 	
 protected:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rect2r boundingBox;
+	morda::Rectr boundingBox;
 	
 	Font(){}
 	
@@ -31,7 +31,7 @@ protected:
 	
 	virtual real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
 	
-	virtual morda::Rect2r StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
+	virtual morda::Rectr StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
 public:
 	virtual ~Font()noexcept{}
 	
@@ -72,21 +72,21 @@ public:
 	
 	
 	
-	morda::Rect2r StringBoundingBox(unikod::Utf8Iterator str)const;
+	morda::Rectr StringBoundingBox(unikod::Utf8Iterator str)const;
 	
-	morda::Rect2r StringBoundingBox(const utki::Buf<std::uint32_t> utf32str)const{
+	morda::Rectr StringBoundingBox(const utki::Buf<std::uint32_t> utf32str)const{
 		return this->StringBoundingBoxInternal(utf32str);
 	}
 	
-	morda::Rect2r StringBoundingBox(const char* str)const{
+	morda::Rectr StringBoundingBox(const char* str)const{
 		return this->StringBoundingBox(unikod::Utf8Iterator(str));
 	}
 	
-	morda::Rect2r StringBoundingBox(const std::string& str)const{
+	morda::Rectr StringBoundingBox(const std::string& str)const{
 		return this->StringBoundingBox(str.c_str());
 	}
 	
-	const morda::Rect2r& BoundingBox()const noexcept{
+	const morda::Rectr& BoundingBox()const noexcept{
 		return this->boundingBox;
 	}
 	

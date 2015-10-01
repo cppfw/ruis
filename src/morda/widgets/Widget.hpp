@@ -14,7 +14,7 @@
 
 #include "../util/Matrix4.hpp"
 #include "../util/Vector2.hpp"
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 
 #include "../render/Texture2D.hpp"
 
@@ -66,7 +66,7 @@ private:
 
 	bool isEnabled_var;
 
-	morda::Rect2r rectangle;
+	morda::Rectr rectangle;
 	
 	//clip widgets contents by widget's border if set to true
 	bool clip_var;
@@ -163,11 +163,11 @@ private:
 	}
 public:
 
-	const morda::Rect2r& rect()const noexcept{
+	const morda::Rectr& rect()const noexcept{
 		return this->rectangle;
 	}
 	
-	morda::Rect2i ComputeViewportRect(const Matr4r& matrix)const noexcept;
+	morda::Recti ComputeViewportRect(const Matr4r& matrix)const noexcept;
 	
 	void moveTo(const morda::Vec2r& newPos)noexcept{
 		this->rectangle.p = newPos;
@@ -302,7 +302,7 @@ public:
 	 * @return false otherwise.
      */
 	bool contains(const morda::Vec2r& pos)const noexcept{
-		return morda::Rect2r(morda::Vec2r(0, 0), this->rect().d).Overlaps(pos);
+		return morda::Rectr(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
 	}
 	
 	

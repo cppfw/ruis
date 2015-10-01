@@ -10,7 +10,7 @@
 #include <utki/Void.hpp>
 
 #include "../util/Matrix4.hpp"
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 
 
 namespace morda{
@@ -85,9 +85,9 @@ private:
 	
 public:
 	
-	static void setViewport(Rect2i r);
+	static void setViewport(Recti r);
 	
-	static Rect2i getViewport();
+	static Recti getViewport();
 	
 	static void clearColor(Vec4f c = Vec4f(0.0f, 0, 0.0f, 1.0f));
 	
@@ -95,11 +95,11 @@ public:
 	
 	static bool isScissorEnabled();
 	
-	static Rect2i getScissorRect();
+	static Recti getScissorRect();
 	
 	static void setScissorEnabled(bool enabled);
 	
-	static void setScissorRect(Rect2i r);
+	static void setScissorRect(Recti r);
 	
 	static unsigned getMaxTextureSize();
 	
@@ -123,7 +123,7 @@ public:
 	
 	static void unbindTexture(unsigned unitNum);
 	
-	static void copyColorBufferToTexture(Vec2i dst, Rect2i src);
+	static void copyColorBufferToTexture(Vec2i dst, Recti src);
 
 	static void swapFrameBuffers();
 	

@@ -11,14 +11,14 @@ using namespace morda;
 
 
 
-ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
+ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim(rect.d.abs())
 {
-	this->texCoords[3] = Vec2r(rect.Left(), this->tex->Tex().Dim().y - rect.Bottom()).compDivBy(this->tex->Tex().Dim());
-	this->texCoords[2] = Vec2r(rect.Right(), this->tex->Tex().Dim().y - rect.Bottom()).compDivBy(this->tex->Tex().Dim());
-	this->texCoords[1] = Vec2r(rect.Right(), this->tex->Tex().Dim().y - rect.Top()).compDivBy(this->tex->Tex().Dim());
-	this->texCoords[0] = Vec2r(rect.Left(), this->tex->Tex().Dim().y - rect.Top()).compDivBy(this->tex->Tex().Dim());
+	this->texCoords[3] = Vec2r(rect.left(), this->tex->Tex().Dim().y - rect.bottom()).compDivBy(this->tex->Tex().Dim());
+	this->texCoords[2] = Vec2r(rect.right(), this->tex->Tex().Dim().y - rect.bottom()).compDivBy(this->tex->Tex().Dim());
+	this->texCoords[1] = Vec2r(rect.right(), this->tex->Tex().Dim().y - rect.top()).compDivBy(this->tex->Tex().Dim());
+	this->texCoords[0] = Vec2r(rect.left(), this->tex->Tex().Dim().y - rect.top()).compDivBy(this->tex->Tex().Dim());
 }
 
 
@@ -26,11 +26,11 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect) :
 std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const papki::File& fi){
 	auto tex = App::inst().resMan.Load<ResTexture>(chain.side("tex").up().value());
 	
-	Rect2r rect;
+	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){
 		rect = Rect2rFromSTOB(n);
 	}else{
-		rect = Rect2r(Vec2r(0, 0), tex->Tex().Dim());
+		rect = Rectr(Vec2r(0, 0), tex->Tex().Dim());
 	}
 	
 	return utki::makeShared<ResImage>(tex, rect);

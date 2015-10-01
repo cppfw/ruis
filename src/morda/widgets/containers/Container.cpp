@@ -82,7 +82,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->setHovered(w->rect().Overlaps(pos), pointerID);
+				w->setHovered(w->rect().overlaps(pos), pointerID);
 				w->onMouseButton(isDown, pos - w->rect().p, button, pointerID);
 				
 				unsigned& n = i->second.second;
@@ -107,7 +107,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 			continue;
 		}
 		
-		if(!(*i)->rect().Overlaps(pos)){
+		if(!(*i)->rect().overlaps(pos)){
 			continue;
 		}
 		
@@ -144,7 +144,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		
 				//set hovered goes after move notification because position of widget could change
 				//during handling the notification, so need to check after that for hovering
-				w->setHovered(w->rect().Overlaps(pos), pointerID);
+				w->setHovered(w->rect().overlaps(pos), pointerID);
 
 				return true;//doesn't matter what to return
 			}else{
@@ -160,7 +160,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 			continue;
 		}
 		
-		if(!(*i)->rect().Overlaps(pos)){
+		if(!(*i)->rect().overlaps(pos)){
 			(*i)->setHovered(false, pointerID);
 			continue;
 		}

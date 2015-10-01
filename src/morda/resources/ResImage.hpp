@@ -32,7 +32,7 @@ THE SOFTWARE. */
 #include "../ResourceManager.hpp"
 
 #include "ResTexture.hpp"
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 #include "../shaders/PosTexShader.hpp"
 
 #include <array>
@@ -49,7 +49,7 @@ class ResImage : public Resource{
 	Vec2r dim;
 	
 public:
-	ResImage(std::shared_ptr<ResTexture> tex, const Rect2r& rect);
+	ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
 	
 	ResImage(const ResImage& orig) = delete;
 	ResImage& operator=(const ResImage& orig) = delete;

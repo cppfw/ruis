@@ -134,7 +134,7 @@ private:
 	
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
-	friend void UpdateWindowRect(App& app, const morda::Rect2r& rect);
+	friend void UpdateWindowRect(App& app, const morda::Rectr& rect);
 	friend void Render(App& app);
 	friend std::uint32_t Update(App& app);
 	friend void HandleInputEvents();
@@ -284,7 +284,7 @@ private:
 	friend void Macosx_HandleMouseHover(bool isHovered);
 	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
 	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
-	friend void Macosx_UpdateWindowRect(const morda::Rect2r& r);
+	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
 	friend void Macosx_SetQuitFlag();
 	
 #else
@@ -328,10 +328,10 @@ public:
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
-	morda::Rect2r curWinRect;
+	morda::Rectr curWinRect;
 
 public:
-	const morda::Rect2r& winRect()const noexcept{
+	const morda::Rectr& winRect()const noexcept{
 		return this->curWinRect;
 	}
 
@@ -349,7 +349,7 @@ public:
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 
-	void UpdateWindowRect(const morda::Rect2r& rect);
+	void UpdateWindowRect(const morda::Rectr& rect);
 
 	void render();
 

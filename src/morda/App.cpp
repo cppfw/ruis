@@ -48,7 +48,7 @@ void App::render(){
 
 
 
-void App::UpdateWindowRect(const morda::Rect2r& rect){
+void App::UpdateWindowRect(const morda::Rectr& rect){
 	if(this->curWinRect == rect){
 		return;
 	}
@@ -56,7 +56,7 @@ void App::UpdateWindowRect(const morda::Rect2r& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	Render::setViewport(Rect2i(
+	Render::setViewport(Recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),
@@ -78,7 +78,7 @@ void App::HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 	}
 	
 	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().Overlaps(pos), id);
+		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
 		this->rootWidget->onMouseMove(this->NativeWindowToRootCoordinates(pos), id);
 	}
 }
@@ -91,7 +91,7 @@ void App::HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouse
 	}
 
 	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().Overlaps(pos), pointerID);
+		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
 		this->rootWidget->onMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, pointerID);
 	}
 }

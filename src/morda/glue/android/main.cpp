@@ -57,7 +57,7 @@ std::array<morda::Vec2r, 10> pointers;
 
 
 
-inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rect2r& winRect, const morda::Vec2r& p){
+inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rectr& winRect, const morda::Vec2r& p){
 	morda::Vec2r ret(
 			p.x,
 			p.y - (curWinDim.y - winRect.d.y)
@@ -798,7 +798,7 @@ App::App(const WindowParams& requestedWindowParams) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
-	this->UpdateWindowRect(morda::Rect2r(0, 0, float(width), float(height)));
+	this->UpdateWindowRect(morda::Rectr(0, 0, float(width), float(height)));
 }
 
 
@@ -833,7 +833,7 @@ void App::HideVirtualKeyboard()noexcept{
 
 
 
-inline void UpdateWindowRect(App& app, const morda::Rect2r& rect){
+inline void UpdateWindowRect(App& app, const morda::Rectr& rect){
 //	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
 	app.UpdateWindowRect(rect);
 }
@@ -1323,7 +1323,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 
 	UpdateWindowRect(
 			app,
-			morda::Rect2r(
+			morda::Rectr(
 					float(rect->left),
 					curWinDim.y - float(rect->bottom),
 					float(rect->right - rect->left),

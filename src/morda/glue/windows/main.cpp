@@ -426,7 +426,7 @@ namespace morda{
 
 		case WM_SIZE:
 			//resize GL, LoWord=Width, HiWord=Height
-			app.UpdateWindowRect(morda::Rect2r(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
+			app.UpdateWindowRect(morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
 			lres = 0;
 			return true;
 
@@ -623,7 +623,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		curWinRect(0, 0, -1, -1)
 {
 	this->UpdateWindowRect(
-			morda::Rect2r(
+			morda::Rectr(
 					0,
 					0,
 					float(requestedWindowParams.dim.x),

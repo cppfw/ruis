@@ -222,7 +222,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 			}
 		}
 
-		if(w->rect().Right() >= this->rect().d.x){
+		if(w->rect().right() >= this->rect().d.x){
 			return true;
 		}
 	}

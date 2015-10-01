@@ -315,8 +315,8 @@ real TexFont::StringAdvanceInternal(const utki::Buf<std::uint32_t> str)const{
 
 
 
-morda::Rect2r TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> str)const{
-	morda::Rect2r ret;
+morda::Rectr TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> str)const{
+	morda::Rectr ret;
 
 	if(str.size() == 0){
 		ret.p.set(0);

@@ -10,7 +10,7 @@
 #include <stdexcept>
 
 #include "../util/Vector2.hpp"
-#include "../util/Rectangle2.hpp"
+#include "../util/Rectangle.hpp"
 
 #include <utki/Exc.hpp>
 #include <papki/File.hpp>
@@ -68,7 +68,7 @@ public:
 	
 	real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const override;
 
-	morda::Rect2r StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const override;
+	morda::Rectr StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const override;
 
 	DEBUG_CODE( void RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const; )
 

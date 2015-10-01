@@ -18,7 +18,7 @@ real morda::Font::StringAdvance(unikod::Utf8Iterator str)const{
 
 
 
-morda::Rect2r morda::Font::StringBoundingBox(unikod::Utf8Iterator str)const{
+morda::Rectr morda::Font::StringBoundingBox(unikod::Utf8Iterator str)const{
 	std::array<std::uint32_t, 4096> buf;
 	return this->StringBoundingBoxInternal(utki::Buf<std::uint32_t>(&*buf.begin(), unikod::fillBuffer(utki::wrapBuf(buf), str)));
 }
