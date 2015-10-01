@@ -72,7 +72,6 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 
 
-//override
 bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
@@ -104,7 +103,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
-		if(!(*i)->isVisible() || !(*i)->isEnabled()){
+		if(!(*i)->isInteractive()){
 			continue;
 		}
 		
@@ -131,7 +130,6 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 
 
 
-//override
 bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
 	
@@ -157,7 +155,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
-		if(!(*i)->isVisible() || !(*i)->isEnabled()){
+		if(!(*i)->isInteractive()){
 			ASSERT(!(*i)->isHovered())
 			continue;
 		}

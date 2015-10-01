@@ -291,6 +291,10 @@ public:
 		return this->isEnabled_var;
 	}
 	
+	bool isInteractive()const noexcept{
+		return this->isEnabled() && this->isVisible();
+	}
+	
 	/**
 	 * @brief Check if point is within the widget bounds.
      * @param pos - point to check in widget coordinates.

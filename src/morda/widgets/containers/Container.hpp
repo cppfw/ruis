@@ -69,13 +69,11 @@ public:
 public:
 	Container(const stob::Node* chain = nullptr);
 
-public:
 	~Container()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
-public:
 	
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
 	

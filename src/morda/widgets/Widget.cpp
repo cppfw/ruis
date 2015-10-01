@@ -277,11 +277,12 @@ void Widget::clearCache(){
 
 
 void Widget::onKeyInternal(bool isDown, EKey keyCode){
-	if(this->onKey(isDown, keyCode)){
-		return;
+	if(this->isInteractive()){
+		if(this->onKey(isDown, keyCode)){
+			return;
+		}
 	}
 
-	//pass key event to parent
 	if(this->parent()){
 		this->parent()->onKeyInternal(isDown, keyCode);
 	}
