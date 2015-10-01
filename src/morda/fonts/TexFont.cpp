@@ -37,8 +37,8 @@ static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsign
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
-			std::uint8_t &d = dst.PixChan(i + x, j + y, dstChan);
-			std::uint8_t s = src.PixChan(i, j, srcChan);
+			std::uint8_t &d = dst.pixChan(i + x, j + y, dstChan);
+			std::uint8_t s = src.pixChan(i, j, srcChan);
 			if(s > d){
 				d = s;
 			}
@@ -135,7 +135,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	Image texImg(Vec2ui(texWidth, curTexHeight), Image::EType::GREYA);
 	//clear the image because image buffer may contain trash data
 	//and glyphs will have artifacts on their edges
-	texImg.Clear();
+	texImg.clear();
 
 	//init bounding box to invalid values
 	float left = 1000000;
@@ -168,11 +168,11 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::EType::GREY, slot->bitmap.buffer);
 
 		Image im(Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), Image::EType::GREYA);
-		im.Clear();
+		im.clear();
 		if(outline == 0){
-			im.Blit(0, 0, glyphim, 1, 0);
+			im.blit(0, 0, glyphim, 1, 0);
 		}else{
-			im.Blit(outline, outline, glyphim, 0, 0);
+			im.blit(outline, outline, glyphim, 0, 0);
 
 			for(unsigned y = 0; y < 2 * outline + 1; ++y){
 				for(unsigned x = 0; x < 2 * outline + 1; ++x){
@@ -204,9 +204,9 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			//TODO: optimize somehow?
 			//resize texture image
 			Image copy(texImg);
-			texImg.Init(Vec2ui(copy.dim().x, newHeight), copy.type());
-			texImg.Clear();
-			texImg.Blit(0, 0, copy);
+			texImg.init(Vec2ui(copy.dim().x, newHeight), copy.type());
+			texImg.clear();
+			texImg.blit(0, 0, copy);
 		}
 
 		if(im.dim().y > maxHeightInRow){
@@ -241,7 +241,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			ASSERT(right - left >= 0) //height >= 0
 		}
 
-		texImg.Blit(curX, curY, im);
+		texImg.blit(curX, curY, im);
 		curX += im.dim().x + DXGap;
 	}//~for
 	
@@ -259,14 +259,14 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		//TODO: optimize somehow?
 		//resize
 		Image copy(texImg);
-		texImg.Init(Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.type());
-		texImg.Clear();
-		texImg.Blit(0, 0, copy);
+		texImg.init(Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.type());
+		texImg.clear();
+		texImg.blit(0, 0, copy);
 	}
 
 	//fill luminance channel with 0xff
 	if(outline == 0){
-		texImg.Clear(0, 0xff);
+		texImg.clear(0, 0xff);
 	}
 
 	//now the font image has its final width and heights (no more resizes will be done)

@@ -28,8 +28,8 @@ using namespace morda;
 
 
 
-void Image::Init(Vec2ui dimensions, EType typeOfImage){
-	this->Reset();
+void Image::init(Vec2ui dimensions, EType typeOfImage){
+	this->reset();
 	this->dim_var = dimensions;
 	this->type_var = typeOfImage;
 	this->buf_var.resize(this->dim().x * this->dim().y * this->numChannels());
@@ -39,7 +39,7 @@ void Image::Init(Vec2ui dimensions, EType typeOfImage){
 
 Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
-	this->Init(dimensions, typeOfImage);
+	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_var.begin(), srcBuf, this->buf_var.size() * sizeof(this->buf_var[0]));
 }
 
@@ -54,7 +54,7 @@ Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
 		throw utki::Exc("Image::Image(): incorrect dimensions of given images");
 	}
 
-	this->Init(dimensions, src.type());
+	this->init(dimensions, src.type());
 
 	//copy image data
 	throw utki::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
@@ -66,7 +66,7 @@ Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
 
 //copy constructor
 Image::Image(const Image& im){
-	this->Init(im.dim(), im.type());
+	this->init(im.dim(), im.type());
 	ASSERT(this->buf_var.size() * sizeof(this->buf_var[0]) == im.buf_var.size() * sizeof(im.buf_var[0]))
 	memcpy(this->buf().begin(), im.buf().begin(), this->buf_var.size() * sizeof(this->buf_var[0]));
 }
@@ -81,7 +81,7 @@ Image::~Image(){
 
 
 //Fills image buffer with zeroes
-void Image::Clear(std::uint8_t  val){
+void Image::clear(std::uint8_t  val){
 	if (this->buf_var.size() == 0) {
 		return;
 	}
@@ -90,7 +90,7 @@ void Image::Clear(std::uint8_t  val){
 
 
 
-void Image::Clear(unsigned chan, std::uint8_t val){
+void Image::clear(unsigned chan, std::uint8_t val){
 	for(unsigned i = 0; i < this->dim().x * this->dim().y; ++i){
 		this->buf_var[i * this->numChannels() + chan] = val;
 	}
@@ -99,7 +99,7 @@ void Image::Clear(unsigned chan, std::uint8_t val){
 
 
 //Null all data
-void Image::Reset(){
+void Image::reset(){
 	this->dim_var.set(0);
 	this->type_var = EType::UNKNOWN;
 	this->buf_var.clear();
@@ -111,7 +111,7 @@ void Image::Reset(){
 //============Flip Image vertical method==============
 //====================================================
 //Flips vertically current image
-void Image::FlipVertical(){
+void Image::flipVertical(){
 	if(!this->buf_var.size()){
 		return;//nothing to flip
 	}
@@ -129,7 +129,7 @@ void Image::FlipVertical(){
 
 
 
-void Image::Blit(unsigned x, unsigned y, const Image& src){
+void Image::blit(unsigned x, unsigned y, const Image& src){
 	ASSERT(this->buf_var.size() != 0)
 	if(this->type() != src.type()){
 		throw utki::Exc("Image::Blit(): bits per pixel values do not match");
@@ -143,15 +143,15 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 		case EType::GREY:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->PixChan(i + x, j + y, 0) = src.PixChan(i, j, 0);
+					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
 				}
 			}
 			break;
 		case EType::GREYA:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->PixChan(i + x, j + y, 0) = src.PixChan(i, j, 0);
-					this->PixChan(i + x, j + y, 1) = src.PixChan(i, j, 1);
+					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
+					this->pixChan(i + x, j + y, 1) = src.pixChan(i, j, 1);
 				}
 			}
 			break;
@@ -163,7 +163,7 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 
 
 
-void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
+void Image::blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_var.size())
 	if(dstChan >= this->numChannels()){
 		throw utki::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
@@ -178,7 +178,7 @@ void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, uns
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
-			this->PixChan(i + x, j + y, dstChan) = src.PixChan(i, j, srcChan);
+			this->pixChan(i + x, j + y, dstChan) = src.pixChan(i, j, srcChan);
 		}
 	}
 }
@@ -212,11 +212,11 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 
 
 //Read PNG file method
-void Image::LoadPNG(const papki::File& fi){
+void Image::loadPNG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 	if(this->buf_var.size() > 0){
-		this->Reset();
+		this->reset();
 	}
 
 	papki::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
@@ -313,7 +313,7 @@ void Image::LoadPNG(const papki::File& fi){
 	//Great! Number of channels and bits per pixel are initialized now!
 
 	//set image dimensions and set buffer size
-	this->Init(Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
+	this->init(Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
 	//Great! height and width are initialized and buffer memory allocated
 
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
@@ -452,12 +452,12 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 
 
 //Read JPEG function
-void Image::LoadJPG(const papki::File& fi){
+void Image::loadJPG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
 	if(this->buf_var.size()){
-		this->Reset();
+		this->reset();
 	}
 	
 	papki::File::Guard fileGuard(fi);//this will guarantee that the file will be closed upon exit
@@ -557,7 +557,7 @@ void Image::LoadJPG(const papki::File& fi){
 	}
 	
 	//Set buffer size (allocate memory for image)
-	this->Init(Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
+	this->init(Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	//calculate the size of a row in bytes
 	int bytesRow = this->dim().x * this->numChannels();
@@ -612,10 +612,10 @@ void Image::LoadJPG(const papki::File& fi){
 
 
 
-void Image::LoadTGA(File& fi){
+void Image::loadTGA(File& fi){
 	ASSERT(!fi.IsOpened())
 
-	M_IMAGE_PRINT(<< "Image::LoadTGA: enter" << std::endl)
+	M_IMAGE_PRINT(<< "Image::loadTGA: enter" << std::endl)
 
 	int tmp;//temporary var
 
@@ -624,7 +624,7 @@ void Image::LoadTGA(File& fi){
 	}
 	fi.Open(File::READ);
 	File::Guard fileCloser(fi);//this will guarant that the file will be closed upon exit
-	M_IMAGE_PRINT(<< "Image::LoadTGA: file opened" << std::endl)
+	M_IMAGE_PRINT(<< "Image::loadTGA: file opened" << std::endl)
 
 	// Read in the length in bytes from the header to the pixel data
 	std::uint8_t length = 0;//The length in bytes to the pixels
@@ -677,17 +677,17 @@ void Image::LoadTGA(File& fi){
 
 	//Check if the image is RLE compressed or not
 	if(imageType != M_TGA_RLE){
-		M_IMAGE_PRINT(<<"Image::LoadTGA: image is not RLE compressed"<<std::endl)
+		M_IMAGE_PRINT(<<"Image::loadTGA: image is not RLE compressed"<<std::endl)
 		// Check if the image is a 24 or 32-bit image
 		if(bits==24 || bits==32){
-			M_IMAGE_PRINT(<<"Image::LoadTGA: image is 8 bits per channel"<<std::endl)
+			M_IMAGE_PRINT(<<"Image::loadTGA: image is 8 bits per channel"<<std::endl)
 			//channels=bits/8;// Calculate the channels (3 or 4) - (use bits >> 3 for more speed).
 			//TODO: move stride out of the IF because it is calculated in the else too
 			stride=this->NumChannels()*this->W();// Next, we calculate the stride
 			//data=((unsigned char*)malloc(sizeof(byte)*stride*h));//Allocate memory for the pixels.
 			M_ASSERT(this->buf.Size() == stride*this->H())
 
-			M_IMAGE_PRINT(<<"Image::LoadTGA: this->buf.Buf()="<<((void*)(this->buf.Buf()))<<std::endl
+			M_IMAGE_PRINT(<<"Image::loadTGA: this->buf.Buf()="<<((void*)(this->buf.Buf()))<<std::endl
 						  <<"    this->buf.Buf()+this->buf.Size()="<<(this->buf.Buf()+this->buf.Size())<<std::endl)
 
 			// Load in all the pixel data line by line
@@ -696,9 +696,9 @@ void Image::LoadTGA(File& fi){
 				byte *pLine=this->buf.Buf()+stride*y;
 				M_ASSERT( (this->buf.Buf()+this->buf.Size())>pLine && this->buf.Buf()<=pLine)
 				// Read in the current line of pixels
-				M_IMAGE_PRINT(<<"Image::LoadTGA: going to read image line "<<y<<std::endl)
+				M_IMAGE_PRINT(<<"Image::loadTGA: going to read image line "<<y<<std::endl)
 				fi.Read(pLine, stride);
-				M_IMAGE_PRINT(<<"Image::LoadTGA: image line read finished"<<std::endl)
+				M_IMAGE_PRINT(<<"Image::loadTGA: image line read finished"<<std::endl)
 
 				// Go through all of the pixels and swap the B and R values since TGA
 				// files are stored as BGR instead of RGB (or use GL_BGR_EXT versus GL_RGB)
@@ -710,7 +710,7 @@ void Image::LoadTGA(File& fi){
 				}
 			}
 		}else if(bits==16){//Check if the image is a 16 bit image (RGB stored in 1 unsigned short)
-			M_IMAGE_PRINT(<<"Image::LoadTGA: image is 16 bits per pixel"<<std::endl)
+			M_IMAGE_PRINT(<<"Image::loadTGA: image is 16 bits per pixel"<<std::endl)
 			u16 pixels=0;
 			u16 r=0, g=0, b=0;
 
@@ -739,7 +739,7 @@ void Image::LoadTGA(File& fi){
 		}else
 			throw ImageException("unsupported pixel format");// Else return ERR for a bad or unsupported pixel format
 	}else{// Else, it must be Run-Length Encoded (RLE)
-		M_IMAGE_PRINT(<<"Image::LoadTGA: image is RLE compressed"<<std::endl)
+		M_IMAGE_PRINT(<<"Image::loadTGA: image is RLE compressed"<<std::endl)
 		//Create some variables to hold the rleID, current colors read, channels, & stride.
 		byte rleID=0;
 		int colorsRead=0;
@@ -808,23 +808,23 @@ void Image::LoadTGA(File& fi){
 		}
 	}
 	fi.Close();//Close the file pointer that opened the file
-}//~Image::LoadTGA()
+}//~Image::loadTGA()
 */
 
 
 
-void Image::Load(const papki::File& fi){
+void Image::load(const papki::File& fi){
 	std::string ext = fi.ext();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)
-		this->LoadPNG(fi);
+		this->loadPNG(fi);
 	}else if(ext == "jpg"){
 //		TRACE(<< "Image::Load(): loading JPG image" << std::endl)
-		this->LoadJPG(fi);
+		this->loadJPG(fi);
 	}/*else if(ext == "tga"){
 //		TRACE(<< "Image::Load(): loading TGA image" << std::endl)
-		this->LoadTGA(fi);
+		this->loadTGA(fi);
 	}*/else{
 		throw Image::Exc("Image::Load(): unknown image format");
 	}

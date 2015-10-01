@@ -48,7 +48,7 @@ public:
 
 	//Creates Image object with initialized image.
 	Image(Vec2ui dimensions, EType imageType){
-		this->Init(dimensions, imageType);
+		this->init(dimensions, imageType);
 	}
 
 	Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
@@ -57,7 +57,7 @@ public:
 	Image(Vec2ui pos, Vec2ui dimensions, const Image& src);
 
 	Image(const papki::File& f){
-		this->Load(f);
+		this->load(f);
 	}
 
 	~Image();
@@ -87,34 +87,34 @@ public:
 	}
 
 public:
-	void Init(Vec2ui dimensions, EType typeOfImage);
-	void Reset();//destroys all image data
-	void Clear(std::uint8_t  val = 0);//fills each image channel with specified value
-	void Clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value
+	void init(Vec2ui dimensions, EType typeOfImage);
+	void reset();//destroys all image data
+	void clear(std::uint8_t  val = 0);//fills each image channel with specified value
+	void clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value
 
-	void FlipVertical();
+	void flipVertical();
 
-	void Blit(unsigned x, unsigned y, const Image& src);
+	void blit(unsigned x, unsigned y, const Image& src);
 
-	void Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
+	void blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
-	const std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan)const{
+	const std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan)const{
 		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
 	}
 
-	std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan){
+	std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan){
 		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
 	}
 
-	void LoadPNG(const papki::File& f);//Load image from PNG-file
-	void LoadJPG(const papki::File& f);//Load image from JPG-file
-//	void LoadTGA(papki::File& f);//Load image from TGA-file
+	void loadPNG(const papki::File& f);//Load image from PNG-file
+	void loadJPG(const papki::File& f);//Load image from JPG-file
+//	void loadTGA(papki::File& f);//Load image from TGA-file
 
-	void Load(const papki::File& f);
+	void load(const papki::File& f);
 
 private:
 
-};//~class Image
+};//~class
 
 
 
