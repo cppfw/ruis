@@ -28,7 +28,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	Render::copyColorBufferToTexture(Vec2i(0), viewPortRect);
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d);
+	matr.scale(this->rect().d);
 
 	morda::PosTexShader &s = App::inst().Shaders().simpleGrayscalePosTexShader;
 

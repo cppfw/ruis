@@ -29,7 +29,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	}
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d.compDiv(this->img->Dim()));
+	matr.scale(this->rect().d.compDiv(this->img->Dim()));
 
 	morda::PosTexShader &s = App::inst().Shaders().posTexShader;
 	

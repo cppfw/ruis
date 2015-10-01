@@ -199,7 +199,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	morda::ColorPosShader& s = App::inst().Shaders().colorPosShader;
 	s.Bind();
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d);
+	matr.scale(this->rect().d);
 	s.SetMatrix(matr);
 
 	if(this->isHovered()){
@@ -240,9 +240,9 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	Render::clearColor(Vec4f(0.0f));
 	
 	Matr4r matrix;
-	matrix.Identity();
-	matrix.Translate(-1, -1);
-	matrix.Scale(Vec2r(2.0f).compDivBy(this->rect().d));
+	matrix.identity();
+	matrix.translate(-1, -1);
+	matrix.scale(Vec2r(2.0f).compDivBy(this->rect().d));
 	
 	this->render(matrix);
 	
@@ -256,7 +256,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 
 void Widget::renderFromCache(const Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d);
+	matr.scale(this->rect().d);
 	
 	morda::PosTexShader &s = App::inst().Shaders().posTexShader;
 

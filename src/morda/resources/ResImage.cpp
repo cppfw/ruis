@@ -42,7 +42,7 @@ void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
 	this->tex->Tex().bind();
 	
 	Matr4f matr(matrix);
-	matr.Scale(this->dim);
+	matr.scale(this->dim);
 	
 	s.SetMatrix(matr);
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));

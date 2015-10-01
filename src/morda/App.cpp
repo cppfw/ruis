@@ -30,9 +30,9 @@ void App::render(){
 	Render::clearDepth();
 	
 	morda::Matr4r m;
-	m.Identity();
-	m.Translate(-1, -1);
-	m.Scale(Vec2r(2.0f).compDivBy(this->curWinRect.d));
+	m.identity();
+	m.translate(-1, -1);
+	m.scale(Vec2r(2.0f).compDivBy(this->curWinRect.d));
 	
 	ASSERT(this->rootWidget)
 	

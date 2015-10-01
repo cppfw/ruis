@@ -38,7 +38,7 @@ void ScrollContainer::render(const morda::Matr4r& matrix) const {
 	d.x = -d.x;
 	
 	Matr4r matr(matrix);
-	matr.Translate(d);
+	matr.translate(d);
 	
 	this->Container::render(matr);
 }

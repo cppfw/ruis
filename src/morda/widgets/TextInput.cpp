@@ -37,11 +37,11 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	//render selection
 	if(this->cursorIndex != this->selectionStartIndex){
 		morda::Matr4r matr(matrix);
-		matr.Translate(
+		matr.translate(
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
 			);
-		matr.Scale(Vec2r(::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
+		matr.scale(Vec2r(::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
 		ColorPosShader& s = App::inst().Shaders().colorPosShader;
 
@@ -53,7 +53,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	
 	{
 		morda::Matr4r matr(matrix);
-		matr.Translate(-this->textBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
+		matr.translate(-this->textBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->color() == 0xffffffff){//if white
@@ -79,8 +79,8 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	
 	if(this->isFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
-		matr.Translate(this->cursorPos, 0);
-		matr.Scale(Vec2r(D_CursorWidth, this->rect().d.y));
+		matr.translate(this->cursorPos, 0);
+		matr.scale(Vec2r(D_CursorWidth, this->rect().d.y));
 
 		ColorPosShader& s = App::inst().Shaders().colorPosShader;
 

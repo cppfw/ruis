@@ -25,7 +25,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	//texture is bound right after creation
 	
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->rect().d);
+	matr.scale(this->rect().d);
 
 	morda::SimpleBlurPosTexShader &s = App::inst().Shaders().simpleBlurPosTexShader;
 

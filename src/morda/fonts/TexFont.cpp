@@ -383,7 +383,7 @@ morda::Rectr TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> s
 #ifdef DEBUG
 void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
-	matr.Scale(this->tex.Dim());
+	matr.scale(this->tex.Dim());
 	shader.SetMatrix(matr);
 
 	this->tex.bind();
@@ -420,7 +420,7 @@ real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 		try{
 			real advance = this->RenderGlyphInternal(shader, matr, *s);
 			ret += advance;
-			matr.Translate(advance, 0);
+			matr.translate(advance, 0);
 		}catch(std::out_of_range&){
 			//ignore
 		}

@@ -115,7 +115,7 @@ public:
 	void render(const morda::Matr4r& matrix)const override{
 		{
 			morda::Matr4r matr(matrix);
-			matr.Scale(this->rect().d);
+			matr.scale(this->rect().d);
 
 			this->tex->Tex().bind();
 
@@ -132,7 +132,7 @@ public:
 //		glEnable(GL_BLEND);
 //		morda::SimpleTexturingShader &s = morda::App::inst().Shaders().simpleTexturing;
 //		morda::Matr4r m(matrix);
-//		m.Translate(200, 200);
+//		m.translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
 };
@@ -161,14 +161,14 @@ public:
 		this->Widget::render(matrix);
 		
 		morda::Matr4r matr(matrix);
-		matr.Scale(this->rect().d / 2);
-		matr.Translate(1, 1);
-		matr.Frustum(-2, 2, -1.5, 1.5, 2, 100);
+		matr.scale(this->rect().d / 2);
+		matr.translate(1, 1);
+		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
 		
 		morda::Matr4r m(matr);
-		m.Translate(0, 0, -4);
+		m.translate(0, 0, -4);
 		
-		m.Rotate(this->rot);
+		m.rotate(this->rot);
 
 		this->tex->Tex().bind();
 		

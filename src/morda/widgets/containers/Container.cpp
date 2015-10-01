@@ -64,7 +64,7 @@ void Container::render(const morda::Matr4r& matrix)const{
 		}
 		
 		morda::Matr4r matr(matrix);
-		matr.Translate(w->rect().p);
+		matr.translate(w->rect().p);
 
 		w->renderInternal(matr);
 	}
