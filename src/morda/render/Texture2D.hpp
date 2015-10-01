@@ -34,7 +34,7 @@ public:
 	Texture2D& operator=(Texture2D&&) = default;
 	
 	Texture2D(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
-		this->Constructor(image.Dim(), image.NumChannels(), image.Buf(), minFilter, magFilter);
+		this->Constructor(image.dim(), image.numChannels(), image.buf(), minFilter, magFilter);
 	}
 	
 	Texture2D(Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){

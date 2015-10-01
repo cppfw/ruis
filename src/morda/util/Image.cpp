@@ -30,9 +30,9 @@ using namespace morda;
 
 void Image::Init(Vec2ui dimensions, EType typeOfImage){
 	this->Reset();
-	this->dim = dimensions;
-	this->type = typeOfImage;
-	this->buf.resize(this->Dim().x * this->Dim().y * this->NumChannels());
+	this->dim_var = dimensions;
+	this->type_var = typeOfImage;
+	this->buf_var.resize(this->dim().x * this->dim().y * this->numChannels());
 }
 
 
@@ -40,21 +40,21 @@ void Image::Init(Vec2ui dimensions, EType typeOfImage){
 Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->Init(dimensions, typeOfImage);
-	memcpy(&*this->buf.begin(), srcBuf, this->buf.size() * sizeof(this->buf[0]));
+	memcpy(&*this->buf_var.begin(), srcBuf, this->buf_var.size() * sizeof(this->buf_var[0]));
 }
 
 
 
 Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
-	if(src.Dim().x == 0 || src.Dim().y == 0){
+	if(src.dim().x == 0 || src.dim().y == 0){
 		throw utki::Exc("Image::Image(): source image has zero dimensions");
 	}
 
-	if( src.Dim().x <= pos.x || src.Dim().y <= pos.y || src.Dim().x < (pos.x + dimensions.x) || src.Dim().y < (pos.y + dimensions.y) ){
+	if( src.dim().x <= pos.x || src.dim().y <= pos.y || src.dim().x < (pos.x + dimensions.x) || src.dim().y < (pos.y + dimensions.y) ){
 		throw utki::Exc("Image::Image(): incorrect dimensions of given images");
 	}
 
-	this->Init(dimensions, src.Type());
+	this->Init(dimensions, src.type());
 
 	//copy image data
 	throw utki::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
@@ -66,9 +66,9 @@ Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
 
 //copy constructor
 Image::Image(const Image& im){
-	this->Init(im.Dim(), im.Type());
-	ASSERT(this->buf.size() * sizeof(this->buf[0]) == im.buf.size() * sizeof(im.buf[0]))
-	memcpy(this->Buf().begin(), im.Buf().begin(), this->buf.size() * sizeof(this->buf[0]));
+	this->Init(im.dim(), im.type());
+	ASSERT(this->buf_var.size() * sizeof(this->buf_var[0]) == im.buf_var.size() * sizeof(im.buf_var[0]))
+	memcpy(this->buf().begin(), im.buf().begin(), this->buf_var.size() * sizeof(this->buf_var[0]));
 }
 
 
@@ -82,17 +82,17 @@ Image::~Image(){
 
 //Fills image buffer with zeroes
 void Image::Clear(std::uint8_t  val){
-	if (this->buf.size() == 0) {
+	if (this->buf_var.size() == 0) {
 		return;
 	}
-	memset(&*this->buf.begin(), val, this->buf.size() * sizeof(this->buf[0]));
+	memset(&*this->buf_var.begin(), val, this->buf_var.size() * sizeof(this->buf_var[0]));
 }
 
 
 
 void Image::Clear(unsigned chan, std::uint8_t val){
-	for(unsigned i = 0; i < this->Dim().x * this->Dim().y; ++i){
-		this->buf[i * this->NumChannels() + chan] = val;
+	for(unsigned i = 0; i < this->dim().x * this->dim().y; ++i){
+		this->buf_var[i * this->numChannels() + chan] = val;
 	}
 }
 
@@ -100,9 +100,9 @@ void Image::Clear(unsigned chan, std::uint8_t val){
 
 //Null all data
 void Image::Reset(){
-	this->dim.set(0);
-	this->type = EType::UNKNOWN;
-	this->buf.clear();
+	this->dim_var.set(0);
+	this->type_var = EType::UNKNOWN;
+	this->buf_var.clear();
 }
 
 
@@ -112,34 +112,34 @@ void Image::Reset(){
 //====================================================
 //Flips vertically current image
 void Image::FlipVertical(){
-	if(!this->buf.size()){
+	if(!this->buf_var.size()){
 		return;//nothing to flip
 	}
 
-	unsigned stride = this->NumChannels() * this->Dim().x;//stride
+	unsigned stride = this->numChannels() * this->dim().x;//stride
 	std::vector<std::uint8_t> line(stride);
 
 	//TODO: use iterators
-	for(unsigned i = 0; i < this->Dim().y / 2; ++i){
-		memcpy(&*line.begin(), &*this->buf.begin() + stride * i, stride);//move line to temp
-		memcpy(&*this->buf.begin() + stride * i, &*this->buf.begin() + stride * (this->Dim().y - i - 1), stride);//move bottom line to top
-		memcpy(&*this->buf.begin() + stride * (this->Dim().y - i - 1), &*line.begin(), stride);
+	for(unsigned i = 0; i < this->dim().y / 2; ++i){
+		memcpy(&*line.begin(), &*this->buf_var.begin() + stride * i, stride);//move line to temp
+		memcpy(&*this->buf_var.begin() + stride * i, &*this->buf_var.begin() + stride * (this->dim().y - i - 1), stride);//move bottom line to top
+		memcpy(&*this->buf_var.begin() + stride * (this->dim().y - i - 1), &*line.begin(), stride);
 	}
 }
 
 
 
 void Image::Blit(unsigned x, unsigned y, const Image& src){
-	ASSERT(this->buf.size() != 0)
-	if(this->Type() != src.Type()){
+	ASSERT(this->buf_var.size() != 0)
+	if(this->type() != src.type()){
 		throw utki::Exc("Image::Blit(): bits per pixel values do not match");
 	}
 
-	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);
-	unsigned blitAreaH = std::min(src.Dim().y, this->Dim().y - y);
+	unsigned blitAreaW = std::min(src.dim().x, this->dim().x - x);
+	unsigned blitAreaH = std::min(src.dim().y, this->dim().y - y);
 
 	//TODO: implement blitting for all image types
-	switch(this->Type()){
+	switch(this->type()){
 		case EType::GREY:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
@@ -164,17 +164,17 @@ void Image::Blit(unsigned x, unsigned y, const Image& src){
 
 
 void Image::Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
-	ASSERT(this->buf.size())
-	if(dstChan >= this->NumChannels()){
+	ASSERT(this->buf_var.size())
+	if(dstChan >= this->numChannels()){
 		throw utki::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
 	}
 
-	if(srcChan >= src.NumChannels()){
+	if(srcChan >= src.numChannels()){
 		throw utki::Exc("Image::Blit(): source channel index is greater than number of channels in the image");
 	}
 
-	unsigned blitAreaW = std::min(src.Dim().x, this->Dim().x - x);
-	unsigned blitAreaH = std::min(src.Dim().y, this->Dim().y - y);
+	unsigned blitAreaW = std::min(src.dim().x, this->dim().x - x);
+	unsigned blitAreaH = std::min(src.dim().y, this->dim().y - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
@@ -215,7 +215,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 void Image::LoadPNG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
-	if(this->buf.size() > 0){
+	if(this->buf_var.size() > 0){
 		this->Reset();
 	}
 
@@ -322,20 +322,20 @@ void Image::LoadPNG(const papki::File& fi){
 	png_uint_32 bytesPerRow = png_get_rowbytes(pngPtr, infoPtr);//get bytes per row
 
 	//check that our expectations are correct
-	if(bytesPerRow != this->Dim().x * this->NumChannels()){
+	if(bytesPerRow != this->dim().x * this->numChannels()){
 		throw Image::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
-	ASSERT((bytesPerRow * height) == this->buf.size())
+	ASSERT((bytesPerRow * height) == this->buf_var.size())
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->Dim().y && this->buf.size())
-		std::vector<png_bytep> rows(this->Dim().y);
+		ASSERT(this->dim().y && this->buf_var.size())
+		std::vector<png_bytep> rows(this->dim().y);
 		//initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
-		for(unsigned i = 0; i < this->Dim().y; ++i){
-			rows[i] = &*this->buf.begin() + i * bytesPerRow;
+		for(unsigned i = 0; i < this->dim().y; ++i){
+			rows[i] = &*this->buf_var.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 //		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
@@ -456,7 +456,7 @@ void Image::LoadJPG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
-	if(this->buf.size()){
+	if(this->buf_var.size()){
 		this->Reset();
 	}
 	
@@ -560,7 +560,7 @@ void Image::LoadJPG(const papki::File& fi){
 	this->Init(Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	//calculate the size of a row in bytes
-	int bytesRow = this->Dim().x * this->NumChannels();
+	int bytesRow = this->dim().x * this->numChannels();
 
 	//TODO: remove this comment
 	//Allocate memory for the pic
@@ -578,11 +578,11 @@ void Image::LoadJPG(const papki::File& fi){
 	memset(*buffer, 0, sizeof(JSAMPLE) * bytesRow);
 
 	int y = 0;
-	while(cinfo.output_scanline < this->Dim().y){
+	while(cinfo.output_scanline < this->dim().y){
 		//read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		//copy the data to an image
-		memcpy(&*this->buf.begin() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(&*this->buf_var.begin() + bytesRow * y, buffer[0], bytesRow);
 		++y;
 	}
 

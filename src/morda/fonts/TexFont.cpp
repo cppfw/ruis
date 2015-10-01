@@ -28,12 +28,12 @@ using namespace morda;
 namespace{
 
 static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsigned srcChan, unsigned x, unsigned y){
-	ASSERT(dst.Buf().size())
-	ASSERT(dstChan < dst.NumChannels())
-	ASSERT(srcChan < src.NumChannels())
+	ASSERT(dst.buf().size())
+	ASSERT(dstChan < dst.numChannels())
+	ASSERT(srcChan < src.numChannels())
 
-	unsigned blitAreaW = std::min(src.Dim().x, dst.Dim().x - x);
-	unsigned blitAreaH = std::min(src.Dim().y, dst.Dim().y - y);
+	unsigned blitAreaW = std::min(src.dim().x, dst.dim().x - x);
+	unsigned blitAreaH = std::min(src.dim().y, dst.dim().y - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
@@ -167,7 +167,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		}
 		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::EType::GREY, slot->bitmap.buffer);
 
-		Image im(Vec2ui(glyphim.Dim().x + 2 * outline, glyphim.Dim().y + 2 * outline), Image::EType::GREYA);
+		Image im(Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), Image::EType::GREYA);
 		im.Clear();
 		if(outline == 0){
 			im.Blit(0, 0, glyphim, 1, 0);
@@ -188,15 +188,15 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 
 //		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
 
-		if(texImg.Dim().x < curX + im.Dim().x + DXGap){
+		if(texImg.dim().x < curX + im.dim().x + DXGap){
 			curX = DXGap;
 			curY += maxHeightInRow + DYGap;
 			maxHeightInRow = 0;
 		}
 
-		if(texImg.Dim().y < curY + im.Dim().y + DYGap){
+		if(texImg.dim().y < curY + im.dim().y + DYGap){
 			//grow texture size
-			unsigned newHeight = FindNextPowOf2(curY + im.Dim().y + DYGap);
+			unsigned newHeight = FindNextPowOf2(curY + im.dim().y + DYGap);
 			if(newHeight > maxTexSize){//if it is impossible to grow texture image height anymore
 				throw utki::Exc("TexFont::Load(): there's not enough room on the texture for all the glyphs of the requested size");
 			}
@@ -204,13 +204,13 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			//TODO: optimize somehow?
 			//resize texture image
 			Image copy(texImg);
-			texImg.Init(Vec2ui(copy.Dim().x, newHeight), copy.Type());
+			texImg.Init(Vec2ui(copy.dim().x, newHeight), copy.type());
 			texImg.Clear();
 			texImg.Blit(0, 0, copy);
 		}
 
-		if(im.Dim().y > maxHeightInRow){
-			maxHeightInRow = im.Dim().y;
+		if(im.dim().y > maxHeightInRow){
+			maxHeightInRow = im.dim().y;
 		}
 
 		//record glyph information
@@ -226,9 +226,9 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
 			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
 
-			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.Dim().y));
-			g.texCoords[1] = morda::Vec2r(real(curX + im.Dim().x), real(curY + im.Dim().y));
-			g.texCoords[2] = morda::Vec2r(real(curX + im.Dim().x), real(curY));
+			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.dim().y));
+			g.texCoords[1] = morda::Vec2r(real(curX + im.dim().x), real(curY + im.dim().y));
+			g.texCoords[2] = morda::Vec2r(real(curX + im.dim().x), real(curY));
 			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
 
 			//update bounding box if needed
@@ -242,7 +242,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		}
 
 		texImg.Blit(curX, curY, im);
-		curX += im.Dim().x + DXGap;
+		curX += im.dim().x + DXGap;
 	}//~for
 	
 	//save bounding box
@@ -259,7 +259,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		//TODO: optimize somehow?
 		//resize
 		Image copy(texImg);
-		texImg.Init(Vec2ui(FindNextPowOf2(curX), copy.Dim().y), copy.Type());
+		texImg.Init(Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.type());
 		texImg.Clear();
 		texImg.Blit(0, 0, copy);
 	}
@@ -274,7 +274,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-			i->second.texCoords[j].compDivBy(texImg.Dim().to<float>());
+			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
 		}
 	}
 

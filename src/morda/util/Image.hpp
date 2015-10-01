@@ -33,14 +33,14 @@ public:
 	};
 	
 private:
-	EType type;
-	Vec2ui dim = Vec2ui(0);
-	std::vector<std::uint8_t> buf;//image pixels data
+	EType type_var;
+	Vec2ui dim_var = Vec2ui(0);
+	std::vector<std::uint8_t> buf_var;//image pixels data
 
 public:
 	//default constructor
 	Image() :
-			type(EType::UNKNOWN)
+			type_var(EType::UNKNOWN)
 	{}
 
 	//copy constructor
@@ -62,28 +62,28 @@ public:
 
 	~Image();
 
-	const Vec2ui& Dim()const noexcept{
-		return this->dim;
+	const Vec2ui& dim()const noexcept{
+		return this->dim_var;
 	}
 
-	unsigned BitsPerPixel()const{
-		return this->NumChannels() * 8;
+	unsigned bitsPerPixel()const{
+		return this->numChannels() * 8;
 	}
 
-	unsigned NumChannels()const{
-		return unsigned(this->type);
+	unsigned numChannels()const{
+		return unsigned(this->type_var);
 	}
 
-	EType Type()const{
-		return this->type;
+	EType type()const{
+		return this->type_var;
 	}
 
-	utki::Buf<std::uint8_t> Buf(){
-		return utki::wrapBuf(this->buf);
+	utki::Buf<std::uint8_t> buf(){
+		return utki::wrapBuf(this->buf_var);
 	}
 
-	const utki::Buf<std::uint8_t> Buf()const{
-		return utki::wrapBuf(this->buf);
+	const utki::Buf<std::uint8_t> buf()const{
+		return utki::wrapBuf(this->buf_var);
 	}
 
 public:
@@ -99,11 +99,11 @@ public:
 	void Blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
 	const std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan)const{
-		return this->buf[ASSCOND((y * this->Dim().x + x) * this->NumChannels() + chan, < this->buf.size())];
+		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
 	}
 
 	std::uint8_t& PixChan(unsigned x, unsigned y, unsigned chan){
-		return this->buf[ASSCOND((y * this->Dim().x + x) * this->NumChannels() + chan, < this->buf.size())];
+		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
 	}
 
 	void LoadPNG(const papki::File& f);//Load image from PNG-file
