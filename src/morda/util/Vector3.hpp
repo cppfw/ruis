@@ -453,7 +453,7 @@ template <class T> Vector3<T>& Vector3<T>::operator+=(const Vector2<T>& vec)noex
 
 
 template <class T> Vector3<T>& Vector3<T>::rotate(const Quaternion<T>& q)noexcept{
-	*this = q.ToMatrix4() * (*this);
+	*this = q.toMatrix4() * (*this);
 	return *this;
 }
 

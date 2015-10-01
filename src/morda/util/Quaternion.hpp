@@ -5,9 +5,7 @@
 #pragma once
 
 
-#ifdef DEBUG
-#	include <iostream>
-#endif
+#include <iostream>
 
 #include <cmath>
 
@@ -247,7 +245,7 @@ public:
 	 * It is a unit quaternion representing no rotation.
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& Identity()noexcept{
+	Quaternion& identity()noexcept{
 		this->x = T(0);
 		this->y = T(0);
 		this->z = T(0);
@@ -262,7 +260,7 @@ public:
 	 * Note, complex conjugate of quaternion (x, y, z, w) is (-x, -y, -z, w).
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& Conjugate()noexcept{
+	Quaternion& conjugate()noexcept{
 		return (*this = this->operator!());
 	}
 
@@ -273,7 +271,7 @@ public:
 	 * Note, negating quaternion means changing the sign of its every component.
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& Negate()noexcept{
+	Quaternion& negate()noexcept{
 		this->x = -this->x;
 		this->y = -this->y;
 		this->z = -this->z;
@@ -287,7 +285,7 @@ public:
 	 * @brief Calculate power 2 from quaternion magnitude.
 	 * @return power 2 from magnitude.
 	 */
-	T MagPow2()const noexcept{
+	T magPow2()const noexcept{
 		return (*this) * (*this);
 	}
 
@@ -297,8 +295,8 @@ public:
 	 * @brief Calculate quaternion magnitude.
 	 * @return quaternion magnitude.
 	 */
-	T Magnitude()const noexcept{
-		return std::sqrt(this->MagPow2());
+	T magnitude()const noexcept{
+		return std::sqrt(this->magPow2());
 	}
 
 
@@ -309,8 +307,8 @@ public:
 	 * If it is a quaternion of zero magnitude, then the result is undefined.
 	 * @return reference to this quaternion instance.
 	 */
-	Quaternion& Normalize()noexcept{
-		return (*this) /= Magnitude();
+	Quaternion& normalize()noexcept{
+		return (*this) /= magnitude();
 	}
 
 
@@ -325,9 +323,9 @@ public:
      * @param angle - rotation angle.
      * @return Reference to this quaternion object.
      */
-	Quaternion& InitRot(T axisX, T axisY, T axisZ, T angle)noexcept{
-		T sina2 = ::sin(angle / 2);
-		this->w = ::cos(angle / 2);
+	Quaternion& initRot(T axisX, T axisY, T axisZ, T angle)noexcept{
+		T sina2 = std::sin(angle / 2);
+		this->w = std::cos(angle / 2);
 		this->x = axisX * sina2;
 		this->y = axisY * sina2;
 		this->z = axisZ * sina2;
@@ -344,7 +342,7 @@ public:
      * @param angle - rotation angle.
      * @return Reference to this quaternion object.
      */
-	Quaternion& InitRot(const Vector3<T>& axis, T angle)noexcept;
+	Quaternion& initRot(const Vector3<T>& axis, T angle)noexcept;
 	
 	
 	
@@ -357,7 +355,7 @@ public:
      * @param rot - rotation vector.
      * @return Reference to this quaternion object.
      */
-	Quaternion& InitRot(const Vector3<T>& rot)noexcept;
+	Quaternion& initRot(const Vector3<T>& rot)noexcept;
 
 
 
@@ -367,7 +365,7 @@ public:
 	 * to a rotation matrix.
      * @return Rotation matrix.
      */
-	Matrix4<T> ToMatrix4()const noexcept;
+	Matrix4<T> toMatrix4()const noexcept;
 
 
 	
@@ -383,7 +381,7 @@ public:
      * @param t - interpolation parameter, value from [0 : 1].
      * @return Resulting quaternion of SLERP(this, quat, t).
      */
-	Quaternion Slerp(const Quaternion& quat, T t)const noexcept{
+	Quaternion slerp(const Quaternion& quat, T t)const noexcept{
 		//Since quaternions are normalized the cosine of the angle alpha
 		//between quaternions is equal to their dot product.
 		T cosalpha = (*this) * quat;
@@ -415,11 +413,11 @@ public:
 		if(cosalpha > T(0.9f)){
 			//Get the angle alpha between the 2 quaternions, and then store the sin(alpha)
 			T alpha = std::acos(cosalpha);
-			T sinalpha = ::sin(alpha);
+			T sinalpha = std::sin(alpha);
 
 			//Calculate the scales for q1 and q2, according to the angle and it's sine value
-			sc1 = ::sin((1 - t) * alpha) / sinalpha;
-			sc2 = ::sin(t * alpha) / sinalpha;
+			sc1 = std::sin((1 - t) * alpha) / sinalpha;
+			sc2 = std::sin(t * alpha) / sinalpha;
 		}else{
 			sc1 = (1 - t);
 			sc2 = t;
@@ -429,13 +427,11 @@ public:
 		return (*this) * sc1 + quat * (sc2 * sign);
 	}
 
-#ifdef DEBUG  
 	friend std::ostream& operator<<(std::ostream& s, const Quaternion<T>& quat){
 		s << "(" << quat.x << ", " << quat.y << ", " << quat.z << ", " << quat.w << ")";
 		return s;
 	}
-#endif  
-};//~class Quaternion
+};//~class
 
 
 
@@ -455,30 +451,30 @@ namespace morda{
 //=================================
 
 template <class T> Quaternion<T>::Quaternion(const Vector3<T>& rot)noexcept{
-	this->InitRot(rot);
+	this->initRot(rot);
 }
 
 
 
-template <class T> Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& rot)noexcept{
+template <class T> Quaternion<T>& Quaternion<T>::initRot(const Vector3<T>& rot)noexcept{
 	T mag = rot.magnitude();
 	if(mag != 0){
-		this->InitRot(rot.x / mag, rot.y / mag, rot.z / mag, mag);
+		this->initRot(rot.x / mag, rot.y / mag, rot.z / mag, mag);
 	}else{
-		this->Identity();
+		this->identity();
 	}
 	return *this;
 }
 
 
 
-template <class T> Quaternion<T>& Quaternion<T>::InitRot(const Vector3<T>& axis, T angle)noexcept{
-	return this->InitRot(axis.x, axis.y, axis.z, angle);
+template <class T> Quaternion<T>& Quaternion<T>::initRot(const Vector3<T>& axis, T angle)noexcept{
+	return this->initRot(axis.x, axis.y, axis.z, angle);
 }
 
 
 
-template <class T> Matrix4<T> Quaternion<T>::ToMatrix4()const noexcept{
+template <class T> Matrix4<T> Quaternion<T>::toMatrix4()const noexcept{
 	return Matrix4<T>(*this);
 }
 

@@ -142,19 +142,19 @@ public:
 class CubeWidget : public morda::Widget, public morda::Updateable{
 	std::shared_ptr<morda::ResTexture> tex;
 	
-	morda::Quatr rot = morda::Quatr().Identity();
+	morda::Quatr rot = morda::Quatr().identity();
 public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
 		this->tex = morda::App::inst().resMan.Load<morda::ResTexture>("tex_sample");
-		this->rot.Identity();
+		this->rot.identity();
 		
 		
 	}
 	
 	void Update(std::uint32_t dt) override{
-		this->rot %= morda::Quatr().InitRot(morda::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::Quatr().initRot(morda::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
 	void render(const morda::Matr4r& matrix)const override{
