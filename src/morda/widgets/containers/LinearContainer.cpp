@@ -13,7 +13,7 @@ using namespace morda;
 LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 		Container::LayoutParams(chain)
 {
-	if(auto n = GetProperty(chain, "weight")){
+	if(auto n = getProperty(chain, "weight")){
 		this->weight = n->asFloat();
 	}else{
 		this->weight = 0;

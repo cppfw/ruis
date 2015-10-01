@@ -28,7 +28,7 @@ std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const papki::F
 	
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){
-		rect = Rect2rFromSTOB(n);
+		rect = makeRectrFromSTOB(n);
 	}else{
 		rect = Rectr(Vec2r(0, 0), tex->Tex().Dim());
 	}

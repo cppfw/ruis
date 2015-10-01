@@ -24,7 +24,7 @@ namespace morda{
  *                If zero pointer is passed the resulting vector will be filled with zeros.
  * @return parsed Vec2r.
  */
-morda::Vec2r Vec2rFromSTOB(const stob::Node* chain);
+morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
 
 /**
  * @brief Parse chain of 4 STOB nodes as Rect2r.
@@ -34,7 +34,7 @@ morda::Vec2r Vec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed Rect2r.
  */
-morda::Rectr Rect2rFromSTOB(const stob::Node* chain);
+morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
 
 
 
@@ -47,7 +47,7 @@ morda::Rectr Rect2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting vector will be filled with zeroes.
  * @return parsed Vec2r.
  */
-morda::Vec2r DimVec2rFromSTOB(const stob::Node* chain);
+morda::Vec2r dimVec2rFromSTOB(const stob::Node* chain);
 
 
 
@@ -59,7 +59,7 @@ morda::Vec2r DimVec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting vector will be filled with false's.
  * @return parsed Vec2b.
  */
-morda::Vector2<bool> Vec2bFromSTOB(const stob::Node* chain);
+morda::Vector2<bool> makeVec2bFromSTOB(const stob::Node* chain);
 
 
 
@@ -70,7 +70,7 @@ morda::Vector2<bool> Vec2bFromSTOB(const stob::Node* chain);
  * @param n - stob node holding the value.
  * @return Parsed value in pixels.
  */
-float DimValueFromSTOB(const stob::Node& n);
+float dimValueFromSTOB(const stob::Node& n);
 
 
 
@@ -80,17 +80,17 @@ float DimValueFromSTOB(const stob::Node& n);
  * @param begin - first node of the original STOB document.
  * @return New first node and pointer to the last child node of the script.
  */
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> ResolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin);
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin);
 
 
 
-inline bool NodeHoldsFractionValue(const stob::Node& node)noexcept{
+inline bool nodeHoldsFractionValue(const stob::Node& node)noexcept{
 	size_t len = node.length();
 	return len != 0 && node.value()[len - 1] == '%';
 }
 
 
-inline const stob::Node* GetProperty(const stob::Node* chain, const char* property){
+inline const stob::Node* getProperty(const stob::Node* chain, const char* property){
 	if(!chain){
 		return nullptr;
 	}

@@ -29,7 +29,7 @@ std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const papki::Fil
 	//read size attribute
 	unsigned size;
 	if(auto sizeProp = chain.childOfThisOrNext("size")){
-		size = unsigned(morda::DimValueFromSTOB(*sizeProp));
+		size = unsigned(morda::dimValueFromSTOB(*sizeProp));
 	}else{
 		size = 13;
 	}

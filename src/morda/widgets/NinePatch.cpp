@@ -93,7 +93,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	this->content = this->findChildByNameAs<FrameContainer>("morda_content");
 	
-	if(const stob::Node* n = GetProperty(chain, "image")){
+	if(const stob::Node* n = getProperty(chain, "image")){
 		this->SetNinePatch(morda::App::inst().resMan.Load<ResNinePatch>(n->value()));
 	}
 	

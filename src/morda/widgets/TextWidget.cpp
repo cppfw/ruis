@@ -18,7 +18,7 @@ TextWidget::TextWidget(const stob::Node* desc) :
 		Widget(desc),
 		ColorWidget(desc)
 {
-	if(const stob::Node* p = GetProperty(desc, "font")){
+	if(const stob::Node* p = getProperty(desc, "font")){
 		this->font = App::inst().resMan.Load<morda::ResFont>(p->value());
 	}else{
 		this->font = DefaultFont();
@@ -31,7 +31,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 		Widget(chain),
 		TextWidget(chain)
 {
-	if(auto p = GetProperty(chain, "text")){
+	if(auto p = getProperty(chain, "text")){
 		this->setText(unikod::toUtf32(p->value()));
 	}
 }

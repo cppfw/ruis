@@ -68,7 +68,7 @@ void PushButton::onPressedChanged() {
 ToggleButton::ToggleButton(const stob::Node* chain) :
 		Widget(chain)
 {
-	if(const stob::Node* n = GetProperty(chain, "checked")){
+	if(const stob::Node* n = getProperty(chain, "checked")){
 		this->isChecked_var = n->asBool();
 	}else{
 		this->isChecked_var = false;

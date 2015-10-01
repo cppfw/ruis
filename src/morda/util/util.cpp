@@ -9,7 +9,7 @@ using namespace morda;
 
 
 
-morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
+morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2r ret;
 	
@@ -27,22 +27,22 @@ morda::Vec2r morda::Vec2rFromSTOB(const stob::Node* chain){
 }
 
 
-Rectr morda::Rect2rFromSTOB(const stob::Node* chain){
-	Vec2r p = Vec2rFromSTOB(chain);
+Rectr morda::makeRectrFromSTOB(const stob::Node* chain){
+	Vec2r p = makeVec2rFromSTOB(chain);
 	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
-	Vec2r d = Vec2rFromSTOB(chain);
+	Vec2r d = makeVec2rFromSTOB(chain);
 	return Rectr(p, d);
 }
 
 
 
-morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
+morda::Vec2r morda::dimVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2r ret;
 	
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
-		v = DimValueFromSTOB(*chain);
+		v = dimValueFromSTOB(*chain);
 		ret[i] = v;
 	}
 	
@@ -55,7 +55,7 @@ morda::Vec2r morda::DimVec2rFromSTOB(const stob::Node* chain){
 
 
 
-real morda::DimValueFromSTOB(const stob::Node& n){
+real morda::dimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
 		real ret = ::round(n.asFloat() * App::inst().DotsPerCm() / 10.0f);
@@ -68,7 +68,7 @@ real morda::DimValueFromSTOB(const stob::Node& n){
 
 
 
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin){
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin){
 	if(!begin){
 		return std::make_tuple(nullptr, nullptr);
 	}
@@ -88,7 +88,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(papk
 		std::unique_ptr<stob::Node> incNodes = stob::load(fi);
 
 		//recursive call
-		auto ri = ResolveIncludes(fi, std::move(incNodes));
+		auto ri = resolveIncludes(fi, std::move(incNodes));
 
 		stob::Node* lastChild = std::get<1>(ri);
 		
@@ -120,7 +120,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::ResolveIncludes(papk
 
 
 
-morda::Vector2<bool> morda::Vec2bFromSTOB(const stob::Node* chain){
+morda::Vector2<bool> morda::makeVec2bFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vector2<bool> ret;
 	

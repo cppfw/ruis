@@ -11,12 +11,12 @@ using namespace morda;
 ImageLabel::ImageLabel(const stob::Node* chain) :
 		Widget(chain)
 {
-	if(auto image = GetProperty(chain, "image")){
+	if(auto image = getProperty(chain, "image")){
 		this->img = App::inst().resMan.Load<ResImage>(image->value());
 		this->resize(this->img->Dim());
 	}
 	
-	if(auto n = GetProperty(chain, "keepAspectRatio")){
+	if(auto n = getProperty(chain, "keepAspectRatio")){
 		this->keepAspectRatio = n->asBool();
 	}else{
 		this->keepAspectRatio = false;

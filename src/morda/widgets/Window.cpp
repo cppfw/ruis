@@ -216,19 +216,19 @@ morda::Window::Window(const stob::Node* chain) :
 {
 	this->SetupWidgets();
 	
-	if(auto n = GetProperty(chain, "title")){
+	if(auto n = getProperty(chain, "title")){
 		this->SetTitle(n->value());
 	}
 	
 	this->titleBgColorTopmost = 0xffff0000;
 	this->titleBgColorNonTopmost = 0xff808080;
 	
-	if(auto a = GetProperty(chain, "appearance")){
-		if(auto n = GetProperty(a, "titleColorTopmost")){
+	if(auto a = getProperty(chain, "appearance")){
+		if(auto n = getProperty(a, "titleColorTopmost")){
 			this->titleBgColorTopmost = n->asUint32();
 		}
 		
-		if(auto n = GetProperty(a, "titleColorNonTopmost")){
+		if(auto n = getProperty(a, "titleColorNonTopmost")){
 			this->titleBgColorNonTopmost = n->asUint32();
 		}
 	}

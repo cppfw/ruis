@@ -10,13 +10,13 @@ BlackHoleContainer::BlackHoleContainer(const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(chain)
 {
-	if(auto n = GetProperty(chain, "shrinkX")){
+	if(auto n = getProperty(chain, "shrinkX")){
 		this->shrink.x = n->asBool();
 	}else{
 		this->shrink.x = true;
 	}
 	
-	if(auto n = GetProperty(chain, "shrinkY")){
+	if(auto n = getProperty(chain, "shrinkY")){
 		this->shrink.y = n->asBool();
 	}else{
 		this->shrink.y = true;

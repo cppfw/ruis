@@ -10,9 +10,9 @@ using namespace morda;
 std::shared_ptr<ResNinePatch> ResNinePatch::Load(const stob::Node& chain, const papki::File& fi){
 	auto tex = morda::App::inst().resMan.Load<ResTexture>(chain.side("tex").up().value());
 	
-	auto rect = Rect2rFromSTOB(&chain.side("rect").up());
+	auto rect = makeRectrFromSTOB(&chain.side("rect").up());
 	
-	auto borders = Rect2rFromSTOB(&chain.side("borders").up());
+	auto borders = makeRectrFromSTOB(&chain.side("borders").up());
 	
 	return utki::makeShared<ResNinePatch>(
 			utki::makeShared<ResImage>(tex, Rectr(rect.p, borders.p)), //lt

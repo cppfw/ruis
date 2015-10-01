@@ -248,7 +248,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 std::unique_ptr<stob::Node> Inflater::Load(papki::File& fi){
 	std::unique_ptr<stob::Node> ret = stob::load(fi);
 	
-	ret = std::move(std::get<0>(ResolveIncludes(fi, std::move(ret))));
+	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));
 
 	return ret;
 }
