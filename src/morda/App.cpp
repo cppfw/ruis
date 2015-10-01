@@ -29,6 +29,8 @@ void App::render(){
 	Render::clearColor();
 	Render::clearDepth();
 	
+	Render::setCullEnabled(true);
+	
 	morda::Matr4r m;
 	m.identity();
 	m.translate(-1, -1);
