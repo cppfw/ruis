@@ -1,4 +1,4 @@
-#include "DropDownList.hpp"
+#include "DropDownSelector.hpp"
 
 
 using namespace morda;
@@ -26,7 +26,7 @@ const char* DLayout = R"qwertyuiop(
 }
 
 
-DropDownList::DropDownList(const stob::Node* chain) :
+DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
 		HorizontalContainer(stob::parse(DLayout).get())
 {

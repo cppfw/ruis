@@ -122,9 +122,9 @@ Container{
 					text{"some checkbox"}
 				}
 			}
-			DropDownList{
+			DropDownSelector{
 				layout{
-//					dimX{max}
+					dimX{max}
 				}
 			}
 		}

@@ -27,7 +27,7 @@
 #include "widgets/CheckBox.hpp"
 #include "widgets/List.hpp"
 #include "widgets/ResizeProxy.hpp"
-#include "widgets/DropDownList.hpp"
+#include "widgets/DropDownSelector.hpp"
 
 #include "App.hpp"
 
@@ -69,7 +69,7 @@ Inflater::Inflater(){
 	this->AddWidget<OverlayContainer>("OverlayContainer");
 	this->AddWidget<TreeView>("TreeView");
 	this->AddWidget<ResizeProxy>("ResizeProxy");
-	this->AddWidget<DropDownList>("DropDownList");
+	this->AddWidget<DropDownSelector>("DropDownSelector");
 }
 
 
