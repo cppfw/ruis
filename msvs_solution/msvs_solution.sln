@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmorda", "libmorda\libmorda.vcxproj", "{111D4939-C046-4338-B740-ECA7F87785D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_app", "test_app\test_app.vcxproj", "{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{111D4939-C046-4338-B740-ECA7F87785D6}.Release|x64.Build.0 = Release|x64
 		{111D4939-C046-4338-B740-ECA7F87785D6}.Release|x86.ActiveCfg = Release|Win32
 		{111D4939-C046-4338-B740-ECA7F87785D6}.Release|x86.Build.0 = Release|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Debug|x64.ActiveCfg = Debug|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Debug|x64.Build.0 = Debug|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Debug|x86.Build.0 = Debug|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Release|x64.ActiveCfg = Release|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Release|x64.Build.0 = Release|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Release|x86.ActiveCfg = Release|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
