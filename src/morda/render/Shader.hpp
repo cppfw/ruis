@@ -64,7 +64,7 @@ protected:
 
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
 
-	void renderArrays(Render::EMode mode, unsigned numElements){
+	void renderArrays(Render::EMode mode, size_t numElements){
 		this->Bind();
 		Render::renderArrays(mode, numElements);
 		this->renderIsInProgress = false;

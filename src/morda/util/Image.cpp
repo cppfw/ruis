@@ -228,7 +228,7 @@ void Image::loadPNG(const papki::File& fi){
 
 	{
 #ifdef DEBUG
-		unsigned ret = //TODO:???
+		auto ret = //TODO:???
 #endif
 		fi.read(utki::wrapBuf(sig));
 		ASSERT(ret == sig.size() * sizeof(sig[0]))
@@ -319,7 +319,7 @@ void Image::loadPNG(const papki::File& fi){
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
 
 	//Read image data
-	png_uint_32 bytesPerRow = png_get_rowbytes(pngPtr, infoPtr);//get bytes per row
+	png_size_t bytesPerRow = png_get_rowbytes(pngPtr, infoPtr);//get bytes per row
 
 	//check that our expectations are correct
 	if(bytesPerRow != this->dim().x * this->numChannels()){
@@ -394,7 +394,7 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	ASSERT(src)
 
 	//Read in JPEGINPUTBUFFERSIZE JOCTET's
-	int nbytes;
+	size_t nbytes;
 
 	try{
 		utki::Buf<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);

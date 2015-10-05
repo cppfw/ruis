@@ -400,13 +400,13 @@ namespace morda{
 
 		case WM_KEYDOWN:
 		{
-						   morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
-						   if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-							   app.HandleKeyEvent(true, key);
-						   }
-						   app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
-						   lres = 0;
-						   return true;
+			morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
+			if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
+				app.HandleKeyEvent(true, key);
+			}
+			app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
+			lres = 0;
+			return true;
 		}
 		case WM_KEYUP:
 			app.HandleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
@@ -414,7 +414,7 @@ namespace morda{
 			return true;
 
 		case WM_CHAR:
-			app.HandleCharacterInput(KeyEventUnicodeResolver(wParam), EKey::UNKNOWN);
+			app.HandleCharacterInput(KeyEventUnicodeResolver(std::uint32_t(wParam)), EKey::UNKNOWN);
 			lres = 0;
 			return true;
 		case WM_PAINT:
@@ -692,7 +692,14 @@ void Main(int argc, const char** argv){
 	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4utki3BufIhEE")));
 
 	if(!f){ //try MSVC function mangling style
-		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")));
+		f = reinterpret_cast<Factory>(GetProcAddress(
+				GetModuleHandle(NULL),			
+#if M_CPU == M_CPU_X86_64
+				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPEAPEBDV?$Buf@E@utki@@@Z")
+#else
+				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")
+#endif
+			));
 	}
 
 	ASSERT_INFO(f, "no app factory function found")
