@@ -45,12 +45,6 @@
     <ClCompile Include="..\..\src\morda\render\Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\render\Render_DirectX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\morda\render\Render_OpenGL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\morda\render\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

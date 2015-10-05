@@ -610,7 +610,7 @@ App::ResMan::ResMan(){
 		papki::FSFile fi(path);
 		this->MountResPack(fi);
 	}
-	catch (papki::File::Exc&){
+	catch (papki::Exc&){
 		//default res pack not found, do nothing
 	}
 }
@@ -684,7 +684,7 @@ void App::Quit()noexcept {
 namespace morda{
 
 void Main(int argc, const char** argv){
-	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const const utki::Buf<std::uint8_t>&);
+	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const utki::Buf<std::uint8_t>&);
 
 	Factory f;
 	
@@ -696,7 +696,7 @@ void Main(int argc, const char** argv){
 	}
 
 	ASSERT(f)
-	std::unique_ptr<morda::App> a = f(argc, argv, const utki::Buf<std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> a = f(argc, argv, nullptr);
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
 	

@@ -141,8 +141,6 @@
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\render\FrameBuffer.cpp" />
     <ClCompile Include="..\..\src\morda\render\Render.cpp" />
-    <ClCompile Include="..\..\src\morda\render\Render_DirectX.cpp" />
-    <ClCompile Include="..\..\src\morda\render\Render_OpenGL.cpp" />
     <ClCompile Include="..\..\src\morda\render\Shader.cpp" />
     <ClCompile Include="..\..\src\morda\render\Texture2D.cpp" />
     <ClCompile Include="..\..\src\morda\ResourceManager.cpp" />
@@ -202,6 +200,14 @@
     <Import Project="..\packages\libnitki.1.0.1.6\build\native\libnitki.targets" Condition="Exists('..\packages\libnitki.1.0.1.6\build\native\libnitki.targets')" />
     <Import Project="..\packages\libutki.1.0.8.5\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.0.8.5\build\native\libutki.targets')" />
     <Import Project="..\packages\libaika.1.0.1.3\build\native\libaika.targets" Condition="Exists('..\packages\libaika.1.0.1.3\build\native\libaika.targets')" />
+    <Import Project="..\packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
+    <Import Project="..\packages\libpng.redist.1.5.10.13\build\native\libpng.redist.targets" Condition="Exists('..\packages\libpng.redist.1.5.10.13\build\native\libpng.redist.targets')" />
+    <Import Project="..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="..\packages\libpng.1.5.10.13\build\native\libpng.targets" Condition="Exists('..\packages\libpng.1.5.10.13\build\native\libpng.targets')" />
+    <Import Project="..\packages\libjpeg.redist.9.0.1.4\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.0.1.4\build\native\libjpeg.redist.targets')" />
+    <Import Project="..\packages\libjpeg.9.0.1.4\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.0.1.4\build\native\libjpeg.targets')" />
+    <Import Project="..\packages\freetype2.2.6.0.1\build\native\freetype2.targets" Condition="Exists('..\packages\freetype2.2.6.0.1\build\native\freetype2.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -214,5 +220,13 @@
     <Error Condition="!Exists('..\packages\libnitki.1.0.1.6\build\native\libnitki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libnitki.1.0.1.6\build\native\libnitki.targets'))" />
     <Error Condition="!Exists('..\packages\libutki.1.0.8.5\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.0.8.5\build\native\libutki.targets'))" />
     <Error Condition="!Exists('..\packages\libaika.1.0.1.3\build\native\libaika.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libaika.1.0.1.3\build\native\libaika.targets'))" />
+    <Error Condition="!Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
+    <Error Condition="!Exists('..\packages\libpng.redist.1.5.10.13\build\native\libpng.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng.redist.1.5.10.13\build\native\libpng.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('..\packages\libpng.1.5.10.13\build\native\libpng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng.1.5.10.13\build\native\libpng.targets'))" />
+    <Error Condition="!Exists('..\packages\libjpeg.redist.9.0.1.4\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.0.1.4\build\native\libjpeg.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\libjpeg.9.0.1.4\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.0.1.4\build\native\libjpeg.targets'))" />
+    <Error Condition="!Exists('..\packages\freetype2.2.6.0.1\build\native\freetype2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype2.2.6.0.1\build\native\freetype2.targets'))" />
   </Target>
 </Project>
