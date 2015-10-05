@@ -563,7 +563,7 @@ void Render::setCullEnabled(bool enable) {
 
 namespace{
 
-struct OpenGLFrameBuffer : public utki::Void{
+struct OpenGLFrameBuffer : public utki::Void, public utki::Unique{
 	GLuint fbo;
 
 	OpenGLFrameBuffer(){
@@ -580,7 +580,7 @@ struct OpenGLFrameBuffer : public utki::Void{
 }
 
 std::unique_ptr<utki::Void> Render::createFrameBuffer(){
-	return  std::unique_ptr<utki::Void>(new OpenGLFrameBuffer());
+	return  utki::makeUnique<OpenGLFrameBuffer>();
 }
 
 void Render::bindFrameBuffer(utki::Void* fbo){
