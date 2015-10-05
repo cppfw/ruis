@@ -689,13 +689,13 @@ void Main(int argc, const char** argv){
 	Factory f;
 	
 	//Try GCC name mangling first
-	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4ting6BufferIKhEE")));
+	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4utki3BufIhEE")));
 
 	if(!f){ //try MSVC function mangling style
 		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")));
 	}
 
-	ASSERT(f)
+	ASSERT_INFO(f, "no app factory function found")
 	std::unique_ptr<morda::App> a = f(argc, argv, nullptr);
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
