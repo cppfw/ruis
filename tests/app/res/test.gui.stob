@@ -104,17 +104,27 @@ Container{
 		}
 */
 
-		HorizontalContainer{
+		VerticalContainer{
 			layout{
 				dimX{max} dimY{max}
 			}
-			CheckBox{
-				""
-			}
-			Widget{
+			HorizontalContainer{
 				layout{
-					dimX{0} dimY{0}
-					weight{1}
+					dimX{max} dimY{min}
+				}
+				CheckBox{
+				}
+				Label{
+					layout{
+						dimX{0} dimY{min}
+						weight{1}
+					}
+					text{"some checkbox"}
+				}
+			}
+			DropDownList{
+				layout{
+//					dimX{max}
 				}
 			}
 		}
