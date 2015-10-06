@@ -1,4 +1,4 @@
-# How to build and install morda in Mac OS X #
+# How to build morda in Mac OS X #
 
 ## Step by step instructions ##
 
