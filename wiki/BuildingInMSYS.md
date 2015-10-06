@@ -1,3 +1,5 @@
+TODO: update
+
 # Step-by-step building morda in Windows using MinGW and MSYS #
 
   1. **MSYS**
