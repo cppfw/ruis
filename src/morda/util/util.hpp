@@ -4,13 +4,14 @@
 
 #pragma once
 
-#include "Vector2.hpp"
-#include "Rectangle.hpp"
+#include <kolme/Vector2.hpp>
+#include <kolme/Rectangle.hpp>
 
 #include <tuple>
 
 #include <stob/dom.hpp>
 
+#include "../config.hpp"
 
 namespace morda{
 
@@ -59,7 +60,7 @@ morda::Vec2r dimVec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting vector will be filled with false's.
  * @return parsed Vec2b.
  */
-morda::Vector2<bool> makeVec2bFromSTOB(const stob::Node* chain);
+kolme::Vec2b makeVec2bFromSTOB(const stob::Node* chain);
 
 
 

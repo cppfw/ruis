@@ -132,7 +132,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	unsigned curY = DYGap;
 	unsigned maxHeightInRow = 0;
 
-	Image texImg(Vec2ui(texWidth, curTexHeight), Image::EType::GREYA);
+	Image texImg(kolme::Vec2ui(texWidth, curTexHeight), Image::EType::GREYA);
 	//clear the image because image buffer may contain trash data
 	//and glyphs will have artifacts on their edges
 	texImg.clear();
@@ -165,9 +165,9 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			}
 			continue;
 		}
-		Image glyphim(Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::EType::GREY, slot->bitmap.buffer);
+		Image glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::EType::GREY, slot->bitmap.buffer);
 
-		Image im(Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), Image::EType::GREYA);
+		Image im(kolme::Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), Image::EType::GREYA);
 		im.clear();
 		if(outline == 0){
 			im.blit(0, 0, glyphim, 1, 0);
@@ -204,7 +204,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 			//TODO: optimize somehow?
 			//resize texture image
 			Image copy(texImg);
-			texImg.init(Vec2ui(copy.dim().x, newHeight), copy.type());
+			texImg.init(kolme::Vec2ui(copy.dim().x, newHeight), copy.type());
 			texImg.clear();
 			texImg.blit(0, 0, copy);
 		}
@@ -259,7 +259,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		//TODO: optimize somehow?
 		//resize
 		Image copy(texImg);
-		texImg.init(Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.type());
+		texImg.init(kolme::Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.type());
 		texImg.clear();
 		texImg.blit(0, 0, copy);
 	}

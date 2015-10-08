@@ -4,15 +4,17 @@
 
 #pragma once
 
+#include <string>
+
 #include <utki/Buf.hpp>
 #include <unikod/utf8.hpp>
 
-#include "../util/Matrix4.hpp"
-#include "../util/Rectangle.hpp"
+#include <kolme/Matrix4.hpp>
+#include <kolme/Rectangle.hpp>
 
 #include "../shaders/PosTexShader.hpp"
 
-#include <string>
+#include "../config.hpp"
 
 namespace morda{
 

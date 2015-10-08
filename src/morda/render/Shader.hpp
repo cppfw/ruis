@@ -10,9 +10,9 @@
 
 #include "../render/Render.hpp"
 
-#include "../util/Matrix4.hpp"
-#include "../util/Vector3.hpp"
-#include "../util/Vector2.hpp"
+#include <kolme/Matrix4.hpp>
+#include <kolme/Vector3.hpp>
+#include <kolme/Vector2.hpp>
 
 #include "../Exc.hpp"
 
@@ -76,7 +76,7 @@ protected:
 		this->renderIsInProgress = false;
 	}
 	
-	void setUniformMatrix4f(Render::InputID id, const morda::Matr4f& m){
+	void setUniformMatrix4f(Render::InputID id, const kolme::Matr4f& m){
 		this->Bind();
 		Render::setUniformMatrix4f(id, m);
 	}
@@ -86,7 +86,7 @@ protected:
 		Render::setUniform1i(id, i);
 	}
 	
-	void setUniform2f(Render::InputID id, Vec2f v){
+	void setUniform2f(Render::InputID id, kolme::Vec2f v){
 		this->Bind();
 		Render::setUniform2f(id, v);
 	}
@@ -96,17 +96,17 @@ protected:
 		Render::setUniform4f(id, x, y, z, a);
 	}
 	
-	void setUniform4f(Render::InputID id, const utki::Buf<Vec4f> v){
+	void setUniform4f(Render::InputID id, const utki::Buf<kolme::Vec4f> v){
 		this->Bind();
 		Render::setUniform4f(id, v);
 	}
 	
-	void setVertexAttribArray(Render::InputID id, const utki::Buf<Vec3f> a){
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec3f> a){
 		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 	
-	void setVertexAttribArray(Render::InputID id, const utki::Buf<Vec2f> a){
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec2f> a){
 		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
@@ -123,7 +123,7 @@ public:
 	
 	virtual ~Shader()noexcept{}
 	
-	void SetMatrix(const morda::Matr4f &m){
+	void SetMatrix(const kolme::Matr4f &m){
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 };//~class Shader

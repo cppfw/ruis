@@ -12,9 +12,9 @@
 
 #include "../util/keycodes.hpp"
 
-#include "../util/Matrix4.hpp"
-#include "../util/Vector2.hpp"
-#include "../util/Rectangle.hpp"
+#include <kolme/Matrix4.hpp>
+#include <kolme/Vector2.hpp>
+#include <kolme/Rectangle.hpp>
 
 #include "../render/Texture2D.hpp"
 
@@ -84,7 +84,7 @@ private:
 	bool cache;
 	mutable Texture2D cacheTex;
 
-	void renderFromCache(const Matr4f& matrix)const;
+	void renderFromCache(const kolme::Matr4f& matrix)const;
 	
 protected:
 	void clearCache();
@@ -167,7 +167,7 @@ public:
 		return this->rectangle;
 	}
 	
-	morda::Recti ComputeViewportRect(const Matr4r& matrix)const noexcept;
+	kolme::Recti ComputeViewportRect(const Matr4r& matrix)const noexcept;
 	
 	void moveTo(const morda::Vec2r& newPos)noexcept{
 		this->rectangle.p = newPos;

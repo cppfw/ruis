@@ -120,9 +120,9 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 
 
 
-morda::Vector2<bool> morda::makeVec2bFromSTOB(const stob::Node* chain){
+kolme::Vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 	unsigned i;
-	morda::Vector2<bool> ret;
+	kolme::Vec2b ret;
 	
 	bool v = false;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){

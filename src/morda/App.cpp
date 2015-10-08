@@ -58,7 +58,7 @@ void App::UpdateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	Render::setViewport(Recti(
+	Render::setViewport(kolme::Recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),

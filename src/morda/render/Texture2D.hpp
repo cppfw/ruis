@@ -8,7 +8,7 @@
 
 #include <utki/debug.hpp>
 
-#include "../util/Vector2.hpp"
+#include <kolme/Vector2.hpp>
 
 #include "../util/Image.hpp"
 
@@ -25,7 +25,7 @@ class Texture2D{
 
 	morda::Vec2r dim;
 
-	void Constructor(Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
+	void Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
 public:
 	Texture2D(const Texture2D& tex) = delete;
 	Texture2D& operator=(const Texture2D& tex) = delete;
@@ -37,7 +37,7 @@ public:
 		this->Constructor(image.dim(), image.numChannels(), image.buf(), minFilter, magFilter);
 	}
 	
-	Texture2D(Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
+	Texture2D(kolme::Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(dimensions, numChannels, nullptr, minFilter, magFilter);
 	}
 

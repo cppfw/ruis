@@ -13,6 +13,8 @@
 
 #include <nitki/Thread.hpp>
 
+#include <kolme/Vector2.hpp>
+
 #include <memory>
 
 #include "config.hpp"
@@ -46,7 +48,6 @@
 #include "ResourceManager.hpp"
 
 #include "util/keycodes.hpp"
-#include "util/Vector2.hpp"
 
 #include "widgets/Widget.hpp"
 #include "widgets/CharInputWidget.hpp"
@@ -76,7 +77,7 @@ class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 
 public:
 	struct WindowParams{
-		morda::Vec2ui dim;
+		kolme::Vec2ui dim;
 	};
 	
 	
@@ -354,15 +355,15 @@ private:
 	void render();
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r NativeWindowToRootCoordinates(const morda::Vec2f& pos)const noexcept{
+	morda::Vec2r NativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
 		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 	
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseMove(const morda::Vec2f& pos, unsigned id);
+	void HandleMouseMove(const kolme::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButton(bool isDown, const morda::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	void HandleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::EMouseButton button, unsigned id);
 	
 	void HandleMouseHover(bool isHovered, unsigned pointerID);
 

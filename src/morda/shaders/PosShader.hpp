@@ -19,9 +19,9 @@ namespace morda{
 class PosShader : virtual public Shader{
 public:
 	
-	static const std::array<Vec2f, 4> quadFan;
+	static const std::array<kolme::Vec2f, 4> quadFan;
 	
-	static const std::array<Vec2f, 4> quad01Fan;
+	static const std::array<kolme::Vec2f, 4> quad01Fan;
 	
 	
 	PosShader(const PosShader&) = delete;
@@ -36,20 +36,20 @@ protected:
 	const Render::InputID positionAttr;
 	
 public:
-	void render(const utki::Buf<Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
-		this->render<Vec2f>(p, mode);
+	void render(const utki::Buf<kolme::Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+		this->render<kolme::Vec2f>(p, mode);
 	}
 	
-	void render(const utki::Buf<Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
-		this->render<Vec3f>(p, mode);
+	void render(const utki::Buf<kolme::Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+		this->render<kolme::Vec3f>(p, mode);
 	}
 	
-	void render(const utki::Buf<std::uint16_t> i, const utki::Buf<Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
-		this->render<Vec2f>(i, p, mode);
+	void render(const utki::Buf<std::uint16_t> i, const utki::Buf<kolme::Vec2f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+		this->render<kolme::Vec2f>(i, p, mode);
 	}
 	
-	void render(const utki::Buf<std::uint16_t> i, const utki::Buf<Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
-		this->render<Vec3f>(i, p, mode);
+	void render(const utki::Buf<std::uint16_t> i, const utki::Buf<kolme::Vec3f> p, Render::EMode mode = Render::EMode::TRIANGLE_FAN){
+		this->render<kolme::Vec3f>(i, p, mode);
 	}
 	
 private:

@@ -131,7 +131,7 @@ Render::InputID Render::getUniform(utki::Void& p, const char* n) {
 	return InputID(0);
 }
 
-void Render::setUniformMatrix4f(InputID id, const Matr4f& m) {
+void Render::setUniformMatrix4f(InputID id, const kolme::Matr4f& m) {
 	//TODO:
 }
 
@@ -139,7 +139,7 @@ void Render::setUniform1i(InputID id, int i) {
 	//TODO:
 }
 
-void Render::setUniform2f(InputID id, Vec2f v) {
+void Render::setUniform2f(InputID id, kolme::Vec2f v) {
 	//TODO:
 }
 
@@ -155,7 +155,7 @@ void Render::setVertexAttribArray(InputID id, const Vec3f* a) {
 	//TODO:
 }
 
-void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
+void Render::setVertexAttribArray(InputID id, const kolme::Vec2f* a) {
 	//TODO:
 }
 

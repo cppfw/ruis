@@ -15,7 +15,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 
 
 void BlurGlass::render(const morda::Matr4r& matrix)const{
-	Recti viewPortRect = this->ComputeViewportRect(matrix);
+	kolme::Recti viewPortRect = this->ComputeViewportRect(matrix);
 	
 	if(!viewPortRect.d.isPositive()){
 		return;
@@ -31,10 +31,10 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 
 	s.SetMatrix(matr);
 	
-	s.SetTextureStep(Vec2f(1).compDiv(viewPortRect.d.to<float>()));
+	s.SetTextureStep(kolme::Vec2f(1).compDiv(viewPortRect.d.to<float>()));
 	
 	for(unsigned i = 0; i != 3; ++i){
-		Render::copyColorBufferToTexture(Vec2i(0), viewPortRect);
+		Render::copyColorBufferToTexture(kolme::Vec2i(0), viewPortRect);
 		
 		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 	}

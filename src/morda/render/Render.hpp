@@ -9,8 +9,8 @@
 #include <utki/Buf.hpp>
 #include <utki/Void.hpp>
 
-#include "../util/Matrix4.hpp"
-#include "../util/Rectangle.hpp"
+#include <kolme/Matrix4.hpp>
+#include <kolme/Rectangle.hpp>
 
 
 namespace morda{
@@ -67,39 +67,39 @@ private:
 	
 	static InputID getUniform(utki::Void& p, const char* n);
 	
-	static void setUniformMatrix4f(InputID id, const Matr4f& m);
+	static void setUniformMatrix4f(InputID id, const kolme::Matr4f& m);
 	
 	static void setUniform1i(InputID id, int i);
 	
-	static void setUniform2f(InputID id, Vec2f v);
+	static void setUniform2f(InputID id, kolme::Vec2f v);
 	
 	static void setUniform4f(InputID id, float x, float y, float z, float a);
 	
-	static void setUniform4f(InputID id, const utki::Buf<Vec4f> v);
+	static void setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v);
 	
-	static void setVertexAttribArray(InputID id, const Vec3f* a);
+	static void setVertexAttribArray(InputID id, const kolme::Vec3f* a);
 	
-	static void setVertexAttribArray(InputID id, const Vec2f* a);
+	static void setVertexAttribArray(InputID id, const kolme::Vec2f* a);
 	//=== ~~~
 	
 	
 public:
 	
-	static void setViewport(Recti r);
+	static void setViewport(kolme::Recti r);
 	
-	static Recti getViewport();
+	static kolme::Recti getViewport();
 	
-	static void clearColor(Vec4f c = Vec4f(0.0f, 0, 0.0f, 1.0f));
+	static void clearColor(kolme::Vec4f c = kolme::Vec4f(0.0f, 0, 0.0f, 1.0f));
 	
 	static void clearDepth(float d = 0.0f);
 	
 	static bool isScissorEnabled();
 	
-	static Recti getScissorRect();
+	static kolme::Recti getScissorRect();
 	
 	static void setScissorEnabled(bool enabled);
 	
-	static void setScissorRect(Recti r);
+	static void setScissorRect(kolme::Recti r);
 	
 	static unsigned getMaxTextureSize();
 	
@@ -114,7 +114,7 @@ public:
 	
 	//=== functions to be used by Texture class
 private:
-	static std::unique_ptr<utki::Void> create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
+	static std::unique_ptr<utki::Void> create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
 	
 	static void bindTexture(utki::Void& tex, unsigned unitNum);
 	//=== ~~~
@@ -123,7 +123,7 @@ public:
 	
 	static void unbindTexture(unsigned unitNum);
 	
-	static void copyColorBufferToTexture(Vec2i dst, Recti src);
+	static void copyColorBufferToTexture(kolme::Vec2i dst, kolme::Recti src);
 
 	static void swapFrameBuffers();
 	

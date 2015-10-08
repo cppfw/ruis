@@ -28,7 +28,7 @@ using namespace morda;
 
 
 
-void Image::init(Vec2ui dimensions, EType typeOfImage){
+void Image::init(kolme::Vec2ui dimensions, EType typeOfImage){
 	this->reset();
 	this->dim_var = dimensions;
 	this->type_var = typeOfImage;
@@ -37,7 +37,7 @@ void Image::init(Vec2ui dimensions, EType typeOfImage){
 
 
 
-Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
+Image::Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_var.begin(), srcBuf, this->buf_var.size() * sizeof(this->buf_var[0]));
@@ -45,7 +45,7 @@ Image::Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
 
 
 
-Image::Image(Vec2ui pos, Vec2ui dimensions, const Image& src){
+Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
 	if(src.dim().x == 0 || src.dim().y == 0){
 		throw utki::Exc("Image::Image(): source image has zero dimensions");
 	}
@@ -313,7 +313,7 @@ void Image::loadPNG(const papki::File& fi){
 	//Great! Number of channels and bits per pixel are initialized now!
 
 	//set image dimensions and set buffer size
-	this->init(Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
+	this->init(kolme::Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
 	//Great! height and width are initialized and buffer memory allocated
 
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
@@ -557,7 +557,7 @@ void Image::loadJPG(const papki::File& fi){
 	}
 	
 	//Set buffer size (allocate memory for image)
-	this->init(Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
+	this->init(kolme::Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	//calculate the size of a row in bytes
 	int bytesRow = this->dim().x * this->numChannels();

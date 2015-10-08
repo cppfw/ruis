@@ -43,7 +43,7 @@ public:
 	SimpleBlurPosTexShader(const SimpleBlurPosTexShader&) = delete;
 	SimpleBlurPosTexShader& operator=(const SimpleBlurPosTexShader&) = delete;
 	
-	void SetTextureStep(Vec2f step){
+	void SetTextureStep(kolme::Vec2f step){
 		this->setUniform2f(this->texStepUniform, step);
 	}
 	

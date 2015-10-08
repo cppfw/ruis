@@ -252,7 +252,7 @@ Render::InputID Render::getUniform(utki::Void& p, const char* n) {
 	return InputID(ret);
 }
 
-void Render::setUniformMatrix4f(InputID id, const Matr4f& m) {
+void Render::setUniformMatrix4f(InputID id, const kolme::Matr4f& m) {
 	glUniformMatrix4fv(GLint(id.id), 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 	AssertOpenGLNoError();
 }
@@ -262,7 +262,7 @@ void Render::setUniform1i(InputID id, int i) {
 	AssertOpenGLNoError();
 }
 
-void Render::setUniform2f(InputID id, Vec2f v) {
+void Render::setUniform2f(InputID id, kolme::Vec2f v) {
 	glUniform2f(GLint(id.id), v.x, v.y);
 	AssertOpenGLNoError();
 }
@@ -272,13 +272,13 @@ void Render::setUniform4f(InputID id, float x, float y, float z, float a) {
 	AssertOpenGLNoError();
 }
 
-void Render::setUniform4f(InputID id, const utki::Buf<Vec4f> v) {
+void Render::setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v) {
 	static_assert(sizeof(v[0]) == sizeof(GLfloat) * 4, "size mismatch");
 	glUniform4fv(GLint(id.id), v.size(), reinterpret_cast<const GLfloat*>(&*v.begin()));
 	AssertOpenGLNoError();
 }
 
-void Render::setVertexAttribArray(InputID id, const Vec3f* a) {
+void Render::setVertexAttribArray(InputID id, const kolme::Vec3f* a) {
 	glEnableVertexAttribArray(GLint(id.id));
 	AssertOpenGLNoError();
 	ASSERT(a)
@@ -286,7 +286,7 @@ void Render::setVertexAttribArray(InputID id, const Vec3f* a) {
 	AssertOpenGLNoError();
 }
 
-void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
+void Render::setVertexAttribArray(InputID id, const kolme::Vec2f* a) {
 	glEnableVertexAttribArray(GLint(id.id));
 	AssertOpenGLNoError();
 	ASSERT(a)
@@ -294,17 +294,17 @@ void Render::setVertexAttribArray(InputID id, const Vec2f* a) {
 	AssertOpenGLNoError();
 }
 
-void Render::setViewport(Recti r){
+void Render::setViewport(kolme::Recti r){
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
 }
 
-Recti Render::getViewport() {
+kolme::Recti Render::getViewport() {
 	GLint vp[4];
 
 	glGetIntegerv(GL_VIEWPORT, vp);
 	
-	return Recti(vp[0], vp[1], vp[2], vp[3]);
+	return kolme::Recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
 
@@ -375,7 +375,7 @@ Render::~Render()noexcept {
 
 }
 
-void Render::clearColor(Vec4f c) {
+void Render::clearColor(kolme::Vec4f c) {
 	glClearColor(c.x, c.y, c.z, c.w);
 	AssertOpenGLNoError();
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -393,10 +393,10 @@ bool Render::isScissorEnabled() {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
 }
 
-Recti Render::getScissorRect() {
+kolme::Recti Render::getScissorRect() {
 	GLint osb[4];
 	glGetIntegerv(GL_SCISSOR_BOX, osb);
-	return Recti(osb[0], osb[1], osb[2], osb[3]);
+	return kolme::Recti(osb[0], osb[1], osb[2], osb[3]);
 }
 
 void Render::setScissorEnabled(bool enabled) {
@@ -407,7 +407,7 @@ void Render::setScissorEnabled(bool enabled) {
 	}
 }
 
-void Render::setScissorRect(Recti r) {
+void Render::setScissorRect(kolme::Recti r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
 	AssertOpenGLNoError();
 }
@@ -443,7 +443,7 @@ struct GLTexture2D : public utki::Void, public utki::PoolStored<GLTexture2D, 32>
 
 }//~namespace
 
-std::unique_ptr<utki::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+std::unique_ptr<utki::Void> Render::create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
 	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	
 	GLint minFilterGL = texFilterMap[unsigned(minFilter)];
@@ -513,7 +513,7 @@ void Render::unbindTexture(unsigned unitNum){
 }
 
 
-void Render::copyColorBufferToTexture(Vec2i dst, Recti src){
+void Render::copyColorBufferToTexture(kolme::Vec2i dst, kolme::Recti src){
 	glCopyTexSubImage2D(
 		GL_TEXTURE_2D,
 		0, //level

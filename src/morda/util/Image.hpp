@@ -7,7 +7,7 @@
 
 #include <papki/File.hpp>
 
-#include "Vector2.hpp"
+#include <kolme/Vector2.hpp>
 
 
 
@@ -34,7 +34,7 @@ public:
 	
 private:
 	EType type_var;
-	Vec2ui dim_var = Vec2ui(0);
+	kolme::Vec2ui dim_var = kolme::Vec2ui(0);
 	std::vector<std::uint8_t> buf_var;//image pixels data
 
 public:
@@ -47,14 +47,14 @@ public:
 	Image(const Image& im);
 
 	//Creates Image object with initialized image.
-	Image(Vec2ui dimensions, EType imageType){
+	Image(kolme::Vec2ui dimensions, EType imageType){
 		this->init(dimensions, imageType);
 	}
 
-	Image(Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
+	Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
 
 	//Creates Image object and copies a region from source image.
-	Image(Vec2ui pos, Vec2ui dimensions, const Image& src);
+	Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src);
 
 	Image(const papki::File& f){
 		this->load(f);
@@ -62,7 +62,7 @@ public:
 
 	~Image();
 
-	const Vec2ui& dim()const noexcept{
+	const kolme::Vec2ui& dim()const noexcept{
 		return this->dim_var;
 	}
 
@@ -87,7 +87,7 @@ public:
 	}
 
 public:
-	void init(Vec2ui dimensions, EType typeOfImage);
+	void init(kolme::Vec2ui dimensions, EType typeOfImage);
 	void reset();//destroys all image data
 	void clear(std::uint8_t  val = 0);//fills each image channel with specified value
 	void clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value

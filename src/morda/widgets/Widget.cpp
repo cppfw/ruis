@@ -169,9 +169,9 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
-			Recti scissor = this->ComputeViewportRect(matrix);
+			kolme::Recti scissor = this->ComputeViewportRect(matrix);
 
-			Recti oldScissor;
+			kolme::Recti oldScissor;
 			bool scissorTestWasEnabled = Render::isScissorEnabled();
 			if(scissorTestWasEnabled){
 				oldScissor = Render::getScissorRect();
@@ -203,9 +203,9 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	s.SetMatrix(matr);
 
 	if(this->isHovered()){
-		s.SetColor(morda::Vec3f(0, 1, 0));
+		s.SetColor(kolme::Vec3f(0, 1, 0));
 	}else{
-		s.SetColor(morda::Vec3f(1, 0, 1));
+		s.SetColor(kolme::Vec3f(1, 0, 1));
 	}
 	s.render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
@@ -235,9 +235,9 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	ASSERT(Render::isBoundFrameBufferComplete())
 	
-	Render::setViewport(Recti(Vec2i(0), this->rect().d.to<int>()));
+	Render::setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
 	
-	Render::clearColor(Vec4f(0.0f));
+	Render::clearColor(kolme::Vec4f(0.0f));
 	
 	Matr4r matrix;
 	matrix.identity();
@@ -254,7 +254,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	return std::move(tex);
 }
 
-void Widget::renderFromCache(const Matr4f& matrix) const {
+void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 	
@@ -352,8 +352,8 @@ void Widget::makeTopmost(){
 
 
 
-morda::Recti Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
-	return Recti(
+kolme::Recti Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
+	return kolme::Recti(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);

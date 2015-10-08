@@ -9,8 +9,8 @@
 #include <sstream>
 #include <stdexcept>
 
-#include "../util/Vector2.hpp"
-#include "../util/Rectangle.hpp"
+#include <kolme/Vector2.hpp>
+#include <kolme/Rectangle.hpp>
 
 #include <utki/Exc.hpp>
 #include <papki/File.hpp>
@@ -40,8 +40,8 @@ namespace morda{
 
 class TexFont : public Font{
 	struct Glyph{
-		std::array<morda::Vec2f, 4> verts;
-		std::array<morda::Vec2f, 4> texCoords;
+		std::array<kolme::Vec2f, 4> verts;
+		std::array<kolme::Vec2f, 4> texCoords;
 
 		real advance;
 	};

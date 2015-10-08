@@ -17,7 +17,7 @@ TextField::TextField(const stob::Node* chain) :
 	
 	
 	auto bhc = utki::makeShared<BlackHoleContainer>();
-	bhc->setShrink(Vec2b(true, false));
+	bhc->setShrink(kolme::Vec2b(true, false));
 	bhc->add(this->ti);
 	
 	{

@@ -1,4 +1,4 @@
-#include "../../../src/morda/util/Quaternion.hpp"
+#include <kolme/Quaternion.hpp>
 
 #include "../../../src/morda/AppFactory.hpp"
 #include "../../../src/morda/widgets/Widget.hpp"
@@ -121,7 +121,7 @@ public:
 
 			morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
 
-//			s.SetColor(morda::Vec3f(1, 0, 0));
+//			s.SetColor(kolme::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
 			s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 		}
@@ -154,7 +154,7 @@ public:
 	}
 	
 	void Update(std::uint32_t dt) override{
-		this->rot %= morda::Quatr().initRot(morda::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
 	void render(const morda::Matr4r& matrix)const override{
@@ -174,48 +174,48 @@ public:
 		
 		morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
 
-//		s.SetColor(morda::Vec3f(0, 1, 0));
+//		s.SetColor(kolme::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
 		
 		
 		static std::array<morda::Vec3r, 36> cubePos = {{
-			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, 1), morda::Vec3f(-1, 1, 1),
-			morda::Vec3f(1, -1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(-1, 1, 1),
+			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, 1), kolme::Vec3f(-1, 1, 1),
+			kolme::Vec3f(1, -1, 1), kolme::Vec3f(1, 1, 1), kolme::Vec3f(-1, 1, 1),
 			
-			morda::Vec3f(1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, 1),
-			morda::Vec3f(1, -1, -1), morda::Vec3f(1, 1, -1), morda::Vec3f(1, 1, 1),
+			kolme::Vec3f(1, -1, 1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, 1, 1),
+			kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, 1, -1), kolme::Vec3f(1, 1, 1),
 			
-			morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, -1), morda::Vec3f(1, 1, -1),
-			morda::Vec3f(-1, -1, -1), morda::Vec3f(-1, 1, -1), morda::Vec3f(1, 1, -1),
+			kolme::Vec3f(1, -1, -1), kolme::Vec3f(-1, -1, -1), kolme::Vec3f(1, 1, -1),
+			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(-1, 1, -1), kolme::Vec3f(1, 1, -1),
 			
-			morda::Vec3f(-1, -1, -1), morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, -1),
-			morda::Vec3f(-1, -1, 1), morda::Vec3f(-1, 1, 1), morda::Vec3f(-1, 1, -1),
+			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(-1, -1, 1), kolme::Vec3f(-1, 1, -1),
+			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(-1, 1, 1), kolme::Vec3f(-1, 1, -1),
 			
-			morda::Vec3f(-1, 1, -1), morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, -1),
-			morda::Vec3f(-1, 1, 1), morda::Vec3f(1, 1, 1), morda::Vec3f(1, 1, -1),
+			kolme::Vec3f(-1, 1, -1), kolme::Vec3f(-1, 1, 1), kolme::Vec3f(1, 1, -1),
+			kolme::Vec3f(-1, 1, 1), kolme::Vec3f(1, 1, 1), kolme::Vec3f(1, 1, -1),
 			
-			morda::Vec3f(-1, -1, -1), morda::Vec3f(1, -1, -1), morda::Vec3f(-1, -1, 1),
-			morda::Vec3f(-1, -1, 1), morda::Vec3f(1, -1, -1), morda::Vec3f(1, -1, 1)
+			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(-1, -1, 1),
+			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, -1, 1)
 		}};
 		
-		static std::array<morda::Vec2f, 36> cubeTex = {{
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+		static std::array<kolme::Vec2f, 36> cubeTex = {{
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
 		
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1),
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
 			
-			morda::Vec2f(0, 0), morda::Vec2f(1, 0), morda::Vec2f(0, 1),
-			morda::Vec2f(1, 0), morda::Vec2f(1, 1), morda::Vec2f(0, 1)
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
 		}};
 		
 		static std::array<std::uint16_t, 36> indices = {{

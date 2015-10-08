@@ -41,7 +41,7 @@ std::shared_ptr<ResImage> ResImage::Load(const stob::Node& chain, const papki::F
 void ResImage::Render(const Matr4r& matrix, PosTexShader& s) const{
 	this->tex->Tex().bind();
 	
-	Matr4f matr(matrix);
+	kolme::Matr4f matr(matrix);
 	matr.scale(this->dim);
 	
 	s.SetMatrix(matr);

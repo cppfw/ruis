@@ -5,7 +5,7 @@ Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 9), prorab,
 		libutki-dev, libpapki-dev, libpogodi-dev, libunikod-dev, libnitki-dev,
-		libaika-dev,
+		libaika-dev, libkolme-dev,
 		libstob-dev (>= 3.0.0),
 		libpng12-dev, libjpeg8-dev, zlib1g-dev, libglew1.6-dev, libfreetype6-dev
 Build-Depends-Indep: doxygen

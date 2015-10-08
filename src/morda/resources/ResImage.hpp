@@ -32,7 +32,7 @@ THE SOFTWARE. */
 #include "../ResourceManager.hpp"
 
 #include "ResTexture.hpp"
-#include "../util/Rectangle.hpp"
+#include <kolme/Rectangle.hpp>
 #include "../shaders/PosTexShader.hpp"
 
 #include <array>

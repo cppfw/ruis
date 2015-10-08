@@ -9,7 +9,7 @@
 
 #include "../resources/ResFont.hpp"
 
-#include "../util/Rectangle.hpp"
+#include <kolme/Rectangle.hpp>
 
 #include <list>
 #include <vector>
