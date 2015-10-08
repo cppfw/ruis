@@ -101,7 +101,7 @@ struct Direct3DContext : public utki::Void {
 
 
 
-void Render::renderArrays(EMode mode, unsigned numElements) {
+void Render::renderArrays(EMode mode, size_t numElements) {
 //TODO:
 }
 

@@ -93,7 +93,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	public:
 		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi){
 			this->fontFile = fi.loadWholeFileIntoMemory();
-			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), this->fontFile.size(), 0/* face_index */, &this->face) != 0){
+			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), GLsizei(this->fontFile.size()), 0/* face_index */, &this->face) != 0){
 				throw utki::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}
@@ -124,7 +124,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 
 	//guess for texture width
 	unsigned texWidth;
-	texWidth = std::max(unsigned(128), FindNextPowOf2((chars.size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
+	texWidth = std::max(unsigned(128), FindNextPowOf2(unsigned(chars.size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
 	texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
 
 	unsigned curTexHeight = FindNextPowOf2(size);//first guess of texture height

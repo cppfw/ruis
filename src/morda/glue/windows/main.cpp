@@ -2,7 +2,7 @@
 
 #include "../../App.hpp"
 
-#include <ting/windows.hpp>
+#include <utki/windows.hpp>
 #include <papki/FSFile.hpp>
 
 #include <windowsx.h>
@@ -400,13 +400,13 @@ namespace morda{
 
 		case WM_KEYDOWN:
 		{
-						   morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
-						   if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-							   app.HandleKeyEvent(true, key);
-						   }
-						   app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
-						   lres = 0;
-						   return true;
+			morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
+			if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
+				app.HandleKeyEvent(true, key);
+			}
+			app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
+			lres = 0;
+			return true;
 		}
 		case WM_KEYUP:
 			app.HandleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
@@ -414,7 +414,7 @@ namespace morda{
 			return true;
 
 		case WM_CHAR:
-			app.HandleCharacterInput(KeyEventUnicodeResolver(wParam), EKey::UNKNOWN);
+			app.HandleCharacterInput(KeyEventUnicodeResolver(std::uint32_t(wParam)), EKey::UNKNOWN);
 			lres = 0;
 			return true;
 		case WM_PAINT:
@@ -610,7 +610,7 @@ App::ResMan::ResMan(){
 		papki::FSFile fi(path);
 		this->MountResPack(fi);
 	}
-	catch (papki::File::Exc&){
+	catch (papki::Exc&){
 		//default res pack not found, do nothing
 	}
 }
@@ -684,19 +684,26 @@ void App::Quit()noexcept {
 namespace morda{
 
 void Main(int argc, const char** argv){
-	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const const utki::Buf<std::uint8_t>&);
+	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const utki::Buf<std::uint8_t>&);
 
 	Factory f;
 	
 	//Try GCC name mangling first
-	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4ting6BufferIKhEE")));
+	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4utki3BufIhEE")));
 
 	if(!f){ //try MSVC function mangling style
-		f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buffer@$$CBE@ting@@@Z")));
+		f = reinterpret_cast<Factory>(GetProcAddress(
+				GetModuleHandle(NULL),			
+#if M_CPU == M_CPU_X86_64
+				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPEAPEBDV?$Buf@E@utki@@@Z")
+#else
+				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")
+#endif
+			));
 	}
 
-	ASSERT(f)
-	std::unique_ptr<morda::App> a = f(argc, argv, const utki::Buf<std::uint8_t>(0, 0));
+	ASSERT_INFO(f, "no app factory function found")
+	std::unique_ptr<morda::App> a = f(argc, argv, nullptr);
 	
 	ShowWindow(a->window.hwnd, SW_SHOW);
 	

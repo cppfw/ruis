@@ -5,7 +5,7 @@
 #endif
 
 #if M_OS == M_OS_WINDOWS
-#	include <ting/windows.hpp>
+#	include <utki/windows.hpp>
 #endif
 
 #include <memory>
@@ -150,7 +150,7 @@ struct ShaderWrapper{
 			if(logLen > 1){//1 char is a terminating 0
 				std::vector<char> log(logLen);
 				GLint len;
-				glGetShaderInfoLog(shader, log.size(), &len, &*log.begin());
+				glGetShaderInfoLog(shader, GLsizei(log.size()), &len, &*log.begin());
 				TRACE(<< "===Compile log===\n" << &*log.begin() << std::endl)
 			}else{
 				TRACE(<< "Shader compile log is empty" << std::endl)
@@ -195,7 +195,7 @@ struct ProgramWrapper : public utki::Void{
 			if(logLen > 1){ //1 is for terminating 0 character.
 				std::vector<char> log(logLen);
 				GLint len;
-				glGetProgramInfoLog(program, log.size(), &len, &*log.begin());
+				glGetProgramInfoLog(program, GLsizei(log.size()), &len, &*log.begin());
 				TRACE(<< "===Link log===\n" << &*log.begin() << std::endl)
 			}
 			return true;
@@ -208,10 +208,10 @@ struct ProgramWrapper : public utki::Void{
 
 
 
-void Render::renderArrays(EMode mode, unsigned numElements) {
+void Render::renderArrays(EMode mode, size_t numElements) {
 	GLenum m = modeMap[unsigned(mode)];
 	
-	glDrawArrays(m, 0, numElements);
+	glDrawArrays(m, 0, GLsizei(numElements));
 	AssertOpenGLNoError();
 }
 
@@ -220,7 +220,7 @@ void Render::renderArrays(EMode mode, unsigned numElements) {
 void Render::renderElements(EMode mode, const utki::Buf<std::uint16_t>& i) {
 	GLenum m = modeMap[unsigned(mode)];
 	
-	glDrawElements(m, i.size(), GL_UNSIGNED_SHORT, &*i.begin());
+	glDrawElements(m, GLsizei(i.size()), GL_UNSIGNED_SHORT, &*i.begin());
 	AssertOpenGLNoError();
 }
 
@@ -274,7 +274,7 @@ void Render::setUniform4f(InputID id, float x, float y, float z, float a) {
 
 void Render::setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v) {
 	static_assert(sizeof(v[0]) == sizeof(GLfloat) * 4, "size mismatch");
-	glUniform4fv(GLint(id.id), v.size(), reinterpret_cast<const GLfloat*>(&*v.begin()));
+	glUniform4fv(GLint(id.id), GLsizei(v.size()), reinterpret_cast<const GLfloat*>(&*v.begin()));
 	AssertOpenGLNoError();
 }
 
@@ -563,7 +563,7 @@ void Render::setCullEnabled(bool enable) {
 
 namespace{
 
-struct OpenGLFrameBuffer : public utki::Void{
+struct OpenGLFrameBuffer : public utki::Void, public utki::Unique{
 	GLuint fbo;
 
 	OpenGLFrameBuffer(){
@@ -580,7 +580,7 @@ struct OpenGLFrameBuffer : public utki::Void{
 }
 
 std::unique_ptr<utki::Void> Render::createFrameBuffer(){
-	return  std::unique_ptr<utki::Void>(new OpenGLFrameBuffer());
+	return  utki::makeUnique<OpenGLFrameBuffer>();
 }
 
 void Render::bindFrameBuffer(utki::Void* fbo){

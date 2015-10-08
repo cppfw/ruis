@@ -54,7 +54,7 @@ public:
 	
 	//=== functions to be used by Shader class internally
 private:
-	static void renderArrays(EMode mode, unsigned numElements);
+	static void renderArrays(EMode mode, size_t numElements);
 	
 	static void renderElements(EMode mode, const utki::Buf<std::uint16_t>& i);
 	
