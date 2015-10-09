@@ -1,4 +1,4 @@
-vars{
+defs{
 	morda_color_text{0xffccfbff}
 
 //	morda_color_bg{0xff141a27}

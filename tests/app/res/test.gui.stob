@@ -8,12 +8,12 @@ templates{
 	}
 }
 
-vars{
+defs{
 	trololo{"saf"}
 }
 
 
-vars{
+defs{
 	variable{and_its_value}
 	trololo{"tro lo lo"}
 
@@ -44,7 +44,7 @@ Container{
 
 		cache{true}
 
-		vars{
+		defs{
 			bbb{dDd}
 //			clr{0xffff0000}
 			clr{@{another_color}}

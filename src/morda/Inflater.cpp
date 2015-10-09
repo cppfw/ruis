@@ -108,7 +108,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(papki::File& fi) {
 namespace{
 
 const char* D_Templates = "templates";
-const char* D_Vars = "vars";
+const char* D_Defs = "defs";
 
 
 
@@ -178,7 +178,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 			if(n->child()){
 				this->PushTemplates(n->child()->cloneChain());
 			}
-		}else if(*n == D_Vars){
+		}else if(*n == D_Defs){
 			if(n->child()){
 				this->PushVariables(*n->child());
 			}
@@ -223,7 +223,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
 			needPopTemplates = true;
 		}
 	}
-	if(auto v = n->child(D_Vars).node()){
+	if(auto v = n->child(D_Defs).node()){
 		if(v->child()){
 			this->PushVariables(*v->child());
 			needPopVariables = true;
