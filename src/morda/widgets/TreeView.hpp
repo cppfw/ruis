@@ -228,7 +228,7 @@ public:
 		iter.pathPtr = std::move(this->pos(iter.path()).pathPtr);
 		ASSERT(iter.pathPtr.size() != 0 && iter.pathIdx.size() == iter.pathPtr.size())
 		ASSERT_INFO(iter.pathPtr.back()->numChildren() >= iter.pathIdx.back(), "given iterator was malformed")
-		if(iter.pathPtr.back()->numChildren() == iter.pathIdx.back()){
+		while(iter.path().size() != 0 && iter.pathPtr.back()->numChildren() == iter.pathIdx.back()){
 			iter.ascent();
 			if(iter.pathIdx.size() != 0){
 				++iter.pathIdx.back();

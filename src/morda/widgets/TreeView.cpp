@@ -53,7 +53,7 @@ size_t TreeView::ItemsProvider::count() const noexcept{
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
 	auto i = this->iterForIndex(index);
 	
-	TRACE(<< "i.path() = " << (*i).numChildren() << std::endl)
+//	TRACE(<< "i.path() = " << (*i).numChildren() << std::endl)
 	
 	return this->getWidget(i.path(), (*i).numChildren() == 0);
 }
@@ -65,6 +65,11 @@ void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
 }
 
 const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iterForIndex(size_t index) const {
+	if(this->iter == this->visibleTree.end()){
+		this->iter = this->visibleTree.begin();
+		this->iterIndex = 0;
+	}
+	
 	ASSERT(this->iter.path().size() != 0)
 	
 	if(index != this->iterIndex){
