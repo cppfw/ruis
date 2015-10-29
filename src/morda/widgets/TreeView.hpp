@@ -52,6 +52,7 @@ public:
 		Tree& operator*(){
 			ASSERT(this->pathPtr.size() != 0)
 			ASSERT(this->pathIdx.size() == this->pathPtr.size())
+			ASSERT(this->pathIdx.back() < this->pathPtr.back()->children.size())
 			return this->pathPtr.back()->children[this->pathIdx.back()];
 		}
 		

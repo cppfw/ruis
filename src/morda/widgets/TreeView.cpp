@@ -53,6 +53,8 @@ size_t TreeView::ItemsProvider::count() const noexcept{
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
 	auto i = this->iterForIndex(index);
 	
+	TRACE(<< "i.path() = " << (*i).numChildren() << std::endl)
+	
 	return this->getWidget(i.path(), (*i).numChildren() == 0);
 }
 
