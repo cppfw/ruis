@@ -23,14 +23,14 @@
 - run brew doctor and fix reported problems if possible
 	
 	```
-	sudo brew doctor
+	brew doctor
 	```
 
 - Add the homebrew tap (needs to be done once):
 	
 	```
-	sudo brew tap igagis/tap
-	sudo brew update
+	brew tap igagis/tap
+	brew update
 	```
 
 - Install necessary libraries
