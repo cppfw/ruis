@@ -1,0 +1,63 @@
+nuget{
+	nuspec{
+		id = libmorda;
+		version : $(version).1; //increase this trailing number if this file has changed to generate a new version of the NuGet package
+		title: C++ GUI library;
+		authors: {Ivan Gagis};
+		owners: {Ivan Gagis};
+		licenseUrl: "https://raw.githubusercontent.com/igagis/morda/master/LICENSE";
+		projectUrl: "https://github.com/igagis/morda";
+		iconUrl: "https://github.com/igagis/morda/blob/master/logo.svg";
+		requireLicenseAcceptance:false;
+		summary: C++ GUI library;
+
+		description: @"C++ GUI library";
+		releaseNotes: "Initial release";
+		copyright: Copyright 2015 Ivan Gagis;
+		tags: { native};
+	}
+	dependencies {
+		packages : {
+			libkolme/1.0.0.1;
+			freetype2/2.6.0.1;
+			glew.v140/1.12.0;
+			libaika/1.0.1.3;
+			libjpeg/9.0.1.4;
+			libnitki/1.0.1.6;
+			libpapki/1.0.2.2;
+			libpng/1.5.10.13;
+			libpogodi/1.0.1.8;
+			libstob/3.1.0.1;
+			libunikod/1.0.2.2;
+			libutki/1.0.8.5;
+			zlib/1.2.8.8;
+		};
+	}
+	files {
+		include: { "..\src\**\*.hpp" };
+		
+		[x86,release] { 
+			lib: ..\msvs_solution\Release\libmorda.lib;
+//			symbols: ..\msvs_solution\Release\libmorda.pdb;
+//			bin: ..\msvs_solution\Release\libmorda.dll;
+		}
+
+		[x86,debug] { 
+			lib: ..\msvs_solution\Debug\libmorda.lib;
+//			symbols: ..\msvs_solution\Debug\libmorda.pdb;
+//			bin: ..\msvs_solution\Debug\libmorda.dll;
+		}
+
+		[x64,release] { 
+			lib: ..\msvs_solution\x64\Release\libmorda.lib;
+//			symbols: ..\msvs_solution\x64\Release\libmorda.pdb;
+//			bin: ..\msvs_solution\x64\Release\libmorda.dll;
+		}
+
+		[x64,debug] { 
+			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
+//			symbols: ..\msvs_solution\x64\Debug\libmorda.pdb;
+//			bin: ..\msvs_solution\x64\Debug\libmorda.dll;
+		}  
+	}
+}
