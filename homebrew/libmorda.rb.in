@@ -17,6 +17,7 @@ class Libmorda < Formula
   depends_on "z"
   depends_on "glew"
   depends_on "freetype"
+  depends_on "libkolme"
   
   def install
     ENV['PATH'] += ':/usr/local/bin'
