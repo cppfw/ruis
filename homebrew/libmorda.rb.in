@@ -1,0 +1,29 @@
+class Libmorda < Formula
+  desc "C++ cross-platform OpenGL based GUI library."
+  homepage "https://github.com/igagis/morda"
+  url "https://github.com/igagis/morda/archive/$(version).tar.gz"
+  sha256 "$(sha256)"
+
+  depends_on "prorab" => :build
+  depends_on "libutki"
+  depends_on "libpapki"
+  depends_on "libpogodi"
+  depends_on "libunikod"
+  depends_on "libnitki"
+  depends_on "libaika"
+  depends_on "libstob"
+  depends_on "libpng"
+  depends_on "jpeg"
+  depends_on "z"
+  depends_on "glew"
+  depends_on "freetype"
+  
+  def install
+    ENV['PATH'] += ':/usr/local/bin'
+    system "make", "install"
+  end
+
+  #test do
+  #  system "make", "test"
+  #end
+end
