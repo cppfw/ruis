@@ -13,7 +13,7 @@ public:
 	class ItemsProvider : virtual public utki::Shared{
 		friend class DropDownSelector;
 		
-		DropDownSelector* list = nullptr;
+//		DropDownSelector* list = nullptr;
 	protected:
 		ItemsProvider(){}
 	public:
