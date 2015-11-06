@@ -251,7 +251,7 @@ Widget::EMouseButton ButtonNumberToEnum(int number){
 
 
 
-const std::array<EKey, std::uint8_t(-1) + 1> keyCodeMap = {
+const std::array<EKey, std::uint8_t(-1) + 1> keyCodeMap = {{
 	EKey::UNKNOWN,
 	EKey::UNKNOWN,
 	EKey::UNKNOWN,
@@ -508,7 +508,7 @@ const std::array<EKey, std::uint8_t(-1) + 1> keyCodeMap = {
 	EKey::UNKNOWN,
 	EKey::UNKNOWN,
 	EKey::UNKNOWN
-};
+}};
 
 
 
