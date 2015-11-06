@@ -101,7 +101,7 @@ class HandleSlider :
 protected:
 	HandleSlider(bool isVertical, const stob::Node* chain);
 
-	virtual void onFactorChange();
+	virtual void onFactorChange() override;
 
 public:
 	
