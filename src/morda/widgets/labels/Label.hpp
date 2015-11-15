@@ -15,7 +15,7 @@
 namespace morda{
 
 
-
+//TODO: rename to TextLabel
 class Label : public SingleLineTextWidget{
 	
 	

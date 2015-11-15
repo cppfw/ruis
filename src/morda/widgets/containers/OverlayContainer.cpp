@@ -5,9 +5,6 @@ using namespace morda;
 
 
 
-
-
-
 OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(chain)

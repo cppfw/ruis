@@ -214,10 +214,10 @@ morda::Window::Window(const stob::Node* chain) :
 		TableContainer(stob::parse(DWindowDesc).get()),
 		emptyMinDim(this->TableContainer::measure(Vec2r(-1)))
 {
-	this->SetupWidgets();
+	this->setupWidgets();
 	
 	if(auto n = getProperty(chain, "title")){
-		this->SetTitle(n->value());
+		this->setTitle(n->value());
 	}
 	
 	this->titleBgColorTopmost = 0xffff0000;
@@ -238,7 +238,7 @@ morda::Window::Window(const stob::Node* chain) :
 	}
 }
 
-void morda::Window::SetupWidgets(){
+void morda::Window::setupWidgets(){
 	this->contentArea = this->findChildByNameAs<FrameContainer>("morda_content");
 	ASSERT(this->contentArea)
 	
@@ -403,7 +403,7 @@ void morda::Window::SetupWidgets(){
 
 
 
-void morda::Window::SetTitle(const std::string& str){
+void morda::Window::setTitle(const std::string& str){
 	this->title->setText(unikod::toUtf32(str));
 }
 

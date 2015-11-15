@@ -41,7 +41,7 @@ class Window :
 	
 	morda::Vec2r capturePoint;
 	
-	void SetupWidgets();
+	void setupWidgets();
 	
 public:
 	Window(const stob::Node* chain = nullptr);
@@ -50,9 +50,9 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 	
-	void SetTitle(const std::string& str);
+	void setTitle(const std::string& str);
 	
-	FrameContainer& Content(){
+	FrameContainer& content(){
 		return *this->contentArea;
 	}
 	
