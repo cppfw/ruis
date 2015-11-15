@@ -277,7 +277,7 @@ void List::updateChildrenList(){
 	
 	auto iter = this->children().begin();
 	size_t iterIndex = this->addedIndex;
-	size_t iterEndIndex = iterIndex + this->children().size();
+	const size_t iterEndIndex = iterIndex + this->children().size();
 	size_t index = this->posIndex;
 	for(; index < this->provider->count();){
 		std::shared_ptr<Widget> w;
