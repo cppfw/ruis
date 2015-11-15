@@ -191,8 +191,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
-		xInputMethod(xDisplay, xWindow),
-		curWinRect(0, 0, -1, -1)
+		xInputMethod(xDisplay, xWindow)
 {
 #ifdef DEBUG
 	//print GLX version
@@ -202,15 +201,6 @@ App::App(const WindowParams& requestedWindowParams) :
 		TRACE(<< "GLX Version: " << major << "." << minor << std::endl)
 	}
 #endif
-	
-	this->UpdateWindowRect(
-			morda::Rectr(
-					0,
-					0,
-					float(requestedWindowParams.dim.x),
-					float(requestedWindowParams.dim.y)
-				)
-		);
 }
 
 

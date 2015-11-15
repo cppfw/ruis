@@ -330,7 +330,7 @@ public:
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
-	morda::Rectr curWinRect;
+	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
 public:
 	const morda::Rectr& winRect()const noexcept{
