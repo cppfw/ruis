@@ -27,7 +27,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	morda::SimpleBlurPosTexShader &s = App::inst().Shaders().simpleBlurPosTexShader;
+	morda::SimpleBlurPosTexShader &s = App::inst().shaders().simpleBlurPosTexShader;
 
 	s.SetMatrix(matr);
 	

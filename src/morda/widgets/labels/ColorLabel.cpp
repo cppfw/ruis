@@ -17,7 +17,7 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	ColorPosShader& s = App::inst().Shaders().colorPosShader;
+	ColorPosShader& s = App::inst().shaders().colorPosShader;
 
 	s.SetColor(this->color());
 	s.SetMatrix(matr);

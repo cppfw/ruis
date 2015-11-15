@@ -24,9 +24,9 @@ void TextLabel::render(const morda::Matr4r& matrix)const{
 	
 	PosTexShader& s = [this]() -> PosTexShader&{
 		if(this->color() == 0xffffffff){//if white
-			return morda::App::inst().Shaders().posTexShader;
+			return morda::App::inst().shaders().posTexShader;
 		}else{
-			ColorPosTexShader& s = morda::App::inst().Shaders().colorPosTexShader;
+			ColorPosTexShader& s = morda::App::inst().shaders().colorPosTexShader;
 
 			s.SetColor(this->color());
 			return s;

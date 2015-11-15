@@ -119,7 +119,7 @@ public:
 
 			this->tex->Tex().bind();
 
-			morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
+			morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
 
 //			s.SetColor(kolme::Vec3f(1, 0, 0));
 			s.SetMatrix(matr);
@@ -172,7 +172,7 @@ public:
 
 		this->tex->Tex().bind();
 		
-		morda::PosTexShader &s = morda::App::inst().Shaders().posTexShader;
+		morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
 		s.SetMatrix(m);

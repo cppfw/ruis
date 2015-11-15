@@ -78,6 +78,7 @@ class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 public:
 	struct WindowParams{
 		kolme::Vec2ui dim;
+		bool fullscreen = false;
 	};
 	
 	
@@ -318,11 +319,11 @@ private:
 	Updateable::Updater updater;
 
 private:
-	DefaultShaders shaders;
+	DefaultShaders shaders_var;
 
 public:
-	DefaultShaders& Shaders()noexcept{
-		return this->shaders;
+	DefaultShaders& shaders()noexcept{
+		return this->shaders_var;
 	}
 
 	std::unique_ptr<papki::File> CreateResourceFileInterface(const std::string& path = std::string())const;
@@ -356,7 +357,7 @@ private:
 
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r NativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
-		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
+		return morda::Vec2r(pos.x, this->winRect().d.y - pos.y - 1.0f);
 	}
 	
 	//pos is in usual window coordinates, y goes down.
@@ -378,7 +379,7 @@ public:
 		this->rootWidget = w;
 		
 		this->rootWidget->moveTo(morda::Vec2r(0));
-		this->rootWidget->resize(this->curWinRect.d);
+		this->rootWidget->resize(this->winRect().d);
 	}
 	
 	void ShowVirtualKeyboard()noexcept;

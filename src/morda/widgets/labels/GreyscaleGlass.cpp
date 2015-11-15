@@ -30,7 +30,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	morda::PosTexShader &s = App::inst().Shaders().simpleGrayscalePosTexShader;
+	morda::PosTexShader &s = App::inst().shaders().simpleGrayscalePosTexShader;
 
 	s.SetMatrix(matr);
 	
