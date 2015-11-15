@@ -605,6 +605,8 @@ class Application : public morda::App{
 		wp.dim.x = 1024;
 		wp.dim.y = 800;
 		
+		wp.fullscreen = false;
+		
 		return wp;
 	}
 public:
