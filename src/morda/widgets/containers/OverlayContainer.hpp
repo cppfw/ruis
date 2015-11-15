@@ -31,6 +31,8 @@ public:
 		return *this->contentContainer;
 	}
 	
+	void showContextMenu(std::shared_ptr<Widget> menu, Vec2r anchor);
+	
 private:
 
 };
