@@ -87,8 +87,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		
 		auto p = this->findAncestor<OverlayContainer>();
 		if(!p){
-			TRACE(<< "DropDownSelector: no OverlayContainer parent found" << std::endl)
-			return;
+			throw Exc("DropDownSelector: no OverlayContainer parent found");
 		}
 		
 		this->dropDown = utki::makeShared<FrameContainer>(stob::parse(DDropDownLayout).get());
