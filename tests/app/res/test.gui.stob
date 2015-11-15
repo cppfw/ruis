@@ -127,6 +127,18 @@ Container{
 				layout{
 					dimX{max}
 				}
+
+				TextLabel{text{item0}}
+				TextLabel{text{item1}}
+				TextLabel{text{item2}}
+				TextLabel{text{item3}}
+				TextLabel{text{item4}}
+				TextLabel{text{item5}}
+				TextLabel{text{item6}}
+				TextLabel{text{item7}}
+				TextLabel{text{item8}}
+				TextLabel{text{item9}}
+				TextLabel{text{item10}}
 			}
 		}
 	}

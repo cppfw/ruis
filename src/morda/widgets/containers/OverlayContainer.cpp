@@ -1,9 +1,30 @@
 #include "OverlayContainer.hpp"
+#include "../MouseProxy.hpp"
 
 
 using namespace morda;
 
+namespace{
 
+const char* DContextMenuLayout = R"qwertyuiop(
+	layout{
+		dimX{max} dimY{max}
+	}
+	MouseProxy{
+		name{morda_overlay_mouseproxy}
+		layout{
+			dimX{max} dimY{max}
+		}
+	}
+	Container{
+		name{morda_overlay_container}
+		layout{
+			dimX{max} dimY{max}
+		}
+	}
+)qwertyuiop";
+
+}
 
 OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
@@ -13,21 +34,27 @@ OverlayContainer::OverlayContainer(const stob::Node* chain) :
 }
 
 void OverlayContainer::onChildrenListChanged(){
-	if(!this->overlayContainer || !this->overlayContainer->parent()){
-		this->overlayContainer = utki::makeShared<Container>();
-		this->add(this->overlayContainer);
-
-		auto& lp = this->getLayoutParams(*this->overlayContainer);
-
-		lp.dim.y = Widget::LayoutParams::D_Max;
-		lp.dim.x = Widget::LayoutParams::D_Max;
+	if(!this->overlayLayer || !this->overlayLayer->parent()){
+		this->overlayLayer = utki::makeShared<FrameContainer>(stob::parse(DContextMenuLayout).get());
+		this->add(this->overlayLayer);
+		
+		this->overlayContainer = this->overlayLayer->findChildByNameAs<Container>("morda_overlay_container");
+		ASSERT(this->overlayContainer)
+		
+		auto mp = this->overlayLayer->findChildByNameAs<MouseProxy>("morda_overlay_mouseproxy");
+		ASSERT(mp)
+		
+		mp->mouseButton = [this](Widget& w, bool isDown, const Vec2r& pos, Widget::EMouseButton button, unsigned id) -> bool{
+			this->hideContextMenu();
+			return false;
+		};
 	}
 	
-	ASSERT(this->overlayContainer)
+	ASSERT(this->overlayLayer)
 	ASSERT(this->children().size() >= 1)
 	
-	if(this->children().back() != this->overlayContainer){
-		auto w = this->overlayContainer->removeFromParent();
+	if(this->children().back() != this->overlayLayer){
+		auto w = this->overlayLayer->removeFromParent();
 		this->add(w);
 	}
 }
@@ -54,4 +81,13 @@ void OverlayContainer::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	}
 	
 	w->moveTo(anchor);
+}
+
+void OverlayContainer::hideContextMenu(){
+	if(this->overlayContainer->children().size() == 0){
+		return;
+	}
+	ASSERT(this->overlayContainer->children().size() > 0)
+	
+	this->overlayContainer->remove(*this->overlayContainer->children().back());
 }
