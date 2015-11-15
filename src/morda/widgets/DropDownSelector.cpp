@@ -48,3 +48,28 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		p->showContextMenu(w, this->calcPosInParent(Vec2r(0), p));
 	};
 }
+
+void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
+	if(provider && provider->dd){
+		throw Exc("given provider is already set to some DropDownSelector");
+	}
+	
+	if(this->provider){
+		this->provider->dd = nullptr;
+	}
+	this->provider = std::move(provider);
+	if(this->provider){
+		this->provider->dd = this;
+	}
+	this->handleDataSetChanged();
+}
+
+void DropDownSelector::ItemsProvider::notifyDataSetChanged(){
+	if(this->dd){
+		this->dd->handleDataSetChanged();
+	}
+}
+
+void DropDownSelector::handleDataSetChanged(){
+	//TODO:
+}
