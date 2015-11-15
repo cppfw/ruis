@@ -74,6 +74,10 @@ void List::layOut() {
 
 
 void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
+	if(provider && provider->list){
+		throw Exc("given provider is already set to some List");
+	}
+	
 	if(this->provider){
 		this->provider->list = nullptr;
 	}
