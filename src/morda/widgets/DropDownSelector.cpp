@@ -2,7 +2,7 @@
 #include "Button.hpp"
 #include "containers/OverlayContainer.hpp"
 #include "TextWidget.hpp"
-#include "labels/Label.hpp"
+#include "labels/TextLabel.hpp"
 
 using namespace morda;
 
@@ -11,7 +11,7 @@ using namespace morda;
 namespace{
 
 const char* DLayout = R"qwertyuiop(
-		Label{
+		TextLabel{
 			name{morda_dropdown_selection}
 			layout{
 				dimX{0} dimY{min}
@@ -21,7 +21,7 @@ const char* DLayout = R"qwertyuiop(
 		}
 		PushButton{
 			name{morda_dropdown_button}
-			Label{
+			TextLabel{
 				text{\/}
 			}
 		}
@@ -42,7 +42,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 			return;
 		}
 		
-		auto w = utki::makeShared<Label>();
+		auto w = utki::makeShared<TextLabel>();
 		w->setText("context menu");
 		
 		p->showContextMenu(w, this->calcPosInParent(Vec2r(0), p));

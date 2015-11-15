@@ -1,5 +1,5 @@
 templates{
-	Label Label{
+	TextLabel TextLabel{
 //		text{"trololo"}
 
 //		color{0xff0000ff}
@@ -60,7 +60,7 @@ Container{
 		}
 
 /*
-		Label{
+		TextLabel{
 
 			templates{
 				My1Label MyLabel{
@@ -115,7 +115,7 @@ Container{
 				}
 				CheckBox{
 				}
-				Label{
+				TextLabel{
 					layout{
 						dimX{0} dimY{min}
 						weight{1}
@@ -159,7 +159,7 @@ Container{
 				weight{7}
 			}
 
-			Label{
+			TextLabel{
 				name {label1}
 				text {trololo}
 				padding {10 20 30 40}
@@ -171,7 +171,7 @@ Container{
 
 			}
 
-			Label{
+			TextLabel{
 				name {label2}
 				text {"blah bla"}
 				padding {0}
@@ -197,7 +197,7 @@ Container{
 				}
 				
 
-				Label{
+				TextLabel{
 					text {"Show VK"}
 					color{0xffccfbff}
 				}
@@ -273,24 +273,24 @@ Container{
 			}
 			TableRow{
 				HorizontalContainer{
-					Label{
+					TextLabel{
 						text{Insert:}
 					}
 					PushButton{
 						name{insert_before}
-						Label{
+						TextLabel{
 							text{"before"}
 						}
 					}
 					PushButton{
 						name{insert_after}
-						Label{
+						TextLabel{
 							text{"after"}
 						}
 					}
 					PushButton{
 						name{insert_child}
-						Label{
+						TextLabel{
 							text{"child"}
 						}
 					}
@@ -425,7 +425,7 @@ Container{
 							name{push_button_in_scroll_container}
 							posX{10mm} posY{20mm}
 
-							Label{
+							TextLabel{
 								posX{0} posY{0}
 								dimX{100mm} dimY{10mm}
 								text{"Hello World!!!"}
@@ -521,7 +521,7 @@ Container{
 					}
 				}
 
-				Label{
+				TextLabel{
 					text{"Long text"}
 				}
 			}
@@ -553,51 +553,51 @@ Container{
 						dimX{max} dimY{max}
 					}
 
-					Label{
+					TextLabel{
 						text{item0}
 					}
 
-					Label{
+					TextLabel{
 						text{item_1_iequwgfiew}
 					}
 
-					Label{
+					TextLabel{
 						text{item_2_werf}
 					}
 
 					PushButton{
-						Label{
+						TextLabel{
 							text {"item3"}
 							color{0xffccfbff}
 						}
 					//	text{item_3}
 					}
 
-					Label{
+					TextLabel{
 						text{item_4}
 					}
 
-					Label{
+					TextLabel{
 						text{item_5}
 					}
 
-					Label{
+					TextLabel{
 						text{item_6}
 					}
 
-					Label{
+					TextLabel{
 						text{item_7}
 					}
 
-					Label{
+					TextLabel{
 						text{item_8}
 					}
 
-					Label{
+					TextLabel{
 						text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
 					}
 
-					Label{
+					TextLabel{
 						text{item_10}
 					}
 				}

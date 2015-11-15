@@ -6,7 +6,7 @@
 #include "../../../src/morda/widgets/containers/KeyProxyContainer.hpp"
 
 #include "../../../src/morda/widgets/Button.hpp"
-#include "../../../src/morda/widgets/labels/Label.hpp"
+#include "../../../src/morda/widgets/labels/TextLabel.hpp"
 
 #include "../../../src/morda/resources/ResTexture.hpp"
 #include "../../../src/morda/resources/ResFont.hpp"
@@ -285,7 +285,7 @@ public:
 					color{0xa0808080}
 				}
 
-				Label{
+				TextLabel{
 					name{plusminus}
 				}
 				MouseProxy{
@@ -477,7 +477,7 @@ public:
 			if(n->child()){
 				auto w = morda::App::inst().inflater.Inflate(*stob::parse(DPlusMinus));
 
-				auto plusminus = w->findChildByNameAs<morda::Label>("plusminus");
+				auto plusminus = w->findChildByNameAs<morda::TextLabel>("plusminus");
 				ASSERT(plusminus)
 				plusminus->setText(isCollapsed ? "+" : "-");
 
@@ -519,7 +519,7 @@ public:
 									layout{dimX{max}dimY{max}}
 									color{0}
 								}
-								Label{
+								TextLabel{
 									name{value}
 								}
 								MouseProxy{
@@ -531,7 +531,7 @@ public:
 				));
 			
 			{
-				auto value = v->findChildByNameAs<morda::Label>("value");
+				auto value = v->findChildByNameAs<morda::TextLabel>("value");
 				ASSERT(value)
 				value->setText(n->value());
 			}

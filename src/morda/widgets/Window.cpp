@@ -114,7 +114,7 @@ const char* DWindowDesc = R"qwertyuiop(
 							dimX{max} dimY{max}
 						}
 
-						Label{
+						TextLabel{
 							name{morda_title}
 							layout{
 								dimX{0}
@@ -242,7 +242,7 @@ void morda::Window::setupWidgets(){
 	this->contentArea = this->findChildByNameAs<FrameContainer>("morda_content");
 	ASSERT(this->contentArea)
 	
-	this->title = this->findChildByNameAs<Label>("morda_title");
+	this->title = this->findChildByNameAs<TextLabel>("morda_title");
 	ASSERT(this->title)
 	
 	this->titleBg = this->findChildByNameAs<ColorLabel>("morda_window_title_bg");

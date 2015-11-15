@@ -1,4 +1,4 @@
-#include "Label.hpp"
+#include "TextLabel.hpp"
 
 
 #include "../../App.hpp"
@@ -9,7 +9,7 @@ using namespace morda;
 
 
 
-Label::Label(const stob::Node* chain) :
+TextLabel::TextLabel(const stob::Node* chain) :
 		Widget(chain),
 		SingleLineTextWidget(chain)
 {}
@@ -18,7 +18,7 @@ Label::Label(const stob::Node* chain) :
 
 
 //override
-void Label::render(const morda::Matr4r& matrix)const{
+void TextLabel::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.translate(-this->textBoundingBox().p.x, -this->Font().BoundingBox().p.y);
 	

@@ -15,15 +15,14 @@
 namespace morda{
 
 
-//TODO: rename to TextLabel
-class Label : public SingleLineTextWidget{
+class TextLabel : public SingleLineTextWidget{
 	
 	
 public:
-	Label(const stob::Node* chain = nullptr);
+	TextLabel(const stob::Node* chain = nullptr);
 	
 public:
-	~Label()noexcept{}
+	~TextLabel()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 };

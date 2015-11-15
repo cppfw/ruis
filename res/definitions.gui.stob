@@ -9,7 +9,7 @@ defs{
 }
 
 templates{
-	Label Label{
+	TextLabel TextLabel{
 		color{ @{morda_color_text} }
 	}
 

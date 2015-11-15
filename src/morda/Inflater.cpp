@@ -11,7 +11,7 @@
 #include "widgets/containers/OverlayContainer.hpp"
 
 #include "widgets/labels/ColorLabel.hpp"
-#include "widgets/labels/Label.hpp"
+#include "widgets/labels/TextLabel.hpp"
 #include "widgets/labels/ImageLabel.hpp"
 #include "widgets/labels/GreyscaleGlass.hpp"
 #include "widgets/labels/BlurGlass.hpp"
@@ -45,7 +45,7 @@ Inflater::Inflater(){
 	this->AddWidget<HorizontalContainer>("HorizontalContainer");
 	this->AddWidget<VerticalContainer>("VerticalContainer");
 	this->AddWidget<FrameContainer>("FrameContainer");
-	this->AddWidget<Label>("Label");
+	this->AddWidget<TextLabel>("TextLabel");
 	this->AddWidget<TextInput>("TextInput");
 	this->AddWidget<VerticalSlider>("VerticalSlider");
 	this->AddWidget<HorizontalSlider>("HorizontalSlider");

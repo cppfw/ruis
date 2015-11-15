@@ -6,7 +6,7 @@
 #pragma once
 
 #include "containers/FrameContainer.hpp"
-#include "labels/Label.hpp"
+#include "labels/TextLabel.hpp"
 #include "labels/ColorLabel.hpp"
 #include "MouseProxy.hpp"
 #include "containers/TableContainer.hpp"
@@ -25,7 +25,7 @@ class Window :
 	std::uint32_t titleBgColorTopmost;
 	std::uint32_t titleBgColorNonTopmost;
 	
-	std::shared_ptr<Label> title;
+	std::shared_ptr<TextLabel> title;
 	
 	std::shared_ptr<FrameContainer> contentArea;
 	

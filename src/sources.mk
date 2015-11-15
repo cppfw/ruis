@@ -61,4 +61,4 @@ this_srcs += morda/widgets/labels/BlurGlass.cpp
 this_srcs += morda/widgets/labels/ColorLabel.cpp
 this_srcs += morda/widgets/labels/GreyscaleGlass.cpp
 this_srcs += morda/widgets/labels/ImageLabel.cpp
-this_srcs += morda/widgets/labels/Label.cpp
+this_srcs += morda/widgets/labels/TextLabel.cpp
