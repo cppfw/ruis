@@ -5,39 +5,37 @@ using namespace morda;
 
 
 
-namespace{
 
-const char* DDesc = R"qwertyuiop(
-		FrameContainer{
-			name{morda_content}
-			layout{
-				dimX{max} dimY{max}
-			}
-		}
-
-		Container{
-			name{morda_overlay}
-			layout{
-				dimX{max} dimY{max}
-			}
-		}
-	)qwertyuiop";
-
-}
 
 
 OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
-		FrameContainer(stob::parse(DDesc).get())
+		FrameContainer(chain)
 {
-	this->contentContainer = this->findChildByNameAs<FrameContainer>("morda_content");
-	this->overlayContainer = this->findChildByNameAs<Container>("morda_overlay");
+	this->onChildrenListChanged();
+}
+
+void OverlayContainer::onChildrenListChanged(){
+	if(!this->overlayContainer || !this->overlayContainer->parent()){
+		this->overlayContainer = utki::makeShared<Container>();
+		this->add(this->overlayContainer);
+
+		auto& lp = this->getLayoutParams(*this->overlayContainer);
+
+		lp.dim.y = Widget::LayoutParams::D_Max;
+		lp.dim.x = Widget::LayoutParams::D_Max;
+	}
 	
-	if(chain){
-		ASSERT(this->contentContainer);
-		this->contentContainer->add(*chain);
+	ASSERT(this->overlayContainer)
+	ASSERT(this->children().size() >= 1)
+	
+	if(this->children().back() != this->overlayContainer){
+		auto w = this->overlayContainer->removeFromParent();
+		this->add(w);
 	}
 }
+
+
 
 void OverlayContainer::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);

@@ -13,7 +13,6 @@ namespace morda{
  */
 class OverlayContainer : public FrameContainer{
 	std::shared_ptr<Container> overlayContainer;
-	std::shared_ptr<FrameContainer> contentContainer;
 public:
 	OverlayContainer(const stob::Node* chain = nullptr);
 	
@@ -24,12 +23,10 @@ public:
 		return *this->overlayContainer;
 	}
 	
-	FrameContainer& content(){
-		return *this->contentContainer;
-	}
-	
 	void showContextMenu(std::shared_ptr<Widget> menu, Vec2r anchor);
 	
+	void onChildrenListChanged() override;
+
 private:
 
 };
