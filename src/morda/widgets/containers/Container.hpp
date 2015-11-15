@@ -111,17 +111,20 @@ public:
 
 
 
-template <class T> T* Widget::findParent(const char* name){
+template <class T> T* Widget::findAncestor(const char* name){
 	if(!this->parent()){
 		return nullptr;
 	}
-
+	
 	auto p = dynamic_cast<T*>(this->parent());
-	if(p && (!name || p->name() == name)){
-		return p;
+	
+	if(p){
+		if(!name || p->name() == name){
+			return p;
+		}
 	}
 
-	return this->parent()->findParent<T>();
+	return this->parent()->findAncestor<T>();
 }
 
 

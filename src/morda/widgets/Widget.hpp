@@ -313,7 +313,7 @@ public:
 	void makeTopmost();
 	
 	
-	template <class T> T* findParent(const char* name = nullptr); //defined in Container.hpp
+	template <class T> T* findAncestor(const char* name = nullptr); //defined in Container.hpp
 	
 	
 	/**
@@ -329,3 +329,7 @@ public:
 
 
 }//~namespace
+
+
+//Widget depends on Container, so need to define it also in all cases when widget is used.
+#include "containers/Container.hpp"

@@ -11,10 +11,7 @@ namespace morda{
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  */
-class OverlayContainer :
-		virtual public Widget,
-		private FrameContainer
-{
+class OverlayContainer : public FrameContainer{
 	std::shared_ptr<Container> overlayContainer;
 	std::shared_ptr<FrameContainer> contentContainer;
 public:
