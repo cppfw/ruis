@@ -798,7 +798,7 @@ App::App(const WindowParams& requestedWindowParams) :
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
 	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
 	
-	this->UpdateWindowRect(morda::Rectr(0, 0, float(width), float(height)));
+	this->updateWindowRect(morda::Rectr(0, 0, float(width), float(height)));
 }
 
 
@@ -815,7 +815,7 @@ std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string&
 
 
 
-void App::ShowVirtualKeyboard()noexcept{
+void App::showVirtualKeyboard()noexcept{
 	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 	
 	ASSERT(javaFunctionsWrapper)
@@ -824,7 +824,7 @@ void App::ShowVirtualKeyboard()noexcept{
 
 
 
-void App::HideVirtualKeyboard()noexcept{
+void App::hideVirtualKeyboard()noexcept{
 	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 	
 	ASSERT(javaFunctionsWrapper)

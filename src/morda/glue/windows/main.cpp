@@ -619,10 +619,10 @@ App::ResMan::ResMan(){
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
-		dotsPerCm(deviceContext),
+		dotsPerCm_var(deviceContext),
 		curWinRect(0, 0, -1, -1)
 {
-	this->UpdateWindowRect(
+	this->updateWindowRect(
 			morda::Rectr(
 					0,
 					0,
@@ -677,7 +677,7 @@ void App::Exec(){
 	}
 }
 
-void App::Quit()noexcept {
+void App::quit()noexcept {
 	this->quitFlag = true;
 }
 

@@ -104,7 +104,7 @@ public:
 		return false;
 	}
 	
-	void OnCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::EKey key) override{
+	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::EKey key) override{
 		if(unicode.size() == 0){
 			return;
 		}
@@ -620,12 +620,12 @@ public:
 		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater.Inflate(
 				*this->CreateResourceFileInterface("res/test.gui.stob")
 			);
-		this->SetRootWidget(c);
+		this->setRootWidget(c);
 		
 		std::dynamic_pointer_cast<morda::KeyProxyContainer>(c)->key = [this](bool isDown, morda::EKey keyCode) -> bool{
 			if(isDown){
 				if(keyCode == morda::EKey::ESCAPE){
-					this->Quit();
+					this->quit();
 				}
 			}
 			return false;
@@ -636,7 +636,7 @@ public:
 		
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
-			this->ShowVirtualKeyboard();
+			this->showVirtualKeyboard();
 		};
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){

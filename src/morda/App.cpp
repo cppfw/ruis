@@ -50,7 +50,7 @@ void App::render(){
 
 
 
-void App::UpdateWindowRect(const morda::Rectr& rect){
+void App::updateWindowRect(const morda::Rectr& rect){
 	if(this->curWinRect == rect){
 		return;
 	}
@@ -74,33 +74,33 @@ void App::UpdateWindowRect(const morda::Rectr& rect){
 
 
 
-void App::HandleMouseMove(const morda::Vec2r& pos, unsigned id){
+void App::handleMouseMove(const morda::Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
 	
 	if(this->rootWidget->isInteractive()){
 		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
-		this->rootWidget->onMouseMove(this->NativeWindowToRootCoordinates(pos), id);
+		this->rootWidget->onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
 	}
 }
 
 
 
-void App::HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned pointerID){
+void App::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
 
 	if(this->rootWidget->isInteractive()){
 		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
-		this->rootWidget->onMouseButton(isDown, this->NativeWindowToRootCoordinates(pos), button, pointerID);
+		this->rootWidget->onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, pointerID);
 	}
 }
 
 
 
-void App::HandleMouseHover(bool isHovered, unsigned pointerID){
+void App::handleMouseHover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -108,7 +108,7 @@ void App::HandleMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->setHovered(isHovered, pointerID);
 }
 
-void App::HandleKeyEvent(bool isDown, EKey keyCode){
+void App::handleKeyEvent(bool isDown, EKey keyCode){
 	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){
@@ -130,14 +130,14 @@ std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string&
 	return utki::makeUnique<papki::FSFile>(path);
 }
 
-void App::ShowVirtualKeyboard()noexcept{
+void App::showVirtualKeyboard()noexcept{
 	TRACE(<< "App::ShowVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
 
 
 
-void App::HideVirtualKeyboard()noexcept{
+void App::hideVirtualKeyboard()noexcept{
 	TRACE(<< "App::HideVirtualKeyboard(): invoked" << std::endl)
 	//do nothing
 }
@@ -187,7 +187,7 @@ App::ResMan::ResMan(){
 
 
 
-void App::SetFocusedWidget(const std::shared_ptr<Widget> w){
+void App::setFocusedWidget(const std::shared_ptr<Widget> w){
 	if(auto prev = this->focusedWidget.lock()){
 		prev->isFocused_var = false;
 		prev->onFocusedChanged();

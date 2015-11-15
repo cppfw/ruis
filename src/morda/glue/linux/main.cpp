@@ -187,7 +187,7 @@ App::DotsPerCmWrapper::DotsPerCmWrapper(XDisplayWrapper& display){
 
 
 App::App(const WindowParams& requestedWindowParams) :
-		dotsPerCm(xDisplay),
+		dotsPerCm_var(xDisplay),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
@@ -580,7 +580,7 @@ public:
 }//~namespace
 
 
-void App::Quit()noexcept{
+void App::quit()noexcept{
 	this->quitFlag = true;
 }
 
@@ -623,14 +623,14 @@ void App::Exec(){
 						break;
 					case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						this->UpdateWindowRect(morda::Rectr(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+						this->updateWindowRect(morda::Rectr(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
 						break;
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
 						{
 							EKey key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
-							this->HandleKeyEvent(true, key);
-							this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event), key);
+							this->handleKeyEvent(true, key);
+							this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event), key);
 						}
 						break;
 					case KeyRelease:
@@ -649,20 +649,20 @@ void App::Exec(){
 									)
 								{
 									//Key wasn't actually released
-									this->HandleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev), key);
+									this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev), key);
 
 									XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 									break;
 								}
 							}
 
-							this->HandleKeyEvent(false, key);
+							this->handleKeyEvent(false, key);
 						}
 						break;
 					case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						this->HandleMouseButton(
+						this->handleMouseButton(
 								true,
 								morda::Vec2r(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
@@ -670,7 +670,7 @@ void App::Exec(){
 							);
 						break;
 					case ButtonRelease:
-						this->HandleMouseButton(
+						this->handleMouseButton(
 								false,
 								morda::Vec2r(event.xbutton.x, event.xbutton.y),
 								ButtonNumberToEnum(event.xbutton.button),
@@ -679,16 +679,16 @@ void App::Exec(){
 						break;
 					case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-						this->HandleMouseMove(
+						this->handleMouseMove(
 								morda::Vec2r(event.xmotion.x, event.xmotion.y),
 								0
 							);
 						break;
 					case EnterNotify:
-						this->HandleMouseHover(true, 0);
+						this->handleMouseHover(true, 0);
 						break;
 					case LeaveNotify:
-						this->HandleMouseHover(false, 0);
+						this->handleMouseHover(false, 0);
 						break;
 					case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)

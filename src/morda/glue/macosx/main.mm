@@ -77,7 +77,7 @@ void Macosx_UpdateWindowRect(const morda::Rectr& r){
 	morda::App::inst().UpdateWindowRect(r);
 }
 
-void morda::App::Quit()noexcept{
+void morda::App::quit()noexcept{
 	this->quitFlag = true;
 }
 

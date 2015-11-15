@@ -283,7 +283,7 @@ bool TextInput::onKey(bool isDown, EKey keyCode){
 	return false;
 }
 
-void TextInput::OnCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key){
+void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key){
 	switch(key){
 		case EKey::ENTER:
 			break;

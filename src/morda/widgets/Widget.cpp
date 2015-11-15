@@ -297,7 +297,7 @@ void Widget::focus()noexcept{
 		return;
 	}
 
-	App::inst().SetFocusedWidget(this->sharedFromThis(this));
+	App::inst().setFocusedWidget(this->sharedFromThis(this));
 }
 
 
@@ -311,7 +311,7 @@ void Widget::unfocus()noexcept{
 
 	ASSERT(App::inst().focusedWidget.lock() && App::inst().focusedWidget.lock().operator->() == this)
 
-	App::inst().SetFocusedWidget(nullptr);
+	App::inst().setFocusedWidget(nullptr);
 }
 
 

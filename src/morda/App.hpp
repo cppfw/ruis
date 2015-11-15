@@ -102,7 +102,7 @@ private:
 		float value;
 		
 		DotsPerCmWrapper();
-	} dotsPerCm;
+	} dotsPerCm_var;
 	
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
@@ -136,7 +136,7 @@ private:
 	
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
-	friend void UpdateWindowRect(App& app, const morda::Rectr& rect);
+	friend void updateWindowRect(App& app, const morda::Rectr& rect);
 	friend void Render(App& app);
 	friend std::uint32_t Update(App& app);
 	friend void HandleInputEvents();
@@ -155,7 +155,7 @@ private:
 		float value;
 		
 		DotsPerCmWrapper(XDisplayWrapper& display);
-	} dotsPerCm;
+	} dotsPerCm_var;
 	
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
@@ -240,7 +240,7 @@ private:
 		float value;
 		
 		DotsPerCmWrapper(DeviceContextWrapper& dc);
-	} dotsPerCm;
+	} dotsPerCm_var;
 
 	friend void Main(int argc, const char** argv);
 	void Exec();
@@ -252,7 +252,7 @@ private:
 		float value;
 		
 		DotsPerCmWrapper();
-	} dotsPerCm;
+	} dotsPerCm_var;
 	
 	struct ApplicationObject{
 		void* id;
@@ -351,22 +351,22 @@ public:
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 
-	void UpdateWindowRect(const morda::Rectr& rect);
+	void updateWindowRect(const morda::Rectr& rect);
 
 	void render();
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r NativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
+	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
 		return morda::Vec2r(pos.x, this->winRect().d.y - pos.y - 1.0f);
 	}
 	
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseMove(const kolme::Vec2f& pos, unsigned id);
+	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void HandleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::EMouseButton button, unsigned id);
 	
-	void HandleMouseHover(bool isHovered, unsigned pointerID);
+	void handleMouseHover(bool isHovered, unsigned pointerID);
 
 protected:
 	App(const WindowParams& requestedWindowParams);
@@ -375,42 +375,44 @@ public:
 
 	virtual ~App()noexcept{}
 
-	void SetRootWidget(const std::shared_ptr<morda::Widget>& w){
+	void setRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
 		
 		this->rootWidget->moveTo(morda::Vec2r(0));
 		this->rootWidget->resize(this->winRect().d);
 	}
 	
-	void ShowVirtualKeyboard()noexcept;
+	void showVirtualKeyboard()noexcept;
 	
-	void HideVirtualKeyboard()noexcept;
+	void hideVirtualKeyboard()noexcept;
 	
 private:
 	std::weak_ptr<Widget> focusedWidget;
 	
-	void SetFocusedWidget(const std::shared_ptr<Widget> w);
+	void setFocusedWidget(const std::shared_ptr<Widget> w);
 	
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <class UnicodeResolver> void HandleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
+	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
 		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-				c->OnCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
+				c->onCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
 			}
 		}
 	}
 	
-	void HandleKeyEvent(bool isDown, EKey keyCode);
+	void handleKeyEvent(bool isDown, EKey keyCode);
 	
 public:
 	
-	float DotsPerCm()const noexcept{
-		return this->dotsPerCm.value;
+	float dotsPerCm()const noexcept{
+		return this->dotsPerCm_var.value;
 	}
 	
-	void Quit()noexcept;
+	//TODO: add dots per inch
+	
+	void quit()noexcept;
 };
 
 
