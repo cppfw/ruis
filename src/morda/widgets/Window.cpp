@@ -411,7 +411,7 @@ void morda::Window::setTitle(const std::string& str){
 
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	if(isDown){
-		morda::App::inst().PostToUIThread_ts(
+		morda::App::inst().postToUiThread_ts(
 				[this](){
 					this->makeTopmost();
 				}

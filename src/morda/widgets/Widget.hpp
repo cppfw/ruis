@@ -167,7 +167,7 @@ public:
 		return this->rectangle;
 	}
 	
-	kolme::Recti ComputeViewportRect(const Matr4r& matrix)const noexcept;
+	kolme::Recti computeViewportRect(const Matr4r& matrix)const noexcept;
 	
 	void moveTo(const morda::Vec2r& newPos)noexcept{
 		this->rectangle.p = newPos;

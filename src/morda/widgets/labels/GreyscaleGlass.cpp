@@ -19,7 +19,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
 	//texture is bound right after creation
 	
-	kolme::Recti viewPortRect = this->ComputeViewportRect(matrix);
+	kolme::Recti viewPortRect = this->computeViewportRect(matrix);
 	
 	if(!viewPortRect.d.isPositive()){
 		return;

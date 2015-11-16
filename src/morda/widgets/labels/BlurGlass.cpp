@@ -15,7 +15,7 @@ BlurGlass::BlurGlass(const stob::Node* chain) :
 
 
 void BlurGlass::render(const morda::Matr4r& matrix)const{
-	kolme::Recti viewPortRect = this->ComputeViewportRect(matrix);
+	kolme::Recti viewPortRect = this->computeViewportRect(matrix);
 	
 	if(!viewPortRect.d.isPositive()){
 		return;

@@ -305,10 +305,10 @@ private:
 
 #if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
 public:
-	void PostToUIThread_ts(std::function<void()>&& f);
+	void postToUiThread_ts(std::function<void()>&& f);
 #else
 public:
-	void PostToUIThread_ts(std::function<void()>&& f){	
+	void postToUiThread_ts(std::function<void()>&& f){	
 		this->uiQueue.pushMessage(std::move(f));
 	}
 private:

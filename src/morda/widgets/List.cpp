@@ -20,7 +20,7 @@ public:
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
-		return morda::App::inst().inflater.Inflate(*(this->widgets[index]));
+		return morda::App::inst().inflater.inflate(*(this->widgets[index]));
 	}
 	
 
@@ -402,7 +402,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 		return;
 	}
 	
-	App::inst().PostToUIThread_ts(
+	App::inst().postToUiThread_ts(
 		[this](){
 			this->list->handleDataSetChanged();
 		}

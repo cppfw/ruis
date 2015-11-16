@@ -74,7 +74,7 @@ public:
 	 * @param chain - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> Inflate(const stob::Node& chain);
+	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
 
 	/**
 	 * @brief Inflate widget described in GUI script.

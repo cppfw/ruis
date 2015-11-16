@@ -471,11 +471,11 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::inst().inflater.Inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::inst().inflater.inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
 			if(n->child()){
-				auto w = morda::App::inst().inflater.Inflate(*stob::parse(DPlusMinus));
+				auto w = morda::App::inst().inflater.inflate(*stob::parse(DPlusMinus));
 
 				auto plusminus = w->findChildByNameAs<morda::TextLabel>("plusminus");
 				ASSERT(plusminus)
@@ -511,7 +511,7 @@ public:
 		}
 		
 		{
-			auto v = morda::App::inst().inflater.Inflate(*stob::parse(
+			auto v = morda::App::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
 							FrameContainer{
 								ColorLabel{
@@ -563,7 +563,7 @@ public:
 		}
 		
 		{
-			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::inst().inflater.Inflate(*stob::parse(
+			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
 							PushButton{
 								ColorLabel{
@@ -642,7 +642,7 @@ public:
 		};
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
-			this->PostToUIThread_ts(
+			this->postToUiThread_ts(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
 					}

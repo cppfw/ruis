@@ -50,7 +50,7 @@ Widget::LayoutParams& Container::getLayoutParams_internal(Widget& w){
 
 void Container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().node(); n; n = n->nextNonProperty().node()){
-		this->add(morda::App::inst().inflater.Inflate(*n));
+		this->add(morda::App::inst().inflater.inflate(*n));
 	}
 }
 

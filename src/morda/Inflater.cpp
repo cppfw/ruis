@@ -101,7 +101,7 @@ std::shared_ptr<morda::Widget> Inflater::Inflate(papki::File& fi) {
 	std::unique_ptr<stob::Node> root = this->Load(fi);
 	ASSERT(root)
 
-	return std::move(this->Inflate(*root));
+	return std::move(this->inflate(*root));
 }
 
 
@@ -167,7 +167,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 
 }
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(const stob::Node& chain){
+std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	if(!App::inst().ThisIsUIThread()){
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}

@@ -11,7 +11,6 @@ class DropDownSelector :
 		private HorizontalContainer
 {
 	std::shared_ptr<FrameContainer> selectionContainer;
-	std::shared_ptr<Widget> dropDown; //null if drop down is not opened
 public:
 	class ItemsProvider : virtual public utki::Shared{
 		friend class DropDownSelector;
@@ -20,10 +19,13 @@ public:
 	protected:
 		ItemsProvider(){}
 	public:
+		DropDownSelector* dropDownSelector(){
+			return this->dd;
+		}
 		
 		virtual size_t count()const noexcept = 0;
 		
-		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<Widget> getWidget(size_t index, bool isSelection) = 0;
 		
 		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
 		
@@ -44,6 +46,7 @@ public:
 	DropDownSelector(const DropDownSelector&) = delete;
 	DropDownSelector& operator=(const DropDownSelector&) = delete;
 	
+	void setSelection(size_t i);
 	
 private:
 	void handleDataSetChanged();

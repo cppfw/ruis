@@ -679,7 +679,7 @@ void morda::App::macosx_SwapFrameBuffers(){
 }
 
 
-void morda::App::PostToUIThread_ts(std::function<void()>&& f){	
+void morda::App::postToUiThread_ts(std::function<void()>&& f){	
 	NSEvent* e = [NSEvent
 			otherEventWithType: NSApplicationDefined
 			location: NSMakePoint(0, 0)

@@ -169,7 +169,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
-			kolme::Recti scissor = this->ComputeViewportRect(matrix);
+			kolme::Recti scissor = this->computeViewportRect(matrix);
 
 			kolme::Recti oldScissor;
 			bool scissorTestWasEnabled = Render::isScissorEnabled();
@@ -352,7 +352,7 @@ void Widget::makeTopmost(){
 
 
 
-kolme::Recti Widget::ComputeViewportRect(const Matr4r& matrix) const noexcept{
+kolme::Recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
 	return kolme::Recti(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
