@@ -326,7 +326,7 @@ namespace morda{
 			return true;
 
 		case WM_MOUSEMOVE:
-			app.HandleMouseMove(
+			app.handleMouseMove(
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				0
 				);
@@ -334,7 +334,7 @@ namespace morda{
 			return true;
 
 		case WM_LBUTTONDOWN:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::LEFT,
@@ -344,7 +344,7 @@ namespace morda{
 			return true;
 
 		case WM_LBUTTONUP:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::LEFT,
@@ -354,7 +354,7 @@ namespace morda{
 			return true;
 
 		case WM_MBUTTONDOWN:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::MIDDLE,
@@ -364,7 +364,7 @@ namespace morda{
 			return true;
 
 		case WM_MBUTTONUP:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::MIDDLE,
@@ -374,7 +374,7 @@ namespace morda{
 			return true;
 
 		case WM_RBUTTONDOWN:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::RIGHT,
@@ -384,7 +384,7 @@ namespace morda{
 			return true;
 
 		case WM_RBUTTONUP:
-			app.HandleMouseButton(
+			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				Widget::EMouseButton::RIGHT,
@@ -402,19 +402,19 @@ namespace morda{
 		{
 			morda::EKey key = keyCodeMap[std::uint8_t(wParam)];
 			if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-				app.HandleKeyEvent(true, key);
+				app.handleKeyEvent(true, key);
 			}
-			app.HandleCharacterInput(KeyEventUnicodeResolver(), key);
+			app.handleCharacterInput(KeyEventUnicodeResolver(), key);
 			lres = 0;
 			return true;
 		}
 		case WM_KEYUP:
-			app.HandleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
+			app.handleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
 			lres = 0;
 			return true;
 
 		case WM_CHAR:
-			app.HandleCharacterInput(KeyEventUnicodeResolver(std::uint32_t(wParam)), EKey::UNKNOWN);
+			app.handleCharacterInput(KeyEventUnicodeResolver(std::uint32_t(wParam)), EKey::UNKNOWN);
 			lres = 0;
 			return true;
 		case WM_PAINT:
@@ -426,15 +426,15 @@ namespace morda{
 
 		case WM_SIZE:
 			//resize GL, LoWord=Width, HiWord=Height
-			app.UpdateWindowRect(morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
+			app.updateWindowRect(morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
 			lres = 0;
 			return true;
 
 		case WM_USER:
-		{
+			{
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(lParam));
 						(*m)();
-		}
+			}
 			return true;
 
 		default:
