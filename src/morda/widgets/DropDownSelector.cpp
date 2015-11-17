@@ -36,6 +36,9 @@ const char* DLayout = R"qwertyuiop(
 
 const char* DDropDownItemLayout = R"qwertyuiop(
 		FrameContainer{
+			layout{
+				dimX{max}
+			}
 			MouseProxy{
 				name{morda_dropdown_mouseproxy}
 				layout{
