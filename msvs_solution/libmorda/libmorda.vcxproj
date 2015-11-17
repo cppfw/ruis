@@ -174,7 +174,7 @@
     <ClCompile Include="..\..\src\morda\widgets\labels\ColorLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\labels\GreyscaleGlass.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\labels\ImageLabel.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\Label.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\labels\TextLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\List.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\MouseProxy.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\NinePatch.cpp" />

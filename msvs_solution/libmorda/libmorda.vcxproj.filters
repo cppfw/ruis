@@ -174,7 +174,7 @@
     <ClCompile Include="..\..\src\morda\widgets\labels\ImageLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\morda\widgets\labels\Label.cpp">
+    <ClCompile Include="..\..\src\morda\widgets\labels\TextLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
