@@ -44,14 +44,14 @@ void Macosx_Main(int argc, const char** argv){
 
 void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
-	morda::App::inst().HandleMouseMove(
+	morda::App::inst().handleMouseMove(
 			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
 			id
 		);
 }
 
 void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id){
-	morda::App::inst().HandleMouseButton(
+	morda::App::inst().handleMouseButton(
 			isDown,
 			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
 			button,
@@ -60,21 +60,21 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMou
 }
 
 void Macosx_HandleMouseHover(bool isHovered){
-	morda::App::inst().HandleMouseHover(isHovered, 0);
+	morda::App::inst().handleMouseHover(isHovered, 0);
 }
 
 void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
-	morda::App::inst().HandleKeyEvent(isDown, keyCode);
+	morda::App::inst().handleKeyEvent(isDown, keyCode);
 }
 
 void Macosx_HandleCharacterInput(const void* nsstring, EKey key){
-	morda::App::inst().HandleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
+	morda::App::inst().handleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
 void Macosx_UpdateWindowRect(const morda::Rectr& r){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
-	morda::App::inst().UpdateWindowRect(r);
+	morda::App::inst().updateWindowRect(r);
 }
 
 void morda::App::quit()noexcept{
@@ -560,7 +560,7 @@ int main (int argc, const char** argv){
 
 -(BOOL)windowShouldClose:(id)sender{
 	TRACE(<< "window wants to close!!!!" << std::endl)
-	morda::App::inst().Quit();
+	morda::App::inst().quit();
 	return NO;
 }
 
@@ -661,7 +661,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(windowObject.id)
 {
-	this->UpdateWindowRect(
+	this->updateWindowRect(
 			morda::Rectr(
 					0,
 					0,
