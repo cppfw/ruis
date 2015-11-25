@@ -44,6 +44,6 @@
 	```
 	git clone git@github.com:igagis/morda.git
 	cd morda
-	make
+	make debug=true
 	make test
 	```
