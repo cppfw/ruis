@@ -695,9 +695,9 @@ void Main(int argc, const char** argv){
 		f = reinterpret_cast<Factory>(GetProcAddress(
 				GetModuleHandle(NULL),			
 #if M_CPU == M_CPU_X86_64
-				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPEAPEBDV?$Buf@E@utki@@@Z")
+				TEXT("?createApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPEAPEBDV?$Buf@E@utki@@@Z")
 #else
-				TEXT("?CreateApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")
+				TEXT("?createApp@morda@@YA?AV?$unique_ptr@VApp@morda@@U?$default_delete@VApp@morda@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")
 #endif
 			));
 	}

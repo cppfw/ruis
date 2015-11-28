@@ -37,7 +37,7 @@ public:
 namespace morda{
 
 void Macosx_Main(int argc, const char** argv){
-	auto app = morda::CreateApp(argc, argv, utki::wrapBuf<std::uint8_t>(nullptr, 0));
+	auto app = morda::createApp(argc, argv, utki::wrapBuf<std::uint8_t>(nullptr, 0));
 
 	app->Exec();
 }

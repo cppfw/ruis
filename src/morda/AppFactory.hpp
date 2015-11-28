@@ -20,7 +20,7 @@ namespace morda{
 __declspec(dllexport)
 #endif
 
-std::unique_ptr<App> CreateApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState);
+std::unique_ptr<App> createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState);
 
 
 
