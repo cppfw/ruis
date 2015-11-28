@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "Widget.hpp"
 #include "List.hpp"
 
