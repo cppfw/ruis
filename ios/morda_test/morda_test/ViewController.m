@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 
+#import <OpenGlES/ES2/glext.h>
+
+
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 // Uniform index.

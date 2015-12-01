@@ -23,7 +23,7 @@
 		2C6512C21C0A60F800D295F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512C11C0A60F800D295F5 /* XCTest.framework */; };
 		2C6512C31C0A60F800D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C6512C41C0A60F800D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
-		2C6512D91C0A629200D295F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6512D81C0A629200D295F5 /* main.m */; };
+		2C6512D91C0A629200D295F5 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C6512D81C0A629200D295F5 /* main.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,7 @@
 		2C6512BA1C0A60F800D295F5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2C6512C01C0A60F800D295F5 /* morda_testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = morda_testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512C11C0A60F800D295F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		2C6512D81C0A629200D295F5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../src/morda/glue/ios/main.m; sourceTree = "<group>"; };
+		2C6512D81C0A629200D295F5 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +148,7 @@
 		2C6512D71C0A626600D295F5 /* morda */ = {
 			isa = PBXGroup;
 			children = (
-				2C6512D81C0A629200D295F5 /* main.m */,
+				2C6512D81C0A629200D295F5 /* main.mm */,
 			);
 			name = morda;
 			sourceTree = "<group>";
@@ -197,7 +197,7 @@
 		2C65128C1C0A60F700D295F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = org.igagis;
 				TargetAttributes = {
 					2C6512BF1C0A60F800D295F5 = {
@@ -253,7 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */,
-				2C6512D91C0A629200D295F5 /* main.m in Sources */,
+				2C6512D91C0A629200D295F5 /* main.mm in Sources */,
 				2C6512AC1C0A60F700D295F5 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +321,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -383,6 +384,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -396,6 +398,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -460,6 +463,7 @@
 				2C6512D31C0A60F800D295F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C6512D41C0A60F800D295F5 /* Build configuration list for PBXNativeTarget "morda_testTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +472,7 @@
 				2C6512D61C0A60F800D295F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
