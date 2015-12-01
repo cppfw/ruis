@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		10A9C62395F6290855B1BF73 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E415AE30DEBB436F57FDE6 /* libPods.a */; };
+		2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1B81C0E622C0024ADE4 /* main.mm */; };
+		2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1BA1C0E624D0024ADE4 /* App.cpp */; };
 		2C6512981C0A60F700D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C65129A1C0A60F700D295F5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512991C0A60F700D295F5 /* CoreGraphics.framework */; };
 		2C65129C1C0A60F700D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
@@ -24,7 +26,6 @@
 		2C6512C21C0A60F800D295F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512C11C0A60F800D295F5 /* XCTest.framework */; };
 		2C6512C31C0A60F800D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C6512C41C0A60F800D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
-		2CFC77B91C0E5DCB004A12F4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC77B81C0E5DCB004A12F4 /* main.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +40,8 @@
 
 /* Begin PBXFileReference section */
 		092CF4F2F5A713FD722963EA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		2C2433CA1C0E522B00D21771 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = App.cpp; path = ../../src/morda/App.cpp; sourceTree = "<group>"; };
-		2C2433CC1C0E524500D21771 /* Inflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Inflater.cpp; path = ../../src/morda/Inflater.cpp; sourceTree = "<group>"; };
+		2C03C1B81C0E622C0024ADE4 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
+		2C03C1BA1C0E624D0024ADE4 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = App.cpp; path = ../src/morda/App.cpp; sourceTree = "<group>"; };
 		2C6512941C0A60F700D295F5 /* morda_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = morda_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512971C0A60F700D295F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C6512991C0A60F700D295F5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,8 +62,6 @@
 		2C6512BA1C0A60F800D295F5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2C6512C01C0A60F800D295F5 /* morda_testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = morda_testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512C11C0A60F800D295F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		2C6512D81C0A629200D295F5 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
-		2CFC77B81C0E5DCB004A12F4 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
 		88E415AE30DEBB436F57FDE6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		957ADA57ADC66A3BC19FCC35 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,7 +96,6 @@
 		2C65128B1C0A60F700D295F5 = {
 			isa = PBXGroup;
 			children = (
-				2CFC77B81C0E5DCB004A12F4 /* main.mm */,
 				2C6512D71C0A626600D295F5 /* morda */,
 				2C6512A11C0A60F700D295F5 /* morda_test */,
 				2C6512961C0A60F700D295F5 /* Frameworks */,
@@ -159,9 +157,8 @@
 		2C6512D71C0A626600D295F5 /* morda */ = {
 			isa = PBXGroup;
 			children = (
-				2C2433CC1C0E524500D21771 /* Inflater.cpp */,
-				2C2433CA1C0E522B00D21771 /* App.cpp */,
-				2C6512D81C0A629200D295F5 /* main.mm */,
+				2C03C1BA1C0E624D0024ADE4 /* App.cpp */,
+				2C03C1B81C0E622C0024ADE4 /* main.mm */,
 			);
 			name = morda;
 			sourceTree = "<group>";
@@ -325,7 +322,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CFC77B91C0E5DCB004A12F4 /* main.mm in Sources */,
+				2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */,
+				2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */,
 				2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */,
 				2C6512AC1C0A60F700D295F5 /* AppDelegate.m in Sources */,
 			);
