@@ -1,3 +1,5 @@
 source 'https://github.com/igagis/cocoapods-repo.git'
 
 pod 'libutki', '>= 1.0.8'
+pod 'libpapki', '>= 1.0.3'
+
