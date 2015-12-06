@@ -117,7 +117,7 @@ public:
 			morda::Matr4r matr(matrix);
 			matr.scale(this->rect().d);
 
-			this->tex->Tex().bind();
+			this->tex->tex().bind();
 
 			morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
 
@@ -170,7 +170,7 @@ public:
 		
 		m.rotate(this->rot);
 
-		this->tex->Tex().bind();
+		this->tex->tex().bind();
 		
 		morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
 

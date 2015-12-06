@@ -7,7 +7,7 @@ using namespace morda;
 
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::Load(const stob::Node& chain, const papki::File& fi){
+std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const papki::File& fi){
 	auto tex = morda::App::inst().resMan.Load<ResTexture>(chain.side("tex").up().value());
 	
 	auto rect = makeRectrFromSTOB(&chain.side("rect").up());

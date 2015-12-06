@@ -206,8 +206,8 @@ App::Inflater::Inflater(){
 	try{
 		auto t = morda::App::inst().resMan.Load<ResSTOB>("morda_gui_definitions");
 		
-		if(t->STOB()){
-			this->inflate(*t->STOB());
+		if(t->chain()){
+			this->inflate(*t->chain());
 		}
 		
 	}catch(ResourceManager::Exc&){

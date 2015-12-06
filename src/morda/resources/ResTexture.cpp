@@ -11,7 +11,7 @@ using namespace morda;
 
 
 //static
-std::shared_ptr<ResTexture> ResTexture::Load(const stob::Node& chain, const papki::File& fi){
+std::shared_ptr<ResTexture> ResTexture::load(const stob::Node& chain, const papki::File& fi){
 //	TRACE(<< "ResTexture::Load(): enter" << std::endl)
 
 //	TRACE(<< "ResTexture::Load(): Loading image, file path = " << fileVal->value() << std::endl)

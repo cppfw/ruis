@@ -17,7 +17,7 @@ ResFont::ResFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, un
 
 
 //static
-std::shared_ptr<ResFont> ResFont::Load(const stob::Node& chain, const papki::File& fi){
+std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::File& fi){
 	//read chars attribute
 	std::vector<std::uint32_t> wideChars;
 	for(unikod::Utf8Iterator i(chain.side("chars").up().value()); !i.isEnd(); ++i){

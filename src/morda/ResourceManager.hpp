@@ -153,7 +153,7 @@ template <class T> std::shared_ptr<T> ResourceManager::Load(const char* resName)
 		throw Exc("ResourceManager::Load(): resource description is empty");
 	}
 	
-	auto resource = T::Load(*ret.e.child(), *ret.rp.fi);
+	auto resource = T::load(*ret.e.child(), *ret.rp.fi);
 
 	this->AddResource(resource, ret.e);
 
