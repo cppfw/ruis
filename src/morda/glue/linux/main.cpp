@@ -621,7 +621,7 @@ void App::Exec(){
 	this->render();
 	
 	while(!this->quitFlag){
-		waitSet.waitWithTimeout(this->updater.Update());
+		waitSet.waitWithTimeout(this->updater.update());
 		
 		if(this->uiQueue.canRead()){
 			while(auto m = this->uiQueue.peekMsg()){

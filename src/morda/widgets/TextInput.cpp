@@ -238,7 +238,7 @@ size_t TextInput::PosToIndex(real pos){
 }
 
 
-void TextInput::Update(std::uint32_t dt){
+void TextInput::update(std::uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
@@ -248,7 +248,7 @@ void TextInput::onFocusedChanged(){
 		this->shiftPressed = false;
 		this->StartCursorBlinking();
 	}else{
-		this->StopUpdating();
+		this->stopUpdating();
 	}
 }
 
@@ -258,9 +258,9 @@ void TextInput::onResize(){
 
 
 void TextInput::StartCursorBlinking(){
-	this->StopUpdating();
+	this->stopUpdating();
 	this->cursorBlinkVisible = true;
-	this->StartUpdating(D_CursorBlinkPeriod);
+	this->startUpdating(D_CursorBlinkPeriod);
 }
 
 bool TextInput::onKey(bool isDown, EKey keyCode){

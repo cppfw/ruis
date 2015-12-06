@@ -29,9 +29,9 @@ private:
 		
 		class UpdateQueue : public std::list<T_Pair>{
 		public:
-			UpdateQueue::iterator Insert(const T_Pair& p);
+			UpdateQueue::iterator insertPair(const T_Pair& p);
 
-			std::shared_ptr<morda::Updateable> PopFront(){
+			std::shared_ptr<morda::Updateable> popFront(){
 				std::shared_ptr<morda::Updateable> ret = std::move(this->front().second.lock());
 				this->pop_front();
 				return std::move(ret);
@@ -47,19 +47,19 @@ private:
 		typedef std::list<std::shared_ptr<morda::Updateable> > T_ToAddList;
 		T_ToAddList toAdd;
 		
-		void AddPending();
+		void addPending();
 		
-		void UpdateUpdateable(const std::shared_ptr<morda::Updateable>& u);
+		void updateUpdateable(const std::shared_ptr<morda::Updateable>& u);
 	public:
 		Updater() :
 				activeQueue(&q1),
 				inactiveQueue(&q2)
 		{}
 		
-		void RemoveFromToAdd(Updateable* u);
+		void removeFromToAdd(Updateable* u);
 		
 		//returns dt to wait before next update
-		std::uint32_t Update();
+		std::uint32_t update();
 	};
 	
 private:
@@ -67,11 +67,11 @@ private:
 	
 	std::uint32_t startedAt; //timestamp when update timer started.
 	
-	std::uint32_t EndAt()const noexcept{
+	std::uint32_t endAt()const noexcept{
 		return this->startedAt + std::uint32_t(this->dt);
 	}
 	
-	bool isUpdating = false;
+	bool isUpdating_var = false;
 	
 	//pointer to the queue the updateable is inserted into
 	Updater::UpdateQueue* queue = nullptr;
@@ -90,15 +90,15 @@ public:
 	
 	~Updateable()noexcept{}
 	
-	bool IsUpdating()const noexcept{
-		return this->isUpdating;
+	bool isUpdating()const noexcept{
+		return this->isUpdating_var;
 	}
 	
-	void StartUpdating(std::uint16_t dt = 30);
+	void startUpdating(std::uint16_t dt = 30);
 	
-	void StopUpdating()noexcept;
+	void stopUpdating()noexcept;
 	
-	virtual void Update(std::uint32_t dt) = 0;
+	virtual void update(std::uint32_t dt) = 0;
 };
 
 }//~namespace

@@ -9,8 +9,8 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 		Widget(chain),
 		NinePatch(chain)
 {
-	this->imgNormal = morda::App::inst().resMan.Load<ResNinePatch>("morda_npt_pushbutton");
-	this->imgPressed = morda::App::inst().resMan.Load<ResNinePatch>("morda_npt_pushbutton_pressed");
+	this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton");
+	this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_pressed");
 	
 	//initialize nine-patch
 	this->NinePatchButton::onPressedChanged();

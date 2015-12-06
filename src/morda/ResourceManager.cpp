@@ -16,7 +16,7 @@ const char* D_Include = "include";
 
 
 
-void ResourceManager::MountResPack(const papki::File& fi){
+void ResourceManager::mountResPack(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 	
 	std::string dir = fi.dir();
@@ -34,7 +34,7 @@ void ResourceManager::MountResPack(const papki::File& fi){
 		auto incNode = np.prev()->removeNext()->removeChildren();
 		
 		fi.setPath(dir + incNode->value());
-		this->MountResPack(fi);
+		this->mountResPack(fi);
 	}
 
 	if(!resScript->next()){
@@ -52,7 +52,7 @@ void ResourceManager::MountResPack(const papki::File& fi){
 
 
 
-ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std::string& resName){
+ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std::string& resName){
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
@@ -69,7 +69,7 @@ ResourceManager::FindInScriptRet ResourceManager::FindResourceInScript(const std
 
 
 
-void ResourceManager::AddResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
+void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
 	ASSERT(res)
 
 	ASSERT(this->resMap.find(node.value()) == this->resMap.end())

@@ -40,14 +40,14 @@ public:
 			morda::Widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::App::inst().resMan.Load<morda::ResTexture>("tex_sample");
-		this->fnt = morda::App::inst().resMan.Load<morda::ResFont>("morda_fnt_main");
+		this->tex = morda::App::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->fnt = morda::App::inst().resMan.load<morda::ResFont>("morda_fnt_main");
 	}
 	
 	std::uint32_t timer = 0;
 	std::uint32_t cnt = 0;
 	
-	void Update(std::uint32_t dt) override{
+	void update(std::uint32_t dt) override{
 		this->timer += dt;
 		++this->cnt;
 		
@@ -66,10 +66,10 @@ public:
 			return false;
 		}
 		
-		if(this->IsUpdating()){
-			this->StopUpdating();
+		if(this->isUpdating()){
+			this->stopUpdating();
 		}else{
-			this->StartUpdating(30);
+			this->startUpdating(30);
 		}
 		this->focus();
 		return true;
@@ -147,13 +147,13 @@ public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
-		this->tex = morda::App::inst().resMan.Load<morda::ResTexture>("tex_sample");
+		this->tex = morda::App::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
 		
 		
 	}
 	
-	void Update(std::uint32_t dt) override{
+	void update(std::uint32_t dt) override{
 		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 	}
 	
@@ -613,14 +613,14 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->resMan.MountResPack(*this->CreateResourceFileInterface("res/"));
+		this->resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		
 		this->inflater.AddWidget<SimpleWidget>("U_SimpleWidget");
 		this->inflater.AddWidget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater.Inflate(
-				*this->CreateResourceFileInterface("res/test.gui.stob")
+		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/test.gui.stob")
 			);
 		this->setRootWidget(c);
 		
@@ -649,7 +649,7 @@ public:
 				);
 		};
 		
-		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->StartUpdating(30);
+		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->startUpdating(30);
 		
 		//ScrollContainer
 		{

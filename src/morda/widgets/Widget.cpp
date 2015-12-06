@@ -291,7 +291,7 @@ void Widget::onKeyInternal(bool isDown, EKey keyCode){
 
 
 void Widget::focus()noexcept{
-	ASSERT(App::inst().ThisIsUIThread())
+	ASSERT(App::inst().thisIsUIThread())
 
 	if(this->isFocused()){
 		return;
@@ -303,7 +303,7 @@ void Widget::focus()noexcept{
 
 
 void Widget::unfocus()noexcept{
-	ASSERT(App::inst().ThisIsUIThread())
+	ASSERT(App::inst().thisIsUIThread())
 
 	if(!this->isFocused()){
 		return;

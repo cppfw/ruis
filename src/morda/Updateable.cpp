@@ -10,14 +10,14 @@ using namespace morda;
 
 
 
-Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::Insert(const T_Pair& p){
+Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::insertPair(const T_Pair& p){
 	if(this->size() == 0 || this->back().first <= p.first){
 		this->push_back(p);
 		return --(this->end());
 	}
 	
 	//otherwise, go from the beginning
-	for(iterator i = this->begin(); i != this->end(); ++i){
+	for(auto i = this->begin(); i != this->end(); ++i){
 		if(i->first >= p.first){
 			return this->insert(i, p); //inserts before iterator
 		}
@@ -29,21 +29,21 @@ Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::Ins
 
 
 
-void Updateable::Updater::AddPending(){
+void Updateable::Updater::addPending(){
 	while(this->toAdd.size() != 0){
 		T_Pair p;
 		
-		p.first = this->toAdd.front()->EndAt();
+		p.first = this->toAdd.front()->endAt();
 		p.second = this->toAdd.front();
 		
 		if(p.first < this->lastUpdatedTimestamp){
 //			TRACE(<< "Updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
 			this->toAdd.front()->queue = this->inactiveQueue;
-			this->toAdd.front()->iter = this->inactiveQueue->Insert(p);
+			this->toAdd.front()->iter = this->inactiveQueue->insertPair(p);
 		}else{
 //			TRACE(<< "Updateable::Updater::AddPending(): inserted to active queue" << std::endl)
 			this->toAdd.front()->queue = this->activeQueue;
-			this->toAdd.front()->iter = this->activeQueue->Insert(p);
+			this->toAdd.front()->iter = this->activeQueue->insertPair(p);
 		}
 		
 		this->toAdd.front()->pendingAddition = false;
@@ -54,7 +54,7 @@ void Updateable::Updater::AddPending(){
 
 
 
-void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateable>& u){
+void Updateable::Updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -63,10 +63,10 @@ void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateab
 	//at this point updateable is removed from update queue, so set it to 0
 	u->queue = 0;
 	
-	u->Update(this->lastUpdatedTimestamp - u->startedAt);
+	u->update(this->lastUpdatedTimestamp - u->startedAt);
 	
 	//if not stopped during update, add it back
-	if(u->IsUpdating()){
+	if(u->isUpdating()){
 		u->startedAt = this->lastUpdatedTimestamp;
 		u->pendingAddition = true;
 		this->toAdd.push_back(u);
@@ -75,12 +75,12 @@ void Updateable::Updater::UpdateUpdateable(const std::shared_ptr<morda::Updateab
 
 
 
-std::uint32_t Updateable::Updater::Update(){
+std::uint32_t Updateable::Updater::update(){
 	std::uint32_t curTime = aika::getTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
-	this->AddPending();//add pending before updating this->lastUpdatedTimestamp
+	this->addPending();//add pending before updating this->lastUpdatedTimestamp
 	
 	//check if there is a warp around
 	if(curTime < this->lastUpdatedTimestamp){
@@ -90,7 +90,7 @@ std::uint32_t Updateable::Updater::Update(){
 		
 		//if time has warped, then all Updateables from active queue have expired.
 		while(this->activeQueue->size() != 0){
-			this->UpdateUpdateable(this->activeQueue->PopFront());
+			this->updateUpdateable(this->activeQueue->popFront());
 		}
 		
 		std::swap(this->activeQueue, this->inactiveQueue);
@@ -105,10 +105,10 @@ std::uint32_t Updateable::Updater::Update(){
 		if(this->activeQueue->front().first > curTime){
 			break;
 		}
-		this->UpdateUpdateable(this->activeQueue->PopFront());
+		this->updateUpdateable(this->activeQueue->popFront());
 	}
 	
-	this->AddPending();//after updating need to add recurring Updateables if any
+	this->addPending();//after updating need to add recurring Updateables if any
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
@@ -142,7 +142,7 @@ std::uint32_t Updateable::Updater::Update(){
 
 
 
-void Updateable::Updater::RemoveFromToAdd(Updateable* u){
+void Updateable::Updater::removeFromToAdd(Updateable* u){
 	ASSERT(u->pendingAddition)
 	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
 		if((*i).operator->() == u){
@@ -156,18 +156,18 @@ void Updateable::Updater::RemoveFromToAdd(Updateable* u){
 
 
 
-void Updateable::StartUpdating(std::uint16_t dt){
-	ASSERT(App::inst().ThisIsUIThread())
+void Updateable::startUpdating(std::uint16_t dt){
+	ASSERT(App::inst().thisIsUIThread())
 
 //	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
-	if(this->IsUpdating()){
+	if(this->isUpdating()){
 		throw Exc("Updateable::StartUpdating(): Already updating");
 	}
 	
 	this->dt = dt;
 	this->startedAt = aika::getTicks();
-	this->isUpdating = true;
+	this->isUpdating_var = true;
 	
 	this->pendingAddition = true;
 	
@@ -176,15 +176,15 @@ void Updateable::StartUpdating(std::uint16_t dt){
 
 
 
-void Updateable::StopUpdating()noexcept{
-	ASSERT(App::inst().ThisIsUIThread())
+void Updateable::stopUpdating()noexcept{
+	ASSERT(App::inst().thisIsUIThread())
 	
 	if(this->queue){
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		App::inst().updater.RemoveFromToAdd(this);
+		App::inst().updater.removeFromToAdd(this);
 	}
 
-	this->isUpdating = false;
+	this->isUpdating_var = false;
 }

@@ -804,12 +804,12 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 App::ResMan::ResMan(){
-	this->MountResPack(*morda::App::inst().CreateResourceFileInterface("morda_res/"));
+	this->mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/"));
 }
 
 
 
-std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
 }
 

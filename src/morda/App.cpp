@@ -126,7 +126,7 @@ void App::handleKeyEvent(bool isDown, EKey keyCode){
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
-std::unique_ptr<papki::File> App::CreateResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
 	return utki::makeUnique<papki::FSFile>(path);
 }
 
@@ -175,7 +175,7 @@ App::ResMan::ResMan(){
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			this->MountResPack(*morda::App::inst().CreateResourceFileInterface(s));
+			this->mountResPack(*morda::App::inst().createResourceFileInterface(s));
 		}catch(papki::Exc& e){
 			continue;
 		}
@@ -204,7 +204,7 @@ void App::setFocusedWidget(const std::shared_ptr<Widget> w){
 
 App::Inflater::Inflater(){
 	try{
-		auto t = morda::App::inst().resMan.Load<ResSTOB>("morda_gui_definitions");
+		auto t = morda::App::inst().resMan.load<ResSTOB>("morda_gui_definitions");
 		
 		if(t->chain()){
 			this->inflate(*t->chain());

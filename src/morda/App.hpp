@@ -82,7 +82,7 @@ public:
 	};
 	
 	
-	bool ThisIsUIThread()const noexcept{
+	bool thisIsUIThread()const noexcept{
 		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
 	}
 	
@@ -326,7 +326,7 @@ public:
 		return this->shaders_var;
 	}
 
-	std::unique_ptr<papki::File> CreateResourceFileInterface(const std::string& path = std::string())const;
+	std::unique_ptr<papki::File> createResourceFileInterface(const std::string& path = std::string())const;
 
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.

@@ -9,7 +9,7 @@ using namespace morda;
 
 namespace{
 std::shared_ptr<ResFont> DefaultFont(){
-	return morda::App::inst().resMan.Load<ResFont>("morda_fnt_main");
+	return morda::App::inst().resMan.load<ResFont>("morda_fnt_main");
 }
 }
 
@@ -19,7 +19,7 @@ TextWidget::TextWidget(const stob::Node* desc) :
 		ColorWidget(desc)
 {
 	if(const stob::Node* p = getProperty(desc, "font")){
-		this->font_var = App::inst().resMan.Load<morda::ResFont>(p->value());
+		this->font_var = App::inst().resMan.load<morda::ResFont>(p->value());
 	}else{
 		this->font_var = DefaultFont();
 	}

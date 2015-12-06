@@ -79,7 +79,7 @@ public:
 	
 	void onResize()override;
 	
-	void Update(std::uint32_t dt)override;
+	void update(std::uint32_t dt)override;
 	
 	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key)override;
 

@@ -608,7 +608,7 @@ App::ResMan::ResMan(){
 
 	try{
 		papki::FSFile fi(path);
-		this->MountResPack(fi);
+		this->mountResPack(fi);
 	}
 	catch (papki::Exc&){
 		//default res pack not found, do nothing
@@ -646,7 +646,7 @@ void App::Exec(){
 	//	TRACE(<< "App::Exec(): enter" << std::endl)
 
 	while (!this->quitFlag){
-		std::uint32_t timeout = this->updater.Update();
+		std::uint32_t timeout = this->updater.update();
 		//		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(

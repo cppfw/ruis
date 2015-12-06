@@ -12,7 +12,7 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(auto image = getProperty(chain, "image")){
-		this->img = App::inst().resMan.Load<ResImage>(image->value());
+		this->img = App::inst().resMan.load<ResImage>(image->value());
 		this->resize(this->img->dim());
 	}
 	

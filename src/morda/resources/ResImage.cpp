@@ -24,7 +24,7 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 
 
 std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi){
-	auto tex = App::inst().resMan.Load<ResTexture>(chain.side("tex").up().value());
+	auto tex = App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
 	
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){

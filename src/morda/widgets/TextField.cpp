@@ -13,7 +13,7 @@ TextField::TextField(const stob::Node* chain) :
 		Widget(chain),
 		ti(utki::makeShared<TextInput>(chain))
 {
-	this->SetNinePatch(morda::App::inst().resMan.Load<ResNinePatch>("morda_npt_textfield"));
+	this->SetNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_textfield"));
 	
 	
 	auto bhc = utki::makeShared<BlackHoleContainer>();

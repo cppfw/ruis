@@ -74,7 +74,7 @@ Inflater::Inflater(){
 
 
 
-void Inflater::AddWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory){
+void Inflater::addWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory){
 	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
 			std::pair<std::string, std::unique_ptr<Inflater::WidgetFactory> >(
 					widgetName,
@@ -88,7 +88,7 @@ void Inflater::AddWidgetFactory(const std::string& widgetName, std::unique_ptr<W
 
 
 
-bool Inflater::RemoveWidget(const std::string& widgetName)noexcept{
+bool Inflater::removeWidget(const std::string& widgetName)noexcept{
 	if(this->widgetFactories.erase(widgetName) == 0){
 		return false;
 	}
@@ -97,8 +97,8 @@ bool Inflater::RemoveWidget(const std::string& widgetName)noexcept{
 
 
 
-std::shared_ptr<morda::Widget> Inflater::Inflate(papki::File& fi) {
-	std::unique_ptr<stob::Node> root = this->Load(fi);
+std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
+	std::unique_ptr<stob::Node> root = this->load(fi);
 	ASSERT(root)
 
 	return std::move(this->inflate(*root));
@@ -168,7 +168,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 }
 
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
-	if(!App::inst().ThisIsUIThread()){
+	if(!App::inst().thisIsUIThread()){
 		throw Inflater::Exc("Inflate called not from UI thread");
 	}
 	
@@ -176,11 +176,11 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	for(; n && n->isProperty(); n = n->next()){
 		if(*n == D_Templates){
 			if(n->child()){
-				this->PushTemplates(n->child()->cloneChain());
+				this->pushTemplates(n->child()->cloneChain());
 			}
 		}else if(*n == D_Defs){
 			if(n->child()){
-				this->PushVariables(*n->child());
+				this->pushVariables(*n->child());
 			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
@@ -192,7 +192,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	}
 	
 	std::unique_ptr<stob::Node> cloned;
-	if(auto t = this->FindTemplate(n->value())){
+	if(auto t = this->findTemplate(n->value())){
 		cloned = utki::makeUnique<stob::Node>(t->value());
 		cloned->setChildren(MergeGUIChain(t->child(), n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
@@ -210,22 +210,22 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	bool needPopVariables = false;
 	utki::ScopeExit scopeExit([this, &needPopTemplates, &needPopVariables](){
 		if(needPopTemplates){
-			this->PopTemplates();
+			this->popTemplates();
 		}
 		if(needPopVariables){
-			this->PopVariables();
+			this->popVariables();
 		}
 	});
 	
 	if(auto t = n->child(D_Templates).node()){
 		if(auto c = t->child()){
-			this->PushTemplates(c->cloneChain());
+			this->pushTemplates(c->cloneChain());
 			needPopTemplates = true;
 		}
 	}
 	if(auto v = n->child(D_Defs).node()){
 		if(v->child()){
-			this->PushVariables(*v->child());
+			this->pushVariables(*v->child());
 			needPopVariables = true;
 		}
 	}
@@ -239,15 +239,15 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			}
 		}
 		
-		this->SubstituteVariables(cloned.get());
+		this->substituteVariables(cloned.get());
 		
-		return i->second->Create(cloned.get());
+		return i->second->create(cloned.get());
 	}
 }
 
 
 
-std::unique_ptr<stob::Node> Inflater::Load(papki::File& fi){
+std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 	std::unique_ptr<stob::Node> ret = stob::load(fi);
 	
 	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));
@@ -255,7 +255,7 @@ std::unique_ptr<stob::Node> Inflater::Load(papki::File& fi){
 	return ret;
 }
 
-void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
+void Inflater::pushTemplates(std::unique_ptr<stob::Node> chain){
 	decltype(this->templates)::value_type m;
 	
 	for(; chain; chain = chain->chopNext()){
@@ -277,7 +277,7 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 	}
 	
 	for(auto i = m.begin(); i != m.end(); ++i){
-		if(auto s = this->FindTemplate(i->second->value())){
+		if(auto s = this->findTemplate(i->second->value())){
 			i->second->setValue(s->value());
 			ASSERT(s->child())
 			i->second->setChildren(MergeGUIChain(s->child(), i->second->removeChildren()));
@@ -299,14 +299,14 @@ void Inflater::PushTemplates(std::unique_ptr<stob::Node> chain){
 
 
 
-void Inflater::PopTemplates(){
+void Inflater::popTemplates(){
 	ASSERT(this->templates.size() != 0)
 	this->templates.pop_front();
 }
 
 
 
-const stob::Node* Inflater::FindTemplate(const std::string& name)const{
+const stob::Node* Inflater::findTemplate(const std::string& name)const{
 	for(auto& i : this->templates){
 		auto r = i.find(name);
 		if(r != i.end()){
@@ -319,7 +319,7 @@ const stob::Node* Inflater::FindTemplate(const std::string& name)const{
 
 
 
-const std::string* Inflater::FindVariable(const std::string& name)const{
+const std::string* Inflater::findVariable(const std::string& name)const{
 	for(auto& i : this->variables){
 		auto r = i.find(name);
 		if(r != i.end()){
@@ -332,14 +332,14 @@ const std::string* Inflater::FindVariable(const std::string& name)const{
 
 
 
-void Inflater::PopVariables(){
+void Inflater::popVariables(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_front();
 }
 
 
 
-void Inflater::PushVariables(const stob::Node& chain){
+void Inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
 	for(auto n = &chain; n; n = n->next()){
@@ -357,7 +357,7 @@ void Inflater::PushVariables(const stob::Node& chain){
 					throw Exc("Inflater::PushVariables(): variable reference has several values, error");
 				}
 				
-				if(auto var = this->FindVariable(r->value())){
+				if(auto var = this->findVariable(r->value())){
 					value = *var;
 				}else{
 					throw Exc("Inflater::PushVariables(): variable reference could not be resolved, error");
@@ -397,7 +397,7 @@ void Inflater::PushVariables(const stob::Node& chain){
 
 
 
-void Inflater::SubstituteVariables(stob::Node* to)const{
+void Inflater::substituteVariables(stob::Node* to)const{
 	if(!to){
 		return;
 	}
@@ -419,7 +419,7 @@ void Inflater::SubstituteVariables(stob::Node* to)const{
 			throw Exc("Inflater::SubstituteVariables(): error: variable name has children");
 		}
 		
-		if(auto var = this->FindVariable(to->child()->value())){
+		if(auto var = this->findVariable(to->child()->value())){
 			to->setValue(var->c_str());
 			to->removeChildren();
 		}
@@ -429,7 +429,7 @@ void Inflater::SubstituteVariables(stob::Node* to)const{
 		
 	for(; to; to = to->next()){
 		if(to->isProperty() && to->child()){
-			this->SubstituteVariables(to->child());
+			this->substituteVariables(to->child());
 		}
 	}
 }
