@@ -28,7 +28,7 @@ void TextLabel::render(const morda::Matr4r& matrix)const{
 		}else{
 			ColorPosTexShader& s = morda::App::inst().shaders().colorPosTexShader;
 
-			s.SetColor(this->color());
+			s.setColor(this->color());
 			return s;
 		}
 	}();

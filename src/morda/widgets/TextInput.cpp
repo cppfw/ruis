@@ -45,7 +45,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 
 		ColorPosShader& s = App::inst().shaders().colorPosShader;
 
-		s.SetColor(0xff804040);
+		s.setColor(0xff804040);
 
 		s.SetMatrix(matr);
 		s.render(utki::wrapBuf(s.quad01Fan));
@@ -61,7 +61,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 			}else{
 				ColorPosTexShader& s = morda::App::inst().shaders().colorPosTexShader;
 
-				s.SetColor(this->color());
+				s.setColor(this->color());
 				return s;
 			}
 		}();
@@ -81,7 +81,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 
 		ColorPosShader& s = App::inst().shaders().colorPosShader;
 
-		s.SetColor(this->color());
+		s.setColor(this->color());
 
 		s.SetMatrix(matr);
 		s.render(utki::wrapBuf(s.quad01Fan));

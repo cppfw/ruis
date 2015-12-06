@@ -35,8 +35,8 @@ protected:
 	{}
 
 public:
-	void SetColor(std::uint32_t color){
-		this->SetColor(
+	void setColor(std::uint32_t color){
+		this->setColor(
 				float(color & 0xff) / float(0xff),
 				float((color >> 8) & 0xff) / float(0xff),
 				float((color >> 16) & 0xff) / float(0xff),
@@ -44,19 +44,19 @@ public:
 			);
 	}
 	
-	void SetColor(kolme::Vec3f color){
+	void setColor(kolme::Vec3f color){
 		this->setUniform4f(this->colorUniform, color.x, color.y, color.z, 1.0f);
     }
 
-	void SetColor(kolme::Vec3f color, float alpha){
+	void setColor(kolme::Vec3f color, float alpha){
 		this->setUniform4f(this->colorUniform, color.x, color.y, color.z, alpha);
     }
 	
-	void SetColor(float r, float g, float b, float a){
+	void setColor(float r, float g, float b, float a){
 		this->setUniform4f(this->colorUniform, r, g, b, a);
 	}
 
-	void SetColor(const kolme::Vec4f& color){
+	void setColor(const kolme::Vec4f& color){
 		this->setUniform4f(this->colorUniform, utki::wrapBuf(&color, 1));
     }
 };
