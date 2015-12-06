@@ -19,9 +19,9 @@ TextWidget::TextWidget(const stob::Node* desc) :
 		ColorWidget(desc)
 {
 	if(const stob::Node* p = getProperty(desc, "font")){
-		this->font = App::inst().resMan.Load<morda::ResFont>(p->value());
+		this->font_var = App::inst().resMan.Load<morda::ResFont>(p->value());
 	}else{
-		this->font = DefaultFont();
+		this->font_var = DefaultFont();
 	}
 }
 
@@ -39,7 +39,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 
 
 Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret(this->bb.d.x, this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y);
+	Vec2r ret(this->bb.d.x, this->font().boundingBox().d.y - this->font().boundingBox().p.y);
 	
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){

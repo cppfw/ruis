@@ -53,7 +53,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	
 	{
 		morda::Matr4r matr(matrix);
-		matr.translate(-this->textBoundingBox().p.x + this->xOffset, -this->Font().BoundingBox().p.y);
+		matr.translate(-this->textBoundingBox().p.x + this->xOffset, -this->font().boundingBox().p.y);
 		
 		PosTexShader& s = [this]() -> PosTexShader&{
 			if(this->color() == 0xffffffff){//if white
@@ -67,13 +67,10 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		}();
 		
 		ASSERT(this->firstVisibleCharIndex <= this->text().size())
-		this->Font().RenderString(
+		this->font().renderString(
 				s,
 				matr,
-				utki::wrapBuf(
-						&*(this->text().begin() + this->firstVisibleCharIndex),
-						this->text().size() - this->firstVisibleCharIndex
-					)
+				std::u32string(this->text(), this->firstVisibleCharIndex, this->text().size() - this->firstVisibleCharIndex)
 			);
 	}
 	
@@ -125,7 +122,7 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 	}
 	
 	if(quotum.y < 0){
-		ret.y = this->Font().BoundingBox().d.y - this->Font().BoundingBox().p.y;
+		ret.y = this->font().boundingBox().d.y - this->font().boundingBox().p.y;
 	}else{
 		ret.y = quotum.y;
 	}
@@ -162,10 +159,9 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = this->Font().StringAdvance(utki::wrapBuf(
-			&*(this->text().begin() + this->firstVisibleCharIndex),
-			this->cursorIndex - this->firstVisibleCharIndex
-		)) + this->xOffset;
+	this->cursorPos = this->font().stringAdvance(
+			std::u32string(this->text(), this->firstVisibleCharIndex, this->cursorIndex - this->firstVisibleCharIndex)
+		) + this->xOffset;
 	
 	ASSERT(this->cursorPos >= 0)
 	
@@ -182,7 +178,7 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 			)
 		{
 			ASSERT(i != this->text().rend())
-			this->xOffset -= this->Font().CharAdvance(*i);
+			this->xOffset -= this->font().charAdvance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
 		}
@@ -207,7 +203,7 @@ real TextInput::IndexToPos(size_t index){
 			++i, --index
 		)
 	{
-		ret += this->Font().CharAdvance(*i);
+		ret += this->font().charAdvance(*i);
 		if(ret >= this->rect().d.x){
 			ret = this->rect().d.x;
 			break;
@@ -223,7 +219,7 @@ size_t TextInput::PosToIndex(real pos){
 	real p = this->xOffset;
 	
 	for(auto i = this->text().begin() + this->firstVisibleCharIndex; i != this->text().end(); ++i){
-		real w = this->Font().CharAdvance(*i);
+		real w = this->font().charAdvance(*i);
 		
 		if(pos < p + w){
 			if(pos < p + w / 2){

@@ -20,7 +20,7 @@ namespace morda{
  * @brief Abstract widget displaying a text.
  */
 class TextWidget : public ColorWidget{
-	std::shared_ptr<ResFont> font;
+	std::shared_ptr<ResFont> font_var;
 	
 public:
 	TextWidget() = delete;
@@ -29,20 +29,20 @@ public:
 	
 	virtual ~TextWidget()noexcept{}
 	
-	void SetFont(std::shared_ptr<ResFont> font){
+	void setFont(std::shared_ptr<ResFont> font){
 		if(!font){
 			throw morda::Exc("TextWidget::SetFont(): passed argument is null");
 		}
 		
-		this->font = std::move(font);
+		this->font_var = std::move(font);
 		
 		this->setRelayoutNeeded();
 		
 		this->onFontChanged();
 	}
 	
-	const morda::Font& Font()const{
-		return this->font->font();
+	const morda::Font& font()const{
+		return this->font_var->font();
 	}
 	
 	virtual void onFontChanged(){}
@@ -56,7 +56,7 @@ private:
 
 
 class SingleLineTextWidget : public TextWidget{
-	std::vector<std::uint32_t> text_var;
+	std::u32string text_var;
 	
 	mutable Rectr bb;
 	
@@ -70,7 +70,7 @@ protected:
 	}
 	
 	void recomputeBoundingBox(){
-		this->bb = this->Font().StringBoundingBox(utki::wrapBuf(this->text_var));
+		this->bb = this->font().stringBoundingBox(this->text_var);
 	}
 public:
 	

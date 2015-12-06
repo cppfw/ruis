@@ -25,71 +25,77 @@ class Font{
 	
 protected:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rectr boundingBox;
+	morda::Rectr boundingBox_var;
 	
 	Font(){}
 	
-	virtual real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const = 0;
+	virtual real renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const = 0;
 	
-	virtual real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
+	virtual real stringAdvanceInternal(const std::u32string& str)const = 0;
 	
-	virtual morda::Rectr StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const = 0;
+	virtual morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const = 0;
 public:
 	virtual ~Font()noexcept{}
 	
 	//renders the string, returns resulting string advance
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, unikod::Utf8Iterator str)const;
-	
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const{
-		return this->RenderStringInternal(shader, matrix, utf32str);
+	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, unikod::Utf8Iterator str)const{
+		return this->renderStringInternal(shader, matrix, unikod::toUtf32(str));
 	}
 	
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
-		return this->RenderString(shader, matrix, unikod::Utf8Iterator(str));
+	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const{
+		return this->renderStringInternal(shader, matrix, str);
 	}
 	
-	real RenderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
-		return this->RenderString(shader, matrix, str.c_str());
+	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
+		return this->renderString(shader, matrix, unikod::Utf8Iterator(str));
 	}
 	
-	
-	
-	real StringAdvance(unikod::Utf8Iterator str)const;
-	
-	real StringAdvance(const utki::Buf<std::uint32_t> utf32str)const{
-		return this->StringAdvanceInternal(utf32str);
-	}
-	
-	real StringAdvance(const char* str)const{
-		return this->StringAdvance(unikod::Utf8Iterator(str));
-	}
-	
-	real StringAdvance(const std::string& str)const{
-		return this->StringAdvance(str.c_str());
+	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
+		return this->renderString(shader, matrix, str.c_str());
 	}
 	
 	
 	
-	virtual real CharAdvance(std::uint32_t c)const = 0;
-	
-	
-	
-	morda::Rectr StringBoundingBox(unikod::Utf8Iterator str)const;
-	
-	morda::Rectr StringBoundingBox(const utki::Buf<std::uint32_t> utf32str)const{
-		return this->StringBoundingBoxInternal(utf32str);
+	real stringAdvance(unikod::Utf8Iterator str)const{
+		return this->stringAdvanceInternal(unikod::toUtf32(str));
 	}
 	
-	morda::Rectr StringBoundingBox(const char* str)const{
-		return this->StringBoundingBox(unikod::Utf8Iterator(str));
+	real stringAdvance(const std::u32string& str)const{
+		return this->stringAdvanceInternal(str);
 	}
 	
-	morda::Rectr StringBoundingBox(const std::string& str)const{
-		return this->StringBoundingBox(str.c_str());
+	real stringAdvance(const char* str)const{
+		return this->stringAdvance(unikod::Utf8Iterator(str));
 	}
 	
-	const morda::Rectr& BoundingBox()const noexcept{
-		return this->boundingBox;
+	real stringAdvance(const std::string& str)const{
+		return this->stringAdvance(str.c_str());
+	}
+	
+	
+	
+	virtual real charAdvance(std::uint32_t c)const = 0;
+	
+	
+	
+	morda::Rectr stringBoundingBox(unikod::Utf8Iterator str)const{
+		return this->stringBoundingBoxInternal(unikod::toUtf32(str));
+	}
+	
+	morda::Rectr stringBoundingBox(const std::u32string& str)const{
+		return this->stringBoundingBoxInternal(str);
+	}
+	
+	morda::Rectr stringBoundingBox(const char* str)const{
+		return this->stringBoundingBox(unikod::Utf8Iterator(str));
+	}
+	
+	morda::Rectr stringBoundingBox(const std::string& str)const{
+		return this->stringBoundingBox(str.c_str());
+	}
+	
+	const morda::Rectr& boundingBox()const noexcept{
+		return this->boundingBox_var;
 	}
 	
 private:

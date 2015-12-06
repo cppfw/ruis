@@ -64,7 +64,7 @@ const unsigned DYGap = 1;
 
 
 
-void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline){
+void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline){
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -246,10 +246,10 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	}//~for
 	
 	//save bounding box
-	this->boundingBox.p.x = left;
-	this->boundingBox.p.y = bottom;
-	this->boundingBox.d.x = right - left;
-	this->boundingBox.d.y = top - bottom;
+	this->boundingBox_var.p.x = left;
+	this->boundingBox_var.p.y = bottom;
+	this->boundingBox_var.d.x = right - left;
+	this->boundingBox_var.d.y = top - bottom;
 
 //	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
 
@@ -284,7 +284,7 @@ void TexFont::Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 
 
 
-real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
+real TexFont::renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 	
 	shader.SetMatrix(matrix);
@@ -296,10 +296,10 @@ real TexFont::RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& mat
 
 
 
-real TexFont::StringAdvanceInternal(const utki::Buf<std::uint32_t> str)const{
+real TexFont::stringAdvanceInternal(const std::u32string& str)const{
 	real ret = 0;
 
-	const std::uint32_t* s = str.begin();
+	auto s = str.begin();
 	
 	for(; s != str.end(); ++s){
 		try{
@@ -315,7 +315,7 @@ real TexFont::StringAdvanceInternal(const utki::Buf<std::uint32_t> str)const{
 
 
 
-morda::Rectr TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> str)const{
+morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	morda::Rectr ret;
 
 	if(str.size() == 0){
@@ -324,7 +324,7 @@ morda::Rectr TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> s
 		return ret;
 	}
 
-	decltype(str)::const_iterator s = str.begin();
+	auto s = str.begin();
 
 	real curAdvance;
 
@@ -381,7 +381,7 @@ morda::Rectr TexFont::StringBoundingBoxInternal(const utki::Buf<std::uint32_t> s
 
 
 #ifdef DEBUG
-void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
+void TexFont::renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->tex.Dim());
 	shader.SetMatrix(matr);
@@ -394,8 +394,8 @@ void TexFont::RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 
 
 
-real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const{
-	if(utf32str.size() == 0){
+real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const{
+	if(str.size() == 0){
 		shader.renderNothing();
 		return 0;
 	}
@@ -414,11 +414,11 @@ real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 
 	morda::Matr4r matr(matrix);
 
-	auto s = utf32str.begin();
+	auto s = str.begin();
 
-	for(; s != utf32str.end(); ++s){
+	for(; s != str.end(); ++s){
 		try{
-			real advance = this->RenderGlyphInternal(shader, matr, *s);
+			real advance = this->renderGlyphInternal(shader, matr, *s);
 			ret += advance;
 			matr.translate(advance, 0);
 		}catch(std::out_of_range&){
@@ -432,7 +432,7 @@ real TexFont::RenderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 
 
 
-real TexFont::CharAdvance(std::uint32_t c) const{
+real TexFont::charAdvance(std::uint32_t c) const{
 	const Glyph& g = this->glyphs.at(c);
 	return g.advance;
 }

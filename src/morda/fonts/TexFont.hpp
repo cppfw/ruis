@@ -48,39 +48,39 @@ class TexFont : public Font{
 
 	Texture2D tex;
 
-	typedef std::map<wchar_t, Glyph> T_GlyphsMap;
+	typedef std::map<char32_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
 	T_GlyphsMap glyphs;
 
 public:
 	
 	TexFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0){
-		this->Load(fi, chars, size, outline);
+		this->load(fi, chars, size, outline);
 	}
 
 	~TexFont()noexcept{}
 	
-	void Load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0);
+	void load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0);
 
 	
-	real RenderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const utki::Buf<std::uint32_t> utf32str)const override;
+	real renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const override;
 
 	
-	real StringAdvanceInternal(const utki::Buf<std::uint32_t> utf32str)const override;
+	real stringAdvanceInternal(const std::u32string& str)const override;
 
-	morda::Rectr StringBoundingBoxInternal(const utki::Buf<std::uint32_t> utf32str)const override;
+	morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const override;
 
-	DEBUG_CODE( void RenderTex(PosTexShader& shader, const morda::Matr4r& matrix)const; )
+	DEBUG_CODE( void renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const; )
 
 
-	real CharAdvance(std::uint32_t c) const override;
+	real charAdvance(std::uint32_t c) const override;
 
 	
 private:
 
-	real RenderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
+	real renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
 
-};//~class TexFont
+};
 
 
 
