@@ -31,7 +31,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 
 	s.SetMatrix(matr);
 	
-	s.SetTextureStep(kolme::Vec2f(1).compDiv(viewPortRect.d.to<float>()));
+	s.setTextureStep(kolme::Vec2f(1).compDiv(viewPortRect.d.to<float>()));
 	
 	for(unsigned i = 0; i != 3; ++i){
 		Render::copyColorBufferToTexture(kolme::Vec2i(0), viewPortRect);
