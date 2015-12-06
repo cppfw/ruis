@@ -34,7 +34,7 @@ private:
 		return utki::makeUnique<LayoutParams>(chain);
 	}
 	
-	LayoutParams& GetTableRowLayoutParams(Widget& w);
+	LayoutParams& getTableRowLayoutParams(Widget& w);
 };
 
 }

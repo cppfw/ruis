@@ -83,11 +83,11 @@ class HandleSlider :
 	HandleSlider(const HandleSlider&);
 	HandleSlider& operator=(const HandleSlider&);
 	
-	unsigned GetLongIndex()const noexcept{
+	unsigned getLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
 	}
 
-	unsigned GetTransIndex()const noexcept{
+	unsigned getTransIndex()const noexcept{
 		return this->isVertical ? 0 : 1;
 	}
 	

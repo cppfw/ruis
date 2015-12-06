@@ -43,7 +43,7 @@ void ScrollContainer::render(const morda::Matr4r& matrix) const {
 	this->Container::render(matr);
 }
 
-void ScrollContainer::ClampScrollPos() {
+void ScrollContainer::clampScrollPos() {
 	if(this->effectiveDim.x < 0){
 		this->curScrollPos.x = 0;
 	}
@@ -58,8 +58,8 @@ void ScrollContainer::ClampScrollPos() {
 void ScrollContainer::setScrollPos(const Vec2r& newScrollPos) {
 	this->curScrollPos = newScrollPos.rounded();
 	
-	this->ClampScrollPos();
-	this->UpdateScrollFactor();
+	this->clampScrollPos();
+	this->updateScrollFactor();
 }
 
 
@@ -71,7 +71,7 @@ void ScrollContainer::setScrollPosAsFactor(const Vec2r& factor){
 }
 
 
-void ScrollContainer::UpdateScrollFactor(){
+void ScrollContainer::updateScrollFactor(){
 	//at this point effective dimension should be updated
 	Vec2r factor = this->curScrollPos.compDiv(this->effectiveDim);
 	
@@ -101,7 +101,7 @@ void ScrollContainer::arrangeWidgets() {
 
 void ScrollContainer::layOut(){
 	this->arrangeWidgets();
-	this->UpdateEffectiveDim();
+	this->updateEffectiveDim();
 
 	//distance of content's bottom right corner from bottom right corner of the ScrollContainer
 	Vec2r br = this->curScrollPos - this->effectiveDim;
@@ -126,10 +126,10 @@ void ScrollContainer::layOut(){
 void ScrollContainer::onChildrenListChanged(){
 	this->Container::onChildrenListChanged();
 	this->arrangeWidgets();
-	this->UpdateEffectiveDim();
+	this->updateEffectiveDim();
 }
 
-void ScrollContainer::UpdateEffectiveDim(){
+void ScrollContainer::updateEffectiveDim(){
 	morda::Vec2r minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
@@ -142,5 +142,5 @@ void ScrollContainer::UpdateEffectiveDim(){
 	}	
 	
 	this->effectiveDim = minDim - this->rect().d;
-	this->UpdateScrollFactor();
+	this->updateScrollFactor();
 }

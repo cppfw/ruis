@@ -96,7 +96,7 @@ bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton
 	this->leftMouseButtonDown = isDown;
 	
 	if(isDown){
-		this->SetCursorIndex(this->PosToIndex(pos.x));
+		this->setCursorIndex(this->posToIndex(pos.x));
 	}
 	
 	return true;
@@ -107,7 +107,7 @@ bool TextInput::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 		return false;
 	}
 	
-	this->SetCursorIndex(this->PosToIndex(pos.x), true);
+	this->setCursorIndex(this->posToIndex(pos.x), true);
 	return true;
 }
 
@@ -130,7 +130,7 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 	return ret;
 }
 
-void TextInput::SetCursorIndex(size_t index, bool selection){
+void TextInput::setCursorIndex(size_t index, bool selection){
 	this->cursorIndex = index;
 	
 	utki::clampTop(this->cursorIndex, this->text().size());
@@ -140,12 +140,12 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 	}
 	
 	utki::ScopeExit scopeExit([this](){
-		this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
+		this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 		
 		if(!this->isFocused()){
 			this->focus();
 		}
-		this->StartCursorBlinking();
+		this->startCursorBlinking();
 	});
 	
 //	TRACE(<< "selectionStartIndex = " << this->selectionStartIndex << std::endl)
@@ -187,7 +187,7 @@ void TextInput::SetCursorIndex(size_t index, bool selection){
 
 
 
-real TextInput::IndexToPos(size_t index){
+real TextInput::indexToPos(size_t index){
 	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	
 	if(index <= this->firstVisibleCharIndex){
@@ -214,7 +214,7 @@ real TextInput::IndexToPos(size_t index){
 }
 
 
-size_t TextInput::PosToIndex(real pos){
+size_t TextInput::posToIndex(real pos){
 	size_t index = this->firstVisibleCharIndex;
 	real p = this->xOffset;
 	
@@ -246,18 +246,18 @@ void TextInput::onFocusedChanged(){
 	if(this->isFocused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;
-		this->StartCursorBlinking();
+		this->startCursorBlinking();
 	}else{
 		this->stopUpdating();
 	}
 }
 
 void TextInput::onResize(){
-	this->selectionStartPos = this->IndexToPos(this->selectionStartIndex);
+	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 }
 
 
-void TextInput::StartCursorBlinking(){
+void TextInput::startCursorBlinking(){
 	this->stopUpdating();
 	this->cursorBlinkVisible = true;
 	this->startUpdating(D_CursorBlinkPeriod);
@@ -302,7 +302,7 @@ void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey ke
 				}else{
 					newIndex = this->cursorIndex + 1;
 				}
-				this->SetCursorIndex(newIndex, this->shiftPressed);
+				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
 		case EKey::LEFT:
@@ -327,30 +327,30 @@ void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey ke
 				}else{
 					newIndex = this->cursorIndex - 1;
 				}
-				this->SetCursorIndex(newIndex, this->shiftPressed);
+				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
 		case EKey::END:
-			this->SetCursorIndex(this->text().size(), this->shiftPressed);
+			this->setCursorIndex(this->text().size(), this->shiftPressed);
 			break;
 		case EKey::HOME:
-			this->SetCursorIndex(0, this->shiftPressed);
+			this->setCursorIndex(0, this->shiftPressed);
 			break;
 		case EKey::BACKSPACE:
-			if(this->ThereIsSelection()){
-				this->SetCursorIndex(this->DeleteSelection());
+			if(this->thereIsSelection()){
+				this->setCursorIndex(this->deleteSelection());
 			}else{
 				if(this->cursorIndex != 0){
 					auto t = this->clear();
 					t.erase(t.begin() + (this->cursorIndex - 1));
 					this->setText(std::move(t));
-					this->SetCursorIndex(this->cursorIndex - 1);
+					this->setCursorIndex(this->cursorIndex - 1);
 				}
 			}
 			break;
 		case EKey::DELETE:
-			if(this->ThereIsSelection()){
-				this->SetCursorIndex(this->DeleteSelection());
+			if(this->thereIsSelection()){
+				this->setCursorIndex(this->deleteSelection());
 			}else{
 				if(this->cursorIndex < this->text().size()){
 					auto t = this->clear();
@@ -358,7 +358,7 @@ void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey ke
 					this->setText(std::move(t));
 				}
 			}
-			this->StartCursorBlinking();
+			this->startCursorBlinking();
 			break;
 		case EKey::ESCAPE:
 			//do nothing
@@ -366,21 +366,21 @@ void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey ke
 		case EKey::A:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
-				this->SetCursorIndex(this->text().size(), true);
+				this->setCursorIndex(this->text().size(), true);
 				break;
 			}
 			//fall through
 		default:
 			if(unicode.size() != 0){
-				if(this->ThereIsSelection()){
-					this->cursorIndex = this->DeleteSelection();
+				if(this->thereIsSelection()){
+					this->cursorIndex = this->deleteSelection();
 				}
 				
 				auto t = this->clear();
 				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
 				this->setText(std::move(t));
 				
-				this->SetCursorIndex(this->cursorIndex + unicode.size());
+				this->setCursorIndex(this->cursorIndex + unicode.size());
 			}
 			
 			break;
@@ -391,7 +391,7 @@ void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey ke
 
 
 
-size_t TextInput::DeleteSelection(){
+size_t TextInput::deleteSelection(){
 	ASSERT(this->cursorIndex != this->selectionStartIndex)
 	
 	size_t start, end;

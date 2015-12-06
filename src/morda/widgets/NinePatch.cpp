@@ -91,32 +91,32 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->b = this->findChildByNameAs<ImageLabel>("morda_b");
 	this->rb = this->findChildByNameAs<ImageLabel>("morda_rb");
 	
-	this->content = this->findChildByNameAs<FrameContainer>("morda_content");
+	this->content_var = this->findChildByNameAs<FrameContainer>("morda_content");
 	
 	if(const stob::Node* n = getProperty(chain, "image")){
-		this->SetNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
 	}
 	
 	if(chain){
-		this->content->add(*chain);
+		this->content_var->add(*chain);
 	}
 }
 
 
-void NinePatch::SetNinePatch(const std::shared_ptr<ResNinePatch>& np){
+void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->image = np;
 	
-	this->lt->SetImage(np->lt);
-	this->t->SetImage(np->t);
-	this->rt->SetImage(np->rt);
+	this->lt->setImage(np->lt);
+	this->t->setImage(np->t);
+	this->rt->setImage(np->rt);
 	
-	this->l->SetImage(np->l);
-	this->m->SetImage(np->m);
-	this->r->SetImage(np->r);
+	this->l->setImage(np->l);
+	this->m->setImage(np->m);
+	this->r->setImage(np->r);
 	
-	this->lb->SetImage(np->lb);
-	this->b->SetImage(np->b);
-	this->rb->SetImage(np->rb);
+	this->lb->setImage(np->lb);
+	this->b->setImage(np->b);
+	this->rb->setImage(np->rb);
 	
 	this->clearCache();
 }

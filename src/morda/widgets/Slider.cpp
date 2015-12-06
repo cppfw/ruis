@@ -81,7 +81,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 			return false;
 		}
 
-		unsigned longIndex = this->GetLongIndex();
+		unsigned longIndex = this->getLongIndex();
 
 		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		utki::clampBottom(maxPos, 0.0f);
@@ -125,7 +125,7 @@ void HandleSlider::onFactorChange() {
 void HandleSlider::layOut(){
 	this->FrameContainer::layOut();
 	
-	unsigned longIndex = this->GetLongIndex();
+	unsigned longIndex = this->getLongIndex();
 	
 	morda::Vec2r newSize(this->rect().d);
 	

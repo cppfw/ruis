@@ -29,7 +29,7 @@ Widget::LayoutParams& TableRow::getLayoutParams_internal(Widget& w){
 
 
 
-TableRow::LayoutParams& TableRow::GetTableRowLayoutParams(Widget& w) {
+TableRow::LayoutParams& TableRow::getTableRowLayoutParams(Widget& w) {
 	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::getLayoutParams_internal(w));
 	if(!lp){
 		throw morda::Exc("TableRow: layout parameters can only be of type TableRow::LayoutParams, other type found");

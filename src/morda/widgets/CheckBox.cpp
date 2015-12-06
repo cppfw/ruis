@@ -27,10 +27,10 @@ CheckBox::CheckBox(const stob::Node* chain) :
 		ToggleButton(chain),
 		NinePatch(stob::parse(D_Layout).get())
 {
-	this->checkWidget = this->Content().findChildByName("morda_checkbox_check");
+	this->checkWidget = this->content().findChildByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isChecked());
 	
-	this->SetNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_checkbox"));
+	this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_checkbox"));
 }
 
 

@@ -58,11 +58,11 @@ public:
 	}
 	
 private:
-	void UpdateEffectiveDim();
+	void updateEffectiveDim();
 	
-	void UpdateScrollFactor();
+	void updateScrollFactor();
 
-	void ClampScrollPos();
+	void clampScrollPos();
 	
 	void arrangeWidgets();
 };

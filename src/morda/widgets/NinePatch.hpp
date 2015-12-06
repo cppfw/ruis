@@ -22,7 +22,7 @@ class NinePatch :
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
 	
-	std::shared_ptr<FrameContainer> content;
+	std::shared_ptr<FrameContainer> content_var;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -30,10 +30,10 @@ public:
 	
 	NinePatch(const stob::Node* chain = nullptr);
 	
-	void SetNinePatch(const std::shared_ptr<ResNinePatch>& np);
+	void setNinePatch(const std::shared_ptr<ResNinePatch>& np);
 	
-	FrameContainer& Content(){
-		return *this->content;
+	FrameContainer& content(){
+		return *this->content_var;
 	}
 private:
 
