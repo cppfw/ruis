@@ -719,7 +719,7 @@ void morda::App::Exec(){
 	do{
 		this->render();
 		
-		std::uint32_t millis = this->updater.Update();
+		std::uint32_t millis = this->updater.update();
 		
 		NSEvent *event = [applicationObject
 				nextEventMatchingMask:NSAnyEventMask
