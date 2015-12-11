@@ -140,6 +140,13 @@ Container{
 				TextLabel{text{item9}}
 				TextLabel{text{item10}}
 			}
+			PushButton{
+				name{fullscreen_button}
+				
+				TextLabel{
+					text{"toggle fullscreen"}
+				}
+			}
 		}
 	}
 

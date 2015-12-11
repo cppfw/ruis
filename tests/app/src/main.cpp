@@ -605,8 +605,6 @@ class Application : public morda::App{
 		wp.dim.x = 1024;
 		wp.dim.y = 800;
 		
-		wp.fullscreen = false;
-		
 		return wp;
 	}
 public:
@@ -801,6 +799,15 @@ public:
 				if(auto p = prvdr.lock()){
 					p->insertChild();
 				}
+			};
+		}
+
+
+		//fullscreen
+		{
+			auto b = c->findChildByNameAs<morda::PushButton>("fullscreen_button");
+			b->clicked = [this](morda::PushButton&) {
+				this->setFullscreen(!this->isFullscreen());
 			};
 		}
 	}

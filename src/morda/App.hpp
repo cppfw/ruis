@@ -78,7 +78,6 @@ class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 public:
 	struct WindowParams{
 		kolme::Vec2ui dim;
-		bool fullscreen = false;
 	};
 	
 	
@@ -413,6 +412,18 @@ public:
 	//TODO: add dots per inch
 	
 	void quit()noexcept;
+
+private:
+	bool isFullscreen_var = false;
+
+	kolme::Rectu beforeFullScreenWindowRect;
+
+public:
+	bool isFullscreen()const noexcept {
+		return this->isFullscreen_var;
+	}
+
+	void setFullscreen(bool enable);
 };
 
 

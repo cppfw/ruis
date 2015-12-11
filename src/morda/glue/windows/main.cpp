@@ -726,3 +726,75 @@ int WINAPI WinMain(
 	return 0;
 }
 
+
+void App::setFullscreen(bool enable) {
+	if (enable == this->isFullscreen()) {
+		return;
+	}
+
+	if (enable) {
+		//save original window size
+		RECT rect;
+		if (GetWindowRect(this->window.hwnd, &rect) == 0) {
+			throw Exc("Failed to get window rect");
+		}
+		this->beforeFullScreenWindowRect.p.x = rect.left;
+		this->beforeFullScreenWindowRect.p.y = rect.top;
+		this->beforeFullScreenWindowRect.d.x = rect.right - rect.left;
+		this->beforeFullScreenWindowRect.d.y = rect.bottom - rect.top;
+
+		// Set new window style
+		SetWindowLong(
+				this->window.hwnd,
+				GWL_STYLE,
+				GetWindowLong(this->window.hwnd, GWL_STYLE)
+						& ~(WS_CAPTION | WS_THICKFRAME)
+			);
+		SetWindowLong(
+				this->window.hwnd,
+				GWL_EXSTYLE,
+				GetWindowLong(this->window.hwnd, GWL_EXSTYLE)
+						& ~(WS_EX_DLGMODALFRAME | WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE)
+			);
+
+		//set new window size and position
+		MONITORINFO mi;
+		mi.cbSize = sizeof(mi);
+		GetMonitorInfo(MonitorFromWindow(this->window.hwnd, MONITOR_DEFAULTTONEAREST), &mi);
+		SetWindowPos(
+				this->window.hwnd,
+				NULL,
+				mi.rcMonitor.left,
+				mi.rcMonitor.top,
+				mi.rcMonitor.right - mi.rcMonitor.left,
+				mi.rcMonitor.bottom - mi.rcMonitor.top,
+				SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED
+			);
+	}else{
+		// Reset original window style
+		SetWindowLong(
+				this->window.hwnd,
+				GWL_STYLE,
+				GetWindowLong(this->window.hwnd, GWL_STYLE)
+						| (WS_CAPTION | WS_THICKFRAME)
+			);
+		SetWindowLong(
+				this->window.hwnd,
+				GWL_EXSTYLE,
+				GetWindowLong(this->window.hwnd, GWL_EXSTYLE)
+						| (WS_EX_DLGMODALFRAME | WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE)
+			);
+
+			SetWindowPos(
+					this->window.hwnd,
+					NULL,
+					this->beforeFullScreenWindowRect.p.x,
+					this->beforeFullScreenWindowRect.p.y,
+					this->beforeFullScreenWindowRect.d.x,
+					this->beforeFullScreenWindowRect.d.y,
+					SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED
+				);
+	}
+
+	this->isFullscreen_var = enable;
+}
