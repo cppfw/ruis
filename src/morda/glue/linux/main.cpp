@@ -113,26 +113,6 @@ App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper
 
 	XMapWindow(this->d.d, this->w);
 	
-	if(wp.fullscreen){
-		XEvent event;
-		Atom stateAtom;
-		Atom atom;
-
-		stateAtom = XInternAtom(this->d.d, "_NET_WM_STATE", False);
-		atom = XInternAtom(this->d.d, "_NET_WM_STATE_FULLSCREEN", False);
-
-		event.xclient.type = ClientMessage;
-		event.xclient.serial = 0;
-		event.xclient.send_event = True;
-		event.xclient.window = this->w;
-		event.xclient.message_type = stateAtom;
-		event.xclient.format = 32;
-		event.xclient.data.l[0]	= 1;
-		event.xclient.data.l[1]	= atom;
-		event.xclient.data.l[2]	= 0;
-
-		XSendEvent(this->d.d, DefaultRootWindow(this->d.d), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
-	}
 	XFlush(this->d.d);
 }
 
@@ -756,4 +736,35 @@ int main(int argc, const char** argv){
 	morda::Main(argc, argv);
 
 	return 0;
+}
+
+
+
+void App::setFullscreen(bool enable){
+	if(enable == this->isFullscreen()){
+		return;
+	}
+
+	XEvent event;
+	Atom stateAtom;
+	Atom atom;
+
+	stateAtom = XInternAtom(this->xDisplay.d, "_NET_WM_STATE", False);
+	atom = XInternAtom(this->xDisplay.d, "_NET_WM_STATE_FULLSCREEN", False);
+
+	event.xclient.type = ClientMessage;
+	event.xclient.serial = 0;
+	event.xclient.send_event = True;
+	event.xclient.window = this->xWindow.w;
+	event.xclient.message_type = stateAtom;
+	event.xclient.format = 32;
+	event.xclient.data.l[0]	= enable ? 1 : 0;
+	event.xclient.data.l[1]	= atom;
+	event.xclient.data.l[2]	= 0;
+
+	XSendEvent(this->xDisplay.d, DefaultRootWindow(this->xDisplay.d), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+	
+	XFlush(this->xDisplay.d);
+	
+	this->isFullscreen_var = enable;
 }
