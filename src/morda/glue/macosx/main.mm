@@ -515,6 +515,8 @@ int main (int argc, const char** argv){
 -(BOOL)windowShouldClose:(id)sender;
 -(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize;
 
+-(void)initStuff;
+
 @end
 @implementation CocoaWindow
 
@@ -529,16 +531,21 @@ int main (int argc, const char** argv){
 	self->v = [[CocoaView alloc] initWithFrame:[self frameRectForContentRect:contentRect]];
 	[self setContentView:self->v];
 	
-	[self makeFirstResponder:self->v];
+	[self initStuff];
 	
-	[self setDelegate:self];
 	[self setShowsResizeIndicator:YES];
 	[self setMinSize:NSMakeSize(0, 0)];
 	[self setMaxSize:NSMakeSize(1000000000, 1000000000)];
 	[self setIgnoresMouseEvents:NO];
+	
+	return self;
+}
+
+-(void)initStuff{
+	[self makeFirstResponder:self->v];
+	[self setDelegate:self];
 	[self makeKeyWindow];
 	[self makeMainWindow];
-	return self;
 }
 
 -(void)dealloc{
@@ -564,9 +571,11 @@ int main (int argc, const char** argv){
 	return NO;
 }
 
--(BOOL)canBecomeKeyWindow{return YES;}
+-(BOOL)canBecomeKeyWindow{return YES;} //This is needed for window without title bar to be able to get key events
 -(BOOL)canBecomeMainWindow{return YES;}
 -(BOOL)acceptsFirstResponder{return YES;}
+
+-(CocoaView*)view{return self->v;}
 
 @end
 
@@ -755,4 +764,41 @@ void morda::App::Exec(){
 				];
 		}while(event && !this->quitFlag);
 	}while(!this->quitFlag);
+}
+
+void App::setFullscreen(bool enable){
+	if(enable == this->isFullscreen()){
+		return;
+	}
+	
+	NSWindow* window = (NSWindow*)this->windowObject.id;
+	
+	if(enable){
+		//save old window size
+		NSRect rect = [window frame];
+		this->beforeFullScreenWindowRect.p.x = rect.origin.x;
+		this->beforeFullScreenWindowRect.p.y = rect.origin.y;
+		this->beforeFullScreenWindowRect.d.x = rect.size.width;
+		this->beforeFullScreenWindowRect.d.y = rect.size.height;
+		
+		[window setStyleMask:([window styleMask] & (~(NSTitledWindowMask | NSResizableWindowMask)))];
+		
+		[window setFrame:[[NSScreen mainScreen] frame] display:YES animate:NO];
+		[window setLevel:NSScreenSaverWindowLevel];
+	}else{
+		[window setStyleMask:([window styleMask] | NSTitledWindowMask | NSResizableWindowMask)];
+		
+		NSRect oldFrame;
+		oldFrame.origin.x = this->beforeFullScreenWindowRect.p.x;
+		oldFrame.origin.y = this->beforeFullScreenWindowRect.p.y;
+		oldFrame.size.width = this->beforeFullScreenWindowRect.d.x;
+		oldFrame.size.height = this->beforeFullScreenWindowRect.d.y;
+		
+		[window setFrame:oldFrame display:YES animate:NO];
+		[window setLevel:NSNormalWindowLevel];
+	}
+	
+	[window initStuff];
+	
+	this->isFullscreen_var = enable;
 }
