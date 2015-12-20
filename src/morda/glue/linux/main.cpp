@@ -105,14 +105,14 @@ App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper
 			&attr
 		);
 	//TODO: check for error
-	
+
 	{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
 		Atom a = XInternAtom(this->d.d, "WM_DELETE_WINDOW", True);
 		XSetWMProtocols(this->d.d, this->w, &a, 1);
 	}
 
 	XMapWindow(this->d.d, this->w);
-	
+
 	XFlush(this->d.d);
 }
 
@@ -133,7 +133,7 @@ App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrap
 		throw morda::Exc("glXCreateContext() failed");
 	}
 	glXMakeCurrent(this->d.d, this->w.w, this->glxContext);
-	
+
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }
 
@@ -156,7 +156,7 @@ App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindow
 	if(this->xim == NULL){
 		throw morda::Exc("XOpenIM() failed");
 	}
-	
+
 	this->xic = XCreateIC(
 			this->xim,
 			XNClientWindow, this->w.w,
@@ -182,15 +182,16 @@ void App::XInputMethodWrapper::Destroy()noexcept{
 }
 
 
-App::DotsPerCmWrapper::DotsPerCmWrapper(XDisplayWrapper& display){
+App::DotsPerInchWrapper::DotsPerInchWrapper(XDisplayWrapper& display){
 	int scrNum = 0;
 	this->value = ((double(DisplayWidth(display.d, scrNum)) / (double(DisplayWidthMM(display.d, scrNum))/ 10.0))
 			+ (double(DisplayHeight(display.d, scrNum)) / (double(DisplayHeightMM(display.d, scrNum)) / 10.0))) / 2;
+	this->value *= 2.54f;
 }
 
 
 App::App(const WindowParams& requestedWindowParams) :
-		dotsPerCm_var(xDisplay),
+		dotsPerInch_var(xDisplay),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
@@ -212,7 +213,7 @@ namespace{
 
 class XEventWaitable : public pogodi::Waitable{
 	int fd;
-	
+
 	int getHandle() override{
 		return this->fd;
 	}
@@ -220,7 +221,7 @@ public:
 	XEventWaitable(Display* d){
 		this->fd = XConnectionNumber(d);
 	}
-	
+
 	void clearCanReadFlag(){
 		this->pogodi::Waitable::clearCanReadFlag();
 	}
@@ -513,12 +514,12 @@ public:
 			xic(xic),
 			event(event)
 	{}
-	
+
 	std::vector<std::uint32_t> Resolve()const{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
-		
+
 		Status status;
 		//KeySym xkeysym;
 		std::array<char, 32> staticBuf;
@@ -535,36 +536,36 @@ public:
 		ASSERT(size >= 0)
 		ASSERT(buf.size() != 0)
 		ASSERT(buf.size() > unsigned(size))
-		
+
 //		TRACE(<< "KeyEventUnicodeResolver::Resolve(): size = " << size << std::endl)
-		
+
 		buf[size] = 0;//null-terminate
-		
+
 		switch(status){
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
 					return std::vector<std::uint32_t>();
 				}
-				
+
 				{
 					typedef std::vector<std::uint32_t> T_Vector;
 					T_Vector utf32;
-					
+
 					for(unikod::Utf8Iterator i(buf.begin()); !i.isEnd(); ++i){
 						utf32.push_back(i.character());
 					}
-					
+
 					std::vector<std::uint32_t> ret(utf32.size());
-					
+
 					std::uint32_t* dst = &*ret.begin();
 					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
 						*dst = *src;
 					}
-					
+
 					return ret;
 				}
-				
+
 				break;
 			default:
 			case XBufferOverflow:
@@ -573,7 +574,7 @@ public:
 			case XLookupNone:
 				break;
 		}//~switch
-		
+
 		return std::vector<std::uint32_t>();
 	}
 };
@@ -590,26 +591,26 @@ void App::quit()noexcept{
 
 void App::Exec(){
 	XEventWaitable xew(this->xDisplay.d);
-	
+
 	pogodi::WaitSet waitSet(2);
-	
+
 	waitSet.add(xew, pogodi::Waitable::READ);
 	waitSet.add(this->uiQueue, pogodi::Waitable::READ);
-	
+
 	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
 	//So, render everything for the first time.
 	this->render();
-	
+
 	while(!this->quitFlag){
 		waitSet.waitWithTimeout(this->updater.update());
-		
+
 		if(this->uiQueue.canRead()){
 			while(auto m = this->uiQueue.peekMsg()){
 				m();
 			}
 			ASSERT(!this->uiQueue.canRead())
 		}
-		
+
 		if(xew.canRead()){
 			xew.clearCanReadFlag();
 			while(XPending(this->xDisplay.d) > 0){
@@ -710,10 +711,10 @@ void App::Exec(){
 				}//~switch()
 			}//~while()
 		}//~if there are pending X events
-		
+
 		this->render();
 	}//~while(!this->quitFlag)
-	
+
 	waitSet.remove(this->uiQueue);
 	waitSet.remove(xew);
 }
@@ -763,8 +764,8 @@ void App::setFullscreen(bool enable){
 	event.xclient.data.l[2]	= 0;
 
 	XSendEvent(this->xDisplay.d, DefaultRootWindow(this->xDisplay.d), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
-	
+
 	XFlush(this->xDisplay.d);
-	
+
 	this->isFullscreen_var = enable;
 }

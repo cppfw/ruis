@@ -72,19 +72,19 @@ class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 	friend class Updateable;
 	friend class Widget;
 	friend class CharInputWidget;
-	
+
 	nitki::Thread::T_ThreadID uiThreadId = nitki::Thread::getCurrentThreadID();
 
 public:
 	struct WindowParams{
 		kolme::Vec2ui dim;
 	};
-	
-	
+
+
 	bool thisIsUIThread()const noexcept{
 		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
 	}
-	
+
 	struct DefaultShaders{
 		ColorPosShader colorPosShader;
 		ColorPosTexShader colorPosTexShader;
@@ -99,10 +99,10 @@ public:
 private:
 	struct DotsPerCmWrapper{
 		float value;
-		
+
 		DotsPerCmWrapper();
 	} dotsPerCm_var;
-	
+
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -128,11 +128,11 @@ private:
 		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
 		~EGLContextWrapper()noexcept;
 	} eglContext;
-	
+
 #endif
-	
+
 #if M_OS == M_OS_LINUX
-	
+
 private:
 #	if M_OS_NAME == M_OS_NAME_ANDROID
 	friend void updateWindowRect(App& app, const morda::Rectr& rect);
@@ -142,7 +142,7 @@ private:
 	friend void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars);
 	friend void HandleQueueMessages(App& app);
 	friend int GetUIQueueHandle(App& app);
-	
+
 #	else
 	struct XDisplayWrapper{
 		Display* d;
@@ -150,12 +150,12 @@ private:
 		~XDisplayWrapper()noexcept;
 	} xDisplay;
 
-	struct DotsPerCmWrapper{
+	struct DotsPerInchWrapper{
 		float value;
-		
-		DotsPerCmWrapper(XDisplayWrapper& display);
-	} dotsPerCm_var;
-	
+
+		DotsPerInchWrapper(XDisplayWrapper& display);
+	} dotsPerInch_var;
+
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
 		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
@@ -188,15 +188,15 @@ private:
 	struct XInputMethodWrapper{
 		XIM xim;
 		XIC xic;
-		
+
 		XDisplayWrapper& d;
 		XWindowWrapper& w;
-		
+
 		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
 		~XInputMethodWrapper()noexcept{
 			this->Destroy();
 		}
-		
+
 		void Destroy()noexcept;
 	} xInputMethod;
 
@@ -204,40 +204,40 @@ private:
 	void Exec();
 
 #	endif
-	
+
 #elif M_OS == M_OS_WINDOWS
-	
+
 private:
 	struct WindowClassWrapper{
 		std::string name;
-		
+
 		WindowClassWrapper();
 		~WindowClassWrapper()noexcept;
 	} windowClass;
-	
+
 	struct WindowWrapper{
 		HWND hwnd;
-		
+
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()noexcept;
 	} window;
-	
+
 	struct DeviceContextWrapper{
 		const WindowWrapper& w;
 		HDC hdc;
-		
+
 		DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w);
 		~DeviceContextWrapper()noexcept{
 			this->Destroy();
 		}
-		
+
 	private:
 		void Destroy()noexcept;
 	} deviceContext;
-	
+
 	struct DotsPerCmWrapper{
 		float value;
-		
+
 		DotsPerCmWrapper(DeviceContextWrapper& dc);
 	} dotsPerCm_var;
 
@@ -249,36 +249,36 @@ private:
 private:
 	struct DotsPerCmWrapper{
 		float value;
-		
+
 		DotsPerCmWrapper();
 	} dotsPerCm_var;
-	
+
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();
 		~ApplicationObject()noexcept;
 	} applicationObject;
-	
+
 	struct WindowObject{
 		void* id;
 		WindowObject(const morda::App::WindowParams& wp);
 		~WindowObject()noexcept;
 	} windowObject;
-	
+
 	struct OpenGLContext{
 		void *id;
 		OpenGLContext(void* window);
 		~OpenGLContext()noexcept{
 			this->Destroy();
 		}
-		
+
 		void Destroy()noexcept;
 	} openGLContext;
-	
+
 	void macosx_SwapFrameBuffers();
-	
+
 	void Exec();
-	
+
 	friend void Macosx_Main(int argc, const char** argv);
 	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
 	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
@@ -287,20 +287,20 @@ private:
 	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
 	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
 	friend void Macosx_SetQuitFlag();
-	
+
 #else
 #	error "unsupported OS"
 #endif
 
 private:
 	Render renderer; //This should init the rendering
-	
-	
+
+
 #if M_OS_NAME != M_OS_NAME_ANDROID
 private:
 	volatile bool quitFlag = false;
 #endif
-	
+
 
 #if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
 public:
@@ -346,7 +346,7 @@ public:
 		friend class App;
 		Inflater();
 	} inflater;
-	
+
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 
@@ -358,13 +358,13 @@ private:
 	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
 		return morda::Vec2r(pos.x, this->winRect().d.y - pos.y - 1.0f);
 	}
-	
+
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::EMouseButton button, unsigned id);
-	
+
 	void handleMouseHover(bool isHovered, unsigned pointerID);
 
 protected:
@@ -376,20 +376,20 @@ public:
 
 	void setRootWidget(const std::shared_ptr<morda::Widget>& w){
 		this->rootWidget = w;
-		
+
 		this->rootWidget->moveTo(morda::Vec2r(0));
 		this->rootWidget->resize(this->winRect().d);
 	}
-	
+
 	void showVirtualKeyboard()noexcept;
-	
+
 	void hideVirtualKeyboard()noexcept;
-	
+
 private:
 	std::weak_ptr<Widget> focusedWidget;
-	
+
 	void setFocusedWidget(const std::shared_ptr<Widget> w);
-	
+
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
@@ -400,17 +400,19 @@ private:
 			}
 		}
 	}
-	
+
 	void handleKeyEvent(bool isDown, EKey keyCode);
-	
+
 public:
-	
-	float dotsPerCm()const noexcept{
-		return this->dotsPerCm_var.value;
+
+	float dotsPerInch()const noexcept{
+		return this->dotsPerInch_var.value;
 	}
-	
-	//TODO: add dots per inch
-	
+
+	float dotsPerCm()const noexcept{
+		return this->dotsPerInch() / 2.54f;
+	}
+
 	void quit()noexcept;
 
 private:
