@@ -652,7 +652,7 @@ void morda::App::OpenGLContext::Destroy()noexcept{
 
 
 
-App::DotsPerCmWrapper::DotsPerCmWrapper(){
+App::DotsPerInchWrapper::DotsPerInchWrapper(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
 	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
@@ -662,6 +662,7 @@ App::DotsPerCmWrapper::DotsPerCmWrapper(){
 
 	this->value = float(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
 			(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
+	this->value *= 2.54f;
 }
 
 
