@@ -581,9 +581,10 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 
 
 
-App::DotsPerCmWrapper::DotsPerCmWrapper(DeviceContextWrapper& dc){
+App::DotsPerInchWrapper::DotsPerInchWrapper(DeviceContextWrapper& dc){
 	this->value = (float(GetDeviceCaps(dc.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, HORZSIZE))
 		+ float(GetDeviceCaps(dc.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, VERTSIZE))) / 2.0f;
+	this->value *= 2.54f;
 }
 
 
@@ -619,7 +620,7 @@ App::ResMan::ResMan(){
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
-		dotsPerCm_var(deviceContext),
+		dotsPerInch_var(deviceContext),
 		curWinRect(0, 0, -1, -1)
 {
 	this->updateWindowRect(
@@ -687,7 +688,7 @@ void Main(int argc, const char** argv){
 	typedef std::unique_ptr<morda::App>(*Factory)(int, const char**, const utki::Buf<std::uint8_t>&);
 
 	Factory f;
-	
+
 	//Try GCC name mangling first
 	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4utki3BufIhEE")));
 
@@ -704,9 +705,9 @@ void Main(int argc, const char** argv){
 
 	ASSERT_INFO(f, "no app factory function found")
 	std::unique_ptr<morda::App> a = f(argc, argv, nullptr);
-	
+
 	ShowWindow(a->window.hwnd, SW_SHOW);
-	
+
 	a->Exec();
 }
 
@@ -722,7 +723,7 @@ int WINAPI WinMain(
 	)
 {
 	morda::Main(0, 0);
-	
+
 	return 0;
 }
 
