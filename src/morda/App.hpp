@@ -97,11 +97,11 @@ public:
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 private:
-	struct DotsPerCmWrapper{
+	struct DotsPerInchWrapper{
 		float value;
 
 		DotsPerCmWrapper();
-	} dotsPerCm_var;
+	} dotsPerInch_var;
 
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
@@ -235,11 +235,11 @@ private:
 		void Destroy()noexcept;
 	} deviceContext;
 
-	struct DotsPerCmWrapper{
+	struct DotsPerInchWrapper{
 		float value;
 
-		DotsPerCmWrapper(DeviceContextWrapper& dc);
-	} dotsPerCm_var;
+		DotsPerInchWrapper(DeviceContextWrapper& dc);
+	} dotsPerInch_var;
 
 	friend void Main(int argc, const char** argv);
 	void Exec();
@@ -247,11 +247,11 @@ private:
 
 #elif M_OS == M_OS_MACOSX	
 private:
-	struct DotsPerCmWrapper{
+	struct DotsPerInchWrapper{
 		float value;
 
-		DotsPerCmWrapper();
-	} dotsPerCm_var;
+		DotsPerInchWrapper();
+	} dotsPerInch_var;
 
 	struct ApplicationObject{
 		void* id;
