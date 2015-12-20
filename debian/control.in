@@ -3,7 +3,7 @@ Maintainer: Ivan Gagis <igagis@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), prorab,
+Build-Depends: g++, debhelper (>= 9), prorab, pkg-config,
 		libutki-dev, libpapki-dev, libpogodi-dev, libunikod-dev, libnitki-dev,
 		libaika-dev, libkolme-dev,
 		libstob-dev (>= 3.0.0),
