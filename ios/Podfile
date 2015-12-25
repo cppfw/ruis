@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/igagis/cocoapods-repo.git'
 
 pod 'libutki', '>= 1.0.8'
@@ -6,4 +7,6 @@ pod 'libnitki', '>= 1.0.2'
 pod 'libkolme', '>= 1.0.1'
 pod 'libstob', '>= 3.1.1'
 pod 'libaika', '>= 1.0.2'
+pod 'libpng', '>= 1.6.18'
+pod 'freetype', '>= 2.6.4'
 
