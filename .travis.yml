@@ -12,6 +12,11 @@ compiler:
   - clang
   - gcc
 
+matrix:
+  exclude:
+    - os: osx
+      compiler: gcc
+
 env:
   global:
   #encrypted HOMEBREW_GITHUB_ACCESS_TOKEN for publishing to homebrew-tap

@@ -37,7 +37,12 @@
 #	endif
 
 #elif M_OS == M_OS_MACOSX
-#	define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+
+#	if M_OS_NAME == M_OS_NAME_IOS
+#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGLES
+#	else
+#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
+#	endif
 
 #else
 #	error "unknown OS"
