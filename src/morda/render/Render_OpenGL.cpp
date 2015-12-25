@@ -1,5 +1,9 @@
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-#	include <GLES2/gl2.h>
+#	if M_OS_NAME == M_OS_NAME_IOS
+#		include <OpenGLES/ES2/glext.h>
+#	else
+#		include <GLES2/gl2.h>
+#	endif
 #else
 #	include <GL/glew.h>
 #endif
@@ -383,7 +387,11 @@ void Render::clearColor(kolme::Vec4f c) {
 }
 
 void Render::clearDepth(float d) {
+#if M_OS_NAME == M_OS_NAME_IOS
+	glClearDepthf(d);
+#else
 	glClearDepth(d);
+#endif
 	glClear(GL_DEPTH_BUFFER_BIT);
 	AssertOpenGLNoError();
 }
@@ -534,20 +542,24 @@ unsigned Render::getMaxTextureSize(){
 	return unsigned(val);
 }
 
+//TODO: move it to App class?
 void Render::swapFrameBuffers() {
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
-#else
-	static_assert(M_MORDA_RENDER == M_MORDA_RENDER_OPENGL, "Unexpected render API");
-#	if M_OS == M_OS_WINDOWS
+#if M_OS == M_OS_WINDOWS
 	SwapBuffers(morda::App::inst().deviceContext.hdc);
-#	elif M_OS == M_OS_LINUX
-	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
-#	elif M_OS == M_OS_MACOSX
-	morda::App::inst().macosx_SwapFrameBuffers();
+#elif M_OS == M_OS_LINUX
+#	if M_OS_NAME == M_OS_NAME_ANDROID
+	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
 #	else
-#		error "unknown OS"
+	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
 #	endif
+#elif M_OS == M_OS_MACOSX
+#	if M_OS_NAME == M_OS_NAME_IOS
+	ASSERT(false)
+#	else
+	morda::App::inst().macosx_SwapFrameBuffers();
+#	endif
+#else
+#	error "unknown OS"
 #endif
 }
 

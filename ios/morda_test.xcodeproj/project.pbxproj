@@ -26,6 +26,58 @@
 		2C6512C21C0A60F800D295F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512C11C0A60F800D295F5 /* XCTest.framework */; };
 		2C6512C31C0A60F800D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C6512C41C0A60F800D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
+		2C6960211C2CD85B00ADD06C /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960201C2CD85B00ADD06C /* ResourceManager.cpp */; };
+		2C6960231C2CD88D00ADD06C /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960221C2CD88D00ADD06C /* Render.cpp */; };
+		2C6960251C2CDAC900ADD06C /* Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960241C2CDAC900ADD06C /* Widget.cpp */; };
+		2C6960271C2CDAED00ADD06C /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960261C2CDAED00ADD06C /* FrameBuffer.cpp */; };
+		2C69602E1C2CDB3300ADD06C /* ColorPosShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960281C2CDB3300ADD06C /* ColorPosShader.cpp */; };
+		2C69602F1C2CDB3300ADD06C /* ColorPosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960291C2CDB3300ADD06C /* ColorPosTexShader.cpp */; };
+		2C6960301C2CDB3300ADD06C /* PosShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69602A1C2CDB3300ADD06C /* PosShader.cpp */; };
+		2C6960311C2CDB3300ADD06C /* PosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69602B1C2CDB3300ADD06C /* PosTexShader.cpp */; };
+		2C6960321C2CDB3300ADD06C /* SimpleBlurPosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69602C1C2CDB3300ADD06C /* SimpleBlurPosTexShader.cpp */; };
+		2C6960331C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69602D1C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp */; };
+		2C6960351C2CDB5B00ADD06C /* Inflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960341C2CDB5B00ADD06C /* Inflater.cpp */; };
+		2C6960451C2CDBC600ADD06C /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960361C2CDBC600ADD06C /* Button.cpp */; };
+		2C6960461C2CDBC600ADD06C /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960371C2CDBC600ADD06C /* CheckBox.cpp */; };
+		2C6960471C2CDBC600ADD06C /* ColorWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960381C2CDBC600ADD06C /* ColorWidget.cpp */; };
+		2C6960481C2CDBC600ADD06C /* DropDownSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960391C2CDBC600ADD06C /* DropDownSelector.cpp */; };
+		2C6960491C2CDBC600ADD06C /* List.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603A1C2CDBC600ADD06C /* List.cpp */; };
+		2C69604A1C2CDBC600ADD06C /* MouseProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603B1C2CDBC600ADD06C /* MouseProxy.cpp */; };
+		2C69604B1C2CDBC600ADD06C /* NinePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603C1C2CDBC600ADD06C /* NinePatch.cpp */; };
+		2C69604C1C2CDBC600ADD06C /* NinePatchButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603D1C2CDBC600ADD06C /* NinePatchButton.cpp */; };
+		2C69604D1C2CDBC600ADD06C /* ResizeProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603E1C2CDBC600ADD06C /* ResizeProxy.cpp */; };
+		2C69604E1C2CDBC600ADD06C /* Slider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69603F1C2CDBC600ADD06C /* Slider.cpp */; };
+		2C69604F1C2CDBC600ADD06C /* TextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960401C2CDBC600ADD06C /* TextField.cpp */; };
+		2C6960501C2CDBC600ADD06C /* TextInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960411C2CDBC600ADD06C /* TextInput.cpp */; };
+		2C6960511C2CDBC600ADD06C /* TextWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960421C2CDBC600ADD06C /* TextWidget.cpp */; };
+		2C6960521C2CDBC600ADD06C /* TreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960431C2CDBC600ADD06C /* TreeView.cpp */; };
+		2C6960531C2CDBC600ADD06C /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960441C2CDBC600ADD06C /* Window.cpp */; };
+		2C69605C1C2CDBDE00ADD06C /* BlackHoleContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960541C2CDBDE00ADD06C /* BlackHoleContainer.cpp */; };
+		2C69605D1C2CDBDE00ADD06C /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960551C2CDBDE00ADD06C /* Container.cpp */; };
+		2C69605E1C2CDBDE00ADD06C /* FrameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960561C2CDBDE00ADD06C /* FrameContainer.cpp */; };
+		2C69605F1C2CDBDE00ADD06C /* LinearContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960571C2CDBDE00ADD06C /* LinearContainer.cpp */; };
+		2C6960601C2CDBDE00ADD06C /* OverlayContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960581C2CDBDE00ADD06C /* OverlayContainer.cpp */; };
+		2C6960611C2CDBDE00ADD06C /* ScrollContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960591C2CDBDE00ADD06C /* ScrollContainer.cpp */; };
+		2C6960621C2CDBDE00ADD06C /* TableContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69605A1C2CDBDE00ADD06C /* TableContainer.cpp */; };
+		2C6960631C2CDBDE00ADD06C /* TableRow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69605B1C2CDBDE00ADD06C /* TableRow.cpp */; };
+		2C6960691C2CDBF000ADD06C /* BlurGlass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960641C2CDBF000ADD06C /* BlurGlass.cpp */; };
+		2C69606A1C2CDBF000ADD06C /* ColorLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960651C2CDBF000ADD06C /* ColorLabel.cpp */; };
+		2C69606B1C2CDBF000ADD06C /* GreyscaleGlass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960661C2CDBF000ADD06C /* GreyscaleGlass.cpp */; };
+		2C69606C1C2CDBF000ADD06C /* ImageLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960671C2CDBF000ADD06C /* ImageLabel.cpp */; };
+		2C69606D1C2CDBF000ADD06C /* TextLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960681C2CDBF000ADD06C /* TextLabel.cpp */; };
+		2C69606F1C2CDC2700ADD06C /* Updateable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69606E1C2CDC2700ADD06C /* Updateable.cpp */; };
+		2C6960751C2CDCAF00ADD06C /* ResFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960701C2CDCAF00ADD06C /* ResFont.cpp */; };
+		2C6960761C2CDCAF00ADD06C /* ResImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960711C2CDCAF00ADD06C /* ResImage.cpp */; };
+		2C6960771C2CDCAF00ADD06C /* ResNinePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960721C2CDCAF00ADD06C /* ResNinePatch.cpp */; };
+		2C6960781C2CDCAF00ADD06C /* ResSTOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960731C2CDCAF00ADD06C /* ResSTOB.cpp */; };
+		2C6960791C2CDCAF00ADD06C /* ResTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960741C2CDCAF00ADD06C /* ResTexture.cpp */; };
+		2C69607F1C2CDCE200ADD06C /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69607B1C2CDCE200ADD06C /* Mesh.cpp */; };
+		2C6960801C2CDCE200ADD06C /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69607C1C2CDCE200ADD06C /* util.cpp */; };
+		2C6960841C2CDD6700ADD06C /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960821C2CDD6700ADD06C /* Shader.cpp */; };
+		2C6960851C2CDD6700ADD06C /* Texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960831C2CDD6700ADD06C /* Texture2D.cpp */; };
+		2C6960881C2CDD8300ADD06C /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960861C2CDD8300ADD06C /* Font.cpp */; };
+		2C69608F1C2CDE3300ADD06C /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C69608E1C2CDE3300ADD06C /* Image.cpp */; };
+		2C6960911C2CDE4800ADD06C /* TexFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6960901C2CDE4800ADD06C /* TexFont.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +114,58 @@
 		2C6512BA1C0A60F800D295F5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2C6512C01C0A60F800D295F5 /* morda_testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = morda_testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512C11C0A60F800D295F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		2C6960201C2CD85B00ADD06C /* ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceManager.cpp; path = ../src/morda/ResourceManager.cpp; sourceTree = "<group>"; };
+		2C6960221C2CD88D00ADD06C /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Render.cpp; path = ../src/morda/render/Render.cpp; sourceTree = "<group>"; };
+		2C6960241C2CDAC900ADD06C /* Widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Widget.cpp; path = ../src/morda/widgets/Widget.cpp; sourceTree = "<group>"; };
+		2C6960261C2CDAED00ADD06C /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrameBuffer.cpp; path = ../src/morda/render/FrameBuffer.cpp; sourceTree = "<group>"; };
+		2C6960281C2CDB3300ADD06C /* ColorPosShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorPosShader.cpp; path = ../src/morda/shaders/ColorPosShader.cpp; sourceTree = "<group>"; };
+		2C6960291C2CDB3300ADD06C /* ColorPosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorPosTexShader.cpp; path = ../src/morda/shaders/ColorPosTexShader.cpp; sourceTree = "<group>"; };
+		2C69602A1C2CDB3300ADD06C /* PosShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PosShader.cpp; path = ../src/morda/shaders/PosShader.cpp; sourceTree = "<group>"; };
+		2C69602B1C2CDB3300ADD06C /* PosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PosTexShader.cpp; path = ../src/morda/shaders/PosTexShader.cpp; sourceTree = "<group>"; };
+		2C69602C1C2CDB3300ADD06C /* SimpleBlurPosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleBlurPosTexShader.cpp; path = ../src/morda/shaders/SimpleBlurPosTexShader.cpp; sourceTree = "<group>"; };
+		2C69602D1C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleGrayscalePosTexShader.cpp; path = ../src/morda/shaders/SimpleGrayscalePosTexShader.cpp; sourceTree = "<group>"; };
+		2C6960341C2CDB5B00ADD06C /* Inflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Inflater.cpp; path = ../src/morda/Inflater.cpp; sourceTree = "<group>"; };
+		2C6960361C2CDBC600ADD06C /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../src/morda/widgets/Button.cpp; sourceTree = "<group>"; };
+		2C6960371C2CDBC600ADD06C /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CheckBox.cpp; path = ../src/morda/widgets/CheckBox.cpp; sourceTree = "<group>"; };
+		2C6960381C2CDBC600ADD06C /* ColorWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorWidget.cpp; path = ../src/morda/widgets/ColorWidget.cpp; sourceTree = "<group>"; };
+		2C6960391C2CDBC600ADD06C /* DropDownSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DropDownSelector.cpp; path = ../src/morda/widgets/DropDownSelector.cpp; sourceTree = "<group>"; };
+		2C69603A1C2CDBC600ADD06C /* List.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = List.cpp; path = ../src/morda/widgets/List.cpp; sourceTree = "<group>"; };
+		2C69603B1C2CDBC600ADD06C /* MouseProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MouseProxy.cpp; path = ../src/morda/widgets/MouseProxy.cpp; sourceTree = "<group>"; };
+		2C69603C1C2CDBC600ADD06C /* NinePatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NinePatch.cpp; path = ../src/morda/widgets/NinePatch.cpp; sourceTree = "<group>"; };
+		2C69603D1C2CDBC600ADD06C /* NinePatchButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NinePatchButton.cpp; path = ../src/morda/widgets/NinePatchButton.cpp; sourceTree = "<group>"; };
+		2C69603E1C2CDBC600ADD06C /* ResizeProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResizeProxy.cpp; path = ../src/morda/widgets/ResizeProxy.cpp; sourceTree = "<group>"; };
+		2C69603F1C2CDBC600ADD06C /* Slider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Slider.cpp; path = ../src/morda/widgets/Slider.cpp; sourceTree = "<group>"; };
+		2C6960401C2CDBC600ADD06C /* TextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextField.cpp; path = ../src/morda/widgets/TextField.cpp; sourceTree = "<group>"; };
+		2C6960411C2CDBC600ADD06C /* TextInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextInput.cpp; path = ../src/morda/widgets/TextInput.cpp; sourceTree = "<group>"; };
+		2C6960421C2CDBC600ADD06C /* TextWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextWidget.cpp; path = ../src/morda/widgets/TextWidget.cpp; sourceTree = "<group>"; };
+		2C6960431C2CDBC600ADD06C /* TreeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TreeView.cpp; path = ../src/morda/widgets/TreeView.cpp; sourceTree = "<group>"; };
+		2C6960441C2CDBC600ADD06C /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Window.cpp; path = ../src/morda/widgets/Window.cpp; sourceTree = "<group>"; };
+		2C6960541C2CDBDE00ADD06C /* BlackHoleContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BlackHoleContainer.cpp; path = ../src/morda/widgets/containers/BlackHoleContainer.cpp; sourceTree = "<group>"; };
+		2C6960551C2CDBDE00ADD06C /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Container.cpp; path = ../src/morda/widgets/containers/Container.cpp; sourceTree = "<group>"; };
+		2C6960561C2CDBDE00ADD06C /* FrameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrameContainer.cpp; path = ../src/morda/widgets/containers/FrameContainer.cpp; sourceTree = "<group>"; };
+		2C6960571C2CDBDE00ADD06C /* LinearContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LinearContainer.cpp; path = ../src/morda/widgets/containers/LinearContainer.cpp; sourceTree = "<group>"; };
+		2C6960581C2CDBDE00ADD06C /* OverlayContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OverlayContainer.cpp; path = ../src/morda/widgets/containers/OverlayContainer.cpp; sourceTree = "<group>"; };
+		2C6960591C2CDBDE00ADD06C /* ScrollContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScrollContainer.cpp; path = ../src/morda/widgets/containers/ScrollContainer.cpp; sourceTree = "<group>"; };
+		2C69605A1C2CDBDE00ADD06C /* TableContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TableContainer.cpp; path = ../src/morda/widgets/containers/TableContainer.cpp; sourceTree = "<group>"; };
+		2C69605B1C2CDBDE00ADD06C /* TableRow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TableRow.cpp; path = ../src/morda/widgets/containers/TableRow.cpp; sourceTree = "<group>"; };
+		2C6960641C2CDBF000ADD06C /* BlurGlass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BlurGlass.cpp; path = ../src/morda/widgets/labels/BlurGlass.cpp; sourceTree = "<group>"; };
+		2C6960651C2CDBF000ADD06C /* ColorLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorLabel.cpp; path = ../src/morda/widgets/labels/ColorLabel.cpp; sourceTree = "<group>"; };
+		2C6960661C2CDBF000ADD06C /* GreyscaleGlass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GreyscaleGlass.cpp; path = ../src/morda/widgets/labels/GreyscaleGlass.cpp; sourceTree = "<group>"; };
+		2C6960671C2CDBF000ADD06C /* ImageLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageLabel.cpp; path = ../src/morda/widgets/labels/ImageLabel.cpp; sourceTree = "<group>"; };
+		2C6960681C2CDBF000ADD06C /* TextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLabel.cpp; path = ../src/morda/widgets/labels/TextLabel.cpp; sourceTree = "<group>"; };
+		2C69606E1C2CDC2700ADD06C /* Updateable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Updateable.cpp; path = ../src/morda/Updateable.cpp; sourceTree = "<group>"; };
+		2C6960701C2CDCAF00ADD06C /* ResFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResFont.cpp; path = ../src/morda/resources/ResFont.cpp; sourceTree = "<group>"; };
+		2C6960711C2CDCAF00ADD06C /* ResImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResImage.cpp; path = ../src/morda/resources/ResImage.cpp; sourceTree = "<group>"; };
+		2C6960721C2CDCAF00ADD06C /* ResNinePatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResNinePatch.cpp; path = ../src/morda/resources/ResNinePatch.cpp; sourceTree = "<group>"; };
+		2C6960731C2CDCAF00ADD06C /* ResSTOB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResSTOB.cpp; path = ../src/morda/resources/ResSTOB.cpp; sourceTree = "<group>"; };
+		2C6960741C2CDCAF00ADD06C /* ResTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResTexture.cpp; path = ../src/morda/resources/ResTexture.cpp; sourceTree = "<group>"; };
+		2C69607B1C2CDCE200ADD06C /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/morda/util/Mesh.cpp; sourceTree = "<group>"; };
+		2C69607C1C2CDCE200ADD06C /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = ../src/morda/util/util.cpp; sourceTree = "<group>"; };
+		2C6960821C2CDD6700ADD06C /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../src/morda/render/Shader.cpp; sourceTree = "<group>"; };
+		2C6960831C2CDD6700ADD06C /* Texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture2D.cpp; path = ../src/morda/render/Texture2D.cpp; sourceTree = "<group>"; };
+		2C6960861C2CDD8300ADD06C /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Font.cpp; path = ../src/morda/fonts/Font.cpp; sourceTree = "<group>"; };
+		2C69608E1C2CDE3300ADD06C /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../src/morda/util/Image.cpp; sourceTree = "<group>"; };
+		2C6960901C2CDE4800ADD06C /* TexFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TexFont.cpp; path = ../src/morda/fonts/TexFont.cpp; sourceTree = "<group>"; };
 		88E415AE30DEBB436F57FDE6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		957ADA57ADC66A3BC19FCC35 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +261,58 @@
 		2C6512D71C0A626600D295F5 /* morda */ = {
 			isa = PBXGroup;
 			children = (
+				2C6960901C2CDE4800ADD06C /* TexFont.cpp */,
+				2C69608E1C2CDE3300ADD06C /* Image.cpp */,
+				2C6960861C2CDD8300ADD06C /* Font.cpp */,
+				2C6960821C2CDD6700ADD06C /* Shader.cpp */,
+				2C6960831C2CDD6700ADD06C /* Texture2D.cpp */,
+				2C69607B1C2CDCE200ADD06C /* Mesh.cpp */,
+				2C69607C1C2CDCE200ADD06C /* util.cpp */,
+				2C6960701C2CDCAF00ADD06C /* ResFont.cpp */,
+				2C6960711C2CDCAF00ADD06C /* ResImage.cpp */,
+				2C6960721C2CDCAF00ADD06C /* ResNinePatch.cpp */,
+				2C6960731C2CDCAF00ADD06C /* ResSTOB.cpp */,
+				2C6960741C2CDCAF00ADD06C /* ResTexture.cpp */,
+				2C69606E1C2CDC2700ADD06C /* Updateable.cpp */,
+				2C6960641C2CDBF000ADD06C /* BlurGlass.cpp */,
+				2C6960651C2CDBF000ADD06C /* ColorLabel.cpp */,
+				2C6960661C2CDBF000ADD06C /* GreyscaleGlass.cpp */,
+				2C6960671C2CDBF000ADD06C /* ImageLabel.cpp */,
+				2C6960681C2CDBF000ADD06C /* TextLabel.cpp */,
+				2C6960541C2CDBDE00ADD06C /* BlackHoleContainer.cpp */,
+				2C6960551C2CDBDE00ADD06C /* Container.cpp */,
+				2C6960561C2CDBDE00ADD06C /* FrameContainer.cpp */,
+				2C6960571C2CDBDE00ADD06C /* LinearContainer.cpp */,
+				2C6960581C2CDBDE00ADD06C /* OverlayContainer.cpp */,
+				2C6960591C2CDBDE00ADD06C /* ScrollContainer.cpp */,
+				2C69605A1C2CDBDE00ADD06C /* TableContainer.cpp */,
+				2C69605B1C2CDBDE00ADD06C /* TableRow.cpp */,
+				2C6960361C2CDBC600ADD06C /* Button.cpp */,
+				2C6960371C2CDBC600ADD06C /* CheckBox.cpp */,
+				2C6960381C2CDBC600ADD06C /* ColorWidget.cpp */,
+				2C6960391C2CDBC600ADD06C /* DropDownSelector.cpp */,
+				2C69603A1C2CDBC600ADD06C /* List.cpp */,
+				2C69603B1C2CDBC600ADD06C /* MouseProxy.cpp */,
+				2C69603C1C2CDBC600ADD06C /* NinePatch.cpp */,
+				2C69603D1C2CDBC600ADD06C /* NinePatchButton.cpp */,
+				2C69603E1C2CDBC600ADD06C /* ResizeProxy.cpp */,
+				2C69603F1C2CDBC600ADD06C /* Slider.cpp */,
+				2C6960401C2CDBC600ADD06C /* TextField.cpp */,
+				2C6960411C2CDBC600ADD06C /* TextInput.cpp */,
+				2C6960421C2CDBC600ADD06C /* TextWidget.cpp */,
+				2C6960431C2CDBC600ADD06C /* TreeView.cpp */,
+				2C6960441C2CDBC600ADD06C /* Window.cpp */,
+				2C6960341C2CDB5B00ADD06C /* Inflater.cpp */,
+				2C6960281C2CDB3300ADD06C /* ColorPosShader.cpp */,
+				2C6960291C2CDB3300ADD06C /* ColorPosTexShader.cpp */,
+				2C69602A1C2CDB3300ADD06C /* PosShader.cpp */,
+				2C69602B1C2CDB3300ADD06C /* PosTexShader.cpp */,
+				2C69602C1C2CDB3300ADD06C /* SimpleBlurPosTexShader.cpp */,
+				2C69602D1C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp */,
+				2C6960261C2CDAED00ADD06C /* FrameBuffer.cpp */,
+				2C6960241C2CDAC900ADD06C /* Widget.cpp */,
+				2C6960221C2CD88D00ADD06C /* Render.cpp */,
+				2C6960201C2CD85B00ADD06C /* ResourceManager.cpp */,
 				2C03C1BA1C0E624D0024ADE4 /* App.cpp */,
 				2C03C1B81C0E622C0024ADE4 /* main.mm */,
 			);
@@ -322,10 +478,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6960511C2CDBC600ADD06C /* TextWidget.cpp in Sources */,
+				2C6960601C2CDBDE00ADD06C /* OverlayContainer.cpp in Sources */,
+				2C69605D1C2CDBDE00ADD06C /* Container.cpp in Sources */,
+				2C6960631C2CDBDE00ADD06C /* TableRow.cpp in Sources */,
+				2C6960531C2CDBC600ADD06C /* Window.cpp in Sources */,
+				2C69604B1C2CDBC600ADD06C /* NinePatch.cpp in Sources */,
+				2C6960851C2CDD6700ADD06C /* Texture2D.cpp in Sources */,
+				2C69606F1C2CDC2700ADD06C /* Updateable.cpp in Sources */,
+				2C6960211C2CD85B00ADD06C /* ResourceManager.cpp in Sources */,
+				2C69604C1C2CDBC600ADD06C /* NinePatchButton.cpp in Sources */,
+				2C69607F1C2CDCE200ADD06C /* Mesh.cpp in Sources */,
+				2C69604E1C2CDBC600ADD06C /* Slider.cpp in Sources */,
+				2C6960911C2CDE4800ADD06C /* TexFont.cpp in Sources */,
+				2C6960501C2CDBC600ADD06C /* TextInput.cpp in Sources */,
+				2C6960301C2CDB3300ADD06C /* PosShader.cpp in Sources */,
+				2C6960321C2CDB3300ADD06C /* SimpleBlurPosTexShader.cpp in Sources */,
+				2C69605E1C2CDBDE00ADD06C /* FrameContainer.cpp in Sources */,
+				2C6960231C2CD88D00ADD06C /* Render.cpp in Sources */,
+				2C69606A1C2CDBF000ADD06C /* ColorLabel.cpp in Sources */,
+				2C6960521C2CDBC600ADD06C /* TreeView.cpp in Sources */,
+				2C69608F1C2CDE3300ADD06C /* Image.cpp in Sources */,
+				2C6960481C2CDBC600ADD06C /* DropDownSelector.cpp in Sources */,
 				2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */,
+				2C6960351C2CDB5B00ADD06C /* Inflater.cpp in Sources */,
+				2C69604A1C2CDBC600ADD06C /* MouseProxy.cpp in Sources */,
+				2C6960751C2CDCAF00ADD06C /* ResFont.cpp in Sources */,
 				2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */,
+				2C6960451C2CDBC600ADD06C /* Button.cpp in Sources */,
+				2C69604F1C2CDBC600ADD06C /* TextField.cpp in Sources */,
+				2C6960491C2CDBC600ADD06C /* List.cpp in Sources */,
+				2C6960771C2CDCAF00ADD06C /* ResNinePatch.cpp in Sources */,
+				2C69605C1C2CDBDE00ADD06C /* BlackHoleContainer.cpp in Sources */,
 				2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */,
+				2C69602F1C2CDB3300ADD06C /* ColorPosTexShader.cpp in Sources */,
+				2C6960781C2CDCAF00ADD06C /* ResSTOB.cpp in Sources */,
+				2C6960791C2CDCAF00ADD06C /* ResTexture.cpp in Sources */,
+				2C69606D1C2CDBF000ADD06C /* TextLabel.cpp in Sources */,
+				2C6960801C2CDCE200ADD06C /* util.cpp in Sources */,
+				2C6960311C2CDB3300ADD06C /* PosTexShader.cpp in Sources */,
+				2C6960611C2CDBDE00ADD06C /* ScrollContainer.cpp in Sources */,
+				2C6960881C2CDD8300ADD06C /* Font.cpp in Sources */,
+				2C69606B1C2CDBF000ADD06C /* GreyscaleGlass.cpp in Sources */,
+				2C6960471C2CDBC600ADD06C /* ColorWidget.cpp in Sources */,
+				2C6960761C2CDCAF00ADD06C /* ResImage.cpp in Sources */,
+				2C69602E1C2CDB3300ADD06C /* ColorPosShader.cpp in Sources */,
+				2C6960271C2CDAED00ADD06C /* FrameBuffer.cpp in Sources */,
+				2C6960841C2CDD6700ADD06C /* Shader.cpp in Sources */,
+				2C6960331C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp in Sources */,
+				2C69604D1C2CDBC600ADD06C /* ResizeProxy.cpp in Sources */,
+				2C6960251C2CDAC900ADD06C /* Widget.cpp in Sources */,
 				2C6512AC1C0A60F700D295F5 /* AppDelegate.m in Sources */,
+				2C69605F1C2CDBDE00ADD06C /* LinearContainer.cpp in Sources */,
+				2C69606C1C2CDBF000ADD06C /* ImageLabel.cpp in Sources */,
+				2C6960691C2CDBF000ADD06C /* BlurGlass.cpp in Sources */,
+				2C6960621C2CDBDE00ADD06C /* TableContainer.cpp in Sources */,
+				2C6960461C2CDBC600ADD06C /* CheckBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

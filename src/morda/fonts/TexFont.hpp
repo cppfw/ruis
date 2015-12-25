@@ -17,16 +17,6 @@
 
 #include "../config.hpp"
 
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-#	include <GLES2/gl2.h>
-#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-#	include <GL/glew.h>
-#elif M_MORDA_RENDER == M_MORDA_RENDER_DIRECTX
-
-#else
-#	error "unknown render API"
-#endif
-
 #include "../render/Texture2D.hpp"
 #include "Font.hpp"
 

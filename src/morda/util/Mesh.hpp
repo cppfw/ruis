@@ -5,8 +5,7 @@
 
 #pragma once
 
-#include <ting/util.hpp>
-#include "Vector3.hpp"
+#include <kolme/Vector3.hpp>
 
 namespace morda{
 

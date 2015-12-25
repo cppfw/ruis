@@ -28,8 +28,12 @@
 #	endif
 
 #elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-#	include <GLES2/gl2.h>
-#	include <EGL/egl.h>
+#	if M_OS_NAME == M_OS_NAME_IOS
+#		include <OpenGlES/ES2/glext.h>
+#	else
+#		include <GLES2/gl2.h>
+#		include <EGL/egl.h>
+#	endif
 #elif M_MORDA_RENDER == M_MORDA_RENDER_DIRECTX
 
 #else
@@ -94,43 +98,6 @@ public:
 	};
 
 
-
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
-private:
-	struct DotsPerInchWrapper{
-		float value;
-
-		DotsPerCmWrapper();
-	} dotsPerInch_var;
-
-	struct EGLDisplayWrapper{
-		EGLDisplay d;
-		EGLDisplayWrapper();
-		~EGLDisplayWrapper()noexcept;
-	} eglDisplay;
-
-	struct EGLConfigWrapper{
-		EGLConfig c;
-		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
-		~EGLConfigWrapper()noexcept{}
-	} eglConfig;
-
-	struct EGLSurfaceWrapper{
-		EGLDisplayWrapper& d;
-		EGLSurface s;
-		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
-		~EGLSurfaceWrapper()noexcept;
-	} eglSurface;
-
-	struct EGLContextWrapper{
-		EGLDisplayWrapper& d;
-		EGLContext c;
-		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
-		~EGLContextWrapper()noexcept;
-	} eglContext;
-
-#endif
-
 #if M_OS == M_OS_LINUX
 
 private:
@@ -143,6 +110,38 @@ private:
 	friend void HandleQueueMessages(App& app);
 	friend int GetUIQueueHandle(App& app);
 
+private:
+	struct DotsPerInchWrapper{
+		float value;
+		
+		DotsPerInchWrapper();
+	} dotsPerInch_var;
+	
+	struct EGLDisplayWrapper{
+		EGLDisplay d;
+		EGLDisplayWrapper();
+		~EGLDisplayWrapper()noexcept;
+	} eglDisplay;
+	
+	struct EGLConfigWrapper{
+		EGLConfig c;
+		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
+		~EGLConfigWrapper()noexcept{}
+	} eglConfig;
+	
+	struct EGLSurfaceWrapper{
+		EGLDisplayWrapper& d;
+		EGLSurface s;
+		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
+		~EGLSurfaceWrapper()noexcept;
+	} eglSurface;
+	
+	struct EGLContextWrapper{
+		EGLDisplayWrapper& d;
+		EGLContext c;
+		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
+		~EGLContextWrapper()noexcept;
+	} eglContext;
 #	else
 	struct XDisplayWrapper{
 		Display* d;
@@ -245,13 +244,28 @@ private:
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
-#elif M_OS == M_OS_MACOSX	
+#elif M_OS == M_OS_MACOSX
 private:
 	struct DotsPerInchWrapper{
 		float value;
-
+		
 		DotsPerInchWrapper();
 	} dotsPerInch_var;
+	
+#	if M_OS_NAME == M_OS_NAME_IOS
+	void macosx_SwapFrameBuffers();
+	
+	void Exec();
+	
+	friend void Macosx_Main(int argc, const char** argv);
+	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
+	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
+	friend void Macosx_HandleMouseHover(bool isHovered);
+	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
+	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
+	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
+	friend void Macosx_SetQuitFlag();
+#	else
 
 	struct ApplicationObject{
 		void* id;
@@ -274,19 +288,7 @@ private:
 
 		void Destroy()noexcept;
 	} openGLContext;
-
-	void macosx_SwapFrameBuffers();
-
-	void Exec();
-
-	friend void Macosx_Main(int argc, const char** argv);
-	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
-	friend void Macosx_HandleMouseHover(bool isHovered);
-	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
-	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
-	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
-	friend void Macosx_SetQuitFlag();
+#	endif
 
 #else
 #	error "unsupported OS"
