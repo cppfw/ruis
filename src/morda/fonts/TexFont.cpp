@@ -93,7 +93,7 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	public:
 		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi){
 			this->fontFile = fi.loadWholeFileIntoMemory();
-			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), GLsizei(this->fontFile.size()), 0/* face_index */, &this->face) != 0){
+			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->face) != 0){
 				throw utki::Exc("TexFont::Load(): unable to crate font face object");
 			}
 		}

@@ -252,7 +252,6 @@ private:
 		DotsPerInchWrapper();
 	} dotsPerInch_var;
 	
-#	if M_OS_NAME == M_OS_NAME_IOS
 	void macosx_SwapFrameBuffers();
 	
 	void Exec();
@@ -265,6 +264,9 @@ private:
 	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
 	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
 	friend void Macosx_SetQuitFlag();
+	
+#	if M_OS_NAME == M_OS_NAME_IOS
+	//TODO:
 #	else
 
 	struct ApplicationObject{
