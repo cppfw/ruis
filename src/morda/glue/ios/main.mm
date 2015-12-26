@@ -7,13 +7,17 @@
 //
 
 #include "../../App.hpp"
+#include "../../AppFactory.hpp"
+
 
 #import <UIKit/UIKit.h>
 
+#include "ViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+	morda::App* app;
+}
 
 @end
 
@@ -21,7 +25,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Override point for customization after application launch.
+	self->app = morda::createApp(0, nullptr, utki::wrapBuf<std::uint8_t>(nullptr, 0)).release();
+	
 	return YES;
 }
 
@@ -50,22 +55,25 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+	ASSERT(self->app)
+	delete self->app;
 }
 
 @end
 
 
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-    }
+int main(int argc, char * argv[]){
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+	[pool release];
+	return retVal;
 }
 
 
 
 void morda::App::postToUiThread_ts(std::function<void()>&& f){
+	//TODO:
 	/*
 	NSEvent* e = [NSEvent
 				  otherEventWithType: NSApplicationDefined
@@ -82,4 +90,64 @@ void morda::App::postToUiThread_ts(std::function<void()>&& f){
 	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
 	[applicationObject postEvent:e atStart:NO];
 	*/
+}
+
+
+
+void morda::App::setFullscreen(bool enable){
+	//TODO:
+}
+
+
+void morda::App::quit()noexcept{
+	//TODO:
+}
+
+
+morda::App::App(const morda::App::WindowParams& wp) :
+		windowObject(wp)
+{
+	//TODO:
+}
+
+
+morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
+	//TODO:
+}
+
+
+morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
+	UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	if(!window){
+		throw morda::Exc("failed to create a UIWindow");
+	}
+	
+	this->id = window;
+	
+	window.screen = [UIScreen mainScreen];
+	
+	window.backgroundColor = [UIColor redColor];
+	window.rootViewController = [[ViewController alloc] init];
+	
+	[window makeKeyAndVisible];
+}
+
+morda::App::WindowObject::~WindowObject()noexcept{
+	UIWindow* window = (UIWindow*)this->id;
+	[window release];
+}
+
+
+void morda::App::showVirtualKeyboard()noexcept{
+	//TODO:
+}
+
+void morda::App::hideVirtualKeyboard()noexcept{
+	//TODO:
+}
+
+std::unique_ptr<papki::File> morda::App::createResourceFileInterface(const std::string& path)const{
+	//TODO;
+	return nullptr;
 }

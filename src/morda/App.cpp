@@ -125,7 +125,7 @@ void App::handleKeyEvent(bool isDown, EKey keyCode){
 
 
 
-#if M_OS_NAME != M_OS_NAME_ANDROID
+#if M_OS_NAME != M_OS_NAME_ANDROID && M_OS_NAME != M_OS_NAME_IOS
 std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
 	return utki::makeUnique<papki::FSFile>(path);
 }
@@ -175,7 +175,9 @@ App::ResMan::ResMan(){
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			this->mountResPack(*morda::App::inst().createResourceFileInterface(s));
+			auto fi = morda::App::inst().createResourceFileInterface(s);
+			ASSERT(fi)
+			this->mountResPack(*fi);
 		}catch(papki::Exc& e){
 			continue;
 		}

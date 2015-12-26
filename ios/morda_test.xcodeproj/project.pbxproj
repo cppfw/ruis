@@ -10,14 +10,14 @@
 		10A9C62395F6290855B1BF73 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E415AE30DEBB436F57FDE6 /* libPods.a */; };
 		2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1B81C0E622C0024ADE4 /* main.mm */; };
 		2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1BA1C0E624D0024ADE4 /* App.cpp */; };
+		2C547A781C2F2C1E0079154C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C547A771C2F2C1E0079154C /* main.cpp */; };
+		2C547A7A1C2F37CC0079154C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 2C547A791C2F37CC0079154C /* res */; };
 		2C6512981C0A60F700D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C65129A1C0A60F700D295F5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512991C0A60F700D295F5 /* CoreGraphics.framework */; };
 		2C65129C1C0A60F700D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
 		2C65129E1C0A60F700D295F5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129D1C0A60F700D295F5 /* GLKit.framework */; };
 		2C6512A01C0A60F700D295F5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129F1C0A60F700D295F5 /* OpenGLES.framework */; };
 		2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512A41C0A60F700D295F5 /* InfoPlist.strings */; };
-		2C6512AF1C0A60F800D295F5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512AD1C0A60F800D295F5 /* Main_iPhone.storyboard */; };
-		2C6512B21C0A60F800D295F5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B01C0A60F800D295F5 /* Main_iPad.storyboard */; };
 		2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B31C0A60F800D295F5 /* Shader.fsh */; };
 		2C6512B61C0A60F800D295F5 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B51C0A60F800D295F5 /* Shader.vsh */; };
 		2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6512B81C0A60F800D295F5 /* ViewController.m */; };
@@ -93,6 +93,8 @@
 		092CF4F2F5A713FD722963EA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2C03C1B81C0E622C0024ADE4 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
 		2C03C1BA1C0E624D0024ADE4 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = App.cpp; path = ../src/morda/App.cpp; sourceTree = "<group>"; };
+		2C547A771C2F2C1E0079154C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../tests/app/src/main.cpp; sourceTree = "<group>"; };
+		2C547A791C2F37CC0079154C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../res; sourceTree = "<group>"; };
 		2C6512941C0A60F700D295F5 /* morda_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = morda_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512971C0A60F700D295F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C6512991C0A60F700D295F5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -102,8 +104,6 @@
 		2C6512A31C0A60F700D295F5 /* morda_test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "morda_test-Info.plist"; sourceTree = "<group>"; };
 		2C6512A51C0A60F700D295F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C6512A91C0A60F700D295F5 /* morda_test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "morda_test-Prefix.pch"; sourceTree = "<group>"; };
-		2C6512AE1C0A60F800D295F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		2C6512B11C0A60F800D295F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		2C6512B31C0A60F800D295F5 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
 		2C6512B51C0A60F800D295F5 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		2C6512B71C0A60F800D295F5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -231,13 +231,13 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
-				2C6512AD1C0A60F800D295F5 /* Main_iPhone.storyboard */,
-				2C6512B01C0A60F800D295F5 /* Main_iPad.storyboard */,
+				2C547A771C2F2C1E0079154C /* main.cpp */,
 				2C6512B31C0A60F800D295F5 /* Shader.fsh */,
 				2C6512B51C0A60F800D295F5 /* Shader.vsh */,
 				2C6512B71C0A60F800D295F5 /* ViewController.h */,
 				2C6512B81C0A60F800D295F5 /* ViewController.m */,
 				2C6512BA1C0A60F800D295F5 /* Images.xcassets */,
+				2C547A791C2F37CC0079154C /* res */,
 				2C6512A21C0A60F700D295F5 /* Supporting Files */,
 			);
 			path = morda_test;
@@ -403,10 +403,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */,
-				2C6512B21C0A60F800D295F5 /* Main_iPad.storyboard in Resources */,
-				2C6512AF1C0A60F800D295F5 /* Main_iPhone.storyboard in Resources */,
 				2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */,
 				2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */,
+				2C547A7A1C2F37CC0079154C /* res in Resources */,
 				2C6512B61C0A60F800D295F5 /* Shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,6 +518,7 @@
 				2C6960761C2CDCAF00ADD06C /* ResImage.cpp in Sources */,
 				2C69602E1C2CDB3300ADD06C /* ColorPosShader.cpp in Sources */,
 				2C6960271C2CDAED00ADD06C /* FrameBuffer.cpp in Sources */,
+				2C547A781C2F2C1E0079154C /* main.cpp in Sources */,
 				2C6960841C2CDD6700ADD06C /* Shader.cpp in Sources */,
 				2C6960331C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp in Sources */,
 				2C69604D1C2CDBC600ADD06C /* ResizeProxy.cpp in Sources */,
@@ -557,22 +557,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		2C6512AD1C0A60F800D295F5 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2C6512AE1C0A60F800D295F5 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		2C6512B01C0A60F800D295F5 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2C6512B11C0A60F800D295F5 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -583,7 +567,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -623,7 +607,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -655,6 +639,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
@@ -670,6 +655,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";

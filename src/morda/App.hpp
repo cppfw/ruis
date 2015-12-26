@@ -266,7 +266,12 @@ private:
 	friend void Macosx_SetQuitFlag();
 	
 #	if M_OS_NAME == M_OS_NAME_IOS
-	//TODO:
+	struct WindowObject{
+		void* id;
+		WindowObject(const morda::App::WindowParams& wp);
+		~WindowObject()noexcept;
+	} windowObject;
+	
 #	else
 	struct ApplicationObject{
 		void* id;
