@@ -25,6 +25,7 @@ this_cflags += -funsigned-char #the 'char' type is unsigned
 this_cflags += -Wnon-virtual-dtor #warn if base class has non-virtual destructor
 this_cflags += -fno-operator-names #do not treat 'and', 'bitand','bitor','compl','not','or','xor' as keywords
 this_cflags += -Werror #treat warnings as errors
+this_cflags += -Wfatal-errors # stop on first error encountered
 this_cflags += -fstrict-aliasing #strict aliasing (in order to comply with the c++ standard more strictly)
 this_cflags += -g #include debugging symbols
                 #-P -E #-Wreorder
@@ -38,8 +39,6 @@ ifeq ($(debug),true)
     this_cflags += -DDEBUG
 #    this_cflags += -DM_MORDA_RENDER_WIDGET_BORDERS
     this_objcflags += -DDEBUG
-    this_objcflags += -std=c++11
-    this_objcflags += -Werror
 endif
 
 ifeq ($(prorab_os), linux)
@@ -69,7 +68,7 @@ else ifeq ($(prorab_os), macosx)
         $(this_mm_obj): $(prorab_this_dir)morda/glue/macosx/main.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
-		$(prorab_echo)$(CC) -ObjC++ -c -o "$$@" $(this_objcflags) $$<
+		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
     endef
     $(eval $(this_rules))
 endif
