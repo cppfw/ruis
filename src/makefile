@@ -38,7 +38,7 @@ this_objcflags :=
 ifeq ($(debug),true)
     this_cflags += -DDEBUG
 #    this_cflags += -DM_MORDA_RENDER_WIDGET_BORDERS
-    this_objcflags += -DDEBUG
+    this_objcflags += -DDEBUG $(this_cflags)
 endif
 
 ifeq ($(prorab_os), linux)
@@ -68,7 +68,7 @@ else ifeq ($(prorab_os), macosx)
         $(this_mm_obj): $(prorab_this_dir)morda/glue/macosx/main.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
-		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
+		$(prorab_echo)$(CC) -ObjC++ -c -o "$$@" $(this_objcflags) $$<
     endef
     $(eval $(this_rules))
 endif
