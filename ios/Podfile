@@ -9,4 +9,5 @@ pod 'libstob', '>= 3.1.1'
 pod 'libaika', '>= 1.0.2'
 pod 'libpng', '>= 1.6.18'
 pod 'freetype', '>= 2.6.4'
+pod 'libjpeg', '>= 6.1.1'
 
