@@ -772,7 +772,7 @@ void App::setFullscreen(bool enable){
 		return;
 	}
 	
-	NSWindow* window = (NSWindow*)this->windowObject.id;
+	CocoaWindow* window = (CocoaWindow*)this->windowObject.id;
 	
 	if(enable){
 		//save old window size
