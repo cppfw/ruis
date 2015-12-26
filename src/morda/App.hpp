@@ -268,7 +268,6 @@ private:
 #	if M_OS_NAME == M_OS_NAME_IOS
 	//TODO:
 #	else
-
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();
