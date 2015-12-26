@@ -157,9 +157,12 @@ App::ResMan::ResMan(){
 		
 	std::vector<std::string> paths;
 	
-#	ifdef DEBUG
-		paths.push_back("../../res/");
+#	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
+		paths.push_back("respack/");
 #	else
+#		ifdef DEBUG
+		paths.push_back("../../respack/");
+#		else
 		{
 			std::stringstream ss;
 			ss << "/usr/local/share/morda/res" << soname << "/";
@@ -170,6 +173,7 @@ App::ResMan::ResMan(){
 			ss << "/usr/share/morda/res" << soname << "/";
 			paths.push_back(ss.str());
 		}
+#		endif
 #	endif
 
 	for(const auto& s : paths){

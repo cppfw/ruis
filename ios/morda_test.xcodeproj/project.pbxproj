@@ -11,7 +11,8 @@
 		2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1B81C0E622C0024ADE4 /* main.mm */; };
 		2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1BA1C0E624D0024ADE4 /* App.cpp */; };
 		2C547A781C2F2C1E0079154C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C547A771C2F2C1E0079154C /* main.cpp */; };
-		2C547A7A1C2F37CC0079154C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 2C547A791C2F37CC0079154C /* res */; };
+		2C547A821C2F4E560079154C /* respack in Resources */ = {isa = PBXBuildFile; fileRef = 2C547A811C2F4E550079154C /* respack */; };
+		2C547A841C2F4E930079154C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 2C547A831C2F4E930079154C /* res */; };
 		2C6512981C0A60F700D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C65129A1C0A60F700D295F5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512991C0A60F700D295F5 /* CoreGraphics.framework */; };
 		2C65129C1C0A60F700D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
@@ -94,7 +95,8 @@
 		2C03C1B81C0E622C0024ADE4 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = ../src/morda/glue/ios/main.mm; sourceTree = "<group>"; };
 		2C03C1BA1C0E624D0024ADE4 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = App.cpp; path = ../src/morda/App.cpp; sourceTree = "<group>"; };
 		2C547A771C2F2C1E0079154C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../tests/app/src/main.cpp; sourceTree = "<group>"; };
-		2C547A791C2F37CC0079154C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../res; sourceTree = "<group>"; };
+		2C547A811C2F4E550079154C /* respack */ = {isa = PBXFileReference; lastKnownFileType = folder; name = respack; path = ../../respack; sourceTree = "<group>"; };
+		2C547A831C2F4E930079154C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../tests/app/res; sourceTree = "<group>"; };
 		2C6512941C0A60F700D295F5 /* morda_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = morda_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512971C0A60F700D295F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C6512991C0A60F700D295F5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -231,13 +233,14 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
+				2C547A831C2F4E930079154C /* res */,
+				2C547A811C2F4E550079154C /* respack */,
 				2C547A771C2F2C1E0079154C /* main.cpp */,
 				2C6512B31C0A60F800D295F5 /* Shader.fsh */,
 				2C6512B51C0A60F800D295F5 /* Shader.vsh */,
 				2C6512B71C0A60F800D295F5 /* ViewController.h */,
 				2C6512B81C0A60F800D295F5 /* ViewController.m */,
 				2C6512BA1C0A60F800D295F5 /* Images.xcassets */,
-				2C547A791C2F37CC0079154C /* res */,
 				2C6512A21C0A60F700D295F5 /* Supporting Files */,
 			);
 			path = morda_test;
@@ -405,7 +408,8 @@
 				2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */,
 				2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */,
 				2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */,
-				2C547A7A1C2F37CC0079154C /* res in Resources */,
+				2C547A841C2F4E930079154C /* res in Resources */,
+				2C547A821C2F4E560079154C /* respack in Resources */,
 				2C6512B61C0A60F800D295F5 /* Shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

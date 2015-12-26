@@ -9,6 +9,9 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
 
+#include <papki/FSFile.hpp>
+
+#include <sstream>
 
 #import <UIKit/UIKit.h>
 
@@ -147,11 +150,14 @@ void morda::App::hideVirtualKeyboard()noexcept{
 	//TODO:
 }
 
+
 std::unique_ptr<papki::File> morda::App::createResourceFileInterface(const std::string& path)const{
-	auto dir = [[[NSBundle mainBundle] resourcePath] fileSystemRepresentation];
+	std::string dir([[[NSBundle mainBundle] resourcePath] fileSystemRepresentation]);
 	
-	TRACE(<< "res path = " << dir << std::endl)
+//	TRACE(<< "res path = " << dir << std::endl)
+
+	std::stringstream ss;
+	ss << dir << "/" << path;
 	
-	//TODO;
-	return nullptr;
+	return utki::makeUnique<papki::FSFile>(ss.str());
 }
