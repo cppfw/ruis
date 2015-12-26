@@ -148,6 +148,10 @@ void morda::App::hideVirtualKeyboard()noexcept{
 }
 
 std::unique_ptr<papki::File> morda::App::createResourceFileInterface(const std::string& path)const{
+	auto dir = [[[NSBundle mainBundle] resourcePath] fileSystemRepresentation];
+	
+	TRACE(<< "res path = " << dir << std::endl)
+	
 	//TODO;
 	return nullptr;
 }
