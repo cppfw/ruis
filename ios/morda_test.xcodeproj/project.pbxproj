@@ -16,7 +16,6 @@
 		2C65129E1C0A60F700D295F5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129D1C0A60F700D295F5 /* GLKit.framework */; };
 		2C6512A01C0A60F700D295F5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129F1C0A60F700D295F5 /* OpenGLES.framework */; };
 		2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512A41C0A60F700D295F5 /* InfoPlist.strings */; };
-		2C6512AC1C0A60F700D295F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6512AB1C0A60F700D295F5 /* AppDelegate.m */; };
 		2C6512AF1C0A60F800D295F5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512AD1C0A60F800D295F5 /* Main_iPhone.storyboard */; };
 		2C6512B21C0A60F800D295F5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B01C0A60F800D295F5 /* Main_iPad.storyboard */; };
 		2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B31C0A60F800D295F5 /* Shader.fsh */; };
@@ -103,8 +102,6 @@
 		2C6512A31C0A60F700D295F5 /* morda_test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "morda_test-Info.plist"; sourceTree = "<group>"; };
 		2C6512A51C0A60F700D295F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C6512A91C0A60F700D295F5 /* morda_test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "morda_test-Prefix.pch"; sourceTree = "<group>"; };
-		2C6512AA1C0A60F700D295F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2C6512AB1C0A60F700D295F5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2C6512AE1C0A60F800D295F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		2C6512B11C0A60F800D295F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		2C6512B31C0A60F800D295F5 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
@@ -234,8 +231,6 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
-				2C6512AA1C0A60F700D295F5 /* AppDelegate.h */,
-				2C6512AB1C0A60F700D295F5 /* AppDelegate.m */,
 				2C6512AD1C0A60F800D295F5 /* Main_iPhone.storyboard */,
 				2C6512B01C0A60F800D295F5 /* Main_iPad.storyboard */,
 				2C6512B31C0A60F800D295F5 /* Shader.fsh */,
@@ -528,7 +523,6 @@
 				2C6960331C2CDB3300ADD06C /* SimpleGrayscalePosTexShader.cpp in Sources */,
 				2C69604D1C2CDBC600ADD06C /* ResizeProxy.cpp in Sources */,
 				2C6960251C2CDAC900ADD06C /* Widget.cpp in Sources */,
-				2C6512AC1C0A60F700D295F5 /* AppDelegate.m in Sources */,
 				2C69605F1C2CDBDE00ADD06C /* LinearContainer.cpp in Sources */,
 				2C69606C1C2CDBF000ADD06C /* ImageLabel.cpp in Sources */,
 				2C6960691C2CDBF000ADD06C /* BlurGlass.cpp in Sources */,
