@@ -252,6 +252,16 @@ private:
 		DotsPerInchWrapper();
 	} dotsPerInch_var;
 	
+#	if M_OS_NAME == M_OS_NAME_IOS
+	struct WindowObject{
+		void* id;
+		WindowObject(const morda::App::WindowParams& wp);
+		~WindowObject()noexcept;
+	} windowObject;
+	
+	friend void ios_render();
+	
+#	else
 	void macosx_SwapFrameBuffers();
 	
 	void Exec();
@@ -264,15 +274,7 @@ private:
 	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
 	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
 	friend void Macosx_SetQuitFlag();
-	
-#	if M_OS_NAME == M_OS_NAME_IOS
-	struct WindowObject{
-		void* id;
-		WindowObject(const morda::App::WindowParams& wp);
-		~WindowObject()noexcept;
-	} windowObject;
-	
-#	else
+
 	struct ApplicationObject{
 		void* id;
 		ApplicationObject();

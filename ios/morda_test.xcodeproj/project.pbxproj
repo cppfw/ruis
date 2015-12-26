@@ -21,7 +21,6 @@
 		2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512A41C0A60F700D295F5 /* InfoPlist.strings */; };
 		2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B31C0A60F800D295F5 /* Shader.fsh */; };
 		2C6512B61C0A60F800D295F5 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512B51C0A60F800D295F5 /* Shader.vsh */; };
-		2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6512B81C0A60F800D295F5 /* ViewController.m */; };
 		2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C6512BA1C0A60F800D295F5 /* Images.xcassets */; };
 		2C6512C21C0A60F800D295F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512C11C0A60F800D295F5 /* XCTest.framework */; };
 		2C6512C31C0A60F800D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
@@ -108,8 +107,6 @@
 		2C6512A91C0A60F700D295F5 /* morda_test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "morda_test-Prefix.pch"; sourceTree = "<group>"; };
 		2C6512B31C0A60F800D295F5 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
 		2C6512B51C0A60F800D295F5 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
-		2C6512B71C0A60F800D295F5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2C6512B81C0A60F800D295F5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2C6512BA1C0A60F800D295F5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2C6512C01C0A60F800D295F5 /* morda_testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = morda_testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512C11C0A60F800D295F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -238,8 +235,6 @@
 				2C547A771C2F2C1E0079154C /* main.cpp */,
 				2C6512B31C0A60F800D295F5 /* Shader.fsh */,
 				2C6512B51C0A60F800D295F5 /* Shader.vsh */,
-				2C6512B71C0A60F800D295F5 /* ViewController.h */,
-				2C6512B81C0A60F800D295F5 /* ViewController.m */,
 				2C6512BA1C0A60F800D295F5 /* Images.xcassets */,
 				2C6512A21C0A60F700D295F5 /* Supporting Files */,
 			);
@@ -508,7 +503,6 @@
 				2C6960491C2CDBC600ADD06C /* List.cpp in Sources */,
 				2C6960771C2CDCAF00ADD06C /* ResNinePatch.cpp in Sources */,
 				2C69605C1C2CDBDE00ADD06C /* BlackHoleContainer.cpp in Sources */,
-				2C6512B91C0A60F800D295F5 /* ViewController.m in Sources */,
 				2C69602F1C2CDB3300ADD06C /* ColorPosTexShader.cpp in Sources */,
 				2C6960781C2CDCAF00ADD06C /* ResSTOB.cpp in Sources */,
 				2C6960791C2CDCAF00ADD06C /* ResTexture.cpp in Sources */,

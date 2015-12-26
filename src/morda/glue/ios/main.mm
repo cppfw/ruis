@@ -14,8 +14,9 @@
 #include <sstream>
 
 #import <UIKit/UIKit.h>
+#import <GLKit/GLKit.h>
 
-#include "ViewController.h"
+
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
@@ -110,13 +111,91 @@ void morda::App::quit()noexcept{
 morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp)
 {
-	//TODO:
+	this->updateWindowRect(
+			morda::Rectr(
+					0,
+					0,
+					float(wp.dim.x),
+					float(wp.dim.y)
+				)
+		);
 }
 
 
 morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 	//TODO:
 }
+
+
+
+namespace  morda {
+void ios_render(){
+	morda::App::inst().render();
+}
+}
+
+
+@interface ViewController : GLKViewController{
+	
+}
+
+@property (strong, nonatomic) EAGLContext *context;
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad{
+	[super viewDidLoad];
+	
+	self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+	if (self.context == nil) {
+		self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+	}
+	
+	if (!self.context) {
+		NSLog(@"Failed to create ES context");
+	}
+	
+	GLKView *view = (GLKView *)self.view;
+	view.context = self.context;
+	view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+	
+	[EAGLContext setCurrentContext:self.context];
+}
+
+- (void)dealloc{
+	[super dealloc];
+	
+	if ([EAGLContext currentContext] == self.context) {
+		[EAGLContext setCurrentContext:nil];
+	}
+	[self.context release];
+}
+
+- (void)didReceiveMemoryWarning{
+	// Dispose of any resources that can be recreated.
+}
+
+
+- (void)update{
+	//TODO:
+}
+
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
+	morda::ios_render();
+}
+
+@end
+
+
+
+
+
+
+
+
+
+
 
 
 morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){

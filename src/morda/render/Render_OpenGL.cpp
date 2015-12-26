@@ -555,7 +555,7 @@ void Render::swapFrameBuffers() {
 #	endif
 #elif M_OS == M_OS_MACOSX
 #	if M_OS_NAME == M_OS_NAME_IOS
-	ASSERT(false)
+	//ios will swap buffers for us
 #	else
 	morda::App::inst().macosx_SwapFrameBuffers();
 #	endif
