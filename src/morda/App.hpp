@@ -260,6 +260,7 @@ private:
 	} windowObject;
 	
 	friend void ios_render();
+	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	
 #	else

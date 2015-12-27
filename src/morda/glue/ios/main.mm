@@ -23,6 +23,10 @@ namespace morda{
 		morda::App::inst().render();
 	}
 	
+	std::uint32_t ios_update(){
+		return morda::App::inst().updater.update();
+	}
+	
 	void ios_updateWindowRect(morda::Vec2r dim){
 		morda::App::inst().updateWindowRect(
 											morda::Rectr(
@@ -214,7 +218,8 @@ morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 
 
 - (void)update{
-	//TODO:
+	//TODO: adapt to nothingto update, lower frame rate
+	morda::ios_update();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
