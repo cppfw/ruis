@@ -260,6 +260,7 @@ private:
 	} windowObject;
 	
 	friend void ios_render();
+	friend void ios_updateWindowRect(morda::Vec2r dim);
 	
 #	else
 	void macosx_SwapFrameBuffers();

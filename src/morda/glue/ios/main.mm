@@ -17,6 +17,22 @@
 #import <GLKit/GLKit.h>
 
 
+namespace morda{
+	
+	void ios_render(){
+		morda::App::inst().render();
+	}
+	
+	void ios_updateWindowRect(morda::Vec2r dim){
+		morda::App::inst().updateWindowRect(
+											morda::Rectr(
+														 morda::Vec2r(0),
+														 dim
+														 )
+											);
+	}
+	
+}
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
@@ -99,7 +115,27 @@ void morda::App::postToUiThread_ts(std::function<void()>&& f){
 
 
 void morda::App::setFullscreen(bool enable){
-	//TODO:
+	UIWindow* w = (UIWindow*)this->windowObject.id;
+	
+	float scale = 1;
+	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+		scale = [[UIScreen mainScreen] scale];
+	}
+	
+	if(enable){
+		morda::ios_updateWindowRect(morda::Vec2r(
+												 std::round(w.frame.size.width * scale),
+												 std::round(w.frame.size.height * scale)
+			));
+		w.windowLevel = UIWindowLevelStatusBar;
+	}else{
+		CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+		morda::ios_updateWindowRect(morda::Vec2r(
+												 std::round(w.frame.size.width * scale),
+												 std::round((w.frame.size.height - statusBarSize.height) * scale)
+			));
+		w.windowLevel = UIWindowLevelNormal;
+	}
 }
 
 
@@ -111,28 +147,28 @@ void morda::App::quit()noexcept{
 morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp)
 {
-	this->updateWindowRect(
-			morda::Rectr(
-					0,
-					0,
-					float(wp.dim.x),
-					float(wp.dim.y)
-				)
-		);
+	this->setFullscreen(false);//this will intialize the viewport
 }
 
 
 morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
-	//TODO:
+	float scale = 1;
+	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+		scale = [[UIScreen mainScreen] scale];
+	}
+
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		this->value = 132 * scale;
+	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+		this->value = 163 * scale;
+	} else {
+		this->value = 160 * scale;
+	}
+	TRACE(<< "dpi = " << this->value << std::endl)
 }
 
 
 
-namespace  morda {
-void ios_render(){
-	morda::App::inst().render();
-}
-}
 
 
 @interface ViewController : GLKViewController{
