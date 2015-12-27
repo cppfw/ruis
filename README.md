@@ -1,4 +1,4 @@
-# morda [![Build Status](https://travis-ci.org/igagis/morda.svg?branch=master)](https://travis-ci.org/igagis/morda) [![Build status](https://ci.appveyor.com/api/projects/status/vnce10b7pqgfvfug/branch/master?svg=true)](https://ci.appveyor.com/project/igagis/morda/branch/master)
+# morda [![Build Status](https://travis-ci.org/igagis/morda.svg?branch=master)](https://travis-ci.org/igagis/morda) [![Build status](https://ci.appveyor.com/api/projects/status/vnce10b7pqgfvfug/branch/master?svg=true)](https://ci.appveyor.com/project/igagis/morda/branch/master) ![Release](https://img.shields.io/github/release/igagis/morda.svg)
 
 
 OpenGL based GUI library in C++
