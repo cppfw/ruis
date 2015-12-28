@@ -7,7 +7,7 @@ OpenGL based GUI library in C++
 W.I.P.
 
 ## OpenGL versions supported
-  * OpenGL 3.0+
+  * OpenGL 2.0+
   * OpenGL ES 2.0+
 
 ## Supported platforms
