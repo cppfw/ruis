@@ -1,6 +1,6 @@
 morda_fnt_main{
 	file {vera.ttf}
 	chars {" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;?!()_*+-|\\/"}
-	size {5mm}
+	size {20}
 	outline {0}
 }

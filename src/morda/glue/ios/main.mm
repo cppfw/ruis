@@ -44,7 +44,7 @@ namespace morda{
 	}
 	
 	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned id){
-		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
+//		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
 		morda::App::inst().handleMouseButton(
 											 isDown,
 											 morda::Vec2r(pos.x, pos.y),
@@ -140,6 +140,10 @@ void morda::App::setFullscreen(bool enable){
 	float scale = [[UIScreen mainScreen] scale];
 	
 	if(enable){
+		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
+			CGRect rect = w.frame;
+			w.rootViewController.view.frame = rect;
+		}
 		morda::ios_updateWindowRect(morda::Vec2r(
 												 std::round(w.frame.size.width * scale),
 												 std::round(w.frame.size.height * scale)
@@ -147,6 +151,14 @@ void morda::App::setFullscreen(bool enable){
 		w.windowLevel = UIWindowLevelStatusBar;
 	}else{
 		CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+		
+		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
+				CGRect rect = w.frame;
+				rect.origin.y += statusBarSize.height;
+				rect.size.height -= statusBarSize.height;
+				w.rootViewController.view.frame = rect;
+		}
+		
 		morda::ios_updateWindowRect(morda::Vec2r(
 												 std::round(w.frame.size.width * scale),
 												 std::round((w.frame.size.height - statusBarSize.height) * scale)
@@ -213,6 +225,11 @@ morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 	[EAGLContext setCurrentContext:self.context];
 	
 	view.multipleTouchEnabled = YES;
+	
+	if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+ {
+	 self.edgesForExtendedLayout = UIRectEdgeNone;
+ }
 }
 
 - (void)dealloc{
