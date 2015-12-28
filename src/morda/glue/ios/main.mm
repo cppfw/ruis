@@ -36,6 +36,22 @@ namespace morda{
 											);
 	}
 	
+	void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id){
+		morda::App::inst().handleMouseMove(
+										   morda::Vec2r(pos.x, pos.y),
+										   id
+										   );
+	}
+	
+	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned id){
+		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
+		morda::App::inst().handleMouseButton(
+											 isDown,
+											 morda::Vec2r(pos.x, pos.y),
+											 button,
+											 id
+											 );
+	}
 }
 
 
@@ -121,10 +137,7 @@ void morda::App::postToUiThread_ts(std::function<void()>&& f){
 void morda::App::setFullscreen(bool enable){
 	UIWindow* w = (UIWindow*)this->windowObject.id;
 	
-	float scale = 1;
-	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-		scale = [[UIScreen mainScreen] scale];
-	}
+	float scale = [[UIScreen mainScreen] scale];
 	
 	if(enable){
 		morda::ios_updateWindowRect(morda::Vec2r(
@@ -156,10 +169,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
-	float scale = 1;
-	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-		scale = [[UIScreen mainScreen] scale];
-	}
+	float scale = [[UIScreen mainScreen] scale];
 
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		this->value = 132 * scale;
@@ -176,7 +186,7 @@ morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 
 
 @interface ViewController : GLKViewController{
-	
+
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -201,6 +211,8 @@ morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 	view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
 	
 	[EAGLContext setCurrentContext:self.context];
+	
+	view.multipleTouchEnabled = YES;
 }
 
 - (void)dealloc{
@@ -224,6 +236,56 @@ morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
 	morda::ios_render();
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	float scale = [UIScreen mainScreen].scale;
+	
+	for(UITouch * touch in touches ){
+		CGPoint p = [touch locationInView:self.view ];
+		
+//		TRACE(<< "touch began = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
+		morda::ios_handleMouseButton(
+				true,
+				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
+				morda::Widget::EMouseButton::LEFT,
+				0//TODO: id
+			);
+	}
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+	float scale = [UIScreen mainScreen].scale;
+	
+	for(UITouch * touch in touches ){
+		CGPoint p = [touch locationInView:self.view ];
+		
+//		TRACE(<< "touch moved = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
+		morda::ios_handleMouseMove(
+									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
+									 0 //TODO: id
+			);
+	}
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+	float scale = [UIScreen mainScreen].scale;
+	
+	for(UITouch * touch in touches ){
+		CGPoint p = [touch locationInView:self.view ];
+		
+//		TRACE(<< "touch ended = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
+		morda::ios_handleMouseButton(
+									 false,
+									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
+									 morda::Widget::EMouseButton::LEFT,
+									 0//TODO: id
+			);
+	}
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+	//TODO:
 }
 
 @end

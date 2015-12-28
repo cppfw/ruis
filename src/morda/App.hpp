@@ -262,6 +262,8 @@ private:
 	friend void ios_render();
 	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
+	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
+	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned id);
 	
 #	else
 	void macosx_SwapFrameBuffers();
