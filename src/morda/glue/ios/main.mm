@@ -113,23 +113,12 @@ int main(int argc, char * argv[]){
 
 
 void morda::App::postToUiThread_ts(std::function<void()>&& f){
-	//TODO:
-	/*
-	NSEvent* e = [NSEvent
-				  otherEventWithType: NSApplicationDefined
-				  location: NSMakePoint(0, 0)
-				  modifierFlags:0
-				  timestamp:0
-				  windowNumber:0
-				  context: nil
-				  subtype: 0
-				  data1: reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)))
-				  data2: 0
-				  ];
+	auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)));
 	
-	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
-	[applicationObject postEvent:e atStart:NO];
-	*/
+	dispatch_async(dispatch_get_main_queue(), ^{
+		std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
+		(*m)();
+	});
 }
 
 
