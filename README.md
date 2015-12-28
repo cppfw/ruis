@@ -14,8 +14,8 @@ W.I.P.
   * Linux (gcc-4.8 or higher)
   * Windows (VS2015/MinGW gcc-4.8 or higher)
   * MacOS X (clang 5.1 or higher)
-  * Android 2.3+ (gcc-4.8 or higher)
-  * iOS (planned)
+  * Android 2.3+ (currently broken)
+  * iOS (draft implementation)
 
 # Building from sources
   * [how to build in Linux](wiki/BuildingInLinux.md)
