@@ -164,7 +164,7 @@ void morda::App::quit()noexcept{
 
 namespace{
 
-real getDotsPerInch(){
+morda::real getDotsPerInch(){
 	float scale = [[UIScreen mainScreen] scale];
 
 	morda::real value;
@@ -180,7 +180,7 @@ real getDotsPerInch(){
 	return value;
 }
 
-real getDotsPerPt(){
+morda::real getDotsPerPt(){
 	float scale = [[UIScreen mainScreen] scale];
 
 	return morda::real(320.0f * scale) / morda::screenSizePt;
