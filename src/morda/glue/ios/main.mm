@@ -167,7 +167,7 @@ namespace{
 real getDotsPerInch(){
 	float scale = [[UIScreen mainScreen] scale];
 
-	real value;
+	morda::real value;
 	
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		value = 132 * scale;
@@ -183,7 +183,7 @@ real getDotsPerInch(){
 real getDotsPerPt(){
 	float scale = [[UIScreen mainScreen] scale];
 
-	return real(320.0f * scale) / morda::screenSizePt;
+	return morda::real(320.0f * scale) / morda::screenSizePt;
 }
 
 }//~namespace
