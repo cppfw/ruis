@@ -162,27 +162,38 @@ void morda::App::quit()noexcept{
 }
 
 
+namespace{
+
+real getDotsPerInch(){
+	float scale = [[UIScreen mainScreen] scale];
+
+	real value;
+	
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		value = 132 * scale;
+	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+		value = 163 * scale;
+	} else {
+		value = 160 * scale;
+	}
+	TRACE(<< "dpi = " << this->value << std::endl)
+	return value;
+}
+
+real getDotsPerPt(){
+	float scale = [[UIScreen mainScreen] scale];
+
+	return real(320.0f * scale) / morda::screenSizePt;
+}
+
+}//~namespace
+
 morda::App::App(const morda::App::WindowParams& wp) :
-		windowObject(wp)
+		windowObject(wp),
+		units(getDotsPerInch(), getDotsPerPt())
 {
 	this->setFullscreen(false);//this will intialize the viewport
 }
-
-
-morda::App::DotsPerInchWrapper::DotsPerInchWrapper(){
-	float scale = [[UIScreen mainScreen] scale];
-
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		this->value = 132 * scale;
-	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		this->value = 163 * scale;
-	} else {
-		this->value = 160 * scale;
-	}
-	TRACE(<< "dpi = " << this->value << std::endl)
-}
-
-
 
 
 
