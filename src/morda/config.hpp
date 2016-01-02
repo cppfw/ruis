@@ -77,5 +77,6 @@ static_assert(sizeof(Vec3r) == sizeof(real) * 3, "size mismatch");
 typedef kolme::Vector4<real> Vec4r;
 static_assert(sizeof(Vec4r) == sizeof(real) * 4, "size mismatch");
 
+const real screenSizePt = 720; //points per lesser screen dimension
 
 }//~namespace

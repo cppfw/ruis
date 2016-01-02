@@ -182,20 +182,27 @@ void App::XInputMethodWrapper::Destroy()noexcept{
 }
 
 
-App::DotsPerInchWrapper::DotsPerInchWrapper(XDisplayWrapper& display){
+namespace{
+real getDotsPerInch(Display* display){
 	int scrNum = 0;
-	this->value = ((double(DisplayWidth(display.d, scrNum)) / (double(DisplayWidthMM(display.d, scrNum))/ 10.0))
-			+ (double(DisplayHeight(display.d, scrNum)) / (double(DisplayHeightMM(display.d, scrNum)) / 10.0))) / 2;
-	this->value *= 2.54f;
+	real value = ((real(DisplayWidth(display, scrNum)) / (real(DisplayWidthMM(display, scrNum))/ 10.0))
+			+ (real(DisplayHeight(display, scrNum)) / (real(DisplayHeightMM(display, scrNum)) / 10.0))) / 2;
+	value *= 2.54f;
+	return value;
 }
 
+real getDotsPerPt(Display* display){
+	int scrNum = 0;
+	return real(std::min(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum))) / morda::screenSizePt;
+}
+}
 
 App::App(const WindowParams& requestedWindowParams) :
-		dotsPerInch_var(xDisplay),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
-		xInputMethod(xDisplay, xWindow)
+		xInputMethod(xDisplay, xWindow),
+		units(getDotsPerInch(xDisplay.d), getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version

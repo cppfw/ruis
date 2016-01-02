@@ -97,7 +97,6 @@ public:
 		SimpleBlurPosTexShader simpleBlurPosTexShader;
 	};
 
-
 #if M_OS == M_OS_LINUX
 
 private:
@@ -149,12 +148,7 @@ private:
 		~XDisplayWrapper()noexcept;
 	} xDisplay;
 
-	struct DotsPerInchWrapper{
-		float value;
-
-		DotsPerInchWrapper(XDisplayWrapper& display);
-	} dotsPerInch_var;
-
+	
 	struct XVisualInfoWrapper{
 		XVisualInfo *vi;
 		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
@@ -418,15 +412,37 @@ private:
 	void handleKeyEvent(bool isDown, EKey keyCode);
 
 public:
-
-	float dotsPerInch()const noexcept{
-		return this->dotsPerInch_var.value;
-	}
-
-	float dotsPerCm()const noexcept{
-		return this->dotsPerInch() / 2.54f;
-	}
-
+	
+	class Units{
+		real dotsPerInch_var;
+		real dotsPerPt_var;
+	public:
+		Units(real dotsPerInch, real dotsPerPt) :
+				dotsPerInch_var(dotsPerInch),
+				dotsPerPt_var(dotsPerPt)
+		{}
+		
+		real dpi()const noexcept{
+			return this->dotsPerInch_var;
+		}
+		
+		real dotsPerCm()const noexcept{
+			return this->dpi() / 2.54f;
+		}
+		
+		real dotsPerPt()const noexcept{
+			return this->dotsPerPt_var;
+		}
+		
+		real mmToPx(real mm)const noexcept{
+			return std::round(mm * this->dotsPerCm() / 10.0f);
+		}
+		
+		real ptToPx(real pt)const noexcept{
+			return std::round(pt * this->dotsPerPt());
+		}
+	} units;
+	
 	void quit()noexcept;
 
 private:

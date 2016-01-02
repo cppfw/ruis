@@ -41,7 +41,7 @@ morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
 
 /**
  * @brief Parse dimension Vec2r from STOB.
- * Same as Vec2rFromSTOB but using Dimvalue() to parse values.
+ * Same as Vec2rFromSTOB but using DimValue() to parse values.
  * @param chain - chain of at least two nodes holding Vec2r values.
  *                If there are less than 2 nodes in the chain then the rest of
  *                vector components will be filled with latest parsed value.
@@ -67,7 +67,7 @@ kolme::Vec2b makeVec2bFromSTOB(const stob::Node* chain);
 /**
  * @brief Parse dimension value.
  * Parses value of 'pos' or 'dim' property from STOB.
- * In case the value is given in millimeters it will do the conversion.
+ * In case the value is given in millimeters or points it will do the conversion.
  * @param n - stob node holding the value.
  * @return Parsed value in pixels.
  */

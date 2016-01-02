@@ -12,7 +12,7 @@
             <sourceRootList>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>tests</sourceRootElem>
-                <sourceRootElem>res</sourceRootElem>
+                <sourceRootElem>respack</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

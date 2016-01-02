@@ -58,9 +58,9 @@ morda::Vec2r morda::dimVec2rFromSTOB(const stob::Node* chain){
 real morda::dimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
-		real ret = ::round(n.asFloat() * App::inst().dotsPerCm() / 10.0f);
-//		TRACE_ALWAYS(<< "ParseDistancevalue(): mm, ret = " << ret << std::endl)
-		return ret;
+		return App::inst().units.mmToPx(n.asFloat());
+	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 't' && n.value()[n.length() - 2] == 'p'){ //check if in points
+		return App::inst().units.ptToPx(n.asFloat());
 	}
 	
 	return n.asFloat();
