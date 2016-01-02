@@ -672,7 +672,7 @@ real getDotsPerPt(){
 	NSDictionary *description = [screen deviceDescription];
 	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
 
-	return real(std:::min(displayPixelSize.width, displayPixelSize.height)) / morda::screenSizePt;
+	return real(std::min(displayPixelSize.width, displayPixelSize.height)) / morda::screenSizePt;
 }
 
 }//~namespace
