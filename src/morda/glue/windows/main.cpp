@@ -627,7 +627,6 @@ real getDotsPerPt(HDC dc){
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
-		dotsPerInch_var(deviceContext),
 		curWinRect(0, 0, -1, -1),
 		units(getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
 {
