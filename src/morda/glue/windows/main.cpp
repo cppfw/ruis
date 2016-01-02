@@ -581,14 +581,6 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 
 
 
-App::DotsPerInchWrapper::DotsPerInchWrapper(DeviceContextWrapper& dc){
-	this->value = (float(GetDeviceCaps(dc.hdc, HORZRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, HORZSIZE))
-		+ float(GetDeviceCaps(dc.hdc, VERTRES)) * 10.0f / float(GetDeviceCaps(dc.hdc, VERTSIZE))) / 2.0f;
-	this->value *= 2.54f;
-}
-
-
-
 void App::DeviceContextWrapper::Destroy()noexcept{
 	if (!ReleaseDC(this->w.hwnd, this->hdc)){
 		ASSERT_INFO(false, "Failed to release device context")
@@ -616,12 +608,28 @@ App::ResMan::ResMan(){
 	}
 }
 
+namespace{
+
+real getDotsPerInch(HDC dc){
+	real value = (real(GetDeviceCaps(dc, HORZRES)) * 10.0f / real(GetDeviceCaps(dc, HORZSIZE))
+		+ real(GetDeviceCaps(dc, VERTRES)) * 10.0f / real(GetDeviceCaps(dc, VERTSIZE))) / 2.0f;
+	value *= 2.54f;
+	return value;
+}
+
+real getDotsPerPt(HDC dc){
+	return real(std::min(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES))) / morda::screenSizePt;
+}
+
+}//~namespace
+
 
 App::App(const WindowParams& requestedWindowParams) :
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
 		dotsPerInch_var(deviceContext),
-		curWinRect(0, 0, -1, -1)
+		curWinRect(0, 0, -1, -1),
+		units(getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
 {
 	this->updateWindowRect(
 			morda::Rectr(

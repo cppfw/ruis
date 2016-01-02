@@ -110,12 +110,6 @@ private:
 	friend int GetUIQueueHandle(App& app);
 
 private:
-	struct DotsPerInchWrapper{
-		float value;
-		
-		DotsPerInchWrapper();
-	} dotsPerInch_var;
-	
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -228,23 +222,12 @@ private:
 		void Destroy()noexcept;
 	} deviceContext;
 
-	struct DotsPerInchWrapper{
-		float value;
-
-		DotsPerInchWrapper(DeviceContextWrapper& dc);
-	} dotsPerInch_var;
-
 	friend void Main(int argc, const char** argv);
 	void Exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
 #elif M_OS == M_OS_MACOSX
 private:
-	struct DotsPerInchWrapper{
-		float value;
-		
-		DotsPerInchWrapper();
-	} dotsPerInch_var;
 	
 #	if M_OS_NAME == M_OS_NAME_IOS
 	struct WindowObject{
