@@ -195,7 +195,7 @@ real getDotsPerPt(Display* display){
 	int scrNum = 0;
 	return real(std::min(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum))) / morda::screenSizePt;
 }
-}
+}//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
 		xVisualInfo(requestedWindowParams, xDisplay),
