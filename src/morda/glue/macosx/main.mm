@@ -651,8 +651,9 @@ void morda::App::OpenGLContext::Destroy()noexcept{
 }
 
 
+namespace{
 
-App::DotsPerInchWrapper::DotsPerInchWrapper(){
+real getDotsPerInch(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
 	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
@@ -660,16 +661,27 @@ App::DotsPerInchWrapper::DotsPerInchWrapper(){
 			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
 		);
 
-	this->value = float(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
+	real value = real(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
 			(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
-	this->value *= 2.54f;
+	value *= 2.54f;
+	return value;
 }
 
+real getDotsPerPt(){
+	NSScreen *screen = [NSScreen mainScreen];
+	NSDictionary *description = [screen deviceDescription];
+	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
+
+	return real(std:::min(displayPixelSize.width, displayPixelSize.height)) / morda::screenSizePt;
+}
+
+}//~namespace
 
 
 morda::App::App(const morda::App::WindowParams& wp) :
 		windowObject(wp),
-		openGLContext(windowObject.id)
+		openGLContext(windowObject.id),
+		units(getDotsPerInch(), getDotsPerPt())
 {
 	this->updateWindowRect(
 			morda::Rectr(
