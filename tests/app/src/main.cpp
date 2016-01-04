@@ -172,7 +172,7 @@ public:
 
 		this->tex->tex().bind();
 		
-		morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
+		auto& s = morda::App::inst().shaders().posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
 		s.SetMatrix(m);
@@ -600,10 +600,7 @@ public:
 
 class Application : public morda::App{
 	static morda::App::WindowParams GetWindowParams()noexcept{
-		morda::App::WindowParams wp;
-		
-		wp.dim.x = 1024;
-		wp.dim.y = 800;
+		morda::App::WindowParams wp(kolme::Vec2ui(1024, 800));
 		
 		return wp;
 	}

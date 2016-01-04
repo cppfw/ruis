@@ -8,6 +8,7 @@
 #include <utki/config.hpp>
 #include <utki/Buf.hpp>
 #include <utki/Unique.hpp>
+#include <utki/Flags.hpp>
 
 #include <papki/File.hpp>
 
@@ -82,8 +83,26 @@ class App : public utki::IntrusiveSingleton<App>, public utki::Unique{
 public:
 	struct WindowParams{
 		kolme::Vec2ui dim;
+		
+		enum class EBuffers{
+			DEPTH,
+			STENCIL,
+			ACCUMULATOR,
+			
+			ENUM_SIZE
+		};
+		
+		utki::Flags<EBuffers> buffers = utki::Flags<EBuffers>(false);
+		
+		WindowParams(kolme::Vec2ui dim) :
+				dim(dim)
+		{}
 	};
 
+private:
+	WindowParams windowParams; //this is to save window params
+	
+public:
 
 	bool thisIsUIThread()const noexcept{
 		return this->uiThreadId == nitki::Thread::getCurrentThreadID();

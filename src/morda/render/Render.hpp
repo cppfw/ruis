@@ -89,9 +89,13 @@ public:
 	
 	static kolme::Recti getViewport();
 	
-	static void clearColor(kolme::Vec4f c = kolme::Vec4f(0.0f, 0, 0.0f, 1.0f));
+	static void clearColor(kolme::Vec4f c = kolme::Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
 	
 	static void clearDepth(float d = 0.0f);
+	
+	static void clearStencil(std::uint8_t v = 0);
+	
+	static void clearAccumulator(kolme::Vec4f c = kolme::Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
 	
 	static bool isScissorEnabled();
 	

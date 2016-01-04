@@ -25,9 +25,17 @@ void App::render(){
 		return;
 	}
 	
-	//TODO: clear depth if depth buffer is created, and stencil also, and whatever else
 	Render::clearColor();
-	Render::clearDepth();
+	
+	if(this->windowParams.buffers.get(WindowParams::EBuffers::DEPTH)){
+		Render::clearDepth();
+	}
+	if(this->windowParams.buffers.get(WindowParams::EBuffers::STENCIL)){
+		Render::clearStencil();
+	}
+	if(this->windowParams.buffers.get(WindowParams::EBuffers::ACCUMULATOR)){
+		Render::clearAccumulator();
+	}
 	
 	Render::setCullEnabled(true);
 	

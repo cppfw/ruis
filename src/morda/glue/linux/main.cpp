@@ -32,22 +32,33 @@ App::XDisplayWrapper::~XDisplayWrapper()noexcept{
 
 
 App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay){
-	//TODO: allow configuring depth, stencil buffers via WindowParams
-	int attr[] = {
-		GLX_RGBA,
-		GLX_DOUBLEBUFFER,
-		GLX_RED_SIZE, 8,
-		GLX_GREEN_SIZE, 8,
-		GLX_BLUE_SIZE, 8,
-		GLX_ALPHA_SIZE, 8,
-		GLX_DEPTH_SIZE, 24,
-		None
-	};
-
+	std::vector<int> attr;
+	attr.push_back(GLX_RGBA);
+	attr.push_back(GLX_DOUBLEBUFFER);
+	attr.push_back(GLX_RED_SIZE); attr.push_back(8);
+	attr.push_back(GLX_GREEN_SIZE); attr.push_back(8);
+	attr.push_back(GLX_BLUE_SIZE); attr.push_back(8);
+	attr.push_back(GLX_ALPHA_SIZE); attr.push_back(8);
+	
+	if(wp.buffers.get(WindowParams::EBuffers::DEPTH)){
+		attr.push_back(GLX_DEPTH_SIZE); attr.push_back(24);
+	}
+	if(wp.buffers.get(WindowParams::EBuffers::STENCIL)){
+		attr.push_back(GLX_STENCIL_SIZE); attr.push_back(8);
+	}
+	if(wp.buffers.get(WindowParams::EBuffers::ACCUMULATOR)){
+		attr.push_back(GLX_ACCUM_RED_SIZE); attr.push_back(8);
+		attr.push_back(GLX_ACCUM_GREEN_SIZE); attr.push_back(8);
+		attr.push_back(GLX_ACCUM_BLUE_SIZE); attr.push_back(8);
+		attr.push_back(GLX_ACCUM_ALPHA_SIZE); attr.push_back(8);
+	}
+	
+	attr.push_back(None);
+	
 	this->vi = glXChooseVisual(
 			xDisplay.d,
 			DefaultScreen(xDisplay.d),
-			attr
+			&*attr.begin()
 		);
 	if(!this->vi){
 		throw morda::Exc("glXChooseVisual() failed");
@@ -198,6 +209,7 @@ real getDotsPerPt(Display* display){
 }//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
+		windowParams(requestedWindowParams),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
