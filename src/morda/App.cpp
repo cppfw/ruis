@@ -21,7 +21,7 @@ void App::render(){
 	
 //	TRACE(<< "App::Render(): invoked" << std::endl)
 	if(!this->rootWidget){
-		TRACE(<< "App::Render(): root container is not valid" << std::endl)
+		TRACE(<< "App::Render(): root widget is not set" << std::endl)
 		return;
 	}
 	
