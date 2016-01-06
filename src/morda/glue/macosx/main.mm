@@ -679,6 +679,7 @@ real getDotsPerPt(){
 
 
 morda::App::App(const morda::App::WindowParams& wp) :
+		windowParams(wp),
 		windowObject(wp),
 		openGLContext(windowObject.id),
 		units(getDotsPerInch(), getDotsPerPt())
