@@ -593,7 +593,7 @@ void App::DeviceContextWrapper::Destroy()noexcept{
 App::ResMan::ResMan(){
 	std::string path =
 #ifdef DEBUG
-		"../../res/"
+		"../../respack/"
 #else
 		"morda_res/"
 #endif
@@ -625,6 +625,7 @@ real getDotsPerPt(HDC dc){
 
 
 App::App(const WindowParams& requestedWindowParams) :
+		windowParams(requestedWindowParams),
 		window(requestedWindowParams, windowClass),
 		deviceContext(requestedWindowParams, window),
 		curWinRect(0, 0, -1, -1),
