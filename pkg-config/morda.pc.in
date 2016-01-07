@@ -1,7 +1,7 @@
 Name: morda   # human-readable name
 Description: C++ OpenGL GUI library
 Version: $(version)
-URL: http://morda.googlecode.com
+URL: https://github.com/igagis/morda
 Requires:
 Conflicts:
 Libs: -lmorda
