@@ -1,12 +1,11 @@
 language: cpp
 sudo: required
+dist: trusty
+osx_image: xcode7.3
 
 os:
   - linux
   - osx
-
-osx_image: xcode7.1
-dist: trusty
 
 compiler:
   - clang
@@ -25,19 +24,19 @@ env:
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null;
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
-    sudo apt-get update -qq;
+    echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+    sudo apt-get update -qq &&
     sudo apt-get install -qq debhelper prorab doxygen libutki-dev libpapki-dev libnitki-dev libpogodi-dev libunikod-dev libaika-dev libkolme-dev libstob-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    sudo gem install cocoapods;
-    pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git;
-    pod install --project-directory=ios;
+    rvm use ruby-2.2.1 &&
+    pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
+    pod install --project-directory=ios &&
     
-    brew tap igagis/tap;
-    brew update > /dev/null;
-    brew list libpng || brew install libpng;
+    brew tap igagis/tap &&
+    brew update > /dev/null &&
+    (brew list libpng || brew install libpng) &&
     brew install prorab libutki libpapki libnitki libpogodi libunikod libaika libstob jpeg z glew freetype libkolme;
   fi
 
