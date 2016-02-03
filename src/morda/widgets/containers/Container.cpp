@@ -298,10 +298,9 @@ void Container::removeAll() {
 
 
 
-//override
 std::shared_ptr<Widget> Container::findChildByName(const std::string& name)noexcept{
 	if(auto r = this->Widget::findChildByName(name)){
-		return std::move(r);
+		return r;
 	}
 	
 	for(auto& w : this->children()){
