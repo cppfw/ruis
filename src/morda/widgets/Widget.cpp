@@ -251,7 +251,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	fb.unbind();
 	Render::setViewport(App::inst().winRect().to<int>());
 	
-	return std::move(tex);
+	return tex;
 }
 
 void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
