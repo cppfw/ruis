@@ -101,7 +101,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
 	std::unique_ptr<stob::Node> root = this->load(fi);
 	ASSERT(root)
 
-	return std::move(this->inflate(*root));
+	return this->inflate(*root);
 }
 
 
