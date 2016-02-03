@@ -284,7 +284,7 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	
 	this->onChildrenListChanged();
 	
-	return std::move(ret);
+	return ret;
 }
 
 
