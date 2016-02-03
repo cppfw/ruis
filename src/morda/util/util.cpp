@@ -98,7 +98,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 				//include tag is the very first tag
 
 				ASSERT(!lastChild->next())
-				lastChild->insertNext(std::move(n.node()->chopNext()));
+				lastChild->insertNext(n.node()->chopNext());
 				begin = std::move(std::get<0>(ri));
 			}else{
 				//include tag is not the first one
