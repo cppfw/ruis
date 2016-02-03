@@ -258,7 +258,7 @@ public:
 				}
 			}
 		}
-		iter.pathPtr = std::move(this->pos(iter.path()).pathPtr);
+		iter.pathPtr = this->pos(iter.path()).pathPtr;
 	}
 	
 	void resetChildren(Iterator childrenOf, size_t numberOfChildren){
