@@ -32,9 +32,9 @@ private:
 			UpdateQueue::iterator insertPair(const T_Pair& p);
 
 			std::shared_ptr<morda::Updateable> popFront(){
-				std::shared_ptr<morda::Updateable> ret = std::move(this->front().second.lock());
+				auto ret = this->front().second.lock();
 				this->pop_front();
-				return std::move(ret);
+				return ret;
 			}
 		};
 		
