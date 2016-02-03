@@ -20,5 +20,5 @@ std::shared_ptr<ResTexture> ResTexture::load(const stob::Node& chain, const papk
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	image.flipVertical();
 
-	return std::move(utki::makeShared<ResTexture>(image));
+	return utki::makeShared<ResTexture>(image);
 }
