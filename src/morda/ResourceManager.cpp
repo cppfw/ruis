@@ -78,7 +78,7 @@ void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const st
 	auto result = this->resMap.insert(
 			std::pair<const char*, std::weak_ptr<Resource>>(
 					node.value(),
-					std::move(std::weak_ptr<Resource>(res))
+					std::weak_ptr<Resource>(res)
 				)
 		);
 	if(!result.second){
