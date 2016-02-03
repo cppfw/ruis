@@ -44,6 +44,6 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 
 	fi.setPath(chain.side("file").up().value());
 
-	return std::move(utki::makeShared<ResFont>(fi, utki::Buf<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline));
+	return utki::makeShared<ResFont>(fi, utki::Buf<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline);
 }
 
