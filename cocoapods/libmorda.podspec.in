@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.dependency 'libkolme', '>= 1.0.1'
   s.dependency 'libstob', '>= 3.1.1'
   s.dependency 'libaika', '>= 1.0.2'
-  s.dependency 'libpng', '>= 1.6.18'
+  s.dependency 'libpng_igagis', '>= 1.4.1'
   s.dependency 'freetype', '>= 2.6.4'
   s.dependency 'libjpeg', '>= 6.1.1'
 
