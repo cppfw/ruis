@@ -33,9 +33,6 @@ void App::render(){
 	if(this->windowParams.buffers.get(WindowParams::EBuffers::STENCIL)){
 		Render::clearStencil();
 	}
-	if(this->windowParams.buffers.get(WindowParams::EBuffers::ACCUMULATOR)){
-		Render::clearAccumulator();
-	}
 	
 	Render::setCullEnabled(true);
 	

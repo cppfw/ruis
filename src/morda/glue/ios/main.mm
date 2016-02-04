@@ -189,6 +189,7 @@ morda::real getDotsPerPt(){
 }//~namespace
 
 morda::App::App(const morda::App::WindowParams& wp) :
+		windowParams(wp),
 		windowObject(wp),
 		units(getDotsPerInch(), getDotsPerPt())
 {

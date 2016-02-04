@@ -403,12 +403,6 @@ void Render::clearStencil(std::uint8_t v) {
 	AssertOpenGLNoError();
 }
 
-void Render::clearAccumulator(kolme::Vec4f c) {
-	glClearAccum(c.x, c.y, c.z, c.w);
-	glClear(GL_ACCUM_BUFFER_BIT);
-	AssertOpenGLNoError();
-}
-
 
 bool Render::isScissorEnabled() {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC

@@ -95,8 +95,6 @@ public:
 	
 	static void clearStencil(std::uint8_t v = 0);
 	
-	static void clearAccumulator(kolme::Vec4f c = kolme::Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
-	
 	static bool isScissorEnabled();
 	
 	static kolme::Recti getScissorRect();

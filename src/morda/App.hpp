@@ -87,7 +87,6 @@ public:
 		enum class EBuffers{
 			DEPTH,
 			STENCIL,
-			ACCUMULATOR,
 			
 			ENUM_SIZE
 		};
