@@ -46,12 +46,6 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrap
 	if(wp.buffers.get(WindowParams::EBuffers::STENCIL)){
 		attr.push_back(GLX_STENCIL_SIZE); attr.push_back(8);
 	}
-	if(wp.buffers.get(WindowParams::EBuffers::ACCUMULATOR)){
-		attr.push_back(GLX_ACCUM_RED_SIZE); attr.push_back(8);
-		attr.push_back(GLX_ACCUM_GREEN_SIZE); attr.push_back(8);
-		attr.push_back(GLX_ACCUM_BLUE_SIZE); attr.push_back(8);
-		attr.push_back(GLX_ACCUM_ALPHA_SIZE); attr.push_back(8);
-	}
 	
 	attr.push_back(None);
 	
