@@ -199,10 +199,11 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 @interface ViewController : GLKViewController{
-
+	
 }
 
 @property (strong, nonatomic) EAGLContext *context;
+
 @end
 
 @implementation ViewController
@@ -221,16 +222,19 @@ morda::App::App(const morda::App::WindowParams& wp) :
 	
 	GLKView *view = (GLKView *)self.view;
 	view.context = self.context;
-	view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+	view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
+
+	//TODO: read windowParams and set accordingly
+	view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
+	view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
 	
 	[EAGLContext setCurrentContext:self.context];
 	
 	view.multipleTouchEnabled = YES;
 	
-	if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
- {
-	 self.edgesForExtendedLayout = UIRectEdgeNone;
- }
+	if([self respondsToSelector:@selector(edgesForExtendedLayout)]){
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+	}
 }
 
 - (void)dealloc{
