@@ -542,7 +542,7 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 	}
 
 	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): DC created" << std::endl)
-
+	
 	//TODO: make pixel format configurable via WindowParams
 	static	PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),
@@ -555,8 +555,8 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 		0, //shift bit ignored
 		0, //no accumulation buffer
 		0, 0, 0, 0, //accumulation bits ignored
-		16, //16bit depth buffer
-		0, //no stencil buffer
+		wp.buffers.get(WindowParams::EBuffers::DEPTH) ? 16 : 0, //16bit depth buffer
+		wp.buffers.get(WindowParams::EBuffers::STENCIL) ? 8 : 0,
 		0, //no auxiliary buffer
 		PFD_MAIN_PLANE, //main drawing layer
 		0, //reserved
