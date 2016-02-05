@@ -40,10 +40,10 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrap
 	attr.push_back(GLX_BLUE_SIZE); attr.push_back(8);
 	attr.push_back(GLX_ALPHA_SIZE); attr.push_back(8);
 	
-	if(wp.buffers.get(WindowParams::EBuffers::DEPTH)){
+	if(wp.buffers.get(WindowParams::EBuffer::DEPTH)){
 		attr.push_back(GLX_DEPTH_SIZE); attr.push_back(24);
 	}
-	if(wp.buffers.get(WindowParams::EBuffers::STENCIL)){
+	if(wp.buffers.get(WindowParams::EBuffer::STENCIL)){
 		attr.push_back(GLX_STENCIL_SIZE); attr.push_back(8);
 	}
 	

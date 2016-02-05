@@ -84,14 +84,14 @@ public:
 	struct WindowParams{
 		kolme::Vec2ui dim;
 		
-		enum class EBuffers{
+		enum class EBuffer{
 			DEPTH,
 			STENCIL,
 			
 			ENUM_SIZE
 		};
 		
-		utki::Flags<EBuffers> buffers = utki::Flags<EBuffers>(false);
+		utki::Flags<EBuffer> buffers = utki::Flags<EBuffer>(false);
 		
 		WindowParams(kolme::Vec2ui dim) :
 				dim(dim)
@@ -288,7 +288,7 @@ private:
 
 	struct OpenGLContext{
 		void *id;
-		OpenGLContext(void* window);
+		OpenGLContext(const morda::App::WindowParams& wp, void* window);
 		~OpenGLContext()noexcept{
 			this->Destroy();
 		}

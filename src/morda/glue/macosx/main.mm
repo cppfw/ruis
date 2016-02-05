@@ -617,19 +617,23 @@ morda::App::WindowObject::~WindowObject()noexcept{
 
 
 
-morda::App::OpenGLContext::OpenGLContext(void* window){
+morda::App::OpenGLContext::OpenGLContext(const morda::App::WindowParams& wp, void* window){
 	CocoaWindow *wnd = (CocoaWindow*)window;
 	
-	static NSOpenGLPixelFormatAttribute attributes[] = {
-		NSOpenGLPFAAccelerated,
-		NSOpenGLPFAColorSize, 24,
-		NSOpenGLPFADepthSize, 16,
-		NSOpenGLPFADoubleBuffer,
-		NSOpenGLPFASupersample,
-		0
-	};
+	std::vector<NSOpenGLPixelFormatAttribute> attributes;
+	attributes.push_back(NSOpenGLPFAAccelerated);
+	attributes.push_back(NSOpenGLPFAColorSize); attributes.push_back(24);
+	if(wp.buffers.get(morda::App::WindowParams::EBuffer::DEPTH)){
+		attributes.push_back(NSOpenGLPFADepthSize); attributes.push_back(16);
+	}
+	if(wp.buffers.get(morda::App::WindowParams::EBuffer::STENCIL)){
+		attributes.push_back(NSOpenGLPFAStencilSize); attributes.push_back(8);
+	}
+	attributes.push_back(NSOpenGLPFADoubleBuffer);
+	attributes.push_back(NSOpenGLPFASupersample);
+	attributes.push_back(0);
 	
-	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
+	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&*attributes.begin()];
 	if(pixelFormat == nil){
 		throw morda::Exc("morda::App::OpenGLContext::OpenGLContext(): failed to create pixel format");
 	}
@@ -681,7 +685,7 @@ real getDotsPerPt(){
 morda::App::App(const morda::App::WindowParams& wp) :
 		windowParams(wp),
 		windowObject(wp),
-		openGLContext(windowObject.id),
+		openGLContext(wp, windowObject.id),
 		units(getDotsPerInch(), getDotsPerPt())
 {
 	this->updateWindowRect(

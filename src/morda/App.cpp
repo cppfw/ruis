@@ -27,10 +27,10 @@ void App::render(){
 	
 	Render::clearColor();
 	
-	if(this->windowParams.buffers.get(WindowParams::EBuffers::DEPTH)){
+	if(this->windowParams.buffers.get(WindowParams::EBuffer::DEPTH)){
 		Render::clearDepth();
 	}
-	if(this->windowParams.buffers.get(WindowParams::EBuffers::STENCIL)){
+	if(this->windowParams.buffers.get(WindowParams::EBuffer::STENCIL)){
 		Render::clearStencil();
 	}
 	

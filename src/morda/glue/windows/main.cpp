@@ -555,8 +555,8 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 		0, //shift bit ignored
 		0, //no accumulation buffer
 		0, 0, 0, 0, //accumulation bits ignored
-		wp.buffers.get(WindowParams::EBuffers::DEPTH) ? 16 : 0, //16bit depth buffer
-		wp.buffers.get(WindowParams::EBuffers::STENCIL) ? 8 : 0,
+		wp.buffers.get(WindowParams::EBuffer::DEPTH) ? 16 : 0, //16bit depth buffer
+		wp.buffers.get(WindowParams::EBuffer::STENCIL) ? 8 : 0,
 		0, //no auxiliary buffer
 		PFD_MAIN_PLANE, //main drawing layer
 		0, //reserved
