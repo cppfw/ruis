@@ -6,16 +6,16 @@ this_name := tests
 this_srcs := src/main.cpp
 
 
-this_cflags := -Wall
-this_cflags += -Wno-comment #no warnings on nested comments
-this_cflags += -Wno-format
-this_cflags += -DDEBUG
-this_cflags += -fstrict-aliasing #strict aliasing!!!
-this_cflags += -g
-this_cflags += -std=c++11
+this_cxxflags := -Wall
+this_cxxflags += -Wno-comment #no warnings on nested comments
+this_cxxflags += -Wno-format
+this_cxxflags += -DDEBUG
+this_cxxflags += -fstrict-aliasing #strict aliasing!!!
+this_cxxflags += -g
+this_cxxflags += -std=c++11
 
 ifeq ($(debug), true)
-    this_cflags += -DDEBUG
+    this_cxxflags += -DDEBUG
 endif
 
 ifeq ($(prorab_os),windows)
@@ -24,10 +24,10 @@ ifeq ($(prorab_os),windows)
     this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
-    this_cflags += -I/usr/include -I/usr/local/include
+    this_cxxflags += -I/usr/include -I/usr/local/include
 
     #WORKAROUND for MinGW bug:
-    this_cflags += -D__STDC_FORMAT_MACROS
+    this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 else ifeq ($(prorab_os),linux)
