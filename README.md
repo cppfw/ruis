@@ -3,6 +3,8 @@
 
 OpenGL based GUI library in C++
 
+[![Screenshot1](wiki/images/screenshot1_thumbnail.png)](https://raw.githubusercontent.com/igagis/morda/master/wiki/images/screenshot1.png)
+
 ## Work in progress
 W.I.P.
 
