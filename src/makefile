@@ -41,9 +41,9 @@ ifeq ($(debug),true)
 endif
 
 ifeq ($(prorab_os), linux)
-    this_cxxflags += -fPIC
+    this_cxxflags += -fPIC #generate position independent code
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz -lstob
+    this_ldlibs += -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz
 else ifeq ($(prorab_os), windows)
     this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
     this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
@@ -51,7 +51,7 @@ else ifeq ($(prorab_os), windows)
     this_ldflags += -L/usr/local/lib -L/usr/lib
 
     #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
-    this_ldlibs += -lfreetype -lstob -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32
+    this_ldlibs += -lfreetype -ljpeg -lpng -lz -lopengl32 -lglew32 -lgdi32
 
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
@@ -59,7 +59,7 @@ else ifeq ($(prorab_os), macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_cxxflags += -I/usr/local/include/freetype2
     this_ldlibs += -lc++
-    this_ldlibs += -framework Cocoa -framework OpenGL -lpng -lfreetype -ljpeg -lstob -lGLEW
+    this_ldlibs += -framework Cocoa -framework OpenGL -lpng -lfreetype -ljpeg -lGLEW
     
     this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
 
@@ -72,7 +72,7 @@ else ifeq ($(prorab_os), macosx)
     $(eval $(this_rules))
 endif
 
-this_ldlibs += -lnitki -lpogodi -lpapki -laika
+this_ldlibs += -lnitki -lpogodi -lpapki -laika -lstob
 
 $(eval $(prorab-build-lib))
 
