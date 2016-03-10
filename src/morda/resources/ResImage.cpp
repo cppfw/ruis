@@ -47,3 +47,8 @@ void ResImage::render(const Matr4r& matrix, PosTexShader& s) const{
 	s.SetMatrix(matr);
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }
+
+void ResImage::render(const Matr4r& matrix, Vec2r renderDim, PosTexShader& s) const {
+	//TODO:
+	this->render(matrix, s);
+}
