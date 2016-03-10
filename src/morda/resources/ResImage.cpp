@@ -15,10 +15,10 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim_var(rect.d.abs())
 {
-	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().Dim().y - rect.bottom()).compDivBy(this->tex->tex().Dim());
-	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().Dim().y - rect.bottom()).compDivBy(this->tex->tex().Dim());
-	this->texCoords[1] = Vec2r(rect.right(), this->tex->tex().Dim().y - rect.top()).compDivBy(this->tex->tex().Dim());
-	this->texCoords[0] = Vec2r(rect.left(), this->tex->tex().Dim().y - rect.top()).compDivBy(this->tex->tex().Dim());
+	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+	this->texCoords[1] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+	this->texCoords[0] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
 }
 
 
@@ -30,7 +30,7 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 	if(auto n = chain.childOfThisOrNext("rect")){
 		rect = makeRectrFromSTOB(n);
 	}else{
-		rect = Rectr(Vec2r(0, 0), tex->tex().Dim());
+		rect = Rectr(Vec2r(0, 0), tex->tex().dim());
 	}
 	
 	return utki::makeShared<ResImage>(tex, rect);

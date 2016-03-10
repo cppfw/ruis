@@ -214,7 +214,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	Texture2D tex;
 	
-	if(reuse && reuse.Dim() == this->rect().d){
+	if(reuse && reuse.dim() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = Texture2D(

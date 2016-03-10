@@ -383,7 +383,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 #ifdef DEBUG
 void TexFont::renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
-	matr.scale(this->tex.Dim());
+	matr.scale(this->tex.dim());
 	shader.SetMatrix(matr);
 
 	this->tex.bind();
