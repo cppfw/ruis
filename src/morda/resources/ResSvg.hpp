@@ -46,7 +46,7 @@ public:
 		void render(const Matr4r& matrix, PosTexShader& s)const;
 	};
 	
-	Vec2r dim(real dotsPerInch, real dotsPerPt)const noexcept;
+	Vec2r dim(real dotsPerInch)const noexcept;
 	
 	/**
 	 * @brief Get raster image of given dimensions.

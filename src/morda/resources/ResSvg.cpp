@@ -19,11 +19,10 @@ std::shared_ptr<ResSvg> ResSvg::load(const stob::Node& chain, const papki::File&
 	return utki::makeShared<ResSvg>(svgdom::load(fi));
 }
 
-Vec2r ResSvg::dim(real dotsPerInch, real dotsPerPt) const noexcept{
-	auto virtualDpi = dotsPerInch * dotsPerPt;
+Vec2r ResSvg::dim(real dotsPerInch) const noexcept{
 	return Vec2r(
-			this->dom->width.toPx(virtualDpi),
-			this->dom->height.toPx(virtualDpi)
+			this->dom->width.toPx(dotsPerInch),
+			this->dom->height.toPx(dotsPerInch)
 		);
 }
 
