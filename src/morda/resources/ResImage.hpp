@@ -40,7 +40,7 @@ public:
 	
 	virtual bool isScalable()const noexcept = 0;
 
-	virtual Vec2r dim(real dpi = 0)const noexcept = 0;
+	virtual Vec2r dim(real dpi = 72)const noexcept = 0;
 	
 	/**
 	 * @brief Get raster image of given dimensions.
