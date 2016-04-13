@@ -21,7 +21,7 @@ Texture2D::Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Rend
 		throw morda::Exc("Texture2D: zero size width requested");
 	}
 	this->Constructor(
-			kolme::Vec2ui(width, rgbaPixels.size() / width),
+			kolme::Vec2ui(width, unsigned(rgbaPixels.size() / width)),
 			4,
 			utki::Buf<std::uint8_t>(
 					reinterpret_cast<std::uint8_t*>(&*rgbaPixels.begin()),
