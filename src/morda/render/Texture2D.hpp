@@ -23,7 +23,7 @@ class Texture2D{
 
 	std::unique_ptr<utki::Void> tex;
 
-	morda::Vec2r dim_var;
+	Vec2r dim_var;
 
 	void Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
 public:
@@ -53,7 +53,7 @@ public:
 		Render::bindTexture(*this->tex, texUnitNum);
 	}
 
-	morda::Vec2r dim()const noexcept{
+	const decltype(dim_var)& dim()const noexcept{
 		return this->dim_var;
 	}
 

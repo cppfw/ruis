@@ -95,7 +95,8 @@ public:
 
 		~SvgImage()noexcept{
 			if(auto p = this->parent.lock()){
-				p->cache.erase(std::make_tuple(this->tex.dim().x, this->tex.dim().y));
+				kolme::Vec2ui d = this->tex.dim().to<unsigned>();
+				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}
 	};

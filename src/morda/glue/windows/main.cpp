@@ -548,18 +548,18 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 		sizeof(PIXELFORMATDESCRIPTOR),
 		1, // Version number of the structure, should be 1
 		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
-		PFD_TYPE_RGBA,
-		32, //color depth
-		0, 0, 0, 0, 0, 0, //color bits ignored
-		0, //no alpha buffer
-		0, //shift bit ignored
-		0, //no accumulation buffer
-		0, 0, 0, 0, //accumulation bits ignored
-		wp.buffers.get(WindowParams::EBuffer::DEPTH) ? 16 : 0, //16bit depth buffer
-		wp.buffers.get(WindowParams::EBuffer::STENCIL) ? 8 : 0,
-		0, //no auxiliary buffer
-		PFD_MAIN_PLANE, //main drawing layer
-		0, //reserved
+		BYTE(PFD_TYPE_RGBA),
+		BYTE(32), //color depth
+		BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), //color bits ignored
+		BYTE(0), //no alpha buffer
+		BYTE(0), //shift bit ignored
+		BYTE(0), //no accumulation buffer
+		BYTE(0), BYTE(0), BYTE(0), BYTE(0), //accumulation bits ignored
+		wp.buffers.get(WindowParams::EBuffer::DEPTH) ? BYTE(16) : BYTE(0), //16bit depth buffer
+		wp.buffers.get(WindowParams::EBuffer::STENCIL) ? BYTE(8) : BYTE(0),
+		BYTE(0), //no auxiliary buffer
+		BYTE(PFD_MAIN_PLANE), //main drawing layer
+		BYTE(0), //reserved
 		0, 0, 0 //layer masks ignored
 	};
 
