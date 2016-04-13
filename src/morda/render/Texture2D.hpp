@@ -40,6 +40,8 @@ public:
 	Texture2D(kolme::Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
 		this->Constructor(dimensions, numChannels, nullptr, minFilter, magFilter);
 	}
+	
+	Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR);
 
 	Texture2D(){}
 

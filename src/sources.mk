@@ -20,6 +20,7 @@ this_srcs += morda/resources/ResNinePatch.cpp
 this_srcs += morda/resources/ResTexture.cpp
 this_srcs += morda/resources/ResFont.cpp
 this_srcs += morda/resources/ResSTOB.cpp
+this_srcs += morda/resources/ResSvg.cpp
 
 this_srcs += morda/fonts/Font.cpp
 this_srcs += morda/fonts/TexFont.cpp

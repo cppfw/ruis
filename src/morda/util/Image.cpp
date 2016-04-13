@@ -44,7 +44,6 @@ Image::Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* sr
 }
 
 
-
 Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
 	if(src.dim().x == 0 || src.dim().y == 0){
 		throw utki::Exc("Image::Image(): source image has zero dimensions");

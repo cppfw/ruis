@@ -27,8 +27,15 @@ public:
 
 	class Exc : public utki::Exc{
 	public:
-		Exc(const std::string& msg) :
+		Exc(const std::string& msg = std::string()) :
 				utki::Exc(msg.c_str())
+		{}
+	};
+	
+	class IllegalArgumentExc : public Exc{
+	public:
+		IllegalArgumentExc(const std::string& msg = std::string()) :
+				Exc(msg)
 		{}
 	};
 	
@@ -50,7 +57,7 @@ public:
 	Image(kolme::Vec2ui dimensions, EType imageType){
 		this->init(dimensions, imageType);
 	}
-
+	
 	Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
 
 	//Creates Image object and copies a region from source image.
