@@ -5,7 +5,7 @@ Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: g++, debhelper (>= 9), prorab, pkg-config,
 		libutki-dev, libpapki-dev, libpogodi-dev, libunikod-dev, libnitki-dev,
-		libaika-dev, libkolme-dev,
+		libaika-dev, libkolme-dev, libsvgdom-dev, libsvgren-dev,
 		libstob-dev (>= 3.0.0),
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev
 Build-Depends-Indep: doxygen
@@ -13,7 +13,7 @@ Build-Depends-Indep: doxygen
 Package: libmorda-dev
 Architecture: any
 Depends: libmorda$(soname) (= ${binary:Version}), libmorda$(soname)-dbg (= ${binary:Version}), ${misc:Depends},
-		libutki-dev, libpapki-dev, libunikod-dev, libnitki-dev
+		libutki-dev, libpapki-dev, libunikod-dev, libnitki-dev, libsvgdom-dev
 Suggests: libmorda-doc
 Description: OpenGL UI framework development files
  Cross platform OpenGL UI framework written in C++.

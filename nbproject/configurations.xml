@@ -163,6 +163,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>.travis.yml</itemPath>
       <itemPath>ios/Podfile</itemPath>
+      <itemPath>debian/control.in</itemPath>
       <itemPath>cocoapods/libmorda.podspec.in</itemPath>
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
