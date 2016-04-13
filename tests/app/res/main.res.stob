@@ -19,6 +19,9 @@ img_sample{
 //	rect{0 0 120 90}
 }
 
+svg_tiger{
+	file{tiger.svg}
+}
 
 npt_sample{
 	tex{morda_tex_ui}
