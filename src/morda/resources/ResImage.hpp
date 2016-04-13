@@ -36,9 +36,6 @@ public:
 	
 	void render(const Matr4r& matrix, PosTexShader& s)const;
 	
-	//scale to the given dimension and then render.
-	//Needed for scalable vector graphics support.
-	void render(const Matr4r& matrix, Vec2r renderDim, PosTexShader& s)const;
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
 };
