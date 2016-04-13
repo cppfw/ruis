@@ -433,7 +433,8 @@ Container{
 						}
 
 						ImageLabel{
-							image{img_sample}
+//							image{img_sample}
+							image{svg_tiger}
 
 							layout{
 								dimX{min} dimY{min}

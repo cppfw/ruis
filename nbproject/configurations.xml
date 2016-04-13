@@ -46,8 +46,6 @@
           <in>ResNinePatch.hpp</in>
           <in>ResSTOB.cpp</in>
           <in>ResSTOB.hpp</in>
-          <in>ResSvg.cpp</in>
-          <in>ResSvg.hpp</in>
           <in>ResTexture.cpp</in>
           <in>ResTexture.hpp</in>
         </df>
@@ -552,10 +550,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/resources/ResSvg.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -1763,20 +1757,21 @@
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/c++/4.9/bits</pElem>
-            <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda</pElem>
+            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/resources</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
-            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1784,6 +1779,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/svgren</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -1798,8 +1794,8 @@
             <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1808,8 +1804,8 @@
             <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/nitki</pElem>
@@ -1836,31 +1832,6 @@
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/resources/ResSvg.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/c++/4.9/bits</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>src/morda/resources</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/c++/4.9</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
-            <pElem>/usr/include/c++/4.9/debug</pElem>
-            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/svgdom</pElem>
-            <pElem>/usr/include/svgren</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -2867,18 +2838,18 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>src/morda/resources</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -3030,10 +3001,6 @@
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3332,10 +3299,6 @@
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResSTOB.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3666,10 +3629,6 @@
             flavor2="8">
       </item>
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/resources/ResSvg.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/resources/ResSvg.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>

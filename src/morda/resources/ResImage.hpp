@@ -5,13 +5,15 @@
 
 #pragma once
 
-#include "../ResourceManager.hpp"
-
-#include "ResTexture.hpp"
-#include <kolme/Rectangle.hpp>
-#include "../shaders/PosTexShader.hpp"
-
 #include <array>
+
+#include <kolme/Rectangle.hpp>
+
+#include "../ResourceManager.hpp"
+#include "../shaders/PosTexShader.hpp"
+#include "ResTexture.hpp"
+
+
 
 namespace morda{
 
@@ -25,9 +27,29 @@ public:
 	ResImage(const ResImage& orig) = delete;
 	ResImage& operator=(const ResImage& orig) = delete;
 	
-	virtual bool isSvg()const noexcept = 0;
+	class Image : public utki::Shared{
+	protected:
+		Texture2D tex;
+	public:
+		Image(Texture2D&& tex) :
+				tex(std::move(tex))
+		{}
+
+		void render(const Matr4r& matrix, PosTexShader& s)const;
+	};
+	
+	virtual bool isScalable()const noexcept = 0;
 
 	virtual Vec2r dim(real dpi = 0)const noexcept = 0;
+	
+	/**
+	 * @brief Get raster image of given dimensions.
+	 * @param forDim - dimensions request for raster image.
+	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
+	 */
+	virtual std::shared_ptr<Image> get(Vec2r forDim = 0)const{
+		return nullptr;
+	}
 	
 	virtual void render(const Matr4r& matrix, PosTexShader& s)const = 0;
 private:
@@ -57,12 +79,37 @@ public:
 	
 	void render(const Matr4r& matrix, PosTexShader& s)const override;
 	
-	bool isSvg() const noexcept override{
+	bool isScalable() const noexcept override{
 		return false;
 	}
-
+	
 private:
 	static std::shared_ptr<ResRasterImage> load(const stob::Node& chain, const papki::File& fi);
 };
+
+
+
+class ResSvgImage : public ResImage{
+	friend class ResImage;
+	
+protected:
+	ResSvgImage(){}
+	
+public:
+	ResSvgImage(const ResSvgImage&) = delete;
+	ResSvgImage& operator=(const ResSvgImage&) = delete;
+	
+	bool isScalable() const noexcept override{
+		return true;
+	}
+	
+	void render(const Matr4r& matrix, PosTexShader& s) const override{
+		this->get(0)->render(matrix, s);
+	}
+	
+private:
+	static std::shared_ptr<ResSvgImage> load(const stob::Node& chain, const papki::File& fi);
+};
+
 
 }
