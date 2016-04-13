@@ -2838,10 +2838,10 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>

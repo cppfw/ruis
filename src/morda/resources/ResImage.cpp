@@ -20,6 +20,17 @@ using namespace morda;
 
 
 
+void ResImage::Image::render(const Matr4r& matrix, PosTexShader& s) const {
+	this->tex.bind();
+	
+	kolme::Matr4f matr(matrix);
+	matr.scale(this->tex.dim());
+	
+	s.SetMatrix(matr);
+	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
+}
+
+
 ResRasterImage::ResRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim_var(rect.d.abs())
@@ -57,25 +68,13 @@ void ResRasterImage::render(const Matr4r& matrix, PosTexShader& s) const{
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }
 
-std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
-	if(auto f = chain.thisOrNext("file").node()){
-		if(auto fn = f->child()){
-			fi.setPath(fn->value());
-			if(fi.ext().compare("svg") == 0){
-				return ResSvgImage::load(chain, fi);
-			}
-		}
-	}
-	
-	return ResRasterImage::load(chain, fi);
-}
 
 
 namespace{
-class ResSvgImageInternal : public ResSvgImage{
+class ResSvgImage : public ResImage{
 	std::unique_ptr<svgdom::SvgElement> dom;
 public:
-	ResSvgImageInternal(decltype(dom) dom) :
+	ResSvgImage(decltype(dom) dom) :
 			dom(std::move(dom))
 	{}
 	
@@ -87,9 +86,9 @@ public:
 	}
 	
 	class SvgImage : public Image{
-		std::weak_ptr<const ResSvgImageInternal> parent;
+		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgImage(std::shared_ptr<const ResSvgImageInternal> parent, Texture2D&& tex) :
+		SvgImage(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
 				Image(std::move(tex)),
 				parent(parent)
 		{}
@@ -100,6 +99,14 @@ public:
 			}
 		}
 	};
+	
+	bool isScalable() const noexcept override{
+		return true;
+	}
+	
+	void render(const Matr4r& matrix, PosTexShader& s) const override{
+		this->get(0)->render(matrix, s);
+	}
 	
 	std::shared_ptr<Image> get(Vec2r forDim)const override{
 		unsigned imWidth = unsigned(forDim.x);
@@ -126,23 +133,27 @@ public:
 	}
 	
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<Image>> cache;
+	
+	static std::shared_ptr<ResSvgImage> load(const stob::Node& chain, const papki::File& fi);
 };
 }
 
 std::shared_ptr<ResSvgImage> ResSvgImage::load(const stob::Node& chain, const papki::File& fi) {
 	fi.setPath(chain.side("file").up().value());
 	
-	return utki::makeShared<ResSvgImageInternal>(svgdom::load(fi));
+	return utki::makeShared<ResSvgImage>(svgdom::load(fi));
 }
 
 
-void ResImage::Image::render(const Matr4r& matrix, PosTexShader& s) const {
-	this->tex.bind();
+std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
+	if(auto f = chain.thisOrNext("file").node()){
+		if(auto fn = f->child()){
+			fi.setPath(fn->value());
+			if(fi.ext().compare("svg") == 0){
+				return ResSvgImage::load(chain, fi);
+			}
+		}
+	}
 	
-	kolme::Matr4f matr(matrix);
-	matr.scale(this->tex.dim());
-	
-	s.SetMatrix(matr);
-	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
+	return ResRasterImage::load(chain, fi);
 }
-

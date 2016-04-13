@@ -88,28 +88,4 @@ private:
 };
 
 
-
-class ResSvgImage : public ResImage{
-	friend class ResImage;
-	
-protected:
-	ResSvgImage(){}
-	
-public:
-	ResSvgImage(const ResSvgImage&) = delete;
-	ResSvgImage& operator=(const ResSvgImage&) = delete;
-	
-	bool isScalable() const noexcept override{
-		return true;
-	}
-	
-	void render(const Matr4r& matrix, PosTexShader& s) const override{
-		this->get(0)->render(matrix, s);
-	}
-	
-private:
-	static std::shared_ptr<ResSvgImage> load(const stob::Node& chain, const papki::File& fi);
-};
-
-
 }
