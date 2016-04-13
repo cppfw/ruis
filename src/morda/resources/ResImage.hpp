@@ -18,6 +18,27 @@ namespace morda{
 class ResImage : public Resource{
 	friend class ResourceManager;
 	
+protected:
+	ResImage(){}
+	
+public:
+	ResImage(const ResImage& orig) = delete;
+	ResImage& operator=(const ResImage& orig) = delete;
+	
+	virtual bool isSvg()const noexcept = 0;
+
+	virtual Vec2r dim(real dpi = 0)const noexcept = 0;
+	
+	virtual void render(const Matr4r& matrix, PosTexShader& s)const = 0;
+private:
+	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
+};
+
+
+
+class ResRasterImage : public ResImage{
+	friend class ResImage;
+	
 	std::shared_ptr<ResTexture> tex;
 	
 	std::array<Vec2r, 4> texCoords;
@@ -25,19 +46,23 @@ class ResImage : public Resource{
 	Vec2r dim_var;
 	
 public:
-	ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
+	ResRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
 	
-	ResImage(const ResImage& orig) = delete;
-	ResImage& operator=(const ResImage& orig) = delete;
+	ResRasterImage(const ResRasterImage& orig) = delete;
+	ResRasterImage& operator=(const ResRasterImage& orig) = delete;
 	
-	const Vec2r& dim()const noexcept{
+	Vec2r dim(real dpi) const noexcept override{
 		return this->dim_var;
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s)const;
+	void render(const Matr4r& matrix, PosTexShader& s)const override;
 	
+	bool isSvg() const noexcept override{
+		return false;
+	}
+
 private:
-	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResRasterImage> load(const stob::Node& chain, const papki::File& fi);
 };
 
 }

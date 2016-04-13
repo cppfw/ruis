@@ -11,7 +11,7 @@ using namespace morda;
 
 
 
-ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
+ResRasterImage::ResRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim_var(rect.d.abs())
 {
@@ -23,7 +23,7 @@ ResImage::ResImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 
 
 
-std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi){
+std::shared_ptr<ResRasterImage> ResRasterImage::load(const stob::Node& chain, const papki::File& fi){
 	auto tex = App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
 	
 	Rectr rect;
@@ -33,12 +33,12 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 		rect = Rectr(Vec2r(0, 0), tex->tex().dim());
 	}
 	
-	return utki::makeShared<ResImage>(tex, rect);
+	return utki::makeShared<ResRasterImage>(tex, rect);
 }
 
 
 
-void ResImage::render(const Matr4r& matrix, PosTexShader& s) const{
+void ResRasterImage::render(const Matr4r& matrix, PosTexShader& s) const{
 	this->tex->tex().bind();
 	
 	kolme::Matr4f matr(matrix);
@@ -46,4 +46,8 @@ void ResImage::render(const Matr4r& matrix, PosTexShader& s) const{
 	
 	s.SetMatrix(matr);
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
+}
+
+std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
+	return ResRasterImage::load(chain, fi);
 }
