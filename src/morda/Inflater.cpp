@@ -9,7 +9,6 @@
 #include "widgets/containers/TableRow.hpp"
 #include "widgets/containers/KeyProxyContainer.hpp"
 #include "widgets/containers/OverlayContainer.hpp"
-#include "widgets/containers/ContainerProxy.hpp"
 
 #include "widgets/labels/ColorLabel.hpp"
 #include "widgets/labels/TextLabel.hpp"
@@ -71,7 +70,6 @@ Inflater::Inflater(){
 	this->AddWidget<TreeView>("TreeView");
 	this->AddWidget<ResizeProxy>("ResizeProxy");
 	this->AddWidget<DropDownSelector>("DropDownSelector");
-	this->AddWidget<ContainerProxy>("ContainerProxy");
 }
 
 

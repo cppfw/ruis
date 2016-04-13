@@ -85,8 +85,6 @@
             <in>BlackHoleContainer.hpp</in>
             <in>Container.cpp</in>
             <in>Container.hpp</in>
-            <in>ContainerProxy.cpp</in>
-            <in>ContainerProxy.hpp</in>
             <in>FrameContainer.cpp</in>
             <in>FrameContainer.hpp</in>
             <in>LinearContainer.cpp</in>
@@ -1077,16 +1075,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/morda/widgets/containers/FrameContainer.cpp"
             ex="false"
             tool="1"
@@ -1485,8 +1473,6 @@
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/c++/4.9/bits</pElem>
@@ -1512,6 +1498,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2005,11 +1992,16 @@
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>DEBUG</Elem>
           </preprocessorList>
@@ -2029,6 +2021,7 @@
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>src/morda/util/unzip</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2064,6 +2057,7 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2091,6 +2085,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2120,6 +2115,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2142,6 +2138,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2175,6 +2172,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2203,6 +2201,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2225,6 +2224,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2255,6 +2255,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2287,6 +2288,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2309,6 +2311,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2337,6 +2340,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2367,6 +2371,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2396,6 +2401,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2425,6 +2431,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2453,6 +2460,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2481,6 +2489,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2511,6 +2520,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2536,6 +2546,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2566,14 +2577,8 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="src/morda/widgets/containers/FrameContainer.cpp"
@@ -2598,6 +2603,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2623,6 +2629,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2648,6 +2655,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2678,6 +2686,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2703,6 +2712,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2728,6 +2738,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2756,6 +2767,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2784,6 +2796,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2812,6 +2825,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2841,6 +2855,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2871,6 +2886,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3110,16 +3126,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3418,16 +3424,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/Container.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3744,16 +3740,6 @@
             ex="false"
             tool="1"
             flavor2="8">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/containers/ContainerProxy.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/morda/widgets/containers/FrameContainer.cpp"
             ex="false"
