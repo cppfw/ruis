@@ -520,6 +520,18 @@ void Render::bindTexture(utki::Void& tex, unsigned unitNum){
 	static_cast<GLTexture2D&>(tex).bind(unitNum);
 }
 
+bool Render::isTextureBound(utki::Void& tex, unsigned unitNum){
+	GLint activeUnit;
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeUnit);
+	
+	glActiveTexture(GL_TEXTURE0 + unitNum);
+	GLint whichID;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
+	
+	glActiveTexture(activeUnit);
+	return GLuint(whichID) == static_cast<GLTexture2D&>(tex).tex;
+}
+
 void Render::unbindTexture(unsigned unitNum){
 	glActiveTexture(GL_TEXTURE0 + unitNum);
 	AssertOpenGLNoError();

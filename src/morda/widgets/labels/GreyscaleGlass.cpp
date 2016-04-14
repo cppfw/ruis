@@ -17,7 +17,7 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
-	//texture is bound right after creation
+	ASSERT(texture.isBound())
 	
 	kolme::Recti viewPortRect = this->computeViewportRect(matrix);
 	
@@ -34,5 +34,5 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 
 	s.SetMatrix(matr);
 	
-	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
+	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoordsUpsideDown));
 }

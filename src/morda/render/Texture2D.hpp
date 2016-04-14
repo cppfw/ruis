@@ -44,13 +44,13 @@ public:
 	Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR);
 
 	Texture2D(){}
-
-	void bind()const{
-		Render::bindTexture(*this->tex, 0);
+	
+	void bind(unsigned texUnitNum = 0)const{
+		Render::bindTexture(*this->tex, texUnitNum);
 	}
 	
-	void bind(unsigned texUnitNum)const{
-		Render::bindTexture(*this->tex, texUnitNum);
+	bool isBound(unsigned texUnitNum = 0)const{
+		return Render::isTextureBound(*this->tex, texUnitNum);
 	}
 
 	const decltype(dim_var)& dim()const noexcept{

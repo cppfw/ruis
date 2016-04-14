@@ -24,6 +24,7 @@ protected:
 
 public:
 	static const std::array<kolme::Vec2f, 4> quadFanTexCoords;
+	static const std::array<kolme::Vec2f, 4> quadFanTexCoordsUpsideDown;
 	
 	PosTexShader();
 	

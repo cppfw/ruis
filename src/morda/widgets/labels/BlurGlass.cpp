@@ -22,7 +22,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	}
 	
 	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
-	//texture is bound right after creation
+	ASSERT(texture.isBound())
 	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
@@ -36,6 +36,6 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	for(unsigned i = 0; i != 3; ++i){
 		Render::copyColorBufferToTexture(kolme::Vec2i(0), viewPortRect);
 		
-		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
+		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoordsUpsideDown));
 	}
 }

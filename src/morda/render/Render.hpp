@@ -119,6 +119,8 @@ private:
 	static std::unique_ptr<utki::Void> create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
 	
 	static void bindTexture(utki::Void& tex, unsigned unitNum);
+	
+	static bool isTextureBound(utki::Void& tex, unsigned unitNum);
 	//=== ~~~
 	
 public:
