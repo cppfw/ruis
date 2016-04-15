@@ -156,7 +156,7 @@ void Updateable::Updater::removeFromToAdd(Updateable* u){
 
 
 
-void Updateable::startUpdating(std::uint16_t dt){
+void Updateable::startUpdating(std::uint16_t dtMs){
 	ASSERT(App::inst().thisIsUIThread())
 
 //	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
@@ -165,7 +165,7 @@ void Updateable::startUpdating(std::uint16_t dt){
 		throw Exc("Updateable::StartUpdating(): Already updating");
 	}
 	
-	this->dt = dt;
+	this->dt = dtMs;
 	this->startedAt = aika::getTicks();
 	this->isUpdating_var = true;
 	

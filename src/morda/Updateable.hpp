@@ -88,17 +88,15 @@ public:
 		{}
 	};
 	
-	~Updateable()noexcept{}
-	
 	bool isUpdating()const noexcept{
 		return this->isUpdating_var;
 	}
 	
-	void startUpdating(std::uint16_t dt = 30);
+	void startUpdating(std::uint16_t dtMs = 30);
 	
 	void stopUpdating()noexcept;
 	
-	virtual void update(std::uint32_t dt) = 0;
+	virtual void update(std::uint32_t dtMs) = 0;
 };
 
 }//~namespace
