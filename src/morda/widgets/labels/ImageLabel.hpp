@@ -17,6 +17,8 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
+	mutable std::shared_ptr<morda::ResImage::Image> scaledImage;
+	
 	bool keepAspectRatio;
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
@@ -29,6 +31,10 @@ public:
 	
 	void setImage(const std::shared_ptr<ResImage>& image);
 	
+	void onResize() override{
+		this->Widget::onResize();
+		this->scaledImage.reset();
+	}
 private:
 
 };

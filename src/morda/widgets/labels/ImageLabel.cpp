@@ -27,13 +27,21 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	if(!this->img){
 		return;
 	}
-	
-	morda::Matr4r matr(matrix);
-	matr.scale(this->rect().d.compDiv(this->img->dim()));
 
 	morda::PosTexShader &s = App::inst().shaders().posTexShader;
 	
-	this->img->render(matr, s);
+	if(this->img->isScalable()){
+		if(!this->scaledImage){
+			this->scaledImage = this->img->get(this->rect().d);
+		}
+		
+		this->scaledImage->render(matrix, s);
+	}else{
+		morda::Matr4r matr(matrix);
+		matr.scale(this->rect().d.compDiv(this->img->dim()));
+
+		this->img->render(matr, s);
+	}
 }
 
 morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
@@ -41,10 +49,12 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	ASSERT(this->img->dim().isPositive())
+	Vec2r imgDim = this->img->dim(morda::App::inst().units.dpi());
+	
+	ASSERT(imgDim.isPositive())
 	
 	if(!keepAspectRatio){
-		Vec2r ret = this->img->dim();
+		Vec2r ret = imgDim;
 		
 		for(unsigned i = 0; i != ret.size(); ++i){
 			if(quotum[i] >= 0){
@@ -56,12 +66,12 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 	}
 	
 	ASSERT(this->img)
-	ASSERT(this->img->dim().y > 0)
+	ASSERT(imgDim.y > 0)
 	
-	real ratio = this->img->dim().x / this->img->dim().y;
+	real ratio = imgDim.x / imgDim.y;
 	
 	if(quotum.x < 0 && quotum.y < 0){
-		return this->img->dim();
+		return imgDim;
 	}else if(quotum.x < 0){
 		ASSERT(quotum.y >= 0)
 		
@@ -85,10 +95,12 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 
 
 void ImageLabel::setImage(const std::shared_ptr<ResImage>& image) {
-	if(this->img && image && this->img->dim() != image->dim()){
+	if(this->img && image && this->img->dim() == image->dim()){
+	}else{
 		this->setRelayoutNeeded();
 	}
 	
 	this->img = image;
+	this->scaledImage.reset();
 }
 

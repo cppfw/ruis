@@ -122,8 +122,8 @@ public:
 			}
 		}
 
-		auto pixels = svgren::render(*this->dom, imWidth, imHeight);
-		ASSERT(imWidth * imHeight == pixels.size())
+		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::App::inst().units.dpi());
+		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
 		
 		auto img = utki::makeShared<SvgImage>(this->sharedFromThis(this), Texture2D(imWidth, pixels));
