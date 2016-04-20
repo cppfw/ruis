@@ -21,6 +21,18 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 	}else{
 		this->keepAspectRatio = false;
 	}
+	
+	if(auto n = getProperty(chain, "repeatX")){
+		this->repeat.x = n->asBool();
+	}else{
+		this->repeat.x = false;
+	}
+	
+	if(auto n = getProperty(chain, "repeatY")){
+		this->repeat.y = n->asBool();
+	}else{
+		this->repeat.y = false;
+	}
 }
 
 void ImageLabel::render(const morda::Matr4r& matrix) const{

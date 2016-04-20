@@ -20,6 +20,8 @@ class ImageLabel : public virtual Widget{
 	mutable std::shared_ptr<morda::ResImage::Image> scaledImage;
 	
 	bool keepAspectRatio;
+	
+	kolme::Vec2b repeat;
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
