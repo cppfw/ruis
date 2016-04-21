@@ -46,6 +46,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 		if(!this->scaledImage){
 			this->scaledImage = this->img->get(this->rect().d);
 		}
+		ASSERT(this->scaledImage)
 		
 		this->scaledImage->render(matrix, s);
 	}else{
