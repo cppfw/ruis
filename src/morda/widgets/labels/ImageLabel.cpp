@@ -52,7 +52,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 		morda::Matr4r matr(matrix);
 		matr.scale(this->rect().d.compDiv(this->img->dim()));
 
-		this->img->render(matr, s);
+		this->img->render_old(matr, s);
 	}
 }
 

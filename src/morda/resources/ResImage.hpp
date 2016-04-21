@@ -27,7 +27,7 @@ public:
 	ResImage(const ResImage& orig) = delete;
 	ResImage& operator=(const ResImage& orig) = delete;
 	
-	class Image : public utki::Shared{
+	class Image : virtual public utki::Shared{
 	protected:
 		Texture2D tex;
 	public:
@@ -51,40 +51,40 @@ public:
 		return nullptr;
 	}
 	
-	virtual void render(const Matr4r& matrix, PosTexShader& s)const = 0;
+	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const = 0;
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
 };
 
 
 
-class ResRasterImage : public ResImage{
+class ResAtlasRasterImage : public ResImage{
 	friend class ResImage;
 	
 	std::shared_ptr<ResTexture> tex;
 	
 	std::array<Vec2r, 4> texCoords;
 	
-	Vec2r dim_var;
+	Vec2r dim_v;
 	
 public:
-	ResRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
+	ResAtlasRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
 	
-	ResRasterImage(const ResRasterImage& orig) = delete;
-	ResRasterImage& operator=(const ResRasterImage& orig) = delete;
+	ResAtlasRasterImage(const ResAtlasRasterImage& orig) = delete;
+	ResAtlasRasterImage& operator=(const ResAtlasRasterImage& orig) = delete;
 	
 	Vec2r dim(real dpi) const noexcept override{
-		return this->dim_var;
+		return this->dim_v;
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s)const override;
+	void render_old(const Matr4r& matrix, PosTexShader& s)const override;
 	
 	bool isScalable() const noexcept override{
 		return false;
 	}
 	
 private:
-	static std::shared_ptr<ResRasterImage> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResAtlasRasterImage> load(const stob::Node& chain, const papki::File& fi);
 };
 
 
