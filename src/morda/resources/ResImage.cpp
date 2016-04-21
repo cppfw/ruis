@@ -101,9 +101,7 @@ public:
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
-		morda::Image image(fi);
-		image.flipVertical();
-		return utki::makeShared<ResRasterImage>(Texture2D(image));
+		return utki::makeShared<ResRasterImage>(loadTexture(fi));
 	}
 };
 

@@ -20,17 +20,17 @@ namespace morda{
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	Texture2D tex_var;
+	Texture2D tex_v;
 
 public:
-	ResTexture(const Image& image) :
-			tex_var(image)
+	ResTexture(Texture2D&& texture) :
+			tex_v(std::move(texture))
 	{}
 
 	~ResTexture()noexcept{}
 
 	const Texture2D& tex()const noexcept{
-		return this->tex_var;
+		return this->tex_v;
 	}
 
 private:

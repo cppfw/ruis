@@ -4,14 +4,16 @@
 
 #pragma once
 
+#include <tuple>
+
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
-
-#include <tuple>
 
 #include <stob/dom.hpp>
 
 #include "../config.hpp"
+
+#include "../render/Texture2D.hpp"
 
 namespace morda{
 
@@ -97,6 +99,14 @@ inline const stob::Node* getProperty(const stob::Node* chain, const char* proper
 	}
 	auto n = chain->thisOrNext(property).node();
 	return n ? n->child() : nullptr;
+}
+
+
+inline Texture2D loadTexture(const papki::File& fi){
+	Image image(fi);
+//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+	image.flipVertical();
+	return Texture2D(image);
 }
 
 
