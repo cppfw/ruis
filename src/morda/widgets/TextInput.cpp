@@ -47,7 +47,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 
 		s.setColor(0xff804040);
 
-		s.SetMatrix(matr);
+		s.setMatrix(matr);
 		s.render(utki::wrapBuf(s.quad01Fan));
 	}
 	
@@ -83,7 +83,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 
 		s.setColor(this->color());
 
-		s.SetMatrix(matr);
+		s.setMatrix(matr);
 		s.render(utki::wrapBuf(s.quad01Fan));
 	}
 }

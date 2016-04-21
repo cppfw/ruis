@@ -263,7 +263,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	ASSERT(this->cacheTex)
 	this->cacheTex.bind();
 	
-	s.SetMatrix(matr);
+	s.setMatrix(matr);
 	
 	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 }

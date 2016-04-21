@@ -20,6 +20,6 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 	ColorPosShader& s = App::inst().shaders().colorPosShader;
 
 	s.setColor(this->color());
-	s.SetMatrix(matr);
+	s.setMatrix(matr);
 	s.render(utki::wrapBuf(s.quad01Fan));
 }

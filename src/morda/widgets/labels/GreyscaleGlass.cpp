@@ -32,7 +32,7 @@ void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
 
 	morda::PosTexShader &s = App::inst().shaders().simpleGrayscalePosTexShader;
 
-	s.SetMatrix(matr);
+	s.setMatrix(matr);
 	
 	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoordsUpsideDown));
 }

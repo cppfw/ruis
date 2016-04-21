@@ -51,6 +51,12 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 				auto src = PosTexShader::quadFanTexCoords.cbegin();
 				auto dst = this->texCoords.begin();
 				auto scale = this->rect().d.compDiv(this->img->dim());
+				if(!this->repeat.x){
+					scale.x = 1;
+				}
+				if(!this->repeat.y){
+					scale.y = 1;
+				}
 				for(; dst != this->texCoords.end(); ++src, ++dst){
 					*dst = src->compMul(scale);
 				}
@@ -60,11 +66,14 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 		}
 		ASSERT(this->scaledImage)
 		
-		this->scaledImage->render(matrix, s, this->texCoords);
+		morda::Matr4r matr(matrix);
+		matr.scale(this->rect().d);
+	
+		this->scaledImage->render(matr, s, this->texCoords);
 	}else{
 		morda::Matr4r matr(matrix);
 		matr.scale(this->rect().d.compDiv(this->img->dim()));
-
+	
 		this->img->render_old(matr, s);
 	}
 }

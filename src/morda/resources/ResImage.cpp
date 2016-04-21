@@ -21,13 +21,10 @@ using namespace morda;
 
 
 void ResImage::Texture::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const {
-	this->tex.bind();
+	this->tex_v.bind();
 	
-	kolme::Matr4f matr(matrix);
-	matr.scale(this->tex.dim());
-	
-	s.SetMatrix(matr);
-	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
+	s.setMatrix(matrix);
+	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));
 }
 
 
@@ -64,7 +61,7 @@ void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) cons
 	kolme::Matr4f matr(matrix);
 	matr.scale(this->dim_v);
 	
-	s.SetMatrix(matr);
+	s.setMatrix(matr);
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }
 
@@ -87,16 +84,16 @@ public:
 	}
 	
 	Vec2r dim(real dpi) const noexcept override{
-		return this->tex.dim();
+		return this->tex_v.dim();
 	}
 	
 	void render_old(const Matr4r& matrix, PosTexShader& s) const override{
-		this->tex.bind();
+		this->tex_v.bind();
 
 		kolme::Matr4f matr(matrix);
-		matr.scale(this->tex.dim());
+		matr.scale(this->tex_v.dim());
 
-		s.SetMatrix(matr);
+		s.setMatrix(matr);
 		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
 	}
 	
@@ -129,7 +126,7 @@ public:
 
 		~SvgImage()noexcept{
 			if(auto p = this->parent.lock()){
-				kolme::Vec2ui d = this->tex.dim().to<unsigned>();
+				kolme::Vec2ui d = this->tex_v.dim().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}

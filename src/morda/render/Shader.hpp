@@ -123,7 +123,7 @@ public:
 	
 	virtual ~Shader()noexcept{}
 	
-	void SetMatrix(const kolme::Matr4f &m){
+	void setMatrix(const kolme::Matr4f &m){
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 };//~class Shader

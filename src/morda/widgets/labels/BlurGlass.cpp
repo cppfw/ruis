@@ -29,7 +29,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 
 	morda::SimpleBlurPosTexShader &s = App::inst().shaders().simpleBlurPosTexShader;
 
-	s.SetMatrix(matr);
+	s.setMatrix(matr);
 	
 	s.setTextureStep(kolme::Vec2f(1).compDiv(viewPortRect.d.to<float>()));
 	

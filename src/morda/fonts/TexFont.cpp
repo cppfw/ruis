@@ -287,7 +287,7 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 real TexFont::renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
 	const Glyph& g = this->glyphs.at(ch);
 	
-	shader.SetMatrix(matrix);
+	shader.setMatrix(matrix);
 
 	shader.render(utki::wrapBuf(g.verts), utki::wrapBuf(g.texCoords));
 
@@ -384,7 +384,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 void TexFont::renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->tex.dim());
-	shader.SetMatrix(matr);
+	shader.setMatrix(matr);
 
 	this->tex.bind();
 

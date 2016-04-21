@@ -122,7 +122,7 @@ public:
 			morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
 
 //			s.SetColor(kolme::Vec3f(1, 0, 0));
-			s.SetMatrix(matr);
+			s.setMatrix(matr);
 			s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 		}
 		
@@ -175,7 +175,7 @@ public:
 		auto& s = morda::App::inst().shaders().posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
-		s.SetMatrix(m);
+		s.setMatrix(m);
 		
 		
 		static std::array<morda::Vec3r, 36> cubePos = {{
