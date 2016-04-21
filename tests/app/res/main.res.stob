@@ -15,7 +15,7 @@ tex_images{
 }
 
 img_sample{
-	tex{tex_sample}
+	file{lattice.png}
 //	rect{0 0 120 90}
 }
 

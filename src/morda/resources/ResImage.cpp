@@ -90,6 +90,16 @@ public:
 		return this->tex.dim();
 	}
 	
+	void render_old(const Matr4r& matrix, PosTexShader& s) const override{
+		this->tex.bind();
+
+		kolme::Matr4f matr(matrix);
+		matr.scale(this->tex.dim());
+
+		s.SetMatrix(matr);
+		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
+	}
+	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
 		morda::Image image(fi);
 	//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)

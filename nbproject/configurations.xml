@@ -1762,18 +1762,18 @@
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>src/morda/util</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/nitki</pElem>
             <pElem>/usr/include/X11</pElem>
