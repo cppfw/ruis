@@ -334,7 +334,7 @@ Container{
 
 			ImageLabel{
 //				image{img_lattice}
-				image{svg_sample}
+				image{img_camera}
 
 				keepAspectRatio{true}
 
@@ -443,7 +443,7 @@ Container{
 
 						ImageLabel{
 							image{img_sample}
-//							image{svg_sample}
+//							image{img_camera}
 
 							layout{
 								dimX{min} dimY{min}
