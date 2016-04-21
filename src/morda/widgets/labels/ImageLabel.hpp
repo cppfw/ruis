@@ -21,7 +21,7 @@ class ImageLabel : public virtual Widget{
 	
 	bool keepAspectRatio;
 	
-	kolme::Vec2b repeat;
+	kolme::Vec2b repeat_v;
 	mutable std::array<kolme::Vec2f, 4> texCoords;
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
@@ -35,6 +35,15 @@ public:
 	void setImage(const std::shared_ptr<ResImage>& image);
 	
 	void onResize() override;
+	
+	const decltype(repeat_v)& repeat()const noexcept{
+		return this->repeat_v;
+	}
+	
+	void setRepeat(decltype(repeat_v) r){
+		this->repeat_v = r;
+		this->scaledImage.reset();
+	}
 private:
 
 };

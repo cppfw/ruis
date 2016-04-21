@@ -23,15 +23,15 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 	}
 	
 	if(auto n = getProperty(chain, "repeatX")){
-		this->repeat.x = n->asBool();
+		this->repeat_v.x = n->asBool();
 	}else{
-		this->repeat.x = false;
+		this->repeat_v.x = false;
 	}
 	
 	if(auto n = getProperty(chain, "repeatY")){
-		this->repeat.y = n->asBool();
+		this->repeat_v.y = n->asBool();
 	}else{
-		this->repeat.y = false;
+		this->repeat_v.y = false;
 	}
 }
 
@@ -46,15 +46,15 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 		if(!this->scaledImage){
 			this->scaledImage = this->img->get(this->rect().d);
 			
-			if(this->repeat.x || this->repeat.y){
+			if(this->repeat_v.x || this->repeat_v.y){
 				ASSERT(PosTexShader::quadFanTexCoords.size() == this->texCoords.size())
 				auto src = PosTexShader::quadFanTexCoords.cbegin();
 				auto dst = this->texCoords.begin();
 				auto scale = this->rect().d.compDiv(this->img->dim());
-				if(!this->repeat.x){
+				if(!this->repeat_v.x){
 					scale.x = 1;
 				}
-				if(!this->repeat.y){
+				if(!this->repeat_v.y){
 					scale.y = 1;
 				}
 				for(; dst != this->texCoords.end(); ++src, ++dst){
