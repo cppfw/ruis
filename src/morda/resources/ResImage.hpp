@@ -27,11 +27,11 @@ public:
 	ResImage(const ResImage& orig) = delete;
 	ResImage& operator=(const ResImage& orig) = delete;
 	
-	class Image : virtual public utki::Shared{
+	class Texture : virtual public utki::Shared{
 	protected:
 		Texture2D tex;
 	public:
-		Image(Texture2D&& tex) :
+		Texture(Texture2D&& tex) :
 				tex(std::move(tex))
 		{}
 
@@ -47,7 +47,7 @@ public:
 	 * @param forDim - dimensions request for raster image.
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 */
-	virtual std::shared_ptr<const Image> get(Vec2r forDim = 0)const = 0;
+	virtual std::shared_ptr<const Texture> get(Vec2r forDim = 0)const = 0;
 	
 	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const{}//TODO: remove
 private:
@@ -81,7 +81,7 @@ public:
 		return false;
 	}
 	
-	virtual std::shared_ptr<const Image> get(Vec2r forDim = 0)const override{
+	virtual std::shared_ptr<const Texture> get(Vec2r forDim = 0)const override{
 		return nullptr;
 	}
 	

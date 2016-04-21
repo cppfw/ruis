@@ -20,7 +20,7 @@ using namespace morda;
 
 
 
-void ResImage::Image::render(const Matr4r& matrix, PosTexShader& s) const {
+void ResImage::Texture::render(const Matr4r& matrix, PosTexShader& s) const {
 	this->tex.bind();
 	
 	kolme::Matr4f matr(matrix);
@@ -72,17 +72,17 @@ void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) cons
 
 namespace{
 
-class ResRasterImage : public ResImage, public ResImage::Image{
+class ResRasterImage : public ResImage, public ResImage::Texture{
 public:
 	ResRasterImage(Texture2D&& tex) :
-			ResImage::Image(std::move(tex))
+			ResImage::Texture(std::move(tex))
 	{}
 	
 	bool isScalable() const noexcept override{
 		return false;
 	}
 	
-	std::shared_ptr<const ResImage::Image> get(Vec2r forDim) const override{
+	std::shared_ptr<const ResImage::Texture> get(Vec2r forDim) const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -121,11 +121,11 @@ public:
 			);
 	}
 	
-	class SvgImage : public Image{
+	class SvgImage : public Texture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
 		SvgImage(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
-				Image(std::move(tex)),
+				Texture(std::move(tex)),
 				parent(parent)
 		{}
 
@@ -145,7 +145,7 @@ public:
 		this->get(0)->render(matrix, s);
 	}
 	
-	std::shared_ptr<const Image> get(Vec2r forDim)const override{
+	std::shared_ptr<const Texture> get(Vec2r forDim)const override{
 		unsigned imWidth = unsigned(forDim.x);
 		unsigned imHeight = unsigned(forDim.y);
 
@@ -169,7 +169,7 @@ public:
 		return img;
 	}
 	
-	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<Image>> cache;
+	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<Texture>> cache;
 	
 	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
 		return utki::makeShared<ResSvgImage>(svgdom::load(fi));
