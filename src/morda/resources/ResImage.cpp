@@ -72,11 +72,30 @@ void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) cons
 
 namespace{
 
-class ResRasterImage : public ResImage{
+class ResRasterImage : public ResImage, public ResImage::Image{
 public:
-
+	ResRasterImage(Texture2D&& tex) :
+			ResImage::Image(std::move(tex))
+	{}
 	
-	//TODO:
+	bool isScalable() const noexcept override{
+		return false;
+	}
+	
+	std::shared_ptr<const ResImage::Image> get(Vec2r forDim) const override{
+		return this->sharedFromThis(this);
+	}
+	
+	Vec2r dim(real dpi) const noexcept override{
+		return this->tex.dim();
+	}
+	
+	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
+		morda::Image image(fi);
+	//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+		image.flipVertical();
+		return utki::makeShared<ResRasterImage>(Texture2D(image));
+	}
 };
 
 class ResSvgImage : public ResImage{
@@ -117,7 +136,7 @@ public:
 		this->get(0)->render(matrix, s);
 	}
 	
-	std::shared_ptr<Image> get(Vec2r forDim)const override{
+	std::shared_ptr<const Image> get(Vec2r forDim)const override{
 		unsigned imWidth = unsigned(forDim.x);
 		unsigned imHeight = unsigned(forDim.y);
 
@@ -160,6 +179,8 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 			fi.setPath(fn->value());
 			if(fi.ext().compare("svg") == 0){
 				return ResSvgImage::load(chain, fi);
+			}else{
+				return ResRasterImage::load(fi);
 			}
 		}
 	}

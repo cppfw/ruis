@@ -2838,7 +2838,6 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
@@ -2850,6 +2849,7 @@
             <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>src/morda/resources</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
