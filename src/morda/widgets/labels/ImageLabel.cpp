@@ -45,10 +45,22 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	if(this->img->isScalable()){
 		if(!this->scaledImage){
 			this->scaledImage = this->img->get(this->rect().d);
+			
+			if(this->repeat.x || this->repeat.y){
+				ASSERT(PosTexShader::quadFanTexCoords.size() == this->texCoords.size())
+				auto src = PosTexShader::quadFanTexCoords.cbegin();
+				auto dst = this->texCoords.begin();
+				auto scale = this->rect().d.compDiv(this->img->dim());
+				for(; dst != this->texCoords.end(); ++src, ++dst){
+					*dst = src->compMul(scale);
+				}
+			}else{
+				this->texCoords = PosTexShader::quadFanTexCoords;
+			}
 		}
 		ASSERT(this->scaledImage)
 		
-		this->scaledImage->render(matrix, s);
+		this->scaledImage->render(matrix, s, this->texCoords);
 	}else{
 		morda::Matr4r matr(matrix);
 		matr.scale(this->rect().d.compDiv(this->img->dim()));
@@ -117,3 +129,7 @@ void ImageLabel::setImage(const std::shared_ptr<ResImage>& image) {
 	this->scaledImage.reset();
 }
 
+void ImageLabel::onResize() {
+	this->Widget::onResize();
+	this->scaledImage.reset();
+}

@@ -79,7 +79,7 @@ public:
 	{}
 	
 	bool isScalable() const noexcept override{
-		return false;
+		return true;
 	}
 	
 	std::shared_ptr<const ResImage::Texture> get(Vec2r forDim) const override{

@@ -38,7 +38,7 @@ public:
 		void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const;
 	};
 	
-	virtual bool isScalable()const noexcept = 0;
+	virtual bool isScalable()const noexcept = 0; //TODO: remove
 
 	virtual Vec2r dim(real dpi = 96)const noexcept = 0;
 	

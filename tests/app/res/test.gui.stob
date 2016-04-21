@@ -366,6 +366,14 @@ Container{
 
 		title{"Spinning cube"}
 
+		ImageLabel{
+			layout{
+				dimX{max} dimY{max}
+			}
+			image{img_lattice}
+			repeatX{true} repeatY{true}
+		}
+
 		CubeWidget{
 			name{cube_widget}
 			layout{
