@@ -102,7 +102,6 @@ public:
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
 		morda::Image image(fi);
-	//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 		image.flipVertical();
 		return utki::makeShared<ResRasterImage>(Texture2D(image));
 	}
@@ -172,15 +171,12 @@ public:
 	
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<Image>> cache;
 	
-	static std::shared_ptr<ResSvgImage> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
+		return utki::makeShared<ResSvgImage>(svgdom::load(fi));
+	}	
 };
 }
 
-std::shared_ptr<ResSvgImage> ResSvgImage::load(const stob::Node& chain, const papki::File& fi) {
-	fi.setPath(chain.side("file").up().value());
-	
-	return utki::makeShared<ResSvgImage>(svgdom::load(fi));
-}
 
 
 std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
@@ -188,7 +184,7 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 		if(auto fn = f->child()){
 			fi.setPath(fn->value());
 			if(fi.ext().compare("svg") == 0){
-				return ResSvgImage::load(chain, fi);
+				return ResSvgImage::load(fi);
 			}else{
 				return ResRasterImage::load(fi);
 			}
