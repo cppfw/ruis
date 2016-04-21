@@ -47,11 +47,9 @@ public:
 	 * @param forDim - dimensions request for raster image.
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 */
-	virtual std::shared_ptr<Image> get(Vec2r forDim = 0)const{
-		return nullptr;
-	}
+	virtual std::shared_ptr<Image> get(Vec2r forDim = 0)const = 0;
 	
-	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const = 0;
+	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const = 0;//TODO: remove
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
 };
@@ -81,6 +79,10 @@ public:
 	
 	bool isScalable() const noexcept override{
 		return false;
+	}
+	
+	virtual std::shared_ptr<Image> get(Vec2r forDim = 0)const override{
+		return nullptr;
 	}
 	
 private:
