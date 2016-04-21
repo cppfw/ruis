@@ -20,7 +20,7 @@ using namespace morda;
 
 
 
-void ResImage::Texture::render(const Matr4r& matrix, PosTexShader& s) const {
+void ResImage::Texture::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const {
 	this->tex.bind();
 	
 	kolme::Matr4f matr(matrix);

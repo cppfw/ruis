@@ -35,7 +35,7 @@ public:
 				tex(std::move(tex))
 		{}
 
-		void render(const Matr4r& matrix, PosTexShader& s)const;
+		void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const;
 	};
 	
 	virtual bool isScalable()const noexcept = 0;
