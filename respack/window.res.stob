@@ -1,3 +1,7 @@
+morda_img_window_background{
+	file{background.png}
+}
+
 morda_img_window_lt{
 	tex{morda_tex_ui}
 	rect{0 16 6 6}

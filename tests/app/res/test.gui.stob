@@ -388,13 +388,15 @@ Container{
 
 		title{"TextInput"}
 
-		ColorLabel{
+		/*ColorLabel{
 			color{ @{morda_color_bg} }
 
 			layout{
 				dimX{max} dimY{max}
 			}
-		}
+		}*/
+
+		Background
 
 		TextField{
 			name{text_input}

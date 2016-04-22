@@ -1329,7 +1329,7 @@
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1"
-                 commonFlags="-mtune=generic -march=x86-64 -O3 -std=c++11 -funsigned-char -fPIC"/>
+                 commonFlags="-mtune=generic -march=x86-64 -O3 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
         <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
@@ -1376,21 +1376,28 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>src/morda/glue/linux</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
-            <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/glue</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -1401,32 +1408,27 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="1/morda/resources">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="1/morda/util/unzip">
         <ccTool>
           <incDir>
             <pElem>src/morda/util/unzip</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/widgets">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
           </incDir>
         </ccTool>
       </folder>
       <folder path="1/morda/widgets/containers">
         <ccTool>
           <incDir>
-            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/utki</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="1/morda/widgets/labels">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -1444,13 +1446,19 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/nitki</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
@@ -1458,6 +1466,7 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1467,11 +1476,17 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
@@ -1483,6 +1498,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1490,10 +1506,16 @@
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
@@ -1504,6 +1526,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1512,8 +1535,14 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1526,6 +1555,7 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/aika</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1534,11 +1564,18 @@
         <ccTool flags="1">
           <incDir>
             <pElem>src/morda/fonts</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1546,17 +1583,24 @@
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/freetype2/config</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/freetype2/config</pElem>
             <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1588,11 +1632,18 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1600,9 +1651,15 @@
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1614,6 +1671,7 @@
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1634,7 +1692,14 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1643,11 +1708,18 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1655,13 +1727,20 @@
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1670,6 +1749,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1677,14 +1757,21 @@
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1693,6 +1780,7 @@
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
             <pElem>/usr/include/svgren</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1703,10 +1791,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
@@ -1717,6 +1812,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1724,11 +1820,19 @@
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1736,14 +1840,22 @@
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1757,7 +1869,14 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1771,7 +1890,14 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1780,9 +1906,16 @@
         <ccTool flags="1">
           <incDir>
             <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1791,10 +1924,17 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1808,7 +1948,14 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1822,7 +1969,14 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1831,9 +1985,16 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1852,10 +2013,17 @@
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
             <pElem>src/morda/util/unzip</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1871,12 +2039,18 @@
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1885,6 +2059,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1892,9 +2067,17 @@
       <item path="src/morda/widgets/Button.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -1904,6 +2087,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1911,9 +2095,17 @@
       <item path="src/morda/widgets/CheckBox.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
@@ -1925,6 +2117,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1932,13 +2125,22 @@
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1949,9 +2151,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -1964,6 +2174,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1971,10 +2182,18 @@
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -1984,6 +2203,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1991,13 +2211,22 @@
       <item path="src/morda/widgets/MouseProxy.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2005,10 +2234,18 @@
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets/labels</pElem>
@@ -2020,6 +2257,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2030,9 +2268,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
@@ -2044,6 +2290,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2051,13 +2298,22 @@
       <item path="src/morda/widgets/ResizeProxy.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2065,10 +2321,18 @@
       <item path="src/morda/widgets/Slider.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -2078,6 +2342,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2085,9 +2350,17 @@
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/fonts</pElem>
@@ -2100,6 +2373,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2107,13 +2381,21 @@
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2121,6 +2403,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2128,13 +2411,21 @@
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
@@ -2142,6 +2433,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2149,9 +2441,17 @@
       <item path="src/morda/widgets/TreeView.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -2162,6 +2462,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2169,19 +2470,28 @@
       <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/widgets/containers</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2189,14 +2499,22 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/containers</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
@@ -2204,6 +2522,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2214,13 +2533,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2231,9 +2559,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -2243,6 +2579,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2253,13 +2590,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2270,13 +2616,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2287,13 +2642,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2304,8 +2668,16 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
@@ -2316,6 +2688,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2326,13 +2699,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2343,13 +2725,22 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/containers</pElem>
+            <pElem>/usr/include/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2360,12 +2751,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2373,6 +2769,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2383,12 +2780,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2396,6 +2798,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2406,12 +2809,17 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2419,6 +2827,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2429,11 +2838,16 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/c++/4.9</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/shaders</pElem>
@@ -2443,6 +2857,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2455,12 +2870,17 @@
           <incDir>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/widgets/labels</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
+            <pElem>/usr/include/c++/4.9/debug</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/4.9/include</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2468,6 +2888,7 @@
             <pElem>/usr/include/X11</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/4.9</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
