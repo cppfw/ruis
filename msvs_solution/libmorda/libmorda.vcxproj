@@ -239,6 +239,6 @@
     <Error Condition="!Exists('..\packages\libsvgdom.0.2.4\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.4\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\libunikod.2.0.3\build\native\libunikod.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libunikod.2.0.3\build\native\libunikod.targets'))" />
     <Error Condition="!Exists('..\packages\libutki.1.0.13\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.0.13\build\native\libutki.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgren.0.3.5\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.5\build\native\libsvgren.targets'))" />
+    
   </Target>
 </Project>
