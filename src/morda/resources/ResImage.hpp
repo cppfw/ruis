@@ -56,6 +56,9 @@ public:
 	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const{}//TODO: remove
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
+	
+public:
+	static std::shared_ptr<ResImage> load(const papki::File& fi);
 };
 
 

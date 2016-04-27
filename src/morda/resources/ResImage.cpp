@@ -178,13 +178,17 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 	if(auto f = chain.thisOrNext("file").node()){
 		if(auto fn = f->child()){
 			fi.setPath(fn->value());
-			if(fi.ext().compare("svg") == 0){
-				return ResSvgImage::load(fi);
-			}else{
-				return ResRasterImage::load(fi);
-			}
+			return ResImage::load(fi);
 		}
 	}
 	
 	return ResAtlasRasterImage::load(chain, fi);
+}
+
+std::shared_ptr<ResImage> ResImage::load(const papki::File& fi) {
+	if(fi.ext().compare("svg") == 0){
+		return ResSvgImage::load(fi);
+	}else{
+		return ResRasterImage::load(fi);
+	}
 }

@@ -29,3 +29,8 @@ npt_sample{
 	borders{6 6 6 6}
 }
 
+npt_sample2{
+	file{a.png			b.svg					img_sample
+	c.png}				image{img_center}		file{d.jpg}
+	image{img_fdsfd}	file{g.svg				e.svg}
+}
