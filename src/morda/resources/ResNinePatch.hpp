@@ -17,6 +17,18 @@ public:
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
 	
+	ResNinePatch(const std::array<std::shared_ptr<ResImage>, 9>& images) :
+			lt(images[0]),
+			t(images[1]),
+			rt(images[2]),
+			l(images[3]),
+			m(images[4]),
+			r(images[5]),
+			lb(images[6]),
+			b(images[7]),
+			rb(images[8])
+	{}
+	
 	ResNinePatch(
 			const std::shared_ptr<ResImage>& lt,
 			const std::shared_ptr<ResImage>& t,
