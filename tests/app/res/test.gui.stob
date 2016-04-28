@@ -512,16 +512,17 @@ Container{
 			layout{dimX{max}dimY{max}}
 			color{0xff008000}
 			gradient{
+				//TODO:make gradient resource
 				isVertical{true}
-				stop{
+				Stop{
 					pos{0}
 					color{0xff00ff00}
 				}
-				stop{
+				Stop{
 					pos{0.3}
 					color{0xff00ffff}
 				}
-				stop{
+				Stop{
 					pos{0.65}
 					color{0xffffffff}
 				}
