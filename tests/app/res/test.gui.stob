@@ -511,6 +511,7 @@ Container{
 		ColorLabel{
 			layout{dimX{max}dimY{max}}
 			color{0xff008000}
+			solid{0xff008000}
 			gradient{
 				isVertical{false}
 				stop{
