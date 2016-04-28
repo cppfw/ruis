@@ -26,5 +26,5 @@ templates{
 		layout{dimX{max} dimY{max}}
 		image{morda_img_window_background}
 		repeatX{true} repeatY{true}
-    }
+	}
 }
