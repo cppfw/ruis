@@ -15,6 +15,7 @@ this_srcs += morda/render/Render.cpp
 this_srcs += morda/render/Shader.cpp
 this_srcs += morda/render/Texture2D.cpp
 
+this_srcs += morda/resources/ResGradient.cpp
 this_srcs += morda/resources/ResImage.cpp
 this_srcs += morda/resources/ResNinePatch.cpp
 this_srcs += morda/resources/ResTexture.cpp
