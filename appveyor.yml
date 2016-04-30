@@ -2,6 +2,7 @@ os: Visual Studio 2015
 version: "{branch}-{build}"
 
 install:
+  - ps: (New-Object Net.WebClient).DownloadFile('https://dist.nuget.org/win-x86-commandline/latest/nuget.exe', 'C:\Tools\NuGet\NuGet.exe')
   - ps: (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi')
   - ps: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
   - ps: $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
