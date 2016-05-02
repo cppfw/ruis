@@ -116,15 +116,15 @@ public:
 			);
 	}
 	
-	class SvgImage : public Texture{
+	class SvgTexture : public Texture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgImage(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
+		SvgTexture(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
 				Texture(std::move(tex)),
 				parent(parent)
 		{}
 
-		~SvgImage()noexcept{
+		~SvgTexture()noexcept{
 			if(auto p = this->parent.lock()){
 				kolme::Vec2ui d = this->tex_v.dim().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
@@ -157,7 +157,7 @@ public:
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
 		
-		auto img = utki::makeShared<SvgImage>(this->sharedFromThis(this), Texture2D(imWidth, pixels));
+		auto img = utki::makeShared<SvgTexture>(this->sharedFromThis(this), Texture2D(imWidth, pixels));
 
 		this->cache[std::make_tuple(imWidth, imHeight)] = img;
 

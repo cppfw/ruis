@@ -35,9 +35,9 @@ public:
 				tex_v(std::move(texture))
 		{}
 		
-		const Texture2D& tex()const noexcept{
-			return this->tex_v;
-		}
+//		const Texture2D& tex()const noexcept{
+//			return this->tex_v;
+//		}
 
 		void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const;
 	};
