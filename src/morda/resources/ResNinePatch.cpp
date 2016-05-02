@@ -34,10 +34,10 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 	
 	auto dst = images.begin();
 	for(auto n = chain.child(); n; n = n->next()){
-		if(std::string("file") == n->value()){
+		if(n->asString() == "file"){
 			fi.setPath(n->up().value());
 			*dst = ResImage::load(fi);
-		}else if(std::string("image") == n->value()){
+		}else if(n->asString() == "image"){
 			*dst = morda::App::inst().resMan.load<ResImage>(n->up().value());
 		}else{
 			continue;
