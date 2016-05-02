@@ -57,6 +57,13 @@ void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) cons
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }
 
+void ResAtlasRasterImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
+	this->tex->tex().bind();
+	
+	s.setMatrix(matrix);
+	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
+}
+
 
 
 namespace{

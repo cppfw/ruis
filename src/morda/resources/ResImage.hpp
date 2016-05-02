@@ -53,7 +53,7 @@ public:
 
 
 
-class ResAtlasRasterImage : public ResImage{
+class ResAtlasRasterImage : public ResImage, public ResImage::QuadTexture{
 	friend class ResImage;
 	
 	std::shared_ptr<ResTexture> tex;
@@ -75,12 +75,15 @@ public:
 	void render_old(const Matr4r& matrix, PosTexShader& s)const override;
 	
 	bool isScalable() const noexcept override{
-		return false;
+		return true;
 	}
 	
-	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDim = 0)const override{
-		return nullptr;
+	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{
+		return this->sharedFromThis(this);
 	}
+	
+	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
+
 	
 private:
 	static std::shared_ptr<ResAtlasRasterImage> load(const stob::Node& chain, const papki::File& fi);
