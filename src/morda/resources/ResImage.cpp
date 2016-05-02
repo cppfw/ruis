@@ -20,7 +20,7 @@ using namespace morda;
 
 
 
-ResAtlasRasterImage::ResAtlasRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
+ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim_v(rect.d.abs())
 {
@@ -32,7 +32,7 @@ ResAtlasRasterImage::ResAtlasRasterImage(std::shared_ptr<ResTexture> tex, const 
 
 
 
-std::shared_ptr<ResAtlasRasterImage> ResAtlasRasterImage::load(const stob::Node& chain, const papki::File& fi){
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, const papki::File& fi){
 	auto tex = App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
 	
 	Rectr rect;
@@ -42,11 +42,11 @@ std::shared_ptr<ResAtlasRasterImage> ResAtlasRasterImage::load(const stob::Node&
 		rect = Rectr(Vec2r(0, 0), tex->tex().dim());
 	}
 	
-	return utki::makeShared<ResAtlasRasterImage>(tex, rect);
+	return utki::makeShared<ResAtlasImage>(tex, rect);
 }
 
 
-void ResAtlasRasterImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
+void ResAtlasImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
 	this->tex->tex().bind();
 	
 	s.setMatrix(matrix);
@@ -165,7 +165,7 @@ std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::F
 		}
 	}
 	
-	return ResAtlasRasterImage::load(chain, fi);
+	return ResAtlasImage::load(chain, fi);
 }
 
 std::shared_ptr<ResImage> ResImage::load(const papki::File& fi) {

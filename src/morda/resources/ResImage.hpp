@@ -49,7 +49,7 @@ public:
 
 
 
-class ResAtlasRasterImage : public ResImage, public ResImage::QuadTexture{
+class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
 	friend class ResImage;
 	
 	std::shared_ptr<ResTexture> tex;
@@ -59,10 +59,10 @@ class ResAtlasRasterImage : public ResImage, public ResImage::QuadTexture{
 	Vec2r dim_v;
 	
 public:
-	ResAtlasRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
+	ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
 	
-	ResAtlasRasterImage(const ResAtlasRasterImage& orig) = delete;
-	ResAtlasRasterImage& operator=(const ResAtlasRasterImage& orig) = delete;
+	ResAtlasImage(const ResAtlasImage& orig) = delete;
+	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;
 	
 	Vec2r dim(real dpi) const noexcept override{
 		return this->dim_v;
@@ -73,10 +73,9 @@ public:
 	}
 	
 	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
-
 	
 private:
-	static std::shared_ptr<ResAtlasRasterImage> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi);
 };
 
 
