@@ -30,7 +30,6 @@ npt_sample{
 }
 
 npt_sample2{
-	file{a.png}			file{b.svg}			image{img_sample}
-	file{c.png}			image{img_center}	file{d.jpg}
-	image{img_fdsfd}	file{g.svg}			file{e.svg}
+	file{a.png}
+	borders{6 6 6 6}
 }
