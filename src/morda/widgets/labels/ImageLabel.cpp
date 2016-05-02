@@ -42,40 +42,33 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 	morda::PosTexShader &s = App::inst().shaders().posTexShader;
 	
-	if(this->img->isScalable()){
-		if(!this->scaledImage){
-			this->scaledImage = this->img->get(this->rect().d);
-			
-			if(this->repeat_v.x || this->repeat_v.y){
-				ASSERT(PosTexShader::quadFanTexCoords.size() == this->texCoords.size())
-				auto src = PosTexShader::quadFanTexCoords.cbegin();
-				auto dst = this->texCoords.begin();
-				auto scale = this->rect().d.compDiv(this->img->dim());
-				if(!this->repeat_v.x){
-					scale.x = 1;
-				}
-				if(!this->repeat_v.y){
-					scale.y = 1;
-				}
-				for(; dst != this->texCoords.end(); ++src, ++dst){
-					*dst = src->compMul(scale);
-				}
-			}else{
-				this->texCoords = PosTexShader::quadFanTexCoords;
+	if(!this->scaledImage){
+		this->scaledImage = this->img->get(this->rect().d);
+
+		if(this->repeat_v.x || this->repeat_v.y){
+			ASSERT(PosTexShader::quadFanTexCoords.size() == this->texCoords.size())
+			auto src = PosTexShader::quadFanTexCoords.cbegin();
+			auto dst = this->texCoords.begin();
+			auto scale = this->rect().d.compDiv(this->img->dim());
+			if(!this->repeat_v.x){
+				scale.x = 1;
 			}
+			if(!this->repeat_v.y){
+				scale.y = 1;
+			}
+			for(; dst != this->texCoords.end(); ++src, ++dst){
+				*dst = src->compMul(scale);
+			}
+		}else{
+			this->texCoords = PosTexShader::quadFanTexCoords;
 		}
-		ASSERT(this->scaledImage)
-		
-		morda::Matr4r matr(matrix);
-		matr.scale(this->rect().d);
-	
-		this->scaledImage->render(matr, s, this->texCoords);
-	}else{
-		morda::Matr4r matr(matrix);
-		matr.scale(this->rect().d.compDiv(this->img->dim()));
-	
-		this->img->render_old(matr, s);
 	}
+	ASSERT(this->scaledImage)
+
+	morda::Matr4r matr(matrix);
+	matr.scale(this->rect().d);
+
+	this->scaledImage->render(matr, s, this->texCoords);
 }
 
 morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{

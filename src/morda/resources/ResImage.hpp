@@ -31,8 +31,6 @@ public:
 	public:
 		virtual void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
 	};
-	
-	virtual bool isScalable()const noexcept = 0; //TODO: remove
 
 	virtual Vec2r dim(real dpi = 96)const noexcept = 0;
 	
@@ -42,8 +40,6 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 */
 	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDim = 0)const = 0;
-	
-	virtual void render_old(const Matr4r& matrix, PosTexShader& s)const{}//TODO: remove
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
 	
@@ -70,12 +66,6 @@ public:
 	
 	Vec2r dim(real dpi) const noexcept override{
 		return this->dim_v;
-	}
-	
-	void render_old(const Matr4r& matrix, PosTexShader& s)const override;
-	
-	bool isScalable() const noexcept override{
-		return true;
 	}
 	
 	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{

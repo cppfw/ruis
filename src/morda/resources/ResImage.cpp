@@ -46,17 +46,6 @@ std::shared_ptr<ResAtlasRasterImage> ResAtlasRasterImage::load(const stob::Node&
 }
 
 
-
-void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) const{
-	this->tex->tex().bind();
-	
-	kolme::Matr4f matr(matrix);
-	matr.scale(this->dim_v);
-	
-	s.setMatrix(matr);
-	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
-}
-
 void ResAtlasRasterImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
 	this->tex->tex().bind();
 	
@@ -91,26 +80,12 @@ public:
 			TexQuadTexture(std::move(tex))
 	{}
 	
-	bool isScalable() const noexcept override{
-		return true;
-	}
-	
 	std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim) const override{
 		return this->sharedFromThis(this);
 	}
 	
 	Vec2r dim(real dpi) const noexcept override{
 		return this->tex_v.dim();
-	}
-	
-	void render_old(const Matr4r& matrix, PosTexShader& s) const override{
-		this->tex_v.bind();
-
-		kolme::Matr4f matr(matrix);
-		matr.scale(this->tex_v.dim());
-
-		s.setMatrix(matr);
-		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(PosTexShader::quadFanTexCoords));
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
@@ -147,14 +122,6 @@ public:
 			}
 		}
 	};
-	
-	bool isScalable() const noexcept override{
-		return true;
-	}
-	
-	void render_old(const Matr4r& matrix, PosTexShader& s) const override{
-		this->get(0)->render(matrix, s);
-	}
 	
 	std::shared_ptr<const QuadTexture> get(Vec2r forDim)const override{
 		unsigned imWidth = unsigned(forDim.x);

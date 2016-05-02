@@ -1797,12 +1797,12 @@
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>
