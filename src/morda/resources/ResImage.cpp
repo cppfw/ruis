@@ -20,14 +20,6 @@ using namespace morda;
 
 
 
-void ResImage::Texture::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const {
-	this->tex_v.bind();
-	
-	s.setMatrix(matrix);
-	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));
-}
-
-
 ResAtlasRasterImage::ResAtlasRasterImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		tex(tex),
 		dim_v(rect.d.abs())
@@ -69,17 +61,34 @@ void ResAtlasRasterImage::render_old(const Matr4r& matrix, PosTexShader& s) cons
 
 namespace{
 
-class ResRasterImage : public ResImage, public ResImage::Texture{
+class TexQuadTexture : public ResImage::QuadTexture{
+protected:
+	Texture2D tex_v;
+	
+	TexQuadTexture(Texture2D&& tex) :
+			tex_v(std::move(tex))
+	{}
+	
+public:
+	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+		this->tex_v.bind();
+
+		s.setMatrix(matrix);
+		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));
+	}
+};
+	
+class ResRasterImage : public ResImage, public TexQuadTexture{
 public:
 	ResRasterImage(Texture2D&& tex) :
-			ResImage::Texture(std::move(tex))
+			TexQuadTexture(std::move(tex))
 	{}
 	
 	bool isScalable() const noexcept override{
 		return true;
 	}
 	
-	std::shared_ptr<const ResImage::Texture> get(Vec2r forDim) const override{
+	std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim) const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -116,11 +125,11 @@ public:
 			);
 	}
 	
-	class SvgTexture : public Texture{
+	class SvgTexture : public TexQuadTexture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
 		SvgTexture(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
-				Texture(std::move(tex)),
+				TexQuadTexture(std::move(tex)),
 				parent(parent)
 		{}
 
@@ -140,7 +149,7 @@ public:
 		this->get(0)->render(matrix, s);
 	}
 	
-	std::shared_ptr<const Texture> get(Vec2r forDim)const override{
+	std::shared_ptr<const QuadTexture> get(Vec2r forDim)const override{
 		unsigned imWidth = unsigned(forDim.x);
 		unsigned imHeight = unsigned(forDim.y);
 
@@ -164,7 +173,7 @@ public:
 		return img;
 	}
 	
-	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<Texture>> cache;
+	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
 	
 	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
 		return utki::makeShared<ResSvgImage>(svgdom::load(fi));

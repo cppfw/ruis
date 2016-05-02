@@ -17,7 +17,7 @@ class ImageLabel : public virtual Widget{
 	
 	std::shared_ptr<morda::ResImage> img;
 	
-	mutable std::shared_ptr<const morda::ResImage::Texture> scaledImage;
+	mutable std::shared_ptr<const morda::ResImage::QuadTexture> scaledImage;
 	
 	bool keepAspectRatio;
 	
