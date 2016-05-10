@@ -22,9 +22,18 @@ templates{
 
 	PushButton NinePatchButton
 
-	Background ImageLabel{
+	Background FrameContainer{
 		layout{dimX{max} dimY{max}}
-		image{morda_img_window_background}
-		repeatX{true} repeatY{true}
+
+		ImageLabel{
+			layout{dimX{max} dimY{max}}
+			image{morda_img_window_background}
+			repeatX{true} repeatY{true}
+		}
+
+		ColorLabel{
+			layout{dimX{max} dimY{max}}
+			gradient{morda_grd_background}
+		}
 	}
 }
