@@ -33,3 +33,13 @@ npt_sample2{
 	file{a.png}
 	borders{6 6 6 6}
 }
+
+grd_sample{
+	vertical{true}
+
+	stop{ pos{0} color{0x0} }
+
+	stop{ pos{0.7} color{0xffffffff} }
+
+	stop{ pos{0.9} color{0xffffff00} }
+}
