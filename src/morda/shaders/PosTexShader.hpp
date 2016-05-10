@@ -50,8 +50,8 @@ public:
 private:
 	template <class V> void renderInternal(const utki::Buf<V> p, const utki::Buf<kolme::Vec2f> t, Render::EMode mode){
 		if(p.size() != t.size()){
-			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
-			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");
+			TRACE(<< "PosTexShader::renderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
+			throw morda::Exc("PosTexShader::renderInternal(): passed in array sizes do not match");
 		}
 		this->setVertexAttribArray(this->positionAttr, p);
 		this->setVertexAttribArray(this->texCoordAttr, t);
@@ -60,8 +60,8 @@ private:
 	
 	template <class V> void renderInternal(const utki::Buf<std::uint16_t> i, const utki::Buf<V> p, const utki::Buf<kolme::Vec2f> t, Render::EMode mode){
 		if(p.size() != t.size()){
-			TRACE(<< "PosTexShader::RenderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
-			throw morda::Exc("PosTexShader::RenderInternal(): passed in array sizes do not match");
+			TRACE(<< "PosTexShader::renderInternal(): passed in array sizes do not match: p.size() = " << p.size() << " t.size() = " << t.size() << std::endl)
+			throw morda::Exc("PosTexShader::renderInternal(): passed in array sizes do not match");
 		}
 		this->setVertexAttribArray(this->positionAttr, p);
 		this->setVertexAttribArray(this->texCoordAttr, t);

@@ -282,6 +282,14 @@ void Render::setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v) {
 	AssertOpenGLNoError();
 }
 
+void Render::setVertexAttribArray(InputID id, const kolme::Vec4f* a) {
+	glEnableVertexAttribArray(GLint(id.id));
+	AssertOpenGLNoError();
+	ASSERT(a)
+	glVertexAttribPointer(GLint(id.id), 4, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*>(a));
+	AssertOpenGLNoError();
+}
+
 void Render::setVertexAttribArray(InputID id, const kolme::Vec3f* a) {
 	glEnableVertexAttribArray(GLint(id.id));
 	AssertOpenGLNoError();

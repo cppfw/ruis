@@ -23,10 +23,6 @@ namespace morda{
  */
 class ColorShader : virtual public Shader{
 
-	//no copying
-	ColorShader(const ColorShader&);
-	ColorShader& operator=(const ColorShader&);
-
 	Render::InputID colorUniform;
 
 protected:
@@ -35,6 +31,10 @@ protected:
 	{}
 
 public:
+	
+	ColorShader(const ColorShader&) = delete;
+	ColorShader& operator=(const ColorShader&) = delete;
+	
 	void setColor(std::uint32_t color){
 		this->setColor(
 				float(color & 0xff) / float(0xff),

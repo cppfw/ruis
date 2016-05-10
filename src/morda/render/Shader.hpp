@@ -101,6 +101,11 @@ protected:
 		Render::setUniform4f(id, v);
 	}
 	
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec4f> a){
+		this->Bind();
+		Render::setVertexAttribArray(id, &*a.begin());
+	}
+	
 	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec3f> a){
 		this->Bind();
 		Render::setVertexAttribArray(id, &*a.begin());

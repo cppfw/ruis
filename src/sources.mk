@@ -7,6 +7,7 @@ this_srcs += morda/shaders/PosShader.cpp
 this_srcs += morda/shaders/PosTexShader.cpp
 this_srcs += morda/shaders/ColorPosShader.cpp
 this_srcs += morda/shaders/ColorPosTexShader.cpp
+this_srcs += morda/shaders/ClrPosShader.cpp
 this_srcs += morda/shaders/SimpleGrayscalePosTexShader.cpp
 this_srcs += morda/shaders/SimpleBlurPosTexShader.cpp
 

@@ -77,6 +77,8 @@ private:
 	
 	static void setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v);
 	
+	static void setVertexAttribArray(InputID id, const kolme::Vec4f* a);
+	
 	static void setVertexAttribArray(InputID id, const kolme::Vec3f* a);
 	
 	static void setVertexAttribArray(InputID id, const kolme::Vec2f* a);
