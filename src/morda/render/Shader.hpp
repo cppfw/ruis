@@ -37,7 +37,7 @@ class Shader{
 
 	const Render::InputID matrixUniform;
 	
-	void Bind(){
+	void bind(){
 		if(this == boundShader){
 			return;
 		}
@@ -64,55 +64,60 @@ protected:
 
 	Shader(const char* vertexShaderCode = nullptr, const char* fragmentShaderCode = nullptr);
 
-	void renderArrays(Render::EMode mode, size_t numElements){
-		this->Bind();
+	void renderArrays(Render::Mode_e mode, size_t numElements){
+		this->bind();
 		Render::renderArrays(mode, numElements);
 		this->renderIsInProgress = false;
 	}
 	
-	void renderElements(Render::EMode mode, const utki::Buf<std::uint16_t> i){
-		this->Bind();
+	void renderElements(Render::Mode_e mode, const utki::Buf<std::uint16_t> i){
+		this->bind();
 		Render::renderElements(mode, i);
 		this->renderIsInProgress = false;
 	}
 	
 	void setUniformMatrix4f(Render::InputID id, const kolme::Matr4f& m){
-		this->Bind();
+		this->bind();
 		Render::setUniformMatrix4f(id, m);
 	}
 	
 	void setUniform1i(Render::InputID id, int i){
-		this->Bind();
+		this->bind();
 		Render::setUniform1i(id, i);
 	}
 	
 	void setUniform2f(Render::InputID id, kolme::Vec2f v){
-		this->Bind();
+		this->bind();
 		Render::setUniform2f(id, v);
 	}
 	
 	void setUniform4f(Render::InputID id, float x, float y, float z, float a){
-		this->Bind();
+		this->bind();
 		Render::setUniform4f(id, x, y, z, a);
 	}
 	
 	void setUniform4f(Render::InputID id, const utki::Buf<kolme::Vec4f> v){
-		this->Bind();
+		this->bind();
 		Render::setUniform4f(id, v);
 	}
 	
+	void setVertexAttribArray(Render::InputID id, const utki::Buf<std::uint32_t> a){
+		this->bind();
+		Render::setVertexAttribArray(id, &*a.begin());
+	}
+	
 	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec4f> a){
-		this->Bind();
+		this->bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 	
 	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec3f> a){
-		this->Bind();
+		this->bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 	
 	void setVertexAttribArray(Render::InputID id, const utki::Buf<kolme::Vec2f> a){
-		this->Bind();
+		this->bind();
 		Render::setVertexAttribArray(id, &*a.begin());
 	}
 public:

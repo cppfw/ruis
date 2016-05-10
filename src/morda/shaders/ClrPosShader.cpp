@@ -44,7 +44,7 @@ ClrPosShader::ClrPosShader() :
 						FRAG_MAIN_END
 					)qwertyuiop"
 			),
-		clrAttr(this->getAttribute("clr"))
+		colorAttr(this->getAttribute("clr"))
 {
 }
 

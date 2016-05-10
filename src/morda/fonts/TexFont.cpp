@@ -401,10 +401,10 @@ real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 	}
 	
 	Render::setBlendFunc(
-			Render::EBlendFactor::SRC_ALPHA,
-			Render::EBlendFactor::ONE_MINUS_SRC_ALPHA,
-			Render::EBlendFactor::ONE_MINUS_DST_ALPHA,
-			Render::EBlendFactor::ONE
+			Render::BlendFactor_e::SRC_ALPHA,
+			Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
+			Render::BlendFactor_e::ONE_MINUS_DST_ALPHA,
+			Render::BlendFactor_e::ONE
 		);
 	Render::setBlendEnabled(true);
 

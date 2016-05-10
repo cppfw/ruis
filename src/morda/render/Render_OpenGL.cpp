@@ -63,7 +63,8 @@ inline static void AssertOpenGLNoError(){
 GLenum modeMap[] = {
 	GL_TRIANGLES,			//TRIANGLES
 	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
-	GL_LINE_LOOP			//LINE_LOOP
+	GL_LINE_LOOP,			//LINE_LOOP
+	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
 };
 
 
@@ -212,7 +213,7 @@ struct ProgramWrapper : public utki::Void{
 
 
 
-void Render::renderArrays(EMode mode, size_t numElements) {
+void Render::renderArrays(Mode_e mode, size_t numElements) {
 	GLenum m = modeMap[unsigned(mode)];
 	
 	glDrawArrays(m, 0, GLsizei(numElements));
@@ -221,7 +222,7 @@ void Render::renderArrays(EMode mode, size_t numElements) {
 
 
 
-void Render::renderElements(EMode mode, const utki::Buf<std::uint16_t>& i) {
+void Render::renderElements(Mode_e mode, const utki::Buf<std::uint16_t>& i) {
 	GLenum m = modeMap[unsigned(mode)];
 	
 	glDrawElements(m, GLsizei(i.size()), GL_UNSIGNED_SHORT, &*i.begin());
@@ -279,6 +280,14 @@ void Render::setUniform4f(InputID id, float x, float y, float z, float a) {
 void Render::setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v) {
 	static_assert(sizeof(v[0]) == sizeof(GLfloat) * 4, "size mismatch");
 	glUniform4fv(GLint(id.id), GLsizei(v.size()), reinterpret_cast<const GLfloat*>(&*v.begin()));
+	AssertOpenGLNoError();
+}
+
+void Render::setVertexAttribArray(InputID id, const std::uint32_t* a) {
+	glEnableVertexAttribArray(GLint(id.id));
+	AssertOpenGLNoError();
+	ASSERT(a)
+	glVertexAttribPointer(GLint(id.id), 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, a);
 	AssertOpenGLNoError();
 }
 
@@ -466,7 +475,7 @@ struct GLTexture2D : public utki::Void, public utki::PoolStored<GLTexture2D, 32>
 
 }//~namespace
 
-std::unique_ptr<utki::Void> Render::create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+std::unique_ptr<utki::Void> Render::create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, TexFilter_e minFilter, TexFilter_e magFilter){
 	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	
 	GLint minFilterGL = texFilterMap[unsigned(minFilter)];
@@ -667,7 +676,7 @@ GLenum blendFunc[] = {
 
 }
 
-void Render::setBlendFunc(EBlendFactor srcClr, EBlendFactor dstClr, EBlendFactor srcAlpha, EBlendFactor dstAlpha) {
+void Render::setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) {
 	glBlendFuncSeparate(
 			blendFunc[unsigned(srcClr)],
 			blendFunc[unsigned(dstClr)],

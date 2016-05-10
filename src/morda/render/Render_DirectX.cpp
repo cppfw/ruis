@@ -250,7 +250,7 @@ struct GLTexture2D : public utki::Void, public ting::PoolStored<GLTexture2D, 32>
 
 }//~namespace
 
-std::unique_ptr<utki::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter){
+std::unique_ptr<utki::Void> Render::create2DTexture(Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, TexFilter_e minFilter, TexFilter_e magFilter){
 	/*
 	ASSERT(data.size() == 0 || data.size() >= dim.x * dim.y * numChannels)
 	

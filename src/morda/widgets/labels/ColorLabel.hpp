@@ -7,12 +7,15 @@
 
 #include "../ColorWidget.hpp"
 
+#include "../../resources/ResGradient.hpp"
 
 namespace morda{
 
 
 
 class ColorLabel : public ColorWidget{
+	
+	std::shared_ptr<ResGradient> gradient;
 public:
 	ColorLabel(const stob::Node* chain = nullptr);
 	

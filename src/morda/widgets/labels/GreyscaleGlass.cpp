@@ -16,7 +16,7 @@ GreyscaleGlass::GreyscaleGlass(const stob::Node* chain) :
 
 
 void GreyscaleGlass::render(const morda::Matr4r& matrix) const{
-	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
+	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::TexFilter_e::NEAREST, Render::TexFilter_e::NEAREST);
 	ASSERT(texture.isBound())
 	
 	kolme::Recti viewPortRect = this->computeViewportRect(matrix);

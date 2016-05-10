@@ -21,7 +21,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 		return;
 	}
 	
-	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::ETexFilter::NEAREST, Render::ETexFilter::NEAREST);
+	Texture2D texture(this->rect().d.to<unsigned>(), 3, Render::TexFilter_e::NEAREST, Render::TexFilter_e::NEAREST);
 	ASSERT(texture.isBound())
 	
 	morda::Matr4r matr(matrix);

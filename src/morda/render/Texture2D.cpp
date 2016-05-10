@@ -8,7 +8,7 @@ using namespace morda;
 
 
 
-void Texture2D::Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter) {
+void Texture2D::Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::TexFilter_e minFilter, Render::TexFilter_e magFilter) {
 	this->dim_var = d.to<real>();
 
 	this->tex = Render::create2DTexture(d, numChannels, data, minFilter, magFilter);
@@ -16,7 +16,7 @@ void Texture2D::Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::B
 
 
 
-Texture2D::Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::ETexFilter minFilter, Render::ETexFilter magFilter){
+Texture2D::Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::TexFilter_e minFilter, Render::TexFilter_e magFilter){
 	if(width == 0){
 		throw morda::Exc("Texture2D: zero size width requested");
 	}

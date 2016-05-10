@@ -220,8 +220,8 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 		tex = Texture2D(
 				this->rect().d.to<unsigned>(),
 				4,
-				Render::ETexFilter::NEAREST,
-				Render::ETexFilter::NEAREST
+				Render::TexFilter_e::NEAREST,
+				Render::TexFilter_e::NEAREST
 			);
 	}
 	

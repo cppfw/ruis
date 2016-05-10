@@ -25,7 +25,7 @@ class Texture2D{
 
 	Vec2r dim_var;
 
-	void Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::ETexFilter minFilter, Render::ETexFilter magFilter);
+	void Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::TexFilter_e minFilter, Render::TexFilter_e magFilter);
 public:
 	Texture2D(const Texture2D& tex) = delete;
 	Texture2D& operator=(const Texture2D& tex) = delete;
@@ -33,15 +33,15 @@ public:
 	Texture2D(Texture2D&& tex) = default;
 	Texture2D& operator=(Texture2D&&) = default;
 	
-	Texture2D(const Image& image, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
+	Texture2D(const Image& image, Render::TexFilter_e minFilter = Render::TexFilter_e::LINEAR, Render::TexFilter_e magFilter = Render::TexFilter_e::LINEAR){
 		this->Constructor(image.dim(), image.numChannels(), image.buf(), minFilter, magFilter);
 	}
 	
-	Texture2D(kolme::Vec2ui dimensions, unsigned numChannels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR){
+	Texture2D(kolme::Vec2ui dimensions, unsigned numChannels, Render::TexFilter_e minFilter = Render::TexFilter_e::LINEAR, Render::TexFilter_e magFilter = Render::TexFilter_e::LINEAR){
 		this->Constructor(dimensions, numChannels, nullptr, minFilter, magFilter);
 	}
 	
-	Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::ETexFilter minFilter = Render::ETexFilter::LINEAR, Render::ETexFilter magFilter = Render::ETexFilter::LINEAR);
+	Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::TexFilter_e minFilter = Render::TexFilter_e::LINEAR, Render::TexFilter_e magFilter = Render::TexFilter_e::LINEAR);
 
 	Texture2D(){}
 	

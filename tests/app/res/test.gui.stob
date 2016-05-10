@@ -511,22 +511,7 @@ Container{
 		ColorLabel{
 			layout{dimX{max}dimY{max}}
 			color{0xff008000}
-			gradient{
-				//TODO: make gradient resource
-				isVertical{true}
-				Stop{
-					pos{0}
-					color{0xff00ff00}
-				}
-				Stop{
-					pos{0.3}
-					color{0xff00ffff}
-				}
-				Stop{
-					pos{0.65}
-					color{0xffffffff}
-				}
-			}
+			gradient{grd_sample}
 		}
 
 		TableContainer{

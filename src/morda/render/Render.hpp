@@ -33,12 +33,13 @@ class Render{
 	
 public:
 	
-	enum class EMode{
+	enum class Mode_e{
 		//NOTE: do not change order!!!
 		
 		TRIANGLES,
 		TRIANGLE_FAN,
-		LINE_LOOP
+		LINE_LOOP,
+		TRIANGLE_STRIP
 	};
 	
 	class InputID{
@@ -54,9 +55,9 @@ public:
 	
 	//=== functions to be used by Shader class internally
 private:
-	static void renderArrays(EMode mode, size_t numElements);
+	static void renderArrays(Mode_e mode, size_t numElements);
 	
-	static void renderElements(EMode mode, const utki::Buf<std::uint16_t>& i);
+	static void renderElements(Mode_e mode, const utki::Buf<std::uint16_t>& i);
 	
 	//returns pointer to shader object
 	static std::unique_ptr<utki::Void> compileShader(const char* vertexShaderCode, const char* fragmentShaderCode);
@@ -76,6 +77,8 @@ private:
 	static void setUniform4f(InputID id, float x, float y, float z, float a);
 	
 	static void setUniform4f(InputID id, const utki::Buf<kolme::Vec4f> v);
+	
+	static void setVertexAttribArray(InputID id, const std::uint32_t* a);
 	
 	static void setVertexAttribArray(InputID id, const kolme::Vec4f* a);
 	
@@ -107,7 +110,7 @@ public:
 	
 	static unsigned getMaxTextureSize();
 	
-	enum class ETexFilter{
+	enum class TexFilter_e{
 		//NOTE: do not change the order!!!
 		
 		NEAREST,
@@ -118,7 +121,7 @@ public:
 	
 	//=== functions to be used by Texture class
 private:
-	static std::unique_ptr<utki::Void> create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, ETexFilter minFilter, ETexFilter magFilter);
+	static std::unique_ptr<utki::Void> create2DTexture(kolme::Vec2ui dim, unsigned numChannels, const utki::Buf<std::uint8_t> data, TexFilter_e minFilter, TexFilter_e magFilter);
 	
 	static void bindTexture(utki::Void& tex, unsigned unitNum);
 	
@@ -146,7 +149,7 @@ private:
 public:
 	static void setBlendEnabled(bool enable);
 	
-	enum class EBlendFactor{
+	enum class BlendFactor_e{
 		//NOTE: do not change order
 		
 		ONE,
@@ -155,7 +158,7 @@ public:
 		ONE_MINUS_DST_ALPHA
 	};
 	
-	static void setBlendFunc(EBlendFactor srcClr, EBlendFactor dstClr, EBlendFactor srcAlpha, EBlendFactor dstAlpha);
+	static void setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha);
 
 	static bool isBoundFrameBufferComplete();
 

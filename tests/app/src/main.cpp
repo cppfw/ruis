@@ -224,7 +224,7 @@ public:
 		
 		morda::Render::setCullEnabled(true);
 		
-		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::EMode::TRIANGLES);
+		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::Mode_e::TRIANGLES);
 		
 		morda::Render::setCullEnabled(false);
 	}
