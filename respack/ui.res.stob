@@ -47,9 +47,9 @@ morda_npt_slider_handle{
 morda_grd_background{
 	stop{ pos{0} color{0} }
 
-	stop{ pos{0.45} color{0x10ffffff} }
+	stop{ pos{0.43} color{0x10ffffff} }
 	stop{ pos{0.5} color{0x12ffffff} }
-	stop{ pos{0.55} color{0x10ffffff} }
+	stop{ pos{0.57} color{0x10ffffff} }
 
 	stop{ pos{1} color{0} }
 }
