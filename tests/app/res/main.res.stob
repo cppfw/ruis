@@ -30,7 +30,7 @@ npt_sample{
 }
 
 npt_sample2{
-	file{a.png}
+	file{a.svg}
 	borders{6 6 6 6}
 }
 

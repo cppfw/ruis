@@ -136,3 +136,19 @@ kolme::Vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 	
 	return ret;
 }
+
+
+
+bool morda::isPercent(const stob::Node& n){
+	auto len = n.length();
+	
+	if(len == 0){
+		return false;
+	}
+	
+	if(n.value()[len - 1] == '%'){
+		return true;
+	}
+	
+	return false;
+}

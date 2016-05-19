@@ -7,6 +7,40 @@ using namespace morda;
 
 
 
+namespace{
+
+class ResSubImage : public ResImage, public ResImage::QuadTexture{
+	friend class ResImage;
+	
+	std::shared_ptr<ResImage::QuadTexture> tex;
+	
+	std::array<Vec2r, 4> texCoords;
+	
+	Vec2r dim_v;
+	
+public:
+	ResSubImage(decltype(tex) tex, const Rectr& rect);
+	
+	ResSubImage(const ResSubImage& orig) = delete;
+	ResSubImage& operator=(const ResSubImage& orig) = delete;
+	
+	Vec2r dim(real dpi) const noexcept override{
+		return this->dim_v;
+	}
+	
+	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{
+		return this->sharedFromThis(this);
+	}
+	
+	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+		ASSERT(this->tex)
+		this->tex->render(matrix, s, texCoords);
+	}
+};
+
+}
+
+
 std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const papki::File& fi){
 	
 	//TODO: remove?

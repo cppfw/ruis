@@ -78,6 +78,15 @@ float dimValueFromSTOB(const stob::Node& n);
 
 
 /**
+ * @brief Check if the value is given in percentage.
+ * @param n - STOB node whose value to check.
+ * @return true in case the value contained in the given STOB node is in percentage.
+ * @return false otherwise.
+ */
+bool isPercent(const stob::Node& n);
+
+
+/**
  * @brief Resolve includes in STOB document.
  * @param fi - file interface set to the original STOB document. Because resolving include paths is done relatively to original STOB document path.
  * @param begin - first node of the original STOB document.
