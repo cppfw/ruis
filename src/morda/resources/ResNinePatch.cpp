@@ -64,20 +64,11 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 			);
 	}
 	
-	std::array<std::shared_ptr<ResImage>, 9> images;
+	auto borders = makeSidesrFromSTOB(&chain.side("borders").up());
 	
-	auto dst = images.begin();
-	for(auto n = chain.child(); n; n = n->next()){
-		if(n->asString() == "file"){
-			fi.setPath(n->up().value());
-			*dst = ResImage::load(fi);
-		}else if(n->asString() == "image"){
-			*dst = morda::App::inst().resMan.load<ResImage>(n->up().value());
-		}else{
-			continue;
-		}
-		++dst;
-	}
+	auto file = chain.side("file").up().asString();
+	fi.setPath(file);
+	auto image = ResImage::load(fi);
 	
-	return utki::makeShared<ResNinePatch>(images);
+	return utki::makeShared<ResNinePatch>(image, borders);
 }

@@ -34,6 +34,12 @@ Rectr morda::makeRectrFromSTOB(const stob::Node* chain){
 	return Rectr(p, d);
 }
 
+Sidesr morda::makeSidesrFromSTOB(const stob::Node* chain){
+	Vec2r p = makeVec2rFromSTOB(chain);
+	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
+	Vec2r d = makeVec2rFromSTOB(chain);
+	return Sidesr(p.x, p.y, d.x, d.y);
+}
 
 
 morda::Vec2r morda::dimVec2rFromSTOB(const stob::Node* chain){

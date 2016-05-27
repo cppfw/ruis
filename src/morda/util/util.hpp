@@ -30,15 +30,24 @@ namespace morda{
 morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
 
 /**
- * @brief Parse chain of 4 STOB nodes as Rect2r.
- * @param chain - chain of at least four nodes holding Rect2r values.
+ * @brief Parse chain of 4 STOB nodes as Rectr.
+ * @param chain - chain of at least four nodes holding Rectr values.
  *                If there are less than 4 nodes in the chain then the rest of
  *                rectangle components will be filled with latest parsed value.
  *                If zero pointer is passed the resulting rectangle will be filled with zeros.
- * @return parsed Rect2r.
+ * @return parsed Rectr.
  */
 morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
 
+/**
+ * @brief Parse chain of 4 STOB nodes as Siders.
+ * @param chain - chain of at least four nodes holding Siders values.
+ *                If there are less than 4 nodes in the chain then the rest of
+ *                Sidesr components will be filled with latest parsed value.
+ *                If zero pointer is passed the resulting Sidesr will be filled with zeros.
+ * @return parsed Sidesr.
+ */
+morda::Sidesr makeSidesrFromSTOB(const stob::Node* chain);
 
 
 /**

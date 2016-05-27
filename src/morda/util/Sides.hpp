@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Sides.hpp
  * Author: ivan
@@ -11,10 +5,37 @@
  * Created on May 27, 2016, 5:02 PM
  */
 
-#ifndef SIDES_HPP
-#define SIDES_HPP
+#pragma once
 
+#include <kolme/Rectangle.hpp>
 
+namespace morda{
 
-#endif /* SIDES_HPP */
+template <class T> class Sides : private kolme::Rectangle<T>{
+	
+public:
+	Sides(){}
+	
+	Sides(T l, T t, T r, T b) :
+			kolme::Rectangle<T>(l, b, r, t)
+	{}
+	
+	T& left()noexcept{
+		return this->p.x;
+	}
+	
+	T& right()noexcept{
+		return this->d.x;
+	}
+	
+	T& bottom()noexcept{
+		return this->p.y;
+	}
+	
+	T& top()noexcept{
+		return this->d.y;
+	}
+	
+};
 
+}
