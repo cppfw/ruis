@@ -94,7 +94,7 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 	real mul = 1;
 	auto req = borders.begin();
 	for(auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req){
-		if(*orig <= 0){
+		if(*orig <= 0 || *req <= 0){
 			continue;
 		}
 		

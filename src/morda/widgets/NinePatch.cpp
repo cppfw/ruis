@@ -1,6 +1,7 @@
 #include "NinePatch.hpp"
 #include "../App.hpp"
 #include "../util/util.hpp"
+#include "ResizeProxy.hpp"
 
 
 using namespace morda;
@@ -10,16 +11,26 @@ namespace{
 const char* D_NinePatchLayout = R"qwertyuiop(
 		//1st row
 		TableRow{
-			ImageLabel{
-				name{morda_lt}
+			FrameContainer{
+				ImageLabel{
+					name{morda_lt}
+				}
+				ResizeProxy{
+					name{morda_resizeproxy_lt}
+				}
 			}
 
 			ImageLabel{
 				name{morda_t}
 			}
 
-			ImageLabel{
-				name{morda_rt}
+			FrameContainer{
+				ImageLabel{
+					name{morda_rt}
+				}
+				ResizeProxy{
+					name{morda_resizeproxy_rt}
+				}
 			}
 		}
 
@@ -59,16 +70,26 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 		//3rd row
 		TableRow{
-			ImageLabel{
-				name{morda_lb}
+			FrameContainer{
+				ImageLabel{
+					name{morda_lb}
+				}
+				ResizeProxy{
+					name{morda_resizeproxy_lb}
+				}
 			}
 
 			ImageLabel{
 				name{morda_b}
 			}
 
-			ImageLabel{
-				name{morda_rb}
+			FrameContainer{
+				ImageLabel{
+					name{morda_rb}
+				}
+				ResizeProxy{
+					name{morda_resizeproxy_rb}
+				}
 			}
 		}
 	)qwertyuiop";
@@ -100,23 +121,45 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	if(chain){
 		this->content_var->add(*chain);
 	}
+	
+	{
+		auto onResized = [this](const Vec2r& newSize){
+			this->updateImages();
+		};
+		
+		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lt")->resized = onResized;
+		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_rt")->resized = onResized;
+		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lb")->resized = onResized;
+		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_rb")->resized = onResized;
+	}
 }
 
 
 void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->image = np;
 	
-	this->lt->setImage(np->lt);
-	this->t->setImage(np->t);
-	this->rt->setImage(np->rt);
-	
-	this->l->setImage(np->l);
-	this->m->setImage(np->m);
-	this->r->setImage(np->r);
-	
-	this->lb->setImage(np->lb);
-	this->b->setImage(np->b);
-	this->rb->setImage(np->rb);
+	this->updateImages();
 	
 	this->clearCache();
+}
+
+void NinePatch::updateImages() {
+	auto im = this->image->get(Sidesr(
+			this->l->rect().d.x,
+			this->t->rect().d.y,
+			this->r->rect().d.x,
+			this->b->rect().d.y
+		));
+	
+	this->lt->setImage(im[0][0]);
+	this->t->setImage(im[0][1]);
+	this->rt->setImage(im[0][2]);
+	
+	this->l->setImage(im[1][0]);
+	this->m->setImage(im[1][1]);
+	this->r->setImage(im[1][2]);
+	
+	this->lb->setImage(im[2][0]);
+	this->b->setImage(im[2][1]);
+	this->rb->setImage(im[2][2]);
 }

@@ -2297,10 +2297,10 @@
             <pElem>/usr/include/c++/4.9/bits</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/containers</pElem>
-            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
-            <pElem>src/morda</pElem>
+            <pElem>/usr/include/c++/4.9/ext</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/c++/4.9/bits</pElem>
             <pElem>/usr/include/c++/4.9/debug</pElem>

@@ -18,7 +18,7 @@ class NinePatch :
 	public virtual Widget,
 	private TableContainer
 {
-	std::shared_ptr<ResNinePatch> image;//hold reference to resource to avoid data duplication
+	std::shared_ptr<ResNinePatch> image;
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
 	
@@ -36,7 +36,7 @@ public:
 		return *this->content_var;
 	}
 private:
-
+	void updateImages();
 };
 
 }
