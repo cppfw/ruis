@@ -86,7 +86,7 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 
 ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 	if(!this->image){
-		return ImageMatrix_t({{{this->lt, this->t, this->rt}, {this->l, this->m, this->r} , {this->lb, this->b, this->rb}}});
+		return ImageMatrix_t({{{{this->lt, this->t, this->rt}}, {{this->l, this->m, this->r}} , {{this->lb, this->b, this->rb}}}});
 	}
 	
 	//TODO: add caching by requested borders
