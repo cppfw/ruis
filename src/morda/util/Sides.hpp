@@ -11,7 +11,7 @@
 
 namespace morda{
 
-template <class T> class Sides : private std::array<T, 4>{
+template <class T> class Sides : public std::array<T, 4>{
 	
 public:
 	Sides(){}

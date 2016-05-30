@@ -1836,8 +1836,8 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/c++/4.9/ext</pElem>
-            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/c++/4.9</pElem>
             <pElem>/usr/include/kolme</pElem>

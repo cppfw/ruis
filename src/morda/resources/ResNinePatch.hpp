@@ -52,7 +52,8 @@ public:
 			rb(rb)
 	{}
 	
-	std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> get(Sidesr borders)const;
+	typedef std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> ImageMatrix_t;
+	ImageMatrix_t get(Sidesr borders)const;
 private:
 	static std::shared_ptr<ResNinePatch> load(const stob::Node& chain, const papki::File& fi);
 };

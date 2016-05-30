@@ -19,7 +19,18 @@ class ResSubImage : public ResImage, public ResImage::QuadTexture{
 	Vec2r dim_v;
 	
 public:
-	ResSubImage(decltype(tex) tex, const Rectr& rect);
+	//rect is a rectangle on the texture, Y axis up.
+	ResSubImage(decltype(tex) tex, Vec2r texDim, const Rectr& rect) :
+			tex(std::move(tex)),
+			dim_v(rect.d)
+	{
+		Rectr r(rect);
+		r.p.y = texDim.y - r.p.y - r.d.y;
+		this->texCoords[0] = texDim.compDiv(r.leftTop());
+		this->texCoords[1] = texDim.compDiv(r.rightTop());
+		this->texCoords[2] = texDim.compDiv(r.rightBottom());
+		this->texCoords[3] = texDim.compDiv(r.p);
+	}
 	
 	ResSubImage(const ResSubImage& orig) = delete;
 	ResSubImage& operator=(const ResSubImage& orig) = delete;
@@ -71,4 +82,31 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 	auto image = ResImage::load(fi);
 	
 	return utki::makeShared<ResNinePatch>(image, borders);
+}
+
+ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
+	if(!this->image){
+		return ImageMatrix_t({{{this->lt, this->t, this->rt}, {this->l, this->m, this->r} , {this->lb, this->b, this->rb}}});
+	}
+	
+	//TODO: add caching by requested borders
+	
+	real mul = 1;
+	auto req = borders.begin();
+	for(auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req){
+		if(*orig <= 0){
+			continue;
+		}
+		
+		if(*req > (*orig) * mul){
+			mul = *req / *orig;
+		}
+	}
+	
+	auto dim = this->image->dim() * mul;
+	
+	auto quadTex = this->image->get(dim);
+	
+	//TODO:
+	return ImageMatrix_t();
 }
