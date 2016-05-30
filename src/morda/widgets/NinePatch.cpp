@@ -16,6 +16,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_lt}
 				}
 				ResizeProxy{
+					layout{dimX{max}dimY{max}}
 					name{morda_resizeproxy_lt}
 				}
 			}
@@ -29,6 +30,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_rt}
 				}
 				ResizeProxy{
+					layout{dimX{max}dimY{max}}
 					name{morda_resizeproxy_rt}
 				}
 			}
@@ -75,6 +77,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_lb}
 				}
 				ResizeProxy{
+					layout{dimX{max}dimY{max}}
 					name{morda_resizeproxy_lb}
 				}
 			}
@@ -88,6 +91,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					name{morda_rb}
 				}
 				ResizeProxy{
+					layout{dimX{max}dimY{max}}
 					name{morda_resizeproxy_rb}
 				}
 			}
@@ -145,7 +149,7 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 
 void NinePatch::updateImages() {
 	auto im = this->image->get(Sidesr(
-			this->l->rect().d.x,
+			this->l->rect().d.x,//TODO: take from saved border spec
 			this->t->rect().d.y,
 			this->r->rect().d.x,
 			this->b->rect().d.y
