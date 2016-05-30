@@ -10,11 +10,11 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="12"
+   height="31"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="button.svg">
   <defs
      id="defs4">
@@ -49,7 +49,7 @@
        x2="83.620377"
        y2="1024.3687"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.1370274,0,0,0.85918958,-43.040756,170.13017)" />
+       gradientTransform="matrix(1.1370274,0,0,0.85918958,-43.540756,170.63012)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3816-3"
@@ -89,13 +89,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
-     inkscape:cx="63.175102"
-     inkscape:cy="23.312779"
+     inkscape:cx="53.258681"
+     inkscape:cy="16.891717"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1014"
+     inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1" />
@@ -107,7 +107,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -115,70 +115,73 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,-1021.3622)" />
   <g
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="Layer 0.5"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,-1021.3622)" />
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Layer 1.5"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,-1021.3622)" />
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,-1021.3622)" />
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer 3"
-     style="display:inline" />
+     style="display:inline"
+     transform="translate(0,-1021.3622)" />
   <g
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Layer 4"
-     style="display:inline">
-    <g
-       id="g3012">
-      <rect
-         ry="4.5468059"
-         rx="5.6851368"
-         y="1021.7622"
-         x="0.5"
-         height="29"
-         width="11"
-         id="rect3007-3-9"
-         style="fill:#766b6b;fill-opacity:1;stroke:none;display:inline" />
-      <rect
-         ry="5"
-         rx="5"
-         y="1037.3622"
-         x="0"
-         height="15"
-         width="12"
-         id="rect3007-3-9-8"
-         style="fill:#766b6b;fill-opacity:0.37647059;stroke:none;display:inline" />
-      <rect
-         ry="5"
-         rx="5"
-         y="1023.3622"
-         x="0.5"
-         height="27"
-         width="11"
-         id="rect3007"
-         style="fill:url(#linearGradient3822);fill-opacity:1;stroke:none;display:inline" />
-      <rect
-         ry="5"
-         rx="5"
-         y="1021.7604"
-         x="0.49817041"
-         height="29"
-         width="11"
-         id="rect3007-3"
-         style="fill:none;stroke:#1c1617;stroke-width:0.99634081;stroke-opacity:1;display:inline" />
-    </g>
+     style="display:inline"
+     transform="translate(0,-1021.3622)">
+    <rect
+       style="display:inline;fill:#766b6b;fill-opacity:1;stroke:none"
+       id="rect3007-3-9"
+       width="11"
+       height="15"
+       x="0.50000006"
+       y="1021.8622"
+       rx="5"
+       ry="5" />
+    <rect
+       style="display:inline;fill:#766b6b;fill-opacity:0.37647059;stroke:none"
+       id="rect3007-3-9-8"
+       width="12"
+       height="15"
+       x="0"
+       y="1037.3622"
+       rx="5"
+       ry="5" />
+    <rect
+       style="display:inline;fill:url(#linearGradient3822);fill-opacity:1;stroke:none"
+       id="rect3007"
+       width="12"
+       height="27"
+       x="0"
+       y="1023.8622"
+       rx="5"
+       ry="5" />
+    <rect
+       style="display:inline;fill:none;stroke:#1c1617;stroke-width:0.99655598;stroke-opacity:1"
+       id="rect3007-3"
+       width="11.003444"
+       height="29.003445"
+       x="0.49827799"
+       y="1021.8605"
+       rx="5.0015655"
+       ry="5.0005941" />
   </g>
 </svg>
