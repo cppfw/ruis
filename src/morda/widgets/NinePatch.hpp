@@ -35,8 +35,13 @@ public:
 	FrameContainer& content(){
 		return *this->content_var;
 	}
+	
+	void render(const morda::Matr4r& matrix) const override;
+
 private:
-	void updateImages();
+	mutable bool updateImagesNeeded = true;
+	
+	void updateImages()const;
 };
 
 }

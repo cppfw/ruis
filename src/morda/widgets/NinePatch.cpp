@@ -130,7 +130,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	{
 		auto onResized = [this](const Vec2r& newSize){
-			this->updateImages();
+			this->updateImagesNeeded = true;
 		};
 		
 		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lt")->resized = onResized;
@@ -138,6 +138,13 @@ NinePatch::NinePatch(const stob::Node* chain) :
 		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lb")->resized = onResized;
 		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_rb")->resized = onResized;
 	}
+}
+
+void NinePatch::render(const morda::Matr4r& matrix) const {
+	if(this->updateImagesNeeded){
+		this->updateImages();
+	}
+	this->TableContainer::render(matrix);
 }
 
 
@@ -149,15 +156,14 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->clearCache();
 }
 
-void NinePatch::updateImages() {
+void NinePatch::updateImages()const{
+	this->updateImagesNeeded = false;
+	
 	Sidesr borders;
 	borders.left() = this->l->parent()->getLayoutParams(*this->l).dim.x;
 	borders.right() = this->r->parent()->getLayoutParams(*this->r).dim.x;
 	borders.top() = this->t->parent()->getLayoutParams(*this->t).dim.y;
 	borders.bottom() = this->b->parent()->getLayoutParams(*this->b).dim.y;
-	for(auto& b : borders){
-		utki::clampBottom(b, 0.0f);
-	}
 	
 	auto im = this->image->get(borders);
 	

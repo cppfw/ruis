@@ -83,11 +83,10 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 }
 
 ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
+	//TODO: remove
 	if(!this->image){
 		return ImageMatrix_t({{{{this->lt, this->t, this->rt}}, {{this->l, this->m, this->r}} , {{this->lb, this->b, this->rb}}}});
 	}
-	
-	//TODO: add caching by requested borders
 	
 	real mul = 1;
 	auto req = borders.begin();
@@ -100,6 +99,8 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 			mul = *req / *orig;
 		}
 	}
+	
+	//TODO: add caching by multiplier
 	
 	auto dim = this->image->dim() * mul;
 	
