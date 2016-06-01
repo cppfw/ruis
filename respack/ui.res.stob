@@ -44,7 +44,7 @@ morda_npt_slider_handle{
 	borders{4 4 4 4}
 }
 
-morda_npt_push_button{
+morda_npt_pushbutton_normal{
 	file{button.svg}
 	borders{5 5 5 6}
 }

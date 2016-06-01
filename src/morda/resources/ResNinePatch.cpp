@@ -12,24 +12,22 @@ namespace{
 class ResSubImage : public ResImage, public ResImage::QuadTexture{
 	friend class ResImage;
 	
-	std::shared_ptr<ResImage::QuadTexture> tex;
+	std::shared_ptr<const ResImage::QuadTexture> tex;
 	
 	std::array<Vec2r, 4> texCoords;
 	
 	Vec2r dim_v;
 	
 public:
-	//rect is a rectangle on the texture, Y axis up.
-	ResSubImage(decltype(tex) tex, Vec2r texDim, const Rectr& rect) :
+	//rect is a rectangle on the texture, Y axis down.
+	ResSubImage(decltype(tex) tex, const Vec2r& texDim, const Rectr& rect) :
 			tex(std::move(tex)),
 			dim_v(rect.d)
 	{
-		Rectr r(rect);
-		r.p.y = texDim.y - r.p.y - r.d.y;
-		this->texCoords[0] = texDim.compDiv(r.leftTop());
-		this->texCoords[1] = texDim.compDiv(r.rightTop());
-		this->texCoords[2] = texDim.compDiv(r.rightBottom());
-		this->texCoords[3] = texDim.compDiv(r.p);
+		this->texCoords[0] = rect.leftTop().compDiv(texDim);
+		this->texCoords[1] = rect.rightTop().compDiv(texDim);
+		this->texCoords[2] = rect.rightBottom().compDiv(texDim);
+		this->texCoords[3] = rect.p.compDiv(texDim);
 	}
 	
 	ResSubImage(const ResSubImage& orig) = delete;
@@ -45,7 +43,7 @@ public:
 	
 	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
 		ASSERT(this->tex)
-		this->tex->render(matrix, s, texCoords);
+		this->tex->render(matrix, s, this->texCoords);
 	}
 };
 
@@ -107,6 +105,28 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 	
 	auto quadTex = this->image->get(dim);
 	
-	//TODO:
-	return ImageMatrix_t();
+	Sidesr scaledBorders(this->borders);
+	for(auto& b : scaledBorders){
+		b *= mul;
+	}
+	
+	return ImageMatrix_t(
+			{{
+				{{
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(0, 0, scaledBorders.left(), scaledBorders.top())), //left top
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), 0, dim.x - scaledBorders.left() - scaledBorders.right(), scaledBorders.top())), //top
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(dim.x - scaledBorders.right(), 0, scaledBorders.right(), scaledBorders.top())) //right top
+				}},
+				{{
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(0, scaledBorders.top(), scaledBorders.left(), dim.y - scaledBorders.top() - scaledBorders.bottom())), //left
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), scaledBorders.top(), dim.x - scaledBorders.left() - scaledBorders.right(), dim.y - scaledBorders.top() - scaledBorders.bottom())), //middle
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(dim.x - scaledBorders.right(), scaledBorders.top(), scaledBorders.right(), dim.y - scaledBorders.top() - scaledBorders.bottom())) //right
+				}},
+				{{
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(0, dim.y - scaledBorders.bottom(), scaledBorders.left(), scaledBorders.bottom())), //left bottom
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), dim.y - scaledBorders.bottom(), dim.x - scaledBorders.left() - scaledBorders.right(), scaledBorders.bottom())), //bottom
+					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(dim.x - scaledBorders.right(), dim.y - scaledBorders.bottom(), scaledBorders.right(), scaledBorders.bottom())) //right bottom
+				}}
+			}}
+		);
 }

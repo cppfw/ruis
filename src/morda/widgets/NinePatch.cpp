@@ -1,3 +1,5 @@
+#include <utki/util.hpp>
+
 #include "NinePatch.hpp"
 #include "../App.hpp"
 #include "../util/util.hpp"
@@ -148,12 +150,16 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 }
 
 void NinePatch::updateImages() {
-	auto im = this->image->get(Sidesr(
-			this->l->rect().d.x,//TODO: take from saved border spec
-			this->t->rect().d.y,
-			this->r->rect().d.x,
-			this->b->rect().d.y
-		));
+	Sidesr borders;
+	borders.left() = this->l->parent()->getLayoutParams(*this->l).dim.x;
+	borders.right() = this->r->parent()->getLayoutParams(*this->r).dim.x;
+	borders.top() = this->t->parent()->getLayoutParams(*this->t).dim.y;
+	borders.bottom() = this->b->parent()->getLayoutParams(*this->b).dim.y;
+	for(auto& b : borders){
+		utki::clampBottom(b, 0.0f);
+	}
+	
+	auto im = this->image->get(borders);
 	
 	this->lt->setImage(im[0][0]);
 	this->t->setImage(im[0][1]);

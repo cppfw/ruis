@@ -16,7 +16,7 @@ namespace morda{
  * @brief Table container.
  * It finds the maximum weight and maximum width in the column to use it in row lay outing.
  */
-class TableContainer : public  VerticalContainer{
+class TableContainer : public VerticalContainer{
 public:
 	TableContainer(const stob::Node* chain = nullptr);
 	
