@@ -13,28 +13,18 @@ namespace{
 const char* D_NinePatchLayout = R"qwertyuiop(
 		//1st row
 		TableRow{
-			FrameContainer{
-				ImageLabel{
-					name{morda_lt}
-				}
-				ResizeProxy{
-					layout{dimX{max}dimY{max}}
-					name{morda_resizeproxy_lt}
-				}
+			ImageLabel{
+				name{morda_lt}
 			}
 
 			ImageLabel{
+				layout{dimX{0}}
 				name{morda_t}
 			}
 
-			FrameContainer{
-				ImageLabel{
-					name{morda_rt}
-				}
-				ResizeProxy{
-					layout{dimX{max}dimY{max}}
-					name{morda_resizeproxy_rt}
-				}
+			ImageLabel{
+				layout{dimX{0}}
+				name{morda_rt}
 			}
 		}
 
@@ -46,7 +36,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_l}
 				layout{
-					dimY{max}
+					dimY{max}dimX{0}
 				}
 			}
 
@@ -67,35 +57,25 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			ImageLabel{
 				name{morda_r}
 				layout{
-					dimY{max}
+					dimY{max}dimX{0}
 				}
 			}
 		}
 
 		//3rd row
 		TableRow{
-			FrameContainer{
-				ImageLabel{
-					name{morda_lb}
-				}
-				ResizeProxy{
-					layout{dimX{max}dimY{max}}
-					name{morda_resizeproxy_lb}
-				}
+			ImageLabel{
+				layout{dimX{0}}
+				name{morda_lb}
 			}
 
 			ImageLabel{
+				layout{dimX{0}}
 				name{morda_b}
 			}
 
-			FrameContainer{
-				ImageLabel{
-					name{morda_rb}
-				}
-				ResizeProxy{
-					layout{dimX{max}dimY{max}}
-					name{morda_resizeproxy_rb}
-				}
+			ImageLabel{
+				name{morda_rb}
 			}
 		}
 	)qwertyuiop";
@@ -120,6 +100,31 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	this->content_var = this->findChildByNameAs<FrameContainer>("morda_content");
 	
+	if(auto n = getProperty(chain, "borderLeft")){
+		this->borders.left() = dimValueFromSTOB(*n);
+	}else{
+		this->borders.left() = LayoutParams::D_Min;
+	}
+	
+	if(auto n = getProperty(chain, "borderRight")){
+		this->borders.right() = dimValueFromSTOB(*n);
+	}else{
+		this->borders.right() = LayoutParams::D_Min;
+	}
+	
+	if(auto n = getProperty(chain, "borderTop")){
+		this->borders.top() = dimValueFromSTOB(*n);
+	}else{
+		this->borders.top() = LayoutParams::D_Min;
+	}
+	
+	if(auto n = getProperty(chain, "borderBottom")){
+		this->borders.bottom() = dimValueFromSTOB(*n);
+	}else{
+		this->borders.bottom() = LayoutParams::D_Min;
+	}
+	
+	//this should go after setting borders
 	if(const stob::Node* n = getProperty(chain, "image")){
 		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
 	}
@@ -127,23 +132,9 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	if(chain){
 		this->content_var->add(*chain);
 	}
-	
-	{
-		auto onResized = [this](const Vec2r& newSize){
-			this->updateImagesNeeded = true;
-		};
-		
-		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lt")->resized = onResized;
-		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_rt")->resized = onResized;
-		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_lb")->resized = onResized;
-		this->findChildByNameAs<ResizeProxy>("morda_resizeproxy_rb")->resized = onResized;
-	}
 }
 
 void NinePatch::render(const morda::Matr4r& matrix) const {
-	if(this->updateImagesNeeded){
-		this->updateImages();
-	}
 	this->TableContainer::render(matrix);
 }
 
@@ -151,21 +142,46 @@ void NinePatch::render(const morda::Matr4r& matrix) const {
 void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->image = np;
 	
-	this->updateImages();
+	this->applyImages();
 	
 	this->clearCache();
 }
 
-void NinePatch::updateImages()const{
-	this->updateImagesNeeded = false;
+void NinePatch::applyImages(){
+	auto& minBorders = this->image->getBorders();
+	TRACE(<< "minBorders = " << minBorders << std::endl)
 	
-	Sidesr borders;
-	borders.left() = this->l->parent()->getLayoutParams(*this->l).dim.x;
-	borders.right() = this->r->parent()->getLayoutParams(*this->r).dim.x;
-	borders.top() = this->t->parent()->getLayoutParams(*this->t).dim.y;
-	borders.bottom() = this->b->parent()->getLayoutParams(*this->b).dim.y;
-	
-	auto im = this->image->get(borders);
+	{
+		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
+		
+		lp.dim.x = this->borders.left();
+		if(lp.dim.x == LayoutParams::D_Min){
+			lp.dim.x = minBorders.left();
+		}
+		
+		lp.dim.y = this->borders.top();
+		if(lp.dim.y == LayoutParams::D_Min){
+			lp.dim.y = minBorders.top();
+		}
+		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+	}
+	{
+		auto& lp = this->rb->parent()->getLayoutParams(*this->rb);
+		
+		lp.dim.x = this->borders.right();
+		if(lp.dim.x == LayoutParams::D_Min){
+			lp.dim.x = minBorders.right();
+		}
+		
+		lp.dim.y = this->borders.bottom();
+		if(lp.dim.y == LayoutParams::D_Min){
+			lp.dim.y = minBorders.bottom();
+		}
+		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+	}
+	TRACE(<< "this->borders = " << this->borders << std::endl)
+			
+	auto im = this->image->get(this->borders);
 	
 	this->lt->setImage(im[0][0]);
 	this->t->setImage(im[0][1]);

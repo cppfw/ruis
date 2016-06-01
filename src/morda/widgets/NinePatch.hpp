@@ -4,11 +4,13 @@
 
 #pragma once
 
+#include "../util/Sides.hpp"
+
+#include "../resources/ResNinePatch.hpp"
 
 #include "containers/FrameContainer.hpp"
 #include "containers/TableContainer.hpp"
 
-#include "../resources/ResNinePatch.hpp"
 #include "labels/ImageLabel.hpp"
 
 namespace morda{
@@ -19,6 +21,8 @@ class NinePatch :
 	private TableContainer
 {
 	std::shared_ptr<ResNinePatch> image;
+	
+	Sidesr borders;
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
 	
@@ -38,10 +42,17 @@ public:
 	
 	void render(const morda::Matr4r& matrix) const override;
 
-private:
-	mutable bool updateImagesNeeded = true;
+	decltype(borders) getBorders()const noexcept{
+		return this->borders;
+	}
 	
-	void updateImages()const;
+	void setBorders(Sidesr borders){
+		this->borders = borders;
+		this->applyImages();
+	}
+	
+private:
+	void applyImages();
 };
 
 }

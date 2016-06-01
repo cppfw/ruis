@@ -20,7 +20,7 @@ class ResNinePatch : public Resource{
 	Sidesr borders;
 	
 public:
-	const std::shared_ptr<ResImage> lt, t, rt, l, m, r, lb, b, rb;//TODO: make private
+	const std::shared_ptr<ResImage> lt, t, rt, l, m, r, lb, b, rb;//TODO: remove
 	
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
@@ -54,6 +54,10 @@ public:
 	
 	typedef std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> ImageMatrix_t;
 	ImageMatrix_t get(Sidesr borders)const;
+	
+	const decltype(borders)& getBorders()const noexcept{
+		return this->borders;
+	}
 private:
 	static std::shared_ptr<ResNinePatch> load(const stob::Node& chain, const papki::File& fi);
 };

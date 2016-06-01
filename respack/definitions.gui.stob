@@ -20,7 +20,9 @@ templates{
 		}
 	}
 
-	PushButton NinePatchButton
+	PushButton NinePatchButton{
+		borderLeft{5mm}
+	}
 
 	Background FrameContainer{
 		layout{dimX{max} dimY{max}}

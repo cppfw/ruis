@@ -12,7 +12,7 @@ namespace morda{
 
 class NinePatchButton :
 		public PushButton,
-		private NinePatch
+		public NinePatch
 {
 	std::shared_ptr<ResNinePatch> imgNormal;
 	std::shared_ptr<ResNinePatch> imgPressed;
