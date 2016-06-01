@@ -82,9 +82,9 @@ void TableContainer::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 			}
 			
 			ASSERT(lpptr)
-			lpptr->modifiedParams.dim.x = maxDimX;
-			lpptr->modifiedParams.dim.y = lpptr->dim.y;
-			lpptr->modifiedParams.weight = maxWeight;
+			lpptr->processedParams.dim.x = maxDimX;
+			lpptr->processedParams.dim.y = lpptr->dim.y;
+			lpptr->processedParams.weight = maxWeight;
 			++iter;
 		}
 	}

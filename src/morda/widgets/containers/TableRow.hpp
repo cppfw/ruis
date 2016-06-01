@@ -17,16 +17,16 @@ public:
 	TableRow(const TableRow&) = delete;
 	TableRow& operator=(const TableRow&) = delete;
 	
+protected:
 	class LayoutParams : public HorizontalContainer::LayoutParams{
 		friend class TableRow;
 		friend class TableContainer;
 		
-		HorizontalContainer::LayoutParams modifiedParams;
+		HorizontalContainer::LayoutParams processedParams;
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};
 	
-protected:
 	Widget::LayoutParams& getLayoutParams_internal(Widget& w) override;
 
 private:

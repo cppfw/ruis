@@ -12,7 +12,7 @@ TableRow::TableRow(const stob::Node* chain) :
 
 TableRow::LayoutParams::LayoutParams(const stob::Node* chain) :
 		HorizontalContainer::LayoutParams(chain),
-		modifiedParams(nullptr)
+		processedParams(nullptr)
 {}
 
 
@@ -24,7 +24,7 @@ Widget::LayoutParams& TableRow::getLayoutParams_internal(Widget& w){
 		throw morda::Exc("TableRow: layout parameters can only be of type TableRow::LayoutParams, other type found");
 	}
 	
-	return lp->modifiedParams;
+	return lp->processedParams;
 }
 
 
