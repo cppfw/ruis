@@ -104,8 +104,9 @@ morda::Vec2r TableContainer::measure(const morda::Vec2r& quotum) const{
 }
 
 
-Widget::LayoutParams& TableContainer::getLayoutParams_internal(Widget& w){
-	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::getLayoutParams_internal(w));
+
+Widget::LayoutParams& TableContainer::getLayoutParamsDuringLayout(Widget& w){
+	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::getLayoutParams(w));
 	
 	layoutParams.dim.x = LayoutParams::D_Max;
 	

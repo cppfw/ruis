@@ -20,7 +20,7 @@ public:
 	BlackHoleContainer(const BlackHoleContainer&) = delete;
 	BlackHoleContainer& operator=(const BlackHoleContainer&) = delete;
 	
-	Vec2r measure(const morda::Vec2r& constraint)const override;
+	Vec2r measure(const morda::Vec2r& quotum)const override;
 	
 	void setShrink(kolme::Vec2b shrink){
 		this->shrink = shrink;

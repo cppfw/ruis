@@ -17,8 +17,8 @@ TableRow::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 
 
-Widget::LayoutParams& TableRow::getLayoutParams_internal(Widget& w){
-	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::getLayoutParams_internal(w));
+Widget::LayoutParams& TableRow::getLayoutParamsDuringLayout(Widget& w){
+	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::getLayoutParams(w));
 	
 	if(!lp){
 		throw morda::Exc("TableRow: layout parameters can only be of type TableRow::LayoutParams, other type found");
@@ -30,7 +30,7 @@ Widget::LayoutParams& TableRow::getLayoutParams_internal(Widget& w){
 
 
 TableRow::LayoutParams& TableRow::getTableRowLayoutParams(Widget& w) {
-	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::getLayoutParams_internal(w));
+	auto lp = dynamic_cast<LayoutParams*>(&this->HorizontalContainer::getLayoutParams(w));
 	if(!lp){
 		throw morda::Exc("TableRow: layout parameters can only be of type TableRow::LayoutParams, other type found");
 	}

@@ -36,9 +36,19 @@ Container::Container(const stob::Node* chain) :
 	}
 }
 
+Widget::LayoutParams& Container::getLayoutParams(Widget& w){
+	this->setRelayoutNeeded();
+	
+	auto& lp = const_cast<std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type>(this)->getLayoutParams(w);
+	
+	return const_cast<std::add_lvalue_reference<std::remove_const<std::remove_reference<decltype(lp)>::type>::type>::type>(lp);
+}
 
-
-Widget::LayoutParams& Container::getLayoutParams_internal(Widget& w){
+const Widget::LayoutParams& Container::getLayoutParams(Widget& w)const{
+	if(w.parent() && w.parent() != this){
+		throw morda::Exc("Container::getLayoutParams(): the widget is added to another container");
+	}
+	
 	if(!w.layoutParams){
 		w.layoutParams = this->createLayoutParams(w.layout.get());
 	}
@@ -46,6 +56,11 @@ Widget::LayoutParams& Container::getLayoutParams_internal(Widget& w){
 	return *w.layoutParams;
 }
 
+
+
+Widget::LayoutParams& Container::getLayoutParamsDuringLayout(Widget& w){
+	return this->getLayoutParams(w);
+}
 
 
 void Container::add(const stob::Node& chain){

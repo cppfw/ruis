@@ -35,36 +35,32 @@ protected:
 		return utki::makeUnique<Widget::LayoutParams>(chain);
 	}
 	
-	virtual LayoutParams& getLayoutParams_internal(Widget& w);
+	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 	
-	const LayoutParams& getLayoutParams_internal(const Widget& w)const{
-		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParams_internal(
+protected:
+	virtual LayoutParams& getLayoutParamsDuringLayout(Widget& w);
+	
+	const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const{
+		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParamsDuringLayout(
 				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
 			);
 	}
 	
-	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->getLayoutParams_internal(w));
+	template <class T> const T& getLayoutParamsDuringLayoutAs(const Widget& w)const{
+		auto p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
 		if(!p){
 			w.layoutParams.reset();
-			p = dynamic_cast<const T*>(&this->getLayoutParams_internal(w));
+			p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
 		}
 		
 		ASSERT(p)
 		return *p;
 	}
 	
-	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
-	
 public:
-	LayoutParams& getLayoutParams(Widget& w){
-		if(w.parent() != this){
-			throw Exc("Container::getLayoutParams(): the widget is not added to this container");
-		}		
-		this->setRelayoutNeeded();
-		return this->getLayoutParams_internal(w);
-	}
+	LayoutParams& getLayoutParams(Widget& w);
 	
+	const LayoutParams& getLayoutParams(Widget& w)const;
 	
 public:
 	Container(const stob::Node* chain = nullptr);

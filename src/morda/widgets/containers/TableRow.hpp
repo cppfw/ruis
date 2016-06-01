@@ -26,9 +26,10 @@ protected:
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};
-	
-	Widget::LayoutParams& getLayoutParams_internal(Widget& w) override;
 
+	Widget::LayoutParams& getLayoutParamsDuringLayout(Widget& w) override;
+
+	
 private:
 	std::unique_ptr<Widget::LayoutParams> createLayoutParams(const stob::Node* chain)const override{
 		return utki::makeUnique<LayoutParams>(chain);

@@ -17,14 +17,20 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				name{morda_lt}
 			}
 
-			ImageLabel{
-				layout{dimX{0}}
-				name{morda_t}
+			BlackHoleContainer{
+				layout{dimX{0}dimY{max}}
+				ImageLabel{
+					layout{dimX{max}dimY{max}}
+					name{morda_t}
+				}
 			}
 
-			ImageLabel{
-				layout{dimX{0}}
-				name{morda_rt}
+			BlackHoleContainer{
+				layout{dimX{0}dimY{max}}
+				ImageLabel{
+					layout{dimX{max}dimY{max}}
+					name{morda_rt}
+				}
 			}
 		}
 
@@ -33,10 +39,11 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			layout{
 				weight{1}
 			}
-			ImageLabel{
-				name{morda_l}
-				layout{
-					dimY{max}dimX{0}
+			BlackHoleContainer{
+				layout{dimY{max}dimX{0}}
+				ImageLabel{
+					name{morda_l}
+					layout{dimY{max}dimX{max}}
 				}
 			}
 
@@ -46,32 +53,40 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					weight{1}
 					dimY{max}
 				}
-				ImageLabel{
-					name{morda_m}
-					layout{
-						dimX{max} dimY{max}
+				BlackHoleContainer{
+					layout{dimX{max} dimY{max}}
+					ImageLabel{
+						name{morda_m}
+						layout{dimX{max} dimY{max}}
 					}
 				}
 			}
 
-			ImageLabel{
-				name{morda_r}
-				layout{
-					dimY{max}dimX{0}
+			BlackHoleContainer{
+				layout{dimY{max}dimX{0}}
+				ImageLabel{
+					name{morda_r}
+					layout{dimY{max}dimX{max}}
 				}
 			}
 		}
 
 		//3rd row
 		TableRow{
-			ImageLabel{
-				layout{dimX{0}}
-				name{morda_lb}
+			BlackHoleContainer{
+				layout{dimY{max}dimX{0}}
+				ImageLabel{
+					layout{dimX{max}dimY{max}}
+					name{morda_lb}
+				}
 			}
 
-			ImageLabel{
-				layout{dimX{0}}
-				name{morda_b}
+			BlackHoleContainer{
+				layout{dimY{max}dimX{0}}
+				ImageLabel{
+					layout{dimX{max}dimY{max}}
+					name{morda_b}
+				}
 			}
 
 			ImageLabel{
@@ -149,7 +164,7 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 
 void NinePatch::applyImages(){
 	auto& minBorders = this->image->getBorders();
-	TRACE(<< "minBorders = " << minBorders << std::endl)
+//	TRACE(<< "minBorders = " << minBorders << std::endl)
 	
 	{
 		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
@@ -163,7 +178,7 @@ void NinePatch::applyImages(){
 		if(lp.dim.y == LayoutParams::D_Min){
 			lp.dim.y = minBorders.top();
 		}
-		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+//		TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}
 	{
 		auto& lp = this->rb->parent()->getLayoutParams(*this->rb);
@@ -177,9 +192,9 @@ void NinePatch::applyImages(){
 		if(lp.dim.y == LayoutParams::D_Min){
 			lp.dim.y = minBorders.bottom();
 		}
-		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+//		TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}
-	TRACE(<< "this->borders = " << this->borders << std::endl)
+//	TRACE(<< "this->borders = " << this->borders << std::endl)
 			
 	auto im = this->image->get(this->borders);
 	

@@ -15,7 +15,7 @@ FrameContainer::FrameContainer(const stob::Node* chain) :
 void FrameContainer::layOut() {
 //	TRACE(<< "FrameContainer::layOut(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
+		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(**i);
 		
 		(*i)->resize(this->dimForWidget(**i, lp));
 		
@@ -32,7 +32,7 @@ morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
 	}
 	
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
+		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(**i);
 		
 		morda::Vec2r d;
 		

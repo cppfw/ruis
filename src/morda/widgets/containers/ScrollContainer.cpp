@@ -90,7 +90,7 @@ void ScrollContainer::updateScrollFactor(){
 
 void ScrollContainer::arrangeWidgets() {
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
+		auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(**i);
 		
 		auto d = this->dimForWidget(**i, lp);
 		
@@ -133,7 +133,7 @@ void ScrollContainer::updateEffectiveDim(){
 	morda::Vec2r minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
+		auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(**i);
 
 		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
 		

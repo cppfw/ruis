@@ -23,15 +23,15 @@ BlackHoleContainer::BlackHoleContainer(const stob::Node* chain) :
 	}
 }
 
-Vec2r BlackHoleContainer::measure(const morda::Vec2r& constraint) const {
+Vec2r BlackHoleContainer::measure(const morda::Vec2r& quotum) const {
 	if(this->shrink.x && this->shrink.y){
-		return this->Widget::measure(constraint);
+		return this->Widget::measure(quotum);
 	}
 	
-	Vec2r ret = this->FrameContainer::measure(constraint);
+	Vec2r ret = this->FrameContainer::measure(quotum);
 	
 	for(unsigned i = 0; i != ret.size(); ++i){
-		if(this->shrink[i] && constraint[i] < 0){
+		if(this->shrink[i] && quotum[i] < 0){
 			ret[i] = 0;
 		}
 	}
