@@ -135,6 +135,8 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	
 	auto quadTex = this->image->get(dim);
 	
+	//TODO: get actual dim of returned texture
+	
 	Sidesr scaledBorders(this->borders);
 	for(auto& b : scaledBorders){
 		b *= mul;
