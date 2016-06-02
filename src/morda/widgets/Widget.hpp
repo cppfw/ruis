@@ -41,8 +41,23 @@ public:
 public:
 	class LayoutParams : public utki::Unique{
 	public:
+		/**
+		 * @brief Requests minimal dimensions of the widget.
+		 * The widget will always be given minimal space it needs to properly draw.
+		 */
 		constexpr static const real D_Min = real(-1);
+		
+		/**
+		 * @brief Requests minimal or bigger dimensions of widget.
+		 * The widget will be given at least minimal space it needs to properly draw.
+		 */
 		constexpr static const real D_Max = real(-2);
+		
+		/**
+		 * @brief Requests widget to be same size as its parent.
+		 * Minimal size of the widget is assumed to be 0.
+		 */
+		constexpr static const real D_Fill = real(-3);
 		
 		LayoutParams(Vec2r dim = Vec2r(D_Min)) :
 				dim(dim)
@@ -264,6 +279,12 @@ public:
      */
 	virtual void onParentChanged(){}
 	
+	/**
+	 * @brief Measure how big a widget wants to be.
+	 * Given the given space determine what dimensions widget wants to have to properly draw.
+	 * @param quotum - space available to widget. If value is negative then a minimum size needed for proper widget draw possible is assumed.
+	 * @return Measured desired widget dimensions.
+	 */
 	virtual morda::Vec2r measure(const morda::Vec2r& quotum)const;
 	
 public:

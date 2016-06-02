@@ -17,20 +17,14 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				name{morda_lt}
 			}
 
-			BlackHoleContainer{
-				layout{dimX{0}dimY{max}}
-				ImageLabel{
-					layout{dimX{max}dimY{max}}
-					name{morda_t}
-				}
+			ImageLabel{
+				layout{dimX{0}dimY{fill}}
+				name{morda_t}
 			}
 
-			BlackHoleContainer{
-				layout{dimX{0}dimY{max}}
-				ImageLabel{
-					layout{dimX{max}dimY{max}}
-					name{morda_rt}
-				}
+			ImageLabel{
+				layout{dimX{0}dimY{fill}}
+				name{morda_rt}
 			}
 		}
 
@@ -39,12 +33,10 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 			layout{
 				weight{1}
 			}
-			BlackHoleContainer{
-				layout{dimY{max}dimX{0}}
-				ImageLabel{
-					name{morda_l}
-					layout{dimY{max}dimX{max}}
-				}
+			
+			ImageLabel{
+				name{morda_l}
+				layout{dimX{0}dimY{fill}}
 			}
 
 			FrameContainer{
@@ -53,40 +45,28 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 					weight{1}
 					dimY{max}
 				}
-				BlackHoleContainer{
-					layout{dimX{max} dimY{max}}
-					ImageLabel{
-						name{morda_m}
-						layout{dimX{max} dimY{max}}
-					}
+
+				ImageLabel{
+					name{morda_m}
+					layout{dimX{fill}dimY{fill}}
 				}
 			}
-
-			BlackHoleContainer{
-				layout{dimY{max}dimX{0}}
-				ImageLabel{
-					name{morda_r}
-					layout{dimY{max}dimX{max}}
-				}
+			ImageLabel{
+				name{morda_r}
+				layout{dimX{0}dimY{fill}}
 			}
 		}
 
 		//3rd row
 		TableRow{
-			BlackHoleContainer{
-				layout{dimY{max}dimX{0}}
-				ImageLabel{
-					layout{dimX{max}dimY{max}}
-					name{morda_lb}
-				}
+			ImageLabel{
+				layout{dimX{0}dimY{fill}}
+				name{morda_lb}
 			}
 
-			BlackHoleContainer{
-				layout{dimY{max}dimX{0}}
-				ImageLabel{
-					layout{dimX{max}dimY{max}}
-					name{morda_b}
-				}
+			ImageLabel{
+				layout{dimX{0}dimY{fill}}
+				name{morda_b}
 			}
 
 			ImageLabel{

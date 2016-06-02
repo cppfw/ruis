@@ -79,6 +79,8 @@ real dimValueFromLayoutStob(const stob::Node& n){
 		return Widget::LayoutParams::D_Min;
 	}else if(n == "max"){
 		return Widget::LayoutParams::D_Max;
+	}else if(n == "fill"){
+		return Widget::LayoutParams::D_Fill;
 	}
 	return dimValueFromSTOB(n);
 }

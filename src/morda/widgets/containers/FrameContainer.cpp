@@ -43,8 +43,14 @@ morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
 				}else{
 					d[j] = -1;
 				}
-			}else if(lp.dim[j] == LayoutParams::D_Min || lp.dim[j] < 0){
+			}else if(lp.dim[j] == LayoutParams::D_Min){
 				d[j] = -1;
+			}else if(lp.dim[j] == LayoutParams::D_Fill){
+				if(quotum[j] >= 0){
+					d[j] = quotum[j];
+				}else{
+					d[j] = 0;
+				}
 			}else{
 				d[j] = lp.dim[j];
 			}

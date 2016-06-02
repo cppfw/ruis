@@ -331,10 +331,10 @@ std::shared_ptr<Widget> Container::findChildByName(const std::string& name)noexc
 Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dim[i] == LayoutParams::D_Max){
+		if(lp.dim[i] == LayoutParams::D_Max || lp.dim[i] == LayoutParams::D_Fill){
 			d[i] = this->rect().d[i];
-		}else if(lp.dim[i] == LayoutParams::D_Min || lp.dim[i] < 0){
-			d[i] = -1;
+		}else if(lp.dim[i] == LayoutParams::D_Min){
+			d[i] = -1; //will be updated later below
 		}else{
 			d[i] = lp.dim[i];
 		}
@@ -346,7 +346,6 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 				d[i] = md[i];
 			}
 		}
-		return d;
 	}
 	return d;
 }
