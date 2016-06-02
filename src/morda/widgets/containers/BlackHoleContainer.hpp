@@ -8,7 +8,7 @@
 
 namespace morda{
 
-
+//TODO: not needed anymore since there is Fill. Remove?
 /**
  * @brief Container which makes minimal size to be zero.
  */
