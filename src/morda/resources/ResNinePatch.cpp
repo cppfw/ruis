@@ -61,6 +61,7 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 		auto borders = makeRectrFromSTOB(&chain.side("borders").up());
 
 		return utki::makeShared<ResNinePatch>(
+				Sidesr(borders.p.x, borders.p.y, borders.d.x, borders.d.y),
 				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p, borders.p)), //lt
 				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x + borders.p.x, rect.p.y, rect.d.x - borders.p.x - borders.d.x, borders.p.y)), //t
 				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.right() - borders.d.x, rect.p.y, borders.d.x, borders.p.y)), //rt

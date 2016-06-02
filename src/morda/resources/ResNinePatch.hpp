@@ -31,6 +31,7 @@ public:
 	{}
 	
 	ResNinePatch(
+			Sidesr borders,
 			const std::shared_ptr<ResImage>& lt,
 			const std::shared_ptr<ResImage>& t,
 			const std::shared_ptr<ResImage>& rt,
@@ -41,6 +42,7 @@ public:
 			const std::shared_ptr<ResImage>& b,
 			const std::shared_ptr<ResImage>& rb
 		) :
+			borders(borders),
 			lt(lt),
 			t(t),
 			rt(rt),
