@@ -136,6 +136,7 @@ void NinePatch::render(const morda::Matr4r& matrix) const {
 
 void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->image = np;
+	this->scaledImage.reset();
 	
 	this->applyImages();
 	
@@ -176,17 +177,17 @@ void NinePatch::applyImages(){
 	}
 //	TRACE(<< "this->borders = " << this->borders << std::endl)
 			
-	auto im = this->image->get(this->borders);
+	this->scaledImage = this->image->get(this->borders);
 	
-	this->lt->setImage(im[0][0]);
-	this->t->setImage(im[0][1]);
-	this->rt->setImage(im[0][2]);
+	this->lt->setImage((*this->scaledImage)[0][0]);
+	this->t->setImage((*this->scaledImage)[0][1]);
+	this->rt->setImage((*this->scaledImage)[0][2]);
 	
-	this->l->setImage(im[1][0]);
-	this->m->setImage(im[1][1]);
-	this->r->setImage(im[1][2]);
+	this->l->setImage((*this->scaledImage)[1][0]);
+	this->m->setImage((*this->scaledImage)[1][1]);
+	this->r->setImage((*this->scaledImage)[1][2]);
 	
-	this->lb->setImage(im[2][0]);
-	this->b->setImage(im[2][1]);
-	this->rb->setImage(im[2][2]);
+	this->lb->setImage((*this->scaledImage)[2][0]);
+	this->b->setImage((*this->scaledImage)[2][1]);
+	this->rb->setImage((*this->scaledImage)[2][2]);
 }

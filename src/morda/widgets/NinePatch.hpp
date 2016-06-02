@@ -22,6 +22,8 @@ class NinePatch :
 {
 	std::shared_ptr<ResNinePatch> image;
 	
+	std::shared_ptr<ResNinePatch::ImageMatrix> scaledImage;
+	
 	Sidesr borders;
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;

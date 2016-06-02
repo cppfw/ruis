@@ -54,13 +54,29 @@ public:
 			rb(rb)
 	{}
 	
-	typedef std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> ImageMatrix_t;
-	ImageMatrix_t get(Sidesr borders)const;
+	class ImageMatrix :
+			public std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>,
+			public utki::Shared
+	{
+		friend class ResNinePatch;
+		
+		std::weak_ptr<const ResNinePatch> parent;
+	
+		real mul;//for erasing from the cache
+	public:
+		ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul);
+		
+		~ImageMatrix()noexcept;
+	};
+	
+	std::shared_ptr<ImageMatrix> get(Sidesr borders)const;
 	
 	const decltype(borders)& getBorders()const noexcept{
 		return this->borders;
 	}
 private:
+	mutable std::map<real, std::weak_ptr<ImageMatrix>> cache;
+	
 	static std::shared_ptr<ResNinePatch> load(const stob::Node& chain, const papki::File& fi);
 };
 

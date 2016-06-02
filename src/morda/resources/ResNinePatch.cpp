@@ -83,10 +83,31 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 	return utki::makeShared<ResNinePatch>(image, borders);
 }
 
-ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
+ResNinePatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul) :
+		std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>(l),
+		parent(parent),
+		mul(mul)
+{}
+
+ResNinePatch::ImageMatrix::~ImageMatrix()noexcept{
+	if(auto p = this->parent.lock()){		
+		p->cache.erase(this->mul);
+	}
+}
+
+
+std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) const {
 	//TODO: remove
 	if(!this->image){
-		return ImageMatrix_t({{{{this->lt, this->t, this->rt}}, {{this->l, this->m, this->r}} , {{this->lb, this->b, this->rb}}}});
+		return utki::makeShared<ImageMatrix>(
+				std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>({{
+					{{this->lt, this->t, this->rt}},
+					{{this->l, this->m, this->r}},
+					{{this->lb, this->b, this->rb}}
+				}}),
+				this->sharedFromThis(this),
+				real(1)
+			);
 	}
 	
 	real mul = 1;
@@ -101,7 +122,14 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 		}
 	}
 	
-	//TODO: add caching by multiplier
+	{
+		auto i = this->cache.find(mul);
+		if(i != this->cache.end()){
+			if(auto r = i->second.lock()){
+				return r;
+			}
+		}
+	}
 	
 	auto dim = this->image->dim() * mul;
 	
@@ -112,8 +140,8 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 		b *= mul;
 	}
 	
-	return ImageMatrix_t(
-			{{
+	auto ret = utki::makeShared<ImageMatrix>(
+			std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>({{
 				{{
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(0, 0, scaledBorders.left(), scaledBorders.top())), //left top
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), 0, dim.x - scaledBorders.left() - scaledBorders.right(), scaledBorders.top())), //top
@@ -129,6 +157,11 @@ ResNinePatch::ImageMatrix_t ResNinePatch::get(Sidesr borders) const {
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), dim.y - scaledBorders.bottom(), dim.x - scaledBorders.left() - scaledBorders.right(), scaledBorders.bottom())), //bottom
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(dim.x - scaledBorders.right(), dim.y - scaledBorders.bottom(), scaledBorders.right(), scaledBorders.bottom())) //right bottom
 				}}
-			}}
+			}}),
+			this->sharedFromThis(this),
+			mul
 		);
+	
+	this->cache[mul] = ret;
+	return ret;
 }
