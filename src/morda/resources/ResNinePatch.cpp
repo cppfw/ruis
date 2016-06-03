@@ -84,7 +84,7 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 }
 
 ResNinePatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul) :
-		std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>(l),
+		images_v(l),
 		parent(parent),
 		mul(mul)
 {}

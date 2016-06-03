@@ -179,15 +179,15 @@ void NinePatch::applyImages(){
 			
 	this->scaledImage = this->image->get(this->borders);
 	
-	this->lt->setImage((*this->scaledImage)[0][0]);
-	this->t->setImage((*this->scaledImage)[0][1]);
-	this->rt->setImage((*this->scaledImage)[0][2]);
+	this->lt->setImage(this->scaledImage->images()[0][0]);
+	this->t->setImage(this->scaledImage->images()[0][1]);
+	this->rt->setImage(this->scaledImage->images()[0][2]);
 	
-	this->l->setImage((*this->scaledImage)[1][0]);
-	this->m->setImage((*this->scaledImage)[1][1]);
-	this->r->setImage((*this->scaledImage)[1][2]);
+	this->l->setImage(this->scaledImage->images()[1][0]);
+	this->m->setImage(this->scaledImage->images()[1][1]);
+	this->r->setImage(this->scaledImage->images()[1][2]);
 	
-	this->lb->setImage((*this->scaledImage)[2][0]);
-	this->b->setImage((*this->scaledImage)[2][1]);
-	this->rb->setImage((*this->scaledImage)[2][2]);
+	this->lb->setImage(this->scaledImage->images()[2][0]);
+	this->b->setImage(this->scaledImage->images()[2][1]);
+	this->rb->setImage(this->scaledImage->images()[2][2]);
 }

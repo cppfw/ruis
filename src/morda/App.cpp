@@ -186,6 +186,7 @@ App::ResMan::ResMan(){
 //			TRACE(<< "s = " << s << std::endl)
 			auto fi = morda::App::inst().createResourceFileInterface(s);
 			ASSERT(fi)
+//			TRACE(<< "fi->path() = " << fi->path() << std::endl)
 			this->mountResPack(*fi);
 		}catch(papki::Exc& e){
 			continue;

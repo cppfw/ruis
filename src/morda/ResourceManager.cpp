@@ -18,6 +18,7 @@ const char* D_Include = "include";
 
 void ResourceManager::mountResPack(const papki::File& fi){
 	ASSERT(!fi.isOpened())
+//	TRACE(<< "fi->path() = " << fi.path() << std::endl)
 	
 	std::string dir = fi.dir();
 	

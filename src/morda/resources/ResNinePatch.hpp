@@ -54,16 +54,17 @@ public:
 			rb(rb)
 	{}
 	
-	class ImageMatrix :
-			public std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>,
-			public utki::Shared
-	{
-		friend class ResNinePatch;
+	class ImageMatrix :	virtual public utki::Shared{
+		const std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> images_v;
 		
 		std::weak_ptr<const ResNinePatch> parent;
 	
 		real mul;//for erasing from the cache
 	public:
+		decltype(images_v)& images()const noexcept{
+			return this->images_v;
+		}
+		
 		ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul);
 		
 		~ImageMatrix()noexcept;
