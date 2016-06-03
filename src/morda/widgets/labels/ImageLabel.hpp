@@ -15,7 +15,7 @@ class ImageLabel : public virtual Widget{
 	ImageLabel(const ImageLabel&);
 	ImageLabel& operator=(const ImageLabel&);
 	
-	std::shared_ptr<morda::ResImage> img;
+	std::shared_ptr<const morda::ResImage> img;
 	
 	mutable std::shared_ptr<const morda::ResImage::QuadTexture> scaledImage;
 	
@@ -32,7 +32,7 @@ public:
 
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 	
-	void setImage(const std::shared_ptr<ResImage>& image);
+	void setImage(const std::shared_ptr<const ResImage>& image);
 	
 	void onResize() override;
 	

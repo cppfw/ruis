@@ -83,7 +83,7 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const 
 	return utki::makeShared<ResNinePatch>(image, borders);
 }
 
-ResNinePatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul) :
+ResNinePatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul) :
 		images_v(l),
 		parent(parent),
 		mul(mul)
@@ -100,7 +100,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	//TODO: remove
 	if(!this->image){
 		return utki::makeShared<ImageMatrix>(
-				std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>({{
+				std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
 					{{this->lt, this->t, this->rt}},
 					{{this->l, this->m, this->r}},
 					{{this->lb, this->b, this->rb}}
@@ -143,7 +143,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	}
 	
 	auto ret = utki::makeShared<ImageMatrix>(
-			std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>({{
+			std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
 				{{
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(0, 0, scaledBorders.left(), scaledBorders.top())), //left top
 					utki::makeShared<ResSubImage>(quadTex, dim, Rectr(scaledBorders.left(), 0, dim.x - scaledBorders.left() - scaledBorders.right(), scaledBorders.top())), //top

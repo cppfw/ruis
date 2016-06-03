@@ -20,7 +20,7 @@ class ResNinePatch : public Resource{
 	Sidesr borders;
 	
 public:
-	const std::shared_ptr<ResImage> lt, t, rt, l, m, r, lb, b, rb;//TODO: remove
+	const std::shared_ptr<const ResImage> lt, t, rt, l, m, r, lb, b, rb;//TODO: remove
 	
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
@@ -55,7 +55,7 @@ public:
 	{}
 	
 	class ImageMatrix :	virtual public utki::Shared{
-		const std::array<std::array<std::shared_ptr<ResImage>, 3>, 3> images_v;
+		const std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3> images_v;
 		
 		std::weak_ptr<const ResNinePatch> parent;
 	
@@ -65,7 +65,7 @@ public:
 			return this->images_v;
 		}
 		
-		ImageMatrix(std::array<std::array<std::shared_ptr<ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul);
+		ImageMatrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul);
 		
 		~ImageMatrix()noexcept;
 	};
