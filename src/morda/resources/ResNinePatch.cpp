@@ -111,14 +111,16 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	}
 	
 	real mul = 1;
-	auto req = borders.begin();
-	for(auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req){
-		if(*orig <= 0 || *req <= 0){
-			continue;
-		}
-		
-		if(*req > (*orig) * mul){
-			mul = *req / *orig;
+	{
+		auto req = borders.begin();
+		for(auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req){
+			if(*orig <= 0 || *req <= 0){
+				continue;
+			}
+
+			if(*req > (*orig) * mul){
+				mul = *req / *orig;
+			}
 		}
 	}
 	
