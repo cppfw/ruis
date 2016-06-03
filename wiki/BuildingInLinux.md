@@ -23,6 +23,6 @@
 	```
 	git clone https://github.com/igagis/morda.git
 	cd morda
-	make
+	make debug=true CXX=g++-4.9
 	make test
 	```
