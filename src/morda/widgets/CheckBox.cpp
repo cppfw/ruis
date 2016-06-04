@@ -30,7 +30,7 @@ CheckBox::CheckBox(const stob::Node* chain) :
 	this->checkWidget = this->content().findChildByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isChecked());
 	
-	this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_checkbox"));
+	this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
 }
 
 

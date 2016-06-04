@@ -51,6 +51,7 @@ Container{
 			clr{@{another_color}}
 		}
 
+/*
 		ColorLabel{
 			color{ @{morda_color_bg} }
 
@@ -58,6 +59,9 @@ Container{
 				dimX{max} dimY{max}
 			}
 		}
+*/
+
+		Background
 
 /*
 		TextLabel{
@@ -109,12 +113,27 @@ Container{
 			layout{
 				dimX{max} dimY{max}
 			}
+
+			Widget{
+				layout{dimY{5pt}}
+			}
+
 			HorizontalContainer{
 				layout{
 					dimX{max} dimY{min}
 				}
+				
+				Widget{
+					layout{dimX{5pt}}
+				}
+
 				CheckBox{
 				}
+
+				Widget{
+					layout{dimX{5pt}}
+				}
+
 				TextLabel{
 					layout{
 						dimX{0} dimY{min}
