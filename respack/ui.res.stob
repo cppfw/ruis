@@ -2,18 +2,6 @@ morda_tex_ui{
 	file{ui.png}
 }
 
-morda_npt_pushbutton{
-	tex{morda_tex_ui}
-	rect{0 0 15 15}
-	borders{7 7 7 7}
-}
-
-morda_npt_pushbutton_pressed{
-	tex{morda_tex_ui}
-	rect{16 0 15 15}
-	borders{7 7 7 7}
-}
-
 morda_npt_textfield{
 	tex{morda_tex_ui}
 	rect{32 0 13 13}
@@ -46,6 +34,11 @@ morda_npt_slider_handle{
 
 morda_npt_pushbutton_normal{
 	file{button.svg}
+	borders{5 5 5 6}
+}
+
+morda_npt_pushbutton_pressed{
+	file{button_pressed.svg}
 	borders{5 5 5 6}
 }
 

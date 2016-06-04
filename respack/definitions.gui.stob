@@ -21,7 +21,7 @@ templates{
 	}
 
 	PushButton NinePatchButton{
-		borderLeft{5mm}
+//		borderLeft{5mm}
 	}
 
 	Background FrameContainer{
