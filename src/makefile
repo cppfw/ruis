@@ -28,7 +28,7 @@ this_cxxflags += -Werror #treat warnings as errors
 this_cxxflags += -Wfatal-errors # stop on first error encountered
 this_cxxflags += -fstrict-aliasing #strict aliasing (in order to comply with the c++ standard more strictly)
 this_cxxflags += -g #include debugging symbols
-this_cxxflags += -O3
+this_cxxflags += -O2 #TODO: switch to -O3 when g++ bug is fixed and it won't produce segfault
 this_cxxflags += -std=c++11
 
 

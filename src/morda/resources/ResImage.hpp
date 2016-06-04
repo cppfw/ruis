@@ -28,7 +28,16 @@ public:
 	ResImage& operator=(const ResImage& orig) = delete;
 	
 	class QuadTexture : virtual public utki::Shared{
+		Vec2r dim_v;
 	public:
+		QuadTexture(Vec2r dim) :
+				dim_v(dim)
+		{}
+		
+		const decltype(dim_v)& dim()const noexcept{
+			return this->dim_v;
+		}
+		
 		virtual void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
 	};
 
@@ -56,8 +65,6 @@ class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
 	
 	std::array<Vec2r, 4> texCoords;
 	
-	Vec2r dim_v;
-	
 public:
 	ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
 	
@@ -65,7 +72,7 @@ public:
 	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;
 	
 	Vec2r dim(real dpi) const noexcept override{
-		return this->dim_v;
+		return this->ResImage::QuadTexture::dim();
 	}
 	
 	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{

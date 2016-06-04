@@ -21,8 +21,8 @@ using namespace morda;
 
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
-		tex(tex),
-		dim_v(rect.d.abs())
+		ResImage::QuadTexture(rect.d.abs()),
+		tex(tex)
 {
 	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
 	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
@@ -62,6 +62,7 @@ protected:
 	Texture2D tex_v;
 	
 	TexQuadTexture(Texture2D&& tex) :
+			ResImage::QuadTexture(tex.dim()),
 			tex_v(std::move(tex))
 	{}
 	
