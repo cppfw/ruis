@@ -47,6 +47,10 @@ morda_npt_checkbox_bg{
 	borders{2 3 2 3}
 }
 
+morda_img_checkbox_tick{
+	file{checkbox_tick.svg}
+}
+
 morda_grd_background{
 	stop{ pos{0} color{0} }
 

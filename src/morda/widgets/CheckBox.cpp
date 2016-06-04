@@ -11,10 +11,7 @@ namespace{
 const char* D_Layout = R"qwertyuiop(
 		ImageLabel{
 			name{morda_checkbox_check}
-			image{morda_img_checkbox}
-			layout{
-				fillX{true} fillY{true}
-			}
+			image{morda_img_checkbox_tick}
 		}
 	)qwertyuiop";
 
