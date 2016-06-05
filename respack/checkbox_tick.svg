@@ -10,11 +10,11 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="11.999475"
-   height="11.999527"
+   width="15"
+   height="14"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="checkbox_tick.svg">
   <defs
      id="defs4">
@@ -65,7 +65,7 @@
          offset="0"
          id="stop3757-3" />
       <stop
-         style="stop-color:#fecb8b;stop-opacity:1;"
+         style="stop-color:#fed6a3;stop-opacity:1;"
          offset="1"
          id="stop3759-5" />
     </linearGradient>
@@ -76,8 +76,9 @@
        x1="12.974304"
        y1="1051.4473"
        x2="12.978164"
-       y2="1040.4303"
-       gradientUnits="userSpaceOnUse" />
+       y2="1039.799"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.5,-1)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3755-2"
@@ -85,8 +86,9 @@
        x1="12.974304"
        y1="1051.4473"
        x2="12.978164"
-       y2="1040.4303"
-       gradientUnits="userSpaceOnUse" />
+       y2="1039.799"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(2.5,-1)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -96,8 +98,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.678384"
-     inkscape:cx="2.2320981"
-     inkscape:cy="6.8076239"
+     inkscape:cx="3.3354259"
+     inkscape:cy="5.0145728"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -105,10 +107,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1280"
-     inkscape:window-height="668"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -118,7 +120,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -126,22 +128,22 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-1.3228303e-4,-1040.3626)">
+     transform="translate(-0.5001323,-1038.3621)">
     <path
-       style="fill:none;fill-opacity:0.43921569;stroke:#f9dab2;stroke-linejoin:round;stroke-opacity:0.43921569"
-       d="m 0.5,1046.3622 3.5000001,4 7.4999999,-9.5 -7.5,7 z"
+       style="fill:none;stroke:#f9dab2;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.43921569;stroke-dasharray:none"
+       d="m 3.5001323,1044.8621 2.9998678,2.5 6.0001319,-7.5 -5.9999997,6.5 z"
        id="path2985-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:none;fill-opacity:0.43921569;stroke:#f3b565;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.43921569"
-       d="m 0.5,1046.3622 3.5,5.5 7.5,-11 -7.5947018,9.0998 z"
+       style="fill:none;stroke:#f3b565;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.43921569;stroke-dasharray:none"
+       d="m 3.5001323,1045.8621 2.9998677,4.5 6.500132,-10 -6.5948338,8.5999 z"
        id="path2985-6"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="fill:url(#linearGradient4154);fill-opacity:1;stroke:url(#linearGradient4162);stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       d="m 0.5,1046.3622 3.5,4.5 7.5,-10 -7.5,8 z"
+       style="fill:url(#linearGradient4154);fill-opacity:1;stroke:url(#linearGradient4162);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 3.5001323,1045.3621 3,4 6.4999997,-9.5 -6.500132,7.5 z"
        id="path2985"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
