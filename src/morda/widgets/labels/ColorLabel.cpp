@@ -25,6 +25,7 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 	matr.scale(this->rect().d);
 
 	if(this->gradient){
+//		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
 		this->gradient->render(matr, App::inst().shaders().clrPosShader);
 	}else{
 		ColorPosShader& s = App::inst().shaders().colorPosShader;

@@ -26,8 +26,8 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 			this->vertices.push_back(kolme::Vec2f(0, std::get<0>(s)));
 			this->vertices.push_back(kolme::Vec2f(1, std::get<0>(s)));
 		}else{ ASSERT(!vertical)
-			this->vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
 			this->vertices.push_back(kolme::Vec2f(std::get<0>(s), 1));
+			this->vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
 		}
 	}
 	ASSERT(this->vertices.size() == this->colors.size())
@@ -71,6 +71,8 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 
 void ResGradient::render(const Matr4r& matrix, ClrPosShader& s) const {
 	ASSERT(this->vertices.size() == this->colors.size())
+	
+//	TRACE(<< "matrix = " << matrix << std::endl)
 	
 	s.setMatrix(matrix);
 	s.render(utki::wrapBuf(this->vertices), utki::wrapBuf(this->colors), Render::Mode_e::TRIANGLE_STRIP);

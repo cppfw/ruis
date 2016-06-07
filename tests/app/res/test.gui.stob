@@ -167,6 +167,7 @@ Container{
 				}
 			}
 		}
+
 	}
 
 	Window{
@@ -343,6 +344,8 @@ Container{
 
 		title{"Sliders"}
 
+		Background
+
 		HorizontalContainer{
 
 			name{horizontal_container}
@@ -385,6 +388,7 @@ Container{
 
 		title{"Spinning cube"}
 
+/*
 		ImageLabel{
 			layout{
 				dimX{max} dimY{max}
@@ -392,6 +396,8 @@ Container{
 			image{img_lattice}
 			repeatX{true} repeatY{true}
 		}
+*/
+		Background
 
 		CubeWidget{
 			name{cube_widget}
@@ -527,11 +533,14 @@ Container{
 
 		title{"TableContainer"}
 
+
 		ColorLabel{
 			layout{dimX{max}dimY{max}}
 			color{0xff008000}
 			gradient{grd_sample}
 		}
+
+//		Background
 
 		TableContainer{
 			layout{
