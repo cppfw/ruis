@@ -423,16 +423,25 @@ Container{
 
 		Background
 
-		TextField{
-			name{text_input}
-
-			text{"Hello Wrodl!!!"}
-
-			color{ @{morda_color_text} }
-
+		HorizontalContainer{
 			layout{
 				dimX{max} dimY{min}
 			}
+
+			Widget{layout{dimX{5pt}}}
+
+			TextField{
+				name{text_input}
+
+				text{"Hello Wrodl!!!"}
+
+				color{ @{morda_color_text} }
+
+				layout{
+					dimX{min} dimY{min} weight{1}
+				}
+			}
+			Widget{layout{dimX{5pt}}}
 		}
 	}
 

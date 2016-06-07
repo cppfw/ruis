@@ -8,18 +8,6 @@ morda_npt_textfield{
 	borders{6 6 6 6}
 }
 
-morda_npt_checkbox{
-	tex{morda_tex_ui}
-	rect{46 0 11 11}
-	borders{5 5 5 5}
-}
-
-morda_img_checkbox{
-	tex{morda_tex_ui}
-	rect{0 49 15 15}
-}
-
-
 morda_npt_slider{
 	tex{morda_tex_ui}
 	rect{16 16 9 9}
@@ -51,12 +39,15 @@ morda_img_checkbox_tick{
 	file{checkbox_tick.svg}
 }
 
+morda_npt_textfield_background{
+	file{textfield_bg.svg}
+	borders{4 5 4 5}
+}
+
 morda_grd_background{
 	stop{ pos{0} color{0} }
-
 	stop{ pos{0.43} color{0x10ffffff} }
 	stop{ pos{0.5} color{0x12ffffff} }
 	stop{ pos{0.57} color{0x10ffffff} }
-
 	stop{ pos{1} color{0} }
 }

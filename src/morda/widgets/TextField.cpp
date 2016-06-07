@@ -3,6 +3,7 @@
 #include "containers/BlackHoleContainer.hpp"
 
 #include "../App.hpp"
+#include "../util/util.hpp"
 
 
 using namespace morda;
@@ -13,7 +14,11 @@ TextField::TextField(const stob::Node* chain) :
 		Widget(chain),
 		ti(utki::makeShared<TextInput>(chain))
 {
-	this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_textfield"));
+	if(auto n = getProperty(chain, "background")){
+		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+	}else{
+		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_textfield_background"));
+	}
 	
 	
 	auto bhc = utki::makeShared<BlackHoleContainer>();
