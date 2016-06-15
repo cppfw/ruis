@@ -31,6 +31,8 @@ this_cxxflags += -g #include debugging symbols
 this_cxxflags += -O2 #TODO: switch to -O3 when g++ bug is fixed and it won't produce segfault
 this_cxxflags += -std=c++11
 
+this_cxxflags += -D_GLIBCXX_USE_CXX11_ABI=0 #use old ABI
+
 
 this_objcflags := 
 
