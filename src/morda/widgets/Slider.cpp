@@ -3,6 +3,7 @@
 #include "../App.hpp"
 #include "../util/util.hpp"
 #include "MouseProxy.hpp"
+#include "NinePatch.hpp"
 
 
 
@@ -26,7 +27,7 @@ const char* DDescription = R"qwertyuiop(
 			FrameContainer{
 				name{handle}
 				NinePatch{
-					image{morda_npt_slider_handle}
+					name{handle_image}
 
 					layout{
 						dimX{max} dimY{max}
@@ -52,6 +53,16 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		handle(*this->findChildByName("handle")),
 		isVertical(isVertical)
 {
+	{
+		auto hi = this->findChildByNameAs<NinePatch>("handle_image");
+		
+		if(auto n = getProperty(chain, "handleNinePatch")){
+			hi->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		}else{
+			hi->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
+		}
+	}
+	
 	auto hp = this->findChildByNameAs<MouseProxy>("morda_handle_proxy");
 	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
 		if(button != EMouseButton::LEFT){
