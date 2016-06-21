@@ -104,7 +104,7 @@ template <class T> std::shared_ptr<T> ResourceManager::findResourceInResMap(cons
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
 		if(auto r = (*i).second.lock()){
-			return std::move(std::dynamic_pointer_cast<T>(std::move(r)));
+			return std::dynamic_pointer_cast<T>(std::move(r));
 		}
 	}
 	return nullptr;//no resource found with given name, return invalid reference
@@ -116,7 +116,7 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
 	if(auto r = this->findResourceInResMap<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
-		return std::move(r);
+		return r;
 	}
 
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
@@ -134,7 +134,7 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 	this->addResource(resource, ret.e);
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
-	return std::move(resource);
+	return resource;
 }
 
 

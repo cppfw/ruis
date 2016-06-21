@@ -15,7 +15,7 @@ namespace{
 
 const char* DDescription = R"qwertyuiop(
 		NinePatch{
-			image{morda_npt_slider}
+			name{morda_slider_bg}
 			layout{
 				dimX{max} dimY{max}
 			}
@@ -27,7 +27,7 @@ const char* DDescription = R"qwertyuiop(
 			FrameContainer{
 				name{handle}
 				NinePatch{
-					name{handle_image}
+					name{morda_handle_image}
 
 					layout{
 						dimX{max} dimY{max}
@@ -54,8 +54,18 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		isVertical(isVertical)
 {
 	{
-		auto hi = this->findChildByNameAs<NinePatch>("handle_image");
-		
+		auto np = this->findChildByNameAs<NinePatch>("morda_slider_bg");
+		ASSERT(np)
+		if(auto n = getProperty(chain, "background")){
+			np->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		}else{
+			np->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+		}
+	}
+	
+	{
+		auto hi = this->findChildByNameAs<NinePatch>("morda_handle_image");
+		ASSERT(hi)
 		if(auto n = getProperty(chain, "handleNinePatch")){
 			hi->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
 		}else{

@@ -131,6 +131,8 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 		}
 	}
 	
+	TRACE(<< "this->image->dim() = " << this->image->dim() << std::endl)
+	
 	auto quadTex = this->image->get(this->image->dim() * mul);
 	
 	Vec2r actMul = quadTex->dim().compDiv(this->image->dim());
