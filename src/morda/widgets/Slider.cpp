@@ -25,7 +25,7 @@ const char* DDescription = R"qwertyuiop(
 				dimX{max} dimY{max}
 			}
 			FrameContainer{
-				name{handle}
+				name{morda_handle}
 				NinePatch{
 					name{morda_handle_image}
 
@@ -36,7 +36,7 @@ const char* DDescription = R"qwertyuiop(
 				MouseProxy{
 					name{morda_handle_proxy}
 					layout{
-						dimX{max} dimY{max}
+						dimX{fill} dimY{fill}
 					}
 				}
 			}
@@ -50,7 +50,7 @@ const char* DDescription = R"qwertyuiop(
 HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		FrameContainer(stob::parse(DDescription).get()),
-		handle(*this->findChildByName("handle")),
+		handle(*this->findChildByName("morda_handle")),
 		isVertical(isVertical)
 {
 	{
