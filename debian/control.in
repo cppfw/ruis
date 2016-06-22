@@ -36,8 +36,3 @@ Architecture: all
 Depends: ${misc:Depends}
 Description: Documentation for libmorda
  Doxygen docs.
- 
-Package: libmorda-res$(soname)
-Architecture: all
-Description: Resources for libmorda UI library
- Resources for libmorda UI library.

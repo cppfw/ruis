@@ -1,3 +1,9 @@
+libmorda (0.2.0) unstable; urgency=medium
+
+  * development release
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Jun 2016 21:20:29 +0300
+
 libmorda (0.1.2-2) stable; urgency=medium
 
   * updating build dependencies for debian
