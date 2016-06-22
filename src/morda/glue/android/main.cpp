@@ -803,12 +803,6 @@ App::App(const WindowParams& requestedWindowParams) :
 
 
 
-App::ResMan::ResMan(){
-	this->mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/"));
-}
-
-
-
 std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
 	return AssetFile::New(appInfo.assetManager, path);
 }

@@ -348,15 +348,9 @@ public:
 	}
 
 public:
-	class ResMan : public ResourceManager{
-		friend class App;
-		ResMan();
-	} resMan;
+	ResourceManager resMan;
 
-	class Inflater : public morda::Inflater{
-		friend class App;
-		Inflater();
-	} inflater;
+	Inflater inflater;
 
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
@@ -459,6 +453,8 @@ public:
 	}
 
 	void setFullscreen(bool enable);
+	
+	void initStandardWidgets();
 };
 
 

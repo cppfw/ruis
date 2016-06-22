@@ -608,6 +608,8 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
+		this->initStandardWidgets();
+		
 		this->resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		

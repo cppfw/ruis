@@ -9,24 +9,9 @@
 #include "widgets/containers/KeyProxyContainer.hpp"
 #include "widgets/containers/OverlayContainer.hpp"
 
-#include "widgets/labels/ColorLabel.hpp"
-#include "widgets/labels/TextLabel.hpp"
-#include "widgets/labels/ImageLabel.hpp"
-#include "widgets/labels/GreyscaleGlass.hpp"
-#include "widgets/labels/BlurGlass.hpp"
 
-#include "widgets/TextInput.hpp"
-#include "widgets/Slider.hpp"
-#include "widgets/Window.hpp"
 #include "widgets/MouseProxy.hpp"
-#include "widgets/NinePatch.hpp"
-#include "widgets/NinePatchButton.hpp"
-#include "widgets/TextField.hpp"
-#include "widgets/TreeView.hpp"
-#include "widgets/CheckBox.hpp"
-#include "widgets/List.hpp"
 #include "widgets/ResizeProxy.hpp"
-#include "widgets/DropDownSelector.hpp"
 
 #include "App.hpp"
 
@@ -44,30 +29,13 @@ Inflater::Inflater(){
 	this->AddWidget<HorizontalContainer>("HorizontalContainer");
 	this->AddWidget<VerticalContainer>("VerticalContainer");
 	this->AddWidget<FrameContainer>("FrameContainer");
-	this->AddWidget<TextLabel>("TextLabel");
-	this->AddWidget<TextInput>("TextInput");
-	this->AddWidget<VerticalSlider>("VerticalSlider");
-	this->AddWidget<HorizontalSlider>("HorizontalSlider");
-	this->AddWidget<ImageLabel>("ImageLabel");
-	this->AddWidget<Window>("Window");
 	this->AddWidget<MouseProxy>("MouseProxy");
-	this->AddWidget<NinePatch>("NinePatch");
-	this->AddWidget<NinePatchButton>("NinePatchButton");
-	this->AddWidget<ColorLabel>("ColorLabel");
-	this->AddWidget<TextField>("TextField");
-	this->AddWidget<CheckBox>("CheckBox");
-	this->AddWidget<GreyscaleGlass>("GreyscaleGlass");
-	this->AddWidget<BlurGlass>("BlurGlass");
 	this->AddWidget<ScrollContainer>("ScrollContainer");
 	this->AddWidget<TableContainer>("TableContainer");
 	this->AddWidget<TableRow>("TableRow");
-	this->AddWidget<HorizontalList>("HorizontalList");
-	this->AddWidget<VerticalList>("VerticalList");
 	this->AddWidget<KeyProxyContainer>("KeyProxyContainer");
 	this->AddWidget<OverlayContainer>("OverlayContainer");
-	this->AddWidget<TreeView>("TreeView");
 	this->AddWidget<ResizeProxy>("ResizeProxy");
-	this->AddWidget<DropDownSelector>("DropDownSelector");
 }
 
 

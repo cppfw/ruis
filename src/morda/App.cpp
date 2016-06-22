@@ -6,6 +6,19 @@
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
 
+#include "widgets/TextField.hpp"
+#include "widgets/Slider.hpp"
+#include "widgets/NinePatchButton.hpp"
+#include "widgets/CheckBox.hpp"
+
+#include "widgets/labels/ColorLabel.hpp"
+#include "widgets/labels/TextLabel.hpp"
+#include "widgets/labels/GreyscaleGlass.hpp"
+#include "widgets/labels/BlurGlass.hpp"
+#include "widgets/List.hpp"
+#include "widgets/TreeView.hpp"
+#include "widgets/DropDownSelector.hpp"
+#include "widgets/Window.hpp"
 
 
 using namespace morda;
@@ -13,6 +26,107 @@ using namespace morda;
 
 
 utki::IntrusiveSingleton<App>::T_Instance App::instance;
+
+
+
+void App::initStandardWidgets() {
+	
+	
+#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
+	//mount default resource pack
+	
+#	ifndef DEBUG
+	unsigned soname = 
+#	include "../soname.txt"
+		;
+#	endif
+		
+	std::vector<std::string> paths;
+	
+#	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
+		paths.push_back("respack/");
+#	else
+#		ifdef DEBUG
+		paths.push_back("../../respack/");
+#		else
+		{
+			std::stringstream ss;
+			ss << "/usr/local/share/morda/res" << soname << "/";
+			paths.push_back(ss.str());
+		}
+		{
+			std::stringstream ss;
+			ss << "/usr/share/morda/res" << soname << "/";
+			paths.push_back(ss.str());
+		}
+#		endif
+#	endif
+
+	for(const auto& s : paths){
+		try{
+//			TRACE(<< "s = " << s << std::endl)
+			auto fi = morda::App::inst().createResourceFileInterface(s);
+			ASSERT(fi)
+//			TRACE(<< "fi->path() = " << fi->path() << std::endl)
+			this->resMan.mountResPack(*fi);
+		}catch(papki::Exc& e){
+			continue;
+		}
+		break;
+	}
+#elif M_OS == M_OS_WINDOWS
+	std::string path =
+#	ifdef DEBUG
+		"../../respack/"
+#	else
+		"morda_res/"
+#	endif
+		;
+
+	try{
+		papki::FSFile fi(path);
+		this->resMan.mountResPack(fi);
+	}
+	catch (papki::Exc&){
+		//default res pack not found, do nothing
+	}
+#elif M_OS_NAME == M_OS_NAME_ANDROID
+	this->resMan,mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/")); //TODO: change to respack?
+#endif
+	
+	//add standard widgets to inflater
+	
+	this->inflater.AddWidget<TextLabel>("TextLabel");
+	this->inflater.AddWidget<TextInput>("TextInput");
+	this->inflater.AddWidget<VerticalSlider>("VerticalSlider");
+	this->inflater.AddWidget<HorizontalSlider>("HorizontalSlider");
+	this->inflater.AddWidget<ImageLabel>("ImageLabel");
+	this->inflater.AddWidget<Window>("Window");
+	this->inflater.AddWidget<NinePatch>("NinePatch");
+	this->inflater.AddWidget<NinePatchButton>("NinePatchButton");
+	this->inflater.AddWidget<ColorLabel>("ColorLabel");
+	this->inflater.AddWidget<TextField>("TextField");
+	this->inflater.AddWidget<CheckBox>("CheckBox");
+	this->inflater.AddWidget<GreyscaleGlass>("GreyscaleGlass");
+	this->inflater.AddWidget<BlurGlass>("BlurGlass");
+	this->inflater.AddWidget<HorizontalList>("HorizontalList");
+	this->inflater.AddWidget<VerticalList>("VerticalList");
+	this->inflater.AddWidget<TreeView>("TreeView");
+	this->inflater.AddWidget<DropDownSelector>("DropDownSelector");
+	
+	
+	try{
+		auto t = morda::App::inst().resMan.load<ResSTOB>("morda_gui_definitions");
+		
+		if(t->chain()){
+			this->inflater.inflate(*t->chain());
+		}
+		
+	}catch(ResourceManager::Exc&){
+		//ignore
+		TRACE(<< "App::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
+	}
+}
 
 
 
@@ -149,54 +263,6 @@ void App::hideVirtualKeyboard()noexcept{
 #endif
 
 
-#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
-
-App::ResMan::ResMan(){
-	//mount default resource pack
-	
-#	ifndef DEBUG
-	unsigned soname = 
-#	include "../soname.txt"
-		;
-#	endif
-		
-	std::vector<std::string> paths;
-	
-#	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
-		paths.push_back("respack/");
-#	else
-#		ifdef DEBUG
-		paths.push_back("../../respack/");
-#		else
-		{
-			std::stringstream ss;
-			ss << "/usr/local/share/morda/res" << soname << "/";
-			paths.push_back(ss.str());
-		}
-		{
-			std::stringstream ss;
-			ss << "/usr/share/morda/res" << soname << "/";
-			paths.push_back(ss.str());
-		}
-#		endif
-#	endif
-
-	for(const auto& s : paths){
-		try{
-//			TRACE(<< "s = " << s << std::endl)
-			auto fi = morda::App::inst().createResourceFileInterface(s);
-			ASSERT(fi)
-//			TRACE(<< "fi->path() = " << fi->path() << std::endl)
-			this->mountResPack(*fi);
-		}catch(papki::Exc& e){
-			continue;
-		}
-		break;
-	}
-}
-
-#endif
-
 
 
 void App::setFocusedWidget(const std::shared_ptr<Widget> w){
@@ -210,20 +276,5 @@ void App::setFocusedWidget(const std::shared_ptr<Widget> w){
 	if(w){
 		w->isFocused_var = true;
 		w->onFocusedChanged();
-	}
-}
-
-
-App::Inflater::Inflater(){
-	try{
-		auto t = morda::App::inst().resMan.load<ResSTOB>("morda_gui_definitions");
-		
-		if(t->chain()){
-			this->inflate(*t->chain());
-		}
-		
-	}catch(ResourceManager::Exc&){
-		//ignore
-		TRACE(<< "App::Inflater::Inflater(): could not load morda_gui_definitions" << std::endl)
 	}
 }

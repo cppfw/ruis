@@ -590,24 +590,6 @@ void App::DeviceContextWrapper::Destroy()noexcept{
 
 
 
-App::ResMan::ResMan(){
-	std::string path =
-#ifdef DEBUG
-		"../../respack/"
-#else
-		"morda_res/"
-#endif
-		;
-
-	try{
-		papki::FSFile fi(path);
-		this->mountResPack(fi);
-	}
-	catch (papki::Exc&){
-		//default res pack not found, do nothing
-	}
-}
-
 namespace{
 
 real getDotsPerInch(HDC dc){
