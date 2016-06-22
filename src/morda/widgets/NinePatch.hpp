@@ -8,10 +8,10 @@
 
 #include "../resources/ResNinePatch.hpp"
 
-#include "containers/FrameContainer.hpp"
-#include "containers/TableContainer.hpp"
+#include "core/container/FrameContainer.hpp"
+#include "core/container/TableContainer.hpp"
 
-#include "labels/ImageLabel.hpp"
+#include "label/ImageLabel.hpp"
 
 namespace morda{
 

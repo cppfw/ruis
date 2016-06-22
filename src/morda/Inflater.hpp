@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "Exc.hpp"
-#include "widgets/Widget.hpp"
+#include "widgets/core/Widget.hpp"
 
 
 

@@ -1,13 +1,13 @@
-#include "../shaders/PosShader.hpp"
+#include "../../shaders/PosShader.hpp"
 
-#include "../render/FrameBuffer.hpp"
+#include "../../render/FrameBuffer.hpp"
 
 #include "Widget.hpp"
 
-#include "containers/Container.hpp"
+#include "container/Container.hpp"
 
-#include "../App.hpp"
-#include "../util/util.hpp"
+#include "../../App.hpp"
+#include "../../util/util.hpp"
 
 using namespace morda;
 

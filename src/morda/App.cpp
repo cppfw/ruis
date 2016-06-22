@@ -7,14 +7,14 @@
 #include <papki/RootDirFile.hpp>
 
 #include "widgets/TextField.hpp"
-#include "widgets/Slider.hpp"
-#include "widgets/NinePatchButton.hpp"
-#include "widgets/CheckBox.hpp"
+#include "widgets/slider/Slider.hpp"
+#include "widgets/button/NinePatchButton.hpp"
+#include "widgets/button/CheckBox.hpp"
 
-#include "widgets/labels/ColorLabel.hpp"
-#include "widgets/labels/TextLabel.hpp"
-#include "widgets/labels/GreyscaleGlass.hpp"
-#include "widgets/labels/BlurGlass.hpp"
+#include "widgets/label/ColorLabel.hpp"
+#include "widgets/label/TextLabel.hpp"
+#include "widgets/label/GreyscaleGlass.hpp"
+#include "widgets/label/BlurGlass.hpp"
 #include "widgets/List.hpp"
 #include "widgets/TreeView.hpp"
 #include "widgets/DropDownSelector.hpp"

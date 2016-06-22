@@ -6,10 +6,10 @@
 
 #include <memory>
 
-#include "Widget.hpp"
+#include "core/Widget.hpp"
 #include "List.hpp"
 
-#include "containers/ScrollContainer.hpp"
+#include "core/container/ScrollContainer.hpp"
 
 
 namespace morda{

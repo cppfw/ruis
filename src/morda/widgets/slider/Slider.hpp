@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "Widget.hpp"
-#include "containers/FrameContainer.hpp"
+#include "../core/Widget.hpp"
+#include "../core/container/FrameContainer.hpp"
 
 
 //disable stupid warnings

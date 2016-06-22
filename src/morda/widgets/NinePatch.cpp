@@ -3,7 +3,7 @@
 #include "NinePatch.hpp"
 #include "../App.hpp"
 #include "../util/util.hpp"
-#include "ResizeProxy.hpp"
+#include "core/proxy/ResizeProxy.hpp"
 
 
 using namespace morda;

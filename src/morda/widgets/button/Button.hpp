@@ -7,7 +7,7 @@
 
 #include <functional>
 
-#include "../widgets/Widget.hpp"
+#include "../core/Widget.hpp"
 
 
 

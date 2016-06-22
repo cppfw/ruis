@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Widget.hpp"
+#include "core/Widget.hpp"
 
 
 namespace morda{

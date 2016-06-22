@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "Widget.hpp"
-#include "containers/Container.hpp"
+#include "core/Widget.hpp"
+#include "core/container/Container.hpp"
 
 
 namespace morda{

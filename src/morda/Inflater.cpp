@@ -1,17 +1,17 @@
 #include "Inflater.hpp"
 
-#include "widgets/containers/Container.hpp"
-#include "widgets/containers/LinearContainer.hpp"
-#include "widgets/containers/FrameContainer.hpp"
-#include "widgets/containers/ScrollContainer.hpp"
-#include "widgets/containers/TableContainer.hpp"
-#include "widgets/containers/TableRow.hpp"
-#include "widgets/containers/KeyProxyContainer.hpp"
-#include "widgets/containers/OverlayContainer.hpp"
+#include "widgets/core/container/Container.hpp"
+#include "widgets/core/container/LinearContainer.hpp"
+#include "widgets/core/container/FrameContainer.hpp"
+#include "widgets/core/container/ScrollContainer.hpp"
+#include "widgets/core/container/TableContainer.hpp"
+#include "widgets/core/container/TableRow.hpp"
+#include "widgets/core/proxy/KeyProxyContainer.hpp"
+#include "widgets/core/container/OverlayContainer.hpp"
 
 
-#include "widgets/MouseProxy.hpp"
-#include "widgets/ResizeProxy.hpp"
+#include "widgets/core/proxy/MouseProxy.hpp"
+#include "widgets/core/proxy/ResizeProxy.hpp"
 
 #include "App.hpp"
 

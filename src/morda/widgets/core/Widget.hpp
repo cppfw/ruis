@@ -10,15 +10,15 @@
 
 #include <utki/Shared.hpp>
 
-#include "../util/keycodes.hpp"
+#include "../../util/keycodes.hpp"
 
 #include <kolme/Matrix4.hpp>
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 
-#include "../render/Texture2D.hpp"
+#include "../../render/Texture2D.hpp"
 
-#include "../config.hpp"
+#include "../../config.hpp"
 
 #include <stob/dom.hpp>
 
@@ -353,4 +353,4 @@ public:
 
 
 //Widget depends on Container, so need to define it also in all cases when widget is used.
-#include "containers/Container.hpp"
+#include "container/Container.hpp"

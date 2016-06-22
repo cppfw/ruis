@@ -1,9 +1,9 @@
 #include "Slider.hpp"
 
-#include "../App.hpp"
-#include "../util/util.hpp"
-#include "MouseProxy.hpp"
-#include "NinePatch.hpp"
+#include "../../App.hpp"
+#include "../../util/util.hpp"
+#include "../core/proxy/MouseProxy.hpp"
+#include "../NinePatch.hpp"
 
 
 

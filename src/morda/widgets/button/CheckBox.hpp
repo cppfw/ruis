@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Button.hpp"
-#include "NinePatch.hpp"
+#include "../NinePatch.hpp"
 
 
 namespace morda{

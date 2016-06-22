@@ -1,5 +1,5 @@
 #include "OverlayContainer.hpp"
-#include "../MouseProxy.hpp"
+#include "../proxy/MouseProxy.hpp"
 
 
 using namespace morda;

@@ -8,7 +8,7 @@
 
 #include "Widget.hpp"
 
-#include "../util/keycodes.hpp"
+#include "../../util/keycodes.hpp"
 
 namespace morda{
 

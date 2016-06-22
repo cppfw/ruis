@@ -3,14 +3,14 @@
 
 #include "../App.hpp"
 
-#include "Button.hpp"
+#include "button/Button.hpp"
 #include "TextWidget.hpp"
 
-#include "containers/OverlayContainer.hpp"
+#include "core/container/OverlayContainer.hpp"
 
-#include "labels/TextLabel.hpp"
-#include "MouseProxy.hpp"
-#include "labels/ColorLabel.hpp"
+#include "label/TextLabel.hpp"
+#include "core/proxy/MouseProxy.hpp"
+#include "label/ColorLabel.hpp"
 
 using namespace morda;
 

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "../Widget.hpp"
+#include "../core/Widget.hpp"
 #include "../../resources/ResImage.hpp"
 
 

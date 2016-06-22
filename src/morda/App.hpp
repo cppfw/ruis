@@ -54,8 +54,8 @@
 
 #include "util/keycodes.hpp"
 
-#include "widgets/Widget.hpp"
-#include "widgets/CharInputWidget.hpp"
+#include "widgets/core/Widget.hpp"
+#include "widgets/core/CharInputWidget.hpp"
 
 #include "shaders/ColorPosShader.hpp"
 #include "shaders/ColorPosTexShader.hpp"

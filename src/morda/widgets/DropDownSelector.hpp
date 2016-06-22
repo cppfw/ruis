@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Widget.hpp"
-#include "containers/LinearContainer.hpp"
-#include "containers/FrameContainer.hpp"
+#include "core/Widget.hpp"
+#include "core/container/LinearContainer.hpp"
+#include "core/container/FrameContainer.hpp"
 
 namespace morda{
 

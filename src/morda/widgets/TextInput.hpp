@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "Widget.hpp"
+#include "core/Widget.hpp"
 #include "TextWidget.hpp"
 
 #include "../Updateable.hpp"
-#include "CharInputWidget.hpp"
+#include "core/CharInputWidget.hpp"
 
 
 namespace morda{

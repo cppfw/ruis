@@ -1,8 +1,8 @@
 #include "Button.hpp"
 
-#include "../App.hpp"
+#include "../../App.hpp"
 
-#include "../util/util.hpp"
+#include "../../util/util.hpp"
 
 
 using namespace morda;

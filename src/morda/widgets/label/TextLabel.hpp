@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include "../Widget.hpp"
+#include "../core/Widget.hpp"
 #include "../../resources/ResFont.hpp"
 #include "../TextWidget.hpp"
 

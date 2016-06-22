@@ -5,11 +5,11 @@
 
 #pragma once
 
-#include "containers/FrameContainer.hpp"
-#include "labels/TextLabel.hpp"
-#include "labels/ColorLabel.hpp"
-#include "MouseProxy.hpp"
-#include "containers/TableContainer.hpp"
+#include "core/container/FrameContainer.hpp"
+#include "label/TextLabel.hpp"
+#include "label/ColorLabel.hpp"
+#include "core/proxy/MouseProxy.hpp"
+#include "core/container/TableContainer.hpp"
 
 namespace morda{
 
