@@ -451,6 +451,8 @@ Container{
 
 		title{"ScrollArea"}
 
+		Background
+
 		TableContainer{
 			layout{
 				dimX{max} dimY{max}
@@ -523,12 +525,7 @@ Container{
 						dimX{0}
 					}
 				}
-				ColorLabel{
-					color{@{morda_color_bg}}
-					layout{
-						dimY{max}
-					}
-				}
+				Widget
 			}
 		}
 	}

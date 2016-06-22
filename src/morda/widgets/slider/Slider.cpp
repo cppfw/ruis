@@ -22,7 +22,7 @@ const char* DDescription = R"qwertyuiop(
 		}
 		Container{
 			layout{
-				dimX{fill} dimY{fill}
+				dimX{max} dimY{max}
 			}
 			FrameContainer{
 				name{morda_handle}
@@ -175,17 +175,3 @@ void HandleSlider::layOut(){
 		this->handle.moveTo(newPos);
 	}
 }
-
-
-
-morda::Vec2r HandleSlider::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret = quotum;
-	for(unsigned i = 0; i != ret.size(); ++i){
-		if(ret[i] < 0){
-			ret[i] = 30; //TODO: what should it be???
-		}
-	}
-	return ret;
-}
-
-	

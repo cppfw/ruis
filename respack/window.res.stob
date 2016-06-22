@@ -1,3 +1,7 @@
+morda_tex_ui{
+	file{ui.png}
+}
+
 morda_img_window_background{
 	file{background.png}
 }

@@ -58,7 +58,8 @@
        y1="1039.4067"
        x2="14.535714"
        y2="1037.3533"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-0.99999982,-0.9998774)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -130,20 +131,20 @@
     <rect
        style="fill:#ffffff;fill-opacity:0.0627451;stroke:none"
        id="rect2985-3"
-       width="4"
-       height="4.9000001"
-       x="10"
-       y="1037.4622"
-       rx="2"
-       ry="2" />
+       width="6"
+       height="6.9000001"
+       x="9"
+       y="1036.4622"
+       rx="3"
+       ry="3" />
     <rect
        style="fill:url(#linearGradient3821);fill-opacity:1;stroke:none"
        id="rect2985"
-       width="4"
-       height="4"
-       x="10"
-       y="1037.3622"
-       rx="2"
-       ry="2" />
+       width="6"
+       height="6"
+       x="9"
+       y="1036.3622"
+       rx="3"
+       ry="3" />
   </g>
 </svg>

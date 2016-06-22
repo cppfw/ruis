@@ -119,11 +119,8 @@
           <in>ColorWidget.cpp</in>
           <in>DropDownSelector.cpp</in>
           <in>List.cpp</in>
-          <in>MouseProxy.hpp</in>
           <in>NinePatch.cpp</in>
           <in>NinePatch.hpp</in>
-          <in>ResizeProxy.hpp</in>
-          <in>Slider.hpp</in>
           <in>TextField.cpp</in>
           <in>TextInput.cpp</in>
           <in>TextInput.hpp</in>
@@ -2312,15 +2309,9 @@
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/MouseProxy.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ResizeProxy.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2513,15 +2504,9 @@
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/MouseProxy.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/ResizeProxy.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Slider.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2761,8 +2746,6 @@
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/widgets/ResizeProxy.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
       </item>
