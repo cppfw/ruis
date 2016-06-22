@@ -17,7 +17,7 @@ morda_npt_slider_handle{
 
 morda_npt_slider_bg{
 	file{slider_bg.svg}
-	borders{15 16 15 16}
+	borders{12 13 12 13}
 }
 
 morda_npt_pushbutton_normal{

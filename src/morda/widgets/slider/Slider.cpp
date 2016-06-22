@@ -22,7 +22,7 @@ const char* DDescription = R"qwertyuiop(
 		}
 		Container{
 			layout{
-				dimX{max} dimY{max}
+				dimX{fill} dimY{fill}
 			}
 			FrameContainer{
 				name{morda_handle}

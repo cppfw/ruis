@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="31"
-   height="33"
-   viewBox="0 0 31 33.000001"
+   width="24"
+   height="26"
+   viewBox="0 0 24 26.000001"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="slider_bg.svg">
   <defs
      id="defs4" />
@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.2"
-     inkscape:cx="-21.793523"
-     inkscape:cy="15.552095"
+     inkscape:zoom="22.4"
+     inkscape:cx="30.918058"
+     inkscape:cy="14.387255"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1012"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-height="1026"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -57,33 +57,33 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1019.3622)">
+     transform="translate(-4.6639449e-7,-1026.3622)">
     <rect
-       style="fill:#1a1517;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#1a1517;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect3336-6"
-       width="31"
-       height="31"
+       width="24"
+       height="24"
        x="0"
-       y="1019.3622"
-       rx="15"
-       ry="15" />
+       y="1026.3622"
+       rx="12"
+       ry="12" />
     <rect
-       style="fill:#ffffff;fill-opacity:0.43921569;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:0.43921569;fill-rule:evenodd;stroke:none"
        id="rect3336-3"
-       width="31"
-       height="31"
+       width="24"
+       height="24"
        x="0"
-       y="1021.3622"
-       rx="15"
-       ry="15" />
+       y="1028.3622"
+       rx="12"
+       ry="12" />
     <rect
-       style="fill:#2f2528;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#2f2528;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect3336"
-       width="31"
-       height="31"
+       width="24"
+       height="24"
        x="0"
-       y="1020.3622"
-       rx="15"
-       ry="15" />
+       y="1027.3622"
+       rx="12"
+       ry="12" />
   </g>
 </svg>

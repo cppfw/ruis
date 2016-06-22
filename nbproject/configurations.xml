@@ -1373,8 +1373,8 @@
           <incDir>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/unikod</pElem>

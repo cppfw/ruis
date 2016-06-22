@@ -78,7 +78,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 	
 	Vec2r imgDim = this->img->dim(morda::App::inst().units.dpi());
 	
-	ASSERT(imgDim.isPositive())
+	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	
 	if(!keepAspectRatio){
 		Vec2r ret = imgDim;
