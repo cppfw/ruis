@@ -160,34 +160,33 @@
     <ClCompile Include="..\..\src\morda\Updateable.cpp" />
     <ClCompile Include="..\..\src\morda\util\Image.cpp" />
     <ClCompile Include="..\..\src\morda\util\util.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\Button.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\CheckBox.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\button\Button.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\button\CheckBox.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\button\NinePatchButton.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\ColorWidget.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\BlackHoleContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\Container.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\FrameContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\LinearContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\OverlayContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\ScrollContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\TableContainer.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\containers\TableRow.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\Container.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\FrameContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\LinearContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\OverlayContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\ScrollContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\TableContainer.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\container\TableRow.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\proxy\MouseProxy.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\proxy\ResizeProxy.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\core\Widget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\DropDownSelector.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\BlurGlass.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\ColorLabel.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\GreyscaleGlass.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\ImageLabel.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\labels\TextLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\label\BlurGlass.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\label\ColorLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\label\GreyscaleGlass.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\label\ImageLabel.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\label\TextLabel.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\List.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\MouseProxy.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\NinePatch.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\NinePatchButton.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\ResizeProxy.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\Slider.cpp" />
+    <ClCompile Include="..\..\src\morda\widgets\slider\Slider.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextField.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextInput.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TextWidget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\TreeView.cpp" />
-    <ClCompile Include="..\..\src\morda\widgets\Widget.cpp" />
     <ClCompile Include="..\..\src\morda\widgets\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,8 +213,8 @@
     <Import Project="..\packages\libkolme.1.0.5\build\native\libkolme.targets" Condition="Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" />
     <Import Project="..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" />
     <Import Project="..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" />
-    <Import Project="..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets')" />
-    <Import Project="..\packages\libsvgren.0.3.8\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.8\build\native\libsvgren.targets')" />
+    <Import Project="..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets')" />
+    <Import Project="..\packages\libsvgren.0.3.11\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -240,7 +239,7 @@
     <Error Condition="!Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libkolme.1.0.5\build\native\libkolme.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgren.0.3.8\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.8\build\native\libsvgren.targets'))" />
+    <Error Condition="!Exists('..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets'))" />
+    <Error Condition="!Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.11\build\native\libsvgren.targets'))" />
   </Target>
 </Project>

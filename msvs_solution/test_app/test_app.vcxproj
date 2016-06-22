@@ -177,8 +177,8 @@
     <Import Project="..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" />
     <Import Project="..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" />
     <Import Project="..\packages\libkolme.1.0.5\build\native\libkolme.targets" Condition="Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" />
-    <Import Project="..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets')" />
-    <Import Project="..\packages\libsvgren.0.3.8\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.8\build\native\libsvgren.targets')" />
+    <Import Project="..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets')" />
+    <Import Project="..\packages\libsvgren.0.3.11\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -203,7 +203,7 @@
     <Error Condition="!Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets'))" />
     <Error Condition="!Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libkolme.1.0.5\build\native\libkolme.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.6\build\native\libsvgdom.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgren.0.3.8\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.8\build\native\libsvgren.targets'))" />
+    <Error Condition="!Exists('..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.7\build\native\libsvgdom.targets'))" />
+    <Error Condition="!Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.11\build\native\libsvgren.targets'))" />
   </Target>
 </Project>
