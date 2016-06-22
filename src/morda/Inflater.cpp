@@ -1,7 +1,6 @@
 #include "Inflater.hpp"
 
 #include "widgets/containers/Container.hpp"
-#include "widgets/containers/BlackHoleContainer.hpp"
 #include "widgets/containers/LinearContainer.hpp"
 #include "widgets/containers/FrameContainer.hpp"
 #include "widgets/containers/ScrollContainer.hpp"
@@ -65,7 +64,6 @@ Inflater::Inflater(){
 	this->AddWidget<HorizontalList>("HorizontalList");
 	this->AddWidget<VerticalList>("VerticalList");
 	this->AddWidget<KeyProxyContainer>("KeyProxyContainer");
-	this->AddWidget<BlackHoleContainer>("BlackHoleContainer");
 	this->AddWidget<OverlayContainer>("OverlayContainer");
 	this->AddWidget<TreeView>("TreeView");
 	this->AddWidget<ResizeProxy>("ResizeProxy");

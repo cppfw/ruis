@@ -50,7 +50,6 @@ this_srcs += morda/widgets/TreeView.cpp
 this_srcs += morda/widgets/Widget.cpp
 this_srcs += morda/widgets/Window.cpp
 
-this_srcs += morda/widgets/containers/BlackHoleContainer.cpp
 this_srcs += morda/widgets/containers/Container.cpp
 this_srcs += morda/widgets/containers/FrameContainer.cpp
 this_srcs += morda/widgets/containers/LinearContainer.cpp
