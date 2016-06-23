@@ -26,7 +26,7 @@ public:
 		this->texCoords[1] = rect.rightTop().compDiv(this->tex->dim());
 		this->texCoords[2] = rect.rightBottom().compDiv(this->tex->dim());
 		this->texCoords[3] = rect.p.compDiv(this->tex->dim());
-		TRACE(<< "this->texCoords = (" << this->texCoords[0] << ", " << this->texCoords[1] << ", " << this->texCoords[2] << ", " << this->texCoords[3] << ")" << std::endl)
+//		TRACE(<< "this->texCoords = (" << this->texCoords[0] << ", " << this->texCoords[1] << ", " << this->texCoords[2] << ", " << this->texCoords[3] << ")" << std::endl)
 	}
 	
 	ResSubImage(const ResSubImage& orig) = delete;
@@ -132,7 +132,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 		}
 	}
 	
-	TRACE(<< "this->image->dim() = " << this->image->dim() << std::endl)
+//	TRACE(<< "this->image->dim() = " << this->image->dim() << std::endl)
 //	TRACE(<< "mul = " << mul << std::endl)
 	
 	auto quadTex = this->image->get((this->image->dim() * mul).round());

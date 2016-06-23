@@ -5,11 +5,9 @@ this_name := morda
 
 this_soname := $(shell cat $(prorab_this_dir)/soname.txt)
 
-
-this_srcs := $(shell find $(prorab_this_dir) -name *.cpp) #find all .cpp files
+this_srcs := $(shell find $(patsubst %/,%,$(prorab_this_dir)) -name *.cpp) #find all .cpp files
 this_srcs := $(patsubst $(prorab_this_dir)%,%,$(this_srcs)) #remove this dir prefix
 this_srcs := $(filter-out morda/glue/%,$(this_srcs)) #filter out platform specific files
-
 
 
 ifeq ($(prorab_os),linux)
