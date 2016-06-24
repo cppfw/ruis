@@ -158,6 +158,7 @@ void App::render(){
 	ASSERT(this->rootWidget)
 	
 	if(this->rootWidget->needsRelayout()){
+		TRACE(<< "root widget re-layout needed!" << std::endl)
 		this->rootWidget->relayoutNeeded = false;
 		this->rootWidget->layOut();
 	}

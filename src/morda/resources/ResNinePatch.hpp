@@ -20,38 +20,12 @@ class ResNinePatch : public Resource{
 	Sidesr borders;
 	
 public:
-	const std::shared_ptr<const ResImage> lt, t, rt, l, m, r, lb, b, rb;//TODO: remove
-	
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
 	
 	ResNinePatch(const std::shared_ptr<ResImage> image, Sidesr borders) :
 			image(std::move(image)),
 			borders(borders)
-	{}
-	
-	ResNinePatch(
-			Sidesr borders,
-			const std::shared_ptr<ResImage>& lt,
-			const std::shared_ptr<ResImage>& t,
-			const std::shared_ptr<ResImage>& rt,
-			const std::shared_ptr<ResImage>& l,
-			const std::shared_ptr<ResImage>& m,
-			const std::shared_ptr<ResImage>& r,
-			const std::shared_ptr<ResImage>& lb,
-			const std::shared_ptr<ResImage>& b,
-			const std::shared_ptr<ResImage>& rb
-		) :
-			borders(borders),
-			lt(lt),
-			t(t),
-			rt(rt),
-			l(l),
-			m(m),
-			r(r),
-			lb(lb),
-			b(b),
-			rb(rb)
 	{}
 	
 	class ImageMatrix :	virtual public utki::Shared{

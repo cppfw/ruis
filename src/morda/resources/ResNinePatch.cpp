@@ -51,29 +51,6 @@ public:
 
 
 std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const papki::File& fi){
-	
-	//TODO: remove?
-	if(chain.thisOrNext("tex").node()){
-		auto tex = morda::App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
-
-		auto rect = makeRectrFromSTOB(&chain.side("rect").up());
-
-		auto borders = makeRectrFromSTOB(&chain.side("borders").up());
-
-		return utki::makeShared<ResNinePatch>(
-				Sidesr(borders.p.x, borders.p.y, borders.d.x, borders.d.y),
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p, borders.p)), //lt
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x + borders.p.x, rect.p.y, rect.d.x - borders.p.x - borders.d.x, borders.p.y)), //t
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.right() - borders.d.x, rect.p.y, borders.d.x, borders.p.y)), //rt
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x, rect.p.y + borders.p.y, borders.p.x, rect.d.y - borders.p.y - borders.d.y)), //l
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x + borders.p.x, rect.p.y + borders.p.y, rect.d.x - borders.p.x - borders.d.x, rect.d.y - borders.p.y - borders.d.y)), //m
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.right() - borders.d.x, rect.p.y + borders.p.y, borders.d.x, rect.d.y - borders.p.y - borders.d.y)), //r
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x, rect.top() - borders.d.y, borders.p.x, borders.d.y)), //lb
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.p.x + borders.p.x, rect.top() - borders.d.y, rect.d.x - borders.p.x - borders.d.x, borders.d.y)), //b
-				utki::makeShared<ResAtlasImage>(tex, Rectr(rect.right() - borders.d.x, rect.top() - borders.d.y, borders.d.x, borders.d.y)) //br
-			);
-	}
-	
 	auto borders = makeSidesrFromSTOB(&chain.side("borders").up());
 	
 	auto file = chain.side("file").up().asString();
@@ -97,19 +74,6 @@ ResNinePatch::ImageMatrix::~ImageMatrix()noexcept{
 
 
 std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) const {
-	//TODO: remove
-	if(!this->image){
-		return utki::makeShared<ImageMatrix>(
-				std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
-					{{this->lt, this->t, this->rt}},
-					{{this->l, this->m, this->r}},
-					{{this->lb, this->b, this->rb}}
-				}}),
-				this->sharedFromThis(this),
-				real(1)
-			);
-	}
-	
 	real mul = 1;
 	{
 		auto req = borders.begin();
