@@ -1302,11 +1302,26 @@
         </ccTool>
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/svgdom</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>/usr/include/nitki</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/pogodi</pElem>
+            <pElem>/usr/include/svgren</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResNinePatch.cpp"
