@@ -2,6 +2,7 @@
 #include "../App.hpp"
 #include "../util/util.hpp"
 
+#include <iomanip>
 
 using namespace morda;
 
@@ -132,15 +133,16 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 		}
 	}
 	
-//	TRACE(<< "this->image->dim() = " << this->image->dim() << std::endl)
-//	TRACE(<< "mul = " << mul << std::endl)
+//	TRACE(<< "this->image->dim() = " << std::setprecision(10) << this->image->dim() << std::endl)
+//	TRACE(<< "mul = " << std::setprecision(10) << mul << std::endl)
 	
 	auto quadTex = this->image->get((this->image->dim() * mul).round());
-	
-	Vec2r actMul = quadTex->dim().compDiv(this->image->dim());
 //	TRACE(<< "quadTex->dim() = " << quadTex->dim() << std::endl)
 	
-//	TRACE(<< "actMul = " << actMul << std::endl)
+	Vec2r actMul = quadTex->dim().compDiv(this->image->dim());
+
+	
+//	TRACE(<< "actMul = " << std::setprecision(10) << actMul << std::endl)
 	
 	Sidesr scaledBorders(this->borders);
 	scaledBorders.left() *= actMul.x;
@@ -148,7 +150,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	scaledBorders.top() *= actMul.y;
 	scaledBorders.bottom() *= actMul.y;
 	
-//	TRACE(<< "scaledBorders = " << scaledBorders << std::endl)
+//	TRACE(<< "scaledBorders = " << std::setprecision(10) << scaledBorders << std::endl)
 	
 	auto ret = utki::makeShared<ImageMatrix>(
 			std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
@@ -163,9 +165,24 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 					utki::makeShared<ResSubImage>(quadTex, Rectr(std::round(quadTex->dim().x - scaledBorders.right()), scaledBorders.top(), scaledBorders.right(), std::round(quadTex->dim().y - scaledBorders.top() - scaledBorders.bottom()))) //right
 				}},
 				{{
-					utki::makeShared<ResSubImage>(quadTex, Rectr(0, std::round(quadTex->dim().y - scaledBorders.bottom()), scaledBorders.left(), scaledBorders.bottom())), //left bottom
-					utki::makeShared<ResSubImage>(quadTex, Rectr(scaledBorders.left(), std::round(quadTex->dim().y - scaledBorders.bottom()), std::round(quadTex->dim().x - scaledBorders.left() - scaledBorders.right()), scaledBorders.bottom())), //bottom
-					utki::makeShared<ResSubImage>(quadTex, Rectr(std::round(quadTex->dim().x - scaledBorders.right()), std::round(quadTex->dim().y - scaledBorders.bottom()), scaledBorders.right(), scaledBorders.bottom())) //right bottom
+					utki::makeShared<ResSubImage>(quadTex, Rectr(
+							0,
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
+							scaledBorders.left(),
+							scaledBorders.bottom())
+						), //left bottom
+					utki::makeShared<ResSubImage>(quadTex, Rectr(
+							scaledBorders.left(),
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
+							std::round(quadTex->dim().x - scaledBorders.left() - scaledBorders.right()),
+							scaledBorders.bottom())
+						), //bottom
+					utki::makeShared<ResSubImage>(quadTex, Rectr(
+							std::round(quadTex->dim().x - scaledBorders.right()),
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
+							scaledBorders.right(),
+							scaledBorders.bottom())
+						) //right bottom
 				}}
 			}}),
 			this->sharedFromThis(this),
