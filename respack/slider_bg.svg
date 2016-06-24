@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
-   height="26"
-   viewBox="0 0 24 26.000001"
+   height="24.999998"
+   viewBox="0 0 24 24.999999"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
@@ -49,7 +49,8 @@
        y1="1048.9603"
        x2="25.071428"
        y2="1029.764"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,1.0000183)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3815"
@@ -70,7 +71,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
      inkscape:cx="15.15913"
-     inkscape:cy="14.387255"
+     inkscape:cy="14.387237"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -100,32 +101,32 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-4.6639449e-7,-1026.3622)">
+     transform="translate(-4.6153846e-7,-1027.3622)">
     <rect
        style="fill:#1a1517;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect3336-6"
        width="24"
-       height="24"
+       height="23"
        x="0"
-       y="1026.3622"
+       y="1027.3622"
        rx="12"
        ry="12" />
     <rect
        style="fill:#ffffff;fill-opacity:0.43921569;fill-rule:evenodd;stroke:none"
        id="rect3336-3"
        width="24"
-       height="24"
+       height="23"
        x="0"
-       y="1028.3622"
+       y="1029.3622"
        rx="12"
        ry="12" />
     <rect
        style="fill:url(#linearGradient3813);fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect3336"
        width="24"
-       height="24"
+       height="23"
        x="0"
-       y="1027.3622"
+       y="1028.3622"
        rx="12"
        ry="12" />
     <rect

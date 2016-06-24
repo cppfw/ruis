@@ -1,11 +1,11 @@
 morda_npt_slider_bg{
 	file{slider_bg.svg}
-	borders{12 13 12 13}
+	borders{12 12 12 13}
 }
 
 morda_npt_slider_handle{
 	file{slider_handle.svg}
-	borders{13 13 13 13}
+	borders{12 12 12 13}
 }
 
 morda_npt_pushbutton_normal{

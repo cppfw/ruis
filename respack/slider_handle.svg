@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="26"
-   height="26"
+   width="24"
+   height="25"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
@@ -38,7 +38,7 @@
        x2="24.276785"
        y2="1030.3175"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0,-1.9999478)" />
+       gradientTransform="translate(-1,-0.99993042)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3757-6"
@@ -87,9 +87,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.4"
-     inkscape:cx="10.767072"
-     inkscape:cy="9.4240076"
+     inkscape:zoom="11.313708"
+     inkscape:cx="22.185611"
+     inkscape:cy="0.61832146"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -118,14 +118,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1026.3622)">
+     transform="translate(0,-1027.3622)">
     <rect
        style="fill:#dbd7da;fill-opacity:1;stroke:none"
        id="rect3755-3"
        width="22"
-       height="22"
-       x="2"
-       y="1027.3622"
+       height="21"
+       x="1"
+       y="1028.3622"
        rx="11"
        ry="11" />
     <rect
@@ -133,7 +133,7 @@
        id="rect3755-2"
        width="22"
        height="22"
-       x="2"
+       x="1"
        y="1029.3622"
        rx="11"
        ry="11" />
@@ -141,9 +141,19 @@
        style="fill:url(#linearGradient3763);fill-opacity:1;stroke:none"
        id="rect3755"
        width="22"
-       height="22"
-       x="2"
-       y="1028.3622"
+       height="21"
+       x="1"
+       y="1029.3622"
+       rx="11"
+       ry="11" />
+    <rect
+       style="fill:#550000;fill-opacity:0;stroke:none"
+       id="rect3765"
+       width="356"
+       height="336"
+       x="-148"
+       y="-135"
+       transform="translate(0,1027.3622)"
        rx="11"
        ry="11" />
   </g>
