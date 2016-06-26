@@ -158,3 +158,10 @@ bool morda::isPercent(const stob::Node& n){
 	
 	return false;
 }
+
+
+real morda::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
+	//TODO:
+	
+	return real(std::min(resolution.x, resolution.y)) / morda::screenSizePt;
+}

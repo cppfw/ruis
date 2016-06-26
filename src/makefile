@@ -7,15 +7,10 @@ this_soname := $(shell cat $(prorab_this_dir)/soname.txt)
 
 this_srcs := $(shell find $(patsubst %/,%,$(prorab_this_dir)) -name *.cpp) #find all .cpp files
 this_srcs := $(patsubst $(prorab_this_dir)%,%,$(this_srcs)) #remove this dir prefix
-this_srcs := $(filter-out morda/glue/%,$(this_srcs)) #filter out platform specific files
 
 
-ifeq ($(prorab_os),linux)
-    this_srcs += morda/glue/linux/main.cpp
-else ifeq ($(prorab_os), macosx)
+ifeq ($(prorab_os), macosx)
     this_mm_src := morda/glue/macosx/main.mm
-else ifeq ($(prorab_os), windows)
-    this_srcs += morda/glue/windows/main.cpp
 endif
 
 

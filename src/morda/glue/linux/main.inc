@@ -4,6 +4,7 @@
 #include <array>
 
 #include "../../AppFactory.hpp"
+#include "../../util/util.hpp"
 
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
@@ -198,7 +199,10 @@ real getDotsPerInch(Display* display){
 
 real getDotsPerPt(Display* display){
 	int scrNum = 0;
-	return real(std::min(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum))) / morda::screenSizePt;
+	kolme::Vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
+	kolme::Vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
+	
+	return findDotsPerPt(resolution, screenSizeMm);
 }
 }//~namespace
 
@@ -208,7 +212,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xInputMethod(xDisplay, xWindow),
-		units(getDotsPerInch(xDisplay.d), getDotsPerPt(xDisplay.d))
+		units(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version

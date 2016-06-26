@@ -128,4 +128,7 @@ inline Texture2D loadTexture(const papki::File& fi){
 }
 
 
+real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
+
+
 }//~namespace
