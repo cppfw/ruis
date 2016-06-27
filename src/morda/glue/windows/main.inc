@@ -1,6 +1,7 @@
 //This file contains implementations of platform dependent methods from App class.
 
 #include "../../App.hpp"
+#include "../../util/util.hpp"
 
 #include <utki/windows.hpp>
 #include <papki/FSFile.hpp>
@@ -543,7 +544,6 @@ App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const Wi
 
 	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): DC created" << std::endl)
 	
-	//TODO: make pixel format configurable via WindowParams
 	static	PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),
 		1, // Version number of the structure, should be 1
@@ -600,7 +600,10 @@ real getDotsPerInch(HDC dc){
 }
 
 real getDotsPerPt(HDC dc){
-	return real(std::min(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES))) / morda::screenSizePt;
+	kolme::Vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
+	kolme::Vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
+
+	return findDotsPerPt(resolution, screenSizeMm);
 }
 
 }//~namespace
