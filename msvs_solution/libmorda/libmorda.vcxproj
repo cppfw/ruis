@@ -137,7 +137,7 @@
     <ClCompile Include="..\..\src\morda\App.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\Font.cpp" />
     <ClCompile Include="..\..\src\morda\fonts\TexFont.cpp" />
-    <ClCompile Include="..\..\src\morda\glue\windows\main.cpp" />
+    <ClCompile Include="..\..\src\morda\glue\main.cpp" />
     <ClCompile Include="..\..\src\morda\Inflater.cpp" />
     <ClCompile Include="..\..\src\morda\render\FrameBuffer.cpp" />
     <ClCompile Include="..\..\src\morda\render\Render.cpp" />
@@ -208,14 +208,13 @@
     <Import Project="..\packages\libpogodi.1.0.6\build\native\libpogodi.targets" Condition="Exists('..\packages\libpogodi.1.0.6\build\native\libpogodi.targets')" />
     <Import Project="..\packages\libpng.1.6.20.1\build\native\libpng.targets" Condition="Exists('..\packages\libpng.1.6.20.1\build\native\libpng.targets')" />
     <Import Project="..\packages\libunikod.2.0.3\build\native\libunikod.targets" Condition="Exists('..\packages\libunikod.2.0.3\build\native\libunikod.targets')" />
-    <Import Project="..\packages\libutki.1.0.13\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.0.13\build\native\libutki.targets')" />
     <Import Project="..\packages\libstob.3.2.1\build\native\libstob.targets" Condition="Exists('..\packages\libstob.3.2.1\build\native\libstob.targets')" />
     <Import Project="..\packages\libkolme.1.0.5\build\native\libkolme.targets" Condition="Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" />
     <Import Project="..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" />
     <Import Project="..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" />
-
     <Import Project="..\packages\libsvgren.0.3.11\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" />
     <Import Project="..\packages\libsvgdom.0.2.8\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.8\build\native\libsvgdom.targets')" />
+    <Import Project="..\packages\libutki.1.0.16\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.0.16\build\native\libutki.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -235,13 +234,12 @@
     <Error Condition="!Exists('..\packages\libpogodi.1.0.6\build\native\libpogodi.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpogodi.1.0.6\build\native\libpogodi.targets'))" />
     <Error Condition="!Exists('..\packages\libpng.1.6.20.1\build\native\libpng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng.1.6.20.1\build\native\libpng.targets'))" />
     <Error Condition="!Exists('..\packages\libunikod.2.0.3\build\native\libunikod.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libunikod.2.0.3\build\native\libunikod.targets'))" />
-    <Error Condition="!Exists('..\packages\libutki.1.0.13\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.0.13\build\native\libutki.targets'))" />
     <Error Condition="!Exists('..\packages\libstob.3.2.1\build\native\libstob.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libstob.3.2.1\build\native\libstob.targets'))" />
     <Error Condition="!Exists('..\packages\libkolme.1.0.5\build\native\libkolme.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libkolme.1.0.5\build\native\libkolme.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets'))" />
-
     <Error Condition="!Exists('..\packages\libsvgren.0.3.11\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.11\build\native\libsvgren.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.2.8\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.8\build\native\libsvgdom.targets'))" />
+    <Error Condition="!Exists('..\packages\libutki.1.0.16\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.0.16\build\native\libutki.targets'))" />
   </Target>
 </Project>
