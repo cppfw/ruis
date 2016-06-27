@@ -183,6 +183,8 @@ morda::real getDotsPerInch(){
 morda::real getDotsPerPt(){
 	float scale = [[UIScreen mainScreen] scale];
 
+	//TODO: use findDotsPerPt() function from morda util
+	
 	return morda::real(320.0f * scale) / morda::screenSizePt;
 }
 
