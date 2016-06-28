@@ -10,7 +10,7 @@
 
 namespace morda{
 
-//TODO: list could be implemented based on ScrollContainer and LinearContainer inside of it, for easier widgets arrangement when scrolling
+//TODO: list could be implemented based on ScrollArea and LinearContainer inside of it, for easier widgets arrangement when scrolling
 class List : public Container{
 	size_t addedIndex = size_t(-1);
 	

@@ -85,7 +85,7 @@
               <in>Frame.cpp</in>
               <in>LinearContainer.cpp</in>
               <in>Overlay.cpp</in>
-              <in>ScrollContainer.cpp</in>
+              <in>ScrollArea.cpp</in>
               <in>Table.cpp</in>
               <in>TableRow.cpp</in>
             </df>
@@ -1831,7 +1831,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/ScrollContainer.cpp"
+      <item path="src/morda/widgets/core/container/ScrollArea.cpp"
             ex="false"
             tool="1"
             flavor2="8">

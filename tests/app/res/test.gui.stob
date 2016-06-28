@@ -470,7 +470,7 @@ Container{
 						dimX{0} dimY{max}
 						weight{1}
 					}
-					ScrollContainer{
+					ScrollArea{
 						name{scroll_area}
 
 						clip{true}

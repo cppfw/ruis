@@ -14,7 +14,7 @@
 #include "../../../src/morda/resources/ResFont.hpp"
 
 #include "../../../src/morda/widgets/core/CharInputWidget.hpp"
-#include "../../../src/morda/widgets/core/container/ScrollContainer.hpp"
+#include "../../../src/morda/widgets/core/container/ScrollArea.hpp"
 #include "../../../src/morda/widgets/core/container/LinearContainer.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
@@ -647,9 +647,9 @@ public:
 		
 		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->startUpdating(30);
 		
-		//ScrollContainer
+		//ScrollArea
 		{
-			auto scrollArea = c->findChildByNameAs<morda::ScrollContainer>("scroll_area");
+			auto scrollArea = c->findChildByNameAs<morda::ScrollArea>("scroll_area");
 			auto sa = utki::makeWeak(scrollArea);
 			
 			auto vertSlider = c->findChildByNameAs<morda::HandleSlider>("scroll_area_vertical_slider");

@@ -13,7 +13,7 @@ namespace morda{
 
 
 
-class ScrollContainer : public Container{
+class ScrollArea : public Container{
 	//offset from top left corner
 	Vec2r curScrollPos = Vec2r(0);
 	
@@ -24,10 +24,10 @@ class ScrollContainer : public Container{
 	Vec2r curScrollFactor;
 	
 public:
-	ScrollContainer(const stob::Node* chain = nullptr);
+	ScrollArea(const stob::Node* chain = nullptr);
 	
-	ScrollContainer(const ScrollContainer&) = delete;
-	ScrollContainer& operator=(const ScrollContainer&) = delete;
+	ScrollArea(const ScrollArea&) = delete;
+	ScrollArea& operator=(const ScrollArea&) = delete;
 	
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;

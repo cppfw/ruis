@@ -1,4 +1,4 @@
-#include "ScrollContainer.hpp"
+#include "ScrollArea.hpp"
 #include "../../../App.hpp"
 #include "../../../util/util.hpp"
 
@@ -7,14 +7,14 @@ using namespace morda;
 
 
 
-ScrollContainer::ScrollContainer(const stob::Node* chain) :
+ScrollArea::ScrollArea(const stob::Node* chain) :
 		Widget(chain),
 		Container(chain)
 {}
 
 
 
-bool ScrollContainer::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
+bool ScrollArea::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
@@ -23,7 +23,7 @@ bool ScrollContainer::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouse
 
 
 
-bool ScrollContainer::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool ScrollArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
@@ -32,7 +32,7 @@ bool ScrollContainer::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 
 
 
-void ScrollContainer::render(const morda::Matr4r& matrix) const {
+void ScrollArea::render(const morda::Matr4r& matrix) const {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;
@@ -43,7 +43,7 @@ void ScrollContainer::render(const morda::Matr4r& matrix) const {
 	this->Container::render(matr);
 }
 
-void ScrollContainer::clampScrollPos() {
+void ScrollArea::clampScrollPos() {
 	if(this->effectiveDim.x < 0){
 		this->curScrollPos.x = 0;
 	}
@@ -55,7 +55,7 @@ void ScrollContainer::clampScrollPos() {
 
 
 
-void ScrollContainer::setScrollPos(const Vec2r& newScrollPos) {
+void ScrollArea::setScrollPos(const Vec2r& newScrollPos) {
 	this->curScrollPos = newScrollPos.rounded();
 	
 	this->clampScrollPos();
@@ -64,14 +64,14 @@ void ScrollContainer::setScrollPos(const Vec2r& newScrollPos) {
 
 
 
-void ScrollContainer::setScrollPosAsFactor(const Vec2r& factor){	
+void ScrollArea::setScrollPosAsFactor(const Vec2r& factor){	
 	Vec2r newScrollPos = this->effectiveDim.compMul(factor);
 	
 	this->setScrollPos(newScrollPos);
 }
 
 
-void ScrollContainer::updateScrollFactor(){
+void ScrollArea::updateScrollFactor(){
 	//at this point effective dimension should be updated
 	Vec2r factor = this->curScrollPos.compDiv(this->effectiveDim);
 	
@@ -88,7 +88,7 @@ void ScrollContainer::updateScrollFactor(){
 	}
 }
 
-void ScrollContainer::arrangeWidgets() {
+void ScrollArea::arrangeWidgets() {
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(**i);
 		
@@ -99,11 +99,11 @@ void ScrollContainer::arrangeWidgets() {
 }
 
 
-void ScrollContainer::layOut(){
+void ScrollArea::layOut(){
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 
-	//distance of content's bottom right corner from bottom right corner of the ScrollContainer
+	//distance of content's bottom right corner from bottom right corner of the ScrollArea
 	Vec2r br = this->curScrollPos - this->effectiveDim;
 
 	if(br.x > 0){
@@ -123,13 +123,13 @@ void ScrollContainer::layOut(){
 	}
 }
 
-void ScrollContainer::onChildrenListChanged(){
+void ScrollArea::onChildrenListChanged(){
 	this->Container::onChildrenListChanged();
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 }
 
-void ScrollContainer::updateEffectiveDim(){
+void ScrollArea::updateEffectiveDim(){
 	morda::Vec2r minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){

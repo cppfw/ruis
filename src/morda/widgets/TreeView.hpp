@@ -9,7 +9,7 @@
 #include "core/Widget.hpp"
 #include "List.hpp"
 
-#include "core/container/ScrollContainer.hpp"
+#include "core/container/ScrollArea.hpp"
 
 
 namespace morda{
@@ -377,7 +377,7 @@ private:
 
 class TreeView :
 		virtual public Widget,
-		private ScrollContainer
+		private ScrollArea
 {
 	std::shared_ptr<List> list;
 public:
@@ -463,7 +463,7 @@ public:
 	}
 	
 	Vec2r scrollFactor()const{
-		return Vec2r(this->ScrollContainer::scrollFactor().x, this->list->scrollFactor());
+		return Vec2r(this->ScrollArea::scrollFactor().x, this->list->scrollFactor());
 	}
 };
 
