@@ -9,15 +9,15 @@
 
 namespace morda{
 
-class KeyProxyContainer : public FrameContainer{
+class KeyProxy : public FrameContainer{
 public:
-	KeyProxyContainer(const stob::Node* chain = nullptr) :
+	KeyProxy(const stob::Node* chain = nullptr) :
 			Widget(chain),
 			FrameContainer(chain)
 	{}
 	
-	KeyProxyContainer(const KeyProxyContainer&) = delete;
-	KeyProxyContainer& operator=(const KeyProxyContainer&) = delete;
+	KeyProxy(const KeyProxy&) = delete;
+	KeyProxy& operator=(const KeyProxy&) = delete;
 	
 	std::function<bool(bool isDown, morda::EKey keyCode)> key;
 	

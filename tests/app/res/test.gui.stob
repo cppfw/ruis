@@ -24,7 +24,7 @@ defs{
 	clr{0xff0000ff}
 }
 
-KeyProxyContainer{
+KeyProxy{
 
 OverlayContainer{
 	name {overlay}

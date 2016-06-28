@@ -1,9 +1,11 @@
 #include <kolme/Quaternion.hpp>
+#include <utki/debug.hpp>
+#include <papki/FSFile.hpp>
 
 #include "../../../src/morda/AppFactory.hpp"
 #include "../../../src/morda/widgets/core/Widget.hpp"
 #include "../../../src/morda/widgets/core/container/Container.hpp"
-#include "../../../src/morda/widgets/core/proxy/KeyProxyContainer.hpp"
+#include "../../../src/morda/widgets/core/proxy/KeyProxy.hpp"
 
 #include "../../../src/morda/widgets/button/Button.hpp"
 #include "../../../src/morda/widgets/label/TextLabel.hpp"
@@ -22,9 +24,6 @@
 #include "../../../src/morda/widgets/label/ColorLabel.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
-
-#include <utki/debug.hpp>
-#include <papki/FSFile.hpp>
 
 #include "../../../src/morda/util/ZipFile.hpp"
 
@@ -621,7 +620,7 @@ public:
 			);
 		this->setRootWidget(c);
 		
-		std::dynamic_pointer_cast<morda::KeyProxyContainer>(c)->key = [this](bool isDown, morda::EKey keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::EKey keyCode) -> bool{
 			if(isDown){
 				if(keyCode == morda::EKey::ESCAPE){
 					this->quit();

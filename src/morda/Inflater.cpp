@@ -6,7 +6,7 @@
 #include "widgets/core/container/ScrollContainer.hpp"
 #include "widgets/core/container/TableContainer.hpp"
 #include "widgets/core/container/TableRow.hpp"
-#include "widgets/core/proxy/KeyProxyContainer.hpp"
+#include "widgets/core/proxy/KeyProxy.hpp"
 #include "widgets/core/container/OverlayContainer.hpp"
 
 
@@ -33,7 +33,7 @@ Inflater::Inflater(){
 	this->AddWidget<ScrollContainer>("ScrollContainer");
 	this->AddWidget<TableContainer>("TableContainer");
 	this->AddWidget<TableRow>("TableRow");
-	this->AddWidget<KeyProxyContainer>("KeyProxyContainer");
+	this->AddWidget<KeyProxy>("KeyProxy");
 	this->AddWidget<OverlayContainer>("OverlayContainer");
 	this->AddWidget<ResizeProxy>("ResizeProxy");
 }
