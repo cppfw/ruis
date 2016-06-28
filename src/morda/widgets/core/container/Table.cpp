@@ -10,7 +10,7 @@ using namespace morda;
 
 Table::Table(const stob::Node* chain) :
 		Widget(chain),
-		Vertical(chain)
+		VerticalArea(chain)
 {}
 
 void Table::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
@@ -94,13 +94,13 @@ void Table::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 
 void Table::layOut(){
 	this->updateRowsLayoutParam(this->rect().d);
-	this->Vertical::layOut();
+	this->VerticalArea::layOut();
 }
 
 
 morda::Vec2r Table::measure(const morda::Vec2r& quotum) const{
 	this->updateRowsLayoutParam(quotum);
-	return this->Vertical::measure(quotum);
+	return this->VerticalArea::measure(quotum);
 }
 
 

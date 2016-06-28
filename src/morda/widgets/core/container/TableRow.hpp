@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "LinearContainer.hpp"
+#include "LinearArea.hpp"
 #include "Table.hpp"
 
 namespace morda{
 
-class TableRow : public Horizontal{
+class TableRow : public HorizontalArea{
 	friend class Table;
 public:
 	TableRow(const stob::Node* chain = nullptr);
@@ -18,11 +18,11 @@ public:
 	TableRow& operator=(const TableRow&) = delete;
 	
 protected:
-	class LayoutParams : public Horizontal::LayoutParams{
+	class LayoutParams : public HorizontalArea::LayoutParams{
 		friend class TableRow;
 		friend class Table;
 		
-		mutable Horizontal::LayoutParams processedParams;
+		mutable HorizontalArea::LayoutParams processedParams;
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};

@@ -15,7 +15,7 @@
 
 #include "../../../src/morda/widgets/core/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/core/container/ScrollArea.hpp"
-#include "../../../src/morda/widgets/core/container/LinearContainer.hpp"
+#include "../../../src/morda/widgets/core/container/LinearArea.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
@@ -309,7 +309,7 @@ public:
 	const char* DLineEnd = R"qwertyuiop(
 			Frame{
 				layout{dimX{5mm} dimY{max}}
-				Vertical{
+				VerticalArea{
 					layout{dimX{max}dimY{max}}
 					ColorLabel{
 						layout{dimX{0.5mm}dimY{0}weight{1}}
@@ -317,7 +317,7 @@ public:
 					}
 					Widget{layout{dimX{max}dimY{0}weight{1}}}
 				}
-				Horizontal{
+				HorizontalArea{
 					layout{dimX{max}dimY{max}}
 					Widget{layout{dimX{0}dimY{max}weight{1}}}
 					ColorLabel{
@@ -335,7 +335,7 @@ public:
 					layout{dimX{0.5mm}dimY{max}}
 					color{0xffff0000}
 				}
-				Horizontal{
+				HorizontalArea{
 					layout{dimX{max}dimY{max}}
 					Widget{layout{dimX{0}dimY{max}weight{1}}}
 					ColorLabel{
@@ -461,7 +461,7 @@ public:
 			isLast.push_back(n->next() == nullptr);
 		}
 		
-		auto ret = utki::makeShared<morda::Horizontal>();
+		auto ret = utki::makeShared<morda::HorizontalArea>();
 
 		ASSERT(isLast.size() == path.size())
 		

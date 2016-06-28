@@ -81,7 +81,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 
 			//middle
-			Vertical{
+			VerticalArea{
 				layout{
 					weight{1}
 					dimY{max}
@@ -109,7 +109,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						}
 					}
 
-					Horizontal{
+					HorizontalArea{
 						layout{
 							dimX{max} dimY{max}
 						}

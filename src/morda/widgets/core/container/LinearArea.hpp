@@ -12,9 +12,9 @@ namespace morda{
 
 
 
-class LinearContainer : public Container{
-	LinearContainer(const LinearContainer&) = delete;
-	LinearContainer& operator=(const LinearContainer&) = delete;
+class LinearArea : public Container{
+	LinearArea(const LinearArea&) = delete;
+	LinearArea& operator=(const LinearArea&) = delete;
 
 	bool isVertical;
 	
@@ -27,7 +27,7 @@ class LinearContainer : public Container{
 	}
 	
 protected:
-	LinearContainer(bool isVertical, const stob::Node* chain);
+	LinearArea(bool isVertical, const stob::Node* chain);
 public:
 
 	void layOut() override;	
@@ -49,28 +49,28 @@ private:
 
 
 
-class Vertical : public LinearContainer{
+class VerticalArea : public LinearArea{
 public:
-	Vertical(const stob::Node* chain = nullptr) :
+	VerticalArea(const stob::Node* chain = nullptr) :
 			Widget(chain),
-			LinearContainer(true, chain)
+			LinearArea(true, chain)
 	{}
 	
-	Vertical(const Vertical&) = delete;
-	Vertical& operator=(const Vertical&) = delete;
+	VerticalArea(const VerticalArea&) = delete;
+	VerticalArea& operator=(const VerticalArea&) = delete;
 };
 
 
 
-class Horizontal : public LinearContainer{
+class HorizontalArea : public LinearArea{
 public:
-	Horizontal(const stob::Node* chain = nullptr) :
+	HorizontalArea(const stob::Node* chain = nullptr) :
 			Widget(chain),
-			LinearContainer(false, chain)
+			LinearArea(false, chain)
 	{}
 	
-	Horizontal(const Horizontal&) = delete;
-	Horizontal& operator=(const Horizontal&) = delete;
+	HorizontalArea(const HorizontalArea&) = delete;
+	HorizontalArea& operator=(const HorizontalArea&) = delete;
 };
 
 

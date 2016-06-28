@@ -83,7 +83,7 @@
             <df name="container">
               <in>Container.cpp</in>
               <in>Frame.cpp</in>
-              <in>LinearContainer.cpp</in>
+              <in>LinearArea.cpp</in>
               <in>Overlay.cpp</in>
               <in>ScrollArea.cpp</in>
               <in>Table.cpp</in>
@@ -1796,7 +1796,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/LinearContainer.cpp"
+      <item path="src/morda/widgets/core/container/LinearArea.cpp"
             ex="false"
             tool="1"
             flavor2="8">

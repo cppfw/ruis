@@ -1,4 +1,4 @@
-#include "LinearContainer.hpp"
+#include "LinearArea.hpp"
 
 #include "../../../util/util.hpp"
 
@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
+LinearArea::LayoutParams::LayoutParams(const stob::Node* chain) :
 		Container::LayoutParams(chain)
 {
 	if(auto n = getProperty(chain, "weight")){
@@ -23,7 +23,7 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 
 
-LinearContainer::LinearContainer(bool isVertical, const stob::Node* chain) :
+LinearArea::LinearArea(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		Container(chain),
 		isVertical(isVertical)
@@ -42,7 +42,7 @@ public:
 
 
 
-void LinearContainer::layOut(){
+void LinearArea::layOut(){
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	
@@ -129,7 +129,7 @@ void LinearContainer::layOut(){
 
 
 
-morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r LinearArea::measure(const morda::Vec2r& quotum)const{
 	unsigned longIndex = this->GetLongIndex();
 	unsigned transIndex = this->GetTransIndex();
 	

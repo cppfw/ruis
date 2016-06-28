@@ -6,7 +6,7 @@
 
 #include <functional>
 
-#include "LinearContainer.hpp"
+#include "LinearArea.hpp"
 #include "TableRow.hpp"
 
 namespace morda{
@@ -16,7 +16,7 @@ namespace morda{
  * @brief Table container.
  * It finds the maximum weight and maximum width in the column to use it in row lay outing.
  */
-class Table : public Vertical{
+class Table : public VerticalArea{
 public:
 	Table(const stob::Node* chain = nullptr);
 	

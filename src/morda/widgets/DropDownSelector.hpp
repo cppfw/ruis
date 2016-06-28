@@ -1,14 +1,14 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "core/container/LinearContainer.hpp"
+#include "core/container/LinearArea.hpp"
 #include "core/container/Frame.hpp"
 
 namespace morda{
 
 class DropDownSelector :
 		virtual public Widget,
-		private Horizontal
+		private HorizontalArea
 {
 	std::shared_ptr<Frame> selectionContainer;
 public:

@@ -129,7 +129,7 @@ public:
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		Horizontal(stob::parse(DLayout).get())
+		HorizontalArea(stob::parse(DLayout).get())
 {
 	this->selectionContainer = this->findChildByNameAs<Frame>("morda_dropdown_selection");
 	ASSERT(this->selectionContainer)
@@ -145,7 +145,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 			throw Exc("DropDownSelector: no Overlay parent found");
 		}
 		
-		auto w = utki::makeShared<Vertical>();
+		auto w = utki::makeShared<VerticalArea>();
 		
 		for(size_t i = 0; i != this->provider->count(); ++i){
 			w->add(this->provider->getWidget(i, false));
