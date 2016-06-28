@@ -148,6 +148,7 @@ void NinePatch::applyImages(){
 //	TRACE(<< "minBorders = " << minBorders << std::endl)
 	
 	{
+		//TODO: getLayoutParams requests relayout which is not necessarily needed
 		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
 		
 		lp.dim.x = this->borders.left();
