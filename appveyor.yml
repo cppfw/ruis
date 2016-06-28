@@ -8,6 +8,7 @@ install:
   - ps: Import-Module CoApp
 
 before_build:
+  - nuget update msvs_solution/msvs_solution.sln
   - nuget restore msvs_solution/msvs_solution.sln
 
 build_script:

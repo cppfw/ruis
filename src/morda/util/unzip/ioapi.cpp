@@ -77,8 +77,9 @@ voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, int mode)
     if (mode & ZLIB_FILEFUNC_MODE_CREATE)
         mode_fopen = "wb";
 
-    if ((filename!=NULL) && (mode_fopen != NULL))
-        file = fopen(filename, mode_fopen);
+	if ((filename != NULL) && (mode_fopen != NULL)) {
+		fopen_s(&file, filename, mode_fopen);
+	}
     return file;
 }
 

@@ -142,7 +142,8 @@ void ZipFile::closeInternal()const noexcept{
 }
 
 size_t ZipFile::readInternal(utki::Buf<std::uint8_t> buf)const{
-	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), buf.size());
+	ASSERT(buf.size() <= unsigned(-1))
+	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), unsigned(buf.size()));
 	if(numBytesRead < 0){
 		throw papki::Exc("ZipFile::Read(): file reading failed");
 	}
@@ -199,8 +200,8 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 			if(unzGetCurrentFileInfo(
 					this->handle,
 					NULL,
-					fileNameBuf.begin(),
-					fileNameBuf.size(),
+					&*fileNameBuf.begin(),
+					uLong(fileNameBuf.size()),
 					NULL,
 					0,
 					NULL,
@@ -212,7 +213,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 
 			fileNameBuf[fileNameBuf.size() - 1] = 0;//null-terminate, just to be on a safe side
 
-			std::string fn(fileNameBuf.begin());//filename
+			std::string fn(&*fileNameBuf.begin());//filename
 
 			if(fn.size() <= this->path().size()){
 				continue;
