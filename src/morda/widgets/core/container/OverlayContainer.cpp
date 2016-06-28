@@ -28,14 +28,14 @@ const char* DContextMenuLayout = R"qwertyuiop(
 
 OverlayContainer::OverlayContainer(const stob::Node* chain) :
 		Widget(chain),
-		FrameContainer(chain)
+		Frame(chain)
 {
 	this->onChildrenListChanged();
 }
 
 void OverlayContainer::onChildrenListChanged(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = utki::makeShared<FrameContainer>(stob::parse(DContextMenuLayout).get());
+		this->overlayLayer = utki::makeShared<Frame>(stob::parse(DContextMenuLayout).get());
 		this->add(this->overlayLayer);
 		
 		this->overlayContainer = this->overlayLayer->findChildByNameAs<Container>("morda_overlay_container");

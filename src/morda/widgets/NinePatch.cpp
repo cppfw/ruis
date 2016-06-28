@@ -39,7 +39,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 				layout{dimX{0}dimY{fill}}
 			}
 
-			FrameContainer{
+			Frame{
 				name{morda_content}
 				layout{
 					weight{1}
@@ -93,7 +93,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->b = this->findChildByNameAs<ImageLabel>("morda_b");
 	this->rb = this->findChildByNameAs<ImageLabel>("morda_rb");
 	
-	this->content_var = this->findChildByNameAs<FrameContainer>("morda_content");
+	this->content_var = this->findChildByNameAs<Frame>("morda_content");
 	
 	if(auto n = getProperty(chain, "borderLeft")){
 		this->borders.left() = dimValueFromSTOB(*n);

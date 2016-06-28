@@ -13,13 +13,13 @@ namespace morda{
 
 
 
-class FrameContainer : public Container{
+class Frame : public Container{
 	
-	FrameContainer(const FrameContainer&) = delete;
-	FrameContainer& operator=(const FrameContainer&) = delete;
+	Frame(const Frame&) = delete;
+	Frame& operator=(const Frame&) = delete;
 	
 public:
-	FrameContainer(const stob::Node* chain = nullptr);
+	Frame(const stob::Node* chain = nullptr);
 	
 public:	
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;

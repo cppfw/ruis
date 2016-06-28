@@ -24,7 +24,7 @@ templates{
 //		borderLeft{5mm}
 	}
 
-	Background FrameContainer{
+	Background Frame{
 		layout{dimX{fill} dimY{fill}}
 
 		ImageLabel{

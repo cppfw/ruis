@@ -269,7 +269,7 @@ Container{
 					weight{1}
 				}
 
-				FrameContainer{
+				Frame{
 					layout{
 						dimX{0} dimY{max}
 						weight{1}
@@ -465,7 +465,7 @@ Container{
 					weight{1}
 				}
 
-				FrameContainer{
+				Frame{
 					layout{
 						dimX{0} dimY{max}
 						weight{1}
@@ -613,7 +613,7 @@ Container{
 			}
 
 
-			FrameContainer{
+			Frame{
 				layout{
 					dimX{0} dimY{max}
 					weight{1}

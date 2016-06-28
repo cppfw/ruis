@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "core/container/FrameContainer.hpp"
+#include "core/container/Frame.hpp"
 #include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
 #include "core/proxy/MouseProxy.hpp"
@@ -27,7 +27,7 @@ class Window :
 	
 	std::shared_ptr<TextLabel> title;
 	
-	std::shared_ptr<FrameContainer> contentArea;
+	std::shared_ptr<Frame> contentArea;
 	
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
@@ -52,7 +52,7 @@ public:
 	
 	void setTitle(const std::string& str);
 	
-	FrameContainer& content(){
+	Frame& content(){
 		return *this->contentArea;
 	}
 	

@@ -1,19 +1,19 @@
-#include "FrameContainer.hpp"
+#include "Frame.hpp"
 
 #include "../../../util/util.hpp"
 
 using namespace morda;
 
 
-FrameContainer::FrameContainer(const stob::Node* chain) :
+Frame::Frame(const stob::Node* chain) :
 		Widget(chain),
 		Container(chain)
 {}
 
 
 
-void FrameContainer::layOut() {
-//	TRACE(<< "FrameContainer::layOut(): invoked" << std::endl)
+void Frame::layOut() {
+//	TRACE(<< "Frame::layOut(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(**i);
 		
@@ -25,7 +25,7 @@ void FrameContainer::layOut() {
 
 
 
-morda::Vec2r FrameContainer::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r Frame::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));

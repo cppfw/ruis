@@ -5,15 +5,15 @@
 
 #pragma once
 
-#include "../container/FrameContainer.hpp"
+#include "../container/Frame.hpp"
 
 namespace morda{
 
-class KeyProxy : public FrameContainer{
+class KeyProxy : public Frame{
 public:
 	KeyProxy(const stob::Node* chain = nullptr) :
 			Widget(chain),
-			FrameContainer(chain)
+			Frame(chain)
 	{}
 	
 	KeyProxy(const KeyProxy&) = delete;

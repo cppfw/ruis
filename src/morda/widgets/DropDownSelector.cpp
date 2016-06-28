@@ -19,7 +19,7 @@ using namespace morda;
 namespace{
 
 const char* DLayout = R"qwertyuiop(
-		FrameContainer{
+		Frame{
 			name{morda_dropdown_selection}
 			layout{
 				dimX{0} dimY{min}
@@ -35,7 +35,7 @@ const char* DLayout = R"qwertyuiop(
 	)qwertyuiop";
 
 const char* DDropDownItemLayout = R"qwertyuiop(
-		FrameContainer{
+		Frame{
 			layout{
 				dimX{max}
 			}
@@ -70,7 +70,7 @@ public:
 			return w;
 		}
 		
-		auto wd = std::dynamic_pointer_cast<FrameContainer>(morda::App::inst().inflater.inflate(*stob::parse(DDropDownItemLayout)));
+		auto wd = std::dynamic_pointer_cast<Frame>(morda::App::inst().inflater.inflate(*stob::parse(DDropDownItemLayout)));
 		ASSERT(wd)
 		
 		auto mp = wd->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
@@ -131,7 +131,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
 		HorizontalContainer(stob::parse(DLayout).get())
 {
-	this->selectionContainer = this->findChildByNameAs<FrameContainer>("morda_dropdown_selection");
+	this->selectionContainer = this->findChildByNameAs<Frame>("morda_dropdown_selection");
 	ASSERT(this->selectionContainer)
 	
 	auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");

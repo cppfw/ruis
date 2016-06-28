@@ -8,7 +8,7 @@
 
 #include "../resources/ResNinePatch.hpp"
 
-#include "core/container/FrameContainer.hpp"
+#include "core/container/Frame.hpp"
 #include "core/container/TableContainer.hpp"
 
 #include "label/ImageLabel.hpp"
@@ -28,7 +28,7 @@ class NinePatch :
 	
 	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
 	
-	std::shared_ptr<FrameContainer> content_var;
+	std::shared_ptr<Frame> content_var;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -38,7 +38,7 @@ public:
 	
 	void setNinePatch(const std::shared_ptr<ResNinePatch>& np);
 	
-	FrameContainer& content(){
+	Frame& content(){
 		return *this->content_var;
 	}
 	

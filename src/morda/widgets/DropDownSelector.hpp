@@ -2,7 +2,7 @@
 
 #include "core/Widget.hpp"
 #include "core/container/LinearContainer.hpp"
-#include "core/container/FrameContainer.hpp"
+#include "core/container/Frame.hpp"
 
 namespace morda{
 
@@ -10,7 +10,7 @@ class DropDownSelector :
 		virtual public Widget,
 		private HorizontalContainer
 {
-	std::shared_ptr<FrameContainer> selectionContainer;
+	std::shared_ptr<Frame> selectionContainer;
 public:
 	class ItemsProvider : virtual public utki::Shared{
 		friend class DropDownSelector;

@@ -274,7 +274,7 @@ public:
 	}
 	
 	const char* DPlusMinus = R"qwertyuiop(
-			FrameContainer{
+			Frame{
 				layout{
 					dimX{5mm} dimY{5mm}
 				}
@@ -297,7 +297,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLine = R"qwertyuiop(
-			FrameContainer{
+			Frame{
 				layout{dimX{5mm} dimY{max}}
 				ColorLabel{
 					layout{dimX{0.5mm}dimY{max}}
@@ -307,7 +307,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLineEnd = R"qwertyuiop(
-			FrameContainer{
+			Frame{
 				layout{dimX{5mm} dimY{max}}
 				VerticalContainer{
 					layout{dimX{max}dimY{max}}
@@ -329,7 +329,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLineMiddle = R"qwertyuiop(
-			FrameContainer{
+			Frame{
 				layout{dimX{5mm} dimY{max}}
 				ColorLabel{
 					layout{dimX{0.5mm}dimY{max}}
@@ -470,7 +470,7 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::FrameContainer>(morda::App::inst().inflater.inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::App::inst().inflater.inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
 			if(n->child()){
@@ -512,7 +512,7 @@ public:
 		{
 			auto v = morda::App::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
-							FrameContainer{
+							Frame{
 								ColorLabel{
 									name{selection}
 									layout{dimX{max}dimY{max}}

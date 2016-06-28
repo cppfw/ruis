@@ -4,14 +4,14 @@
 
 #pragma once
 
-#include "FrameContainer.hpp"
+#include "Frame.hpp"
 
 namespace morda{
 
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  */
-class OverlayContainer : public FrameContainer{
+class OverlayContainer : public Frame{
 	std::shared_ptr<Widget> overlayLayer;
 	std::shared_ptr<Container> overlayContainer;
 public:

@@ -13,7 +13,7 @@ namespace{
 const char* DWindowDesc = R"qwertyuiop(
 		//1st row
 		TableRow{
-			FrameContainer{
+			Frame{
 				ImageLabel{
 					image{morda_img_window_lt}
 				}
@@ -25,7 +25,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			FrameContainer{
+			Frame{
 				layout{
 					dimX{0}
 				}
@@ -43,7 +43,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			FrameContainer{
+			Frame{
 				ImageLabel{
 					image{morda_img_window_rt}
 				}
@@ -61,7 +61,7 @@ const char* DWindowDesc = R"qwertyuiop(
 			layout{
 				weight{1}
 			}
-			FrameContainer{
+			Frame{
 				layout{
 					dimY{max}
 				}
@@ -88,7 +88,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 
 				//caption
-				FrameContainer{
+				Frame{
 					layout{
 						dimX{max}
 					}
@@ -124,7 +124,7 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 
-				FrameContainer{
+				Frame{
 					name{morda_content}
 					clip{true}
 					layout{
@@ -134,7 +134,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			FrameContainer{
+			Frame{
 				layout{
 					dimY{max}
 				}
@@ -156,7 +156,7 @@ const char* DWindowDesc = R"qwertyuiop(
 
 		//3rd row
 		TableRow{
-			FrameContainer{
+			Frame{
 				ImageLabel{
 					image{morda_img_window_lb}
 				}
@@ -168,7 +168,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			FrameContainer{
+			Frame{
 				layout{
 					dimX{0}
 				}
@@ -186,7 +186,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				}
 			}
 
-			FrameContainer{
+			Frame{
 				ImageLabel{
 					image{morda_img_window_rb}
 				}
@@ -234,7 +234,7 @@ morda::Window::Window(const stob::Node* chain) :
 }
 
 void morda::Window::setupWidgets(){
-	this->contentArea = this->findChildByNameAs<FrameContainer>("morda_content");
+	this->contentArea = this->findChildByNameAs<Frame>("morda_content");
 	ASSERT(this->contentArea)
 	
 	this->title = this->findChildByNameAs<TextLabel>("morda_title");
