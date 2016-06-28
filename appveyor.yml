@@ -8,9 +8,8 @@ install:
   - ps: Import-Module CoApp
 
 before_build:
-  - nuget update msvs_solution/libmorda/packages.config
-  - nuget update msvs_solution/test_app/packages.config
   - nuget restore msvs_solution/msvs_solution.sln
+  - nuget update msvs_solution/msvs_solution.sln
 
 build_script:
   - ps: .\nuget\build_nuget.ps1
