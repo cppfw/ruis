@@ -73,32 +73,17 @@ Widget::Widget(const stob::Node* chain){
 
 
 
-namespace{
-real dimValueFromLayoutStob(const stob::Node& n){
-	if(n == "min"){
-		return Widget::LayoutParams::D_Min;
-	}else if(n == "max"){
-		return Widget::LayoutParams::D_Max;
-	}else if(n == "fill"){
-		return Widget::LayoutParams::D_Fill;
-	}
-	return dimValueFromSTOB(n);
-}
-}
-
-
-
 Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 	if(auto n = getProperty(chain, "dimX")){
-		this->dim.x = dimValueFromLayoutStob(*n);
+		this->dim.x = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.x = LayoutParams::D_Min;
+		this->dim.x = LayoutParams::Min_d;
 	}
 	
 	if(auto n = getProperty(chain, "dimY")){
-		this->dim.y = dimValueFromLayoutStob(*n);
+		this->dim.y = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.y = LayoutParams::D_Min;
+		this->dim.y = LayoutParams::Min_d;
 	}
 }
 

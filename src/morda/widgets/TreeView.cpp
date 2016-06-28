@@ -15,8 +15,8 @@ TreeView::TreeView(const stob::Node* chain) :
 	
 	auto& lp = this->getLayoutParams(*this->list);
 	
-	lp.dim.y = Widget::LayoutParams::D_Max;
-	lp.dim.x = Widget::LayoutParams::D_Min;
+	lp.dim.y = Widget::LayoutParams::Max_d;
+	lp.dim.x = Widget::LayoutParams::Min_d;
 	
 	this->list->dataSetChanged = [this](List&){
 		if(this->viewChanged){

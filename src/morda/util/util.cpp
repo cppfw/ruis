@@ -165,3 +165,16 @@ real morda::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
 	
 	return real(std::min(resolution.x, resolution.y)) / morda::screenSizePt;
 }
+
+
+
+float morda::dimValueFromLayoutStob(const stob::Node& n){
+	if(n == "min"){
+		return Widget::LayoutParams::Min_d;
+	}else if(n == "max"){
+		return Widget::LayoutParams::Max_d;
+	}else if(n == "fill"){
+		return Widget::LayoutParams::Fill_d;
+	}
+	return dimValueFromSTOB(n);
+}

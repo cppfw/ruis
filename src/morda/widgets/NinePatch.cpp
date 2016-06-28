@@ -98,25 +98,25 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	if(auto n = getProperty(chain, "borderLeft")){
 		this->borders.left() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.left() = LayoutParams::D_Min;
+		this->borders.left() = LayoutParams::Min_d;
 	}
 	
 	if(auto n = getProperty(chain, "borderRight")){
 		this->borders.right() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.right() = LayoutParams::D_Min;
+		this->borders.right() = LayoutParams::Min_d;
 	}
 	
 	if(auto n = getProperty(chain, "borderTop")){
 		this->borders.top() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.top() = LayoutParams::D_Min;
+		this->borders.top() = LayoutParams::Min_d;
 	}
 	
 	if(auto n = getProperty(chain, "borderBottom")){
 		this->borders.bottom() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.bottom() = LayoutParams::D_Min;
+		this->borders.bottom() = LayoutParams::Min_d;
 	}
 	
 	//this should go after setting borders
@@ -152,12 +152,12 @@ void NinePatch::applyImages(){
 		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
 		
 		lp.dim.x = this->borders.left();
-		if(lp.dim.x == LayoutParams::D_Min){
+		if(lp.dim.x == LayoutParams::Min_d){
 			lp.dim.x = minBorders.left();
 		}
 		
 		lp.dim.y = this->borders.top();
-		if(lp.dim.y == LayoutParams::D_Min){
+		if(lp.dim.y == LayoutParams::Min_d){
 			lp.dim.y = minBorders.top();
 		}
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)
@@ -166,12 +166,12 @@ void NinePatch::applyImages(){
 		auto& lp = this->rb->parent()->getLayoutParams(*this->rb);
 		
 		lp.dim.x = this->borders.right();
-		if(lp.dim.x == LayoutParams::D_Min){
+		if(lp.dim.x == LayoutParams::Min_d){
 			lp.dim.x = minBorders.right();
 		}
 		
 		lp.dim.y = this->borders.bottom();
-		if(lp.dim.y == LayoutParams::D_Min){
+		if(lp.dim.y == LayoutParams::Min_d){
 			lp.dim.y = minBorders.bottom();
 		}
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)

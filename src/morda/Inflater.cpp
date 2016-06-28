@@ -6,10 +6,10 @@
 #include "widgets/core/container/ScrollArea.hpp"
 #include "widgets/core/container/Table.hpp"
 #include "widgets/core/container/TableRow.hpp"
-#include "widgets/core/proxy/KeyProxy.hpp"
 #include "widgets/core/container/Overlay.hpp"
+#include "widgets/core/container/Margins.hpp"
 
-
+#include "widgets/core/proxy/KeyProxy.hpp"
 #include "widgets/core/proxy/MouseProxy.hpp"
 #include "widgets/core/proxy/ResizeProxy.hpp"
 
@@ -36,6 +36,7 @@ Inflater::Inflater(){
 	this->AddWidget<KeyProxy>("KeyProxy");
 	this->AddWidget<Overlay>("Overlay");
 	this->AddWidget<ResizeProxy>("ResizeProxy");
+	this->AddWidget<Margins>("Margins");
 }
 
 

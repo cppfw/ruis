@@ -45,21 +45,21 @@ public:
 		 * @brief Requests minimal dimensions of the widget.
 		 * The widget will always be given minimal space it needs to properly draw.
 		 */
-		constexpr static const real D_Min = real(-1);
+		constexpr static const real Min_d = real(-1);
 		
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
 		 * The widget will be given at least minimal space it needs to properly draw.
 		 */
-		constexpr static const real D_Max = real(-2);
+		constexpr static const real Max_d = real(-2);
 		
 		/**
 		 * @brief Requests widget to be same size as its parent.
 		 * Minimal size of the widget is assumed to be 0.
 		 */
-		constexpr static const real D_Fill = real(-3);
+		constexpr static const real Fill_d = real(-3);
 		
-		LayoutParams(Vec2r dim = Vec2r(D_Min)) :
+		LayoutParams(Vec2r dim = Vec2r(Min_d)) :
 				dim(dim)
 		{}
 		

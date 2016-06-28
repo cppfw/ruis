@@ -87,6 +87,16 @@ float dimValueFromSTOB(const stob::Node& n);
 
 
 /**
+ * @brief Parse layout dimension value.
+ * Parses value of 'dim' value of layout parameters from STOB.
+ * @param n - stob node holding the value.
+ * @return Parsed value.
+ */
+float dimValueFromLayoutStob(const stob::Node& n);
+
+
+
+/**
  * @brief Check if the value is given in percentage.
  * @param n - STOB node whose value to check.
  * @return true in case the value contained in the given STOB node is in percentage.
