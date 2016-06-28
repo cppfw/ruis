@@ -5,12 +5,12 @@
 #pragma once
 
 #include "LinearContainer.hpp"
-#include "TableContainer.hpp"
+#include "Table.hpp"
 
 namespace morda{
 
 class TableRow : public Horizontal{
-	friend class TableContainer;
+	friend class Table;
 public:
 	TableRow(const stob::Node* chain = nullptr);
 	
@@ -20,7 +20,7 @@ public:
 protected:
 	class LayoutParams : public Horizontal::LayoutParams{
 		friend class TableRow;
-		friend class TableContainer;
+		friend class Table;
 		
 		mutable Horizontal::LayoutParams processedParams;
 	public:

@@ -206,8 +206,8 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		TableContainer(stob::parse(DWindowDesc).get()),
-		emptyMinDim(this->TableContainer::measure(Vec2r(-1)))
+		Table(stob::parse(DWindowDesc).get()),
+		emptyMinDim(this->Table::measure(Vec2r(-1)))
 {
 	this->setupWidgets();
 	

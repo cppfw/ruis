@@ -16,12 +16,12 @@ namespace morda{
  * @brief Table container.
  * It finds the maximum weight and maximum width in the column to use it in row lay outing.
  */
-class TableContainer : public Vertical{
+class Table : public Vertical{
 public:
-	TableContainer(const stob::Node* chain = nullptr);
+	Table(const stob::Node* chain = nullptr);
 	
-	TableContainer(const TableContainer&) = delete;
-	TableContainer& operator=(const TableContainer&) = delete;
+	Table(const Table&) = delete;
+	Table& operator=(const Table&) = delete;
 	
 	void layOut()override;
 	

@@ -86,7 +86,7 @@
               <in>LinearContainer.cpp</in>
               <in>Overlay.cpp</in>
               <in>ScrollContainer.cpp</in>
-              <in>TableContainer.cpp</in>
+              <in>Table.cpp</in>
               <in>TableRow.cpp</in>
             </df>
             <df name="proxy">
@@ -1854,7 +1854,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/TableContainer.cpp"
+      <item path="src/morda/widgets/core/container/Table.cpp"
             ex="false"
             tool="1"
             flavor2="8">

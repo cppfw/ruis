@@ -79,7 +79,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		TableContainer(stob::parse(D_NinePatchLayout).get())
+		Table(stob::parse(D_NinePatchLayout).get())
 {
 	this->lt = this->findChildByNameAs<ImageLabel>("morda_lt");
 	this->t = this->findChildByNameAs<ImageLabel>("morda_t");
@@ -130,7 +130,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 }
 
 void NinePatch::render(const morda::Matr4r& matrix) const {
-	this->TableContainer::render(matrix);
+	this->Table::render(matrix);
 }
 
 

@@ -9,7 +9,7 @@
 #include "../resources/ResNinePatch.hpp"
 
 #include "core/container/Frame.hpp"
-#include "core/container/TableContainer.hpp"
+#include "core/container/Table.hpp"
 
 #include "label/ImageLabel.hpp"
 
@@ -18,7 +18,7 @@ namespace morda{
 
 class NinePatch :
 	public virtual Widget,
-	private TableContainer
+	private Table
 {
 	std::shared_ptr<ResNinePatch> image;
 	

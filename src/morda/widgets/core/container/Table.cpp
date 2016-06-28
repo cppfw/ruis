@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "TableContainer.hpp"
+#include "Table.hpp"
 
 
 
@@ -8,19 +8,19 @@ using namespace morda;
 
 
 
-TableContainer::TableContainer(const stob::Node* chain) :
+Table::Table(const stob::Node* chain) :
 		Widget(chain),
 		Vertical(chain)
 {}
 
-void TableContainer::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
+void Table::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, const TableRow::LayoutParams*>> iterators;
 	iterators.reserve(this->children().size());
 	
 	for(auto& c : this->children()){
 		auto tr = dynamic_cast<TableRow*>(c.get());
 		if(!tr){
-			throw morda::Exc("TableContainer: non-TableRow child found, TableContainer can only hold TableRow children");
+			throw morda::Exc("Table: non-TableRow child found, Table can only hold TableRow children");
 		}
 		
 		iterators.push_back(std::make_tuple(tr, tr->children().begin(), nullptr));
@@ -47,7 +47,7 @@ void TableContainer::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 			Vec2r d;
 			
 			if(lpptr->dim.x == LayoutParams::D_Max){
-				throw morda::Exc("TableContainer::UpdateRowsLayoutParam(): \"max\" in horizontal direction: mistake");
+				throw morda::Exc("Table::UpdateRowsLayoutParam(): \"max\" in horizontal direction: mistake");
 			}
 			
 			if(lpptr->dim.y == LayoutParams::D_Max){
@@ -92,20 +92,20 @@ void TableContainer::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 
 
 
-void TableContainer::layOut(){
+void Table::layOut(){
 	this->updateRowsLayoutParam(this->rect().d);
 	this->Vertical::layOut();
 }
 
 
-morda::Vec2r TableContainer::measure(const morda::Vec2r& quotum) const{
+morda::Vec2r Table::measure(const morda::Vec2r& quotum) const{
 	this->updateRowsLayoutParam(quotum);
 	return this->Vertical::measure(quotum);
 }
 
 
 
-const Widget::LayoutParams& TableContainer::getLayoutParamsDuringLayout(const Widget& w)const{
+const Widget::LayoutParams& Table::getLayoutParamsDuringLayout(const Widget& w)const{
 	auto& layoutParams = dynamic_cast<const LayoutParams&>(this->getLayoutParams(w));
 	auto& lp = const_cast<LayoutParams&>(layoutParams);
 	

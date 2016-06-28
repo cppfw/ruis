@@ -9,7 +9,7 @@
 #include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
 #include "core/proxy/MouseProxy.hpp"
-#include "core/container/TableContainer.hpp"
+#include "core/container/Table.hpp"
 
 namespace morda{
 
@@ -17,7 +17,7 @@ namespace morda{
 
 class Window :
 		virtual public Widget,
-		private TableContainer
+		private Table
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	

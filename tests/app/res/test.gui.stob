@@ -258,7 +258,7 @@ Container{
 			}
 		}
 
-		TableContainer{
+		Table{
 			layout{
 				dimX{max} dimY{max}
 			}
@@ -453,7 +453,7 @@ Container{
 
 		Background
 
-		TableContainer{
+		Table{
 			layout{
 				dimX{max} dimY{max}
 			}
@@ -537,7 +537,7 @@ Container{
 
 		clip{true}
 
-		title{"TableContainer"}
+		title{"Table"}
 
 
 		ColorLabel{
@@ -548,7 +548,7 @@ Container{
 
 //		Background
 
-		TableContainer{
+		Table{
 			layout{
 				dimX{max} dimY{max}
 			}
