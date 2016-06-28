@@ -38,13 +38,14 @@ protected:
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 	
 protected:
-	virtual LayoutParams& getLayoutParamsDuringLayout(Widget& w);
+	virtual const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const;
 	
-	const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const{
-		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParamsDuringLayout(
-				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
-			);
-	}
+	//TODO: remove
+//	const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const{
+//		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParamsDuringLayout(
+//				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
+//			);
+//	}
 	
 	template <class T> const T& getLayoutParamsDuringLayoutAs(const Widget& w)const{
 		auto p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
@@ -60,7 +61,7 @@ protected:
 public:
 	LayoutParams& getLayoutParams(Widget& w);
 	
-	const LayoutParams& getLayoutParams(Widget& w)const;
+	const LayoutParams& getLayoutParams(const Widget& w)const;
 	
 public:
 	Container(const stob::Node* chain = nullptr);

@@ -22,12 +22,12 @@ protected:
 		friend class TableRow;
 		friend class TableContainer;
 		
-		HorizontalContainer::LayoutParams processedParams;
+		mutable HorizontalContainer::LayoutParams processedParams;
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};
 
-	Widget::LayoutParams& getLayoutParamsDuringLayout(Widget& w) override;
+	const Widget::LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const override;
 
 	
 private:
@@ -35,7 +35,7 @@ private:
 		return utki::makeUnique<LayoutParams>(chain);
 	}
 	
-	LayoutParams& getTableRowLayoutParams(Widget& w);
+	const LayoutParams& getTableRowLayoutParams(const Widget& w)const;
 };
 
 }

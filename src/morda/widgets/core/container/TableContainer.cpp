@@ -14,7 +14,7 @@ TableContainer::TableContainer(const stob::Node* chain) :
 {}
 
 void TableContainer::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
-	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, TableRow::LayoutParams*>> iterators;
+	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, const TableRow::LayoutParams*>> iterators;
 	iterators.reserve(this->children().size());
 	
 	for(auto& c : this->children()){
@@ -105,10 +105,11 @@ morda::Vec2r TableContainer::measure(const morda::Vec2r& quotum) const{
 
 
 
-Widget::LayoutParams& TableContainer::getLayoutParamsDuringLayout(Widget& w){
-	auto& layoutParams = dynamic_cast<LayoutParams&>(this->VerticalContainer::getLayoutParams(w));
+const Widget::LayoutParams& TableContainer::getLayoutParamsDuringLayout(const Widget& w)const{
+	auto& layoutParams = dynamic_cast<const LayoutParams&>(this->getLayoutParams(w));
+	auto& lp = const_cast<LayoutParams&>(layoutParams);
 	
-	layoutParams.dim.x = LayoutParams::D_Max;
+	lp.dim.x = LayoutParams::D_Max;
 	
-	return layoutParams;
+	return lp;
 }

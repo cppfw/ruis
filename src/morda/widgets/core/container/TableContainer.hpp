@@ -28,7 +28,7 @@ public:
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 	
 protected:
-	Widget::LayoutParams& getLayoutParamsDuringLayout(Widget& w) override;
+	const Widget::LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const override;
 
 	
 private:

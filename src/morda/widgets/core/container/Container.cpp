@@ -44,7 +44,7 @@ Widget::LayoutParams& Container::getLayoutParams(Widget& w){
 	return const_cast<std::add_lvalue_reference<std::remove_const<std::remove_reference<decltype(lp)>::type>::type>::type>(lp);
 }
 
-const Widget::LayoutParams& Container::getLayoutParams(Widget& w)const{
+const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
 	if(w.parent() && w.parent() != this){
 		throw morda::Exc("Container::getLayoutParams(): the widget is added to another container");
 	}
@@ -58,7 +58,7 @@ const Widget::LayoutParams& Container::getLayoutParams(Widget& w)const{
 
 
 
-Widget::LayoutParams& Container::getLayoutParamsDuringLayout(Widget& w){
+const Widget::LayoutParams& Container::getLayoutParamsDuringLayout(const Widget& w)const{
 	return this->getLayoutParams(w);
 }
 
