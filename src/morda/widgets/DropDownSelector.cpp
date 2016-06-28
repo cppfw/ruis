@@ -6,7 +6,7 @@
 #include "button/Button.hpp"
 #include "TextWidget.hpp"
 
-#include "core/container/OverlayContainer.hpp"
+#include "core/container/Overlay.hpp"
 
 #include "label/TextLabel.hpp"
 #include "core/proxy/MouseProxy.hpp"
@@ -97,9 +97,9 @@ public:
 			if(!isDown){
 				if(this->dropDownSelector()){
 					this->dropDownSelector()->setSelection(index);
-					auto oc = this->dropDownSelector()->findAncestor<OverlayContainer>();
+					auto oc = this->dropDownSelector()->findAncestor<Overlay>();
 					if(!oc){
-						throw Exc("No OverlayContainer found in ancestors of DropDownSelector");
+						throw Exc("No Overlay found in ancestors of DropDownSelector");
 					}
 					morda::App::inst().postToUiThread_ts([oc](){
 						oc->hideContextMenu();
@@ -140,9 +140,9 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 			return;
 		}
 		
-		auto p = this->findAncestor<OverlayContainer>();
+		auto p = this->findAncestor<Overlay>();
 		if(!p){
-			throw Exc("DropDownSelector: no OverlayContainer parent found");
+			throw Exc("DropDownSelector: no Overlay parent found");
 		}
 		
 		auto w = utki::makeShared<Vertical>();

@@ -26,7 +26,7 @@ defs{
 
 KeyProxy{
 
-OverlayContainer{
+Overlay{
 	name {overlay}
 	layout{
 		dimX{max} dimY{max}
@@ -690,5 +690,5 @@ Container{
 	}
 
 }
-}//~OverlayContainer
+}//~Overlay
 }//~KeyProxyContainer

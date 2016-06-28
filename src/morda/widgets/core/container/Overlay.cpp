@@ -1,4 +1,4 @@
-#include "OverlayContainer.hpp"
+#include "Overlay.hpp"
 #include "../proxy/MouseProxy.hpp"
 
 
@@ -26,14 +26,14 @@ const char* DContextMenuLayout = R"qwertyuiop(
 
 }
 
-OverlayContainer::OverlayContainer(const stob::Node* chain) :
+Overlay::Overlay(const stob::Node* chain) :
 		Widget(chain),
 		Frame(chain)
 {
 	this->onChildrenListChanged();
 }
 
-void OverlayContainer::onChildrenListChanged(){
+void Overlay::onChildrenListChanged(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
 		this->overlayLayer = utki::makeShared<Frame>(stob::parse(DContextMenuLayout).get());
 		this->add(this->overlayLayer);
@@ -61,7 +61,7 @@ void OverlayContainer::onChildrenListChanged(){
 
 
 
-void OverlayContainer::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
+void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
 	
 	Vec2r dim = this->dimForWidget(*w, lp);
@@ -83,7 +83,7 @@ void OverlayContainer::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	w->moveTo(anchor);
 }
 
-void OverlayContainer::hideContextMenu(){
+void Overlay::hideContextMenu(){
 	if(this->overlayContainer->children().size() == 0){
 		return;
 	}

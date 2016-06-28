@@ -11,14 +11,14 @@ namespace morda{
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  */
-class OverlayContainer : public Frame{
+class Overlay : public Frame{
 	std::shared_ptr<Widget> overlayLayer;
 	std::shared_ptr<Container> overlayContainer;
 public:
-	OverlayContainer(const stob::Node* chain = nullptr);
+	Overlay(const stob::Node* chain = nullptr);
 	
-	OverlayContainer(const OverlayContainer&) = delete;
-	OverlayContainer& operator=(const OverlayContainer&) = delete;
+	Overlay(const Overlay&) = delete;
+	Overlay& operator=(const Overlay&) = delete;
 	
 	Container& overlay(){
 		return *this->overlayContainer;

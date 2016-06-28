@@ -84,7 +84,7 @@
               <in>Container.cpp</in>
               <in>Frame.cpp</in>
               <in>LinearContainer.cpp</in>
-              <in>OverlayContainer.cpp</in>
+              <in>Overlay.cpp</in>
               <in>ScrollContainer.cpp</in>
               <in>TableContainer.cpp</in>
               <in>TableRow.cpp</in>
@@ -1814,7 +1814,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/OverlayContainer.cpp"
+      <item path="src/morda/widgets/core/container/Overlay.cpp"
             ex="false"
             tool="1"
             flavor2="8">
