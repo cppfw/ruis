@@ -639,7 +639,7 @@ Container{
 					PushButton{
 						TextLabel{
 							text {"item3"}
-							color{0xffccfbff}
+							color{0xff0000ff}
 						}
 					//	text{item_3}
 					}

@@ -32,7 +32,6 @@
 
 class SimpleWidget : virtual public morda::Widget, public morda::Updateable, public morda::CharInputWidget{
 	std::shared_ptr<morda::ResTexture> tex;
-	std::shared_ptr<morda::ResFont> fnt;
 	
 public:	
 	SimpleWidget(const stob::Node* desc) :
@@ -40,7 +39,6 @@ public:
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::App::inst().resMan.load<morda::ResTexture>("tex_sample");
-		this->fnt = morda::App::inst().resMan.load<morda::ResFont>("morda_fnt_main");
 	}
 	
 	std::uint32_t timer = 0;
