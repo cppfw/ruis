@@ -109,7 +109,7 @@ Container{
 		}
 */
 
-		VerticalContainer{
+		Vertical{
 			layout{
 				dimX{max} dimY{max}
 			}
@@ -118,7 +118,7 @@ Container{
 				layout{dimY{5pt}}
 			}
 
-			HorizontalContainer{
+			Horizontal{
 				layout{
 					dimX{max} dimY{min}
 				}
@@ -182,7 +182,7 @@ Container{
 			}
 		}
 
-		HorizontalContainer{
+		Horizontal{
 			padding {20 30 10 40}
 
 			posX{50} posY{100}
@@ -311,7 +311,7 @@ Container{
 				Widget{}
 			}
 			TableRow{
-				HorizontalContainer{
+				Horizontal{
 					TextLabel{
 						text{Insert:}
 					}
@@ -346,7 +346,7 @@ Container{
 
 		Background
 
-		HorizontalContainer{
+		Horizontal{
 
 			name{horizontal_container}
 
@@ -423,7 +423,7 @@ Container{
 
 		Background
 
-		HorizontalContainer{
+		Horizontal{
 			layout{
 				dimX{max} dimY{min}
 			}
@@ -607,7 +607,7 @@ Container{
 
 		title{"VerticalList"}
 
-		HorizontalContainer{
+		Horizontal{
 			layout{
 				dimX{max} dimY{max}
 			}

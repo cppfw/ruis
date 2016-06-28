@@ -9,7 +9,7 @@
 
 namespace morda{
 
-class TableRow : public HorizontalContainer{
+class TableRow : public Horizontal{
 	friend class TableContainer;
 public:
 	TableRow(const stob::Node* chain = nullptr);
@@ -18,11 +18,11 @@ public:
 	TableRow& operator=(const TableRow&) = delete;
 	
 protected:
-	class LayoutParams : public HorizontalContainer::LayoutParams{
+	class LayoutParams : public Horizontal::LayoutParams{
 		friend class TableRow;
 		friend class TableContainer;
 		
-		mutable HorizontalContainer::LayoutParams processedParams;
+		mutable Horizontal::LayoutParams processedParams;
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};

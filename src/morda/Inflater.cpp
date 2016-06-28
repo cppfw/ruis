@@ -26,8 +26,8 @@ using namespace morda;
 Inflater::Inflater(){
 	this->AddWidget<Widget>("Widget");
 	this->AddWidget<Container>("Container");
-	this->AddWidget<HorizontalContainer>("HorizontalContainer");
-	this->AddWidget<VerticalContainer>("VerticalContainer");
+	this->AddWidget<Horizontal>("Horizontal");
+	this->AddWidget<Vertical>("Vertical");
 	this->AddWidget<Frame>("Frame");
 	this->AddWidget<MouseProxy>("MouseProxy");
 	this->AddWidget<ScrollContainer>("ScrollContainer");

@@ -49,28 +49,28 @@ private:
 
 
 
-class VerticalContainer : public LinearContainer{
+class Vertical : public LinearContainer{
 public:
-	VerticalContainer(const stob::Node* chain = nullptr) :
+	Vertical(const stob::Node* chain = nullptr) :
 			Widget(chain),
 			LinearContainer(true, chain)
 	{}
 	
-	VerticalContainer(const VerticalContainer&) = delete;
-	VerticalContainer& operator=(const VerticalContainer&) = delete;
+	Vertical(const Vertical&) = delete;
+	Vertical& operator=(const Vertical&) = delete;
 };
 
 
 
-class HorizontalContainer : public LinearContainer{
+class Horizontal : public LinearContainer{
 public:
-	HorizontalContainer(const stob::Node* chain = nullptr) :
+	Horizontal(const stob::Node* chain = nullptr) :
 			Widget(chain),
 			LinearContainer(false, chain)
 	{}
 	
-	HorizontalContainer(const HorizontalContainer&) = delete;
-	HorizontalContainer& operator=(const HorizontalContainer&) = delete;
+	Horizontal(const Horizontal&) = delete;
+	Horizontal& operator=(const Horizontal&) = delete;
 };
 
 

@@ -8,7 +8,7 @@ namespace morda{
 
 class DropDownSelector :
 		virtual public Widget,
-		private HorizontalContainer
+		private Horizontal
 {
 	std::shared_ptr<Frame> selectionContainer;
 public:
