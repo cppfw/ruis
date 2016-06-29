@@ -38,25 +38,25 @@ nuget{
 		
 		[x86,release] { 
 			lib: ..\msvs_solution\Release\libmorda.lib;
-			symbols: ..\msvs_solution\Release\libmorda.pdb;
+			symbols: ..\msvs_solution\libmorda\Release\libmorda.pdb;
 //			bin: ..\msvs_solution\Release\libmorda.dll;
 		}
 
 		[x86,debug] { 
 			lib: ..\msvs_solution\Debug\libmorda.lib;
-			symbols: ..\msvs_solution\Debug\libmorda.pdb;
+			symbols: ..\msvs_solution\libmorda\Debug\libmorda.pdb;
 //			bin: ..\msvs_solution\Debug\libmorda.dll;
 		}
 
 		[x64,release] { 
 			lib: ..\msvs_solution\x64\Release\libmorda.lib;
-			symbols: ..\msvs_solution\x64\Release\libmorda.pdb;
+			symbols: ..\msvs_solution\libmorda\x64\Release\libmorda.pdb;
 //			bin: ..\msvs_solution\x64\Release\libmorda.dll;
 		}
 
 		[x64,debug] { 
 			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
-			symbols: ..\msvs_solution\x64\Debug\libmorda.pdb;
+			symbols: ..\msvs_solution\libmorda\x64\Debug\libmorda.pdb;
 //			bin: ..\msvs_solution\x64\Debug\libmorda.dll;
 		}  
 	}
