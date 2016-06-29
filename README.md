@@ -3,7 +3,7 @@
 
 OpenGL based GUI library in C++
 
-[![Screenshot1](wiki/images/screenshot1_thumbnail.png)](https://raw.githubusercontent.com/igagis/morda/master/wiki/images/screenshot1.png)
+[![Screenshot](wiki/images/screenshot2_thumbnail.png)](https://raw.githubusercontent.com/igagis/morda/master/wiki/images/screenshot2.png)
 
 ## Work in progress
 W.I.P.
