@@ -205,7 +205,7 @@ public:
 	}
 	
 public:
-	Widget(const stob::Node* chain);
+	Widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
 	
 public:
 

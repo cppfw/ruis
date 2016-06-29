@@ -114,24 +114,20 @@ Container{
 				dimX{max} dimY{max}
 			}
 
-			Widget{
-				layout{dimY{5pt}}
-			}
 
 			HorizontalArea{
 				layout{
 					dimX{max} dimY{min}
 				}
 				
-				Widget{
-					layout{dimX{5pt}}
-				}
+				Margins{
+					left{5pt}
+					right{5pt}
+					top{5pt}
+					bottom{5pt}
 
-				CheckBox{
-				}
-
-				Widget{
-					layout{dimX{5pt}}
+					CheckBox{
+					}
 				}
 
 				TextLabel{
@@ -142,6 +138,7 @@ Container{
 					text{"some checkbox"}
 				}
 			}
+
 			DropDownSelector{
 				layout{
 					dimX{max}

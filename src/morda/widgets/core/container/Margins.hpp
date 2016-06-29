@@ -29,8 +29,14 @@ public:
 		return this->margins_v;
 	}
 	
+	/**
+	 * @brief Set new margins.
+	 * Margin can be expressed in pixels (no unit), millimeters (mm) or points (pt).
+	 * It can also be 'fill', 'min' or 'max'. 'fill' and 'max' have same effect.
+	 * 'min' has same effect as zero margin.
+	 * @param margins - margin values to set.
+	 */
 	void setMargins(Sidesr margins);
-	
 };
 
 }

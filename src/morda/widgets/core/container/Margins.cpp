@@ -1,5 +1,7 @@
 #include "Margins.hpp"
+
 #include "../../../util/util.hpp"
+#include "../../../App.hpp"
 
 using namespace morda;
 
@@ -7,6 +9,12 @@ using namespace morda;
 Margins::Margins(const stob::Node* chain) :
 		Widget(chain)
 {
+	if(chain){
+		if(auto n = chain->thisOrNextNonProperty().node()){
+			this->child = morda::App::inst().inflater.inflate(*n);
+		}
+	}
+	
 	{
 		Sidesr m;
 
@@ -36,18 +44,61 @@ Margins::Margins(const stob::Node* chain) :
 		
 		this->setMargins(m);
 	}
-	
-	//TODO:
 }
 
 void Margins::setWidget(std::shared_ptr<Widget> w){
-	//TODO:
-	
 	this->child = std::move(w);
+	this->setMargins(this->margins_v);
 }
 
 
 void Margins::setMargins(Sidesr margins){
-	//TODO:
 	this->margins_v = margins;
+	
+	this->removeAll();
+	
+	if(!this->child){
+		return;
+	}
+	
+	if(this->margins_v.left() != 0){
+		auto w = utki::makeShared<Widget>(nullptr);
+		this->add(w);
+		auto& lp = this->getLayoutParams(*w);
+		lp.dim.x = this->margins_v.left();
+		lp.dim.y = 0;
+	}
+	
+	if(this->margins_v.top() != 0 || this->margins_v.bottom() != 0){
+		auto va  = utki::makeShared<VerticalArea>();
+		this->add(va);
+		
+		if(this->margins_v.top() != 0){
+			auto w = utki::makeShared<Widget>(nullptr);
+			va->add(w);
+			auto& lp = va->getLayoutParams(*w);
+			lp.dim.x = 0;
+			lp.dim.y = this->margins_v.top();
+		}
+		
+		va->add(this->child);
+		
+		if(this->margins_v.bottom() != 0){
+			auto w = utki::makeShared<Widget>(nullptr);
+			va->add(w);
+			auto& lp = va->getLayoutParams(*w);
+			lp.dim.x = 0;
+			lp.dim.y = this->margins_v.bottom();
+		}
+	}else{
+		this->add(this->child);
+	}
+	
+	if(this->margins_v.right() != 0){
+		auto w = utki::makeShared<Widget>(nullptr);
+		this->add(w);
+		auto& lp = this->getLayoutParams(*w);
+		lp.dim.x = this->margins_v.right();
+		lp.dim.y = 0;
+	}
 }
