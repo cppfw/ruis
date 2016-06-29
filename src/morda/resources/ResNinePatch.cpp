@@ -77,7 +77,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	real mul = 1;
 	{
 		auto req = borders.begin();
-		for(auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req){
+		for(auto orig = this->borders_v.begin(); orig != this->borders_v.end(); ++orig, ++req){
 			if(*orig <= 0 || *req <= 0){
 				continue;
 			}
@@ -108,7 +108,7 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 	
 //	TRACE(<< "actMul = " << std::setprecision(10) << actMul << std::endl)
 	
-	Sidesr scaledBorders(this->borders);
+	Sidesr scaledBorders(this->borders_v);
 	scaledBorders.left() *= actMul.x;
 	scaledBorders.right() *= actMul.x;
 	scaledBorders.top() *= actMul.y;

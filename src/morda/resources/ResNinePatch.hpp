@@ -17,7 +17,7 @@ class ResNinePatch : public Resource{
 	
 	const std::shared_ptr<ResImage> image;
 	
-	Sidesr borders;
+	Sidesr borders_v;
 	
 public:
 	ResNinePatch(const ResNinePatch&) = delete;
@@ -25,7 +25,7 @@ public:
 	
 	ResNinePatch(const std::shared_ptr<ResImage> image, Sidesr borders) :
 			image(std::move(image)),
-			borders(borders)
+			borders_v(borders)
 	{}
 	
 	class ImageMatrix :	virtual public utki::Shared{
@@ -46,8 +46,8 @@ public:
 	
 	std::shared_ptr<ImageMatrix> get(Sidesr borders)const;
 	
-	const decltype(borders)& getBorders()const noexcept{
-		return this->borders;
+	const decltype(borders_v)& borders()const noexcept{
+		return this->borders_v;
 	}
 private:
 	mutable std::map<real, std::weak_ptr<ImageMatrix>> cache;

@@ -11,193 +11,199 @@ using namespace morda;
 namespace{
 
 const char* DWindowDesc = R"qwertyuiop(
-		//1st row
-		TableRow{
-			Frame{
-				ImageLabel{
-					image{morda_img_window_lt}
-				}
-				MouseProxy{
-					name{morda_lt_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-
-			Frame{
-				layout{
-					dimX{0}
-				}
-				ImageLabel{
-					image{morda_img_window_t}
-					layout{
-						dimX{max}
-					}
-				}
-				MouseProxy{
-					name{morda_t_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-
-			Frame{
-				ImageLabel{
-					image{morda_img_window_rt}
-				}
-				MouseProxy{
-					name{morda_rt_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-		}//~TableRow
-
-		//2nd row
-		TableRow{
+		Table{
 			layout{
-				weight{1}
+				dimX{max} dimY{max}
 			}
-			Frame{
-				layout{
-					dimY{max}
+
+			//1st row
+			TableRow{
+				Frame{
+					ImageLabel{
+						image{morda_img_window_lt}
+					}
+					MouseProxy{
+						name{morda_lt_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
 				}
-				ImageLabel{
-					image{morda_img_window_l}
+
+				Frame{
+					layout{
+						dimX{0}
+					}
+					ImageLabel{
+						image{morda_img_window_t}
+						layout{
+							dimX{max}
+						}
+					}
+					MouseProxy{
+						name{morda_t_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+				}
+
+				Frame{
+					ImageLabel{
+						image{morda_img_window_rt}
+					}
+					MouseProxy{
+						name{morda_rt_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+				}
+			}//~TableRow
+
+			//2nd row
+			TableRow{
+				layout{
+					weight{1}
+				}
+				Frame{
 					layout{
 						dimY{max}
 					}
-				}
-				MouseProxy{
-					name{morda_l_proxy}
-					layout{
-						dimX{max} dimY{max}
+					ImageLabel{
+						image{morda_img_window_l}
+						layout{
+							dimY{max}
+						}
 					}
-				}
-			}
-
-
-			//middle
-			VerticalArea{
-				layout{
-					weight{1}
-					dimY{max}
-				}
-
-				//caption
-				Frame{
-					layout{
-						dimX{max}
-					}
-
-					clip{true}
-
 					MouseProxy{
-						name{morda_caption_proxy}
+						name{morda_l_proxy}
 						layout{
 							dimX{max} dimY{max}
 						}
 					}
+				}
 
-					ColorLabel{
-						name{morda_window_title_bg}
-						layout{
-							dimX{max} dimY{max}
-						}
+
+				//middle
+				VerticalArea{
+					layout{
+						weight{1}
+						dimY{max}
 					}
 
-					HorizontalArea{
+					//caption
+					Frame{
 						layout{
-							dimX{max} dimY{max}
+							dimX{max}
 						}
 
-						TextLabel{
-							name{morda_title}
+						clip{true}
+
+						MouseProxy{
+							name{morda_caption_proxy}
 							layout{
-								dimX{0}
-								weight{1}
+								dimX{max} dimY{max}
+							}
+						}
+
+						ColorLabel{
+							name{morda_window_title_bg}
+							layout{
+								dimX{max} dimY{max}
+							}
+						}
+
+						HorizontalArea{
+							layout{
+								dimX{max} dimY{max}
+							}
+
+							TextLabel{
+								name{morda_title}
+								layout{
+									dimX{0}
+									weight{1}
+								}
 							}
 						}
 					}
+
+					Frame{
+						name{morda_content}
+						clip{true}
+						layout{
+							dimX{fill} dimY{0}
+							weight{1}
+						}
+					}
 				}
 
 				Frame{
-					name{morda_content}
-					clip{true}
-					layout{
-						dimX{fill} dimY{0}
-						weight{1}
-					}
-				}
-			}
-
-			Frame{
-				layout{
-					dimY{max}
-				}
-
-				ImageLabel{
-					image{morda_img_window_r}
 					layout{
 						dimY{max}
 					}
-				}
-				MouseProxy{
-					name{morda_r_proxy}
-					layout{
-						dimX{max} dimY{max}
+
+					ImageLabel{
+						image{morda_img_window_r}
+						layout{
+							dimY{max}
+						}
+					}
+					MouseProxy{
+						name{morda_r_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
 					}
 				}
 			}
+
+			//3rd row
+			TableRow{
+				Frame{
+					ImageLabel{
+						image{morda_img_window_lb}
+					}
+					MouseProxy{
+						name{morda_lb_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+				}
+
+				Frame{
+					layout{
+						dimX{0}
+					}
+					ImageLabel{
+						image{morda_img_window_b}
+						layout{
+							dimX{max}
+						}
+					}
+					MouseProxy{
+						name{morda_b_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+				}
+
+				Frame{
+					ImageLabel{
+						image{morda_img_window_rb}
+					}
+					MouseProxy{
+						name{morda_rb_proxy}
+						layout{
+							dimX{max} dimY{max}
+						}
+					}
+				}
+			}//~TableRow
 		}
-
-		//3rd row
-		TableRow{
-			Frame{
-				ImageLabel{
-					image{morda_img_window_lb}
-				}
-				MouseProxy{
-					name{morda_lb_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-
-			Frame{
-				layout{
-					dimX{0}
-				}
-				ImageLabel{
-					image{morda_img_window_b}
-					layout{
-						dimX{max}
-					}
-				}
-				MouseProxy{
-					name{morda_b_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-
-			Frame{
-				ImageLabel{
-					image{morda_img_window_rb}
-				}
-				MouseProxy{
-					name{morda_rb_proxy}
-					layout{
-						dimX{max} dimY{max}
-					}
-				}
-			}
-		}//~TableRow
 	)qwertyuiop";
 
 }
@@ -206,8 +212,8 @@ const char* DWindowDesc = R"qwertyuiop(
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		Table(stob::parse(DWindowDesc).get()),
-		emptyMinDim(this->Table::measure(Vec2r(-1)))
+		Frame(stob::parse(DWindowDesc).get()),
+		emptyMinDim(this->measure(Vec2r(-1)))
 {
 	this->setupWidgets();
 	

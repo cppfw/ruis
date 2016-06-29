@@ -144,7 +144,7 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 }
 
 void NinePatch::applyImages(){
-	auto& minBorders = this->image->getBorders();
+	auto& minBorders = this->image->borders();
 //	TRACE(<< "minBorders = " << minBorders << std::endl)
 	
 	{

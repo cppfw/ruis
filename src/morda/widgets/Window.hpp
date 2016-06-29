@@ -5,9 +5,10 @@
 
 #pragma once
 
-#include "core/container/Frame.hpp"
 #include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
+
+#include "core/container/Frame.hpp"
 #include "core/proxy/MouseProxy.hpp"
 #include "core/container/Table.hpp"
 
@@ -17,7 +18,7 @@ namespace morda{
 
 class Window :
 		virtual public Widget,
-		private Table
+		private Frame
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	
