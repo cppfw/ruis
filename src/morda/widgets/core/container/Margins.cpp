@@ -12,6 +12,10 @@ Margins::Margins(const stob::Node* chain) :
 	if(chain){
 		if(auto n = chain->thisOrNextNonProperty().node()){
 			this->child = morda::App::inst().inflater.inflate(*n);
+			
+			if(n->nextNonProperty().node()){
+				throw morda::Exc("Margins::Margins(): only one child allowed for Margins");
+			}
 		}
 	}
 	
