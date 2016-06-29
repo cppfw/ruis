@@ -20,21 +20,18 @@ namespace morda{
  * @brief Abstract widget displaying a text.
  */
 class TextWidget : public ColorWidget{
-	std::shared_ptr<ResFont> font_var;
+	std::shared_ptr<ResFont> font_v;
 	
 public:
-	TextWidget() = delete;
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
-	
-	virtual ~TextWidget()noexcept{}
 	
 	void setFont(std::shared_ptr<ResFont> font){
 		if(!font){
 			throw morda::Exc("TextWidget::SetFont(): passed argument is null");
 		}
 		
-		this->font_var = std::move(font);
+		this->font_v = std::move(font);
 		
 		this->setRelayoutNeeded();
 		
@@ -42,7 +39,7 @@ public:
 	}
 	
 	const morda::Font& font()const{
-		return this->font_var->font();
+		return this->font_v->font();
 	}
 	
 	virtual void onFontChanged(){}
@@ -56,7 +53,7 @@ private:
 
 
 class SingleLineTextWidget : public TextWidget{
-	std::u32string text_var;
+	std::u32string text_v;
 	
 	mutable Rectr bb;
 	
@@ -70,12 +67,12 @@ protected:
 	}
 	
 	void recomputeBoundingBox(){
-		this->bb = this->font().stringBoundingBox(this->text_var);
+		this->bb = this->font().stringBoundingBox(this->text_v);
 	}
 public:
 	
-	void setText(decltype(text_var)&& text){
-		this->text_var = std::move(text);
+	void setText(decltype(text_v)&& text){
+		this->text_v = std::move(text);
 		this->setRelayoutNeeded();
 		this->recomputeBoundingBox();
 	}
@@ -89,12 +86,12 @@ public:
 	}
 
 	
-	decltype(text_var) clear(){
-		return std::move(this->text_var);
+	decltype(text_v) clear(){
+		return std::move(this->text_v);
 	}
 	
-	const decltype(text_var)& text()const noexcept{
-		return this->text_var;
+	const decltype(text_v)& text()const noexcept{
+		return this->text_v;
 	}
 };
 

@@ -220,7 +220,7 @@ private:
 	void onKeyInternal(bool isDown, EKey keyCode);
 	
 private:
-	bool isFocused_var = false;
+	bool isFocused_v = false;
 public:
 	
 	//return true to consume
@@ -233,13 +233,13 @@ public:
 	void unfocus()noexcept;
 	
 	bool isFocused()const noexcept{
-		return this->isFocused_var;
+		return this->isFocused_v;
 	}
 	
 	/**
 	 * @brief Called when keyboard input focus changes.
      */
-	virtual void onFocusedChanged(){}
+	virtual void onFocusChanged(){}
 	
 	enum class EMouseButton{
 		LEFT,

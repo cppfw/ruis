@@ -13,8 +13,11 @@
 
 namespace morda{
 
-class TextInput : public SingleLineTextWidget, public Updateable, public CharInputWidget{
-	
+class TextInput :
+		public SingleLineTextWidget,
+		public Updateable,
+		public CharInputWidget
+{	
 	size_t firstVisibleCharIndex = 0;
 	real xOffset = 0;
 	
@@ -49,7 +52,7 @@ public:
 	
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void onFocusedChanged()override;
+	void onFocusChanged()override;
 	
 	bool onKey(bool isDown, EKey keyCode)override;
 	

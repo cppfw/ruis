@@ -13,9 +13,9 @@ TextWidget::TextWidget(const stob::Node* desc) :
 		ColorWidget(desc)
 {
 	if(const stob::Node* p = getProperty(desc, "font")){
-		this->font_var = App::inst().resMan.load<morda::ResFont>(p->value());
+		this->font_v = App::inst().resMan.load<morda::ResFont>(p->value());
 	}else{
-		this->font_var = morda::App::inst().resMan.load<ResFont>("morda_fnt_normal");
+		this->font_v = morda::App::inst().resMan.load<ResFont>("morda_fnt_normal");
 	}
 }
 
