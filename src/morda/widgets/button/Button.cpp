@@ -9,7 +9,6 @@ using namespace morda;
 
 
 
-//override
 bool Button::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
 	//TODO: multitouch support
 	
@@ -23,12 +22,12 @@ bool Button::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 		//some other mouse button is clicked, and then the left one is clicked outside of widget,
 		//then the event about left button down will still be delivered to this widget because it has captured the mouse.
 		if(this->contains(pos)){
-			this->isPressed_var = true;
+			this->isPressed_v = true;
 			this->onPressedChanged();
 		}
 	}else{
-		if(this->isPressed_var){
-			this->isPressed_var = false;
+		if(this->isPressed_v){
+			this->isPressed_v = false;
 			this->onPressedChanged();
 	//		TRACE(<< "AbstractButton::OnMouseButton(): emitting signal" << std::endl)
 		}
@@ -39,15 +38,16 @@ bool Button::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton bu
 
 
 
-//override
-void Button::onHoverChanged(unsigned pointerID){
+void Button::onHoverChanged(unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 	
 	//TODO: check if was hovered by the same pointer
 	
-	if(!this->isHovered(pointerID)){
-		this->isPressed_var = false;
-		this->onPressedChanged();
+	if(!this->isHovered(pointerId)){
+		if(this->isPressed_v){
+			this->isPressed_v = false;
+			this->onPressedChanged();
+		}
 	}
 }
 
