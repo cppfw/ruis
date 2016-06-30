@@ -95,26 +95,26 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	this->content_var = this->findChildByNameAs<Frame>("morda_content");
 	
-	if(auto n = getProperty(chain, "borderLeft")){
-		this->borders.left() = dimValueFromSTOB(*n);
+	if(auto n = getProperty(chain, "left")){
+		this->borders.left() = dimValueFromLayoutStob(*n);
 	}else{
 		this->borders.left() = LayoutParams::Min_d;
 	}
 	
-	if(auto n = getProperty(chain, "borderRight")){
-		this->borders.right() = dimValueFromSTOB(*n);
+	if(auto n = getProperty(chain, "right")){
+		this->borders.right() = dimValueFromLayoutStob(*n);
 	}else{
 		this->borders.right() = LayoutParams::Min_d;
 	}
 	
-	if(auto n = getProperty(chain, "borderTop")){
-		this->borders.top() = dimValueFromSTOB(*n);
+	if(auto n = getProperty(chain, "top")){
+		this->borders.top() = dimValueFromLayoutStob(*n);
 	}else{
 		this->borders.top() = LayoutParams::Min_d;
 	}
 	
-	if(auto n = getProperty(chain, "borderBottom")){
-		this->borders.bottom() = dimValueFromSTOB(*n);
+	if(auto n = getProperty(chain, "bottom")){
+		this->borders.bottom() = dimValueFromLayoutStob(*n);
 	}else{
 		this->borders.bottom() = LayoutParams::Min_d;
 	}
