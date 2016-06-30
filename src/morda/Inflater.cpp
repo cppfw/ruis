@@ -74,8 +74,8 @@ std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
 
 namespace{
 
-const char* D_Templates = "templates";
-const char* D_Defs = "defs";
+const char* templates_c = "templates";
+const char* defs_c = "defs";
 
 
 
@@ -136,16 +136,16 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	if(!App::inst().thisIsUIThread()){
-		throw Inflater::Exc("Inflate called not from UI thread");
+		throw Exc("Inflate called not from UI thread");
 	}
 	
 	const stob::Node* n = &chain;
 	for(; n && n->isProperty(); n = n->next()){
-		if(*n == D_Templates){
+		if(*n == templates_c){
 			if(n->child()){
 				this->pushTemplates(n->child()->cloneChain());
 			}
-		}else if(*n == D_Defs){
+		}else if(*n == defs_c){
 			if(n->child()){
 				this->pushVariables(*n->child());
 			}
@@ -184,13 +184,13 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		}
 	});
 	
-	if(auto t = n->child(D_Templates).node()){
+	if(auto t = n->child(templates_c).node()){
 		if(auto c = t->child()){
 			this->pushTemplates(c->cloneChain());
 			needPopTemplates = true;
 		}
 	}
-	if(auto v = n->child(D_Defs).node()){
+	if(auto v = n->child(defs_c).node()){
 		if(v->child()){
 			this->pushVariables(*v->child());
 			needPopVariables = true;
