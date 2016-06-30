@@ -119,6 +119,10 @@ NinePatch::NinePatch(const stob::Node* chain) :
 		this->borders.bottom() = LayoutParams::min_c;
 	}
 	
+	if(auto n = getProperty(chain, "centerVisible")){
+		this->setCenterVisible(n->asBool());
+	}
+	
 	//this should go after setting up border widgets
 	if(const stob::Node* n = getProperty(chain, "image")){
 		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
@@ -191,4 +195,9 @@ void NinePatch::applyImages(){
 	this->lb->setImage(this->scaledImage->images()[2][0]);
 	this->b->setImage(this->scaledImage->images()[2][1]);
 	this->rb->setImage(this->scaledImage->images()[2][2]);
+}
+
+void NinePatch::setCenterVisible(bool visible){
+	ASSERT(this->m)
+	this->m->setVisible(visible);
 }

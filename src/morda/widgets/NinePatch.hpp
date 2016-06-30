@@ -48,6 +48,8 @@ public:
 		return this->borders;
 	}
 	
+	void setCenterVisible(bool visible);
+	
 	void setBorders(Sidesr borders){
 		this->borders = borders;
 		this->applyImages();

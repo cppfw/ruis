@@ -32,6 +32,11 @@ morda_npt_textfield_background{
 	borders{4 5 4 5}
 }
 
+morda_npt_window_bg_mask{
+	file{window_bg_mask.svg}
+	borders{5 5 5 5}
+}
+
 morda_grd_background{
 	stop{ pos{0} color{0} }
 	stop{ pos{0.43} color{0x10ffffff} }
