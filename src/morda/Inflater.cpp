@@ -79,7 +79,7 @@ const char* defs_c = "defs";
 
 
 
-std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
+std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
 	if(!to){
 		if(!from){
 			return nullptr;
@@ -117,7 +117,7 @@ std::unique_ptr<stob::Node> MergeGUIChain(const stob::Node* from, std::unique_pt
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		d->setChildren(MergeGUIChain(s->child(), d->removeChildren()));
+		d->setChildren(mergeGUIChain(s->child(), d->removeChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
@@ -161,7 +161,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	std::unique_ptr<stob::Node> cloned;
 	if(auto t = this->findTemplate(n->value())){
 		cloned = utki::makeUnique<stob::Node>(t->value());
-		cloned->setChildren(MergeGUIChain(t->child(), n->child() ? n->child()->cloneChain() : nullptr));
+		cloned->setChildren(mergeGUIChain(t->child(), n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
 	}
 	
@@ -247,7 +247,7 @@ void Inflater::pushTemplates(std::unique_ptr<stob::Node> chain){
 		if(auto s = this->findTemplate(i->second->value())){
 			i->second->setValue(s->value());
 			ASSERT(s->child())
-			i->second->setChildren(MergeGUIChain(s->child(), i->second->removeChildren()));
+			i->second->setChildren(mergeGUIChain(s->child(), i->second->removeChildren()));
 		}
 	}
 	
