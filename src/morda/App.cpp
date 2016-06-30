@@ -44,10 +44,10 @@ void App::initStandardWidgets() {
 	std::vector<std::string> paths;
 	
 #	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
-		paths.push_back("respack/");
+		paths.push_back("morda_res/");
 #	else
 #		ifdef DEBUG
-		paths.push_back("../../respack/");
+		paths.push_back("../../morda_res/");
 #		else
 		{
 			std::stringstream ss;
@@ -77,7 +77,7 @@ void App::initStandardWidgets() {
 #elif M_OS == M_OS_WINDOWS
 	std::string path =
 #	ifdef DEBUG
-		"../../respack/"
+		"../../morda_res/"
 #	else
 		"morda_res/"
 #	endif
@@ -91,7 +91,7 @@ void App::initStandardWidgets() {
 		//default res pack not found, do nothing
 	}
 #elif M_OS_NAME == M_OS_NAME_ANDROID
-	this->resMan,mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/")); //TODO: change to respack?
+	this->resMan,mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/"));
 #endif
 	
 	//add standard widgets to inflater
