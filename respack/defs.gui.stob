@@ -7,6 +7,8 @@ defs{
 
 	morda_color_bg_window_title{0xff903a42}
 	morda_color_bg_window_title_nontopmost{0xff404040}
+
+	morda_window_border_size{4pt}
 }
 
 templates{
@@ -18,6 +20,10 @@ templates{
 		titleColorTopmost{ @{morda_color_bg_window_title} }
 		titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
 		background{WindowBackground}
+		left{@{morda_window_border_size}}
+		top{@{morda_window_border_size}}
+		right{@{morda_window_border_size}}
+		bottom{@{morda_window_border_size}}
 	}
 
 	PushButton NinePatchButton{

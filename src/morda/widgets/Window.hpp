@@ -30,6 +30,11 @@ class Window :
 	
 	std::shared_ptr<Frame> contentArea;
 	
+	std::shared_ptr<Widget> tBorder;
+	std::shared_ptr<Widget> lBorder;
+	std::shared_ptr<Widget> rBorder;
+	std::shared_ptr<Widget> bBorder;
+	
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
 	bool leftBottomResizeCaptured = false;
@@ -65,6 +70,8 @@ public:
 	void onTopmostChanged()override;
 	
 	void setBackground(std::shared_ptr<Widget> w);
+	
+	void setBorders(Sidesr borders);
 };
 
 }

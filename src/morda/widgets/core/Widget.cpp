@@ -367,3 +367,12 @@ Vec2r Widget::calcPosInParent(Vec2r pos, const Widget* parent) {
 	
 	return this->parent()->calcPosInParent(this->rect().p + pos, parent);
 }
+
+
+Widget::LayoutParams& Widget::getLayoutParams() {
+	if(!this->parent()){
+		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+	}
+	
+	return this->parent()->getLayoutParams(*this);
+}

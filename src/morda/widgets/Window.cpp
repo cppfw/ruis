@@ -18,45 +18,24 @@ const char* DWindowDesc = R"qwertyuiop(
 
 			//1st row
 			TableRow{
-				Frame{
-					ImageLabel{
-						image{morda_img_window_lt}
-					}
-					MouseProxy{
-						name{morda_lt_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+				MouseProxy{
+					name{morda_lt_proxy}
+					layout{
+						dimX{fill} dimY{fill}
 					}
 				}
 
-				Frame{
+				MouseProxy{
+					name{morda_t_proxy}
 					layout{
 						dimX{0}
 					}
-					ImageLabel{
-						image{morda_img_window_t}
-						layout{
-							dimX{max}
-						}
-					}
-					MouseProxy{
-						name{morda_t_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
-					}
 				}
 
-				Frame{
-					ImageLabel{
-						image{morda_img_window_rt}
-					}
-					MouseProxy{
-						name{morda_rt_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+				MouseProxy{
+					name{morda_rt_proxy}
+					layout{
+						dimX{fill} dimY{fill}
 					}
 				}
 			}//~TableRow
@@ -66,24 +45,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				layout{
 					weight{1}
 				}
-				Frame{
+				
+				MouseProxy{
+					name{morda_l_proxy}
 					layout{
-						dimY{max}
-					}
-					ImageLabel{
-						image{morda_img_window_l}
-						layout{
-							dimY{max}
-						}
-					}
-					MouseProxy{
-						name{morda_l_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+						dimY{fill}
 					}
 				}
-
 
 				//middle
 				VerticalArea{
@@ -139,67 +107,34 @@ const char* DWindowDesc = R"qwertyuiop(
 					}
 				}
 
-				Frame{
+				MouseProxy{
+					name{morda_r_proxy}
 					layout{
-						dimY{max}
-					}
-
-					ImageLabel{
-						image{morda_img_window_r}
-						layout{
-							dimY{max}
-						}
-					}
-					MouseProxy{
-						name{morda_r_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+						dimY{fill}
 					}
 				}
-			}
+			}//~TableRow
 
 			//3rd row
 			TableRow{
-				Frame{
-					ImageLabel{
-						image{morda_img_window_lb}
-					}
-					MouseProxy{
-						name{morda_lb_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
-					}
-				}
-
-				Frame{
+				MouseProxy{
+					name{morda_lb_proxy}
 					layout{
-						dimX{0}
-					}
-					ImageLabel{
-						image{morda_img_window_b}
-						layout{
-							dimX{max}
-						}
-					}
-					MouseProxy{
-						name{morda_b_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+						dimX{fill} dimY{fill}
 					}
 				}
 
-				Frame{
-					ImageLabel{
-						image{morda_img_window_rb}
+				MouseProxy{
+					name{morda_b_proxy}
+					layout{
+						dimX{fill}
 					}
-					MouseProxy{
-						name{morda_rb_proxy}
-						layout{
-							dimX{max} dimY{max}
-						}
+				}
+
+				MouseProxy{
+					name{morda_rb_proxy}
+					layout{
+						dimX{fill} dimY{fill}
 					}
 				}
 			}//~TableRow
@@ -249,8 +184,36 @@ morda::Window::Window(const stob::Node* chain) :
 
 	if(auto n = getProperty(chain, "background")){
 		this->setBackground(morda::App::inst().inflater.inflate(*n));
-	}else{
-		//TODO: set empty background
+	}
+
+	{
+		Sidesr borders;
+		
+		if(auto n = getProperty(chain, "left")){
+			borders.left() = dimValueFromSTOB(*n);
+		}else{
+			borders.left() = 0;
+		}
+		
+		if(auto n = getProperty(chain, "top")){
+			borders.top() = dimValueFromSTOB(*n);
+		}else{
+			borders.top() = 0;
+		}
+		
+		if(auto n = getProperty(chain, "right")){
+			borders.right() = dimValueFromSTOB(*n);
+		}else{
+			borders.right() = 0;
+		}
+		
+		if(auto n = getProperty(chain, "bottom")){
+			borders.bottom() = dimValueFromSTOB(*n);
+		}else{
+			borders.bottom() = 0;
+		}
+		
+		this->setBorders(borders);
 	}
 	
 	if(chain){
@@ -375,6 +338,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->lBorder = w;
 	}
 	
 	{
@@ -389,6 +353,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->rBorder = w;
 	}
 	
 	{
@@ -403,6 +368,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->tBorder = w;
 	}
 	
 	{
@@ -418,6 +384,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->bBorder = w;
 	}
 }
 
@@ -427,6 +394,12 @@ void morda::Window::setTitle(const std::string& str){
 	this->title->setText(unikod::toUtf32(str));
 }
 
+void morda::Window::setBorders(Sidesr borders) {
+	this->lBorder->getLayoutParams().dim.x = borders.left();
+	this->tBorder->getLayoutParams().dim.y = borders.top();
+	this->rBorder->getLayoutParams().dim.x = borders.right();
+	this->bBorder->getLayoutParams().dim.y = borders.bottom();
+}
 
 
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){

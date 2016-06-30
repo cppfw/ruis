@@ -117,6 +117,8 @@ private:
 	
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
+	Widget::LayoutParams& getLayoutParams();
+	
 	bool needsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
