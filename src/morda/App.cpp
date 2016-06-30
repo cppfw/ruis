@@ -90,8 +90,6 @@ void App::initStandardWidgets() {
 	catch (papki::Exc&){
 		//default res pack not found, do nothing
 	}
-#elif M_OS_NAME == M_OS_NAME_ANDROID
-	this->resMan,mountResPack(*morda::App::inst().createResourceFileInterface("morda_res/"));
 #endif
 	
 	//add standard widgets to inflater
