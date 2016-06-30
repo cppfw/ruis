@@ -47,9 +47,9 @@ Widget::Widget(const stob::Node* chain){
 	}
 
 	if(const stob::Node* p = getProperty(chain, "clip")){
-		this->clip_var = p->asBool();
+		this->clip_v = p->asBool();
 	}else{
-		this->clip_var = false;
+		this->clip_v = false;
 	}
 	
 	if(const stob::Node* p = getProperty(chain, "cache")){
@@ -59,15 +59,15 @@ Widget::Widget(const stob::Node* chain){
 	}
 	
 	if(const stob::Node* p = getProperty(chain, "visible")){
-		this->isVisible_var = p->asBool();
+		this->isVisible_v = p->asBool();
 	}else{
-		this->isVisible_var = true;
+		this->isVisible_v = true;
 	}
 	
 	if(const stob::Node* p = getProperty(chain, "enabled")){
-		this->isEnabled_var = p->asBool();
+		this->isEnabled_v = p->asBool();
 	}else{
-		this->isEnabled_var = true;
+		this->isEnabled_v = true;
 	}
 }
 
@@ -77,13 +77,13 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 	if(auto n = getProperty(chain, "dimX")){
 		this->dim.x = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.x = LayoutParams::Min_d;
+		this->dim.x = LayoutParams::min_c;
 	}
 	
 	if(auto n = getProperty(chain, "dimY")){
 		this->dim.y = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.y = LayoutParams::Min_d;
+		this->dim.y = LayoutParams::min_c;
 	}
 }
 
@@ -152,7 +152,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 		}
 		this->renderFromCache(matrix);
 	}else{
-		if(this->clip_var){
+		if(this->clip_v){
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test

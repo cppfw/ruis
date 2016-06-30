@@ -46,23 +46,23 @@ void Table::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
 			
 			Vec2r d;
 			
-			if(lpptr->dim.x == LayoutParams::Max_d){
+			if(lpptr->dim.x == LayoutParams::max_c){
 				throw morda::Exc("Table::UpdateRowsLayoutParam(): \"max\" in horizontal direction: mistake");
 			}
 			
-			if(lpptr->dim.y == LayoutParams::Max_d){
+			if(lpptr->dim.y == LayoutParams::max_c){
 				if(constraint.y >= 0){
 					d.y = constraint.y;
 				}else{
 					d.y = -1;
 				}
-			}else if(lpptr->dim.y == LayoutParams::Min_d || lpptr->dim.y < 0){
+			}else if(lpptr->dim.y == LayoutParams::min_c || lpptr->dim.y < 0){
 				d.y = -1;
 			}else{
 				d.y = lpptr->dim.y;
 			}
 			
-			if(lpptr->dim.x == LayoutParams::Min_d || lpptr->dim.x < 0){
+			if(lpptr->dim.x == LayoutParams::min_c || lpptr->dim.x < 0){
 				d.x = -1;
 			}else{
 				d.x = lpptr->dim.x;
@@ -109,7 +109,7 @@ const Widget::LayoutParams& Table::getLayoutParamsDuringLayout(const Widget& w)c
 	auto& layoutParams = dynamic_cast<const LayoutParams&>(this->getLayoutParams(w));
 	auto& lp = const_cast<LayoutParams&>(layoutParams);
 	
-	lp.dim.x = LayoutParams::Max_d;
+	lp.dim.x = LayoutParams::max_c;
 	
 	return lp;
 }

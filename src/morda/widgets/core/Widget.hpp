@@ -45,21 +45,21 @@ public:
 		 * @brief Requests minimal dimensions of the widget.
 		 * The widget will always be given minimal space it needs to properly draw.
 		 */
-		constexpr static const real Min_d = real(-1);
+		constexpr static const real min_c = real(-1);
 		
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
 		 * The widget will be given at least minimal space it needs to properly draw.
 		 */
-		constexpr static const real Max_d = real(-2);
+		constexpr static const real max_c = real(-2);
 		
 		/**
 		 * @brief Requests widget to be same size as its parent.
 		 * Minimal size of the widget is assumed to be 0.
 		 */
-		constexpr static const real Fill_d = real(-3);
+		constexpr static const real fill_c = real(-3);
 		
-		LayoutParams(Vec2r dim = Vec2r(Min_d)) :
+		LayoutParams(Vec2r dim = Vec2r(min_c)) :
 				dim(dim)
 		{}
 		
@@ -77,21 +77,21 @@ private:
 	
 	std::set<unsigned> hovered;
 
-	bool isVisible_var;
+	bool isVisible_v;
 
-	bool isEnabled_var;
+	bool isEnabled_v;
 
 	morda::Rectr rectangle;
 	
 	//clip widgets contents by widget's border if set to true
-	bool clip_var;
+	bool clip_v;
 public:
 	bool clip()const noexcept{
-		return this->clip_var;
+		return this->clip_v;
 	}
 	
 	void setClip(bool clip)noexcept{
-		this->clip_var = clip;
+		this->clip_v = clip;
 	}
 	
 	
@@ -296,22 +296,22 @@ public:
 	virtual void layOut(){}
 	
 	void setVisible(bool visible){
-		this->isVisible_var = visible;
-		if(!this->isVisible_var){
+		this->isVisible_v = visible;
+		if(!this->isVisible_v){
 			this->setUnhovered();
 		}
 	}
 	
 	bool isVisible()const noexcept{
-		return this->isVisible_var;
+		return this->isVisible_v;
 	}
 
 	void setEnabled(bool enable)noexcept{
-		this->isEnabled_var = enable;
+		this->isEnabled_v = enable;
 	}
 	
 	bool isEnabled()const noexcept{
-		return this->isEnabled_var;
+		return this->isEnabled_v;
 	}
 	
 	bool isInteractive()const noexcept{

@@ -22,7 +22,7 @@ TextField::TextField(const stob::Node* chain) :
 	
 	{
 		auto& lp = this->content().getLayoutParams(*this->ti);
-		lp.dim.x = Widget::LayoutParams::Fill_d;
-		lp.dim.y = Widget::LayoutParams::Min_d;
+		lp.dim.x = Widget::LayoutParams::fill_c;
+		lp.dim.y = Widget::LayoutParams::min_c;
 	}
 }

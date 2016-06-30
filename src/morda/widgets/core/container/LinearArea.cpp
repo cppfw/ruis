@@ -59,8 +59,8 @@ void LinearArea::layOut(){
 			
 			netWeight += lp.weight;
 			
-			ASSERT(lp.dim[longIndex] != LayoutParams::Max_d)
-			ASSERT(lp.dim[longIndex] != LayoutParams::Fill_d)
+			ASSERT(lp.dim[longIndex] != LayoutParams::max_c)
+			ASSERT(lp.dim[longIndex] != LayoutParams::fill_c)
 			
 			Vec2r d = this->dimForWidget(**i, lp);
 			info->measuredDim = d;
@@ -88,10 +88,10 @@ void LinearArea::layOut(){
 					d[longIndex] += flexible * lp.weight / netWeight;
 				}
 				
-				if(lp.dim[transIndex] == LayoutParams::Max_d || lp.dim[transIndex] == LayoutParams::Fill_d){
+				if(lp.dim[transIndex] == LayoutParams::max_c || lp.dim[transIndex] == LayoutParams::fill_c){
 					d[transIndex] = this->rect().d[transIndex];
 				}else{
-					if(lp.dim[transIndex] == LayoutParams::Min_d){
+					if(lp.dim[transIndex] == LayoutParams::min_c){
 						d[transIndex] = -1;
 					}else{
 						d[transIndex] = lp.dim[transIndex];
@@ -147,20 +147,20 @@ morda::Vec2r LinearArea::measure(const morda::Vec2r& quotum)const{
 
 			netWeight += lp.weight;
 
-			if(lp.dim[longIndex] == LayoutParams::Max_d || lp.dim[longIndex] == LayoutParams::Fill_d){
+			if(lp.dim[longIndex] == LayoutParams::max_c || lp.dim[longIndex] == LayoutParams::fill_c){
 				throw morda::Exc("LinearContainer::onMeasure(): mistake: 'max' or 'fill' in longitudional direction");
 			}
 
 			Vec2r d;
-			if(lp.dim[transIndex] == LayoutParams::Max_d){
+			if(lp.dim[transIndex] == LayoutParams::max_c){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = -1;
 				}
-			}else if(lp.dim[transIndex] == LayoutParams::Min_d){
+			}else if(lp.dim[transIndex] == LayoutParams::min_c){
 				d[transIndex] = -1;
-			}else if(lp.dim[transIndex] == LayoutParams::Fill_d){
+			}else if(lp.dim[transIndex] == LayoutParams::fill_c){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
@@ -170,9 +170,9 @@ morda::Vec2r LinearArea::measure(const morda::Vec2r& quotum)const{
 				d[transIndex] = lp.dim[transIndex];
 			}
 
-			ASSERT(lp.dim[longIndex] != LayoutParams::Max_d)
-			ASSERT(lp.dim[longIndex] != LayoutParams::Fill_d)
-			if(lp.dim[longIndex] == LayoutParams::Min_d){
+			ASSERT(lp.dim[longIndex] != LayoutParams::max_c)
+			ASSERT(lp.dim[longIndex] != LayoutParams::fill_c)
+			if(lp.dim[longIndex] == LayoutParams::min_c){
 				d[longIndex] = -1;
 			}else{
 				d[longIndex] = lp.dim[longIndex];
@@ -221,15 +221,15 @@ morda::Vec2r LinearArea::measure(const morda::Vec2r& quotum)const{
 				d[longIndex] += flexLen * lp.weight / netWeight;
 			}
 			
-			if(lp.dim[transIndex] == LayoutParams::Max_d){
+			if(lp.dim[transIndex] == LayoutParams::max_c){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = -1;
 				}
-			}else if(lp.dim[transIndex] == LayoutParams::Min_d){
+			}else if(lp.dim[transIndex] == LayoutParams::min_c){
 				d[transIndex] = -1;
-			}else if(lp.dim[transIndex] == LayoutParams::Fill_d){
+			}else if(lp.dim[transIndex] == LayoutParams::fill_c){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{

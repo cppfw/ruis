@@ -37,15 +37,15 @@ morda::Vec2r Frame::measure(const morda::Vec2r& quotum)const{
 		morda::Vec2r d;
 		
 		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dim[j] == LayoutParams::Max_d){
+			if(lp.dim[j] == LayoutParams::max_c){
 				if(quotum[j] >= 0){
 					d[j] = quotum[j];
 				}else{
 					d[j] = -1;
 				}
-			}else if(lp.dim[j] == LayoutParams::Min_d){
+			}else if(lp.dim[j] == LayoutParams::min_c){
 				d[j] = -1;
-			}else if(lp.dim[j] == LayoutParams::Fill_d){
+			}else if(lp.dim[j] == LayoutParams::fill_c){
 				if(quotum[j] >= 0){
 					d[j] = quotum[j];
 				}else{

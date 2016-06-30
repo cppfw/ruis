@@ -10,7 +10,7 @@ using namespace morda;
 
 
 namespace{
-const char* D_NinePatchLayout = R"qwertyuiop(
+const char* ninePatchLayout_c = R"qwertyuiop(
 		//1st row
 		TableRow{
 			ImageLabel{
@@ -79,7 +79,7 @@ const char* D_NinePatchLayout = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		Table(stob::parse(D_NinePatchLayout).get())
+		Table(stob::parse(ninePatchLayout_c).get())
 {
 	this->lt = this->findChildByNameAs<ImageLabel>("morda_lt");
 	this->t = this->findChildByNameAs<ImageLabel>("morda_t");
@@ -96,30 +96,30 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->content_var = this->findChildByNameAs<Frame>("morda_content");
 	
 	if(auto n = getProperty(chain, "left")){
-		this->borders.left() = dimValueFromLayoutStob(*n);
+		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'
 	}else{
-		this->borders.left() = LayoutParams::Min_d;
+		this->borders.left() = LayoutParams::min_c;
 	}
 	
 	if(auto n = getProperty(chain, "right")){
-		this->borders.right() = dimValueFromLayoutStob(*n);
+		this->borders.right() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.right() = LayoutParams::Min_d;
+		this->borders.right() = LayoutParams::min_c;
 	}
 	
 	if(auto n = getProperty(chain, "top")){
-		this->borders.top() = dimValueFromLayoutStob(*n);
+		this->borders.top() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.top() = LayoutParams::Min_d;
+		this->borders.top() = LayoutParams::min_c;
 	}
 	
 	if(auto n = getProperty(chain, "bottom")){
-		this->borders.bottom() = dimValueFromLayoutStob(*n);
+		this->borders.bottom() = dimValueFromSTOB(*n);
 	}else{
-		this->borders.bottom() = LayoutParams::Min_d;
+		this->borders.bottom() = LayoutParams::min_c;
 	}
 	
-	//this should go after setting borders
+	//this should go after setting up border widgets
 	if(const stob::Node* n = getProperty(chain, "image")){
 		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
 	}
@@ -152,12 +152,12 @@ void NinePatch::applyImages(){
 		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
 		
 		lp.dim.x = this->borders.left();
-		if(lp.dim.x == LayoutParams::Min_d){
+		if(lp.dim.x == LayoutParams::min_c){
 			lp.dim.x = minBorders.left();
 		}
 		
 		lp.dim.y = this->borders.top();
-		if(lp.dim.y == LayoutParams::Min_d){
+		if(lp.dim.y == LayoutParams::min_c){
 			lp.dim.y = minBorders.top();
 		}
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)
@@ -166,12 +166,12 @@ void NinePatch::applyImages(){
 		auto& lp = this->rb->parent()->getLayoutParams(*this->rb);
 		
 		lp.dim.x = this->borders.right();
-		if(lp.dim.x == LayoutParams::Min_d){
+		if(lp.dim.x == LayoutParams::min_c){
 			lp.dim.x = minBorders.right();
 		}
 		
 		lp.dim.y = this->borders.bottom();
-		if(lp.dim.y == LayoutParams::Min_d){
+		if(lp.dim.y == LayoutParams::min_c){
 			lp.dim.y = minBorders.bottom();
 		}
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)
