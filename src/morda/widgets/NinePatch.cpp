@@ -79,19 +79,22 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
+		BlendWidget(chain),
 		Table(stob::parse(ninePatchLayout_c).get())
 {
-	this->lt = this->findChildByNameAs<ImageLabel>("morda_lt");
-	this->t = this->findChildByNameAs<ImageLabel>("morda_t");
-	this->rt = this->findChildByNameAs<ImageLabel>("morda_rt");
+	this->imageLabelMatrix[0][0] = this->findChildByNameAs<ImageLabel>("morda_lt");
+	this->imageLabelMatrix[0][1] = this->findChildByNameAs<ImageLabel>("morda_t");
+	this->imageLabelMatrix[0][2] = this->findChildByNameAs<ImageLabel>("morda_rt");
 	
-	this->l = this->findChildByNameAs<ImageLabel>("morda_l");
-	this->m = this->findChildByNameAs<ImageLabel>("morda_m");
-	this->r = this->findChildByNameAs<ImageLabel>("morda_r");
+	this->imageLabelMatrix[1][0] = this->findChildByNameAs<ImageLabel>("morda_l");
+	this->imageLabelMatrix[1][1] = this->findChildByNameAs<ImageLabel>("morda_m");
+	this->imageLabelMatrix[1][2] = this->findChildByNameAs<ImageLabel>("morda_r");
 	
-	this->lb = this->findChildByNameAs<ImageLabel>("morda_lb");
-	this->b = this->findChildByNameAs<ImageLabel>("morda_b");
-	this->rb = this->findChildByNameAs<ImageLabel>("morda_rb");
+	this->imageLabelMatrix[2][0] = this->findChildByNameAs<ImageLabel>("morda_lb");
+	this->imageLabelMatrix[2][1] = this->findChildByNameAs<ImageLabel>("morda_b");
+	this->imageLabelMatrix[2][2] = this->findChildByNameAs<ImageLabel>("morda_rb");
+	
+	this->onBlendChanged();
 	
 	this->content_var = this->findChildByNameAs<Frame>("morda_content");
 	
@@ -153,7 +156,7 @@ void NinePatch::applyImages(){
 	
 	{
 		//TODO: getLayoutParams requests relayout which is not necessarily needed
-		auto& lp = this->lt->parent()->getLayoutParams(*this->lt);
+		auto& lp = this->imageLabelMatrix[0][0]->getLayoutParams();
 		
 		lp.dim.x = this->borders.left();
 		if(lp.dim.x == LayoutParams::min_c){
@@ -167,7 +170,8 @@ void NinePatch::applyImages(){
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}
 	{
-		auto& lp = this->rb->parent()->getLayoutParams(*this->rb);
+		//TODO: getLayoutParams requests relayout which is not necessarily needed
+		auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
 		
 		lp.dim.x = this->borders.right();
 		if(lp.dim.x == LayoutParams::min_c){
@@ -184,20 +188,22 @@ void NinePatch::applyImages(){
 			
 	this->scaledImage = this->image->get(this->borders);
 	
-	this->lt->setImage(this->scaledImage->images()[0][0]);
-	this->t->setImage(this->scaledImage->images()[0][1]);
-	this->rt->setImage(this->scaledImage->images()[0][2]);
-	
-	this->l->setImage(this->scaledImage->images()[1][0]);
-	this->m->setImage(this->scaledImage->images()[1][1]);
-	this->r->setImage(this->scaledImage->images()[1][2]);
-	
-	this->lb->setImage(this->scaledImage->images()[2][0]);
-	this->b->setImage(this->scaledImage->images()[2][1]);
-	this->rb->setImage(this->scaledImage->images()[2][2]);
+	for(unsigned i = 0; i != 3; ++i){
+		for(unsigned j = 0; j != 3; ++j){
+			this->imageLabelMatrix[i][j]->setImage(this->scaledImage->images()[i][j]);
+		}
+	}
 }
 
 void NinePatch::setCenterVisible(bool visible){
-	ASSERT(this->m)
-	this->m->setVisible(visible);
+	ASSERT(this->imageLabelMatrix[1][1])
+	this->imageLabelMatrix[1][1]->setVisible(visible);
+}
+
+void NinePatch::onBlendChanged(){
+	for(unsigned i = 0; i != 3; ++i){
+		for(unsigned j = 0; j != 3; ++j){
+			this->imageLabelMatrix[i][j]->setBlend(this->blend());
+		}
+	}
 }

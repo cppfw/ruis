@@ -6,17 +6,15 @@
 #include <utki/debug.hpp>
 
 #include "TexFont.hpp"
+
 #include "../util/Image.hpp"
+#include "../util/util.hpp"
 
 
 //freetype includes
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#if M_OS == M_OS_WINDOWS
-#	undef min
-#	undef max
-#endif
 
 #include <algorithm>
 
@@ -400,13 +398,7 @@ real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 		return 0;
 	}
 	
-	Render::setBlendFunc(
-			Render::BlendFactor_e::SRC_ALPHA,
-			Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
-			Render::BlendFactor_e::ONE_MINUS_DST_ALPHA,
-			Render::BlendFactor_e::ONE
-		);
-	Render::setBlendEnabled(true);
+	applySimpleAlphaBlending();
 
 	this->tex.bind();
 

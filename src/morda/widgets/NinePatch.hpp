@@ -13,12 +13,16 @@
 
 #include "label/ImageLabel.hpp"
 
+#include "BlendWidget.hpp"
+
+
 namespace morda{
 
 
 class NinePatch :
-	public virtual Widget,
-	private Table
+		public virtual Widget,
+		public BlendWidget,
+		private Table
 {
 	std::shared_ptr<ResNinePatch> image;
 	
@@ -26,7 +30,7 @@ class NinePatch :
 	
 	Sidesr borders;
 	
-	std::shared_ptr<ImageLabel> lt, t, rt, l, m, r, lb, b, rb;
+	std::array<std::array<std::shared_ptr<ImageLabel>, 3>, 3> imageLabelMatrix;
 	
 	std::shared_ptr<Frame> content_var;
 	
@@ -54,6 +58,9 @@ public:
 		this->borders = borders;
 		this->applyImages();
 	}
+	
+	void onBlendChanged() override;
+
 	
 private:
 	void applyImages();

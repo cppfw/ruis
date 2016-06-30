@@ -143,4 +143,9 @@ inline Texture2D loadTexture(const papki::File& fi){
 real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
 
 
+inline void applySimpleAlphaBlending(){
+	Render::setBlendEnabled(true);
+	Render::setBlendFunc(Render::BlendFactor_e::SRC_ALPHA, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA, Render::BlendFactor_e::ONE, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA);
+}
+
 }//~namespace

@@ -8,8 +8,10 @@
 using namespace morda;
 
 
+
 ImageLabel::ImageLabel(const stob::Node* chain) :
-		Widget(chain)
+		Widget(chain),
+		BlendWidget(chain)
 {
 	if(auto image = getProperty(chain, "image")){
 		this->img = App::inst().resMan.load<ResImage>(image->value());
@@ -40,6 +42,8 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 		return;
 	}
 
+	this->applyBlending();
+	
 	morda::PosTexShader &s = App::inst().shaders().posTexShader;
 	
 	if(!this->scaledImage){

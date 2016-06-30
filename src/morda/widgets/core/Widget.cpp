@@ -150,6 +150,10 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 			
 			Render::setScissorEnabled(scissorTestWasEnabled);
 		}
+		
+		//After rendering to texture it is most likely there will be transparent areas, so enable simple blending
+		applySimpleAlphaBlending();
+		
 		this->renderFromCache(matrix);
 	}else{
 		if(this->clip_v){

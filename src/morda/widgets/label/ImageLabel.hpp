@@ -6,12 +6,18 @@
 #pragma once
 
 #include "../core/Widget.hpp"
+
+#include "../BlendWidget.hpp"
+
 #include "../../resources/ResImage.hpp"
 
 
 namespace morda{
 
-class ImageLabel : public virtual Widget{
+class ImageLabel :
+		public virtual Widget,
+		public BlendWidget
+{
 	ImageLabel(const ImageLabel&);
 	ImageLabel& operator=(const ImageLabel&);
 	
@@ -23,6 +29,7 @@ class ImageLabel : public virtual Widget{
 	
 	kolme::Vec2b repeat_v;
 	mutable std::array<kolme::Vec2f, 4> texCoords;
+	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
 public:
@@ -43,6 +50,11 @@ public:
 	void setRepeat(decltype(repeat_v) r){
 		this->repeat_v = r;
 		this->scaledImage.reset();
+	}
+	
+	void setKeepAspectRatio(bool keepAspectRatio){
+		this->keepAspectRatio = keepAspectRatio;
+		this->setRelayoutNeeded();
 	}
 private:
 

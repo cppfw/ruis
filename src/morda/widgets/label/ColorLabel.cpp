@@ -21,6 +21,8 @@ ColorLabel::ColorLabel(const stob::Node* chain) :
 
 
 void ColorLabel::render(const morda::Matr4r& matrix)const{
+	applySimpleAlphaBlending();
+	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 

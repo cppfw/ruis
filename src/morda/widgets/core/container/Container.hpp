@@ -40,13 +40,6 @@ protected:
 protected:
 	virtual const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const;
 	
-	//TODO: remove
-//	const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const{
-//		return const_cast<std::remove_const<std::remove_pointer<decltype(this)>::type>::type*>(this)->getLayoutParamsDuringLayout(
-//				const_cast<std::remove_const<std::remove_reference<decltype(w)>::type>::type&>(w)
-//			);
-//	}
-	
 	template <class T> const T& getLayoutParamsDuringLayoutAs(const Widget& w)const{
 		auto p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
 		if(!p){

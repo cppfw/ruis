@@ -8,7 +8,7 @@ defs{
 	morda_color_bg_window_title{0xff903a42}
 	morda_color_bg_window_title_nontopmost{0xff404040}
 
-	morda_window_border_size{10pt}
+	morda_window_border_size{4pt}
 }
 
 templates{
@@ -33,6 +33,8 @@ templates{
 	WindowBackground Frame{
 		layout{dimX{fill} dimY{fill}}
 
+		cache{true}
+
 		ImageLabel{
 			layout{dimX{fill} dimY{fill}}
 			image{morda_img_window_background}
@@ -52,6 +54,12 @@ templates{
 			right{@{morda_window_border_size}}
 			bottom{@{morda_window_border_size}}
 			centerVisible{false}
+
+			blend{true}
+			blendSrc{zero}
+			blendDst{srcAlpha}
+			blendSrcAlpha{one}
+			blendDstAlpha{zero}
 		}
 
 	}
