@@ -125,8 +125,10 @@ inline const stob::Node* getProperty(const stob::Node* chain, const char* proper
 	if(!chain){
 		return nullptr;
 	}
-	auto n = chain->thisOrNext(property).node();
-	return n ? n->child() : nullptr;
+	if(auto n = chain->thisOrNext(property).node()){
+		return n->child();
+	}
+	return nullptr;
 }
 
 

@@ -61,7 +61,7 @@ Container{
 		}
 */
 
-		Background
+//		Background
 
 /*
 		TextLabel{
@@ -172,6 +172,7 @@ Container{
 		posX{300} posY{10}
 
 		title{"HorizontalLayout"}
+		background{}
 
 		GreyscaleGlass{
 			layout{
@@ -248,6 +249,7 @@ Container{
 		//cache{true}
 
 		title{"TreeView"}
+		background{}
 
 		BlurGlass{
 			layout{
@@ -341,7 +343,7 @@ Container{
 
 		title{"Sliders"}
 
-		Background
+//		Background
 
 		HorizontalArea{
 
@@ -394,7 +396,7 @@ Container{
 			repeatX{true} repeatY{true}
 		}
 */
-		Background
+//		Background
 
 		CubeWidget{
 			name{cube_widget}
@@ -418,7 +420,7 @@ Container{
 			}
 		}*/
 
-		Background
+//		Background
 
 		HorizontalArea{
 			layout{
@@ -448,7 +450,7 @@ Container{
 
 		title{"ScrollArea"}
 
-		Background
+//		Background
 
 		Table{
 			layout{

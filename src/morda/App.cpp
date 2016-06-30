@@ -116,7 +116,7 @@ void App::initStandardWidgets() {
 	
 	
 	try{
-		auto t = morda::App::inst().resMan.load<ResSTOB>("morda_gui_definitions");
+		auto t = morda::App::inst().resMan.load<ResSTOB>("morda_gui_defs");
 		
 		if(t->chain()){
 			this->inflater.inflate(*t->chain());

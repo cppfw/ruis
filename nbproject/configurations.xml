@@ -84,6 +84,7 @@
               <in>Container.cpp</in>
               <in>Frame.cpp</in>
               <in>LinearArea.cpp</in>
+              <in>Margins.cpp</in>
               <in>Overlay.cpp</in>
               <in>ScrollArea.cpp</in>
               <in>Table.cpp</in>
@@ -887,7 +888,7 @@
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </cTool>
-          <ccTool flags="-funsigned-char -O2 -std=c++11 -fPIC">
+          <ccTool flags="1">
             <standard>8</standard>
           </ccTool>
         </makeTool>
@@ -1820,9 +1821,6 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/util</pElem>

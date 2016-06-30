@@ -209,6 +209,20 @@ const char* DWindowDesc = R"qwertyuiop(
 }
 
 
+void morda::Window::setBackground(std::shared_ptr<Widget> w) {
+	ASSERT(this->children().size() == 1 || this->children().size() == 2)
+	if(this->children().size() == 2){
+		this->remove(this->children().begin());
+	}
+	
+	ASSERT(this->children().size() == 1)
+	
+	if(w){
+		this->add(std::move(w), this->children().begin());
+	}
+}
+
+
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
@@ -221,17 +235,22 @@ morda::Window::Window(const stob::Node* chain) :
 		this->setTitle(n->value());
 	}
 	
-	this->titleBgColorTopmost = 0xffff0000;
-	this->titleBgColorNonTopmost = 0xff808080;
-	
-	if(auto a = getProperty(chain, "appearance")){
-		if(auto n = getProperty(a, "titleColorTopmost")){
-			this->titleBgColorTopmost = n->asUint32();
-		}
-		
-		if(auto n = getProperty(a, "titleColorNonTopmost")){
-			this->titleBgColorNonTopmost = n->asUint32();
-		}
+	if(auto n = getProperty(chain, "titleColorTopmost")){
+		this->titleBgColorTopmost = n->asUint32();
+	}else{
+		this->titleBgColorTopmost = 0xffff0000;
+	}
+
+	if(auto n = getProperty(chain, "titleColorNonTopmost")){
+		this->titleBgColorNonTopmost = n->asUint32();
+	}else{
+		this->titleBgColorNonTopmost = 0xff808080;
+	}
+
+	if(auto n = getProperty(chain, "background")){
+		this->setBackground(morda::App::inst().inflater.inflate(*n));
+	}else{
+		//TODO: set empty background
 	}
 	
 	if(chain){

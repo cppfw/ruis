@@ -15,17 +15,16 @@ templates{
 	}
 
 	Window Window{
-		appearance{
-			titleColorTopmost{ @{morda_color_bg_window_title} }
-			titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
-		}
+		titleColorTopmost{ @{morda_color_bg_window_title} }
+		titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
+		background{WindowBackground}
 	}
 
 	PushButton NinePatchButton{
 //		borderLeft{5mm}
 	}
 
-	Background Frame{
+	WindowBackground Frame{
 		layout{dimX{fill} dimY{fill}}
 
 		ImageLabel{

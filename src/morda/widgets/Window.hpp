@@ -63,6 +63,8 @@ public:
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void onTopmostChanged()override;
+	
+	void setBackground(std::shared_ptr<Widget> w);
 };
 
 }
