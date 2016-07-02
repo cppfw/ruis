@@ -44,3 +44,7 @@ morda_grd_background{
 	stop{ pos{0.57} color{0x10ffffff} }
 	stop{ pos{1} color{0} }
 }
+
+morda_img_window_background{
+	file{background.png}
+}
