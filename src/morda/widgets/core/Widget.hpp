@@ -97,6 +97,7 @@ public:
 	
 private:
 	bool cache;
+	mutable bool cacheDirty = true;
 	mutable Texture2D cacheTex;
 
 	void renderFromCache(const kolme::Matr4f& matrix)const;

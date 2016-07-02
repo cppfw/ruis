@@ -146,13 +146,20 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	}
 	
 	if(this->cache){
-		if(!this->cacheTex){
+		if(this->cacheDirty){
 			bool scissorTestWasEnabled = Render::isScissorEnabled();
 			Render::setScissorEnabled(false);
-			
-			this->cacheTex = this->renderToTexture();//TODO: make reusing the tex
+
+			//check if can re-use old texture
+			if(!this->cacheTex || this->cacheTex.dim() != this->rect().d){
+				this->cacheTex = this->renderToTexture();
+			}else{
+				ASSERT(this->cacheTex.dim() == this->rect().d)
+				this->cacheTex = this->renderToTexture(std::move(this->cacheTex));
+			}
 			
 			Render::setScissorEnabled(scissorTestWasEnabled);
+			this->cacheDirty = false;
 		}
 		
 		//After rendering to texture it is most likely there will be transparent areas, so enable simple blending
@@ -264,7 +271,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 }
 
 void Widget::clearCache(){
-	this->cacheTex = Texture2D();
+	this->cacheDirty = true;
 	if(this->parentContainer){
 		this->parentContainer->clearCache();
 	}
