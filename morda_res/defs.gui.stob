@@ -43,7 +43,7 @@ templates{
 
 		ColorLabel{
 			layout{dimX{fill} dimY{fill}}
-			gradient{morda_grd_background}
+			gradient{morda_grd_window_background}
 		}
 
 		NinePatch{
