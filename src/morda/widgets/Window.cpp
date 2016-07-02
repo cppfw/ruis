@@ -87,18 +87,20 @@ const char* DWindowDesc = R"qwertyuiop(
 								dimX{max} dimY{max}
 							}
 
-//							Margins{
-//								left{3pt}
-//								top{2pt}
-//								bottom{2pt}
+							Margins{
+								left{3pt}
+								top{2pt}
+								bottom{2pt}
+
+								layout{
+									dimX{0}
+									weight{1}
+								}
+
 								TextLabel{
 									name{morda_title}
-									layout{
-										dimX{0}
-										weight{1}
-									}
 								}
-//							}
+							}
 						}
 					}
 
@@ -166,8 +168,7 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		Frame(stob::parse(DWindowDesc).get()),
-		emptyMinDim(this->measure(Vec2r(-1)))
+		Frame(stob::parse(DWindowDesc).get())
 {
 	this->setupWidgets();
 	
@@ -220,6 +221,9 @@ morda::Window::Window(const stob::Node* chain) :
 		
 		this->setBorders(borders);
 	}
+	
+	//this should go after initializing borders
+	this->emptyMinDim = this->measure(Vec2r(-1));
 	
 	if(chain){
 		this->contentArea->add(*chain);
