@@ -699,5 +699,6 @@ void Render::setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFacto
 
 
 bool Render::isBoundFrameBufferComplete(){
+//	TRACE(<< "glCheckFramebufferStatus(GL_FRAMEBUFFER) = " << glCheckFramebufferStatus(GL_FRAMEBUFFER) << std::endl)
 	return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 }

@@ -87,13 +87,18 @@ const char* DWindowDesc = R"qwertyuiop(
 								dimX{max} dimY{max}
 							}
 
-							TextLabel{
-								name{morda_title}
-								layout{
-									dimX{0}
-									weight{1}
+//							Margins{
+//								left{3pt}
+//								top{2pt}
+//								bottom{2pt}
+								TextLabel{
+									name{morda_title}
+									layout{
+										dimX{0}
+										weight{1}
+									}
 								}
-							}
+//							}
 						}
 					}
 
