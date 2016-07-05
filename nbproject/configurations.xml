@@ -1117,7 +1117,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>

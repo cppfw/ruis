@@ -3,6 +3,7 @@
 #include "../App.hpp"
 
 #include <utki/debug.hpp>
+#include <utki/config.hpp>
 
 
 using namespace morda;
@@ -161,9 +162,13 @@ bool morda::isPercent(const stob::Node& n){
 
 
 real morda::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
-	//TODO:
-	
-	return real(std::min(resolution.x, resolution.y)) / morda::screenSizePt;
+#if M_OS_NAME == M_OS_NAME_ANDROID
+	return real(1);//TODO:
+#elif M_OS_NAME == M_OS_NAME_IOS
+	return real(1);//TODO:
+#else
+	return real(1);
+#endif
 }
 
 

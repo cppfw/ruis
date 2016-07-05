@@ -81,6 +81,4 @@ static_assert(sizeof(Vec4r) == sizeof(real) * 4, "size mismatch");
 
 typedef Sides<real> Sidesr;
 
-const real screenSizePt = 720; //points per lesser screen dimension
-
 }//~namespace
