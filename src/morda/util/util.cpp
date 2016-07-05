@@ -162,6 +162,11 @@ bool morda::isPercent(const stob::Node& n){
 
 
 real morda::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
+	
+	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
+	//For high density displays it should be more than one pixel, depending on display ppi.
+	//For handheld devices the size of PT should be determined from physical screen size and pixel resolution.
+	
 #if M_OS_NAME == M_OS_NAME_ANDROID
 	return real(1);//TODO:
 #elif M_OS_NAME == M_OS_NAME_IOS

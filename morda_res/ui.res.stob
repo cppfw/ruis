@@ -48,3 +48,8 @@ morda_grd_window_background{
 morda_img_window_background{
 	file{background.png}
 }
+
+morda_npt_window_empty_bg{
+	file{window_empty_bg.svg}
+	borders{5 5 5 5}
+}

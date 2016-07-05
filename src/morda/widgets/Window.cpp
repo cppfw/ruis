@@ -189,6 +189,7 @@ morda::Window::Window(const stob::Node* chain) :
 	}
 
 	if(auto n = getProperty(chain, "background")){
+		for(; n->next(); n = n->next());//take last child
 		this->setBackground(morda::App::inst().inflater.inflate(*n));
 	}
 

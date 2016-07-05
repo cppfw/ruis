@@ -61,6 +61,17 @@ templates{
 			blendSrcAlpha{one}
 			blendDstAlpha{zero}
 		}
+	}
 
+	WindowEmptyBackground NinePatch{
+		layout{dimX{fill} dimY{fill}}
+
+		image{morda_npt_window_empty_bg}
+
+		left{@{morda_window_border_size}}
+		top{@{morda_window_border_size}}
+		right{@{morda_window_border_size}}
+		bottom{@{morda_window_border_size}}
+		centerVisible{false}
 	}
 }

@@ -37,6 +37,7 @@ Container{
 		dimX{max} dimY{max}
 	}
 
+
 	Window{
 		posX{0} posY{0}
 		dimX{300} dimY{200}
@@ -50,64 +51,6 @@ Container{
 //			clr{0xffff0000}
 			clr{@{another_color}}
 		}
-
-/*
-		ColorLabel{
-			color{ @{morda_color_bg} }
-
-			layout{
-				dimX{max} dimY{max}
-			}
-		}
-*/
-
-//		Background
-
-/*
-		TextLabel{
-
-			templates{
-				My1Label MyLabel{
-					Child{1234}
-					Child{5678}
-
-					dimY{34}
-					text{f}
-					layout{
-						dimX{18}
-					}
-				}
-
-				My2Label MyLabel{
-					dimX{98}
-				}
-			}
-
-			text{"inwindow text, y j g q p"}
-			layout{
-				
-			}
-
-			color{@{clr}}
-		}
-*/
-
-/*
-		ImageLabel{
-
-			templates{
-				My3Label MyLabel{
-					dimX{98}
-				}
-			}
-
-			image{img_sample}
-
-			layout{
-
-			}
-		}
-*/
 
 		VerticalArea{
 			layout{
@@ -167,12 +110,14 @@ Container{
 
 	}
 
+
 	Window{
 		dimX{300} dimY{200}
 		posX{300} posY{10}
 
 		title{"HorizontalLayout"}
-		background{}
+
+		background{WindowEmptyBackground}
 
 		GreyscaleGlass{
 			layout{
@@ -249,7 +194,7 @@ Container{
 		//cache{true}
 
 		title{"TreeView"}
-		background{}
+		background{WindowEmptyBackground}
 
 		BlurGlass{
 			layout{
@@ -343,7 +288,6 @@ Container{
 
 		title{"Sliders"}
 
-//		Background
 
 		HorizontalArea{
 
@@ -396,7 +340,6 @@ Container{
 			repeatX{true} repeatY{true}
 		}
 */
-//		Background
 
 		CubeWidget{
 			name{cube_widget}
@@ -420,7 +363,6 @@ Container{
 			}
 		}*/
 
-//		Background
 
 		HorizontalArea{
 			layout{
@@ -450,7 +392,6 @@ Container{
 
 		title{"ScrollArea"}
 
-//		Background
 
 		Table{
 			layout{
@@ -545,7 +486,7 @@ Container{
 			gradient{grd_sample}
 		}
 
-//		Background
+
 
 		Table{
 			layout{

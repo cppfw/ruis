@@ -79,6 +79,7 @@ const char* defs_c = "defs";
 
 
 
+//Merges two STOB chains. 
 std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
 	if(!to){
 		if(!from){
@@ -89,35 +90,36 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 	
 	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
 	
-	for(auto s = from; s; s = s->next()){
-		if(!s->isProperty()){
-			auto c = s->clone();
+	for(auto src = from; src; src = src->next()){
+		if(!src->isProperty()){
+			auto c = src->clone();
 			c->setNext(std::move(children));
 			children = std::move(c);
 			continue;
 		}
 		
-		if(!s->child() || *s == "@"){ //@ means reference to a variable
+		if(!src->child() || *src == "@"){ //@ means reference to a variable
 			//No children means that it is a property value, stop further processing of this chain.
 			
 			//Check that it is the only node in the chain
-			if(s != from || s->next()){
+			if(src != from || src->next()){
 				throw Inflater::Exc("malformed gui script: property with several values encountered");
 			}
 			return to;
 		}
 		
-		auto d = to->thisOrNext(s->value()).node();
-		if(!d){
-			to->insertNext(s->clone());
+		auto dst = to->thisOrNext(src->value()).node();
+		if(!dst){
+			//there is no same named property in 'to', so just clone property there
+			to->insertNext(src->clone());
 			continue;
 		}
 		
-		if(!d->child()){
+		if(!dst->child()){
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		d->setChildren(mergeGUIChain(s->child(), d->removeChildren()));
+		dst->setChildren(mergeGUIChain(src->child(), dst->removeChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
