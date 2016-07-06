@@ -176,20 +176,22 @@ morda::Window::Window(const stob::Node* chain) :
 		this->setTitle(n->value());
 	}
 	
-	if(auto c = getProperty(chain, "look")){
-		if(auto n = getProperty(c, "titleColorTopmost")){
+	{
+		auto ch = getProperty(chain, "look");
+		
+		if(auto n = getProperty(ch, "titleColorTopmost")){
 			this->titleBgColorTopmost = n->asUint32();
 		}else{
 			this->titleBgColorTopmost = 0xffff0000;
 		}
 
-		if(auto n = getProperty(c, "titleColorNonTopmost")){
+		if(auto n = getProperty(ch, "titleColorNonTopmost")){
 			this->titleBgColorNonTopmost = n->asUint32();
 		}else{
 			this->titleBgColorNonTopmost = 0xff808080;
 		}
 
-		if(auto n = getProperty(c, "background")){
+		if(auto n = getProperty(ch, "background")){
 			for(; n->next(); n = n->next());//take last child
 			this->setBackground(morda::App::inst().inflater.inflate(*n));
 		}
@@ -197,25 +199,25 @@ morda::Window::Window(const stob::Node* chain) :
 		{
 			Sidesr borders;
 
-			if(auto n = getProperty(c, "left")){
+			if(auto n = getProperty(ch, "left")){
 				borders.left() = dimValueFromSTOB(*n);
 			}else{
 				borders.left() = 0;
 			}
 
-			if(auto n = getProperty(c, "top")){
+			if(auto n = getProperty(ch, "top")){
 				borders.top() = dimValueFromSTOB(*n);
 			}else{
 				borders.top() = 0;
 			}
 
-			if(auto n = getProperty(c, "right")){
+			if(auto n = getProperty(ch, "right")){
 				borders.right() = dimValueFromSTOB(*n);
 			}else{
 				borders.right() = 0;
 			}
 
-			if(auto n = getProperty(c, "bottom")){
+			if(auto n = getProperty(ch, "bottom")){
 				borders.bottom() = dimValueFromSTOB(*n);
 			}else{
 				borders.bottom() = 0;

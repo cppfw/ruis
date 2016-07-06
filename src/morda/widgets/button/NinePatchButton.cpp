@@ -10,16 +10,20 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 		Widget(chain),
 		NinePatch(chain)
 {
-	if(auto n = getProperty(chain, "imageNormal")){
-		this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>(n->value());
-	}else{
-		this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_normal");
-	}
-	
-	if(auto n = getProperty(chain, "imagePressed")){
-		this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>(n->value());
-	}else{
-		this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_pressed");
+	{
+		auto ch = getProperty(chain, "look");
+		
+		if(auto n = getProperty(ch, "imageNormal")){
+			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>(n->value());
+		}else{
+			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_normal");
+		}
+
+		if(auto n = getProperty(ch, "imagePressed")){
+			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>(n->value());
+		}else{
+			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_pressed");
+		}
 	}
 	
 	//initialize nine-patch

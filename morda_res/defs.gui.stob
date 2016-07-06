@@ -28,9 +28,7 @@ templates{
 		}
 	}
 
-	PushButton NinePatchButton{
-//		borderLeft{5mm}
-	}
+	PushButton NinePatchButton
 
 	WindowBackground Frame{
 		layout{dimX{fill} dimY{fill}}
