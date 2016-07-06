@@ -106,6 +106,32 @@ Container{
 					text{"toggle fullscreen"}
 				}
 			}
+
+			ChoiceGroup{
+				layout{dimX{max}}
+
+				templates{
+					RadBtn HorizontalArea{
+						Margins{
+							left{5pt}
+							right{5pt}
+							top{5pt}
+							bottom{5pt}
+							RadioButton
+						}
+
+						TextLabel{
+							text{"radiobutton"}
+						}
+					}
+				}
+
+				VerticalArea{
+					RadBtn
+					RadBtn
+					RadBtn
+				}
+			}
 		}
 
 	}

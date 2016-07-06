@@ -12,7 +12,7 @@
 #include "widgets/button/NinePatchButton.hpp"
 #include "widgets/button/CheckBox.hpp"
 #include "widgets/button/RadioButton.hpp"
-#include "widgets/button/RadioGroup.hpp"
+#include "widgets/button/ChoiceGroup.hpp"
 
 #include "widgets/label/ColorLabel.hpp"
 #include "widgets/label/TextLabel.hpp"
@@ -117,7 +117,7 @@ void App::initStandardWidgets() {
 	this->inflater.addWidget<TreeView>("TreeView");
 	this->inflater.addWidget<DropDownSelector>("DropDownSelector");
 	this->inflater.addWidget<RadioButton>("RadioButton");
-	this->inflater.addWidget<RadioGroup>("RadioGroup");
+	this->inflater.addWidget<ChoiceGroup>("ChoiceGroup");
 	
 	
 	try{

@@ -65,7 +65,7 @@ public:
 
 
 class ToggleButton : public PushButton{
-	bool isChecked_var;
+	bool isChecked_v;
 	
 protected:
 	void onClicked()override{
@@ -82,11 +82,11 @@ protected:
 public:
 
 	void setChecked(bool checked){
-		if(this->isChecked_var == checked){
+		if(this->isChecked_v == checked){
 			return;
 		}
 		
-		this->isChecked_var = checked;
+		this->isChecked_v = checked;
 		this->onCheckedChanged();
 	}
 	
@@ -95,7 +95,7 @@ public:
 	}
 	
 	bool isChecked()const noexcept{
-		return this->isChecked_var;
+		return this->isChecked_v;
 	}
 	
 	std::function<void(ToggleButton&, bool)> checkedChanged;
