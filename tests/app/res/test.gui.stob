@@ -143,7 +143,9 @@ Container{
 
 		title{"HorizontalLayout"}
 
-		background{WindowEmptyBackground}
+		look{
+			background{WindowEmptyBackground}
+		}
 
 		GreyscaleGlass{
 			layout{
@@ -220,7 +222,10 @@ Container{
 		//cache{true}
 
 		title{"TreeView"}
-		background{WindowEmptyBackground}
+
+		look{
+			background{WindowEmptyBackground}
+		}
 
 		BlurGlass{
 			layout{

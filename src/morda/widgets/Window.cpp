@@ -176,51 +176,53 @@ morda::Window::Window(const stob::Node* chain) :
 		this->setTitle(n->value());
 	}
 	
-	if(auto n = getProperty(chain, "titleColorTopmost")){
-		this->titleBgColorTopmost = n->asUint32();
-	}else{
-		this->titleBgColorTopmost = 0xffff0000;
-	}
+	if(auto c = getProperty(chain, "look")){
+		if(auto n = getProperty(c, "titleColorTopmost")){
+			this->titleBgColorTopmost = n->asUint32();
+		}else{
+			this->titleBgColorTopmost = 0xffff0000;
+		}
 
-	if(auto n = getProperty(chain, "titleColorNonTopmost")){
-		this->titleBgColorNonTopmost = n->asUint32();
-	}else{
-		this->titleBgColorNonTopmost = 0xff808080;
-	}
+		if(auto n = getProperty(c, "titleColorNonTopmost")){
+			this->titleBgColorNonTopmost = n->asUint32();
+		}else{
+			this->titleBgColorNonTopmost = 0xff808080;
+		}
 
-	if(auto n = getProperty(chain, "background")){
-		for(; n->next(); n = n->next());//take last child
-		this->setBackground(morda::App::inst().inflater.inflate(*n));
-	}
+		if(auto n = getProperty(c, "background")){
+			for(; n->next(); n = n->next());//take last child
+			this->setBackground(morda::App::inst().inflater.inflate(*n));
+		}
 
-	{
-		Sidesr borders;
-		
-		if(auto n = getProperty(chain, "left")){
-			borders.left() = dimValueFromSTOB(*n);
-		}else{
-			borders.left() = 0;
+		{
+			Sidesr borders;
+
+			if(auto n = getProperty(c, "left")){
+				borders.left() = dimValueFromSTOB(*n);
+			}else{
+				borders.left() = 0;
+			}
+
+			if(auto n = getProperty(c, "top")){
+				borders.top() = dimValueFromSTOB(*n);
+			}else{
+				borders.top() = 0;
+			}
+
+			if(auto n = getProperty(c, "right")){
+				borders.right() = dimValueFromSTOB(*n);
+			}else{
+				borders.right() = 0;
+			}
+
+			if(auto n = getProperty(c, "bottom")){
+				borders.bottom() = dimValueFromSTOB(*n);
+			}else{
+				borders.bottom() = 0;
+			}
+
+			this->setBorders(borders);
 		}
-		
-		if(auto n = getProperty(chain, "top")){
-			borders.top() = dimValueFromSTOB(*n);
-		}else{
-			borders.top() = 0;
-		}
-		
-		if(auto n = getProperty(chain, "right")){
-			borders.right() = dimValueFromSTOB(*n);
-		}else{
-			borders.right() = 0;
-		}
-		
-		if(auto n = getProperty(chain, "bottom")){
-			borders.bottom() = dimValueFromSTOB(*n);
-		}else{
-			borders.bottom() = 0;
-		}
-		
-		this->setBorders(borders);
 	}
 	
 	//this should go after initializing borders
