@@ -50,7 +50,7 @@ public:
 	 * @brief Registers a new widget type.
 	 * @param widgetName - name of the widget as it appears in GUI script.
 	 */
-	template <class T_Widget> void AddWidget(const std::string& widgetName){
+	template <class T_Widget> void addWidget(const std::string& widgetName){
 		class Factory : public WidgetFactory{
 		public:
 			std::shared_ptr<morda::Widget> create(const stob::Node* chain)const override{

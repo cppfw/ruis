@@ -3,18 +3,23 @@
 #include "resources/ResSTOB.hpp"
 
 #include <utki/debug.hpp>
+
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
 
-#include "widgets/TextField.hpp"
 #include "widgets/slider/Slider.hpp"
+
 #include "widgets/button/NinePatchButton.hpp"
 #include "widgets/button/CheckBox.hpp"
+#include "widgets/button/RadioButton.hpp"
+#include "widgets/button/RadioGroup.hpp"
 
 #include "widgets/label/ColorLabel.hpp"
 #include "widgets/label/TextLabel.hpp"
 #include "widgets/label/GreyscaleGlass.hpp"
 #include "widgets/label/BlurGlass.hpp"
+
+#include "widgets/TextField.hpp"
 #include "widgets/List.hpp"
 #include "widgets/TreeView.hpp"
 #include "widgets/DropDownSelector.hpp"
@@ -94,23 +99,25 @@ void App::initStandardWidgets() {
 	
 	//add standard widgets to inflater
 	
-	this->inflater.AddWidget<TextLabel>("TextLabel");
-	this->inflater.AddWidget<TextInput>("TextInput");
-	this->inflater.AddWidget<VerticalSlider>("VerticalSlider");
-	this->inflater.AddWidget<HorizontalSlider>("HorizontalSlider");
-	this->inflater.AddWidget<ImageLabel>("ImageLabel");
-	this->inflater.AddWidget<Window>("Window");
-	this->inflater.AddWidget<NinePatch>("NinePatch");
-	this->inflater.AddWidget<NinePatchButton>("NinePatchButton");
-	this->inflater.AddWidget<ColorLabel>("ColorLabel");
-	this->inflater.AddWidget<TextField>("TextField");
-	this->inflater.AddWidget<CheckBox>("CheckBox");
-	this->inflater.AddWidget<GreyscaleGlass>("GreyscaleGlass");
-	this->inflater.AddWidget<BlurGlass>("BlurGlass");
-	this->inflater.AddWidget<HorizontalList>("HorizontalList");
-	this->inflater.AddWidget<VerticalList>("VerticalList");
-	this->inflater.AddWidget<TreeView>("TreeView");
-	this->inflater.AddWidget<DropDownSelector>("DropDownSelector");
+	this->inflater.addWidget<TextLabel>("TextLabel");
+	this->inflater.addWidget<TextInput>("TextInput");
+	this->inflater.addWidget<VerticalSlider>("VerticalSlider");
+	this->inflater.addWidget<HorizontalSlider>("HorizontalSlider");
+	this->inflater.addWidget<ImageLabel>("ImageLabel");
+	this->inflater.addWidget<Window>("Window");
+	this->inflater.addWidget<NinePatch>("NinePatch");
+	this->inflater.addWidget<NinePatchButton>("NinePatchButton");
+	this->inflater.addWidget<ColorLabel>("ColorLabel");
+	this->inflater.addWidget<TextField>("TextField");
+	this->inflater.addWidget<CheckBox>("CheckBox");
+	this->inflater.addWidget<GreyscaleGlass>("GreyscaleGlass");
+	this->inflater.addWidget<BlurGlass>("BlurGlass");
+	this->inflater.addWidget<HorizontalList>("HorizontalList");
+	this->inflater.addWidget<VerticalList>("VerticalList");
+	this->inflater.addWidget<TreeView>("TreeView");
+	this->inflater.addWidget<DropDownSelector>("DropDownSelector");
+	this->inflater.addWidget<RadioButton>("RadioButton");
+	this->inflater.addWidget<RadioGroup>("RadioGroup");
 	
 	
 	try{

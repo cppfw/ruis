@@ -24,19 +24,19 @@ using namespace morda;
 
 
 Inflater::Inflater(){
-	this->AddWidget<Widget>("Widget");
-	this->AddWidget<Container>("Container");
-	this->AddWidget<HorizontalArea>("HorizontalArea");
-	this->AddWidget<VerticalArea>("VerticalArea");
-	this->AddWidget<Frame>("Frame");
-	this->AddWidget<MouseProxy>("MouseProxy");
-	this->AddWidget<ScrollArea>("ScrollArea");
-	this->AddWidget<Table>("Table");
-	this->AddWidget<TableRow>("TableRow");
-	this->AddWidget<KeyProxy>("KeyProxy");
-	this->AddWidget<Overlay>("Overlay");
-	this->AddWidget<ResizeProxy>("ResizeProxy");
-	this->AddWidget<Margins>("Margins");
+	this->addWidget<Widget>("Widget");
+	this->addWidget<Container>("Container");
+	this->addWidget<HorizontalArea>("HorizontalArea");
+	this->addWidget<VerticalArea>("VerticalArea");
+	this->addWidget<Frame>("Frame");
+	this->addWidget<MouseProxy>("MouseProxy");
+	this->addWidget<ScrollArea>("ScrollArea");
+	this->addWidget<Table>("Table");
+	this->addWidget<TableRow>("TableRow");
+	this->addWidget<KeyProxy>("KeyProxy");
+	this->addWidget<Overlay>("Overlay");
+	this->addWidget<ResizeProxy>("ResizeProxy");
+	this->addWidget<Margins>("Margins");
 }
 
 
