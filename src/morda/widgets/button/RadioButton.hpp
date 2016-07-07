@@ -1,14 +1,14 @@
 #pragma once
 
 #include "ChoiceButton.hpp"
-#include "../NinePatch.hpp"
+#include "../core/container/Frame.hpp"
 
 namespace morda{
 
 
 class RadioButton :
 		public ChoiceButton,
-		private NinePatch
+		private Frame
 {
 	std::shared_ptr<Widget> checkWidget;
 public:

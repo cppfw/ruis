@@ -53,3 +53,12 @@ morda_npt_window_empty_bg{
 	file{window_empty_bg.svg}
 	borders{5 5 5 5}
 }
+
+
+morda_img_radiobutton_bg{
+	file{radiobutton_bg.svg}
+}
+
+morda_img_radiobutton_tick{
+	file{radiobutton_tick.svg}
+}
