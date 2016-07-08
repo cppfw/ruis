@@ -21,5 +21,5 @@ W.I.P.
 
 # Building from sources
   * [how to build in Linux](wiki/BuildingInLinux.md)
-  * [how to build in Windows](wiki/BuildingInMSYS.md)
+  * [how to build in Windows](wiki/BuildingInWindows.adoc)
   * [how to build in MacOS X](wiki/BuildingInMacOSX.md)
