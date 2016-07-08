@@ -1,1 +1,11 @@
+= Building in Windows
 
+
+== Visual Studio 2015
+
+After cloning *morda* repository just use the MSVS solution from _msvs_solution_ directory.
+
+
+== Cygwin
+
+TODO:
