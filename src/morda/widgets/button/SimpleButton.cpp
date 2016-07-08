@@ -1,4 +1,4 @@
-#include "NinePatchButton.hpp"
+#include "SimpleButton.hpp"
 #include "../../App.hpp"
 #include "../../util/util.hpp"
 
@@ -6,7 +6,7 @@
 using namespace morda;
 
 
-NinePatchButton::NinePatchButton(const stob::Node* chain) :
+SimpleButton::SimpleButton(const stob::Node* chain) :
 		Widget(chain),
 		NinePatch(chain)
 {
@@ -27,10 +27,10 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 	}
 	
 	//initialize nine-patch
-	this->NinePatchButton::onPressedChanged();
+	this->SimpleButton::onPressedChanged();
 }
 
-void NinePatchButton::onPressedChanged(){
+void SimpleButton::onPressedChanged(){
 	this->PushButton::onPressedChanged();
 	this->setNinePatch(this->isPressed() ? this->imgPressed : this->imgNormal);
 }

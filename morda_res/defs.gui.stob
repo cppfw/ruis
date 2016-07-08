@@ -28,7 +28,7 @@ templates{
 		}
 	}
 
-	PushButton NinePatchButton
+	PushButton SimpleButton
 
 	WindowBackground Frame{
 		layout{dimX{fill} dimY{fill}}

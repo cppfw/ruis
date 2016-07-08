@@ -10,7 +10,7 @@
 
 namespace morda{
 
-class NinePatchButton :
+class SimpleButton :
 		public PushButton,
 		private NinePatch
 {
@@ -19,10 +19,10 @@ class NinePatchButton :
 	
 public:
 
-	NinePatchButton(const NinePatchButton&) = delete;
-	NinePatchButton& operator=(const NinePatchButton&) = delete;
+	SimpleButton(const SimpleButton&) = delete;
+	SimpleButton& operator=(const SimpleButton&) = delete;
 	
-	NinePatchButton(const stob::Node* chain = nullptr);
+	SimpleButton(const stob::Node* chain = nullptr);
 	
 private:
 	void onPressedChanged()override;
