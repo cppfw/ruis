@@ -1,4 +1,5 @@
 #include <utki/util.hpp>
+#include <utki/types.hpp>
 
 #include "NinePatch.hpp"
 #include "../App.hpp"
@@ -150,37 +151,67 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 	this->clearCache();
 }
 
+
+
 void NinePatch::applyImages(){
 	auto& minBorders = this->image->borders();
 //	TRACE(<< "minBorders = " << minBorders << std::endl)
 	
 	{
-		//TODO: getLayoutParams requests relayout which is not necessarily needed
-		auto& lp = this->imageLabelMatrix[0][0]->getLayoutParams();
+		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = utki::makePtrToConst(this->imageLabelMatrix[0][0].get())->getLayoutParams();
 		
-		lp.dim.x = this->borders.left();
-		if(lp.dim.x == LayoutParams::min_c){
-			lp.dim.x = minBorders.left();
+		if(this->borders.left() == LayoutParams::min_c){
+			if(layoutParams.dim.x != minBorders.left()){
+				auto& lp = this->imageLabelMatrix[0][0].get()->getLayoutParams();
+				lp.dim.x = minBorders.left();
+			}
+		}else{
+			if(layoutParams.dim.x != this->borders.left()){
+				auto& lp = this->imageLabelMatrix[0][0].get()->getLayoutParams();
+				lp.dim.x = this->borders.left();
+			}
 		}
 		
-		lp.dim.y = this->borders.top();
-		if(lp.dim.y == LayoutParams::min_c){
-			lp.dim.y = minBorders.top();
+		if(this->borders.top() == LayoutParams::min_c){
+			if(layoutParams.dim.y != minBorders.top()){
+				auto& lp = this->imageLabelMatrix[0][0].get()->getLayoutParams();
+				lp.dim.y = minBorders.top();
+			}
+		}else{
+			if(layoutParams.dim.y != this->borders.top()){
+				auto& lp = this->imageLabelMatrix[0][0].get()->getLayoutParams();
+				lp.dim.y = this->borders.top();
+			}
 		}
-//		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+//		TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
 	}
 	{
-		//TODO: getLayoutParams requests relayout which is not necessarily needed
-		auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
+		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = utki::makePtrToConst(this->imageLabelMatrix[2][2].get())->getLayoutParams();
 		
-		lp.dim.x = this->borders.right();
-		if(lp.dim.x == LayoutParams::min_c){
-			lp.dim.x = minBorders.right();
+		if(this->borders.right() == LayoutParams::min_c){
+			if(layoutParams.dim.x != minBorders.right()){
+				auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
+				lp.dim.x = minBorders.right();
+			}
+		}else{
+			if(layoutParams.dim.x != this->borders.right()){
+				auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
+				lp.dim.x = this->borders.right();
+			}
 		}
 		
-		lp.dim.y = this->borders.bottom();
-		if(lp.dim.y == LayoutParams::min_c){
-			lp.dim.y = minBorders.bottom();
+		if(this->borders.bottom() == LayoutParams::min_c){
+			if(layoutParams.dim.y != minBorders.bottom()){
+				auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
+				lp.dim.y = minBorders.bottom();
+			}
+		}else{
+			if(layoutParams.dim.y != this->borders.bottom()){
+				auto& lp = this->imageLabelMatrix[2][2]->getLayoutParams();
+				lp.dim.y = this->borders.bottom();
+			}
 		}
 //		TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}

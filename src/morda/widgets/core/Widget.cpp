@@ -391,3 +391,12 @@ Widget::LayoutParams& Widget::getLayoutParams() {
 	
 	return this->parent()->getLayoutParams(*this);
 }
+
+
+const Widget::LayoutParams& Widget::getLayoutParams()const {
+	if(!this->parent()){
+		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+	}
+	
+	return this->parent()->getLayoutParams(*this);
+}

@@ -1507,6 +1507,7 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
+            <pElem>src/morda/widgets/button</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>/usr/include/kolme</pElem>

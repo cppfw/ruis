@@ -135,7 +135,11 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 	ASSERT(this->selectionContainer)
 	
 	auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
-	b->clicked = [this](PushButton& b){
+	b->pressedChanged = [this](Button& b){
+		if(!b.isPressed()){
+			return;
+		}
+		
 		if(!this->provider){
 			return;
 		}
@@ -201,15 +205,15 @@ void DropDownSelector::handleDataSetChanged(){
 	if(!this->provider){
 		return;
 	}
-	if(this->selectedItem >= this->provider->count()){
+	if(this->selectedItem_v >= this->provider->count()){
 		return;
 	}
 	
-	this->selectionContainer->add(this->provider->getWidget(this->selectedItem, true));
+	this->selectionContainer->add(this->provider->getWidget(this->selectedItem_v, true));
 }
 
 void DropDownSelector::setSelection(size_t i){
-	this->selectedItem = i;
+	this->selectedItem_v = i;
 	
 	this->handleDataSetChanged();
 }

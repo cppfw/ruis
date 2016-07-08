@@ -120,6 +120,8 @@ private:
 public:
 	Widget::LayoutParams& getLayoutParams();
 	
+	const Widget::LayoutParams& getLayoutParams()const;
+	
 	bool needsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}

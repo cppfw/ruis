@@ -120,7 +120,7 @@ void LinearArea::layOut(){
 			
 			pos += (*i)->rect().d[longIndex];
 			
-			newPos[transIndex] = ::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
+			newPos[transIndex] = std::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 			
 			(*i)->moveTo(newPos);
 		}

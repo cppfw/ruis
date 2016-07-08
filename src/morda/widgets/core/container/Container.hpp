@@ -35,6 +35,15 @@ protected:
 		return utki::makeUnique<Widget::LayoutParams>(chain);
 	}
 	
+	/**
+	 * @brief Calculate basic dimensions of widget.
+	 * Calculates basic dimensions of given widget if it would be placed to
+	 * this container with given layout parameters, basically this is just
+	 * resolving of 'min', 'max' and 'fill' special values of dimensions.
+	 * @param w - widget to calculate dimensions for.
+	 * @param lp - layout parameters of the widget.
+	 * @return Dimensions of widget.
+	 */
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 	
 protected:

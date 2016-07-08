@@ -35,7 +35,7 @@ public:
 private:
 	std::shared_ptr<ItemsProvider> provider;
 	
-	std::size_t selectedItem = 0;
+	std::size_t selectedItem_v = 0;
 public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
@@ -47,6 +47,10 @@ public:
 	DropDownSelector& operator=(const DropDownSelector&) = delete;
 	
 	void setSelection(size_t i);
+	
+	std::size_t selectedItem()const noexcept{
+		return this->selectedItem_v;
+	}
 	
 private:
 	void handleDataSetChanged();
