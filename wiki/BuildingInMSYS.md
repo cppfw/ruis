@@ -1,4 +1,4 @@
-TODO: update
+TODO: change to building in cygwin
 
 # Step-by-step building morda in Windows using MinGW and MSYS #
 
