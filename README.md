@@ -13,9 +13,9 @@ W.I.P.
   * OpenGL ES 2.0+
 
 ## Supported platforms
-  * Linux (gcc-4.8 or higher)
-  * Windows (VS2015/MinGW gcc-4.8 or higher)
-  * MacOS X (clang 5.1 or higher)
+  * Linux
+  * Windows
+  * MacOS X
   * Android 2.3+ (currently broken)
   * iOS (draft implementation)
 
