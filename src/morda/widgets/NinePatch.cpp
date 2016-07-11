@@ -19,12 +19,12 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 			}
 
 			ImageLabel{
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 				name{morda_t}
 			}
 
 			ImageLabel{
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 				name{morda_rt}
 			}
 		}
@@ -37,36 +37,36 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 			
 			ImageLabel{
 				name{morda_l}
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 			}
 
 			Frame{
 				name{morda_content}
 				layout{
 					weight{1}
-					dimY{max}
+					dy{max}
 				}
 
 				ImageLabel{
 					name{morda_m}
-					layout{dimX{fill}dimY{fill}}
+					layout{dx{fill}dy{fill}}
 				}
 			}
 			ImageLabel{
 				name{morda_r}
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 			}
 		}
 
 		//3rd row
 		TableRow{
 			ImageLabel{
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 				name{morda_lb}
 			}
 
 			ImageLabel{
-				layout{dimX{0}dimY{fill}}
+				layout{dx{0}dy{fill}}
 				name{morda_b}
 			}
 

@@ -8,18 +8,18 @@ namespace{
 
 const char* DContextMenuLayout = R"qwertyuiop(
 	layout{
-		dimX{max} dimY{max}
+		dx{max} dy{max}
 	}
 	MouseProxy{
 		name{morda_overlay_mouseproxy}
 		layout{
-			dimX{max} dimY{max}
+			dx{max} dy{max}
 		}
 	}
 	Container{
 		name{morda_overlay_container}
 		layout{
-			dimX{max} dimY{max}
+			dx{max} dy{max}
 		}
 	}
 )qwertyuiop";

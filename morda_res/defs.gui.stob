@@ -31,23 +31,25 @@ templates{
 	PushButton SimpleButton
 
 	WindowBackground Frame{
-		layout{dimX{fill} dimY{fill}}
+		layout{dx{fill} dy{fill}}
 
 		cache{true}
 
 		ImageLabel{
-			layout{dimX{fill} dimY{fill}}
+			layout{
+				dx{fill} dy{fill}
+			}
 			image{morda_img_window_background}
 			repeatX{true} repeatY{true}
 		}
 
 		ColorLabel{
-			layout{dimX{fill} dimY{fill}}
+			layout{dx{fill} dy{fill}}
 			gradient{morda_grd_window_background}
 		}
 
 		NinePatch{
-			layout{dimX{fill} dimY{fill}}
+			layout{dx{fill} dy{fill}}
 			image{morda_npt_window_bg_mask}
 			left{@{morda_window_border_size}}
 			top{@{morda_window_border_size}}
@@ -64,7 +66,7 @@ templates{
 	}
 
 	WindowEmptyBackground NinePatch{
-		layout{dimX{fill} dimY{fill}}
+		layout{dx{fill} dy{fill}}
 
 		image{morda_npt_window_empty_bg}
 

@@ -274,11 +274,11 @@ public:
 	const char* DPlusMinus = R"qwertyuiop(
 			Frame{
 				layout{
-					dimX{5mm} dimY{5mm}
+					dx{5mm} dy{5mm}
 				}
 
 				ColorLabel{
-					layout{dimX{3mm}dimY{3mm}}
+					layout{dx{3mm}dy{3mm}}
 					color{0xa0808080}
 				}
 
@@ -287,7 +287,7 @@ public:
 				}
 				MouseProxy{
 					layout{
-						dimX{max} dimY{max}
+						dx{max} dy{max}
 					}
 					name{plusminus_mouseproxy}
 				}
@@ -296,9 +296,9 @@ public:
 	
 	const char* DLine = R"qwertyuiop(
 			Frame{
-				layout{dimX{5mm} dimY{max}}
+				layout{dx{5mm} dy{max}}
 				ColorLabel{
-					layout{dimX{0.5mm}dimY{max}}
+					layout{dx{0.5mm}dy{max}}
 					color{0xffff0000}
 				}
 			}
@@ -306,20 +306,20 @@ public:
 	
 	const char* DLineEnd = R"qwertyuiop(
 			Frame{
-				layout{dimX{5mm} dimY{max}}
+				layout{dx{5mm} dy{max}}
 				VerticalArea{
-					layout{dimX{max}dimY{max}}
+					layout{dx{max}dy{max}}
 					ColorLabel{
-						layout{dimX{0.5mm}dimY{0}weight{1}}
+						layout{dx{0.5mm}dy{0}weight{1}}
 						color{0xffff0000}
 					}
-					Widget{layout{dimX{max}dimY{0}weight{1}}}
+					Widget{layout{dx{max}dy{0}weight{1}}}
 				}
 				HorizontalArea{
-					layout{dimX{max}dimY{max}}
-					Widget{layout{dimX{0}dimY{max}weight{1}}}
+					layout{dx{max}dy{max}}
+					Widget{layout{dx{0}dy{max}weight{1}}}
 					ColorLabel{
-						layout{dimX{0}dimY{0.5mm}weight{1}}
+						layout{dx{0}dy{0.5mm}weight{1}}
 						color{0xffff0000}
 					}
 				}
@@ -328,16 +328,16 @@ public:
 	
 	const char* DLineMiddle = R"qwertyuiop(
 			Frame{
-				layout{dimX{5mm} dimY{max}}
+				layout{dx{5mm} dy{max}}
 				ColorLabel{
-					layout{dimX{0.5mm}dimY{max}}
+					layout{dx{0.5mm}dy{max}}
 					color{0xffff0000}
 				}
 				HorizontalArea{
-					layout{dimX{max}dimY{max}}
-					Widget{layout{dimX{0}dimY{max}weight{1}}}
+					layout{dx{max}dy{max}}
+					Widget{layout{dx{0}dy{max}weight{1}}}
 					ColorLabel{
-						layout{dimX{0}dimY{0.5mm}weight{1}}
+						layout{dx{0}dy{0.5mm}weight{1}}
 						color{0xffff0000}
 					}
 				}
@@ -345,7 +345,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DEmpty = R"qwertyuiop(
-			Widget{layout{dimX{5mm}dimY{0}}}
+			Widget{layout{dx{5mm}dy{0}}}
 		)qwertyuiop";
 	
 private:
@@ -513,7 +513,7 @@ public:
 							Frame{
 								ColorLabel{
 									name{selection}
-									layout{dimX{max}dimY{max}}
+									layout{dx{max}dy{max}}
 									color{0}
 								}
 								TextLabel{
@@ -521,7 +521,7 @@ public:
 								}
 								MouseProxy{
 									name{mouse_proxy}
-									layout{dimX{max}dimY{max}}
+									layout{dx{max}dy{max}}
 								}
 							}
 						)qwertyuiop"
@@ -565,7 +565,7 @@ public:
 							PushButton{
 								ColorLabel{
 									color{0xff0000ff}
-									layout{dimX{2mm}dimY{0.5mm}}
+									layout{dx{2mm}dy{0.5mm}}
 								}
 							}
 						)qwertyuiop"

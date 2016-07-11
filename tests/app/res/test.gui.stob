@@ -4,7 +4,7 @@ templates{
 
 //		color{0xff0000ff}
 
-//		dimX{34}
+//		dx{34}
 	}
 }
 
@@ -29,18 +29,18 @@ KeyProxy{
 Overlay{
 	name {overlay}
 	layout{
-		dimX{max} dimY{max}
+		dx{max} dy{max}
 	}
 
 Container{
 	layout{
-		dimX{max} dimY{max}
+		dx{max} dy{max}
 	}
 
 
 	Window{
-		posX{0} posY{0}
-		dimX{300} dimY{200}
+		x{0} y{0}
+		dx{300} dy{200}
 
 		title{"Window title"}
 
@@ -54,13 +54,13 @@ Container{
 
 		VerticalArea{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 
 			HorizontalArea{
 				layout{
-					dimX{max} dimY{min}
+					dx{max} dy{min}
 				}
 				
 				Margins{
@@ -75,7 +75,7 @@ Container{
 
 				TextLabel{
 					layout{
-						dimX{0} dimY{min}
+						dx{0} dy{min}
 						weight{1}
 					}
 					text{"some checkbox"}
@@ -84,7 +84,7 @@ Container{
 
 			DropDownSelector{
 				layout{
-					dimX{max}
+					dx{max}
 				}
 
 				TextLabel{text{item0}}
@@ -108,7 +108,7 @@ Container{
 			}
 
 			ChoiceGroup{
-				layout{dimX{max}}
+				layout{dx{max}}
 
 				templates{
 					RadBtn HorizontalArea{
@@ -138,8 +138,8 @@ Container{
 
 
 	Window{
-		dimX{300} dimY{200}
-		posX{300} posY{10}
+		dx{300} dy{200}
+		x{300} y{10}
 
 		title{"HorizontalLayout"}
 
@@ -149,22 +149,22 @@ Container{
 
 		GreyscaleGlass{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 		}
 
 		HorizontalArea{
 			padding {20 30 10 40}
 
-			posX{50} posY{100}
-			dimX{220} dimY{100}
+			x{50} y{100}
+			dx{220} dy{100}
 
 			name {someContainer}
 
 			clip {true}
 
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 
 				weight{7}
 			}
@@ -195,14 +195,14 @@ Container{
 
 			PushButton{
 				name {show_VK_button}
-				posX{50} posY{80}
-				dimX{10} dimY{30}
+				x{50} y{80}
+				dx{10} dy{30}
 
 				clip{true}
 
 				
 				layout{
-					dimX{20mm} dimY{min}
+					dx{20mm} dy{min}
 					weight {1}
 				}
 				
@@ -216,8 +216,8 @@ Container{
 	}//~Window
 
 	Window{
-		dimX{300} dimY{200}
-		posX{300} posY{250}
+		dx{300} dy{200}
+		x{300} y{250}
 
 		//cache{true}
 
@@ -229,36 +229,36 @@ Container{
 
 		BlurGlass{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 		}
 
 		Table{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 			TableRow{
 				layout{
-					dimX{0} dimY{0}
+					dx{0} dy{0}
 					weight{1}
 				}
 
 				Frame{
 					layout{
-						dimX{0} dimY{max}
+						dx{0} dy{max}
 						weight{1}
 					}
 					TreeView{
 						name{treeview_widget}
 						clip{true}
 						layout{
-							dimX{max} dimY{max}
+							dx{max} dy{max}
 						}
 					}
 					ResizeProxy{
 						layout{
-							dimX{max} dimY{max}
+							dx{max} dy{max}
 						}
 						name{treeview_resize_proxy}
 					}
@@ -270,7 +270,7 @@ Container{
 					name{treeview_vertical_slider}
 
 					layout{
-						dimX{min} dimY{max}
+						dx{min} dy{max}
 					}
 				}
 			}
@@ -280,7 +280,7 @@ Container{
 					name{treeview_horizontal_slider}
 
 					layout{
-						dimX{0}
+						dx{0}
 					}
 				}
 				Widget{}
@@ -314,8 +314,8 @@ Container{
 	}//~Window
 
 	Window{
-		dimX{300} dimY{200}
-		posX{0} posY{250}
+		dx{300} dy{200}
+		x{0} y{250}
 
 		title{"Sliders"}
 
@@ -325,7 +325,7 @@ Container{
 			name{horizontal_container}
 
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 			ImageLabel{
@@ -335,13 +335,13 @@ Container{
 				keepAspectRatio{true}
 
 				layout{
-					dimX{min} dimY{max}
+					dx{min} dy{max}
 				}
 			}
 
 			HorizontalSlider{
 				layout{
-					dimX{50} dimY{40} //TODO: min min
+					dx{50} dy{40} //TODO: min min
 					weight{1}
 				}
 			}
@@ -350,22 +350,22 @@ Container{
 				name {"vertical slider"}
 
 				layout{
-					dimX{40} dimY{max} //TODO: min min
+					dx{40} dy{max} //TODO: min min
 				}
 			}
 		}
 	}
 
 	Window{
-		dimX{300} dimY{200}
-		posX{10} posY{500}
+		dx{300} dy{200}
+		x{10} y{500}
 
 		title{"Spinning cube"}
 
 /*
 		ImageLabel{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 			image{img_lattice}
 			repeatX{true} repeatY{true}
@@ -375,14 +375,14 @@ Container{
 		CubeWidget{
 			name{cube_widget}
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 		}
 	}
 
 	Window{
-		dimX{300} dimY{200}
-		posX{310} posY{500}
+		dx{300} dy{200}
+		x{310} y{500}
 
 		title{"TextInput"}
 
@@ -390,17 +390,17 @@ Container{
 			color{ @{morda_color_bg} }
 
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 		}*/
 
 
 		HorizontalArea{
 			layout{
-				dimX{max} dimY{min}
+				dx{max} dy{min}
 			}
 
-			Widget{layout{dimX{5pt}}}
+			Widget{layout{dx{5pt}}}
 
 			TextField{
 				name{text_input}
@@ -410,35 +410,35 @@ Container{
 				color{ @{morda_color_text} }
 
 				layout{
-					dimX{min} dimY{min} weight{1}
+					dx{min} dy{min} weight{1}
 				}
 			}
-			Widget{layout{dimX{5pt}}}
+			Widget{layout{dx{5pt}}}
 		}
 	}
 
 	Window{
-		dimX{300} dimY{200}
-		posX{620} posY{500}
+		dx{300} dy{200}
+		x{620} y{500}
 
 		title{"ScrollArea"}
 
 
 		Table{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 			TableRow{
 
 				layout{
-					dimX{0} dimY{0}
+					dx{0} dy{0}
 					weight{1}
 				}
 
 				Frame{
 					layout{
-						dimX{0} dimY{max}
+						dx{0} dy{max}
 						weight{1}
 					}
 					ScrollArea{
@@ -447,7 +447,7 @@ Container{
 						clip{true}
 
 						layout{
-							dimX{max} dimY{max}
+							dx{max} dy{max}
 						}
 
 						ImageLabel{
@@ -455,24 +455,24 @@ Container{
 //							image{img_camera}
 
 							layout{
-								dimX{min} dimY{min}
+								dx{min} dy{min}
 							}
 						}
 
 						PushButton{
 							name{push_button_in_scroll_container}
-							posX{10mm} posY{20mm}
+							x{10mm} y{20mm}
 
 							TextLabel{
-								posX{0} posY{0}
-								dimX{100mm} dimY{10mm}
+								x{0} y{0}
+								dx{100mm} dy{10mm}
 								text{"Hello World!!!"}
 							}
 						}
 					}
 					ResizeProxy{
 						layout{
-							dimX{max} dimY{max}
+							dx{max} dy{max}
 						}
 						name{scroll_area_resize_proxy}
 					}
@@ -483,7 +483,7 @@ Container{
 					name{scroll_area_vertical_slider}
 
 					layout{
-						dimX{min} dimY{max}
+						dx{min} dy{max}
 					}
 				}
 			}
@@ -493,7 +493,7 @@ Container{
 					name{scroll_area_horizontal_slider}
 
 					layout{
-						dimX{0}
+						dx{0}
 					}
 				}
 				Widget
@@ -503,8 +503,8 @@ Container{
 
 
 	Window{
-		dimX{300} dimY{200}
-		posX{620} posY{250}
+		dx{300} dy{200}
+		x{620} y{250}
 
 		clip{true}
 
@@ -512,7 +512,7 @@ Container{
 
 
 		ColorLabel{
-			layout{dimX{max}dimY{max}}
+			layout{dx{max}dy{max}}
 			color{0xff008000}
 			gradient{grd_sample}
 		}
@@ -521,21 +521,21 @@ Container{
 
 		Table{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 			TableRow{
 				ColorLabel{
 					color{0xff00ff00}
 					layout{
-						dimX{50} dimY{30}
+						dx{50} dy{30}
 					}
 				}
 
 				ColorLabel{
 					color{0xffff0000}
 					layout{
-						dimX{70} dimY{20}
+						dx{70} dy{20}
 						weight{1}
 					}
 				}
@@ -543,7 +543,7 @@ Container{
 				ColorLabel{
 					color{0xffffffff}
 					layout{
-						dimX{10} dimY{20}
+						dx{10} dy{20}
 					}
 				}
 			}
@@ -552,14 +552,14 @@ Container{
 				ColorLabel{
 					color{0xff0000ff}
 					layout{
-						dimX{20} dimY{30}
+						dx{20} dy{30}
 					}
 				}
 
 				ColorLabel{
 					color{0xffffff00}
 					layout{
-						dimX{90} dimY{20}
+						dx{90} dy{20}
 					}
 				}
 
@@ -573,26 +573,26 @@ Container{
 	}
 
 	Window{
-		dimX{300} dimY{200}
-		posX{620} posY{0}
+		dx{300} dy{200}
+		x{620} y{0}
 
 		title{"VerticalList"}
 
 		HorizontalArea{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 
 			Frame{
 				layout{
-					dimX{0} dimY{max}
+					dx{0} dy{max}
 					weight{1}
 				}
 				VerticalList{
 					name{vertical_list}
 					layout{
-						dimX{max} dimY{max}
+						dx{max} dy{max}
 					}
 
 					TextLabel{
@@ -645,7 +645,7 @@ Container{
 				}
 				ResizeProxy{
 					layout{
-						dimX{max} dimY{max}
+						dx{max} dy{max}
 					}
 					name{vertical_list_resize_proxy}
 				}
@@ -654,7 +654,7 @@ Container{
 			VerticalSlider{
 				name{vertical_list_slider}
 				layout{
-					dimY{max}
+					dy{max}
 				}
 			}
 		}

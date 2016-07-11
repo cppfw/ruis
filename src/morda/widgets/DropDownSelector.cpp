@@ -22,7 +22,7 @@ const char* SelectorLayout_d = R"qwertyuiop(
 		Frame{
 			name{morda_dropdown_selection}
 			layout{
-				dimX{0} dimY{min}
+				dx{0} dy{min}
 				weight{1}
 			}
 		}
@@ -37,18 +37,18 @@ const char* SelectorLayout_d = R"qwertyuiop(
 const char* ItemLayout_d = R"qwertyuiop(
 		Frame{
 			layout{
-				dimX{max}
+				dx{max}
 			}
 			MouseProxy{
 				name{morda_dropdown_mouseproxy}
 				layout{
-					dimX{max} dimY{max}
+					dx{max} dy{max}
 				}
 			}
 			ColorLabel{
 				name{morda_dropdown_color}
 				layout{
-					dimX{max} dimY{max}
+					dx{max} dy{max}
 				}
 			}
 		}

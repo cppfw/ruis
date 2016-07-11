@@ -18,25 +18,25 @@ Widget::Widget(const stob::Node* chain){
 		this->layout = n->cloneChain();
 	}
 
-	if(const stob::Node* n = getProperty(chain, "posX")){
+	if(const stob::Node* n = getProperty(chain, "x")){
 		this->rectangle.p.x = morda::dimValueFromSTOB(*n);
 	}else{
 		this->rectangle.p.x = 0;
 	}
 	
-	if(const stob::Node* n = getProperty(chain, "posY")){
+	if(const stob::Node* n = getProperty(chain, "y")){
 		this->rectangle.p.y = morda::dimValueFromSTOB(*n);
 	}else{
 		this->rectangle.p.y = 0;
 	}
 
-	if(const stob::Node* n = getProperty(chain, "dimX")){
+	if(const stob::Node* n = getProperty(chain, "dx")){
 		this->rectangle.d.x = morda::dimValueFromSTOB(*n);
 	}else{
 		this->rectangle.d.x = 0;
 	}
 	
-	if(const stob::Node* n = getProperty(chain, "dimY")){
+	if(const stob::Node* n = getProperty(chain, "dy")){
 		this->rectangle.d.y = morda::dimValueFromSTOB(*n);
 	}else{
 		this->rectangle.d.y = 0;
@@ -74,13 +74,13 @@ Widget::Widget(const stob::Node* chain){
 
 
 Widget::LayoutParams::LayoutParams(const stob::Node* chain){
-	if(auto n = getProperty(chain, "dimX")){
+	if(auto n = getProperty(chain, "dx")){
 		this->dim.x = real(dimValueFromLayoutStob(*n));
 	}else{
 		this->dim.x = LayoutParams::min_c;
 	}
 	
-	if(auto n = getProperty(chain, "dimY")){
+	if(auto n = getProperty(chain, "dy")){
 		this->dim.y = real(dimValueFromLayoutStob(*n));
 	}else{
 		this->dim.y = LayoutParams::min_c;

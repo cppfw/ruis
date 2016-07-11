@@ -17,12 +17,12 @@ const char* DDescription = R"qwertyuiop(
 		NinePatch{
 			name{morda_slider_bg}
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 		}
 		Container{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 			Frame{
 				name{morda_handle}
@@ -30,13 +30,13 @@ const char* DDescription = R"qwertyuiop(
 					name{morda_handle_image}
 
 					layout{
-						dimX{max} dimY{max}
+						dx{max} dy{max}
 					}
 				}
 				MouseProxy{
 					name{morda_handle_proxy}
 					layout{
-						dimX{fill} dimY{fill}
+						dx{fill} dy{fill}
 					}
 				}
 			}

@@ -13,7 +13,7 @@ namespace{
 const char* DWindowDesc = R"qwertyuiop(
 		Table{
 			layout{
-				dimX{max} dimY{max}
+				dx{max} dy{max}
 			}
 
 			//1st row
@@ -21,21 +21,21 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_lt_proxy}
 					layout{
-						dimX{fill} dimY{fill}
+						dx{fill} dy{fill}
 					}
 				}
 
 				MouseProxy{
 					name{morda_t_proxy}
 					layout{
-						dimX{0}
+						dx{0}
 					}
 				}
 
 				MouseProxy{
 					name{morda_rt_proxy}
 					layout{
-						dimX{fill} dimY{fill}
+						dx{fill} dy{fill}
 					}
 				}
 			}//~TableRow
@@ -49,7 +49,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_l_proxy}
 					layout{
-						dimY{fill}
+						dy{fill}
 					}
 				}
 
@@ -57,13 +57,13 @@ const char* DWindowDesc = R"qwertyuiop(
 				VerticalArea{
 					layout{
 						weight{1}
-						dimY{max}
+						dy{max}
 					}
 
 					//caption
 					Frame{
 						layout{
-							dimX{max}
+							dx{max}
 						}
 
 						clip{true}
@@ -71,20 +71,20 @@ const char* DWindowDesc = R"qwertyuiop(
 						MouseProxy{
 							name{morda_caption_proxy}
 							layout{
-								dimX{max} dimY{max}
+								dx{max} dy{max}
 							}
 						}
 
 						ColorLabel{
 							name{morda_window_title_bg}
 							layout{
-								dimX{max} dimY{max}
+								dx{max} dy{max}
 							}
 						}
 
 						HorizontalArea{
 							layout{
-								dimX{max} dimY{max}
+								dx{max} dy{max}
 							}
 
 							Margins{
@@ -93,7 +93,7 @@ const char* DWindowDesc = R"qwertyuiop(
 								bottom{2pt}
 
 								layout{
-									dimX{0}
+									dx{0}
 									weight{1}
 								}
 
@@ -108,7 +108,7 @@ const char* DWindowDesc = R"qwertyuiop(
 						name{morda_content}
 						clip{true}
 						layout{
-							dimX{fill} dimY{0}
+							dx{fill} dy{0}
 							weight{1}
 						}
 					}
@@ -117,7 +117,7 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_r_proxy}
 					layout{
-						dimY{fill}
+						dy{fill}
 					}
 				}
 			}//~TableRow
@@ -127,21 +127,21 @@ const char* DWindowDesc = R"qwertyuiop(
 				MouseProxy{
 					name{morda_lb_proxy}
 					layout{
-						dimX{fill} dimY{fill}
+						dx{fill} dy{fill}
 					}
 				}
 
 				MouseProxy{
 					name{morda_b_proxy}
 					layout{
-						dimX{fill}
+						dx{fill}
 					}
 				}
 
 				MouseProxy{
 					name{morda_rb_proxy}
 					layout{
-						dimX{fill} dimY{fill}
+						dx{fill} dy{fill}
 					}
 				}
 			}//~TableRow
