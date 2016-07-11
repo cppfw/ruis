@@ -25,7 +25,7 @@ public:
 		
 		virtual size_t count()const noexcept = 0;
 		
-		virtual std::shared_ptr<Widget> getWidget(size_t index, bool isSelection) = 0;
+		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
 		
 		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
 		
@@ -54,6 +54,8 @@ public:
 	
 private:
 	void handleDataSetChanged();
+	
+	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);
 };
 
 }
