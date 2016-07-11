@@ -727,10 +727,10 @@ public:
 			ASSERT(treeview)
 			auto provider = utki::makeShared<TreeViewItemsProvider>();
 			treeview->setItemsProvider(provider);
-			std::weak_ptr<morda::TreeView> tv = treeview;
+			auto tv = utki::makeWeak(treeview);
 			
 			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("treeview_vertical_slider");
-			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
+			auto vs = utki::makeWeak(verticalSlider);
 			
 			verticalSlider->factorChange = [tv](morda::Slider& slider){
 				if(auto t = tv.lock()){
@@ -740,7 +740,7 @@ public:
 			
 			auto horizontalSlider = c->findChildByNameAs<morda::HorizontalSlider>("treeview_horizontal_slider");
 			ASSERT(horizontalSlider)
-			std::weak_ptr<morda::HorizontalSlider> hs = horizontalSlider;
+			auto hs = utki::makeWeak(horizontalSlider);
 			
 			horizontalSlider->factorChange = [tv](morda::Slider& slider){
 				if(auto t = tv.lock()){

@@ -253,12 +253,12 @@ Container{
 						name{treeview_widget}
 						clip{true}
 						layout{
-							dx{max} dy{max}
+							dx{fill} dy{fill}
 						}
 					}
 					ResizeProxy{
 						layout{
-							dx{max} dy{max}
+							dx{fill} dy{fill}
 						}
 						name{treeview_resize_proxy}
 					}
