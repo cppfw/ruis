@@ -10,7 +10,7 @@ class DropDownSelector :
 		virtual public Widget,
 		private HorizontalArea
 {
-	std::shared_ptr<Frame> selectionContainer;
+	Frame& selectionContainer;
 public:
 	class ItemsProvider : virtual public utki::Shared{
 		friend class DropDownSelector;

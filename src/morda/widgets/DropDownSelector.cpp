@@ -11,6 +11,7 @@
 #include "label/TextLabel.hpp"
 #include "core/proxy/MouseProxy.hpp"
 #include "label/ColorLabel.hpp"
+#include "NinePatch.hpp"
 
 using namespace morda;
 
@@ -19,11 +20,16 @@ using namespace morda;
 namespace{
 
 const char* SelectorLayout_d = R"qwertyuiop(
-		Frame{
-			name{morda_dropdown_selection}
+		NinePatch{
 			layout{
-				dx{0} dy{min}
+				dx{0}
 				weight{1}
+			}
+			image{morda_npt_dropdown_selector_bg}
+
+			Frame{
+				name{morda_dropdown_selection}
+				layout{dx{max}dy{max}}
 			}
 		}
 		PushButton{
@@ -91,11 +97,9 @@ public:
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalArea(stob::parse(SelectorLayout_d).get())
-{
-	this->selectionContainer = this->findChildByNameAs<Frame>("morda_dropdown_selection");
-	ASSERT(this->selectionContainer)
-	
+		HorizontalArea(stob::parse(SelectorLayout_d).get()),
+		selectionContainer(*this->findChildByNameAs<Frame>("morda_dropdown_selection"))
+{	
 	auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
 	b->pressedChanged = [this](Button& b){
 		if(!b.isPressed()){
@@ -162,7 +166,7 @@ void DropDownSelector::ItemsProvider::notifyDataSetChanged(){
 }
 
 void DropDownSelector::handleDataSetChanged(){
-	this->selectionContainer->removeAll();
+	this->selectionContainer.removeAll();
 	
 	if(!this->provider){
 		return;
@@ -171,7 +175,7 @@ void DropDownSelector::handleDataSetChanged(){
 		return;
 	}
 	
-	this->selectionContainer->add(this->provider->getWidget(this->selectedItem_v));
+	this->selectionContainer.add(this->provider->getWidget(this->selectedItem_v));
 }
 
 void DropDownSelector::setSelection(size_t i){

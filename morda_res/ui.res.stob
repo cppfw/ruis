@@ -32,6 +32,11 @@ morda_img_dropdown_arrow{
 	file{dropdown_arrow.svg}
 }
 
+morda_npt_dropdown_selector_bg{
+	file{dropdown_selector_bg.svg}
+	borders{4 5 4 5}
+}
+
 morda_npt_checkbox_bg{
 	file{checkbox_bg.svg}
 	borders{2 3 2 3}
