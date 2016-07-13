@@ -16,13 +16,13 @@ SimpleButton::SimpleButton(const stob::Node* chain) :
 		if(auto n = getProperty(ch, "imageNormal")){
 			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>(n->value());
 		}else{
-			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_normal");
+			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_button_normal");
 		}
 
 		if(auto n = getProperty(ch, "imagePressed")){
 			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>(n->value());
 		}else{
-			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_pushbutton_pressed");
+			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_button_pressed");
 		}
 	}
 	

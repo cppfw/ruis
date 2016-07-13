@@ -28,8 +28,16 @@ const char* SelectorLayout_d = R"qwertyuiop(
 		}
 		PushButton{
 			name{morda_dropdown_button}
-			TextLabel{
-				text{\/}
+
+			layout{dy{max}}
+
+			look{
+				imageNormal{morda_npt_rightbutton_normal}
+				imagePressed{morda_npt_rightbutton_pressed}
+			}
+
+			ImageLabel{
+				image{morda_img_dropdown_arrow}
 			}
 		}
 	)qwertyuiop";

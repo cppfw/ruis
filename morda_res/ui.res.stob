@@ -8,14 +8,28 @@ morda_npt_slider_handle{
 	borders{12 12 12 13}
 }
 
-morda_npt_pushbutton_normal{
+morda_npt_button_normal{
 	file{button.svg}
 	borders{5 5 5 6}
 }
 
-morda_npt_pushbutton_pressed{
+morda_npt_button_pressed{
 	file{button_pressed.svg}
 	borders{5 5 5 6}
+}
+
+morda_npt_rightbutton_normal{
+	file{rightbutton.svg}
+	borders{5 5 5 6}
+}
+
+morda_npt_rightbutton_pressed{
+	file{rightbutton_pressed.svg}
+	borders{5 5 5 6}
+}
+
+morda_img_dropdown_arrow{
+	file{dropdown_arrow.svg}
 }
 
 morda_npt_checkbox_bg{
