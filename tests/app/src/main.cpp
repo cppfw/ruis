@@ -296,10 +296,10 @@ public:
 	
 	const char* DLine = R"qwertyuiop(
 			Frame{
-				layout{dx{5mm} dy{max}}
+				layout{dx{5mm} dy{fill}}
 				ColorLabel{
-					layout{dx{0.5mm}dy{max}}
-					color{0xffff0000}
+					layout{dx{1pt}dy{fill}}
+					color{@{morda_color_highlight}}
 				}
 			}
 		)qwertyuiop";
@@ -310,8 +310,8 @@ public:
 				VerticalArea{
 					layout{dx{max}dy{max}}
 					ColorLabel{
-						layout{dx{0.5mm}dy{0}weight{1}}
-						color{0xffff0000}
+						layout{dx{1pt}dy{0}weight{1}}
+						color{@{morda_color_highlight}}
 					}
 					Widget{layout{dx{max}dy{0}weight{1}}}
 				}
@@ -319,8 +319,8 @@ public:
 					layout{dx{max}dy{max}}
 					Widget{layout{dx{0}dy{max}weight{1}}}
 					ColorLabel{
-						layout{dx{0}dy{0.5mm}weight{1}}
-						color{0xffff0000}
+						layout{dx{0}dy{1pt}weight{1}}
+						color{@{morda_color_highlight}}
 					}
 				}
 			}
@@ -330,15 +330,15 @@ public:
 			Frame{
 				layout{dx{5mm} dy{max}}
 				ColorLabel{
-					layout{dx{0.5mm}dy{max}}
-					color{0xffff0000}
+					layout{dx{1pt}dy{max}}
+					color{@{morda_color_highlight}}
 				}
 				HorizontalArea{
 					layout{dx{max}dy{max}}
 					Widget{layout{dx{0}dy{max}weight{1}}}
 					ColorLabel{
-						layout{dx{0}dy{0.5mm}weight{1}}
-						color{0xffff0000}
+						layout{dx{0}dy{1pt}weight{1}}
+						color{@{morda_color_highlight}}
 					}
 				}
 			}
@@ -451,24 +451,24 @@ public:
 		auto n = this->root.get();
 		decltype(n) parent = nullptr;
 		
-		std::vector<bool> isLast;
+		std::vector<bool> isLastItemInParent;
 		
 		for(auto i = path.begin(); i != path.end(); ++i){
 			parent = n;
 			n = n->child(*i).node();
-			isLast.push_back(n->next() == nullptr);
+			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 		
 		auto ret = utki::makeShared<morda::HorizontalArea>();
 
-		ASSERT(isLast.size() == path.size())
+		ASSERT(isLastItemInParent.size() == path.size())
 		
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->add(*(isLast[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
+			ret->add(*(isLastItemInParent[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::App::inst().inflater.inflate(*stob::parse(isLast.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::App::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
 			if(n->child()){

@@ -69,7 +69,7 @@ const char* ItemLayout_d = R"qwertyuiop(
 			}
 			ColorLabel{
 				name{morda_dropdown_color}
-				color{0xff329ce1}
+				color{@{morda_color_highlight}}
 				layout{
 					dx{max} dy{max}
 				}
