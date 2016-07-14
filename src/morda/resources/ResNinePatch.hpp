@@ -28,6 +28,7 @@ public:
 			borders_v(borders)
 	{}
 	
+	
 	class ImageMatrix :	virtual public utki::Shared{
 		const std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3> images_v;
 		

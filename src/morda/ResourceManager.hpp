@@ -106,6 +106,7 @@ template <class T> std::shared_ptr<T> ResourceManager::findResourceInResMap(cons
 		if(auto r = (*i).second.lock()){
 			return std::dynamic_pointer_cast<T>(std::move(r));
 		}
+		this->resMap.erase(i);
 	}
 	return nullptr;//no resource found with given name, return invalid reference
 }

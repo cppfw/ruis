@@ -56,6 +56,8 @@ private:
 	void handleDataSetChanged();
 	
 	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);
+	
+	void showDropdownMenu();
 };
 
 }

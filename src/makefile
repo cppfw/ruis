@@ -24,7 +24,6 @@ this_cxxflags += -Werror #treat warnings as errors
 this_cxxflags += -Wfatal-errors # stop on first error encountered
 this_cxxflags += -fstrict-aliasing #strict aliasing (in order to comply with the c++ standard more strictly)
 this_cxxflags += -g #include debugging symbols
-this_cxxflags += -O2 #TODO: switch to -O3 when g++ bug is fixed and it won't produce segfault
 this_cxxflags += -std=c++11
 
 this_cxxflags += -D_GLIBCXX_USE_CXX11_ABI=0 #use old ABI
@@ -34,6 +33,7 @@ this_objcflags :=
 
 ifeq ($(debug),true)
     this_cxxflags += -DDEBUG
+    this_cxxflags += -O2 #TODO: switch to -O3 when g++ bug is fixed and it won't produce segfault
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
     this_objcflags += -DDEBUG
 endif

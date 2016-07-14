@@ -67,8 +67,6 @@ public:
 	
 public:
 	Container(const stob::Node* chain = nullptr);
-
-	~Container()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 

@@ -1,16 +1,17 @@
 #include "DropDownSelector.hpp"
 
-
 #include "../App.hpp"
-
-#include "button/Button.hpp"
-#include "TextWidget.hpp"
 
 #include "core/container/Overlay.hpp"
 
-#include "label/TextLabel.hpp"
 #include "core/proxy/MouseProxy.hpp"
+
+#include "button/Button.hpp"
+
+#include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
+
+#include "TextWidget.hpp"
 #include "NinePatch.hpp"
 
 using namespace morda;
@@ -20,16 +21,23 @@ using namespace morda;
 namespace{
 
 const char* SelectorLayout_d = R"qwertyuiop(
-		NinePatch{
+		Frame{
 			layout{
 				dx{0}
 				weight{1}
 			}
-			image{morda_npt_dropdown_selector_bg}
+			NinePatch{
+				layout{dx{fill}dy{max}}
+				image{morda_npt_dropdown_selector_bg}
 
-			Frame{
-				name{morda_dropdown_selection}
-				layout{dx{max}dy{max}}
+				Frame{
+					name{morda_dropdown_selection}
+					layout{dx{fill}dy{max}}
+				}
+			}
+			MouseProxy{
+				name{morda_dropdown_mouseproxy}
+				layout{dx{fill}dy{fill}}
 			}
 		}
 		PushButton{
@@ -61,9 +69,19 @@ const char* ItemLayout_d = R"qwertyuiop(
 			}
 			ColorLabel{
 				name{morda_dropdown_color}
+				color{0xff329ce1}
 				layout{
 					dx{max} dy{max}
 				}
+			}
+		}
+	)qwertyuiop";
+
+const char* ContextMenuLayout_d = R"qwertyuiop(
+		NinePatch{
+			image{morda_npt_contextmenu_bg}
+			VerticalArea{
+				name{morda_contextmenu_content}
 			}
 		}
 	)qwertyuiop";
@@ -94,35 +112,60 @@ public:
 
 }
 
+void DropDownSelector::showDropdownMenu() {
+	if(!this->provider){
+		return;
+	}
+
+	auto overlay = this->findAncestor<Overlay>();
+	if(!overlay){
+		throw Exc("DropDownSelector: no Overlay parent found");
+	}
+
+	auto np = morda::App::inst().inflater.inflate(*stob::parse(ContextMenuLayout_d));
+	ASSERT(np)
+
+	auto va = np->findChildByNameAs<VerticalArea>("morda_contextmenu_content");
+	ASSERT(va)
+
+	for(size_t i = 0; i != this->provider->count(); ++i){
+		va->add(this->wrapItem(this->provider->getWidget(i), i));
+	}
+
+	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay));
+}
+
+
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
 		HorizontalArea(stob::parse(SelectorLayout_d).get()),
 		selectionContainer(*this->findChildByNameAs<Frame>("morda_dropdown_selection"))
 {	
-	auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
-	b->pressedChanged = [this](Button& b){
-		if(!b.isPressed()){
-			return;
-		}
-		
-		if(!this->provider){
-			return;
-		}
-		
-		auto overlay = this->findAncestor<Overlay>();
-		if(!overlay){
-			throw Exc("DropDownSelector: no Overlay parent found");
-		}
-		
-		auto w = utki::makeShared<VerticalArea>();
-		
-		for(size_t i = 0; i != this->provider->count(); ++i){
-			w->add(this->wrapItem(this->provider->getWidget(i), i));
-		}
-		
-		overlay->showContextMenu(w, this->calcPosInParent(Vec2r(0), overlay));
-	};
+	{
+		auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
+		ASSERT(b)
+		b->pressedChanged = [this](Button& b){
+			if(!b.isPressed()){
+				return;
+			}
+
+			this->showDropdownMenu();
+		};
+	}
+	{
+		auto mp = this->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
+		ASSERT(mp)
+		mp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
+			if(!isDown){
+				return false;
+			}
+			
+			this->showDropdownMenu();
+			
+			return true;
+		};
+	}
 	
 	
 	if(!chain){
@@ -199,11 +242,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	mp->hoverChanged = [clWeak](Widget& w, unsigned id){
 		if(auto c = clWeak.lock()){
-			if(w.isHovered()){
-				c->setColor(0xff800000);
-			}else{
-				c->setColor(0xff404040);
-			}
+			c->setVisible(w.isHovered());
 		}
 	};
 	mp->hoverChanged(*mp, 0);

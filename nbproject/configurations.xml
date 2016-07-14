@@ -872,7 +872,7 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
-        <element flagsID="1" commonFlags="-funsigned-char -O2 -std=c++11 -fPIC"/>
+        <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -O2 -fPIC"/>
         <element flagsID="2"
                  commonFlags="-mtune=generic -march=x86-64 -O2 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
         <element flagsID="3" commonFlags="-std=c++11"/>
@@ -1252,8 +1252,8 @@
           <incDir>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/kolme</pElem>

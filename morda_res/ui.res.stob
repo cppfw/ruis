@@ -37,6 +37,11 @@ morda_npt_dropdown_selector_bg{
 	borders{4 5 4 5}
 }
 
+morda_npt_contextmenu_bg{
+	file{contextmenu_bg.svg}
+	borders{4 5 4 5}
+}
+
 morda_npt_checkbox_bg{
 	file{checkbox_bg.svg}
 	borders{2 3 2 3}
