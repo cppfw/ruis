@@ -6,8 +6,9 @@ defs{
 
 	morda_window_border_size{5pt}
 
-//	morda_color_highlight{0xff329ce1}
 	morda_color_highlight{0xffad9869}
+
+//	morda_color_highlight{0xff329ce1}
 }
 
 templates{

@@ -22,6 +22,7 @@
 #include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/core/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/ColorLabel.hpp"
+#include "../../../src/morda/widgets/label/ImageLabel.hpp"
 
 #include "../../../src/morda/render/Render.hpp"
 
@@ -273,21 +274,12 @@ public:
 	
 	const char* DPlusMinus = R"qwertyuiop(
 			Frame{
-				layout{
-					dx{5mm} dy{5mm}
-				}
-
-				ColorLabel{
-					layout{dx{3mm}dy{3mm}}
-					color{0xa0808080}
-				}
-
-				TextLabel{
+				ImageLabel{
 					name{plusminus}
 				}
 				MouseProxy{
 					layout{
-						dx{max} dy{max}
+						dx{fill} dy{fill}
 					}
 					name{plusminus_mouseproxy}
 				}
@@ -474,9 +466,13 @@ public:
 			if(n->child()){
 				auto w = morda::App::inst().inflater.inflate(*stob::parse(DPlusMinus));
 
-				auto plusminus = w->findChildByNameAs<morda::TextLabel>("plusminus");
+				auto plusminus = w->findChildByNameAs<morda::ImageLabel>("plusminus");
 				ASSERT(plusminus)
-				plusminus->setText(isCollapsed ? "+" : "-");
+				plusminus->setImage(
+						isCollapsed ?
+								morda::App::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
+								morda::App::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
+					);
 
 				auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
@@ -514,7 +510,8 @@ public:
 								ColorLabel{
 									name{selection}
 									layout{dx{max}dy{max}}
-									color{0}
+									color{@{morda_color_highlight}}
+									visible{false}
 								}
 								TextLabel{
 									name{value}
@@ -535,11 +532,7 @@ public:
 			{
 				auto colorLabel = v->findChildByNameAs<morda::ColorLabel>("selection");
 				
-				if(this->selectedItem == path){
-					colorLabel->setColor(0xff800000);
-				}else{
-					colorLabel->setColor(0);
-				}
+				colorLabel->setVisible(this->selectedItem == path);
 				
 				auto mp = v->findChildByNameAs<morda::MouseProxy>("mouse_proxy");
 				ASSERT(mp)

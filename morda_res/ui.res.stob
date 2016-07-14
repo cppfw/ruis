@@ -86,3 +86,12 @@ morda_img_radiobutton_bg{
 morda_img_radiobutton_tick{
 	file{radiobutton_tick.svg}
 }
+
+
+morda_img_treeview_plus{
+	file{treeview_plus.svg}
+}
+
+morda_img_treeview_minus{
+	file{treeview_minus.svg}
+}
