@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <utki/config.hpp>
@@ -49,12 +45,6 @@
 #else
 #	error "unknown OS"
 #endif
-
-
-
-//#ifdef DEBUG
-//#	define M_MORDA_RENDER_WIDGET_BORDERS
-//#endif
 
 
 
