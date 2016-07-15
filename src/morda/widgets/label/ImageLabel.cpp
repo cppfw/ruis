@@ -44,7 +44,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	morda::PosTexShader &s = App::inst().shaders().posTexShader;
+	morda::PosTexShader &s = App::inst().shaders.posTexShader;
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);

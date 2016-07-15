@@ -623,10 +623,10 @@ morda::App::OpenGLContext::OpenGLContext(const morda::App::WindowParams& wp, voi
 	std::vector<NSOpenGLPixelFormatAttribute> attributes;
 	attributes.push_back(NSOpenGLPFAAccelerated);
 	attributes.push_back(NSOpenGLPFAColorSize); attributes.push_back(24);
-	if(wp.buffers.get(morda::App::WindowParams::EBuffer::DEPTH)){
+	if(wp.buffers.get(morda::App::WindowParams::Buffer_e::DEPTH)){
 		attributes.push_back(NSOpenGLPFADepthSize); attributes.push_back(16);
 	}
-	if(wp.buffers.get(morda::App::WindowParams::EBuffer::STENCIL)){
+	if(wp.buffers.get(morda::App::WindowParams::Buffer_e::STENCIL)){
 		attributes.push_back(NSOpenGLPFAStencilSize); attributes.push_back(8);
 	}
 	attributes.push_back(NSOpenGLPFADoubleBuffer);

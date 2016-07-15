@@ -12,7 +12,7 @@ namespace morda{
 
 
 /**
- * @brief Create application instance
+ * @brief Create application instance.
  * User needs to define this factory function to create his application instance.
  * @return New application instance.
  */

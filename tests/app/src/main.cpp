@@ -117,7 +117,7 @@ public:
 
 			this->tex->tex().bind();
 
-			morda::PosTexShader &s = morda::App::inst().shaders().posTexShader;
+			morda::PosTexShader &s = morda::App::inst().shaders.posTexShader;
 
 //			s.SetColor(kolme::Vec3f(1, 0, 0));
 			s.setMatrix(matr);
@@ -128,7 +128,7 @@ public:
 		
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
-//		morda::SimpleTexturingShader &s = morda::App::inst().Shaders().simpleTexturing;
+//		morda::SimpleTexturingShader &s = morda::App::inst().shaders.simpleTexturing;
 //		morda::Matr4r m(matrix);
 //		m.translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
@@ -170,7 +170,7 @@ public:
 
 		this->tex->tex().bind();
 		
-		auto& s = morda::App::inst().shaders().posTexShader;
+		auto& s = morda::App::inst().shaders.posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
 		s.setMatrix(m);

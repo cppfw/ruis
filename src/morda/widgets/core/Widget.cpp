@@ -198,7 +198,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 
 	//render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	morda::ColorPosShader& s = App::inst().shaders().colorPosShader;
+	morda::ColorPosShader& s = App::inst().shaders.colorPosShader;
 	s.Bind();
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
@@ -260,7 +260,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 	
-	morda::PosTexShader &s = App::inst().shaders().posTexShader;
+	morda::PosTexShader &s = App::inst().shaders.posTexShader;
 
 	ASSERT(this->cacheTex)
 	this->cacheTex.bind();

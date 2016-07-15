@@ -41,10 +41,10 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrap
 	attr.push_back(GLX_BLUE_SIZE); attr.push_back(8);
 	attr.push_back(GLX_ALPHA_SIZE); attr.push_back(8);
 	
-	if(wp.buffers.get(WindowParams::EBuffer::DEPTH)){
+	if(wp.buffers.get(WindowParams::Buffer_e::DEPTH)){
 		attr.push_back(GLX_DEPTH_SIZE); attr.push_back(24);
 	}
-	if(wp.buffers.get(WindowParams::EBuffer::STENCIL)){
+	if(wp.buffers.get(WindowParams::Buffer_e::STENCIL)){
 		attr.push_back(GLX_STENCIL_SIZE); attr.push_back(8);
 	}
 	
@@ -784,5 +784,5 @@ void App::setFullscreen(bool enable){
 
 	XFlush(this->xDisplay.d);
 
-	this->isFullscreen_var = enable;
+	this->isFullscreen_v = enable;
 }
