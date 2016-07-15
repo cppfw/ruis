@@ -233,7 +233,7 @@ void App::handleMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->setHovered(isHovered, pointerID);
 }
 
-void App::handleKeyEvent(bool isDown, EKey keyCode){
+void App::handleKeyEvent(bool isDown, Key_e keyCode){
 	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){

@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <utki/config.hpp>
@@ -16,8 +12,12 @@
 
 namespace morda{
 
+
+/**
+ * @brief Keyboard keys enumeration.
+ */
+enum class Key_e{
 //WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
-enum class EKey{
 	UNKNOWN,
 	SPACE,
 	ENTER,
@@ -108,7 +108,7 @@ enum class EKey{
 	F17,
 	F18,
 	F19,
-	F20,
+	F20, //90
 	F13,
 	F16,
 	F14,

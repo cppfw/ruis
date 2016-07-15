@@ -94,7 +94,7 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 		);
 }
 
-const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {{
+const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
 	EKey::A, //0
 	EKey::S,
 	EKey::D,

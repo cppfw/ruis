@@ -54,13 +54,13 @@ public:
 
 	void onFocusChanged()override;
 	
-	bool onKey(bool isDown, EKey keyCode)override;
+	bool onKey(bool isDown, Key_e keyCode)override;
 	
 	void onResize()override;
 	
 	void update(std::uint32_t dt)override;
 	
-	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key)override;
+	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, Key_e key)override;
 
 	void setCursorIndex(size_t index, bool selection = false);
 	

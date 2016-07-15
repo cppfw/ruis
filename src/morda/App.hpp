@@ -297,8 +297,8 @@ private:
 	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
 	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
 	friend void Macosx_HandleMouseHover(bool isHovered);
-	friend void Macosx_HandleKeyEvent(bool isDown, EKey keyCode);
-	friend void Macosx_HandleCharacterInput(const void* nsstring, EKey key);
+	friend void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode);
+	friend void Macosx_HandleCharacterInput(const void* nsstring, Key_e key);
 	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
 	friend void Macosx_SetQuitFlag();
 
@@ -463,7 +463,7 @@ private:
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, EKey key){
+	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, Key_e key){
 		if(auto w = this->focusedWidget.lock()){
 //			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
@@ -472,7 +472,7 @@ private:
 		}
 	}
 
-	void handleKeyEvent(bool isDown, EKey keyCode);
+	void handleKeyEvent(bool isDown, Key_e keyCode);
 
 public:
 	

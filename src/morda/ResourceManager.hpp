@@ -23,6 +23,10 @@ class Resource;
 
 
 
+/**
+ * @brief Resource manager.
+ * This class manages application recources loading from STOB reource description scripts.
+ */
 class ResourceManager{
 	friend class morda::App;
 	friend class Resource;
@@ -71,6 +75,9 @@ private:
 	ResourceManager() = default;
 
 public:
+	/**
+	 * @brief Basic recource related exception.
+	 */
 	class Exc : public morda::Exc{
 	public:
 		Exc(const std::string& message) :
@@ -78,9 +85,31 @@ public:
 		{}
 	};
 
-	//if fi does not point to res script, then "main.res.stob" is assumed.
+	/**
+	 * @brief Mount a resource pack.
+	 * This function adds a resource pack to the list of known resource packs.
+	 * It loads the resource description and uses it when searching for resource
+	 * when resource loading is needed.
+	 * @param fi - file interface pointing to the resource pack's STOB description.
+	 *             If file interface points to a directory instead of a file then
+	 *             resource description filename is assumed to be "main.res.stob".
+	 */
 	void mountResPack(const papki::File& fi);
 
+	/**
+	 * @brief Load a resource.
+	 * This is a template function. Resource types are not indicated anyhow in
+	 * resource descriptions, so it is necessary to indicate resource of which type
+	 * you are loading by specifying a resource class as a template parameter of the function.
+	 * 
+	 * Example:
+	 * @code
+	 * auto image = morda::App::inst().resMan().load<morda::ResImage>("img_my_image_name");
+	 * @endcode
+	 * 
+	 * @param resName - name of the resource as it appears in resource description.
+	 * @return Loaded resource.
+	 */
 	template <class T> std::shared_ptr<T> load(const char* resName);
 	
 private:
@@ -88,7 +117,9 @@ private:
 
 
 
-//base class for all resources
+/**
+ * @brief Base class for all resources.
+ */
 class Resource : virtual public utki::Shared{
 	friend class ResourceManager;
 protected:

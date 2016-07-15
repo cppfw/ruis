@@ -20,11 +20,22 @@ class App;
 
 
 
+/**
+ * @brief Inflater of GUI from STOB description.
+ * This class is used to inflate GUI widget hierarchies from STOB descriptions.
+ * The GUI can be described in STOB with the following basic rules:
+ * A widget name should start with capital letter. A widget property should start
+ * with small letter. Specific widgets define more detailed rules of their description.
+ */
 class Inflater{
 	friend class morda::App;
 
 	Inflater();
 public:
+	/**
+	 * @brief Basic Inflater Exception class.
+	 * @param message
+	 */
 	class Exc : public morda::Exc{
 	public:
 		Exc(const std::string& message) :
@@ -32,14 +43,14 @@ public:
 		{}
 	};
 
+private:
 	class WidgetFactory{
 	public:
 		virtual std::shared_ptr<morda::Widget> create(const stob::Node* chain)const = 0;
 
 		virtual ~WidgetFactory()noexcept{}
 	};
-
-private:
+	
 	typedef std::map<std::string, std::unique_ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
 
@@ -48,6 +59,8 @@ private:
 public:
 	/**
 	 * @brief Registers a new widget type.
+	 * Use this function to associate some widget class with a name which can be used
+	 * in STOB GUI description.
 	 * @param widgetName - name of the widget as it appears in GUI script.
 	 */
 	template <class T_Widget> void addWidget(const std::string& widgetName){
@@ -78,7 +91,7 @@ public:
 
 	/**
 	 * @brief Inflate widget described in GUI script.
-	 * @param fi - file interface to get the GUI script from.
+	 * @param fi - file interface to get the GUI script.
 	 * @return reference to the inflated widget.
 	 */
 	std::shared_ptr<morda::Widget> inflate(papki::File& fi);

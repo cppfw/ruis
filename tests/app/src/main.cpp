@@ -73,14 +73,14 @@ public:
 		return true;
 	}
 	
-	bool onKey(bool isDown, morda::EKey keyCode) override{
+	bool onKey(bool isDown, morda::Key_e keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::EKey::LEFT:
+				case morda::Key_e::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
-				case morda::EKey::A:
+				case morda::Key_e::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -89,10 +89,10 @@ public:
 		}else{
 			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::EKey::LEFT:
+				case morda::Key_e::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
-				case morda::EKey::A:
+				case morda::Key_e::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -102,7 +102,7 @@ public:
 		return false;
 	}
 	
-	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::EKey key) override{
+	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::Key_e key) override{
 		if(unicode.size() == 0){
 			return;
 		}
@@ -611,9 +611,9 @@ public:
 			);
 		this->setRootWidget(c);
 		
-		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::EKey keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::Key_e keyCode) -> bool{
 			if(isDown){
-				if(keyCode == morda::EKey::ESCAPE){
+				if(keyCode == morda::Key_e::ESCAPE){
 					this->quit();
 				}
 			}

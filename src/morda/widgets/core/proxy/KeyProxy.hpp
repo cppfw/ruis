@@ -19,9 +19,9 @@ public:
 	KeyProxy(const KeyProxy&) = delete;
 	KeyProxy& operator=(const KeyProxy&) = delete;
 	
-	std::function<bool(bool isDown, morda::EKey keyCode)> key;
+	std::function<bool(bool isDown, morda::Key_e keyCode)> key;
 	
-	virtual bool onKey(bool isDown, morda::EKey keyCode)override{
+	virtual bool onKey(bool isDown, morda::Key_e keyCode)override{
 		if(this->key){
 			return this->key(isDown, keyCode);
 		}

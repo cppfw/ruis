@@ -18,6 +18,11 @@ namespace morda{
 
 
 
+/**
+ * @brief Base class for periodic updating.
+ * A subclass of this class can subscribe for periodic updates to be performed from UI thread.
+ * For example every 30 milliseconds it will call the update() method.
+ */
 class Updateable : virtual public utki::Shared{
 	friend class App;
 	
@@ -81,6 +86,9 @@ private:
 	bool pendingAddition = false;
 	
 public:
+	/**
+	 * @brief Basic update-related Exception.
+	 */
 	class Exc : public morda::Exc{
 	public:
 		Exc(const std::string& message) :
@@ -88,14 +96,38 @@ public:
 		{}
 	};
 	
+	/**
+	 * @brief Check if the object is currently subscribed for updates.
+	 * @return true if object is subscribed for updates.
+	 * @return false otherwise.
+	 */
 	bool isUpdating()const noexcept{
 		return this->isUpdating_var;
 	}
 	
+	/**
+	 * @brief Subscribe for updates.
+	 * Normally, updates will start from the next UI cycle.
+	 * The virtual update() method will be called periodically.
+	 * Due to limitations specific to each particular platform the actual period
+	 * can be different from requested period.
+	 * The function is not thread safe.
+	 * @param dtMs - time period between updates, in milliseconds.
+	 */
 	void startUpdating(std::uint16_t dtMs = 30);
 	
+	/**
+	 * @brief Unsibscribe from updating.
+	 * After calling this method there will be no updates done.
+	 * The function is not thread safe.
+	 */
 	void stopUpdating()noexcept;
 	
+	/**
+	 * @brief A method to perform an update.
+	 * Override this method to perform
+	 * @param dtMs - actual time elapsed since the previous update.
+	 */
 	virtual void update(std::uint32_t dtMs) = 0;
 };
 

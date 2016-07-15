@@ -222,14 +222,14 @@ private:
 	void renderInternal(const morda::Matr4r& matrix)const;
 	
 private:
-	void onKeyInternal(bool isDown, EKey keyCode);
+	void onKeyInternal(bool isDown, Key_e keyCode);
 	
 private:
 	bool isFocused_v = false;
 public:
 	
 	//return true to consume
-	virtual bool onKey(bool isDown, morda::EKey keyCode){
+	virtual bool onKey(bool isDown, morda::Key_e keyCode){
 		return false;
 	}
 	

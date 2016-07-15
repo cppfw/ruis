@@ -26,7 +26,7 @@ public:
      * @param unicode - unicode string of entered characters in UTF-32.
 	 * @param key - key code associated with character input, can be UNKNOWN.
      */
-	virtual void onCharacterInput(const utki::Buf<std::uint32_t> unicode, EKey key) = 0;
+	virtual void onCharacterInput(const utki::Buf<std::uint32_t> unicode, Key_e key) = 0;
 	
 	virtual ~CharInputWidget()noexcept{}
 };
