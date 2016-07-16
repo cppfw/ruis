@@ -12,7 +12,7 @@
             <sourceRootList>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>tests</sourceRootElem>
-                <sourceRootElem>respack</sourceRootElem>
+                <sourceRootElem>morda_res</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

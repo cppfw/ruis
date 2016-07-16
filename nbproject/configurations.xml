@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="respack" name="0">
-    </df>
     <df root="src" name="1">
       <df name="morda">
         <df name="fonts">
@@ -167,7 +165,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>tests</Elem>
-    <Elem>respack</Elem>
+    <Elem>morda_res</Elem>
   </sourceRootList>
   <projectmakefile>makefile</projectmakefile>
   <confs>

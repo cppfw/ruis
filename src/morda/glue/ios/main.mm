@@ -185,7 +185,7 @@ morda::real getDotsPerPt(){
 
 	//TODO: use findDotsPerPt() function from morda util
 	
-	return morda::real(320.0f * scale) / morda::screenSizePt;
+	return morda::real(scale);
 }
 
 }//~namespace
