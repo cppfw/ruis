@@ -63,11 +63,11 @@ void Macosx_HandleMouseHover(bool isHovered){
 	morda::App::inst().handleMouseHover(isHovered, 0);
 }
 
-void Macosx_HandleKeyEvent(bool isDown, EKey keyCode){
+void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode){
 	morda::App::inst().handleKeyEvent(isDown, keyCode);
 }
 
-void Macosx_HandleCharacterInput(const void* nsstring, EKey key){
+void Macosx_HandleCharacterInput(const void* nsstring, Key_e key){
 	morda::App::inst().handleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
@@ -95,262 +95,262 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
 }
 
 const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
-	EKey::A, //0
-	EKey::S,
-	EKey::D,
-	EKey::F,
-	EKey::H,
-	EKey::G, //5
-	EKey::Z,
-	EKey::X,
-	EKey::C,
-	EKey::V,
-	EKey::UNKNOWN, //0x0A
-	EKey::B,
-	EKey::Q,
-	EKey::W,
-	EKey::E,
-	EKey::R, //15
-	EKey::Y,
-	EKey::T,
-	EKey::ONE,
-	EKey::TWO,
-	EKey::THREE, //20
-	EKey::FOUR,
-	EKey::SIX,
-	EKey::FIVE, //0x17
-	EKey::EQUALS,
-	EKey::NINE, //25
-	EKey::SEVEN,
-	EKey::MINUS,
-	EKey::EIGHT,
-	EKey::ZERO,
-	EKey::RIGHT_SQUARE_BRACKET, //30
-	EKey::O,
-	EKey::U,
-	EKey::LEFT_SQUARE_BRACKET,
-	EKey::I,
-	EKey::P, //35
-	EKey::ENTER, //0x24
-	EKey::L,
-	EKey::J,
-	EKey::APOSTROPHE,
-	EKey::K, //40
-	EKey::SEMICOLON,
-	EKey::BACKSLASH,
-	EKey::COMMA,
-	EKey::SLASH,
-	EKey::N, //0x2D, 45
-	EKey::M,
-	EKey::PERIOD,
-	EKey::TAB, //0x30
-	EKey::SPACE, //0x31
-	EKey::GRAVE, //50
-	EKey::BACKSPACE, //0x33
-	EKey::UNKNOWN, //0x34
-	EKey::ESCAPE, //0x35
-	EKey::UNKNOWN, //0x36
-	EKey::WINDOWS, //Command, 0x37, 55
-	EKey::LEFT_SHIFT, //0x38
-	EKey::CAPSLOCK, //0x39
-	EKey::UNKNOWN, //Option, 0x3A
-	EKey::LEFT_CONTROL, //0x3B
-	EKey::RIGHT_SHIFT, //0x3C, 60
-	EKey::UNKNOWN, //RightOption, 0x3D
-	EKey::RIGHT_CONTROL, //0x3E
-	EKey::FUNCTION, //0x3F
-	EKey::F17, //0x40
-	EKey::UNKNOWN, //KeypadDecimal, 0x41, 65
-	EKey::UNKNOWN, //0x42
-	EKey::UNKNOWN, //KeypadMultiplym 0x43
-	EKey::UNKNOWN, //0x44
-	EKey::UNKNOWN, //KeypadPlus, 0x45
-	EKey::UNKNOWN, //0x46, 70
-	EKey::UNKNOWN, //KeypadClear, 0x47
-	EKey::UNKNOWN, //VolumeUp, 0x48
-	EKey::UNKNOWN, //VolumeDown, 0x49
-	EKey::UNKNOWN, //Mute, 0x4A
-	EKey::UNKNOWN, //KeypadDivide, 0x4B, 75
-	EKey::UNKNOWN, //KeypadEnter, 0x4C
-	EKey::UNKNOWN, //0x4D
-	EKey::UNKNOWN, //KeypadMinus
-	EKey::F18, //0x4F
-	EKey::F19, //0x50, 80
-	EKey::UNKNOWN, //KeypadEquals, 0x51
-	EKey::UNKNOWN, //Keypad0
-	EKey::UNKNOWN, //Keypad1
-	EKey::UNKNOWN, //Keypad2
-	EKey::UNKNOWN, //Keypad3, 85
-	EKey::UNKNOWN, //Keypad4
-	EKey::UNKNOWN, //Keypad5
-	EKey::UNKNOWN, //Keypad6
-	EKey::UNKNOWN, //Keypad7, 0x59
-	EKey::F20, //0x5A, 90
-	EKey::UNKNOWN, //Keypad8, 0x5B
-	EKey::UNKNOWN, //Keypad9, 0x5C
-	EKey::UNKNOWN, //0x5D
-	EKey::UNKNOWN, //0x5E
-	EKey::UNKNOWN, //0x5F, 95
-	EKey::F5, //0x60
-	EKey::F6, //0x61
-	EKey::F7, //0x62
-	EKey::F3, //0x63
-	EKey::F8, //0x64, 100
-	EKey::F9, //0x65
-	EKey::UNKNOWN, //0x66
-	EKey::F11, //0x67
-	EKey::UNKNOWN, //0x68
-	EKey::F13, //0x69
-	EKey::F16, //0x6A
-	EKey::F14, //0x6B
-	EKey::UNKNOWN, //0x6C
-	EKey::F10, //0x6D
-	EKey::UNKNOWN, //0x6E
-	EKey::F12, //0x6F
-	EKey::UNKNOWN, //0x70
-	EKey::F15, //0x71
-	EKey::UNKNOWN, //Help, 0x72
-	EKey::HOME, //0x73
-	EKey::PAGE_UP, //0x74
-	EKey::DELETE, //0x75
-	EKey::F4, //0x76
-	EKey::END, //0x77
-	EKey::F2, //0x78
-	EKey::PAGE_DOWN, //0x79
-	EKey::F1, //0x7A
-	EKey::LEFT, //0x7B
-	EKey::RIGHT, //0x7C
-	EKey::DOWN, //0x7D
-	EKey::UP, //0x7E
-	EKey::UNKNOWN, //0x7F
-	EKey::UNKNOWN, //0x80
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0x90
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xA0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xB0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xC0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xD0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xE0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN, //0xF0
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN,
-	EKey::UNKNOWN //0xFF
+	Key_e::A, //0
+	Key_e::S,
+	Key_e::D,
+	Key_e::F,
+	Key_e::H,
+	Key_e::G, //5
+	Key_e::Z,
+	Key_e::X,
+	Key_e::C,
+	Key_e::V,
+	Key_e::UNKNOWN, //0x0A
+	Key_e::B,
+	Key_e::Q,
+	Key_e::W,
+	Key_e::E,
+	Key_e::R, //15
+	Key_e::Y,
+	Key_e::T,
+	Key_e::ONE,
+	Key_e::TWO,
+	Key_e::THREE, //20
+	Key_e::FOUR,
+	Key_e::SIX,
+	Key_e::FIVE, //0x17
+	Key_e::EQUALS,
+	Key_e::NINE, //25
+	Key_e::SEVEN,
+	Key_e::MINUS,
+	Key_e::EIGHT,
+	Key_e::ZERO,
+	Key_e::RIGHT_SQUARE_BRACKET, //30
+	Key_e::O,
+	Key_e::U,
+	Key_e::LEFT_SQUARE_BRACKET,
+	Key_e::I,
+	Key_e::P, //35
+	Key_e::ENTER, //0x24
+	Key_e::L,
+	Key_e::J,
+	Key_e::APOSTROPHE,
+	Key_e::K, //40
+	Key_e::SEMICOLON,
+	Key_e::BACKSLASH,
+	Key_e::COMMA,
+	Key_e::SLASH,
+	Key_e::N, //0x2D, 45
+	Key_e::M,
+	Key_e::PERIOD,
+	Key_e::TAB, //0x30
+	Key_e::SPACE, //0x31
+	Key_e::GRAVE, //50
+	Key_e::BACKSPACE, //0x33
+	Key_e::UNKNOWN, //0x34
+	Key_e::ESCAPE, //0x35
+	Key_e::UNKNOWN, //0x36
+	Key_e::WINDOWS, //Command, 0x37, 55
+	Key_e::LEFT_SHIFT, //0x38
+	Key_e::CAPSLOCK, //0x39
+	Key_e::UNKNOWN, //Option, 0x3A
+	Key_e::LEFT_CONTROL, //0x3B
+	Key_e::RIGHT_SHIFT, //0x3C, 60
+	Key_e::UNKNOWN, //RightOption, 0x3D
+	Key_e::RIGHT_CONTROL, //0x3E
+	Key_e::FUNCTION, //0x3F
+	Key_e::F17, //0x40
+	Key_e::UNKNOWN, //KeypadDecimal, 0x41, 65
+	Key_e::UNKNOWN, //0x42
+	Key_e::UNKNOWN, //KeypadMultiplym 0x43
+	Key_e::UNKNOWN, //0x44
+	Key_e::UNKNOWN, //KeypadPlus, 0x45
+	Key_e::UNKNOWN, //0x46, 70
+	Key_e::UNKNOWN, //KeypadClear, 0x47
+	Key_e::UNKNOWN, //VolumeUp, 0x48
+	Key_e::UNKNOWN, //VolumeDown, 0x49
+	Key_e::UNKNOWN, //Mute, 0x4A
+	Key_e::UNKNOWN, //KeypadDivide, 0x4B, 75
+	Key_e::UNKNOWN, //KeypadEnter, 0x4C
+	Key_e::UNKNOWN, //0x4D
+	Key_e::UNKNOWN, //KeypadMinus
+	Key_e::F18, //0x4F
+	Key_e::F19, //0x50, 80
+	Key_e::UNKNOWN, //KeypadEquals, 0x51
+	Key_e::UNKNOWN, //Keypad0
+	Key_e::UNKNOWN, //Keypad1
+	Key_e::UNKNOWN, //Keypad2
+	Key_e::UNKNOWN, //Keypad3, 85
+	Key_e::UNKNOWN, //Keypad4
+	Key_e::UNKNOWN, //Keypad5
+	Key_e::UNKNOWN, //Keypad6
+	Key_e::UNKNOWN, //Keypad7, 0x59
+	Key_e::F20, //0x5A, 90
+	Key_e::UNKNOWN, //Keypad8, 0x5B
+	Key_e::UNKNOWN, //Keypad9, 0x5C
+	Key_e::UNKNOWN, //0x5D
+	Key_e::UNKNOWN, //0x5E
+	Key_e::UNKNOWN, //0x5F, 95
+	Key_e::F5, //0x60
+	Key_e::F6, //0x61
+	Key_e::F7, //0x62
+	Key_e::F3, //0x63
+	Key_e::F8, //0x64, 100
+	Key_e::F9, //0x65
+	Key_e::UNKNOWN, //0x66
+	Key_e::F11, //0x67
+	Key_e::UNKNOWN, //0x68
+	Key_e::F13, //0x69
+	Key_e::F16, //0x6A
+	Key_e::F14, //0x6B
+	Key_e::UNKNOWN, //0x6C
+	Key_e::F10, //0x6D
+	Key_e::UNKNOWN, //0x6E
+	Key_e::F12, //0x6F
+	Key_e::UNKNOWN, //0x70
+	Key_e::F15, //0x71
+	Key_e::UNKNOWN, //Help, 0x72
+	Key_e::HOME, //0x73
+	Key_e::PAGE_UP, //0x74
+	Key_e::DELETE, //0x75
+	Key_e::F4, //0x76
+	Key_e::END, //0x77
+	Key_e::F2, //0x78
+	Key_e::PAGE_DOWN, //0x79
+	Key_e::F1, //0x7A
+	Key_e::LEFT, //0x7B
+	Key_e::RIGHT, //0x7C
+	Key_e::DOWN, //0x7D
+	Key_e::UP, //0x7E
+	Key_e::UNKNOWN, //0x7F
+	Key_e::UNKNOWN, //0x80
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0x90
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xA0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xB0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xC0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xD0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xE0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN, //0xF0
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN,
+	Key_e::UNKNOWN //0xFF
 }};
 
 }
@@ -478,7 +478,7 @@ int main (int argc, const char** argv){
 -(void)keyDown:(NSEvent*)e{
 //	TRACE(<< "keyDown event!!!!!" << std::endl)
 	std::uint8_t kc = [e keyCode];
-	EKey key = keyCodeMap[kc];
+	Key_e key = keyCodeMap[kc];
 	
 	if([e isARepeat] == YES){
 		Macosx_HandleCharacterInput([e characters], key);
@@ -824,5 +824,5 @@ void App::setFullscreen(bool enable){
 	
 	[window initStuff];
 	
-	this->isFullscreen_var = enable;
+	this->isFullscreen_v = enable;
 }
