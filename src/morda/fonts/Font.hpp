@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <string>
@@ -18,84 +14,178 @@
 
 namespace morda{
 
-
+/**
+ * @brief Basic class representing a font.
+ */
 class Font{
-	Font(const Font&);
-	Font& operator=(const Font&);
-	
 protected:
 	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rectr boundingBox_var;
+	morda::Rectr boundingBox_v;
 	
 	Font(){}
 	
+	Font(const Font&) = delete;
+	Font& operator=(const Font&) = delete;
+	
+	/**
+	 * @brief Render string of text.
+	 * @param shader - shader to render the text with.
+	 * @param matrix - transformation matrix to use when rendering the text.
+	 * @param str - string of text to render.
+	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
+	 */
 	virtual real renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const = 0;
 	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string of text to get advance for.
+	 * @return Advance of the text string.
+	 */
 	virtual real stringAdvanceInternal(const std::u32string& str)const = 0;
 	
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @return Bounding box of the text string.
+	 */
 	virtual morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const = 0;
 public:
 	virtual ~Font()noexcept{}
 	
-	//renders the string, returns resulting string advance
+	/**
+	 * @brief Render string of text.
+	 * @param shader - shader to use for rendering.
+	 * @param matrix - transformation matrix to use when rendering.
+	 * @param str - string of text to render.
+	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 */
 	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, unikod::Utf8Iterator str)const{
 		return this->renderStringInternal(shader, matrix, unikod::toUtf32(str));
 	}
 	
+	/**
+	 * @brief Render string of text.
+	 * @param shader - shader to use for rendering.
+	 * @param matrix - transformation matrix to use when rendering.
+	 * @param str - string of text to render.
+	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 */
 	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const{
 		return this->renderStringInternal(shader, matrix, str);
 	}
 	
+	/**
+	 * @brief Render string of text.
+	 * @param shader - shader to use for rendering.
+	 * @param matrix - transformation matrix to use when rendering.
+	 * @param str - string of text to render.
+	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 */
 	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
 		return this->renderString(shader, matrix, unikod::Utf8Iterator(str));
 	}
 	
+	/**
+	 * @brief Render string of text.
+	 * @param shader - shader to use for rendering.
+	 * @param matrix - transformation matrix to use when rendering.
+	 * @param str - string of text to render.
+	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 */
 	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
 		return this->renderString(shader, matrix, str.c_str());
 	}
 	
 	
-	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
 	real stringAdvance(unikod::Utf8Iterator str)const{
 		return this->stringAdvanceInternal(unikod::toUtf32(str));
 	}
 	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
 	real stringAdvance(const std::u32string& str)const{
 		return this->stringAdvanceInternal(str);
 	}
 	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
 	real stringAdvance(const char* str)const{
 		return this->stringAdvance(unikod::Utf8Iterator(str));
 	}
 	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
 	real stringAdvance(const std::string& str)const{
 		return this->stringAdvance(str.c_str());
 	}
 	
 	
-	
+	/**
+	 * @brief Get advance of the character.
+	 * @param c - character to get advance for.
+	 * @return Advance of the character.
+	 */
 	virtual real charAdvance(std::uint32_t c)const = 0;
 	
 	
-	
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @return Bounding box of the text string.
+	 */
 	morda::Rectr stringBoundingBox(unikod::Utf8Iterator str)const{
 		return this->stringBoundingBoxInternal(unikod::toUtf32(str));
 	}
 	
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @return Bounding box of the text string.
+	 */
 	morda::Rectr stringBoundingBox(const std::u32string& str)const{
 		return this->stringBoundingBoxInternal(str);
 	}
 	
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @return Bounding box of the text string.
+	 */
 	morda::Rectr stringBoundingBox(const char* str)const{
 		return this->stringBoundingBox(unikod::Utf8Iterator(str));
 	}
 	
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @return Bounding box of the text string.
+	 */
 	morda::Rectr stringBoundingBox(const std::string& str)const{
 		return this->stringBoundingBox(str.c_str());
 	}
 	
+	/**
+	 * @brief Get bounding box of the font.
+	 * Bounding box of the font is an 'or' operation of all font's character bounding boxes.
+	 * I.e. it is a bounding box into which any font's character will fit.
+	 * @return Bounding box of the font.
+	 */
 	const morda::Rectr& boundingBox()const noexcept{
-		return this->boundingBox_var;
+		return this->boundingBox_v;
 	}
 	
 private:

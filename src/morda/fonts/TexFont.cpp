@@ -244,10 +244,10 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	}//~for
 	
 	//save bounding box
-	this->boundingBox_var.p.x = left;
-	this->boundingBox_var.p.y = bottom;
-	this->boundingBox_var.d.x = right - left;
-	this->boundingBox_var.d.y = top - bottom;
+	this->boundingBox_v.p.x = left;
+	this->boundingBox_v.p.y = bottom;
+	this->boundingBox_v.d.x = right - left;
+	this->boundingBox_v.d.y = top - bottom;
 
 //	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
 
@@ -376,19 +376,6 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	return ret;
 }
 
-
-
-#ifdef DEBUG
-void TexFont::renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
-	morda::Matr4r matr(matrix);
-	matr.scale(this->tex.dim());
-	shader.setMatrix(matr);
-
-	this->tex.bind();
-
-	shader.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(shader.quadFanTexCoords));
-}
-#endif
 
 
 
