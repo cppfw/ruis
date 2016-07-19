@@ -73,8 +73,6 @@
           </df>
           <in>Image.cpp</in>
           <in>Image.hpp</in>
-          <in>Mesh.cpp</in>
-          <in>Mesh.hpp</in>
           <in>Sides.hpp</in>
           <in>ZipFile.cpp</in>
           <in>ZipFile.hpp</in>
@@ -659,18 +657,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/local/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/Sides.hpp" ex="false" tool="3" flavor2="0">
@@ -1513,20 +1499,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
@@ -2609,10 +2581,6 @@
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/util/Sides.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="0">
@@ -2801,10 +2769,6 @@
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/util/Mesh.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Sides.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3030,14 +2994,6 @@
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/util/Mesh.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/freetype2</pElem>
           </incDir>
         </ccTool>
       </item>

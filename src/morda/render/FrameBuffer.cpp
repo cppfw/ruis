@@ -52,7 +52,7 @@ void FrameBuffer::bind(){
 	Render::bindFrameBuffer(this->fbo.get());
 	this->prevFBO = curFBO;
 	curFBO = this->fbo.get();
-	this->isBound_var = true;
+	this->isBound_v = true;
 }
 
 void FrameBuffer::unbind(){
@@ -63,5 +63,5 @@ void FrameBuffer::unbind(){
 	Render::bindFrameBuffer(this->prevFBO);
 	curFBO = this->prevFBO;
 	this->prevFBO = nullptr;
-	this->isBound_var = false;
+	this->isBound_v = false;
 }

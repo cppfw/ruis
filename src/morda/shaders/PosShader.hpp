@@ -30,6 +30,7 @@ public:
 	
 protected:
 	PosShader() :
+			Shader(nullptr, nullptr),
 			positionAttr(this->getAttribute("pos"))
 	{}
 	

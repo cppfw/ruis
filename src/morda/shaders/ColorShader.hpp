@@ -27,6 +27,7 @@ class ColorShader : virtual public Shader{
 
 protected:
 	ColorShader() :
+			Shader(nullptr, nullptr),
 			colorUniform(this->getUniform("uniformColor"))
 	{}
 
