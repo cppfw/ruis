@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "../config.hpp"
@@ -12,6 +8,25 @@
 
 namespace morda{
 
+
+/**
+ * @brief Nine-patch resource.
+ * Nine-patch is a stretchable image with defined unstretchable borders.
+ * 
+ * %Resource description:
+ * 
+ * @param file - name of the image file, can be raster image or SVG.
+ * 
+ * @param borders - widths of borders in pixels in the left-top-right-bottom order.
+ * 
+ * Example:
+ * @code
+ * morda_npt_rightbutton_pressed{
+ *     file{rightbutton_pressed.svg}
+ *     borders{5 5 5 6}
+ * }
+ * @endcode
+ */
 class ResNinePatch : public Resource{
 	friend class ResourceManager;
 	

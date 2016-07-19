@@ -1,21 +1,29 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <stob/dom.hpp>
 
-#include "../render/Texture2D.hpp"
-
-
 #include "../ResourceManager.hpp"
+
+#include "../render/Texture2D.hpp"
 
 
 namespace morda{
 
 
-
+/**
+ * @brief Texture resource.
+ * 
+ * %Resource description:
+ * 
+ * @param file - name of the image file, can be raster image.
+ * 
+ * Example:
+ * @code
+ * tex_sample{
+ *     file{texture_sample.png}
+ * }
+ * @endcode
+ */
 //TODO: make intrusive PoolStored
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
@@ -23,12 +31,20 @@ class ResTexture : public morda::Resource{
 	Texture2D tex_v;
 
 public:
+	/**
+	 * @brief Create texture.
+	 * @param texture - texture object to initialize this resource with.
+	 */
 	ResTexture(Texture2D&& texture) :
 			tex_v(std::move(texture))
 	{}
 
 	~ResTexture()noexcept{}
 
+	/**
+	 * @brief Get texture object held by this resource.
+	 * @return Texture object.
+	 */
 	const Texture2D& tex()const noexcept{
 		return this->tex_v;
 	}
