@@ -20,7 +20,9 @@ class Resource;
 
 /**
  * @brief Resource manager.
- * This class manages application recources loading from STOB reource description scripts.
+ * This class manages application recources loading from STOB resource description scripts.
+ * 
+ * TODO: format of the resource script, includes.
  */
 class ResourceManager{
 	friend class morda::App;
