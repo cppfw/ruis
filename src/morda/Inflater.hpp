@@ -1,13 +1,10 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <map>
 #include <memory>
 
 #include "Exc.hpp"
+
 #include "widgets/core/Widget.hpp"
 
 

@@ -1,8 +1,6 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
+
+#include <memory>
 
 #include <utki/Singleton.hpp>
 #include <utki/config.hpp>
@@ -15,8 +13,6 @@
 #include <nitki/Thread.hpp>
 
 #include <kolme/Vector2.hpp>
-
-#include <memory>
 
 #include "config.hpp"
 

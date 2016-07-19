@@ -1,14 +1,9 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <map>
 
 #include <utki/Shared.hpp>
 #include <papki/File.hpp>
-
 #include <stob/dom.hpp>
 
 #include "Exc.hpp"

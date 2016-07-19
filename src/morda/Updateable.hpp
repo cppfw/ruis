@@ -1,14 +1,9 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
-
-
-#include <utki/Shared.hpp>
 
 #include <cstdint>
 #include <list>
+
+#include <utki/Shared.hpp>
 
 #include "Exc.hpp"
 
