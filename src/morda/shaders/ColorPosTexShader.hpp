@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "PosTexShader.hpp"
@@ -12,7 +8,14 @@ namespace morda{
 
 
 
-class ColorPosTexShader : public PosTexShader, public ColorShader{
+/**
+ * @brief Texturing shader with color uniform and position attribute.
+ * This shader modulates the texture value with given color.
+ */
+class ColorPosTexShader :
+		public PosTexShader,
+		public ColorShader
+{
 public:
 	ColorPosTexShader();
 	

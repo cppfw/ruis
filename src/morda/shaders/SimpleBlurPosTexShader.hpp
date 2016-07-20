@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "PosTexShader.hpp"
@@ -9,7 +5,9 @@
 
 namespace morda{
 
-
+/**
+ * @brief Undocumented.
+ */
 class SimpleBlurPosTexShader : public PosTexShader{
 	Render::InputID texStepUniform;
 	

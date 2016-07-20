@@ -1,10 +1,4 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
-
-#include <utki/Singleton.hpp>
 
 #include "ColorShader.hpp"
 #include "PosShader.hpp"
@@ -15,7 +9,14 @@ namespace morda{
 
 
 
-class ColorPosShader : public ColorShader, public PosShader{
+/**
+ * @brief Shader with position attribute and color uniform.
+ * This shader assigns same color to all vertices.
+ */
+class ColorPosShader :
+		public ColorShader,
+		public PosShader
+{
 public:
 	ColorPosShader();
 	
