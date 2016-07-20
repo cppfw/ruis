@@ -56,7 +56,6 @@ public:
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
-	 * @param matrix - transformation matrix to use when rendering.
 	 * @param s - shader to use for rendering.
 	 */
 	void render(ClrPosShader& s)const;

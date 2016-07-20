@@ -61,7 +61,6 @@ public:
 		
 		/**
 		 * @brief Render a quad with this texture.
-		 * @param matrix - transformation matrix.
 		 * @param s - shader to use for rendering.
 		 * @param texCoords - texture coordinates to use for rendering.
 		 */
