@@ -70,6 +70,7 @@ Container{
 					bottom{5pt}
 
 					CheckBox{
+						checked{true}
 					}
 				}
 

@@ -91,6 +91,8 @@ public:
 /**
  * @brief Basic class of a toggle button.
  * Toggle button is a button which can be checked and unchecked.
+ * In GUI script it has the 'checked{true/false}' attribute which can set initial
+ * checked state of the widget.
  */
 class ToggleButton : public PushButton{
 	bool isChecked_v;

@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "Button.hpp"
@@ -10,7 +6,10 @@
 
 namespace morda{
 
-
+/**
+ * @brief Checkbox widget.
+ * Checbox is a toggle button which shows tick sign when checked and empty box when unchecked.
+ */
 class CheckBox :
 		public ToggleButton,
 		private NinePatch
