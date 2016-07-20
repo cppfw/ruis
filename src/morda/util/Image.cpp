@@ -28,19 +28,19 @@ using namespace morda;
 
 
 
-void Image::init(kolme::Vec2ui dimensions, EType typeOfImage){
+void Image::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
 	this->reset();
-	this->dim_var = dimensions;
-	this->type_var = typeOfImage;
-	this->buf_var.resize(this->dim().x * this->dim().y * this->numChannels());
+	this->dim_v = dimensions;
+	this->colorDepth_v = typeOfImage;
+	this->buf_v.resize(this->dim().x * this->dim().y * this->numChannels());
 }
 
 
 
-Image::Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf){
+Image::Image(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
-	memcpy(&*this->buf_var.begin(), srcBuf, this->buf_var.size() * sizeof(this->buf_var[0]));
+	memcpy(&*this->buf_v.begin(), srcBuf, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
 
@@ -53,7 +53,7 @@ Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
 		throw utki::Exc("Image::Image(): incorrect dimensions of given images");
 	}
 
-	this->init(dimensions, src.type());
+	this->init(dimensions, src.colorDepth());
 
 	//copy image data
 	throw utki::Exc("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
@@ -63,45 +63,28 @@ Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
 
 
 
-//copy constructor
-Image::Image(const Image& im){
-	this->init(im.dim(), im.type());
-	ASSERT(this->buf_var.size() * sizeof(this->buf_var[0]) == im.buf_var.size() * sizeof(im.buf_var[0]))
-	memcpy(this->buf().begin(), im.buf().begin(), this->buf_var.size() * sizeof(this->buf_var[0]));
-}
-
-
-
-//destructor
-Image::~Image(){
-	//nothing to do here yet
-}
-
-
-
 //Fills image buffer with zeroes
 void Image::clear(std::uint8_t  val){
-	if (this->buf_var.size() == 0) {
+	if (this->buf_v.size() == 0) {
 		return;
 	}
-	memset(&*this->buf_var.begin(), val, this->buf_var.size() * sizeof(this->buf_var[0]));
+	memset(&*this->buf_v.begin(), val, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
 
 
 void Image::clear(unsigned chan, std::uint8_t val){
 	for(unsigned i = 0; i < this->dim().x * this->dim().y; ++i){
-		this->buf_var[i * this->numChannels() + chan] = val;
+		this->buf_v[i * this->numChannels() + chan] = val;
 	}
 }
 
 
 
-//Null all data
 void Image::reset(){
-	this->dim_var.set(0);
-	this->type_var = EType::UNKNOWN;
-	this->buf_var.clear();
+	this->dim_v.set(0);
+	this->colorDepth_v = ColorDepth_e::UNKNOWN;
+	this->buf_v.clear();
 }
 
 
@@ -111,7 +94,7 @@ void Image::reset(){
 //====================================================
 //Flips vertically current image
 void Image::flipVertical(){
-	if(!this->buf_var.size()){
+	if(!this->buf_v.size()){
 		return;//nothing to flip
 	}
 
@@ -120,17 +103,17 @@ void Image::flipVertical(){
 
 	//TODO: use iterators
 	for(unsigned i = 0; i < this->dim().y / 2; ++i){
-		memcpy(&*line.begin(), &*this->buf_var.begin() + stride * i, stride);//move line to temp
-		memcpy(&*this->buf_var.begin() + stride * i, &*this->buf_var.begin() + stride * (this->dim().y - i - 1), stride);//move bottom line to top
-		memcpy(&*this->buf_var.begin() + stride * (this->dim().y - i - 1), &*line.begin(), stride);
+		memcpy(&*line.begin(), &*this->buf_v.begin() + stride * i, stride);//move line to temp
+		memcpy(&*this->buf_v.begin() + stride * i, &*this->buf_v.begin() + stride * (this->dim().y - i - 1), stride);//move bottom line to top
+		memcpy(&*this->buf_v.begin() + stride * (this->dim().y - i - 1), &*line.begin(), stride);
 	}
 }
 
 
 
 void Image::blit(unsigned x, unsigned y, const Image& src){
-	ASSERT(this->buf_var.size() != 0)
-	if(this->type() != src.type()){
+	ASSERT(this->buf_v.size() != 0)
+	if(this->colorDepth() != src.colorDepth()){
 		throw utki::Exc("Image::Blit(): bits per pixel values do not match");
 	}
 
@@ -138,15 +121,15 @@ void Image::blit(unsigned x, unsigned y, const Image& src){
 	unsigned blitAreaH = std::min(src.dim().y, this->dim().y - y);
 
 	//TODO: implement blitting for all image types
-	switch(this->type()){
-		case EType::GREY:
+	switch(this->colorDepth()){
+		case ColorDepth_e::GREY:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
 					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
 				}
 			}
 			break;
-		case EType::GREYA:
+		case ColorDepth_e::GREYA:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
 					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
@@ -163,7 +146,7 @@ void Image::blit(unsigned x, unsigned y, const Image& src){
 
 
 void Image::blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
-	ASSERT(this->buf_var.size())
+	ASSERT(this->buf_v.size())
 	if(dstChan >= this->numChannels()){
 		throw utki::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
 	}
@@ -214,7 +197,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 void Image::loadPNG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
-	if(this->buf_var.size() > 0){
+	if(this->buf_v.size() > 0){
 		this->reset();
 	}
 
@@ -291,19 +274,19 @@ void Image::loadPNG(const papki::File& fi){
 	ASSERT(bitDepth == 8)
 
 	//Set image type
-	Image::EType imageType;
+	Image::ColorDepth_e imageType;
 	switch(colorType){
 		case PNG_COLOR_TYPE_GRAY:
-			imageType = Image::EType::GREY;
+			imageType = Image::ColorDepth_e::GREY;
 			break;
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			imageType = Image::EType::GREYA;
+			imageType = Image::ColorDepth_e::GREYA;
 			break;
 		case PNG_COLOR_TYPE_RGB:
-			imageType = Image::EType::RGB;
+			imageType = Image::ColorDepth_e::RGB;
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			imageType = Image::EType::RGBA;
+			imageType = Image::ColorDepth_e::RGBA;
 			break;
 		default:
 			throw Image::Exc("Image::LoadPNG(): unknown colorType");
@@ -325,16 +308,16 @@ void Image::loadPNG(const papki::File& fi){
 		throw Image::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
-	ASSERT((bytesPerRow * height) == this->buf_var.size())
+	ASSERT((bytesPerRow * height) == this->buf_v.size())
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->dim().y && this->buf_var.size())
+		ASSERT(this->dim().y && this->buf_v.size())
 		std::vector<png_bytep> rows(this->dim().y);
 		//initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
 		for(unsigned i = 0; i < this->dim().y; ++i){
-			rows[i] = &*this->buf_var.begin() + i * bytesPerRow;
+			rows[i] = &*this->buf_v.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 //		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
@@ -455,7 +438,7 @@ void Image::loadJPG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
-	if(this->buf_var.size()){
+	if(this->buf_v.size()){
 		this->reset();
 	}
 	
@@ -536,19 +519,19 @@ void Image::loadJPG(const papki::File& fi){
 	//this->SetNumChannels((Image::E_ImageChannelsNum)cinfo.output_components);
 	//Great! Number of channels and bits per pixel are initialized now
 
-	Image::EType imageType;
+	Image::ColorDepth_e imageType;
 	switch(cinfo.output_components){
 		case 1:
-			imageType = Image::EType::GREY;
+			imageType = Image::ColorDepth_e::GREY;
 			break;
 		case 2:
-			imageType = Image::EType::GREYA;
+			imageType = Image::ColorDepth_e::GREYA;
 			break;
 		case 3:
-			imageType = Image::EType::RGB;
+			imageType = Image::ColorDepth_e::RGB;
 			break;
 		case 4:
-			imageType = Image::EType::RGBA;
+			imageType = Image::ColorDepth_e::RGBA;
 			break;
 		default:
 			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")
@@ -581,7 +564,7 @@ void Image::loadJPG(const papki::File& fi){
 		//read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		//copy the data to an image
-		memcpy(&*this->buf_var.begin() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(&*this->buf_v.begin() + bytesRow * y, buffer[0], bytesRow);
 		++y;
 	}
 

@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include <papki/File.hpp>
@@ -14,10 +9,15 @@
 namespace morda{
 
 
-
-class Image{
+/**
+ * @brief Utility class for loading and manipulating raster images.
+ */
+class Image final{
 public:
-	enum class EType{
+	/**
+	 * @brief Image color depth.
+	 */
+	enum class ColorDepth_e{
 		UNKNOWN = 0,
 		GREY  = 1, //1 channel. Only Grey channel
 		GREYA = 2, //2 channels. Grey with Alpha channel
@@ -25,6 +25,9 @@ public:
 		RGBA  = 4  //4 channels. RGBA format (4 channels)
 	};
 
+	/**
+	 * @brief Basic image exception.
+	 */
 	class Exc : public utki::Exc{
 	public:
 		Exc(const std::string& msg = std::string()) :
@@ -40,89 +43,206 @@ public:
 	};
 	
 private:
-	EType type_var;
-	kolme::Vec2ui dim_var = kolme::Vec2ui(0);
-	std::vector<std::uint8_t> buf_var;//image pixels data
+	ColorDepth_e colorDepth_v;
+	kolme::Vec2ui dim_v = kolme::Vec2ui(0);
+	std::vector<std::uint8_t> buf_v;//image pixels data
 
 public:
-	//default constructor
+	/**
+	 * @brief Default constructor.
+	 * Creates uninitialized Image object.
+	 */
 	Image() :
-			type_var(EType::UNKNOWN)
+			colorDepth_v(ColorDepth_e::UNKNOWN)
 	{}
 
-	//copy constructor
-	Image(const Image& im);
+	Image(const Image& im) = default;
 
-	//Creates Image object with initialized image.
-	Image(kolme::Vec2ui dimensions, EType imageType){
-		this->init(dimensions, imageType);
+	/**
+	 * @brief Constructor.
+	 * Creates image with given parameters, but uninitialized contents.
+	 * @param dimensions - image dimensions.
+	 * @param colorDepth - color depth.
+	 */
+	Image(kolme::Vec2ui dimensions, ColorDepth_e colorDepth){
+		this->init(dimensions, colorDepth);
 	}
 	
-	Image(kolme::Vec2ui dimensions, EType typeOfImage, const std::uint8_t* srcBuf);
+	/**
+	 * @brief Constructor.
+	 * Creates an image with given parameters and initializes image data from given memory buffer.
+	 * @param dimensions - image dimensions.
+	 * @param colorDepth - color depth.
+	 * @param srcBuf - pointer to memory buffer to take image data from.
+	 */
+	Image(kolme::Vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
 
-	//Creates Image object and copies a region from source image.
+	/**
+	 * @brief Constructor.
+	 * Creates Image object with given dimensions and copies a region from source image to it.
+	 * @param pos - position on the source image to copy from.
+	 * @param dimensions - dimensions of the area to copy.
+	 * @param src - source image to copy area from.
+	 */
 	Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src);
 
+	/**
+	 * @brief Constructor.
+	 * Creates an image by loading it from file. Supported file types are PNG and JPG.
+	 * @param f - file to load image from.
+	 */
 	Image(const papki::File& f){
 		this->load(f);
 	}
 
-	~Image();
-
+	/**
+	 * @brief Get image dimensions.
+	 * @return Image dimensions.
+	 */
 	const kolme::Vec2ui& dim()const noexcept{
-		return this->dim_var;
+		return this->dim_v;
 	}
 
+	/**
+	 * @brief Get color depth.
+	 * @return Bits per pixel.
+	 */
 	unsigned bitsPerPixel()const{
 		return this->numChannels() * 8;
 	}
 
+	/**
+	 * @brief Get color depth.
+	 * @return Number of color channels.
+	 */
 	unsigned numChannels()const{
-		return unsigned(this->type_var);
+		return unsigned(this->colorDepth_v);
 	}
 
-	EType type()const{
-		return this->type_var;
+	/**
+	 * @brief Get color depth.
+	 * @return Color depth type.
+	 */
+	ColorDepth_e colorDepth()const{
+		return this->colorDepth_v;
 	}
 
+	/**
+	 * @brief Get pixel data.
+	 * @return Pixel data of the image.
+	 */
 	utki::Buf<std::uint8_t> buf(){
-		return utki::wrapBuf(this->buf_var);
+		return utki::wrapBuf(this->buf_v);
 	}
 
+	/**
+	 * @brief Get pixel data.
+	 * @return Pixel data of the image.
+	 */
 	const utki::Buf<std::uint8_t> buf()const{
-		return utki::wrapBuf(this->buf_var);
+		return utki::wrapBuf(this->buf_v);
 	}
 
 public:
-	void init(kolme::Vec2ui dimensions, EType typeOfImage);
-	void reset();//destroys all image data
-	void clear(std::uint8_t  val = 0);//fills each image channel with specified value
-	void clear(unsigned chan, std::uint8_t val = 0);//fills specified channel with given value
+	/**
+	 * @brief Initialize this image object with given parameters.
+	 * Pixel data remains uninitialized.
+	 * @param dimensions - image dimensions.
+	 * @param colorDepth - color depth.
+	 */
+	void init(kolme::Vec2ui dimensions, ColorDepth_e colorDepth);
+	
+	
+	/**
+	 * @brief Reset this Image object to uninitialized state.
+	 * All resources are freed.
+	 */
+	void reset();
+	
+	/**
+	 * @brief Fill each image channel with specified value.
+	 * @param val - value to use when filling pixel data.
+	 */
+	void clear(std::uint8_t  val = 0);
+	
+	/**
+	 * @brief Fill specified color channel with given value.
+	 * @param chan - index of color channel to clear.
+	 * @param val - value to use for filling.
+	 */
+	void clear(unsigned chan, std::uint8_t val = 0);
 
+	/**
+	 * @brief Flip image vertically.
+	 */
 	void flipVertical();
 
+	/**
+	 * @brief Blit another image to this image.
+	 * Copy the whole given image to specified location on this image.
+	 * @param x - destination X location.
+	 * @param y - destination Y location.
+	 * @param src - image to copy to this image.
+	 */
 	void blit(unsigned x, unsigned y, const Image& src);
 
+	
+	/**
+	 * @brief Blit another image to this image for desired color channels only.
+	 * Copy specified color channel of the whole given image to specified color
+	 * channel and specified location on this image.
+	 * @param x - destination X location.
+	 * @param y - destination Y location.
+	 * @param src - image to copy to this image.
+	 * @param dstChan - index of destination color channel.
+	 * @param srcChan - index of source color channel.
+	 */
 	void blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
 
+	/**
+	 * @brief Get reference to specific channel for given pixel.
+	 * @param x - X pixel location.
+	 * @param y - Y pixel location.
+	 * @param chan - channel index to get reference to.
+	 * @return Reference to uint8_t representing a single color channel of given pixel.
+	 */
 	const std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan)const{
-		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
+		return this->buf_v[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_v.size())];
 	}
 
+	/**
+	 * @brief Get reference to specific channel for given pixel.
+	 * @param x - X pixel location.
+	 * @param y - Y pixel location.
+	 * @param chan - channel number to get reference to.
+	 * @return Reference to uint8_t representing a single color channel of given pixel.
+	 */
 	std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan){
-		return this->buf_var[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_var.size())];
+		return this->buf_v[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_v.size())];
 	}
 
+	/**
+	 * @brief Load image from PNG file.
+	 * @param f - PNG file.
+	 */
 	void loadPNG(const papki::File& f);//Load image from PNG-file
+	
+	/**
+	 * @brief Load image from JPG file.
+	 * @param f - JPG file.
+	 */
 	void loadJPG(const papki::File& f);//Load image from JPG-file
+	
 //	void loadTGA(papki::File& f);//Load image from TGA-file
 
+	/**
+	 * @brief Load image from file.
+	 * It will try to determine the file type from file name.
+	 * @param f - file to load image from.
+	 */
 	void load(const papki::File& f);
-
-private:
-
-};//~class
+};
 
 
 
-}//~namespace
+}
