@@ -41,9 +41,9 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+	void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
 		ASSERT(this->tex)
-		this->tex->render(matrix, s, this->texCoords);
+		this->tex->render(s, this->texCoords);
 	}
 };
 

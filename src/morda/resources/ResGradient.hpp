@@ -59,8 +59,7 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param s - shader to use for rendering.
 	 */
-	//TODO: do not pass the matrix, it can be set to shader from outside.
-	void render(const Matr4r& matrix, ClrPosShader& s)const;
+	void render(ClrPosShader& s)const;
 	
 private:
 	static std::shared_ptr<ResGradient> load(const stob::Node& chain, const papki::File& fi);

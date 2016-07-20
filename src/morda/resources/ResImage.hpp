@@ -65,8 +65,7 @@ public:
 		 * @param s - shader to use for rendering.
 		 * @param texCoords - texture coordinates to use for rendering.
 		 */
-		//TODO: do not pass matrix, can be set to shader from outside.
-		virtual void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
+		virtual void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
 	};
 
 	/**
@@ -121,7 +120,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
+	void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
 	
 private:
 	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi);

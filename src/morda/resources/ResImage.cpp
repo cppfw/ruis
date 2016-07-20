@@ -46,10 +46,9 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 }
 
 
-void ResAtlasImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
+void ResAtlasImage::render(PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
 	this->tex->tex().bind();
 	
-	s.setMatrix(matrix);
 	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
 }
 
@@ -67,10 +66,9 @@ protected:
 	{}
 	
 public:
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+	void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
 		this->tex_v.bind();
 
-		s.setMatrix(matrix);
 		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));
 	}
 };

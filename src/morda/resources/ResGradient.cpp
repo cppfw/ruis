@@ -69,12 +69,11 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 }
 
 
-void ResGradient::render(const Matr4r& matrix, ClrPosShader& s) const {
+void ResGradient::render(ClrPosShader& s) const {
 	ASSERT(this->vertices.size() == this->colors.size())
 	
 //	TRACE(<< "matrix = " << matrix << std::endl)
 	
-	s.setMatrix(matrix);
 	s.render(utki::wrapBuf(this->vertices), utki::wrapBuf(this->colors), Render::Mode_e::TRIANGLE_STRIP);
 }
 

@@ -72,7 +72,8 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	this->scaledImage->render(matr, s, this->texCoords);
+	s.setMatrix(matr);
+	this->scaledImage->render(s, this->texCoords);
 }
 
 morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{

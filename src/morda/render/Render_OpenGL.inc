@@ -389,7 +389,6 @@ Render::Render() :
 	}
 #endif
 	AssertOpenGLNoError();
-	//TODO: uncomment
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }
 
