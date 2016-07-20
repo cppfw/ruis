@@ -58,7 +58,7 @@ public:
 		}
 	}
 	
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) override{
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -476,8 +476,8 @@ public:
 
 				auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
-					if(button != morda::Widget::EMouseButton::LEFT){
+				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned pointerId) -> bool{
+					if(button != morda::Widget::MouseButton_e::LEFT){
 						return false;
 					}
 					if(!isDown){
@@ -536,8 +536,8 @@ public:
 				
 				auto mp = v->findChildByNameAs<morda::MouseProxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouseButton = [this, path](morda::Widget&, bool isDown, const morda::Vec2r&, morda::Widget::EMouseButton button, unsigned pointerId) -> bool{
-					if(!isDown || button != morda::Widget::EMouseButton::LEFT){
+				mp->mouseButton = [this, path](morda::Widget&, bool isDown, const morda::Vec2r&, morda::Widget::MouseButton_e button, unsigned pointerId) -> bool{
+					if(!isDown || button != morda::Widget::MouseButton_e::LEFT){
 						return false;
 					}
 					

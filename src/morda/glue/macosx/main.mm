@@ -84,7 +84,7 @@ void morda::App::quit()noexcept{
 }
 
 namespace{
-void MouseButton(NSEvent* e, bool isDown, morda::Widget::EMouseButton b){
+void MouseButton(NSEvent* e, bool isDown, morda::Widget::MouseButton_e b){
 	NSPoint pos = [e locationInWindow];
 	Macosx_HandleMouseButton(
 			isDown,
@@ -412,32 +412,32 @@ int main (int argc, const char** argv){
 
 -(void)mouseDown: (NSEvent*)e{
 //	TRACE(<< "left down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::EMouseButton::LEFT);
+	MouseButton(e, true, morda::Widget::MouseButton_e::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
 //	TRACE(<< "left up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::EMouseButton::LEFT);
+	MouseButton(e, false, morda::Widget::MouseButton_e::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
 //	TRACE(<< "right down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::EMouseButton::RIGHT);
+	MouseButton(e, true, morda::Widget::MouseButton_e::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
 //	TRACE(<< "right up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::EMouseButton::RIGHT);
+	MouseButton(e, false, morda::Widget::MouseButton_e::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
 //	TRACE(<< "middle down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::EMouseButton::MIDDLE);
+	MouseButton(e, true, morda::Widget::MouseButton_e::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
 //	TRACE(<< "middle up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::EMouseButton::MIDDLE);
+	MouseButton(e, false, morda::Widget::MouseButton_e::MIDDLE);
 }
 
 

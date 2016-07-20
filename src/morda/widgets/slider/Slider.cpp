@@ -74,8 +74,8 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 	}
 	
 	auto hp = this->findChildByNameAs<MouseProxy>("morda_handle_proxy");
-	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
-		if(button != EMouseButton::LEFT){
+	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
+		if(button != MouseButton_e::LEFT){
 			return false;
 		}
 

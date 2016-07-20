@@ -244,19 +244,19 @@ public:
 	}
 };
 
-Widget::EMouseButton ButtonNumberToEnum(int number){
+Widget::MouseButton_e ButtonNumberToEnum(int number){
 	switch(number){
 		case 1:
-			return Widget::EMouseButton::LEFT;
+			return Widget::MouseButton_e::LEFT;
 		default:
 		case 2:
-			return Widget::EMouseButton::MIDDLE;
+			return Widget::MouseButton_e::MIDDLE;
 		case 3:
-			return Widget::EMouseButton::RIGHT;
+			return Widget::MouseButton_e::RIGHT;
 		case 4:
-			return Widget::EMouseButton::WHEEL_UP;
+			return Widget::MouseButton_e::WHEEL_UP;
 		case 5:
-			return Widget::EMouseButton::WHEEL_DOWN;
+			return Widget::MouseButton_e::WHEEL_DOWN;
 	}
 }
 

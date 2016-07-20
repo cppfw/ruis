@@ -212,7 +212,7 @@ void App::handleMouseMove(const morda::Vec2r& pos, unsigned id){
 
 
 
-void App::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned pointerID){
+void App::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}

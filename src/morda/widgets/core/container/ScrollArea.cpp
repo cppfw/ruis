@@ -14,7 +14,7 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 
 
 
-bool ScrollArea::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) {
+bool ScrollArea::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) {
 	Vec2r d = this->curScrollPos;
 	d.y -= this->effectiveDim.y;
 	d.x = -d.x;

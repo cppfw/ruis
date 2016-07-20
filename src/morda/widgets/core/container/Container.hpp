@@ -125,7 +125,7 @@ public:
 	 * Override of Widget::onMouseButton() method. It passes the event to the container's child widgets in reverse order.
 	 * Normally, users do not need to call this method, it will be called by framework when needed.
 	 */
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID) override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
 	
 	/**
 	 * @brief Handle mouse move event.

@@ -88,8 +88,8 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
-	if(button != EMouseButton::LEFT){
+bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+	if(button != MouseButton_e::LEFT){
 		return false;
 	}
 

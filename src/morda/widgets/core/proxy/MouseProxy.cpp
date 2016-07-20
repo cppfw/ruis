@@ -10,7 +10,7 @@ MouseProxy::MouseProxy(const stob::Node* chain) :
 
 
 
-bool MouseProxy::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool MouseProxy::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(this->mouseButton){
 		return this->mouseButton(*this, isDown, pos, button, pointerId);
 	}

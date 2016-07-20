@@ -63,7 +63,7 @@ public:
 	}
 	
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 	
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 

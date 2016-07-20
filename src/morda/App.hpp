@@ -282,7 +282,7 @@ private:
 	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::EMouseButton button, unsigned id);
+	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
 	
 #	else
 	void macosx_SwapFrameBuffers();
@@ -291,7 +291,7 @@ private:
 	
 	friend void Macosx_Main(int argc, const char** argv);
 	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id);
+	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned id);
 	friend void Macosx_HandleMouseHover(bool isHovered);
 	friend void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode);
 	friend void Macosx_HandleCharacterInput(const void* nsstring, Key_e key);
@@ -412,7 +412,7 @@ private:
 	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::EMouseButton button, unsigned id);
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
 
 	void handleMouseHover(bool isHovered, unsigned pointerID);
 

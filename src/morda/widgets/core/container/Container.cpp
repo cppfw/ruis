@@ -86,7 +86,7 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 
 
-bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID){
+bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);

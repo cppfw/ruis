@@ -30,7 +30,7 @@ public:
 	ScrollArea& operator=(const ScrollArea&) = delete;
 	
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerID)override;
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID)override;
 	
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID)override;
 	

@@ -9,11 +9,11 @@ using namespace morda;
 
 
 
-bool Button::onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId){
+bool Button::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	//TODO: multitouch support
 	
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
-	if(button != EMouseButton::LEFT){
+	if(button != MouseButton_e::LEFT){
 		return false;
 	}
 

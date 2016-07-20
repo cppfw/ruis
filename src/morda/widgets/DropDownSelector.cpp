@@ -156,7 +156,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 	{
 		auto mp = this->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
 		ASSERT(mp)
-		mp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId) -> bool{
+		mp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
 			if(!isDown){
 				return false;
 			}
@@ -247,7 +247,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 	};
 	mp->hoverChanged(*mp, 0);
 
-	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, Widget::EMouseButton button, unsigned id) -> bool{
+	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, Widget::MouseButton_e button, unsigned id) -> bool{
 		if(!isDown){
 			this->setSelection(index);
 			auto oc = this->findAncestor<Overlay>();

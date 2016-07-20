@@ -22,7 +22,7 @@ public:
 	RadioButton(const RadioButton&) = delete;
 	RadioButton& operator=(const RadioButton&) = delete;
 	
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
 		return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
 	}
 	

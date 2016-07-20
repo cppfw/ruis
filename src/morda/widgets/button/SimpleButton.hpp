@@ -29,7 +29,7 @@ public:
 private:
 	void onPressedChanged()override;
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, EMouseButton button, unsigned pointerId)override{
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
 		return this->PushButton::onMouseButton(isDown, pos, button, pointerId);
 	}
 
