@@ -6,20 +6,20 @@ using namespace morda;
 
 namespace{
 
-const char* DContextMenuLayout = R"qwertyuiop(
+const char* ContextMenuLayout_c = R"qwertyuiop(
 	layout{
-		dx{max} dy{max}
+		dx{fill} dy{fill}
 	}
 	MouseProxy{
 		name{morda_overlay_mouseproxy}
 		layout{
-			dx{max} dy{max}
+			dx{fill} dy{fill}
 		}
 	}
 	Container{
 		name{morda_overlay_container}
 		layout{
-			dx{max} dy{max}
+			dx{fill} dy{fill}
 		}
 	}
 )qwertyuiop";
@@ -35,7 +35,7 @@ Overlay::Overlay(const stob::Node* chain) :
 
 void Overlay::onChildrenListChanged(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = utki::makeShared<Frame>(stob::parse(DContextMenuLayout).get());
+		this->overlayLayer = utki::makeShared<Frame>(stob::parse(ContextMenuLayout_c).get());
 		this->add(this->overlayLayer);
 		
 		this->overlayContainer = this->overlayLayer->findChildByNameAs<Container>("morda_overlay_container");
