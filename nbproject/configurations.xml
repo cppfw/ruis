@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="morda_res" name="2">
+    </df>
     <df root="src" name="0">
       <df name="morda">
         <df name="fonts">
@@ -86,7 +88,6 @@
             <in>CheckBox.cpp</in>
             <in>ChoiceButton.cpp</in>
             <in>ChoiceGroup.cpp</in>
-            <in>NinePatchButton.cpp</in>
             <in>RadioButton.cpp</in>
             <in>SimpleButton.cpp</in>
           </df>
@@ -94,16 +95,11 @@
             <df name="container">
               <in>Container.cpp</in>
               <in>Frame.cpp</in>
-              <in>FrameContainer.cpp</in>
               <in>LinearArea.cpp</in>
-              <in>LinearContainer.cpp</in>
               <in>Margins.cpp</in>
               <in>Overlay.cpp</in>
-              <in>OverlayContainer.cpp</in>
               <in>ScrollArea.cpp</in>
-              <in>ScrollContainer.cpp</in>
               <in>Table.cpp</in>
-              <in>TableContainer.cpp</in>
               <in>TableRow.cpp</in>
             </df>
             <df name="proxy">
@@ -1866,38 +1862,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/button/NinePatchButton.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/button</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/resources</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/widgets/button/RadioButton.cpp"
             ex="false"
             tool="1"
@@ -2020,30 +1984,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/FrameContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/widgets/core/container/LinearArea.cpp"
             ex="false"
             tool="1"
@@ -2062,31 +2002,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/core/container/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda/widgets</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/container/Margins.cpp"
@@ -2135,30 +2050,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/OverlayContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/widgets/core/container/ScrollArea.cpp"
             ex="false"
             tool="1"
@@ -2185,36 +2076,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/core/container/ScrollContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-            <pElem>src/morda/widgets</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/widgets/core/container/Table.cpp"
             ex="false"
             tool="1"
@@ -2233,30 +2094,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/core/container/TableContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/container/TableRow.cpp"
