@@ -10,7 +10,7 @@ namespace morda{
  * @brief Checkbox widget.
  * Checbox is a toggle button which shows tick sign when checked and empty box when unchecked.
  * In GUI script can be instantiated as 'Checkbox'. Only available after initializing
- * standard widgets.
+ * standard morda widgets.
  */
 class CheckBox :
 		public ToggleButton,

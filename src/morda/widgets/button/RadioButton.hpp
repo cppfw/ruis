@@ -5,7 +5,12 @@
 
 namespace morda{
 
-
+/**
+ * @brief Radio button widget.
+ * Radio button is a choice button which displays a thick dot when checked and
+ * an empty round when unchecked. In GUI script it can be instantiated as
+ * "RadioButton". Only available after initializing standard morda widgets.
+ */
 class RadioButton :
 		public ChoiceButton,
 		private Frame

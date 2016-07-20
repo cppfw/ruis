@@ -6,10 +6,9 @@ using namespace morda;
 
 
 
-ChoiceButton::ChoiceButton(const stob::Node* chain) :
-		Widget(chain)
-{
-}
+ChoiceButton::ChoiceButton() :
+		Widget(nullptr)
+{}
 
 void ChoiceButton::setChecked(bool checked) {
 	if(checked){

@@ -6,7 +6,13 @@
 
 namespace morda{
 
-
+/**
+ * @brief Choice group container.
+ * This is a container which is used to group several choice buttons to the same
+ * choice group.
+ * In the GUI script can be instantiated as "ChoiceGroup". Only available after
+ * initializing standard morda widgets.
+ */
 class ChoiceGroup : public Frame{
 	friend class ChoiceButton;
 	

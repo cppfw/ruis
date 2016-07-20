@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "Button.hpp"
@@ -10,9 +5,16 @@
 
 namespace morda{
 
+/**
+ * @brief Simple push button.
+ * Implementation of a button as a nine patch which can have children.
+ * In GUI scripts can be instantiated as "SimpleButton". Only availabe after
+ * initializing standard morda widgets.
+ * Sonce the button is a NinePatch it can have children.
+ */
 class SimpleButton :
 		public PushButton,
-		private NinePatch
+		public NinePatch
 {
 	std::shared_ptr<ResNinePatch> imgNormal;
 	std::shared_ptr<ResNinePatch> imgPressed;
