@@ -1,9 +1,3 @@
-/**
- * @file Zip file reader
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include <utki/debug.hpp>
@@ -14,7 +8,9 @@
 
 namespace morda{
 
-
+/**
+ * @brief Undocumented.
+ */
 class ZipFile : public papki::File{
 	std::unique_ptr<papki::File> zipFile;
 	

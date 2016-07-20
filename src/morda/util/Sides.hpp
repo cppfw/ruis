@@ -1,10 +1,3 @@
-/* 
- * File:   Sides.hpp
- * Author: ivan
- *
- * Created on May 27, 2016, 5:02 PM
- */
-
 #pragma once
 
 #include <array>
@@ -12,6 +5,11 @@
 
 namespace morda{
 
+/**
+ * @brief Template class holding some values associated with sides of a rectangle.
+ * Values can be accessed by names of rectangle sides (left, top, right, bottom)
+ * or by indices, in which case sides are: 0 = left, 1 = top, 2 = right, 3 = bottom.
+ */
 template <class T> class Sides : public std::array<T, 4>{
 	
 public:

@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <tuple>
@@ -97,15 +93,6 @@ float dimValueFromLayoutStob(const stob::Node& n);
 
 
 /**
- * @brief Check if the value is given in percentage.
- * @param n - STOB node whose value to check.
- * @return true in case the value contained in the given STOB node is in percentage.
- * @return false otherwise.
- */
-bool isPercent(const stob::Node& n);
-
-
-/**
  * @brief Resolve includes in STOB document.
  * @param fi - file interface set to the original STOB document. Because resolving include paths is done relatively to original STOB document path.
  * @param begin - first node of the original STOB document.
@@ -115,29 +102,21 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(papki::File
 
 
 
-inline bool nodeHoldsFractionValue(const stob::Node& node)noexcept{
-	size_t len = node.length();
-	return len != 0 && node.value()[len - 1] == '%';
-}
+/**
+ * @brief Get property by name from STOB chain.
+ * @param chain - STOB chain of properties.
+ * @param property - property name to look for.
+ * @return Pointer to property value if property was found in the STOB chain.
+ * @return nullptr if property was not found or if the property has no value assigned.
+ */
+const stob::Node* getProperty(const stob::Node* chain, const char* property);
 
-
-inline const stob::Node* getProperty(const stob::Node* chain, const char* property){
-	if(!chain){
-		return nullptr;
-	}
-	if(auto n = chain->thisOrNext(property).node()){
-		return n->child();
-	}
-	return nullptr;
-}
-
-
-inline Texture2D loadTexture(const papki::File& fi){
-	Image image(fi);
-//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-	image.flipVertical();
-	return Texture2D(image);
-}
+/**
+ * @brief Load texture from file.
+ * @param fi - file to load texture from.
+ * @return Loaded texture.
+ */
+Texture2D loadTexture(const papki::File& fi);
 
 
 /**
@@ -150,10 +129,12 @@ inline Texture2D loadTexture(const papki::File& fi){
  */
 real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
 
+/**
+ * @brief Enable simple alpha blending to rendering context.
+ * Enables simple alpha blending on the rendering context.
+ * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
+ * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
+ */
+void applySimpleAlphaBlending();
 
-inline void applySimpleAlphaBlending(){
-	Render::setBlendEnabled(true);
-	Render::setBlendFunc(Render::BlendFactor_e::SRC_ALPHA, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA, Render::BlendFactor_e::ONE, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA);
 }
-
-}//~namespace

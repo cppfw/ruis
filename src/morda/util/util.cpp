@@ -146,21 +146,6 @@ kolme::Vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 
 
 
-bool morda::isPercent(const stob::Node& n){
-	auto len = n.length();
-	
-	if(len == 0){
-		return false;
-	}
-	
-	if(n.value()[len - 1] == '%'){
-		return true;
-	}
-	
-	return false;
-}
-
-
 real morda::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
 	
 	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
@@ -187,4 +172,32 @@ float morda::dimValueFromLayoutStob(const stob::Node& n){
 		return Widget::LayoutParams::fill_c;
 	}
 	return dimValueFromSTOB(n);
+}
+
+
+
+const stob::Node* morda::getProperty(const stob::Node* chain, const char* property){
+	if(!chain){
+		return nullptr;
+	}
+	if(auto n = chain->thisOrNext(property).node()){
+		return n->child();
+	}
+	return nullptr;
+}
+
+
+
+Texture2D morda::loadTexture(const papki::File& fi){
+	Image image(fi);
+//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+	image.flipVertical();
+	return Texture2D(image);
+}
+
+
+
+void morda::applySimpleAlphaBlending(){
+	Render::setBlendEnabled(true);
+	Render::setBlendFunc(Render::BlendFactor_e::SRC_ALPHA, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA, Render::BlendFactor_e::ONE, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA);
 }
