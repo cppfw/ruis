@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <functional>
@@ -15,6 +11,8 @@ namespace morda{
 /**
  * @brief Table container.
  * It finds the maximum weight and maximum width in the column to use it in row lay outing.
+ * This container can only have TableRow widgets as children.
+ * From GUI script it can be instantiated as "Table".
  */
 class Table : public VerticalArea{
 public:

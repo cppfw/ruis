@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "LinearArea.hpp"
@@ -9,6 +5,11 @@
 
 namespace morda{
 
+/**
+ * @brief Row of a table container.
+ * This is a container which should be used as a row of a Table container.
+ * From GUI script it can be instantiated as "TableRow".
+ */
 class TableRow : public HorizontalArea{
 	friend class Table;
 public:
