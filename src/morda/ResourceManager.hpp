@@ -22,7 +22,27 @@ class Resource;
  * @brief Resource manager.
  * This class manages application recources loading from STOB resource description scripts.
  * 
- * TODO: format of the resource script, includes.
+ * Format of resource description scripts is simple. It uses STOB markup.
+ * Each resource is a root-level STOB node, the value is a name of the resource, by that name
+ * the application will load that resource.The children of resource name are the properties of the resource.
+ * Each resource type defines their own properties.
+ * 
+ * It is also possible to include another resource descriptions using the include directive at the root level.
+ * 
+ * Example:
+ * @code
+ * //include another resource script into this one
+ * include{some_other.res.stob}
+ * 
+ * //Example of resource declaration
+ * img_may_image_resource //resource name
+ * {
+ *     //image resource has only one attribute 'file' which tells from
+ *     //from which file to load the image
+ *     file{sample_image.png}
+ * }
+ * 
+ * @endcode
  */
 class ResourceManager{
 	friend class morda::App;
