@@ -7,6 +7,7 @@ namespace morda{
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  * Overlay container is used for displaying topmost widgets like context menus, hint popups etc.
+ * From GUI scripts it can be instantiated as "Overlay".
  */
 class Overlay : public Frame{
 	std::shared_ptr<Widget> overlayLayer;

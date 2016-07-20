@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "Container.hpp"
@@ -12,7 +8,11 @@
 namespace morda{
 
 
-
+/**
+ * @brief Scroll area container widget.
+ * Scroll area is a container which can add an offset to its children widget positions.
+ * From GUI scripts it can be instantiated as "ScrollArea".
+ */
 class ScrollArea : public Container{
 	//offset from top left corner
 	Vec2r curScrollPos = Vec2r(0);
@@ -44,15 +44,30 @@ public:
 
 	void onChildrenListChanged()override;
 	
+	/**
+	 * @brief Get current scroll position.
+	 * @return Current scrolling position in pixels.
+	 */
 	const Vec2r& scrollPos()const{
 		return this->curScrollPos;
 	}
 	
-	
+	/**
+	 * @brief Set scroll position.
+	 * @param newScrollPos - new scroll position.
+	 */
 	void setScrollPos(const Vec2r& newScrollPos);
 	
+	/**
+	 * @brief Set scroll position as factor.
+	 * @param factor - factor with components from range [0:1].
+	 */
 	void setScrollPosAsFactor(const Vec2r& factor);
 	
+	/**
+	 * @brief Get current scroll position as factor.
+	 * @return Current scroll position as factor with components from range [0:1].
+	 */
 	const Vec2r& scrollFactor()const{
 		return this->curScrollFactor;
 	}
