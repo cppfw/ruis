@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		086D5B4B0BE9CDAADF5A9235 /* libPods-morda_test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 967293761C66B4EF58D038F6 /* libPods-morda_test.a */; };
-		10A9C62395F6290855B1BF73 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E415AE30DEBB436F57FDE6 /* libPods.a */; };
 		2C03C1B91C0E622C0024ADE4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1B81C0E622C0024ADE4 /* main.mm */; };
 		2C03C1BB1C0E624D0024ADE4 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C03C1BA1C0E624D0024ADE4 /* App.cpp */; };
 		2C547A781C2F2C1E0079154C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C547A771C2F2C1E0079154C /* main.cpp */; };
@@ -190,7 +189,6 @@
 				2C65129C1C0A60F700D295F5 /* UIKit.framework in Frameworks */,
 				2C65129E1C0A60F700D295F5 /* GLKit.framework in Frameworks */,
 				2C6512981C0A60F700D295F5 /* Foundation.framework in Frameworks */,
-				10A9C62395F6290855B1BF73 /* libPods.a in Frameworks */,
 				086D5B4B0BE9CDAADF5A9235 /* libPods-morda_test.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
