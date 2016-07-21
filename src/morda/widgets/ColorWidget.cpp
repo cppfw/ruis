@@ -10,8 +10,8 @@ ColorWidget::ColorWidget(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(const stob::Node* n = getProperty(chain, "color")){
-		this->color_var = n->asUint32();
+		this->color_v = n->asUint32();
 	}else{
-		this->color_var = 0xffffffff;
+		this->color_v = 0xffffffff;
 	}
 }

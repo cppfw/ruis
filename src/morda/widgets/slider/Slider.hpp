@@ -1,10 +1,7 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "../core/Widget.hpp"
+
 #include "../core/container/Frame.hpp"
 
 
@@ -136,4 +133,4 @@ public:
 	HorizontalSlider& operator=(const HorizontalSlider&) = delete;
 };
 
-}//~namespace
+}

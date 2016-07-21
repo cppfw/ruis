@@ -338,7 +338,7 @@ namespace morda{
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::LEFT,
+				Widget::MouseButton_e::LEFT,
 				0
 				);
 			lres = 0;
@@ -348,7 +348,7 @@ namespace morda{
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::LEFT,
+				Widget::MouseButton_e::LEFT,
 				0
 				);
 			lres = 0;
@@ -358,7 +358,7 @@ namespace morda{
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::MIDDLE,
+				Widget::MouseButton_e::MIDDLE,
 				0
 				);
 			lres = 0;
@@ -368,7 +368,7 @@ namespace morda{
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::MIDDLE,
+				Widget::MouseButton_e::MIDDLE,
 				0
 				);
 			lres = 0;
@@ -378,7 +378,7 @@ namespace morda{
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::RIGHT,
+				Widget::MouseButton_e::RIGHT,
 				0
 				);
 			lres = 0;
@@ -388,7 +388,7 @@ namespace morda{
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				Widget::EMouseButton::RIGHT,
+				Widget::MouseButton_e::RIGHT,
 				0
 				);
 			lres = 0;

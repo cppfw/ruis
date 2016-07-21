@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "core/Widget.hpp"
@@ -10,9 +6,13 @@
 namespace morda{
 
 
-
+/**
+ * @brief Basic widget which has a color setting.
+ * 
+ * @param color - color value.
+ */
 class ColorWidget : public virtual Widget{
-	std::uint32_t color_var;
+	std::uint32_t color_v;
 	
 protected:
 	ColorWidget(const stob::Node* chain);
@@ -23,16 +23,16 @@ public:
 	
 	
 	void setColor(std::uint32_t color){
-		if(this->color_var == color){
+		if(this->color_v == color){
 			return;
 		}
 		
-		this->color_var = color;
+		this->color_v = color;
 		this->clearCache();
 	}
 	
 	std::uint32_t color()const noexcept{
-		return this->color_var;
+		return this->color_v;
 	}
 };
 

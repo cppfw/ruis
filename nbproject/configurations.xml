@@ -12,19 +12,8 @@
           <in>TexFont.hpp</in>
         </df>
         <df name="glue">
-          <df name="android">
-            <in>AssetFile.cpp</in>
-            <in>AssetFile.hpp</in>
-            <in>main.cpp</in>
-          </df>
-          <df name="linux">
-            <in>main.cpp</in>
-          </df>
           <df name="macosx">
             <in>main.mm</in>
-          </df>
-          <df name="windows">
-            <in>main.cpp</in>
           </df>
           <in>main.cpp</in>
         </df>
@@ -225,28 +214,6 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="1/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/glue/linux</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/glue</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="1/morda/resources">
         <ccTool>
           <incDir>
@@ -388,20 +355,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-      </item>
-      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="4">
-      </item>
-      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -903,9 +857,7 @@
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="2"
-                 commonFlags="-mtune=generic -march=x86-64 -O2 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
-        <element flagsID="3" commonFlags="-std=c++11"/>
+        <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -940,43 +892,6 @@
         <ccTool>
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/android">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/linux">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/glue/linux</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/glue</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="1/morda/glue/windows">
-        <ccTool>
-          <incDir>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1068,23 +983,8 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="3">
-        </ccTool>
-      </item>
-      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="3">
-        </ccTool>
-      </item>
-      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-        </ccTool>
-      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
-        <cTool flags="3">
+        <cTool flags="2">
         </cTool>
       </item>
       <item path="src/morda/glue/main.cpp" ex="false" tool="1" flavor2="8">
@@ -1093,10 +993,6 @@
             <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="3">
         </ccTool>
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
@@ -1461,23 +1357,7 @@
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/AssetFile.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1650,23 +1530,7 @@
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/AssetFile.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1889,18 +1753,7 @@
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/glue/android/AssetFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/glue/android/main.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/glue/linux/main.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/glue/macosx/main.mm" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="src/morda/glue/windows/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>

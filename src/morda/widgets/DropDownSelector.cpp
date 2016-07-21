@@ -189,7 +189,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 
 void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(provider && provider->dd){
-		throw Exc("given provider is already set to some DropDownSelector");
+		throw Exc("DropDownSelector::setItemsProvider(): given provider is already set to some DropDownSelector");
 	}
 	
 	if(this->provider){

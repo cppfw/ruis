@@ -50,7 +50,7 @@ void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 		);
 }
 
-void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::EMouseButton button, unsigned id){
+void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned id){
 	morda::App::inst().handleMouseButton(
 			isDown,
 			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
