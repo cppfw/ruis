@@ -50,7 +50,8 @@ script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     make &&
     
-    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO  | grep -E -A 5 "(error|warning):" &&
+    set -o pipefail &&
+    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | grep -E -A 5 "(error|warning):" &&
 
     if [ -n "$TRAVIS_TAG" ]; then prorab-deploy-cocoapods.sh igagis; else echo "Skip deploying to cocoapods because not a tagged commit!!!"; fi;
   fi
