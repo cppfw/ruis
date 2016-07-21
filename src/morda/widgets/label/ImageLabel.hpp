@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "../core/Widget.hpp"
@@ -14,6 +9,16 @@
 
 namespace morda{
 
+/**
+ * @brief Image widget.
+ * This widget can display an image.
+ * From GUI script it can be instantiated as "ImageLabel".
+ * 
+ * @param image - image resource.
+ * @param keepAspectRatio - try to keep aspect ratio of the image when scaling.
+ * @param repeatX - replicate image horizontally if size of the widget is bigger than size of the image resource.
+ * @param repeatY - replicate image vertically if size of the widget is bigger than size of the image resource.
+ */
 class ImageLabel :
 		public virtual Widget,
 		public BlendWidget

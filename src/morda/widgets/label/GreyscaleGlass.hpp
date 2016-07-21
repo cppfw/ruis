@@ -1,14 +1,12 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "../core/Widget.hpp"
 
 namespace morda{
 
+/**
+ * @brief Undocumented.
+ */
 class GreyscaleGlass : virtual public Widget{
 public:
 	GreyscaleGlass(const stob::Node* chain = nullptr);

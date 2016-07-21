@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "../core/Widget.hpp"
@@ -10,6 +5,9 @@
 
 namespace morda{
 
+/**
+ * @brief Undocumented.
+ */
 class BlurGlass : virtual public Widget{
 public:
 	BlurGlass(const stob::Node* chain = nullptr);

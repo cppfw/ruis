@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 
@@ -14,7 +9,11 @@
 
 namespace morda{
 
-
+/**
+ * @brief Text label widget.
+ * This widget shows text.
+ * From GUI script it can be instantiated as "TextLabel".
+ */
 class TextLabel : public SingleLineTextWidget{
 	
 	
