@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "TextInput.hpp"
@@ -11,7 +6,9 @@
 namespace morda{
 
 
-
+/**
+ * @brief Undocumented.
+ */
 class TextField :
 		virtual public Widget,
 		private NinePatch

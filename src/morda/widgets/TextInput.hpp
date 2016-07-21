@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "core/Widget.hpp"
@@ -13,6 +9,9 @@
 
 namespace morda{
 
+/**
+ * @brief Undocumented.
+ */
 class TextInput :
 		public SingleLineTextWidget,
 		public Updateable,

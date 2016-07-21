@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include "label/TextLabel.hpp"
@@ -15,7 +10,17 @@
 namespace morda{
 
 
-
+/**
+ * @brief Window widget.
+ * Window widget has borders, caption bar and can contain child widgets.
+ * Window can be resized by dragging one of the borders or corners of the window.
+ * Window can be moved by dragging caption bar.
+ * Window widgets are supposed to be stored in simple Contaner which does not perform
+ * any automatic layout operations.
+ * From GUI script it can be instantiated as "Window".
+ * @param title - text of the window title.
+ * @param look - style settings.
+ */
 class Window :
 		virtual public Widget,
 		private Frame
@@ -58,6 +63,11 @@ public:
 	
 	void setTitle(const std::string& str);
 	
+	/**
+	 * @brief Get window content area.
+	 * This is where child widgets are stored.
+	 * @return Window content area.
+	 */
 	Frame& content(){
 		return *this->contentArea;
 	}
@@ -71,6 +81,10 @@ public:
 	
 	void setBackground(std::shared_ptr<Widget> w);
 	
+	/**
+	 * @brief Set window borders.
+	 * @param borders - borders in pixels.
+	 */
 	void setBorders(Sidesr borders);
 };
 
