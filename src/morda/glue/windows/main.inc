@@ -327,14 +327,48 @@ namespace morda{
 			return true;
 
 		case WM_MOUSEMOVE:
+			if(!app.window.isHovered){
+				
+				TRACKMOUSEEVENT tme = { sizeof(tme) };
+				tme.dwFlags = TME_LEAVE;
+				tme.hwndTrack = hwnd;
+				TrackMouseEvent(&tme);
+
+				app.window.isHovered = true;
+				app.handleMouseHover(true, 0);
+			}
 			app.handleMouseMove(
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 				0
 				);
 			lres = 0;
 			return true;
+		case WM_MOUSELEAVE:
+			app.window.isHovered = false;
+			app.handleMouseHover(false, 0);
 
+			//Report mouse button up events for all pressed mouse buttons
+			for(
+					decltype(app.window.mouseButtonState)::index_t i = 0;
+					i != app.window.mouseButtonState.size();
+					++i
+				)
+			{
+				if(app.window.mouseButtonState.get(i)){
+					app.window.mouseButtonState.clear(i);
+					app.handleMouseButton(
+							false,
+							morda::Vec2r(1000000, 1000000), //outside of the window
+							Widget::MouseButton_e(i),
+							0
+						);
+				}
+			}
+
+			lres = 0;
+			return true;
 		case WM_LBUTTONDOWN:
+			app.window.mouseButtonState.set(Widget::MouseButton_e::LEFT);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -345,6 +379,7 @@ namespace morda{
 			return true;
 
 		case WM_LBUTTONUP:
+			app.window.mouseButtonState.clear(Widget::MouseButton_e::LEFT);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -355,6 +390,7 @@ namespace morda{
 			return true;
 
 		case WM_MBUTTONDOWN:
+			app.window.mouseButtonState.set(Widget::MouseButton_e::MIDDLE);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -365,6 +401,7 @@ namespace morda{
 			return true;
 
 		case WM_MBUTTONUP:
+			app.window.mouseButtonState.clear(Widget::MouseButton_e::MIDDLE);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -375,6 +412,7 @@ namespace morda{
 			return true;
 
 		case WM_RBUTTONDOWN:
+			app.window.mouseButtonState.set(Widget::MouseButton_e::RIGHT);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -385,6 +423,7 @@ namespace morda{
 			return true;
 
 		case WM_RBUTTONUP:
+			app.window.mouseButtonState.clear(Widget::MouseButton_e::RIGHT);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -433,8 +472,8 @@ namespace morda{
 
 		case WM_USER:
 			{
-						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(lParam));
-						(*m)();
+				std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(lParam));
+				(*m)();
 			}
 			return true;
 
@@ -644,11 +683,11 @@ void App::Exec(){
 		//		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(
-			0,
-			NULL,
-			timeout,
-			QS_ALLINPUT,
-			MWMO_INPUTAVAILABLE
+				0,
+				NULL,
+				timeout,
+				QS_ALLINPUT,
+				MWMO_INPUTAVAILABLE
 			);
 
 		//		TRACE(<< "msg" << std::endl)

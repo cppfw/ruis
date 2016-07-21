@@ -247,6 +247,10 @@ private:
 	struct WindowWrapper{
 		HWND hwnd;
 
+		bool isHovered = false; //for tracking when mouse enters or leaves window.
+
+		utki::Flags<Widget::MouseButton_e> mouseButtonState;
+
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()noexcept;
 	} window;
