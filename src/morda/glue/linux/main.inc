@@ -691,6 +691,7 @@ void App::Exec(){
 							);
 						break;
 					case ButtonRelease:
+//						TRACE(<< "ButtonRelease X event got, button mask = " << event.xbutton.button << std::endl)
 						this->handleMouseButton(
 								false,
 								morda::Vec2r(event.xbutton.x, event.xbutton.y),

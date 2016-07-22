@@ -434,7 +434,31 @@ namespace morda{
 			return true;
 
 		case WM_MOUSEWHEEL:
-			//TODO:
+			{
+				WORD times = HIWORD(wPAram);
+				Widget::MouseButton_e button;
+				if(times >= 0){
+					button = Widget::MouseButton_e::WHEEL_UP;
+				}else{
+					times = -times;
+					button = Widget::MouseButton_e::WHEEL_DOWN;
+				}
+				
+				for(unsigned i = 0; i != times; ++i){
+					this->handleMouseButton(
+							true,
+							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+							button,
+							0
+						);
+					this->handleMouseButton(
+							false,
+							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+							button,
+							0
+						);
+				}
+			}
 			lres = 0;
 			return true;
 
