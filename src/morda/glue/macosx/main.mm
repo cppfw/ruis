@@ -458,6 +458,8 @@ int main (int argc, const char** argv){
 			MouseButton(e, true, button);
 			MouseButton(e, false, button);
 		}
+	}else{
+		TRACE(<< "mouse wheel: precise scrolling deltas, UNIMPLEMENTED!!!!!" << std::endl)
 	}
 }
 
