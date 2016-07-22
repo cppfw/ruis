@@ -65,3 +65,11 @@ void FrameBuffer::unbind(){
 	this->prevFBO = nullptr;
 	this->isBound_v = false;
 }
+
+bool FrameBuffer::isComplete() const {
+	if(!this->isBound()){
+		throw morda::Exc("FrameBuffer::isComplete(): framebuffer is not bound");
+	}
+	
+	return Render::isFrameBufferComplete();
+}

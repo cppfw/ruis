@@ -41,7 +41,7 @@ public:
 	 * @return true if this framebuffer is bound to rendering context.
 	 * @return false otherwise.
 	 */
-	bool isBound(){
+	bool isBound()const noexcept{
 		return this->isBound_v;
 	}
 	
@@ -62,8 +62,15 @@ public:
 	 * @throw morda::Exc if this framebuffer is not curretly bound.
 	 */
 	Texture2D detachColor();
-private:
 
+	/**
+	 * @brief Check if framebuffer is complete and can be used for rendering.
+	 * Frame buffer should be bound when calling this method.
+	 * @return true if the framebuffer is complete.
+	 * @return false otherwise.
+	 * @throw morda::Exc if frame buffer is not bound.
+	 */
+	bool isComplete()const;
 };
 
 }

@@ -217,6 +217,13 @@ private:
 	static void bindFrameBuffer(utki::Void* fbo);
 	
 	static void attachColorTexture2DToFrameBuffer(utki::Void* tex);
+	
+	/**
+	 * @brief Is currently bound framebuffer complete.
+	 * @return true if currently bound frasmebuffer is complete.
+	 * @return false otherwise.
+	 */
+	static bool isFrameBufferComplete();
 	//=== ~~~
 	
 	

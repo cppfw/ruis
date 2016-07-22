@@ -235,6 +235,8 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	fb.attachColor(std::move(tex));
 	
+	ASSERT(fb.isComplete())
+	
 	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
 	
 	Render::setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
