@@ -445,13 +445,13 @@ namespace morda{
 				}
 				
 				for(unsigned i = 0; i != times; ++i){
-					this->handleMouseButton(
+					app.handleMouseButton(
 							true,
 							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 							button,
 							0
 						);
-					this->handleMouseButton(
+					app.handleMouseButton(
 							false,
 							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 							button,
