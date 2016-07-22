@@ -435,7 +435,8 @@ namespace morda{
 
 		case WM_MOUSEWHEEL:
 			{
-				WORD times = HIWORD(wParam);
+				short int times = HIWORD(wParam);
+				times /= 120;
 				Widget::MouseButton_e button;
 				if(times >= 0){
 					button = Widget::MouseButton_e::WHEEL_UP;
@@ -444,16 +445,26 @@ namespace morda{
 					button = Widget::MouseButton_e::WHEEL_DOWN;
 				}
 				
+				POINT pos;
+				pos.x = GET_X_LPARAM(lParam);
+				pos.y = GET_Y_LPARAM(lParam);
+
+				//For some reason in WM_MOUSEWHEEL message mouse cursor position is sent in screen coordinates,
+				//need to traslate those to window coordinates.
+				if(ScreenToClient(hwnd, &pos) == 0){
+					break;
+				}
+
 				for(unsigned i = 0; i != times; ++i){
 					app.handleMouseButton(
 							true,
-							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+							morda::Vec2r(float(pos.x), float(pos.y)),
 							button,
 							0
 						);
 					app.handleMouseButton(
 							false,
-							morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+							morda::Vec2r(float(pos.x), float(pos.y)),
 							button,
 							0
 						);
