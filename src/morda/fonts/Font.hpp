@@ -187,9 +187,6 @@ public:
 	const morda::Rectr& boundingBox()const noexcept{
 		return this->boundingBox_v;
 	}
-	
-private:
-
 };
 
 }
