@@ -435,7 +435,7 @@ namespace morda{
 
 		case WM_MOUSEWHEEL:
 			{
-				WORD times = HIWORD(wPAram);
+				WORD times = HIWORD(wParam);
 				Widget::MouseButton_e button;
 				if(times >= 0){
 					button = Widget::MouseButton_e::WHEEL_UP;
