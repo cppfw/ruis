@@ -624,6 +624,9 @@ struct OpenGLFrameBuffer : public utki::Void, public utki::Unique{
 	}
 };
 
+bool defaultFramebufferInitialized = false;
+GLuint defaultFramebuffer = 0;
+
 }
 
 std::unique_ptr<utki::Void> Render::createFrameBuffer(){
@@ -631,9 +634,21 @@ std::unique_ptr<utki::Void> Render::createFrameBuffer(){
 }
 
 void Render::bindFrameBuffer(utki::Void* fbo){
+	//On some platforms the default framebuffer is not 0, so because of this
+	//check if default framebuffer value is saved or not everytime some
+	//framebuffer is going to be bound and save the value if needed.
+	if(!defaultFramebufferInitialized){
+		GLint oldFb;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFb);
+		TRACE(<< "oldFb1 = " << oldFb << std::endl)
+		defaultFramebuffer = GLuint(oldFb);
+		defaultFramebufferInitialized = true;
+	}
 	if(!fbo){
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
 		AssertOpenGLNoError();
+
+		ASSERT_INFO(Render::isFrameBufferComplete(), "defaultFramebuffer = " << defaultFramebuffer)
 		return;
 	}
 	ASSERT(fbo)
@@ -655,30 +670,40 @@ bool Render::isFrameBufferComplete(){
 		default:
 			TRACE(<< "Unknown framebuffer status: " << status << std::endl)
 			break;
+#ifdef GL_FRAMEBUFFER_UNDEFINED
 		case GL_FRAMEBUFFER_UNDEFINED:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_UNDEFINED" << std::endl)
 			break;
+#endif
 		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT" << std::endl)
 			break;
 		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" << std::endl)
 			break;
+#ifdef GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER
 		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" << std::endl)
 			break;
+#endif
+#ifdef GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER
 		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER" << std::endl)
 			break;
+#endif
 		case GL_FRAMEBUFFER_UNSUPPORTED:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_UNSUPPORTED" << std::endl)
 			break;
+#ifdef GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE
 		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" << std::endl)
 			break;
+#endif
+#ifdef GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS
 		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
 			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS" << std::endl)
 			break;
+#endif
 	}
 #endif
 	

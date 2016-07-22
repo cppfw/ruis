@@ -52,6 +52,10 @@ namespace morda{
 											 id
 											 );
 	}
+	
+	const morda::App::WindowParams& ios_getWindowParams(){
+		return morda::App::inst().windowParams;
+	}
 }
 
 
@@ -226,9 +230,19 @@ morda::App::App(const morda::App::WindowParams& wp) :
 	view.context = self.context;
 	view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
 
-	//TODO: read windowParams and set accordingly
-	view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
-	view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
+	{
+		const morda::App::WindowParams& wp = morda::ios_getWindowParams();
+		if(wp.buffers.get(morda::App::WindowParams::Buffer_e::DEPTH)){
+			view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
+		}else{
+			view.drawableDepthFormat = GLKViewDrawableDepthFormatNone;
+		}
+		if(wp.buffers.get(morda::App::WindowParams::Buffer_e::STENCIL)){
+			view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
+		}else{
+			view.drawableStencilFormat = GLKViewDrawableStencilFormatNone;
+		}
+	}
 	
 	[EAGLContext setCurrentContext:self.context];
 	
@@ -254,7 +268,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 - (void)update{
-	//TODO: adapt to nothingto update, lower frame rate
+	//TODO: adapt to nothing to update, lower frame rate
 	morda::ios_update();
 }
 

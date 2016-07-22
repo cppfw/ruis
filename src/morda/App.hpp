@@ -287,6 +287,7 @@ private:
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
 	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
+	friend const morda::App::WindowParams& ios_getWindowParams();
 	
 #	else
 	void macosx_SwapFrameBuffers();
