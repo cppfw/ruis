@@ -24,17 +24,10 @@
 		2C6512C41C0A60F800D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
 		2CB332B51D42B2CC0000400C /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332161D42B2CC0000400C /* App.cpp */; };
 		2CB332B61D42B2CC0000400C /* TexFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3321D1D42B2CC0000400C /* TexFont.cpp */; };
-		2CB332B71D42B2CC0000400C /* AssetFile.cpp_ in Resources */ = {isa = PBXBuildFile; fileRef = 2CB332211D42B2CC0000400C /* AssetFile.cpp_ */; };
-		2CB332B81D42B2CC0000400C /* AssetFile.hpp_ in Resources */ = {isa = PBXBuildFile; fileRef = 2CB332221D42B2CC0000400C /* AssetFile.hpp_ */; };
-		2CB332B91D42B2CC0000400C /* main.inc in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332231D42B2CC0000400C /* main.inc */; };
-		2CB332BB1D42B2CC0000400C /* main.inc in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332271D42B2CC0000400C /* main.inc */; };
 		2CB332BD1D42B2CC0000400C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3322A1D42B2CC0000400C /* main.cpp */; };
-		2CB332BE1D42B2CC0000400C /* main.inc in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3322C1D42B2CC0000400C /* main.inc */; };
 		2CB332BF1D42B2CC0000400C /* Inflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3322D1D42B2CC0000400C /* Inflater.cpp */; };
 		2CB332C01D42B2CC0000400C /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332301D42B2CC0000400C /* FrameBuffer.cpp */; };
 		2CB332C11D42B2CC0000400C /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332321D42B2CC0000400C /* Render.cpp */; };
-		2CB332C21D42B2CC0000400C /* Render_DirectX.inc in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332341D42B2CC0000400C /* Render_DirectX.inc */; };
-		2CB332C31D42B2CC0000400C /* Render_OpenGL.inc in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332351D42B2CC0000400C /* Render_OpenGL.inc */; };
 		2CB332C41D42B2CC0000400C /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332361D42B2CC0000400C /* Shader.cpp */; };
 		2CB332C51D42B2CC0000400C /* Texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB332381D42B2CC0000400C /* Texture2D.cpp */; };
 		2CB332C61D42B2CC0000400C /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB3323A1D42B2CC0000400C /* ResourceManager.cpp */; };
@@ -131,20 +124,13 @@
 		2CB3321C1D42B2CC0000400C /* Font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Font.hpp; sourceTree = "<group>"; };
 		2CB3321D1D42B2CC0000400C /* TexFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexFont.cpp; sourceTree = "<group>"; };
 		2CB3321E1D42B2CC0000400C /* TexFont.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TexFont.hpp; sourceTree = "<group>"; };
-		2CB332211D42B2CC0000400C /* AssetFile.cpp_ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AssetFile.cpp_; sourceTree = "<group>"; };
-		2CB332221D42B2CC0000400C /* AssetFile.hpp_ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AssetFile.hpp_; sourceTree = "<group>"; };
-		2CB332231D42B2CC0000400C /* main.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = main.inc; sourceTree = "<group>"; };
-		2CB332271D42B2CC0000400C /* main.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = main.inc; sourceTree = "<group>"; };
 		2CB3322A1D42B2CC0000400C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		2CB3322C1D42B2CC0000400C /* main.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = main.inc; sourceTree = "<group>"; };
 		2CB3322D1D42B2CC0000400C /* Inflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Inflater.cpp; sourceTree = "<group>"; };
 		2CB3322E1D42B2CC0000400C /* Inflater.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Inflater.hpp; sourceTree = "<group>"; };
 		2CB332301D42B2CC0000400C /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
 		2CB332311D42B2CC0000400C /* FrameBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FrameBuffer.hpp; sourceTree = "<group>"; };
 		2CB332321D42B2CC0000400C /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
 		2CB332331D42B2CC0000400C /* Render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
-		2CB332341D42B2CC0000400C /* Render_DirectX.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = Render_DirectX.inc; sourceTree = "<group>"; };
-		2CB332351D42B2CC0000400C /* Render_OpenGL.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = Render_OpenGL.inc; sourceTree = "<group>"; };
 		2CB332361D42B2CC0000400C /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		2CB332371D42B2CC0000400C /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		2CB332381D42B2CC0000400C /* Texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture2D.cpp; sourceTree = "<group>"; };
@@ -394,24 +380,10 @@
 		2CB3321F1D42B2CC0000400C /* glue */ = {
 			isa = PBXGroup;
 			children = (
-				2CB332201D42B2CC0000400C /* android */,
 				2CB332241D42B2CC0000400C /* ios */,
-				2CB332261D42B2CC0000400C /* linux */,
-				2CB332281D42B2CC0000400C /* macosx */,
 				2CB3322A1D42B2CC0000400C /* main.cpp */,
-				2CB3322B1D42B2CC0000400C /* windows */,
 			);
 			path = glue;
-			sourceTree = "<group>";
-		};
-		2CB332201D42B2CC0000400C /* android */ = {
-			isa = PBXGroup;
-			children = (
-				2CB332211D42B2CC0000400C /* AssetFile.cpp_ */,
-				2CB332221D42B2CC0000400C /* AssetFile.hpp_ */,
-				2CB332231D42B2CC0000400C /* main.inc */,
-			);
-			path = android;
 			sourceTree = "<group>";
 		};
 		2CB332241D42B2CC0000400C /* ios */ = {
@@ -422,29 +394,6 @@
 			path = ios;
 			sourceTree = "<group>";
 		};
-		2CB332261D42B2CC0000400C /* linux */ = {
-			isa = PBXGroup;
-			children = (
-				2CB332271D42B2CC0000400C /* main.inc */,
-			);
-			path = linux;
-			sourceTree = "<group>";
-		};
-		2CB332281D42B2CC0000400C /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = macosx;
-			sourceTree = "<group>";
-		};
-		2CB3322B1D42B2CC0000400C /* windows */ = {
-			isa = PBXGroup;
-			children = (
-				2CB3322C1D42B2CC0000400C /* main.inc */,
-			);
-			path = windows;
-			sourceTree = "<group>";
-		};
 		2CB3322F1D42B2CC0000400C /* render */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,8 +401,6 @@
 				2CB332311D42B2CC0000400C /* FrameBuffer.hpp */,
 				2CB332321D42B2CC0000400C /* Render.cpp */,
 				2CB332331D42B2CC0000400C /* Render.hpp */,
-				2CB332341D42B2CC0000400C /* Render_DirectX.inc */,
-				2CB332351D42B2CC0000400C /* Render_OpenGL.inc */,
 				2CB332361D42B2CC0000400C /* Shader.cpp */,
 				2CB332371D42B2CC0000400C /* Shader.hpp */,
 				2CB332381D42B2CC0000400C /* Texture2D.cpp */,
@@ -747,10 +694,8 @@
 				2C6512B41C0A60F800D295F5 /* Shader.fsh in Resources */,
 				2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */,
 				2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */,
-				2CB332B81D42B2CC0000400C /* AssetFile.hpp_ in Resources */,
 				2C547A841C2F4E930079154C /* res in Resources */,
 				2C6512B61C0A60F800D295F5 /* Shader.vsh in Resources */,
-				2CB332B71D42B2CC0000400C /* AssetFile.cpp_ in Resources */,
 				2CC8807C1D3AE2BB00CFCA50 /* morda_res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -824,7 +769,6 @@
 				2CB332CE1D42B2CC0000400C /* ColorPosShader.cpp in Sources */,
 				2CB332F81D42B2CC0000400C /* TextWidget.cpp in Sources */,
 				2CB332B61D42B2CC0000400C /* TexFont.cpp in Sources */,
-				2CB332BB1D42B2CC0000400C /* main.inc in Sources */,
 				2CB332D21D42B2CC0000400C /* SimpleBlurPosTexShader.cpp in Sources */,
 				2CB332CD1D42B2CC0000400C /* ClrPosShader.cpp in Sources */,
 				2CB332EB1D42B2CC0000400C /* ResizeProxy.cpp in Sources */,
@@ -835,7 +779,6 @@
 				2CB332FC1D42B39A0000400C /* main.mm in Sources */,
 				2CB332F11D42B2CC0000400C /* ImageLabel.cpp in Sources */,
 				2CB332F91D42B2CC0000400C /* TreeView.cpp in Sources */,
-				2CB332B91D42B2CC0000400C /* main.inc in Sources */,
 				2CB332C41D42B2CC0000400C /* Shader.cpp in Sources */,
 				2CB332CC1D42B2CC0000400C /* ResTexture.cpp in Sources */,
 				2CB332E51D42B2CC0000400C /* Margins.cpp in Sources */,
@@ -851,7 +794,6 @@
 				2CB332DF1D42B2CC0000400C /* RadioButton.cpp in Sources */,
 				2CB332F21D42B2CC0000400C /* TextLabel.cpp in Sources */,
 				2CB332F51D42B2CC0000400C /* Slider.cpp in Sources */,
-				2CB332C21D42B2CC0000400C /* Render_DirectX.inc in Sources */,
 				2CB332D61D42B2CC0000400C /* ioapi.cpp in Sources */,
 				2CB332C81D42B2CC0000400C /* ResGradient.cpp in Sources */,
 				2C547A781C2F2C1E0079154C /* main.cpp in Sources */,
@@ -874,11 +816,9 @@
 				2CB332E81D42B2CC0000400C /* Table.cpp in Sources */,
 				2CB332F61D42B2CC0000400C /* TextField.cpp in Sources */,
 				2CB332E11D42B2CC0000400C /* ColorWidget.cpp in Sources */,
-				2CB332BE1D42B2CC0000400C /* main.inc in Sources */,
 				2CB332FA1D42B2CC0000400C /* Window.cpp in Sources */,
 				2CB332EC1D42B2CC0000400C /* Widget.cpp in Sources */,
 				2CB332D51D42B2CC0000400C /* Image.cpp in Sources */,
-				2CB332C31D42B2CC0000400C /* Render_OpenGL.inc in Sources */,
 				2CB332DB1D42B2CC0000400C /* Button.cpp in Sources */,
 				2CB332D01D42B2CC0000400C /* PosShader.cpp in Sources */,
 				2CB332DA1D42B2CC0000400C /* BlendWidget.cpp in Sources */,
