@@ -376,6 +376,7 @@ int main (int argc, const char** argv){
 -(void)rightMouseUp: (NSEvent*)e;
 -(void)otherMouseDown: (NSEvent*)e;
 -(void)otherMouseUp: (NSEvent*)e;
+-(void)scrollWheel:(NSEvent*)e;
 
 -(void)mouseDragged: (NSEvent*)e;
 -(void)rightMouseDragged: (NSEvent*)e;
@@ -440,6 +441,25 @@ int main (int argc, const char** argv){
 	MouseButton(e, false, morda::Widget::MouseButton_e::MIDDLE);
 }
 
+-(void)scrollWheel: (NSEvent*)e{
+//	TRACE(<< "mouse wheel!!!!!" << std::endl)
+	
+	if([e hasPreciseScrollingDeltas] == NO){
+		int dy = int([e scrollingDeltaY]);
+		morda::Widget::MouseButton_e button;
+		if(dy < 0){
+			dy = -dy;
+			button = morda::Widget::MouseButton_e::WHEEL_DOWN;
+		}else{
+			button = morda::Widget::MouseButton_e::WHEEL_UP;
+		}
+		
+		for(int i = 0; i != dy; ++i){
+			MouseButton(e, true, button);
+			MouseButton(e, false, button);
+		}
+	}
+}
 
 -(void)mouseMoved: (NSEvent*)e{
 //	TRACE(<< "mouseMoved event!!!!!" << std::endl)
