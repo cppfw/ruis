@@ -203,9 +203,6 @@
             <incDir>
               <pElem>.</pElem>
             </incDir>
-            <preprocessorList>
-              <Elem>DEBUG</Elem>
-            </preprocessorList>
           </ccTool>
         </makeTool>
         <preBuild>

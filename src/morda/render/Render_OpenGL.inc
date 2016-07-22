@@ -646,7 +646,43 @@ void Render::bindFrameBuffer(utki::Void* fbo){
 bool Render::isFrameBufferComplete(){
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	AssertOpenGLNoError();
-    return status == GL_FRAMEBUFFER_COMPLETE;
+    if(status == GL_FRAMEBUFFER_COMPLETE){
+		return true;
+	}
+	
+#ifdef DEBUG
+	switch(status){
+		default:
+			TRACE(<< "Unknown framebuffer status: " << status << std::endl)
+			break;
+		case GL_FRAMEBUFFER_UNDEFINED:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_UNDEFINED" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_UNSUPPORTED:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_UNSUPPORTED" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" << std::endl)
+			break;
+		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+			TRACE(<< "Fframebuffer status: GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS" << std::endl)
+			break;
+	}
+#endif
+	
+	return false;
 }
 
 void Render::attachColorTexture2DToFrameBuffer(utki::Void* tex){
