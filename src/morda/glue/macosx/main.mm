@@ -445,19 +445,17 @@ int main (int argc, const char** argv){
 //	TRACE(<< "mouse wheel!!!!!" << std::endl)
 	
 	if([e hasPreciseScrollingDeltas] == NO){
-		int dy = int([e scrollingDeltaY]);
 		morda::Widget::MouseButton_e button;
-		if(dy < 0){
-			dy = -dy;
+//		TRACE(<< "dy = " << float(dy) << std::endl)
+		if([e scrollingDeltaY] < 0){
 			button = morda::Widget::MouseButton_e::WHEEL_DOWN;
 		}else{
 			button = morda::Widget::MouseButton_e::WHEEL_UP;
 		}
+//		TRACE(<< "button = " << unsigned(button) << std::endl)
 		
-		for(int i = 0; i != dy; ++i){
-			MouseButton(e, true, button);
-			MouseButton(e, false, button);
-		}
+		MouseButton(e, true, button);
+		MouseButton(e, false, button);
 	}else{
 		TRACE(<< "mouse wheel: precise scrolling deltas, UNIMPLEMENTED!!!!!" << std::endl)
 	}
