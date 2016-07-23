@@ -12,6 +12,9 @@ Pod::Spec.new do |s|
   s.source_files  = "src/**/*.{hpp,h,cpp,inc}", "src/morda/glue/ios/main.mm", "src/soname.txt"
   s.header_mappings_dir = "src"
 
+  #workaround for freetype-related compiling problems
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/Headers/Private/freetype"' }
+
   s.compiler_flags = "-fno-objc-arc"
 
   s.dependency 'libutki', '>= 1.0.18'
