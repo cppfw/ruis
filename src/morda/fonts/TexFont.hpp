@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #pragma once
 
 #include <map>
@@ -18,10 +13,10 @@
 #include "../config.hpp"
 
 #include "../render/Texture2D.hpp"
-#include "Font.hpp"
 
 #include "../shaders/PosTexShader.hpp"
 
+#include "Font.hpp"
 
 
 namespace morda{

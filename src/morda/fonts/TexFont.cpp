@@ -1,22 +1,16 @@
-// Author: Ivan Gagis <igagis@gmail.com>
+#include <algorithm>
 
-// File description:
-//	Texture font class
-
-#include <utki/debug.hpp>
-
-#include "TexFont.hpp"
-
-#include "../util/Image.hpp"
-#include "../util/util.hpp"
-
-
-//freetype includes
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 
-#include <algorithm>
+#include <utki/debug.hpp>
+
+#include "../util/Image.hpp"
+#include "../util/util.hpp"
+
+#include "TexFont.hpp"
+
 
 
 using namespace morda;

@@ -9,8 +9,10 @@ Pod::Spec.new do |s|
   
   s.source = { :git => "https://github.com/igagis/morda.git", :tag => s.version }
 
-  s.source_files  = "src/**/*.{hpp,h,cpp}", "src/morda/glue/ios/main.mm", "src/soname.txt"
+  s.source_files  = "src/**/*.{hpp,h,cpp,inc}", "src/morda/glue/ios/main.mm", "src/soname.txt"
   s.header_mappings_dir = "src"
+
+  s.compiler_flags = "-fno-objc-arc"
 
   s.dependency 'libutki', '>= 1.0.18'
   s.dependency 'libpogodi', '>= 1.0.8'

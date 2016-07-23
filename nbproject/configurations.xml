@@ -6,7 +6,6 @@
     <df root="src" name="1">
       <df name="morda">
         <df name="fonts">
-          <in>Font.cpp</in>
           <in>Font.hpp</in>
           <in>TexFont.cpp</in>
           <in>TexFont.hpp</in>
@@ -1111,8 +1110,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/fonts/Font.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
