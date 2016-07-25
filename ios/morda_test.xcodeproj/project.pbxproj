@@ -877,7 +877,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -891,6 +891,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_NO_PIE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -917,6 +918,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -924,6 +926,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_NO_PIE = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -940,6 +943,24 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"freetype\"",
+					"-l\"libaika\"",
+					"-l\"libcairo\"",
+					"-l\"libjpeg\"",
+					"-l\"libnitki\"",
+					"-l\"libpapki\"",
+					"-l\"libpixman\"",
+					"-l\"libpng_igagis\"",
+					"-l\"libpogodi\"",
+					"-l\"libstob\"",
+					"-l\"libsvgdom\"",
+					"-l\"libsvgren\"",
+					"-l\"pugixml\"",
+					"-l\"z\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -956,6 +977,24 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"freetype\"",
+					"-l\"libaika\"",
+					"-l\"libcairo\"",
+					"-l\"libjpeg\"",
+					"-l\"libnitki\"",
+					"-l\"libpapki\"",
+					"-l\"libpixman\"",
+					"-l\"libpng_igagis\"",
+					"-l\"libpogodi\"",
+					"-l\"libstob\"",
+					"-l\"libsvgdom\"",
+					"-l\"libsvgren\"",
+					"-l\"pugixml\"",
+					"-l\"z\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

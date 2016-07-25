@@ -17,6 +17,11 @@ Pod::Spec.new do |s|
 
   s.compiler_flags = "-fno-objc-arc"
 
+  #this tells that we are linking against c++ libraries
+  s.libraries = 'c++'
+
+  s.frameworks = 'GLKit'
+
   s.dependency 'libutki', '>= 1.0.18'
   s.dependency 'libpogodi', '>= 1.0.8'
   s.dependency 'libpapki', '>= 1.0.11'
