@@ -2,6 +2,8 @@
 
 #include <tuple>
 
+#include <utki/config.hpp>
+
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 

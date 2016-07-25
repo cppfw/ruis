@@ -743,12 +743,14 @@ void App::Exec(){
 namespace morda{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = morda::createApp(argc, argv, utki::Buf<std::uint8_t>(0, 0));
+	std::unique_ptr<morda::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	
+	ASSERT(app)
 
 	app->Exec();
 }
 
-}//~namespace
+}
 
 
 

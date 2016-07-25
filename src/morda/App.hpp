@@ -607,4 +607,13 @@ public:
 
 
 
+#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX || M_OS == M_OS_UNIX
+/**
+ * @brief For internal use only.
+ */
+std::unique_ptr<App> createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState);
+#endif
+
+
+
 }

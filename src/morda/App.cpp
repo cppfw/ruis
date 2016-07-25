@@ -3,6 +3,7 @@
 #include "resources/ResSTOB.hpp"
 
 #include <utki/debug.hpp>
+#include <utki/config.hpp>
 
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
@@ -24,6 +25,11 @@
 #include "widgets/TreeView.hpp"
 #include "widgets/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
+
+
+#if M_OS == M_OS_UNIX || M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
+#	include <dlfcn.h>
+#endif
 
 
 using namespace morda;
@@ -284,3 +290,28 @@ void App::setFocusedWidget(const std::shared_ptr<Widget> w){
 		w->onFocusChanged();
 	}
 }
+
+
+
+#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX || M_OS == M_OS_UNIX
+std::unique_ptr<App> morda::createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+	void* libHandle = dlopen(nullptr, RTLD_NOW);
+	if(!libHandle){
+		throw morda::Exc("dlopen(): failed");
+	}
+
+	utki::ScopeExit scopeexit([libHandle](){
+		dlclose(libHandle);
+	});
+
+	auto factory =
+			reinterpret_cast<
+					std::unique_ptr<App> (*)(int, const char**, const utki::Buf<std::uint8_t>)
+				>(dlsym(libHandle, "_ZN5morda9createAppEiPPKcN4utki3BufIhEE"));
+	if(!factory){
+		throw morda::Exc("dlsym(): createApp() function not found!");
+	}
+
+	return factory(argc, argv, savedState);
+}
+#endif

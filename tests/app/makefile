@@ -39,6 +39,7 @@ endif
 
 this_ldlibs += -lnitki -laika -lpogodi -lstob
 
+this_ldflags += -rdynamic
 
 $(eval $(prorab-build-app))
 
