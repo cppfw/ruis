@@ -43,7 +43,7 @@ utki::IntrusiveSingleton<App>::T_Instance App::instance;
 void App::initStandardWidgets() {
 	
 	
-#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
+#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || (M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS)
 	//mount default resource pack
 	
 #	ifndef DEBUG
