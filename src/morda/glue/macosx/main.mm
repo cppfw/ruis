@@ -60,6 +60,14 @@ void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::Mous
 }
 
 void Macosx_HandleMouseHover(bool isHovered){
+	if(!morda::App::inst().mouseCursorIsCurrentlyVisible){
+		if(isHovered){
+			[NSCursor hide];
+		}else if(!isHovered){
+			[NSCursor unhide];
+		}
+	}
+	
 	morda::App::inst().handleMouseHover(isHovered, 0);
 }
 
@@ -852,12 +860,12 @@ void App::setFullscreen(bool enable){
 void App::setMouseCursorVisible(bool visible){
 	if(visible){
 		if(!this->mouseCursorIsCurrentlyVisible){
-			CGDisplayShowCursor(kCGDirectMainDisplay);
+			[NSCursor unhide];
 			this->mouseCursorIsCurrentlyVisible = true;
 		}
 	}else{
 		if(this->mouseCursorIsCurrentlyVisible){
-			CGDisplayHideCursor(kCGDirectMainDisplay);
+			[NSCursor hide];
 			this->mouseCursorIsCurrentlyVisible = false;
 		}
 	}
