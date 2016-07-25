@@ -1,11 +1,3 @@
-//
-//  main.m
-//  morda_test
-//
-//  Created by Ivan on 28/11/15.
-//  Copyright (c) 2015 org.igagis. All rights reserved.
-//
-
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
 
@@ -380,4 +372,8 @@ std::unique_ptr<papki::File> morda::App::createResourceFileInterface(const std::
 	ss << dir << "/" << path;
 	
 	return utki::makeUnique<papki::FSFile>(ss.str());
+}
+
+void morda::App::setMouseCursorVisible(bool visible){
+	//do nothing
 }
