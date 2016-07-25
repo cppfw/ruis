@@ -6,10 +6,13 @@
             <name>morda</name>
             <c-extensions/>
             <cpp-extensions>cpp,mm</cpp-extensions>
-            <header-extensions>h,hpp</header-extensions>
+            <header-extensions>h,hpp,inc</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
+                <sourceRootElem>src</sourceRootElem>
+                <sourceRootElem>tests</sourceRootElem>
+                <sourceRootElem>morda_res</sourceRootElem>
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>tests</sourceRootElem>
                 <sourceRootElem>morda_res</sourceRootElem>

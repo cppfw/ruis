@@ -799,6 +799,16 @@ public:
 				this->setFullscreen(!this->isFullscreen());
 			};
 		}
+		
+		//mouse cursor
+		{
+			auto b = c->findChildByNameAs<morda::PushButton>("showhide_mousecursor_button");
+			bool visible = true;
+			b->clicked = [this, visible](morda::PushButton&) mutable{
+				visible = !visible;
+				morda::App::inst().setMouseCursorVisible(visible);
+			};
+		}
 	}
 };
 

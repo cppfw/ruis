@@ -211,6 +211,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
+		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
 		units(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
@@ -786,4 +787,35 @@ void App::setFullscreen(bool enable){
 	XFlush(this->xDisplay.d);
 
 	this->isFullscreen_v = enable;
+}
+
+
+
+void App::setMouseCursorVisible(bool visible){
+	if(visible){
+		XUndefineCursor(this->xDisplay.d, this->xWindow.w);
+	}else{
+		XDefineCursor(this->xDisplay.d, this->xWindow.w, this->xEmptyMouseCursor.c);
+	}
+}
+
+
+
+App::XEmptyMouseCursor::XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow) :
+		d(xDisplay)
+{
+	Pixmap blank;
+	XColor dummy;
+	char data[1] = {0};
+
+	blank = XCreateBitmapFromData(this->d.d, xWindow.w, data, 1, 1);
+	if(blank == None){
+		throw morda::Exc("App::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
+	}
+	this->c = XCreatePixmapCursor(this->d.d, blank, blank, &dummy, &dummy, 0, 0);
+	XFreePixmap(this->d.d, blank);
+}
+
+App::XEmptyMouseCursor::~XEmptyMouseCursor()noexcept{
+	XFreeCursor(this->d.d, this->c);
 }

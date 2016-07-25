@@ -214,6 +214,15 @@ private:
 		void Destroy()noexcept;
 	} glxContex;
 
+	struct XEmptyMouseCursor{
+		Cursor c;
+		
+		XDisplayWrapper& d;
+		
+		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XEmptyMouseCursor()noexcept;
+	} xEmptyMouseCursor;
+	
 	struct XInputMethodWrapper{
 		XIM xim;
 		XIC xic;
@@ -582,8 +591,15 @@ public:
 	 * widgets to be used by application.
 	 */
 	void initStandardWidgets();
+	
+
+	/**
+	 * @brief Show/hide mouse cursor.
+	 * @param visible - whether to show (true) or hide (false) mouse cursor.
+	 */
+	void setMouseCursorVisible(bool visible);
 };
 
 
 
-}//~namespace
+}

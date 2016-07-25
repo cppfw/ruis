@@ -100,11 +100,20 @@ Container{
 				TextLabel{text{item9}}
 				TextLabel{text{item10}}
 			}
-			PushButton{
-				name{fullscreen_button}
-				
-				TextLabel{
-					text{"toggle fullscreen"}
+			HorizontalArea{
+				PushButton{
+					name{showhide_mousecursor_button}
+
+					TextLabel{
+						text{"show/hide mouse"}
+					}
+				}
+				PushButton{
+					name{fullscreen_button}
+
+					TextLabel{
+						text{"toggle fullscreen"}
+					}
 				}
 			}
 
