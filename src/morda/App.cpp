@@ -43,33 +43,32 @@ utki::IntrusiveSingleton<App>::T_Instance App::instance;
 void App::initStandardWidgets() {
 	
 	
-#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || (M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS)
+#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
 	//mount default resource pack
 	
-#	ifndef DEBUG
-	unsigned soname = 
-#	include "../soname.txt"
-		;
-#	endif
-		
 	std::vector<std::string> paths;
 	
 #	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
-		paths.push_back("morda_res/");
+	paths.push_back("morda_res/");
 #	else
 #		ifdef DEBUG
-		paths.push_back("../../morda_res/");
+	paths.push_back("../../morda_res/");
 #		else
-		{
-			std::stringstream ss;
-			ss << "/usr/local/share/morda/res" << soname << "/";
-			paths.push_back(ss.str());
-		}
-		{
-			std::stringstream ss;
-			ss << "/usr/share/morda/res" << soname << "/";
-			paths.push_back(ss.str());
-		}
+	
+	unsigned soname =
+#	include "../soname.txt"
+	;
+	
+	{
+		std::stringstream ss;
+		ss << "/usr/local/share/morda/res" << soname << "/";
+		paths.push_back(ss.str());
+	}
+	{
+		std::stringstream ss;
+		ss << "/usr/share/morda/res" << soname << "/";
+		paths.push_back(ss.str());
+	}
 #		endif
 #	endif
 

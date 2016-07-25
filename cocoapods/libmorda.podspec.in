@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
   #workaround for freetype-related compiling problems
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/Headers/Private/freetype"' }
 
-  s.compiler_flags = "-fno-objc-arc"
+  #we don't use Objective-C Automatic Resource Counting
+  s.requires_arc = false
 
   #this tells that we are linking against c++ libraries
   s.libraries = 'c++'
