@@ -63,30 +63,7 @@ namespace morda{
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	/*
-	//Look up the createApp function
-	void *libHandle = dlopen(nullptr, RTLD_NOW);
-	if(!libHandle){
-		throw morda::Exc("dlopen(): Could not get handle to main program module");
-	}
-	
-	utki::ScopeExit scopeExit([libHandle](){
-		dlclose(libHandle);
-	});
-	
-	auto factory
-			= reinterpret_cast<
-					std::unique_ptr<morda::App> (*)(int, const char**, const utki::Buf<std::uint8_t> savedState)
-				>(
-					dlsym(libHandle, "__ZN5morda9createAppEiPPKcN4utki3BufIhEE")
-				);
-	
-	if(!factory){
-		throw morda::Exc("glsym(): createApp() function not found");
-	}
-	*/
-	
-	self->app = morda::createApp(0, nullptr, utki::wrapBuf<std::uint8_t>(nullptr, 0)).release();
+	self->app = morda::createAppUnix(0, nullptr, utki::wrapBuf<std::uint8_t>()).release();
 	
 	return YES;
 }
