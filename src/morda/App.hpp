@@ -335,6 +335,9 @@ private:
 
 		void Destroy()noexcept;
 	} openGLContext;
+	
+	bool mouseCursorIsCurrentlyVisible = true;
+	
 #	endif
 
 #else

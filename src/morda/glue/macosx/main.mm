@@ -846,3 +846,19 @@ void App::setFullscreen(bool enable){
 	
 	this->isFullscreen_v = enable;
 }
+
+
+
+void App::setMouseCursorVisible(bool visible){
+	if(visible){
+		if(!this->mouseCursorIsCurrentlyVisible){
+			CGDisplayShowCursor(kCGDirectMainDisplay);
+			this->mouseCursorIsCurrentlyVisible = true;
+		}
+	}else{
+		if(this->mouseCursorIsCurrentlyVisible){
+			CGDisplayHideCursor(kCGDirectMainDisplay);
+			this->mouseCursorIsCurrentlyVisible = false;
+		}
+	}
+}
