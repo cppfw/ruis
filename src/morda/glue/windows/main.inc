@@ -335,6 +335,20 @@ namespace morda{
 				TrackMouseEvent(&tme);
 
 				app.window.isHovered = true;
+
+				//restore mouse cursor invisibility
+				if(!app.mouseCursorIsCurrentlyVisible){
+					CURSORINFO ci;
+					ci.cbSize = sizeof(CURSORINFO);
+					if(GetCursorInfo(&ci) != 0){
+						if(ci.flags & CURSOR_SHOWING){
+							ShowCursor(FALSE);
+						}
+					}else{
+						TRACE(<< "GetCursorInfo(): failed!!!" << std::endl)
+					}
+				}
+
 				app.handleMouseHover(true, 0);
 			}
 			app.handleMouseMove(
@@ -344,6 +358,12 @@ namespace morda{
 			lres = 0;
 			return true;
 		case WM_MOUSELEAVE:
+			//Windows hides the mouse cursor even in non-client areas of the window,
+			//like caption bar and borders, so show cursor if it is hidden
+			if(!app.mouseCursorIsCurrentlyVisible){
+				ShowCursor(TRUE);
+			}
+
 			app.window.isHovered = false;
 			app.handleMouseHover(false, 0);
 
