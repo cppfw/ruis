@@ -5,8 +5,6 @@
 
 #include <sstream>
 
-#include <dlfcn.h>
-
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
@@ -63,7 +61,7 @@ namespace morda{
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	self->app = morda::createAppUnix(0, nullptr, utki::wrapBuf<std::uint8_t>()).release();
+	self->app = morda::createAppUnix(0, nullptr, utki::Buf<std::uint8_t>()).release();
 	
 	return YES;
 }
