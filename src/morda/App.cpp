@@ -42,21 +42,25 @@ utki::IntrusiveSingleton<App>::T_Instance App::instance;
 
 void App::initStandardWidgets() {
 	
-	
-#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || M_OS == M_OS_MACOSX
 	//mount default resource pack
 	
 	std::vector<std::string> paths;
-	
-#	if M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
-	paths.push_back("morda_res/");
-#	else
-#		ifdef DEBUG
+
+#if M_OS == M_OS_WINDOWS
+#	ifdef DEBUG
 	paths.push_back("../../morda_res/");
-#		else
+#	else
+	paths.push_back("morda_res/");
+#	endif
+#elif M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
+	paths.push_back("morda_res/");
+#else //linux or macosx
+#	ifdef DEBUG
+	paths.push_back("../../morda_res/");
+#	else
 	
 	unsigned soname =
-#	include "../soname.txt"
+#		include "../soname.txt"
 	;
 	
 	{
@@ -69,9 +73,10 @@ void App::initStandardWidgets() {
 		ss << "/usr/share/morda/res" << soname << "/";
 		paths.push_back(ss.str());
 	}
-#		endif
 #	endif
+#endif
 
+	bool mounted = false;
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
@@ -82,25 +87,13 @@ void App::initStandardWidgets() {
 		}catch(papki::Exc& e){
 			continue;
 		}
+		mounted = true;
 		break;
 	}
-#elif M_OS == M_OS_WINDOWS
-	std::string path =
-#	ifdef DEBUG
-		"../../morda_res/"
-#	else
-		"morda_res/"
-#	endif
-		;
 
-	try{
-		papki::FSFile fi(path);
-		this->resMan.mountResPack(fi);
+	if(!mounted){
+		throw morda::Exc("App::initStandardWidgets(): could not mount default resource pack");
 	}
-	catch (papki::Exc&){
-		//default res pack not found, do nothing
-	}
-#endif
 	
 	//add standard widgets to inflater
 	
