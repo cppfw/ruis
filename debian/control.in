@@ -21,7 +21,7 @@ Description: OpenGL UI framework development files
 
 Package: libmorda$(soname)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libmorda-res$(soname)
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
 
