@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   
   s.source = { :git => "https://github.com/igagis/morda.git", :tag => s.version }
 
-  s.source_files  = "src/**/*.{hpp,h,cpp,inc}", "src/morda/glue/ios/main.mm", "src/soname.txt"
+  s.source_files  = "src/**/*.{hpp,h,cpp,inc}", "src/morda/glue/ios/main.mm"
   s.header_mappings_dir = "src"
 
   #workaround for freetype-related compiling problems
