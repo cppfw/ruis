@@ -1,3 +1,9 @@
+libmorda (0.2.6) unstable; urgency=medium
+
+  * add not found widget name to exception description
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Jul 2016 16:28:58 +0300
+
 libmorda (0.2.5) unstable; urgency=medium
 
   * removing dependency on libmorda-res

@@ -172,7 +172,9 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 
 	if(i == this->widgetFactories.end()){
 		TRACE(<< "Inflater::Inflate(): n->value() = " << n->value() << std::endl)
-		throw Exc("Failed to inflate, no matching factory found for requested widget name");
+		std::stringstream ss;
+		ss << "Failed to inflate, no matching factory found for requested widget name: " << n->value();
+		throw Exc(ss.str());
 	}
 
 	bool needPopTemplates = false;
