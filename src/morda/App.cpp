@@ -25,6 +25,7 @@
 #include "widgets/TreeView.hpp"
 #include "widgets/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
+#include "widgets/MouseCursor.hpp"
 
 
 #if M_OS == M_OS_UNIX || M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
@@ -116,6 +117,7 @@ void App::initStandardWidgets() {
 	this->inflater.addWidget<DropDownSelector>("DropDownSelector");
 	this->inflater.addWidget<RadioButton>("RadioButton");
 	this->inflater.addWidget<ChoiceGroup>("ChoiceGroup");
+	this->inflater.addWidget<MouseCursor>("MouseCursor");
 	
 	
 	try{

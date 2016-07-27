@@ -10,6 +10,11 @@ img_lattice{
 	file{lattice.png}
 }
 
+crs_arrow{
+	image{img_lattice}
+	hotspot{0 256}
+}
+
 tex_images{
 	file{sample.png}
 }

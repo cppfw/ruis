@@ -672,4 +672,14 @@ Container{
 
 }
 }//~Overlay
+
+
+MouseCursor{
+	layout{
+		dx{fill} dy{fill}
+	}
+
+	cursor{crs_arrow}
+}
+
 }//~KeyProxyContainer
