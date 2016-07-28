@@ -1,0 +1,131 @@
+# Creating basic application
+
+Install *morda* on your system.
+
+Entry point of the *morda* application is a method called _morda::createApp()_, and not a traditional _main()_.
+Morda defines _main()_ internally, so the user should not define _main()_.
+
+User should derive their _Application_ class from _morda::App_, which will be a singleton class. Then, return an instance of that class from _morda::createApp()_. To do that, in `main.cpp` include necessary morda files:
+....
+#include <morda/App.hpp>
+#include <morda/AppFactory.hpp>
+....
+
+Then we define our Application class as forllows
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		//Here we will do all the initializations of our app, like loading the UI etc.
+	}
+};
+....
+
+And then we define the _morda::createApp()_ function
+....
+std::unique_ptr<morda::App> morda::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+	return utki::makeUnique<Application>();
+}
+....
+
+So, now we can build and run the project, but it will display just an empty window.
+
+Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+	}
+};
+....
+
+Let's describe our GUI using the GUI script. Create a file named _main.gui.stob_ in the _res/_ directory of your project with following contents
+....
+Frame{// frame layout places widgets in the center one on top of another
+	VerticalArea{ //vertical area layout places widgets one below each other
+		PushButton{
+			name{hw_button} //we can find this button by name from code
+			TextLabel{
+				text{"Hello world!!!"}
+			}
+		}
+
+		TextLabel{
+			name{info_text} //we can find this label by name from code
+			text{Information}
+		}
+	}
+}
+....
+
+
+Now we need to "inflate" the GUI from sript in the code and set it to application:
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+		
+		//Inflate widgets hierarchy from GUI description script
+		auto c = morda::App::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/main.gui.stob")
+			);
+		
+		//set the widgets hierarchy to the application
+		this->setRootWidget(c);
+	}
+};
+....
+
+After running the app we will see a button and a text label below it. But pressing the button will do nothing.
+Let's add some action on the button press
+....
+#include <morda/widgets/label/TextLabel.hpp>
+#include <morda/widgets/button/Button.hpp>
+
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+		
+		//Inflate widgets hierarchy from GUI description script
+		auto c = morda::App::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/main.gui.stob")
+			);
+		
+		//set the widgets hierarchy to the application
+		this->setRootWidget(c);
+		
+		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
+		ASSERT(textLabel)
+		
+		auto button = c->findChildByNameAs<morda::PushButton>("hw_button");
+		
+		auto textLabelWeak = utki::makeWeak(textLabel);//make a weak pointer to the TextLabel widget.
+		
+		bool even = true;
+		
+		//connect some action on button click
+		button->clicked = [textLabelWeak, even](morda::PushButton&) mutable {
+			if(auto tl = textLabelWeak.lock()){
+				even = !even;
+				if(even){
+					tl->setText("even");
+				}else{
+					tl->setText("odd");
+				}
+			}
+		};
+	}
+};
+....
+Now we can run the app and press the button and see that it will do something :).
