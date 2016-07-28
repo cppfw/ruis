@@ -24,7 +24,5 @@ OpenGL versions supported:
   * Android 2.3+ **planned** (draft implementation exists, currently broken)
   * iOS **planned** (draft implementation exists)
 
-# Building from sources
-  * [how to build in Linux](wiki/BuildingInLinux.md)
-  * [how to build in Windows](wiki/BuildingInWindows.adoc)
-  * [how to build in MacOS X](wiki/BuildingInMacOSX.md)
+# Useful info
+  link:wiki/Contribution.adoc[Contributing instructions]
