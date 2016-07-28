@@ -149,24 +149,6 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
-	//check if mouse captured
-	{
-		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
-		if(i != this->mouseCaptureMap.end()){
-			if(auto w = i->second.first.lock()){
-				w->onMouseMove(pos - w->rect().p, pointerID);
-		
-				//set hovered goes after move notification because position of widget could change
-				//during handling the notification, so need to check after that for hovering
-				w->setHovered(w->rect().overlaps(pos), pointerID);
-
-				return true;//doesn't matter what to return
-			}else{
-				this->mouseCaptureMap.erase(i);
-			}
-		}
-	}
-	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
 		if(!(*i)->isInteractive()){
@@ -174,6 +156,10 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 			continue;
 		}
 		
+		bool consumed = (*i)->onMouseMove(pos - (*i)->rect().p, pointerID);
+		
+		//set hovered goes after move notification because position of widget could change
+		//during handling the notification, so need to check after that for hovering
 		if(!(*i)->rect().overlaps(pos)){
 			(*i)->setHovered(false, pointerID);
 			continue;
@@ -181,7 +167,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		
 		(*i)->setHovered(true, pointerID);
 		
-		if((*i)->onMouseMove(pos - (*i)->rect().p, pointerID)){//consumed mouse move event
+		if(consumed){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
 				(*i)->setHovered(false, pointerID);
