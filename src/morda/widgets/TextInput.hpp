@@ -14,7 +14,7 @@ namespace morda{
  */
 class TextInput :
 		public SingleLineTextWidget,
-		public Updateable,
+		private Updateable,
 		public CharInputWidget
 {	
 	size_t firstVisibleCharIndex = 0;
