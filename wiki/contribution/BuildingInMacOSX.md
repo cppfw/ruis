@@ -16,7 +16,7 @@
 	brew tap igagis/tap
 	```
 
-- Update homebrew recipies:
+- Update homebrew formulaes:
 
 	````
 	brew update
