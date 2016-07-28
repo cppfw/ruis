@@ -31,12 +31,6 @@ public:
 	 */
 	static const std::array<kolme::Vec2f, 4> quadFanTexCoords;
 	
-	/**
-	 * @brief array of texture coordinates to use for rendering quad with whole texture.
-	 * Same as 'quadFanTexCoords' but resulting in texture to appear up side down on the quad.
-	 */
-	static const std::array<kolme::Vec2f, 4> quadFanTexCoordsUpsideDown;
-	
 	PosTexShader();
 	
 	PosTexShader(const PosTexShader&) = delete;

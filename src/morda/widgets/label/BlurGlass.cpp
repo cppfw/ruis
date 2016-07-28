@@ -36,6 +36,6 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	for(unsigned i = 0; i != 3; ++i){
 		Render::copyColorBufferToTexture(kolme::Vec2i(0), viewPortRect);
 		
-		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoordsUpsideDown));
+		s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
 	}
 }

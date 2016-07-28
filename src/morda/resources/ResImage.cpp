@@ -138,6 +138,19 @@ public:
 		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::App::inst().units.dpi());
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
+		//flip pixels vertically
+		{
+			std::vector<std::uint32_t> line(imWidth);
+
+			size_t stride = imWidth * sizeof(pixels[0]);
+			
+			//TODO: use iterators
+			for(unsigned i = 0; i != imHeight / 2; ++i){
+				memcpy(&*line.begin(), &*pixels.begin() + imWidth * i, stride);//move line to temp
+				memcpy(&*pixels.begin() + imWidth * i, &*pixels.begin() + imWidth * (imHeight - i - 1), stride);//move bottom line to top
+				memcpy(&*pixels.begin() + imWidth * (imHeight - i - 1), &*line.begin(), stride);
+			}
+		}
 		
 		auto img = utki::makeShared<SvgTexture>(this->sharedFromThis(this), Texture2D(imWidth, pixels));
 

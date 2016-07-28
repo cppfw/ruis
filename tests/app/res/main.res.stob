@@ -10,8 +10,12 @@ img_lattice{
 	file{lattice.png}
 }
 
+img_arrow{
+	file{mouse_arrow2.png}
+}
+
 crs_arrow{
-	image{img_lattice}
+	image{img_arrow}
 	hotspot{0 256}
 }
 

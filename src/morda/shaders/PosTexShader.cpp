@@ -7,10 +7,6 @@ using namespace morda;
 
 
 decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoords = {{
-	kolme::Vec2f(0, 1), kolme::Vec2f(1, 1), kolme::Vec2f(1, 0), kolme::Vec2f(0, 0)
-}};
-
-decltype(PosTexShader::quadFanTexCoords) PosTexShader::quadFanTexCoordsUpsideDown = {{
 	kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
 }};
 
