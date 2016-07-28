@@ -25,4 +25,6 @@ OpenGL versions supported:
   * iOS **planned** (draft implementation exists)
 
 # Useful info
-  link:wiki/Contribution.adoc[Contributing instructions]
+  [Installation and usage](wiki/Installation.adoc)
+  [Tutorials](wiki/Tutorials.adoc)
+  [Contributing instructions](wiki/Contribution.adoc)
