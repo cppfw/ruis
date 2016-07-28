@@ -27,4 +27,4 @@ OpenGL versions supported:
 # Useful info
   * [Installation and usage](wiki/Installation.adoc)
   * [Tutorials](wiki/Tutorials.adoc)
-  * [Contributing instructions](wiki/Contribution.adoc)
+  * [Contributing instructions](wiki/Contributing.adoc)
