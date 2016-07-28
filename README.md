@@ -16,8 +16,8 @@ W.I.P.
   * Linux
   * Windows
   * MacOS X
-  * Android 2.3+ (currently broken)
-  * iOS (draft implementation)
+  * Android 2.3+ **planned** (draft implementation exists, currently broken)
+  * iOS **planned** (draft implementation exists)
 
 # Building from sources
   * [how to build in Linux](wiki/BuildingInLinux.md)
