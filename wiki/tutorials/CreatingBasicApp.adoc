@@ -43,3 +43,43 @@ public:
 	}
 };
 ....
+
+Let's describe our GUI using the GUI script. Create a file named _main.gui.stob_ in the _res/_ directory of your project with following contents
+....
+Frame{// frame layout places widgets in the center one on top of another
+	VerticalArea{ //vertical area layout places widgets one below each other
+		PushButton{
+			name{hw_button} //we can find this button by name from code
+			TextLabel{
+				text{"Hello world!!!"}
+			}
+		}
+
+		TextLabel{
+			name{info_text} //we can find this label by name from code
+			text{Information}
+		}
+	}
+}
+....
+
+
+Now we need to "inflate" the GUI from sript in the code and set it to application:
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+		
+		//Inflate widgets hierarchy from GUI description script
+		auto c = morda::App::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/main.gui.stob")
+			);
+		
+		//set the widgets hierarchy to the application
+		this->setRootWidget(c);
+	}
+};
+....
