@@ -11,12 +11,12 @@ img_lattice{
 }
 
 img_arrow{
-	file{mouse_arrow2.png}
+	file{mouse_arrow.png}
 }
 
 crs_arrow{
 	image{img_arrow}
-	hotspot{0 256}
+	hotspot{2 3}
 }
 
 tex_images{
