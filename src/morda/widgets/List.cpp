@@ -107,7 +107,9 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 	
-	ASSERT(this->numTailItems != 0)
+	if(this->numTailItems == 0){
+		return 0;
+	}
 	
 	real d;
 	if(this->isVertical){
@@ -115,6 +117,8 @@ real List::scrollFactor()const noexcept{
 	}else{
 		d = this->rect().d.x;
 	}
+	
+	ASSERT(this->numTailItems != 0)
 	d = (d + this->firstTailItemOffset) / this->numTailItems;
 	
 	if(d <= 0){
