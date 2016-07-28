@@ -83,3 +83,49 @@ public:
 	}
 };
 ....
+
+After running the app we will see a button and a text label below it. But pressing the button will do nothing.
+Let's add some action on the button press
+....
+#include <morda/widgets/label/TextLabel.hpp>
+#include <morda/widgets/button/Button.hpp>
+
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+		
+		//Inflate widgets hierarchy from GUI description script
+		auto c = morda::App::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/main.gui.stob")
+			);
+		
+		//set the widgets hierarchy to the application
+		this->setRootWidget(c);
+		
+		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
+		ASSERT(textLabel)
+		
+		auto button = c->findChildByNameAs<morda::PushButton>("hw_button");
+		
+		auto textLabelWeak = utki::makeWeak(textLabel);//make a weak pointer to the TextLabel widget.
+		
+		bool even = true;
+		
+		//connect some action on button click
+		button->clicked = [textLabelWeak, even](morda::PushButton&) mutable {
+			if(auto tl = textLabelWeak.lock()){
+				even = !even;
+				if(even){
+					tl->setText("even");
+				}else{
+					tl->setText("odd");
+				}
+			}
+		};
+	}
+};
+....
+Now we can run the app and press the button and see that it will do something :).
