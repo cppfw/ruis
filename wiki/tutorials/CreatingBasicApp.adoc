@@ -1,0 +1,8 @@
+# Creating basic application
+
+. Install *morda* on your system.
+. In `main.cpp` include necessary morda files
+....
+#include <morda/App.hpp>
+#include <morda/AppFactory.hpp>
+....
