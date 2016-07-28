@@ -1,0 +1,13 @@
+# Basic Info
+
+*morda* uses concept of _Widgets_ for structuring the Graphical User Interface (GUI).
+
+Common element of the GUI is called _Widget_ (window + gadget = widget). Basically, GUI is an hierarchy of widgets.
+Simple widget represents a rectangular area on the screen, it can receive user input from mouse and keyboard.
+There is a _Container_ widget, this is a widget which can contain child widgets. It manages positions of its child widgets,
+dispatches user input to child widgets and renders them to screen.
+Each child _Widget_ have pointer to its parent _Container_ widget. _Container_, in turn, is a _Widget_ itself.
+Root widget of the hierarchy does not have parent _Container_.
+
+The hierarchy of widgets can be described in GUI description scripts using link:http://stobml.org[STOB], a simple markup language.
+The hierarchy of widget objects can be "inflated" from those GUI scripts.
