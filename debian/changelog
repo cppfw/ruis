@@ -1,3 +1,9 @@
+libmorda (0.3.0) unstable; urgency=medium
+
+  * basic sample application added
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Jul 2016 01:12:25 +0300
+
 libmorda (0.2.7) unstable; urgency=medium
 
   * use OpenGL coordinate system everywhere
