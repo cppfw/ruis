@@ -1,0 +1,5 @@
+# Installation instructions
+
+- link:installation/Linux.adoc[Linux]
+- link:installation/Windows.adoc[Windows]
+- link:installation/MacOSX.adoc[MacOS X]
