@@ -1,0 +1,15 @@
+Frame{
+	VerticalArea{
+		PushButton{
+			name{hw_button} //we can find this button by name from code
+			TextLabel{
+				text{"Hello world!!!"}
+			}
+		}
+
+		TextLabel{
+			name{info_text} //we can find this label by name from code
+			text{Information}
+		}
+	}
+}
