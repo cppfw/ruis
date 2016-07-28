@@ -1,8 +1,45 @@
 # Creating basic application
 
-. Install *morda* on your system.
-. In `main.cpp` include necessary morda files
+Install *morda* on your system.
+
+Entry point of the *morda* application is a method called _morda::createApp()_, and not a traditional _main()_.
+Morda defines _main()_ internally, so the user should not define _main()_.
+
+User should derive their _Application_ class from _morda::App_, which will be a singleton class. Then, return an instance of that class from _morda::createApp()_. To do that, in `main.cpp` include necessary morda files:
 ....
 #include <morda/App.hpp>
 #include <morda/AppFactory.hpp>
+....
+
+Then we define our Application class as forllows
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		//Here we will do all the initializations of our app, like loading the UI etc.
+	}
+};
+....
+
+And then we define the _morda::createApp()_ function
+....
+std::unique_ptr<morda::App> morda::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+	return utki::makeUnique<Application>();
+}
+....
+
+So, now we can build and run the project, but it will display just an empty window.
+
+Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
+....
+class Application : public morda::App{
+public:
+	Application() :
+			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+	{
+		this->initStandardWidgets();
+	}
+};
 ....
