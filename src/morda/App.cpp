@@ -85,7 +85,7 @@ void App::initStandardWidgets() {
 			ASSERT(fi)
 //			TRACE(<< "fi->path() = " << fi->path() << std::endl)
 			this->resMan.mountResPack(*fi);
-		}catch(papki::Exc& e){
+		}catch(papki::Exc&){
 			continue;
 		}
 		mounted = true;
