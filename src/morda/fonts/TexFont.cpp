@@ -332,32 +332,32 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 		++s;
 	}
 
-	try{
-		for(; s != str.end(); ++s){
-			const Glyph& g = this->glyphs.at(*s);
-
-			if(g.verts[2].y > top){
-				top = g.verts[2].y;
-			}
-
-			if(g.verts[0].y < bottom){
-				bottom = g.verts[0].y;
-			}
-
-			if(curAdvance + g.verts[0].x < left){
-				left = curAdvance + g.verts[0].x;
-			}
-
-			if(curAdvance + g.verts[2].x > right){
-				right = curAdvance + g.verts[2].x;
-			}
-
-			curAdvance += g.advance;
+	for(; s != str.end(); ++s){
+		auto i = this->glyphs.find(*s);
+		if(i == this->glyphs.end()){
+			TRACE(<< "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s << std::endl)
+			continue;
 		}
-	}catch(std::out_of_range&){
-		std::stringstream ss;
-		ss << "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s;
-		throw utki::Exc(ss.str().c_str());
+
+		const Glyph& g = i->second;
+
+		if(g.verts[2].y > top){
+			top = g.verts[2].y;
+		}
+
+		if(g.verts[0].y < bottom){
+			bottom = g.verts[0].y;
+		}
+
+		if(curAdvance + g.verts[0].x < left){
+			left = curAdvance + g.verts[0].x;
+		}
+
+		if(curAdvance + g.verts[2].x > right){
+			right = curAdvance + g.verts[2].x;
+		}
+
+		curAdvance += g.advance;
 	}
 
 	ret.p.x = left;
@@ -406,6 +406,11 @@ real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 
 
 real TexFont::charAdvance(std::uint32_t c) const{
-	const Glyph& g = this->glyphs.at(c);
+	auto i = this->glyphs.find(c);
+	if(i == this->glyphs.end()){
+		return real(0);
+	}
+	
+	const Glyph& g = i->second;
 	return g.advance;
 }
