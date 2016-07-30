@@ -37,7 +37,7 @@ class Container;
  * @param dy - height of the widget.
  * @param name - name assigned to widget.
  * @param clip - enable (true) or disable (false) the scissor test for this widget boundaries when rendering. Default value is false.
- * @param cache - enable (true) or disable (false) prerendering this widget to texture and render from texture for faster rendering.
+ * @param cache - enable (true) or disable (false) pre-rendering this widget to texture and render from texture for faster rendering.
  * @param visible - should the widget be initially visible (true) or hidden (false). Default value is true.
  * @param enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
  */
