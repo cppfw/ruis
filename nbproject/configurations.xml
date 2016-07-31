@@ -918,6 +918,7 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
+            <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
@@ -928,14 +929,8 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/shaders</pElem>
-            <pElem>src/mordavokne</pElem>
             <pElem>src/morda/widgets/button</pElem>
-            <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>/usr/include/pogodi</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>

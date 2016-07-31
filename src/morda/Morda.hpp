@@ -95,8 +95,9 @@ public:
 	 * In addition to core widgets it is possible to use standard widgets.
 	 * This function loads necessarey resource packs and initializes standard
 	 * widgets to be used by application.
+	 * @param fi - file interface to use for resource loading.
 	 */
-	void initStandardWidgets();
+	void initStandardWidgets(papki::File& fi);
 	
 	
 	/**

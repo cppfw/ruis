@@ -1,7 +1,5 @@
 #include "Morda.hpp"
 
-#include "../mordavokne/App.hpp"//TODO: remove
-
 #include "resources/ResSTOB.hpp"
 
 #include "widgets/slider/Slider.hpp"
@@ -30,7 +28,7 @@ Morda::T_Instance Morda::instance;
 
 
 
-void Morda::initStandardWidgets() {
+void Morda::initStandardWidgets(papki::File& fi) {
 	
 	//mount default resource pack
 	
@@ -70,10 +68,9 @@ void Morda::initStandardWidgets() {
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			auto fi = morda::App::inst().createResourceFileInterface(s);//TODO: remove App
-			ASSERT(fi)
-//			TRACE(<< "fi->path() = " << fi->path() << std::endl)
-			this->resMan.mountResPack(*fi);
+			fi.setPath(s);
+//			TRACE(<< "fi.path() = " << fi.path() << std::endl)
+			this->resMan.mountResPack(fi);
 		}catch(papki::Exc&){
 			continue;
 		}
@@ -82,7 +79,7 @@ void Morda::initStandardWidgets() {
 	}
 
 	if(!mounted){
-		throw morda::Exc("App::initStandardWidgets(): could not mount default resource pack");
+		throw morda::Exc("Morda::initStandardWidgets(): could not mount default resource pack");
 	}
 	
 	//add standard widgets to inflater
@@ -118,7 +115,7 @@ void Morda::initStandardWidgets() {
 		
 	}catch(ResourceManager::Exc&){
 		//ignore
-		TRACE(<< "App::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
+		TRACE(<< "Morda::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}
 }
 

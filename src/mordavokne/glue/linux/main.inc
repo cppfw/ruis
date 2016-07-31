@@ -562,7 +562,7 @@ public:
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
-					return nullptr;
+					return std::u32string();
 				}
 				return unikod::toUtf32(&*buf.begin());
 			default:
@@ -573,7 +573,7 @@ public:
 				break;
 		}//~switch
 
-		return nullptr;
+		return std::u32string();
 	}
 };
 
