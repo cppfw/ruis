@@ -256,7 +256,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 			if(!oc){
 				throw Exc("No Overlay found in ancestors of DropDownSelector");
 			}
-			morda::App::inst().postToUiThread_ts([oc](){
+			morda::Morda::inst().postToUiThread_ts([oc](){
 				oc->hideContextMenu();
 			});
 		}

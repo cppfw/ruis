@@ -225,7 +225,7 @@ private:
 	} xInputMethod;
 
 	friend void Main(int argc, const char** argv);
-	void Exec();
+	void exec();
 
 #	endif
 
@@ -266,7 +266,7 @@ private:
 	bool mouseCursorIsCurrentlyVisible = true;
 	
 	friend void Main(int argc, const char** argv);
-	void Exec();
+	void exec();
 	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
 #elif M_OS == M_OS_MACOSX
@@ -289,7 +289,7 @@ private:
 #	else
 	void macosx_SwapFrameBuffers();
 	
-	void Exec();
+	void exec();
 	
 	friend void Macosx_Main(int argc, const char** argv);
 	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
@@ -344,23 +344,23 @@ private:
 public:
 	void postToUiThread_ts(std::function<void()>&& f);
 #else
-public:
-	/**
-	 * @brief Execute function on UI thread.
-	 * This function is thread safe. It posts the function to the queue of execution on UI thread,
-	 * the function will be executed on next UI cycle.
-	 * @param f - function to execute on UI thread.
-	 */
-	void postToUiThread_ts(std::function<void()>&& f){	
-		this->uiQueue.pushMessage(std::move(f));
-	}
 private:
 	nitki::Queue uiQueue;
 #endif
 
-
+private:
+	
+	class MordaVOkne : public morda::Morda{
+	public:
+		void postToUiThread_ts(std::function<void()>&& f) override{
+			App::inst().uiQueue.pushMessage(std::move(f));
+		}
+	} gui_v;
+	
 public:
-	Morda gui;
+	Morda& gui()noexcept{
+		return this->gui_v;
+	}
 
 	/**
 	 * @brief Create file interface into resources storage.

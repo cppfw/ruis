@@ -607,7 +607,7 @@ void App::quit()noexcept{
 }
 
 
-void App::Exec(){
+void App::exec(){
 	XEventWaitable xew(this->xDisplay.d);
 
 	pogodi::WaitSet waitSet(2);
@@ -620,7 +620,7 @@ void App::Exec(){
 	this->render();
 
 	while(!this->quitFlag){
-		waitSet.waitWithTimeout(this->gui.update());
+		waitSet.waitWithTimeout(this->gui().update());
 
 		if(this->uiQueue.canRead()){
 			while(auto m = this->uiQueue.peekMsg()){
@@ -747,7 +747,7 @@ inline void Main(int argc, const char** argv){
 	
 	ASSERT(app)
 
-	app->Exec();
+	app->exec();
 }
 
 }

@@ -67,9 +67,24 @@ public:
 	 */
 	void initStandardWidgets();
 	
+	
+	/**
+	 * @brief Update GUI.
+	 * Call this function from main loop of the program.
+	 * @return number of milliseconds to sleep before next call.
+	 */
 	std::uint32_t update(){
 		return this->updater.update();
 	}
+	
+	/**
+	 * @brief Execute code on UI thread.
+	 * This function should be thread-safe.
+	 * This function should post a message/event to programs main loop event queue.
+	 * When the event is handled it should execute the specified function.
+	 * @param f - function to execute on UI thread.
+	 */
+	virtual void postToUiThread_ts(std::function<void()>&& f) = 0;
 };
 
 }
