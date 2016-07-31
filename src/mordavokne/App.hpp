@@ -81,8 +81,6 @@ private:
 	friend class Widget;
 	friend class CharInputWidget;
 
-	nitki::Thread::T_ThreadID uiThreadId = nitki::Thread::getCurrentThreadID();
-
 public:	
 	/**
 	 * @brief Desired window parameters.
@@ -114,15 +112,6 @@ private:
 	WindowParams windowParams; //this is to save window params
 	
 public:
-	/**
-	 * @brief tell if this is the UI thread.
-	 * @return true if this is UI thread.
-	 * @return false otherwise.
-	 */
-	bool thisIsUIThread()const noexcept{
-		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
-	}
-
 	
 
 #if M_OS == M_OS_LINUX

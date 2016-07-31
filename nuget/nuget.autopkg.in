@@ -23,7 +23,6 @@ nuget{
 			glew.v140/1.12.0;
 			libaika/1.0.1.3;
 			libjpeg/9.0.1.4;
-			libnitki/1.0.1.6;
 			libpapki/1.0.2.2;
 			libpng/1.5.10.13;
 			libpogodi/1.0.1.8;
@@ -39,25 +38,25 @@ nuget{
 		[x86,release] { 
 			lib: ..\msvs_solution\Release\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\Release\libmorda.pdb;
-//			bin: ..\msvs_solution\Release\libmorda.dll;
+			bin: ..\morda_res;
 		}
 
 		[x86,debug] { 
 			lib: ..\msvs_solution\Debug\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\Debug\libmorda.pdb;
-//			bin: ..\msvs_solution\Debug\libmorda.dll;
+			bin: ..\morda_res;
 		}
 
 		[x64,release] { 
 			lib: ..\msvs_solution\x64\Release\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\x64\Release\libmorda.pdb;
-//			bin: ..\msvs_solution\x64\Release\libmorda.dll;
+			bin: ..\morda_res;
 		}
 
 		[x64,debug] { 
 			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\x64\Debug\libmorda.pdb;
-//			bin: ..\msvs_solution\x64\Debug\libmorda.dll;
+			bin: ..\morda_res;
 		}  
 	}
 }

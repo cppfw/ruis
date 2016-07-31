@@ -4,7 +4,6 @@ source 'https://github.com/igagis/cocoapods-repo.git'
 target "morda_test" do
 	pod 'libutki', '>= 1.0.8'
 	pod 'libpapki', '>= 1.0.3'
-	pod 'libnitki', '>= 1.0.2'
 	pod 'libkolme', '>= 1.0.1'
 	pod 'libstob', '>= 3.1.1'
 	pod 'libaika', '>= 1.0.2'

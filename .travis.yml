@@ -27,7 +27,7 @@ before_install:
     echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
-    sudo apt-get install -qq debhelper prorab doxygen libutki-dev libpapki-dev libnitki-dev libpogodi-dev libunikod-dev libaika-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev;
+    sudo apt-get install -qq debhelper prorab doxygen libutki-dev libpapki-dev libpogodi-dev libunikod-dev libaika-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     rvm use ruby-2.2.1 &&
@@ -37,7 +37,7 @@ before_install:
     brew tap igagis/tap &&
     brew update > /dev/null &&
     (brew list libpng || brew install libpng) &&
-    brew install prorab libutki libpapki libnitki libpogodi libunikod libaika libstob libsvgren jpeg z glew freetype libkolme;
+    brew install prorab libutki libpapki libpogodi libunikod libaika libstob libsvgren jpeg z glew freetype libkolme;
   fi
 
 
