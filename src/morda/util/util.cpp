@@ -1,6 +1,6 @@
 #include "util.hpp"
 
-#include "../App.hpp"
+#include "../../mordavokne/App.hpp"//TODO: remove
 
 #include <utki/debug.hpp>
 #include <utki/config.hpp>

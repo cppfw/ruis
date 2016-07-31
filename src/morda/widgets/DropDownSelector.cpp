@@ -1,6 +1,6 @@
 #include "DropDownSelector.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
 
 #include "core/container/Overlay.hpp"
 
@@ -13,6 +13,8 @@
 
 #include "TextWidget.hpp"
 #include "NinePatch.hpp"
+
+#include "../../mordavokne/App.hpp"//TODO: remove
 
 using namespace morda;
 

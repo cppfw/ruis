@@ -1,8 +1,11 @@
 #include "Slider.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
+
 #include "../../util/util.hpp"
+
 #include "../core/proxy/MouseProxy.hpp"
+
 #include "../NinePatch.hpp"
 
 

@@ -2,7 +2,7 @@
 
 #include "../../render/Texture2D.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 
 using namespace morda;

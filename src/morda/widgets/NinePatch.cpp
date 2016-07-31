@@ -1,10 +1,13 @@
 #include <utki/util.hpp>
 #include <utki/types.hpp>
 
-#include "NinePatch.hpp"
-#include "../App.hpp"
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
+
 #include "core/proxy/ResizeProxy.hpp"
+
+#include "NinePatch.hpp"
 
 
 using namespace morda;

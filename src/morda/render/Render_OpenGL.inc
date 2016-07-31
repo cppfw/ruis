@@ -21,7 +21,8 @@
 #include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
-#include "../App.hpp"
+
+#include "../../mordavokne/App.hpp"//TODO:
 
 using namespace morda;
 

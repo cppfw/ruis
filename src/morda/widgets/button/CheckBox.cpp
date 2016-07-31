@@ -1,5 +1,6 @@
 #include "CheckBox.hpp"
-#include "../../App.hpp"
+
+#include "../../Morda.hpp"
 
 
 using namespace morda;

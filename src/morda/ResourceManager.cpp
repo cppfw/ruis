@@ -3,7 +3,7 @@
 #include "ResourceManager.hpp"
 
 #include "util/util.hpp"
-#include "App.hpp"
+
 
 
 using namespace morda;

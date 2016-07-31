@@ -1,6 +1,6 @@
 #include "Button.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 #include "../../util/util.hpp"
 

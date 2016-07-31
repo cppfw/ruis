@@ -11,9 +11,13 @@
 
 #include "ResImage.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
+
 #include "../shaders/PosTexShader.hpp"
+
+#include "../../mordavokne/App.hpp"//TODO: remove
 
 
 using namespace morda;

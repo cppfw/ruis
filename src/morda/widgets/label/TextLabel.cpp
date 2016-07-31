@@ -1,7 +1,7 @@
 #include "TextLabel.hpp"
 
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 
 
@@ -16,8 +16,6 @@ TextLabel::TextLabel(const stob::Node* chain) :
 
 
 
-
-//override
 void TextLabel::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.translate(-this->textBoundingBox().p.x, -this->font().boundingBox().p.y);

@@ -1,6 +1,6 @@
 #include "Morda.hpp"
 
-#include "App.hpp"//TODO: remove
+#include "../mordavokne/App.hpp"//TODO: remove
 
 #include "resources/ResSTOB.hpp"
 

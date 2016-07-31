@@ -1,7 +1,7 @@
 #include "RadioButton.hpp"
 #include "ChoiceGroup.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 using namespace morda;
 

@@ -15,9 +15,9 @@
 #include <kolme/Vector2.hpp>
 
 //TODO: include <>
-#include "Morda.hpp"
+#include "../morda/Morda.hpp"
 
-#include "config.hpp"
+//#include "config.hpp"
 
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
@@ -46,12 +46,12 @@
 #endif
 
 
-#include "Exc.hpp"
+#include "../morda/Exc.hpp"//TODO:
 
-#include "util/keycodes.hpp"
+#include "../morda/util/keycodes.hpp"
 
-#include "widgets/core/Widget.hpp"
-#include "widgets/core/CharInputWidget.hpp"
+#include "../morda/widgets/core/Widget.hpp"//TODO:
+#include "../morda/widgets/core/CharInputWidget.hpp"//TODO:
 
 
 

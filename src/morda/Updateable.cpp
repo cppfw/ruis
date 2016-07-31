@@ -1,6 +1,6 @@
 #include "Updateable.hpp"
 
-#include "App.hpp"
+#include "Morda.hpp"
 
 #include <aika/tick.hpp>
 

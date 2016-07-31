@@ -2,7 +2,8 @@
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
 
-#include "../../../src/morda/AppFactory.hpp"
+#include "../../../src/mordavokne/AppFactory.hpp"
+
 #include "../../../src/morda/widgets/core/Widget.hpp"
 #include "../../../src/morda/widgets/core/container/Container.hpp"
 #include "../../../src/morda/widgets/core/proxy/KeyProxy.hpp"

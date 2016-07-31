@@ -1,7 +1,8 @@
 #include "Margins.hpp"
 
 #include "../../../util/util.hpp"
-#include "../../../App.hpp"
+
+#include "../../../Morda.hpp"
 
 using namespace morda;
 

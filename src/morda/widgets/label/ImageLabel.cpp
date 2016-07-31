@@ -1,8 +1,10 @@
 #include "ImageLabel.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 #include "../../util/util.hpp"
+
+#include "../../../mordavokne/App.hpp"//TODO: remove
 
 
 using namespace morda;

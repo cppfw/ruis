@@ -4,7 +4,7 @@
 #include <array>
 
 #include "../../AppFactory.hpp"
-#include "../../util/util.hpp"
+#include "../../../morda/util/util.hpp"
 
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
