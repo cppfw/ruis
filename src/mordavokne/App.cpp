@@ -104,7 +104,7 @@ std::unique_ptr<App> mordavokne::createAppUnix(int argc, const char** argv, cons
 
 void App::swapFrameBuffers(){
 #if M_OS == M_OS_WINDOWS
-	SwapBuffers(morda::App::inst().deviceContext.hdc);
+	SwapBuffers(this->deviceContext.hdc);
 #elif M_OS == M_OS_LINUX
 #	if M_OS_NAME == M_OS_NAME_ANDROID
 	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);

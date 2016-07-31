@@ -329,61 +329,7 @@ kolme::Recti Render::getViewport() {
 	return kolme::Recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
-
-
-namespace {
-
-#if M_OS == M_OS_WINDOWS
-
-struct OpenGLContext : public utki::Void{
-	HGLRC hrc;
-public:
-	OpenGLContext(HDC hdc) {
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
-
-		this->hrc = wglCreateContext(hdc);
-		if (!this->hrc) {
-			throw morda::Exc("Failed to create OpenGL rendering context");
-		}
-
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-
-		if (!wglMakeCurrent(hdc, this->hrc)) {
-			this->Destroy();
-			throw morda::Exc("Failed to activate OpenGL rendering context");
-		}
-
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-	}
-
-	~OpenGLContext()noexcept {
-		this->Destroy();
-	}
-
-	void Destroy() {
-		if (!wglMakeCurrent(NULL, NULL)) {
-			ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
-		}
-
-		if (!wglDeleteContext(this->hrc)) {
-			ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
-		}
-	}
-};
-
-#else
-
-#endif
-
-}//~namespace
-
-Render::Render() :
-		pimpl(
-#if M_OS == M_OS_WINDOWS
-				new OpenGLContext(morda::App::inst().deviceContext.hdc)
-#endif
-			)
-{
+Render::Render(){
 	AssertOpenGLNoError();
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }

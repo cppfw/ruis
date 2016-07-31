@@ -26,8 +26,6 @@ class Render{
 	
 	friend class Morda;
 	
-	std::unique_ptr<utki::Void> pimpl;
-	
 	Render();
 	~Render()noexcept;
 	

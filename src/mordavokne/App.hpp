@@ -221,7 +221,7 @@ private:
 
 		bool isHovered = false; //for tracking when mouse enters or leaves window.
 
-		utki::Flags<Widget::MouseButton_e> mouseButtonState;
+		utki::Flags<morda::Widget::MouseButton_e> mouseButtonState;
 
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()noexcept;
@@ -240,14 +240,33 @@ private:
 		void Destroy()noexcept;
 	} deviceContext;
 
+
+	struct OpenGLContextWrapper{
+		HGLRC hrc;
+	public:
+		OpenGLContextWrapper(HDC hdc);
+
+		~OpenGLContextWrapper()noexcept {
+			this->Destroy();
+		}
+
+		void Destroy() noexcept;
+	} openglContext;
+
+
+
+
 	bool mouseCursorIsCurrentlyVisible = true;
 	
-	friend void Main(int argc, const char** argv);
+	friend void winmain(int argc, const char** argv);
 	void exec();
-	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
+	void postToUiThread_ts(std::function<void()>&& f);
+	friend bool handleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
 #elif M_OS == M_OS_MACOSX
 private:
+
+	void postToUiThread_ts(std::function<void()>&& f);
 	
 #	if M_OS_NAME == M_OS_NAME_IOS
 	struct WindowObject{
@@ -321,10 +340,7 @@ private:
 #endif
 
 
-#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
-//public:
-//	void postToUiThread_ts(std::function<void()>&& f);
-#else
+#if M_OS != M_OS_WINDOWS && M_OS != M_OS_MACOSX
 private:
 	nitki::Queue uiQueue;
 #endif
@@ -338,7 +354,11 @@ private:
 		{}
 		
 		void postToUiThread_ts(std::function<void()>&& f) override{
+#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
+			App::inst().postToUiThread_ts(std::move(f));
+#else
 			App::inst().uiQueue.pushMessage(std::move(f));
+#endif
 		}
 	} gui;
 	
