@@ -610,7 +610,7 @@ public:
 		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/test.gui.stob")
 			);
-		this->setRootWidget(c);
+		morda::Morda::inst().setRootWidget(c);
 		
 		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::Key_e keyCode) -> bool{
 			if(isDown){

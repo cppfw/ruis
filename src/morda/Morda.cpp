@@ -122,3 +122,116 @@ void Morda::initStandardWidgets() {
 	}
 }
 
+void Morda::setViewportSize(const morda::Vec2r& size){
+	this->viewportSize = size;
+	
+	if(!this->rootWidget){
+		return;
+	}
+	
+	this->rootWidget->resize(this->viewportSize);
+}
+
+
+
+void Morda::setRootWidget(const std::shared_ptr<morda::Widget>& w){
+	this->rootWidget = w;
+
+	this->rootWidget->moveTo(morda::Vec2r(0));
+	this->rootWidget->resize(this->viewportSize);
+}
+
+void Morda::render() const{
+	//TODO: render only if needed?
+	
+	if(!this->rootWidget){
+		TRACE(<< "App::Render(): root widget is not set" << std::endl)
+		return;
+	}
+	
+	Render::clearColor();
+	Render::clearDepth();
+	Render::clearStencil();
+	
+	Render::setCullEnabled(true);
+	
+	morda::Matr4r m;
+	m.identity();
+	m.translate(-1, -1);
+	m.scale(Vec2r(2.0f).compDivBy(this->viewportSize));
+	
+	ASSERT(this->rootWidget)
+	
+	if(this->rootWidget->needsRelayout()){
+		TRACE(<< "root widget re-layout needed!" << std::endl)
+		this->rootWidget->relayoutNeeded = false;
+		this->rootWidget->layOut();
+	}
+	
+	this->rootWidget->renderInternal(m);
+}
+
+
+
+void Morda::handleMouseMove(const morda::Vec2r& pos, unsigned id){
+	if(!this->rootWidget){
+		return;
+	}
+	
+	if(this->rootWidget->isInteractive()){
+		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
+		this->rootWidget->onMouseMove(pos, id);
+	}
+}
+
+
+
+void Morda::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
+	if(!this->rootWidget){
+		return;
+	}
+
+	if(this->rootWidget->isInteractive()){
+		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
+		this->rootWidget->onMouseButton(isDown, pos, button, pointerID);
+	}
+}
+
+
+
+void Morda::handleMouseHover(bool isHovered, unsigned pointerID){
+	if(!this->rootWidget){
+		return;
+	}
+	
+	this->rootWidget->setHovered(isHovered, pointerID);
+}
+
+void Morda::handleKeyEvent(bool isDown, Key_e keyCode){
+//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
+
+	if(auto w = this->focusedWidget.lock()){
+//		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
+		w->onKeyInternal(isDown, keyCode);
+	}else{
+//		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
+		if(this->rootWidget){
+			this->rootWidget->onKeyInternal(isDown, keyCode);
+		}
+	}
+}
+
+
+void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
+	if(auto prev = this->focusedWidget.lock()){
+		prev->isFocused_v = false;
+		prev->onFocusChanged();
+	}
+	
+	this->focusedWidget = w;
+	
+	if(w){
+		w->isFocused_v = true;
+		w->onFocusChanged();
+	}
+}

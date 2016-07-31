@@ -22,39 +22,7 @@ App::T_Instance App::instance;
 
 
 void App::render(){
-	//TODO: render only if needed?
-	
-//	TRACE(<< "App::Render(): invoked" << std::endl)
-	if(!this->rootWidget){
-		TRACE(<< "App::Render(): root widget is not set" << std::endl)
-		return;
-	}
-	
-	Render::clearColor();
-	
-	if(this->windowParams.buffers.get(WindowParams::Buffer_e::DEPTH)){
-		Render::clearDepth();
-	}
-	if(this->windowParams.buffers.get(WindowParams::Buffer_e::STENCIL)){
-		Render::clearStencil();
-	}
-	
-	Render::setCullEnabled(true);
-	
-	morda::Matr4r m;
-	m.identity();
-	m.translate(-1, -1);
-	m.scale(Vec2r(2.0f).compDivBy(this->curWinRect.d));
-	
-	ASSERT(this->rootWidget)
-	
-	if(this->rootWidget->needsRelayout()){
-		TRACE(<< "root widget re-layout needed!" << std::endl)
-		this->rootWidget->relayoutNeeded = false;
-		this->rootWidget->layOut();
-	}
-	
-	this->rootWidget->renderInternal(m);
+	this->gui.render();
 	
 	this->swapFrameBuffers();
 }
@@ -76,63 +44,9 @@ void App::updateWindowRect(const morda::Rectr& rect){
 			int(this->curWinRect.d.y)
 		));
 	
-	if(!this->rootWidget){
-		return;
-	}
+	this->gui.setViewportSize(this->curWinRect.d);
 	
-	this->rootWidget->resize(this->curWinRect.d);
 }
-
-
-
-void App::handleMouseMove(const morda::Vec2r& pos, unsigned id){
-	if(!this->rootWidget){
-		return;
-	}
-	
-	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
-		this->rootWidget->onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
-	}
-}
-
-
-
-void App::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
-	if(!this->rootWidget){
-		return;
-	}
-
-	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
-		this->rootWidget->onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, pointerID);
-	}
-}
-
-
-
-void App::handleMouseHover(bool isHovered, unsigned pointerID){
-	if(!this->rootWidget){
-		return;
-	}
-	
-	this->rootWidget->setHovered(isHovered, pointerID);
-}
-
-void App::handleKeyEvent(bool isDown, Key_e keyCode){
-	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
-
-	if(auto w = this->focusedWidget.lock()){
-		//			TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->onKeyInternal(isDown, keyCode);
-	}else{
-		//			TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
-		if(this->rootWidget){
-			this->rootWidget->onKeyInternal(isDown, keyCode);
-		}
-	}
-}
-
 
 
 
@@ -154,22 +68,6 @@ void App::hideVirtualKeyboard()noexcept{
 }
 #endif
 
-
-
-
-void App::setFocusedWidget(const std::shared_ptr<Widget> w){
-	if(auto prev = this->focusedWidget.lock()){
-		prev->isFocused_v = false;
-		prev->onFocusChanged();
-	}
-	
-	this->focusedWidget = w;
-	
-	if(w){
-		w->isFocused_v = true;
-		w->onFocusChanged();
-	}
-}
 
 
 

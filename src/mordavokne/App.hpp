@@ -76,10 +76,6 @@ class App :
 	
 	
 private:
-	
-	friend class Render;
-	friend class Widget;
-	friend class CharInputWidget;
 
 public:	
 	/**
@@ -375,8 +371,6 @@ public:
 public:
 
 private:
-	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
-
 	void updateWindowRect(const morda::Rectr& rect);
 
 	void render();
@@ -387,12 +381,18 @@ private:
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
+	void handleMouseMove(const kolme::Vec2f& pos, unsigned id){
+		this->gui.handleMouseMove(this->nativeWindowToRootCoordinates(pos), id);
+	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id){
+		this->gui.handleMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
+	}
 
-	void handleMouseHover(bool isHovered, unsigned pointerID);
+	void handleMouseHover(bool isHovered, unsigned pointerID){
+		this->gui.handleMouseHover(isHovered, pointerID);
+	}
 
 protected:
 	/**
@@ -404,17 +404,6 @@ protected:
 public:
 
 	virtual ~App()noexcept{}
-
-	/**
-	 * @brief Set the root widget of the application.
-	 * @param w - the widget to set as a root widget.
-	 */
-	void setRootWidget(const std::shared_ptr<morda::Widget>& w){
-		this->rootWidget = w;
-
-		this->rootWidget->moveTo(morda::Vec2r(0));
-		this->rootWidget->resize(this->winRect().d);
-	}
 
 	/**
 	 * @brief Bring up the virtual keyboard.
@@ -431,22 +420,18 @@ public:
 	void hideVirtualKeyboard()noexcept;
 
 private:
-	std::weak_ptr<Widget> focusedWidget;
-
-	void setFocusedWidget(const std::shared_ptr<Widget> w);
+	
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
+	//TODO: no template
 	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, Key_e key){
-		if(auto w = this->focusedWidget.lock()){
-//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-				c->onCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
-			}
-		}
+		this->gui.handleCharacterInput(unicodeResolver, key);
 	}
 
-	void handleKeyEvent(bool isDown, Key_e keyCode);
+	void handleKeyEvent(bool isDown, Key_e keyCode){
+		this->gui.handleKeyEvent(isDown, keyCode);
+	}
 
 public:
 	

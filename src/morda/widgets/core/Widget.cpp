@@ -305,7 +305,7 @@ void Widget::focus()noexcept{
 		return;
 	}
 
-	App::inst().setFocusedWidget(this->sharedFromThis(this));
+	Morda::inst().setFocusedWidget(this->sharedFromThis(this));
 }
 
 
@@ -317,9 +317,9 @@ void Widget::unfocus()noexcept{
 		return;
 	}
 
-	ASSERT(App::inst().focusedWidget.lock() && App::inst().focusedWidget.lock().operator->() == this)
+	ASSERT(Morda::inst().focusedWidget.lock() && Morda::inst().focusedWidget.lock().operator->() == this)
 
-	App::inst().setFocusedWidget(nullptr);
+	Morda::inst().setFocusedWidget(nullptr);
 }
 
 
