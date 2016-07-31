@@ -213,7 +213,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		units(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
+		gui(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version

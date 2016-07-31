@@ -26,7 +26,14 @@ class Morda : public utki::IntrusiveSingleton<Morda>{
 	friend class Widget;
 public:
 
-	Morda(){}
+	/**
+	 * @brief Constructor.
+	 * @param dotsPerInch - dpi of your display.
+	 * @param dotsPerPt - desired dots per point.
+	 */
+	Morda(real dotsPerInch, real dotsPerPt) :
+			units(dotsPerInch, dotsPerPt)
+	{}
 
 	Morda(const Morda&) = delete;
 	Morda& operator=(const Morda&) = delete;
@@ -136,6 +143,75 @@ public:
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	void handleCharacterInput(const UnicodeProvider& unicode, Key_e key);
+	
+	
+	/**
+	 * @brief Information about screen units.
+	 * This class holds information about screen units and performs conversion
+	 * from one unit to another.
+	 * In morda, length can be expressed in pixels, millimeters or points.
+	 * Points is a convenience unit which is different depending on the screen dimensions
+	 * and density. Point is never less than one pixel.
+	 * For normal desktop displays like HP or Full HD point is equal to one pixel.
+	 * For higher density desktop displays point is more than one pixel depending on density.
+	 * For mobile platforms the point is also 1 or more pixels depending on display density and physical size.
+	 */
+	class Units{
+		real dotsPerInch_v;
+		real dotsPerPt_v;
+	public:
+		/**
+		 * @brief Constructor.
+		 * @param dotsPerInch - dots per inch.
+		 * @param dotsPerPt - dots per point.
+		 */
+		Units(real dotsPerInch, real dotsPerPt) :
+				dotsPerInch_v(dotsPerInch),
+				dotsPerPt_v(dotsPerPt)
+		{}
+		
+		/**
+		 * @brief Get dots (pixels) per inch.
+		 * @return Dots per inch.
+		 */
+		real dpi()const noexcept{
+			return this->dotsPerInch_v;
+		}
+		
+		/**
+		 * @brief Get dots (pixels) per centimeter.
+		 * @return Dots per centimeter.
+		 */
+		real dotsPerCm()const noexcept{
+			return this->dpi() / 2.54f;
+		}
+		
+		/**
+		 * @brief Get dots (pixels) per point.
+		 * @return Dots per point.
+		 */
+		real dotsPerPt()const noexcept{
+			return this->dotsPerPt_v;
+		}
+		
+		/**
+		 * @brief Convert millimeters to pixels (dots).
+		 * @param mm - value in millimeters.
+		 * @return Value in pixels.
+		 */
+		real mmToPx(real mm)const noexcept{
+			return std::round(mm * this->dotsPerCm() / 10.0f);
+		}
+		
+		/**
+		 * @brief Convert points to pixels.
+		 * @param pt - value in points.
+		 * @return  Value in pixels.
+		 */
+		real ptToPx(real pt)const noexcept{
+			return std::round(pt * this->dotsPerPt());
+		}
+	} units;
 };
 
 }

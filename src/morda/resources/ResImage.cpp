@@ -139,7 +139,7 @@ public:
 			}
 		}
 
-		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::App::inst().units.dpi());
+		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::Morda::inst().units.dpi());
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
 		//flip pixels vertically

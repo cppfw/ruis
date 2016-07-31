@@ -83,7 +83,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	Vec2r imgDim = this->img->dim(morda::App::inst().units.dpi());
+	Vec2r imgDim = this->img->dim(morda::Morda::inst().units.dpi());
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	
