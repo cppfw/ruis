@@ -25,7 +25,7 @@ class App;
  * with small letter. Specific widgets define more detailed rules of their description.
  */
 class Inflater{
-	friend class morda::App;
+	friend class Morda;
 
 	Inflater();
 public:

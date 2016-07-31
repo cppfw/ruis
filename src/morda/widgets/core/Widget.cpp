@@ -262,7 +262,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 	
-	morda::PosTexShader &s = App::inst().shaders.posTexShader;
+	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
 
 	ASSERT(this->cacheTex)
 	this->cacheTex.bind();

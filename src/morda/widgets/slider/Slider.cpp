@@ -57,9 +57,9 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		auto np = this->findChildByNameAs<NinePatch>("morda_slider_bg");
 		ASSERT(np)
 		if(auto n = getProperty(chain, "background")){
-			np->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 		}else{
-			np->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
 		}
 	}
 	
@@ -67,9 +67,9 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		auto hi = this->findChildByNameAs<NinePatch>("morda_handle_image");
 		ASSERT(hi)
 		if(auto n = getProperty(chain, "handleNinePatch")){
-			hi->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 		}else{
-			hi->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
+			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
 		}
 	}
 	

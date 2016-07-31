@@ -39,7 +39,7 @@ public:
 			morda::Widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::App::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
 	}
 	
 	std::uint32_t timer = 0;
@@ -117,7 +117,7 @@ public:
 
 			this->tex->tex().bind();
 
-			morda::PosTexShader &s = morda::App::inst().shaders.posTexShader;
+			morda::PosTexShader &s = morda::Morda::inst().shaders.posTexShader;
 
 //			s.SetColor(kolme::Vec3f(1, 0, 0));
 			s.setMatrix(matr);
@@ -128,7 +128,7 @@ public:
 		
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
-//		morda::SimpleTexturingShader &s = morda::App::inst().shaders.simpleTexturing;
+//		morda::SimpleTexturingShader &s = morda::Morda::inst().shaders.simpleTexturing;
 //		morda::Matr4r m(matrix);
 //		m.translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
@@ -145,7 +145,7 @@ public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
-		this->tex = morda::App::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
 		
 		
@@ -170,7 +170,7 @@ public:
 
 		this->tex->tex().bind();
 		
-		auto& s = morda::App::inst().shaders.posTexShader;
+		auto& s = morda::Morda::inst().shaders.posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
 		s.setMatrix(m);
@@ -460,18 +460,18 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::App::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
 			if(n->child()){
-				auto w = morda::App::inst().inflater.inflate(*stob::parse(DPlusMinus));
+				auto w = morda::Morda::inst().inflater.inflate(*stob::parse(DPlusMinus));
 
 				auto plusminus = w->findChildByNameAs<morda::ImageLabel>("plusminus");
 				ASSERT(plusminus)
 				plusminus->setImage(
 						isCollapsed ?
-								morda::App::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
-								morda::App::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
+								morda::Morda::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
+								morda::Morda::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
 					);
 
 				auto plusminusMouseProxy = w->findChildByNameAs<morda::MouseProxy>("plusminus_mouseproxy");
@@ -504,7 +504,7 @@ public:
 		}
 		
 		{
-			auto v = morda::App::inst().inflater.inflate(*stob::parse(
+			auto v = morda::Morda::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
 							Frame{
 								ColorLabel{
@@ -553,7 +553,7 @@ public:
 		}
 		
 		{
-			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::App::inst().inflater.inflate(*stob::parse(
+			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::Morda::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
 							PushButton{
 								ColorLabel{
@@ -598,15 +598,15 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->initStandardWidgets();
+		this->gui.initStandardWidgets();
 		
-		this->resMan.mountResPack(*this->createResourceFileInterface("res/"));
+		this->gui.resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		
-		this->inflater.addWidget<SimpleWidget>("U_SimpleWidget");
-		this->inflater.addWidget<CubeWidget>("CubeWidget");
+		this->gui.inflater.addWidget<SimpleWidget>("U_SimpleWidget");
+		this->gui.inflater.addWidget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater.inflate(
+		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/test.gui.stob")
 			);
 		this->setRootWidget(c);
@@ -621,7 +621,7 @@ public:
 		};
 
 //		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
-//		std::shared_ptr<morda::Widget> c = morda::App::inst().inflater().Inflate(zf);
+//		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater().Inflate(zf);
 		
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){

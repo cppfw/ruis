@@ -129,7 +129,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	//this should go after setting up border widgets
 	if(const stob::Node* n = getProperty(chain, "image")){
-		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 	}
 	
 	if(chain){

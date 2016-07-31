@@ -14,7 +14,7 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		BlendWidget(chain)
 {
 	if(auto image = getProperty(chain, "image")){
-		this->img = App::inst().resMan.load<ResImage>(image->value());
+		this->img = Morda::inst().resMan.load<ResImage>(image->value());
 		this->resize(this->img->dim());
 	}
 	
@@ -44,7 +44,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	morda::PosTexShader &s = App::inst().shaders.posTexShader;
+	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);

@@ -1,0 +1,6 @@
+debian/control
+debian/files
+debian/**/*.log
+debian/**/*.substvars
+debain/libmorda0.install
+debian/tmp

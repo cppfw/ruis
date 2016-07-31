@@ -14,6 +14,9 @@
 
 #include <kolme/Vector2.hpp>
 
+//TODO: include <>
+#include "Morda.hpp"
+
 #include "config.hpp"
 
 
@@ -44,21 +47,12 @@
 
 
 #include "Exc.hpp"
-#include "Inflater.hpp"
-#include "Updateable.hpp"
-#include "ResourceManager.hpp"
 
 #include "util/keycodes.hpp"
 
 #include "widgets/core/Widget.hpp"
 #include "widgets/core/CharInputWidget.hpp"
 
-#include "shaders/ColorPosShader.hpp"
-#include "shaders/ColorPosTexShader.hpp"
-#include "shaders/ClrPosShader.hpp"
-#include "shaders/PosTexShader.hpp"
-#include "shaders/SimpleGrayscalePosTexShader.hpp"
-#include "shaders/SimpleBlurPosTexShader.hpp"
 
 
 
@@ -68,7 +62,7 @@ namespace morda{
 
 /**
  * @brief Base singleton class of Application.
- * An apllication should subclass this class and return an instance from the
+ * An application should subclass this class and return an instance from the
  * application factory function createApp(), see AppFactory.hpp for details.
  * When instance of this class is created it also creates a window and
  * initializes OpenGL (or OpenGL ES).
@@ -77,17 +71,19 @@ class App :
 		public utki::IntrusiveSingleton<App>,
 		public utki::Unique
 {
-	friend class utki::IntrusiveSingleton<App>;
-	static utki::IntrusiveSingleton<App>::T_Instance instance;
-
+	friend T_Singleton;
+	static T_Instance instance;
+	
+	
+private:
+	
 	friend class Render;
-	friend class Updateable;
 	friend class Widget;
 	friend class CharInputWidget;
 
 	nitki::Thread::T_ThreadID uiThreadId = nitki::Thread::getCurrentThreadID();
 
-public:
+public:	
 	/**
 	 * @brief Desired window parameters.
 	 */
@@ -127,17 +123,7 @@ public:
 		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
 	}
 
-	/**
-	 * @brief Collection of standard shaders.
-	 */
-	struct DefaultShaders{
-		ColorPosShader colorPosShader;
-		ColorPosTexShader colorPosTexShader;
-		ClrPosShader clrPosShader;
-		PosTexShader posTexShader;
-		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
-		SimpleBlurPosTexShader simpleBlurPosTexShader;
-	};
+	
 
 #if M_OS == M_OS_LINUX
 
@@ -372,20 +358,14 @@ private:
 	nitki::Queue uiQueue;
 #endif
 
-private:
-	Updateable::Updater updater;
 
 public:
-	/**
-	 * @brief Standard shaders.
-	 * This is the instantiation of morda's standard shaders available for use.
-	 */
-	DefaultShaders shaders;
+	Morda gui;
 
 	/**
 	 * @brief Create file interface into resources storage.
 	 * This function creates a morda's standard file interface to read application's
-	 * recources.
+	 * resources.
 	 * @param path - file path to initialize the file interface with.
 	 * @return Instance of the file interface into the resources storage.
 	 */
@@ -405,15 +385,6 @@ public:
 	}
 
 public:
-	/**
-	 * @brief Instantiation of the resource manager.
-	 */
-	ResourceManager resMan;
-
-	/**
-	 * @brief Instantiation of the GUI inflater.
-	 */
-	Inflater inflater;
 
 private:
 	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
@@ -588,14 +559,6 @@ public:
 	 * @param enable - whether to enable or to disable fullscreen mode.
 	 */
 	void setFullscreen(bool enable);
-	
-	/**
-	 * @brief Initialize standard widgets library.
-	 * In addition to core widgets it is possible to use standard widgets.
-	 * This function loads necessarey resource packs and initializes standard
-	 * widgets to be used by application.
-	 */
-	void initStandardWidgets();
 	
 
 	/**

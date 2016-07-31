@@ -96,7 +96,7 @@ public:
 	}
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
-		return morda::App::inst().inflater.inflate(*(this->widgets[index]));
+		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
 	}
 	
 
@@ -122,7 +122,7 @@ void DropDownSelector::showDropdownMenu() {
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
 
-	auto np = morda::App::inst().inflater.inflate(*stob::parse(ContextMenuLayout_d));
+	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(ContextMenuLayout_d));
 	ASSERT(np)
 
 	auto va = np->findChildByNameAs<VerticalArea>("morda_contextmenu_content");
@@ -228,7 +228,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Frame>(morda::App::inst().inflater.inflate(*stob::parse(ItemLayout_d)));
+	auto wd = std::dynamic_pointer_cast<Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(ItemLayout_d)));
 	ASSERT(wd)
 
 	auto mp = wd->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");

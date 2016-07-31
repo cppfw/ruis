@@ -33,7 +33,7 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 
 
 std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, const papki::File& fi){
-	auto tex = App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
+	auto tex = Morda::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
 	
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){

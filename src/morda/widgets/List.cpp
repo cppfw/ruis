@@ -20,7 +20,7 @@ public:
 	
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
-		return morda::App::inst().inflater.inflate(*(this->widgets[index]));
+		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
 	}
 	
 
