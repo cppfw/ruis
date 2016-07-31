@@ -271,16 +271,20 @@ private:
 #	if M_OS_NAME == M_OS_NAME_IOS
 	struct WindowObject{
 		void* id;
-		WindowObject(const morda::App::WindowParams& wp);
+		WindowObject(const App::WindowParams& wp);
 		~WindowObject()noexcept;
 	} windowObject;
+	
+	WindowParams windowParams;
 	
 	friend void ios_render();
 	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
 	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
-	friend const morda::App::WindowParams& ios_getWindowParams();
+	friend const App::WindowParams& ios_getWindowParams();
+	
+	void swapFrameBuffers(){}
 	
 #	else
 	
@@ -326,7 +330,9 @@ private:
 #endif
 
 private:
+#if M_OS_NAME != M_OS_NAME_IOS
 	void swapFrameBuffers();
+#endif
 	
 	struct GLEWWrapper{
 		GLEWWrapper();
