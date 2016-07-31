@@ -19,3 +19,5 @@ nbproject/private/
 
 pkg-config/morda.pc
 
+samples/basic/basic
+samples/basic/nbproject/private
