@@ -620,7 +620,7 @@ void App::exec(){
 	this->render();
 
 	while(!this->quitFlag){
-		waitSet.waitWithTimeout(this->gui().update());
+		waitSet.waitWithTimeout(this->gui.update());
 
 		if(this->uiQueue.canRead()){
 			while(auto m = this->uiQueue.peekMsg()){

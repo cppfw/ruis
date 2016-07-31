@@ -56,7 +56,7 @@ void App::render(){
 	
 	this->rootWidget->renderInternal(m);
 	
-	Render::swapFrameBuffers();
+	this->swapFrameBuffers();
 }
 
 
@@ -195,3 +195,25 @@ std::unique_ptr<App> morda::createAppUnix(int argc, const char** argv, const utk
 	return factory(argc, argv, savedState);
 }
 #endif
+
+
+
+void App::swapFrameBuffers(){
+#if M_OS == M_OS_WINDOWS
+	SwapBuffers(morda::App::inst().deviceContext.hdc);
+#elif M_OS == M_OS_LINUX
+#	if M_OS_NAME == M_OS_NAME_ANDROID
+	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
+#	else
+	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
+#	endif
+#elif M_OS == M_OS_MACOSX
+#	if M_OS_NAME == M_OS_NAME_IOS
+	//ios will swap buffers for us
+#	else
+	morda::App::inst().macosx_SwapFrameBuffers();
+#	endif
+#else
+#	error "unknown OS"
+#endif
+}

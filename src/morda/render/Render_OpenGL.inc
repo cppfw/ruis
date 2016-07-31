@@ -578,26 +578,6 @@ unsigned Render::getMaxTextureSize(){
 	return unsigned(val);
 }
 
-//TODO: move it to App class?
-void Render::swapFrameBuffers() {
-#if M_OS == M_OS_WINDOWS
-	SwapBuffers(morda::App::inst().deviceContext.hdc);
-#elif M_OS == M_OS_LINUX
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
-#	else
-	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
-#	endif
-#elif M_OS == M_OS_MACOSX
-#	if M_OS_NAME == M_OS_NAME_IOS
-	//ios will swap buffers for us
-#	else
-	morda::App::inst().macosx_SwapFrameBuffers();
-#	endif
-#else
-#	error "unknown OS"
-#endif
-}
 
 void Render::setCullEnabled(bool enable) {
 	if(enable){

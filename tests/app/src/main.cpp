@@ -599,13 +599,13 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		this->gui().initStandardWidgets();
+		morda::Morda::inst().initStandardWidgets();
 		
-		this->gui().resMan.mountResPack(*this->createResourceFileInterface("res/"));
+		morda::Morda::inst().resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		
-		this->gui().inflater.addWidget<SimpleWidget>("U_SimpleWidget");
-		this->gui().inflater.addWidget<CubeWidget>("CubeWidget");
+		morda::Morda::inst().inflater.addWidget<SimpleWidget>("U_SimpleWidget");
+		morda::Morda::inst().inflater.addWidget<CubeWidget>("CubeWidget");
 
 		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/test.gui.stob")
@@ -630,7 +630,7 @@ public:
 		};
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
-			this->gui().postToUiThread_ts(
+			morda::Morda::inst().postToUiThread_ts(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
 					}

@@ -320,7 +320,9 @@ private:
 #endif
 
 private:
-	Render renderer; //This should init the rendering
+	void swapFrameBuffers();
+	
+	Render renderer; //TODO: move to Morda
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
@@ -330,8 +332,8 @@ private:
 
 
 #if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
-public:
-	void postToUiThread_ts(std::function<void()>&& f);
+//public:
+//	void postToUiThread_ts(std::function<void()>&& f);
 #else
 private:
 	nitki::Queue uiQueue;
@@ -344,12 +346,9 @@ private:
 		void postToUiThread_ts(std::function<void()>&& f) override{
 			App::inst().uiQueue.pushMessage(std::move(f));
 		}
-	} gui_v;
+	} gui;
 	
 public:
-	Morda& gui()noexcept{
-		return this->gui_v;
-	}
 
 	/**
 	 * @brief Create file interface into resources storage.
