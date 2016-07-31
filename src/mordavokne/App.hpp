@@ -283,18 +283,17 @@ private:
 	friend const morda::App::WindowParams& ios_getWindowParams();
 	
 #	else
-	void macosx_SwapFrameBuffers();
 	
 	void exec();
 	
-	friend void Macosx_Main(int argc, const char** argv);
-	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned id);
-	friend void Macosx_HandleMouseHover(bool isHovered);
-	friend void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode);
-	friend void Macosx_HandleCharacterInput(const void* nsstring, Key_e key);
-	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
-	friend void Macosx_SetQuitFlag();
+	friend void macosx_Main(int argc, const char** argv);
+	friend void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
+	friend void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
+	friend void macosx_HandleMouseHover(bool isHovered);
+	friend void macosx_HandleKeyEvent(bool isDown, morda::Key_e keyCode);
+	friend void macosx_HandleCharacterInput(const void* nsstring, morda::Key_e key);
+	friend void macosx_UpdateWindowRect(const morda::Rectr& r);
+	friend void macosx_SetQuitFlag();
 
 	struct ApplicationObject{
 		void* id;
@@ -304,13 +303,13 @@ private:
 
 	struct WindowObject{
 		void* id;
-		WindowObject(const morda::App::WindowParams& wp);
+		WindowObject(const App::WindowParams& wp);
 		~WindowObject()noexcept;
 	} windowObject;
 
 	struct OpenGLContext{
 		void *id;
-		OpenGLContext(const morda::App::WindowParams& wp, void* window);
+		OpenGLContext(const App::WindowParams& wp, void* window);
 		~OpenGLContext()noexcept{
 			this->Destroy();
 		}

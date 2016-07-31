@@ -101,7 +101,7 @@ std::unique_ptr<App> mordavokne::createAppUnix(int argc, const char** argv, cons
 #endif
 
 
-
+#if M_OS != M_OS_MACOSX
 void App::swapFrameBuffers(){
 #if M_OS == M_OS_WINDOWS
 	SwapBuffers(this->deviceContext.hdc);
@@ -111,16 +111,11 @@ void App::swapFrameBuffers(){
 #	else
 	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 #	endif
-#elif M_OS == M_OS_MACOSX
-#	if M_OS_NAME == M_OS_NAME_IOS
-	//ios will swap buffers for us
-#	else
-	morda::App::inst().macosx_SwapFrameBuffers();
-#	endif
 #else
 #	error "unknown OS"
 #endif
 }
+#endif
 
 
 

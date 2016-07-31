@@ -174,8 +174,8 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -j8</buildCommand>
-          <cleanCommand>${MAKE} clean</cleanCommand>
+          <buildCommand>make -j2</buildCommand>
+          <cleanCommand>make clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <cTool>
             <incDir>
@@ -783,11 +783,47 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE}  debug=true -j8</buildCommand>
-          <cleanCommand>${MAKE} clean</cleanCommand>
+          <buildCommand>${MAKE} debug=true -j8</buildCommand>
+          <cleanCommand>${MAKE} clean </cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <ccTool flags="1">
             <standard>8</standard>
+            <incDir>
+              <pElem>/usr/include/utki</pElem>
+              <pElem>/usr/include/papki</pElem>
+              <pElem>src/morda</pElem>
+              <pElem>src/mordavokne</pElem>
+              <pElem>/usr/include/kolme</pElem>
+              <pElem>/usr/include/nitki</pElem>
+              <pElem>src/morda/render</pElem>
+              <pElem>src/morda/util</pElem>
+              <pElem>src/morda/widgets/core</pElem>
+              <pElem>src/morda/shaders</pElem>
+              <pElem>/usr/include/unikod</pElem>
+              <pElem>/usr/include/stob</pElem>
+              <pElem>/usr/include/X11</pElem>
+              <pElem>/usr/include/GL</pElem>
+              <pElem>/usr/include/pogodi</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/utki</pElem>
+              <pElem>src/morda</pElem>
+              <pElem>src/morda/render</pElem>
+              <pElem>/usr/include/kolme</pElem>
+              <pElem>/usr/include/unikod</pElem>
+              <pElem>/usr/include/stob</pElem>
+              <pElem>/usr/include/pogodi</pElem>
+              <pElem>src/mordavokne</pElem>
+              <pElem>src/mordavokne/glue/linux</pElem>
+              <pElem>src/morda/shaders</pElem>
+              <pElem>/usr/include/papki</pElem>
+              <pElem>/usr/include/nitki</pElem>
+              <pElem>src/morda/util</pElem>
+              <pElem>src/morda/widgets/core</pElem>
+              <pElem>/usr/include/X11</pElem>
+              <pElem>/usr/include/GL</pElem>
+              <pElem>src/mordavokne/glue</pElem>
+              <pElem>.</pElem>
+            </incDir>
           </ccTool>
         </makeTool>
         <preBuild>
@@ -1892,52 +1928,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/mordavokne/App.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/mordavokne</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/mordavokne/glue/main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/pogodi</pElem>
-            <pElem>src/mordavokne</pElem>
-            <pElem>src/mordavokne/glue/linux</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/nitki</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/widgets/core</pElem>
-            <pElem>/usr/include/X11</pElem>
-            <pElem>/usr/include/GL</pElem>
-            <pElem>src/mordavokne/glue</pElem>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">

@@ -13,7 +13,6 @@ namespace morda{
 
 
 
-class App;
 class Resource;
 
 

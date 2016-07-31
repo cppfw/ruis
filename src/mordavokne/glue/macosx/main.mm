@@ -1,66 +1,66 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
-#include "../../util/util.hpp"
+#include "../../../morda/util/util.hpp"
 
 #import <Cocoa/Cocoa.h>
 
 
-using namespace morda;
+using namespace mordavokne;
 
 
 namespace{
-class UnicodeResolver{
+class MacosxUnicodeProvider : public morda::Morda::UnicodeProvider{
 	const NSString* nsStr;
 public:
-	UnicodeResolver(const NSString* nsStr = nullptr) :
+	MacosxUnicodeProvider(const NSString* nsStr = nullptr) :
 			nsStr(nsStr)
 	{}
 	
-	std::vector<std::uint32_t> Resolve()const{
+	std::u32string get()const override{
 		if(!this->nsStr){
-			return std::vector<std::uint32_t>();
+			return std::u32string();
 		}
 		
 		NSUInteger len = [this->nsStr length];
 		
-		std::vector<std::uint32_t> ret(len);
+		std::u32string ret(len, 0);
 		for(unsigned i = 0; i != len; ++i){
 			ret[i] = [this->nsStr characterAtIndex:i];
 		}
 		
-		return std::move(ret);
+		return ret;
 	}
 };
 }
 
 
-namespace morda{
+namespace mordavokne{
 
-void Macosx_Main(int argc, const char** argv){
-	auto app = morda::createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+void macosx_Main(int argc, const char** argv){
+	auto app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
 
-	app->Exec();
+	app->exec();
 }
 
-void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
+void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
-	morda::App::inst().handleMouseMove(
-			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
+	mordavokne::App::inst().handleMouseMove(
+			morda::Vec2r(pos.x, mordavokne::App::inst().curWinRect.d.y - pos.y),
 			id
 		);
 }
 
-void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned id){
-	morda::App::inst().handleMouseButton(
+void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id){
+	mordavokne::App::inst().handleMouseButton(
 			isDown,
-			morda::Vec2r(pos.x, morda::App::inst().curWinRect.d.y - pos.y),
+			morda::Vec2r(pos.x, mordavokne::App::inst().curWinRect.d.y - pos.y),
 			button,
 			id
 		);
 }
 
-void Macosx_HandleMouseHover(bool isHovered){
-	if(!morda::App::inst().mouseCursorIsCurrentlyVisible){
+void macosx_HandleMouseHover(bool isHovered){
+	if(!mordavokne::App::inst().mouseCursorIsCurrentlyVisible){
 		if(isHovered){
 			[NSCursor hide];
 		}else if(!isHovered){
@@ -68,33 +68,33 @@ void Macosx_HandleMouseHover(bool isHovered){
 		}
 	}
 	
-	morda::App::inst().handleMouseHover(isHovered, 0);
+	mordavokne::App::inst().handleMouseHover(isHovered, 0);
 }
 
-void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode){
-	morda::App::inst().handleKeyEvent(isDown, keyCode);
+void macosx_HandleKeyEvent(bool isDown, morda::Key_e keyCode){
+	mordavokne::App::inst().handleKeyEvent(isDown, keyCode);
 }
 
-void Macosx_HandleCharacterInput(const void* nsstring, Key_e key){
-	morda::App::inst().handleCharacterInput(UnicodeResolver(reinterpret_cast<const NSString*>(nsstring)), key);
+void macosx_HandleCharacterInput(const void* nsstring, morda::Key_e key){
+	mordavokne::App::inst().handleCharacterInput(MacosxUnicodeProvider(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
-void Macosx_UpdateWindowRect(const morda::Rectr& r){
-	NSOpenGLContext *openGLContext = (NSOpenGLContext*)morda::App::inst().openGLContext.id;
+void macosx_UpdateWindowRect(const morda::Rectr& r){
+	NSOpenGLContext *openGLContext = (NSOpenGLContext*)mordavokne::App::inst().openGLContext.id;
 	[openGLContext update];//after resizing window we need to update OpenGL context
-	morda::App::inst().updateWindowRect(r);
+	mordavokne::App::inst().updateWindowRect(r);
 }
 
-void morda::App::quit()noexcept{
+void App::quit()noexcept{
 	this->quitFlag = true;
 }
 
 }
 
 namespace{
-void MouseButton(NSEvent* e, bool isDown, morda::Widget::MouseButton_e b){
+void mouseButton(NSEvent* e, bool isDown, morda::Widget::MouseButton_e b){
 	NSPoint pos = [e locationInWindow];
-	Macosx_HandleMouseButton(
+	macosx_HandleMouseButton(
 			isDown,
 			morda::Vec2r(pos.x, pos.y).rounded(),
 			b,
@@ -103,269 +103,269 @@ void MouseButton(NSEvent* e, bool isDown, morda::Widget::MouseButton_e b){
 }
 
 const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
-	Key_e::A, //0
-	Key_e::S,
-	Key_e::D,
-	Key_e::F,
-	Key_e::H,
-	Key_e::G, //5
-	Key_e::Z,
-	Key_e::X,
-	Key_e::C,
-	Key_e::V,
-	Key_e::UNKNOWN, //0x0A
-	Key_e::B,
-	Key_e::Q,
-	Key_e::W,
-	Key_e::E,
-	Key_e::R, //15
-	Key_e::Y,
-	Key_e::T,
-	Key_e::ONE,
-	Key_e::TWO,
-	Key_e::THREE, //20
-	Key_e::FOUR,
-	Key_e::SIX,
-	Key_e::FIVE, //0x17
-	Key_e::EQUALS,
-	Key_e::NINE, //25
-	Key_e::SEVEN,
-	Key_e::MINUS,
-	Key_e::EIGHT,
-	Key_e::ZERO,
-	Key_e::RIGHT_SQUARE_BRACKET, //30
-	Key_e::O,
-	Key_e::U,
-	Key_e::LEFT_SQUARE_BRACKET,
-	Key_e::I,
-	Key_e::P, //35
-	Key_e::ENTER, //0x24
-	Key_e::L,
-	Key_e::J,
-	Key_e::APOSTROPHE,
-	Key_e::K, //40
-	Key_e::SEMICOLON,
-	Key_e::BACKSLASH,
-	Key_e::COMMA,
-	Key_e::SLASH,
-	Key_e::N, //0x2D, 45
-	Key_e::M,
-	Key_e::PERIOD,
-	Key_e::TAB, //0x30
-	Key_e::SPACE, //0x31
-	Key_e::GRAVE, //50
-	Key_e::BACKSPACE, //0x33
-	Key_e::UNKNOWN, //0x34
-	Key_e::ESCAPE, //0x35
-	Key_e::UNKNOWN, //0x36
-	Key_e::WINDOWS, //Command, 0x37, 55
-	Key_e::LEFT_SHIFT, //0x38
-	Key_e::CAPSLOCK, //0x39
-	Key_e::UNKNOWN, //Option, 0x3A
-	Key_e::LEFT_CONTROL, //0x3B
-	Key_e::RIGHT_SHIFT, //0x3C, 60
-	Key_e::UNKNOWN, //RightOption, 0x3D
-	Key_e::RIGHT_CONTROL, //0x3E
-	Key_e::FUNCTION, //0x3F
-	Key_e::F17, //0x40
-	Key_e::UNKNOWN, //KeypadDecimal, 0x41, 65
-	Key_e::UNKNOWN, //0x42
-	Key_e::UNKNOWN, //KeypadMultiplym 0x43
-	Key_e::UNKNOWN, //0x44
-	Key_e::UNKNOWN, //KeypadPlus, 0x45
-	Key_e::UNKNOWN, //0x46, 70
-	Key_e::UNKNOWN, //KeypadClear, 0x47
-	Key_e::UNKNOWN, //VolumeUp, 0x48
-	Key_e::UNKNOWN, //VolumeDown, 0x49
-	Key_e::UNKNOWN, //Mute, 0x4A
-	Key_e::UNKNOWN, //KeypadDivide, 0x4B, 75
-	Key_e::UNKNOWN, //KeypadEnter, 0x4C
-	Key_e::UNKNOWN, //0x4D
-	Key_e::UNKNOWN, //KeypadMinus
-	Key_e::F18, //0x4F
-	Key_e::F19, //0x50, 80
-	Key_e::UNKNOWN, //KeypadEquals, 0x51
-	Key_e::UNKNOWN, //Keypad0
-	Key_e::UNKNOWN, //Keypad1
-	Key_e::UNKNOWN, //Keypad2
-	Key_e::UNKNOWN, //Keypad3, 85
-	Key_e::UNKNOWN, //Keypad4
-	Key_e::UNKNOWN, //Keypad5
-	Key_e::UNKNOWN, //Keypad6
-	Key_e::UNKNOWN, //Keypad7, 0x59
-	Key_e::F20, //0x5A, 90
-	Key_e::UNKNOWN, //Keypad8, 0x5B
-	Key_e::UNKNOWN, //Keypad9, 0x5C
-	Key_e::UNKNOWN, //0x5D
-	Key_e::UNKNOWN, //0x5E
-	Key_e::UNKNOWN, //0x5F, 95
-	Key_e::F5, //0x60
-	Key_e::F6, //0x61
-	Key_e::F7, //0x62
-	Key_e::F3, //0x63
-	Key_e::F8, //0x64, 100
-	Key_e::F9, //0x65
-	Key_e::UNKNOWN, //0x66
-	Key_e::F11, //0x67
-	Key_e::UNKNOWN, //0x68
-	Key_e::F13, //0x69
-	Key_e::F16, //0x6A
-	Key_e::F14, //0x6B
-	Key_e::UNKNOWN, //0x6C
-	Key_e::F10, //0x6D
-	Key_e::UNKNOWN, //0x6E
-	Key_e::F12, //0x6F
-	Key_e::UNKNOWN, //0x70
-	Key_e::F15, //0x71
-	Key_e::UNKNOWN, //Help, 0x72
-	Key_e::HOME, //0x73
-	Key_e::PAGE_UP, //0x74
-	Key_e::DELETE, //0x75
-	Key_e::F4, //0x76
-	Key_e::END, //0x77
-	Key_e::F2, //0x78
-	Key_e::PAGE_DOWN, //0x79
-	Key_e::F1, //0x7A
-	Key_e::LEFT, //0x7B
-	Key_e::RIGHT, //0x7C
-	Key_e::DOWN, //0x7D
-	Key_e::UP, //0x7E
-	Key_e::UNKNOWN, //0x7F
-	Key_e::UNKNOWN, //0x80
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0x90
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xA0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xB0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xC0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xD0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xE0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN, //0xF0
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN //0xFF
+	morda::Key_e::A, //0
+	morda::Key_e::S,
+	morda::Key_e::D,
+	morda::Key_e::F,
+	morda::Key_e::H,
+	morda::Key_e::G, //5
+	morda::Key_e::Z,
+	morda::Key_e::X,
+	morda::Key_e::C,
+	morda::Key_e::V,
+	morda::Key_e::UNKNOWN, //0x0A
+	morda::Key_e::B,
+	morda::Key_e::Q,
+	morda::Key_e::W,
+	morda::Key_e::E,
+	morda::Key_e::R, //15
+	morda::Key_e::Y,
+	morda::Key_e::T,
+	morda::Key_e::ONE,
+	morda::Key_e::TWO,
+	morda::Key_e::THREE, //20
+	morda::Key_e::FOUR,
+	morda::Key_e::SIX,
+	morda::Key_e::FIVE, //0x17
+	morda::Key_e::EQUALS,
+	morda::Key_e::NINE, //25
+	morda::Key_e::SEVEN,
+	morda::Key_e::MINUS,
+	morda::Key_e::EIGHT,
+	morda::Key_e::ZERO,
+	morda::Key_e::RIGHT_SQUARE_BRACKET, //30
+	morda::Key_e::O,
+	morda::Key_e::U,
+	morda::Key_e::LEFT_SQUARE_BRACKET,
+	morda::Key_e::I,
+	morda::Key_e::P, //35
+	morda::Key_e::ENTER, //0x24
+	morda::Key_e::L,
+	morda::Key_e::J,
+	morda::Key_e::APOSTROPHE,
+	morda::Key_e::K, //40
+	morda::Key_e::SEMICOLON,
+	morda::Key_e::BACKSLASH,
+	morda::Key_e::COMMA,
+	morda::Key_e::SLASH,
+	morda::Key_e::N, //0x2D, 45
+	morda::Key_e::M,
+	morda::Key_e::PERIOD,
+	morda::Key_e::TAB, //0x30
+	morda::Key_e::SPACE, //0x31
+	morda::Key_e::GRAVE, //50
+	morda::Key_e::BACKSPACE, //0x33
+	morda::Key_e::UNKNOWN, //0x34
+	morda::Key_e::ESCAPE, //0x35
+	morda::Key_e::UNKNOWN, //0x36
+	morda::Key_e::WINDOWS, //Command, 0x37, 55
+	morda::Key_e::LEFT_SHIFT, //0x38
+	morda::Key_e::CAPSLOCK, //0x39
+	morda::Key_e::UNKNOWN, //Option, 0x3A
+	morda::Key_e::LEFT_CONTROL, //0x3B
+	morda::Key_e::RIGHT_SHIFT, //0x3C, 60
+	morda::Key_e::UNKNOWN, //RightOption, 0x3D
+	morda::Key_e::RIGHT_CONTROL, //0x3E
+	morda::Key_e::FUNCTION, //0x3F
+	morda::Key_e::F17, //0x40
+	morda::Key_e::UNKNOWN, //KeypadDecimal, 0x41, 65
+	morda::Key_e::UNKNOWN, //0x42
+	morda::Key_e::UNKNOWN, //KeypadMultiplym 0x43
+	morda::Key_e::UNKNOWN, //0x44
+	morda::Key_e::UNKNOWN, //KeypadPlus, 0x45
+	morda::Key_e::UNKNOWN, //0x46, 70
+	morda::Key_e::UNKNOWN, //KeypadClear, 0x47
+	morda::Key_e::UNKNOWN, //VolumeUp, 0x48
+	morda::Key_e::UNKNOWN, //VolumeDown, 0x49
+	morda::Key_e::UNKNOWN, //Mute, 0x4A
+	morda::Key_e::UNKNOWN, //KeypadDivide, 0x4B, 75
+	morda::Key_e::UNKNOWN, //KeypadEnter, 0x4C
+	morda::Key_e::UNKNOWN, //0x4D
+	morda::Key_e::UNKNOWN, //KeypadMinus
+	morda::Key_e::F18, //0x4F
+	morda::Key_e::F19, //0x50, 80
+	morda::Key_e::UNKNOWN, //KeypadEquals, 0x51
+	morda::Key_e::UNKNOWN, //Keypad0
+	morda::Key_e::UNKNOWN, //Keypad1
+	morda::Key_e::UNKNOWN, //Keypad2
+	morda::Key_e::UNKNOWN, //Keypad3, 85
+	morda::Key_e::UNKNOWN, //Keypad4
+	morda::Key_e::UNKNOWN, //Keypad5
+	morda::Key_e::UNKNOWN, //Keypad6
+	morda::Key_e::UNKNOWN, //Keypad7, 0x59
+	morda::Key_e::F20, //0x5A, 90
+	morda::Key_e::UNKNOWN, //Keypad8, 0x5B
+	morda::Key_e::UNKNOWN, //Keypad9, 0x5C
+	morda::Key_e::UNKNOWN, //0x5D
+	morda::Key_e::UNKNOWN, //0x5E
+	morda::Key_e::UNKNOWN, //0x5F, 95
+	morda::Key_e::F5, //0x60
+	morda::Key_e::F6, //0x61
+	morda::Key_e::F7, //0x62
+	morda::Key_e::F3, //0x63
+	morda::Key_e::F8, //0x64, 100
+	morda::Key_e::F9, //0x65
+	morda::Key_e::UNKNOWN, //0x66
+	morda::Key_e::F11, //0x67
+	morda::Key_e::UNKNOWN, //0x68
+	morda::Key_e::F13, //0x69
+	morda::Key_e::F16, //0x6A
+	morda::Key_e::F14, //0x6B
+	morda::Key_e::UNKNOWN, //0x6C
+	morda::Key_e::F10, //0x6D
+	morda::Key_e::UNKNOWN, //0x6E
+	morda::Key_e::F12, //0x6F
+	morda::Key_e::UNKNOWN, //0x70
+	morda::Key_e::F15, //0x71
+	morda::Key_e::UNKNOWN, //Help, 0x72
+	morda::Key_e::HOME, //0x73
+	morda::Key_e::PAGE_UP, //0x74
+	morda::Key_e::DELETE, //0x75
+	morda::Key_e::F4, //0x76
+	morda::Key_e::END, //0x77
+	morda::Key_e::F2, //0x78
+	morda::Key_e::PAGE_DOWN, //0x79
+	morda::Key_e::F1, //0x7A
+	morda::Key_e::LEFT, //0x7B
+	morda::Key_e::RIGHT, //0x7C
+	morda::Key_e::DOWN, //0x7D
+	morda::Key_e::UP, //0x7E
+	morda::Key_e::UNKNOWN, //0x7F
+	morda::Key_e::UNKNOWN, //0x80
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0x90
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xA0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xB0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xC0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xD0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xE0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, //0xF0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN //0xFF
 }};
 
 }
 
 
 int main (int argc, const char** argv){
-	morda::Macosx_Main(argc, argv);
+	macosx_Main(argc, argv);
 
 	return 0;
 }
@@ -421,32 +421,32 @@ int main (int argc, const char** argv){
 
 -(void)mouseDown: (NSEvent*)e{
 //	TRACE(<< "left down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::MouseButton_e::LEFT);
+	mouseButton(e, true, morda::Widget::MouseButton_e::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
 //	TRACE(<< "left up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::MouseButton_e::LEFT);
+	mouseButton(e, false, morda::Widget::MouseButton_e::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
 //	TRACE(<< "right down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::MouseButton_e::RIGHT);
+	mouseButton(e, true, morda::Widget::MouseButton_e::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
 //	TRACE(<< "right up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::MouseButton_e::RIGHT);
+	mouseButton(e, false, morda::Widget::MouseButton_e::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
 //	TRACE(<< "middle down!!!!!" << std::endl)
-	MouseButton(e, true, morda::Widget::MouseButton_e::MIDDLE);
+	mouseButton(e, true, morda::Widget::MouseButton_e::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
 //	TRACE(<< "middle up!!!!!" << std::endl)
-	MouseButton(e, false, morda::Widget::MouseButton_e::MIDDLE);
+	mouseButton(e, false, morda::Widget::MouseButton_e::MIDDLE);
 }
 
 -(void)scrollWheel: (NSEvent*)e{
@@ -462,8 +462,8 @@ int main (int argc, const char** argv){
 		}
 //		TRACE(<< "button = " << unsigned(button) << std::endl)
 		
-		MouseButton(e, true, button);
-		MouseButton(e, false, button);
+		mouseButton(e, true, button);
+		mouseButton(e, false, button);
 	}else{
 		TRACE(<< "mouse wheel: precise scrolling deltas, UNIMPLEMENTED!!!!!" << std::endl)
 	}
@@ -473,7 +473,7 @@ int main (int argc, const char** argv){
 //	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
-	Macosx_HandleMouseMove(
+	macosx_HandleMouseMove(
 			morda::Vec2r(pos.x, pos.y).rounded(),
 			0
 		);
@@ -494,34 +494,34 @@ int main (int argc, const char** argv){
 -(void)mouseEntered: (NSEvent*)e{
 //	TRACE(<< "mouseEntered event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:YES];
-	morda::Macosx_HandleMouseHover(true);
+	macosx_HandleMouseHover(true);
 }
 
 -(void)mouseExited: (NSEvent*)e{
 //	TRACE(<< "mouseExited event!!!!!" << std::endl)
 	[[self window] setAcceptsMouseMovedEvents:NO];
-	morda::Macosx_HandleMouseHover(false);
+	macosx_HandleMouseHover(false);
 }
 
 -(void)keyDown:(NSEvent*)e{
 //	TRACE(<< "keyDown event!!!!!" << std::endl)
 	std::uint8_t kc = [e keyCode];
-	Key_e key = keyCodeMap[kc];
+	morda::Key_e key = keyCodeMap[kc];
 	
 	if([e isARepeat] == YES){
-		Macosx_HandleCharacterInput([e characters], key);
+		macosx_HandleCharacterInput([e characters], key);
 		return;
 	}
 	
-	Macosx_HandleKeyEvent(true, key);
+	macosx_HandleKeyEvent(true, key);
 	
-	Macosx_HandleCharacterInput([e characters], key);
+	macosx_HandleCharacterInput([e characters], key);
 }
 
 -(void)keyUp:(NSEvent*)e{
 //	TRACE(<< "keyUp event!!!!!" << std::endl)
 	std::uint8_t kc = [e keyCode];
-	Macosx_HandleKeyEvent(false, keyCodeMap[kc]);
+	macosx_HandleKeyEvent(false, keyCodeMap[kc]);
 }
 
 @end
@@ -586,7 +586,7 @@ int main (int argc, const char** argv){
 	NSWindow* nsw = [n object];
 	NSRect frame = [nsw frame];
 	NSRect rect = [nsw contentRectForFrameRect:frame];
-	morda::Macosx_UpdateWindowRect(morda::Rectr(0, 0, rect.size.width, rect.size.height));
+	macosx_UpdateWindowRect(morda::Rectr(0, 0, rect.size.width, rect.size.height));
 }
 
 -(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
@@ -595,7 +595,7 @@ int main (int argc, const char** argv){
 
 -(BOOL)windowShouldClose:(id)sender{
 	TRACE(<< "window wants to close!!!!" << std::endl)
-	morda::App::inst().quit();
+	App::inst().quit();
 	return NO;
 }
 
@@ -608,7 +608,7 @@ int main (int argc, const char** argv){
 @end
 
 
-morda::App::ApplicationObject::ApplicationObject(){
+App::ApplicationObject::ApplicationObject(){
 	NSApplication *applicationObject = [NSApplication sharedApplication];
 	this->id = applicationObject;
 	
@@ -617,12 +617,12 @@ morda::App::ApplicationObject::ApplicationObject(){
 	}
 }
 
-morda::App::ApplicationObject::~ApplicationObject()noexcept{
+App::ApplicationObject::~ApplicationObject()noexcept{
 	NSApplication *applicationObject = (NSApplication*)this->id;
 	[applicationObject release];
 }
 
-morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
+App::WindowObject::WindowObject(const App::WindowParams& wp){
 	CocoaWindow* window = [[CocoaWindow alloc]
 			initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
 			styleMask:(NSResizableWindowMask | NSMiniaturizableWindowMask | NSClosableWindowMask | NSTitledWindowMask)
@@ -638,23 +638,23 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	[window setTitle:[[NSProcessInfo processInfo] processName]];
 }
 
-morda::App::WindowObject::~WindowObject()noexcept{
+App::WindowObject::~WindowObject()noexcept{
 	NSWindow* window = (CocoaWindow*)this->id;
 	[window release];
 }
 
 
 
-morda::App::OpenGLContext::OpenGLContext(const morda::App::WindowParams& wp, void* window){
+App::OpenGLContext::OpenGLContext(const App::WindowParams& wp, void* window){
 	CocoaWindow *wnd = (CocoaWindow*)window;
 	
 	std::vector<NSOpenGLPixelFormatAttribute> attributes;
 	attributes.push_back(NSOpenGLPFAAccelerated);
 	attributes.push_back(NSOpenGLPFAColorSize); attributes.push_back(24);
-	if(wp.buffers.get(morda::App::WindowParams::Buffer_e::DEPTH)){
+	if(wp.buffers.get(App::WindowParams::Buffer_e::DEPTH)){
 		attributes.push_back(NSOpenGLPFADepthSize); attributes.push_back(16);
 	}
-	if(wp.buffers.get(morda::App::WindowParams::Buffer_e::STENCIL)){
+	if(wp.buffers.get(App::WindowParams::Buffer_e::STENCIL)){
 		attributes.push_back(NSOpenGLPFAStencilSize); attributes.push_back(8);
 	}
 	attributes.push_back(NSOpenGLPFADoubleBuffer);
@@ -677,7 +677,7 @@ morda::App::OpenGLContext::OpenGLContext(const morda::App::WindowParams& wp, voi
 	[openGLContext makeCurrentContext];
 }
 
-void morda::App::OpenGLContext::Destroy()noexcept{
+void App::OpenGLContext::Destroy()noexcept{
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->id;
 	[openGLContext release];
 }
@@ -685,7 +685,7 @@ void morda::App::OpenGLContext::Destroy()noexcept{
 
 namespace{
 
-real getDotsPerInch(){
+morda::real getDotsPerInch(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
 	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
@@ -693,13 +693,13 @@ real getDotsPerInch(){
 			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
 		);
 
-	real value = real(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
+	morda::real value = morda::real(((displayPixelSize.width * 10.0f / displayPhysicalSize.width) +
 			(displayPixelSize.height * 10.0f / displayPhysicalSize.height)) / 2.0f);
 	value *= 2.54f;
 	return value;
 }
 
-real getDotsPerPt(){
+morda::real getDotsPerPt(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
 	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
@@ -716,11 +716,10 @@ real getDotsPerPt(){
 }//~namespace
 
 
-morda::App::App(const morda::App::WindowParams& wp) :
-		windowParams(wp),
+App::App(const App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(wp, windowObject.id),
-		units(getDotsPerInch(), getDotsPerPt())
+		gui(getDotsPerInch(), getDotsPerPt())
 {
 	this->updateWindowRect(
 			morda::Rectr(
@@ -734,13 +733,13 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 
-void morda::App::macosx_SwapFrameBuffers(){
+void App::swapFrameBuffers(){
 	NSOpenGLContext *openGLContext = (NSOpenGLContext*)this->openGLContext.id;
 	[openGLContext flushBuffer];
 }
 
 
-void morda::App::postToUiThread_ts(std::function<void()>&& f){	
+void App::postToUiThread_ts(std::function<void()>&& f){	
 	NSEvent* e = [NSEvent
 			otherEventWithType: NSApplicationDefined
 			location: NSMakePoint(0, 0)
@@ -758,7 +757,7 @@ void morda::App::postToUiThread_ts(std::function<void()>&& f){
 }
 
 
-void morda::App::Exec(){
+void App::exec(){
 	NSApplication *applicationObject = (NSApplication*)this->applicationObject.id;
 	NSWindow* window = (NSWindow*)this->windowObject.id;
 	
@@ -780,7 +779,7 @@ void morda::App::Exec(){
 	do{
 		this->render();
 		
-		std::uint32_t millis = this->updater.update();
+		std::uint32_t millis = this->gui.update();
 		
 		NSEvent *event = [applicationObject
 				nextEventMatchingMask:NSAnyEventMask

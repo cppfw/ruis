@@ -10,7 +10,7 @@ this_srcs := $(patsubst $(prorab_this_dir)%,%,$(this_srcs)) #remove this dir pre
 
 
 ifeq ($(prorab_os), macosx)
-    this_mm_src := morda/glue/macosx/main.mm
+    this_mm_src := mordavokne/glue/macosx/main.mm
 endif
 
 
@@ -60,10 +60,10 @@ else ifeq ($(prorab_os), macosx)
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lpng -lfreetype -ljpeg -lGLEW
     
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
+    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)mordavokne/glue/macosx/main.o
 
     define this_rules
-        $(this_mm_obj): $(prorab_this_dir)morda/glue/macosx/main.mm
+        $(this_mm_obj): $(prorab_this_dir)mordavokne/glue/macosx/main.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
 		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
