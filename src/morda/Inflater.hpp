@@ -13,10 +13,6 @@ namespace morda{
 
 
 
-class App;
-
-
-
 /**
  * @brief Inflater of GUI from STOB description.
  * This class is used to inflate GUI widget hierarchies from STOB descriptions.

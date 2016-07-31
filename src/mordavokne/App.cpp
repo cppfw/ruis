@@ -12,7 +12,7 @@
 #endif
 
 
-using namespace morda;
+using namespace mordavokne;
 
 
 
@@ -24,9 +24,9 @@ App::T_Instance App::instance;
 void App::render(){
 	//TODO: render only if needed?
 	
-	Render::clearColor();
-	Render::clearDepth();
-	Render::clearStencil();
+	morda::Render::clearColor();
+	morda::Render::clearDepth();
+	morda::Render::clearStencil();
 
 	this->gui.render();
 	
@@ -43,7 +43,7 @@ void App::updateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	Render::setViewport(kolme::Recti(
+	morda::Render::setViewport(kolme::Recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),
@@ -78,7 +78,7 @@ void App::hideVirtualKeyboard()noexcept{
 
 
 #if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX || M_OS == M_OS_UNIX
-std::unique_ptr<App> morda::createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+std::unique_ptr<App> mordavokne::createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	void* libHandle = dlopen(nullptr, RTLD_NOW);
 	if(!libHandle){
 		throw morda::Exc("dlopen(): failed");
@@ -91,7 +91,7 @@ std::unique_ptr<App> morda::createAppUnix(int argc, const char** argv, const utk
 	auto factory =
 			reinterpret_cast<
 					std::unique_ptr<App> (*)(int, const char**, const utki::Buf<std::uint8_t>)
-				>(dlsym(libHandle, "_ZN5morda9createAppEiPPKcN4utki3BufIhEE"));
+				>(dlsym(libHandle, "_ZN10mordavokne9createAppEiPPKcN4utki3BufIhEE"));
 	if(!factory){
 		throw morda::Exc("dlsym(): createApp() function not found!");
 	}
@@ -109,7 +109,7 @@ void App::swapFrameBuffers(){
 #	if M_OS_NAME == M_OS_NAME_ANDROID
 	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
 #	else
-	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
+	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 #	endif
 #elif M_OS == M_OS_MACOSX
 #	if M_OS_NAME == M_OS_NAME_IOS
@@ -127,7 +127,7 @@ void App::swapFrameBuffers(){
 App::GLEWWrapper::GLEWWrapper(){
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
 	if(glewInit() != GLEW_OK){
-		throw Exc("GLEW initialization failed");
+		throw utki::Exc("GLEW initialization failed");
 	}
 #endif
 }

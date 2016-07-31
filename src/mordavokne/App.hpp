@@ -51,7 +51,7 @@
 
 
 
-namespace morda{
+namespace mordavokne{
 
 
 
@@ -333,7 +333,7 @@ private:
 	
 	class MordaVOkne : public morda::Morda{
 	public:
-		MordaVOkne(real dotsPerInch, real dotsPerPt) :
+		MordaVOkne(morda::real dotsPerInch, morda::real dotsPerPt) :
 				Morda(dotsPerInch, dotsPerPt)
 		{}
 		
@@ -384,7 +384,7 @@ private:
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id){
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::Widget::MouseButton_e button, unsigned id){
 		this->gui.handleMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
 
@@ -422,11 +422,11 @@ private:
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, Key_e key){
+	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
 		this->gui.handleCharacterInput(unicodeResolver, key);
 	}
 
-	void handleKeyEvent(bool isDown, Key_e keyCode){
+	void handleKeyEvent(bool isDown, morda::Key_e keyCode){
 		this->gui.handleKeyEvent(isDown, keyCode);
 	}
 

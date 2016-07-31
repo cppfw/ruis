@@ -589,9 +589,9 @@ public:
 
 
 
-class Application : public morda::App{
-	static morda::App::WindowParams GetWindowParams()noexcept{
-		morda::App::WindowParams wp(kolme::Vec2ui(1024, 800));
+class Application : public mordavokne::App{
+	static mordavokne::App::WindowParams GetWindowParams()noexcept{
+		mordavokne::App::WindowParams wp(kolme::Vec2ui(1024, 800));
 		
 		return wp;
 	}
@@ -808,7 +808,7 @@ public:
 			this->setMouseCursorVisible(visible);
 			b->clicked = [this, visible](morda::PushButton&) mutable{
 				visible = !visible;
-				morda::App::inst().setMouseCursorVisible(visible);
+				mordavokne::App::inst().setMouseCursorVisible(visible);
 			};
 		}
 	}
@@ -816,6 +816,6 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	return utki::makeUnique<Application>();
 }

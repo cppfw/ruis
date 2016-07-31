@@ -9,7 +9,7 @@
 #include <windowsx.h>
 
 
-using namespace morda;
+using namespace mordavokne;
 
 
 namespace{
@@ -777,7 +777,7 @@ void Main(int argc, const char** argv){
 	Factory f;
 
 	//Try GCC name mangling first
-	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN5morda9CreateAppEiPPKcN4utki3BufIhEE")));
+	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN10mordavokne9createAppEiPPKcN4utki3BufIhEE")));
 
 	if(!f){ //try MSVC function mangling style
 		f = reinterpret_cast<Factory>(GetProcAddress(
