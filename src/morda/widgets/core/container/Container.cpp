@@ -182,8 +182,6 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 
 
 void Container::onHoverChanged(unsigned pointerID){
-	//TODO: if some child removed during iterating?
-	
 	if(this->isHovered(pointerID)){
 		return;
 	}

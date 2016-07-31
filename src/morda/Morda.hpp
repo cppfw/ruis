@@ -84,11 +84,18 @@ public:
 private:
 	Vec2r viewportSize;
 public:
-	//TODO: doxygen
+	/**
+	 * @brief Set viewport size for GUI.
+	 * Set the dimensions of the rectangular area where GUI will be rendered.
+	 * @param size - dimensions of the viewport, in pixels.
+	 */
 	void setViewportSize(const morda::Vec2r& size);
 	
-	//TODO: doxygen
-	void render()const;
+	/**
+	 * @brief Render GUI.
+	 * @param matrix - use this transformation matrix.
+	 */
+	void render(const Matr4r& matrix = Matr4r().identity())const;
 	
 	/**
 	 * @brief Initialize standard widgets library.
@@ -118,29 +125,59 @@ public:
 	 */
 	virtual void postToUiThread_ts(std::function<void()>&& f) = 0;
 	
-	//TODO: doxygen
-	//pos is in usual window coordinates, y goes down.
+	/**
+	 * @brief Feed in the mouse move event to GUI.
+	 * @param pos - new position of the mouse pointer.
+	 * @param id - ID of the mouse pointer.
+	 */
 	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
 
-	//TODO: doxygen
-	//pos is in usual window coordinates, y goes down.
+	/**
+	 * @brief Feed in the mouse button event to GUI.
+	 * @param isDown - is mouse button pressed (true) or released (false).
+	 * @param pos - position of the mouse pointer at the moment the button was pressed or released.
+	 * @param button - mouse button.
+	 * @param id - ID of the mouse pointer.
+	 */
 	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
 
-	//TODO: doxygen
-	void handleMouseHover(bool isHovered, unsigned pointerID);
+	/**
+	 * @brief Feed in mouse hover event to GUI.
+	 * Call this function when the mouse pointer enters or leaves the GUI viewport.
+	 * @param isHovered - whether the mouse pointer entered (true) the GUI area or left (false).
+	 * @param id - mouse pointer ID.
+	 */
+	void handleMouseHover(bool isHovered, unsigned id);
 	
-	//TODO: doxygen
+	/**
+	 * @brief Feed in the key event to GUI.
+	 * @param isDown - is the key pressed (true) or released (false).
+	 * @param keyCode - code of the key.
+	 */
 	void handleKeyEvent(bool isDown, Key_e keyCode);
 	
+	/**
+	 * @brief Unicode input provider.
+	 * Override this class to pass in the character input information when user makes character input.
+	 */
 	struct UnicodeProvider{
+		/**
+		 * @brief Get unicode string.
+		 * Override this function to return entered text.
+		 * @return The text that the user has entered.
+		 */
 		virtual std::u32string get()const = 0;
 		
 		virtual ~UnicodeProvider()noexcept{}
 	};
 	
-	//TODO: doxygen
-	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
-	//as much as possible.
+	/**
+	 * @brief Feed in the character input event to the GUI.
+	 * The idea with UnicodeProvider parameter is that we don't want to calculate the unicode string
+	 * unless it is really needed, thus provide the string only when get() method is called.
+	 * @param unicode - unicode string provider.
+	 * @param key - key code associated with character input, can be UNKNOWN.
+	 */
 	void handleCharacterInput(const UnicodeProvider& unicode, Key_e key);
 	
 	

@@ -22,6 +22,12 @@ App::T_Instance App::instance;
 
 
 void App::render(){
+	//TODO: render only if needed?
+	
+	Render::clearColor();
+	Render::clearDepth();
+	Render::clearStencil();
+
 	this->gui.render();
 	
 	this->swapFrameBuffers();

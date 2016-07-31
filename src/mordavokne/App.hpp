@@ -46,12 +46,7 @@
 #endif
 
 
-#include "../morda/Exc.hpp"//TODO:
-
-#include "../morda/util/keycodes.hpp"
-
-#include "../morda/widgets/core/Widget.hpp"//TODO:
-#include "../morda/widgets/core/CharInputWidget.hpp"//TODO:
+#include "../morda/util/keycodes.hpp" //TODO: include via <>
 
 
 
@@ -425,7 +420,6 @@ private:
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	//TODO: no template
 	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, Key_e key){
 		this->gui.handleCharacterInput(unicodeResolver, key);
 	}

@@ -17,12 +17,12 @@
 
 #include <utki/Exc.hpp>
 #include <utki/Void.hpp>
+#include <utki/Unique.hpp>
 #include <utki/PoolStored.hpp>
 #include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
 
-#include "../../mordavokne/App.hpp"//TODO:
 
 using namespace morda;
 
@@ -591,7 +591,10 @@ void Render::setCullEnabled(bool enable) {
 
 namespace{
 
-struct OpenGLFrameBuffer : public utki::Void, public utki::Unique{
+struct OpenGLFrameBuffer :
+		public utki::Void,
+		public utki::Unique
+{
 	GLuint fbo;
 
 	OpenGLFrameBuffer(){

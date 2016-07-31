@@ -10,7 +10,6 @@
 
 #include "container/Container.hpp"
 
-#include "../../../mordavokne/App.hpp"//TODO: remove
 
 
 using namespace morda;
@@ -243,6 +242,11 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
 	
+	auto oldViewport = Render::getViewport();
+	utki::ScopeExit scopeExit([&oldViewport](){
+		Render::setViewport(oldViewport);
+	});
+	
 	Render::setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
 	
 	Render::clearColor(kolme::Vec4f(0.0f));
@@ -257,7 +261,6 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	tex = fb.detachColor();
 	
 	fb.unbind();
-	Render::setViewport(App::inst().winRect().to<int>());
 	
 	return tex;
 }

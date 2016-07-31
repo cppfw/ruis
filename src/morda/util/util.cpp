@@ -1,10 +1,9 @@
 #include "util.hpp"
 
-#include "../../mordavokne/App.hpp"//TODO: remove
-
 #include <utki/debug.hpp>
 #include <utki/config.hpp>
 
+#include "../Morda.hpp"
 
 using namespace morda;
 

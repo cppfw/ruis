@@ -4,8 +4,6 @@
 
 #include "../../util/util.hpp"
 
-#include "../../../mordavokne/App.hpp"//TODO: remove
-
 
 using namespace morda;
 
