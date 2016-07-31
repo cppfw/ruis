@@ -425,7 +425,7 @@ private:
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	//TODO: no template
-	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, Key_e key){
+	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, Key_e key){
 		this->gui.handleCharacterInput(unicodeResolver, key);
 	}
 

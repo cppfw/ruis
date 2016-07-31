@@ -235,3 +235,12 @@ void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
 		w->onFocusChanged();
 	}
 }
+
+void Morda::handleCharacterInput(const UnicodeProvider& unicode, Key_e key){
+	if(auto w = this->focusedWidget.lock()){
+		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
+		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
+			c->onCharacterInput(unicode.get(), key);
+		}
+	}
+}

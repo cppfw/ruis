@@ -279,7 +279,7 @@ bool TextInput::onKey(bool isDown, Key_e keyCode){
 	return false;
 }
 
-void TextInput::onCharacterInput(const utki::Buf<std::uint32_t> unicode, Key_e key){
+void TextInput::onCharacterInput(const std::u32string& unicode, Key_e key){
 	switch(key){
 		case Key_e::ENTER:
 			break;

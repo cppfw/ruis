@@ -103,7 +103,7 @@ public:
 		return false;
 	}
 	
-	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, morda::Key_e key) override{
+	void onCharacterInput(const std::u32string& unicode, morda::Key_e key) override{
 		if(unicode.size() == 0){
 			return;
 		}

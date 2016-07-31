@@ -59,7 +59,7 @@ public:
 	
 	void update(std::uint32_t dt)override;
 	
-	void onCharacterInput(const utki::Buf<std::uint32_t> unicode, Key_e key)override;
+	void onCharacterInput(const std::u32string& unicode, Key_e key)override;
 
 	void setCursorIndex(size_t index, bool selection = false);
 	

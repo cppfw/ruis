@@ -126,17 +126,16 @@ public:
 	//TODO: doxygen
 	void handleKeyEvent(bool isDown, Key_e keyCode);
 	
+	struct UnicodeProvider{
+		virtual std::u32string get()const = 0;
+		
+		virtual ~UnicodeProvider()noexcept{}
+	};
+	
 	//TODO: doxygen
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, Key_e key){
-		if(auto w = this->focusedWidget.lock()){
-//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-				c->onCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
-			}
-		}
-	}
+	void handleCharacterInput(const UnicodeProvider& unicode, Key_e key);
 };
 
 }

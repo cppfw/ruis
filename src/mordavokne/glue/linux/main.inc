@@ -524,22 +524,22 @@ const std::array<Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
 
 
 
-class KeyEventUnicodeResolver{
+class KeyEventUnicodeProvider : public morda::Morda::UnicodeProvider{
 	XIC& xic;
 	XEvent& event;
 public:
-	KeyEventUnicodeResolver(XIC& xic, XEvent& event) :
+	KeyEventUnicodeProvider(XIC& xic, XEvent& event) :
 			xic(xic),
 			event(event)
 	{}
 
-	std::vector<std::uint32_t> Resolve()const{
+	std::u32string get()const override{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
 
 		Status status;
-		//KeySym xkeysym;
+
 		std::array<char, 32> staticBuf;
 		std::vector<char> arr;
 		auto buf = utki::wrapBuf(staticBuf);
@@ -563,28 +563,9 @@ public:
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
-					return std::vector<std::uint32_t>();
+					return nullptr;
 				}
-
-				{
-					typedef std::vector<std::uint32_t> T_Vector;
-					T_Vector utf32;
-
-					for(unikod::Utf8Iterator i(buf.begin()); !i.isEnd(); ++i){
-						utf32.push_back(i.character());
-					}
-
-					std::vector<std::uint32_t> ret(utf32.size());
-
-					std::uint32_t* dst = &*ret.begin();
-					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
-						*dst = *src;
-					}
-
-					return ret;
-				}
-
-				break;
+				return unikod::toUtf32(&*buf.begin());
 			default:
 			case XBufferOverflow:
 				ASSERT(false)
@@ -593,7 +574,7 @@ public:
 				break;
 		}//~switch
 
-		return std::vector<std::uint32_t>();
+		return nullptr;
 	}
 };
 
@@ -652,7 +633,7 @@ void App::exec(){
 						{
 							Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 							this->handleKeyEvent(true, key);
-							this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event), key);
+							this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, event), key);
 						}
 						break;
 					case KeyRelease:
@@ -671,7 +652,7 @@ void App::exec(){
 									)
 								{
 									//Key wasn't actually released
-									this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev), key);
+									this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, nev), key);
 
 									XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 									break;
