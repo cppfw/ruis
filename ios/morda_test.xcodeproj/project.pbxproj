@@ -292,8 +292,6 @@
 		2C65128B1C0A60F700D295F5 = {
 			isa = PBXGroup;
 			children = (
-				2CB8BEEB1D4EA5CA00D3F036 /* morda */,
-				2CB8BED01D4EA3C200D3F036 /* mordavokne */,
 				2C6512A11C0A60F700D295F5 /* morda_test */,
 				2C6512961C0A60F700D295F5 /* Frameworks */,
 				2C6512951C0A60F700D295F5 /* Products */,
@@ -328,6 +326,8 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
+				2CB8BEEB1D4EA5CA00D3F036 /* morda */,
+				2CB8BED01D4EA3C200D3F036 /* mordavokne */,
 				2CC8807B1D3AE2BB00CFCA50 /* morda_res */,
 				2C547A831C2F4E930079154C /* res */,
 				2C547A771C2F2C1E0079154C /* main.cpp */,
@@ -356,7 +356,7 @@
 				2CB8BED41D4EA3C200D3F036 /* glue */,
 			);
 			name = mordavokne;
-			path = ../src/mordavokne;
+			path = ../../src/mordavokne;
 			sourceTree = "<group>";
 		};
 		2CB8BED41D4EA3C200D3F036 /* glue */ = {
@@ -396,7 +396,7 @@
 				2CB8BF331D4EA5CA00D3F036 /* widgets */,
 			);
 			name = morda;
-			path = ../src/morda;
+			path = ../../src/morda;
 			sourceTree = "<group>";
 		};
 		2CB8BEEE1D4EA5CA00D3F036 /* fonts */ = {

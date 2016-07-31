@@ -2,6 +2,7 @@
 #include "../../AppFactory.hpp"
 
 #include <papki/FSFile.hpp>
+#include <papki/RootDirFile.hpp>
 
 #include <sstream>
 
@@ -370,10 +371,10 @@ std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string&
 	
 //	TRACE(<< "res path = " << dir << std::endl)
 
-	std::stringstream ss;
-	ss << dir << "/" << path;
+	auto rdf = utki::makeUnique<papki::RootDirFile>(utki::makeUnique<papki::FSFile>(), dir + "/");
+	rdf->setPath(path);
 	
-	return utki::makeUnique<papki::FSFile>(ss.str());
+	return std::move(rdf);
 }
 
 void App::setMouseCursorVisible(bool visible){
