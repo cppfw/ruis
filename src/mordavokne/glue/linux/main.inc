@@ -207,7 +207,6 @@ real getDotsPerPt(Display* display){
 }//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
-		windowParams(requestedWindowParams),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),

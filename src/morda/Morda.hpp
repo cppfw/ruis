@@ -14,8 +14,6 @@
 #include "Inflater.hpp"
 #include "ResourceManager.hpp"
 
-#include "widgets/core/CharInputWidget.hpp"//TODO: move to cpp
-
 namespace morda{
 
 class Morda : public utki::IntrusiveSingleton<Morda>{

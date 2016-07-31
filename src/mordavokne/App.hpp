@@ -103,9 +103,6 @@ public:
 				dim(dim)
 		{}
 	};
-
-private:
-	WindowParams windowParams; //this is to save window params
 	
 public:
 	
