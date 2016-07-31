@@ -988,7 +988,6 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/GL</pElem>
             <pElem>.</pElem>

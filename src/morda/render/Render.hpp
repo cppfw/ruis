@@ -24,7 +24,7 @@ class Render{
 	friend class Texture2D;
 	friend class FrameBuffer;
 	
-	friend class App;
+	friend class Morda;
 	
 	std::unique_ptr<utki::Void> pimpl;
 	

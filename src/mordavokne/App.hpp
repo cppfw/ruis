@@ -310,8 +310,10 @@ private:
 private:
 	void swapFrameBuffers();
 	
-	Render renderer; //TODO: move to Morda
-
+	struct GLEWWrapper{
+		GLEWWrapper();
+	} glewWrapper;
+	
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
 private:

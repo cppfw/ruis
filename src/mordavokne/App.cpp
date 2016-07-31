@@ -121,3 +121,13 @@ void App::swapFrameBuffers(){
 #	error "unknown OS"
 #endif
 }
+
+
+
+App::GLEWWrapper::GLEWWrapper(){
+#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+	if(glewInit() != GLEW_OK){
+		throw Exc("GLEW initialization failed");
+	}
+#endif
+}

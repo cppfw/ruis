@@ -22,6 +22,9 @@ class Morda : public utki::IntrusiveSingleton<Morda>{
 	
 	friend class Updateable;
 	friend class Widget;
+	
+	Render renderer;
+	
 public:
 
 	/**

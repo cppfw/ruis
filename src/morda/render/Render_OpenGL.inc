@@ -384,11 +384,6 @@ Render::Render() :
 #endif
 			)
 {
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-	if(glewInit() != GLEW_OK){
-		throw morda::Exc("GLEW initialization failed");
-	}
-#endif
 	AssertOpenGLNoError();
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }
