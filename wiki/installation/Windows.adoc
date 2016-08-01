@@ -6,5 +6,3 @@
 
 . Install *libmorda* NuGet package to your project, the package is available on _nuget.org_ and should be found by NuGet manager.
 
-. Copy _morda_res_ directory to your project executable path to be able to use default *morda* resources.
-  The _morda_res_ deirectory should be taken from corresponding version of *morda*, the zipped sources can be downloaded from https://github.com/igagis/morda/releases.
