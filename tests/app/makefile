@@ -35,13 +35,13 @@ ifeq ($(prorab_os),windows)
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
-    this_mm_src := mordavokne/glue/macosx/glue.mm
+    this_mm_src := src/mordavokne/glue/macosx/glue.mm
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)mordavokne/glue/macosx/glue.o
+    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)src/mordavokne/glue/macosx/glue.o
 
     define this_rules
-        $(this_mm_obj): $(prorab_this_dir)mordavokne/glue/macosx/glue.mm
+        $(this_mm_obj): $(prorab_this_dir)src/mordavokne/glue/macosx/glue.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
 		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<

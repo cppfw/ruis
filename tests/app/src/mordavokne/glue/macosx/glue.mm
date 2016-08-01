@@ -1,6 +1,6 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
-#include "../../../morda/util/util.hpp"
+#include "../../../../../../src/morda/util/util.hpp"
 
 #import <Cocoa/Cocoa.h>
 
