@@ -4,7 +4,7 @@ Section: misc
 Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: g++, debhelper (>= 9), prorab, pkg-config,
-		libutki-dev, libpapki-dev, libpogodi-dev, libunikod-dev,
+		libutki-dev, libpapki-dev, libunikod-dev,
 		libaika-dev, libkolme-dev, libsvgdom-dev, libsvgren-dev,
 		libstob-dev (>= 3.0.0),
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev
