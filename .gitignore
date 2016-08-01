@@ -10,6 +10,7 @@ debian/*.debhelper
 *.[aod]
 *.so
 *.so.*
+*.dylib
 
 doc/doxygen/
 doc/doxygen.cfg
@@ -21,3 +22,8 @@ pkg-config/morda.pc
 
 samples/basic/basic
 samples/basic/nbproject/private
+
+ios/morda_test.xcworkspace
+ios/Pods
+ios/Podfile.lock
+
