@@ -132,12 +132,6 @@
     <df root="tests" name="2">
       <df name="app">
         <df name="src">
-          <df name="mordavokne">
-            <df name="glue">
-              <in>main.cpp</in>
-            </df>
-            <in>App.cpp</in>
-          </df>
           <in>main.cpp</in>
         </df>
       </df>
@@ -180,8 +174,8 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>make -j2</buildCommand>
-          <cleanCommand>make clean</cleanCommand>
+          <buildCommand>${MAKE} -j8</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <cTool>
             <incDir>
@@ -782,16 +776,18 @@
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
+        <element flagsID="2"
+                 commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} debug=true -j8</buildCommand>
-          <cleanCommand>${MAKE} clean </cleanCommand>
+          <buildCommand>${MAKE}  debug=true -j8</buildCommand>
+          <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <ccTool flags="0">
+          <ccTool flags="2">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -1154,12 +1150,89 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/mordavokne/App.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/mordavokne</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/nitki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/pogodi</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/mordavokne/glue/main.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/pogodi</pElem>
+            <pElem>src/mordavokne</pElem>
+            <pElem>src/mordavokne/glue/linux</pElem>
+            <pElem>src/morda/shaders</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/nitki</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>/usr/include/X11</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>src/mordavokne/glue</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
       <item path="tests/app/src/mordavokne/App.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/mordavokne/glue/glue.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/app/src/mordavokne/glue/main.cpp"
@@ -1167,6 +1240,13 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
     </conf>

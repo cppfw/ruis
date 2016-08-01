@@ -23,7 +23,7 @@ ifeq ($(debug), true)
 endif
 
 ifeq ($(prorab_os),windows)
-    this_srcs += src/mordavokne/glue/main.cpp
+    this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension)
@@ -35,20 +35,20 @@ ifeq ($(prorab_os),windows)
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
-    this_mm_src := mordavokne/glue/macosx/main.mm
+    this_mm_src := mordavokne/glue/macosx/glue.mm
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)mordavokne/glue/macosx/main.o
+    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)mordavokne/glue/macosx/glue.o
 
     define this_rules
-        $(this_mm_obj): $(prorab_this_dir)mordavokne/glue/macosx/main.mm
+        $(this_mm_obj): $(prorab_this_dir)mordavokne/glue/macosx/glue.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
 		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
     endef
     $(eval $(this_rules))
 else ifeq ($(prorab_os),linux)
-    this_srcs += src/mordavokne/glue/main.cpp
+    this_srcs += src/mordavokne/glue/glue.cpp
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl
 endif
 
