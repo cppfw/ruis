@@ -33,30 +33,39 @@ nuget{
 		};
 	}
 	files {
-		include: { "..\src\**\*.hpp" };
+		//this is needed to put headers in the morda folder
+		nestedInclude: {
+			#destination = ${d_include}morda;
+			"..\src\morda\**\*.hpp"
+		};
+		
+		res += {
+			#add-each-file : ::nuget.targets.[${condition}].CopyToOutput;
+			#destination : ${d_bin}\morda_res;
+		};
 		
 		[x86,release] { 
 			lib: ..\msvs_solution\Release\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\Release\libmorda.pdb;
-			bin: ..\morda_res;
+			res: ..\morda_res\**\*;
 		}
 
 		[x86,debug] { 
 			lib: ..\msvs_solution\Debug\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\Debug\libmorda.pdb;
-			bin: ..\morda_res;
+			res: ..\morda_res\**\*;
 		}
 
 		[x64,release] { 
 			lib: ..\msvs_solution\x64\Release\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\x64\Release\libmorda.pdb;
-			bin: ..\morda_res;
+			res: ..\morda_res\**\*;
 		}
 
 		[x64,debug] { 
 			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
 			symbols: ..\msvs_solution\libmorda\x64\Debug\libmorda.pdb;
-			bin: ..\morda_res;
+			res: ..\morda_res\**\*;
 		}  
 	}
 }
