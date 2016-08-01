@@ -1,9 +1,9 @@
 //This file contains implementations of platform dependent methods from App class.
 
 #include "../../App.hpp"
-#include "../../../morda/util/util.hpp"
+#include "../../../../../../src/morda/util/util.hpp"
 
-#include "../../../morda/Morda.hpp"
+#include "../../../../../../src/morda/Morda.hpp"
 
 #include <utki/windows.hpp>
 #include <papki/FSFile.hpp>
