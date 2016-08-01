@@ -382,17 +382,6 @@ private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
 	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
-public:
-	/**
-	 * @brief Get current window rectangle.
-	 * @return Current application window rectangle.
-	 */
-	const morda::Rectr& winRect()const noexcept{
-		return this->curWinRect;
-	}
-
-public:
-
 private:
 	void updateWindowRect(const morda::Rectr& rect);
 
@@ -400,7 +389,7 @@ private:
 
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
-		return morda::Vec2r(pos.x, this->winRect().d.y - pos.y - 1.0f);
+		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 
 	//pos is in usual window coordinates, y goes down.
