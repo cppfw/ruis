@@ -20,8 +20,8 @@
 		2C6512C21C0A60F800D295F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512C11C0A60F800D295F5 /* XCTest.framework */; };
 		2C6512C31C0A60F800D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
 		2C6512C41C0A60F800D295F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C65129B1C0A60F700D295F5 /* UIKit.framework */; };
-		2CB8BEE21D4EA3C200D3F036 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BED11D4EA3C200D3F036 /* App.cpp */; };
-		2CB8BEE61D4EA3C200D3F036 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BEDA1D4EA3C200D3F036 /* main.mm */; };
+		2C9352871D4FA90E00D58719 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9352761D4FA90E00D58719 /* App.cpp */; };
+		2C93528C1D4FA90E00D58719 /* glue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C9352801D4FA90E00D58719 /* glue.mm */; };
 		2CB8BF801D4EA5CA00D3F036 /* TexFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BEF01D4EA5CA00D3F036 /* TexFont.cpp */; };
 		2CB8BF811D4EA5CA00D3F036 /* Inflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BEF21D4EA5CA00D3F036 /* Inflater.cpp */; };
 		2CB8BF821D4EA5CA00D3F036 /* Morda.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BEF41D4EA5CA00D3F036 /* Morda.cpp */; };
@@ -116,10 +116,10 @@
 		2C6512BA1C0A60F800D295F5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2C6512C01C0A60F800D295F5 /* morda_testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = morda_testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C6512C11C0A60F800D295F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		2CB8BED11D4EA3C200D3F036 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
-		2CB8BED21D4EA3C200D3F036 /* App.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
-		2CB8BED31D4EA3C200D3F036 /* AppFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppFactory.hpp; sourceTree = "<group>"; };
-		2CB8BEDA1D4EA3C200D3F036 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		2C9352761D4FA90E00D58719 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
+		2C9352771D4FA90E00D58719 /* App.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
+		2C9352781D4FA90E00D58719 /* AppFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppFactory.hpp; sourceTree = "<group>"; };
+		2C9352801D4FA90E00D58719 /* glue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = glue.mm; sourceTree = "<group>"; };
 		2CB8BEEC1D4EA5CA00D3F036 /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		2CB8BEED1D4EA5CA00D3F036 /* Exc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Exc.hpp; sourceTree = "<group>"; };
 		2CB8BEEF1D4EA5CA00D3F036 /* Font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Font.hpp; sourceTree = "<group>"; };
@@ -326,8 +326,8 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
+				2C9352751D4FA90E00D58719 /* mordavokne */,
 				2CB8BEEB1D4EA5CA00D3F036 /* morda */,
-				2CB8BED01D4EA3C200D3F036 /* mordavokne */,
 				2CC8807B1D3AE2BB00CFCA50 /* morda_res */,
 				2C547A831C2F4E930079154C /* res */,
 				2C547A771C2F2C1E0079154C /* main.cpp */,
@@ -347,30 +347,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2CB8BED01D4EA3C200D3F036 /* mordavokne */ = {
+		2C9352751D4FA90E00D58719 /* mordavokne */ = {
 			isa = PBXGroup;
 			children = (
-				2CB8BED11D4EA3C200D3F036 /* App.cpp */,
-				2CB8BED21D4EA3C200D3F036 /* App.hpp */,
-				2CB8BED31D4EA3C200D3F036 /* AppFactory.hpp */,
-				2CB8BED41D4EA3C200D3F036 /* glue */,
+				2C9352761D4FA90E00D58719 /* App.cpp */,
+				2C9352771D4FA90E00D58719 /* App.hpp */,
+				2C9352781D4FA90E00D58719 /* AppFactory.hpp */,
+				2C9352791D4FA90E00D58719 /* glue */,
 			);
 			name = mordavokne;
-			path = ../../src/mordavokne;
+			path = ../../tests/app/src/mordavokne;
 			sourceTree = "<group>";
 		};
-		2CB8BED41D4EA3C200D3F036 /* glue */ = {
+		2C9352791D4FA90E00D58719 /* glue */ = {
 			isa = PBXGroup;
 			children = (
-				2CB8BED91D4EA3C200D3F036 /* ios */,
+				2C93527F1D4FA90E00D58719 /* ios */,
 			);
 			path = glue;
 			sourceTree = "<group>";
 		};
-		2CB8BED91D4EA3C200D3F036 /* ios */ = {
+		2C93527F1D4FA90E00D58719 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				2CB8BEDA1D4EA3C200D3F036 /* main.mm */,
+				2C9352801D4FA90E00D58719 /* glue.mm */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -781,6 +781,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C93528C1D4FA90E00D58719 /* glue.mm in Sources */,
 				2CB8BF811D4EA5CA00D3F036 /* Inflater.cpp in Sources */,
 				2CB8BF951D4EA5CA00D3F036 /* PosTexShader.cpp in Sources */,
 				2CB8BFAE1D4EA5CA00D3F036 /* MouseProxy.cpp in Sources */,
@@ -808,11 +809,11 @@
 				2CB8BF9E1D4EA5CA00D3F036 /* BlendWidget.cpp in Sources */,
 				2CB8BFAC1D4EA5CA00D3F036 /* Table.cpp in Sources */,
 				2CB8BFA71D4EA5CA00D3F036 /* Frame.cpp in Sources */,
+				2C9352871D4FA90E00D58719 /* App.cpp in Sources */,
 				2CB8BF841D4EA5CA00D3F036 /* Render.cpp in Sources */,
 				2CB8BF901D4EA5CA00D3F036 /* ResTexture.cpp in Sources */,
 				2CB8BF9A1D4EA5CA00D3F036 /* ioapi.cpp in Sources */,
 				2CB8BF8C1D4EA5CA00D3F036 /* ResGradient.cpp in Sources */,
-				2CB8BEE61D4EA3C200D3F036 /* main.mm in Sources */,
 				2CB8BF821D4EA5CA00D3F036 /* Morda.cpp in Sources */,
 				2CB8BFB01D4EA5CA00D3F036 /* Widget.cpp in Sources */,
 				2CB8BFA41D4EA5CA00D3F036 /* SimpleButton.cpp in Sources */,
@@ -845,7 +846,6 @@
 				2CB8BFA01D4EA5CA00D3F036 /* CheckBox.cpp in Sources */,
 				2CB8BFB41D4EA5CA00D3F036 /* GreyscaleGlass.cpp in Sources */,
 				2CB8BFB51D4EA5CA00D3F036 /* ImageLabel.cpp in Sources */,
-				2CB8BEE21D4EA3C200D3F036 /* App.cpp in Sources */,
 				2C547A781C2F2C1E0079154C /* main.cpp in Sources */,
 				2CB8BF941D4EA5CA00D3F036 /* PosShader.cpp in Sources */,
 			);
