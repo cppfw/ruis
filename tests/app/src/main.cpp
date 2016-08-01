@@ -2,7 +2,7 @@
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
 
-#include "../../../src/mordavokne/AppFactory.hpp"
+#include "mordavokne/AppFactory.hpp"
 
 #include "../../../src/morda/widgets/core/Widget.hpp"
 #include "../../../src/morda/widgets/core/container/Container.hpp"

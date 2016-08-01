@@ -5,7 +5,7 @@
 
 #include "../../AppFactory.hpp"
 
-#include "../../../morda/util/util.hpp"
+#include "../../../../../../src/morda/util/util.hpp"
 
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>

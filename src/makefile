@@ -8,13 +8,6 @@ this_soname := $(shell cat $(prorab_this_dir)/soname.txt)
 this_srcs := $(shell find $(patsubst %/,%,$(prorab_this_dir)) -name *.cpp) #find all .cpp files
 this_srcs := $(patsubst $(prorab_this_dir)%,%,$(this_srcs)) #remove this dir prefix
 
-
-ifeq ($(prorab_os), macosx)
-    this_mm_src := mordavokne/glue/macosx/main.mm
-endif
-
-
-
 this_cxxflags += -Wall #enable all warnings
 this_cxxflags += -Wno-comment #no warnings on nested comments
 this_cxxflags += -funsigned-char #the 'char' type is unsigned
@@ -59,25 +52,8 @@ else ifeq ($(prorab_os), macosx)
     this_cxxflags += -I/usr/local/include/freetype2
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lpng -lfreetype -ljpeg -lGLEW
-    
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)mordavokne/glue/macosx/main.o
-
-    define this_rules
-        $(this_mm_obj): $(prorab_this_dir)mordavokne/glue/macosx/main.mm
-		@echo Compiling $$<...
-		$(prorab_echo)mkdir -p $$(dir $$@)
-		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
-    endef
-    $(eval $(this_rules))
 endif
 
 this_ldlibs += -lnitki -lpogodi -lpapki -laika -lstob -lsvgdom -lsvgren
 
 $(eval $(prorab-build-lib))
-
-
-ifeq ($(prorab_os), macosx)
-    $(prorab_this_staticlib): $(this_mm_obj)
-
-    $(prorab_this_name): $(this_mm_obj)
-endif

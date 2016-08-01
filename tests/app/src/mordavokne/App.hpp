@@ -14,10 +14,9 @@
 
 #include <kolme/Vector2.hpp>
 
-//TODO: include <>
-#include "../morda/Morda.hpp"
+#include "../../../../src/morda/Morda.hpp"
 
-//#include "config.hpp"
+
 
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
@@ -44,9 +43,6 @@
 #if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
 #	include <nitki/Queue.hpp>
 #endif
-
-
-#include "../morda/util/keycodes.hpp" //TODO: include via <>
 
 
 
