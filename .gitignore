@@ -23,8 +23,6 @@ pkg-config/morda.pc
 samples/basic/basic
 samples/basic/nbproject/private
 
-ios/morda_test.xcworkspace
-ios/Pods
-ios/Podfile.lock
+ios
 
 msvs_solution

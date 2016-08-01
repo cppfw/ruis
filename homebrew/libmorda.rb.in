@@ -7,7 +7,6 @@ class Libmorda < Formula
   depends_on "prorab" => :build
   depends_on "libutki"
   depends_on "libpapki"
-  depends_on "libpogodi"
   depends_on "libunikod"
   depends_on "libaika"
   depends_on "libstob"
@@ -17,11 +16,12 @@ class Libmorda < Formula
   depends_on "glew"
   depends_on "freetype"
   depends_on "libkolme"
+  depends_on "libsvgdom"
   depends_on "libsvgren"
   
   def install
     ENV['PATH'] += ':/usr/local/bin'
-    system "make", "install"
+    system "make", "-f", "src/makefile", "install"
   end
 
   #test do
