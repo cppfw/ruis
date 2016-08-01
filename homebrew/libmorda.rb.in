@@ -9,7 +9,6 @@ class Libmorda < Formula
   depends_on "libpapki"
   depends_on "libpogodi"
   depends_on "libunikod"
-  depends_on "libnitki"
   depends_on "libaika"
   depends_on "libstob"
   depends_on "libpng"
@@ -18,6 +17,7 @@ class Libmorda < Formula
   depends_on "glew"
   depends_on "freetype"
   depends_on "libkolme"
+  depends_on "libsvgren"
   
   def install
     ENV['PATH'] += ':/usr/local/bin'

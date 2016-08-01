@@ -11,8 +11,10 @@
 
 #include "ResImage.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
+
 #include "../shaders/PosTexShader.hpp"
 
 
@@ -33,7 +35,7 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 
 
 std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, const papki::File& fi){
-	auto tex = App::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
+	auto tex = Morda::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
 	
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){
@@ -135,7 +137,7 @@ public:
 			}
 		}
 
-		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::App::inst().units.dpi());
+		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::Morda::inst().units.dpi());
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
 		//flip pixels vertically

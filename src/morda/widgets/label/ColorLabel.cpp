@@ -1,6 +1,7 @@
 #include "ColorLabel.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
+
 #include "../../util/util.hpp"
 
 
@@ -12,7 +13,7 @@ ColorLabel::ColorLabel(const stob::Node* chain) :
 		ColorWidget(chain)
 {
 	if(auto p = getProperty(chain, "gradient")){
-		this->gradient = App::inst().resMan.load<ResGradient>(p->value());
+		this->gradient = Morda::inst().resMan.load<ResGradient>(p->value());
 	}else{
 		ASSERT(!this->gradient)
 	}
@@ -28,11 +29,11 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 
 	if(this->gradient){
 //		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
-		auto& s = App::inst().shaders.clrPosShader;
+		auto& s = Morda::inst().shaders.clrPosShader;
 		s.setMatrix(matr);
 		this->gradient->render(s);
 	}else{
-		ColorPosShader& s = App::inst().shaders.colorPosShader;
+		ColorPosShader& s = Morda::inst().shaders.colorPosShader;
 
 		s.setColor(this->color());
 		s.setMatrix(matr);

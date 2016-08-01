@@ -1,7 +1,9 @@
 #include "ResFont.hpp"
 
 #include "../Exc.hpp"
-#include "../App.hpp"
+
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
 
 #include <unikod/utf8.hpp>

@@ -14,7 +14,9 @@
 
 #include <kolme/Vector2.hpp>
 
-#include "config.hpp"
+#include "../../../../src/morda/Morda.hpp"
+
+
 
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
@@ -43,32 +45,15 @@
 #endif
 
 
-#include "Exc.hpp"
-#include "Inflater.hpp"
-#include "Updateable.hpp"
-#include "ResourceManager.hpp"
-
-#include "util/keycodes.hpp"
-
-#include "widgets/core/Widget.hpp"
-#include "widgets/core/CharInputWidget.hpp"
-
-#include "shaders/ColorPosShader.hpp"
-#include "shaders/ColorPosTexShader.hpp"
-#include "shaders/ClrPosShader.hpp"
-#include "shaders/PosTexShader.hpp"
-#include "shaders/SimpleGrayscalePosTexShader.hpp"
-#include "shaders/SimpleBlurPosTexShader.hpp"
 
 
-
-namespace morda{
+namespace mordavokne{
 
 
 
 /**
  * @brief Base singleton class of Application.
- * An apllication should subclass this class and return an instance from the
+ * An application should subclass this class and return an instance from the
  * application factory function createApp(), see AppFactory.hpp for details.
  * When instance of this class is created it also creates a window and
  * initializes OpenGL (or OpenGL ES).
@@ -77,17 +62,13 @@ class App :
 		public utki::IntrusiveSingleton<App>,
 		public utki::Unique
 {
-	friend class utki::IntrusiveSingleton<App>;
-	static utki::IntrusiveSingleton<App>::T_Instance instance;
+	friend T_Singleton;
+	static T_Instance instance;
+	
+	
+private:
 
-	friend class Render;
-	friend class Updateable;
-	friend class Widget;
-	friend class CharInputWidget;
-
-	nitki::Thread::T_ThreadID uiThreadId = nitki::Thread::getCurrentThreadID();
-
-public:
+public:	
 	/**
 	 * @brief Desired window parameters.
 	 */
@@ -113,31 +94,9 @@ public:
 				dim(dim)
 		{}
 	};
-
-private:
-	WindowParams windowParams; //this is to save window params
 	
 public:
-	/**
-	 * @brief tell if this is the UI thread.
-	 * @return true if this is UI thread.
-	 * @return false otherwise.
-	 */
-	bool thisIsUIThread()const noexcept{
-		return this->uiThreadId == nitki::Thread::getCurrentThreadID();
-	}
-
-	/**
-	 * @brief Collection of standard shaders.
-	 */
-	struct DefaultShaders{
-		ColorPosShader colorPosShader;
-		ColorPosTexShader colorPosTexShader;
-		ClrPosShader clrPosShader;
-		PosTexShader posTexShader;
-		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
-		SimpleBlurPosTexShader simpleBlurPosTexShader;
-	};
+	
 
 #if M_OS == M_OS_LINUX
 
@@ -239,7 +198,7 @@ private:
 	} xInputMethod;
 
 	friend void Main(int argc, const char** argv);
-	void Exec();
+	void exec();
 
 #	endif
 
@@ -258,7 +217,7 @@ private:
 
 		bool isHovered = false; //for tracking when mouse enters or leaves window.
 
-		utki::Flags<Widget::MouseButton_e> mouseButtonState;
+		utki::Flags<morda::Widget::MouseButton_e> mouseButtonState;
 
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()noexcept;
@@ -277,42 +236,64 @@ private:
 		void Destroy()noexcept;
 	} deviceContext;
 
+
+	struct OpenGLContextWrapper{
+		HGLRC hrc;
+	public:
+		OpenGLContextWrapper(HDC hdc);
+
+		~OpenGLContextWrapper()noexcept {
+			this->Destroy();
+		}
+
+		void Destroy() noexcept;
+	} openglContext;
+
+
+
+
 	bool mouseCursorIsCurrentlyVisible = true;
 	
-	friend void Main(int argc, const char** argv);
-	void Exec();
-	friend bool HandleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
+	friend void winmain(int argc, const char** argv);
+	void exec();
+	void postToUiThread_ts(std::function<void()>&& f);
+	friend bool handleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
 
 #elif M_OS == M_OS_MACOSX
 private:
+
+	void postToUiThread_ts(std::function<void()>&& f);
 	
 #	if M_OS_NAME == M_OS_NAME_IOS
 	struct WindowObject{
 		void* id;
-		WindowObject(const morda::App::WindowParams& wp);
+		WindowObject(const App::WindowParams& wp);
 		~WindowObject()noexcept;
 	} windowObject;
+	
+	WindowParams windowParams;
 	
 	friend void ios_render();
 	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
 	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
-	friend const morda::App::WindowParams& ios_getWindowParams();
+	friend const App::WindowParams& ios_getWindowParams();
+	
+	void swapFrameBuffers(){}
 	
 #	else
-	void macosx_SwapFrameBuffers();
 	
-	void Exec();
+	void exec();
 	
-	friend void Macosx_Main(int argc, const char** argv);
-	friend void Macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void Macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned id);
-	friend void Macosx_HandleMouseHover(bool isHovered);
-	friend void Macosx_HandleKeyEvent(bool isDown, Key_e keyCode);
-	friend void Macosx_HandleCharacterInput(const void* nsstring, Key_e key);
-	friend void Macosx_UpdateWindowRect(const morda::Rectr& r);
-	friend void Macosx_SetQuitFlag();
+	friend void macosx_Main(int argc, const char** argv);
+	friend void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
+	friend void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
+	friend void macosx_HandleMouseHover(bool isHovered);
+	friend void macosx_HandleKeyEvent(bool isDown, morda::Key_e keyCode);
+	friend void macosx_HandleCharacterInput(const void* nsstring, morda::Key_e key);
+	friend void macosx_UpdateWindowRect(const morda::Rectr& r);
+	friend void macosx_SetQuitFlag();
 
 	struct ApplicationObject{
 		void* id;
@@ -322,13 +303,13 @@ private:
 
 	struct WindowObject{
 		void* id;
-		WindowObject(const morda::App::WindowParams& wp);
+		WindowObject(const App::WindowParams& wp);
 		~WindowObject()noexcept;
 	} windowObject;
 
 	struct OpenGLContext{
 		void *id;
-		OpenGLContext(const morda::App::WindowParams& wp, void* window);
+		OpenGLContext(const App::WindowParams& wp, void* window);
 		~OpenGLContext()noexcept{
 			this->Destroy();
 		}
@@ -345,8 +326,14 @@ private:
 #endif
 
 private:
-	Render renderer; //This should init the rendering
-
+#if M_OS_NAME != M_OS_NAME_IOS
+	void swapFrameBuffers();
+#endif
+	
+	struct GLEWWrapper{
+		GLEWWrapper();
+	} glewWrapper;
+	
 
 #if M_OS_NAME != M_OS_NAME_ANDROID
 private:
@@ -354,38 +341,34 @@ private:
 #endif
 
 
-#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
-public:
-	void postToUiThread_ts(std::function<void()>&& f);
-#else
-public:
-	/**
-	 * @brief Execute function on UI thread.
-	 * This function is thread safe. It posts the function to the queue of execution on UI thread,
-	 * the function will be executed on next UI cycle.
-	 * @param f - function to execute on UI thread.
-	 */
-	void postToUiThread_ts(std::function<void()>&& f){	
-		this->uiQueue.pushMessage(std::move(f));
-	}
+#if M_OS != M_OS_WINDOWS && M_OS != M_OS_MACOSX
 private:
 	nitki::Queue uiQueue;
 #endif
 
 private:
-	Updateable::Updater updater;
-
+	
+	class MordaVOkne : public morda::Morda{
+	public:
+		MordaVOkne(morda::real dotsPerInch, morda::real dotsPerPt) :
+				Morda(dotsPerInch, dotsPerPt)
+		{}
+		
+		void postToUiThread_ts(std::function<void()>&& f) override{
+#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
+			App::inst().postToUiThread_ts(std::move(f));
+#else
+			App::inst().uiQueue.pushMessage(std::move(f));
+#endif
+		}
+	} gui;
+	
 public:
-	/**
-	 * @brief Standard shaders.
-	 * This is the instantiation of morda's standard shaders available for use.
-	 */
-	DefaultShaders shaders;
 
 	/**
 	 * @brief Create file interface into resources storage.
 	 * This function creates a morda's standard file interface to read application's
-	 * recources.
+	 * resources.
 	 * @param path - file path to initialize the file interface with.
 	 * @return Instance of the file interface into the resources storage.
 	 */
@@ -395,45 +378,29 @@ private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
 	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
-public:
-	/**
-	 * @brief Get current window rectangle.
-	 * @return Current application window rectangle.
-	 */
-	const morda::Rectr& winRect()const noexcept{
-		return this->curWinRect;
-	}
-
-public:
-	/**
-	 * @brief Instantiation of the resource manager.
-	 */
-	ResourceManager resMan;
-
-	/**
-	 * @brief Instantiation of the GUI inflater.
-	 */
-	Inflater inflater;
-
 private:
-	std::shared_ptr<morda::Widget> rootWidget; //NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
-
 	void updateWindowRect(const morda::Rectr& rect);
 
 	void render();
 
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
-		return morda::Vec2r(pos.x, this->winRect().d.y - pos.y - 1.0f);
+		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
+	void handleMouseMove(const kolme::Vec2f& pos, unsigned id){
+		this->gui.onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
+	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::Widget::MouseButton_e button, unsigned id){
+		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
+	}
 
-	void handleMouseHover(bool isHovered, unsigned pointerID);
+	void handleMouseHover(bool isHovered, unsigned pointerID){
+		this->gui.onMouseHover(isHovered, pointerID);
+	}
 
 protected:
 	/**
@@ -445,17 +412,6 @@ protected:
 public:
 
 	virtual ~App()noexcept{}
-
-	/**
-	 * @brief Set the root widget of the application.
-	 * @param w - the widget to set as a root widget.
-	 */
-	void setRootWidget(const std::shared_ptr<morda::Widget>& w){
-		this->rootWidget = w;
-
-		this->rootWidget->moveTo(morda::Vec2r(0));
-		this->rootWidget->resize(this->winRect().d);
-	}
 
 	/**
 	 * @brief Bring up the virtual keyboard.
@@ -472,92 +428,19 @@ public:
 	void hideVirtualKeyboard()noexcept;
 
 private:
-	std::weak_ptr<Widget> focusedWidget;
-
-	void setFocusedWidget(const std::shared_ptr<Widget> w);
+	
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	template <class UnicodeResolver> void handleCharacterInput(const UnicodeResolver& unicodeResolver, Key_e key){
-		if(auto w = this->focusedWidget.lock()){
-//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-			if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-				c->onCharacterInput(utki::wrapBuf(unicodeResolver.Resolve()), key);
-			}
-		}
+	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
+		this->gui.onCharacterInput(unicodeResolver, key);
 	}
 
-	void handleKeyEvent(bool isDown, Key_e keyCode);
+	void handleKeyEvent(bool isDown, morda::Key_e keyCode){
+		this->gui.onKeyEvent(isDown, keyCode);
+	}
 
 public:
-	
-	/**
-	 * @brief Information about screen units.
-	 * This class holds information about screen units and performs conversion
-	 * from one unit to another.
-	 * In morda, length can be expressed in pixels, millimeters or points.
-	 * Points is a convenience unit which is different depending on the screen dimensions
-	 * and density. Point is never less than one pixel.
-	 * For normal desktop displays like HP or Full HD point is equal to one pixel.
-	 * For higher density desktop displays point is more than one pixel depending on density.
-	 * For mobile platforms the point is also 1 or more pixels depending on display density and physical size.
-	 */
-	class Units{
-		real dotsPerInch_v;
-		real dotsPerPt_v;
-	public:
-		/**
-		 * @brief Constructor.
-		 * @param dotsPerInch - dots per inch.
-		 * @param dotsPerPt - dots per point.
-		 */
-		Units(real dotsPerInch, real dotsPerPt) :
-				dotsPerInch_v(dotsPerInch),
-				dotsPerPt_v(dotsPerPt)
-		{}
-		
-		/**
-		 * @brief Get dots (pixels) per inch.
-		 * @return Dots per inch.
-		 */
-		real dpi()const noexcept{
-			return this->dotsPerInch_v;
-		}
-		
-		/**
-		 * @brief Get dots (pixels) per centimeter.
-		 * @return Dots per centimeter.
-		 */
-		real dotsPerCm()const noexcept{
-			return this->dpi() / 2.54f;
-		}
-		
-		/**
-		 * @brief Get dots (pixels) per point.
-		 * @return Dots per point.
-		 */
-		real dotsPerPt()const noexcept{
-			return this->dotsPerPt_v;
-		}
-		
-		/**
-		 * @brief Convert millimeters to pixels (dots).
-		 * @param mm - value in millimeters.
-		 * @return Value in pixels.
-		 */
-		real mmToPx(real mm)const noexcept{
-			return std::round(mm * this->dotsPerCm() / 10.0f);
-		}
-		
-		/**
-		 * @brief Convert points to pixels.
-		 * @param pt - value in points.
-		 * @return  Value in pixels.
-		 */
-		real ptToPx(real pt)const noexcept{
-			return std::round(pt * this->dotsPerPt());
-		}
-	} units;
 	
 	/**
 	 * @brief Requests application to exit.
@@ -588,14 +471,6 @@ public:
 	 * @param enable - whether to enable or to disable fullscreen mode.
 	 */
 	void setFullscreen(bool enable);
-	
-	/**
-	 * @brief Initialize standard widgets library.
-	 * In addition to core widgets it is possible to use standard widgets.
-	 * This function loads necessarey resource packs and initializes standard
-	 * widgets to be used by application.
-	 */
-	void initStandardWidgets();
 	
 
 	/**

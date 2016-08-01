@@ -1,7 +1,7 @@
 #include "TextLabel.hpp"
 
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 
 
@@ -16,17 +16,15 @@ TextLabel::TextLabel(const stob::Node* chain) :
 
 
 
-
-//override
 void TextLabel::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.translate(-this->textBoundingBox().p.x, -this->font().boundingBox().p.y);
 	
 	PosTexShader& s = [this]() -> PosTexShader&{
 		if(this->color() == 0xffffffff){//if white
-			return morda::App::inst().shaders.posTexShader;
+			return morda::Morda::inst().shaders.posTexShader;
 		}else{
-			ColorPosTexShader& s = morda::App::inst().shaders.colorPosTexShader;
+			ColorPosTexShader& s = morda::Morda::inst().shaders.colorPosTexShader;
 
 			s.setColor(this->color());
 			return s;

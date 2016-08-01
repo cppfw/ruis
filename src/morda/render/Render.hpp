@@ -24,9 +24,7 @@ class Render{
 	friend class Texture2D;
 	friend class FrameBuffer;
 	
-	friend class App;
-	
-	std::unique_ptr<utki::Void> pimpl;
+	friend class Morda;
 	
 	Render();
 	~Render()noexcept;
@@ -204,11 +202,6 @@ public:
 	 * @param src - rectangle on the current color buffer. X axis goes right, Y axis goes upwards.
 	 */
 	static void copyColorBufferToTexture(kolme::Vec2i dst, kolme::Recti src);
-
-	/**
-	 * @brief Swap front and back buffers.
-	 */
-	static void swapFrameBuffers();
 	
 	//=== functions to be used by FrameBuffer class
 private:

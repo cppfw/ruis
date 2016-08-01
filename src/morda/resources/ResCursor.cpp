@@ -1,6 +1,6 @@
 #include "ResCursor.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
 
 #include "../util/util.hpp"
 
@@ -16,7 +16,7 @@ ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
 std::shared_ptr<ResCursor> ResCursor::load(const stob::Node& chain, const papki::File& fi) {
 	std::shared_ptr<ResImage> image;
 	if(auto n = getProperty(&chain, "image")){
-		image = morda::App::inst().resMan.load<ResImage>(n->value());
+		image = morda::Morda::inst().resMan.load<ResImage>(n->value());
 	}else{
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'image' property");
 	}

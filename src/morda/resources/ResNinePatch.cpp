@@ -1,8 +1,10 @@
 #include "ResNinePatch.hpp"
-#include "../App.hpp"
-#include "../util/util.hpp"
 
 #include <iomanip>
+
+#include "../Morda.hpp"
+
+#include "../util/util.hpp"
 
 using namespace morda;
 

@@ -11,7 +11,7 @@ this_soname := $(shell cat $(this_soname_dependency))
 
 $(eval $(prorab-build-deb))
 
-#TODO: move to a separate makefile in res directory
+
 define this_rules
 install::
 #resource files

@@ -3,7 +3,7 @@
 #include "App.hpp"
 
 
-namespace morda{
+namespace mordavokne{
 
 
 

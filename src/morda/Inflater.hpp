@@ -13,10 +13,6 @@ namespace morda{
 
 
 
-class App;
-
-
-
 /**
  * @brief Inflater of GUI from STOB description.
  * This class is used to inflate GUI widget hierarchies from STOB descriptions.
@@ -25,7 +21,7 @@ class App;
  * with small letter. Specific widgets define more detailed rules of their description.
  */
 class Inflater{
-	friend class morda::App;
+	friend class Morda;
 
 	Inflater();
 public:

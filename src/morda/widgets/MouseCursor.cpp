@@ -1,6 +1,6 @@
 #include "MouseCursor.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
 
 #include "../util/util.hpp"
 
@@ -12,7 +12,7 @@ MouseCursor::MouseCursor(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(auto n = getProperty(chain, "cursor")){
-		this->setCursor(morda::App::inst().resMan.load<ResCursor>(n->value()));
+		this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(n->value()));
 	}
 }
 
@@ -41,7 +41,7 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	
 	ASSERT(this->quadTex)
 	
-	auto& s = morda::App::inst().shaders.posTexShader;
+	auto& s = morda::Morda::inst().shaders.posTexShader;
 	
 	Matr4r matr(matrix);
 	matr.translate(this->cursorPos);

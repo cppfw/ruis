@@ -1,6 +1,6 @@
 #include "Updateable.hpp"
 
-#include "App.hpp"
+#include "Morda.hpp"
 
 #include <aika/tick.hpp>
 
@@ -157,7 +157,7 @@ void Updateable::Updater::removeFromToAdd(Updateable* u){
 
 
 void Updateable::startUpdating(std::uint16_t dtMs){
-	ASSERT(App::inst().thisIsUIThread())
+//	ASSERT(App::inst().thisIsUIThread())
 
 //	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
@@ -167,24 +167,24 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	
 	this->dt = dtMs;
 	this->startedAt = aika::getTicks();
-	this->isUpdating_var = true;
+	this->isUpdating_v = true;
 	
 	this->pendingAddition = true;
 	
-	App::inst().updater.toAdd.push_front(this->sharedFromThis(this));
+	Morda::inst().updater.toAdd.push_front(this->sharedFromThis(this));
 }
 
 
 
 void Updateable::stopUpdating()noexcept{
-	ASSERT(App::inst().thisIsUIThread())
+//	ASSERT(App::inst().thisIsUIThread())
 	
 	if(this->queue){
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		App::inst().updater.removeFromToAdd(this);
+		Morda::inst().updater.removeFromToAdd(this);
 	}
 
-	this->isUpdating_var = false;
+	this->isUpdating_v = false;
 }

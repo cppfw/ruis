@@ -1,5 +1,6 @@
 #include "CheckBox.hpp"
-#include "../../App.hpp"
+
+#include "../../Morda.hpp"
 
 
 using namespace morda;
@@ -27,7 +28,7 @@ CheckBox::CheckBox(const stob::Node* chain) :
 	this->checkWidget = this->content().findChildByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isChecked());
 	
-	this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
+	this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
 }
 
 

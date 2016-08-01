@@ -4,7 +4,8 @@
 #include <array>
 
 #include "../../AppFactory.hpp"
-#include "../../util/util.hpp"
+
+#include "../../../../../../src/morda/util/util.hpp"
 
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
@@ -13,7 +14,7 @@
 
 
 
-using namespace morda;
+using namespace mordavokne;
 
 
 
@@ -189,31 +190,30 @@ void App::XInputMethodWrapper::Destroy()noexcept{
 
 
 namespace{
-real getDotsPerInch(Display* display){
+morda::real getDotsPerInch(Display* display){
 	int scrNum = 0;
-	real value = ((real(DisplayWidth(display, scrNum)) / (real(DisplayWidthMM(display, scrNum))/ 10.0))
-			+ (real(DisplayHeight(display, scrNum)) / (real(DisplayHeightMM(display, scrNum)) / 10.0))) / 2;
+	morda::real value = ((morda::real(DisplayWidth(display, scrNum)) / (morda::real(DisplayWidthMM(display, scrNum))/ 10.0))
+			+ (morda::real(DisplayHeight(display, scrNum)) / (morda::real(DisplayHeightMM(display, scrNum)) / 10.0))) / 2;
 	value *= 2.54f;
 	return value;
 }
 
-real getDotsPerPt(Display* display){
+morda::real getDotsPerPt(Display* display){
 	int scrNum = 0;
 	kolme::Vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
 	kolme::Vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
 	
-	return findDotsPerPt(resolution, screenSizeMm);
+	return morda::findDotsPerPt(resolution, screenSizeMm);
 }
 }//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
-		windowParams(requestedWindowParams),
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		units(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
+		gui(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version
@@ -245,301 +245,301 @@ public:
 	}
 };
 
-Widget::MouseButton_e ButtonNumberToEnum(int number){
+morda::Widget::MouseButton_e ButtonNumberToEnum(int number){
 	switch(number){
 		case 1:
-			return Widget::MouseButton_e::LEFT;
+			return morda::Widget::MouseButton_e::LEFT;
 		default:
 		case 2:
-			return Widget::MouseButton_e::MIDDLE;
+			return morda::Widget::MouseButton_e::MIDDLE;
 		case 3:
-			return Widget::MouseButton_e::RIGHT;
+			return morda::Widget::MouseButton_e::RIGHT;
 		case 4:
-			return Widget::MouseButton_e::WHEEL_UP;
+			return morda::Widget::MouseButton_e::WHEEL_UP;
 		case 5:
-			return Widget::MouseButton_e::WHEEL_DOWN;
+			return morda::Widget::MouseButton_e::WHEEL_DOWN;
 	}
 }
 
 
 
-const std::array<Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::ESCAPE,//9
-	Key_e::ONE,//10
-	Key_e::TWO,//11
-	Key_e::THREE,//12
-	Key_e::FOUR,//13
-	Key_e::FIVE,//14
-	Key_e::SIX,//15
-	Key_e::SEVEN,//16
-	Key_e::EIGHT,//17
-	Key_e::NINE,//18
-	Key_e::ZERO,//19
-	Key_e::MINUS,//20
-	Key_e::EQUALS,//21
-	Key_e::BACKSPACE,//22
-	Key_e::TAB,//23
-	Key_e::Q,//24
-	Key_e::W,//25
-	Key_e::E,//26
-	Key_e::R,//27
-	Key_e::T,//28
-	Key_e::Y,//29
-	Key_e::U,//30
-	Key_e::I,//31
-	Key_e::O,//32
-	Key_e::P,//33
-	Key_e::LEFT_SQUARE_BRACKET,//34
-	Key_e::RIGHT_SQUARE_BRACKET,//35
-	Key_e::ENTER,//36
-	Key_e::LEFT_CONTROL,//37
-	Key_e::A,//38
-	Key_e::S,//39
-	Key_e::D,//40
-	Key_e::F,//41
-	Key_e::G,//42
-	Key_e::H,//43
-	Key_e::J,//44
-	Key_e::K,//45
-	Key_e::L,//46
-	Key_e::SEMICOLON,//47
-	Key_e::APOSTROPHE,//48
-	Key_e::GRAVE,//49
-	Key_e::LEFT_SHIFT,//50
-	Key_e::BACKSLASH,//51
-	Key_e::Z,//52
-	Key_e::X,//53
-	Key_e::C,//54
-	Key_e::V,//55
-	Key_e::B,//56
-	Key_e::N,//57
-	Key_e::M,//58
-	Key_e::COMMA,//59
-	Key_e::PERIOD,//60
-	Key_e::SLASH,//61
-	Key_e::RIGHT_SHIFT,//62
-	Key_e::UNKNOWN,
-	Key_e::LEFT_ALT,//64
-	Key_e::SPACE,//65
-	Key_e::CAPSLOCK,//66
-	Key_e::F1,//67
-	Key_e::F2,//68
-	Key_e::F3,//69
-	Key_e::F4,//70
-	Key_e::F5,//71
-	Key_e::F6,//72
-	Key_e::F7,//73
-	Key_e::F8,//74
-	Key_e::F9,//75
-	Key_e::F10,//76
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::F11,//95
-	Key_e::F12,//96
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::RIGHT_CONTROL,//105
-	Key_e::UNKNOWN,
-	Key_e::PRINT_SCREEN,//107
-	Key_e::RIGHT_ALT,//108
-	Key_e::UNKNOWN,
-	Key_e::HOME,//110
-	Key_e::UP,//111
-	Key_e::PAGE_UP,//112
-	Key_e::LEFT,//113
-	Key_e::RIGHT,//114
-	Key_e::END,//115
-	Key_e::DOWN,//116
-	Key_e::PAGE_DOWN,//117
-	Key_e::INSERT,//118
-	Key_e::DELETE,//119
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::PAUSE,//127
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::WINDOWS,//133
-	Key_e::UNKNOWN,
-	Key_e::WINDOWS_MENU,//135
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN,
-	Key_e::UNKNOWN
+const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {{
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::ESCAPE,//9
+	morda::Key_e::ONE,//10
+	morda::Key_e::TWO,//11
+	morda::Key_e::THREE,//12
+	morda::Key_e::FOUR,//13
+	morda::Key_e::FIVE,//14
+	morda::Key_e::SIX,//15
+	morda::Key_e::SEVEN,//16
+	morda::Key_e::EIGHT,//17
+	morda::Key_e::NINE,//18
+	morda::Key_e::ZERO,//19
+	morda::Key_e::MINUS,//20
+	morda::Key_e::EQUALS,//21
+	morda::Key_e::BACKSPACE,//22
+	morda::Key_e::TAB,//23
+	morda::Key_e::Q,//24
+	morda::Key_e::W,//25
+	morda::Key_e::E,//26
+	morda::Key_e::R,//27
+	morda::Key_e::T,//28
+	morda::Key_e::Y,//29
+	morda::Key_e::U,//30
+	morda::Key_e::I,//31
+	morda::Key_e::O,//32
+	morda::Key_e::P,//33
+	morda::Key_e::LEFT_SQUARE_BRACKET,//34
+	morda::Key_e::RIGHT_SQUARE_BRACKET,//35
+	morda::Key_e::ENTER,//36
+	morda::Key_e::LEFT_CONTROL,//37
+	morda::Key_e::A,//38
+	morda::Key_e::S,//39
+	morda::Key_e::D,//40
+	morda::Key_e::F,//41
+	morda::Key_e::G,//42
+	morda::Key_e::H,//43
+	morda::Key_e::J,//44
+	morda::Key_e::K,//45
+	morda::Key_e::L,//46
+	morda::Key_e::SEMICOLON,//47
+	morda::Key_e::APOSTROPHE,//48
+	morda::Key_e::GRAVE,//49
+	morda::Key_e::LEFT_SHIFT,//50
+	morda::Key_e::BACKSLASH,//51
+	morda::Key_e::Z,//52
+	morda::Key_e::X,//53
+	morda::Key_e::C,//54
+	morda::Key_e::V,//55
+	morda::Key_e::B,//56
+	morda::Key_e::N,//57
+	morda::Key_e::M,//58
+	morda::Key_e::COMMA,//59
+	morda::Key_e::PERIOD,//60
+	morda::Key_e::SLASH,//61
+	morda::Key_e::RIGHT_SHIFT,//62
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::LEFT_ALT,//64
+	morda::Key_e::SPACE,//65
+	morda::Key_e::CAPSLOCK,//66
+	morda::Key_e::F1,//67
+	morda::Key_e::F2,//68
+	morda::Key_e::F3,//69
+	morda::Key_e::F4,//70
+	morda::Key_e::F5,//71
+	morda::Key_e::F6,//72
+	morda::Key_e::F7,//73
+	morda::Key_e::F8,//74
+	morda::Key_e::F9,//75
+	morda::Key_e::F10,//76
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::F11,//95
+	morda::Key_e::F12,//96
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::RIGHT_CONTROL,//105
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::PRINT_SCREEN,//107
+	morda::Key_e::RIGHT_ALT,//108
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::HOME,//110
+	morda::Key_e::UP,//111
+	morda::Key_e::PAGE_UP,//112
+	morda::Key_e::LEFT,//113
+	morda::Key_e::RIGHT,//114
+	morda::Key_e::END,//115
+	morda::Key_e::DOWN,//116
+	morda::Key_e::PAGE_DOWN,//117
+	morda::Key_e::INSERT,//118
+	morda::Key_e::DELETE,//119
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::PAUSE,//127
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::WINDOWS,//133
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::WINDOWS_MENU,//135
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN
 }};
 
 
 
-class KeyEventUnicodeResolver{
+class KeyEventUnicodeProvider : public morda::Morda::UnicodeProvider{
 	XIC& xic;
 	XEvent& event;
 public:
-	KeyEventUnicodeResolver(XIC& xic, XEvent& event) :
+	KeyEventUnicodeProvider(XIC& xic, XEvent& event) :
 			xic(xic),
 			event(event)
 	{}
 
-	std::vector<std::uint32_t> Resolve()const{
+	std::u32string get()const override{
 #ifndef X_HAVE_UTF8_STRING
 #	error "no Xutf8stringlookup()"
 #endif
 
 		Status status;
-		//KeySym xkeysym;
+
 		std::array<char, 32> staticBuf;
 		std::vector<char> arr;
 		auto buf = utki::wrapBuf(staticBuf);
@@ -563,28 +563,9 @@ public:
 			case XLookupChars:
 			case XLookupBoth:
 				if(size == 0){
-					return std::vector<std::uint32_t>();
+					return std::u32string();
 				}
-
-				{
-					typedef std::vector<std::uint32_t> T_Vector;
-					T_Vector utf32;
-
-					for(unikod::Utf8Iterator i(buf.begin()); !i.isEnd(); ++i){
-						utf32.push_back(i.character());
-					}
-
-					std::vector<std::uint32_t> ret(utf32.size());
-
-					std::uint32_t* dst = &*ret.begin();
-					for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
-						*dst = *src;
-					}
-
-					return ret;
-				}
-
-				break;
+				return unikod::toUtf32(&*buf.begin());
 			default:
 			case XBufferOverflow:
 				ASSERT(false)
@@ -593,7 +574,7 @@ public:
 				break;
 		}//~switch
 
-		return std::vector<std::uint32_t>();
+		return std::u32string();
 	}
 };
 
@@ -607,7 +588,7 @@ void App::quit()noexcept{
 }
 
 
-void App::Exec(){
+void App::exec(){
 	XEventWaitable xew(this->xDisplay.d);
 
 	pogodi::WaitSet waitSet(2);
@@ -620,7 +601,7 @@ void App::Exec(){
 	this->render();
 
 	while(!this->quitFlag){
-		waitSet.waitWithTimeout(this->updater.update());
+		waitSet.waitWithTimeout(this->gui.update());
 
 		if(this->uiQueue.canRead()){
 			while(auto m = this->uiQueue.peekMsg()){
@@ -650,15 +631,15 @@ void App::Exec(){
 					case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
 						{
-							Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
+							morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 							this->handleKeyEvent(true, key);
-							this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, event), key);
+							this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, event), key);
 						}
 						break;
 					case KeyRelease:
 //						TRACE(<< "KeyRelease X event got" << std::endl)
 						{
-							Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
+							morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 
 							//detect auto-repeated key events
 							if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
@@ -671,7 +652,7 @@ void App::Exec(){
 									)
 								{
 									//Key wasn't actually released
-									this->handleCharacterInput(KeyEventUnicodeResolver(this->xInputMethod.xic, nev), key);
+									this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, nev), key);
 
 									XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
 									break;
@@ -740,14 +721,14 @@ void App::Exec(){
 
 
 
-namespace morda{
+namespace mordavokne{
 
 inline void Main(int argc, const char** argv){
-	std::unique_ptr<morda::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
 	
 	ASSERT(app)
 
-	app->Exec();
+	app->exec();
 }
 
 }
@@ -755,7 +736,7 @@ inline void Main(int argc, const char** argv){
 
 
 int main(int argc, const char** argv){
-	morda::Main(argc, argv);
+	mordavokne::Main(argc, argv);
 
 	return 0;
 }

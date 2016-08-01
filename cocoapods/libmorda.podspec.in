@@ -9,24 +9,18 @@ Pod::Spec.new do |s|
   
   s.source = { :git => "https://github.com/igagis/morda.git", :tag => s.version }
 
-  s.source_files  = "src/**/*.{hpp,h,cpp,inc}", "src/morda/glue/ios/main.mm"
+  s.source_files  = "src/**/*.{hpp,h,cpp}"
   s.header_mappings_dir = "src"
 
   #workaround for freetype-related compiling problems
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/Headers/Private/freetype"' }
 
-  #we don't use Objective-C Automatic Resource Counting
-  s.requires_arc = false
-
   #this tells that we are linking against c++ libraries
   s.libraries = 'c++'
 
-  s.frameworks = 'GLKit'
-
-  s.dependency 'libutki', '>= 1.0.18'
+  s.dependency 'libutki', '>= 1.0.20'
   s.dependency 'libpogodi', '>= 1.0.8'
   s.dependency 'libpapki', '>= 1.0.11'
-  s.dependency 'libnitki', '>= 1.0.8'
   s.dependency 'libkolme', '>= 1.0.6'
   s.dependency 'libstob', '>= 3.2.3'
   s.dependency 'libaika', '>= 1.0.7'

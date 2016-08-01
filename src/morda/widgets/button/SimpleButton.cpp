@@ -1,5 +1,7 @@
 #include "SimpleButton.hpp"
-#include "../../App.hpp"
+
+#include "../../Morda.hpp"
+
 #include "../../util/util.hpp"
 
 
@@ -14,15 +16,15 @@ SimpleButton::SimpleButton(const stob::Node* chain) :
 		auto ch = getProperty(chain, "look");
 		
 		if(auto n = getProperty(ch, "imageNormal")){
-			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>(n->value());
+			this->imgNormal = morda::Morda::inst().resMan.load<ResNinePatch>(n->value());
 		}else{
-			this->imgNormal = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_button_normal");
+			this->imgNormal = morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_button_normal");
 		}
 
 		if(auto n = getProperty(ch, "imagePressed")){
-			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>(n->value());
+			this->imgPressed = morda::Morda::inst().resMan.load<ResNinePatch>(n->value());
 		}else{
-			this->imgPressed = morda::App::inst().resMan.load<ResNinePatch>("morda_npt_button_pressed");
+			this->imgPressed = morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_button_pressed");
 		}
 	}
 	

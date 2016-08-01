@@ -19,7 +19,7 @@ namespace morda{
  * For example every 30 milliseconds it will call the update() method.
  */
 class Updateable : virtual public utki::Shared{
-	friend class App;
+	friend class Morda;
 	
 private:
 	class Updater{
@@ -71,7 +71,7 @@ private:
 		return this->startedAt + std::uint32_t(this->dt);
 	}
 	
-	bool isUpdating_var = false;
+	bool isUpdating_v = false;
 	
 	//pointer to the queue the updateable is inserted into
 	Updater::UpdateQueue* queue = nullptr;
@@ -97,7 +97,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool isUpdating()const noexcept{
-		return this->isUpdating_var;
+		return this->isUpdating_v;
 	}
 	
 	/**

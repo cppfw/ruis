@@ -2,6 +2,7 @@
 #include "../../AppFactory.hpp"
 
 #include <papki/FSFile.hpp>
+#include <papki/RootDirFile.hpp>
 
 #include <sstream>
 
@@ -9,18 +10,20 @@
 #import <GLKit/GLKit.h>
 
 
-namespace morda{
+using namespace mordavokne;
+
+namespace mordavokne{
 	
 	void ios_render(){
-		morda::App::inst().render();
+		App::inst().render();
 	}
 	
 	std::uint32_t ios_update(){
-		return morda::App::inst().updater.update();
+		return App::inst().gui.update();
 	}
 	
 	void ios_updateWindowRect(morda::Vec2r dim){
-		morda::App::inst().updateWindowRect(
+		App::inst().updateWindowRect(
 											morda::Rectr(
 														 morda::Vec2r(0),
 														 dim
@@ -29,7 +32,7 @@ namespace morda{
 	}
 	
 	void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id){
-		morda::App::inst().handleMouseMove(
+		App::inst().handleMouseMove(
 										   morda::Vec2r(pos.x, pos.y),
 										   id
 										   );
@@ -37,7 +40,7 @@ namespace morda{
 	
 	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id){
 //		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
-		morda::App::inst().handleMouseButton(
+		App::inst().handleMouseButton(
 											 isDown,
 											 morda::Vec2r(pos.x, pos.y),
 											 button,
@@ -45,14 +48,14 @@ namespace morda{
 											 );
 	}
 	
-	const morda::App::WindowParams& ios_getWindowParams(){
-		return morda::App::inst().windowParams;
+	const App::WindowParams& ios_getWindowParams(){
+		return App::inst().windowParams;
 	}
 }
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
-	morda::App* app;
+	App* app;
 }
 
 @end
@@ -61,7 +64,7 @@ namespace morda{
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	self->app = morda::createAppUnix(0, nullptr, utki::Buf<std::uint8_t>()).release();
+	self->app = createAppUnix(0, nullptr, utki::Buf<std::uint8_t>()).release();
 	
 	return YES;
 }
@@ -108,7 +111,7 @@ int main(int argc, char * argv[]){
 
 
 
-void morda::App::postToUiThread_ts(std::function<void()>&& f){
+void App::postToUiThread_ts(std::function<void()>&& f){
 	auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)));
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -119,7 +122,7 @@ void morda::App::postToUiThread_ts(std::function<void()>&& f){
 
 
 
-void morda::App::setFullscreen(bool enable){
+void App::setFullscreen(bool enable){
 	UIWindow* w = (UIWindow*)this->windowObject.id;
 	
 	float scale = [[UIScreen mainScreen] scale];
@@ -129,7 +132,7 @@ void morda::App::setFullscreen(bool enable){
 			CGRect rect = w.frame;
 			w.rootViewController.view.frame = rect;
 		}
-		morda::ios_updateWindowRect(morda::Vec2r(
+		ios_updateWindowRect(morda::Vec2r(
 												 std::round(w.frame.size.width * scale),
 												 std::round(w.frame.size.height * scale)
 			));
@@ -144,7 +147,7 @@ void morda::App::setFullscreen(bool enable){
 				w.rootViewController.view.frame = rect;
 		}
 		
-		morda::ios_updateWindowRect(morda::Vec2r(
+		ios_updateWindowRect(morda::Vec2r(
 												 std::round(w.frame.size.width * scale),
 												 std::round((w.frame.size.height - statusBarSize.height) * scale)
 			));
@@ -153,7 +156,7 @@ void morda::App::setFullscreen(bool enable){
 }
 
 
-void morda::App::quit()noexcept{
+void App::quit()noexcept{
 	//TODO:
 }
 
@@ -186,10 +189,10 @@ morda::real getDotsPerPt(){
 
 }//~namespace
 
-morda::App::App(const morda::App::WindowParams& wp) :
+App::App(const App::WindowParams& wp) :
 		windowParams(wp),
 		windowObject(wp),
-		units(getDotsPerInch(), getDotsPerPt())
+		gui(getDotsPerInch(), getDotsPerPt())
 {
 	this->setFullscreen(false);//this will intialize the viewport
 }
@@ -223,13 +226,13 @@ morda::App::App(const morda::App::WindowParams& wp) :
 	view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
 
 	{
-		const morda::App::WindowParams& wp = morda::ios_getWindowParams();
-		if(wp.buffers.get(morda::App::WindowParams::Buffer_e::DEPTH)){
+		const App::WindowParams& wp = ios_getWindowParams();
+		if(wp.buffers.get(App::WindowParams::Buffer_e::DEPTH)){
 			view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
 		}else{
 			view.drawableDepthFormat = GLKViewDrawableDepthFormatNone;
 		}
-		if(wp.buffers.get(morda::App::WindowParams::Buffer_e::STENCIL)){
+		if(wp.buffers.get(App::WindowParams::Buffer_e::STENCIL)){
 			view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
 		}else{
 			view.drawableStencilFormat = GLKViewDrawableStencilFormatNone;
@@ -261,11 +264,11 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 - (void)update{
 	//TODO: adapt to nothing to update, lower frame rate
-	morda::ios_update();
+	ios_update();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
-	morda::ios_render();
+	ios_render();
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -275,7 +278,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch began = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		morda::ios_handleMouseButton(
+		ios_handleMouseButton(
 				true,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 				morda::Widget::MouseButton_e::LEFT,
@@ -291,7 +294,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch moved = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		morda::ios_handleMouseMove(
+		ios_handleMouseMove(
 									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 									 0 //TODO: id
 			);
@@ -305,7 +308,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch ended = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		morda::ios_handleMouseButton(
+		ios_handleMouseButton(
 									 false,
 									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 									 morda::Widget::MouseButton_e::LEFT,
@@ -331,7 +334,7 @@ morda::App::App(const morda::App::WindowParams& wp) :
 
 
 
-morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
+App::WindowObject::WindowObject(const App::WindowParams& wp){
 	UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	if(!window){
@@ -348,32 +351,32 @@ morda::App::WindowObject::WindowObject(const morda::App::WindowParams& wp){
 	[window makeKeyAndVisible];
 }
 
-morda::App::WindowObject::~WindowObject()noexcept{
+App::WindowObject::~WindowObject()noexcept{
 	UIWindow* window = (UIWindow*)this->id;
 	[window release];
 }
 
 
-void morda::App::showVirtualKeyboard()noexcept{
+void App::showVirtualKeyboard()noexcept{
 	//TODO:
 }
 
-void morda::App::hideVirtualKeyboard()noexcept{
+void App::hideVirtualKeyboard()noexcept{
 	//TODO:
 }
 
 
-std::unique_ptr<papki::File> morda::App::createResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
 	std::string dir([[[NSBundle mainBundle] resourcePath] fileSystemRepresentation]);
 	
 //	TRACE(<< "res path = " << dir << std::endl)
 
-	std::stringstream ss;
-	ss << dir << "/" << path;
+	auto rdf = utki::makeUnique<papki::RootDirFile>(utki::makeUnique<papki::FSFile>(), dir + "/");
+	rdf->setPath(path);
 	
-	return utki::makeUnique<papki::FSFile>(ss.str());
+	return std::move(rdf);
 }
 
-void morda::App::setMouseCursorVisible(bool visible){
+void App::setMouseCursorVisible(bool visible){
 	//do nothing
 }

@@ -1,10 +1,13 @@
 #include <utki/util.hpp>
 #include <utki/types.hpp>
 
-#include "NinePatch.hpp"
-#include "../App.hpp"
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
+
 #include "core/proxy/ResizeProxy.hpp"
+
+#include "NinePatch.hpp"
 
 
 using namespace morda;
@@ -129,7 +132,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	//this should go after setting up border widgets
 	if(const stob::Node* n = getProperty(chain, "image")){
-		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 	}
 	
 	if(chain){

@@ -13,7 +13,6 @@ namespace morda{
 
 
 
-class App;
 class Resource;
 
 
@@ -45,7 +44,7 @@ class Resource;
  * @endcode
  */
 class ResourceManager{
-	friend class morda::App;
+	friend class Morda;
 	friend class Resource;
 	
 	std::map<const std::string, std::weak_ptr<Resource>> resMap;
@@ -121,7 +120,7 @@ public:
 	 * 
 	 * Example:
 	 * @code
-	 * auto image = morda::App::inst().resMan().load<morda::ResImage>("img_my_image_name");
+	 * auto image = morda::Morda::inst().resMan().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 * 
 	 * @param resName - name of the resource as it appears in resource description.

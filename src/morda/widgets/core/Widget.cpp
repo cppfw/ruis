@@ -2,12 +2,15 @@
 
 #include "../../render/FrameBuffer.hpp"
 
+#include "../../Morda.hpp"
+
+#include "../../util/util.hpp"
+
 #include "Widget.hpp"
 
 #include "container/Container.hpp"
 
-#include "../../App.hpp"
-#include "../../util/util.hpp"
+
 
 using namespace morda;
 
@@ -239,6 +242,11 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
 	
+	auto oldViewport = Render::getViewport();
+	utki::ScopeExit scopeExit([&oldViewport](){
+		Render::setViewport(oldViewport);
+	});
+	
 	Render::setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
 	
 	Render::clearColor(kolme::Vec4f(0.0f));
@@ -253,7 +261,6 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	tex = fb.detachColor();
 	
 	fb.unbind();
-	Render::setViewport(App::inst().winRect().to<int>());
 	
 	return tex;
 }
@@ -262,7 +269,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 	
-	morda::PosTexShader &s = App::inst().shaders.posTexShader;
+	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
 
 	ASSERT(this->cacheTex)
 	this->cacheTex.bind();
@@ -295,27 +302,27 @@ void Widget::onKeyInternal(bool isDown, Key_e keyCode){
 
 
 void Widget::focus()noexcept{
-	ASSERT(App::inst().thisIsUIThread())
+//	ASSERT(App::inst().thisIsUIThread())
 
 	if(this->isFocused()){
 		return;
 	}
 
-	App::inst().setFocusedWidget(this->sharedFromThis(this));
+	Morda::inst().setFocusedWidget(this->sharedFromThis(this));
 }
 
 
 
 void Widget::unfocus()noexcept{
-	ASSERT(App::inst().thisIsUIThread())
+//	ASSERT(App::inst().thisIsUIThread())
 
 	if(!this->isFocused()){
 		return;
 	}
 
-	ASSERT(App::inst().focusedWidget.lock() && App::inst().focusedWidget.lock().operator->() == this)
+	ASSERT(Morda::inst().focusedWidget.lock() && Morda::inst().focusedWidget.lock().operator->() == this)
 
-	App::inst().setFocusedWidget(nullptr);
+	Morda::inst().setFocusedWidget(nullptr);
 }
 
 

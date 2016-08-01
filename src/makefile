@@ -8,13 +8,6 @@ this_soname := $(shell cat $(prorab_this_dir)/soname.txt)
 this_srcs := $(shell find $(patsubst %/,%,$(prorab_this_dir)) -name *.cpp) #find all .cpp files
 this_srcs := $(patsubst $(prorab_this_dir)%,%,$(this_srcs)) #remove this dir prefix
 
-
-ifeq ($(prorab_os), macosx)
-    this_mm_src := morda/glue/macosx/main.mm
-endif
-
-
-
 this_cxxflags += -Wall #enable all warnings
 this_cxxflags += -Wno-comment #no warnings on nested comments
 this_cxxflags += -funsigned-char #the 'char' type is unsigned
@@ -42,7 +35,7 @@ endif
 ifeq ($(prorab_os), linux)
     this_cxxflags += -fPIC #generate position independent code
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += -lpthread -lX11 -lGL -lGLEW -ljpeg -lpng `pkg-config --libs freetype2` -lz
+    this_ldlibs += -lpthread -lGL -ljpeg -lpng `pkg-config --libs freetype2` -lz
 else ifeq ($(prorab_os), windows)
     this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
     this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
@@ -59,25 +52,8 @@ else ifeq ($(prorab_os), macosx)
     this_cxxflags += -I/usr/local/include/freetype2
     this_ldlibs += -lc++
     this_ldlibs += -framework Cocoa -framework OpenGL -lpng -lfreetype -ljpeg -lGLEW
-    
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)morda/glue/macosx/main.o
-
-    define this_rules
-        $(this_mm_obj): $(prorab_this_dir)morda/glue/macosx/main.mm
-		@echo Compiling $$<...
-		$(prorab_echo)mkdir -p $$(dir $$@)
-		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
-    endef
-    $(eval $(this_rules))
 endif
 
-this_ldlibs += -lnitki -lpogodi -lpapki -laika -lstob -lsvgdom -lsvgren
+this_ldlibs += -lpogodi -lpapki -lstob -lsvgdom -lsvgren
 
 $(eval $(prorab-build-lib))
-
-
-ifeq ($(prorab_os), macosx)
-    $(prorab_this_staticlib): $(this_mm_obj)
-
-    $(prorab_this_name): $(this_mm_obj)
-endif

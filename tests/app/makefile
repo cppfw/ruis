@@ -3,7 +3,8 @@ include prorab.mk
 this_name := tests
 
 
-this_srcs := src/main.cpp
+this_srcs += src/main.cpp
+this_srcs += src/mordavokne/App.cpp
 
 
 this_cxxflags := -Wall
@@ -22,6 +23,8 @@ ifeq ($(debug), true)
 endif
 
 ifeq ($(prorab_os),windows)
+    this_srcs += src/mordavokne/glue/glue.cpp
+
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension)
     this_ldflags += -L/usr/lib -L/usr/local/lib
@@ -32,16 +35,35 @@ ifeq ($(prorab_os),windows)
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
+    this_mm_src := src/mordavokne/glue/macosx/glue.mm
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+
+    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)src/mordavokne/glue/macosx/glue.o
+
+    define this_rules
+        $(this_mm_obj): $(prorab_this_dir)src/mordavokne/glue/macosx/glue.mm
+		@echo Compiling $$<...
+		$(prorab_echo)mkdir -p $$(dir $$@)
+		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
+    endef
+    $(eval $(this_rules))
 else ifeq ($(prorab_os),linux)
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL
+    this_srcs += src/mordavokne/glue/glue.cpp
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl
 endif
 
-this_ldlibs += -lnitki -laika -lpogodi -lstob
+this_ldlibs += -lnitki -laika -lpogodi -lstob -lpapki
 
 this_ldflags += -rdynamic
 
 $(eval $(prorab-build-app))
+
+ifeq ($(prorab_os), macosx)
+    $(prorab_this_staticlib): $(this_mm_obj)
+
+    $(prorab_this_name): $(this_mm_obj)
+endif
+
 
 
 define this_rules

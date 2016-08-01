@@ -1,8 +1,9 @@
 #include "Window.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
 
 #include "../util/util.hpp"
+
 
 
 using namespace morda;
@@ -193,7 +194,7 @@ morda::Window::Window(const stob::Node* chain) :
 
 		if(auto n = getProperty(ch, "background")){
 			for(; n->next(); n = n->next());//take last child
-			this->setBackground(morda::App::inst().inflater.inflate(*n));
+			this->setBackground(morda::Morda::inst().inflater.inflate(*n));
 		}
 
 		{
@@ -418,7 +419,7 @@ void morda::Window::setBorders(Sidesr borders) {
 
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(isDown){
-		morda::App::inst().postToUiThread_ts(
+		morda::Morda::inst().postToUiThread_ts(
 				[this](){
 					this->makeTopmost();
 				}

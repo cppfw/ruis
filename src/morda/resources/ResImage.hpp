@@ -10,7 +10,7 @@
 
 #include "../shaders/PosTexShader.hpp"
 
-
+#include "../Morda.hpp"
 
 namespace morda{
 
@@ -72,7 +72,7 @@ public:
 	 * @param dpi - dots per inch.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual Vec2r dim(real dpi = 96)const noexcept = 0;
+	virtual Vec2r dim(real dpi = morda::Morda::inst().units.dpi())const noexcept = 0;
 	
 	/**
 	 * @brief Get raster texture of given dimensions.

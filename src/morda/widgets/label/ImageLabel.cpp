@@ -1,6 +1,6 @@
 #include "ImageLabel.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 #include "../../util/util.hpp"
 
@@ -14,7 +14,7 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 		BlendWidget(chain)
 {
 	if(auto image = getProperty(chain, "image")){
-		this->img = App::inst().resMan.load<ResImage>(image->value());
+		this->img = Morda::inst().resMan.load<ResImage>(image->value());
 		this->resize(this->img->dim());
 	}
 	
@@ -44,7 +44,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	morda::PosTexShader &s = App::inst().shaders.posTexShader;
+	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);
@@ -81,7 +81,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	Vec2r imgDim = this->img->dim(morda::App::inst().units.dpi());
+	Vec2r imgDim = this->img->dim(morda::Morda::inst().units.dpi());
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	

@@ -1,6 +1,7 @@
 #include "TextField.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
+
 #include "../util/util.hpp"
 
 
@@ -13,9 +14,9 @@ TextField::TextField(const stob::Node* chain) :
 		ti(utki::makeShared<TextInput>(chain))
 {
 	if(auto n = getProperty(chain, "background")){
-		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>(n->value()));
+		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 	}else{
-		this->setNinePatch(morda::App::inst().resMan.load<ResNinePatch>("morda_npt_textfield_background"));
+		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_textfield_background"));
 	}
 	
 	this->content().add(this->ti);

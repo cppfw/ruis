@@ -17,11 +17,12 @@
 
 #include <utki/Exc.hpp>
 #include <utki/Void.hpp>
+#include <utki/Unique.hpp>
 #include <utki/PoolStored.hpp>
 #include <utki/Buf.hpp>
 
 #include "../Exc.hpp"
-#include "../App.hpp"
+
 
 using namespace morda;
 
@@ -328,66 +329,7 @@ kolme::Recti Render::getViewport() {
 	return kolme::Recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
-
-
-namespace {
-
-#if M_OS == M_OS_WINDOWS
-
-struct OpenGLContext : public utki::Void{
-	HGLRC hrc;
-public:
-	OpenGLContext(HDC hdc) {
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
-
-		this->hrc = wglCreateContext(hdc);
-		if (!this->hrc) {
-			throw morda::Exc("Failed to create OpenGL rendering context");
-		}
-
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-
-		if (!wglMakeCurrent(hdc, this->hrc)) {
-			this->Destroy();
-			throw morda::Exc("Failed to activate OpenGL rendering context");
-		}
-
-		//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-	}
-
-	~OpenGLContext()noexcept {
-		this->Destroy();
-	}
-
-	void Destroy() {
-		if (!wglMakeCurrent(NULL, NULL)) {
-			ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
-		}
-
-		if (!wglDeleteContext(this->hrc)) {
-			ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
-		}
-	}
-};
-
-#else
-
-#endif
-
-}//~namespace
-
-Render::Render() :
-		pimpl(
-#if M_OS == M_OS_WINDOWS
-				new OpenGLContext(morda::App::inst().deviceContext.hdc)
-#endif
-			)
-{
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-	if(glewInit() != GLEW_OK){
-		throw morda::Exc("GLEW initialization failed");
-	}
-#endif
+Render::Render(){
 	AssertOpenGLNoError();
 	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 }
@@ -577,26 +519,6 @@ unsigned Render::getMaxTextureSize(){
 	return unsigned(val);
 }
 
-//TODO: move it to App class?
-void Render::swapFrameBuffers() {
-#if M_OS == M_OS_WINDOWS
-	SwapBuffers(morda::App::inst().deviceContext.hdc);
-#elif M_OS == M_OS_LINUX
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
-#	else
-	glXSwapBuffers(morda::App::inst().xDisplay.d, morda::App::inst().xWindow.w);
-#	endif
-#elif M_OS == M_OS_MACOSX
-#	if M_OS_NAME == M_OS_NAME_IOS
-	//ios will swap buffers for us
-#	else
-	morda::App::inst().macosx_SwapFrameBuffers();
-#	endif
-#else
-#	error "unknown OS"
-#endif
-}
 
 void Render::setCullEnabled(bool enable) {
 	if(enable){
@@ -610,7 +532,10 @@ void Render::setCullEnabled(bool enable) {
 
 namespace{
 
-struct OpenGLFrameBuffer : public utki::Void, public utki::Unique{
+struct OpenGLFrameBuffer :
+		public utki::Void,
+		public utki::Unique
+{
 	GLuint fbo;
 
 	OpenGLFrameBuffer(){

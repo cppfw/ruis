@@ -43,7 +43,7 @@ class Container;
  */
 class Widget : virtual public utki::Shared{
 	friend class Container;
-	friend class App;
+	friend class Morda;
 	
 public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;

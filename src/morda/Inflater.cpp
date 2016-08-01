@@ -13,7 +13,7 @@
 #include "widgets/core/proxy/MouseProxy.hpp"
 #include "widgets/core/proxy/ResizeProxy.hpp"
 
-#include "App.hpp"
+#include "Morda.hpp"
 
 #include "util/util.hpp"
 
@@ -137,9 +137,10 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 }
 
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
-	if(!App::inst().thisIsUIThread()){
-		throw Exc("Inflate called not from UI thread");
-	}
+	//TODO:
+//	if(!App::inst().thisIsUIThread()){
+//		throw Exc("Inflate called not from UI thread");
+//	}
 	
 	const stob::Node* n = &chain;
 	for(; n && n->isProperty(); n = n->next()){

@@ -2,7 +2,7 @@
 
 #include "../../render/Texture2D.hpp"
 
-#include "../../App.hpp"
+#include "../../Morda.hpp"
 
 
 using namespace morda;
@@ -27,7 +27,7 @@ void BlurGlass::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	morda::SimpleBlurPosTexShader &s = App::inst().shaders.simpleBlurPosTexShader;
+	morda::SimpleBlurPosTexShader &s = Morda::inst().shaders.simpleBlurPosTexShader;
 
 	s.setMatrix(matr);
 	

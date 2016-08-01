@@ -1,6 +1,6 @@
 #include "TextWidget.hpp"
 
-#include "../App.hpp"
+#include "../Morda.hpp"
 
 #include "../util/util.hpp"
 
@@ -13,9 +13,9 @@ TextWidget::TextWidget(const stob::Node* desc) :
 		ColorWidget(desc)
 {
 	if(const stob::Node* p = getProperty(desc, "font")){
-		this->font_v = App::inst().resMan.load<morda::ResFont>(p->value());
+		this->font_v = Morda::inst().resMan.load<morda::ResFont>(p->value());
 	}else{
-		this->font_v = morda::App::inst().resMan.load<ResFont>("morda_fnt_normal");
+		this->font_v = morda::Morda::inst().resMan.load<ResFont>("morda_fnt_normal");
 	}
 }
 

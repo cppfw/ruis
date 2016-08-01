@@ -1,10 +1,9 @@
 #include "util.hpp"
 
-#include "../App.hpp"
-
 #include <utki/debug.hpp>
 #include <utki/config.hpp>
 
+#include "../Morda.hpp"
 
 using namespace morda;
 
@@ -65,9 +64,9 @@ morda::Vec2r morda::dimVec2rFromSTOB(const stob::Node* chain){
 real morda::dimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
-		return App::inst().units.mmToPx(n.asFloat());
+		return Morda::inst().units.mmToPx(n.asFloat());
 	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 't' && n.value()[n.length() - 2] == 'p'){ //check if in points
-		return App::inst().units.ptToPx(n.asFloat());
+		return Morda::inst().units.ptToPx(n.asFloat());
 	}
 	
 	return n.asFloat();

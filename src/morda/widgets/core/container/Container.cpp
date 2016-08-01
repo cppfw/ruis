@@ -1,6 +1,6 @@
 #include "Container.hpp"
 
-#include "../../../App.hpp"
+#include "../../../Morda.hpp"
 
 #include "../../../util/util.hpp"
 
@@ -65,7 +65,7 @@ const Widget::LayoutParams& Container::getLayoutParamsDuringLayout(const Widget&
 
 void Container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().node(); n; n = n->nextNonProperty().node()){
-		this->add(morda::App::inst().inflater.inflate(*n));
+		this->add(morda::Morda::inst().inflater.inflate(*n));
 	}
 }
 
@@ -182,8 +182,6 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 
 
 void Container::onHoverChanged(unsigned pointerID){
-	//TODO: if some child removed during iterating?
-	
 	if(this->isHovered(pointerID)){
 		return;
 	}
