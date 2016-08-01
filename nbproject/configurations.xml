@@ -143,6 +143,7 @@
       <itemPath>.gitignore</itemPath>
       <itemPath>.travis.yml</itemPath>
       <itemPath>ios/Podfile</itemPath>
+      <itemPath>appveyor.yml</itemPath>
       <itemPath>debian/control.in</itemPath>
       <itemPath>cocoapods/libmorda.podspec.in</itemPath>
       <itemPath>homebrew/libmorda.rb.in</itemPath>
