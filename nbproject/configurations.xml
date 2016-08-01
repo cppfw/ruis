@@ -132,6 +132,12 @@
     <df root="tests" name="2">
       <df name="app">
         <df name="src">
+          <df name="mordavokne">
+            <df name="glue">
+              <in>main.cpp</in>
+            </df>
+            <in>App.cpp</in>
+          </df>
           <in>main.cpp</in>
         </df>
       </df>
@@ -785,7 +791,7 @@
           <buildCommand>${MAKE} debug=true -j8</buildCommand>
           <cleanCommand>${MAKE} clean </cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <ccTool flags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC">
+          <ccTool flags="0">
             <standard>8</standard>
             <preprocessorList>
               <Elem>DEBUG</Elem>
@@ -1154,13 +1160,6 @@
       </item>
       <item path="tests/app/src/mordavokne/App.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/app/src/mordavokne/glue/main.cpp"
@@ -1168,13 +1167,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
     </conf>

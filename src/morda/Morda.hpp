@@ -133,7 +133,7 @@ public:
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void handleMouseMove(const kolme::Vec2f& pos, unsigned id);
+	void onMouseMove(const kolme::Vec2f& pos, unsigned id);
 
 	/**
 	 * @brief Feed in the mouse button event to GUI.
@@ -142,7 +142,7 @@ public:
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
+	void onMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.
@@ -150,14 +150,14 @@ public:
 	 * @param isHovered - whether the mouse pointer entered (true) the GUI area or left (false).
 	 * @param id - mouse pointer ID.
 	 */
-	void handleMouseHover(bool isHovered, unsigned id);
+	void onMouseHover(bool isHovered, unsigned id);
 	
 	/**
 	 * @brief Feed in the key event to GUI.
 	 * @param isDown - is the key pressed (true) or released (false).
 	 * @param keyCode - code of the key.
 	 */
-	void handleKeyEvent(bool isDown, Key_e keyCode);
+	void onKeyEvent(bool isDown, Key_e keyCode);
 	
 	/**
 	 * @brief Unicode input provider.
@@ -181,7 +181,7 @@ public:
 	 * @param unicode - unicode string provider.
 	 * @param key - key code associated with character input, can be UNKNOWN.
 	 */
-	void handleCharacterInput(const UnicodeProvider& unicode, Key_e key);
+	void onCharacterInput(const UnicodeProvider& unicode, Key_e key);
 	
 	
 	/**

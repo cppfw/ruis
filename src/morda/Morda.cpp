@@ -163,7 +163,7 @@ void Morda::render(const Matr4r& matrix)const{
 
 
 
-void Morda::handleMouseMove(const morda::Vec2r& pos, unsigned id){
+void Morda::onMouseMove(const morda::Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -176,7 +176,7 @@ void Morda::handleMouseMove(const morda::Vec2r& pos, unsigned id){
 
 
 
-void Morda::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
+void Morda::onMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -189,7 +189,7 @@ void Morda::handleMouseButton(bool isDown, const morda::Vec2r& pos, Widget::Mous
 
 
 
-void Morda::handleMouseHover(bool isHovered, unsigned pointerID){
+void Morda::onMouseHover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -197,7 +197,7 @@ void Morda::handleMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->setHovered(isHovered, pointerID);
 }
 
-void Morda::handleKeyEvent(bool isDown, Key_e keyCode){
+void Morda::onKeyEvent(bool isDown, Key_e keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){
@@ -226,7 +226,7 @@ void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
 	}
 }
 
-void Morda::handleCharacterInput(const UnicodeProvider& unicode, Key_e key){
+void Morda::onCharacterInput(const UnicodeProvider& unicode, Key_e key){
 	if(auto w = this->focusedWidget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){

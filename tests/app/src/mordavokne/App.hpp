@@ -390,16 +390,16 @@ private:
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const kolme::Vec2f& pos, unsigned id){
-		this->gui.handleMouseMove(this->nativeWindowToRootCoordinates(pos), id);
+		this->gui.onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
 	}
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::Widget::MouseButton_e button, unsigned id){
-		this->gui.handleMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
+		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
 
 	void handleMouseHover(bool isHovered, unsigned pointerID){
-		this->gui.handleMouseHover(isHovered, pointerID);
+		this->gui.onMouseHover(isHovered, pointerID);
 	}
 
 protected:
@@ -433,11 +433,11 @@ private:
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
 	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
-		this->gui.handleCharacterInput(unicodeResolver, key);
+		this->gui.onCharacterInput(unicodeResolver, key);
 	}
 
 	void handleKeyEvent(bool isDown, morda::Key_e keyCode){
-		this->gui.handleKeyEvent(isDown, keyCode);
+		this->gui.onKeyEvent(isDown, keyCode);
 	}
 
 public:
