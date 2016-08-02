@@ -54,16 +54,3 @@ endif
 this_ldlibs += -lpogodi -lpapki -lstob -lsvgdom -lsvgren -laika
 
 $(eval $(prorab-build-lib))
-
-
-
-#install default resource pack
-define this_rules
-install::
-	$(prorab_echo)for i in $(patsubst $(prorab_this_dir)../morda_res/%,/%,$(shell find $(prorab_this_dir)../morda_res -type f -name "*")); do \
-		install -d $(DESTDIR)$(PREFIX)/share/morda/res$(this_soname)$$$${i%/*}; \
-		install $(prorab_this_dir)../morda_res$$$$i $(DESTDIR)$(PREFIX)/share/morda/res$(this_soname)$$$$i; \
-	done
-endef
-$(eval $(this_rules))
-

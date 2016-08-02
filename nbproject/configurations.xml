@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="morda_res" name="0">
+    <df root="res" name="0">
+      <in>makefile</in>
     </df>
     <df root="src" name="1">
       <df name="morda">
@@ -161,7 +162,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>tests</Elem>
-    <Elem>morda_res</Elem>
+    <Elem>res</Elem>
   </sourceRootList>
   <projectmakefile>makefile</projectmakefile>
   <confs>
@@ -181,7 +182,7 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -j8</buildCommand>
+          <buildCommand>${MAKE} -j8 this_cxxflags=-DM_MORDA_LOCAL_RES</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
         </makeTool>
@@ -294,6 +295,8 @@
           </preprocessorList>
         </ccTool>
       </folder>
+      <item path="res/makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -1308,7 +1311,7 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE}  debug=true -j8</buildCommand>
+          <buildCommand>${MAKE}  debug=true -j8 CXXFLAGS=-DM_MORDA_LOCAL_RES</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <ccTool flags="0">
@@ -1420,6 +1423,8 @@
           </preprocessorList>
         </ccTool>
       </folder>
+      <item path="res/makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -2456,6 +2461,8 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="res/makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/Exc.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
@@ -2619,6 +2626,8 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="res/makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/Exc.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="0">
@@ -2826,6 +2835,8 @@
           </incDir>
         </ccTool>
       </folder>
+      <item path="res/makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>

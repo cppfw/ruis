@@ -35,16 +35,16 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	std::vector<std::string> paths;
 
 #if M_OS == M_OS_WINDOWS
-#	ifdef DEBUG
-	paths.push_back("../../morda_res/");
+#	ifdef M_MORDA_LOCAL_RES
+	paths.push_back("../../res/morda_res/");
 #	else
 	paths.push_back("morda_res/");
 #	endif
 #elif M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
 	paths.push_back("morda_res/");
 #else //linux or macosx
-#	ifdef DEBUG
-	paths.push_back("../../morda_res/");
+#	ifdef M_MORDA_LOCAL_RES
+	paths.push_back("../../res/morda_res/");
 #	else
 	
 	unsigned soname =
