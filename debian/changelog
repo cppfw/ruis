@@ -1,3 +1,9 @@
+libmorda (0.4.2) unstable; urgency=medium
+
+  * added dependency on aika
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 14:13:10 +0300
+
 libmorda (0.4.1) unstable; urgency=medium
 
   * homebrew fix, nuget fix
