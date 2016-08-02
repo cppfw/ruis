@@ -35,7 +35,7 @@ endif
 ifeq ($(prorab_os), linux)
     this_cxxflags += -fPIC #generate position independent code
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += -lpthread -lGL -ljpeg -lpng `pkg-config --libs freetype2` -lz
+    this_ldlibs += -lpthread -lGL -ljpeg -lpng `pkg-config --libs freetype2` -lz -lGLEW
 else ifeq ($(prorab_os), windows)
 #    this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
 #    this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
