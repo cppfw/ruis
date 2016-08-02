@@ -1,3 +1,9 @@
+libmorda (0.4.8) unstable; urgency=medium
+
+  * podspec resources
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 00:17:24 +0300
+
 libmorda (0.4.7) unstable; urgency=medium
 
   * windows: opengl by default
