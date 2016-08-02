@@ -30,6 +30,8 @@ nuget{
 			libunikod/1.0.2.2;
 			libutki/1.0.20;
 			zlib/1.2.8.8;
+			libsvgdom/0.2.13;
+			libsvgren/0.3.13;
 		};
 	}
 	files {
