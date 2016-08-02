@@ -18,6 +18,9 @@ Pod::Spec.new do |s|
   #this tells that we are linking against c++ libraries
   s.libraries = 'c++'
 
+
+  s.resources = "morda_res/**/*"
+
   s.dependency 'libutki', '>= 1.0.20'
   s.dependency 'libpapki', '>= 1.0.11'
   s.dependency 'libkolme', '>= 1.0.6'
