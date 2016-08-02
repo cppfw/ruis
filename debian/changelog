@@ -1,3 +1,9 @@
+libmorda (0.4.3) unstable; urgency=medium
+
+  * added dependency on aika
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 14:15:12 +0300
+
 libmorda (0.4.2) unstable; urgency=medium
 
   * added dependency on aika
