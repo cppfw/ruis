@@ -42,7 +42,8 @@ nuget{
 		};
 		
 		res += {
-			#add-each-file : ::nuget.targets.[${condition}].CopyToOutput;
+			#add-folder : ::nuget.targets.[${condition}].CopyToOutput;
+			#flatten = false
 			#destination : ${d_bin}\morda_res;
 		};
 		
