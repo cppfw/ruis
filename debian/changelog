@@ -1,3 +1,9 @@
+libmorda (0.4.6) unstable; urgency=medium
+
+  * nuget fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 21:20:49 +0300
+
 libmorda (0.4.5) unstable; urgency=medium
 
   * build fixes
