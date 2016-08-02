@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.libraries = 'c++'
 
 
-  s.resources = "res/**/*"
+  s.resources = "res/morda_res"
 
   s.dependency 'libutki', '>= 1.0.20'
   s.dependency 'libpapki', '>= 1.0.11'
