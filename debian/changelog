@@ -1,3 +1,9 @@
+libmorda (0.4.5) unstable; urgency=medium
+
+  * build fixes
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 20:50:43 +0300
+
 libmorda (0.4.4) unstable; urgency=medium
 
   * trying to bundle resources to cocoapods
