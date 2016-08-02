@@ -1,3 +1,9 @@
+libmorda (0.4.7) unstable; urgency=medium
+
+  * windows: opengl by default
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 23:21:54 +0300
+
 libmorda (0.4.6) unstable; urgency=medium
 
   * nuget fix
