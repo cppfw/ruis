@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		086D5B4B0BE9CDAADF5A9235 /* libPods-morda_test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 967293761C66B4EF58D038F6 /* libPods-morda_test.a */; };
+		2C09D3E71D51121300DCE090 /* morda_res in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D3E61D51121300DCE090 /* morda_res */; };
 		2C547A781C2F2C1E0079154C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C547A771C2F2C1E0079154C /* main.cpp */; };
 		2C547A841C2F4E930079154C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 2C547A831C2F4E930079154C /* res */; };
 		2C6512981C0A60F700D295F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C6512971C0A60F700D295F5 /* Foundation.framework */; };
@@ -86,7 +87,6 @@
 		2CB8BFBD1D4EA5CA00D3F036 /* TextWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BF7A1D4EA5CA00D3F036 /* TextWidget.cpp */; };
 		2CB8BFBE1D4EA5CA00D3F036 /* TreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BF7C1D4EA5CA00D3F036 /* TreeView.cpp */; };
 		2CB8BFBF1D4EA5CA00D3F036 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB8BF7E1D4EA5CA00D3F036 /* Window.cpp */; };
-		2CC8807C1D3AE2BB00CFCA50 /* morda_res in Resources */ = {isa = PBXBuildFile; fileRef = 2CC8807B1D3AE2BB00CFCA50 /* morda_res */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +102,7 @@
 /* Begin PBXFileReference section */
 		0874090BE77D2F5551D0E2EB /* Pods-morda_test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-morda_test.release.xcconfig"; path = "Pods/Target Support Files/Pods-morda_test/Pods-morda_test.release.xcconfig"; sourceTree = "<group>"; };
 		092CF4F2F5A713FD722963EA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2C09D3E61D51121300DCE090 /* morda_res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = morda_res; path = ../../res/morda_res; sourceTree = "<group>"; };
 		2C547A771C2F2C1E0079154C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../tests/app/src/main.cpp; sourceTree = "<group>"; };
 		2C547A831C2F4E930079154C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../tests/app/res; sourceTree = "<group>"; };
 		2C6512941C0A60F700D295F5 /* morda_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = morda_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +256,6 @@
 		2CB8BF7D1D4EA5CA00D3F036 /* TreeView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TreeView.hpp; sourceTree = "<group>"; };
 		2CB8BF7E1D4EA5CA00D3F036 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		2CB8BF7F1D4EA5CA00D3F036 /* Window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
-		2CC8807B1D3AE2BB00CFCA50 /* morda_res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = morda_res; path = ../../morda_res; sourceTree = "<group>"; };
 		88E415AE30DEBB436F57FDE6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		957ADA57ADC66A3BC19FCC35 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		967293761C66B4EF58D038F6 /* libPods-morda_test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-morda_test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,7 +328,7 @@
 			children = (
 				2C9352751D4FA90E00D58719 /* mordavokne */,
 				2CB8BEEB1D4EA5CA00D3F036 /* morda */,
-				2CC8807B1D3AE2BB00CFCA50 /* morda_res */,
+				2C09D3E61D51121300DCE090 /* morda_res */,
 				2C547A831C2F4E930079154C /* res */,
 				2C547A771C2F2C1E0079154C /* main.cpp */,
 				2C6512BA1C0A60F800D295F5 /* Images.xcassets */,
@@ -713,9 +713,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */,
+				2C09D3E71D51121300DCE090 /* morda_res in Resources */,
 				2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */,
 				2C547A841C2F4E930079154C /* res in Resources */,
-				2CC8807C1D3AE2BB00CFCA50 /* morda_res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
