@@ -2,21 +2,23 @@
 
 Install *morda* on your system.
 
-Entry point of the *morda* application is a method called _morda::createApp()_, and not a traditional _main()_.
+This sample uses link:https://github.com/igagis/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your sistem.
+
+Entry point of the *mordavokne* application is a method called _mordavokne::createApp()_, and not a traditional _main()_.
 Morda defines _main()_ internally, so the user should not define _main()_.
 
-User should derive their _Application_ class from _morda::App_, which will be a singleton class. Then, return an instance of that class from _morda::createApp()_. To do that, in `main.cpp` include necessary morda files:
+User should derive their _Application_ class from _mordavokne::App_, which will be a singleton class. Then, return an instance of that class from _mordavokne::createApp()_. To do that, in `main.cpp` include necessary morda files:
 ....
-#include <morda/App.hpp>
-#include <morda/AppFactory.hpp>
+#include <mordavokne/App.hpp>
+#include <mordavokne/AppFactory.hpp>
 ....
 
 Then we define our Application class as forllows
 ....
-class Application : public morda::App{
+class Application : public mordavokne::App{
 public:
 	Application() :
-			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
 		//Here we will do all the initializations of our app, like loading the UI etc.
 	}
@@ -25,7 +27,7 @@ public:
 
 And then we define the _morda::createApp()_ function
 ....
-std::unique_ptr<morda::App> morda::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	return utki::makeUnique<Application>();
 }
 ....
@@ -34,12 +36,12 @@ So, now we can build and run the project, but it will display just an empty wind
 
 Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
 ....
-class Application : public morda::App{
+class Application : public mordavokne::App{
 public:
 	Application() :
-			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
-		this->initStandardWidgets();
+		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
 	}
 };
 ....
@@ -66,20 +68,20 @@ Frame{// frame layout places widgets in the center one on top of another
 
 Now we need to "inflate" the GUI from sript in the code and set it to application:
 ....
-class Application : public morda::App{
+class Application : public mordavokne::App{
 public:
 	Application() :
-			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
-		this->initStandardWidgets();
+		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
 		
 		//Inflate widgets hierarchy from GUI description script
-		auto c = morda::App::inst().inflater.inflate(
+		auto c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.stob")
 			);
 		
 		//set the widgets hierarchy to the application
-		this->setRootWidget(c);
+		morda::Morda::inst().setRootWidget(c);
 	}
 };
 ....
@@ -87,23 +89,27 @@ public:
 After running the app we will see a button and a text label below it. But pressing the button will do nothing.
 Let's add some action on the button press
 ....
+#include <mordavokne/App.hpp>
+#include <mordavokne/AppFactory.hpp>
+
 #include <morda/widgets/label/TextLabel.hpp>
 #include <morda/widgets/button/Button.hpp>
 
-class Application : public morda::App{
+
+class Application : public mordavokne::App{
 public:
 	Application() :
-			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
-		this->initStandardWidgets();
+		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
 		
 		//Inflate widgets hierarchy from GUI description script
-		auto c = morda::App::inst().inflater.inflate(
+		auto c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.stob")
 			);
 		
 		//set the widgets hierarchy to the application
-		this->setRootWidget(c);
+		morda::Morda::inst().setRootWidget(c);
 		
 		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
 		ASSERT(textLabel)
@@ -127,5 +133,11 @@ public:
 		};
 	}
 };
+
+
+
+std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+	return utki::makeUnique<Application>();
+}
 ....
 Now we can run the app and press the button and see that it will do something :).
