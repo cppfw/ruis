@@ -173,7 +173,7 @@ int main( int argc, char* args[] ) {
 				morda::Morda::inst().onMouseButton(
 						e.button.type == SDL_MOUSEBUTTONDOWN,
 						morda::Vec2r(x, height_d - y),
-						e.button.button == 1 ? morda::Widget::MouseButton_e::LEFT : morda::Widget::MouseButton_e::RIGHT,
+						e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
 						0
 					);
 			}else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP){
