@@ -156,6 +156,7 @@ public:
 	
 	/**
 	 * @brief Feed in the key event to GUI.
+	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
 	 * @param isDown - is the key pressed (true) or released (false).
 	 * @param keyCode - code of the key.
 	 */
@@ -180,6 +181,8 @@ public:
 	 * @brief Feed in the character input event to the GUI.
 	 * The idea with UnicodeProvider parameter is that we don't want to calculate the unicode string
 	 * unless it is really needed, thus provide the string only when get() method is called.
+	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial key press.
+	 * UnicodeProvider may provide empty string.
 	 * @param unicode - unicode string provider.
 	 * @param key - key code associated with character input, can be UNKNOWN.
 	 */

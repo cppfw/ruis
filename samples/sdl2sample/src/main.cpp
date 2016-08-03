@@ -13,6 +13,36 @@ const int width_d = 640;
 const int height_d = 480;
 
 
+
+morda::Key_e sdlScancodeToMordaKey(SDL_Scancode sc){
+	switch(sc){
+		//TODO: add all key mappings
+		case SDL_SCANCODE_LEFT:
+			return morda::Key_e::LEFT;
+		case SDL_SCANCODE_RIGHT:
+			return morda::Key_e::RIGHT;
+		case SDL_SCANCODE_LCTRL:
+			return morda::Key_e::LEFT_CONTROL;
+		case SDL_SCANCODE_RCTRL:
+			return morda::Key_e::RIGHT_CONTROL;
+		case SDL_SCANCODE_END:
+			return morda::Key_e::END;
+		case SDL_SCANCODE_HOME:
+			return morda::Key_e::HOME;
+		case SDL_SCANCODE_BACKSPACE:
+			return morda::Key_e::BACKSPACE;
+		case SDL_SCANCODE_DELETE:
+			return morda::Key_e::DELETE;
+		case SDL_SCANCODE_LSHIFT:
+			return morda::Key_e::LEFT_SHIFT;
+		case SDL_SCANCODE_RSHIFT:
+			return morda::Key_e::RIGHT_SHIFT;
+		default:
+			return morda::Key_e::UNKNOWN;
+	}
+}
+
+
 int main( int argc, char* args[] ) { 
 	//Initialize SDL 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) { 
@@ -51,17 +81,33 @@ int main( int argc, char* args[] ) {
 		return 1;
 	}
 	
+	Uint32 userEventType = SDL_RegisterEvents(1);
+	if(userEventType == ((Uint32)-1)){
+		SDL_DestroyWindow( window ); 
+		SDL_Quit();
+		return 1;
+	}
+	
 	//create morda singleton
 	class SDLMorda : public morda::Morda{
 	public:
-		SDLMorda() :
-				morda::Morda(96, 1)
+		const Uint32 userEventType;
+		
+		SDLMorda(Uint32 userEventType) :
+				morda::Morda(96, 1),
+				userEventType(userEventType)
 		{}
 				
 		void postToUiThread_ts(std::function<void()>&& f)override{
-			//TODO:
+			SDL_Event e;
+			SDL_memset(&e, 0, sizeof(e));
+			e.type = this->userEventType;
+			e.user.code = 0;
+			e.user.data1 = new std::function<void()>(std::move(f));
+			e.user.data2 = 0;
+			SDL_PushEvent(&e);
 		}
-	} sdlMorda;
+	} sdlMorda(userEventType);
 	
 	morda::Morda::inst().setViewportSize(morda::Vec2r(width_d, height_d));
 	
@@ -97,6 +143,9 @@ int main( int argc, char* args[] ) {
 					tl->setText("odd");
 				}
 			}
+			morda::Morda::inst().postToUiThread_ts([](){
+				std::cout << "Hello from UI thread!" << std::endl;
+			});
 		};
 	}
 	
@@ -112,10 +161,6 @@ int main( int argc, char* args[] ) {
 			//User requests quit 
 			if( e.type == SDL_QUIT ) { 
 				quit = true; 
-			} 
-			//Handle key press with current mouse position 
-			else if( e.type == SDL_TEXTINPUT ) { 
-//				handleKeys( e.text.text[ 0 ], x, y ); 
 			}else if(e.type == SDL_MOUSEMOTION){
 				int x = 0, y = 0;
 				SDL_GetMouseState(&x, &y);
@@ -131,6 +176,33 @@ int main( int argc, char* args[] ) {
 						e.button.button == 1 ? morda::Widget::MouseButton_e::LEFT : morda::Widget::MouseButton_e::RIGHT,
 						0
 					);
+			}else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP){
+				std::cout << "SDL scancode= " << unsigned(e.key.keysym.scancode) << std::endl;
+				if(e.key.repeat == 0){
+					morda::Morda::inst().onKeyEvent(e.key.type == SDL_KEYDOWN, sdlScancodeToMordaKey(e.key.keysym.scancode));
+				}
+				if(e.type == SDL_KEYDOWN){
+					struct SDLUnicodeDummyProvider : public morda::Morda::UnicodeProvider{
+						std::u32string get()const override{
+							return std::u32string();
+						}
+					};
+					morda::Morda::inst().onCharacterInput(SDLUnicodeDummyProvider(), sdlScancodeToMordaKey(e.key.keysym.scancode));
+				}
+			}else if( e.type == SDL_TEXTINPUT ) {
+				struct SDLUnicodeProvider : public morda::Morda::UnicodeProvider{
+					char32_t c;
+					SDLUnicodeProvider(char inputChar) :
+							c(inputChar)
+					{}
+					std::u32string get()const override{
+						return std::u32string(&this->c, 1);
+					}
+				} sdlUnicodeProvider(e.text.text[0]);
+				morda::Morda::inst().onCharacterInput(sdlUnicodeProvider, morda::Key_e::UNKNOWN);
+			}else if(e.type == sdlMorda.userEventType){
+				std::unique_ptr<std::function<void()>> f(reinterpret_cast<std::function<void()>*>(e.user.data1));
+				f->operator ()();
 			}
 		}
 		
