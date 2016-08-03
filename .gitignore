@@ -1,28 +1,16 @@
-debian/control
-debian/files
-debian/**/*.log
-debian/**/*.substvars
-debian/libmorda[0123456789].install
-debian/tmp
-debian/libmorda*/
-debian/*.debhelper
+debian/
 
 *.[aod]
 *.so
 *.so.*
 *.dylib
 
-doc/doxygen/
-doc/doxygen.cfg
-doc/doxygen_sqlite3.db
+doc/
 
-nbproject/private/
+nbproject/
 
-pkg-config/morda.pc
+pkg-config/
 
-samples/basic/basic
-samples/basic/nbproject/private
+ios/
 
-ios
-
-msvs_solution
+msvs_solution/
