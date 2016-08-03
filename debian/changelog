@@ -1,3 +1,9 @@
+libmorda (0.4.12) unstable; urgency=medium
+
+  * bintray: deploy also .tar.gz
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 19:36:50 +0300
+
 libmorda (0.4.11) unstable; urgency=medium
 
   * bintray: upload source packages also

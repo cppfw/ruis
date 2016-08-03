@@ -15,11 +15,15 @@
 			"uploadPattern": "$1"
 		},
 		{
+			"includePattern": "../(.[^/]*(\\.dsc)$)",
+			"uploadPattern": "$1"
+		},
+		{
 			"includePattern": "../(.[^/]*(\\.tar\\.xz)$)",
 			"uploadPattern": "$1"
 		},
 		{
-			"includePattern": "../(.[^/]*(\\.dsc)$)",
+			"includePattern": "../(.[^/]*(\\.tar\\.gz)$)",
 			"uploadPattern": "$1"
 		}
 	],
