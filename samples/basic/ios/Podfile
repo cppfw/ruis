@@ -1,0 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/igagis/cocoapods-repo.git'
+
+project 'basic/basic.xcodeproj'
+
+target "basic" do
+	pod 'libutki', '>= 1.0.20'
+	pod 'libmordavokne', '>= 0.1.4'
+	pod 'libmorda', '>= 0.4.12'
+end

@@ -10,6 +10,7 @@
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>ios/Podfile</itemPath>
       <itemPath>makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
