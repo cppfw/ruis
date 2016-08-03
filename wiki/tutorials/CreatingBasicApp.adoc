@@ -2,7 +2,7 @@
 
 Install *morda* on your system.
 
-This sample uses link:https://github.com/igagis/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your sistem.
+This sample uses link:https://github.com/igagis/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your sistem too.
 
 Entry point of the *mordavokne* application is a method called _mordavokne::createApp()_, and not a traditional _main()_.
 Morda defines _main()_ internally, so the user should not define _main()_.
