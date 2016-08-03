@@ -1,6 +1,6 @@
 include prorab.mk
 
-this_name := sdl2sample
+this_name := sdl2example
 
 
 this_srcs := src/main.cpp

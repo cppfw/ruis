@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="res" name="1">
+    <df root="res" name="0">
     </df>
-    <df root="src" name="0">
+    <df root="src" name="1">
       <in>main.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -37,7 +37,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>make</buildCommand>
           <cleanCommand>make clean</cleanCommand>
-          <executablePath>sdl2sample</executablePath>
+          <executablePath>sdl2example</executablePath>
           <ccTool>
             <incDir>
               <pElem>.</pElem>
