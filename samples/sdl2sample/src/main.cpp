@@ -16,7 +16,7 @@ const int height_d = 480;
 
 morda::Key_e sdlScancodeToMordaKey(SDL_Scancode sc){
 	switch(sc){
-		//TODO: add all key mappings
+		//TODO: add all key mappings, use array for mapping instead of switch
 		case SDL_SCANCODE_LEFT:
 			return morda::Key_e::LEFT;
 		case SDL_SCANCODE_RIGHT:
@@ -69,11 +69,6 @@ int main( int argc, char* args[] ) {
 		SDL_DestroyWindow( window ); 
 		SDL_Quit();
 	}
-	
-	//Use Vsync
-//	if( SDL_GL_SetSwapInterval( 1 ) < 0 ) {
-//		printf( "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError() );
-//	}
 	
 	if(glewInit() != GLEW_OK){
 		SDL_DestroyWindow( window ); 
