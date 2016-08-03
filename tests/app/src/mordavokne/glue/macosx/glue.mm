@@ -50,7 +50,7 @@ void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 		);
 }
 
-void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id){
+void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
 	mordavokne::App::inst().handleMouseButton(
 			isDown,
 			morda::Vec2r(pos.x, mordavokne::App::inst().curWinRect.d.y - pos.y),
@@ -92,7 +92,7 @@ void App::quit()noexcept{
 }
 
 namespace{
-void mouseButton(NSEvent* e, bool isDown, morda::Widget::MouseButton_e b){
+void mouseButton(NSEvent* e, bool isDown, morda::MouseButton_e b){
 	NSPoint pos = [e locationInWindow];
 	macosx_HandleMouseButton(
 			isDown,
@@ -421,44 +421,44 @@ int main (int argc, const char** argv){
 
 -(void)mouseDown: (NSEvent*)e{
 //	TRACE(<< "left down!!!!!" << std::endl)
-	mouseButton(e, true, morda::Widget::MouseButton_e::LEFT);
+	mouseButton(e, true, morda::MouseButton_e::LEFT);
 }
 
 -(void)mouseUp: (NSEvent*)e{
 //	TRACE(<< "left up!!!!!" << std::endl)
-	mouseButton(e, false, morda::Widget::MouseButton_e::LEFT);
+	mouseButton(e, false, morda::MouseButton_e::LEFT);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
 //	TRACE(<< "right down!!!!!" << std::endl)
-	mouseButton(e, true, morda::Widget::MouseButton_e::RIGHT);
+	mouseButton(e, true, morda::MouseButton_e::RIGHT);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
 //	TRACE(<< "right up!!!!!" << std::endl)
-	mouseButton(e, false, morda::Widget::MouseButton_e::RIGHT);
+	mouseButton(e, false, morda::MouseButton_e::RIGHT);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
 //	TRACE(<< "middle down!!!!!" << std::endl)
-	mouseButton(e, true, morda::Widget::MouseButton_e::MIDDLE);
+	mouseButton(e, true, morda::MouseButton_e::MIDDLE);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
 //	TRACE(<< "middle up!!!!!" << std::endl)
-	mouseButton(e, false, morda::Widget::MouseButton_e::MIDDLE);
+	mouseButton(e, false, morda::MouseButton_e::MIDDLE);
 }
 
 -(void)scrollWheel: (NSEvent*)e{
 //	TRACE(<< "mouse wheel!!!!!" << std::endl)
 	
 	if([e hasPreciseScrollingDeltas] == NO){
-		morda::Widget::MouseButton_e button;
+		morda::MouseButton_e button;
 //		TRACE(<< "dy = " << float(dy) << std::endl)
 		if([e scrollingDeltaY] < 0){
-			button = morda::Widget::MouseButton_e::WHEEL_DOWN;
+			button = morda::MouseButton_e::WHEEL_DOWN;
 		}else{
-			button = morda::Widget::MouseButton_e::WHEEL_UP;
+			button = morda::MouseButton_e::WHEEL_UP;
 		}
 //		TRACE(<< "button = " << unsigned(button) << std::endl)
 		

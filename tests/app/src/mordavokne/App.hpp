@@ -217,7 +217,7 @@ private:
 
 		bool isHovered = false; //for tracking when mouse enters or leaves window.
 
-		utki::Flags<morda::Widget::MouseButton_e> mouseButtonState;
+		utki::Flags<morda::MouseButton_e> mouseButtonState;
 
 		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
 		~WindowWrapper()noexcept;
@@ -277,7 +277,7 @@ private:
 	friend std::uint32_t ios_update();
 	friend void ios_updateWindowRect(morda::Vec2r dim);
 	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
+	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id);
 	friend const App::WindowParams& ios_getWindowParams();
 	
 	void swapFrameBuffers(){}
@@ -288,7 +288,7 @@ private:
 	
 	friend void macosx_Main(int argc, const char** argv);
 	friend void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id);
+	friend void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id);
 	friend void macosx_HandleMouseHover(bool isHovered);
 	friend void macosx_HandleKeyEvent(bool isDown, morda::Key_e keyCode);
 	friend void macosx_HandleCharacterInput(const void* nsstring, morda::Key_e key);
@@ -394,7 +394,7 @@ private:
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::Widget::MouseButton_e button, unsigned id){
+	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::MouseButton_e button, unsigned id){
 		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
 

@@ -379,7 +379,7 @@ namespace mordavokne{
 					app.handleMouseButton(
 							false,
 							morda::Vec2r(1000000, 1000000), //outside of the window
-							morda::Widget::MouseButton_e(i),
+							morda::MouseButton_e(i),
 							0
 						);
 				}
@@ -388,66 +388,66 @@ namespace mordavokne{
 			lres = 0;
 			return true;
 		case WM_LBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::Widget::MouseButton_e::LEFT);
+			app.window.mouseButtonState.set(morda::MouseButton_e::LEFT);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::LEFT,
+				morda::MouseButton_e::LEFT,
 				0
 				);
 			lres = 0;
 			return true;
 
 		case WM_LBUTTONUP:
-			app.window.mouseButtonState.clear(morda::Widget::MouseButton_e::LEFT);
+			app.window.mouseButtonState.clear(morda::MouseButton_e::LEFT);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::LEFT,
+				morda::MouseButton_e::LEFT,
 				0
 				);
 			lres = 0;
 			return true;
 
 		case WM_MBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::Widget::MouseButton_e::MIDDLE);
+			app.window.mouseButtonState.set(morda::MouseButton_e::MIDDLE);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::MIDDLE,
+				morda::MouseButton_e::MIDDLE,
 				0
 				);
 			lres = 0;
 			return true;
 
 		case WM_MBUTTONUP:
-			app.window.mouseButtonState.clear(morda::Widget::MouseButton_e::MIDDLE);
+			app.window.mouseButtonState.clear(morda::MouseButton_e::MIDDLE);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::MIDDLE,
+				morda::MouseButton_e::MIDDLE,
 				0
 				);
 			lres = 0;
 			return true;
 
 		case WM_RBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::Widget::MouseButton_e::RIGHT);
+			app.window.mouseButtonState.set(morda::MouseButton_e::RIGHT);
 			app.handleMouseButton(
 				true,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::RIGHT,
+				morda::MouseButton_e::RIGHT,
 				0
 				);
 			lres = 0;
 			return true;
 
 		case WM_RBUTTONUP:
-			app.window.mouseButtonState.clear(morda::Widget::MouseButton_e::RIGHT);
+			app.window.mouseButtonState.clear(morda::MouseButton_e::RIGHT);
 			app.handleMouseButton(
 				false,
 				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::Widget::MouseButton_e::RIGHT,
+				morda::MouseButton_e::RIGHT,
 				0
 				);
 			lres = 0;
@@ -457,12 +457,12 @@ namespace mordavokne{
 			{
 				short int times = HIWORD(wParam);
 				times /= 120;
-				morda::Widget::MouseButton_e button;
+				morda::MouseButton_e button;
 				if(times >= 0){
-					button = morda::Widget::MouseButton_e::WHEEL_UP;
+					button = morda::MouseButton_e::WHEEL_UP;
 				}else{
 					times = -times;
-					button = morda::Widget::MouseButton_e::WHEEL_DOWN;
+					button = morda::MouseButton_e::WHEEL_DOWN;
 				}
 				
 				POINT pos;

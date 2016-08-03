@@ -9,6 +9,8 @@
 #include "shaders/SimpleGrayscalePosTexShader.hpp"
 #include "shaders/SimpleBlurPosTexShader.hpp"
 
+#include "util/MouseButton.hpp"
+
 #include "Updateable.hpp"
 
 #include "Inflater.hpp"
@@ -133,8 +135,8 @@ public:
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void onMouseMove(const kolme::Vec2f& pos, unsigned id);
-
+	void onMouseMove(const Vec2r& pos, unsigned id);
+	
 	/**
 	 * @brief Feed in the mouse button event to GUI.
 	 * @param isDown - is mouse button pressed (true) or released (false).
@@ -142,7 +144,7 @@ public:
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void onMouseButton(bool isDown, const kolme::Vec2f& pos, Widget::MouseButton_e button, unsigned id);
+	void onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.

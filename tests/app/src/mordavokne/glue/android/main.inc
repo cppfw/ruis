@@ -901,7 +901,7 @@ void HandleInputEvents(){
 							app.HandleMouseButton(
 									true,
 									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
-									morda::Widget::MouseButton_e::LEFT,
+									morda::MouseButton_e::LEFT,
 									pointerId
 								);
 						}
@@ -926,7 +926,7 @@ void HandleInputEvents(){
 							app.HandleMouseButton(
 									false,
 									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
-									morda::Widget::MouseButton_e::LEFT,
+									morda::MouseButton_e::LEFT,
 									pointerId
 								);
 						}

@@ -38,7 +38,7 @@ namespace mordavokne{
 										   );
 	}
 	
-	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::Widget::MouseButton_e button, unsigned id){
+	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
 //		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
 		App::inst().handleMouseButton(
 											 isDown,
@@ -281,7 +281,7 @@ App::App(const App::WindowParams& wp) :
 		ios_handleMouseButton(
 				true,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
-				morda::Widget::MouseButton_e::LEFT,
+				morda::MouseButton_e::LEFT,
 				0//TODO: id
 			);
 	}
@@ -311,7 +311,7 @@ App::App(const App::WindowParams& wp) :
 		ios_handleMouseButton(
 									 false,
 									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
-									 morda::Widget::MouseButton_e::LEFT,
+									 morda::MouseButton_e::LEFT,
 									 0//TODO: id
 			);
 	}

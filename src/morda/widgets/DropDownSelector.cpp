@@ -249,7 +249,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 	};
 	mp->hoverChanged(*mp, 0);
 
-	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, Widget::MouseButton_e button, unsigned id) -> bool{
+	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
 		if(!isDown){
 			this->setSelection(index);
 			auto oc = this->findAncestor<Overlay>();

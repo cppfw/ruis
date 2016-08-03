@@ -163,7 +163,7 @@ void Morda::render(const Matr4r& matrix)const{
 
 
 
-void Morda::onMouseMove(const morda::Vec2r& pos, unsigned id){
+void Morda::onMouseMove(const Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -176,7 +176,7 @@ void Morda::onMouseMove(const morda::Vec2r& pos, unsigned id){
 
 
 
-void Morda::onMouseButton(bool isDown, const morda::Vec2r& pos, Widget::MouseButton_e button, unsigned pointerID){
+void Morda::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}

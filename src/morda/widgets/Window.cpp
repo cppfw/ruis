@@ -248,7 +248,7 @@ void morda::Window::setupWidgets(){
 	
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
 		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
-			if(button != Widget::MouseButton_e::LEFT){
+			if(button != MouseButton_e::LEFT){
 				return false;
 			}
 

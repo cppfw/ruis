@@ -6,17 +6,18 @@
 
 #include <utki/Shared.hpp>
 
-#include "../../util/keycodes.hpp"
+#include <stob/dom.hpp>
 
 #include <kolme/Matrix4.hpp>
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 
-#include "../../render/Texture2D.hpp"
-
 #include "../../config.hpp"
 
-#include <stob/dom.hpp>
+#include "../../render/Texture2D.hpp"
+
+#include "../../util/keycodes.hpp"
+#include "../../util/MouseButton.hpp"
 
 
 namespace morda{
@@ -385,21 +386,7 @@ public:
 	 * @brief Called when keyboard input focus changes.
      */
 	virtual void onFocusChanged(){}
-	
-	/**
-	 * @brief Mouse buttons enumeration.
-	 */
-	enum class MouseButton_e{
-		LEFT,
-		RIGHT,
-		MIDDLE,
-		WHEEL_UP,
-		WHEEL_DOWN,
 		
-		ENUM_SIZE
-	};
-
-	
 	
 	/**
 	 * @brief Handle mouse button event.
