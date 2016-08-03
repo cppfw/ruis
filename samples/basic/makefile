@@ -37,7 +37,7 @@ else ifeq ($(prorab_os),linux)
     this_ldlibs += -lGLEW -pthread -lGL
 endif
 
-this_ldlibs += -lnitki -laika -lpogodi -lstob -lmorda
+this_ldlibs += -lnitki -laika -lpogodi -lstob -lmorda -lmordavokne
 
 this_ldflags += -rdynamic
 

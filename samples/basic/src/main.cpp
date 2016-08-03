@@ -1,24 +1,24 @@
-#include <morda/App.hpp>
-#include <morda/AppFactory.hpp>
+#include <mordavokne/App.hpp>
+#include <mordavokne/AppFactory.hpp>
 
 #include <morda/widgets/label/TextLabel.hpp>
 #include <morda/widgets/button/Button.hpp>
 
 
-class Application : public morda::App{
+class Application : public mordavokne::App{
 public:
 	Application() :
-			morda::App(morda::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
-		this->initStandardWidgets();
+		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
 		
 		//Inflate widgets hierarchy from GUI description script
-		auto c = morda::App::inst().inflater.inflate(
+		auto c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.stob")
 			);
 		
 		//set the widgets hierarchy to the application
-		this->setRootWidget(c);
+		morda::Morda::inst().setRootWidget(c);
 		
 		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
 		ASSERT(textLabel)
@@ -45,7 +45,7 @@ public:
 
 
 
-std::unique_ptr<morda::App> morda::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	return utki::makeUnique<Application>();
 }
 

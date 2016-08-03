@@ -1,5 +1,7 @@
 include prorab.mk
 
+this_soname := $(shell cat $(prorab_this_dir)../src/soname.txt)
+
 #install default resource pack
 define this_rules
 install::

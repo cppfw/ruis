@@ -1,3 +1,9 @@
+libmorda (0.4.10) unstable; urgency=medium
+
+  * fix: append soname to res folder on linux/macosx
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 17:51:50 +0300
+
 libmorda (0.4.9) unstable; urgency=medium
 
   * nuget
