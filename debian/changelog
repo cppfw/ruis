@@ -1,3 +1,9 @@
+libmorda (0.4.11) unstable; urgency=medium
+
+  * bintray: upload source packages also
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 18:51:41 +0300
+
 libmorda (0.4.10) unstable; urgency=medium
 
   * fix: append soname to res folder on linux/macosx

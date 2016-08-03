@@ -13,6 +13,14 @@
 		{
 			"includePattern": "../(.[^/]*(\\.deb)$)",
 			"uploadPattern": "$1"
+		},
+		{
+			"includePattern": "../(.[^/]*(\\.tar\\.xz)$)",
+			"uploadPattern": "$1"
+		},
+		{
+			"includePattern": "../(.[^/]*(\\.dsc)$)",
+			"uploadPattern": "$1"
 		}
 	],
 	"publish": true,

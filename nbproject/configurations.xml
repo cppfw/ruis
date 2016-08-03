@@ -155,6 +155,7 @@
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
       <itemPath>nuget/nuget.autopkg.in</itemPath>
+      <itemPath>travis_bintray.json.in</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
