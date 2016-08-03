@@ -8,12 +8,15 @@ Entry point of the *mordavokne* application is a method called _mordavokne::crea
 Morda defines _main()_ internally, so the user should not define _main()_.
 
 User should derive their _Application_ class from _mordavokne::App_, which will be a singleton class. Then, return an instance of that class from _mordavokne::createApp()_. To do that, in `main.cpp` include necessary morda files:
+
+[source,c++]
 ....
 #include <mordavokne/App.hpp>
 #include <mordavokne/AppFactory.hpp>
 ....
 
 Then we define our Application class as forllows
+[source,c++]
 ....
 class Application : public mordavokne::App{
 public:
@@ -26,6 +29,7 @@ public:
 ....
 
 And then we define the _morda::createApp()_ function
+[source,c++]
 ....
 std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
 	return utki::makeUnique<Application>();
@@ -35,6 +39,7 @@ std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** ar
 So, now we can build and run the project, but it will display just an empty window.
 
 Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
+[source,c++]
 ....
 class Application : public mordavokne::App{
 public:
@@ -67,6 +72,7 @@ Frame{// frame layout places widgets in the center one on top of another
 
 
 Now we need to "inflate" the GUI from sript in the code and set it to application:
+[source,c++]
 ....
 class Application : public mordavokne::App{
 public:
@@ -88,6 +94,7 @@ public:
 
 After running the app we will see a button and a text label below it. But pressing the button will do nothing.
 Let's add some action on the button press
+[source,c++]
 ....
 #include <mordavokne/App.hpp>
 #include <mordavokne/AppFactory.hpp>
