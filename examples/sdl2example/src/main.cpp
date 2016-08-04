@@ -17,85 +17,85 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 10
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 20
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 30
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 40
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::A,
+	morda::Key_e::B, // 5
+	morda::Key_e::C,
+	morda::Key_e::D,
+	morda::Key_e::E,
+	morda::Key_e::F,
+	morda::Key_e::G, // 10
+	morda::Key_e::H,
+	morda::Key_e::I,
+	morda::Key_e::J,
+	morda::Key_e::K,
+	morda::Key_e::L, // x5
+	morda::Key_e::M,
+	morda::Key_e::N,
+	morda::Key_e::O,
+	morda::Key_e::P,
+	morda::Key_e::Q, // 20
+	morda::Key_e::R,
+	morda::Key_e::S,
+	morda::Key_e::T,
+	morda::Key_e::U,
+	morda::Key_e::V, // x5
+	morda::Key_e::W,
+	morda::Key_e::X,
+	morda::Key_e::Y,
+	morda::Key_e::Z,
+	morda::Key_e::ONE, // 30
+	morda::Key_e::TWO,
+	morda::Key_e::THREE,
+	morda::Key_e::FOUR,
+	morda::Key_e::FIVE,
+	morda::Key_e::SIX, // x5
+	morda::Key_e::SEVEN,
+	morda::Key_e::EIGHT,
+	morda::Key_e::NINE,
+	morda::Key_e::ZERO,
+	morda::Key_e::ENTER, // 40
+	morda::Key_e::ESCAPE,
 	morda::Key_e::BACKSPACE,
+	morda::Key_e::TAB,
+	morda::Key_e::SPACE,
+	morda::Key_e::MINUS, // x5
+	morda::Key_e::EQUALS,
+	morda::Key_e::LEFT_SQUARE_BRACKET,
+	morda::Key_e::RIGHT_SQUARE_BRACKET,
+	morda::Key_e::BACKSLASH,
+	morda::Key_e::BACKSLASH, // 50
+	morda::Key_e::SEMICOLON,
+	morda::Key_e::APOSTROPHE,
+	morda::Key_e::GRAVE,
+	morda::Key_e::COMMA,
+	morda::Key_e::PERIOD, // x5
+	morda::Key_e::SLASH,
+	morda::Key_e::CAPSLOCK,
+	morda::Key_e::F1,
+	morda::Key_e::F2,
+	morda::Key_e::F3, // 60
+	morda::Key_e::F4,
+	morda::Key_e::F5,
+	morda::Key_e::F6,
+	morda::Key_e::F7,
+	morda::Key_e::F8, // x5
+	morda::Key_e::F9,
+	morda::Key_e::F10,
+	morda::Key_e::F11,
+	morda::Key_e::F12,
+	morda::Key_e::PRINT_SCREEN, // 70
 	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 50
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 60
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // x5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 70
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::PAUSE,
+	morda::Key_e::INSERT,
 	morda::Key_e::HOME,
-	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::PAGE_UP, // x5
 	morda::Key_e::DELETE,
 	morda::Key_e::END,
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::PAGE_DOWN,
 	morda::Key_e::RIGHT,
 	morda::Key_e::LEFT,    // 80
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::DOWN,
+	morda::Key_e::UP,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN, // x5
@@ -117,14 +117,14 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 5
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 110
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::F13,
+	morda::Key_e::F14, // 5
+	morda::Key_e::F15,
+	morda::Key_e::F16,
+	morda::Key_e::F17,
+	morda::Key_e::F18,
+	morda::Key_e::F19, // 110
+	morda::Key_e::F20,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
@@ -239,11 +239,11 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::LEFT_CONTROL,
 	morda::Key_e::LEFT_SHIFT, // x5
-	morda::Key_e::UNKNOWN,
+	morda::Key_e::LEFT_ALT,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::RIGHT_CONTROL,
 	morda::Key_e::RIGHT_SHIFT,
-	morda::Key_e::UNKNOWN, // 230
+	morda::Key_e::RIGHT_ALT, // 230
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
@@ -280,8 +280,7 @@ morda::Key_e sdlScancodeToMordaKey(SDL_Scancode sc){
 }
 
 
-int main( int argc, char* args[] ) { 
-	//Initialize SDL 
+int main( int argc, char* args[] ) {
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) { 
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() ); 
 		return 1;
@@ -291,7 +290,6 @@ int main( int argc, char* args[] ) {
 	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 2 ); 
 	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 0 );
 	
-	//Create window 
 	SDL_Window* window = SDL_CreateWindow(
 			"SDL Tutorial",
 			SDL_WINDOWPOS_UNDEFINED,
@@ -306,7 +304,6 @@ int main( int argc, char* args[] ) {
 		return 1;
 	}
 	
-	//Create OpenGL context 
 	SDL_GLContext gContext = SDL_GL_CreateContext( window );
 	if( gContext == NULL ) {
 		printf( "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -388,15 +385,12 @@ int main( int argc, char* args[] ) {
 		};
 	}
 	
-	//Enable text input 
 	SDL_StartTextInput(); 
-	//While application is running 
+
 	for(bool quit = false; !quit;) { 
 		if(SDL_WaitEventTimeout(nullptr, morda::Morda::inst().update()) == 1){
 			SDL_Event e;
-			//Handle events on queue 
 			while( SDL_PollEvent( &e ) != 0 ) { 
-				//User requests quit 
 				if( e.type == SDL_QUIT ) { 
 					quit = true; 
 				}else if(e.type == SDL_WINDOWEVENT){
@@ -434,7 +428,6 @@ int main( int argc, char* args[] ) {
 							0
 						);
 				}else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP){
-					std::cout << "SDL scancode= " << unsigned(e.key.keysym.scancode) << std::endl;
 					if(e.key.repeat == 0){
 						morda::Morda::inst().onKeyEvent(e.key.type == SDL_KEYDOWN, sdlScancodeToMordaKey(e.key.keysym.scancode));
 					}
@@ -467,22 +460,18 @@ int main( int argc, char* args[] ) {
 		glClearColor( 0.5f, 0.5f, 0.5f, 1.f );
 		glClear( GL_COLOR_BUFFER_BIT );
 		
-		//Render quad 
 		morda::Morda::inst().render();
 		
-		//Update screen 
 		SDL_GL_SwapWindow( window ); 
 	} 
 	
-	//Disable text input 
 	SDL_StopTextInput();
 
 	SDL_GL_DeleteContext(gContext);
 	
-	//Destroy window 
 	SDL_DestroyWindow( window ); 
 	
-	//Quit SDL subsystems 
 	SDL_Quit();
+	
 	return 0;
 }
