@@ -148,56 +148,56 @@ int main( int argc, char* args[] ) {
 	SDL_StartTextInput(); 
 	//While application is running 
 	for(bool quit = false; !quit;) { 
-		morda::Morda::inst().update();
-		
-		SDL_Event e;
-		//Handle events on queue 
-		while( SDL_PollEvent( &e ) != 0 ) { 
-			//User requests quit 
-			if( e.type == SDL_QUIT ) { 
-				quit = true; 
-			}else if(e.type == SDL_MOUSEMOTION){
-				int x = 0, y = 0;
-				SDL_GetMouseState(&x, &y);
-				
-				morda::Morda::inst().onMouseMove(morda::Vec2r(x, height_d - y), 0);
-			}else if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
-				int x = 0, y = 0;
-				SDL_GetMouseState(&x, &y);
-				
-				morda::Morda::inst().onMouseButton(
-						e.button.type == SDL_MOUSEBUTTONDOWN,
-						morda::Vec2r(x, height_d - y),
-						e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
-						0
-					);
-			}else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP){
-				std::cout << "SDL scancode= " << unsigned(e.key.keysym.scancode) << std::endl;
-				if(e.key.repeat == 0){
-					morda::Morda::inst().onKeyEvent(e.key.type == SDL_KEYDOWN, sdlScancodeToMordaKey(e.key.keysym.scancode));
-				}
-				if(e.type == SDL_KEYDOWN){
-					struct SDLUnicodeDummyProvider : public morda::Morda::UnicodeProvider{
-						std::u32string get()const override{
-							return std::u32string();
-						}
-					};
-					morda::Morda::inst().onCharacterInput(SDLUnicodeDummyProvider(), sdlScancodeToMordaKey(e.key.keysym.scancode));
-				}
-			}else if( e.type == SDL_TEXTINPUT ) {
-				struct SDLUnicodeProvider : public morda::Morda::UnicodeProvider{
-					char32_t c;
-					SDLUnicodeProvider(char inputChar) :
-							c(inputChar)
-					{}
-					std::u32string get()const override{
-						return std::u32string(&this->c, 1);
+		if(SDL_WaitEventTimeout(nullptr, morda::Morda::inst().update()) == 1){
+			SDL_Event e;
+			//Handle events on queue 
+			while( SDL_PollEvent( &e ) != 0 ) { 
+				//User requests quit 
+				if( e.type == SDL_QUIT ) { 
+					quit = true; 
+				}else if(e.type == SDL_MOUSEMOTION){
+					int x = 0, y = 0;
+					SDL_GetMouseState(&x, &y);
+
+					morda::Morda::inst().onMouseMove(morda::Vec2r(x, height_d - y), 0);
+				}else if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
+					int x = 0, y = 0;
+					SDL_GetMouseState(&x, &y);
+
+					morda::Morda::inst().onMouseButton(
+							e.button.type == SDL_MOUSEBUTTONDOWN,
+							morda::Vec2r(x, height_d - y),
+							e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
+							0
+						);
+				}else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP){
+					std::cout << "SDL scancode= " << unsigned(e.key.keysym.scancode) << std::endl;
+					if(e.key.repeat == 0){
+						morda::Morda::inst().onKeyEvent(e.key.type == SDL_KEYDOWN, sdlScancodeToMordaKey(e.key.keysym.scancode));
 					}
-				} sdlUnicodeProvider(e.text.text[0]);
-				morda::Morda::inst().onCharacterInput(sdlUnicodeProvider, morda::Key_e::UNKNOWN);
-			}else if(e.type == sdlMorda.userEventType){
-				std::unique_ptr<std::function<void()>> f(reinterpret_cast<std::function<void()>*>(e.user.data1));
-				f->operator ()();
+					if(e.type == SDL_KEYDOWN){
+						struct SDLUnicodeDummyProvider : public morda::Morda::UnicodeProvider{
+							std::u32string get()const override{
+								return std::u32string();
+							}
+						};
+						morda::Morda::inst().onCharacterInput(SDLUnicodeDummyProvider(), sdlScancodeToMordaKey(e.key.keysym.scancode));
+					}
+				}else if( e.type == SDL_TEXTINPUT ) {
+					struct SDLUnicodeProvider : public morda::Morda::UnicodeProvider{
+						char32_t c;
+						SDLUnicodeProvider(char inputChar) :
+								c(inputChar)
+						{}
+						std::u32string get()const override{
+							return std::u32string(&this->c, 1);
+						}
+					} sdlUnicodeProvider(e.text.text[0]);
+					morda::Morda::inst().onCharacterInput(sdlUnicodeProvider, morda::Key_e::UNKNOWN);
+				}else if(e.type == sdlMorda.userEventType){
+					std::unique_ptr<std::function<void()>> f(reinterpret_cast<std::function<void()>*>(e.user.data1));
+					f->operator ()();
+				}
 			}
 		}
 		
