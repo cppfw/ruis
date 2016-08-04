@@ -1,5 +1,7 @@
 #include "Morda.hpp"
 
+#include <utki/config.hpp>
+
 #include "resources/ResSTOB.hpp"
 
 #include "widgets/slider/Slider.hpp"
@@ -34,21 +36,18 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	
 	std::vector<std::string> paths;
 
-#if M_OS == M_OS_WINDOWS
-#	ifdef M_MORDA_LOCAL_RES
-	paths.push_back("../../res/morda_res/");
-#	else
-	paths.push_back("morda_res/");
-#	endif
-#elif M_OS_NAME == M_OS_NAME_IOS || M_OS_NAME == M_OS_NAME_ANDROID
-	paths.push_back("morda_res/");
-#else //linux or macosx
-#	ifdef M_MORDA_LOCAL_RES
-	paths.push_back("../../res/morda_res/");
-#	else
+	if(fi.path().length() != 0){
+		paths.push_back(fi.path());
+	}
 	
+	paths.push_back("morda_res/");
+		
+#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || \
+	(M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS) || \
+	(M_OS == M_OS_UNIX)
+
 	unsigned soname =
-#		include "../soname.txt"
+#	include "../soname.txt"
 	;
 	
 	{
@@ -61,7 +60,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 		ss << "/usr/share/morda/res" << soname << "/";
 		paths.push_back(ss.str());
 	}
-#	endif
 #endif
 
 	bool mounted = false;
