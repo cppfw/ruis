@@ -441,14 +441,14 @@ int main( int argc, char* args[] ) {
 					}
 				}else if( e.type == SDL_TEXTINPUT ) {
 					struct SDLUnicodeProvider : public morda::Morda::UnicodeProvider{
-						char32_t c;
-						SDLUnicodeProvider(char inputChar) :
-								c(inputChar)
+						char* text;
+						SDLUnicodeProvider(char* text) :
+								text(text)
 						{}
 						std::u32string get()const override{
-							return std::u32string(&this->c, 1);
+							return unikod::toUtf32(this->text);
 						}
-					} sdlUnicodeProvider(e.text.text[0]);
+					} sdlUnicodeProvider(e.text.text); //save pointer to text, the ownership of text buffer is not taken!!!
 					morda::Morda::inst().onCharacterInput(sdlUnicodeProvider, morda::Key_e::UNKNOWN);
 				}else if(e.type == sdlMorda.userEventType){
 					std::unique_ptr<std::function<void()>> f(reinterpret_cast<std::function<void()>*>(e.user.data1));
