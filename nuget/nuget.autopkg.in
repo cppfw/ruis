@@ -35,7 +35,7 @@ nuget{
 		};
 	}
 	files {
-		//this is needed to put headers in the morda folder
+		//this is needed to put headers in the base folder
 		nestedInclude: {
 			#destination = ${d_include}morda;
 			"..\src\morda\**\*.hpp"
