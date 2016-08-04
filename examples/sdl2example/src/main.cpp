@@ -12,34 +12,271 @@
 int width = 640;
 int height = 480;
 
-
+std::array<morda::Key_e, 0x100> keyMap = {{
+	morda::Key_e::UNKNOWN, // 0
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 10
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 20
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 30
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 40
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::BACKSPACE,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 50
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 60
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 70
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::HOME,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::DELETE,
+	morda::Key_e::END,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::RIGHT,
+	morda::Key_e::LEFT,    // 80
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 90
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 100
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 110
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 120
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 130
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 140
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 150
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 160
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 170
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 180
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 190
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 200
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 210
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 220
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::LEFT_CONTROL,
+	morda::Key_e::LEFT_SHIFT, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::RIGHT_CONTROL,
+	morda::Key_e::RIGHT_SHIFT,
+	morda::Key_e::UNKNOWN, // 230
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 240
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // x5
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN, // 250
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN,
+	morda::Key_e::UNKNOWN  // 255
+}};
 
 morda::Key_e sdlScancodeToMordaKey(SDL_Scancode sc){
-	switch(sc){
-		//TODO: add all key mappings, use array for mapping instead of switch
-		case SDL_SCANCODE_LEFT:
-			return morda::Key_e::LEFT;
-		case SDL_SCANCODE_RIGHT:
-			return morda::Key_e::RIGHT;
-		case SDL_SCANCODE_LCTRL:
-			return morda::Key_e::LEFT_CONTROL;
-		case SDL_SCANCODE_RCTRL:
-			return morda::Key_e::RIGHT_CONTROL;
-		case SDL_SCANCODE_END:
-			return morda::Key_e::END;
-		case SDL_SCANCODE_HOME:
-			return morda::Key_e::HOME;
-		case SDL_SCANCODE_BACKSPACE:
-			return morda::Key_e::BACKSPACE;
-		case SDL_SCANCODE_DELETE:
-			return morda::Key_e::DELETE;
-		case SDL_SCANCODE_LSHIFT:
-			return morda::Key_e::LEFT_SHIFT;
-		case SDL_SCANCODE_RSHIFT:
-			return morda::Key_e::RIGHT_SHIFT;
-		default:
-			return morda::Key_e::UNKNOWN;
+	if(sc >= keyMap.size()){
+		return morda::Key_e::UNKNOWN;
 	}
+	
+	return keyMap[sc];
 }
 
 
