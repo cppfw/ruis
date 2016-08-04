@@ -9,8 +9,8 @@
 #include <morda/widgets/button/Button.hpp>
 
 
-const int width_d = 640;
-const int height_d = 480;
+int width = 640;
+int height = 480;
 
 
 
@@ -55,7 +55,14 @@ int main( int argc, char* args[] ) {
 	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 0 );
 	
 	//Create window 
-	SDL_Window* window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width_d, height_d, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN); 
+	SDL_Window* window = SDL_CreateWindow(
+			"SDL Tutorial",
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			width,
+			height,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+		); 
 	if( window == NULL ) { 
 		printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() ); 
 		SDL_Quit();
@@ -104,7 +111,7 @@ int main( int argc, char* args[] ) {
 		}
 	} sdlMorda(userEventType);
 	
-	morda::Morda::inst().setViewportSize(morda::Vec2r(width_d, height_d));
+	morda::Morda::inst().setViewportSize(morda::Vec2r(width, height));
 	
 	papki::FSFile fi;
 
@@ -155,18 +162,37 @@ int main( int argc, char* args[] ) {
 				//User requests quit 
 				if( e.type == SDL_QUIT ) { 
 					quit = true; 
+				}else if(e.type == SDL_WINDOWEVENT){
+					switch(e.window.event) {
+						default:
+							break;
+						case SDL_WINDOWEVENT_RESIZED:
+						case SDL_WINDOWEVENT_SIZE_CHANGED:
+							width = e.window.data1;
+							height = e.window.data2;
+//							std::cout << "w = " << e.window.data1 << " h = " << e.window.data2 << std::endl;
+							morda::Morda::inst().setViewportSize(morda::Vec2r(width, height));
+							glViewport(0, 0, width, height);
+							break;
+						case SDL_WINDOWEVENT_ENTER:
+							morda::Morda::inst().onMouseHover(true, 0);
+							break;
+						case SDL_WINDOWEVENT_LEAVE:
+							morda::Morda::inst().onMouseHover(false, 0);
+							break;
+					}
 				}else if(e.type == SDL_MOUSEMOTION){
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
-					morda::Morda::inst().onMouseMove(morda::Vec2r(x, height_d - y), 0);
+					morda::Morda::inst().onMouseMove(morda::Vec2r(x, height - y), 0);
 				}else if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
 					morda::Morda::inst().onMouseButton(
 							e.button.type == SDL_MOUSEBUTTONDOWN,
-							morda::Vec2r(x, height_d - y),
+							morda::Vec2r(x, height - y),
 							e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
 							0
 						);
