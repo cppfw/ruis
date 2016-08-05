@@ -258,4 +258,9 @@ public:
 	} units;
 };
 
+
+inline Morda& inst(){
+	return morda::Morda::inst();
+}
+
 }

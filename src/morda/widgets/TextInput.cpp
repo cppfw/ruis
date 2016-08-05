@@ -17,9 +17,9 @@ using namespace morda;
 
 
 namespace{
-std::uint32_t D_CursorBlinkPeriod = 500; //milliseconds
+const std::uint32_t CursorBlinkPeriod_d = 500; //milliseconds
 
-real D_CursorWidth = real(2.0);
+const real CursorWidth_d = real(1.0);
 }
 
 
@@ -77,7 +77,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	if(this->isFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(Vec2r(D_CursorWidth, this->rect().d.y));
+		matr.scale(Vec2r(CursorWidth_d * morda::inst().units.dotsPerPt(), this->rect().d.y));
 
 		ColorPosShader& s = Morda::inst().shaders.colorPosShader;
 
@@ -116,7 +116,7 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + D_CursorWidth;
+		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + CursorWidth_d * morda::inst().units.dotsPerPt();
 	}else{
 		ret.x = quotum.x;
 	}
@@ -165,8 +165,8 @@ void TextInput::setCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x - D_CursorWidth){
-		this->cursorPos = this->rect().d.x - D_CursorWidth;
+	if(this->cursorPos > this->rect().d.x - CursorWidth_d * morda::inst().units.dotsPerPt()){
+		this->cursorPos = this->rect().d.x - CursorWidth_d * morda::inst().units.dotsPerPt();
 		
 		this->xOffset = this->cursorPos;//start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -260,7 +260,7 @@ void TextInput::onResize(){
 void TextInput::startCursorBlinking(){
 	this->stopUpdating();
 	this->cursorBlinkVisible = true;
-	this->startUpdating(D_CursorBlinkPeriod);
+	this->startUpdating(CursorBlinkPeriod_d);
 }
 
 bool TextInput::onKey(bool isDown, Key_e keyCode){
