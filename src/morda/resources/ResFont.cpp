@@ -12,28 +12,24 @@ using namespace morda;
 
 
 
-ResFont::ResFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline) :
-		f(fi, chars, size, outline)
+ResFont::ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline) :
+		f(fi, chars, fontSize, outline)
 {}
 
 
 
-//static
 std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::File& fi){
 	//read chars attribute
-	std::vector<std::uint32_t> wideChars;
-	for(unikod::Utf8Iterator i(chain.side("chars").up().value()); !i.isEnd(); ++i){
-		wideChars.push_back(i.character());
-	}
+	auto wideChars = unikod::toUtf32(chain.side("chars").up().value());
 
 	ASSERT(wideChars.size() > 0)
 
 	//read size attribute
-	unsigned size;
+	unsigned fontSize;
 	if(auto sizeProp = chain.childOfThisOrNext("size")){
-		size = unsigned(morda::dimValueFromSTOB(*sizeProp));
+		fontSize = unsigned(morda::dimValueFromSTOB(*sizeProp));
 	}else{
-		size = 13;
+		fontSize = 13;
 	}
 	
 	//read outline attribute
@@ -46,6 +42,6 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 
 	fi.setPath(chain.side("file").up().value());
 
-	return utki::makeShared<ResFont>(fi, utki::Buf<std::uint32_t>(&(*wideChars.begin()), wideChars.size()), size, outline);
+	return utki::makeShared<ResFont>(fi, wideChars, fontSize, outline);
 }
 

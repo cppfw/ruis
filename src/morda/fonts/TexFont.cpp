@@ -50,13 +50,16 @@ static unsigned FindNextPowOf2(unsigned n){
 const unsigned DXGap = 1;
 const unsigned DYGap = 1;
 
-
+const char32_t unknownChar_d = 0xfffd;
 
 }//~namespace
 
 
 
-void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline){
+void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline){
+	std::u32string fontChars = chars;
+	fontChars.append(1, unknownChar_d);
+	
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
@@ -104,7 +107,7 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 		FT_Error error = FT_Set_Pixel_Sizes(
 				face,// handle to face object
 				0,// pixel_width (0 means "same as height")
-				size
+				fontSize
 			); // pixel_height
 
 		if(error != 0){
@@ -116,10 +119,10 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 
 	//guess for texture width
 	unsigned texWidth;
-	texWidth = std::max(unsigned(128), FindNextPowOf2(unsigned(chars.size() / 8) * size)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
+	texWidth = std::max(unsigned(128), FindNextPowOf2(unsigned(fontChars.size() / 8) * fontSize)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
 	texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
 
-	unsigned curTexHeight = FindNextPowOf2(size);//first guess of texture height
+	unsigned curTexHeight = FindNextPowOf2(fontSize);//first guess of texture height
 	unsigned curX = DXGap;
 	unsigned curY = DYGap;
 	unsigned maxHeightInRow = 0;
@@ -138,7 +141,7 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
 	//print all the glyphs to the image
-	for(const std::uint32_t* c = chars.begin(); c != chars.end(); ++c){
+	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
 		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
 			throw utki::Exc("TexFont::Load(): unable to load char");
 		}
@@ -274,10 +277,18 @@ void TexFont::load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, 
 	this->tex = Texture2D(texImg);
 }
 
+const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
+	auto i = this->glyphs.find(c);
+	if(i == this->glyphs.end()){
+		return this->glyphs.at(unknownChar_d);
+	}
+	return i->second;
+}
 
 
-real TexFont::renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const{
-	const Glyph& g = this->glyphs.at(ch);
+
+real TexFont::renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, char32_t ch)const{
+	const Glyph& g = this->findGlyph(ch);
 	
 	shader.setMatrix(matrix);
 
@@ -295,7 +306,7 @@ real TexFont::stringAdvanceInternal(const std::u32string& str)const{
 	
 	for(; s != str.end(); ++s){
 		try{
-			const Glyph& g = this->glyphs.at(*s);
+			const Glyph& g = this->findGlyph(*s);
 			ret += g.advance;
 		}catch(std::out_of_range&){
 			//ignore
@@ -323,7 +334,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	real left, right, top, bottom;
 	//init with bounding box of the first glyph
 	{
-		const Glyph& g = this->glyphs.at(*s);
+		const Glyph& g = this->findGlyph(*s);
 		left = g.verts[0].x;
 		right = g.verts[2].x;
 		top = g.verts[2].y;

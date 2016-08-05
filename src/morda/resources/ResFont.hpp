@@ -40,7 +40,7 @@ class ResFont : public morda::Resource{
 	morda::TexFont f;
 
 public:
-	ResFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline);
+	ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline);
 
 	~ResFont()noexcept{}
 

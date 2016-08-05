@@ -48,11 +48,11 @@ public:
 	 * @brief Constructor.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
 	 * @param chars - set of characters to put to the font texture.
-	 * @param size - size of the font in pixels.
+	 * @param fontSize - size of the font in pixels.
 	 * @param outline - thickness of the outline effect.
 	 */
-	TexFont(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0){
-		this->load(fi, chars, size, outline);
+	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline = 0){
+		this->load(fi, chars, fontSize, outline);
 	}
 
 	~TexFont()noexcept{}
@@ -81,10 +81,11 @@ public:
 	
 private:
 
-	void load(const papki::File& fi, const utki::Buf<std::uint32_t> chars, unsigned size, unsigned outline = 0);
+	void load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline = 0);
 	
-	real renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, std::uint32_t ch)const;
+	real renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, char32_t ch)const;
 
+	const Glyph& findGlyph(char32_t c)const;
 };
 
 
