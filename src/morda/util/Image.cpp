@@ -210,7 +210,7 @@ void Image::loadPNG(const papki::File& fi){
 
 	{
 #ifdef DEBUG
-		auto ret = //TODO:???
+		auto ret = //TODO: we should not rely on that it will always read the requested number of bytes
 #endif
 		fi.read(utki::wrapBuf(sig));
 		ASSERT(ret == sig.size() * sizeof(sig[0]))
@@ -503,9 +503,11 @@ void Image::loadJPG(const papki::File& fi){
 	//set pointers to the buffers
 	src->pub.bytes_in_buffer = 0;//forces fill_input_buffer on first read
 	src->pub.next_input_byte = 0;//until buffer loaded
+	
+	//TODO: remove this comment
 	//WARNING!!! there's a little bug in the JPEG library. If "infile" is set
 	//to 0 the "jpeg_start_decompress()" refuses to work. Set it to 1 then.
-//    src->pub..infile=(FILE*)1;//pointer to a file for a standard manager
+//    src->pub.infile=(FILE*)1;//pointer to a file for a standard manager
 //    src->pub.buffer=0;//buffer of a standard manager, we do not use it
 
 	jpeg_read_header(&cinfo, TRUE);//read parametrs of a JPEG file
@@ -543,10 +545,6 @@ void Image::loadJPG(const papki::File& fi){
 
 	//calculate the size of a row in bytes
 	int bytesRow = this->dim().x * this->numChannels();
-
-	//TODO: remove this comment
-	//Allocate memory for the pic
-	//data=(byte*)malloc(h*bytes_row);//new byte[h*bytes_row];
 
 	//Allocate memory for one row. It is an array of rows which
 	//contains only one row. JPOOL_IMAGE means that the memory is allocated
@@ -586,7 +584,7 @@ void Image::loadJPG(const papki::File& fi){
 //=============================================-----T------G---G--G---A-----  A
 //===========================================--'''''T''''''G''''''G'''A'''    A
 //=========================================''       T       GGGGGG    A       A
-//TODO:
+//TODO: support TGA format? Is it needed? There is PNG.
 /*
 #define M_TGA_RGB 2// This tells us it's a normal RGB (really BGR) file
 #define M_TGA_A 3// This tells us it's a ALPHA file (Grayscale I think)

@@ -45,12 +45,11 @@ public:
 	 */
 	class QuadTexture : virtual public utki::Shared{
 		Vec2r dim_v;
-	public:
-		//TODO: should this be protected?
+	protected:
 		QuadTexture(Vec2r dim) :
 				dim_v(dim)
 		{}
-		
+	public:
 		/**
 		 * @brief Get dimensions of the texture.
 		 * @return Dimensions of the texture.
