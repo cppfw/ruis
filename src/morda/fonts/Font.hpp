@@ -139,7 +139,7 @@ public:
 	 * @param c - character to get advance for.
 	 * @return Advance of the character.
 	 */
-	virtual real charAdvance(std::uint32_t c)const = 0;
+	virtual real charAdvance(char32_t c)const = 0;
 	
 	
 	/**

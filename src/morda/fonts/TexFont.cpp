@@ -416,7 +416,7 @@ real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 
 
 
-real TexFont::charAdvance(std::uint32_t c) const{
+real TexFont::charAdvance(char32_t c) const{
 	auto i = this->glyphs.find(c);
 	if(i == this->glyphs.end()){
 		return real(0);

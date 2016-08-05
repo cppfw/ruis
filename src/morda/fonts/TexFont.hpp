@@ -76,7 +76,7 @@ public:
 //	}
 
 
-	real charAdvance(std::uint32_t c) const override;
+	real charAdvance(char32_t c) const override;
 
 	
 private:
