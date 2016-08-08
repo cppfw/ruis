@@ -37,8 +37,8 @@ else ifeq ($(prorab_os),linux)
     this_ldlibs += -lGLEW -pthread -lGL
 endif
 
-this_ldlibs += -lnitki -laika -lpogodi -lstob -lmorda -lmordavokne
+this_ldlibs += -lnitki -laika -lpogodi -lstob -lmorda
 
-this_ldflags += -rdynamic
+this_ldlibs += `pkg-config mordavokne --libs`
 
 $(eval $(prorab-build-app))
