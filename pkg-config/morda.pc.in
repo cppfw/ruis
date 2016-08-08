@@ -4,6 +4,6 @@ Version: $(version)
 URL: https://github.com/igagis/morda
 Requires:
 Conflicts:
-Libs: -lmorda
+Libs: -lmorda -rdynamic
 Libs.private:
 Cflags:

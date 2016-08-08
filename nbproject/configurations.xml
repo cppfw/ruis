@@ -154,6 +154,7 @@
       <itemPath>cocoapods/libmorda.podspec.in</itemPath>
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
+      <itemPath>pkg-config/morda.pc.in</itemPath>
       <itemPath>nuget/nuget.autopkg.in</itemPath>
       <itemPath>travis_bintray.json.in</itemPath>
     </logicalFolder>
