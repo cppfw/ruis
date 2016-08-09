@@ -43,7 +43,8 @@ before_install:
 
 script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    make deb;
+    prorab-deb-prepare.sh &&
+    dpkg-buildpackage -us -uc;
   fi
 
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
