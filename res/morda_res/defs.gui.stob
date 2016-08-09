@@ -28,7 +28,7 @@ templates{
 		}
 	}
 
-	PushButton SimpleButton
+	PushButton SimpleButton{}
 
 	WindowBackground Frame{
 		layout{dx{fill} dy{fill}}
