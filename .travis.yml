@@ -56,7 +56,7 @@ script:
     xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
             | sed -e "s/export PATH=[^ ]*/export PATH=.../g"
             | sed -e "s/[^ ]*\/clang /clang /g"
-            | sed -e "s/\(-[IWfF]\)[^ ]*/\1... /g"
+            | sed -e "s/\(-[IWfFL]\)[^ ]*/\1... /g"
             | sed -e "s/-isystem [^ ]*/-isystem .../g"
             | sed -e "s/-include [^ ]*/-include .../g"
             | sed -e "s/-MF [^ ]*/-MF .../g"
