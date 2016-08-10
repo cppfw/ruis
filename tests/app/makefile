@@ -52,7 +52,7 @@ else ifeq ($(prorab_os),linux)
     this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl
 endif
 
-this_ldlibs += -lnitki -laika -lpogodi -lstob -lpapki
+this_ldlibs += -lnitki -lpogodi -lstob -lpapki
 
 this_ldflags += -rdynamic
 
