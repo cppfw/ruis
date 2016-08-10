@@ -42,6 +42,10 @@
 #	include <nitki/Queue.hpp>
 #endif
 
+#if M_OS == M_OS_WINDOWS
+#	include <utki/windows.hpp>
+#endif
+
 
 
 
