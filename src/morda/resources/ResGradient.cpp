@@ -46,7 +46,7 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 	
 	std::vector<std::tuple<real,std::uint32_t>> stops;
 	
-	const char* stop_c = "stop";
+	const char* stop_c = "Stop";
 	for(auto n = chain.thisOrNext(stop_c).node(); n; n = n->next(stop_c).node()){
 		real pos;
 		if(auto p = getProperty(n->child(), "pos")){
