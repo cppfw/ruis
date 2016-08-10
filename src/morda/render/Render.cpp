@@ -8,11 +8,11 @@
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL || M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
 
-#include "Render_OpenGL.inc"
+#include "Render_OpenGL.cppinc"
 
 #elif M_MORDA_RENDER == M_MORDA_RENDER_DIRECTX
 
-#include "Render_DirectX.inc"
+#include "Render_DirectX.cppinc"
 
 #else
 #	error "unknown render API"
