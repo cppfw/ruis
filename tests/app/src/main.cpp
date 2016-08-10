@@ -599,7 +599,7 @@ public:
 	Application() :
 			App(GetWindowParams())
 	{
-		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface("../../res/morda_res"));
+		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface("../../res/morda_res/"));
 		
 		morda::Morda::inst().resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
