@@ -10,8 +10,6 @@
 
 #include <papki/File.hpp>
 
-#include <nitki/Thread.hpp>
-
 #include <kolme/Vector2.hpp>
 
 #include "../../../../src/morda/Morda.hpp"

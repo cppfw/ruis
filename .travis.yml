@@ -37,7 +37,7 @@ before_install:
     brew tap igagis/tap &&
     brew update > /dev/null &&
     (brew list libpng || brew install libpng) &&
-    brew install prorab libutki libpapki libunikod libstob libsvgren jpeg z glew freetype libkolme;
+    brew install prorab libutki libpapki libunikod libstob libsvgren jpeg z glew freetype libkolme libnitki;
   fi
 
 
