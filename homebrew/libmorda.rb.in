@@ -8,7 +8,6 @@ class Libmorda < Formula
   depends_on "libutki"
   depends_on "libpapki"
   depends_on "libunikod"
-  depends_on "libaika"
   depends_on "libstob"
   depends_on "libpng"
   depends_on "jpeg"

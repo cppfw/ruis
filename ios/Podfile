@@ -6,7 +6,6 @@ target "morda_test" do
 	pod 'libpapki', '>= 1.0.3'
 	pod 'libkolme', '>= 1.0.1'
 	pod 'libstob', '>= 3.1.1'
-	pod 'libaika', '>= 1.0.2'
 	pod 'libsvgren', '>= 0.3.3'
 	pod 'libpng_igagis', '>= 1.4.1'
 	pod 'freetype', '>= 2.6.4'

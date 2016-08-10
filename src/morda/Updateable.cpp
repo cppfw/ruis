@@ -2,12 +2,18 @@
 
 #include "Morda.hpp"
 
-#include <aika/tick.hpp>
-
+#include <chrono>
 
 
 using namespace morda;
 
+
+
+namespace{
+std::uint32_t getTicks(){
+	return std::uint32_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());
+}
+}
 
 
 Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::insertPair(const T_Pair& p){
@@ -76,7 +82,7 @@ void Updateable::Updater::updateUpdateable(const std::shared_ptr<morda::Updateab
 
 
 std::uint32_t Updateable::Updater::update(){
-	std::uint32_t curTime = aika::getTicks();
+	std::uint32_t curTime = getTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
 	
@@ -125,7 +131,7 @@ std::uint32_t Updateable::Updater::update(){
 	
 	std::uint32_t uncorrectedDt = closestTime - curTime;
 	
-	std::uint32_t correction = aika::getTicks() - curTime;
+	std::uint32_t correction = getTicks() - curTime;
 	
 	if(correction >= uncorrectedDt){
 		return 0;
@@ -166,7 +172,7 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	}
 	
 	this->dt = dtMs;
-	this->startedAt = aika::getTicks();
+	this->startedAt = getTicks();
 	this->isUpdating_v = true;
 	
 	this->pendingAddition = true;
