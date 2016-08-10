@@ -53,13 +53,11 @@ script:
     make &&
     
     set -o pipefail &&
-    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | grep -E -A 5 "(error|warning):" &&
-
-    if [ -n "$TRAVIS_TAG" ]; then prorab-deploy-cocoapods.sh igagis; else echo "Skip deploying to cocoapods because not a tagged commit!!!"; fi;
+    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | grep -E -A 5 "(error|warning):";
   fi
 
 before_deploy:
-  - prorab-apply-version.sh `prorab-deb-version.sh debian/changelog` travis_bintray.json.in
+  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray.json.in
 
 deploy:
 - provider: bintray
@@ -75,6 +73,12 @@ deploy:
 - provider: script
   skip_cleanup: true
   script: prorab-deploy-homebrew.sh igagis/tap
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = osx && $CC = clang
+- provider: script
+  skip_cleanup: true
+  script: rvm 2.2.1 do prorab-deploy-cocoapods.sh igagis
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = osx && $CC = clang
