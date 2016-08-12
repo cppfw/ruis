@@ -13,6 +13,7 @@ before_build:
 
 build_script:
   - ps: .\nuget\build_nuget.ps1
+  - ps: .\keep_bin_dir_structure.ps1
 
 #test_script:
 #  - ps: .\tests\autotest-appveyor.ps1
