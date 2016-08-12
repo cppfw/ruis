@@ -153,7 +153,6 @@
     <Import Project="..\packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
     <Import Project="..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
     <Import Project="..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="..\packages\freetype2.2.6.0.1\build\native\freetype2.targets" Condition="Exists('..\packages\freetype2.2.6.0.1\build\native\freetype2.targets')" />
     <Import Project="..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" />
     <Import Project="..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" />
     <Import Project="..\packages\libkolme.1.0.6\build\native\libkolme.targets" Condition="Exists('..\packages\libkolme.1.0.6\build\native\libkolme.targets')" />
@@ -171,6 +170,8 @@
     <Import Project="..\packages\libsvgdom.0.2.14\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.2.14\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libsvgren.0.3.14\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.14\build\native\libsvgren.targets')" />
+    <Import Project="..\packages\freetype.redist.2.6.5.1\build\native\freetype.redist.targets" Condition="Exists('..\packages\freetype.redist.2.6.5.1\build\native\freetype.redist.targets')" />
+    <Import Project="..\packages\freetype.2.6.5.1\build\native\freetype.targets" Condition="Exists('..\packages\freetype.2.6.5.1\build\native\freetype.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -179,7 +180,6 @@
     <Error Condition="!Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
     <Error Condition="!Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
     <Error Condition="!Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
-    <Error Condition="!Exists('..\packages\freetype2.2.6.0.1\build\native\freetype2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype2.2.6.0.1\build\native\freetype2.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets'))" />
     <Error Condition="!Exists('..\packages\libkolme.1.0.6\build\native\libkolme.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libkolme.1.0.6\build\native\libkolme.targets'))" />
@@ -197,5 +197,7 @@
     <Error Condition="!Exists('..\packages\libsvgdom.0.2.14\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.2.14\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.3.14\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.14\build\native\libsvgren.targets'))" />
+    <Error Condition="!Exists('..\packages\freetype.redist.2.6.5.1\build\native\freetype.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype.redist.2.6.5.1\build\native\freetype.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\freetype.2.6.5.1\build\native\freetype.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype.2.6.5.1\build\native\freetype.targets'))" />
   </Target>
 </Project>
