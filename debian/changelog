@@ -1,3 +1,9 @@
+libmorda (0.5.4) unstable; urgency=medium
+
+  * fix for empty gradient
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 02:56:20 +0300
+
 libmorda (0.5.3) unstable; urgency=medium
 
   * nuget: correct resource path names
