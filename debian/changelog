@@ -1,3 +1,9 @@
+libmorda (0.5.2) unstable; urgency=medium
+
+  * msvs debug symbols
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Aug 2016 15:51:29 +0300
+
 libmorda (0.5.1) unstable; urgency=medium
 
   * nuget pack symbols to bin
