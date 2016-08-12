@@ -13,23 +13,23 @@ nuget{
 
 		description: @"C++ GUI library";
 		releaseNotes: "Initial release";
-		copyright: Copyright 2015 Ivan Gagis;
+		copyright: Copyright 2016 Ivan Gagis;
 		tags: { native};
 	}
 	dependencies {
 		packages : {
-			libkolme/1.0.0;
+			libkolme/1.0.6;
 			freetype2/2.6.0.1;
 			glew.v140/1.12.0;
-			libjpeg/9.0.1.4;
-			libpapki/1.0.2;
-			libpng/1.5.10.13;
-			libstob/3.1.0;
-			libunikod/1.0.2;
-			libutki/1.0.20;
+			libjpeg/9.2.0.1;
+			libpapki/1.0.15;
+			libpng/1.6.23.1;
+			libstob/3.2.7;
+			libunikod/2.0.4;
+			libutki/1.0.22;
 			zlib/1.2.8.8;
-			libsvgdom/0.2.13;
-			libsvgren/0.3.13;
+			libsvgdom/0.2.14;
+			libsvgren/0.3.14;
 		};
 	}
 	files {
@@ -38,34 +38,30 @@ nuget{
 			#destination = ${d_include}morda;
 			"..\src\morda\**\*.hpp"
 		};
-		
+
 		res += {
  			#add-each-file : ::nuget.targets.[${condition}].CopyToOutput;
  			#destination : ${d_bin}\morda_res;
 		};
-		
-		[x86,release] { 
+
+		[x86,release] {
 			lib: ..\msvs_solution\Release\libmorda.lib;
-			bin: ..\msvs_solution\libmorda\Release\libmorda.pdb;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x86,debug] { 
+		[x86,debug] {
 			lib: ..\msvs_solution\Debug\libmorda.lib;
-			bin: ..\msvs_solution\libmorda\Debug\libmorda.pdb;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x64,release] { 
+		[x64,release] {
 			lib: ..\msvs_solution\x64\Release\libmorda.lib;
-			bin: ..\msvs_solution\libmorda\x64\Release\libmorda.pdb;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x64,debug] { 
+		[x64,debug] {
 			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
-			bin: ..\msvs_solution\libmorda\x64\Debug\libmorda.pdb;
 			res: ..\res\morda_res\**\*;
-		}  
+		}
 	}
 }
