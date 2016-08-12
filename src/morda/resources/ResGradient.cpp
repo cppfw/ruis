@@ -74,6 +74,11 @@ void ResGradient::render(ClrPosShader& s) const {
 	
 //	TRACE(<< "matrix = " << matrix << std::endl)
 	
+	if (this->vertices.size() == 0) {
+		s.renderNothing();
+		return;
+	}
+
 	s.render(utki::wrapBuf(this->vertices), utki::wrapBuf(this->colors), Render::Mode_e::TRIANGLE_STRIP);
 }
 
