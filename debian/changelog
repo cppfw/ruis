@@ -1,3 +1,9 @@
+libmorda (0.5.6) unstable; urgency=medium
+
+  * travis test
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 15:11:08 +0300
+
 libmorda (0.5.5) unstable; urgency=medium
 
   * cocoapods fix
