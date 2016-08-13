@@ -1,3 +1,9 @@
+libmorda (0.5.5) unstable; urgency=medium
+
+  * cocoapods fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 12:26:30 +0300
+
 libmorda (0.5.4) unstable; urgency=medium
 
   * fix for empty gradient
