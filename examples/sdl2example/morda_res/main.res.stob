@@ -1,0 +1,6 @@
+include{ui.res.stob}
+include{fonts/font.res.stob}
+
+morda_gui_defs{
+	file{defs.gui.stob}
+}

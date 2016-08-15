@@ -1,4 +1,10 @@
-#include <SDL2/SDL.h>
+#include <utki/config.hpp>
+
+#if M_COMPILER == M_COMPILER_MSVC
+#	include <SDL.h>
+#else
+#	include <SDL2/SDL.h>
+#endif
 
 #include <GL/glew.h>
 
@@ -272,7 +278,7 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 }};
 
 morda::Key_e sdlScancodeToMordaKey(SDL_Scancode sc){
-	if(sc >= keyMap.size()){
+	if(size_t(sc) >= keyMap.size()){
 		return morda::Key_e::UNKNOWN;
 	}
 	
@@ -345,7 +351,7 @@ int main( int argc, char* args[] ) {
 		}
 	} sdlMorda(userEventType);
 	
-	morda::Morda::inst().setViewportSize(morda::Vec2r(width, height));
+	morda::Morda::inst().setViewportSize(morda::Vec2r(morda::real(width), morda::real(height)));
 	
 	papki::FSFile fi;
 
@@ -402,7 +408,7 @@ int main( int argc, char* args[] ) {
 							width = e.window.data1;
 							height = e.window.data2;
 //							std::cout << "w = " << e.window.data1 << " h = " << e.window.data2 << std::endl;
-							morda::Morda::inst().setViewportSize(morda::Vec2r(width, height));
+							morda::Morda::inst().setViewportSize(morda::Vec2r(morda::real(width), morda::real(height)));
 							glViewport(0, 0, width, height);
 							break;
 						case SDL_WINDOWEVENT_ENTER:
@@ -416,14 +422,14 @@ int main( int argc, char* args[] ) {
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
-					morda::Morda::inst().onMouseMove(morda::Vec2r(x, height - y), 0);
+					morda::Morda::inst().onMouseMove(morda::Vec2r(morda::real(x), morda::real(height - y)), 0);
 				}else if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
 					morda::Morda::inst().onMouseButton(
 							e.button.type == SDL_MOUSEBUTTONDOWN,
-							morda::Vec2r(x, height - y),
+							morda::Vec2r(morda::real(x), morda::real(height - y)),
 							e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
 							0
 						);
