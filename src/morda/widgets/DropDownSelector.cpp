@@ -22,7 +22,7 @@ using namespace morda;
 
 namespace{
 
-const char* SelectorLayout_d = R"qwertyuiop(
+const char* selectorLayout_c = R"qwertyuiop(
 		Frame{
 			layout{
 				dx{0}
@@ -58,7 +58,7 @@ const char* SelectorLayout_d = R"qwertyuiop(
 		}
 	)qwertyuiop";
 
-const char* ItemLayout_d = R"qwertyuiop(
+const char* itemLayout_c = R"qwertyuiop(
 		Frame{
 			layout{
 				dx{max}
@@ -79,7 +79,7 @@ const char* ItemLayout_d = R"qwertyuiop(
 		}
 	)qwertyuiop";
 
-const char* ContextMenuLayout_d = R"qwertyuiop(
+const char* contextMenuLayout_c = R"qwertyuiop(
 		NinePatch{
 			image{morda_npt_contextmenu_bg}
 			VerticalArea{
@@ -124,7 +124,7 @@ void DropDownSelector::showDropdownMenu() {
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
 
-	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(ContextMenuLayout_d));
+	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
 	ASSERT(np)
 
 	auto va = np->findChildByNameAs<VerticalArea>("morda_contextmenu_content");
@@ -141,7 +141,7 @@ void DropDownSelector::showDropdownMenu() {
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalArea(stob::parse(SelectorLayout_d).get()),
+		HorizontalArea(stob::parse(selectorLayout_c).get()),
 		selectionContainer(*this->findChildByNameAs<Frame>("morda_dropdown_selection"))
 {	
 	{
@@ -230,7 +230,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(ItemLayout_d)));
+	auto wd = std::dynamic_pointer_cast<Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
 	ASSERT(wd)
 
 	auto mp = wd->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
