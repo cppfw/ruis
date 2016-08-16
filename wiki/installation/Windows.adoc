@@ -5,5 +5,3 @@
 . Create a new project for your application.
 
 . Install *libmorda* NuGet package to your project, the package is available on _nuget.org_ and should be found by NuGet manager.
-
-. Copy the *morda_res* directory with resources for standard widgets to your application's working directory. NuGet package will copy the morda_res to project's TargetDir after building, you can take it from there.
