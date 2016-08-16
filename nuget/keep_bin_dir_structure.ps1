@@ -55,7 +55,8 @@ ForEach ($nugetFile in $nugetFiles) {
 				
 				#$path
 				#$node.DestinationFolder
-				$node.SetAttribute("DestinationFolder", "$($node.DestinationFolder)$($path)")
+				$base = '$(LocalDebuggerWorkingDirectory)'
+				$node.SetAttribute("DestinationFolder", "$($base)$($path)")
 				#$node.DestinationFolder
 			}
 			
