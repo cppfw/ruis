@@ -8,18 +8,11 @@ OpenGL based GUI library in C++
 **morda** is a cross-platform OpenGL based non-intrusive GUI framework dedicated to games and multimedia applications. Its design was inspired by GUI system from Android and many concepts are borrowed from there.
 
 ## Why OpenGL?
-The intention was to create a truly cross-platform GUI framework, i.e. there should be no any modifications needed to application code in order to build it for different platforms. Only OpenGL out of modern graphics libraries is cross-platofrm and exists on all major platforms.
+Only OpenGL out of modern graphics libraries is cross-platofrm and exists on all major platforms.
 
 OpenGL versions supported:
   * OpenGL 2.0 and higher
   * OpenGL ES 2.0 and higher
-
-## Supported platforms
-  * Linux
-  * Windows
-  * MacOS X
-  * Android 2.3+ **planned** (draft implementation exists, currently broken)
-  * iOS **planned** (draft implementation exists)
 
 # Useful info
   * [Installation](wiki/Installation.adoc)
