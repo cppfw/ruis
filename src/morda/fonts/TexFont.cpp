@@ -50,7 +50,7 @@ static unsigned FindNextPowOf2(unsigned n){
 const unsigned DXGap = 1;
 const unsigned DYGap = 1;
 
-const char32_t unknownChar_d = 0xfffd;
+constexpr const char32_t unknownChar_c = 0xfffd;
 
 }//~namespace
 
@@ -58,7 +58,7 @@ const char32_t unknownChar_d = 0xfffd;
 
 void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline){
 	std::u32string fontChars = chars;
-	fontChars.append(1, unknownChar_d);
+	fontChars.append(1, unknownChar_c);
 	
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
@@ -280,7 +280,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);
 	if(i == this->glyphs.end()){
-		return this->glyphs.at(unknownChar_d);
+		return this->glyphs.at(unknownChar_c);
 	}
 	return i->second;
 }

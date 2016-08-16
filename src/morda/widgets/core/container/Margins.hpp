@@ -39,7 +39,7 @@ class Margins :
 {
 	std::shared_ptr<Widget> child;
 	
-	//can hold also Fill_d or Max_d
+	//can hold also fill_c or max_c
 	Sidesr margins_v;
 public:
 	/**

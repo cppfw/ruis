@@ -7,7 +7,7 @@ using namespace morda;
 
 
 namespace{
-std::map<std::string, Render::BlendFactor_e> blendFactorNames_d = {
+const std::map<std::string, Render::BlendFactor_e> blendFactorNames_c = {
 	{"zero", Render::BlendFactor_e::ZERO},
 	{"one", Render::BlendFactor_e::ONE},
 	{"srcColor", Render::BlendFactor_e::SRC_COLOR},
@@ -26,8 +26,8 @@ std::map<std::string, Render::BlendFactor_e> blendFactorNames_d = {
 };
 
 Render::BlendFactor_e blendFactorFromString(const std::string& s){
-	auto i = blendFactorNames_d.find(s);
-	if(i == blendFactorNames_d.end()){
+	auto i = blendFactorNames_c.find(s);
+	if(i == blendFactorNames_c.end()){
 		return Render::BlendFactor_e::ONE;
 	}
 	return i->second;
