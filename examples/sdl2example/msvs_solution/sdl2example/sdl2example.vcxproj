@@ -174,7 +174,7 @@
     <Import Project="..\packages\libpng.1.6.23.1\build\native\libpng.targets" Condition="Exists('..\packages\libpng.1.6.23.1\build\native\libpng.targets')" />
     <Import Project="..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libsvgren.0.3.14\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.3.14\build\native\libsvgren.targets')" />
-    <Import Project="..\packages\libmorda.0.5.7\build\native\libmorda.targets" Condition="Exists('..\packages\libmorda.0.5.7\build\native\libmorda.targets')" />
+    <Import Project="..\packages\libmorda.0.5.8\build\native\libmorda.targets" Condition="Exists('..\packages\libmorda.0.5.8\build\native\libmorda.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -201,6 +201,6 @@
     <Error Condition="!Exists('..\packages\libpng.1.6.23.1\build\native\libpng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng.1.6.23.1\build\native\libpng.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.12.8.3\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.3.14\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.3.14\build\native\libsvgren.targets'))" />
-    <Error Condition="!Exists('..\packages\libmorda.0.5.7\build\native\libmorda.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libmorda.0.5.7\build\native\libmorda.targets'))" />
+    <Error Condition="!Exists('..\packages\libmorda.0.5.8\build\native\libmorda.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libmorda.0.5.8\build\native\libmorda.targets'))" />
   </Target>
 </Project>
