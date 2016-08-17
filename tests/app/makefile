@@ -49,10 +49,10 @@ else ifeq ($(prorab_os),macosx)
     $(eval $(this_rules))
 else ifeq ($(prorab_os),linux)
     this_srcs += src/mordavokne/glue/glue.cpp
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl -lstdc++ -lm
+    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl
 endif
 
-this_ldlibs += -lnitki -lpogodi -lstob -lpapki
+this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
 this_ldflags += -rdynamic
 
