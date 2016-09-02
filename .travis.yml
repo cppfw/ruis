@@ -22,13 +22,22 @@ env:
   - secure: "xxmSoh63zIzuDGn1kkfVd1s3qNOpuyhvXzN/b6/PnCcyzSC5wfflH+PswfvYOyrDk9/FS3hzEBf8MOyfhaZ1+YXkscXINej9Cl8uhYntDRrmVCL72RKJyVZD6lu66X7gOVWuXeQB8vcGOz2vFWKbz12jA3yRlWCrmDlTz2RPckGT9ssmNBFgKRDeMIWtl3i98hfke1vyj+3bkxYXb4MR1RCb/yAbcNUAf0o8ihlXGKynPqHJN7UxGBwWUiZi9QcCFKhPwnkrc3yYu4jm0JIwqn+uwAGwes4cV2GWVD4l8kD1NybKAj0r9Fq6uq3R4qI6397hBkBafjeUQLWtf6w54Ti1sFr7ifdxtCY7HXRrhmAGKisxu8h0XiA38l0IpVf9XaGQsqiiWKp2LP9wBtWOw5ga3+wxzcavDBsGe6pIIf+NffiEvwhWoC1wSCDmhJ+9Hphi4lYspr2+WS325FlCVcwWP6gxb6ZUst/siRnQWpYhfAmI28rBVRR2ChyjkDDpnsNxBVxgHTJqPdutZLdece9oF8UxGYNgh39Mr7Eb+to1RrcD7v+IZT4RgTaBPQzp+M1Tstvk07J48ukG+dh67g6gXzQv6ZtaQKCeZaW6Z1dw4k/sgEJE3wWXoFi/6RkbqAB338sye83HefloaGbzaAwC4pQxGZqa2dgOH70jmSs="
   - PRORAB_GIT_USERNAME=igagis
   - PRORAB_GIT_ACCESS_TOKEN=$HOMEBREW_GITHUB_ACCESS_TOKEN
+  - linuxDependencies="debhelper prorab doxygen libutki-dev libnitki-dev libpapki-dev libunikod-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev"
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
-    sudo apt-get install -qq debhelper prorab doxygen libutki-dev libnitki-dev libpapki-dev libunikod-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev;
+    sudo apt-get install -qq $linuxDependencies;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
+    sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
+    echo "deb http://dl.bintray.com/igagis/rasp /" | sudo tee /tmp/rasp/etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo chroot /tmp/rasp apt-get update &&
+    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
+    sudo mkdir -p /tmp/rasp/build &&
+    sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     rvm use ruby-2.2.1 &&
@@ -46,6 +55,10 @@ script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     prorab-deb-prepare.sh &&
     dpkg-buildpackage -us -uc;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
+    sudo chroot /tmp/rasp bash -c "cd /build && prorab-deb-prepare.sh" &&
+    sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc";
   fi
 
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
@@ -68,7 +81,8 @@ script:
   fi
 
 before_deploy:
-  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray.json.in
+  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray_deb.json.in
+  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray_rasp.json.in
 
 deploy:
 - provider: bintray
@@ -76,7 +90,17 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = linux && $CC = gcc
-  file: travis_bintray.json
+  file: travis_bintray_deb.json
+  user: igagis
+  key:
+    secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
+  dry-run: false
+- provider: bintray
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux && $CC = gcc
+  file: travis_bintray_rasp.json
   user: igagis
   key:
     secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
