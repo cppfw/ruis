@@ -22,7 +22,7 @@ env:
   - secure: "xxmSoh63zIzuDGn1kkfVd1s3qNOpuyhvXzN/b6/PnCcyzSC5wfflH+PswfvYOyrDk9/FS3hzEBf8MOyfhaZ1+YXkscXINej9Cl8uhYntDRrmVCL72RKJyVZD6lu66X7gOVWuXeQB8vcGOz2vFWKbz12jA3yRlWCrmDlTz2RPckGT9ssmNBFgKRDeMIWtl3i98hfke1vyj+3bkxYXb4MR1RCb/yAbcNUAf0o8ihlXGKynPqHJN7UxGBwWUiZi9QcCFKhPwnkrc3yYu4jm0JIwqn+uwAGwes4cV2GWVD4l8kD1NybKAj0r9Fq6uq3R4qI6397hBkBafjeUQLWtf6w54Ti1sFr7ifdxtCY7HXRrhmAGKisxu8h0XiA38l0IpVf9XaGQsqiiWKp2LP9wBtWOw5ga3+wxzcavDBsGe6pIIf+NffiEvwhWoC1wSCDmhJ+9Hphi4lYspr2+WS325FlCVcwWP6gxb6ZUst/siRnQWpYhfAmI28rBVRR2ChyjkDDpnsNxBVxgHTJqPdutZLdece9oF8UxGYNgh39Mr7Eb+to1RrcD7v+IZT4RgTaBPQzp+M1Tstvk07J48ukG+dh67g6gXzQv6ZtaQKCeZaW6Z1dw4k/sgEJE3wWXoFi/6RkbqAB338sye83HefloaGbzaAwC4pQxGZqa2dgOH70jmSs="
   - PRORAB_GIT_USERNAME=igagis
   - PRORAB_GIT_ACCESS_TOKEN=$HOMEBREW_GITHUB_ACCESS_TOKEN
-  - linuxDependencies="debhelper prorab doxygen libutki-dev libnitki-dev libpapki-dev libunikod-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev"
+  - linuxDependencies="debhelper pkg-config prorab doxygen libutki-dev libnitki-dev libpapki-dev libunikod-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev"
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
