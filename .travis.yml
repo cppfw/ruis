@@ -36,7 +36,7 @@ before_install:
     sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
     echo "deb http://dl.bintray.com/igagis/rasp /" | sudo tee /tmp/rasp/etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo chroot /tmp/rasp apt-get update &&
-    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies g++-4.8-arm-linux-gnueabihf &&
+    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
     sudo mkdir -p /tmp/rasp/build &&
     sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/;
   fi
