@@ -29,7 +29,7 @@ before_install:
     echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
-    sudo apt-get install -qq $linuxDependencies;
+    sudo apt-get install -qq $linuxDependencies g++-arm-linux-gnueabihf;
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
     sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
@@ -58,7 +58,8 @@ script:
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
     sudo chroot /tmp/rasp bash -c "cd /build && prorab-deb-prepare.sh" &&
-    sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc";
+    make -C/tmp/rasp/build CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ CFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CFLAGS`" CXXFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CXXFLAGS`" LDFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get LDFLAGS`" &&
+    sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc -nc";
   fi
 
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
