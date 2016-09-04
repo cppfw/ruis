@@ -35,7 +35,7 @@ before_install:
     sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
     echo "deb http://dl.bintray.com/igagis/rasp /" | sudo tee /tmp/rasp/etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo chroot /tmp/rasp apt-get update &&
-    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies g++ &&
+    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies g++-4.8-arm-linux-gnueabihf &&
     sudo mkdir -p /tmp/rasp/build &&
     sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/;
   fi
@@ -58,7 +58,7 @@ script:
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
     sudo chroot /tmp/rasp bash -c "cd /build && prorab-deb-prepare.sh" &&
-    make -C/tmp/rasp/build verbose=true CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ CFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CFLAGS`" CXXFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CXXFLAGS`" LDFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get LDFLAGS`" &&
+    make -C/tmp/rasp/build CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ CFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CFLAGS`" CXXFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CXXFLAGS`" LDFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get LDFLAGS`" &&
     sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc -nc";
   fi
 
