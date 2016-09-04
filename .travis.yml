@@ -40,9 +40,9 @@ before_install:
     sudo mkdir -p /tmp/rasp/build &&
     sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/ &&
     
-    sudo mkdir -p /usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
+    sudo mkdir -p /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
     sudo rsync -av /usr/arm-linux-gnueabihf/include/c++/4.8.4 /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
-    sudo mkdir -p /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 &&
+    sudo mkdir -p /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 &&
     sudo rsync -av /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
