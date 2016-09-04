@@ -78,13 +78,13 @@ voidpf ZCALLBACK fopen_file_func (voidpf opaque, const char* filename, int mode)
     if (mode & ZLIB_FILEFUNC_MODE_CREATE)
         mode_fopen = "wb";
 
-	if ((filename != NULL) && (mode_fopen != NULL)) {
+    if ((filename != NULL) && (mode_fopen != NULL)) {
 #if M_COMPILER == M_COMPILER_MSVC
-		fopen_s(&file, filename, mode_fopen);
+        fopen_s(&file, filename, mode_fopen);
 #else
-		file = fopen(filename, mode_fopen);
+        file = fopen(filename, mode_fopen);
 #endif
-	}
+    }
     return file;
 }
 
