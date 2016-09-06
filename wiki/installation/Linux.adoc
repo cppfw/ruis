@@ -14,5 +14,5 @@ sudo apt-get update
 
 Install libmorda-dev package:
 ....
-sudo apt-get install libsvgren-dev
+sudo apt-get install libmorda-dev
 ....
