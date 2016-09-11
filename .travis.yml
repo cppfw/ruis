@@ -32,19 +32,20 @@ before_install:
     sudo apt-get install -qq $linuxDependencies g++-arm-linux-gnueabihf &&
     arm-linux-gnueabihf-g++ -E -x c++ - -v < /dev/null;
   fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
-    sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
-    echo "deb http://dl.bintray.com/igagis/rasp /" | sudo tee /tmp/rasp/etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo chroot /tmp/rasp apt-get update &&
-    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
-    sudo mkdir -p /tmp/rasp/build &&
-    sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/ &&
-    
-    sudo mkdir -p /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
-    sudo rsync -av /usr/arm-linux-gnueabihf/include/c++/4.8.4 /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
-    sudo mkdir -p /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 &&
-    sudo rsync -av /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8;
-  fi
+  #commented out rapberry pi build
+#- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
+#    sudo prorab-make-raspberry-chroot.sh /tmp/rasp &&
+#    echo "deb http://dl.bintray.com/igagis/rasp /" | sudo tee /tmp/rasp/etc/apt/sources.list.d/igagis.list > /dev/null &&
+#    sudo chroot /tmp/rasp apt-get update &&
+#    sudo chroot /tmp/rasp apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
+#    sudo mkdir -p /tmp/rasp/build &&
+#    sudo rsync -av $TRAVIS_BUILD_DIR/ /tmp/rasp/build/ &&
+#    
+#    sudo mkdir -p /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
+#    sudo rsync -av /usr/arm-linux-gnueabihf/include/c++/4.8.4 /tmp/rasp/usr/arm-linux-gnueabihf/include/c++/4.8.4 &&
+#    sudo mkdir -p /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 &&
+#    sudo rsync -av /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 /tmp/rasp/usr/lib/gcc-cross/arm-linux-gnueabihf/4.8;
+#  fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     rvm use ruby-2.2.1 &&
     pod repo add --silent igagis https://$PRORAB_GIT_USERNAME:$PRORAB_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
@@ -62,11 +63,12 @@ script:
     prorab-deb-prepare.sh &&
     dpkg-buildpackage -us -uc;
   fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
-    sudo chroot /tmp/rasp bash -c "cd /build && prorab-deb-prepare.sh" &&
-    make -C/tmp/rasp/build CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ CFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CFLAGS`" CXXFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CXXFLAGS`" LDFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get LDFLAGS`" &&
-    sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc -nc";
-  fi
+  #commented out rapberry pi build
+#- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
+#    sudo chroot /tmp/rasp bash -c "cd /build && prorab-deb-prepare.sh" &&
+#    make -C/tmp/rasp/build CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ CFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CFLAGS`" CXXFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get CXXFLAGS`" LDFLAGS="--sysroot=/tmp/rasp `dpkg-buildflags --get LDFLAGS`" &&
+#    sudo chroot /tmp/rasp bash -c "cd /build && dpkg-buildpackage -us -uc -nc";
+#  fi
 
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
 # Also, need to set pipefail to make pipe exit code nono-zero in case first command fails but second succeeds (because grep exits with 0 always)
