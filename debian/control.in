@@ -25,7 +25,6 @@ Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
 
 Package: libmorda$(soname)-dbg
-Section: libdevel
 Architecture: any
 Priority: extra
 Section: debug
