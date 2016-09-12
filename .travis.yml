@@ -62,7 +62,7 @@ script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     prorab-deb-prepare.sh &&
     dpkg-buildpackage -us -uc &&
-    lintian ../*.changes;
+    lintian --profile debian ../*.changes;
   fi
   #commented out rapberry pi build
 #- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CC" == "gcc" ]; then
