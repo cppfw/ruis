@@ -1,7 +1,7 @@
 {
 	"package": {
 		"name": "libmorda",
-		"repo": "rasp",
+		"repo": "ubu",
 		"subject": "igagis"
 	},
 	
@@ -11,12 +11,12 @@
 
 	"files": [
 		{
-			"includePattern": "/srv/chroot/rasp-armhf/(.[^/]*(\\.deb)$)",
+			"includePattern": "../(.[^/]*(\\.deb)$)",
 			"uploadPattern": "$1",
 			"matrixParams": {
 				"deb_distribution": "unstable",
 				"deb_component": "main",
-				"deb_architecture": "armhf"
+				"deb_architecture": "amd64"
 			}
 		}
 	],

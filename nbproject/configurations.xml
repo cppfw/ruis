@@ -150,12 +150,16 @@
       <itemPath>.travis.yml</itemPath>
       <itemPath>ios/Podfile</itemPath>
       <itemPath>appveyor.yml</itemPath>
+      <itemPath>debian/changelog</itemPath>
       <itemPath>debian/control.in</itemPath>
       <itemPath>cocoapods/libmorda.podspec.in</itemPath>
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
       <itemPath>pkg-config/morda.pc.in</itemPath>
       <itemPath>nuget/nuget.autopkg.in</itemPath>
+      <itemPath>travis_bintray_deb.json.in</itemPath>
+      <itemPath>travis_bintray_rasp.json.in</itemPath>
+      <itemPath>travis_bintray_ubu.json.in</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>

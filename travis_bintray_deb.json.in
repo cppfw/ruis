@@ -12,19 +12,12 @@
 	"files": [
 		{
 			"includePattern": "../(.[^/]*(\\.deb)$)",
-			"uploadPattern": "$1"
-		},
-		{
-			"includePattern": "../(.[^/]*(\\.dsc)$)",
-			"uploadPattern": "$1"
-		},
-		{
-			"includePattern": "../(.[^/]*(\\.tar\\.xz)$)",
-			"uploadPattern": "$1"
-		},
-		{
-			"includePattern": "../(.[^/]*(\\.tar\\.gz)$)",
-			"uploadPattern": "$1"
+			"uploadPattern": "$1",
+			"matrixParams": {
+				"deb_distribution": "unstable",
+				"deb_component": "main",
+				"deb_architecture": "amd64"
+			}
 		}
 	],
 	"publish": true,

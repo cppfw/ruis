@@ -206,7 +206,7 @@ libmorda (0.1.2-2) stable; urgency=medium
 
   * updating build dependencies for debian
 
- -- Ivan Gagis <ivan@igagis-desktop.igagis.org>  Tue, 10 Nov 2015 03:10:33 +0200
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Nov 2015 03:10:33 +0200
 
 libmorda (0.1.2-1) stable; urgency=medium
 
