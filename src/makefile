@@ -18,8 +18,6 @@ this_cxxflags += -fstrict-aliasing #strict aliasing (in order to comply with the
 this_cxxflags += -g #include debugging symbols
 this_cxxflags += -std=c++11
 
-this_cxxflags += -D_GLIBCXX_USE_CXX11_ABI=0 #use old ABI
-
 
 this_objcflags := 
 
