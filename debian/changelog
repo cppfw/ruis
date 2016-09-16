@@ -1,3 +1,9 @@
+libmorda (0.5.9) unstable; urgency=medium
+
+  * deploy to debian, ubuntu, rasp
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 16 Sep 2016 19:22:24 +0300
+
 libmorda (0.5.8) unstable; urgency=medium
 
   * nuget: copy resources to working dir
