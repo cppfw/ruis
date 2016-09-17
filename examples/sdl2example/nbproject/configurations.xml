@@ -44,7 +44,6 @@
             </incDir>
             <preprocessorList>
               <Elem>DEBUG</Elem>
-              <Elem>_GLIBCXX_USE_CXX11_ABI=0</Elem>
             </preprocessorList>
           </ccTool>
         </makeTool>

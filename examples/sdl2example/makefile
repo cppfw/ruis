@@ -15,7 +15,6 @@ this_cxxflags += -g
 this_cxxflags += -O2
 this_cxxflags += -std=c++11
 
-this_cxxflags += -D_GLIBCXX_USE_CXX11_ABI=0 #use old ABI
 
 ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
