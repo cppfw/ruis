@@ -76,18 +76,18 @@ before_install:
     echo "deb [trusted=yes] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /srv/chroot/ubu-amd64/etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo chroot /srv/chroot/ubu-amd64 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
   fi
-#- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-#    echo "deb http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
-#    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-#    sudo apt-get update -qq &&
-#    sudo apt-get install -qq prorab;
-#    sudo prorab-make-raspberry-chroot.sh /srv/chroot/rasp-armhf &&
-#    echo "deb http://dl.bintray.com/igagis/rasp unstable main" | sudo tee /srv/chroot/rasp-armhf/etc/apt/sources.list.d/igagis.list > /dev/null &&
-#    sudo chroot /srv/chroot/rasp-armhf apt-get update &&
-#    sudo chroot /srv/chroot/rasp-armhf apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
-#    sudo mkdir -p /srv/chroot/rasp-armhf/build &&
-#    sudo rsync -av $TRAVIS_BUILD_DIR/ /srv/chroot/rasp-armhf/build/;
-#  fi
+- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
+    echo "deb http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+    sudo apt-get update -qq &&
+    sudo apt-get install -qq prorab;
+    sudo prorab-make-raspberry-chroot.sh /srv/chroot/rasp-armhf &&
+    echo "deb http://dl.bintray.com/igagis/rasp unstable main" | sudo tee /srv/chroot/rasp-armhf/etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo chroot /srv/chroot/rasp-armhf apt-get update &&
+    sudo chroot /srv/chroot/rasp-armhf apt-get install --allow-unauthenticated -qq -y $linuxDependencies &&
+    sudo mkdir -p /srv/chroot/rasp-armhf/build &&
+    sudo rsync -av $TRAVIS_BUILD_DIR/ /srv/chroot/rasp-armhf/build/;
+  fi
 - if [ "$BUILD_NAME" == "clang" ]; then
     echo "deb http://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
@@ -129,11 +129,10 @@ script:
             | sed -e "s/-iquote [^ ]*/%/g"
             | sed -e "s/-isysroot [^ ]*/%/g";
   fi
-#No build for raspberry pi yet, as it takes too long and travis times out
-#- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-#    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
-#    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buildpackage -us -uc";
-#  fi
+- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
+    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
+    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buildpackage -us -uc";
+  fi
   
   
 
@@ -162,16 +161,16 @@ deploy:
   key:
     secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
   dry-run: false
-#- provider: bintray
-#  skip_cleanup: true
-#  on:
-#    tags: true
-#    condition: $BUILD_NAME = raspberry_pi
-#  file: travis_bintray_rasp.json
-#  user: igagis
-#  key:
-#    secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
-#  dry-run: false
+- provider: bintray
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $BUILD_NAME = raspberry_pi
+  file: travis_bintray_rasp.json
+  user: igagis
+  key:
+    secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
+  dry-run: false
 - provider: script
   skip_cleanup: true
   script: prorab-deploy-homebrew.sh igagis/tap
