@@ -1,3 +1,9 @@
+libmorda (0.5.10) unstable; urgency=medium
+
+  * release rasp build
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 18 Sep 2016 12:30:17 +0300
+
 libmorda (0.5.9) unstable; urgency=medium
 
   * deploy to debian, ubuntu, rasp
