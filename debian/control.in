@@ -13,7 +13,7 @@ Build-Depends-Indep: doxygen
 Package: libmorda-dev
 Architecture: any
 Depends: libmorda$(soname) (= ${binary:Version}), libmorda$(soname)-dbg (= ${binary:Version}), ${misc:Depends},
-		libutki-dev, libpapki-dev, libunikod-dev
+		libutki-dev, libpapki-dev, libunikod-dev, libkolme-dev
 Suggests: libmorda-doc
 Priority: extra
 Section: libdevel
