@@ -2,6 +2,8 @@
 
 #include <utki/Singleton.hpp>
 
+#include "render/Renderer.hpp"
+
 #include "shaders/ColorPosShader.hpp"
 #include "shaders/ColorPosTexShader.hpp"
 #include "shaders/ClrPosShader.hpp"
@@ -25,16 +27,24 @@ class Morda : public utki::IntrusiveSingleton<Morda>{
 	friend class Updateable;
 	friend class Widget;
 	
-	Render renderer;
+	std::shared_ptr<Renderer> renderer_v;
+	
+	Render r;
 	
 public:
 
+	Renderer& renderer()noexcept{
+		ASSERT(this->renderer_v)
+		return *this->renderer_v;
+	}
+	
 	/**
 	 * @brief Constructor.
 	 * @param dotsPerInch - dpi of your display.
 	 * @param dotsPerPt - desired dots per point.
 	 */
-	Morda(real dotsPerInch, real dotsPerPt) :
+	Morda(Renderer& r, real dotsPerInch, real dotsPerPt) :
+			renderer_v(r.getSharedPtr()),
 			units(dotsPerInch, dotsPerPt)
 	{}
 
@@ -50,7 +60,7 @@ public:
 	struct DefaultShaders{
 		ColorPosShader colorPosShader;
 		ColorPosTexShader colorPosTexShader;
-		ClrPosShader clrPosShader;
+		PosClrShader clrPosShader;
 		PosTexShader posTexShader;
 		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
 		SimpleBlurPosTexShader simpleBlurPosTexShader;

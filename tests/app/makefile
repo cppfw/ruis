@@ -3,8 +3,8 @@ include prorab.mk
 this_name := tests
 
 
-this_srcs += src/main.cpp
-this_srcs += src/mordavokne/App.cpp
+this_srcs += $(call prorab-src-dir,src)
+this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 
 
 this_cxxflags := -Wall

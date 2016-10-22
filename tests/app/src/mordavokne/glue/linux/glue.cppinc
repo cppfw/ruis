@@ -11,7 +11,7 @@
 #include <papki/FSFile.hpp>
 #include <unikod/utf8.hpp>
 
-
+#include "../../../OpenGL2Renderer.hpp"
 
 
 using namespace mordavokne;
@@ -213,7 +213,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		gui(getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
+		gui(*utki::makeShared<OpenGL2Renderer>(), getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version

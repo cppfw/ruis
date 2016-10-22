@@ -58,7 +58,7 @@ public:
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
 	 * @param s - shader to use for rendering.
 	 */
-	void render(ClrPosShader& s)const;
+	void render(PosClrShader& s)const;
 	
 private:
 	static std::shared_ptr<ResGradient> load(const stob::Node& chain, const papki::File& fi);

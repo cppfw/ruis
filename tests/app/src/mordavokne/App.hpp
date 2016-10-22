@@ -14,6 +14,7 @@
 
 #include "../../../../src/morda/Morda.hpp"
 
+#include "../OpenGL2Renderer.hpp"
 
 
 
@@ -198,7 +199,7 @@ private:
 
 		void Destroy()noexcept;
 	} xInputMethod;
-
+	
 	friend void Main(int argc, const char** argv);
 	void exec();
 
@@ -352,8 +353,8 @@ private:
 	
 	class MordaVOkne : public morda::Morda{
 	public:
-		MordaVOkne(morda::real dotsPerInch, morda::real dotsPerPt) :
-				Morda(dotsPerInch, dotsPerPt)
+		MordaVOkne(morda::Renderer& r, morda::real dotsPerInch, morda::real dotsPerPt) :
+				Morda(r, dotsPerInch, dotsPerPt)
 		{}
 		
 		void postToUiThread_ts(std::function<void()>&& f) override{
@@ -480,6 +481,9 @@ public:
 	 * @param visible - whether to show (true) or hide (false) mouse cursor.
 	 */
 	void setMouseCursorVisible(bool visible);
+	
+private:
+	std::unique_ptr<morda::Renderer> renderer;
 };
 
 

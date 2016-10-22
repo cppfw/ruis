@@ -10,17 +10,17 @@ namespace morda{
  * @brief Shader with color and position vertex attributes.
  * This shader has color and position vertex attributes.
  */
-class ClrPosShader  :
+class PosClrShader  :
 		protected PosShader,
 		virtual public Shader
 {
 	Render::InputID colorAttr;
 	
 public:
-	ClrPosShader();
+	PosClrShader();
 	
-	ClrPosShader(const ClrPosShader&) = delete;
-	ClrPosShader& operator=(const ClrPosShader&) = delete;
+	PosClrShader(const PosClrShader&) = delete;
+	PosClrShader& operator=(const PosClrShader&) = delete;
 	
 	/**
 	 * @brief Render array of 2 dimensional vertices.

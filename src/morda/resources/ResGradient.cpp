@@ -69,7 +69,7 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 }
 
 
-void ResGradient::render(ClrPosShader& s) const {
+void ResGradient::render(PosClrShader& s) const {
 	ASSERT(this->vertices.size() == this->colors.size())
 	
 //	TRACE(<< "matrix = " << matrix << std::endl)

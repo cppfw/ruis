@@ -12,7 +12,7 @@ using namespace morda;
 
 
 
-ClrPosShader::ClrPosShader() :
+PosClrShader::PosClrShader() :
 		Shader(
 				R"qwertyuiop(
 						UNIFORM_BEGIN
