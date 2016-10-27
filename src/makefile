@@ -26,7 +26,7 @@ ifeq ($(debug),true)
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
     this_objcflags += -DDEBUG
 else
-    this_cxxflags += -O2 #TODO: switch to -O3 when g++ bug is fixed and it won't produce segfault
+    this_cxxflags += -O3
 endif
 
 ifeq ($(prorab_os), linux)
