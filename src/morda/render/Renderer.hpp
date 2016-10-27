@@ -27,7 +27,7 @@ public:
 	
 	static unsigned bytesPerPixel(TexType_e t);
 	
-	virtual std::shared_ptr<Texture2D_n> createTexture2D(TexType_e type, unsigned width, const std::vector<std::uint8_t>& data) = 0;
+	virtual std::shared_ptr<Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const std::vector<std::uint8_t>& data) = 0;
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) = 0;
 	

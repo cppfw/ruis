@@ -68,12 +68,12 @@ struct OpenGL2Texture2D : public morda::Texture2D_n{
 }
 
 
-std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e type, unsigned width, const std::vector<std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e type, kolme::Vec2ui dim, const std::vector<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % bytesPerPixel(type) == 0)
-	ASSERT(data.size() % width == 0)
+	ASSERT(data.size() % dim.x == 0)
 
-	unsigned height = data.size() / width;
+	ASSERT(data.size() == 0 || data.size() / bytesPerPixel(type) / dim.x == dim.y)
 	
 	auto ret = utki::makeShared<OpenGL2Texture2D>();
 	
@@ -106,8 +106,8 @@ std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e t
 			GL_TEXTURE_2D,
 			0,//0th level, no mipmaps
 			internalFormat, //internal format
-			width,
-			height,
+			dim.x,
+			dim.y,
 			0,//border, should be 0!
 			internalFormat, //format of the texel data
 			GL_UNSIGNED_BYTE,

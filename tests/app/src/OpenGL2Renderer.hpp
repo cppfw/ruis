@@ -12,7 +12,7 @@ public:
 	
 	virtual ~OpenGL2Renderer()noexcept;
 
-	std::shared_ptr<morda::Texture2D_n> createTexture2D(TexType_e type, unsigned width, const std::vector<std::uint8_t>& data) override;
+	std::shared_ptr<morda::Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const std::vector<std::uint8_t>& data) override;
 
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override;
 
