@@ -12,6 +12,7 @@
 #include "../config.hpp"
 
 #include "../render/Texture2D.hpp"
+#include "../render/Texture2D_n.hpp"
 
 namespace morda{
 
@@ -138,5 +139,8 @@ real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
  * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
  */
 void applySimpleAlphaBlending();
+
+
+std::shared_ptr<Texture2D_n> loadTexture_n(const papki::File& fi);
 
 }

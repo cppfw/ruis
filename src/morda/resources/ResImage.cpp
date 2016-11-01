@@ -49,9 +49,10 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 
 
 void ResAtlasImage::render(PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
-	this->tex->tex().bind();
+//	this->tex->tex().bind();
 	
-	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
+//	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
+	//TODO:
 }
 
 

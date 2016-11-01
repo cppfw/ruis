@@ -194,6 +194,31 @@ Texture2D morda::loadTexture(const papki::File& fi){
 	return Texture2D(image);
 }
 
+std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
+	Image image(fi);
+//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+	image.flipVertical();
+	
+	morda::Renderer::TexType_e tt;
+	switch(image.numChannels()){
+		case 1:
+			tt = morda::Renderer::TexType_e::GREY;
+			break;
+		case 2:
+			tt = morda::Renderer::TexType_e::GREYA;
+			break;
+		case 3:
+			tt = morda::Renderer::TexType_e::RGB;
+			break;
+		case 4:
+			tt = morda::Renderer::TexType_e::RGBA;
+			break;
+		default:
+			ASSERT(false)
+	}
+	
+	return morda::inst().renderer().createTexture2D(tt, image.dim(), image.buf());
+}
 
 
 void morda::applySimpleAlphaBlending(){

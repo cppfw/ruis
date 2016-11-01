@@ -17,5 +17,5 @@ std::shared_ptr<ResTexture> ResTexture::load(const stob::Node& chain, const papk
 //	TRACE(<< "ResTexture::Load(): Loading image, file path = " << fileVal->value() << std::endl)
 	fi.setPath(chain.side("file").up().value());
 
-	return utki::makeShared<ResTexture>(loadTexture(fi));
+	return utki::makeShared<ResTexture>(loadTexture_n(fi));
 }

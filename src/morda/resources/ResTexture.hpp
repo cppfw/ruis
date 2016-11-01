@@ -4,7 +4,7 @@
 
 #include "../ResourceManager.hpp"
 
-#include "../render/Texture2D.hpp"
+#include "../render/Texture2D_n.hpp"
 
 
 namespace morda{
@@ -28,16 +28,17 @@ namespace morda{
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	Texture2D tex_v;
-
+	std::shared_ptr<Texture2D_n> tex_v;
 public:
 	/**
 	 * @brief Create texture.
 	 * @param texture - texture object to initialize this resource with.
 	 */
-	ResTexture(Texture2D&& texture) :
+	ResTexture(decltype(tex_v) texture) :
 			tex_v(std::move(texture))
-	{}
+	{
+		ASSERT(this->tex_v)
+	}
 
 	~ResTexture()noexcept{}
 
@@ -45,8 +46,8 @@ public:
 	 * @brief Get texture object held by this resource.
 	 * @return Texture object.
 	 */
-	const Texture2D& tex()const noexcept{
-		return this->tex_v;
+	const Texture2D_n& tex()const noexcept{
+		return *this->tex_v;
 	}
 
 private:

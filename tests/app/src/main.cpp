@@ -116,13 +116,14 @@ public:
 			morda::Matr4r matr(matrix);
 			matr.scale(this->rect().d);
 
-			this->tex->tex().bind();
+//			this->tex->tex().bind();
 
-			morda::PosTexShader &s = morda::Morda::inst().shaders.posTexShader;
+//			morda::PosTexShader &s = morda::Morda::inst().shaders.posTexShader;
 
 //			s.SetColor(kolme::Vec3f(1, 0, 0));
-			s.setMatrix(matr);
-			s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
+//			s.setMatrix(matr);
+//			s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
+			morda::inst().renderer().shaderPosTex.render(matr, this->tex->tex(), utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(morda::PosTexShader::quadFanTexCoords));
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -169,12 +170,12 @@ public:
 		
 		m.rotate(this->rot);
 
-		this->tex->tex().bind();
+//		this->tex->tex().bind();
 		
-		auto& s = morda::Morda::inst().shaders.posTexShader;
+//		auto& s = morda::Morda::inst().shaders.posTexShader;
 
 //		s.SetColor(kolme::Vec3f(0, 1, 0));
-		s.setMatrix(m);
+//		s.setMatrix(m);
 		
 		
 		static std::array<morda::Vec3r, 36> cubePos = {{
@@ -223,7 +224,8 @@ public:
 		
 		morda::Render::setCullEnabled(true);
 		
-		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::Mode_e::TRIANGLES);
+//		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::Mode_e::TRIANGLES);
+		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Shader_n::Mode_e::TRIANGLES);
 		
 		morda::Render::setCullEnabled(false);
 	}
