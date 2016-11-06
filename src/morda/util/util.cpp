@@ -201,6 +201,8 @@ std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
 	
 	morda::Renderer::TexType_e tt;
 	switch(image.numChannels()){
+		default:
+			ASSERT(false)
 		case 1:
 			tt = morda::Renderer::TexType_e::GREY;
 			break;
@@ -212,9 +214,6 @@ std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
 			break;
 		case 4:
 			tt = morda::Renderer::TexType_e::RGBA;
-			break;
-		default:
-			ASSERT(false)
 			break;
 	}
 	
