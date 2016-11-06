@@ -215,6 +215,7 @@ std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
 			break;
 		default:
 			ASSERT(false)
+			break;
 	}
 	
 	return morda::inst().renderer().createTexture2D(tt, image.dim(), image.buf());
