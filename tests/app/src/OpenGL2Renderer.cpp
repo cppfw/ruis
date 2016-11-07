@@ -1,5 +1,6 @@
 #include "OpenGL2Renderer.hpp"
 
+#include "OpenGL2VertexBuffer.hpp"
 
 #include <GL/glew.h>
 
@@ -175,11 +176,6 @@ std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e t
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) {
-	//TODO:
-	return nullptr;
-}
-
 void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const utki::Buf<kolme::Vec2f> p, const utki::Buf<kolme::Vec2f> t, Mode_e mode) {
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	
@@ -198,4 +194,10 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 	this->setVertexAttribArray(this->posAttrib, &*p.begin());
 	this->setVertexAttribArray(this->texCoordAttrib, &*t.begin());
 	this->renderElements(mode, i);
+}
+
+
+
+std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
+	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }

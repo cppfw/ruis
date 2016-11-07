@@ -154,6 +154,8 @@
           <in>OpenGL2Renderer.hpp</in>
           <in>OpenGL2Shader.cpp</in>
           <in>OpenGL2Shader.hpp</in>
+          <in>OpenGL2VertexBuffer.cpp</in>
+          <in>OpenGL2VertexBuffer.hpp</in>
           <in>main.cpp</in>
         </df>
       </df>
@@ -600,6 +602,16 @@
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -626,6 +638,7 @@
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
+        <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -1806,6 +1819,13 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="2">
+        </ccTool>
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -2014,6 +2034,16 @@
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -2208,6 +2238,16 @@
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2442,6 +2482,16 @@
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2VertexBuffer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
