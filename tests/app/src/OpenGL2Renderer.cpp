@@ -1,6 +1,7 @@
 #include "OpenGL2Renderer.hpp"
 
 #include "OpenGL2VertexBuffer.hpp"
+#include "OpenGL2VertexArray.hpp"
 
 #include <GL/glew.h>
 
@@ -201,3 +202,8 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
+
+std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray() {
+	return utki::makeShared<OpenGL2VertexArray>();
+}
+

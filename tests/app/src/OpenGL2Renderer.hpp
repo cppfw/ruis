@@ -35,4 +35,6 @@ public:
 
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override;
 
+	std::shared_ptr<morda::VertexArray> createVertexArray() override;
+
 };
