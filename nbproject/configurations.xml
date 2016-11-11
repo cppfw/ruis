@@ -150,6 +150,8 @@
             </df>
             <in>App.cpp</in>
           </df>
+          <in>OpenGL2Buffer.cpp</in>
+          <in>OpenGL2Buffer.hpp</in>
           <in>OpenGL2Renderer.cpp</in>
           <in>OpenGL2Renderer.hpp</in>
           <in>OpenGL2Shader.cpp</in>
@@ -1348,6 +1350,8 @@
             flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -2570,6 +2574,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -2794,6 +2802,10 @@
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Renderer.hpp" ex="false" tool="3" flavor2="0">
@@ -3010,6 +3022,10 @@
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3266,6 +3282,10 @@
       <item path="src/morda/widgets/TreeView.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
       </item>

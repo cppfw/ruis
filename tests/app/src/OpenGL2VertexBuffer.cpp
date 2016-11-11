@@ -6,9 +6,6 @@
 OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<kolme::Vec3f> vertices) :
 		morda::VertexBuffer(vertices.size())
 {
-	glGenBuffers(1, &this->buffer);
-	AssertOpenGLNoError();
-	
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffer);
 	AssertOpenGLNoError();
 	
@@ -17,12 +14,5 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<kolme::Vec3f> vertices)
 	
 	//TODO: remove this
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	AssertOpenGLNoError();
-}
-
-
-
-OpenGL2VertexBuffer::~OpenGL2VertexBuffer()noexcept{
-	glDeleteBuffers(1, &this->buffer);
 	AssertOpenGLNoError();
 }

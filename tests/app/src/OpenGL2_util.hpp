@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <utki/debug.hpp>
 
 inline static void AssertOpenGLNoError(){
 #ifdef DEBUG
