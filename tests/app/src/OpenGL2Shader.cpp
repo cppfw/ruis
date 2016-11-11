@@ -9,9 +9,10 @@
 
 
 OpenGL2Shader::OpenGL2Shader(const char* vertexShaderCode, const char* fragmentShaderCode) :
-		program(vertexShaderCode, fragmentShaderCode)
+		program(vertexShaderCode, fragmentShaderCode),
+		posAttrib(this->getAttribute("pos")),
+		matrixUniform(this->getUniform("matrix"))
 {
-	this->matrixUniform = this->getUniform("matrix");
 }
 
 GLint OpenGL2Shader::getUniform(const char* n) {
@@ -63,4 +64,8 @@ void OpenGL2Shader::renderElements(morda::Shader_n::Mode_e mode, const utki::Buf
 
 	glDrawElements(m, GLsizei(i.size()), GL_UNSIGNED_SHORT, &*i.begin());
 //	AssertOpenGLNoError();
+}
+
+void OpenGL2Shader::setPosAttribArray(const kolme::Vec3f* a) {
+	this->setVertexAttribArray(this->posAttrib, a);
 }

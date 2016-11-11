@@ -8,7 +8,6 @@
 
 
 class OpenGL2ShaderPosTex : public morda::ShaderPosTex, public OpenGL2Shader{
-	GLint posAttrib;
 	GLint texCoordAttrib;
 	GLint textureUniform;
 public:
@@ -33,7 +32,7 @@ public:
 
 	std::shared_ptr<morda::Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) override;
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) override;
 
 	std::shared_ptr<morda::VertexArray> createVertexArray() override;
 

@@ -105,7 +105,9 @@ struct ProgramWrapper{
 class OpenGL2Shader {
 	ProgramWrapper program;
 	
-	GLint matrixUniform;
+	const GLint posAttrib;
+	
+	const GLint matrixUniform;
 public:
 	OpenGL2Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
@@ -132,6 +134,8 @@ protected:
 	void setMatrix(const kolme::Matr4f& m){
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
+	
+	void setPosAttribArray(const kolme::Vec3f* a);
 	
 	void setVertexAttribArray(GLint id, const kolme::Vec3f* a);
 	

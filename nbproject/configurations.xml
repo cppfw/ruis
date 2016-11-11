@@ -158,6 +158,7 @@
           <in>OpenGL2VertexArray.hpp</in>
           <in>OpenGL2VertexBuffer.cpp</in>
           <in>OpenGL2VertexBuffer.hpp</in>
+          <in>OpenGL2_util.hpp</in>
           <in>main.cpp</in>
         </df>
       </df>
@@ -200,8 +201,6 @@
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -O2 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
-        <element flagsID="2"
-                 commonFlags="-mtune=generic -march=x86-64 -O3 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -359,7 +358,7 @@
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
@@ -524,7 +523,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
@@ -589,14 +588,14 @@
         </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
-            <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>.</pElem>
@@ -604,7 +603,7 @@
         </ccTool>
       </item>
       <item path="src/morda/shaders/ClrPosShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
@@ -632,7 +631,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
@@ -654,7 +653,7 @@
         </ccTool>
       </item>
       <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
@@ -705,7 +704,7 @@
         </ccTool>
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/util</pElem>
@@ -740,7 +739,7 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/BlendWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -755,7 +754,7 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1193,7 +1192,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1229,14 +1228,14 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/proxy/ResizeProxy.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/widgets/label/BlurGlass.cpp"
@@ -2593,6 +2592,8 @@
         <ccTool flags="2">
         </ccTool>
       </item>
+      <item path="tests/app/src/OpenGL2_util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -2821,6 +2822,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2_util.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -3035,6 +3038,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2_util.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3289,6 +3294,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2_util.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
       </item>

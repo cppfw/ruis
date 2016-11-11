@@ -5,34 +5,7 @@
 
 #include <GL/glew.h>
 
-
-inline static void AssertOpenGLNoError(){
-#ifdef DEBUG
-	GLenum error = glGetError();
-	switch(error){
-		case GL_NO_ERROR:
-			return;
-		case GL_INVALID_ENUM:
-			ASSERT_INFO(false, "OpenGL error: GL_INVALID_ENUM")
-			break;
-		case GL_INVALID_VALUE:
-			ASSERT_INFO(false, "OpenGL error: GL_INVALID_VALUE")
-			break;
-		case GL_INVALID_OPERATION:
-			ASSERT_INFO(false, "OpenGL error: GL_INVALID_OPERATION")
-			break;
-		case GL_INVALID_FRAMEBUFFER_OPERATION:
-			ASSERT_INFO(false, "OpenGL error: GL_INVALID_FRAMEBUFFER_OPERATION")
-			break;
-		case GL_OUT_OF_MEMORY:
-			ASSERT_INFO(false, "OpenGL error: GL_OUT_OF_MEMORY")
-			break;
-		default:
-			ASSERT_INFO(false, "Unknown OpenGL error, code = " << int(error))
-			break;
-	}
-#endif
-}
+#include "OpenGL2_util.hpp"
 
 
 OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
@@ -74,7 +47,6 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 					)qwertyuiop"
 			)
 {
-	this->posAttrib = this->getAttribute("pos");
 	this->textureUniform = this->getUniform("texture0");
 	this->texCoordAttrib = this->getAttribute("texCoord0");
 }
@@ -192,14 +164,14 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 	
 	this->setMatrix(m);
 	
-	this->setVertexAttribArray(this->posAttrib, &*p.begin());
+	this->setPosAttribArray(&*p.begin());
 	this->setVertexAttribArray(this->texCoordAttrib, &*t.begin());
 	this->renderElements(mode, i);
 }
 
 
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 
