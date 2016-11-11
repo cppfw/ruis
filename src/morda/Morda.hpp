@@ -40,6 +40,7 @@ public:
 	
 	/**
 	 * @brief Constructor.
+	 * @param r - renderer implementation.
 	 * @param dotsPerInch - dpi of your display.
 	 * @param dotsPerPt - desired dots per point.
 	 */
