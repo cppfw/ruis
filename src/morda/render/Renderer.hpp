@@ -45,7 +45,7 @@ public:
 	
 	virtual std::shared_ptr<IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) = 0;
 	
-	virtual std::shared_ptr<VertexArray> createVertexArray() = 0;
+	virtual std::shared_ptr<VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers) = 0;
 	
 	std::shared_ptr<Renderer> getSharedPtr()noexcept{
 		return this->sharedFromThis(this);

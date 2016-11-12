@@ -39,6 +39,6 @@ public:
 
 	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) override;
 	
-	std::shared_ptr<morda::VertexArray> createVertexArray() override;
+	std::shared_ptr<morda::VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers) override;
 
 };

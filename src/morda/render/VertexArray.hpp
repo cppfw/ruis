@@ -12,7 +12,13 @@ class VertexArray : virtual public utki::Shared{
 	std::vector<std::shared_ptr<VertexBuffer>> buffers;
 public:
 	
+	VertexArray(decltype(buffers)&& buffers) :
+			buffers(buffers)
+	{}
 	
+	VertexBuffer& get(size_t i){
+		return *this->buffers[i];
+	}
 };
 
 }

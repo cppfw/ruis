@@ -6,9 +6,9 @@
 
 
 class OpenGL2VertexArray : public morda::VertexArray{
-	GLuint buffer;
+	GLuint arr;
 public:
-	OpenGL2VertexArray();
+	OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers);
 	
 	OpenGL2VertexArray(const OpenGL2VertexArray&) = delete;
 	OpenGL2VertexArray& operator=(const OpenGL2VertexArray&) = delete;

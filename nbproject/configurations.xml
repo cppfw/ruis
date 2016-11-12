@@ -490,6 +490,8 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -1710,6 +1712,15 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -2716,6 +2727,8 @@
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/VertexBuffer.hpp" ex="false" tool="3" flavor2="0">
@@ -2948,6 +2961,8 @@
       <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3227,6 +3242,8 @@
       <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>

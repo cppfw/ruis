@@ -18,17 +18,17 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 						#	define lowp
 						#endif
 
-						attribute highp vec4 pos;
+						attribute highp vec4 a0; //position
 
-						attribute highp vec2 texCoord0;
+						attribute highp vec2 a1; //texture coordinates
 
 						uniform highp mat4 matrix;
 
 						varying highp vec2 tc0;
 
 						void main(void){
-							gl_Position = matrix * pos;
-							tc0 = texCoord0;
+							gl_Position = matrix * a0;
+							tc0 = a1;
 						}
 					)qwertyuiop",
 				R"qwertyuiop(
@@ -49,7 +49,7 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 			)
 {
 	this->textureUniform = this->getUniform("texture0");
-	this->texCoordAttrib = this->getAttribute("texCoord0");
+	this->texCoordAttrib = 1;
 }
 
 
@@ -214,8 +214,8 @@ std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const u
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray() {
-	return utki::makeShared<OpenGL2VertexArray>();
+std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers) {
+	return utki::makeShared<OpenGL2VertexArray>(std::move(buffers));
 }
 
 std::shared_ptr<morda::IndexBuffer> OpenGL2Renderer::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
