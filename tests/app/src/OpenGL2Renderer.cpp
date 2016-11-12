@@ -210,7 +210,47 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 }
 
 
+void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va, const morda::IndexBuffer& e, Mode_e mode = Mode_e::TRIANGLE_FAN){
+	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
+	auto& a = static_cast<const OpenGL2VertexArray&>(va);
+	
+	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(&e))
+	const OpenGL2IndexBuffer& eb = static_cast<const OpenGL2IndexBuffer&>(e);
+	
+	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
+	this->bind();
+	
+	glBindVertexArray(a.arr);
+	AssertOpenGLNoError();
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eb.buffer);
+	AssertOpenGLNoError();
+
+	for(unsigned i = 0; i != a.buffers.size(); ++i){
+		glEnableVertexAttribArray(i);
+		AssertOpenGLNoError();
+	}
+
+	glDrawElements(modeMap[unsigned(mode)], eb.elementsCount, eb.elementType, 0);
+
+	for(unsigned i = 0; i != a.buffers.size(); ++i){
+		glDisableVertexAttribArray(i);
+		AssertOpenGLNoError();
+	}
+
+	//TODO: remove this
+	glBindVertexArray(0);
+	AssertOpenGLNoError();
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	AssertOpenGLNoError();
+}
+
+
 std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
+	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
+}
+
+std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 

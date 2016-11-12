@@ -9,16 +9,11 @@
 namespace morda{
 
 class VertexArray : virtual public utki::Shared{
-	std::vector<std::shared_ptr<VertexBuffer>> buffers;
 public:
+	const std::vector<std::shared_ptr<VertexBuffer>> buffers;
 	
-	VertexArray(decltype(buffers)&& buffers) :
-			buffers(buffers)
-	{}
-	
-	VertexBuffer& get(size_t i){
-		return *this->buffers[i];
-	}
+	VertexArray(decltype(buffers)&& buffers);
+
 };
 
 }

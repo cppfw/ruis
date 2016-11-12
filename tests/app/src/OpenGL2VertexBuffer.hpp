@@ -9,9 +9,13 @@
 #include "OpenGL2Buffer.hpp"
 
 class OpenGL2VertexBuffer : public morda::VertexBuffer, public OpenGL2Buffer{
-	
 public:
+	const GLint numComponents;
+	const GLenum type;
+	
 	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec3f> vertices);
+	
+	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec2f> vertices);
 	
 	OpenGL2VertexBuffer(const OpenGL2VertexBuffer&) = delete;
 	OpenGL2VertexBuffer& operator=(const OpenGL2VertexBuffer&) = delete;

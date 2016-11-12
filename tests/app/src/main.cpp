@@ -144,8 +144,7 @@ class CubeWidget : public morda::Widget, public morda::Updateable{
 	
 	morda::Quatr rot = morda::Quatr().identity();
 public:
-	std::array<morda::Vec3r, 36> cubePos;
-	std::shared_ptr<morda::VertexBuffer> cubeVErtPos;
+	std::shared_ptr<morda::VertexArray> cubeVAO;
 	
 	std::array<std::uint16_t, 36> indices;
 	std::shared_ptr<morda::IndexBuffer> cubeIndices;
@@ -153,7 +152,7 @@ public:
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
 	{
-		this->cubePos = {{
+		std::array<morda::Vec3r, 36> cubePos = {{
 			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, 1), kolme::Vec3f(-1, 1, 1),
 			kolme::Vec3f(1, -1, 1), kolme::Vec3f(1, 1, 1), kolme::Vec3f(-1, 1, 1),
 			
@@ -173,7 +172,31 @@ public:
 			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, -1, 1)
 		}};
 		
-		this->cubeVErtPos = morda::inst().renderer().createVertexBuffer(utki::wrapBuf(this->cubePos));
+		auto posVBO = morda::inst().renderer().createVertexBuffer(utki::wrapBuf(cubePos));
+		
+		std::array<kolme::Vec2f, 36> cubeTex = {{
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+		
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			
+			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
+			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
+		}};
+		
+		auto texVBO = morda::inst().renderer().createVertexBuffer(utki::wrapBuf(cubeTex));
+		
+		this->cubeVAO = morda::inst().renderer().createVertexArray({posVBO, texVBO});
 		
 		this->indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
@@ -212,33 +235,12 @@ public:
 //		s.setMatrix(m);
 		
 		
-		
-		
-		static std::array<kolme::Vec2f, 36> cubeTex = {{
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
-			
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
-			
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
-		
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
-			
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
-			
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
-		}};
-		
 		morda::Render::setCullEnabled(true);
 		
 //		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::Mode_e::TRIANGLES);
 //		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Shader_n::Mode_e::TRIANGLES);
-		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), *this->cubeVErtPos, *this->cubeIndices, morda::Shader_n::Mode_e::TRIANGLES);
+//		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), *this->cubeVErtPos, *this->cubeIndices, morda::Shader_n::Mode_e::TRIANGLES);
+		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), *this->cubeVAO, *this->cubeIndices, morda::Shader_n::Mode_e::TRIANGLES);
 		
 		morda::Render::setCullEnabled(false);
 	}
