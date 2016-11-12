@@ -145,6 +145,10 @@ class CubeWidget : public morda::Widget, public morda::Updateable{
 	morda::Quatr rot = morda::Quatr().identity();
 public:
 	std::array<morda::Vec3r, 36> cubePos;
+	std::shared_ptr<morda::VertexBuffer> cubeVErtPos;
+	
+	std::array<std::uint16_t, 36> indices;
+	std::shared_ptr<morda::IndexBuffer> cubeIndices;
 	
 	CubeWidget(const stob::Node* desc) :
 			Widget(desc)
@@ -171,6 +175,12 @@ public:
 		
 		this->cubeVErtPos = morda::inst().renderer().createVertexBuffer(utki::wrapBuf(this->cubePos));
 		
+		this->indices = {{
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+		}};
+		
+		this->cubeIndices = morda::inst().renderer().createIndexBuffer(utki::wrapBuf(this->indices));
+		
 		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
 		
@@ -180,8 +190,6 @@ public:
 	void update(std::uint32_t dt) override{
 		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 	}
-	
-	std::shared_ptr<morda::VertexBuffer> cubeVErtPos;
 	
 	void render(const morda::Matr4r& matrix)const override{
 		this->Widget::render(matrix);
@@ -226,14 +234,11 @@ public:
 			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
 		}};
 		
-		static std::array<std::uint16_t, 36> indices = {{
-			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
-		}};
-		
 		morda::Render::setCullEnabled(true);
 		
 //		s.render(utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Render::Mode_e::TRIANGLES);
-		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Shader_n::Mode_e::TRIANGLES);
+//		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), utki::wrapBuf(indices), utki::wrapBuf(cubePos), utki::wrapBuf(cubeTex), morda::Shader_n::Mode_e::TRIANGLES);
+		morda::inst().renderer().shaderPosTex.render(m, this->tex->tex(), *this->cubeVErtPos, *this->cubeIndices, morda::Shader_n::Mode_e::TRIANGLES);
 		
 		morda::Render::setCullEnabled(false);
 	}

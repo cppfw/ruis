@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 
 #include "OpenGL2_util.hpp"
+#include "OpenGL2IndexBuffer.hpp"
 
 
 OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
@@ -42,7 +43,7 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 						varying highp vec2 tc0;
 		
 						void main(void){
-							gl_FragColor = texture2D(texture0, tc0);
+							gl_FragColor = texture2D(texture0, tc0) * 0.1 + vec4(0.9, 0.9, 0, 0.9);
 						}
 					)qwertyuiop"
 			)
@@ -169,6 +170,44 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 	this->renderElements(mode, i);
 }
 
+namespace{
+GLenum modeMap[] = {
+	GL_TRIANGLES,			//TRIANGLES
+	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
+	GL_LINE_LOOP,			//LINE_LOOP
+	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
+};
+}
+
+void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexBuffer& p, const morda::IndexBuffer& e, Mode_e mode = Mode_e::TRIANGLE_FAN){
+	ASSERT(dynamic_cast<const OpenGL2VertexBuffer*>(&p))
+	const OpenGL2VertexBuffer& pb = static_cast<const OpenGL2VertexBuffer&>(p);
+	
+	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(&e))
+	const OpenGL2IndexBuffer& eb = static_cast<const OpenGL2IndexBuffer&>(e);
+	
+	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
+	this->bind();
+	
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, pb.buffer);
+	AssertOpenGLNoError();
+	
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, eb.buffer);
+	AssertOpenGLNoError();
+
+//	glEnableClientState(GL_VERTEX_ARRAY);
+//	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glDrawElements(modeMap[unsigned(mode)], eb.elementsCount, eb.elementType, 0);
+
+//	glDisableClientState(GL_VERTEX_ARRAY);
+
+	//TODO: remove this
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	AssertOpenGLNoError();
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+	AssertOpenGLNoError();
+}
 
 
 std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
@@ -179,3 +218,6 @@ std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray() {
 	return utki::makeShared<OpenGL2VertexArray>();
 }
 
+std::shared_ptr<morda::IndexBuffer> OpenGL2Renderer::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
+	return utki::makeShared<OpenGL2IndexBuffer>(indices);
+}

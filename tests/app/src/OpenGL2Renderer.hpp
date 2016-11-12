@@ -16,6 +16,9 @@ public:
 	void render(const kolme::Matr4f &m, const morda::Texture2D_n& tex, const utki::Buf<kolme::Vec2f> p, const utki::Buf<kolme::Vec2f> t, Mode_e mode = Mode_e::TRIANGLE_FAN)override;
 	
 	void render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const utki::Buf<std::uint16_t> i, const utki::Buf<kolme::Vec3f> p, const utki::Buf<kolme::Vec2f> t, Mode_e mode) override;
+	
+	void render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexBuffer& p, const morda::IndexBuffer& e, Mode_e mode) override;
+
 };
 
 
@@ -34,6 +37,8 @@ public:
 
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) override;
 
+	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) override;
+	
 	std::shared_ptr<morda::VertexArray> createVertexArray() override;
 
 };

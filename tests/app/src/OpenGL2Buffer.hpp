@@ -3,9 +3,9 @@
 #include <GL/glew.h>
 
 class OpenGL2Buffer {
-protected:
-	const GLuint buffer;
 public:
+	const GLuint buffer;
+
 	OpenGL2Buffer();
 	
 	OpenGL2Buffer(const OpenGL2Buffer&) = delete;

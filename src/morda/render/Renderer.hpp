@@ -11,6 +11,7 @@
 
 #include "VertexBuffer.hpp"
 #include "VertexArray.hpp"
+#include "IndexBuffer.hpp"
 
 #include "ShaderPosTex.hpp"
 
@@ -41,6 +42,8 @@ public:
 	virtual std::shared_ptr<Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) = 0;
+	
+	virtual std::shared_ptr<IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) = 0;
 	
 	virtual std::shared_ptr<VertexArray> createVertexArray() = 0;
 	
