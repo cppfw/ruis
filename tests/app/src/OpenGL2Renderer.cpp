@@ -43,7 +43,7 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 						varying highp vec2 tc0;
 		
 						void main(void){
-							gl_FragColor = texture2D(texture0, tc0) * 0.1 + vec4(0.9, 0.9, 0, 0.9);
+							gl_FragColor = texture2D(texture0, tc0);
 						}
 					)qwertyuiop"
 			)
@@ -212,36 +212,24 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 
 void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va, const morda::IndexBuffer& e, Mode_e mode = Mode_e::TRIANGLE_FAN){
 	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
-	auto& a = static_cast<const OpenGL2VertexArray&>(va);
+	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
 	
 	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(&e))
-	const OpenGL2IndexBuffer& eb = static_cast<const OpenGL2IndexBuffer&>(e);
+	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(e);
 	
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	
-	glBindVertexArray(a.arr);
-	AssertOpenGLNoError();
+	this->setMatrix(m);
 	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eb.buffer);
+	glBindVertexArray(vao.arr);
 	AssertOpenGLNoError();
 
-	for(unsigned i = 0; i != a.buffers.size(); ++i){
-		glEnableVertexAttribArray(i);
-		AssertOpenGLNoError();
-	}
-
-	glDrawElements(modeMap[unsigned(mode)], eb.elementsCount, eb.elementType, 0);
-
-	for(unsigned i = 0; i != a.buffers.size(); ++i){
-		glDisableVertexAttribArray(i);
-		AssertOpenGLNoError();
-	}
+	glDrawElements(modeMap[unsigned(mode)], ivbo.elementsCount, ivbo.elementType, nullptr);
+	AssertOpenGLNoError();
 
 	//TODO: remove this
 	glBindVertexArray(0);
-	AssertOpenGLNoError();
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	AssertOpenGLNoError();
 }
 
@@ -254,8 +242,8 @@ std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const u
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers) {
-	return utki::makeShared<OpenGL2VertexArray>(std::move(buffers));
+std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) {
+	return utki::makeShared<OpenGL2VertexArray>(std::move(buffers), std::move(indices));
 }
 
 std::shared_ptr<morda::IndexBuffer> OpenGL2Renderer::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {

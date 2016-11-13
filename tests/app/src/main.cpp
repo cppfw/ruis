@@ -196,13 +196,13 @@ public:
 		
 		auto texVBO = morda::inst().renderer().createVertexBuffer(utki::wrapBuf(cubeTex));
 		
-		this->cubeVAO = morda::inst().renderer().createVertexArray({posVBO, texVBO});
-		
 		this->indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 		
 		this->cubeIndices = morda::inst().renderer().createIndexBuffer(utki::wrapBuf(this->indices));
+		
+		this->cubeVAO = morda::inst().renderer().createVertexArray({posVBO, texVBO}, this->cubeIndices);
 		
 		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();

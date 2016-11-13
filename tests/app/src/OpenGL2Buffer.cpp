@@ -6,6 +6,7 @@ namespace{
 inline GLuint createGLBuffer(){
 	GLuint ret;
 	glGenBuffers(1, &ret);
+	AssertOpenGLNoError();
 	return ret;
 }
 }
@@ -13,11 +14,12 @@ inline GLuint createGLBuffer(){
 OpenGL2Buffer::OpenGL2Buffer() :
 		buffer(createGLBuffer())
 {
-	AssertOpenGLNoError();
 }
 
 
 OpenGL2Buffer::~OpenGL2Buffer()noexcept{
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	AssertOpenGLNoError();
 	glDeleteBuffers(1, &this->buffer);
 	AssertOpenGLNoError();
 }

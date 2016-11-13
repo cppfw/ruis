@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VertexBuffer.hpp"
+#include "IndexBuffer.hpp"
 
 #include <utki/Shared.hpp>
 
@@ -12,7 +13,9 @@ class VertexArray : virtual public utki::Shared{
 public:
 	const std::vector<std::shared_ptr<VertexBuffer>> buffers;
 	
-	VertexArray(decltype(buffers)&& buffers);
+	const std::shared_ptr<IndexBuffer> indices;
+	
+	VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices);
 
 };
 
