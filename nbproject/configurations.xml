@@ -17,10 +17,9 @@
           <in>FrameBuffer.hpp</in>
           <in>Render.cpp</in>
           <in>Render.hpp</in>
+          <in>Renderer.cpp</in>
           <in>Shader.cpp</in>
           <in>Shader.hpp</in>
-          <in>ShaderPos.cpp</in>
-          <in>ShaderPos.hpp</in>
           <in>ShaderPosTex.cpp</in>
           <in>ShaderPosTex.hpp</in>
           <in>Shader_n.cpp</in>
@@ -28,6 +27,7 @@
           <in>Texture2D.cpp</in>
           <in>Texture2D_n.cpp</in>
           <in>Texture2D_n.hpp</in>
+          <in>VertexArray.cpp</in>
           <in>VertexArray.hpp</in>
           <in>VertexBuffer.hpp</in>
         </df>
@@ -154,8 +154,11 @@
           <in>OpenGL2Buffer.hpp</in>
           <in>OpenGL2Factory.cpp</in>
           <in>OpenGL2Factory.hpp</in>
+          <in>OpenGL2IndexBuffer.cpp</in>
           <in>OpenGL2Shader.cpp</in>
           <in>OpenGL2Shader.hpp</in>
+          <in>OpenGL2ShaderPosTex.cpp</in>
+          <in>OpenGL2Texture2D.cpp</in>
           <in>OpenGL2VertexArray.cpp</in>
           <in>OpenGL2VertexArray.hpp</in>
           <in>OpenGL2VertexBuffer.cpp</in>
@@ -417,8 +420,6 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/render/IndexBuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -429,10 +430,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -485,8 +482,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -1357,33 +1352,9 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2VertexArray.cpp"
             ex="false"
@@ -1682,10 +1653,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/render/ShaderPos.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/ShaderPos.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/ShaderPosTex.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -2628,12 +2595,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="8">
@@ -2645,22 +2606,10 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2Texture2D.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2VertexArray.cpp"
@@ -2743,15 +2692,9 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/IndexBuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2768,8 +2711,6 @@
       <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -2889,33 +2830,9 @@
       </item>
       <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2VertexArray.cpp"
             ex="false"
@@ -2992,15 +2909,9 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/IndexBuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3017,8 +2928,6 @@
       <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3138,33 +3047,9 @@
       </item>
       <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2VertexArray.cpp"
             ex="false"
@@ -3289,15 +3174,9 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/IndexBuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3312,8 +3191,6 @@
       <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/Texture2D_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/VertexArray.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3426,33 +3303,9 @@
       </item>
       <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2IndexBuffer.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2ShaderPosTex.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Texture2D.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2VertexArray.cpp"
             ex="false"

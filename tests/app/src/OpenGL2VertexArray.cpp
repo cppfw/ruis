@@ -4,12 +4,19 @@
 #include "OpenGL2VertexBuffer.hpp"
 #include "OpenGL2IndexBuffer.hpp"
 
-OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) :
-		morda::VertexArray(std::move(buffers), std::move(indices))
-{
-	glGenVertexArrays(1, &this->arr);
+namespace{
+GLuint createGLVertexArray(){
+	GLuint ret;
+	glGenVertexArrays(1, &ret);
 	AssertOpenGLNoError();
-	
+	return ret;
+}
+}
+
+OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) :
+		morda::VertexArray(std::move(buffers), std::move(indices)),
+		arr(createGLVertexArray())
+{
 	glBindVertexArray(this->arr);
 	AssertOpenGLNoError();
 	

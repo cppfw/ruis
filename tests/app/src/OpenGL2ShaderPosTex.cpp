@@ -51,26 +51,6 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 }
 
 
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const utki::Buf<kolme::Vec2f> p, const utki::Buf<kolme::Vec2f> t, Mode_e mode) {
-	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
-	
-	this->bind();
-	
-	//TODO:
-	
-}
-
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const utki::Buf<std::uint16_t> i, const utki::Buf<kolme::Vec3f> p, const utki::Buf<kolme::Vec2f> t, Mode_e mode) {
-	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
-	this->bind();
-	
-	this->setMatrix(m);
-	
-	this->setPosAttribArray(&*p.begin());
-	this->setVertexAttribArray(this->texCoordAttrib, &*t.begin());
-	this->renderElements(mode, i);
-}
-
 namespace{
 GLenum modeMap[] = {
 	GL_TRIANGLES,			//TRIANGLES
@@ -80,43 +60,13 @@ GLenum modeMap[] = {
 };
 }
 
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexBuffer& p, const morda::IndexBuffer& e, Mode_e mode = Mode_e::TRIANGLE_FAN){
-	ASSERT(dynamic_cast<const OpenGL2VertexBuffer*>(&p))
-	const OpenGL2VertexBuffer& pb = static_cast<const OpenGL2VertexBuffer&>(p);
-	
-	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(&e))
-	const OpenGL2IndexBuffer& eb = static_cast<const OpenGL2IndexBuffer&>(e);
-	
-	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
-	this->bind();
-	
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, pb.buffer);
-	AssertOpenGLNoError();
-	
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, eb.buffer);
-	AssertOpenGLNoError();
 
-//	glEnableClientState(GL_VERTEX_ARRAY);
-//	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-	glDrawElements(modeMap[unsigned(mode)], eb.elementsCount, eb.elementType, 0);
-
-//	glDisableClientState(GL_VERTEX_ARRAY);
-
-	//TODO: remove this
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-	AssertOpenGLNoError();
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
-	AssertOpenGLNoError();
-}
-
-
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va, const morda::IndexBuffer& e, Mode_e mode = Mode_e::TRIANGLE_FAN){
+void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va, Mode_e mode = Mode_e::TRIANGLE_FAN){
 	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
 	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
 	
-	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(&e))
-	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(e);
+	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
+	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
 	
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();

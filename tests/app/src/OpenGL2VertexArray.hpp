@@ -7,7 +7,7 @@
 
 class OpenGL2VertexArray : public morda::VertexArray{
 public:
-	GLuint arr;
+	const GLuint arr;
 	
 	OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices);
 	
