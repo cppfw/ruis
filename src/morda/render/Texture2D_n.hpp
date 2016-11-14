@@ -11,7 +11,9 @@ class Texture2D_n : virtual public utki::Shared{
 	Vec2r dim_v;
 	
 public:
-	Texture2D_n(){}
+	Texture2D_n(Vec2r dim) :
+			dim_v(dim)
+	{}
 	
 	Texture2D_n(const Texture2D_n&) = delete;
 	Texture2D_n& operator=(const Texture2D_n&) = delete;
