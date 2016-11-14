@@ -44,15 +44,16 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
+	auto& r = morda::inst().renderer();
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);
 
 		if(this->repeat_v.x || this->repeat_v.y){
-			ASSERT(PosTexShader::quadFanTexCoords.size() == this->texCoords.size())
+			std::array<kolme::Vec2f, 4> texCoords;
+			ASSERT(PosTexShader::quadFanTexCoords.size() == texCoords.size())
 			auto src = PosTexShader::quadFanTexCoords.cbegin();
-			auto dst = this->texCoords.begin();
+			auto dst = texCoords.begin();
 			auto scale = this->rect().d.compDiv(this->img->dim());
 			if(!this->repeat_v.x){
 				scale.x = 1;
@@ -60,11 +61,12 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 			if(!this->repeat_v.y){
 				scale.y = 1;
 			}
-			for(; dst != this->texCoords.end(); ++src, ++dst){
+			for(; dst != texCoords.end(); ++src, ++dst){
 				*dst = src->compMul(scale);
 			}
+			this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices);
 		}else{
-			this->texCoords = PosTexShader::quadFanTexCoords;
+			this->vao = morda::inst().renderer().posTexQuad01VAO;
 		}
 	}
 	ASSERT(this->scaledImage)
@@ -72,8 +74,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	s.setMatrix(matr);
-	this->scaledImage->render(matr, s, this->texCoords);
+	this->scaledImage->render(matr, *this->vao);
 }
 
 morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{

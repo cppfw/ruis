@@ -36,9 +36,9 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
 		ResImage::QuadTexture(tex->tex().dim()),
-		tex(std::move(tex))
+		tex(std::move(tex)),
+		vao(morda::inst().renderer().posTexQuad01VAO)
 {
-	this->vao = morda::inst().renderer().posTexQuad01VAO;
 }
 
 
@@ -56,7 +56,7 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 }
 
 
-void ResAtlasImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
+void ResAtlasImage::render(const Matr4r& matrix, VertexArray& vao) const {
 	morda::inst().renderer().shaderPosTex->render(matrix, this->tex->tex(), *this->vao, Shader_n::Mode_e::TRIANGLE_FAN);
 }
 
@@ -66,24 +66,22 @@ namespace{
 
 class TexQuadTexture : public ResImage::QuadTexture{
 protected:
-	Texture2D tex_v;
+	std::shared_ptr<Texture2D_n> tex_v;
 	
-	TexQuadTexture(Texture2D&& tex) :
-			ResImage::QuadTexture(tex.dim()),
+	TexQuadTexture(std::shared_ptr<Texture2D_n> tex) :
+			ResImage::QuadTexture(tex->dim()),
 			tex_v(std::move(tex))
 	{}
 	
 public:
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
-		this->tex_v.bind();
-
-		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));
+	void render(const Matr4r& matrix, VertexArray& vao) const override{
+		morda::inst().renderer().shaderPosTex->render(matrix, *this->tex_v, vao, Shader_n::Mode_e::TRIANGLE_FAN);
 	}
 };
 	
 class ResRasterImage : public ResImage, public TexQuadTexture{
 public:
-	ResRasterImage(Texture2D&& tex) :
+	ResRasterImage(std::shared_ptr<Texture2D_n> tex) :
 			TexQuadTexture(std::move(tex))
 	{}
 	
@@ -92,11 +90,11 @@ public:
 	}
 	
 	Vec2r dim(real dpi) const noexcept override{
-		return this->tex_v.dim();
+		return this->tex_v->dim();
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
-		return utki::makeShared<ResRasterImage>(loadTexture(fi));
+		return utki::makeShared<ResRasterImage>(loadTexture_n(fi));
 	}
 };
 
@@ -117,14 +115,14 @@ public:
 	class SvgTexture : public TexQuadTexture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgTexture(std::shared_ptr<const ResSvgImage> parent, Texture2D&& tex) :
+		SvgTexture(std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D_n> tex) :
 				TexQuadTexture(std::move(tex)),
 				parent(parent)
 		{}
 
 		~SvgTexture()noexcept{
 			if(auto p = this->parent.lock()){
-				kolme::Vec2ui d = this->tex_v.dim().to<unsigned>();
+				kolme::Vec2ui d = this->tex_v->dim().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}
@@ -160,7 +158,10 @@ public:
 			}
 		}
 		
-		auto img = utki::makeShared<SvgTexture>(this->sharedFromThis(this), Texture2D(imWidth, pixels));
+		auto img = utki::makeShared<SvgTexture>(
+				this->sharedFromThis(this),
+				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(imWidth, imHeight), utki::wrapBuf(pixels))
+			);
 
 		this->cache[std::make_tuple(imWidth, imHeight)] = img;
 

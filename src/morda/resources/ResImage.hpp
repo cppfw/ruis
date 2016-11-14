@@ -61,10 +61,9 @@ public:
 		/**
 		 * @brief Render a quad with this texture.
 		 * @param matrix - transformation matrix to use for rendering.
-		 * @param s - shader to use for rendering.
-		 * @param texCoords - texture coordinates to use for rendering.
+		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
+		virtual void render(const Matr4r& matrix, VertexArray& vao = *morda::inst().renderer().posTexQuad01VAO)const = 0;
 	};
 
 	/**
@@ -120,7 +119,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
+	void render(const Matr4r& matrix, VertexArray& vao) const override;
 	
 private:
 	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi);

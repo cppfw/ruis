@@ -186,7 +186,7 @@ const stob::Node* morda::getProperty(const stob::Node* chain, const char* proper
 }
 
 
-
+//TODO: remove
 Texture2D morda::loadTexture(const papki::File& fi){
 	Image image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)

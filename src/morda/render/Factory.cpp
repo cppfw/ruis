@@ -18,3 +18,15 @@ unsigned Factory::bytesPerPixel(TexType_e t) {
 			return 0;
 	}
 }
+
+std::shared_ptr<Texture2D_n> Factory::createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data) {
+	return this->createTexture2D(
+			TexType_e::RGBA,
+			dim,
+			utki::Buf<std::uint8_t>(
+					const_cast<std::uint8_t*>(reinterpret_cast<const std::uint8_t*>(&*data.begin())),
+					data.sizeInBytes()
+				)
+		);
+}
+

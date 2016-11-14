@@ -26,7 +26,7 @@ OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::Vertex
 		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
 		AssertOpenGLNoError();
 		
-		TRACE(<< "vbo.numComponents = " << vbo.numComponents << " vbo.type = " << vbo.type << std::endl)
+//		TRACE(<< "vbo.numComponents = " << vbo.numComponents << " vbo.type = " << vbo.type << std::endl)
 		
 		glVertexAttribPointer(i, vbo.numComponents, vbo.type, GL_FALSE, 0, nullptr);
 		AssertOpenGLNoError();

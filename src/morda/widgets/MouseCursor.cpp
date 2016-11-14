@@ -41,8 +41,6 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	
 	ASSERT(this->quadTex)
 	
-	auto& s = morda::Morda::inst().shaders.posTexShader;
-	
 	Matr4r matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
@@ -50,7 +48,8 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	
 //	TRACE(<< "MouseCursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
-	s.setMatrix(matr);
-	this->quadTex->render(matr, s);
+	//TODO:
+//	s.setMatrix(matr);
+	this->quadTex->render(matr, *morda::inst().renderer().posTexQuad01VAO);
 }
 

@@ -35,8 +35,9 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 	}else{
 		ColorPosShader& s = Morda::inst().shaders.colorPosShader;
 
-		s.setColor(this->color());
 		s.setMatrix(matr);
+		s.setColor(this->color());
+		
 		s.render(utki::wrapBuf(s.quad01Fan));
 	}
 }

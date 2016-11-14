@@ -35,6 +35,7 @@ class Shader{
 	
 	void bind(){
 		if(this == boundShader){
+			Render::bindShader(*this->program);
 			return;
 		}
 		

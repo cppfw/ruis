@@ -17,7 +17,7 @@ class ResSubImage : public ResImage, public ResImage::QuadTexture{
 	
 	std::shared_ptr<const ResImage::QuadTexture> tex;
 	
-	std::array<Vec2r, 4> texCoords;
+	std::shared_ptr<VertexArray> vao;
 	
 public:
 	//rect is a rectangle on the texture, Y axis up.
@@ -25,11 +25,15 @@ public:
 			ResImage::QuadTexture(rect.d),
 			tex(std::move(tex))
 	{
-		this->texCoords[0] = rect.p.compDiv(this->tex->dim());
-		this->texCoords[1] = rect.rightBottom().compDiv(this->tex->dim());
-		this->texCoords[2] = rect.rightTop().compDiv(this->tex->dim());
-		this->texCoords[3] = rect.leftTop().compDiv(this->tex->dim());
-//		TRACE(<< "this->texCoords = (" << this->texCoords[0] << ", " << this->texCoords[1] << ", " << this->texCoords[2] << ", " << this->texCoords[3] << ")" << std::endl)
+		std::array<Vec2r, 4> texCoords;
+		
+		texCoords[0] = rect.p.compDiv(this->tex->dim());
+		texCoords[1] = rect.rightBottom().compDiv(this->tex->dim());
+		texCoords[2] = rect.rightTop().compDiv(this->tex->dim());
+		texCoords[3] = rect.leftTop().compDiv(this->tex->dim());
+		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
+		auto& r = morda::inst().renderer();
+		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices);
 	}
 	
 	ResSubImage(const ResSubImage& orig) = delete;
@@ -43,9 +47,9 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+	void render(const Matr4r& matrix, VertexArray& vao) const override{
 		ASSERT(this->tex)
-		this->tex->render(matrix, s, this->texCoords);
+		this->tex->render(matrix, *this->vao);
 	}
 };
 

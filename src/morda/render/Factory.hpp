@@ -35,6 +35,8 @@ public:
 	
 	virtual std::shared_ptr<Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
 	
+	std::shared_ptr<Texture2D_n> createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data);
+	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) = 0;
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) = 0;

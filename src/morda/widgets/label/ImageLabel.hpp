@@ -33,7 +33,7 @@ class ImageLabel :
 	bool keepAspectRatio;
 	
 	kolme::Vec2b repeat_v;
-	mutable std::array<kolme::Vec2f, 4> texCoords;
+	mutable std::shared_ptr<VertexArray> vao;
 	
 public:
 	ImageLabel(const stob::Node* chain = nullptr);
