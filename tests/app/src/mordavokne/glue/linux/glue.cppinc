@@ -11,7 +11,7 @@
 #include <papki/FSFile.hpp>
 #include <unikod/utf8.hpp>
 
-#include "../../../OpenGL2Renderer.hpp"
+#include "../../../OpenGL2Factory.hpp"
 
 
 using namespace mordavokne;
@@ -213,7 +213,8 @@ App::App(const WindowParams& requestedWindowParams) :
 		glxContex(xDisplay, xWindow, xVisualInfo),
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		gui(*utki::makeShared<OpenGL2Renderer>(), getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
+		renderer(utki::makeShared<morda::Renderer>(utki::makeUnique<OpenGL2Factory>())),
+		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
 	//print GLX version

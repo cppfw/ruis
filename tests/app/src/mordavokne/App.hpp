@@ -14,7 +14,9 @@
 
 #include "../../../../src/morda/Morda.hpp"
 
-#include "../OpenGL2Renderer.hpp"
+#include "../../../../src/morda/render/Renderer.hpp"
+
+#include "../OpenGL2Factory.hpp"
 
 
 
@@ -351,21 +353,6 @@ private:
 
 private:
 	
-	class MordaVOkne : public morda::Morda{
-	public:
-		MordaVOkne(morda::Renderer& r, morda::real dotsPerInch, morda::real dotsPerPt) :
-				Morda(r, dotsPerInch, dotsPerPt)
-		{}
-		
-		void postToUiThread_ts(std::function<void()>&& f) override{
-#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
-			App::inst().postToUiThread_ts(std::move(f));
-#else
-			App::inst().uiQueue.pushMessage(std::move(f));
-#endif
-		}
-	} gui;
-	
 public:
 
 	/**
@@ -483,7 +470,22 @@ public:
 	void setMouseCursorVisible(bool visible);
 	
 private:
-	std::unique_ptr<morda::Renderer> renderer;
+	std::shared_ptr<morda::Renderer> renderer;
+	
+	class MordaVOkne : public morda::Morda{
+	public:
+		MordaVOkne(std::shared_ptr<morda::Renderer> r, morda::real dotsPerInch, morda::real dotsPerPt) :
+				Morda(r, dotsPerInch, dotsPerPt)
+		{}
+		
+		void postToUiThread_ts(std::function<void()>&& f) override{
+#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
+			App::inst().postToUiThread_ts(std::move(f));
+#else
+			App::inst().uiQueue.pushMessage(std::move(f));
+#endif
+		}
+	} gui;
 };
 
 

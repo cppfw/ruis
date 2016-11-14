@@ -1,4 +1,4 @@
-#include "OpenGL2Renderer.hpp"
+#include "OpenGL2Factory.hpp"
 
 #include "OpenGL2VertexBuffer.hpp"
 #include "OpenGL2VertexArray.hpp"
@@ -13,20 +13,18 @@
 
 
 
-OpenGL2Renderer::OpenGL2Renderer() :
-		Renderer(this->sPosTex)
-{
+OpenGL2Factory::OpenGL2Factory(){
 	//TODO:
 }
 
 
-OpenGL2Renderer::~OpenGL2Renderer()noexcept{
+OpenGL2Factory::~OpenGL2Factory()noexcept{
 	//TODO:
 }
 
 
 
-std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D_n> OpenGL2Factory::createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % bytesPerPixel(type) == 0)
 	ASSERT(data.size() % dim.x == 0)
@@ -35,7 +33,7 @@ std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e t
 	
 	auto ret = utki::makeShared<OpenGL2Texture2D>(dim.to<float>());
 	
-	//TODO: save previous bing and restore it after?
+	//TODO: save previous bind and restore it after?
 	ret->bind(0);
 	
 	GLint internalFormat;
@@ -87,18 +85,22 @@ std::shared_ptr<morda::Texture2D_n> OpenGL2Renderer::createTexture2D(TexType_e t
 }
 
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Renderer::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGL2Renderer::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) {
+std::shared_ptr<morda::VertexArray> OpenGL2Factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) {
 	return utki::makeShared<OpenGL2VertexArray>(std::move(buffers), std::move(indices));
 }
 
-std::shared_ptr<morda::IndexBuffer> OpenGL2Renderer::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
+std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
 	return utki::makeShared<OpenGL2IndexBuffer>(indices);
+}
+
+std::unique_ptr<morda::ShaderPosTex> OpenGL2Factory::createPosTexShader() {
+	return utki::makeUnique<OpenGL2ShaderPosTex>();
 }

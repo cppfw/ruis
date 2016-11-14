@@ -1,10 +1,11 @@
 #pragma once
 
+#include <utki/Unique.hpp>
 
 namespace morda{
 
 
-class Shader_n {
+class Shader_n : public utki::Unique{
 public:
 	Shader_n();
 	

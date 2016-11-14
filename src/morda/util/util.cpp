@@ -199,25 +199,25 @@ std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	image.flipVertical();
 	
-	morda::Renderer::TexType_e tt;
+	morda::Factory::TexType_e tt;
 	switch(image.numChannels()){
 		default:
 			ASSERT(false)
 		case 1:
-			tt = morda::Renderer::TexType_e::GREY;
+			tt = morda::Factory::TexType_e::GREY;
 			break;
 		case 2:
-			tt = morda::Renderer::TexType_e::GREYA;
+			tt = morda::Factory::TexType_e::GREYA;
 			break;
 		case 3:
-			tt = morda::Renderer::TexType_e::RGB;
+			tt = morda::Factory::TexType_e::RGB;
 			break;
 		case 4:
-			tt = morda::Renderer::TexType_e::RGBA;
+			tt = morda::Factory::TexType_e::RGBA;
 			break;
 	}
 	
-	return morda::inst().renderer().createTexture2D(tt, image.dim(), image.buf());
+	return morda::inst().renderer().factory->createTexture2D(tt, image.dim(), image.buf());
 }
 
 

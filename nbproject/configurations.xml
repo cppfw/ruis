@@ -11,12 +11,12 @@
           <in>TexFont.hpp</in>
         </df>
         <df name="render">
+          <in>Factory.cpp</in>
+          <in>Factory.hpp</in>
           <in>FrameBuffer.cpp</in>
           <in>FrameBuffer.hpp</in>
           <in>Render.cpp</in>
           <in>Render.hpp</in>
-          <in>Renderer.cpp</in>
-          <in>Renderer.hpp</in>
           <in>Shader.cpp</in>
           <in>Shader.hpp</in>
           <in>ShaderPos.cpp</in>
@@ -152,8 +152,8 @@
           </df>
           <in>OpenGL2Buffer.cpp</in>
           <in>OpenGL2Buffer.hpp</in>
-          <in>OpenGL2Renderer.cpp</in>
-          <in>OpenGL2Renderer.hpp</in>
+          <in>OpenGL2Factory.cpp</in>
+          <in>OpenGL2Factory.hpp</in>
           <in>OpenGL2Shader.cpp</in>
           <in>OpenGL2Shader.hpp</in>
           <in>OpenGL2VertexArray.cpp</in>
@@ -392,6 +392,18 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -418,17 +430,9 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
+      <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -1349,6 +1353,10 @@
       </item>
       <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="4">
       </item>
+      <item path="tests/app/src/OpenGL2Factory.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
       <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
             ex="false"
             tool="1"
@@ -1358,10 +1366,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
@@ -1622,6 +1626,17 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -1649,8 +1664,8 @@
       <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
@@ -1685,6 +1700,7 @@
       <item path="src/morda/render/Shader_n.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
+            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -2603,6 +2619,10 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <item path="tests/app/src/OpenGL2Factory.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
       <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
             ex="false"
             tool="1"
@@ -2614,10 +2634,6 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
           </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
         </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="8">
@@ -2719,6 +2735,10 @@
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Factory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
@@ -2865,6 +2885,10 @@
       </item>
       <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
             ex="false"
             tool="1"
@@ -2874,10 +2898,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2964,6 +2984,10 @@
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Factory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
@@ -3110,6 +3134,10 @@
       </item>
       <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
             ex="false"
             tool="1"
@@ -3119,10 +3147,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3256,6 +3280,10 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Factory.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3394,6 +3422,10 @@
       </item>
       <item path="tests/app/src/OpenGL2Buffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2Factory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2Factory.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="tests/app/src/OpenGL2IndexBuffer.cpp"
             ex="false"
             tool="1"
@@ -3403,10 +3435,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/app/src/OpenGL2Renderer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>

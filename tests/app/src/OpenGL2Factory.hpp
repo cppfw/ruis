@@ -1,20 +1,18 @@
 #pragma once
 
-#include "../../../src/morda/render/Renderer.hpp"
+#include "../../../src/morda/render/Factory.hpp"
 
 #include "OpenGL2ShaderPosTex.hpp"
 
 
-class OpenGL2Renderer : public morda::Renderer{
-	OpenGL2ShaderPosTex sPosTex;
-	
+class OpenGL2Factory : public morda::Factory{
 public:
-	OpenGL2Renderer();
+	OpenGL2Factory();
 	
-	OpenGL2Renderer(const OpenGL2Renderer&) = delete;
-	OpenGL2Renderer& operator=(const OpenGL2Renderer&) = delete;
+	OpenGL2Factory(const OpenGL2Factory&) = delete;
+	OpenGL2Factory& operator=(const OpenGL2Factory&) = delete;
 	
-	virtual ~OpenGL2Renderer()noexcept;
+	virtual ~OpenGL2Factory()noexcept;
 
 	std::shared_ptr<morda::Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) override;
 
@@ -26,4 +24,5 @@ public:
 	
 	std::shared_ptr<morda::VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) override;
 
+	std::unique_ptr<morda::ShaderPosTex> createPosTexShader() override;
 };
