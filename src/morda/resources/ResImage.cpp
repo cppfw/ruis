@@ -24,12 +24,21 @@ using namespace morda;
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		ResImage::QuadTexture(rect.d.abs()),
-		tex(tex)
+		tex(std::move(tex))
 {
-	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-	this->texCoords[1] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
-	this->texCoords[0] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[1] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[0] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+	//TODO:
+	ASSERT(false)
+}
+
+ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
+		ResImage::QuadTexture(tex->tex().dim()),
+		tex(std::move(tex))
+{
+	this->vao = morda::inst().renderer().posTexQuad01VAO;
 }
 
 
@@ -40,19 +49,15 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){
 		rect = makeRectrFromSTOB(n);
+		return utki::makeShared<ResAtlasImage>(tex, rect);
 	}else{
-		rect = Rectr(Vec2r(0, 0), tex->tex().dim());
+		return utki::makeShared<ResAtlasImage>(tex);
 	}
-	
-	return utki::makeShared<ResAtlasImage>(tex, rect);
 }
 
 
-void ResAtlasImage::render(PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
-//	this->tex->tex().bind();
-	
-//	s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(this->texCoords));
-	//TODO:
+void ResAtlasImage::render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>&) const {
+	morda::inst().renderer().shaderPosTex->render(matrix, this->tex->tex(), *this->vao, Shader_n::Mode_e::TRIANGLE_FAN);
 }
 
 
@@ -69,7 +74,7 @@ protected:
 	{}
 	
 public:
-	void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
+	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override{
 		this->tex_v.bind();
 
 		s.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(texCoords));

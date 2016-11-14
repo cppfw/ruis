@@ -76,6 +76,8 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 	glBindVertexArray(vao.arr);
 	AssertOpenGLNoError();
 
+//	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
+	
 	glDrawElements(modeMap[unsigned(mode)], ivbo.elementsCount, ivbo.elementType, nullptr);
 	AssertOpenGLNoError();
 

@@ -60,10 +60,11 @@ public:
 		
 		/**
 		 * @brief Render a quad with this texture.
+		 * @param matrix - transformation matrix to use for rendering.
 		 * @param s - shader to use for rendering.
 		 * @param texCoords - texture coordinates to use for rendering.
 		 */
-		virtual void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
+		virtual void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords = PosTexShader::quadFanTexCoords)const = 0;
 	};
 
 	/**
@@ -102,10 +103,11 @@ class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
 	
 	std::shared_ptr<ResTexture> tex;
 	
-	std::array<Vec2r, 4> texCoords;
+	std::shared_ptr<VertexArray> vao;
 	
 public:
 	ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect);
+	ResAtlasImage(std::shared_ptr<ResTexture> tex);
 	
 	ResAtlasImage(const ResAtlasImage& orig) = delete;
 	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;
@@ -118,7 +120,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
+	void render(const Matr4r& matrix, PosTexShader& s, const std::array<kolme::Vec2f, 4>& texCoords) const override;
 	
 private:
 	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi);

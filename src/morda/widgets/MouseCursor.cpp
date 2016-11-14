@@ -51,6 +51,6 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 //	TRACE(<< "MouseCursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
 	s.setMatrix(matr);
-	this->quadTex->render(s);
+	this->quadTex->render(matr, s);
 }
 
