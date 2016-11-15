@@ -25,7 +25,9 @@ public:
 		TRIANGLES,
 		TRIANGLE_FAN,
 		LINE_LOOP,
-		TRIANGLE_STRIP
+		TRIANGLE_STRIP,
+		
+		ENUM_SIZE
 	};
 	
 	const Mode_e mode;

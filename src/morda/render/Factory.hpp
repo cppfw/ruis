@@ -14,6 +14,7 @@
 #include "IndexBuffer.hpp"
 
 #include "ShaderPosTex.hpp"
+#include "ShaderColorPos.hpp"
 
 namespace morda{
 
@@ -46,6 +47,8 @@ public:
 	virtual std::shared_ptr<VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, VertexArray::Mode_e mode) = 0;
 	
 	virtual std::unique_ptr<ShaderPosTex> createPosTexShader() = 0;
+	
+	virtual std::unique_ptr<ShaderColorPos> createColorPosShader() = 0;
 };
 
 }

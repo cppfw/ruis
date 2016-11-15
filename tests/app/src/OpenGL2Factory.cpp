@@ -9,6 +9,7 @@
 #include "OpenGL2IndexBuffer.hpp"
 
 #include "OpenGL2Texture2D.hpp"
+#include "OpenGL2ShaderColorPos.hpp"
 
 
 
@@ -104,3 +105,8 @@ std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(const utki
 std::unique_ptr<morda::ShaderPosTex> OpenGL2Factory::createPosTexShader() {
 	return utki::makeUnique<OpenGL2ShaderPosTex>();
 }
+
+std::unique_ptr<morda::ShaderColorPos> OpenGL2Factory::createColorPosShader() {
+	return utki::makeUnique<OpenGL2ShaderColorPos>();
+}
+

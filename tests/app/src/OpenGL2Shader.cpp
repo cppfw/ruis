@@ -1,12 +1,26 @@
-#include "OpenGL2Shader.hpp"
-#include "OpenGL2_util.hpp"
-
 #include <GL/glew.h>
 
 #include <utki/debug.hpp>
 #include <utki/Exc.hpp>
 
 #include <vector>
+
+#include "OpenGL2Shader.hpp"
+#include "OpenGL2_util.hpp"
+#include "OpenGL2VertexArray.hpp"
+#include "OpenGL2IndexBuffer.hpp"
+
+
+OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
+
+
+GLenum OpenGL2Shader::modeMap[] = {
+	GL_TRIANGLES,			//TRIANGLES
+	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
+	GL_LINE_LOOP,			//LINE_LOOP
+	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
+};
+
 
 
 
@@ -105,7 +119,6 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 
 OpenGL2Shader::OpenGL2Shader(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		program(vertexShaderCode, fragmentShaderCode),
-		posAttrib(0),
 		matrixUniform(this->getUniform("matrix"))
 {
 }
@@ -118,42 +131,27 @@ GLint OpenGL2Shader::getUniform(const char* n) {
 	return ret;
 }
 
-GLint OpenGL2Shader::getAttribute(const char* n) {
-	GLint ret = glGetAttribLocation(this->program.p, n);
-	if(ret < 0){
-		std::stringstream ss;
-		ss << "No attribute found in the shader program: " << n;
-		throw utki::Exc(ss.str());
-	}
-	return ret;
+void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va) {
+	ASSERT(this->isBound())
+	
+	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
+	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
+	
+	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
+	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
+	
+	this->setMatrix(m);
+	
+	glBindVertexArray(vao.arr);
+	AssertOpenGLNoError();
+
+//	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
+	
+	glDrawElements(modeToGLMode(va.mode), ivbo.elementsCount, ivbo.elementType, nullptr);
+	AssertOpenGLNoError();
+
+	//TODO: remove this
+	glBindVertexArray(0);
+	AssertOpenGLNoError();
 }
 
-void OpenGL2Shader::setVertexAttribArray(GLint id, const kolme::Vec3f* a) {
-	glEnableVertexAttribArray(id);
-//	AssertOpenGLNoError();
-	ASSERT(a)
-	glVertexAttribPointer(id, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*> (a));
-//	AssertOpenGLNoError();
-}
-
-void OpenGL2Shader::setVertexAttribArray(GLint id, const kolme::Vec2f* a) {
-	glEnableVertexAttribArray(id);
-//	AssertOpenGLNoError();
-	ASSERT(a)
-	glVertexAttribPointer(id, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<const GLfloat*> (a));
-//	AssertOpenGLNoError();
-}
-
-namespace{
-GLenum modeMap[] = {
-	GL_TRIANGLES,			//TRIANGLES
-	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
-	GL_LINE_LOOP,			//LINE_LOOP
-	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
-};
-}
-
-
-void OpenGL2Shader::setPosAttribArray(const kolme::Vec3f* a) {
-	this->setVertexAttribArray(this->posAttrib, a);
-}

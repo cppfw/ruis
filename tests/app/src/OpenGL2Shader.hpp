@@ -10,7 +10,10 @@
 
 #include <vector>
 
+#include "OpenGL2_util.hpp"
+
 #include "../../../src/morda/render/Shader_n.hpp"
+#include "../../../src/morda/render/VertexArray.hpp"
 
 struct ShaderWrapper{
 	GLuint s;
@@ -38,9 +41,9 @@ struct ProgramWrapper{
 class OpenGL2Shader {
 	ProgramWrapper program;
 	
-	const GLint posAttrib;
-	
 	const GLint matrixUniform;
+	
+	static OpenGL2Shader* boundShader;
 public:
 	OpenGL2Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
@@ -52,26 +55,36 @@ public:
 protected:
 	GLint getUniform(const char* n);
 	
-	GLint getAttribute(const char* n);
-	
 	void bind(){
 		glUseProgram(program.p);
-//		AssertOpenGLNoError();
+		AssertOpenGLNoError();
+		boundShader = this;
+	}
+	
+	bool isBound(){
+		return this == boundShader;
 	}
 	
 	void setUniformMatrix4f(GLint id, const kolme::Matr4f& m){
 		glUniformMatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
-//		AssertOpenGLNoError();
+		AssertOpenGLNoError();
+	}
+	
+	void setUniform4f(GLint id, float x, float y, float z, float a) {
+		glUniform4f(id, x, y, z, a);
+		AssertOpenGLNoError();
 	}
 	
 	void setMatrix(const kolme::Matr4f& m){
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 	
-	void setPosAttribArray(const kolme::Vec3f* a);
+	static GLenum modeMap[];
 	
-	void setVertexAttribArray(GLint id, const kolme::Vec3f* a);
+	static GLenum modeToGLMode(morda::VertexArray::Mode_e mode){
+		return modeMap[unsigned(mode)];
+	}
 	
-	void setVertexAttribArray(GLint id, const kolme::Vec2f* a);
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va);
 };
 

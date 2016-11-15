@@ -33,11 +33,13 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 		s.setMatrix(matr);
 		this->gradient->render(s);
 	}else{
-		ColorPosShader& s = Morda::inst().shaders.colorPosShader;
+//		ColorPosShader& s = Morda::inst().shaders.colorPosShader;
 
-		s.setMatrix(matr);
-		s.setColor(this->color());
+//		s.setMatrix(matr);
+//		s.setColor(this->color());
 		
-		s.render(utki::wrapBuf(s.quad01Fan));
+//		s.render(utki::wrapBuf(s.quad01Fan));
+		auto& r = morda::inst().renderer();
+		r.shaderColorPos->render(matr, this->color(), *r.posQuad01VAO);
 	}
 }

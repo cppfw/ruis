@@ -3,6 +3,7 @@
 #include "Factory.hpp"
 
 #include "ShaderPosTex.hpp"
+#include "ShaderColorPos.hpp"
 
 namespace morda{
 
@@ -12,10 +13,14 @@ public:
 	
 	const std::unique_ptr<ShaderPosTex> shaderPosTex;
 
+	const std::unique_ptr<ShaderColorPos> shaderColorPos;
+	
 public:
 	const std::shared_ptr<VertexBuffer> quad01VBO;
 	const std::shared_ptr<IndexBuffer> quadIndices;
 
+	const std::shared_ptr<VertexArray> posQuad01VAO;
+	
 	const std::shared_ptr<VertexArray> posTexQuad01VAO;
 	
 	Renderer(std::unique_ptr<Factory> factory);

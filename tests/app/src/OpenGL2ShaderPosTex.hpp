@@ -6,7 +6,6 @@
 
 
 class OpenGL2ShaderPosTex : public morda::ShaderPosTex, public OpenGL2Shader{
-	GLint texCoordAttrib;
 	GLint textureUniform;
 public:
 	OpenGL2ShaderPosTex();

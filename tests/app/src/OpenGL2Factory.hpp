@@ -25,4 +25,7 @@ public:
 	std::shared_ptr<morda::VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) override;
 
 	std::unique_ptr<morda::ShaderPosTex> createPosTexShader() override;
+	
+	std::unique_ptr<morda::ShaderColorPos> createColorPosShader() override;
+
 };

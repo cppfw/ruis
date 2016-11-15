@@ -47,42 +47,13 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 			)
 {
 	this->textureUniform = this->getUniform("texture0");
-	this->texCoordAttrib = 1;
-}
-
-
-namespace{
-GLenum modeMap[] = {
-	GL_TRIANGLES,			//TRIANGLES
-	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
-	GL_LINE_LOOP,			//LINE_LOOP
-	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
-};
 }
 
 
 void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va){
-	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
-	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
-	
-	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
-	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
-	
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	
-	this->setMatrix(m);
-	
-	glBindVertexArray(vao.arr);
-	AssertOpenGLNoError();
-
-//	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
-	
-	glDrawElements(modeMap[unsigned(va.mode)], ivbo.elementsCount, ivbo.elementType, nullptr);
-	AssertOpenGLNoError();
-
-	//TODO: remove this
-	glBindVertexArray(0);
-	AssertOpenGLNoError();
+	this->OpenGL2Shader::render(m, va);
 }
 
