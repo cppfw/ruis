@@ -117,7 +117,7 @@ public:
 			matr.scale(this->rect().d);
 
 			auto& r = morda::inst().renderer();
-			r.shaderPosTex->render(matr, this->tex->tex(), *r.posTexQuad01VAO, morda::Shader_n::Mode_e::TRIANGLE_FAN);
+			r.shaderPosTex->render(matr, this->tex->tex(), *r.posTexQuad01VAO);
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -193,7 +193,7 @@ public:
 		
 		auto cubeIndices = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(indices));
 		
-		this->cubeVAO = morda::inst().renderer().factory->createVertexArray({posVBO, texVBO}, cubeIndices);
+		this->cubeVAO = morda::inst().renderer().factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
 		
 		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
@@ -218,7 +218,7 @@ public:
 		
 		m.rotate(this->rot);
 
-		morda::inst().renderer().shaderPosTex->render(m, this->tex->tex(), *this->cubeVAO, morda::Shader_n::Mode_e::TRIANGLES);
+		morda::inst().renderer().shaderPosTex->render(m, this->tex->tex(), *this->cubeVAO);
 		
 		morda::Render::setCullEnabled(false);
 	}

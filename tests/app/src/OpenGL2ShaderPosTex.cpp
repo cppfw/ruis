@@ -61,7 +61,7 @@ GLenum modeMap[] = {
 }
 
 
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va, Mode_e mode = Mode_e::TRIANGLE_FAN){
+void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va){
 	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
 	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
 	
@@ -78,7 +78,7 @@ void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_
 
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
-	glDrawElements(modeMap[unsigned(mode)], ivbo.elementsCount, ivbo.elementType, nullptr);
+	glDrawElements(modeMap[unsigned(va.mode)], ivbo.elementsCount, ivbo.elementType, nullptr);
 	AssertOpenGLNoError();
 
 	//TODO: remove this

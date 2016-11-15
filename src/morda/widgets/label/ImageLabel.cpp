@@ -64,7 +64,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 			for(; dst != texCoords.end(); ++src, ++dst){
 				*dst = src->compMul(scale);
 			}
-			this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices);
+			this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
 		}else{
 			this->vao = morda::inst().renderer().posTexQuad01VAO;
 		}

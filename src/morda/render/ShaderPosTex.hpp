@@ -20,7 +20,7 @@ public:
 	ShaderPosTex(const ShaderPosTex&) = delete;
 	ShaderPosTex& operator=(const ShaderPosTex&) = delete;
 	
-	virtual void render(const kolme::Matr4f &m, const Texture2D_n& tex, const morda::VertexArray& va, Mode_e mode) = 0;
+	virtual void render(const kolme::Matr4f &m, const Texture2D_n& tex, const morda::VertexArray& va) = 0;
 private:
 
 };

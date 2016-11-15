@@ -43,7 +43,7 @@ public:
 	
 	virtual std::shared_ptr<IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) = 0;
 	
-	virtual std::shared_ptr<VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) = 0;
+	virtual std::shared_ptr<VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, VertexArray::Mode_e mode) = 0;
 	
 	virtual std::unique_ptr<ShaderPosTex> createPosTexShader() = 0;
 };

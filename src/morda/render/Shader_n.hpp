@@ -14,20 +14,6 @@ public:
 	
 	virtual ~Shader_n()noexcept{}
 	
-	
-	/**
-	 * @brief Vertex data rendering mode.
-	 * Enumeration defining how to interpret vertex data when rendering.
-	 */
-	enum class Mode_e{
-		//NOTE: do not change order!!!
-		
-		TRIANGLES,
-		TRIANGLE_FAN,
-		LINE_LOOP,
-		TRIANGLE_STRIP
-	};
-	
 private:
 
 };

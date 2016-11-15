@@ -13,8 +13,8 @@ GLuint createGLVertexArray(){
 }
 }
 
-OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices) :
-		morda::VertexArray(std::move(buffers), std::move(indices)),
+OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
+		morda::VertexArray(std::move(buffers), std::move(indices), mode),
 		arr(createGLVertexArray())
 {
 	glBindVertexArray(this->arr);

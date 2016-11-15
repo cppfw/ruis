@@ -15,7 +15,22 @@ public:
 	
 	const std::shared_ptr<IndexBuffer> indices;
 	
-	VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices);
+	/**
+	 * @brief Vertex data rendering mode.
+	 * Enumeration defining how to interpret vertex data when rendering.
+	 */
+	enum class Mode_e{
+		//NOTE: do not change order!!!
+		
+		TRIANGLES,
+		TRIANGLE_FAN,
+		LINE_LOOP,
+		TRIANGLE_STRIP
+	};
+	
+	const Mode_e mode;
+	
+	VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
 
 };
 

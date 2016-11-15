@@ -5,9 +5,10 @@
 
 using namespace morda;
 
-VertexArray::VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices) :
+VertexArray::VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
 		buffers(buffers),
-		indices(std::move(indices))
+		indices(std::move(indices)),
+		mode(mode)
 {
 	if(this->buffers.size() == 0){
 		throw morda::Exc("no vertex buffers passed to vertex array");

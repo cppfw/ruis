@@ -154,13 +154,6 @@ GLenum modeMap[] = {
 }
 
 
-void OpenGL2Shader::renderElements(morda::Shader_n::Mode_e mode, const utki::Buf<std::uint16_t>& i) {
-	GLenum m = modeMap[unsigned(mode)];
-
-	glDrawElements(m, GLsizei(i.size()), GL_UNSIGNED_SHORT, &*i.begin());
-//	AssertOpenGLNoError();
-}
-
 void OpenGL2Shader::setPosAttribArray(const kolme::Vec3f* a) {
 	this->setVertexAttribArray(this->posAttrib, a);
 }

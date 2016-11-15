@@ -73,7 +73,5 @@ protected:
 	void setVertexAttribArray(GLint id, const kolme::Vec3f* a);
 	
 	void setVertexAttribArray(GLint id, const kolme::Vec2f* a);
-	
-	void renderElements(morda::Shader_n::Mode_e mode, const utki::Buf<std::uint16_t>& i);
 };
 
