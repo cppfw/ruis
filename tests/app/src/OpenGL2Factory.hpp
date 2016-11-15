@@ -16,6 +16,8 @@ public:
 
 	std::shared_ptr<morda::Texture2D_n> createTexture2D(TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) override;
 
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) override;
+	
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) override;
 	
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override;
@@ -24,8 +26,5 @@ public:
 	
 	std::shared_ptr<morda::VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) override;
 
-	std::unique_ptr<morda::ShaderPosTex> createPosTexShader() override;
-	
-	std::unique_ptr<morda::ShaderColorPos> createColorPosShader() override;
-
+	std::unique_ptr<Shaders> createShaders() override;
 };

@@ -15,6 +15,7 @@
 
 #include "ShaderPosTex.hpp"
 #include "ShaderColorPos.hpp"
+#include "ShaderPosClr.hpp"
 
 namespace morda{
 
@@ -38,6 +39,8 @@ public:
 	
 	std::shared_ptr<Texture2D_n> createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data);
 	
+	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) = 0;
+	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) = 0;
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) = 0;
@@ -46,9 +49,13 @@ public:
 	
 	virtual std::shared_ptr<VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, VertexArray::Mode_e mode) = 0;
 	
-	virtual std::unique_ptr<ShaderPosTex> createPosTexShader() = 0;
+	struct Shaders : public utki::Unique{
+		std::unique_ptr<ShaderPosTex> posTex;
+		std::unique_ptr<ShaderColorPos> colorPos;
+		std::unique_ptr<ShaderPosClr> posClr;
+	};
 	
-	virtual std::unique_ptr<ShaderColorPos> createColorPosShader() = 0;
+	virtual std::unique_ptr<Shaders> createShaders() = 0;
 };
 
 }

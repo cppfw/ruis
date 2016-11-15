@@ -1,13 +1,9 @@
-/* 
- * File:   ResGradient.cpp
- * Author: ivan
- * 
- * Created on April 29, 2016, 11:53 AM
- */
+#include <kolme/Vector4.hpp>
 
 #include "ResGradient.hpp"
 
 #include "../util/util.hpp"
+#include "../Morda.hpp"
 
 
 
@@ -16,21 +12,50 @@ using namespace morda;
 
 
 ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical){
+	std::vector<kolme::Vec2f> vertices;
+//	std::vector<std::uint32_t> colors;
+	std::vector<kolme::Vec4f> colors;
 	for(auto& s : stops){
-		this->colors.push_back(std::get<1>(s));
-		this->colors.push_back(std::get<1>(s));
+		{
+			auto c = std::get<1>(s);
+			kolme::Vec4f clr(
+					float(c & 0xff) / 255,
+					float((c >> 8) & 0xff) / 255,
+					float((c >> 16) & 0xff) / 255,
+					float((c >> 24) & 0xff) / 255
+				);
+
+			colors.push_back(clr);
+			colors.push_back(clr);
+		}
 		
-//		TRACE(<< "put color = " << std::hex << this->colors.back() << std::endl)
+		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 		
 		if(vertical){
-			this->vertices.push_back(kolme::Vec2f(0, std::get<0>(s)));
-			this->vertices.push_back(kolme::Vec2f(1, std::get<0>(s)));
+			vertices.push_back(kolme::Vec2f(0, std::get<0>(s)));
+			vertices.push_back(kolme::Vec2f(1, std::get<0>(s)));
 		}else{ ASSERT(!vertical)
-			this->vertices.push_back(kolme::Vec2f(std::get<0>(s), 1));
-			this->vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
+			vertices.push_back(kolme::Vec2f(std::get<0>(s), 1));
+			vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
 		}
+		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}
-	ASSERT(this->vertices.size() == this->colors.size())
+	ASSERT(vertices.size() == colors.size())
+	
+	std::vector<std::uint16_t> indices;
+	for(size_t i = 0; i != vertices.size(); ++i){
+		indices.push_back(std::uint16_t(i));
+	}
+	
+	auto& r = morda::inst().renderer();
+	this->vao = r.factory->createVertexArray(
+			{
+				r.factory->createVertexBuffer(utki::wrapBuf(vertices)),
+				r.factory->createVertexBuffer(utki::wrapBuf(colors))
+			},
+			r.factory->createIndexBuffer(utki::wrapBuf(indices)),
+			VertexArray::Mode_e::TRIANGLE_STRIP
+		);
 }
 
 
@@ -69,16 +94,7 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 }
 
 
-void ResGradient::render(PosClrShader& s) const {
-	ASSERT(this->vertices.size() == this->colors.size())
-	
-//	TRACE(<< "matrix = " << matrix << std::endl)
-	
-	if (this->vertices.size() == 0) {
-		s.renderNothing();
-		return;
-	}
-
-	s.render(utki::wrapBuf(this->vertices), utki::wrapBuf(this->colors), Render::Mode_e::TRIANGLE_STRIP);
+void ResGradient::render(const morda::Matr4r& m) const {
+	morda::inst().renderer().shader->posClr->render(m, *this->vao);
 }
 

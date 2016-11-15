@@ -43,7 +43,7 @@ class OpenGL2Shader {
 	
 	const GLint matrixUniform;
 	
-	static OpenGL2Shader* boundShader;
+	static const OpenGL2Shader* boundShader;
 public:
 	OpenGL2Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 	
@@ -55,17 +55,17 @@ public:
 protected:
 	GLint getUniform(const char* n);
 	
-	void bind(){
+	void bind()const{
 		glUseProgram(program.p);
 		AssertOpenGLNoError();
 		boundShader = this;
 	}
 	
-	bool isBound(){
+	bool isBound()const noexcept{
 		return this == boundShader;
 	}
 	
-	void setUniformMatrix4f(GLint id, const kolme::Matr4f& m){
+	void setUniformMatrix4f(GLint id, const kolme::Matr4f& m)const{
 		glUniformMatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		AssertOpenGLNoError();
 	}
@@ -75,7 +75,7 @@ protected:
 		AssertOpenGLNoError();
 	}
 	
-	void setMatrix(const kolme::Matr4f& m){
+	void setMatrix(const kolme::Matr4f& m)const{
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 	
@@ -85,6 +85,6 @@ protected:
 		return modeMap[unsigned(mode)];
 	}
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va);
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va)const;
 };
 

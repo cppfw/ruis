@@ -10,6 +10,7 @@
 
 #include "OpenGL2Texture2D.hpp"
 #include "OpenGL2ShaderColorPos.hpp"
+#include "OpenGL2ShaderPosClr.hpp"
 
 
 
@@ -85,6 +86,9 @@ std::shared_ptr<morda::Texture2D_n> OpenGL2Factory::createTexture2D(TexType_e ty
 	return ret;
 }
 
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices){
+	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
+}
 
 std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
 	return utki::makeShared<OpenGL2VertexBuffer>(vertices);
@@ -102,11 +106,10 @@ std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(const utki
 	return utki::makeShared<OpenGL2IndexBuffer>(indices);
 }
 
-std::unique_ptr<morda::ShaderPosTex> OpenGL2Factory::createPosTexShader() {
-	return utki::makeUnique<OpenGL2ShaderPosTex>();
+std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
+	auto ret = utki::makeUnique<morda::Factory::Shaders>();
+	ret->posTex = utki::makeUnique<OpenGL2ShaderPosTex>();
+	ret->colorPos = utki::makeUnique<OpenGL2ShaderColorPos>();
+	ret->posClr = utki::makeUnique<OpenGL2ShaderPosClr>();
+	return ret;
 }
-
-std::unique_ptr<morda::ShaderColorPos> OpenGL2Factory::createColorPosShader() {
-	return utki::makeUnique<OpenGL2ShaderColorPos>();
-}
-

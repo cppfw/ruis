@@ -5,8 +5,7 @@ using namespace morda;
 
 Renderer::Renderer(std::unique_ptr<Factory> factory) :
 		factory(std::move(factory)),
-		shaderPosTex(this->factory->createPosTexShader()),
-		shaderColorPos(this->factory->createColorPosShader()),
+		shader(this->factory->createShaders()),
 		quad01VBO(this->factory->createVertexBuffer(utki::wrapBuf(std::array<kolme::Vec2f, 4>({{
 			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
 		}})))),

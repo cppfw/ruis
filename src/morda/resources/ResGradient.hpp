@@ -7,6 +7,8 @@
 
 #include "../shaders/ClrPosShader.hpp"
 
+#include "../render/VertexArray.hpp"
+
 
 namespace morda{
 
@@ -36,8 +38,7 @@ namespace morda{
 class ResGradient : public Resource{
 	friend class ResourceManager;
 	
-	std::vector<kolme::Vec2f> vertices;
-	std::vector<std::uint32_t> colors;
+	std::shared_ptr<VertexArray> vao;
 	
 public:
 	/**
@@ -56,9 +57,9 @@ public:
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
-	 * @param s - shader to use for rendering.
+	 * @param m - transformation matrix.
 	 */
-	void render(PosClrShader& s)const;
+	void render(const morda::Matr4r& m)const;
 	
 private:
 	static std::shared_ptr<ResGradient> load(const stob::Node& chain, const papki::File& fi);

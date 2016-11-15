@@ -2,18 +2,13 @@
 
 #include "Factory.hpp"
 
-#include "ShaderPosTex.hpp"
-#include "ShaderColorPos.hpp"
-
 namespace morda{
 
 class Renderer : virtual public utki::Shared{
 public:
 	const std::unique_ptr<Factory> factory;
 	
-	const std::unique_ptr<ShaderPosTex> shaderPosTex;
-
-	const std::unique_ptr<ShaderColorPos> shaderColorPos;
+	const std::unique_ptr<Factory::Shaders> shader;
 	
 public:
 	const std::shared_ptr<VertexBuffer> quad01VBO;

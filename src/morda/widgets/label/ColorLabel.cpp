@@ -29,11 +29,9 @@ void ColorLabel::render(const morda::Matr4r& matrix)const{
 
 	if(this->gradient){
 //		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
-		auto& s = Morda::inst().shaders.clrPosShader;
-		s.setMatrix(matr);
-		this->gradient->render(s);
+		this->gradient->render(matr);
 	}else{
 		auto& r = morda::inst().renderer();
-		r.shaderColorPos->render(matr, this->color(), *r.posQuad01VAO);
+		r.shader->colorPos->render(matr, this->color(), *r.posQuad01VAO);
 	}
 }

@@ -11,7 +11,7 @@
 #include "OpenGL2IndexBuffer.hpp"
 
 
-OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
+const OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
 
 
 GLenum OpenGL2Shader::modeMap[] = {
@@ -131,7 +131,7 @@ GLint OpenGL2Shader::getUniform(const char* n) {
 	return ret;
 }
 
-void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va) {
+void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)const{
 	ASSERT(this->isBound())
 	
 	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))

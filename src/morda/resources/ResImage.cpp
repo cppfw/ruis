@@ -57,7 +57,7 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 
 
 void ResAtlasImage::render(const Matr4r& matrix, VertexArray& vao) const {
-	morda::inst().renderer().shaderPosTex->render(matrix, this->tex->tex(), *this->vao);
+	morda::inst().renderer().shader->posTex->render(matrix, this->tex->tex(), *this->vao);
 }
 
 
@@ -75,7 +75,7 @@ protected:
 	
 public:
 	void render(const Matr4r& matrix, VertexArray& vao) const override{
-		morda::inst().renderer().shaderPosTex->render(matrix, *this->tex_v, vao);
+		morda::inst().renderer().shader->posTex->render(matrix, *this->tex_v, vao);
 	}
 };
 	

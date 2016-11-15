@@ -254,6 +254,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/render/ShaderPosClr.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -560,6 +562,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -586,7 +598,6 @@
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
-        <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -932,12 +943,14 @@
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/shaders</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -1807,7 +1820,20 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
           <incDir>
             <pElem>.</pElem>
           </incDir>
@@ -1940,6 +1966,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/render/ShaderPosClr.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
@@ -2042,6 +2070,16 @@
             flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2ShaderColorPos.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2108,6 +2146,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/render/ShaderPosClr.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.hpp" ex="false" tool="3" flavor2="0">
@@ -2210,6 +2250,16 @@
             flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2ShaderColorPos.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2322,6 +2372,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/render/ShaderPosClr.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResGradient.cpp"
@@ -2422,6 +2474,16 @@
             flavor2="0">
       </item>
       <item path="tests/app/src/OpenGL2ShaderColorPos.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/app/src/OpenGL2ShaderPosClr.hpp"
             ex="false"
             tool="3"
             flavor2="0">
