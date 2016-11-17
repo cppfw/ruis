@@ -13,8 +13,6 @@
 
 #include "widgets/label/ColorLabel.hpp"
 #include "widgets/label/TextLabel.hpp"
-#include "widgets/label/GreyscaleGlass.hpp"
-#include "widgets/label/BlurGlass.hpp"
 
 #include "widgets/TextField.hpp"
 #include "widgets/List.hpp"
@@ -93,8 +91,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<ColorLabel>("ColorLabel");
 	this->inflater.addWidget<TextField>("TextField");
 	this->inflater.addWidget<CheckBox>("CheckBox");
-	this->inflater.addWidget<GreyscaleGlass>("GreyscaleGlass");
-	this->inflater.addWidget<BlurGlass>("BlurGlass");
 	this->inflater.addWidget<HorizontalList>("HorizontalList");
 	this->inflater.addWidget<VerticalList>("VerticalList");
 	this->inflater.addWidget<TreeView>("TreeView");

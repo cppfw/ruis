@@ -58,8 +58,6 @@ public:
 	 */
 	struct DefaultShaders{
 		PosTexShader posTexShader;
-		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
-		SimpleBlurPosTexShader simpleBlurPosTexShader;
 	} shaders;
 
 private:

@@ -30,6 +30,7 @@ protected:
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering the text.
+	 * @param color - text color.
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
@@ -54,6 +55,7 @@ public:
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering.
+	 * @param color - text color.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
@@ -64,6 +66,7 @@ public:
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering.
+	 * @param color - text color.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
@@ -74,6 +77,7 @@ public:
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering.
+	 * @param color - text color.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
@@ -84,6 +88,7 @@ public:
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering.
+	 * @param color - text color.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
