@@ -16,6 +16,9 @@
 
 #include "../shaders/PosTexShader.hpp"
 
+#include "../render/Texture2D_n.hpp"
+#include "../render/VertexArray.hpp"
+
 #include "Font.hpp"
 
 
@@ -33,11 +36,13 @@ class TexFont : public Font{
 	struct Glyph{
 		std::array<kolme::Vec2f, 4> verts;
 		std::array<kolme::Vec2f, 4> texCoords;
-
+		
+		std::shared_ptr<VertexArray> vao;
+		
 		real advance;
 	};
 
-	Texture2D tex;
+	std::shared_ptr<Texture2D_n> tex;
 
 	typedef std::map<char32_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
@@ -58,7 +63,7 @@ public:
 	~TexFont()noexcept{}
 
 	
-	real renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const override;
+	real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const override;
 
 	
 	real stringAdvanceInternal(const std::u32string& str)const override;
@@ -83,7 +88,7 @@ private:
 
 	void load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline = 0);
 	
-	real renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, char32_t ch)const;
+	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;
 
 	const Glyph& findGlyph(char32_t c)const;
 };

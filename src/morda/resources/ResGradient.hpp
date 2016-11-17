@@ -5,8 +5,6 @@
 #include "../ResourceManager.hpp"
 #include "../config.hpp"
 
-#include "../shaders/ClrPosShader.hpp"
-
 #include "../render/VertexArray.hpp"
 
 

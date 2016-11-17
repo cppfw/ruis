@@ -13,6 +13,7 @@
 
 #include "../render/Texture2D.hpp"
 #include "../render/Texture2D_n.hpp"
+#include "../render/Factory.hpp"
 
 namespace morda{
 
@@ -142,5 +143,9 @@ void applySimpleAlphaBlending();
 
 
 std::shared_ptr<Texture2D_n> loadTexture_n(const papki::File& fi);
+
+morda::Factory::TexType_e numChannelsToTexType(unsigned numChannels);
+
+kolme::Vec4f colorToVec4f(std::uint32_t color);
 
 }

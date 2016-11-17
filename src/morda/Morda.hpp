@@ -5,7 +5,6 @@
 #include "render/Renderer.hpp"
 
 #include "shaders/ColorPosTexShader.hpp"
-#include "shaders/ClrPosShader.hpp"
 #include "shaders/PosTexShader.hpp"
 #include "shaders/SimpleGrayscalePosTexShader.hpp"
 #include "shaders/SimpleBlurPosTexShader.hpp"
@@ -58,8 +57,6 @@ public:
 	 * @brief Collection of standard shaders.
 	 */
 	struct DefaultShaders{
-		ColorPosTexShader colorPosTexShader;
-		PosClrShader clrPosShader;
 		PosTexShader posTexShader;
 		SimpleGrayscalePosTexShader simpleGrayscalePosTexShader;
 		SimpleBlurPosTexShader simpleBlurPosTexShader;

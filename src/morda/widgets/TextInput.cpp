@@ -1,6 +1,7 @@
 #include "TextInput.hpp"
 
 #include "../Morda.hpp"
+#include "../util/util.hpp"
 
 
 
@@ -51,21 +52,10 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 		morda::Matr4r matr(matrix);
 		matr.translate(-this->textBoundingBox().p.x + this->xOffset, -this->font().boundingBox().p.y);
 		
-		PosTexShader& s = [this]() -> PosTexShader&{
-			if(this->color() == 0xffffffff){//if white
-				return morda::Morda::inst().shaders.posTexShader;
-			}else{
-				ColorPosTexShader& s = morda::Morda::inst().shaders.colorPosTexShader;
-
-				s.setColor(this->color());
-				return s;
-			}
-		}();
-		
 		ASSERT(this->firstVisibleCharIndex <= this->text().size())
 		this->font().renderString(
-				s,
 				matr,
+				morda::colorToVec4f(this->color()),
 				std::u32string(this->text(), this->firstVisibleCharIndex, this->text().size() - this->firstVisibleCharIndex)
 			);
 	}

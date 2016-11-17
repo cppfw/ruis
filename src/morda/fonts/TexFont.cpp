@@ -10,6 +10,7 @@
 #include "../util/util.hpp"
 
 #include "TexFont.hpp"
+#include "../Morda.hpp"
 
 
 
@@ -140,6 +141,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
+	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({0, 1, 2, 3})));
+	
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
 		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
@@ -214,7 +217,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			
 			Glyph &g = this->glyphs[*c];
 			g.advance = real(m->horiAdvance) / (64.0f);
-
+			
 			ASSERT(outline < (unsigned(-1) >> 1))
 			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
 			g.verts[1] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
@@ -271,10 +274,23 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
 			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
 		}
+		auto& r = morda::inst().renderer();
+		i->second.vao = r.factory->createVertexArray(
+				{
+					r.factory->createVertexBuffer(utki::wrapBuf(i->second.verts)),
+					r.factory->createVertexBuffer(utki::wrapBuf(i->second.texCoords))
+				},
+				indexBuffer,
+				VertexArray::Mode_e::TRIANGLE_FAN
+			);
 	}
 
 //	TRACE(<< "TexFont::Load(): initing texture" << std::endl)
-	this->tex = Texture2D(texImg);
+	this->tex = morda::inst().renderer().factory->createTexture2D(
+			morda::numChannelsToTexType(texImg.numChannels()),
+			texImg.dim(),
+			texImg.buf()
+		);
 }
 
 const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
@@ -287,12 +303,11 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 
 
 
-real TexFont::renderGlyphInternal(PosTexShader& shader, const morda::Matr4r& matrix, char32_t ch)const{
+real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
-	shader.setMatrix(matrix);
-
-	shader.render(utki::wrapBuf(g.verts), utki::wrapBuf(g.texCoords));
+	
+	morda::inst().renderer().shader->colorPosTex->render(matrix, *this->tex, color, *g.vao);
 
 	return g.advance;
 }
@@ -384,15 +399,12 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 
 
-real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const{
+real TexFont::renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
-		shader.renderNothing();
 		return 0;
 	}
 	
 	applySimpleAlphaBlending();
-
-	this->tex.bind();
 
 	real ret = 0;
 
@@ -402,7 +414,7 @@ real TexFont::renderStringInternal(PosTexShader& shader, const morda::Matr4r& ma
 
 	for(; s != str.end(); ++s){
 		try{
-			real advance = this->renderGlyphInternal(shader, matr, *s);
+			real advance = this->renderGlyphInternal(matr, color, *s);
 			ret += advance;
 			matr.translate(advance, 0);
 		}catch(std::out_of_range&){

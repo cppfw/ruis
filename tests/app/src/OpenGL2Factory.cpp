@@ -11,6 +11,7 @@
 #include "OpenGL2Texture2D.hpp"
 #include "OpenGL2ShaderColorPos.hpp"
 #include "OpenGL2ShaderPosClr.hpp"
+#include "OpenGL2ShaderColorPosTex.hpp"
 
 
 
@@ -111,5 +112,6 @@ std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
 	ret->posTex = utki::makeUnique<OpenGL2ShaderPosTex>();
 	ret->colorPos = utki::makeUnique<OpenGL2ShaderColorPos>();
 	ret->posClr = utki::makeUnique<OpenGL2ShaderPosClr>();
+	ret->colorPosTex = utki::makeUnique<OpenGL2ShaderColorPosTex>();
 	return ret;
 }

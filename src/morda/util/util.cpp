@@ -194,34 +194,50 @@ Texture2D morda::loadTexture(const papki::File& fi){
 	return Texture2D(image);
 }
 
-std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
-	Image image(fi);
-//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-	image.flipVertical();
-	
-	morda::Factory::TexType_e tt;
-	switch(image.numChannels()){
+
+morda::Factory::TexType_e morda::numChannelsToTexType(unsigned numChannels){
+	switch(numChannels){
 		default:
 			ASSERT(false)
 		case 1:
-			tt = morda::Factory::TexType_e::GREY;
+			return morda::Factory::TexType_e::GREY;
 			break;
 		case 2:
-			tt = morda::Factory::TexType_e::GREYA;
+			return morda::Factory::TexType_e::GREYA;
 			break;
 		case 3:
-			tt = morda::Factory::TexType_e::RGB;
+			return morda::Factory::TexType_e::RGB;
 			break;
 		case 4:
-			tt = morda::Factory::TexType_e::RGBA;
+			return morda::Factory::TexType_e::RGBA;
 			break;
 	}
+}
+
+std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
+	Image image(fi);
+//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+	image.flipVertical();	
 	
-	return morda::inst().renderer().factory->createTexture2D(tt, image.dim(), image.buf());
+	return morda::inst().renderer().factory->createTexture2D(
+			numChannelsToTexType(image.numChannels()),
+			image.dim(),
+			image.buf()
+		);
 }
 
 
 void morda::applySimpleAlphaBlending(){
 	Render::setBlendEnabled(true);
 	Render::setBlendFunc(Render::BlendFactor_e::SRC_ALPHA, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA, Render::BlendFactor_e::ONE, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA);
+}
+
+
+kolme::Vec4f morda::colorToVec4f(std::uint32_t color){
+	return kolme::Vec4f(
+			float(color & 0xff) / float(0xff),
+			float((color >> 8) & 0xff) / float(0xff),
+			float((color >> 16) & 0xff) / float(0xff),
+			float((color >> 24) & 0xff) / float(0xff)
+		);
 }

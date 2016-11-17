@@ -16,6 +16,7 @@
 #include "ShaderPosTex.hpp"
 #include "ShaderColorPos.hpp"
 #include "ShaderPosClr.hpp"
+#include "ShaderColorPosTex.hpp"
 
 namespace morda{
 
@@ -53,6 +54,7 @@ public:
 		std::unique_ptr<ShaderPosTex> posTex;
 		std::unique_ptr<ShaderColorPos> colorPos;
 		std::unique_ptr<ShaderPosClr> posClr;
+		std::unique_ptr<ShaderColorPosTex> colorPosTex;
 	};
 	
 	virtual std::unique_ptr<Shaders> createShaders() = 0;

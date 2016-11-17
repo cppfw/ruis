@@ -29,12 +29,11 @@ protected:
 	
 	/**
 	 * @brief Render string of text.
-	 * @param shader - shader to render the text with.
 	 * @param matrix - transformation matrix to use when rendering the text.
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real renderStringInternal(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const = 0;
+	virtual real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -54,46 +53,42 @@ public:
 	
 	/**
 	 * @brief Render string of text.
-	 * @param shader - shader to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, unikod::Utf8Iterator str)const{
-		return this->renderStringInternal(shader, matrix, unikod::toUtf32(str));
+	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, unikod::Utf8Iterator str)const{
+		return this->renderStringInternal(matrix, color, unikod::toUtf32(str));
 	}
 	
 	/**
 	 * @brief Render string of text.
-	 * @param shader - shader to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::u32string& str)const{
-		return this->renderStringInternal(shader, matrix, str);
+	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const{
+		return this->renderStringInternal(matrix, color, str);
 	}
 	
 	/**
 	 * @brief Render string of text.
-	 * @param shader - shader to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const char* str)const{
-		return this->renderString(shader, matrix, unikod::Utf8Iterator(str));
+	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const char* str)const{
+		return this->renderString(matrix, color, unikod::Utf8Iterator(str));
 	}
 	
 	/**
 	 * @brief Render string of text.
-	 * @param shader - shader to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(PosTexShader& shader, const morda::Matr4r& matrix, const std::string& str)const{
-		return this->renderString(shader, matrix, str.c_str());
+	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const std::string& str)const{
+		return this->renderString(matrix, color, str.c_str());
 	}
 	
 	
