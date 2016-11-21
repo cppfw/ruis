@@ -138,7 +138,7 @@ void Widget::setRelayoutNeeded()noexcept{
 	if(this->parentContainer){
 		this->parentContainer->setRelayoutNeeded();
 	}
-	this->cacheTex = Texture2D();
+	this->cacheTex.reset();
 }
 
 
@@ -154,10 +154,10 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 			Render::setScissorEnabled(false);
 
 			//check if can re-use old texture
-			if(!this->cacheTex || this->cacheTex.dim() != this->rect().d){
+			if(!this->cacheTex || this->cacheTex->dim() != this->rect().d){
 				this->cacheTex = this->renderToTexture();
 			}else{
-				ASSERT(this->cacheTex.dim() == this->rect().d)
+				ASSERT(this->cacheTex->dim() == this->rect().d)
 				this->cacheTex = this->renderToTexture(std::move(this->cacheTex));
 			}
 			
@@ -216,31 +216,26 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
-	Texture2D tex;
+std::shared_ptr<Texture2D_n> Widget::renderToTexture(std::shared_ptr<Texture2D_n> reuse) const {
+	std::shared_ptr<Texture2D_n> tex;
 	
-	if(reuse && reuse.dim() == this->rect().d){
+	if(reuse && reuse->dim() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
-		tex = Texture2D(
+		tex = morda::inst().renderer().factory->createTexture2D(
+				morda::Texture2D_n::TexType_e::RGBA,
 				this->rect().d.to<unsigned>(),
-				4,
-				Render::TexFilter_e::NEAREST,
-				Render::TexFilter_e::NEAREST
+				nullptr
 			);
 	}
 	
 	Render::unbindTexture(0);
 	
-	FrameBuffer fb;
+	auto& r = morda::inst().renderer();
 	
-	fb.bind();
+	r.setFramebuffer(r.factory->createFramebuffer(tex));
 	
-	fb.attachColor(std::move(tex));
-	
-	ASSERT(fb.isComplete())
-	
-	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
+//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
 	
 	auto oldViewport = Render::getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){
@@ -258,9 +253,7 @@ Texture2D Widget::renderToTexture(Texture2D&& reuse) const {
 	
 	this->render(matrix);
 	
-	tex = fb.detachColor();
-	
-	fb.unbind();
+	r.setFramebuffer(nullptr);
 	
 	return tex;
 }
@@ -269,14 +262,9 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 	
-	morda::PosTexShader &s = Morda::inst().shaders.posTexShader;
-
+	auto& r = morda::inst().renderer();
 	ASSERT(this->cacheTex)
-	this->cacheTex.bind();
-	
-	s.setMatrix(matr);
-	
-	s.render(utki::wrapBuf(morda::PosShader::quad01Fan), utki::wrapBuf(s.quadFanTexCoords));
+	r.shader->posTex->render(matr, *this->cacheTex, *r.posTexQuad01VAO);
 }
 
 void Widget::clearCache(){

@@ -14,7 +14,7 @@
 
 #include "../../config.hpp"
 
-#include "../../render/Texture2D.hpp"
+#include "../../render/Texture2D_n.hpp"
 
 #include "../../util/keycodes.hpp"
 #include "../../util/MouseButton.hpp"
@@ -125,7 +125,7 @@ public:
 private:
 	bool cache;
 	mutable bool cacheDirty = true;
-	mutable Texture2D cacheTex;
+	mutable std::shared_ptr<Texture2D_n> cacheTex;
 
 	void renderFromCache(const kolme::Matr4f& matrix)const;
 	
@@ -140,7 +140,7 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	Texture2D renderToTexture(Texture2D&& reuse = Texture2D())const;
+	std::shared_ptr<Texture2D_n> renderToTexture(std::shared_ptr<Texture2D_n> reuse = nullptr)const;
 	
 private:
 	//logical ID of the widget

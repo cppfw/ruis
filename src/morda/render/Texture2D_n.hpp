@@ -24,6 +24,14 @@ public:
 		return this->dim_v;
 	}
 
+	enum class TexType_e{
+		GREY,
+		GREYA,
+		RGB,
+		RGBA
+	};
+	
+	static unsigned bytesPerPixel(Texture2D_n::TexType_e t);
 };
 
 }

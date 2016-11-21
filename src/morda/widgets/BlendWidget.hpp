@@ -2,6 +2,8 @@
 
 #include "core/Widget.hpp"
 
+#include "../render/Render.hpp"
+
 namespace morda{
 
 /**

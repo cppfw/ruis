@@ -13,3 +13,11 @@ Renderer::Renderer(std::unique_ptr<Factory> factory) :
 		posQuad01VAO(this->factory->createVertexArray({this->quad01VBO}, this->quadIndices, VertexArray::Mode_e::TRIANGLE_FAN)),
 		posTexQuad01VAO(this->factory->createVertexArray({this->quad01VBO, this->quad01VBO}, this->quadIndices, VertexArray::Mode_e::TRIANGLE_FAN))
 {}
+
+
+
+void Renderer::setFramebuffer(std::shared_ptr<FrameBuffer_n> fb) {
+	this->curFB = std::move(fb);
+	this->setFramebufferInternal(this->curFB.operator ->());
+}
+

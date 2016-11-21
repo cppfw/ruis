@@ -144,7 +144,7 @@ void applySimpleAlphaBlending();
 
 std::shared_ptr<Texture2D_n> loadTexture_n(const papki::File& fi);
 
-morda::Factory::TexType_e numChannelsToTexType(unsigned numChannels);
+morda::Texture2D_n::TexType_e numChannelsToTexType(unsigned numChannels);
 
 kolme::Vec4f colorToVec4f(std::uint32_t color);
 

@@ -22,6 +22,15 @@ public:
 	
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
+	
+private:
+	std::shared_ptr<FrameBuffer_n> curFB;
+public:
+	//can be nullptr = set screen framebuffer
+	void setFramebuffer(std::shared_ptr<FrameBuffer_n> fb);
+	
+protected:
+	virtual void setFramebufferInternal(FrameBuffer_n* fb) = 0;
 };
 
 }

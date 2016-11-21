@@ -195,21 +195,21 @@ Texture2D morda::loadTexture(const papki::File& fi){
 }
 
 
-morda::Factory::TexType_e morda::numChannelsToTexType(unsigned numChannels){
+morda::Texture2D_n::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 	switch(numChannels){
 		default:
 			ASSERT(false)
 		case 1:
-			return morda::Factory::TexType_e::GREY;
+			return morda::Texture2D_n::TexType_e::GREY;
 			break;
 		case 2:
-			return morda::Factory::TexType_e::GREYA;
+			return morda::Texture2D_n::TexType_e::GREYA;
 			break;
 		case 3:
-			return morda::Factory::TexType_e::RGB;
+			return morda::Texture2D_n::TexType_e::RGB;
 			break;
 		case 4:
-			return morda::Factory::TexType_e::RGBA;
+			return morda::Texture2D_n::TexType_e::RGBA;
 			break;
 	}
 }
