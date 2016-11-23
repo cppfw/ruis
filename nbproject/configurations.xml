@@ -642,19 +642,9 @@
       </folder>
       <folder path="1/morda/fonts">
         <ccTool>
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/fonts</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>/usr/include/freetype2/freetype</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/stob</pElem>
-          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="1/morda/resources">
@@ -811,7 +801,7 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">

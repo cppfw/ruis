@@ -141,7 +141,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
-	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({0, 1, 2, 3})));
+	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({{0, 1, 2, 3}})));
 	
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
