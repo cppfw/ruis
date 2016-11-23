@@ -229,8 +229,6 @@ std::shared_ptr<Texture2D_n> Widget::renderToTexture(std::shared_ptr<Texture2D_n
 			);
 	}
 	
-	Render::unbindTexture(0);
-	
 	auto& r = morda::inst().renderer();
 	
 	r.setFramebuffer(r.factory->createFramebuffer(tex));
