@@ -12,7 +12,7 @@
 
 #include "OpenGL2_util.hpp"
 
-#include "../../../src/morda/render/Shader_n.hpp"
+#include "../../../src/morda/render/Shader.hpp"
 #include "../../../src/morda/render/VertexArray.hpp"
 
 struct ShaderWrapper{

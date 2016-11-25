@@ -8,8 +8,6 @@
 
 #include "../ResourceManager.hpp"
 
-#include "../shaders/PosTexShader.hpp"
-
 #include "../Morda.hpp"
 
 namespace morda{

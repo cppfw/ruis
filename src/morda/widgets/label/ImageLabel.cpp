@@ -37,6 +37,12 @@ ImageLabel::ImageLabel(const stob::Node* chain) :
 	}
 }
 
+namespace{
+const std::array<kolme::Vec2f, 4> quadFanTexCoords = {{
+	kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
+}};
+}
+
 void ImageLabel::render(const morda::Matr4r& matrix) const{
 	if(!this->img){
 		return;
@@ -51,8 +57,8 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 
 		if(this->repeat_v.x || this->repeat_v.y){
 			std::array<kolme::Vec2f, 4> texCoords;
-			ASSERT(PosTexShader::quadFanTexCoords.size() == texCoords.size())
-			auto src = PosTexShader::quadFanTexCoords.cbegin();
+			ASSERT(quadFanTexCoords.size() == texCoords.size())
+			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();
 			auto scale = this->rect().d.compDiv(this->img->dim());
 			if(!this->repeat_v.x){

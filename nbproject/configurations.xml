@@ -16,7 +16,6 @@
           <in>Render.cpp</in>
           <in>Render.hpp</in>
           <in>Shader.cpp</in>
-          <in>Shader.hpp</in>
           <in>Texture2D.cpp</in>
         </df>
         <df name="resources">
@@ -237,21 +236,9 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
+      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/morda/render/FrameBuffer_n.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/FrameBuffer_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
+      <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/ShaderColorPos.hpp"
             ex="false"
@@ -264,10 +251,6 @@
             flavor2="0">
       </item>
       <item path="src/morda/render/ShaderPosClr.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
       </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -300,35 +283,6 @@
         </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
@@ -611,8 +565,7 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
-        <element flagsID="1" commonFlags="-funsigned-char -std=c++11 -fPIC"/>
-        <element flagsID="2"
+        <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
       </flagsDictionary>
       <codeAssistance>
@@ -642,9 +595,18 @@
       </folder>
       <folder path="1/morda/fonts">
         <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/fonts</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/freetype2/freetype</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
+          </incDir>
         </ccTool>
       </folder>
       <folder path="1/morda/resources">
@@ -670,7 +632,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="1/morda/widgets/core/container">
+      <folder path="1/morda/widgets/core">
         <ccTool>
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -680,7 +642,6 @@
       <folder path="1/morda/widgets/core/proxy">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
             <pElem>src/morda/widgets/core/proxy</pElem>
@@ -708,7 +669,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets</pElem>
           </incDir>
@@ -725,10 +685,8 @@
         </ccTool>
       </folder>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -740,16 +698,14 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/Morda.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/papki</pElem>
@@ -763,40 +719,36 @@
             <pElem>src</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets/button</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -805,122 +757,77 @@
         </ccTool>
       </item>
       <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
+            <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>/usr/include/papki</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/render/FrameBuffer_n.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
             <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>/usr/include/GL</pElem>
-          </incDir>
-        </ccTool>
+      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/render/Shader_n.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda/render</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
+            <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/render/Texture2D_n.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>src/morda</pElem>
             <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
@@ -928,27 +835,26 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda/resources</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -956,7 +862,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
@@ -967,12 +873,12 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResImage.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -983,7 +889,7 @@
             <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -991,7 +897,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1001,23 +907,24 @@
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1026,6 +933,7 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1046,139 +954,93 @@
       <item path="src/morda/shaders/ColorPosTexShader.cpp"
             ex="false"
             tool="1"
-            flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-        </ccTool>
+            flavor2="0">
       </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/render</pElem>
-          </incDir>
-        </ccTool>
+      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-        </ccTool>
+      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
             ex="false"
             tool="1"
-            flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-        </ccTool>
+            flavor2="0">
       </item>
       <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
             ex="false"
             tool="1"
-            flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-          </incDir>
-        </ccTool>
+            flavor2="0">
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/ZipFile.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/util/unzip</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/ioapi.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/util/unzip/unzip.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/BlendWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/ColorWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1189,6 +1051,7 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1196,10 +1059,8 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1212,17 +1073,15 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1234,15 +1093,13 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/MouseCursor.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1254,15 +1111,13 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1273,17 +1128,15 @@
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1296,16 +1149,14 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/fonts</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1318,15 +1169,13 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1339,15 +1188,13 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/TreeView.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1359,15 +1206,13 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/Window.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1381,7 +1226,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1389,7 +1234,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/widgets/button</pElem>
@@ -1398,8 +1243,8 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1407,7 +1252,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
@@ -1418,8 +1263,8 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/resources</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1427,7 +1272,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets/button</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
@@ -1438,6 +1283,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1445,7 +1291,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets/core/container</pElem>
             <pElem>src/morda/widgets/button</pElem>
@@ -1456,6 +1302,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1463,7 +1310,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets/core/container</pElem>
             <pElem>src/morda/widgets/button</pElem>
@@ -1473,8 +1320,8 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1482,7 +1329,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
@@ -1493,23 +1340,32 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/resources</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/Widget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
+          <incDir>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/container/Container.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1520,8 +1376,8 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1529,7 +1385,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1541,6 +1397,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1548,7 +1405,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1560,6 +1417,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1567,7 +1425,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1578,8 +1436,8 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1587,7 +1445,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1599,6 +1457,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1606,7 +1465,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1617,8 +1476,8 @@
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1626,7 +1485,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1638,6 +1497,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1645,7 +1505,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
@@ -1657,6 +1517,7 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1664,14 +1525,14 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/widgets/core/proxy/ResizeProxy.cpp"
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/morda/widgets/label/BlurGlass.cpp"
@@ -1683,10 +1544,8 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1698,7 +1557,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1711,10 +1570,8 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -1727,7 +1584,7 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1735,10 +1592,8 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
@@ -1752,7 +1607,7 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>src/morda/shaders</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -1760,7 +1615,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="2">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="tests/app/src/OpenGL2Buffer.cpp" ex="false" tool="1" flavor2="8">
@@ -1979,18 +1834,6 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/FrameBuffer_n.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/FrameBuffer_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Shader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/ShaderColorPos.hpp"
             ex="false"
             tool="3"
@@ -2038,16 +1881,6 @@
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2188,18 +2021,6 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/FrameBuffer_n.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/FrameBuffer_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Shader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/render/ShaderColorPos.hpp"
             ex="false"
             tool="3"
@@ -2247,16 +2068,6 @@
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/ColorShader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosShader.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2445,16 +2256,6 @@
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/FrameBuffer_n.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/FrameBuffer_n.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/morda/render/Render.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
       <item path="src/morda/render/ShaderColorPos.hpp"
             ex="false"
             tool="3"
@@ -2489,25 +2290,6 @@
       <item path="src/morda/resources/ResSTOB.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/ColorPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/shaders/PosShader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/PosTexShader.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/shaders/SimpleBlurPosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-      </item>
-      <item path="src/morda/shaders/SimpleGrayscalePosTexShader.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
       </item>
       <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">

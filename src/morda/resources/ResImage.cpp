@@ -15,7 +15,6 @@
 
 #include "../util/util.hpp"
 
-#include "../shaders/PosTexShader.hpp"
 
 
 using namespace morda;
@@ -66,9 +65,9 @@ namespace{
 
 class TexQuadTexture : public ResImage::QuadTexture{
 protected:
-	std::shared_ptr<Texture2D_n> tex_v;
+	std::shared_ptr<Texture2D> tex_v;
 	
-	TexQuadTexture(std::shared_ptr<Texture2D_n> tex) :
+	TexQuadTexture(std::shared_ptr<Texture2D> tex) :
 			ResImage::QuadTexture(tex->dim()),
 			tex_v(std::move(tex))
 	{}
@@ -81,7 +80,7 @@ public:
 	
 class ResRasterImage : public ResImage, public TexQuadTexture{
 public:
-	ResRasterImage(std::shared_ptr<Texture2D_n> tex) :
+	ResRasterImage(std::shared_ptr<Texture2D> tex) :
 			TexQuadTexture(std::move(tex))
 	{}
 	
@@ -94,7 +93,7 @@ public:
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
-		return utki::makeShared<ResRasterImage>(loadTexture_n(fi));
+		return utki::makeShared<ResRasterImage>(loadTexture(fi));
 	}
 };
 
@@ -115,7 +114,7 @@ public:
 	class SvgTexture : public TexQuadTexture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgTexture(std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D_n> tex) :
+		SvgTexture(std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D> tex) :
 				TexQuadTexture(std::move(tex)),
 				parent(parent)
 		{}

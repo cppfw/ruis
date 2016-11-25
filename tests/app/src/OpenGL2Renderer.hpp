@@ -14,7 +14,25 @@ public:
 	OpenGL2Renderer(const OpenGL2Renderer& orig);
 
 	
-	void setFramebufferInternal(morda::FrameBuffer_n* fb) override;
+	void setFramebufferInternal(morda::FrameBuffer* fb) override;
+
+	void clearFramebuffer()override;
+	
+	bool isScissorEnabled() const override;
+	
+	void setScissorEnabled(bool enabled) override;
+	
+	kolme::Recti getScissorRect() const override;
+	
+	void setScissorRect(kolme::Recti r) override;
+
+	kolme::Recti getViewport()const override;
+	
+	void setViewport(kolme::Recti r) override;
+	
+	void setBlendEnabled(bool enable) override;
+
+	void setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) override;
 
 };
 

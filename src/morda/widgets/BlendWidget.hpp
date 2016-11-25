@@ -2,7 +2,7 @@
 
 #include "core/Widget.hpp"
 
-#include "../render/Render.hpp"
+#include "../render/Renderer.hpp"
 
 namespace morda{
 
@@ -25,10 +25,10 @@ public:
 	 * @brief Structure holding blending settings.
 	 */
 	struct Blend{
-		Render::BlendFactor_e src;
-		Render::BlendFactor_e dst;
-		Render::BlendFactor_e srcAlpha;
-		Render::BlendFactor_e dstAlpha;
+		Renderer::BlendFactor_e src;
+		Renderer::BlendFactor_e dst;
+		Renderer::BlendFactor_e srcAlpha;
+		Renderer::BlendFactor_e dstAlpha;
 		
 		bool operator==(const Blend& b){
 			return this->src == b.src && this->dst == b.dst && this->srcAlpha == b.srcAlpha && this->dstAlpha == b.dstAlpha;

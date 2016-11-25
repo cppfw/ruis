@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../../src/morda/render/Texture2D_n.hpp"
+#include "../../../src/morda/render/Texture2D.hpp"
 
 #include <GL/glew.h>
 
 
-struct OpenGL2Texture2D : public morda::Texture2D_n{
+struct OpenGL2Texture2D : public morda::Texture2D{
 	GLuint tex;
 	
 	OpenGL2Texture2D(kolme::Vec2f dim);

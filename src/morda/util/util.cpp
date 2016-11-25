@@ -5,6 +5,8 @@
 
 #include "../Morda.hpp"
 
+#include "Image.hpp"
+
 using namespace morda;
 
 
@@ -186,35 +188,27 @@ const stob::Node* morda::getProperty(const stob::Node* chain, const char* proper
 }
 
 
-//TODO: remove
-Texture2D morda::loadTexture(const papki::File& fi){
-	Image image(fi);
-//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-	image.flipVertical();
-	return Texture2D(image);
-}
 
-
-morda::Texture2D_n::TexType_e morda::numChannelsToTexType(unsigned numChannels){
+morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 	switch(numChannels){
 		default:
 			ASSERT(false)
 		case 1:
-			return morda::Texture2D_n::TexType_e::GREY;
+			return morda::Texture2D::TexType_e::GREY;
 			break;
 		case 2:
-			return morda::Texture2D_n::TexType_e::GREYA;
+			return morda::Texture2D::TexType_e::GREYA;
 			break;
 		case 3:
-			return morda::Texture2D_n::TexType_e::RGB;
+			return morda::Texture2D::TexType_e::RGB;
 			break;
 		case 4:
-			return morda::Texture2D_n::TexType_e::RGBA;
+			return morda::Texture2D::TexType_e::RGBA;
 			break;
 	}
 }
 
-std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
+std::shared_ptr<Texture2D> morda::loadTexture(const papki::File& fi){
 	Image image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	image.flipVertical();	
@@ -228,8 +222,13 @@ std::shared_ptr<Texture2D_n> morda::loadTexture_n(const papki::File& fi){
 
 
 void morda::applySimpleAlphaBlending(){
-	Render::setBlendEnabled(true);
-	Render::setBlendFunc(Render::BlendFactor_e::SRC_ALPHA, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA, Render::BlendFactor_e::ONE, Render::BlendFactor_e::ONE_MINUS_SRC_ALPHA);
+	morda::inst().renderer().setBlendEnabled(true);
+	morda::inst().renderer().setBlendFunc(
+			Renderer::BlendFactor_e::SRC_ALPHA,
+			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
+			Renderer::BlendFactor_e::ONE,
+			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+		);
 }
 
 

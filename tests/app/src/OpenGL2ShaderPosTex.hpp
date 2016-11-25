@@ -10,5 +10,5 @@ class OpenGL2ShaderPosTex : public morda::ShaderPosTex, public OpenGL2Shader{
 public:
 	OpenGL2ShaderPosTex();
 	
-	void render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va) override;
+	void render(const kolme::Matr4f& m, const morda::Texture2D& tex, const morda::VertexArray& va) override;
 };

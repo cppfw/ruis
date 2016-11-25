@@ -12,7 +12,6 @@
 #include "../config.hpp"
 
 #include "../render/Texture2D.hpp"
-#include "../render/Texture2D_n.hpp"
 #include "../render/Factory.hpp"
 
 namespace morda{
@@ -120,7 +119,7 @@ const stob::Node* getProperty(const stob::Node* chain, const char* property);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-Texture2D loadTexture(const papki::File& fi);
+std::shared_ptr<Texture2D> loadTexture(const papki::File& fi);
 
 
 /**
@@ -142,9 +141,7 @@ real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
 void applySimpleAlphaBlending();
 
 
-std::shared_ptr<Texture2D_n> loadTexture_n(const papki::File& fi);
-
-morda::Texture2D_n::TexType_e numChannelsToTexType(unsigned numChannels);
+morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);
 
 kolme::Vec4f colorToVec4f(std::uint32_t color);
 

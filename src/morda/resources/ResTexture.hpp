@@ -4,7 +4,7 @@
 
 #include "../ResourceManager.hpp"
 
-#include "../render/Texture2D_n.hpp"
+#include "../render/Texture2D.hpp"
 
 
 namespace morda{
@@ -28,7 +28,7 @@ namespace morda{
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	std::shared_ptr<Texture2D_n> tex_v;
+	std::shared_ptr<Texture2D> tex_v;
 public:
 	/**
 	 * @brief Create texture.
@@ -46,7 +46,7 @@ public:
 	 * @brief Get texture object held by this resource.
 	 * @return Texture object.
 	 */
-	const Texture2D_n& tex()const noexcept{
+	const Texture2D& tex()const noexcept{
 		return *this->tex_v;
 	}
 

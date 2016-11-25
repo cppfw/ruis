@@ -24,9 +24,7 @@ App::T_Instance App::instance;
 void App::render(){
 	//TODO: render only if needed?
 	
-	morda::Render::clearColor();
-	morda::Render::clearDepth();
-	morda::Render::clearStencil();
+	this->renderer->clearFramebuffer();
 
 	this->gui.render();
 	
@@ -43,7 +41,7 @@ void App::updateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	morda::Render::setViewport(kolme::Recti(
+	morda::inst().renderer().setViewport(kolme::Recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),

@@ -4,11 +4,6 @@
 
 #include "render/Renderer.hpp"
 
-#include "shaders/ColorPosTexShader.hpp"
-#include "shaders/PosTexShader.hpp"
-#include "shaders/SimpleGrayscalePosTexShader.hpp"
-#include "shaders/SimpleBlurPosTexShader.hpp"
-
 #include "util/MouseButton.hpp"
 
 #include "Updateable.hpp"
@@ -26,8 +21,6 @@ class Morda : public utki::IntrusiveSingleton<Morda>{
 	friend class Widget;
 	
 	std::shared_ptr<Renderer> renderer_v;
-	
-	Render r;
 	
 public:
 
@@ -52,13 +45,6 @@ public:
 	
 	virtual ~Morda()noexcept{}
 
-	
-	/**
-	 * @brief Collection of standard shaders.
-	 */
-	struct DefaultShaders{
-		PosTexShader posTexShader;
-	} shaders;
 
 private:
 	Updateable::Updater updater;

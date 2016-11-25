@@ -7,7 +7,7 @@
 #include <utki/Shared.hpp>
 #include <utki/Buf.hpp>
 
-#include "Texture2D_n.hpp"
+#include "Texture2D.hpp"
 
 #include "VertexBuffer.hpp"
 #include "VertexArray.hpp"
@@ -17,7 +17,7 @@
 #include "ShaderColorPos.hpp"
 #include "ShaderPosClr.hpp"
 #include "ShaderColorPosTex.hpp"
-#include "FrameBuffer_n.hpp"
+#include "FrameBuffer.hpp"
 
 namespace morda{
 
@@ -32,9 +32,9 @@ public:
 	
 	
 	
-	virtual std::shared_ptr<Texture2D_n> createTexture2D(Texture2D_n::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
+	virtual std::shared_ptr<Texture2D> createTexture2D(Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
 	
-	std::shared_ptr<Texture2D_n> createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data);
+	std::shared_ptr<Texture2D> createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data);
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) = 0;
 	
@@ -59,7 +59,7 @@ public:
 	
 	virtual std::unique_ptr<Shaders> createShaders() = 0;
 	
-	virtual std::shared_ptr<FrameBuffer_n> createFramebuffer(std::shared_ptr<Texture2D_n> color) = 0;
+	virtual std::shared_ptr<FrameBuffer> createFramebuffer(std::shared_ptr<Texture2D> color) = 0;
 };
 
 }

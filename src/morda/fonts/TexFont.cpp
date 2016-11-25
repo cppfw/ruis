@@ -116,7 +116,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		}
 	}
 
-	unsigned maxTexSize = Render::getMaxTextureSize();
+	unsigned maxTexSize = morda::inst().renderer().maxTextureSize;
 
 	//guess for texture width
 	unsigned texWidth;

@@ -2,7 +2,7 @@
 
 #include <kolme/Matrix4.hpp>
 
-#include "Shader_n.hpp"
+#include "Shader.hpp"
 #include "VertexArray.hpp"
 
 namespace morda{

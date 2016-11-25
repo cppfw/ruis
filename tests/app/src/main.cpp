@@ -25,8 +25,6 @@
 #include "../../../src/morda/widgets/label/ColorLabel.hpp"
 #include "../../../src/morda/widgets/label/ImageLabel.hpp"
 
-#include "../../../src/morda/render/Render.hpp"
-
 #include "../../../src/morda/util/ZipFile.hpp"
 
 
@@ -218,9 +216,11 @@ public:
 		
 		m.rotate(this->rot);
 
+		glEnable(GL_CULL_FACE);
+		
 		morda::inst().renderer().shader->posTex->render(m, this->tex->tex(), *this->cubeVAO);
 		
-		morda::Render::setCullEnabled(false);
+		glDisable(GL_CULL_FACE);
 	}
 };
 

@@ -28,12 +28,12 @@ OpenGL2Factory::~OpenGL2Factory()noexcept{
 
 
 
-std::shared_ptr<morda::Texture2D_n> OpenGL2Factory::createTexture2D(morda::Texture2D_n::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
-	ASSERT(data.size() % morda::Texture2D_n::bytesPerPixel(type) == 0)
+	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
 	ASSERT(data.size() % dim.x == 0)
 
-	ASSERT(data.size() == 0 || data.size() / morda::Texture2D_n::bytesPerPixel(type) / dim.x == dim.y)
+	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dim.x == dim.y)
 	
 	auto ret = utki::makeShared<OpenGL2Texture2D>(dim.to<float>());
 	
@@ -117,7 +117,7 @@ std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
 	return ret;
 }
 
-std::shared_ptr<morda::FrameBuffer_n> OpenGL2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D_n> color) {
+std::shared_ptr<morda::FrameBuffer> OpenGL2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
 	return utki::makeShared<OpenGL2FrameBuffer>(std::move(color));
 }
 

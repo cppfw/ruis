@@ -5,8 +5,8 @@
 
 #include <GL/glew.h>
 
-OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D_n> color) :
-		morda::FrameBuffer_n(std::move(color))
+OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) :
+		morda::FrameBuffer(std::move(color))
 {
 	glGenFramebuffers(1, &this->fbo);
 	AssertOpenGLNoError();
@@ -24,11 +24,13 @@ OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D_n> color
 	AssertOpenGLNoError();
 	
 	//Check for completeness
+#ifdef DEBUG
 	{
 		GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		AssertOpenGLNoError();
 		ASSERT(status == GL_FRAMEBUFFER_COMPLETE)
 	}
+#endif
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFb);
 	AssertOpenGLNoError();

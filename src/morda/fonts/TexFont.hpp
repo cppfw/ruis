@@ -13,10 +13,6 @@
 #include "../config.hpp"
 
 #include "../render/Texture2D.hpp"
-
-#include "../shaders/PosTexShader.hpp"
-
-#include "../render/Texture2D_n.hpp"
 #include "../render/VertexArray.hpp"
 
 #include "Font.hpp"
@@ -42,7 +38,7 @@ class TexFont : public Font{
 		real advance;
 	};
 
-	std::shared_ptr<Texture2D_n> tex;
+	std::shared_ptr<Texture2D> tex;
 
 	typedef std::map<char32_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;

@@ -1,33 +1,18 @@
 #include "Texture2D.hpp"
 
-#include "../Exc.hpp"
-
-
 using namespace morda;
 
-
-
-
-void Texture2D::Constructor(kolme::Vec2ui d, unsigned numChannels, const utki::Buf<std::uint8_t> data, Render::TexFilter_e minFilter, Render::TexFilter_e magFilter) {
-	this->dim_v = d.to<real>();
-
-	this->tex = Render::create2DTexture(d, numChannels, data, minFilter, magFilter);
-}
-
-
-
-Texture2D::Texture2D(unsigned width, std::vector<std::uint32_t> rgbaPixels, Render::TexFilter_e minFilter, Render::TexFilter_e magFilter){
-	if(width == 0){
-		throw morda::Exc("Texture2D: zero size width requested");
+unsigned Texture2D::bytesPerPixel(Texture2D::TexType_e t) {
+	switch(t){
+		case Texture2D::TexType_e::GREY:
+			return 1;
+		case Texture2D::TexType_e::GREYA:
+			return 2;
+		case Texture2D::TexType_e::RGB:
+			return 3;
+		case Texture2D::TexType_e::RGBA:
+			return 4;
+		default:
+			return 0;
 	}
-	this->Constructor(
-			kolme::Vec2ui(width, unsigned(rgbaPixels.size() / width)),
-			4,
-			utki::Buf<std::uint8_t>(
-					reinterpret_cast<std::uint8_t*>(&*rgbaPixels.begin()),
-					rgbaPixels.size() * sizeof(*rgbaPixels.begin())
-				),
-			minFilter,
-			magFilter
-		);
 }

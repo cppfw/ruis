@@ -1,7 +1,3 @@
-#include "../../shaders/PosShader.hpp"
-
-#include "../../render/FrameBuffer.hpp"
-
 #include "../../Morda.hpp"
 
 #include "../../util/util.hpp"
@@ -150,8 +146,8 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	
 	if(this->cache){
 		if(this->cacheDirty){
-			bool scissorTestWasEnabled = Render::isScissorEnabled();
-			Render::setScissorEnabled(false);
+			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
+			morda::inst().renderer().setScissorEnabled(false);
 
 			//check if can re-use old texture
 			if(!this->cacheTex || this->cacheTex->dim() != this->rect().d){
@@ -161,7 +157,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 				this->cacheTex = this->renderToTexture(std::move(this->cacheTex));
 			}
 			
-			Render::setScissorEnabled(scissorTestWasEnabled);
+			morda::inst().renderer().setScissorEnabled(scissorTestWasEnabled);
 			this->cacheDirty = false;
 		}
 		
@@ -177,22 +173,22 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 			kolme::Recti scissor = this->computeViewportRect(matrix);
 
 			kolme::Recti oldScissor;
-			bool scissorTestWasEnabled = Render::isScissorEnabled();
+			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
 			if(scissorTestWasEnabled){
-				oldScissor = Render::getScissorRect();
+				oldScissor = morda::inst().renderer().getScissorRect();
 				scissor.intersect(oldScissor);
 			}else{
-				Render::setScissorEnabled(true);
+				morda::inst().renderer().setScissorEnabled(true);
 			}
 
-			Render::setScissorRect(scissor);
+			morda::inst().renderer().setScissorRect(scissor);
 
 			this->render(matrix);
 
 			if(scissorTestWasEnabled){
-				Render::setScissorRect(oldScissor);
+				morda::inst().renderer().setScissorRect(oldScissor);
 			}else{
-				Render::setScissorEnabled(false);
+				morda::inst().renderer().setScissorEnabled(false);
 			}
 		}else{
 			this->render(matrix);
@@ -216,14 +212,14 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::shared_ptr<Texture2D_n> Widget::renderToTexture(std::shared_ptr<Texture2D_n> reuse) const {
-	std::shared_ptr<Texture2D_n> tex;
+std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> reuse) const {
+	std::shared_ptr<Texture2D> tex;
 	
 	if(reuse && reuse->dim() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = morda::inst().renderer().factory->createTexture2D(
-				morda::Texture2D_n::TexType_e::RGBA,
+				morda::Texture2D::TexType_e::RGBA,
 				this->rect().d.to<unsigned>(),
 				nullptr
 			);
@@ -235,14 +231,14 @@ std::shared_ptr<Texture2D_n> Widget::renderToTexture(std::shared_ptr<Texture2D_n
 	
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
 	
-	auto oldViewport = Render::getViewport();
+	auto oldViewport = morda::inst().renderer().getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){
-		Render::setViewport(oldViewport);
+		morda::inst().renderer().setViewport(oldViewport);
 	});
 	
-	Render::setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
+	morda::inst().renderer().setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
 	
-	Render::clearColor(kolme::Vec4f(0.0f));
+	morda::inst().renderer().clearFramebuffer();
 	
 	Matr4r matrix;
 	matrix.identity();
@@ -351,7 +347,7 @@ void Widget::makeTopmost(){
 
 kolme::Recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
 	return kolme::Recti(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(Render::getViewport().d.to<real>()).rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 }

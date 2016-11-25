@@ -3,7 +3,7 @@
 #include "OpenGL2_util.hpp"
 
 OpenGL2Texture2D::OpenGL2Texture2D(kolme::Vec2f dim) :
-		morda::Texture2D_n(dim)
+		morda::Texture2D(dim)
 {
 	glGenTextures(1, &this->tex);
 	AssertOpenGLNoError();

@@ -8,8 +8,6 @@
 #include <kolme/Matrix4.hpp>
 #include <kolme/Rectangle.hpp>
 
-#include "../shaders/PosTexShader.hpp"
-
 #include "../config.hpp"
 
 namespace morda{

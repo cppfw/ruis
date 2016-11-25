@@ -50,7 +50,7 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 }
 
 
-void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D_n& tex, const morda::VertexArray& va){
+void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D& tex, const morda::VertexArray& va){
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	
