@@ -22,11 +22,12 @@ ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
 endif
 
+this_cxxflags += -I$(d)/../../src
+
 ifeq ($(prorab_os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension)
     this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
@@ -36,12 +37,12 @@ ifeq ($(prorab_os),windows)
     this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
     this_mm_src := src/mordavokne/glue/macosx/glue.mm
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+    this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    this_mm_obj := $(prorab_this_dir)$(prorab_obj_dir)src/mordavokne/glue/macosx/glue.o
+    this_mm_obj := $(d)$(prorab_obj_dir)src/mordavokne/glue/macosx/glue.o
 
     define this_rules
-        $(this_mm_obj): $(prorab_this_dir)src/mordavokne/glue/macosx/glue.mm
+        $(this_mm_obj): $(d)src/mordavokne/glue/macosx/glue.mm
 		@echo Compiling $$<...
 		$(prorab_echo)mkdir -p $$(dir $$@)
 		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
@@ -49,8 +50,11 @@ else ifeq ($(prorab_os),macosx)
     $(eval $(this_rules))
 else ifeq ($(prorab_os),linux)
     this_srcs += src/mordavokne/glue/glue.cpp
-    this_ldlibs += $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension) -lGLEW -pthread -lGL -lX11 -ldl
+    this_ldlibs += -lGLEW -pthread -lGL -lX11 -ldl
 endif
+
+this_ldlibs += $(d)../../src/libmorda$(prorab_lib_extension)
+this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(prorab_lib_extension)
 
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
@@ -76,19 +80,23 @@ $(eval $(this_rules))
 
 #add dependency on libmorda
 ifeq ($(prorab_os),windows)
-    $(prorab_this_dir)libmorda$(prorab_lib_extension): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
+    $(d)libmorda$(prorab_lib_extension): $(abspath $(d)../../src/libmorda$(prorab_lib_extension))
 	@cp $< $@
 
-    $(prorab_this_name): $(prorab_this_dir)libmorda$(prorab_lib_extension)
+    $(prorab_this_name): $(d)libmorda$(prorab_lib_extension)
 
     define this_rules
         clean::
-		@rm -f $(prorab_this_dir)libmorda$(prorab_lib_extension)
+		@rm -f $(d)libmorda$(prorab_lib_extension)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(prorab_this_dir)../../src/libmorda$(prorab_lib_extension))
+    $(prorab_this_name): $(abspath $(d)../../src/libmorda$(prorab_lib_extension))
 endif
 
 
-$(eval $(call prorab-include,$(prorab_this_dir)../../src/makefile))
+$(eval $(call prorab-include,$(d)../../src/makefile))
+
+#add dependency on opengl2 renderer
+$(prorab_this_name): $(abspath $(d)../../renderers/opengl2/libmorda-opengl2-ren$(prorab_lib_extension))
+$(eval $(call prorab-include,$(d)../../renderers/opengl2/makefile))

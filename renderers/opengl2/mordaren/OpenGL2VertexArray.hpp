@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/VertexArray.hpp"
+#include <morda/render/VertexArray.hpp>
 
 #include <GL/glew.h>
 

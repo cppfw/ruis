@@ -13,6 +13,7 @@
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>tests</sourceRootElem>
                 <sourceRootElem>res</sourceRootElem>
+                <sourceRootElem>renderers</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

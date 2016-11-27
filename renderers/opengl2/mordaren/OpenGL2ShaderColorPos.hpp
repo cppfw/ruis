@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/ShaderColorPos.hpp"
+#include <morda/render/ShaderColorPos.hpp>
 #include "OpenGL2Shader.hpp"
 
 class OpenGL2ShaderColorPos : public morda::ShaderColorPos, public OpenGL2Shader{

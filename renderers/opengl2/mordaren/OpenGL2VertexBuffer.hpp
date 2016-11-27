@@ -4,7 +4,7 @@
 
 #include <kolme/Vector2.hpp>
 
-#include "../../../src/morda/render/VertexBuffer.hpp"
+#include <morda/render/VertexBuffer.hpp>
 
 #include "OpenGL2Buffer.hpp"
 

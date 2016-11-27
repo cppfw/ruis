@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/Factory.hpp"
+#include <morda/render/Factory.hpp>
 
 #include "OpenGL2ShaderPosTex.hpp"
 

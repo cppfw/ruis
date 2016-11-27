@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/Texture2D.hpp"
+#include <morda/render/Texture2D.hpp>
 
 #include <GL/glew.h>
 

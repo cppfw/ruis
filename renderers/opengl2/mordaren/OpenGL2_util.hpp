@@ -2,7 +2,7 @@
 
 #include <utki/debug.hpp>
 
-inline static void AssertOpenGLNoError(){
+inline void AssertOpenGLNoError(){
 #ifdef DEBUG
 	GLenum error = glGetError();
 	switch(error){

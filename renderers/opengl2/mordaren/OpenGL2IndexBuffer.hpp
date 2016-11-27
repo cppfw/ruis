@@ -2,7 +2,8 @@
 
 #include <utki/Buf.hpp>
 
-#include "../../../src/morda/render/IndexBuffer.hpp"
+#include <morda/render/IndexBuffer.hpp>
+
 #include "OpenGL2Buffer.hpp"
 
 class OpenGL2IndexBuffer : public morda::IndexBuffer, public OpenGL2Buffer{

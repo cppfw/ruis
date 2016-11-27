@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../src/morda/render/FrameBuffer.hpp"
-#include "../../../src/morda/render/Texture2D.hpp"
+#include <morda/render/FrameBuffer.hpp>
+#include <morda/render/Texture2D.hpp>
 
 #include <GL/glew.h>
 

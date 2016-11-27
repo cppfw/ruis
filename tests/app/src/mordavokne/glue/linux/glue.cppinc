@@ -11,8 +11,7 @@
 #include <papki/FSFile.hpp>
 #include <unikod/utf8.hpp>
 
-#include "../../../OpenGL2Factory.hpp"
-#include "../../../OpenGL2Renderer.hpp"
+#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
 
 using namespace mordavokne;
 

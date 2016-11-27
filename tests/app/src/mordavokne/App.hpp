@@ -16,8 +16,6 @@
 
 #include "../../../../src/morda/render/Renderer.hpp"
 
-#include "../OpenGL2Factory.hpp"
-
 
 
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL

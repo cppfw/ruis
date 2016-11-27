@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/ShaderPosClr.hpp"
+#include <morda/render/ShaderPosClr.hpp>
 
 #include "OpenGL2Shader.hpp"
 
