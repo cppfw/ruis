@@ -9,10 +9,10 @@
 class OpenGL2Renderer : public morda::Renderer{
 	GLuint defaultFramebuffer;
 public:
-	OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory);
+	OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory = utki::makeUnique<OpenGL2Factory>());
 	
-	OpenGL2Renderer(const OpenGL2Renderer& orig);
-
+	OpenGL2Renderer(const OpenGL2Renderer& orig) = delete;
+	OpenGL2Renderer& operator=(const OpenGL2Renderer& orig) = delete;
 	
 	void setFramebufferInternal(morda::FrameBuffer* fb) override;
 
