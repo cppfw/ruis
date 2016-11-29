@@ -24,7 +24,7 @@ endif
 
 this_cxxflags += -I$(d)/../../src
 
-ifeq ($(prorab_os),windows)
+ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
@@ -35,7 +35,7 @@ ifeq ($(prorab_os),windows)
 
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
-else ifeq ($(prorab_os),macosx)
+else ifeq ($(os),macosx)
     this_mm_src := src/mordavokne/glue/macosx/glue.mm
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
@@ -48,13 +48,13 @@ else ifeq ($(prorab_os),macosx)
 		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
     endef
     $(eval $(this_rules))
-else ifeq ($(prorab_os),linux)
+else ifeq ($(os),linux)
     this_srcs += src/mordavokne/glue/glue.cpp
     this_ldlibs += -lGLEW -pthread -lGL -lX11 -ldl
 endif
 
-this_ldlibs += $(d)../../src/libmorda$(prorab_lib_extension)
-this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(prorab_lib_extension)
+this_ldlibs += $(d)../../src/libmorda$(soext)
+this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
 
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
@@ -73,30 +73,30 @@ endif
 define this_rules
 test:: $(prorab_this_name)
 	@echo running $$^...
-	@(cd $(prorab_this_dir); LD_LIBRARY_PATH=../../src $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
 endef
 $(eval $(this_rules))
 
 
 #add dependency on libmorda
 ifeq ($(prorab_os),windows)
-    $(d)libmorda$(prorab_lib_extension): $(abspath $(d)../../src/libmorda$(prorab_lib_extension))
+    $(d)libmorda$(soext): $(abspath $(d)../../src/libmorda$(soext))
 	@cp $< $@
 
-    $(prorab_this_name): $(d)libmorda$(prorab_lib_extension)
+    $(prorab_this_name): $(d)libmorda$(soext)
 
     define this_rules
         clean::
-		@rm -f $(d)libmorda$(prorab_lib_extension)
+		@rm -f $(d)libmorda$(soext)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/libmorda$(prorab_lib_extension))
+    $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
 endif
 
 
 $(eval $(call prorab-include,$(d)../../src/makefile))
 
 #add dependency on opengl2 renderer
-$(prorab_this_name): $(abspath $(d)../../renderers/opengl2/libmorda-opengl2-ren$(prorab_lib_extension))
+$(prorab_this_name): $(abspath $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext))
 $(eval $(call prorab-include,$(d)../../renderers/opengl2/makefile))
