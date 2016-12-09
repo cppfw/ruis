@@ -73,7 +73,7 @@ endif
 define this_rules
 test:: $(prorab_this_name)
 	@echo running $$^...
-	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src:../../renderers/opengl2 $$^)
 endef
 $(eval $(this_rules))
 
