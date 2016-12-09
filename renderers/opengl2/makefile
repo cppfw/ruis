@@ -3,7 +3,7 @@ include prorab.mk
 
 this_name := morda-opengl2-ren
 
-this_soname := $(shell cat $(d)/soname.txt)
+this_soname := $(shell cat $(d)/../../src/soname.txt)
 
 this_srcs += $(call prorab-src-dir,mordaren)
 
