@@ -42,6 +42,10 @@ else ifeq ($(prorab_os), macosx)
     this_ldlibs += -lGLEW
 endif
 
-this_ldlibs += -lstdc++ -lm
+this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda.so
 
 $(eval $(prorab-build-lib))
+
+
+$(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
+$(eval $(call prorab-include,$(d)../../src/makefile))

@@ -44,3 +44,22 @@ Priority: extra
 Depends: ${misc:Depends}
 Description: Documentation for libmorda
  Doxygen docs.
+
+Package: libmorda-opengl2-ren-dev
+Architecture: any
+Depends: libmorda-opengl2-ren$(soname) (= ${binary:Version}), libmorda-opengl2-ren$(soname)-dbg (= ${binary:Version}), ${misc:Depends},
+		libmorda-dev
+Suggests:
+Priority: extra
+Section: libdevel
+Description: OpenGL 2 renderer for morda UI framework development files
+ Cross platform OpenGL 2 renderer for morda UI framework written in C++.
+ Development files.
+
+Package: libmorda-opengl2-ren$(soname)
+Architecture: any
+Priority: extra
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OpenGL 2 renderer for morda UI framework
+ Cross platform OpenGL 2 renderer for morda UI framework written in C++.

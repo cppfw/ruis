@@ -1,4 +1,4 @@
-usr/include
-usr/lib/pkgconfig
+usr/include/morda
+usr/lib/pkgconfig/morda.pc
 usr/lib/libmorda.so
 usr/lib/libmorda.a

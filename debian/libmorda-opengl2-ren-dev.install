@@ -1,0 +1,4 @@
+usr/include/mordaren
+usr/lib/pkgconfig/morda-opengl2-ren.pc
+usr/lib/libmorda-opengl2-ren.so
+usr/lib/libmorda-opengl2-ren.a

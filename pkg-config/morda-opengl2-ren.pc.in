@@ -1,0 +1,9 @@
+Name: morda-opengl2-ren   # human-readable name
+Description: C++ OpenGL 2 renderer for morda GUI library
+Version: $(version)
+URL: https://github.com/igagis/morda
+Requires:
+Conflicts:
+Libs: -lmorda-opengl2-ren
+Libs.private:
+Cflags:
