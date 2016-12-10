@@ -2,6 +2,8 @@
 #include "../../AppFactory.hpp"
 #include "../../../../../../src/morda/util/util.hpp"
 
+#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+
 #import <Cocoa/Cocoa.h>
 
 
@@ -719,7 +721,8 @@ morda::real getDotsPerPt(){
 App::App(const App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(wp, windowObject.id),
-		gui(getDotsPerInch(), getDotsPerPt())
+		renderer(utki::makeShared<OpenGL2Renderer>()),
+		gui(this->renderer, getDotsPerInch(), getDotsPerPt())
 {
 	this->updateWindowRect(
 			morda::Rectr(

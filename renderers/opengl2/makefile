@@ -42,7 +42,7 @@ else ifeq ($(prorab_os), macosx)
     this_ldlibs += -lGLEW
 endif
 
-this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda.so
+this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda$(soext)
 
 $(eval $(prorab-build-lib))
 

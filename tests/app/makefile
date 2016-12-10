@@ -22,7 +22,8 @@ ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
 endif
 
-this_cxxflags += -I$(d)/../../src
+this_cxxflags += -I$(d)../../src
+this_objcflags += -I$(d)../../src
 
 ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
