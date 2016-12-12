@@ -119,6 +119,7 @@ void App::swapFrameBuffers(){
 
 App::GLEWWrapper::GLEWWrapper(){
 #if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+	glewExperimental = GL_TRUE;
 	if(glewInit() != GLEW_OK){
 		throw utki::Exc("GLEW initialization failed");
 	}

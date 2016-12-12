@@ -95,9 +95,8 @@ else
     $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
 endif
 
-
-$(eval $(call prorab-include,$(d)../../src/makefile))
-
 #add dependency on opengl2 renderer
 $(prorab_this_name): $(abspath $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext))
+
+$(eval $(call prorab-include,$(d)../../src/makefile))
 $(eval $(call prorab-include,$(d)../../renderers/opengl2/makefile))
