@@ -31,9 +31,7 @@
         </df>
         <df name="render">
           <in>Factory.cpp</in>
-          <in>FrameBuffer.cpp</in>
           <in>FrameBuffer.hpp</in>
-          <in>Render.cpp</in>
           <in>Renderer.cpp</in>
           <in>Shader.cpp</in>
           <in>Texture2D.cpp</in>
@@ -351,10 +349,6 @@
         </ccTool>
       </item>
       <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
@@ -952,32 +946,6 @@
             <pElem>src/morda</pElem>
             <pElem>.</pElem>
           </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/render/Render.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="3">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
@@ -1860,8 +1828,6 @@
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/resources/ResFont.cpp" ex="false" tool="1" flavor2="0">
@@ -1990,8 +1956,6 @@
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/fonts/TexFont.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -2169,8 +2133,6 @@
         </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="src/morda/render/FrameBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/render/FrameBuffer.hpp" ex="false" tool="3" flavor2="0">
       </item>
