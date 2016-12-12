@@ -28,7 +28,7 @@ OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
 void OpenGL2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
 	if(!fb){
 		glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebuffer);
-		AssertOpenGLNoError();
+		assertOpenGLNoError();
 		return;
 	}
 	
@@ -36,14 +36,14 @@ void OpenGL2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
 	auto& ogl2fb = static_cast<OpenGL2FrameBuffer&>(*fb);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, ogl2fb.fbo);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 }
 
 void OpenGL2Renderer::clearFramebuffer() {
 	glClearColor(0, 0, 0, 1);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 	glClear(GL_COLOR_BUFFER_BIT);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 	
 #if M_OS_NAME == M_OS_NAME_IOS
 	glClearDepthf(0);
@@ -51,11 +51,11 @@ void OpenGL2Renderer::clearFramebuffer() {
 	glClearDepth(0);
 #endif
 	glClear(GL_DEPTH_BUFFER_BIT);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 	
 	glClearStencil(0);
 	glClear(GL_STENCIL_BUFFER_BIT);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 }
 
 bool OpenGL2Renderer::isScissorEnabled() const {
@@ -78,7 +78,7 @@ kolme::Recti OpenGL2Renderer::getScissorRect() const {
 
 void OpenGL2Renderer::setScissorRect(kolme::Recti r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 }
 
 kolme::Recti OpenGL2Renderer::getViewport()const {
@@ -91,7 +91,7 @@ kolme::Recti OpenGL2Renderer::getViewport()const {
 
 void OpenGL2Renderer::setViewport(kolme::Recti r) {
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 }
 
 void OpenGL2Renderer::setBlendEnabled(bool enable) {

@@ -56,7 +56,7 @@ protected:
 	
 	void bind()const{
 		glUseProgram(program.p);
-		AssertOpenGLNoError();
+		assertOpenGLNoError();
 		boundShader = this;
 	}
 	
@@ -66,12 +66,12 @@ protected:
 	
 	void setUniformMatrix4f(GLint id, const kolme::Matr4f& m)const{
 		glUniformMatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
-		AssertOpenGLNoError();
+		assertOpenGLNoError();
 	}
 	
 	void setUniform4f(GLint id, float x, float y, float z, float a) {
 		glUniform4f(id, x, y, z, a);
-		AssertOpenGLNoError();
+		assertOpenGLNoError();
 	}
 	
 	void setMatrix(const kolme::Matr4f& m)const{

@@ -103,7 +103,7 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 		ss << "a" << i;
 //		TRACE(<< ss.str() << std::endl)
 		glBindAttribLocation(this->p, i, ss.str().c_str());
-		AssertOpenGLNoError();
+		assertOpenGLNoError();
 	}
 	
 	glLinkProgram(this->p);
@@ -143,15 +143,15 @@ void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)
 	this->setMatrix(m);
 	
 	glBindVertexArray(vao.arr);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
 	glDrawElements(modeToGLMode(va.mode), ivbo.elementsCount, ivbo.elementType, nullptr);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 
 	//TODO: remove this
 	glBindVertexArray(0);
-	AssertOpenGLNoError();
+	assertOpenGLNoError();
 }
 
