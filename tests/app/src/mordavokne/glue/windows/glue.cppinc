@@ -5,6 +5,8 @@
 
 #include "../../../../../../src/morda/Morda.hpp"
 
+#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+
 #include <utki/windows.hpp>
 #include <papki/FSFile.hpp>
 
@@ -737,7 +739,8 @@ App::App(const WindowParams& requestedWindowParams) :
 		deviceContext(requestedWindowParams, window),
 		openglContext(deviceContext.hdc),
 		curWinRect(0, 0, -1, -1),
-		gui(getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
+		renderer(utki::makeShared<OpenGL2Renderer>()),
+		gui(this->renderer, getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
 {
 	this->updateWindowRect(
 			morda::Rectr(
