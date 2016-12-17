@@ -9,7 +9,6 @@
 #include "OpenGL2_util.hpp"
 #include "OpenGL2VertexArray.hpp"
 #include "OpenGL2IndexBuffer.hpp"
-#include "OpenGL2VertexBuffer.hpp"
 
 
 const OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
@@ -135,33 +134,16 @@ GLint OpenGL2Shader::getUniform(const char* n) {
 void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)const{
 	ASSERT(this->isBound())
 	
+	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
+	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
+	
 	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
 	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
 	
 	this->setMatrix(m);
 	
-	for(unsigned i = 0; i != va.buffers.size(); ++i){
-		ASSERT(dynamic_cast<OpenGL2VertexBuffer*>(va.buffers[i].operator->()))
-		auto& vbo = static_cast<OpenGL2VertexBuffer&>(*va.buffers[i]);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
-		assertOpenGLNoError();
-		
-//		TRACE(<< "vbo.numComponents = " << vbo.numComponents << " vbo.type = " << vbo.type << std::endl)
-		
-		glVertexAttribPointer(i, vbo.numComponents, vbo.type, GL_FALSE, 0, nullptr);
-		assertOpenGLNoError();
-		
-		glEnableVertexAttribArray(i);
-		assertOpenGLNoError();
-	}
-	
-	{
-		ASSERT(dynamic_cast<OpenGL2IndexBuffer*>(va.indices.operator->()))
-		auto& ivbo = static_cast<OpenGL2IndexBuffer&>(*va.indices);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo.buffer);
-		assertOpenGLNoError();
-	}
-	
+	glBindVertexArray(vao.arr);
+	assertOpenGLNoError();
 
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
