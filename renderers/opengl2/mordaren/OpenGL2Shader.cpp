@@ -167,9 +167,5 @@ void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)
 	
 	glDrawElements(modeToGLMode(va.mode), ivbo.elementsCount, ivbo.elementType, nullptr);
 	assertOpenGLNoError();
-
-	//TODO: remove this
-	glBindVertexArray(0);
-	assertOpenGLNoError();
 }
 
