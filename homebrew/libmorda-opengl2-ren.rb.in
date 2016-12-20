@@ -1,0 +1,20 @@
+class LibmordaOpengl2Ren < Formula
+  desc "OpenGl2 renderer for morda GUI library."
+  homepage "https://github.com/igagis/morda"
+  url "https://github.com/igagis/morda/archive/$(version).tar.gz"
+  sha256 "$(sha256)"
+
+  depends_on "prorab" => :build
+  depends_on "libmorda"
+  depends_on "glew"
+  depends_on "libkolme"
+  
+  def install
+    ENV['PATH'] += ':/usr/local/bin'
+    system "make", "-f", "renderers/opengl2/makefile", "install", "PREFIX=#{prefix}"
+  end
+
+  #test do
+  #  system "make", "test"
+  #end
+end

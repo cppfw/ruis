@@ -176,7 +176,9 @@ deploy:
   dry-run: false
 - provider: script
   skip_cleanup: true
-  script: prorab-deploy-homebrew.sh igagis/tap
+  script:
+  - prorab-deploy-homebrew.sh -t igagis/tap homebrew/libmorda.rb.in
+  - prorab-deploy-homebrew.sh -t igagis/tap homebrew/libmorda-opengl2-ren.rb.in
   on:
     tags: true
     condition: $BUILD_NAME = macosx

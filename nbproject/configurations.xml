@@ -156,6 +156,7 @@
       <itemPath>appveyor.yml</itemPath>
       <itemPath>debian/changelog</itemPath>
       <itemPath>debian/control.in</itemPath>
+      <itemPath>homebrew/libmorda-opengl2-ren.rb.in</itemPath>
       <itemPath>cocoapods/libmorda.podspec.in</itemPath>
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
