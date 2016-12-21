@@ -20,7 +20,6 @@ nuget{
 		packages : {
 			libkolme/1.0.6;
 			freetype/2.6.5.1;
-			glew.v140/1.12.0;
 			libjpeg/9.2.0.1;
 			libpapki/1.0.15;
 			libpng/1.6.23.1;

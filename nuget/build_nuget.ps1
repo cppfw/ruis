@@ -27,6 +27,12 @@ msbuild ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=Debug /p:
 If(!$?){exit 1}
 msbuild ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=Release /p:Platform=x64 /v:minimal /nologo
 If(!$?){exit 1}
-Write-NuGetPackage nuget.autopkg
-If(!$?){exit 1}
+
+$autopkgFiles = @(gci *.autopkg)
+
+ForEach ($autopkgFile in $autopkgFiles) {
+    Write-NuGetPackage $autopkgFile
+    If(!$?){exit 1}
+}
+
 Pop-Location
