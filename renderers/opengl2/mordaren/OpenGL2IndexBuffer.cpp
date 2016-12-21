@@ -6,7 +6,7 @@
 
 OpenGL2IndexBuffer::OpenGL2IndexBuffer(const utki::Buf<std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
-		elementsCount(indices.size())
+		elementsCount(GLsizei(indices.size()))
 {	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->buffer);
 	assertOpenGLNoError();
