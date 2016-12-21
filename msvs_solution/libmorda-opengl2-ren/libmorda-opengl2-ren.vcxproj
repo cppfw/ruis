@@ -134,35 +134,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2Buffer.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2Factory.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2Shader.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderColorPos.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderPosTex.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2Texture2D.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2VertexArray.cpp" />
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
+    <ClCompile Include="..\..\renderers\opengl2\mordaren\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2Buffer.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2Factory.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2FrameBuffer.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2IndexBuffer.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2Renderer.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2Shader.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderColorPos.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderColorPosTex.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderPosClr.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2ShaderPosTex.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2Texture2D.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2VertexArray.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2VertexBuffer.hpp" />
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\OpenGL2_util.hpp" />
+    <ClInclude Include="..\..\renderers\opengl2\mordaren\**\*.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libmorda\libmorda.vcxproj">
