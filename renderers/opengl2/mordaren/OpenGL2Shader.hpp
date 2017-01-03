@@ -1,12 +1,13 @@
 #pragma once
 
-#include <GL/glew.h>
-
+#include <utki/config.hpp>
 #include <utki/debug.hpp>
 #include <utki/Exc.hpp>
 #include <utki/Buf.hpp>
 
 #include <kolme/Matrix4.hpp>
+
+#include <GL/glew.h>
 
 #include <vector>
 

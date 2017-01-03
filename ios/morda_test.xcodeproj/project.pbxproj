@@ -25,10 +25,6 @@
 		2C9807261D5BA15900948717 /* TexFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806951D5BA15900948717 /* TexFont.cpp */; };
 		2C9807271D5BA15900948717 /* Inflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806971D5BA15900948717 /* Inflater.cpp */; };
 		2C9807281D5BA15900948717 /* Morda.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806991D5BA15900948717 /* Morda.cpp */; };
-		2C9807291D5BA15900948717 /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C98069C1D5BA15900948717 /* FrameBuffer.cpp */; };
-		2C98072A1D5BA15900948717 /* Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C98069E1D5BA15900948717 /* Render.cpp */; };
-		2C98072B1D5BA15900948717 /* Render_DirectX.cppinc in Resources */ = {isa = PBXBuildFile; fileRef = 2C9806A01D5BA15900948717 /* Render_DirectX.cppinc */; };
-		2C98072C1D5BA15900948717 /* Render_OpenGL.cppinc in Resources */ = {isa = PBXBuildFile; fileRef = 2C9806A11D5BA15900948717 /* Render_OpenGL.cppinc */; };
 		2C98072D1D5BA15900948717 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806A21D5BA15900948717 /* Shader.cpp */; };
 		2C98072E1D5BA15900948717 /* Texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806A41D5BA15900948717 /* Texture2D.cpp */; };
 		2C98072F1D5BA15900948717 /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806A61D5BA15900948717 /* ResourceManager.cpp */; };
@@ -39,13 +35,6 @@
 		2C9807341D5BA15900948717 /* ResNinePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806B11D5BA15900948717 /* ResNinePatch.cpp */; };
 		2C9807351D5BA15900948717 /* ResSTOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806B31D5BA15900948717 /* ResSTOB.cpp */; };
 		2C9807361D5BA15900948717 /* ResTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806B51D5BA15900948717 /* ResTexture.cpp */; };
-		2C9807371D5BA15900948717 /* ClrPosShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806B81D5BA15900948717 /* ClrPosShader.cpp */; };
-		2C9807381D5BA15900948717 /* ColorPosShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806BA1D5BA15900948717 /* ColorPosShader.cpp */; };
-		2C9807391D5BA15900948717 /* ColorPosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806BC1D5BA15900948717 /* ColorPosTexShader.cpp */; };
-		2C98073A1D5BA15900948717 /* PosShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806BF1D5BA15900948717 /* PosShader.cpp */; };
-		2C98073B1D5BA15900948717 /* PosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806C11D5BA15900948717 /* PosTexShader.cpp */; };
-		2C98073C1D5BA15900948717 /* SimpleBlurPosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806C31D5BA15900948717 /* SimpleBlurPosTexShader.cpp */; };
-		2C98073D1D5BA15900948717 /* SimpleGrayscalePosTexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806C51D5BA15900948717 /* SimpleGrayscalePosTexShader.cpp */; };
 		2C98073E1D5BA15900948717 /* Updateable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806C71D5BA15900948717 /* Updateable.cpp */; };
 		2C98073F1D5BA15900948717 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806CA1D5BA15900948717 /* Image.cpp */; };
 		2C9807401D5BA15900948717 /* ioapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9806D11D5BA15900948717 /* ioapi.cpp */; };
@@ -72,9 +61,7 @@
 		2C9807551D5BA15900948717 /* ResizeProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807021D5BA15900948717 /* ResizeProxy.cpp */; };
 		2C9807561D5BA15900948717 /* Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807041D5BA15900948717 /* Widget.cpp */; };
 		2C9807571D5BA15900948717 /* DropDownSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807061D5BA15900948717 /* DropDownSelector.cpp */; };
-		2C9807581D5BA15900948717 /* BlurGlass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807091D5BA15900948717 /* BlurGlass.cpp */; };
 		2C9807591D5BA15900948717 /* ColorLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C98070B1D5BA15900948717 /* ColorLabel.cpp */; };
-		2C98075A1D5BA15900948717 /* GreyscaleGlass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C98070D1D5BA15900948717 /* GreyscaleGlass.cpp */; };
 		2C98075B1D5BA15900948717 /* ImageLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C98070F1D5BA15900948717 /* ImageLabel.cpp */; };
 		2C98075C1D5BA15900948717 /* TextLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807111D5BA15900948717 /* TextLabel.cpp */; };
 		2C98075D1D5BA15900948717 /* List.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C9807131D5BA15900948717 /* List.cpp */; };
@@ -126,12 +113,7 @@
 		2C9806981D5BA15900948717 /* Inflater.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Inflater.hpp; sourceTree = "<group>"; };
 		2C9806991D5BA15900948717 /* Morda.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Morda.cpp; sourceTree = "<group>"; };
 		2C98069A1D5BA15900948717 /* Morda.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Morda.hpp; sourceTree = "<group>"; };
-		2C98069C1D5BA15900948717 /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
 		2C98069D1D5BA15900948717 /* FrameBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FrameBuffer.hpp; sourceTree = "<group>"; };
-		2C98069E1D5BA15900948717 /* Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render.cpp; sourceTree = "<group>"; };
-		2C98069F1D5BA15900948717 /* Render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Render.hpp; sourceTree = "<group>"; };
-		2C9806A01D5BA15900948717 /* Render_DirectX.cppinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Render_DirectX.cppinc; sourceTree = "<group>"; };
-		2C9806A11D5BA15900948717 /* Render_OpenGL.cppinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Render_OpenGL.cppinc; sourceTree = "<group>"; };
 		2C9806A21D5BA15900948717 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		2C9806A31D5BA15900948717 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		2C9806A41D5BA15900948717 /* Texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture2D.cpp; sourceTree = "<group>"; };
@@ -152,21 +134,6 @@
 		2C9806B41D5BA15900948717 /* ResSTOB.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ResSTOB.hpp; sourceTree = "<group>"; };
 		2C9806B51D5BA15900948717 /* ResTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResTexture.cpp; sourceTree = "<group>"; };
 		2C9806B61D5BA15900948717 /* ResTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ResTexture.hpp; sourceTree = "<group>"; };
-		2C9806B81D5BA15900948717 /* ClrPosShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClrPosShader.cpp; sourceTree = "<group>"; };
-		2C9806B91D5BA15900948717 /* ClrPosShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClrPosShader.hpp; sourceTree = "<group>"; };
-		2C9806BA1D5BA15900948717 /* ColorPosShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorPosShader.cpp; sourceTree = "<group>"; };
-		2C9806BB1D5BA15900948717 /* ColorPosShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColorPosShader.hpp; sourceTree = "<group>"; };
-		2C9806BC1D5BA15900948717 /* ColorPosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorPosTexShader.cpp; sourceTree = "<group>"; };
-		2C9806BD1D5BA15900948717 /* ColorPosTexShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColorPosTexShader.hpp; sourceTree = "<group>"; };
-		2C9806BE1D5BA15900948717 /* ColorShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColorShader.hpp; sourceTree = "<group>"; };
-		2C9806BF1D5BA15900948717 /* PosShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PosShader.cpp; sourceTree = "<group>"; };
-		2C9806C01D5BA15900948717 /* PosShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PosShader.hpp; sourceTree = "<group>"; };
-		2C9806C11D5BA15900948717 /* PosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PosTexShader.cpp; sourceTree = "<group>"; };
-		2C9806C21D5BA15900948717 /* PosTexShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PosTexShader.hpp; sourceTree = "<group>"; };
-		2C9806C31D5BA15900948717 /* SimpleBlurPosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleBlurPosTexShader.cpp; sourceTree = "<group>"; };
-		2C9806C41D5BA15900948717 /* SimpleBlurPosTexShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SimpleBlurPosTexShader.hpp; sourceTree = "<group>"; };
-		2C9806C51D5BA15900948717 /* SimpleGrayscalePosTexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleGrayscalePosTexShader.cpp; sourceTree = "<group>"; };
-		2C9806C61D5BA15900948717 /* SimpleGrayscalePosTexShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SimpleGrayscalePosTexShader.hpp; sourceTree = "<group>"; };
 		2C9806C71D5BA15900948717 /* Updateable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Updateable.cpp; sourceTree = "<group>"; };
 		2C9806C81D5BA15900948717 /* Updateable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Updateable.hpp; sourceTree = "<group>"; };
 		2C9806CA1D5BA15900948717 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
@@ -225,12 +192,8 @@
 		2C9807051D5BA15900948717 /* Widget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Widget.hpp; sourceTree = "<group>"; };
 		2C9807061D5BA15900948717 /* DropDownSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DropDownSelector.cpp; sourceTree = "<group>"; };
 		2C9807071D5BA15900948717 /* DropDownSelector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DropDownSelector.hpp; sourceTree = "<group>"; };
-		2C9807091D5BA15900948717 /* BlurGlass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlurGlass.cpp; sourceTree = "<group>"; };
-		2C98070A1D5BA15900948717 /* BlurGlass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlurGlass.hpp; sourceTree = "<group>"; };
 		2C98070B1D5BA15900948717 /* ColorLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorLabel.cpp; sourceTree = "<group>"; };
 		2C98070C1D5BA15900948717 /* ColorLabel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ColorLabel.hpp; sourceTree = "<group>"; };
-		2C98070D1D5BA15900948717 /* GreyscaleGlass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GreyscaleGlass.cpp; sourceTree = "<group>"; };
-		2C98070E1D5BA15900948717 /* GreyscaleGlass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GreyscaleGlass.hpp; sourceTree = "<group>"; };
 		2C98070F1D5BA15900948717 /* ImageLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageLabel.cpp; sourceTree = "<group>"; };
 		2C9807101D5BA15900948717 /* ImageLabel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ImageLabel.hpp; sourceTree = "<group>"; };
 		2C9807111D5BA15900948717 /* TextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextLabel.cpp; sourceTree = "<group>"; };
@@ -380,7 +343,6 @@
 				2C9806A61D5BA15900948717 /* ResourceManager.cpp */,
 				2C9806A71D5BA15900948717 /* ResourceManager.hpp */,
 				2C9806A81D5BA15900948717 /* resources */,
-				2C9806B71D5BA15900948717 /* shaders */,
 				2C9806C71D5BA15900948717 /* Updateable.cpp */,
 				2C9806C81D5BA15900948717 /* Updateable.hpp */,
 				2C9806C91D5BA15900948717 /* util */,
@@ -403,12 +365,7 @@
 		2C98069B1D5BA15900948717 /* render */ = {
 			isa = PBXGroup;
 			children = (
-				2C98069C1D5BA15900948717 /* FrameBuffer.cpp */,
 				2C98069D1D5BA15900948717 /* FrameBuffer.hpp */,
-				2C98069E1D5BA15900948717 /* Render.cpp */,
-				2C98069F1D5BA15900948717 /* Render.hpp */,
-				2C9806A01D5BA15900948717 /* Render_DirectX.cppinc */,
-				2C9806A11D5BA15900948717 /* Render_OpenGL.cppinc */,
 				2C9806A21D5BA15900948717 /* Shader.cpp */,
 				2C9806A31D5BA15900948717 /* Shader.hpp */,
 				2C9806A41D5BA15900948717 /* Texture2D.cpp */,
@@ -436,28 +393,6 @@
 				2C9806B61D5BA15900948717 /* ResTexture.hpp */,
 			);
 			path = resources;
-			sourceTree = "<group>";
-		};
-		2C9806B71D5BA15900948717 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				2C9806B81D5BA15900948717 /* ClrPosShader.cpp */,
-				2C9806B91D5BA15900948717 /* ClrPosShader.hpp */,
-				2C9806BA1D5BA15900948717 /* ColorPosShader.cpp */,
-				2C9806BB1D5BA15900948717 /* ColorPosShader.hpp */,
-				2C9806BC1D5BA15900948717 /* ColorPosTexShader.cpp */,
-				2C9806BD1D5BA15900948717 /* ColorPosTexShader.hpp */,
-				2C9806BE1D5BA15900948717 /* ColorShader.hpp */,
-				2C9806BF1D5BA15900948717 /* PosShader.cpp */,
-				2C9806C01D5BA15900948717 /* PosShader.hpp */,
-				2C9806C11D5BA15900948717 /* PosTexShader.cpp */,
-				2C9806C21D5BA15900948717 /* PosTexShader.hpp */,
-				2C9806C31D5BA15900948717 /* SimpleBlurPosTexShader.cpp */,
-				2C9806C41D5BA15900948717 /* SimpleBlurPosTexShader.hpp */,
-				2C9806C51D5BA15900948717 /* SimpleGrayscalePosTexShader.cpp */,
-				2C9806C61D5BA15900948717 /* SimpleGrayscalePosTexShader.hpp */,
-			);
-			path = shaders;
 			sourceTree = "<group>";
 		};
 		2C9806C91D5BA15900948717 /* util */ = {
@@ -591,12 +526,8 @@
 		2C9807081D5BA15900948717 /* label */ = {
 			isa = PBXGroup;
 			children = (
-				2C9807091D5BA15900948717 /* BlurGlass.cpp */,
-				2C98070A1D5BA15900948717 /* BlurGlass.hpp */,
 				2C98070B1D5BA15900948717 /* ColorLabel.cpp */,
 				2C98070C1D5BA15900948717 /* ColorLabel.hpp */,
-				2C98070D1D5BA15900948717 /* GreyscaleGlass.cpp */,
-				2C98070E1D5BA15900948717 /* GreyscaleGlass.hpp */,
 				2C98070F1D5BA15900948717 /* ImageLabel.cpp */,
 				2C9807101D5BA15900948717 /* ImageLabel.hpp */,
 				2C9807111D5BA15900948717 /* TextLabel.cpp */,
@@ -702,8 +633,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C98072B1D5BA15900948717 /* Render_DirectX.cppinc in Resources */,
-				2C98072C1D5BA15900948717 /* Render_OpenGL.cppinc in Resources */,
 				2C6512BB1C0A60F800D295F5 /* Images.xcassets in Resources */,
 				2C09D3E71D51121300DCE090 /* morda_res in Resources */,
 				2C6512A61C0A60F700D295F5 /* InfoPlist.strings in Resources */,
@@ -777,11 +706,8 @@
 				2C98074D1D5BA15900948717 /* Frame.cpp in Sources */,
 				2C9807561D5BA15900948717 /* Widget.cpp in Sources */,
 				2C9807321D5BA15900948717 /* ResGradient.cpp in Sources */,
-				2C98073A1D5BA15900948717 /* PosShader.cpp in Sources */,
 				2C9807271D5BA15900948717 /* Inflater.cpp in Sources */,
 				2C98074A1D5BA15900948717 /* SimpleButton.cpp in Sources */,
-				2C9807371D5BA15900948717 /* ClrPosShader.cpp in Sources */,
-				2C98073C1D5BA15900948717 /* SimpleBlurPosTexShader.cpp in Sources */,
 				2C98072D1D5BA15900948717 /* Shader.cpp in Sources */,
 				2C98074F1D5BA15900948717 /* Margins.cpp in Sources */,
 				2C98073F1D5BA15900948717 /* Image.cpp in Sources */,
@@ -793,20 +719,15 @@
 				2C98074B1D5BA15900948717 /* ColorWidget.cpp in Sources */,
 				2C9807501D5BA15900948717 /* Overlay.cpp in Sources */,
 				2C9807341D5BA15900948717 /* ResNinePatch.cpp in Sources */,
-				2C9807291D5BA15900948717 /* FrameBuffer.cpp in Sources */,
 				2C9807481D5BA15900948717 /* ChoiceGroup.cpp in Sources */,
-				2C98073B1D5BA15900948717 /* PosTexShader.cpp in Sources */,
 				2C9807331D5BA15900948717 /* ResImage.cpp in Sources */,
 				2C9807351D5BA15900948717 /* ResSTOB.cpp in Sources */,
 				2C98075F1D5BA15900948717 /* NinePatch.cpp in Sources */,
 				2C9807621D5BA15900948717 /* TextInput.cpp in Sources */,
 				2C9807311D5BA15900948717 /* ResFont.cpp in Sources */,
 				2C9807461D5BA15900948717 /* CheckBox.cpp in Sources */,
-				2C9807381D5BA15900948717 /* ColorPosShader.cpp in Sources */,
 				2C9807471D5BA15900948717 /* ChoiceButton.cpp in Sources */,
 				2C9807651D5BA15900948717 /* Window.cpp in Sources */,
-				2C98072A1D5BA15900948717 /* Render.cpp in Sources */,
-				2C9807391D5BA15900948717 /* ColorPosTexShader.cpp in Sources */,
 				2C98075D1D5BA15900948717 /* List.cpp in Sources */,
 				2C98075E1D5BA15900948717 /* MouseCursor.cpp in Sources */,
 				2C9807491D5BA15900948717 /* RadioButton.cpp in Sources */,
@@ -816,7 +737,6 @@
 				2C9807361D5BA15900948717 /* ResTexture.cpp in Sources */,
 				2C9807641D5BA15900948717 /* TreeView.cpp in Sources */,
 				2C9807531D5BA15900948717 /* TableRow.cpp in Sources */,
-				2C98075A1D5BA15900948717 /* GreyscaleGlass.cpp in Sources */,
 				2C9807401D5BA15900948717 /* ioapi.cpp in Sources */,
 				2C93528C1D4FA90E00D58719 /* glue.mm in Sources */,
 				2C98075B1D5BA15900948717 /* ImageLabel.cpp in Sources */,
@@ -834,8 +754,6 @@
 				2C547A781C2F2C1E0079154C /* main.cpp in Sources */,
 				2C98075C1D5BA15900948717 /* TextLabel.cpp in Sources */,
 				2C9807431D5BA15900948717 /* ZipFile.cpp in Sources */,
-				2C9807581D5BA15900948717 /* BlurGlass.cpp in Sources */,
-				2C98073D1D5BA15900948717 /* SimpleGrayscalePosTexShader.cpp in Sources */,
 				2C9807601D5BA15900948717 /* Slider.cpp in Sources */,
 				2C98072E1D5BA15900948717 /* Texture2D.cpp in Sources */,
 			);
@@ -955,6 +873,27 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(PODS_ROOT)/freetype/include\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/freetype\"",
+					"\"${PODS_ROOT}/Headers/Public/libcairo\"",
+					"\"${PODS_ROOT}/Headers/Public/libjpeg\"",
+					"\"${PODS_ROOT}/Headers/Public/libkolme\"",
+					"\"${PODS_ROOT}/Headers/Public/libnitki\"",
+					"\"${PODS_ROOT}/Headers/Public/libpapki\"",
+					"\"${PODS_ROOT}/Headers/Public/libpixman\"",
+					"\"${PODS_ROOT}/Headers/Public/libpng_igagis\"",
+					"\"${PODS_ROOT}/Headers/Public/libpogodi\"",
+					"\"${PODS_ROOT}/Headers/Public/libstob\"",
+					"\"${PODS_ROOT}/Headers/Public/libsvgdom\"",
+					"\"${PODS_ROOT}/Headers/Public/libsvgren\"",
+					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
+					"\"${PODS_ROOT}/Headers/Public/libutki\"",
+					"\"${PODS_ROOT}/Headers/Public/pugixml\"",
+					../src,
+				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -988,6 +927,27 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "morda_test/morda_test-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(PODS_ROOT)/freetype/include\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/freetype\"",
+					"\"${PODS_ROOT}/Headers/Public/libcairo\"",
+					"\"${PODS_ROOT}/Headers/Public/libjpeg\"",
+					"\"${PODS_ROOT}/Headers/Public/libkolme\"",
+					"\"${PODS_ROOT}/Headers/Public/libnitki\"",
+					"\"${PODS_ROOT}/Headers/Public/libpapki\"",
+					"\"${PODS_ROOT}/Headers/Public/libpixman\"",
+					"\"${PODS_ROOT}/Headers/Public/libpng_igagis\"",
+					"\"${PODS_ROOT}/Headers/Public/libpogodi\"",
+					"\"${PODS_ROOT}/Headers/Public/libstob\"",
+					"\"${PODS_ROOT}/Headers/Public/libsvgdom\"",
+					"\"${PODS_ROOT}/Headers/Public/libsvgren\"",
+					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
+					"\"${PODS_ROOT}/Headers/Public/libutki\"",
+					"\"${PODS_ROOT}/Headers/Public/pugixml\"",
+					../src,
+				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

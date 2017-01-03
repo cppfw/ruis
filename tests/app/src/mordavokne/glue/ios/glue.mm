@@ -4,6 +4,8 @@
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
 
+#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+
 #include <sstream>
 
 #import <UIKit/UIKit.h>
@@ -192,7 +194,8 @@ morda::real getDotsPerPt(){
 App::App(const App::WindowParams& wp) :
 		windowParams(wp),
 		windowObject(wp),
-		gui(getDotsPerInch(), getDotsPerPt())
+		renderer(utki::makeShared<OpenGL2Renderer>()),
+		gui(this->renderer, getDotsPerInch(), getDotsPerPt())
 {
 	this->setFullscreen(false);//this will intialize the viewport
 }
