@@ -2,7 +2,11 @@
 
 #include <morda/render/Texture2D.hpp>
 
-#include <GL/glew.h>
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 
 struct OpenGL2Texture2D : public morda::Texture2D{

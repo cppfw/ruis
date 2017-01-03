@@ -12,41 +12,6 @@
 #include "util/Sides.hpp"
 
 
-#define M_MORDA_RENDER_OPENGL				0
-#define M_MORDA_RENDER_OPENGLES				1
-#define M_MORDA_RENDER_DIRECTX				2
-#define M_MORDA_RENDER_GCM					3
-
-
-#if M_OS == M_OS_LINUX
-
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGLES
-#	else
-#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
-#	endif
-
-#elif M_OS == M_OS_WINDOWS
-
-#	ifdef M_MORDA_ENFORCE_DIRECTX_UNDER_WINDOWS
-#		define M_MORDA_RENDER M_MORDA_RENDER_DIRECTX
-#	else
-#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
-#	endif
-
-#elif M_OS == M_OS_MACOSX
-
-#	if M_OS_NAME == M_OS_NAME_IOS
-#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGLES
-#	else
-#		define M_MORDA_RENDER M_MORDA_RENDER_OPENGL
-#	endif
-
-#else
-#	error "unknown OS"
-#endif
-
-
 
 namespace morda{
 

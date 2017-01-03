@@ -2,7 +2,11 @@
 
 #include "OpenGL2_util.hpp"
 
-#include <GL/glew.h>
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 OpenGL2IndexBuffer::OpenGL2IndexBuffer(const utki::Buf<std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),

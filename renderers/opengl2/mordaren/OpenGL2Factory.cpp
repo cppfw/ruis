@@ -3,8 +3,6 @@
 #include "OpenGL2VertexBuffer.hpp"
 #include "OpenGL2VertexArray.hpp"
 
-#include <GL/glew.h>
-
 #include "OpenGL2_util.hpp"
 #include "OpenGL2IndexBuffer.hpp"
 
@@ -14,7 +12,11 @@
 #include "OpenGL2ShaderColorPosTex.hpp"
 #include "OpenGL2FrameBuffer.hpp"
 
-
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 
 OpenGL2Factory::OpenGL2Factory(){

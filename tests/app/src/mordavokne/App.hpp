@@ -17,25 +17,19 @@
 #include "../../../../src/morda/render/Renderer.hpp"
 
 
-
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
-#	include <GL/glew.h>
-
-#	if M_OS == M_OS_LINUX
-#		include <GL/glx.h>
-#	endif
-
-#elif M_MORDA_RENDER == M_MORDA_RENDER_OPENGLES
+#ifdef M_RENDER_OPENGLES2
 #	if M_OS_NAME == M_OS_NAME_IOS
 #		include <OpenGlES/ES2/glext.h>
 #	else
 #		include <GLES2/gl2.h>
 #		include <EGL/egl.h>
 #	endif
-#elif M_MORDA_RENDER == M_MORDA_RENDER_DIRECTX
-
 #else
-#	error "Unknown OS"
+#	include <GL/glew.h>
+
+#	if M_OS == M_OS_LINUX
+#		include <GL/glx.h>
+#	endif
 #endif
 
 
@@ -103,17 +97,58 @@ public:
 
 #if M_OS == M_OS_LINUX
 
-private:
+private:	
 #	if M_OS_NAME == M_OS_NAME_ANDROID
-	friend void updateWindowRect(App& app, const morda::Rectr& rect);
-	friend void Render(App& app);
-	friend std::uint32_t Update(App& app);
-	friend void HandleInputEvents();
-	friend void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars);
-	friend void HandleQueueMessages(App& app);
-	friend int GetUIQueueHandle(App& app);
+	
+#	else
+	struct XDisplayWrapper{
+		Display* d;
+		XDisplayWrapper();
+		~XDisplayWrapper()noexcept;
+	} xDisplay;
 
-private:
+	
+	struct XVisualInfoWrapper{
+		XVisualInfo *vi;
+		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
+		~XVisualInfoWrapper()noexcept;
+	} xVisualInfo;
+
+	struct XWindowWrapper{
+		::Window w;
+
+		XDisplayWrapper& d;
+
+		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
+		~XWindowWrapper()noexcept;
+	} xWindow;
+
+	struct XEmptyMouseCursor{
+		Cursor c;
+		
+		XDisplayWrapper& d;
+		
+		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XEmptyMouseCursor()noexcept;
+	} xEmptyMouseCursor;
+	
+	struct XInputMethodWrapper{
+		XIM xim;
+		XIC xic;
+
+		XDisplayWrapper& d;
+		XWindowWrapper& w;
+
+		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XInputMethodWrapper()noexcept{
+			this->Destroy();
+		}
+
+		void Destroy()noexcept;
+	} xInputMethod;
+#	endif
+
+#	ifdef M_RENDER_OPENGLES2
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -140,28 +175,6 @@ private:
 		~EGLContextWrapper()noexcept;
 	} eglContext;
 #	else
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()noexcept;
-	} xDisplay;
-
-	
-	struct XVisualInfoWrapper{
-		XVisualInfo *vi;
-		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
-		~XVisualInfoWrapper()noexcept;
-	} xVisualInfo;
-
-	struct XWindowWrapper{
-		::Window w;
-
-		XDisplayWrapper& d;
-
-		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
-		~XWindowWrapper()noexcept;
-	} xWindow;
-
 	struct GLXContextWrapper{
 		GLXContext glxContext;
 
@@ -175,30 +188,18 @@ private:
 
 		void Destroy()noexcept;
 	} glxContex;
+#	endif
 
-	struct XEmptyMouseCursor{
-		Cursor c;
-		
-		XDisplayWrapper& d;
-		
-		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XEmptyMouseCursor()noexcept;
-	} xEmptyMouseCursor;
+#	if M_OS_NAME == M_OS_NAME_ANDROID
+	friend void updateWindowRect(App& app, const morda::Rectr& rect);
+	friend void Render(App& app);
+	friend std::uint32_t Update(App& app);
+	friend void HandleInputEvents();
+	friend void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars);
+	friend void HandleQueueMessages(App& app);
+	friend int GetUIQueueHandle(App& app);
 	
-	struct XInputMethodWrapper{
-		XIM xim;
-		XIC xic;
-
-		XDisplayWrapper& d;
-		XWindowWrapper& w;
-
-		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XInputMethodWrapper()noexcept{
-			this->Destroy();
-		}
-
-		void Destroy()noexcept;
-	} xInputMethod;
+#	else
 	
 	friend void Main(int argc, const char** argv);
 	void exec();

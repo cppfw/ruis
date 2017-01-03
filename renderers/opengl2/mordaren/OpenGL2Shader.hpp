@@ -7,13 +7,17 @@
 
 #include <kolme/Matrix4.hpp>
 
-#include <GL/glew.h>
-
 #include <vector>
 
 #include "OpenGL2_util.hpp"
 
 #include <morda/render/VertexArray.hpp>
+
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 struct ShaderWrapper{
 	GLuint s;

@@ -209,9 +209,9 @@ morda::real getDotsPerPt(Display* display){
 App::App(const WindowParams& requestedWindowParams) :
 		xVisualInfo(requestedWindowParams, xDisplay),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
-		glxContex(xDisplay, xWindow, xVisualInfo),
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
+		glxContex(xDisplay, xWindow, xVisualInfo),
 		renderer(utki::makeShared<OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {

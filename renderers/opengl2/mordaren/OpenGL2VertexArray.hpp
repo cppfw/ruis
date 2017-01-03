@@ -2,7 +2,11 @@
 
 #include <morda/render/VertexArray.hpp>
 
-#include <GL/glew.h>
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 
 class OpenGL2VertexArray : public morda::VertexArray{

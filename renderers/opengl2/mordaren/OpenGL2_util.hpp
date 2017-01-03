@@ -2,6 +2,12 @@
 
 #include <utki/debug.hpp>
 
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
+
 inline void assertOpenGLNoError(){
 #ifdef DEBUG
 	GLenum error = glGetError();

@@ -12,6 +12,9 @@
 #endif
 
 
+
+
+
 using namespace mordavokne;
 
 
@@ -104,8 +107,8 @@ void App::swapFrameBuffers(){
 #if M_OS == M_OS_WINDOWS
 	SwapBuffers(this->deviceContext.hdc);
 #elif M_OS == M_OS_LINUX
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-	eglSwapBuffers(morda::App::inst().eglDisplay.d, morda::App::inst().eglSurface.s);
+#	ifdef M_RENDER_OPENGLES2
+	eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
 #	else
 	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
 #	endif
@@ -118,7 +121,8 @@ void App::swapFrameBuffers(){
 
 
 App::GLEWWrapper::GLEWWrapper(){
-#if M_MORDA_RENDER == M_MORDA_RENDER_OPENGL
+#ifdef M_RENDER_OPENGLES2
+#else
 	glewExperimental = GL_TRUE;
 	if(glewInit() != GLEW_OK){
 		throw utki::Exc("GLEW initialization failed");

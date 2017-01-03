@@ -1,5 +1,3 @@
-#include <GL/glew.h>
-
 #include <utki/debug.hpp>
 #include <utki/Exc.hpp>
 
@@ -10,6 +8,12 @@
 #include "OpenGL2VertexArray.hpp"
 #include "OpenGL2IndexBuffer.hpp"
 #include "OpenGL2VertexBuffer.hpp"
+
+#ifdef M_RENDER_OPENGLES2
+#	include <GLES2/gl2.h>
+#else
+#	include <GL/glew.h>
+#endif
 
 
 const OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
