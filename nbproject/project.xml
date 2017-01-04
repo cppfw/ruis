@@ -36,6 +36,10 @@
                     <name>Borders</name>
                     <type>0</type>
                 </confElem>
+                <confElem>
+                    <name>opengles2</name>
+                    <type>0</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>
