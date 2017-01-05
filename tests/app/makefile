@@ -1,5 +1,7 @@
 include prorab.mk
 
+include $(d)../../raspberrypi.mk
+
 this_name := tests
 
 
@@ -27,6 +29,11 @@ this_objcflags += -I$(d)../../src
 
 ifeq ($(ogles2), true)
     this_cxxflags += -DM_RENDER_OPENGLES2
+
+    ifeq ($(raspberrypi),true)
+        this_cxxflags += -I/opt/vc/include
+        this_ldflags += -L/opt/vc/lib
+    endif
 endif
 
 
@@ -63,6 +70,7 @@ this_ldlibs += $(d)../../src/libmorda$(soext)
 this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
 
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
+
 
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`

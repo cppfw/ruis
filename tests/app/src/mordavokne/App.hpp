@@ -32,6 +32,10 @@
 #	endif
 #endif
 
+#if M_OS == M_OS_LINUX
+#	include <X11/Xlib.h>
+#	include <X11/Xutil.h>
+#endif
 
 #if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
 #	include <nitki/Queue.hpp>

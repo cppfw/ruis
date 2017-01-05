@@ -1,5 +1,7 @@
 include prorab.mk
 
+include $(d)../../raspberrypi.mk
+
 
 this_name := morda-opengl2-ren
 
@@ -27,6 +29,11 @@ endif
 
 ifeq ($(ogles2), true)
     this_cxxflags += -DM_RENDER_OPENGLES2
+
+    ifeq ($(raspberrypi),true)
+        this_cxxflags += -I/opt/vc/include
+        this_ldflags += -L/opt/vc/lib
+    endif
 endif
 
 this_cxxflags += -I$(d)/../../src
