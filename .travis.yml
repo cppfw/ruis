@@ -134,7 +134,7 @@ script:
   fi
 - if [ "$BUILD_NAME" == "raspberry_pi" ]; then
     sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
-    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buildpackage -us -uc";
+    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && ogles2=true dpkg-buildpackage -us -uc";
   fi
   
   
