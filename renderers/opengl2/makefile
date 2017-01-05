@@ -49,7 +49,13 @@ endif
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`
 else
-    this_ldlibs += -lGL -lGLEW
+    this_ldlibs += -lGLEW
+
+    ifeq ($(os), macosx)
+    else
+        this_ldlibs += -lGL
+    endif
+
 endif
 
 this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda$(soext)
