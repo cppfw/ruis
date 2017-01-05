@@ -5,20 +5,32 @@
 OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 		OpenGL2Shader(
 				R"qwertyuiop(
-						uniform mat4 matrix;
+						#ifndef GL_ES
+						#	define highp
+						#	define mediump
+						#	define lowp
+						#endif
 
-						attribute vec4 a0;
-						attribute vec4 a1;
+						uniform highp mat4 matrix;
 
-						varying vec4 color_varying;
+						attribute highp vec4 a0;
+						attribute highp vec4 a1;
+
+						varying highp vec4 color_varying;
 
 						void main(void){
 							gl_Position = matrix * a0;
 							color_varying = a1;
 						}
 					)qwertyuiop",
-				R"qwertyuiop(		
-						varying vec4 color_varying;
+				R"qwertyuiop(
+						#ifndef GL_ES
+						#	define highp
+						#	define mediump
+						#	define lowp
+						#endif
+		
+						varying highp vec4 color_varying;
 						
 						void main(void){
 							gl_FragColor = color_varying;

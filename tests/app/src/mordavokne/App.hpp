@@ -99,56 +99,6 @@ public:
 
 private:	
 #	if M_OS_NAME == M_OS_NAME_ANDROID
-	
-#	else
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()noexcept;
-	} xDisplay;
-
-	
-	struct XVisualInfoWrapper{
-		XVisualInfo *vi;
-		XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay);
-		~XVisualInfoWrapper()noexcept;
-	} xVisualInfo;
-
-	struct XWindowWrapper{
-		::Window w;
-
-		XDisplayWrapper& d;
-
-		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
-		~XWindowWrapper()noexcept;
-	} xWindow;
-
-	struct XEmptyMouseCursor{
-		Cursor c;
-		
-		XDisplayWrapper& d;
-		
-		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XEmptyMouseCursor()noexcept;
-	} xEmptyMouseCursor;
-	
-	struct XInputMethodWrapper{
-		XIM xim;
-		XIC xic;
-
-		XDisplayWrapper& d;
-		XWindowWrapper& w;
-
-		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XInputMethodWrapper()noexcept{
-			this->Destroy();
-		}
-
-		void Destroy()noexcept;
-	} xInputMethod;
-#	endif
-
-#	ifdef M_RENDER_OPENGLES2
 	struct EGLDisplayWrapper{
 		EGLDisplay d;
 		EGLDisplayWrapper();
@@ -175,6 +125,63 @@ private:
 		~EGLContextWrapper()noexcept;
 	} eglContext;
 #	else
+	struct XDisplayWrapper{
+		Display* d;
+		XDisplayWrapper();
+		~XDisplayWrapper()noexcept;
+	} xDisplay;
+
+#		ifdef M_RENDER_OPENGLES2
+	struct EGLDisplayWrapper{
+		EGLDisplay d;
+		EGLDisplayWrapper();
+		~EGLDisplayWrapper()noexcept;
+	} eglDisplay;
+	
+	struct EGLConfigWrapper{
+		EGLConfig c;
+		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
+		~EGLConfigWrapper()noexcept{}
+	} eglConfig;
+#		endif
+	
+	struct XVisualInfoWrapper{
+		XVisualInfo *vi;
+		XVisualInfoWrapper(
+				const WindowParams& wp,
+				XDisplayWrapper& xDisplay
+#		ifdef M_RENDER_OPENGLES2
+				, EGLDisplayWrapper& eglDisplay
+				, EGLConfigWrapper& eglConfig
+#		endif
+			);
+		~XVisualInfoWrapper()noexcept;
+	} xVisualInfo;
+
+	struct XWindowWrapper{
+		::Window w;
+
+		XDisplayWrapper& d;
+
+		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
+		~XWindowWrapper()noexcept;
+	} xWindow;
+
+#		ifdef M_RENDER_OPENGLES2
+	struct EGLSurfaceWrapper{
+		EGLDisplayWrapper& d;
+		EGLSurface s;
+		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c, XWindowWrapper& w);
+		~EGLSurfaceWrapper()noexcept;
+	} eglSurface;
+	
+	struct EGLContextWrapper{
+		EGLDisplayWrapper& d;
+		EGLContext c;
+		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
+		~EGLContextWrapper()noexcept;
+	} eglContext;
+#		else
 	struct GLXContextWrapper{
 		GLXContext glxContext;
 
@@ -188,7 +195,33 @@ private:
 
 		void Destroy()noexcept;
 	} glxContex;
+#		endif
+	
+	struct XEmptyMouseCursor{
+		Cursor c;
+		
+		XDisplayWrapper& d;
+		
+		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XEmptyMouseCursor()noexcept;
+	} xEmptyMouseCursor;
+	
+	struct XInputMethodWrapper{
+		XIM xim;
+		XIC xic;
+
+		XDisplayWrapper& d;
+		XWindowWrapper& w;
+
+		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
+		~XInputMethodWrapper()noexcept{
+			this->Destroy();
+		}
+
+		void Destroy()noexcept;
+	} xInputMethod;
 #	endif
+
 
 #	if M_OS_NAME == M_OS_NAME_ANDROID
 	friend void updateWindowRect(App& app, const morda::Rectr& rect);

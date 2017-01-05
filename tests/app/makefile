@@ -25,6 +25,11 @@ endif
 this_cxxflags += -I$(d)../../src
 this_objcflags += -I$(d)../../src
 
+ifeq ($(ogles2), true)
+    this_cxxflags += -DM_RENDER_OPENGLES2
+endif
+
+
 ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
@@ -51,13 +56,19 @@ else ifeq ($(os),macosx)
     $(eval $(this_rules))
 else ifeq ($(os),linux)
     this_srcs += src/mordavokne/glue/glue.cpp
-    this_ldlibs += -lGLEW -pthread -lGL -lX11 -ldl
+    this_ldlibs += -pthread -lX11 -ldl
 endif
 
 this_ldlibs += $(d)../../src/libmorda$(soext)
 this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
 
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
+
+ifeq ($(ogles2), true)
+    this_ldlibs += `pkg-config --libs egl glesv2`
+else
+    this_ldlibs += -lGL -lGLEW
+endif
 
 this_ldflags += -rdynamic
 

@@ -19,23 +19,6 @@
           <in>OpenGL2VertexBuffer.cpp</in>
         </df>
       </df>
-      <df name="opengl3">
-        <df name="mordaren">
-          <in>OpenGL2Buffer.cpp</in>
-          <in>OpenGL2Factory.cpp</in>
-          <in>OpenGL2FrameBuffer.cpp</in>
-          <in>OpenGL2IndexBuffer.cpp</in>
-          <in>OpenGL2Renderer.cpp</in>
-          <in>OpenGL2Shader.cpp</in>
-          <in>OpenGL2ShaderColorPos.cpp</in>
-          <in>OpenGL2ShaderColorPosTex.cpp</in>
-          <in>OpenGL2ShaderPosClr.cpp</in>
-          <in>OpenGL2ShaderPosTex.cpp</in>
-          <in>OpenGL2Texture2D.cpp</in>
-          <in>OpenGL2VertexArray.cpp</in>
-          <in>OpenGL2VertexBuffer.cpp</in>
-        </df>
-      </df>
     </df>
     <df root="res" name="1">
     </df>
@@ -155,12 +138,6 @@
         <df name="src">
           <df name="mordavokne">
             <df name="glue">
-              <df name="ios">
-                <in>glue.mm</in>
-              </df>
-              <df name="macosx">
-                <in>glue.mm</in>
-              </df>
               <in>glue.cpp</in>
             </df>
             <in>App.cpp</in>
@@ -2878,14 +2855,11 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE}  debug=true -j8 CXXFLAGS=-DM_RENDER_OPENGLES2</buildCommand>
+          <buildCommand>${MAKE}  debug=true -j8 ogles2=true</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <ccTool flags="0">
             <standard>8</standard>
-            <preprocessorList>
-              <Elem>M_RENDER_OPENGLES2</Elem>
-            </preprocessorList>
           </ccTool>
         </makeTool>
         <preBuild>
@@ -2915,25 +2889,18 @@
       <folder path="2/morda/fonts">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/fonts</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/freetype2/freetype</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="2/morda/render">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="2/morda/resources">
@@ -3108,75 +3075,130 @@
         </ccTool>
       </item>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>src/morda/widgets/core/proxy</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/Morda.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>src/morda/widgets/slider</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/widgets/button</pElem>
+            <pElem>/usr/include/unikod</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/ResourceManager.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/Updateable.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/fonts/TexFont.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="src/morda/render/Factory.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Shader.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/Texture2D.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/render/VertexArray.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="src/morda/resources/ResCursor.cpp" ex="false" tool="1" flavor2="8">
@@ -3370,15 +3392,24 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/button</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>src/morda/fonts</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/List.cpp" ex="false" tool="1" flavor2="8">
@@ -3457,15 +3488,22 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/TextInput.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="2">
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/fonts</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>src/morda/util</pElem>
             <pElem>.</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-            <Elem>M_RENDER_OPENGLES2</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/TextWidget.cpp" ex="false" tool="1" flavor2="8">
@@ -3845,6 +3883,7 @@
           </incDir>
           <preprocessorList>
             <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
@@ -3884,6 +3923,7 @@
           </incDir>
           <preprocessorList>
             <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
           </preprocessorList>
         </ccTool>
       </item>

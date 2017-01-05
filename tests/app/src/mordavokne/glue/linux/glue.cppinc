@@ -32,7 +32,31 @@ App::XDisplayWrapper::~XDisplayWrapper()noexcept{
 
 
 
-App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrapper& xDisplay){
+App::XVisualInfoWrapper::XVisualInfoWrapper(
+		const WindowParams& wp,
+		XDisplayWrapper& xDisplay
+#ifdef M_RENDER_OPENGLES2
+		, EGLDisplayWrapper& eglDisplay
+		, EGLConfigWrapper& eglConfig
+#endif
+	)
+{
+#ifdef M_RENDER_OPENGLES2
+	EGLint vid;
+	
+	if(!eglGetConfigAttrib(eglDisplay.d, eglConfig.c, EGL_NATIVE_VISUAL_ID, &vid)) {
+		throw morda::Exc("eglGetConfigAttrib() failed");
+	}
+	
+	int numVisuals;
+	XVisualInfo visTemplate;
+	visTemplate.visualid = vid;
+	this->vi = XGetVisualInfo(xDisplay.d, VisualIDMask, &visTemplate, &numVisuals);
+	if (!this->vi) {
+		throw morda::Exc("XGetVisualInfo() failed");
+	}
+	
+#else
 	std::vector<int> attr;
 	attr.push_back(GLX_RGBA);
 	attr.push_back(GLX_DOUBLEBUFFER);
@@ -58,6 +82,7 @@ App::XVisualInfoWrapper::XVisualInfoWrapper(const WindowParams& wp, XDisplayWrap
 	if(!this->vi){
 		throw morda::Exc("glXChooseVisual() failed");
 	}
+#endif
 }
 
 
@@ -129,7 +154,7 @@ App::XWindowWrapper::~XWindowWrapper()noexcept{
 }
 
 
-
+#ifndef M_RENDER_OPENGLES2
 App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo) :
 		d(xDisplay),
 		w(xWindow)
@@ -151,6 +176,93 @@ void App::GLXContextWrapper::Destroy()noexcept{
 //	TRACE(<< "App::GLXContextWrapper::Destroy(): destroying context" << std::endl)
 	glXDestroyContext(this->d.d, this->glxContext);
 }
+#else
+App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
+		d(d)
+{
+	EGLint contextAttrs[] = {
+		EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+		EGL_NONE
+	};
+
+	this->c = eglCreateContext(d.d, config.c, NULL, contextAttrs);
+	if(this->c == EGL_NO_CONTEXT){
+		throw morda::Exc("eglCreateContext() failed");
+	}
+
+	if(eglMakeCurrent(d.d, s.s, s.s, this->c) == EGL_FALSE){
+		eglDestroyContext(d.d, this->c);
+		throw morda::Exc("eglMakeCurrent() failed");
+	}
+}
+
+
+
+App::EGLContextWrapper::~EGLContextWrapper()noexcept{
+	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+	eglDestroyContext(this->d.d, this->c);
+}
+
+App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& c, XWindowWrapper& w) :
+		d(d)
+{
+	this->s = eglCreateWindowSurface(d.d, c.c, w.w, NULL);
+	if(this->s == EGL_NO_SURFACE){
+		throw morda::Exc("eglCreateWindowSurface() failed");
+	}
+}
+
+
+
+App::EGLSurfaceWrapper::~EGLSurfaceWrapper()noexcept{
+	eglDestroySurface(this->d.d, this->s);
+}
+
+
+App::EGLDisplayWrapper::EGLDisplayWrapper(){
+	this->d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+	if(this->d == EGL_NO_DISPLAY){
+		throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
+	}
+
+	if(eglInitialize(this->d, 0, 0) == EGL_FALSE){
+		eglTerminate(this->d);
+		throw morda::Exc("eglInitialize() failed");
+	}
+}
+
+
+
+App::EGLDisplayWrapper::~EGLDisplayWrapper()noexcept{
+	eglTerminate(this->d);
+}
+
+
+App::EGLConfigWrapper::EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d){
+	//TODO: allow stencil configuration etc. via WindowParams
+	//Here specify the attributes of the desired configuration.
+	//Below, we select an EGLConfig with at least 8 bits per color
+	//component compatible with on-screen windows
+	const EGLint attribs[] = {
+			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+			EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
+			EGL_BLUE_SIZE, 8,
+			EGL_GREEN_SIZE, 8,
+			EGL_RED_SIZE, 8,
+			EGL_NONE
+	};
+
+	//Here, the application chooses the configuration it desires. In this
+	//sample, we have a very simplified selection process, where we pick
+	//the first EGLConfig that matches our criteria
+	EGLint numConfigs;
+	eglChooseConfig(d.d, attribs, &this->c, 1, &numConfigs);
+	if(numConfigs <= 0){
+		throw morda::Exc("eglChooseConfig() failed, no matching config found");
+	}
+}
+
+#endif
 
 
 
@@ -207,21 +319,36 @@ morda::real getDotsPerPt(Display* display){
 }//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
-		xVisualInfo(requestedWindowParams, xDisplay),
+		eglConfig(requestedWindowParams, eglDisplay),
+		xVisualInfo(
+				requestedWindowParams,
+				xDisplay
+#ifdef M_RENDER_OPENGLES2
+				, eglDisplay
+				, eglConfig
+#endif
+			),
 		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
+#ifdef M_RENDER_OPENGLES2
+		eglSurface(eglDisplay, eglConfig, xWindow),
+		eglContext(eglDisplay, eglConfig, eglSurface),
+#else
+		glxContex(xDisplay, xWindow, xVisualInfo),
+#endif
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		glxContex(xDisplay, xWindow, xVisualInfo),
 		renderer(utki::makeShared<OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
+#	ifndef M_RENDER_OPENGLES2
 	//print GLX version
 	{
 		int major, minor;
 		glXQueryVersion(this->xDisplay.d, &major, &minor);
 		TRACE(<< "GLX Version: " << major << "." << minor << std::endl)
 	}
+#	endif
 #endif
 }
 

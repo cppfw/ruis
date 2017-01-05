@@ -24,11 +24,16 @@ else
     this_cxxflags += -O3
 endif
 
+
+ifeq ($(ogles2), true)
+    this_cxxflags += -DM_RENDER_OPENGLES2
+endif
+
 this_cxxflags += -I$(d)/../../src
 
 ifeq ($(prorab_os), linux)
     this_cxxflags += -fPIC #generate position independent code
-    this_ldlibs += -lpthread -lGL -lGLEW
+    this_ldlibs += -lpthread
 else ifeq ($(prorab_os), windows)
 #    this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
 #    this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
@@ -39,7 +44,12 @@ else ifeq ($(prorab_os), windows)
 else ifeq ($(prorab_os), macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
-    this_ldlibs += -lGLEW
+endif
+
+ifeq ($(ogles2), true)
+    this_ldlibs += `pkg-config --libs egl glesv2`
+else
+    this_ldlibs += -lGL -lGLEW
 endif
 
 this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda$(soext)
