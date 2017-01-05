@@ -319,7 +319,9 @@ morda::real getDotsPerPt(Display* display){
 }//~namespace
 
 App::App(const WindowParams& requestedWindowParams) :
+#ifdef M_RENDER_OPENGLES2
 		eglConfig(requestedWindowParams, eglDisplay),
+#endif
 		xVisualInfo(
 				requestedWindowParams,
 				xDisplay
