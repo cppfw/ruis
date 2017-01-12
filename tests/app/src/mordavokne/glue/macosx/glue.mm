@@ -627,7 +627,7 @@ App::ApplicationObject::~ApplicationObject()noexcept{
 App::WindowObject::WindowObject(const App::WindowParams& wp){
 	CocoaWindow* window = [[CocoaWindow alloc]
 			initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
-			styleMask:(NSResizableWindowMask | NSMiniaturizableWindowMask | NSClosableWindowMask | NSTitledWindowMask)
+			styleMask:(NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable | NSWindowStyleMaskTitled)
 			backing:NSBackingStoreBuffered
 			defer:NO
 		];
@@ -744,7 +744,7 @@ void App::swapFrameBuffers(){
 
 void App::postToUiThread_ts(std::function<void()>&& f){	
 	NSEvent* e = [NSEvent
-			otherEventWithType: NSApplicationDefined
+			otherEventWithType: NSEventTypeApplicationDefined
 			location: NSMakePoint(0, 0)
 			modifierFlags:0
 			timestamp:0
@@ -785,7 +785,7 @@ void App::exec(){
 		std::uint32_t millis = this->gui.update();
 		
 		NSEvent *event = [applicationObject
-				nextEventMatchingMask:NSAnyEventMask
+				nextEventMatchingMask:NSEventMaskAny
 				untilDate:[NSDate dateWithTimeIntervalSinceNow:(double(millis) / 1000.0)]
 				inMode:NSDefaultRunLoopMode
 				dequeue:YES
@@ -798,7 +798,7 @@ void App::exec(){
 		do{
 //			TRACE_ALWAYS(<< "Event: type = "<< [event type] << std::endl)
 			switch([event type]){
-				case NSApplicationDefined:
+				case NSEventTypeApplicationDefined:
 					{
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>([event data1]));
 						(*m)();
@@ -811,7 +811,7 @@ void App::exec(){
 			}
 			
 			event = [applicationObject
-					nextEventMatchingMask:NSAnyEventMask
+					nextEventMatchingMask:NSEventMaskAny
 					untilDate:[NSDate distantPast]
 					inMode:NSDefaultRunLoopMode
 					dequeue:YES
@@ -835,12 +835,12 @@ void App::setFullscreen(bool enable){
 		this->beforeFullScreenWindowRect.d.x = rect.size.width;
 		this->beforeFullScreenWindowRect.d.y = rect.size.height;
 		
-		[window setStyleMask:([window styleMask] & (~(NSTitledWindowMask | NSResizableWindowMask)))];
+		[window setStyleMask:([window styleMask] & (~(NSWindowStyleMaskTitled | NSWindowStyleMaskResizable)))];
 		
 		[window setFrame:[[NSScreen mainScreen] frame] display:YES animate:NO];
 		[window setLevel:NSScreenSaverWindowLevel];
 	}else{
-		[window setStyleMask:([window styleMask] | NSTitledWindowMask | NSResizableWindowMask)];
+		[window setStyleMask:([window styleMask] | NSWindowStyleMaskTitled | NSWindowStyleMaskResizable)];
 		
 		NSRect oldFrame;
 		oldFrame.origin.x = this->beforeFullScreenWindowRect.p.x;

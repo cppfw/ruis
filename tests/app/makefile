@@ -49,10 +49,9 @@ ifeq ($(os),windows)
     #WORKAROUND for MinGW bug:
     this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(os),macosx)
-    this_mm_src := src/mordavokne/glue/macosx/glue.mm
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    this_mm_obj := $(d)$(prorab_obj_dir)src/mordavokne/glue/macosx/glue.o
+    this_mm_obj := $(d)$(prorab_obj_dir)objcpp/src/mordavokne/glue/macosx/glue.o
 
     define this_rules
         $(this_mm_obj): $(d)src/mordavokne/glue/macosx/glue.mm
