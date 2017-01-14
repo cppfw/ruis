@@ -7,7 +7,7 @@ Build-Depends: g++ (>= 4:4.8), debhelper (>= 9), prorab (>= 1.8.3), pkg-config,
 		libkolme-dev, libsvgdom-dev, libsvgren-dev,
 		libstob-dev (>= 3.0.0),
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev,
-		libnitki-dev, libegl1-mesa-dev, libgles2-mesa-dev
+		libnitki-dev
 Build-Depends-Indep: doxygen
 
 Package: libmorda-dev
