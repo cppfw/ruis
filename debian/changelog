@@ -1,3 +1,9 @@
+libmorda (0.5.11) unstable; urgency=medium
+
+  * renderer abstraction
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Jan 2017 16:40:19 +0200
+
 libmorda (0.5.10) unstable; urgency=medium
 
   * release rasp build
