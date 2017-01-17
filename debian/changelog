@@ -1,3 +1,9 @@
+libmorda (0.5.12) unstable; urgency=medium
+
+  * adding debug package for opengl2 renderer
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Jan 2017 17:08:30 +0200
+
 libmorda (0.5.11) unstable; urgency=medium
 
   * renderer abstraction
