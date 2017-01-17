@@ -48,7 +48,7 @@ Description: Documentation for libmorda
 Package: libmorda-opengl2-ren-dev
 Architecture: any
 Depends: libmorda-opengl2-ren$(soname) (= ${binary:Version}), libmorda-opengl2-ren$(soname)-dbg (= ${binary:Version}), ${misc:Depends},
-		libmorda-dev
+		libmorda-dev (= ${binary:Version})
 Suggests:
 Priority: extra
 Section: libdevel
