@@ -16,7 +16,7 @@
 - Install necessary libraries
 	
 	```
-	sudo apt-get install libpng12-dev libglew-dev libjpeg8-dev libfreetype6-dev pkg-config doxygen prorab libstob-dev libnitki-dev libaika-dev libkolme-dev libpapki-dev libsvgren-dev
+	sudo apt-get install libpng12-dev libglew-dev libjpeg8-dev libfreetype6-dev pkg-config doxygen prorab libstob-dev libnitki-dev libkolme-dev libpapki-dev libsvgren-dev
 	```
 
 - Check out **morda** sources, build it and run test app:
