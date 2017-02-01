@@ -1,3 +1,9 @@
+libmorda (0.5.15) unstable; urgency=medium
+
+  * deploy test
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 01 Feb 2017 17:40:14 +0200
+
 libmorda (0.5.14) unstable; urgency=medium
 
   * deploy test
