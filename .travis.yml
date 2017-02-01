@@ -177,6 +177,7 @@ deploy:
 - provider: script
   skip_cleanup: true
   script:
+  - echo "Deploying to homebrew!!!"
   - prorab-deploy-homebrew.sh -t igagis/tap homebrew/libmorda.rb.in
   - prorab-deploy-homebrew.sh -t igagis/tap homebrew/libmorda-opengl2-ren.rb.in
   on:
