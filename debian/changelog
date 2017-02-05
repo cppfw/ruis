@@ -1,3 +1,9 @@
+libmorda (0.5.16) unstable; urgency=medium
+
+  * opengl2 renderer moved to mordaren namespace
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Feb 2017 20:33:06 +0200
+
 libmorda (0.5.15) unstable; urgency=medium
 
   * deploy test
