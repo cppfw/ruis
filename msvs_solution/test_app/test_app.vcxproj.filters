@@ -48,6 +48,11 @@
     </ClCompile>
     <ClCompile Include="..\..\tests\app\src\mordavokne\App.cpp" />
     <ClCompile Include="..\..\tests\app\src\mordavokne\glue\glue.cpp" />
+    <ClCompile Include="..\..\tests\app\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\mordavokne\App.cpp" />
+    <ClCompile Include="..\..\tests\app\src\mordavokne\glue\glue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
