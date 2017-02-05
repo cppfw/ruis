@@ -1,3 +1,9 @@
+libmorda (0.5.17) unstable; urgency=medium
+
+  * nuget upate
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Feb 2017 21:08:20 +0200
+
 libmorda (0.5.16) unstable; urgency=medium
 
   * opengl2 renderer moved to mordaren namespace
