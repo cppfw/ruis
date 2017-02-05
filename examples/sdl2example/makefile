@@ -36,6 +36,6 @@ else ifeq ($(prorab_os),linux)
     this_ldlibs += -lGLEW -pthread -lGL -lSDL2
 endif
 
-this_ldlibs += -lmorda -lstob -lpapki -lstdc++
+this_ldlibs += -lmorda -lmorda-opengl2-ren -lstob -lpapki -lstdc++
 
 $(eval $(prorab-build-app))

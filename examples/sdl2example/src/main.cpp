@@ -11,6 +11,7 @@
 #include <papki/FSFile.hpp>
 
 #include <morda/Morda.hpp>
+#include <mordaren/OpenGL2Renderer.hpp>
 #include <morda/widgets/label/TextLabel.hpp>
 #include <morda/widgets/button/Button.hpp>
 
@@ -336,7 +337,7 @@ int main( int argc, char* args[] ) {
 		const Uint32 userEventType;
 		
 		SDLMorda(Uint32 userEventType) :
-				morda::Morda(96, 1),
+				morda::Morda(utki::makeShared<OpenGL2Renderer>(),96, 1),
 				userEventType(userEventType)
 		{}
 				

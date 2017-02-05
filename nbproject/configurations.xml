@@ -163,6 +163,7 @@
       <itemPath>homebrew/libmorda.rb.in</itemPath>
       <itemPath>makefile</itemPath>
       <itemPath>pkg-config/morda.pc.in</itemPath>
+      <itemPath>raspberrypi.mk</itemPath>
       <itemPath>travis_bintray_deb.json.in</itemPath>
       <itemPath>travis_bintray_rasp.json.in</itemPath>
       <itemPath>travis_bintray_ubu.json.in</itemPath>
