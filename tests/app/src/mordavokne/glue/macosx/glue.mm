@@ -721,7 +721,7 @@ morda::real getDotsPerPt(){
 App::App(const App::WindowParams& wp) :
 		windowObject(wp),
 		openGLContext(wp, windowObject.id),
-		renderer(utki::makeShared<OpenGL2Renderer>()),
+		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(), getDotsPerPt())
 {
 	this->updateWindowRect(

@@ -8,6 +8,7 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
 
 struct OpenGL2Texture2D : public morda::Texture2D{
 	GLuint tex;
@@ -18,3 +19,6 @@ struct OpenGL2Texture2D : public morda::Texture2D{
 	
 	void bind(unsigned unitNum)const;
 };
+
+
+}

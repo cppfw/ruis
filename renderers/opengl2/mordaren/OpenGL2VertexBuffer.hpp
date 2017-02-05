@@ -8,6 +8,8 @@
 
 #include "OpenGL2Buffer.hpp"
 
+namespace mordaren{
+
 class OpenGL2VertexBuffer : public morda::VertexBuffer, public OpenGL2Buffer{
 public:
 	const GLint numComponents;
@@ -27,3 +29,4 @@ private:
 };
 
 
+}

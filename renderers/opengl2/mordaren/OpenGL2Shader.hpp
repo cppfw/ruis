@@ -19,6 +19,8 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
+
 struct ShaderWrapper{
 	GLuint s;
 	ShaderWrapper(const char* code, GLenum type);
@@ -92,3 +94,4 @@ protected:
 	void render(const kolme::Matr4f& m, const morda::VertexArray& va)const;
 };
 
+}

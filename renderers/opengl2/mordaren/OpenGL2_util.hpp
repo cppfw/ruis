@@ -8,6 +8,8 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
+
 inline void assertOpenGLNoError(){
 #ifdef DEBUG
 	GLenum error = glGetError();
@@ -36,3 +38,4 @@ inline void assertOpenGLNoError(){
 #endif
 }
 
+}

@@ -9,6 +9,8 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
+
 class OpenGL2FrameBuffer : public morda::FrameBuffer{
 public:
 	GLuint fbo;
@@ -23,3 +25,4 @@ private:
 
 };
 
+}

@@ -1,5 +1,6 @@
 #include "OpenGL2ShaderPosClr.hpp"
 
+using namespace mordaren;
 
 
 OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :

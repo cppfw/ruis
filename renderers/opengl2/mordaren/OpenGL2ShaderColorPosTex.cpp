@@ -2,7 +2,7 @@
 
 #include "OpenGL2Texture2D.hpp"
 
-
+using namespace mordaren;
 
 OpenGL2ShaderColorPosTex::OpenGL2ShaderColorPosTex() :
 		OpenGL2Shader(

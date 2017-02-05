@@ -6,6 +6,8 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
+
 class OpenGL2Buffer {
 public:
 	const GLuint buffer;
@@ -21,4 +23,4 @@ private:
 
 };
 
-
+}

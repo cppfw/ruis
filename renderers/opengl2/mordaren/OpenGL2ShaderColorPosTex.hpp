@@ -4,6 +4,8 @@
 
 #include "OpenGL2Shader.hpp"
 
+namespace mordaren{	
+
 class OpenGL2ShaderColorPosTex : public morda::ShaderColorPosTex, public OpenGL2Shader{
 	GLint colorUniform;
 public:
@@ -14,3 +16,5 @@ public:
 	
 	void render(const kolme::Matr4f& m, const morda::Texture2D& tex, kolme::Vec4f color, const morda::VertexArray& va) override;
 };
+
+}

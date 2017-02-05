@@ -194,7 +194,7 @@ morda::real getDotsPerPt(){
 App::App(const App::WindowParams& wp) :
 		windowParams(wp),
 		windowObject(wp),
-		renderer(utki::makeShared<OpenGL2Renderer>()),
+		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(), getDotsPerPt())
 {
 	this->setFullscreen(false);//this will intialize the viewport

@@ -4,6 +4,8 @@
 
 #include <utki/config.hpp>
 
+using namespace mordaren;
+
 namespace{
 unsigned getMaxTextureSize(){
 	GLint val;

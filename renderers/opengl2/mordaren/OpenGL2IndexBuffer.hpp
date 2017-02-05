@@ -6,6 +6,8 @@
 
 #include "OpenGL2Buffer.hpp"
 
+namespace mordaren{
+
 class OpenGL2IndexBuffer : public morda::IndexBuffer, public OpenGL2Buffer{
 public:
 	const GLenum elementType;
@@ -20,3 +22,5 @@ public:
 private:
 
 };
+
+}

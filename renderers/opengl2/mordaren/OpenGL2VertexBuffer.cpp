@@ -2,7 +2,7 @@
 
 #include "OpenGL2_util.hpp"
 
-
+using namespace mordaren;
 
 void OpenGL2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffer);

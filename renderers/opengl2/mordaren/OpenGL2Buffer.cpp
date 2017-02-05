@@ -2,6 +2,8 @@
 
 #include "OpenGL2_util.hpp"
 
+using namespace mordaren;
+
 namespace{
 inline GLuint createGLBuffer(){
 	GLuint ret;

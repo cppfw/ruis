@@ -7,6 +7,8 @@
 
 #include "OpenGL2_util.hpp"
 
+using namespace mordaren;
+
 OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 		OpenGL2Shader(
 				R"qwertyuiop(

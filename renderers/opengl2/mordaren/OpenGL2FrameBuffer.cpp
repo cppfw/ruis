@@ -9,6 +9,8 @@
 #	include <GL/glew.h>
 #endif
 
+using namespace mordaren;
+
 OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) :
 		morda::FrameBuffer(std::move(color))
 {

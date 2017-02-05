@@ -8,6 +8,8 @@
 #	include <GL/glew.h>
 #endif
 
+using namespace mordaren;
+
 OpenGL2IndexBuffer::OpenGL2IndexBuffer(const utki::Buf<std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
 		elementsCount(GLsizei(indices.size()))

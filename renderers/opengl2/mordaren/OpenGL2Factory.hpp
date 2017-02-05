@@ -4,6 +4,7 @@
 
 #include "OpenGL2ShaderPosTex.hpp"
 
+namespace mordaren{
 
 class OpenGL2Factory : public morda::Factory{
 public:
@@ -30,3 +31,5 @@ public:
 	
 	std::shared_ptr<morda::FrameBuffer> createFramebuffer(std::shared_ptr<morda::Texture2D> color) override;
 };
+
+}

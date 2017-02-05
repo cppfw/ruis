@@ -8,6 +8,7 @@
 #	include <GL/glew.h>
 #endif
 
+namespace mordaren{
 
 class OpenGL2VertexArray : public morda::VertexArray{
 public:	
@@ -21,3 +22,4 @@ private:
 
 };
 
+}

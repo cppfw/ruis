@@ -2,6 +2,8 @@
 
 #include "OpenGL2_util.hpp"
 
+using namespace mordaren;
+
 OpenGL2Texture2D::OpenGL2Texture2D(kolme::Vec2f dim) :
 		morda::Texture2D(dim)
 {

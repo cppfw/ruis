@@ -339,7 +339,7 @@ App::App(const WindowParams& requestedWindowParams) :
 #endif
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
-		renderer(utki::makeShared<OpenGL2Renderer>()),
+		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG

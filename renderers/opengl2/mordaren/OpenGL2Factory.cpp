@@ -18,6 +18,7 @@
 #	include <GL/glew.h>
 #endif
 
+using namespace mordaren;
 
 OpenGL2Factory::OpenGL2Factory(){
 	//TODO:

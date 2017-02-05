@@ -15,6 +15,7 @@
 #	include <GL/glew.h>
 #endif
 
+using namespace mordaren;
 
 const OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
 

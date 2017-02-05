@@ -1,5 +1,6 @@
 #include "OpenGL2ShaderColorPos.hpp"
 
+using namespace mordaren;
 
 OpenGL2ShaderColorPos::OpenGL2ShaderColorPos() :
 		OpenGL2Shader(
