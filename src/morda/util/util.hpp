@@ -123,16 +123,6 @@ std::shared_ptr<Texture2D> loadTexture(const papki::File& fi);
 
 
 /**
- * @brief Find dots per point for given display parameters.
- * The size of the point for desktop displays should normally be equal to one pixel.
- * For handheld devices size of the point depends on physical screen size and pixel resolution.
- * @param resolution - resolution of the display in pixels.
- * @param screenSizeMm - size of the display in millimeters.
- * @return Size of one display point in pixels.
- */
-real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
-
-/**
  * @brief Enable simple alpha blending to rendering context.
  * Enables simple alpha blending on the rendering context.
  * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
