@@ -1,7 +1,5 @@
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
-
 
 this_name := morda-opengl2-ren
 
@@ -27,16 +25,8 @@ else
 endif
 
 
-ifeq ($(ogles2), true)
-    this_cxxflags += -DM_RENDER_OPENGLES2
-
-    ifeq ($(raspberrypi),true)
-        this_cxxflags += -I/opt/vc/include
-        this_ldflags += -L/opt/vc/lib
-    endif
-endif
-
 this_cxxflags += -I$(d)/../../src
+
 
 ifeq ($(prorab_os), linux)
     this_cxxflags += -fPIC #generate position independent code
@@ -50,20 +40,10 @@ else ifeq ($(prorab_os), windows)
 #    this_ldlibs += -lfreetype -lz -lopengl32 -lglew32 -lgdi32
 else ifeq ($(prorab_os), macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
-    this_ldlibs += -lc++
+    this_ldlibs += -lc++ -lGL
 endif
 
-ifeq ($(ogles2), true)
-    this_ldlibs += `pkg-config --libs egl glesv2`
-else
-    this_ldlibs += -lGLEW
-
-    ifeq ($(os), macosx)
-    else
-        this_ldlibs += -lGL
-    endif
-
-endif
+this_ldlibs += -lGLEW
 
 this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda$(soext)
 

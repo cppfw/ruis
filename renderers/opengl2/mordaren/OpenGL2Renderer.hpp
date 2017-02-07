@@ -1,7 +1,8 @@
 #pragma once
 
-#include <morda/render/Renderer.hpp>
+#include <GL/glew.h>
 
+#include <morda/render/Renderer.hpp>
 
 #include "OpenGL2Factory.hpp"
 

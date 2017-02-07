@@ -2,8 +2,6 @@
 
 #include <morda/render/Factory.hpp>
 
-#include "OpenGL2ShaderPosTex.hpp"
-
 namespace mordaren{
 
 class OpenGL2Factory : public morda::Factory{

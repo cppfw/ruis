@@ -1,5 +1,5 @@
+#include "OpenGL2_util.hpp"
 #include "OpenGL2Renderer.hpp"
-
 #include "OpenGL2FrameBuffer.hpp"
 
 #include <utki/config.hpp>

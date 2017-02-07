@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef M_RENDER_OPENGLES2
-#	include <GLES2/gl2.h>
-#else
-#	include <GL/glew.h>
-#endif
+#include <GL/glew.h>
 
 namespace mordaren{
 

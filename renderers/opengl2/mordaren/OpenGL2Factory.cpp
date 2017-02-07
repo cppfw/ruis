@@ -7,16 +7,13 @@
 #include "OpenGL2IndexBuffer.hpp"
 
 #include "OpenGL2Texture2D.hpp"
+#include "OpenGL2ShaderPosTex.hpp"
 #include "OpenGL2ShaderColorPos.hpp"
 #include "OpenGL2ShaderPosClr.hpp"
 #include "OpenGL2ShaderColorPosTex.hpp"
 #include "OpenGL2FrameBuffer.hpp"
 
-#ifdef M_RENDER_OPENGLES2
-#	include <GLES2/gl2.h>
-#else
-#	include <GL/glew.h>
-#endif
+#include <GL/glew.h>
 
 using namespace mordaren;
 
