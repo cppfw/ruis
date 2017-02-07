@@ -702,17 +702,7 @@ morda::real getDotsPerInch(){
 }
 
 morda::real getDotsPerPt(){
-	NSScreen *screen = [NSScreen mainScreen];
-	NSDictionary *description = [screen deviceDescription];
-	NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
-	CGSize displayPhysicalSize = CGDisplayScreenSize(
-			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
-		);
-	
-	kolme::Vec2ui resolution(displayPixelSize.width, displayPixelSize.height);
-	kolme::Vec2ui screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
-	
-	return morda::findDotsPerPt(resolution, screenSizeMm);
+	return 1;
 }
 
 }//~namespace

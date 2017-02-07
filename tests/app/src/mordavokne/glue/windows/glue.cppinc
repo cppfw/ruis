@@ -725,10 +725,7 @@ morda::real getDotsPerInch(HDC dc){
 }
 
 morda::real getDotsPerPt(HDC dc){
-	kolme::Vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
-	kolme::Vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
-
-	return morda::findDotsPerPt(resolution, screenSizeMm);
+	return 1;
 }
 
 }//~namespace
