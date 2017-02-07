@@ -8,8 +8,6 @@ ifeq ($(ogles2),true)
 
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
-
 
 this_name := morda-opengles2-ren
 
