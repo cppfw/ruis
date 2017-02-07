@@ -25,7 +25,7 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::A,
-	morda::Key_e::B, // 5
+	morda::Key_e::B, // x5
 	morda::Key_e::C,
 	morda::Key_e::D,
 	morda::Key_e::E,
@@ -125,7 +125,7 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::F13,
-	morda::Key_e::F14, // 5
+	morda::Key_e::F14, // x5
 	morda::Key_e::F15,
 	morda::Key_e::F16,
 	morda::Key_e::F17,
@@ -225,7 +225,7 @@ std::array<morda::Key_e, 0x100> keyMap = {{
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
-	morda::Key_e::UNKNOWN, // 5
+	morda::Key_e::UNKNOWN, // x5
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,
 	morda::Key_e::UNKNOWN,

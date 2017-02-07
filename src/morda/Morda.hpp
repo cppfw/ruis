@@ -35,10 +35,7 @@ public:
 	 * @param dotsPerInch - dpi of your display.
 	 * @param dotsPerPt - desired dots per point.
 	 */
-	Morda(std::shared_ptr<morda::Renderer> r, real dotsPerInch, real dotsPerPt) :
-			renderer_v(std::move(r)),
-			units(dotsPerInch, dotsPerPt)
-	{}
+	Morda(std::shared_ptr<morda::Renderer> r, real dotsPerInch, real dotsPerPt);
 
 	Morda(const Morda&) = delete;
 	Morda& operator=(const Morda&) = delete;

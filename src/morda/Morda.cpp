@@ -27,6 +27,17 @@ using namespace morda;
 Morda::T_Instance Morda::instance;
 
 
+Morda::Morda(std::shared_ptr<morda::Renderer> r, real dotsPerInch, real dotsPerPt) :
+		renderer_v(std::move(r)),
+		units(dotsPerInch, dotsPerPt)
+{
+	if(!this->renderer_v){
+		throw morda::Exc("no Renderer provided to Morda constructor");
+	}
+}
+
+
+
 
 void Morda::initStandardWidgets(papki::File& fi) {
 	
