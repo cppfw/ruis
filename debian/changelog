@@ -1,3 +1,9 @@
+libmorda (0.5.18) unstable; urgency=medium
+
+  * findDotsPerPt() function removed
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Feb 2017 16:43:28 +0200
+
 libmorda (0.5.17) unstable; urgency=medium
 
   * nuget upate
