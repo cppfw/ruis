@@ -56,7 +56,9 @@ else ifeq ($(prorab_os), macosx)
 endif
 
 
-ifneq ($(raspberrypi),true)
+ifeq ($(raspberrypi),true)
+    this_ldlibs += -lGLESv2
+else
     this_ldlibs += `pkg-config --libs egl glesv2`
 endif
 
