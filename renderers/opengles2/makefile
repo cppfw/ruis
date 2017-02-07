@@ -1,3 +1,5 @@
+ifeq ($(olges2),true)
+
 include prorab.mk
 
 include $(d)../../raspberrypi.mk
@@ -59,3 +61,5 @@ $(eval $(prorab-build-lib))
 
 $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
 $(eval $(call prorab-include,$(d)../../src/makefile))
+
+endif
