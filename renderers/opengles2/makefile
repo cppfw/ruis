@@ -56,7 +56,9 @@ else ifeq ($(prorab_os), macosx)
 endif
 
 
-this_ldlibs += `pkg-config --libs egl glesv2`
+ifneq ($(raspberrypi),true)
+    this_ldlibs += `pkg-config --libs egl glesv2`
+endif
 
 this_ldlibs += -lstdc++ -lm $(d)../../src/libmorda$(soext)
 
