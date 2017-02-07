@@ -40,7 +40,7 @@ else ifeq ($(prorab_os), windows)
 #    this_ldlibs += -lfreetype -lz -lopengl32 -lglew32 -lgdi32
 else ifeq ($(prorab_os), macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
-    this_ldlibs += -lc++ -lGL
+    this_ldlibs += -lc++
 endif
 
 this_ldlibs += -lGLEW
