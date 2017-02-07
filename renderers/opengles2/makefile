@@ -1,4 +1,10 @@
-ifeq ($(olges2),true)
+include $(d)../../raspberrypi.mk
+
+ifeq ($(raspberrypi),true)
+    ogles2 := true
+endif
+
+ifeq ($(ogles2),true)
 
 include prorab.mk
 
