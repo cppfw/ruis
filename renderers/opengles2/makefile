@@ -1,3 +1,5 @@
+include prorab.mk
+
 include $(d)../../raspberrypi.mk
 
 ifeq ($(raspberrypi),true)
@@ -5,8 +7,6 @@ ifeq ($(raspberrypi),true)
 endif
 
 ifeq ($(ogles2),true)
-
-include prorab.mk
 
 
 this_name := morda-opengles2-ren
