@@ -66,14 +66,16 @@ else ifeq ($(os),linux)
 endif
 
 this_ldlibs += $(d)../../src/libmorda$(soext)
-this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
+
 
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
 
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`
+    this_ldlibs += $(d)../../renderers/opengles2/libmorda-opengles2-ren$(soext)
 else
+    this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
     this_ldlibs += -lGLEW
 
     ifeq ($(os), macosx)

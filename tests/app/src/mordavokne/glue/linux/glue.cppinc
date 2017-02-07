@@ -11,7 +11,11 @@
 #include <papki/FSFile.hpp>
 #include <unikod/utf8.hpp>
 
-#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+#ifdef M_RENDER_OPENGLES2
+#	include "../../../../../../renderers/opengles2/mordaren/OpenGLES2Renderer.hpp"
+#else
+#	include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+#endif
 
 using namespace mordavokne;
 
@@ -339,7 +343,11 @@ App::App(const WindowParams& requestedWindowParams) :
 #endif
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
+#ifdef M_RENDER_OPENGLES2
+		renderer(utki::makeShared<mordaren::OpenGLES2Renderer>()),
+#else
 		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
+#endif
 		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {
 #ifdef DEBUG
