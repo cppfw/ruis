@@ -1,7 +1,5 @@
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
-
 this_name := tests
 
 
