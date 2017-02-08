@@ -2,7 +2,7 @@
 #include "../../AppFactory.hpp"
 #include "../../../../../../src/morda/util/util.hpp"
 
-#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+#include "../../../mordaren/OpenGL2Renderer.hpp"
 
 #import <Cocoa/Cocoa.h>
 
