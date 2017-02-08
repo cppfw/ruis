@@ -1,3 +1,9 @@
+libmorda (0.5.19) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Feb 2017 20:34:32 +0200
+
 libmorda (0.5.18) unstable; urgency=medium
 
   * findDotsPerPt() function removed

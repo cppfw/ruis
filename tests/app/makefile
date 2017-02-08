@@ -73,9 +73,7 @@ this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`
-    this_ldlibs += $(d)../../renderers/opengles2/libmorda-opengles2-ren$(soext)
 else
-    this_ldlibs += $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext)
     this_ldlibs += -lGLEW
 
     ifeq ($(os), macosx)
@@ -100,7 +98,7 @@ endif
 define this_rules
 test:: $(prorab_this_name)
 	@echo running $$^...
-	@(cd $(d); LD_LIBRARY_PATH=../../src:../../renderers/opengl2 $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
 endef
 $(eval $(this_rules))
 
@@ -121,8 +119,4 @@ else
     $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
 endif
 
-#add dependency on opengl2 renderer
-$(prorab_this_name): $(abspath $(d)../../renderers/opengl2/libmorda-opengl2-ren$(soext))
-
 $(eval $(call prorab-include,$(d)../../src/makefile))
-$(eval $(call prorab-include,$(d)../../renderers/opengl2/makefile))
