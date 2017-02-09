@@ -84,7 +84,8 @@ before_install:
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq prorab;
-    sudo prorab-make-raspberry-chroot.sh -d testing /srv/chroot/rasp-armhf &&
+    sudo prorab-make-raspberry-chroot.sh -d jessie /srv/chroot/rasp-armhf &&
+    sudo chroot /srv/chroot/rasp-armhf sed -i -e 's/jessie/testing/g' /etc/apt/sources.list &&
     echo "deb http://dl.bintray.com/igagis/rasp unstable main" | sudo tee /srv/chroot/rasp-armhf/etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo chroot /srv/chroot/rasp-armhf apt-get update &&
     sudo chroot /srv/chroot/rasp-armhf apt-get install --allow-unauthenticated -qq -y $linuxDependencies g++ &&
