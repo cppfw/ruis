@@ -1,5 +1,9 @@
 include prorab.mk
 
+include $(d)../../raspberrypi.mk
+
+ifneq ($(raspberrypi),true)
+
 this_name := tests
 
 
@@ -118,3 +122,5 @@ else
 endif
 
 $(eval $(call prorab-include,$(d)../../src/makefile))
+
+endif
