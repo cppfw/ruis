@@ -48,6 +48,7 @@ before_install:
     brew install prorab &&
 
     brew install --force openssl &&
+    rvm install ruby-2.2.1 &&
     rvm install ruby-2.2.2 &&
     rvm use ruby-2.2.2 &&
     
