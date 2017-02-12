@@ -156,9 +156,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libmorda-opengl2-ren\libmorda-opengl2-ren.vcxproj">
-      <Project>{e095aa16-bcb0-4361-96be-8214bff9a4a1}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\libmorda\libmorda.vcxproj">
       <Project>{111d4939-c046-4338-b740-eca7f87785d6}</Project>
     </ProjectReference>
