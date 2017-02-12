@@ -31,7 +31,7 @@ ifeq ($(prorab_os),windows)
     #WORKAROUND for MinGW bug:
     #this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(prorab_os),macosx)
-    #this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+    this_ldlibs += `pkg-config --libs sdl2 glew` -framework OpenGL # -framework Cocoa
 else ifeq ($(prorab_os),linux)
     this_ldlibs += -lGLEW -pthread -lGL -lSDL2
 endif
