@@ -5,7 +5,7 @@
 
 #include "../../../../../../src/morda/Morda.hpp"
 
-#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+#include "../../../mordaren/OpenGL2Renderer.hpp"
 
 #include <utki/windows.hpp>
 #include <papki/FSFile.hpp>
