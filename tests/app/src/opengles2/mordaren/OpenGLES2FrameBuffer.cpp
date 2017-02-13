@@ -1,3 +1,5 @@
+#include <utki/config.hpp>
+
 #include "OpenGLES2FrameBuffer.hpp"
 #include "OpenGLES2Texture2D.hpp"
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utki/config.hpp>
+
 #include <morda/render/Texture2D.hpp>
 
 #if M_OS_NAME == M_OS_NAME_IOS

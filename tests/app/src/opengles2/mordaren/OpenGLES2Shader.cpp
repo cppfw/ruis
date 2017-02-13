@@ -1,3 +1,4 @@
+#include <utki/config.hpp>
 #include <utki/debug.hpp>
 #include <utki/Exc.hpp>
 

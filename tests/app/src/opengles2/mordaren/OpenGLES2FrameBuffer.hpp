@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utki/config.hpp>
+
 #include <morda/render/FrameBuffer.hpp>
 #include <morda/render/Texture2D.hpp>
 

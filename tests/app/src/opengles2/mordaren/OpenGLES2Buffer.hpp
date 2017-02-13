@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utki/config.hpp>
+
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
 #else

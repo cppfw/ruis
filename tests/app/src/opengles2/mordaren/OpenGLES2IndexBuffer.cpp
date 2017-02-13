@@ -1,3 +1,5 @@
+#include <utki/config.hpp>
+
 #include "OpenGLES2IndexBuffer.hpp"
 
 #include "OpenGLES2_util.hpp"

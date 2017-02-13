@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utki/config.hpp>
 #include <utki/debug.hpp>
 
 #if M_OS_NAME == M_OS_NAME_IOS

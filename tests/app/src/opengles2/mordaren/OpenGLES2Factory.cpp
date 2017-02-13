@@ -1,3 +1,5 @@
+#include <utki/config.hpp>
+
 #include "OpenGLES2Factory.hpp"
 
 #include "OpenGLES2VertexBuffer.hpp"
