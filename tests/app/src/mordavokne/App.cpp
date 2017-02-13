@@ -121,11 +121,13 @@ void App::swapFrameBuffers(){
 
 
 App::GLEWWrapper::GLEWWrapper(){
+#if M_OS_NAME != M_OS_NAME_IOS
 #ifdef M_RENDER_OPENGLES2
 #else
 	glewExperimental = GL_TRUE;
 	if(glewInit() != GLEW_OK){
 		throw utki::Exc("GLEW initialization failed");
 	}
+#endif
 #endif
 }

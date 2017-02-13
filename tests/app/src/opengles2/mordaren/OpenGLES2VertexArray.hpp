@@ -2,7 +2,11 @@
 
 #include <morda/render/VertexArray.hpp>
 
-#include <GLES2/gl2.h>
+#if M_OS_NAME == M_OS_NAME_IOS
+#	include <OpenGlES/ES2/glext.h>
+#else
+#	include <GLES2/gl2.h>
+#endif
 
 
 namespace mordaren{

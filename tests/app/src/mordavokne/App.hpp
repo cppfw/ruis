@@ -17,7 +17,7 @@
 #include "../../../../src/morda/render/Renderer.hpp"
 
 
-#ifdef M_RENDER_OPENGLES2
+#if defined M_RENDER_OPENGLES2 || M_OS_NAME == M_OS_NAME_IOS
 #	if M_OS_NAME == M_OS_NAME_IOS
 #		include <OpenGlES/ES2/glext.h>
 #	else
