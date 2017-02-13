@@ -7,8 +7,11 @@ ifneq ($(raspberrypi),true)
 this_name := tests
 
 
-this_srcs += $(call prorab-src-dir,src)
+this_srcs += $(call prorab-src-dir,src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
+
+this_srcs += $(call prorab-src-dir,src/opengl2)
+this_srcs += src/main.cpp
 
 
 this_cxxflags := -Wall

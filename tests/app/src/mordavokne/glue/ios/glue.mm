@@ -4,7 +4,7 @@
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
 
-#include "../../../../../../renderers/opengl2/mordaren/OpenGL2Renderer.hpp"
+#include "../../../opengl2/mordaren/OpenGL2Renderer.hpp"
 
 #include <sstream>
 
