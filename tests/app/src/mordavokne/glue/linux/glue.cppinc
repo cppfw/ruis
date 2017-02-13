@@ -12,7 +12,7 @@
 #include <unikod/utf8.hpp>
 
 #ifdef M_RENDER_OPENGLES2
-#	include "../../../../../../renderers/opengles2/mordaren/OpenGLES2Renderer.hpp"
+#	include "../../../opengles2/mordaren/OpenGLES2Renderer.hpp"
 #else
 #	include "../../../opengl2/mordaren/OpenGL2Renderer.hpp"
 #endif

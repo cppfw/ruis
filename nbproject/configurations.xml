@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="renderers" name="0">
     </df>
@@ -560,7 +560,7 @@
       <flagsDictionary>
         <element flagsID="0" commonFlags="-O3 -std=c++11"/>
         <element flagsID="1"
-                 commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC -fstack-protector-strong"/>
+                 commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
         <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
@@ -580,14 +580,6 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <folder path="0">
-        <ccTool>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="1">
         <ccTool>
           <incDir>
@@ -828,6 +820,7 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -844,6 +837,7 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -862,6 +856,7 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets/core</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2243,44 +2238,8 @@
             <incDir>
               <pElem>src</pElem>
               <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
-              <pElem>src</pElem>
-              <pElem>.</pElem>
             </incDir>
             <preprocessorList>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </ccTool>
@@ -2290,17 +2249,6 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <folder path="0">
-        <ccTool>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
       <folder path="1">
         <ccTool>
           <incDir>
@@ -2321,7 +2269,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -2336,7 +2283,6 @@
         <ccTool>
           <incDir>
             <pElem>src/morda/util/unzip</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -2369,7 +2315,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -2389,18 +2334,12 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
       <folder path="3">
         <ccTool>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>.</pElem>
-          </incDir>
           <preprocessorList>
-            <Elem>DEBUG</Elem>
             <Elem>M_RENDER_OPENGLES2</Elem>
           </preprocessorList>
         </ccTool>
@@ -2420,7 +2359,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2437,12 +2375,10 @@
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets/slider</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>src</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets/button</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2455,7 +2391,6 @@
             <pElem>src/morda</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2469,7 +2404,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2485,7 +2419,6 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2497,7 +2430,6 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2506,7 +2438,6 @@
           <incDir>
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2518,7 +2449,6 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2528,7 +2458,6 @@
             <pElem>/usr/include/utki</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2543,7 +2472,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2560,7 +2488,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2579,7 +2506,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2595,7 +2521,6 @@
             <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2613,7 +2538,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2625,7 +2549,6 @@
             <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2639,7 +2562,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/kolme</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2650,7 +2572,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2661,7 +2582,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/util/unzip</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2684,7 +2604,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2701,7 +2620,6 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2718,7 +2636,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2742,7 +2659,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2760,7 +2676,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2778,7 +2693,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2797,7 +2711,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2817,7 +2730,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/fonts</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2836,7 +2748,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2855,7 +2766,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2873,7 +2783,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2893,7 +2802,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2911,7 +2819,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2931,7 +2838,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2950,7 +2856,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2969,7 +2874,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -2988,7 +2892,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3008,7 +2911,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/resources</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3024,7 +2926,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3044,7 +2945,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3064,7 +2964,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3084,7 +2983,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3104,7 +3002,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3124,7 +3021,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3144,7 +3040,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3164,7 +3059,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3184,7 +3078,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3208,7 +3101,6 @@
             flavor2="8">
         <ccTool flags="2">
           <incDir>
-            <pElem>.</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -3216,7 +3108,6 @@
             <pElem>src/morda</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>DEBUG</Elem>
             <Elem>M_RENDER_OPENGLES2</Elem>
           </preprocessorList>
         </ccTool>
@@ -3238,7 +3129,6 @@
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3248,7 +3138,6 @@
             flavor2="8">
         <ccTool flags="2">
           <incDir>
-            <pElem>.</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -3256,7 +3145,6 @@
             <pElem>src/morda</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>DEBUG</Elem>
             <Elem>M_RENDER_OPENGLES2</Elem>
           </preprocessorList>
         </ccTool>
@@ -3279,7 +3167,6 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3302,7 +3189,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </item>
@@ -3326,6 +3212,201 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2Buffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2Factory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2FrameBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2IndexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2Renderer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2Shader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPos.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPosTex.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosClr.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosTex.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2Texture2D.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2VertexArray.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2VertexBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>M_RENDER_OPENGLES2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
     </conf>
