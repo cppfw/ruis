@@ -1,8 +1,14 @@
+#include <utki/config.hpp>
+
 #include "OpenGLES2Renderer.hpp"
 #include "OpenGLES2FrameBuffer.hpp"
 #include "OpenGLES2_util.hpp"
 
-#include <utki/config.hpp>
+#if M_OS_NAME == M_OS_NAME_IOS
+#	include <OpenGlES/ES2/glext.h>
+#else
+#	include <GLES2/gl2.h>
+#endif
 
 using namespace mordaren;
 
@@ -17,19 +23,22 @@ unsigned getMaxTextureSize(){
 
 OpenGLES2Renderer::OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory) :
 		morda::Renderer(std::move(factory), getMaxTextureSize())
-{
-	//On some platforms the default framebuffer is not 0, so because of this
-	//check if default framebuffer value is saved or not everytime some
-	//framebuffer is going to be bound and save the value if needed.
-	GLint oldFb;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFb);
-	TRACE(<< "oldFb = " << oldFb << std::endl)
-	this->defaultFramebuffer = GLuint(oldFb);
-}
+{}
 
 void OpenGLES2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
+	if(!this->defaultFramebufferInitialized){
+		//On some platforms the default framebuffer is not 0, so because of this
+		//check if default framebuffer value is saved or not every time some
+		//framebuffer is going to be bound and save the value if needed.
+		GLint oldFb;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFb);
+		TRACE(<< "oldFb = " << oldFb << std::endl)
+		this->defaultFramebuffer = decltype(this->defaultFramebuffer)(oldFb);
+		this->defaultFramebufferInitialized = true;
+	}
+	
 	if(!fb){
-		glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, GLuint(this->defaultFramebuffer));
 		assertOpenGLNoError();
 		return;
 	}

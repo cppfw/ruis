@@ -4,18 +4,13 @@
 
 #include <morda/render/Renderer.hpp>
 
-#if M_OS_NAME == M_OS_NAME_IOS
-#	include <OpenGlES/ES2/glext.h>
-#else
-#	include <GLES2/gl2.h>
-#endif
-
 #include "OpenGLES2Factory.hpp"
 
 namespace mordaren{
 
 class OpenGLES2Renderer : public morda::Renderer{
-	GLuint defaultFramebuffer;
+	bool defaultFramebufferInitialized = false;
+	std::uint32_t defaultFramebuffer; //NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
 public:
 	OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory = utki::makeUnique<OpenGLES2Factory>());
 	
