@@ -42,10 +42,8 @@ public:
 
 List::List(bool isVertical, const stob::Node* chain):
 		Widget(chain),
-		la(utki::makeShared<LinearArea>(isVertical))
+		isVertical_v(isVertical)
 {
-	this->add(this->la);
-	
 	if(!chain){
 		return;
 	}
