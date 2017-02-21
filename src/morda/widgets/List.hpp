@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "core/container/Container.hpp"
-
+#include "core/container/ScrollArea.hpp"
+#include "core/container/LinearArea.hpp"
 
 namespace morda{
 
@@ -11,13 +11,14 @@ namespace morda{
  * This is a base class for vertical and horizontal lists.
  */
 //TODO: list could be implemented based on ScrollArea and LinearContainer inside of it, for easier widgets arrangement when scrolling
-class List : public Container{
+class List : private ScrollArea, virtual public Widget{
+	std::shared_ptr<LinearArea> la;
+	
+	//index of the first item added to container as child
 	size_t addedIndex = size_t(-1);
 	
 	size_t posIndex = 0;
 	real posOffset = real(0);
-	
-	bool isVertical;
 	
 	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
 	size_t firstTailItemIndex = 0;
@@ -71,6 +72,10 @@ public:
 	
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
 
+	bool isVertical()const noexcept{
+		ASSERT(this->la)
+		return this->la->isVertical();
+	}
 	
 	/**
 	 * @brief Get number of items currently visible.

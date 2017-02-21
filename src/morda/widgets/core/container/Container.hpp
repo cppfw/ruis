@@ -31,7 +31,7 @@ namespace morda{
 class Container : virtual public Widget{
 
 private:
-	T_ChildrenList children_var;
+	T_ChildrenList children_v;
 	
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
@@ -152,7 +152,7 @@ public:
 	 * @param insertBefore - iterator into the list of children widgets before which to insert the new widget.
 	 * @return Iterator for the newly added widget.
 	 */
-	T_ChildrenList::iterator add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore);
+	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore);
 	
 	/**
 	 * @brief Add child widget.
@@ -160,7 +160,7 @@ public:
 	 * @param insertBefore - child widget before which to insert the new widget.
 	 * @return Iterator of the newly added widget.
 	 */
-	T_ChildrenList::iterator add(const std::shared_ptr<Widget>& w, const Widget* insertBefore = nullptr);
+	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, const Widget* insertBefore = nullptr);
 
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
@@ -203,7 +203,7 @@ public:
 	 * @return List of child widgets.
 	 */
 	const T_ChildrenList& children()const noexcept{
-		return this->children_var;
+		return this->children_v;
 	}
 	
 	/**
