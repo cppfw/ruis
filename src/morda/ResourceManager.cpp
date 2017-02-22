@@ -11,7 +11,8 @@ using namespace morda;
 
 
 namespace{
-const char* D_Include = "include";
+const char* include_c = "include";
+const char* includeSubdirs_c = "includeSubdirs";
 }
 
 
@@ -29,8 +30,20 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();
 	resScript->setNext(stob::load(fi));
 	
+	//handle includeSubdirs
+	if(resScript->next(includeSubdirs_c).node()){
+//		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
+		fi.setPath(fi.dir());
+		for(auto& fileName : fi.listDirContents()){
+			if(fileName.size() != 0 && fileName[fileName.size() - 1] == '/'){
+				fi.setPath(dir + fileName);
+				this->mountResPack(fi);
+			}
+		}
+	}
+	
 	//handle includes
-	for(auto np = resScript->next(D_Include); np.node(); np = np.prev()->next(D_Include)){
+	for(auto np = resScript->next(include_c); np.node(); np = np.prev()->next(include_c)){
 		ASSERT(np.prev())
 		auto incNode = np.prev()->removeNext()->removeChildren();
 		
