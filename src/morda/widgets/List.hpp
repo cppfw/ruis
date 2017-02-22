@@ -9,7 +9,11 @@ namespace morda{
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
  */
-class List : private Container, virtual public Widget{
+class List :
+		private Container,
+		virtual public Widget,
+		virtual public utki::Shared //this is to make 'clang' happy
+{
 	//index of the first item added to container as child
 	size_t addedIndex = size_t(-1);
 	
