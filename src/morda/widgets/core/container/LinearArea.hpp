@@ -16,23 +16,26 @@ class LinearArea : public Container{
 	LinearArea(const LinearArea&) = delete;
 	LinearArea& operator=(const LinearArea&) = delete;
 
-	bool isVertical;
+	bool isVertical_v;
 	
 	unsigned GetLongIndex()const noexcept{
-		return this->isVertical ? 1 : 0;
+		return this->isVertical_v ? 1 : 0;
 	}
 
 	unsigned GetTransIndex()const noexcept{
-		return this->isVertical ? 0 : 1;
+		return this->isVertical_v ? 0 : 1;
 	}
 	
-protected:
-	LinearArea(bool isVertical, const stob::Node* chain);
 public:
+	LinearArea(bool isVertical, const stob::Node* chain = nullptr);
 
 	void layOut() override;	
 	
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
+	
+	bool isVertical()const noexcept{
+		return this->isVertical_v;
+	}
 	
 	/**
 	 * @brief Layout parameters for LinearArea container.

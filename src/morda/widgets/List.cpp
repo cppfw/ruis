@@ -42,7 +42,7 @@ public:
 
 List::List(bool isVertical, const stob::Node* chain):
 		Widget(chain),
-		isVertical(isVertical)
+		isVertical_v(isVertical)
 {
 	if(!chain){
 		return;
@@ -113,7 +113,7 @@ real List::scrollFactor()const noexcept{
 	}
 	
 	real d;
-	if(this->isVertical){
+	if(this->isVertical()){
 		d = this->rect().d.y;
 	}else{
 		d = this->rect().d.x;
@@ -148,7 +148,7 @@ void List::setScrollPosAsFactor(real factor){
 
 		if(this->children().size() != 0){
 			real d;
-			if(this->isVertical){
+			if(this->isVertical()){
 				d = this->rect().d.y;
 			}else{
 				d = this->rect().d.x;
@@ -174,7 +174,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 	w->resize(dim);
 
-	if(this->isVertical){
+	if(this->isVertical()){
 		pos -= w->rect().d.y;
 		w->moveTo(Vec2r(0, pos));
 
@@ -264,7 +264,7 @@ void List::updateChildrenList(){
 	
 	real pos;
 	
-	if(this->isVertical){
+	if(this->isVertical()){
 		pos = this->rect().d.y + this->posOffset;
 	}else{
 		pos = -this->posOffset;
@@ -339,7 +339,7 @@ void List::updateTailItemsInfo(){
 	
 	real dim;
 	
-	if(this->isVertical){
+	if(this->isVertical()){
 		dim = this->rect().d.y;
 	}else{
 		dim = this->rect().d.x;
@@ -358,7 +358,7 @@ void List::updateTailItemsInfo(){
 		
 		Vec2r d = this->dimForWidget(*w, lp);
 		
-		if(this->isVertical){
+		if(this->isVertical()){
 			dim -= d.y;
 		}else{
 			dim -= d.x;
@@ -377,7 +377,7 @@ void List::updateTailItemsInfo(){
 morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	unsigned longIndex, transIndex;
 	
-	if(this->isVertical){
+	if(this->isVertical()){
 		longIndex = 1;
 		transIndex = 0;
 	}else{

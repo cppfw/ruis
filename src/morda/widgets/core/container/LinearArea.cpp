@@ -26,7 +26,7 @@ LinearArea::LayoutParams::LayoutParams(const stob::Node* chain) :
 LinearArea::LinearArea(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		Container(chain),
-		isVertical(isVertical)
+		isVertical_v(isVertical)
 {}
 
 
@@ -112,7 +112,7 @@ void LinearArea::layOut(){
 			
 			Vec2r newPos;
 
-			if(this->isVertical){
+			if(this->isVertical_v){
 				newPos[longIndex] = this->rect().d[longIndex] - pos - (*i)->rect().d[longIndex];
 			}else{
 				newPos[longIndex] = pos;

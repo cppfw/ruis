@@ -207,14 +207,14 @@ void Container::layOut(){
 }
 
 
-Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w, T_ChildrenList::const_iterator insertBefore){
+Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore){
 	if(insertBefore == this->children().end()){
-		return this->add(w);
+		return this->add(std::move(w));
 	}
-	return this->add(w, (*insertBefore).get());
+	return this->add(std::move(w), (*insertBefore).get());
 }
 
-Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w, const Widget* insertBefore){
+Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const Widget* insertBefore){
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -230,27 +230,29 @@ Widget::T_ChildrenList::iterator Container::add(const std::shared_ptr<Widget>& w
 
 	T_ChildrenList::iterator ret;
 	
+	Widget& widget = *w;
+	
 	if(insertBefore){
-		ret = this->children_var.insert(insertBefore->parentIter, w);
+		ret = this->children_v.insert(insertBefore->parentIter, std::move(w));
 	}else{
-		this->children_var.push_back(w);
-		ret = this->children_var.end();
+		this->children_v.push_back(std::move(w));
+		ret = this->children_v.end();
 		--ret;
 	}
 	
-	w->parentIter = ret;
-	w->parentContainer = this;
-	w->onParentChanged();
+	widget.parentIter = ret;
+	widget.parentContainer = this;
+	widget.onParentChanged();
 	
 	this->onChildrenListChanged();
 	
-	if(this->children_var.size() > 1){
-		(*(++this->children_var.rbegin()))->onTopmostChanged();
+	if(this->children_v.size() > 1){
+		(*(++this->children_v.rbegin()))->onTopmostChanged();
 	}
 	
-	w->onTopmostChanged();
+	widget.onTopmostChanged();
 	
-	ASSERT(!w->isHovered())
+	ASSERT(!widget.isHovered())
 	return ret;
 }
 
@@ -273,7 +275,7 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	
 	auto ret = *w.parentIter;
 	
-	this->children_var.erase(w.parentIter);
+	this->children_v.erase(w.parentIter);
 	
 	w.parentContainer = nullptr;
 	w.setUnhovered();
