@@ -642,6 +642,87 @@ Container{
 					TextLabel{
 						text{item_10}
 					}
+
+					TextLabel{
+						text{item_4}
+					}
+
+					TextLabel{
+						text{item_5}
+					}
+
+					TextLabel{
+						text{item_6}
+					}
+
+					TextLabel{
+						text{item_7}
+					}
+
+					TextLabel{
+						text{item_8}
+					}
+
+					TextLabel{
+						text{item_4}
+					}
+
+					TextLabel{
+						text{item_5}
+					}
+
+					TextLabel{
+						text{item_6}
+					}
+
+					TextLabel{
+						text{item_7}
+					}
+
+					TextLabel{
+						text{item_8}
+					}
+
+					TextLabel{
+						text{item_4}
+					}
+
+					TextLabel{
+						text{item_5}
+					}
+
+					TextLabel{
+						text{item_6}
+					}
+
+					TextLabel{
+						text{item_7}
+					}
+
+					TextLabel{
+						text{item_8}
+					}
+
+					TextLabel{
+						text{item_4}
+					}
+
+					TextLabel{
+						text{item_5}
+					}
+
+					TextLabel{
+						text{item_6}
+					}
+
+					TextLabel{
+						text{item_7}
+					}
+
+					TextLabel{
+						text{item_8}
+					}
+
 				}
 				ResizeProxy{
 					layout{
