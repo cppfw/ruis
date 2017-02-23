@@ -118,10 +118,22 @@ void Widget::resize(const morda::Vec2r& newDims){
 
 
 std::shared_ptr<Widget> Widget::removeFromParent(){
-	if(!this->parentContainer){
+	if(!this->parent_v){
 		throw morda::Exc("Widget::RemoveFromParent(): widget is not added to the parent");
 	}
-	return this->parentContainer->remove(*this);
+	return this->parent_v->remove(*this);
+}
+
+
+
+std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
+	if(!this->parent()){
+		throw morda::Exc("this widget is not added to any parent");
+	}
+	
+	this->parent()->add(w, this->parentIter);
+	
+	return this->removeFromParent();
 }
 
 
@@ -131,8 +143,8 @@ void Widget::setRelayoutNeeded()noexcept{
 		return;
 	}
 	this->relayoutNeeded = true;
-	if(this->parentContainer){
-		this->parentContainer->setRelayoutNeeded();
+	if(this->parent_v){
+		this->parent_v->setRelayoutNeeded();
 	}
 	this->cacheTex.reset();
 }
@@ -263,8 +275,8 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 
 void Widget::clearCache(){
 	this->cacheDirty = true;
-	if(this->parentContainer){
-		this->parentContainer->clearCache();
+	if(this->parent_v){
+		this->parent_v->clearCache();
 	}
 }
 

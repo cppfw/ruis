@@ -215,6 +215,10 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, T_Chi
 }
 
 Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const Widget* insertBefore){
+	if(!w){
+		return this->children_v.end();
+	}
+	
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -241,7 +245,7 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	}
 	
 	widget.parentIter = ret;
-	widget.parentContainer = this;
+	widget.parent_v = this;
 	widget.onParentChanged();
 	
 	this->onChildrenListChanged();
@@ -262,7 +266,7 @@ std::shared_ptr<Widget> Container::remove(T_ChildrenList::const_iterator iter){
 
 
 std::shared_ptr<Widget> Container::remove(Widget& w){
-	if(w.parentContainer != this){
+	if(w.parent_v != this){
 		throw morda::Exc("Container::Remove(): widget is not added to this container");
 	}
 	
@@ -271,13 +275,13 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	}
 //	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
 	
-	ASSERT(w.parentContainer == this)
+	ASSERT(w.parent_v == this)
 	
 	auto ret = *w.parentIter;
 	
 	this->children_v.erase(w.parentIter);
 	
-	w.parentContainer = nullptr;
+	w.parent_v = nullptr;
 	w.setUnhovered();
 	
 	w.onParentChanged();

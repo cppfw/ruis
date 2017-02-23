@@ -90,7 +90,7 @@ public:
 	};
 
 private:
-	Container* parentContainer = nullptr;
+	Container* parent_v = nullptr;
 	T_ChildrenList::iterator parentIter;
 	
 	std::set<unsigned> hovered;
@@ -190,7 +190,7 @@ public:
 	 * @return Widget's parent container.
 	 */
 	const Container* parent()const noexcept{
-		return this->parentContainer;
+		return this->parent_v;
 	}
 	
 	/**
@@ -198,7 +198,7 @@ public:
 	 * @return Widget's parent container.
 	 */
 	Container* parent()noexcept{
-		return this->parentContainer;
+		return this->parent_v;
 	}
 	
 	/**
@@ -209,6 +209,14 @@ public:
 	 * @return pointer to this widget.
 	 */
 	std::shared_ptr<Widget> removeFromParent();
+	
+	/**
+	 * @brief Replace this widget by another widget.
+	 * Replaces this widget in its parent by the given widget.
+	 * @param w - widget to replace this one by.
+	 * @return Shared pointer to this widget.
+	 */
+	std::shared_ptr<Widget> replaceBy(std::shared_ptr<Widget> w);
 	
 	/**
 	 * @brief Check if widget is hovered by any pointer.
