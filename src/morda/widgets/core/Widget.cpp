@@ -133,6 +133,10 @@ std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
 	
 	this->parent()->add(w, this->parentIter);
 	
+	if(w && !w->layout){
+		w->layout = std::move(this->layout);
+	}
+	
 	return this->removeFromParent();
 }
 
