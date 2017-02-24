@@ -10,9 +10,10 @@ namespace morda{
  * This is a base class for vertical and horizontal lists.
  */
 class List :
-		private Container,
+		//NOTE: order of virtual public and private declarations here matters for clang due to some bug,
+		//      see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public Widget,
-		virtual public utki::Shared //this is to make 'clang' happy
+		private Container
 {
 	//index of the first item added to container as child
 	size_t addedIndex = size_t(-1);
