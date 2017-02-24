@@ -99,6 +99,12 @@ public:
 	real scrollFactor()const noexcept;
 	
 	/**
+	 * @brief Scroll the list by given number of pixels.
+	 * @param delta - number of pixels to scroll, can be positive or negative.
+	 */
+	void scrollBy(real delta);
+	
+	/**
 	 * @brief Data set changed signal.
 	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
 	 */

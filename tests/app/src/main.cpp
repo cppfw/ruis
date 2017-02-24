@@ -1,6 +1,9 @@
 #include <kolme/Quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
+#include <morda/widgets/core/proxy/MouseProxy.hpp>
+#include <morda/config.hpp>
+#include <morda/util/MouseButton.hpp>
 
 #include "mordavokne/AppFactory.hpp"
 
@@ -683,10 +686,10 @@ public:
 		//VerticalList
 		{
 			auto verticalList = c->findChildByNameAs<morda::VerticalList>("vertical_list");
-			std::weak_ptr<morda::VerticalList> vl = verticalList;
+			auto vl = utki::makeWeak(verticalList);
 			
 			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
-			std::weak_ptr<morda::VerticalSlider> vs = verticalSlider;
+			auto vs = utki::makeWeak(verticalSlider);
 			
 			verticalSlider->factorChange = [vl](morda::Slider& slider){
 				if(auto l = vl.lock()){
@@ -707,6 +710,34 @@ public:
 					s->setFactor(l->scrollFactor());
 //					s->factorChange = std::move(f);
 				}
+			};
+			
+			auto mouseProxy = c->findChildByNameAs<morda::MouseProxy>("list_mouseproxy");
+			struct State : public utki::Shared{
+				morda::Vec2r oldPos = 0;
+				bool isLeftButtonPressed;
+			};
+			auto state = utki::makeShared<State>();
+			
+			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
+				if(button == morda::MouseButton_e::LEFT){
+					state->isLeftButtonPressed = isDown;
+					state->oldPos = pos;
+					return true;
+				}
+				return false;
+			};
+			
+			mouseProxy->mouseMove = [vl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
+				if(state->isLeftButtonPressed){
+					auto dp = pos - state->oldPos;
+					state->oldPos = pos;
+					if(auto l = vl.lock()){
+						l->scrollBy(dp.y);
+					}
+					return true;
+				}
+				return false;
 			};
 		}
 		

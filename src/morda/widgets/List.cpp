@@ -374,6 +374,13 @@ void List::updateTailItemsInfo(){
 	}
 }
 
+void List::scrollBy(real delta) {
+	
+	
+	
+	//TODO:
+}
+
 morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	unsigned longIndex, transIndex;
 	

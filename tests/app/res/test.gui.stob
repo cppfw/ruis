@@ -583,6 +583,11 @@ Container{
 				dx{max} dy{max}
 			}
 
+			MouseProxy{
+				layout{dx{50pt} dy{fill}}
+				name{list_mouseproxy}
+			}
+
 
 			Frame{
 				layout{
