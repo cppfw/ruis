@@ -375,10 +375,84 @@ void List::updateTailItemsInfo(){
 }
 
 void List::scrollBy(real delta) {
+	if(!this->provider){
+		return;
+	}
 	
+	unsigned longIndex;
+//	unsigned transIndex;
 	
+	if(this->isVertical()){
+		longIndex = 1;
+//		transIndex = 0;
+	}else{
+		longIndex = 0;
+//		transIndex = 1;
+	}
 	
-	//TODO:
+	TRACE(<< "delta = " << delta << std::endl)
+	
+	if(delta >= 0){
+		for(auto& c : this->children()){
+			auto wd = c->rect().d[longIndex] - this->posOffset;
+			if(wd > delta){
+				this->posOffset += delta;
+				delta -= wd;
+				break;
+			}
+			
+			delta -= wd;
+			this->posOffset = 0;
+			++this->posIndex;
+		}
+		
+		if(delta > 0){
+			ASSERT_INFO(
+					this->posIndex > this->addedIndex + this->children().size(),
+					"this->posIndex = " << this->posIndex
+					<< " this->addedIndex = " << this->addedIndex
+					<< " this->children().size() = " << this->children().size()
+				)
+			for(; this->posIndex < this->firstTailItemIndex;){
+				auto w = this->provider->getWidget(this->posIndex);
+				auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+				Vec2r d = this->dimForWidget(*w, lp);
+				this->add(w); //this is just optimization, to avoid creating same widget twice
+				if(d[longIndex] > delta){
+					this->posOffset = delta;
+					break;
+				}
+				delta -= d[longIndex];
+				ASSERT(this->posOffset == 0)
+				++this->posIndex;
+			}
+		}
+	}else{
+		delta = -delta;
+		if(delta <= this->posOffset){
+			this->posOffset -= delta;
+		}else{
+			ASSERT(this->addedIndex == this->posIndex)
+			delta -= this->posOffset;
+			this->posOffset = 0;
+			for(; this->posIndex > 0;){
+				ASSERT(this->addedIndex == this->posIndex)
+				--this->posIndex;
+				auto w = this->provider->getWidget(this->posIndex);
+				auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+				Vec2r d = this->dimForWidget(*w, lp);
+				this->add(w, this->children().begin()); //this is just optimization, to avoid creating same widget twice
+				--this->addedIndex;
+				if(d[longIndex] > delta){
+					this->posOffset = d[longIndex] - delta;
+					break;
+				}
+				delta -= d[longIndex];
+			}
+		}
+	}
+	
+	this->updateChildrenList();
 }
 
 morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
