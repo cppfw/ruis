@@ -741,6 +741,66 @@ public:
 			};
 		}
 		
+		//HorizontalList
+		{
+			auto horizontalList = c->findChildByNameAs<morda::List>("horizontal_list");
+			auto hl = utki::makeWeak(horizontalList);
+			
+			auto horizontalSlider = c->findChildByNameAs<morda::Slider>("horizontal_list_slider");
+			ASSERT(horizontalSlider)
+			auto hs = utki::makeWeak(horizontalSlider);
+			
+			horizontalSlider->factorChange = [hl](morda::Slider& slider){
+//				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
+				if(auto l = hl.lock()){
+					l->setScrollPosAsFactor(slider.factor());
+				}
+			};
+			
+			auto resizeProxy = c->findChildByNameAs<morda::ResizeProxy>("horizontal_list_resize_proxy");
+			ASSERT(resizeProxy)
+			
+			resizeProxy->resized = [hs, hl](const morda::Vec2r& newSize){
+				auto l = hl.lock();
+				if(!l){
+					return;
+				}
+				if(auto s = hs.lock()){
+//					auto f = std::move(s->factorChange);
+					s->setFactor(l->scrollFactor());
+//					s->factorChange = std::move(f);
+				}
+			};
+			
+			auto mouseProxy = c->findChildByNameAs<morda::MouseProxy>("horizontal_list_mouseproxy");
+			struct State : public utki::Shared{
+				morda::Vec2r oldPos = 0;
+				bool isLeftButtonPressed;
+			};
+			auto state = utki::makeShared<State>();
+			
+			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
+				if(button == morda::MouseButton_e::LEFT){
+					state->isLeftButtonPressed = isDown;
+					state->oldPos = pos;
+					return true;
+				}
+				return false;
+			};
+			
+			mouseProxy->mouseMove = [hl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
+				if(state->isLeftButtonPressed){
+					auto dp = state->oldPos - pos;
+					state->oldPos = pos;
+					if(auto l = hl.lock()){
+						l->scrollBy(dp.x);
+					}
+					return true;
+				}
+				return false;
+			};
+		}
+		
 		//TreeView
 		{
 			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");

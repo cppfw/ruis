@@ -157,67 +157,147 @@ Container{
 			background{WindowEmptyBackground}
 		}
 
-
-		HorizontalArea{
-			padding {20 30 10 40}
-
-			x{50} y{100}
-			dx{220} dy{100}
-
-			name {someContainer}
-
-			clip {true}
-
+		VerticalArea{
 			layout{
-				dx{max} dy{max}
-
-				weight{7}
+				dx{fill} dy{fill}
 			}
 
-			TextLabel{
-				name {label1}
-				text {trololo}
-				padding {10 20 30 40}
+			HorizontalArea{
+				x{50} y{100}
+				dx{220} dy{100}
 
-				
+				name { someContainer }
+
+				clip {true}
+
 				layout{
-					weight {0}
+					dx{max} dy{min}
 				}
-
-			}
-
-			TextLabel{
-				name {label2}
-				text {"blah bla"}
-				padding {0}
-
-				
-				layout{
-					weight {0}
-				}
-				
-			}
-
-			PushButton{
-				name {show_VK_button}
-				x{50} y{80}
-				dx{10} dy{30}
-
-				clip{true}
-
-				
-				layout{
-					dx{20mm} dy{min}
-					weight {1}
-				}
-				
 
 				TextLabel{
-					text {"Show VK"}
-					color{0xffccfbff}
+					name {label1}
+					text {trololo}
+					padding {10 20 30 40}
+
+
+					layout{
+						weight {0}
+					}
+
+				}
+
+				TextLabel{
+					name {label2}
+					text {"blah bla"}
+					padding {0}
+
+
+					layout{
+						weight {0}
+					}
+
+				}
+
+				PushButton{
+					name {show_VK_button}
+					x{50} y{80}
+					dx{10} dy{30}
+
+					clip{true}
+
+
+					layout{
+						dx{20mm} dy{min}
+						weight {1}
+					}
+
+
+					TextLabel{
+						text {"Show VK"}
+						color{0xffccfbff}
+					}
 				}
 			}
-		}
+
+			Frame{
+				layout{dx{fill} dy{50pt}}
+				ColorLabel{
+					layout{dx{fill}dy{fill}}
+					color{0xff808080}
+				}
+				MouseProxy{
+					layout{dx{fill} dy{fill}}
+					name{horizontal_list_mouseproxy}
+				}
+			}
+			Frame{
+				layout{
+					dx{fill}
+					dy{0}
+					weight{1}
+				}
+				HorizontalList{
+					layout{
+						dx{fill}
+						dy{fill}
+					}
+					name{horizontal_list}
+
+					TextLabel{
+						text{item1|}
+						layout{dy{max}}
+					}
+					TextLabel{
+						text{item2|}
+					}
+					TextLabel{
+						text{item3|}
+					}
+					TextLabel{
+						text{item4|}
+					}
+					TextLabel{
+						text{item5|}
+					}
+					TextLabel{
+						text{item6|}
+					}
+					TextLabel{
+						text{item7|}
+					}
+					TextLabel{
+						text{item8|}
+					}
+					TextLabel{
+						text{item9|}
+					}
+					TextLabel{
+						text{item10|}
+					}
+					TextLabel{
+						text{item11|}
+					}
+					TextLabel{
+						text{item12|}
+					}
+				}
+				ResizeProxy{
+					layout{
+						dx{fill} dy{fill}
+					}
+					name{horizontal_list_resize_proxy}
+				}
+			}
+
+			HorizontalSlider{
+				name{horizontal_list_slider}
+
+				layout{
+					dx{fill}
+				}
+			}
+
+		}//~VerticalArea
 	}//~Window
 
 	Window{
