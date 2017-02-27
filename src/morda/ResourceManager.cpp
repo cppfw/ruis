@@ -19,7 +19,7 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 void ResourceManager::mountResPack(const papki::File& fi){
 	ASSERT(!fi.isOpened())
-//	TRACE(<< "fi->path() = " << fi.path() << std::endl)
+//	TRACE(<< "ResourceManager::mountResPack(): fi->path() = " << fi.path() << std::endl)
 	
 	std::string dir = fi.dir();
 	
@@ -29,14 +29,17 @@ void ResourceManager::mountResPack(const papki::File& fi){
 
 	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();
 	resScript->setNext(stob::load(fi));
-	
+	ASSERT(!fi.isOpened())
 	//handle includeSubdirs
 	if(resScript->next(includeSubdirs_c).node()){
 //		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
 		fi.setPath(fi.dir());
-		for(auto& fileName : fi.listDirContents()){
+		auto dirContents = fi.listDirContents();
+		ASSERT(!fi.isOpened())
+		for(auto& fileName : dirContents){
 			if(fileName.size() != 0 && fileName[fileName.size() - 1] == '/'){
 				fi.setPath(dir + fileName);
+//				TRACE(<< "mounting respack " << fi.path() << std::endl)
 				this->mountResPack(fi);
 			}
 		}
