@@ -202,8 +202,18 @@ public:
 		
 	}
 	
+	unsigned fps = 0;
+	std::uint32_t fpsSecCounter = 0;
+	
 	void update(std::uint32_t dt) override{
+		this->fpsSecCounter += dt;
+		++this->fps;
 		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		if(this->fpsSecCounter >= 1000){
+			TRACE_ALWAYS(<< "fps = " << fps << std::endl)
+			this->fpsSecCounter = 0;
+			this->fps = 0;
+		}
 	}
 	
 	void render(const morda::Matr4r& matrix)const override{
@@ -635,7 +645,7 @@ public:
 				);
 		};
 		
-		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->startUpdating(30);
+		std::dynamic_pointer_cast<CubeWidget>(c->findChildByName("cube_widget"))->startUpdating(0);
 		
 		//ScrollArea
 		{

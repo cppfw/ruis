@@ -747,7 +747,7 @@ void App::exec(){
 			ASSERT(!this->uiQueue.canRead())
 		}
 
-		if(xew.canRead()){
+//		if(xew.canRead()){
 			xew.clearCanReadFlag();
 			while(XPending(this->xDisplay.d) > 0){
 				XEvent event;
@@ -847,7 +847,7 @@ void App::exec(){
 						break;
 				}//~switch()
 			}//~while()
-		}//~if there are pending X events
+//		}//~if there are pending X events
 
 		this->render();
 	}//~while(!this->quitFlag)
