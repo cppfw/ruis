@@ -66,6 +66,7 @@ else ifeq ($(os),macosx)
     endef
     $(eval $(this_rules))
 else ifeq ($(os),linux)
+    this_cxxflags += -fPIC
     this_srcs += src/mordavokne/glue/glue.cpp
     this_ldlibs += -pthread -lX11 -ldl
 endif
