@@ -716,9 +716,7 @@ public:
 					return;
 				}
 				if(auto s = vs.lock()){
-//					auto f = std::move(s->factorChange);
 					s->setFactor(l->scrollFactor());
-//					s->factorChange = std::move(f);
 				}
 			};
 			
@@ -738,12 +736,15 @@ public:
 				return false;
 			};
 			
-			mouseProxy->mouseMove = [vl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouseMove = [vs, vl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = pos - state->oldPos;
 					state->oldPos = pos;
 					if(auto l = vl.lock()){
 						l->scrollBy(dp.y);
+						if(auto s = vs.lock()){
+							s->setFactor(l->scrollFactor());
+						}
 					}
 					return true;
 				}
@@ -776,9 +777,7 @@ public:
 					return;
 				}
 				if(auto s = hs.lock()){
-//					auto f = std::move(s->factorChange);
 					s->setFactor(l->scrollFactor());
-//					s->factorChange = std::move(f);
 				}
 			};
 			
@@ -798,12 +797,15 @@ public:
 				return false;
 			};
 			
-			mouseProxy->mouseMove = [hl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouseMove = [hl, hs, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
 					if(auto l = hl.lock()){
 						l->scrollBy(dp.x);
+						if(auto s = hs.lock()){
+							s->setFactor(l->scrollFactor());
+						}
 					}
 					return true;
 				}

@@ -1320,7 +1320,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <flagsDictionary>
-        <element flagsID="0" commonFlags="-O3 -std=c++11"/>
+        <element flagsID="0" commonFlags="-O3 -std=c++11 -fPIC"/>
         <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
         <element flagsID="2" commonFlags="-std=c++11"/>
@@ -1333,7 +1333,7 @@
           <buildCommand>${MAKE}  debug=true -j8</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <ccTool flags="0">
+          <ccTool flags="-O3 -std=c++11">
             <standard>8</standard>
           </ccTool>
         </makeTool>
