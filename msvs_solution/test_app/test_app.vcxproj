@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -169,7 +169,6 @@
     <Import Project="..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
     <Import Project="..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets" Condition="Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" />
     <Import Project="..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets" Condition="Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" />
-    <Import Project="..\packages\libsvgren.symbols.0.3.13\build\native\libsvgren.symbols.targets" Condition="Exists('..\packages\libsvgren.symbols.0.3.13\build\native\libsvgren.symbols.targets')" />
     <Import Project="..\packages\libutki.1.0.30\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.0.30\build\native\libutki.targets')" />
     <Import Project="..\packages\libkolme.1.0.8\build\native\libkolme.targets" Condition="Exists('..\packages\libkolme.1.0.8\build\native\libkolme.targets')" />
     <Import Project="..\packages\libpapki.1.0.26\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.26\build\native\libpapki.targets')" />
@@ -196,7 +195,6 @@
     <Error Condition="!Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.redist.9.2.0.1\build\native\libjpeg.redist.targets'))" />
     <Error Condition="!Exists('..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg.9.2.0.1\build\native\libjpeg.targets'))" />
-    <Error Condition="!Exists('..\packages\libsvgren.symbols.0.3.13\build\native\libsvgren.symbols.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.symbols.0.3.13\build\native\libsvgren.symbols.targets'))" />
     <Error Condition="!Exists('..\packages\libutki.1.0.30\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.0.30\build\native\libutki.targets'))" />
     <Error Condition="!Exists('..\packages\libkolme.1.0.8\build\native\libkolme.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libkolme.1.0.8\build\native\libkolme.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.26\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.26\build\native\libpapki.targets'))" />
