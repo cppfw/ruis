@@ -10,7 +10,7 @@
 namespace morda{
 
 /**
- * @brief Undocumented.
+ * @brief TODO:.
  */
 class TextInputLine :
 		public SingleLineTextWidget,

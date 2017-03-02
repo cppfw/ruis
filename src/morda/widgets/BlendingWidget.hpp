@@ -55,7 +55,7 @@ public:
 	void setBlendingEnabled(bool enable);
 	
 	/**
-	 * @brief Checi if blending is enabled for this widget.
+	 * @brief Check if blending is enabled for this widget.
 	 */
 	bool isBlendingEnabled()const noexcept{
 		return this->isBlendingEnabled_v;
