@@ -11,7 +11,7 @@ using namespace morda;
 
 ImageLabel::ImageLabel(const stob::Node* chain) :
 		Widget(chain),
-		BlendWidget(chain)
+		BlendingWidget(chain)
 {
 	if(auto image = getProperty(chain, "image")){
 		this->img = Morda::inst().resMan.load<ResImage>(image->value());

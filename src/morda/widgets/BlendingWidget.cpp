@@ -1,4 +1,4 @@
-#include "BlendWidget.hpp"
+#include "BlendingWidget.hpp"
 
 #include "../util/util.hpp"
 
@@ -38,13 +38,13 @@ Renderer::BlendFactor_e blendFactorFromString(const std::string& s){
 
 
 
-BlendWidget::BlendWidget(const stob::Node* chain) :
+BlendingWidget::BlendingWidget(const stob::Node* chain) :
 		Widget(chain)
 {
 	if(auto n = getProperty(chain, "blend")){
-		this->isBlendEnabled_v = n->asBool();
+		this->isBlendingEnabled_v = n->asBool();
 	}else{
-		this->isBlendEnabled_v = true;
+		this->isBlendingEnabled_v = true;
 	}
 	
 	if(auto n = getProperty(chain, "blendSrc")){
@@ -72,25 +72,25 @@ BlendWidget::BlendWidget(const stob::Node* chain) :
 	}
 }
 
-void BlendWidget::applyBlending() const{
-	morda::inst().renderer().setBlendEnabled(this->isBlendEnabled());
-	if(this->isBlendEnabled()){
+void BlendingWidget::applyBlending() const{
+	morda::inst().renderer().setBlendEnabled(this->isBlendingEnabled());
+	if(this->isBlendingEnabled()){
 		morda::inst().renderer().setBlendFunc(this->blend_v.src, this->blend_v.dst, this->blend_v.srcAlpha, this->blend_v.dstAlpha);
 	}
 }
 
-void BlendWidget::setBlendEnabled(bool enable){
-	if(this->isBlendEnabled_v == enable){
+void BlendingWidget::setBlendingEnabled(bool enable){
+	if(this->isBlendingEnabled_v == enable){
 		return;
 	}
-	this->isBlendEnabled_v = enable;
-	this->onBlendChanged();
+	this->isBlendingEnabled_v = enable;
+	this->onBlendingChanged();
 }
 
-void BlendWidget::setBlend(const Blend& blend){
+void BlendingWidget::setBlendingParams(const BlendingParams& blend){
 	if(this->blend_v == blend){
 		return;
 	}
 	this->blend_v = blend;
-	this->onBlendChanged();
+	this->onBlendingChanged();
 }

@@ -83,7 +83,7 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
-		BlendWidget(chain),
+		BlendingWidget(chain),
 		Table(stob::parse(ninePatchLayout_c).get())
 {
 	this->imageLabelMatrix[0][0] = this->findChildByNameAs<ImageLabel>("morda_lt");
@@ -98,7 +98,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->imageLabelMatrix[2][1] = this->findChildByNameAs<ImageLabel>("morda_b");
 	this->imageLabelMatrix[2][2] = this->findChildByNameAs<ImageLabel>("morda_rb");
 	
-	this->onBlendChanged();
+	this->onBlendingChanged();
 	
 	this->content_var = this->findChildByNameAs<Frame>("morda_content");
 	
@@ -234,10 +234,10 @@ void NinePatch::setCenterVisible(bool visible){
 	this->imageLabelMatrix[1][1]->setVisible(visible);
 }
 
-void NinePatch::onBlendChanged(){
+void NinePatch::onBlendingChanged(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageLabelMatrix[i][j]->setBlend(this->blend());
+			this->imageLabelMatrix[i][j]->setBlendingParams(this->blendingParams());
 		}
 	}
 }

@@ -88,7 +88,7 @@
           <df name="slider">
             <in>Slider.cpp</in>
           </df>
-          <in>BlendWidget.cpp</in>
+          <in>BlendingWidget.cpp</in>
           <in>ColorWidget.cpp</in>
           <in>DropDownSelector.cpp</in>
           <in>List.cpp</in>
@@ -589,7 +589,10 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/BlendWidget.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/widgets/BlendingWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets/core</pElem>
@@ -1528,7 +1531,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/morda/widgets/BlendWidget.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/widgets/BlendingWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -2744,7 +2750,10 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/BlendWidget.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/widgets/BlendingWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>

@@ -2,7 +2,7 @@
 
 #include "../core/Widget.hpp"
 
-#include "../BlendWidget.hpp"
+#include "../BlendingWidget.hpp"
 
 #include "../../resources/ResImage.hpp"
 
@@ -21,7 +21,7 @@ namespace morda{
  */
 class ImageLabel :
 		public virtual Widget,
-		public BlendWidget
+		public BlendingWidget
 {
 	ImageLabel(const ImageLabel&);
 	ImageLabel& operator=(const ImageLabel&);

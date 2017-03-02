@@ -9,7 +9,7 @@
 
 #include "label/ImageLabel.hpp"
 
-#include "BlendWidget.hpp"
+#include "BlendingWidget.hpp"
 
 
 namespace morda{
@@ -28,7 +28,7 @@ namespace morda{
  */
 class NinePatch :
 		public virtual Widget,
-		public BlendWidget,
+		public BlendingWidget,
 		private Table
 {
 	std::shared_ptr<ResNinePatch> image;
@@ -84,7 +84,7 @@ public:
 		this->applyImages();
 	}
 	
-	void onBlendChanged() override;
+	void onBlendingChanged() override;
 
 	
 private:
