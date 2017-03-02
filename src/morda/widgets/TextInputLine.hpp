@@ -12,7 +12,7 @@ namespace morda{
 /**
  * @brief Undocumented.
  */
-class TextInput :
+class TextInputLine :
 		public SingleLineTextWidget,
 		private Updateable,
 		public CharInputWidget
@@ -36,12 +36,12 @@ class TextInput :
 	bool leftMouseButtonDown = false;
 	
 public:
-	TextInput(const TextInput&) = delete;
-	TextInput& operator=(const TextInput&) = delete;
+	TextInputLine(const TextInputLine&) = delete;
+	TextInputLine& operator=(const TextInputLine&) = delete;
 	
-	TextInput(const stob::Node* chain = nullptr);
+	TextInputLine(const stob::Node* chain = nullptr);
 	
-	virtual ~TextInput()noexcept{}
+	virtual ~TextInputLine()noexcept{}
 
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 

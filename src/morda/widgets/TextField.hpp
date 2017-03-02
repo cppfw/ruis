@@ -1,19 +1,19 @@
 #pragma once
 
-#include "TextInput.hpp"
+#include "TextInputLine.hpp"
 #include "NinePatch.hpp"
 
 namespace morda{
 
 
 /**
- * @brief Undocumented.
+ * @brief TODO:.
  */
 class TextField :
 		virtual public Widget,
 		private NinePatch
 {
-	std::shared_ptr<TextInput> ti;
+	std::shared_ptr<TextInputLine> ti;
 	
 public:
 	TextField(const stob::Node* chain = nullptr);
@@ -21,7 +21,7 @@ public:
 	TextField(const TextField&) = delete;
 	TextField& operator=(const TextField&) = delete;
 	
-	TextInput& textInput()noexcept{
+	TextInputLine& textInput()noexcept{
 		return *this->ti;
 	}
 	

@@ -93,7 +93,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	//add standard widgets to inflater
 	
 	this->inflater.addWidget<TextLabel>("TextLabel");
-	this->inflater.addWidget<TextInput>("TextInput");
 	this->inflater.addWidget<VerticalSlider>("VerticalSlider");
 	this->inflater.addWidget<HorizontalSlider>("HorizontalSlider");
 	this->inflater.addWidget<ImageLabel>("ImageLabel");

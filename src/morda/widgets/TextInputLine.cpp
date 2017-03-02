@@ -1,4 +1,4 @@
-#include "TextInput.hpp"
+#include "TextInputLine.hpp"
 
 #include "../Morda.hpp"
 #include "../util/util.hpp"
@@ -25,7 +25,7 @@ const real cursorWidth_c = real(1.0);
 
 
 
-TextInput::TextInput(const stob::Node* chain) :
+TextInputLine::TextInputLine(const stob::Node* chain) :
 		Widget(chain),
 		SingleLineTextWidget(chain)
 {
@@ -34,7 +34,7 @@ TextInput::TextInput(const stob::Node* chain) :
 
 
 
-void TextInput::render(const morda::Matr4r& matrix) const{
+void TextInputLine::render(const morda::Matr4r& matrix) const{
 	//render selection
 	if(this->cursorIndex != this->selectionStartIndex){
 		morda::Matr4r matr(matrix);
@@ -70,7 +70,7 @@ void TextInput::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+bool TextInputLine::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(button != MouseButton_e::LEFT){
 		return false;
 	}
@@ -84,7 +84,7 @@ bool TextInput::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 	return true;
 }
 
-bool TextInput::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+bool TextInputLine::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
@@ -94,7 +94,7 @@ bool TextInput::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 }
 
 
-Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
+Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
@@ -112,7 +112,7 @@ Vec2r TextInput::measure(const morda::Vec2r& quotum)const noexcept{
 	return ret;
 }
 
-void TextInput::setCursorIndex(size_t index, bool selection){
+void TextInputLine::setCursorIndex(size_t index, bool selection){
 	this->cursorIndex = index;
 	
 	utki::clampTop(this->cursorIndex, this->text().size());
@@ -169,7 +169,7 @@ void TextInput::setCursorIndex(size_t index, bool selection){
 
 
 
-real TextInput::indexToPos(size_t index){
+real TextInputLine::indexToPos(size_t index){
 	ASSERT(this->firstVisibleCharIndex <= this->text().size())
 	
 	if(index <= this->firstVisibleCharIndex){
@@ -196,7 +196,7 @@ real TextInput::indexToPos(size_t index){
 }
 
 
-size_t TextInput::posToIndex(real pos){
+size_t TextInputLine::posToIndex(real pos){
 	size_t index = this->firstVisibleCharIndex;
 	real p = this->xOffset;
 	
@@ -220,11 +220,11 @@ size_t TextInput::posToIndex(real pos){
 }
 
 
-void TextInput::update(std::uint32_t dt){
+void TextInputLine::update(std::uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
-void TextInput::onFocusChanged(){
+void TextInputLine::onFocusChanged(){
 	if(this->isFocused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;
@@ -234,18 +234,18 @@ void TextInput::onFocusChanged(){
 	}
 }
 
-void TextInput::onResize(){
+void TextInputLine::onResize(){
 	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 }
 
 
-void TextInput::startCursorBlinking(){
+void TextInputLine::startCursorBlinking(){
 	this->stopUpdating();
 	this->cursorBlinkVisible = true;
 	this->startUpdating(cursorBlinkPeriod_c);
 }
 
-bool TextInput::onKey(bool isDown, Key_e keyCode){
+bool TextInputLine::onKey(bool isDown, Key_e keyCode){
 	switch(keyCode){
 		case Key_e::LEFT_CONTROL:
 		case Key_e::RIGHT_CONTROL:
@@ -261,7 +261,7 @@ bool TextInput::onKey(bool isDown, Key_e keyCode){
 	return false;
 }
 
-void TextInput::onCharacterInput(const std::u32string& unicode, Key_e key){
+void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 	switch(key){
 		case Key_e::ENTER:
 			break;
@@ -373,7 +373,7 @@ void TextInput::onCharacterInput(const std::u32string& unicode, Key_e key){
 
 
 
-size_t TextInput::deleteSelection(){
+size_t TextInputLine::deleteSelection(){
 	ASSERT(this->cursorIndex != this->selectionStartIndex)
 	
 	size_t start, end;
