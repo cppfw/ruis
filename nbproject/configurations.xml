@@ -96,6 +96,8 @@
           <in>NinePatch.cpp</in>
           <in>NinePatch.hpp</in>
           <in>TextField.cpp</in>
+          <in>TextInputArea.cpp</in>
+          <in>TextInputArea.hpp</in>
           <in>TextInputLine.cpp</in>
           <in>TextInputLine.hpp</in>
           <in>TextWidget.cpp</in>
@@ -725,6 +727,16 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
@@ -1593,6 +1605,17 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
             tool="1"
@@ -2033,6 +2056,16 @@
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
             tool="1"
@@ -2167,6 +2200,16 @@
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/widgets/NinePatch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
@@ -2345,6 +2388,16 @@
       <item path="src/morda/widgets/NinePatch.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="src/morda/widgets/TextField.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
@@ -2878,6 +2931,16 @@
             <pElem>src/morda/fonts</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/TextInputArea.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/TextInputArea.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/TextInputLine.cpp"
             ex="false"
