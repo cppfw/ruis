@@ -134,6 +134,17 @@ protected:
 	
 public:
 	/**
+	 * @brief Enable/disable caching.
+	 * If caching is enabled for this widget then it will first be rendered to a texture.
+	 * And then the texture will be rendered to the frame buffer each time the widget needs to be drawn.
+	 * Next time the texture will be re-rendered only when cache is cleared.
+	 * @param enabled - whether to enable or disable the caching.
+	 */
+	void setCache(bool enabled)noexcept{
+		this->cache = enabled;
+	}
+	
+	/**
 	 * @brief Render this widget to texture.
 	 * @param reuse - try to re-use the existing texture to avoid new texture allocation.
 	 *                If dimensions of the passed in texture are different from dimensions
