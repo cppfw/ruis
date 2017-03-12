@@ -267,11 +267,11 @@ std::shared_ptr<Widget> Container::remove(T_ChildrenList::const_iterator iter){
 
 std::shared_ptr<Widget> Container::remove(Widget& w){
 	if(w.parent_v != this){
-		throw morda::Exc("Container::Remove(): widget is not added to this container");
+		throw morda::Exc("Container::remove(): widget is not added to this container");
 	}
 	
 	if(this->isBlocked){
-		throw morda::Exc("Container::Remove(): cannot remove child while iterating through children, try deferred removing.");
+		throw morda::Exc("Container::remove(): cannot remove child while iterating through children, try deferred removing.");
 	}
 //	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
 	

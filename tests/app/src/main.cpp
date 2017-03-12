@@ -210,7 +210,7 @@ public:
 		++this->fps;
 		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
-			TRACE_ALWAYS(<< "fps = " << fps << std::endl)
+			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;
 			this->fps = 0;
 		}
