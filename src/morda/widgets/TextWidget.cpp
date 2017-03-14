@@ -44,3 +44,9 @@ Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
 	return ret;
 }
 
+void SingleLineTextWidget::onTextChanged() {
+	if (this->textChanged) {
+		this->textChanged(*this);
+	}
+}
+

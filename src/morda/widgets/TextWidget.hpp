@@ -71,6 +71,7 @@ public:
 		this->text_v = std::move(text);
 		this->setRelayoutNeeded();
 		this->recomputeBoundingBox();
+		this->onTextChanged();
 	}
 	
 	void setText(const std::string& text){
@@ -81,6 +82,9 @@ public:
 		this->recomputeBoundingBox();
 	}
 
+	virtual void onTextChanged();
+	
+	std::function<void(SingleLineTextWidget& w)> textChanged;
 	
 	decltype(text_v) clear(){
 		return std::move(this->text_v);
