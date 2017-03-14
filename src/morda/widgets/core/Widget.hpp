@@ -19,6 +19,8 @@
 #include "../../util/keycodes.hpp"
 #include "../../util/MouseButton.hpp"
 
+#include "../../Exc.hpp"
+
 
 namespace morda{
 
@@ -330,6 +332,24 @@ public:
 	virtual std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept;
 	
 	/**
+	 * @brief Child widget width requested name is not found within the parent container.
+	 */
+	class ChildNotFoundExc : public morda::Exc{
+	public:
+		ChildNotFoundExc(const std::string& childName) :
+				morda::Exc(childName)
+		{}
+	};
+	
+	/**
+	 * @brief Get child by name.
+	 * @param name - name of the child to get.
+	 * @return reference to the child.
+	 * @throw ChildNotFoundExc - if no child with given name has been found.
+	 */
+	Widget& getChildByName(const std::string& name);
+	
+	/**
 	 * @brief Find widget by name.
 	 * Same as findChildByName() but also tries to cast the widget object to a specified class.
 	 * @param name - name of the widget to search for.
@@ -338,6 +358,17 @@ public:
 	 */
 	template <typename T> std::shared_ptr<T> findChildByNameAs(const std::string& name)noexcept{
 		return std::dynamic_pointer_cast<T>(this->findChildByName(name));
+	}
+	
+	/**
+	 * @brief Get child widget of specific type by its name.
+	 * @param name - name of the widget to get.
+	 * @return reference to the requested child widget.
+	 * @throw ChildNotFoundExc - if no child with given name has been found.
+	 * @throw std::bad_cast - if requested child widget is not of the specified type.
+	 */
+	template <typename T> T& getChildByNameAs(const std::string& name){
+		return dynamic_cast<T&>(this->getChildByName(name));
 	}
 	
 public:

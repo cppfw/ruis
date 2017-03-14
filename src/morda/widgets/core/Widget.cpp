@@ -407,3 +407,11 @@ const Widget::LayoutParams& Widget::getLayoutParams()const {
 	
 	return this->parent()->getLayoutParams(*this);
 }
+
+Widget& Widget::getChildByName(const std::string& name) {
+	auto w = this->findChildByName(name);
+	if(!w){
+		throw ChildNotFoundExc(name);
+	}
+	return *w;
+}
