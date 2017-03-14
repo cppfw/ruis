@@ -10,7 +10,7 @@ class TextInputArea :
 		virtual public Widget
 {
 public:
-	TextInputArea();
+	TextInputArea(const stob::Node* chain = nullptr);
 	
 	TextInputArea(const TextInputArea&) = delete;
 	TextInputArea& operator=(const TextInputArea&) = delete;

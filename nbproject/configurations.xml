@@ -1888,14 +1888,19 @@
             flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/stob</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>src/morda/fonts</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
