@@ -11,7 +11,7 @@ using namespace morda;
 
 namespace{
 
-const char* DWindowDesc = R"qwertyuiop(
+const char* windowDesc_c = R"qwertyuiop(
 		Table{
 			layout{
 				dx{max} dy{max}
@@ -169,7 +169,7 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		Frame(stob::parse(DWindowDesc).get())
+		Frame(stob::parse(windowDesc_c).get())
 {
 	this->setupWidgets();
 	
