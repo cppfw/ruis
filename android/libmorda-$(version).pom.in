@@ -21,5 +21,47 @@
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>libkolme</artifactId>
+		  <version>[1.0.10,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>libstob</artifactId>
+		  <version>[3.3.12,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>libsvgren</artifactId>
+		  <version>[0.4.10,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>libpng</artifactId>
+		  <version>[1.4.1,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>libjpeg</artifactId>
+		  <version>[1.0.0,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
+          <dependency>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>freetype2</artifactId>
+		  <version>[1.0.0,)</version>
+		  <type>aar</type>
+		  <scope>compile</scope>
+	  </dependency>
   </dependencies>
 </project>

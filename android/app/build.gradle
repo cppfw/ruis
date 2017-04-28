@@ -41,7 +41,7 @@ model {
                         project ":libmorda" linkage "static"
                     }
                     source {
-                        srcDirs '../../tests'
+//                        srcDirs '../../tests'
                         exclude('**/main.cpp')
                     }
                 }
