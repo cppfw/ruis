@@ -43,21 +43,21 @@
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>io.github.igagis</groupId>
+		  <groupId>org.libpng</groupId>
 		  <artifactId>libpng</artifactId>
 		  <version>[1.4.1,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>io.github.igagis</groupId>
+		  <groupId>org.ijg</groupId>
 		  <artifactId>libjpeg</artifactId>
 		  <version>[1.0.0,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>io.github.igagis</groupId>
+		  <groupId>org.freetype</groupId>
 		  <artifactId>freetype2</artifactId>
 		  <version>[1.0.0,)</version>
 		  <type>aar</type>
