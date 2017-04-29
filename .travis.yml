@@ -1,7 +1,48 @@
-language: cpp
+branches:
+  except:
+  - release
+
 sudo: required
-dist: trusty
-osx_image: xcode8.2
+
+matrix:
+  include:
+    - os: osx
+      env: BUILD_NAME=macosx
+      compiler: clang
+      language: cpp
+      osx_image: xcode8.2
+    - os: osx
+      env: BUILD_NAME=ios
+      compiler: clang
+      language: cpp
+      osx_image: xcode8.2
+    - os: linux
+      env: BUILD_NAME=debian
+      compiler: gcc
+      language: cpp
+      dist: trusty
+    - os: linux
+      env: BUILD_NAME=ubuntu
+      compiler: gcc
+      language: cpp
+      dist: trusty
+    - os: linux
+      env: BUILD_NAME=raspberry_pi
+      compiler: gcc
+      language: cpp
+      dist: trusty
+    - env: BUILD_NAME=android
+      language: android
+
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-25.0.2
+    - android-25
+#    - sys-img-armeabi-v7a-android-22
+    - extra-android-m2repository
 
 
 env:
@@ -12,27 +53,6 @@ env:
   - PRORAB_GIT_ACCESS_TOKEN=$HOMEBREW_GITHUB_ACCESS_TOKEN
   - linuxDependencies="debhelper lintian pkg-config prorab doxygen libutki-dev libnitki-dev libpapki-dev libunikod-dev libkolme-dev libstob-dev libsvgren-dev libpng-dev libjpeg-dev zlib1g-dev libglew-dev libfreetype6-dev"
 
-
-matrix:
-  include:
-    - os: osx
-      env: BUILD_NAME=macosx
-      compiler: clang
-    - os: osx
-      env: BUILD_NAME=ios
-      compiler: clang
-    - os: linux
-      env: BUILD_NAME=debian
-      compiler: gcc
-    - os: linux
-      env: BUILD_NAME=ubuntu
-      compiler: gcc
-    - os: linux
-      env: BUILD_NAME=raspberry_pi
-      compiler: gcc
-#    - os: linux
-#      env: BUILD_NAME=clang
-#      compiler: clang
 
 
 before_install:
@@ -59,6 +79,12 @@ before_install:
     rvm 2.2.1 do gem install cocoapods &&
     pod repo add --silent igagis https://$PRORAB_GIT_USERNAME:$PRORAB_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
     pod install --project-directory=ios;
+  fi
+- if [ "$BUILD_NAME" == "android" ]; then
+    echo "deb https://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+    sudo apt-get update -qq &&
+    sudo apt-get install -qq prorab;
   fi
 - if [ "$BUILD_NAME" == "debian" ]; then
     echo "deb http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
@@ -106,7 +132,19 @@ before_install:
     sudo apt-get install -qq $linuxDependencies lintian;
   fi
 
-
+before_script:
+  # download and install android NDK
+  - if [ "$BUILD_NAME" == "android" ]; then
+      export TERM=dumb &&
+      curl -L https://dl.google.com/android/repository/android-ndk-r14b-linux-x86_64.zip -O &&
+      unzip ./android-ndk-r14b-linux-x86_64.zip > /dev/null &&
+      rm android-ndk-r14b-linux-x86_64.zip &&
+      export ANDROID_NDK_HOME=`pwd`/android-ndk-r14b &&
+      export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME" &&
+      export LOCAL_ANDROID_NDK_HOST_PLATFORM="linux-x86_64" &&
+      export PATH=$PATH:${ANDROID_NDK_HOME} &&
+      env;
+    fi
 
 script:
 - if [ "$BUILD_NAME" == "debian" ]; then
@@ -144,7 +182,11 @@ script:
     sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
     sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && ogles2=true dpkg-buildpackage -us -uc";
   fi
-  
+- if [ "$BUILD_NAME" == "android" ]; then
+    (cd android && ./gradlew build) &&
+    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` android/*.pom.in &&
+    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` android/*.aar.in --filename-only;
+  fi
   
 
 before_deploy:
@@ -178,6 +220,16 @@ deploy:
     tags: true
     condition: $BUILD_NAME = raspberry_pi
   file: travis_bintray_rasp.json
+  user: igagis
+  key:
+    secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="
+  dry-run: false
+- provider: bintray
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $BUILD_NAME = android
+  file: travis_bintray_android.json
   user: igagis
   key:
     secure: "I9Y/BFy451N+PtWur7BXB6MFyqdUaUmrOYbLc2YrTEnKCloaGifGKjQN2VqRuVoj92R7xaPYmd+GnXFs/f5pozmucJNDNDHwd0VVQM29kaETFKY4gsfkBt6ura185Ok/thzSPwmMMmDU6y3sAGoLSC2dGAiz/V3ol0qVGZnGdqa1mOjBJJkRq6TVNjU490GLBc7xSPmObKUouFpFfKfpuWjkBf9n2uEFe/d5Q3TAEPvbj/5ZccRO2r1aJv3s/5/pZuv8Va+MKCp6hCmvsIFw5Gkg8n/50Yd0jj2K+NTnT43nyUPoxq4BLDulC0e4ww0rtKQl5BBW8q7yqYRsw3vNZog71NLFBxpVwSLwe4LHJM0XP4Z3HOPo/GWCekG4ex2Bw02BeOvAv1IAifRJrETgkJ6bF7WPkn80C6AyLZ86BPrsJKKeeL95gELOoEPfEesQKFgglBvSXShP6jZANrmAY4vJ605Wtq2IRksjb9VISCCrCjRwZ221RHdcOaX28ibt2J086RxBxcVOxewVEX0m7Q/HklfUaxorUenejOltcvdG//Jz0eKgJou+1XOFxHP3FiROlHylIc9hgRjhpr344PZ4penlAx1mqbRAX+J0eqQzXGi6ihrEaOo5eSme5RNumSmC3ehaODB3+D+NRzeW4/iqErnrALeOGGTPSnCWf8E="

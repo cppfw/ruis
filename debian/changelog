@@ -1,3 +1,9 @@
+libmorda (0.5.33) unstable; urgency=medium
+
+  * deploy to android
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 29 Apr 2017 12:03:58 +0300
+
 libmorda (0.5.32) unstable; urgency=medium
 
   * Widget::getChildByName method added
