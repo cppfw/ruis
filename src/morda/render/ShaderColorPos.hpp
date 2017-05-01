@@ -7,7 +7,7 @@
 
 namespace morda{
 
-class ShaderColorPos : public Shader_n{
+class ShaderColorPos : public Shader{
 public:
 	ShaderColorPos(){}
 	

@@ -5,14 +5,14 @@
 namespace morda{
 
 
-class Shader_n : public utki::Unique{
+class Shader : public utki::Unique{
 public:
-	Shader_n();
+	Shader();
 	
-	Shader_n(const Shader_n&) = delete;
-	Shader_n& operator=(const Shader_n&) = delete;
+	Shader(const Shader&) = delete;
+	Shader& operator=(const Shader&) = delete;
 	
-	virtual ~Shader_n()noexcept{}
+	virtual ~Shader()noexcept{}
 	
 private:
 

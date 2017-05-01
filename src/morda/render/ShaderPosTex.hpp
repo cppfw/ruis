@@ -13,7 +13,7 @@
 namespace morda{
 
 
-class ShaderPosTex : public Shader_n{
+class ShaderPosTex : public Shader{
 public:
 	ShaderPosTex(){}
 	

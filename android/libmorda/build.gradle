@@ -135,6 +135,9 @@ task copyNdkLibsToAAR(type: Zip) {
         exclude('**/*.c')
         into('ndkLibs/include')
     }
+    from("../../res/morda_res"){
+        into('assets/morda_res')
+    }
     from("build/intermediates/binaries/debug/lib"){
         include('**/*.a')
         into('ndkLibs')
