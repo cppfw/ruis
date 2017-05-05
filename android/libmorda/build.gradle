@@ -24,6 +24,7 @@ model {
             cppFlags.add("-std=c++11")
             cppFlags.add("-fexceptions")
             cppFlags.add("-frtti")
+            cppFlags.add("-g")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libpng")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libjpeg")
