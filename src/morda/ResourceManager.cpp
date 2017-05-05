@@ -81,7 +81,9 @@ ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std
 		}//~for(res)
 	}//~for(resPack)
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
-	throw ResourceManager::Exc("resource name not found in mounted resource packs");
+	std::stringstream ss;
+	ss << "resource name not found in mounted resource packs: " << resName;
+	throw ResourceManager::Exc(ss.str());
 }
 
 

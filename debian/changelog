@@ -1,3 +1,9 @@
+libmorda (0.5.36) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 05 May 2017 11:34:06 +0300
+
 libmorda (0.5.35) unstable; urgency=medium
 
   * pack resources to android assets
