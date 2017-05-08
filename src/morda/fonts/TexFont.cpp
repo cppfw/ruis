@@ -431,7 +431,8 @@ real TexFont::renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f col
 real TexFont::charAdvance(char32_t c) const{
 	auto i = this->glyphs.find(c);
 	if(i == this->glyphs.end()){
-		return real(0);
+		ASSERT(this->glyphs.find(unknownChar_c) != this->glyphs.end())
+		return this->glyphs.at(unknownChar_c).advance;
 	}
 	
 	const Glyph& g = i->second;
