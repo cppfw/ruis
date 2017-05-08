@@ -56,7 +56,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 		this->font().renderString(
 				matr,
 				morda::colorToVec4f(this->color()),
-				std::u32string(this->text(), this->firstVisibleCharIndex, this->text().size() - this->firstVisibleCharIndex)
+				this->text().substr(this->firstVisibleCharIndex, this->text().size() - this->firstVisibleCharIndex)
 			);
 	}
 	
