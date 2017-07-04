@@ -1350,8 +1350,8 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE}  debug=true -j8</buildCommand>
-          <cleanCommand>${MAKE} clean</cleanCommand>
+          <buildCommand>make debug=true -j8</buildCommand>
+          <cleanCommand>make clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
           <ccTool flags="-O3 -std=c++11">
             <standard>8</standard>

@@ -71,7 +71,7 @@ public:
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void setRootWidget(const std::shared_ptr<morda::Widget>& w);
+	void setRootWidget(const std::shared_ptr<morda::Widget> w);
 	
 private:
 	Vec2r viewportSize;

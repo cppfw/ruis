@@ -10,6 +10,7 @@ this_name := tests
 this_srcs += $(call prorab-src-dir,src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 
+
 this_srcs += $(call prorab-src-dir,src/opengl2)
 this_srcs += src/main.cpp
 
@@ -93,7 +94,7 @@ this_ldflags += -rdynamic
 
 $(eval $(prorab-build-app))
 
-ifeq ($(prorab_os), macosx)
+ifeq ($(os), macosx)
     $(prorab_this_staticlib): $(this_mm_obj)
 
     $(prorab_this_name): $(this_mm_obj)
@@ -110,7 +111,7 @@ $(eval $(this_rules))
 
 
 #add dependency on libmorda
-ifeq ($(prorab_os),windows)
+ifeq ($(os),windows)
     $(d)libmorda$(soext): $(abspath $(d)../../src/libmorda$(soext))
 	@cp $< $@
 
@@ -124,6 +125,8 @@ ifeq ($(prorab_os),windows)
 else
     $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
 endif
+
+
 
 $(eval $(call prorab-include,$(d)../../src/makefile))
 

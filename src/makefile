@@ -29,18 +29,18 @@ else
     this_cxxflags += -O3
 endif
 
-ifeq ($(prorab_os), linux)
+ifeq ($(os), linux)
     this_cxxflags += -fPIC #generate position independent code
     this_cxxflags += `pkg-config --cflags freetype2`
     this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz
-else ifeq ($(prorab_os), windows)
+else ifeq ($(os), windows)
 #    this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
 #    this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
 #    this_ldflags += -L/usr/local/lib -L/usr/lib
 
     #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
 #    this_ldlibs += -lfreetype -lz -lopengl32 -lglew32 -lgdi32
-else ifeq ($(prorab_os), macosx)
+else ifeq ($(os), macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_cxxflags += -I/usr/local/include/freetype2
     this_ldlibs += -lc++
