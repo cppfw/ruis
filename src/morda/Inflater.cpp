@@ -137,7 +137,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 }
 
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
-	//TODO:
+//	TODO:
 //	if(!App::inst().thisIsUIThread()){
 //		throw Exc("Inflate called not from UI thread");
 //	}
@@ -150,7 +150,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			}
 		}else if(*n == defs_c){
 			if(n->child()){
-				this->pushVariables(*n->child());
+				this->pushDefinitions(*n->child());
 			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
@@ -185,7 +185,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			this->popTemplates();
 		}
 		if(needPopVariables){
-			this->popVariables();
+			this->popDefinitions();
 		}
 	});
 	
@@ -197,7 +197,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	}
 	if(auto v = n->child(defs_c).node()){
 		if(v->child()){
-			this->pushVariables(*v->child());
+			this->pushDefinitions(*v->child());
 			needPopVariables = true;
 		}
 	}
@@ -211,7 +211,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			}
 		}
 		
-		this->substituteVariables(cloned.get());
+		this->substituteDefinitions(cloned.get());
 		
 		return i->second->create(cloned.get());
 	}
@@ -304,14 +304,14 @@ const std::string* Inflater::findVariable(const std::string& name)const{
 
 
 
-void Inflater::popVariables(){
+void Inflater::popDefinitions(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_front();
 }
 
 
 
-void Inflater::pushVariables(const stob::Node& chain){
+void Inflater::pushDefinitions(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
 	for(auto n = &chain; n; n = n->next()){
@@ -369,7 +369,7 @@ void Inflater::pushVariables(const stob::Node& chain){
 
 
 
-void Inflater::substituteVariables(stob::Node* to)const{
+void Inflater::substituteDefinitions(stob::Node* to)const{
 	if(!to){
 		return;
 	}
@@ -401,7 +401,7 @@ void Inflater::substituteVariables(stob::Node* to)const{
 		
 	for(; to; to = to->next()){
 		if(to->isProperty() && to->child()){
-			this->substituteVariables(to->child());
+			this->substituteDefinitions(to->child());
 		}
 	}
 }
