@@ -108,9 +108,9 @@ private:
 	
 	
 	//variable name - value mapping
-	std::list<std::map<std::string, std::string>> variables;
+	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> variables;
 	
-	const std::string* findVariable(const std::string& name)const;
+	const stob::Node* findVariable(const std::string& name)const;
 	
 	void pushDefinitions(const stob::Node& chain);
 	

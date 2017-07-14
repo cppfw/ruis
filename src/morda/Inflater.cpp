@@ -291,11 +291,11 @@ const stob::Node* Inflater::findTemplate(const std::string& name)const{
 
 
 
-const std::string* Inflater::findVariable(const std::string& name)const{
+const stob::Node* Inflater::findVariable(const std::string& name)const{
 	for(auto& i : this->variables){
 		auto r = i.find(name);
 		if(r != i.end()){
-			return &r->second;
+			return r->second.get();
 		}
 	}
 	TRACE(<< "Inflater::FindVariable(): variable '" << name <<"' not found!!!" << std::endl)
@@ -315,42 +315,39 @@ void Inflater::pushDefinitions(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
 	for(auto n = &chain; n; n = n->next()){
-		std::string value;
+		std::unique_ptr<stob::Node> value;
 		
 		for(auto child = n->child(); child;){
-			if(child->next()){
-				throw Exc("Inflater::PushVariables(): variable has several values, error");
-			}
 			
 			if(*child == "@" && child->child()){
 				auto r = child->child();
 
 				if(r->next()){
-					throw Exc("Inflater::PushVariables(): variable reference has several values, error");
+					throw morda::Exc("Inflater::pushDefinitions(): variable reference has several values, error");
+				}
+
+				if (r->child()) {
+					throw morda::Exc("Inflater::pushDefinitions(): variable reference has children, error");
 				}
 				
 				if(auto var = this->findVariable(r->value())){
-					value = *var;
+					value = var->cloneChain();
 				}else{
-					throw Exc("Inflater::PushVariables(): variable reference could not be resolved, error");
+					throw morda::Exc("Inflater::pushDefinitions(): variable reference could not be resolved, error");
 				}
 				
 				break;
 			}
 			
-			if(child->child()){
-				throw Exc("Inflater::PushVariables(): variable value has children, error");
-			}
-			
-			value = child->value();
+			value = child->cloneChain();
 			break;
 		}
 		
 		if(!m.insert(
-				std::make_pair(n->value(),std::move(value))
+				std::make_pair(n->value(), std::move(value))
 			).second)
 		{
-			throw Exc("Inflater::PushVariables(): failed to add variable, variable with same name is already defined in this variables block");
+			throw morda::Exc("Inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}
 	
@@ -392,8 +389,13 @@ void Inflater::substituteDefinitions(stob::Node* to)const{
 		}
 		
 		if(auto var = this->findVariable(to->child()->value())){
-			to->setValue(var->c_str());
-			to->removeChildren();
+			//TODO: replace by chain
+			to->setValue(var->value());
+			if (var->child()) {
+				to->setChildren(var->child()->cloneChain());
+			}else {
+				to->removeChildren();
+			}
 		}
 		
 		return;

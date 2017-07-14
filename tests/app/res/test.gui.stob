@@ -50,11 +50,16 @@ Container{
 			bbb{dDd}
 //			clr{0xffff0000}
 			clr{@{another_color}}
+			
+			lllayout{
+				dy{max} dx{max}
+			}
 		}
 
 		VerticalArea{
 			layout{
-				dx{max} dy{max}
+//				dx{max} dy{max}
+				@{lllayout}
 			}
 
 
