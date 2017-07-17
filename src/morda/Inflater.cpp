@@ -389,13 +389,7 @@ void Inflater::substituteDefinitions(stob::Node* to)const{
 		}
 		
 		if(auto var = this->findVariable(to->child()->value())){
-			//TODO: replace by chain
-			to->setValue(var->value());
-			if (var->child()) {
-				to->setChildren(var->child()->cloneChain());
-			}else {
-				to->removeChildren();
-			}
+			to->replace(*var);
 		}
 		
 		return;
