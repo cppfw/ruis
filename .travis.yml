@@ -136,7 +136,7 @@ before_script:
   # download and install android NDK
   - if [ "$BUILD_NAME" == "android" ]; then
       export TERM=dumb &&
-      curl -L https://dl.google.com/android/repository/android-ndk-r14b-linux-x86_64.zip -O &&
+      curl -L https://dl.google.com/android/repository/android-ndk-r15-linux-x86_64.zip -O &&
       unzip ./android-ndk-r14b-linux-x86_64.zip > /dev/null &&
       rm android-ndk-r14b-linux-x86_64.zip &&
       export ANDROID_NDK_HOME=`pwd`/android-ndk-r14b &&
