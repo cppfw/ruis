@@ -1,10 +1,12 @@
 templates{
-	TextLabel TextLabel{
-//		text{"trololo"}
+	TextLabel{
+		TextLabel{
+//			text{"trololo"}
 
-//		color{0xff0000ff}
+//			color{0xff0000ff}
 
-//		dx{34}
+//			dx{34}
+		}
 	}
 }
 
@@ -126,17 +128,19 @@ Container{
 				layout{dx{max}}
 
 				templates{
-					RadBtn HorizontalArea{
-						Margins{
-							left{5pt}
-							right{5pt}
-							top{5pt}
-							bottom{5pt}
-							RadioButton
-						}
+					RadBtn{
+						HorizontalArea{
+							Margins{
+								left{5pt}
+								right{5pt}
+								top{5pt}
+								bottom{5pt}
+								RadioButton
+							}
 
-						TextLabel{
-							text{"radiobutton"}
+							TextLabel{
+								text{"radiobutton"}
+							}
 						}
 					}
 				}

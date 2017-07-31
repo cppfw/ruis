@@ -12,68 +12,76 @@ defs{
 }
 
 templates{
-	TextLabel TextLabel{
-		color{ @{morda_color_text} }
-	}
-
-	Window Window{
-		look{
-			titleColorTopmost{ @{morda_color_bg_window_title} }
-			titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
-			background{WindowBackground}
-			left{@{morda_window_border_size}}
-			top{@{morda_window_border_size}}
-			right{@{morda_window_border_size}}
-			bottom{@{morda_window_border_size}}
+	TextLabel{
+		TextLabel{
+			color{ @{morda_color_text} }
 		}
 	}
 
-	PushButton SimpleButton{}
-
-	WindowBackground Frame{
-		layout{dx{fill} dy{fill}}
-
-		cache{true}
-
-		ImageLabel{
-			layout{
-				dx{fill} dy{fill}
+	Window{
+		Window{
+			look{
+				titleColorTopmost{ @{morda_color_bg_window_title} }
+				titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
+				background{WindowBackground}
+				left{@{morda_window_border_size}}
+				top{@{morda_window_border_size}}
+				right{@{morda_window_border_size}}
+				bottom{@{morda_window_border_size}}
 			}
-			image{morda_img_window_background}
-			repeatX{true} repeatY{true}
 		}
+	}
 
-		ColorLabel{
+	PushButton{ SimpleButton{} }
+
+	WindowBackground{
+		Frame{
 			layout{dx{fill} dy{fill}}
-			gradient{morda_grd_window_background}
-		}
 
+			cache{true}
+
+			ImageLabel{
+				layout{
+					dx{fill} dy{fill}
+				}
+				image{morda_img_window_background}
+				repeatX{true} repeatY{true}
+			}
+
+			ColorLabel{
+				layout{dx{fill} dy{fill}}
+				gradient{morda_grd_window_background}
+			}
+
+			NinePatch{
+				layout{dx{fill} dy{fill}}
+				image{morda_npt_window_bg_mask}
+				left{@{morda_window_border_size}}
+				top{@{morda_window_border_size}}
+				right{@{morda_window_border_size}}
+				bottom{@{morda_window_border_size}}
+				centerVisible{false}
+
+				blend{true}
+				blendSrc{zero}
+				blendDst{srcAlpha}
+				blendSrcAlpha{one}
+				blendDstAlpha{zero}
+			}
+		}
+	}
+
+	WindowEmptyBackground{
 		NinePatch{
 			layout{dx{fill} dy{fill}}
-			image{morda_npt_window_bg_mask}
+
+			image{morda_npt_window_empty_bg}
+
 			left{@{morda_window_border_size}}
 			top{@{morda_window_border_size}}
 			right{@{morda_window_border_size}}
 			bottom{@{morda_window_border_size}}
 			centerVisible{false}
-
-			blend{true}
-			blendSrc{zero}
-			blendDst{srcAlpha}
-			blendSrcAlpha{one}
-			blendDstAlpha{zero}
 		}
-	}
-
-	WindowEmptyBackground NinePatch{
-		layout{dx{fill} dy{fill}}
-
-		image{morda_npt_window_empty_bg}
-
-		left{@{morda_window_border_size}}
-		top{@{morda_window_border_size}}
-		right{@{morda_window_border_size}}
-		bottom{@{morda_window_border_size}}
-		centerVisible{false}
 	}
 }

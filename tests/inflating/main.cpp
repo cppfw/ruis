@@ -15,24 +15,39 @@ public:
 int main(int argc, char** argv){
 	TestMorda m;
 	
-	auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
-		Container{
-			defs{
-				a{123}
-			}
-
-			templates{
-				Cont Container{
+	//test that whole definition chain is substituted
+	{
+		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+			Container{
+				defs{
+					dims{dx{max} dy{123}}
 				}
-			}
 
-			Cont{}
-			Cont{}
-		}
-	)qwertyuiop"));
-	
-	ASSERT_ALWAYS(w)
-	ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(w))
+				templates{
+					Cont{
+						Container{
+						}
+					}
+				}
+
+				Cont{
+					layout{
+						@{dims}
+					}
+				}
+
+				Cont{}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		ASSERT_ALWAYS(c)
+		ASSERT_ALWAYS(c->children().size() == 2)
+		auto lp = c->children().front()->getLayoutParams();
+		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
+		ASSERT_ALWAYS(lp.dim[1] == 123)
+	}
 	
 	return 0;
 }

@@ -232,18 +232,14 @@ void Inflater::pushTemplates(std::unique_ptr<stob::Node> chain){
 	
 	for(; chain; chain = chain->chopNext()){
 		if(chain->isProperty()){
-			throw Exc("Inflater::PushTemplates(): template name does not start with capital latin letter, error.");
+			throw Exc("Inflater::pushTemplates(): template name does not start with capital latin letter, error.");
 		}
 		
-		if(chain->child()){
-			throw Exc("Inflater::PushTemplates(): template name has children, error.");
+		if(!chain->child()){
+			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
 		
-		if(!chain->next()){
-			throw Exc("Inflater::PushTemplates(): template name is not followed by template definition, error.");
-		}
-		
-		if(!m.insert(std::make_pair(chain->value(), chain->removeNext())).second){
+		if(!m.insert(std::make_pair(chain->value(), chain->removeChildren())).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
