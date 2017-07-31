@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Factory.hpp"
+#include "RenderFactory.hpp"
 
 namespace morda{
 
 class Renderer : virtual public utki::Shared{
 public:
-	const std::unique_ptr<Factory> factory;
+	const std::unique_ptr<RenderFactory> factory;
 	
-	const std::unique_ptr<Factory::Shaders> shader;
+	const std::unique_ptr<RenderFactory::Shaders> shader;
 	
 public:
 	const std::shared_ptr<VertexBuffer> quad01VBO;
@@ -19,7 +19,7 @@ public:
 	const std::shared_ptr<VertexArray> posTexQuad01VAO;
 	
 protected:
-	Renderer(std::unique_ptr<Factory> factory, unsigned maxTextureSize);
+	Renderer(std::unique_ptr<RenderFactory> factory, unsigned maxTextureSize);
 	
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;

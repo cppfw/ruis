@@ -1,18 +1,10 @@
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
-
-ifneq ($(raspberrypi),true)
 
 this_name := tests
 
 
-this_srcs += $(call prorab-src-dir,src/mordavokne)
-this_srcs := $(filter-out %glue.cpp, $(this_srcs))
-
-
-this_srcs += $(call prorab-src-dir,src/opengl2)
-this_srcs += src/main.cpp
+this_srcs += $(call prorab-src-dir,.)
 
 
 this_cxxflags := -Wall
@@ -68,7 +60,6 @@ else ifeq ($(os),macosx)
     $(eval $(this_rules))
 else ifeq ($(os),linux)
     this_cxxflags += -fPIC
-    this_srcs += src/mordavokne/glue/glue.cpp
     this_ldlibs += -pthread -lX11 -ldl
 endif
 
@@ -78,34 +69,18 @@ this_ldlibs += $(d)../../src/libmorda$(soext)
 this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
 
 
-ifeq ($(ogles2), true)
-    this_ldlibs += `pkg-config --libs egl glesv2`
-else
-    this_ldlibs += -lGLEW
-
-    ifeq ($(os), macosx)
-    else
-        this_ldlibs += -lGL
-    endif
-
-endif
-
 this_ldflags += -rdynamic
 
 $(eval $(prorab-build-app))
 
-ifeq ($(os), macosx)
-    $(prorab_this_staticlib): $(this_mm_obj)
-
-    $(prorab_this_name): $(this_mm_obj)
-endif
-
-
+this_dirs := $(subst /, ,$(d))
+this_test := $(word $(words $(this_dirs)),$(this_dirs))
 
 define this_rules
-run:: $(prorab_this_name)
-	@echo running $$^...
+test:: $(prorab_this_name)
+	@prorab-running-test.sh $(this_test)
 	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
+	@prorab-passed.sh
 endef
 $(eval $(this_rules))
 
@@ -130,4 +105,3 @@ endif
 
 $(eval $(call prorab-include,$(d)../../src/makefile))
 
-endif

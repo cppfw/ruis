@@ -12,7 +12,7 @@
 #include "../config.hpp"
 
 #include "../render/Texture2D.hpp"
-#include "../render/Factory.hpp"
+#include "../render/RenderFactory.hpp"
 
 namespace morda{
 

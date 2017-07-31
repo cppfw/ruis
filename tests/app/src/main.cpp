@@ -1,11 +1,10 @@
 #include <kolme/Quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
-#include <morda/widgets/core/proxy/MouseProxy.hpp>
-#include <morda/config.hpp>
-#include <morda/util/MouseButton.hpp>
 
 #include "mordavokne/AppFactory.hpp"
+
+#include "../../../src/morda/config.hpp"
 
 #include "../../../src/morda/widgets/core/Widget.hpp"
 #include "../../../src/morda/widgets/core/container/Container.hpp"
@@ -20,6 +19,7 @@
 #include "../../../src/morda/widgets/core/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/core/container/ScrollArea.hpp"
 #include "../../../src/morda/widgets/core/container/LinearArea.hpp"
+#include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
 #include "../../../src/morda/widgets/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
@@ -29,7 +29,7 @@
 #include "../../../src/morda/widgets/label/ImageLabel.hpp"
 
 #include "../../../src/morda/util/ZipFile.hpp"
-
+#include "../../../src/morda/util/MouseButton.hpp"
 
 
 

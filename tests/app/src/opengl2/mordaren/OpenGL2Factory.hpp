@@ -1,10 +1,10 @@
 #pragma once
 
-#include <morda/render/Factory.hpp>
+#include <morda/render/RenderFactory.hpp>
 
 namespace mordaren{
 
-class OpenGL2Factory : public morda::Factory{
+class OpenGL2Factory : public morda::RenderFactory{
 public:
 	OpenGL2Factory();
 	

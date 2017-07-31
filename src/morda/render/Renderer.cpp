@@ -3,7 +3,7 @@
 using namespace morda;
 
 
-Renderer::Renderer(std::unique_ptr<Factory> factory, unsigned maxTextureSize) :
+Renderer::Renderer(std::unique_ptr<RenderFactory> factory, unsigned maxTextureSize) :
 		factory(std::move(factory)),
 		shader(this->factory->createShaders()),
 		quad01VBO(this->factory->createVertexBuffer(utki::wrapBuf(std::array<kolme::Vec2f, 4>({{

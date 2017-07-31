@@ -160,7 +160,7 @@ script:
     dpkg-buildpackage -uc -us;
   fi
 - if [ "$BUILD_NAME" == "macosx" ]; then
-    make;
+    make && make test;
   fi
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
 # Also, need to set pipefail to make pipe exit code nono-zero in case first command fails but second succeeds (because grep exits with 0 always)

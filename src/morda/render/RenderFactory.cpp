@@ -1,10 +1,10 @@
-#include "Factory.hpp"
+#include "RenderFactory.hpp"
 
 using namespace morda;
 
 
 
-std::shared_ptr<Texture2D> Factory::createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data) {
+std::shared_ptr<Texture2D> RenderFactory::createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data) {
 	return this->createTexture2D(
 			Texture2D::TexType_e::RGBA,
 			dim,

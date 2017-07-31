@@ -21,16 +21,12 @@
 
 namespace morda{
 
-class Factory : public utki::Unique{
+class RenderFactory : public utki::Unique{
 protected:
-	Factory(){}
+	RenderFactory(){}
 	
 public:
-	virtual ~Factory()noexcept{}
-	
-	
-	
-	
+	virtual ~RenderFactory()noexcept{}	
 	
 	virtual std::shared_ptr<Texture2D> createTexture2D(Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
 	
