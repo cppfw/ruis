@@ -47,6 +47,8 @@ private:
 	typedef std::map<std::string, std::unique_ptr<WidgetFactory> > T_FactoryMap;
 	T_FactoryMap widgetFactories;
 
+	const WidgetFactory* findFactory(const std::string& widgetName);
+	
 	void addWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory);
 
 public:

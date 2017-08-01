@@ -136,6 +136,17 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 
 }
 
+const Inflater::WidgetFactory* Inflater::findFactory(const std::string& widgetName) {
+	auto i = this->widgetFactories.find(widgetName);
+
+	if(i == this->widgetFactories.end()){
+		return nullptr;
+	}
+	
+	return i->second.get();
+}
+
+
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
@@ -169,9 +180,9 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	}
 	
 	
-	auto i = this->widgetFactories.find(n->value());
-
-	if(i == this->widgetFactories.end()){
+	auto fac = this->findFactory(n->value());
+	
+	if(!fac){
 		TRACE(<< "Inflater::Inflate(): n->value() = " << n->value() << std::endl)
 		std::stringstream ss;
 		ss << "Failed to inflate, no matching factory found for requested widget name: " << n->value();
@@ -213,7 +224,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		
 		this->substituteDefinitions(cloned.get());
 		
-		return i->second->create(cloned.get());
+		return fac->create(cloned.get());
 	}
 }
 
@@ -369,7 +380,10 @@ void Inflater::substituteDefinitions(stob::Node* to)const{
 	
 	if(*to == "@"){
 		if(to->next()){
-			throw Exc("Inflater::SubstituteVariables(): error: property value holds something else besides reference to a variable");
+			std::stringstream ss;
+			ss << "Inflater::SubstituteVariables(): error: property value holds something else besides reference to a variable:" << std::endl;
+			ss << to->chainToString(true);
+			throw Exc(ss.str());
 		}
 		
 		if(!to->child()){
