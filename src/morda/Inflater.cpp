@@ -170,8 +170,8 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	
 	std::unique_ptr<stob::Node> cloned;
 	if(auto t = this->findTemplate(n->value())){
-		cloned = utki::makeUnique<stob::Node>(t->value());
-		cloned->setChildren(mergeGUIChain(t->child(), n->child() ? n->child()->cloneChain() : nullptr));
+		cloned = utki::makeUnique<stob::Node>(t->t->value());
+		cloned->setChildren(mergeGUIChain(t->t->child(), n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
 	}
 	
@@ -242,16 +242,16 @@ void Inflater::pushTemplates(const stob::Node& chain){
 			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
 		
-		if(!m.insert(std::make_pair(c->value(), c->child()->clone())).second){
+		if(!m.insert(std::make_pair(c->value(), Template{c->child()->clone()})).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
 	
 	for(auto i = m.begin(); i != m.end(); ++i){
-		if(auto s = this->findTemplate(i->second->value())){
-			i->second->setValue(s->value());
-			ASSERT(s->child())
-			i->second->setChildren(mergeGUIChain(s->child(), i->second->removeChildren()));
+		if(auto s = this->findTemplate(i->second.t->value())){
+			i->second.t->setValue(s->t->value());
+			ASSERT(s->t->child())
+			i->second.t->setChildren(mergeGUIChain(s->t->child(), i->second.t->removeChildren()));
 		}
 	}
 	
@@ -277,11 +277,11 @@ void Inflater::popTemplates(){
 
 
 
-const stob::Node* Inflater::findTemplate(const std::string& name)const{
+const Inflater::Template* Inflater::findTemplate(const std::string& name)const{
 	for(auto& i : this->templates){
 		auto r = i.find(name);
 		if(r != i.end()){
-			return r->second.get();
+			return &r->second;
 		}
 	}
 //	TRACE(<< "Inflater::FindTemplate(): template '" << name <<"' not found!!!" << std::endl)

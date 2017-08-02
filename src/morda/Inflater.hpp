@@ -105,9 +105,9 @@ private:
 		std::set<std::string> vars;
 	};
 	
-	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> templates;
+	std::list<std::map<std::string, Template>> templates;
 	
-	const stob::Node* findTemplate(const std::string& name)const;
+	const Template* findTemplate(const std::string& name)const;
 	
 	void pushTemplates(const stob::Node& chain);
 	
