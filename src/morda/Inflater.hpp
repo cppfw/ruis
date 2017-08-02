@@ -100,11 +100,16 @@ public:
 	static std::unique_ptr<stob::Node> load(papki::File& fi);
 	
 private:
+	struct Template{
+		std::unique_ptr<stob::Node> t;
+		std::set<std::string> vars;
+	};
+	
 	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> templates;
 	
 	const stob::Node* findTemplate(const std::string& name)const;
 	
-	void pushTemplates(std::unique_ptr<stob::Node> chain);
+	void pushTemplates(const stob::Node& chain);
 	
 	void popTemplates();
 	

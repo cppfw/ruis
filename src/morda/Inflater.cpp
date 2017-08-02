@@ -74,7 +74,6 @@ std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
 
 namespace{
 
-const char* templates_c = "templates";
 const char* defs_c = "defs";
 
 
@@ -155,12 +154,9 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	
 	const stob::Node* n = &chain;
 	for(; n && n->isProperty(); n = n->next()){
-		if(*n == templates_c){
+		if(*n == defs_c){
 			if(n->child()){
-				this->pushTemplates(n->child()->cloneChain());
-			}
-		}else if(*n == defs_c){
-			if(n->child()){
+				this->pushTemplates(*n->child());
 				this->pushDefinitions(*n->child());
 			}
 		}else{
@@ -200,14 +196,10 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		}
 	});
 	
-	if(auto t = n->child(templates_c).node()){
-		if(auto c = t->child()){
-			this->pushTemplates(c->cloneChain());
-			needPopTemplates = true;
-		}
-	}
 	if(auto v = n->child(defs_c).node()){
 		if(v->child()){
+			this->pushTemplates(*v->child());
+			needPopTemplates = true;
 			this->pushDefinitions(*v->child());
 			needPopVariables = true;
 		}
@@ -238,19 +230,19 @@ std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 	return ret;
 }
 
-void Inflater::pushTemplates(std::unique_ptr<stob::Node> chain){
+void Inflater::pushTemplates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
 	
-	for(; chain; chain = chain->chopNext()){
-		if(chain->isProperty()){
-			throw Exc("Inflater::pushTemplates(): template name does not start with capital latin letter, error.");
+	for(auto c = &chain; c; c = c->next()){
+		if(c->isProperty()){
+			continue;
 		}
 		
-		if(!chain->child()){
+		if(!c->child()){
 			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
 		
-		if(!m.insert(std::make_pair(chain->value(), chain->removeChildren())).second){
+		if(!m.insert(std::make_pair(c->value(), c->child()->clone())).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
@@ -322,6 +314,10 @@ void Inflater::pushDefinitions(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
 	for(auto n = &chain; n; n = n->next()){
+		if(!n->isProperty()){
+			continue;
+		}
+		
 		std::unique_ptr<stob::Node> value;
 		
 		for(auto child = n->child(); child;){

@@ -21,9 +21,7 @@ int main(int argc, char** argv){
 			Container{
 				defs{
 					dims{dx{max} dy{123}}
-				}
 
-				templates{
 					Cont{
 						Container{
 							layout{
@@ -35,7 +33,7 @@ int main(int argc, char** argv){
 
 				Cont{
 					layout{
-						@{dims}
+					//	@{dims}
 					}
 				}
 
@@ -48,8 +46,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		auto lp = c->children().front()->getLayoutParams();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_ALWAYS(lp.dim[1] == 123)
+//		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
+//		ASSERT_ALWAYS(lp.dim[1] == 123)
 	}
 	
 	return 0;

@@ -1,4 +1,6 @@
-templates{
+defs{
+	trololo{"saf"}
+
 	TextLabel{
 		TextLabel{
 //			text{"trololo"}
@@ -8,10 +10,6 @@ templates{
 //			dx{34}
 		}
 	}
-}
-
-defs{
-	trololo{"saf"}
 }
 
 
@@ -127,7 +125,7 @@ Container{
 			ChoiceGroup{
 				layout{dx{max}}
 
-				templates{
+				defs{
 					RadBtn{
 						HorizontalArea{
 							Margins{
