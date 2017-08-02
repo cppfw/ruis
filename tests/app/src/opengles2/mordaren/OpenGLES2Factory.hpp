@@ -1,6 +1,6 @@
 #pragma once
 
-#include <morda/render/Factory.hpp>
+#include <morda/render/RenderFactory.hpp>
 
 
 namespace mordaren{
