@@ -25,6 +25,7 @@ model {
             cppFlags.add("-fexceptions")
             cppFlags.add("-frtti")
             cppFlags.add("-g")
+            cppFlags.add("-fintegrated-as") //needed to avoid assembler error since NDK r15
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libpng")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libjpeg")
