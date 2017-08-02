@@ -390,7 +390,7 @@ void List::scrollBy(real delta) {
 //		transIndex = 1;
 	}
 	
-	TRACE(<< "delta = " << delta << std::endl)
+//	TRACE(<< "delta = " << delta << std::endl)
 	
 	if(delta >= 0){
 		for(auto& c : this->children()){
