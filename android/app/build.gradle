@@ -23,7 +23,7 @@ model {
         ndk {
             platformVersion = 21
             moduleName = 'morda-tests'
-//            toolchain = 'clang'
+            toolchain = 'clang'
             stl = 'c++_shared'
             cppFlags.add("-std=c++11")
             cppFlags.add("-fexceptions")
