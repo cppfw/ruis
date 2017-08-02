@@ -157,7 +157,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		if(*n == defs_c){
 			if(n->child()){
 				this->pushTemplates(*n->child());
-				this->pushDefinitions(*n->child());
+				this->pushVariables(*n->child());
 			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
@@ -192,7 +192,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			this->popTemplates();
 		}
 		if(needPopVariables){
-			this->popDefinitions();
+			this->popVariables();
 		}
 	});
 	
@@ -200,7 +200,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		if(v->child()){
 			this->pushTemplates(*v->child());
 			needPopTemplates = true;
-			this->pushDefinitions(*v->child());
+			this->pushVariables(*v->child());
 			needPopVariables = true;
 		}
 	}
@@ -214,7 +214,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			}
 		}
 		
-		this->substituteDefinitions(cloned.get());
+		this->substituteVariables(cloned.get());
 		
 		return fac->create(cloned.get());
 	}
@@ -303,14 +303,14 @@ const stob::Node* Inflater::findVariable(const std::string& name)const{
 
 
 
-void Inflater::popDefinitions(){
+void Inflater::popVariables(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_front();
 }
 
 
 
-void Inflater::pushDefinitions(const stob::Node& chain){
+void Inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 	
 	for(auto n = &chain; n; n = n->next()){
@@ -369,7 +369,7 @@ void Inflater::pushDefinitions(const stob::Node& chain){
 
 
 
-void Inflater::substituteDefinitions(stob::Node* to)const{
+void Inflater::substituteVariables(stob::Node* to)const{
 	if(!to){
 		return;
 	}
@@ -403,7 +403,7 @@ void Inflater::substituteDefinitions(stob::Node* to)const{
 		
 	for(; to; to = to->next()){
 		if(to->isProperty() && to->child()){
-			this->substituteDefinitions(to->child());
+			this->substituteVariables(to->child());
 		}
 	}
 }

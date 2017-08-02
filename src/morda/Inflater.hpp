@@ -119,11 +119,11 @@ private:
 	
 	const stob::Node* findVariable(const std::string& name)const;
 	
-	void pushDefinitions(const stob::Node& chain);
+	void pushVariables(const stob::Node& chain);
 	
-	void popDefinitions();
+	void popVariables();
 	
-	void substituteDefinitions(stob::Node* to)const;
+	void substituteVariables(stob::Node* to)const;
 };
 
 
