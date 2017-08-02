@@ -29,7 +29,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 			colors.push_back(clr);
 		}
 		
-		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
+//		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 		
 		if(vertical){
 			vertices.push_back(kolme::Vec2f(0, std::get<0>(s)));
@@ -38,7 +38,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 			vertices.push_back(kolme::Vec2f(std::get<0>(s), 1));
 			vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
 		}
-		TRACE(<< "put pos = " << vertices.back() << std::endl)
+//		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}
 	ASSERT(vertices.size() == colors.size())
 	

@@ -243,6 +243,8 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 	
 	auto& r = morda::inst().renderer();
 	
+	ASSERT(tex)
+	
 	r.setFramebuffer(r.factory->createFramebuffer(tex));
 	
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
