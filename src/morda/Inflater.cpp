@@ -73,19 +73,19 @@ std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
 
 
 namespace{
-
 const char* defs_c = "defs";
+}
 
-
-
+namespace{
 //Merges two STOB chains. 
-std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_ptr<stob::Node> to){
+std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, const std::set<std::string>& vars, std::unique_ptr<stob::Node> to){
 	if(!to){
 		if(!from){
 			return nullptr;
 		}
 		return from->cloneChain();
 	}
+	
 	
 	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
 	
@@ -118,7 +118,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 			continue;//no children means that the property is removed in derived template
 		}
 		
-		dst->setChildren(mergeGUIChain(src->child(), dst->removeChildren()));
+		dst->setChildren(mergeGUIChain(src->child(), vars, dst->removeChildren()));
 	}
 	
 	//add children in reverse order again, so it will be in normal order in the end
@@ -132,7 +132,6 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, std::unique_pt
 	
 	return to;
 }
-
 }
 
 const Inflater::WidgetFactory* Inflater::findFactory(const std::string& widgetName) {
@@ -171,7 +170,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	std::unique_ptr<stob::Node> cloned;
 	if(auto t = this->findTemplate(n->value())){
 		cloned = utki::makeUnique<stob::Node>(t->t->value());
-		cloned->setChildren(mergeGUIChain(t->t->child(), n->child() ? n->child()->cloneChain() : nullptr));
+		cloned->setChildren(mergeGUIChain(t->t->child(), t->vars, n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
 	}
 	
@@ -230,6 +229,38 @@ std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 	return ret;
 }
 
+Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
+	Template ret;
+	
+	for(auto n = &chain; n; n = n->next()){
+		if(n->isProperty()){
+			//possibly variable name
+			if(n->child()){
+				throw Exc("malformed GUI declaration: template argument name has children");
+			}
+			ret.vars.insert(n->value());
+			continue;
+		}
+		//template definition
+		if(ret.t){
+			continue;
+		}
+		ret.t = n->clone();
+	}
+	if(!ret.t){
+		throw Exc("malformed GUI declaration: template has no definition");
+	}
+	ASSERT(ret.t)
+	
+	if(auto t = this->findTemplate(ret.t->value())){
+		ret.t->setValue(t->t->value());
+		ASSERT(t->t->child())
+		ret.t->setChildren(mergeGUIChain(t->t->child(), t->vars, ret.t->removeChildren()));
+	}
+	
+	return ret;
+}
+
 void Inflater::pushTemplates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
 	
@@ -242,16 +273,8 @@ void Inflater::pushTemplates(const stob::Node& chain){
 			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
 		
-		if(!m.insert(std::make_pair(c->value(), Template{c->child()->clone()})).second){
+		if(!m.insert(std::make_pair(c->value(), parseTemplate(c->up()))).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
-		}
-	}
-	
-	for(auto i = m.begin(); i != m.end(); ++i){
-		if(auto s = this->findTemplate(i->second.t->value())){
-			i->second.t->setValue(s->t->value());
-			ASSERT(s->t->child())
-			i->second.t->setChildren(mergeGUIChain(s->t->child(), i->second.t->removeChildren()));
 		}
 	}
 	

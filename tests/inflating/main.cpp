@@ -23,6 +23,9 @@ int main(int argc, char** argv){
 					dims{dx{max} dy{123}}
 
 					Cont{
+						a
+						b
+						c
 						Container{
 							layout{
 								dx{fill} dy{456}

@@ -105,6 +105,8 @@ private:
 		std::set<std::string> vars;
 	};
 	
+	Inflater::Template parseTemplate(const stob::Node& chain);
+	
 	std::list<std::map<std::string, Template>> templates;
 	
 	const Template* findTemplate(const std::string& name)const;
