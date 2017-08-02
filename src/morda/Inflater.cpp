@@ -375,13 +375,6 @@ void Inflater::substituteVariables(stob::Node* to)const{
 	}
 	
 	if(*to == "@"){
-		if(to->next()){
-			std::stringstream ss;
-			ss << "Inflater::SubstituteVariables(): error: property value holds something else besides reference to a variable:" << std::endl;
-			ss << to->chainToString(true);
-			throw Exc(ss.str());
-		}
-		
 		if(!to->child()){
 			throw Exc("Inflater::SubstituteVariables(): error: reference to a variable holds no variable name");
 		}
@@ -400,7 +393,7 @@ void Inflater::substituteVariables(stob::Node* to)const{
 		
 		return;
 	}
-		
+	
 	for(; to; to = to->next()){
 		if(to->isProperty() && to->child()){
 			this->substituteVariables(to->child());
