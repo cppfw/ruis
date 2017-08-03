@@ -207,7 +207,9 @@ public:
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
 	const std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan)const{
-		return this->buf_v[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_v.size())];
+		auto i = (y * this->dim().x + x) * this->numChannels() + chan;
+		ASSERT(i < this->buf_v.size())
+		return this->buf_v[i];
 	}
 
 	/**
@@ -218,7 +220,9 @@ public:
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
 	std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan){
-		return this->buf_v[ASSCOND((y * this->dim().x + x) * this->numChannels() + chan, < this->buf_v.size())];
+		auto i = (y * this->dim().x + x) * this->numChannels() + chan;
+		ASSERT(i < this->buf_v.size())
+		return this->buf_v[i];
 	}
 
 	/**
