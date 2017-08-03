@@ -166,10 +166,13 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmpl, const std::set
 	substituteVars(
 			ret.get(),
 			[&vars](const std::string& name) -> const stob::Node*{
+//				TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
 				if(i == vars.end()){
+//					TRACE(<< "not found" << std::endl)
 					return nullptr;
 				}
+//				TRACE(<< "found = " << i->second.get() << std::endl)
 				return i->second.get();
 			}
 		);
@@ -293,10 +296,23 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 	}
 	ASSERT(ret.t)
 	
+	//for each variable create a stub property if needed
+	for(auto& v : ret.vars){
+		auto p = ret.t->child(v.c_str()).node();
+		if(!p){
+			ret.t->addAsFirstChild(v.c_str());
+			ret.t->child()->addAsFirstChild(nullptr);
+		}
+	}
+	
+//	TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
+	
 	if(auto tmpl = this->findTemplate(ret.t->value())){
 		ret.t->setValue(tmpl->t->value());
 		ret.t->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, ret.t->removeChildren()));
+		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end());//forward all variables
 	}
+	
 //	TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
 	return ret;
 }

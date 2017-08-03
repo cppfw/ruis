@@ -165,7 +165,9 @@ const stob::Node* morda::getProperty(const stob::Node* chain, const char* proper
 		return nullptr;
 	}
 	if(auto n = chain->thisOrNext(property).node()){
-		return n->child();
+		if(n->child() && n->child()->value()){
+			return n->child();
+		}
 	}
 	return nullptr;
 }

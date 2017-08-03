@@ -137,7 +137,7 @@ int main(int argc, char** argv){
 				Cont{ x y layout dx
 					Container{
 						x{@{x}} y{@{y}}
-						dx{@{dx}}
+						dy{@{dx}}
 						layout{
 							@{layout}
 							dx{fill} dy{max}
@@ -170,9 +170,10 @@ int main(int argc, char** argv){
 		auto c = std::dynamic_pointer_cast<morda::Container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
-		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
+		ASSERT_ALWAYS(c->children().front()->rect().p.x == 0)
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 67)
-		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
+		ASSERT_ALWAYS(c->children().front()->rect().d.x == 0)
+		ASSERT_ALWAYS(c->children().front()->rect().d.y == 45)
 		auto lp = c->children().front()->getLayoutParams();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
