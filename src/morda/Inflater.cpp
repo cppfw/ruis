@@ -372,7 +372,7 @@ const stob::Node* Inflater::findVariable(const std::string& name)const{
 			return r->second.get();
 		}
 	}
-	TRACE(<< "Inflater::FindVariable(): variable '" << name <<"' not found!!!" << std::endl)
+//	TRACE(<< "Inflater::findVariable(): variable '" << name <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 

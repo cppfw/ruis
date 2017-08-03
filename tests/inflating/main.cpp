@@ -56,9 +56,8 @@ int main(int argc, char** argv){
 			Container{
 				defs{
 					Cont{
-						x
 						Container{
-							x{@{x}} y{@{x}}
+							x{10} y{12}
 							layout{
 								dx{fill} dy{456}
 							}
@@ -82,9 +81,53 @@ int main(int argc, char** argv){
 		auto c = std::dynamic_pointer_cast<morda::Container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
+		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
+		ASSERT_ALWAYS(c->children().front()->rect().p.y == 12)
+		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
 		auto lp = c->children().front()->getLayoutParams();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
+	}
+	
+	//test template arguments
+	{
+		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+			Container{
+				defs{
+					Cont{
+						x y layout
+						Container{
+							x{@{x}} y{@{x}}
+							layout{
+								@{layout}
+								dx{fill} dy{max}
+							}
+						}
+					}
+				}
+
+				Cont{
+					x{23}
+					dx{45}
+					layout{
+						dx{max}
+					}
+				}
+
+				Cont{}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		ASSERT_ALWAYS(c)
+		ASSERT_ALWAYS(c->children().size() == 2)
+		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
+		ASSERT_ALWAYS(c->children().front()->rect().p.y == 23)
+		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
+		auto lp = c->children().front()->getLayoutParams();
+		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
+		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
 	
 	return 0;
