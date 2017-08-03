@@ -331,7 +331,43 @@ void Inflater::popVariables(){
 	this->variables.pop_front();
 }
 
+namespace{
+void substituteVars(stob::Node* to, const std::function<const stob::Node*(const std::string&)>& findVar){
+	if(!to || !findVar){
+		return;
+	}
+	
+	for(; to;){
+		if(*to == "@"){
+			if(!to->child()){
+				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
+			}
 
+			const auto name = to->child();
+
+			if(name->next()){
+				throw Exc("malformed GUI definition: reference to variable holds more than one variable name");
+			}
+
+			if(name->child()){
+				throw Exc("malformed GUI definition: variable name has children");
+			}
+
+			if(auto var = findVar(name->value())){
+				auto next = to->next();
+				to->replace(*var);
+				to = next;
+				continue;
+			}
+		}else{
+			if(to->child()){
+				substituteVars(to->child(), findVar);
+			}
+		}
+		to = to->next();
+	}
+}
+}
 
 void Inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
@@ -341,33 +377,9 @@ void Inflater::pushVariables(const stob::Node& chain){
 			continue;
 		}
 		
-		std::unique_ptr<stob::Node> value;
+		auto value = n->cloneChildren();
 		
-		for(auto child = n->child(); child;){
-			
-			if(*child == "@" && child->child()){
-				auto r = child->child();
-
-				if(r->next()){
-					throw morda::Exc("Inflater::pushDefinitions(): variable reference has several values, error");
-				}
-
-				if (r->child()) {
-					throw morda::Exc("Inflater::pushDefinitions(): variable reference has children, error");
-				}
-				
-				if(auto var = this->findVariable(r->value())){
-					value = var->cloneChain();
-				}else{
-					throw morda::Exc("Inflater::pushDefinitions(): variable reference could not be resolved, error");
-				}
-				
-				break;
-			}
-			
-			value = child->cloneChain();
-			break;
-		}
+		this->substituteVariables(value.get());
 		
 		if(!m.insert(
 				std::make_pair(n->value(), std::move(value))
@@ -390,36 +402,11 @@ void Inflater::pushVariables(const stob::Node& chain){
 //#endif
 }
 
-
-
 void Inflater::substituteVariables(stob::Node* to)const{
-	if(!to){
-		return;
-	}
-	
-	if(*to == "@"){
-		if(!to->child()){
-			throw Exc("Inflater::SubstituteVariables(): error: reference to a variable holds no variable name");
-		}
-		
-		if(to->child()->next()){
-			throw Exc("Inflater::SubstituteVariables(): error: reference to variable holds more than one variable name");
-		}
-		
-		if(to->child()->child()){
-			throw Exc("Inflater::SubstituteVariables(): error: variable name has children");
-		}
-		
-		if(auto var = this->findVariable(to->child()->value())){
-			to->replace(*var);
-		}
-		
-		return;
-	}
-	
-	for(; to; to = to->next()){
-		if(to->isProperty() && to->child()){
-			this->substituteVariables(to->child());
-		}
-	}
+	substituteVars(
+			to,
+			[this](const std::string& name){
+				return this->findVariable(name);
+			}
+		);
 }

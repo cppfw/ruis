@@ -23,9 +23,6 @@ int main(int argc, char** argv){
 					dims{dx{max} dy{123}}
 
 					Cont{
-						a
-						b
-						c
 						Container{
 							layout{
 								dx{fill} dy{456}
@@ -51,6 +48,43 @@ int main(int argc, char** argv){
 		auto lp = c->children().front()->getLayoutParams();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_ALWAYS(lp.dim[1] == 123)
+	}
+	
+	//test template properties overriding
+	{
+		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+			Container{
+				defs{
+					Cont{
+						x
+						Container{
+							x{@{x}} y{@{x}}
+							layout{
+								dx{fill} dy{456}
+							}
+						}
+					}
+				}
+
+				Cont{
+					x{23}
+					dx{45}
+					layout{
+						dx{max}
+					}
+				}
+
+				Cont{}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		ASSERT_ALWAYS(c)
+		ASSERT_ALWAYS(c->children().size() == 2)
+		auto lp = c->children().front()->getLayoutParams();
+		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
+		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
 	}
 	
 	return 0;
