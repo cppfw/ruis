@@ -362,7 +362,7 @@ struct DataManagerJPEGSource{
 
 void JPEG_InitSource(j_decompress_ptr cinfo){
 	ASSERT(cinfo)
-	ASS(reinterpret_cast<DataManagerJPEGSource*>(cinfo->src))->sof = true;
+	reinterpret_cast<DataManagerJPEGSource*>(cinfo->src)->sof = true;
 }
 
 
@@ -380,7 +380,8 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 
 	try{
 		utki::Buf<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
-		nbytes = ASS(src->fi)->read(bufWrapper);
+		ASSERT(src->fi)
+		nbytes = src->fi->read(bufWrapper);
 	}catch(papki::Exc&){
 		if(src->sof){
 			return FALSE;//the specified file is empty
@@ -464,7 +465,7 @@ void Image::loadJPG(const papki::File& fi){
 		//JPOOL_PERMANENT means that the memory is allocated for a whole
 		//time  of working with the library.
 		cinfo.src = reinterpret_cast<jpeg_source_mgr*>(
-				(ASS(cinfo.mem)->alloc_small)(
+				(cinfo.mem->alloc_small)(
 						j_common_ptr(&cinfo),
 						JPOOL_PERMANENT,
 						sizeof(DataManagerJPEGSource)
@@ -475,7 +476,7 @@ void Image::loadJPG(const papki::File& fi){
 			throw Image::Exc("Image::LoadJPG(): memory alloc failed");
 		}
 		//Allocate memory for read data
-		ASS(src)->buffer = reinterpret_cast<JOCTET*>(
+		src->buffer = reinterpret_cast<JOCTET*>(
 				(cinfo.mem->alloc_small)(
 						j_common_ptr(&cinfo),
 						JPOOL_PERMANENT,
