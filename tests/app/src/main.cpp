@@ -632,7 +632,7 @@ public:
 //		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater().Inflate(zf);
 		
-		
+		ASSERT(std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button")))
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
 			this->showVirtualKeyboard();
 		};
@@ -902,7 +902,7 @@ public:
 		//mouse cursor
 		{
 			auto b = c->findChildByNameAs<morda::PushButton>("showhide_mousecursor_button");
-			bool visible = false;
+			bool visible = true;
 			this->setMouseCursorVisible(visible);
 			b->clicked = [this, visible](morda::PushButton&) mutable{
 				visible = !visible;

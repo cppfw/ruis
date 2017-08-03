@@ -77,60 +77,104 @@ const char* defs_c = "defs";
 }
 
 namespace{
+void substituteVars(stob::Node* to, const std::function<const stob::Node*(const std::string&)>& findVar){
+	if(!to || !findVar){
+		return;
+	}
+	
+	for(; to;){
+		if(*to == "@"){
+			if(!to->child()){
+				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
+			}
+
+			const auto name = to->child();
+
+			if(name->next()){
+				throw Exc("malformed GUI definition: reference to variable holds more than one variable name");
+			}
+
+			if(name->child()){
+				throw Exc("malformed GUI definition: variable name has children");
+			}
+
+			if(auto var = findVar(name->value())){
+				auto next = to->next();
+				to->replace(*var);
+				to = next;
+				continue;
+			}
+		}else{
+			if(to->child()){
+				substituteVars(to->child(), findVar);
+			}
+		}
+		to = to->next();
+	}
+}
+}
+
+namespace{
 //Merges two STOB chains. 
-std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* from, const std::set<std::string>& vars, std::unique_ptr<stob::Node> to){
-	if(!to){
-		if(!from){
+std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmpl, const std::set<std::string>& varNames, std::unique_ptr<stob::Node> chain){
+	if(!chain){
+		if(!tmpl){
 			return nullptr;
 		}
-		return from->cloneChain();
 	}
 	
+	std::unique_ptr<stob::Node> ret;
+	if(tmpl){
+		ret = tmpl->cloneChain();
+	}
 	
-	std::unique_ptr<stob::Node> children; //children will be stored in reverse order
-	
-	for(auto src = from; src; src = src->next()){
-		if(!src->isProperty()){
-			auto c = src->clone();
-			c->setNext(std::move(children));
-			children = std::move(c);
-			continue;
-		}
-		
-		if(!src->child() || *src == "@"){ //@ means reference to a variable
-			//No children means that it is a property value, stop further processing of this chain.
-			
-			//Check that it is the only node in the chain
-			if(src != from || src->next()){
-				throw Inflater::Exc("malformed gui script: property with several values encountered");
+	//prepare variables and remove them from 'chain'
+	std::map<std::string, std::unique_ptr<stob::Node>> vars;
+	{
+		auto childrenChain = utki::makeUnique<stob::Node>();
+		stob::Node* lastChild = childrenChain.get();
+		for(; chain;){
+			if(!chain->isProperty()){
+				ASSERT(lastChild)
+				ASSERT(!lastChild->next())
+				ASSERT(chain)
+				auto tail = chain->chopNext();
+				ASSERT(!chain->next())
+				lastChild->insertNext(std::move(chain));
+				chain = std::move(tail);
+				lastChild = lastChild->next();
+				continue;
+			}else if(varNames.find(chain->value()) != varNames.end()){
+				vars[chain->value()] = chain->removeChildren();
+				chain = chain->chopNext();
+				continue;
+			}else if(ret){
+				if(auto n = ret->thisOrNext(chain->value()).node()){
+					n->setChildren(chain->removeChildren());
+					chain = chain->chopNext();
+					continue;
+				}
 			}
-			return to;
+			auto tail = chain->chopNext();
+			chain->setNext(std::move(ret));
+			ret = std::move(chain);
+			chain = std::move(tail);
 		}
-		
-		auto dst = to->thisOrNext(src->value()).node();
-		if(!dst){
-			//there is no same named property in 'to', so just clone property there
-			to->insertNext(src->clone());
-			continue;
-		}
-		
-		if(!dst->child()){
-			continue;//no children means that the property is removed in derived template
-		}
-		
-		dst->setChildren(mergeGUIChain(src->child(), vars, dst->removeChildren()));
+		vars["children"] = childrenChain->chopNext();
 	}
 	
-	//add children in reverse order again, so it will be in normal order in the end
-	for(; children;){
-		auto c = std::move(children);
-		children = c->chopNext();
-		
-		c->setNext(std::move(to));
-		to = std::move(c);
-	}
+	substituteVars(
+			ret.get(),
+			[&vars](const std::string& name) -> const stob::Node*{
+				auto i = vars.find(name);
+				if(i == vars.end()){
+					return nullptr;
+				}
+				return i->second.get();
+			}
+		);
 	
-	return to;
+	return ret;
 }
 }
 
@@ -145,6 +189,7 @@ const Inflater::WidgetFactory* Inflater::findFactory(const std::string& widgetNa
 }
 
 
+
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
@@ -155,8 +200,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	for(; n && n->isProperty(); n = n->next()){
 		if(*n == defs_c){
 			if(n->child()){
-				this->pushTemplates(*n->child());
-				this->pushVariables(*n->child());
+				this->pushDefs(*n->child());
 			}
 		}else{
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
@@ -168,10 +212,13 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	}
 	
 	std::unique_ptr<stob::Node> cloned;
-	if(auto t = this->findTemplate(n->value())){
-		cloned = utki::makeUnique<stob::Node>(t->t->value());
-		cloned->setChildren(mergeGUIChain(t->t->child(), t->vars, n->child() ? n->child()->cloneChain() : nullptr));
+//	TRACE(<< "inflating = " << n->value() << std::endl)
+	if(auto tmpl = this->findTemplate(n->value())){
+//		TRACE(<< "template name = " << n->value() << std::endl)
+		cloned = utki::makeUnique<stob::Node>(tmpl->t->value());
+		cloned->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, n->child() ? n->child()->cloneChain() : nullptr));
 		n = cloned.get();
+//		TRACE(<< "n = " << n->chainToString(true) << std::endl)
 	}
 	
 	
@@ -184,23 +231,17 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		throw Exc(ss.str());
 	}
 
-	bool needPopTemplates = false;
-	bool needPopVariables = false;
-	utki::ScopeExit scopeExit([this, &needPopTemplates, &needPopVariables](){
-		if(needPopTemplates){
-			this->popTemplates();
-		}
-		if(needPopVariables){
-			this->popVariables();
+	bool needPopDefs = false;
+	utki::ScopeExit scopeExit([this, &needPopDefs](){
+		if(needPopDefs){
+			this->popDefs();
 		}
 	});
 	
 	if(auto v = n->child(defs_c).node()){
 		if(v->child()){
-			this->pushTemplates(*v->child());
-			needPopTemplates = true;
-			this->pushVariables(*v->child());
-			needPopVariables = true;
+			this->pushDefs(*v->child());
+			needPopDefs = true;
 		}
 	}
 	
@@ -252,14 +293,25 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 	}
 	ASSERT(ret.t)
 	
-	if(auto t = this->findTemplate(ret.t->value())){
-		ret.t->setValue(t->t->value());
-		ASSERT(t->t->child())
-		ret.t->setChildren(mergeGUIChain(t->t->child(), t->vars, ret.t->removeChildren()));
+	if(auto tmpl = this->findTemplate(ret.t->value())){
+		ret.t->setValue(tmpl->t->value());
+		ret.t->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, ret.t->removeChildren()));
 	}
-	
+//	TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
 	return ret;
 }
+
+void Inflater::pushDefs(const stob::Node& chain) {
+	this->pushVariables(chain);
+	this->pushTemplates(chain);
+}
+
+void Inflater::popDefs() {
+	this->popVariables();
+	this->popTemplates();
+}
+
+
 
 void Inflater::pushTemplates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
@@ -272,7 +324,7 @@ void Inflater::pushTemplates(const stob::Node& chain){
 		if(!c->child()){
 			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
-		
+//		TRACE(<< "pushing template = " << c->value() << std::endl)
 		if(!m.insert(std::make_pair(c->value(), parseTemplate(c->up()))).second){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
@@ -331,43 +383,6 @@ void Inflater::popVariables(){
 	this->variables.pop_front();
 }
 
-namespace{
-void substituteVars(stob::Node* to, const std::function<const stob::Node*(const std::string&)>& findVar){
-	if(!to || !findVar){
-		return;
-	}
-	
-	for(; to;){
-		if(*to == "@"){
-			if(!to->child()){
-				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
-			}
-
-			const auto name = to->child();
-
-			if(name->next()){
-				throw Exc("malformed GUI definition: reference to variable holds more than one variable name");
-			}
-
-			if(name->child()){
-				throw Exc("malformed GUI definition: variable name has children");
-			}
-
-			if(auto var = findVar(name->value())){
-				auto next = to->next();
-				to->replace(*var);
-				to = next;
-				continue;
-			}
-		}else{
-			if(to->child()){
-				substituteVars(to->child(), findVar);
-			}
-		}
-		to = to->next();
-	}
-}
-}
 
 void Inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
@@ -405,7 +420,7 @@ void Inflater::pushVariables(const stob::Node& chain){
 void Inflater::substituteVariables(stob::Node* to)const{
 	substituteVars(
 			to,
-			[this](const std::string& name){
+			[this](const std::string& name) -> const stob::Node*{
 				return this->findVariable(name);
 			}
 		);

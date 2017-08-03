@@ -111,6 +111,9 @@ private:
 	
 	const Template* findTemplate(const std::string& name)const;
 	
+	void pushDefs(const stob::Node& chain);
+	void popDefs();
+	
 	void pushTemplates(const stob::Node& chain);
 	
 	void popTemplates();

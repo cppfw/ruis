@@ -18,19 +18,31 @@ defs{
 
 	Window{
 		Window{
-			look{
-				titleColorTopmost{ @{morda_color_bg_window_title} }
-				titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
-				background{WindowBackground}
-				left{@{morda_window_border_size}}
-				top{@{morda_window_border_size}}
-				right{@{morda_window_border_size}}
-				bottom{@{morda_window_border_size}}
+			defs{
+				look{
+					titleColorTopmost{ @{morda_color_bg_window_title} }
+					titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
+					background{WindowBackground}
+					left{@{morda_window_border_size}}
+					top{@{morda_window_border_size}}
+					right{@{morda_window_border_size}}
+					bottom{@{morda_window_border_size}}
+				}
 			}
+
+			look{
+				@{look}
+			}
+
+			@{children}
 		}
 	}
 
-	PushButton{ SimpleButton{} }
+	PushButton{
+		SimpleButton{
+			@{children}
+		}
+	}
 
 	WindowBackground{
 		Frame{
