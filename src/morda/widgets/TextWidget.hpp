@@ -15,6 +15,7 @@ namespace morda{
 /**
  * @brief Abstract widget displaying a text.
  */
+//TODO: should not be color widget
 class TextWidget : public ColorWidget{
 	std::shared_ptr<ResFont> font_v;
 	

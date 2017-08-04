@@ -12,11 +12,9 @@ namespace morda{
 
 /**
  * @brief Window widget.
- * Window widget has borders, caption bar and can contain child widgets.
+ * Window has borders, caption bar and can contain child widgets laid out as in Pile container.
  * Window can be resized by dragging one of the borders or corners of the window.
  * Window can be moved by dragging caption bar.
- * Window widgets are supposed to be stored in simple Contaner which does not perform
- * any automatic layout operations.
  * From GUI script it can be instantiated as "Window".
  * @param title - text of the window title.
  * @param look - style settings.

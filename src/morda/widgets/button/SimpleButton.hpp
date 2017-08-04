@@ -8,9 +8,9 @@ namespace morda{
 /**
  * @brief Simple push button.
  * Implementation of a push button as a nine patch which can have children.
- * In GUI scripts can be instantiated as "SimpleButton". Only availabe after
+ * In GUI scripts can be instantiated as "SimpleButton". Only available after
  * initializing standard morda widgets.
- * Sonce the button is a NinePatch it can have children.
+ * Since the button is a NinePatch it can have children.
  */
 class SimpleButton :
 		public PushButton,
