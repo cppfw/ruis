@@ -16,6 +16,42 @@ defs{
 		}
 	}
 
+	Margins{ left top right bottom
+		Row{
+			Widget{
+				layout{
+					dx{@{left}}
+				}
+			}
+			Column{
+				layout{
+					weight{1}
+				}
+				Widget{
+					layout{
+						dy{@{top}}
+					}
+				}
+				Pile{
+					layout{
+						weight{1}
+					}
+					@{children}
+				}
+				Widget{
+					layout{
+						dy{@{bottom}}
+					}
+				}
+			}
+			Widget{
+				layout{
+					dx{@{right}}
+				}
+			}
+		}
+	}
+
 	Left{ layout
 		Row{
 			layout{

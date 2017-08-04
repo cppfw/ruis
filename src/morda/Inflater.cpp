@@ -7,7 +7,6 @@
 #include "widgets/core/container/Table.hpp"
 #include "widgets/core/container/TableRow.hpp"
 #include "widgets/core/container/Overlay.hpp"
-#include "widgets/core/container/Margins.hpp"
 
 #include "widgets/core/proxy/KeyProxy.hpp"
 #include "widgets/core/proxy/MouseProxy.hpp"
@@ -36,7 +35,6 @@ Inflater::Inflater(){
 	this->addWidget<KeyProxy>("KeyProxy");
 	this->addWidget<Overlay>("Overlay");
 	this->addWidget<ResizeProxy>("ResizeProxy");
-	this->addWidget<Margins>("Margins");
 }
 
 
