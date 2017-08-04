@@ -87,7 +87,7 @@ before_install:
     sudo apt-get install -qq prorab;
   fi
 - if [ "$BUILD_NAME" == "debian" ]; then
-    echo "deb http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    echo "deb [arch=amd64] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq sbuild prorab debhelper &&
@@ -101,7 +101,7 @@ before_install:
     sudo chroot /srv/chroot/deb-amd64 ln -s /usr/bin/gpg1 /usr/bin/gpg;
   fi
 - if [ "$BUILD_NAME" == "ubuntu" ]; then
-    echo "deb http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    echo "deb [arch=amd64] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq sbuild prorab debhelper &&
@@ -113,7 +113,7 @@ before_install:
     sudo chroot /srv/chroot/ubu-amd64 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
   fi
 - if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-    echo "deb http://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    echo "deb [arch=amd64] http://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq prorab;
@@ -125,12 +125,7 @@ before_install:
     sudo mkdir -p /srv/chroot/rasp-armhf/build &&
     sudo rsync -av $TRAVIS_BUILD_DIR/ /srv/chroot/rasp-armhf/build/;
   fi
-- if [ "$BUILD_NAME" == "clang" ]; then
-    echo "deb http://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
-    sudo apt-get update -qq &&
-    sudo apt-get install -qq $linuxDependencies lintian;
-  fi
+
 
 before_script:
   # download and install android NDK
@@ -154,10 +149,6 @@ script:
 - if [ "$BUILD_NAME" == "ubuntu" ]; then
     prorab-deb-prepare.sh &&
     sg sbuild -c "sbuild -A -d xenial-amd64-sbuild --debbuildopts '-us -uc'";
-  fi
-- if [ "$BUILD_NAME" == "clang" ]; then
-    prorab-deb-prepare.sh &&
-    dpkg-buildpackage -uc -us;
   fi
 - if [ "$BUILD_NAME" == "macosx" ]; then
     make && make test;
