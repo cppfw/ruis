@@ -16,6 +16,78 @@ defs{
 		}
 	}
 
+	Left{ layout
+		HorizontalArea{
+			layout{
+				@{layout}
+				dx{max}
+			}
+
+			@{children}
+
+			Widget{
+				layout{
+					dx{0}
+					weight{1}
+				}
+			}
+		}
+	}
+
+	Right{ layout
+		HorizontalArea{
+			layout{
+				@{layout}
+				dx{max}
+			}
+
+			Widget{
+				layout{
+					dx{0}
+					weight{1}
+				}
+			}
+
+			@{children}
+		}
+	}
+
+	Top{ layout
+		VerticalArea{
+			layout{
+				@{layout}
+				dy{max}
+			}
+
+			@{children}
+
+			Widget{
+				layout{
+					dy{0}
+					weight{1}
+				}
+			}
+		}
+	}
+
+	Bottom{ layout
+		VerticalArea{
+			layout{
+				@{layout}
+				dy{max}
+			}
+
+			Widget{
+				layout{
+					dy{0}
+					weight{1}
+				}
+			}
+
+			@{children}
+		}
+	}
+
 	Window{
 		look
 		Window{

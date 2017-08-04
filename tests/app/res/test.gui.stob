@@ -63,11 +63,7 @@ Container{
 			}
 
 
-			HorizontalArea{
-				layout{
-					dx{max} dy{min}
-				}
-				
+			Right{
 				Margins{
 					left{5pt}
 					right{5pt}
@@ -80,10 +76,6 @@ Container{
 				}
 
 				TextLabel{
-					layout{
-						dx{0} dy{min}
-						weight{1}
-					}
 					text{"some checkbox"}
 				}
 			}
@@ -105,7 +97,8 @@ Container{
 				TextLabel{text{item9}}
 				TextLabel{text{item10}}
 			}
-			HorizontalArea{
+
+			Left{
 				PushButton{
 					name{showhide_mousecursor_button}
 
@@ -481,14 +474,10 @@ Container{
 			}
 		}*/
 
-
-		HorizontalArea{
+		Bottom{
 			layout{
-				dx{max} dy{min}
+				dx{max}
 			}
-
-			Widget{layout{dx{5pt}}}
-
 			TextField{
 				name{text_input}
 
@@ -497,10 +486,9 @@ Container{
 				color{ @{morda_color_text} }
 
 				layout{
-					dx{min} dy{min} weight{1}
+					dx{max} dy{min}
 				}
 			}
-			Widget{layout{dx{5pt}}}
 		}
 	}
 
