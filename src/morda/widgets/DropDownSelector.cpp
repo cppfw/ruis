@@ -82,7 +82,7 @@ const char* itemLayout_c = R"qwertyuiop(
 const char* contextMenuLayout_c = R"qwertyuiop(
 		NinePatch{
 			image{morda_npt_contextmenu_bg}
-			VerticalArea{
+			Column{
 				name{morda_contextmenu_content}
 			}
 		}
@@ -127,7 +127,7 @@ void DropDownSelector::showDropdownMenu() {
 	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
 	ASSERT(np)
 
-	auto va = np->findChildByNameAs<VerticalArea>("morda_contextmenu_content");
+	auto va = np->findChildByNameAs<Column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
@@ -141,7 +141,7 @@ void DropDownSelector::showDropdownMenu() {
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalArea(stob::parse(selectorLayout_c).get()),
+		Row(stob::parse(selectorLayout_c).get()),
 		selectionContainer(*this->findChildByNameAs<Pile>("morda_dropdown_selection"))
 {	
 	{

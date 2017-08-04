@@ -6,12 +6,12 @@ using namespace morda;
 
 TableRow::TableRow(const stob::Node* chain) :
 		Widget(chain),
-		HorizontalArea(chain)
+		Row(chain)
 {}
 
 
 TableRow::LayoutParams::LayoutParams(const stob::Node* chain) :
-		HorizontalArea::LayoutParams(chain),
+		Row::LayoutParams(chain),
 		processedParams(nullptr)
 {}
 

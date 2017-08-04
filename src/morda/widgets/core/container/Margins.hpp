@@ -4,7 +4,7 @@
 
 #include "../../../util/Sides.hpp"
 
-#include "LinearArea.hpp"
+#include "LinearContainer.hpp"
 
 
 namespace morda{
@@ -35,7 +35,7 @@ namespace morda{
  */
 class Margins : 
 		virtual public Widget,
-		private HorizontalArea
+		private Row
 {
 	std::shared_ptr<Widget> child;
 	

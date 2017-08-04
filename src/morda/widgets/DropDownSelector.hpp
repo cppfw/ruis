@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "core/container/LinearArea.hpp"
+#include "core/container/LinearContainer.hpp"
 #include "core/container/Pile.hpp"
 
 namespace morda{
@@ -14,7 +14,7 @@ namespace morda{
  */
 class DropDownSelector :
 		virtual public Widget,
-		private HorizontalArea
+		private Row
 {
 	Pile& selectionContainer;
 public:

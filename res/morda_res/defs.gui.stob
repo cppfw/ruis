@@ -17,7 +17,7 @@ defs{
 	}
 
 	Left{ layout
-		HorizontalArea{
+		Row{
 			layout{
 				@{layout}
 				dx{max}
@@ -35,7 +35,7 @@ defs{
 	}
 
 	Right{ layout
-		HorizontalArea{
+		Row{
 			layout{
 				@{layout}
 				dx{max}
@@ -53,7 +53,7 @@ defs{
 	}
 
 	Top{ layout
-		VerticalArea{
+		Column{
 			layout{
 				@{layout}
 				dy{max}
@@ -71,7 +71,7 @@ defs{
 	}
 
 	Bottom{ layout
-		VerticalArea{
+		Column{
 			layout{
 				@{layout}
 				dy{max}

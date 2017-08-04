@@ -55,7 +55,7 @@ const char* windowDesc_c = R"qwertyuiop(
 				}
 
 				//middle
-				VerticalArea{
+				Column{
 					layout{
 						weight{1}
 						dy{max}
@@ -83,7 +83,7 @@ const char* windowDesc_c = R"qwertyuiop(
 							}
 						}
 
-						HorizontalArea{
+						Row{
 							layout{
 								dx{max} dy{max}
 							}

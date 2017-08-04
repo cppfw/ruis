@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "LinearArea.hpp"
+#include "LinearContainer.hpp"
 #include "TableRow.hpp"
 
 namespace morda{
@@ -14,7 +14,7 @@ namespace morda{
  * This container can only have TableRow widgets as children.
  * From GUI script it can be instantiated as "Table".
  */
-class Table : public VerticalArea{
+class Table : public Column{
 public:
 	Table(const stob::Node* chain = nullptr);
 	

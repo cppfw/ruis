@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LinearArea.hpp"
+#include "LinearContainer.hpp"
 #include "Table.hpp"
 
 namespace morda{
@@ -10,7 +10,7 @@ namespace morda{
  * This is a container which should be used as a row of a Table container.
  * From GUI script it can be instantiated as "TableRow".
  */
-class TableRow : public HorizontalArea{
+class TableRow : public Row{
 	friend class Table;
 public:
 	TableRow(const stob::Node* chain = nullptr);
@@ -19,11 +19,11 @@ public:
 	TableRow& operator=(const TableRow&) = delete;
 	
 protected:
-	class LayoutParams : public HorizontalArea::LayoutParams{
+	class LayoutParams : public Row::LayoutParams{
 		friend class TableRow;
 		friend class Table;
 		
-		mutable HorizontalArea::LayoutParams processedParams;
+		mutable Row::LayoutParams processedParams;
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
 	};

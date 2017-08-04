@@ -8,13 +8,12 @@ namespace morda{
 
 
 /**
- * @brief Linear area container widget.
- * Linear area container lays out its child widgets in a row from left to right or in a column from top to bottom.
- * This is a base class for VerticalArea and HorizontalArea.
+ * @brief Linear container widget.
+ * Linear container lays out its child widgets in a row from left to right or in a column from top to bottom.
  */
-class LinearArea : public Container{
-	LinearArea(const LinearArea&) = delete;
-	LinearArea& operator=(const LinearArea&) = delete;
+class LinearContainer : public Container{
+	LinearContainer(const LinearContainer&) = delete;
+	LinearContainer& operator=(const LinearContainer&) = delete;
 
 	bool isVertical_v;
 	
@@ -27,7 +26,7 @@ class LinearArea : public Container{
 	}
 	
 public:
-	LinearArea(bool isVertical, const stob::Node* chain = nullptr);
+	LinearContainer(bool isVertical, const stob::Node* chain = nullptr);
 
 	void layOut() override;	
 	
@@ -63,34 +62,34 @@ private:
 
 
 /**
- * @brief Vertical area container widget.
- * Vertical variant of LinearArea container. From GUI scripts it can be instantiated as "VerticalArea".
+ * @brief Vertical container widget.
+ * Column is a vertical variant of linear container. From GUI scripts it can be instantiated as "Column".
  */
-class VerticalArea : public LinearArea{
+class Column : public LinearContainer{
 public:
-	VerticalArea(const stob::Node* chain = nullptr) :
+	Column(const stob::Node* chain = nullptr) :
 			Widget(chain),
-			LinearArea(true, chain)
+			LinearContainer(true, chain)
 	{}
 	
-	VerticalArea(const VerticalArea&) = delete;
-	VerticalArea& operator=(const VerticalArea&) = delete;
+	Column(const Column&) = delete;
+	Column& operator=(const Column&) = delete;
 };
 
 
 /**
- * @brief Horizontal area container widget.
- * Horizontal variant of HorizontalArea container. From GUI scripts it can be instantiated as "HorizontalArea".
+ * @brief Horizontal container widget.
+ * Row is a horizontal variant of linear container. From GUI scripts it can be instantiated as "Row".
  */
-class HorizontalArea : public LinearArea{
+class Row : public LinearContainer{
 public:
-	HorizontalArea(const stob::Node* chain = nullptr) :
+	Row(const stob::Node* chain = nullptr) :
 			Widget(chain),
-			LinearArea(false, chain)
+			LinearContainer(false, chain)
 	{}
 	
-	HorizontalArea(const HorizontalArea&) = delete;
-	HorizontalArea& operator=(const HorizontalArea&) = delete;
+	Row(const Row&) = delete;
+	Row& operator=(const Row&) = delete;
 };
 
 

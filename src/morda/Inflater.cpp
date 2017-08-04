@@ -1,7 +1,7 @@
 #include "Inflater.hpp"
 
 #include "widgets/core/container/Container.hpp"
-#include "widgets/core/container/LinearArea.hpp"
+#include "widgets/core/container/LinearContainer.hpp"
 #include "widgets/core/container/Pile.hpp"
 #include "widgets/core/container/ScrollArea.hpp"
 #include "widgets/core/container/Table.hpp"
@@ -26,8 +26,8 @@ using namespace morda;
 Inflater::Inflater(){
 	this->addWidget<Widget>("Widget");
 	this->addWidget<Container>("Container");
-	this->addWidget<HorizontalArea>("HorizontalArea");
-	this->addWidget<VerticalArea>("VerticalArea");
+	this->addWidget<Row>("Row");
+	this->addWidget<Column>("Column");
 	this->addWidget<Pile>("Pile");
 	this->addWidget<MouseProxy>("MouseProxy");
 	this->addWidget<ScrollArea>("ScrollArea");

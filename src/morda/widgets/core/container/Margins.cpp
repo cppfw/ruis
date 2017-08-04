@@ -75,7 +75,7 @@ void Margins::setMargins(Sidesr margins){
 	}
 	
 	if(this->margins_v.top() != 0 || this->margins_v.bottom() != 0){
-		auto va  = utki::makeShared<VerticalArea>();
+		auto va  = utki::makeShared<Column>();
 		this->add(va);
 		
 		if(this->margins_v.top() != 0){
