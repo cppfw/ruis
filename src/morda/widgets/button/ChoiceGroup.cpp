@@ -7,7 +7,7 @@ using namespace morda;
 
 ChoiceGroup::ChoiceGroup(const stob::Node* chain) :
 		Widget(chain),
-		Frame(chain)
+		Pile(chain)
 {
 }
 

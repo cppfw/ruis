@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ChoiceButton.hpp"
-#include "../core/container/Frame.hpp"
+#include "../core/container/Pile.hpp"
 
 namespace morda{
 
@@ -13,7 +13,7 @@ namespace morda{
  */
 class RadioButton :
 		public ChoiceButton,
-		private Frame
+		private Pile
 {
 	std::shared_ptr<Widget> checkWidget;
 public:

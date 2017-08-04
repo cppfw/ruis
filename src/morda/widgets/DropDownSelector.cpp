@@ -23,7 +23,7 @@ using namespace morda;
 namespace{
 
 const char* selectorLayout_c = R"qwertyuiop(
-		Frame{
+		Pile{
 			layout{
 				dx{0}
 				weight{1}
@@ -32,7 +32,7 @@ const char* selectorLayout_c = R"qwertyuiop(
 				layout{dx{fill}dy{max}}
 				image{morda_npt_dropdown_selector_bg}
 
-				Frame{
+				Pile{
 					name{morda_dropdown_selection}
 					layout{dx{fill}dy{max}}
 				}
@@ -59,7 +59,7 @@ const char* selectorLayout_c = R"qwertyuiop(
 	)qwertyuiop";
 
 const char* itemLayout_c = R"qwertyuiop(
-		Frame{
+		Pile{
 			layout{
 				dx{max}
 			}
@@ -142,7 +142,7 @@ void DropDownSelector::showDropdownMenu() {
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
 		HorizontalArea(stob::parse(selectorLayout_c).get()),
-		selectionContainer(*this->findChildByNameAs<Frame>("morda_dropdown_selection"))
+		selectionContainer(*this->findChildByNameAs<Pile>("morda_dropdown_selection"))
 {	
 	{
 		auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
@@ -230,7 +230,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
+	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
 	ASSERT(wd)
 
 	auto mp = wd->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");

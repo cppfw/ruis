@@ -113,7 +113,7 @@ defs{
 	}
 
 	WindowBackground{
-		Frame{
+		Pile{
 			layout{dx{fill} dy{fill}}
 
 			cache{true}

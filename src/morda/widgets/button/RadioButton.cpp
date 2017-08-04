@@ -24,7 +24,7 @@ const char* D_Layout = R"qwertyuiop(
 
 RadioButton::RadioButton(const stob::Node* chain) :
 		Widget(chain),
-		Frame(stob::parse(D_Layout).get())
+		Pile(stob::parse(D_Layout).get())
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)

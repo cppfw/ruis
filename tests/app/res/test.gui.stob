@@ -219,7 +219,7 @@ Container{
 				}
 			}
 
-			Frame{
+			Pile{
 				layout{dx{fill} dy{50pt}}
 				ColorLabel{
 					layout{dx{fill}dy{fill}}
@@ -230,7 +230,7 @@ Container{
 					name{horizontal_list_mouseproxy}
 				}
 			}
-			Frame{
+			Pile{
 				layout{
 					dx{fill}
 					dy{0}
@@ -324,7 +324,7 @@ Container{
 					weight{1}
 				}
 
-				Frame{
+				Pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
@@ -511,7 +511,7 @@ Container{
 					weight{1}
 				}
 
-				Frame{
+				Pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
@@ -664,7 +664,7 @@ Container{
 			}
 
 
-			Frame{
+			Pile{
 				layout{
 					dx{0} dy{max}
 					weight{1}

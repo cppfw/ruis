@@ -62,7 +62,7 @@ const char* windowDesc_c = R"qwertyuiop(
 					}
 
 					//caption
-					Frame{
+					Pile{
 						layout{
 							dx{max}
 						}
@@ -105,7 +105,7 @@ const char* windowDesc_c = R"qwertyuiop(
 						}
 					}
 
-					Frame{
+					Pile{
 						name{morda_content}
 						clip{true}
 						layout{
@@ -169,7 +169,7 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 morda::Window::Window(const stob::Node* chain) :
 		Widget(chain),
-		Frame(stob::parse(windowDesc_c).get())
+		Pile(stob::parse(windowDesc_c).get())
 {
 	this->setupWidgets();
 	
@@ -237,7 +237,7 @@ morda::Window::Window(const stob::Node* chain) :
 }
 
 void morda::Window::setupWidgets(){
-	this->contentArea = this->findChildByNameAs<Frame>("morda_content");
+	this->contentArea = this->findChildByNameAs<Pile>("morda_content");
 	ASSERT(this->contentArea)
 	
 	this->title = this->findChildByNameAs<TextLabel>("morda_title");

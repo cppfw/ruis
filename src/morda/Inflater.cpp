@@ -2,7 +2,7 @@
 
 #include "widgets/core/container/Container.hpp"
 #include "widgets/core/container/LinearArea.hpp"
-#include "widgets/core/container/Frame.hpp"
+#include "widgets/core/container/Pile.hpp"
 #include "widgets/core/container/ScrollArea.hpp"
 #include "widgets/core/container/Table.hpp"
 #include "widgets/core/container/TableRow.hpp"
@@ -28,7 +28,7 @@ Inflater::Inflater(){
 	this->addWidget<Container>("Container");
 	this->addWidget<HorizontalArea>("HorizontalArea");
 	this->addWidget<VerticalArea>("VerticalArea");
-	this->addWidget<Frame>("Frame");
+	this->addWidget<Pile>("Pile");
 	this->addWidget<MouseProxy>("MouseProxy");
 	this->addWidget<ScrollArea>("ScrollArea");
 	this->addWidget<Table>("Table");

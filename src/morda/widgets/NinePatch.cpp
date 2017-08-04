@@ -43,7 +43,7 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 				layout{dx{0}dy{fill}}
 			}
 
-			Frame{
+			Pile{
 				name{morda_content}
 				layout{
 					weight{1}
@@ -100,7 +100,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	
 	this->onBlendingChanged();
 	
-	this->content_var = this->findChildByNameAs<Frame>("morda_content");
+	this->content_var = this->findChildByNameAs<Pile>("morda_content");
 	
 	if(auto n = getProperty(chain, "left")){
 		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'

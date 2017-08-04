@@ -282,7 +282,7 @@ public:
 	}
 	
 	const char* DPlusMinus = R"qwertyuiop(
-			Frame{
+			Pile{
 				ImageLabel{
 					name{plusminus}
 				}
@@ -296,7 +296,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLine = R"qwertyuiop(
-			Frame{
+			Pile{
 				layout{dx{5mm} dy{fill}}
 				ColorLabel{
 					layout{dx{1pt}dy{fill}}
@@ -306,7 +306,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLineEnd = R"qwertyuiop(
-			Frame{
+			Pile{
 				layout{dx{5mm} dy{max}}
 				VerticalArea{
 					layout{dx{max}dy{max}}
@@ -328,7 +328,7 @@ public:
 		)qwertyuiop";
 	
 	const char* DLineMiddle = R"qwertyuiop(
-			Frame{
+			Pile{
 				layout{dx{5mm} dy{max}}
 				ColorLabel{
 					layout{dx{1pt}dy{max}}
@@ -469,7 +469,7 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::Frame>(morda::Morda::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
 			ASSERT(widget)
 			
 			if(n->child()){
@@ -515,7 +515,7 @@ public:
 		{
 			auto v = morda::Morda::inst().inflater.inflate(*stob::parse(
 					R"qwertyuiop(
-							Frame{
+							Pile{
 								ColorLabel{
 									name{selection}
 									layout{dx{max}dy{max}}

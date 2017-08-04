@@ -4,7 +4,7 @@
 
 #include "../resources/ResNinePatch.hpp"
 
-#include "core/container/Frame.hpp"
+#include "core/container/Pile.hpp"
 #include "core/container/Table.hpp"
 
 #include "label/ImageLabel.hpp"
@@ -39,7 +39,7 @@ class NinePatch :
 	
 	std::array<std::array<std::shared_ptr<ImageLabel>, 3>, 3> imageLabelMatrix;
 	
-	std::shared_ptr<Frame> content_var;
+	std::shared_ptr<Pile> content_var;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -53,7 +53,7 @@ public:
 	 * @brief Get content container.
 	 * @return The content container. This is where the child widgets are stored.
 	 */
-	Frame& content(){
+	Pile& content(){
 		return *this->content_var;
 	}
 	

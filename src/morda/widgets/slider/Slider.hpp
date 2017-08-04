@@ -2,7 +2,7 @@
 
 #include "../core/Widget.hpp"
 
-#include "../core/container/Frame.hpp"
+#include "../core/container/Pile.hpp"
 
 
 //disable stupid warnings
@@ -74,7 +74,7 @@ public:
 
 class HandleSlider :
 		public AreaSlider,
-		private Frame //users do not need to know that it is a container
+		private Pile //users do not need to know that it is a container
 {
 	//no copying
 	HandleSlider(const HandleSlider&);

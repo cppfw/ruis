@@ -2,7 +2,7 @@
 
 #include "core/Widget.hpp"
 #include "core/container/LinearArea.hpp"
-#include "core/container/Frame.hpp"
+#include "core/container/Pile.hpp"
 
 namespace morda{
 
@@ -16,7 +16,7 @@ class DropDownSelector :
 		virtual public Widget,
 		private HorizontalArea
 {
-	Frame& selectionContainer;
+	Pile& selectionContainer;
 public:
 	/**
 	 * @brief Item provider class.

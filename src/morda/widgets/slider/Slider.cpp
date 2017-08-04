@@ -27,7 +27,7 @@ const char* DDescription = R"qwertyuiop(
 			layout{
 				dx{max} dy{max}
 			}
-			Frame{
+			Pile{
 				name{morda_handle}
 				NinePatch{
 					name{morda_handle_image}
@@ -52,7 +52,7 @@ const char* DDescription = R"qwertyuiop(
 
 HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
-		Frame(stob::parse(DDescription).get()),
+		Pile(stob::parse(DDescription).get()),
 		handle(*this->findChildByName("morda_handle")),
 		isVertical(isVertical)
 {
@@ -147,7 +147,7 @@ void HandleSlider::onFactorChange() {
 
 
 void HandleSlider::layOut(){
-	this->Frame::layOut();
+	this->Pile::layOut();
 	
 	unsigned longIndex = this->getLongIndex();
 	

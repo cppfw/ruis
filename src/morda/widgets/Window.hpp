@@ -3,7 +3,7 @@
 #include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
 
-#include "core/container/Frame.hpp"
+#include "core/container/Pile.hpp"
 #include "core/proxy/MouseProxy.hpp"
 #include "core/container/Table.hpp"
 
@@ -23,7 +23,7 @@ namespace morda{
  */
 class Window :
 		virtual public Widget,
-		private Frame
+		private Pile
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	
@@ -33,7 +33,7 @@ class Window :
 	
 	std::shared_ptr<TextLabel> title;
 	
-	std::shared_ptr<Frame> contentArea;
+	std::shared_ptr<Pile> contentArea;
 	
 	std::shared_ptr<Widget> tBorder;
 	std::shared_ptr<Widget> lBorder;
@@ -68,7 +68,7 @@ public:
 	 * This is where child widgets are stored.
 	 * @return Window content area.
 	 */
-	Frame& content(){
+	Pile& content(){
 		return *this->contentArea;
 	}
 	
