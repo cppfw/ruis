@@ -47,7 +47,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, VertexArray& vao) const override{
+	void render(const Matr4r& matrix, const VertexArray& vao) const override{
 		ASSERT(this->tex)
 		this->tex->render(matrix, *this->vao);
 	}

@@ -61,7 +61,7 @@ public:
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const Matr4r& matrix, VertexArray& vao = *morda::inst().renderer().posTexQuad01VAO)const = 0;
+		virtual void render(const Matr4r& matrix, const VertexArray& vao = *morda::inst().renderer().posTexQuad01VAO)const = 0;
 	};
 
 	/**
@@ -117,7 +117,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, VertexArray& vao) const override;
+	void render(const Matr4r& matrix, const VertexArray& vao) const override;
 	
 private:
 	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi);
