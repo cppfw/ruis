@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core/Widget.hpp"
+#include "../core/Widget.hpp"
 #include "ColorWidget.hpp"
 
-#include "../resources/ResFont.hpp"
+#include "../../resources/ResFont.hpp"
 
 #include <kolme/Rectangle.hpp>
 

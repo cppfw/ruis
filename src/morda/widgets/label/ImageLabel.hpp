@@ -2,7 +2,7 @@
 
 #include "../core/Widget.hpp"
 
-#include "../BlendingWidget.hpp"
+#include "../base/BlendingWidget.hpp"
 
 #include "../../resources/ResImage.hpp"
 

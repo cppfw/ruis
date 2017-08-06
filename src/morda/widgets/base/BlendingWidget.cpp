@@ -1,8 +1,8 @@
 #include "BlendingWidget.hpp"
 
-#include "../util/util.hpp"
+#include "../../util/util.hpp"
 
-#include "../Morda.hpp"
+#include "../../Morda.hpp"
 
 using namespace morda;
 

@@ -11,7 +11,7 @@
 #include "label/TextLabel.hpp"
 #include "label/ColorLabel.hpp"
 
-#include "TextWidget.hpp"
+#include "base/TextWidget.hpp"
 #include "NinePatch.hpp"
 
 

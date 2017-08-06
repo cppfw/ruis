@@ -126,9 +126,9 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		if(maxPos > 0){
 			//update factor
 			if(this->isVertical){
-				this->setFactor((maxPos - newPos) / maxPos);
+				this->setFraction((maxPos - newPos) / maxPos);
 			}else{
-				this->setFactor(newPos / maxPos);
+				this->setFraction(newPos / maxPos);
 			}
 		}
 
@@ -138,10 +138,10 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 
 
 
-void HandleSlider::onFactorChange() {
+void HandleSlider::onFractionChange() {
 	this->HandleSlider::layOut();
 	
-	this->Slider::onFactorChange();
+	this->FractionWidget::onFractionChange();
 }
 
 
@@ -164,15 +164,15 @@ void HandleSlider::layOut(){
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
 			if(this->isVertical){
-				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ::round(effectiveLength * this->factor());
+				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ::round(effectiveLength * this->fraction());
 			}else{
-				newPos[longIndex] = ::round(effectiveLength * this->factor());
+				newPos[longIndex] = ::round(effectiveLength * this->fraction());
 			}
 			ASSERT_INFO(
 					newPos[longIndex] <= effectiveLength,
 					"newPos[longIndex] = " << newPos[longIndex]
 							<< ", effectiveLength = " << effectiveLength
-							<< ", this->factor() = " << this->factor()
+							<< ", this->factor() = " << this->fraction()
 				)
 		}
 		this->handle.moveTo(newPos);

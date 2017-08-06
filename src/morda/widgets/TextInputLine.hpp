@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "TextWidget.hpp"
+#include "base/TextWidget.hpp"
 
 #include "../Updateable.hpp"
 #include "core/CharInputWidget.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Widget.hpp"
+#include "../core/Widget.hpp"
 
 
 namespace morda{

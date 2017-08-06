@@ -3,7 +3,7 @@
 #include "../core/Widget.hpp"
 
 #include "../core/container/Pile.hpp"
-
+#include "../base/FractionWidget.hpp"
 
 //disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC
@@ -14,48 +14,7 @@
 namespace morda{
 
 
-class Slider : public virtual Widget{
-	float curFactor = 0; //Current position from 0 to 1
-protected:
-	Slider(const stob::Node* chain = nullptr) :
-			Widget(chain)
-	{}
-	
-	virtual void onFactorChange(){
-		if(this->factorChange){
-			this->factorChange(*this);
-		}
-	}
-public:
-	std::function<void(Slider&)> factorChange;
-	
-	float factor()const noexcept{
-		return this->curFactor;
-	}
-	
-	void setFactor(float newFactor){
-		real factor = utki::clampedRange(newFactor, 0.0f, 1.0f);
-	
-		//in case of nan or inf
-		if(!(0 <= factor && factor <= 1)){
-			TRACE(<< "factor = " << factor << std::endl)
-			throw morda::IllegalValueExc("Factor should be in [0:1]");
-		}
-		
-		ASSERT_INFO(0 <= factor && factor <= 1, factor)
-		
-		if(this->curFactor == factor){
-			return;
-		}
-
-		this->curFactor = factor;
-		
-		this->onFactorChange();
-	}
-};
-
-
-class AreaSlider : public Slider{
+class AreaSlider : public FractionWidget{
 	float curAreaSizeFactor = 0; //Current area size factor from 0 to 1
 protected:
 	AreaSlider(const stob::Node* chain = nullptr) :
@@ -98,7 +57,7 @@ class HandleSlider :
 protected:
 	HandleSlider(bool isVertical, const stob::Node* chain);
 
-	virtual void onFactorChange() override;
+	virtual void onFractionChange() override;
 
 public:
 

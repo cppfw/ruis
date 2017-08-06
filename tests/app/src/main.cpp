@@ -668,26 +668,26 @@ public:
 				}
 				
 				if(auto v = vs.lock()){
-					v->setFactor(sc->scrollFactor().y);
+					v->setFraction(sc->scrollFactor().y);
 				}
 				if(auto h = hs.lock()){
-					h->setFactor(sc->scrollFactor().x);
+					h->setFraction(sc->scrollFactor().x);
 				}
 			};
 			
 			
-			vertSlider->factorChange = [sa](morda::Slider& slider){
+			vertSlider->fractionChange = [sa](morda::FractionWidget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->scrollFactor();
-					sf.y = slider.factor();
+					sf.y = slider.fraction();
 					s->setScrollPosAsFactor(sf);
 				}
 			};
 			
-			horiSlider->factorChange = [sa](morda::Slider& slider){
+			horiSlider->fractionChange = [sa](morda::FractionWidget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->scrollFactor();
-					sf.x = slider.factor();
+					sf.x = slider.fraction();
 					s->setScrollPosAsFactor(sf);
 				}
 			};
@@ -701,9 +701,9 @@ public:
 			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("vertical_list_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 			
-			verticalSlider->factorChange = [vl](morda::Slider& slider){
+			verticalSlider->fractionChange = [vl](morda::FractionWidget& slider){
 				if(auto l = vl.lock()){
-					l->setScrollPosAsFactor(slider.factor());
+					l->setScrollPosAsFactor(slider.fraction());
 				}
 			};
 			
@@ -716,7 +716,7 @@ public:
 					return;
 				}
 				if(auto s = vs.lock()){
-					s->setFactor(l->scrollFactor());
+					s->setFraction(l->scrollFactor());
 				}
 			};
 			
@@ -743,7 +743,7 @@ public:
 					if(auto l = vl.lock()){
 						l->scrollBy(dp.y);
 						if(auto s = vs.lock()){
-							s->setFactor(l->scrollFactor());
+							s->setFraction(l->scrollFactor());
 						}
 					}
 					return true;
@@ -757,14 +757,14 @@ public:
 			auto horizontalList = c->findChildByNameAs<morda::List>("horizontal_list");
 			auto hl = utki::makeWeak(horizontalList);
 			
-			auto horizontalSlider = c->findChildByNameAs<morda::Slider>("horizontal_list_slider");
+			auto horizontalSlider = c->findChildByNameAs<morda::FractionWidget>("horizontal_list_slider");
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 			
-			horizontalSlider->factorChange = [hl](morda::Slider& slider){
+			horizontalSlider->fractionChange = [hl](morda::FractionWidget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
-					l->setScrollPosAsFactor(slider.factor());
+					l->setScrollPosAsFactor(slider.fraction());
 				}
 			};
 			
@@ -777,7 +777,7 @@ public:
 					return;
 				}
 				if(auto s = hs.lock()){
-					s->setFactor(l->scrollFactor());
+					s->setFraction(l->scrollFactor());
 				}
 			};
 			
@@ -804,7 +804,7 @@ public:
 					if(auto l = hl.lock()){
 						l->scrollBy(dp.x);
 						if(auto s = hs.lock()){
-							s->setFactor(l->scrollFactor());
+							s->setFraction(l->scrollFactor());
 						}
 					}
 					return true;
@@ -824,9 +824,9 @@ public:
 			auto verticalSlider = c->findChildByNameAs<morda::VerticalSlider>("treeview_vertical_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 			
-			verticalSlider->factorChange = [tv](morda::Slider& slider){
+			verticalSlider->fractionChange = [tv](morda::FractionWidget& slider){
 				if(auto t = tv.lock()){
-					t->setVerticalScrollPosAsFactor(slider.factor());
+					t->setVerticalScrollPosAsFactor(slider.fraction());
 				}
 			};
 			
@@ -834,9 +834,9 @@ public:
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 			
-			horizontalSlider->factorChange = [tv](morda::Slider& slider){
+			horizontalSlider->fractionChange = [tv](morda::FractionWidget& slider){
 				if(auto t = tv.lock()){
-					t->setHorizontalScrollPosAsFactor(slider.factor());
+					t->setHorizontalScrollPosAsFactor(slider.fraction());
 				}
 			};
 			
@@ -850,10 +850,10 @@ public:
 					return;
 				}
 				if(auto h = hs.lock()){
-					h->setFactor(t->scrollFactor().x);
+					h->setFraction(t->scrollFactor().x);
 				}
 				if(auto v = vs.lock()){
-					v->setFactor(t->scrollFactor().y);
+					v->setFraction(t->scrollFactor().y);
 				}
 			};
 			

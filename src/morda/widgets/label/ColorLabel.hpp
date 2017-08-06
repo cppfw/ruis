@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ColorWidget.hpp"
+#include "../base/ColorWidget.hpp"
 
 #include "../../resources/ResGradient.hpp"
 

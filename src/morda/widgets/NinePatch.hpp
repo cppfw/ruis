@@ -9,7 +9,7 @@
 
 #include "label/ImageLabel.hpp"
 
-#include "BlendingWidget.hpp"
+#include "base/BlendingWidget.hpp"
 
 
 namespace morda{
