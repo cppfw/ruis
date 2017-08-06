@@ -5,7 +5,7 @@
 
 namespace mordaren{
 
-class OpenGLES2Factory : public morda::Factory{
+class OpenGLES2Factory : public morda::RenderFactory{
 public:
 	OpenGLES2Factory();
 	
