@@ -116,8 +116,8 @@ std::shared_ptr<morda::IndexBuffer> OpenGLES2Factory::createIndexBuffer(const ut
 	return utki::makeShared<OpenGLES2IndexBuffer>(indices);
 }
 
-std::unique_ptr<morda::Factory::Shaders> OpenGLES2Factory::createShaders() {
-	auto ret = utki::makeUnique<morda::Factory::Shaders>();
+std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders() {
+	auto ret = utki::makeUnique<morda::RenderFactory::Shaders>();
 	ret->posTex = utki::makeUnique<OpenGLES2ShaderPosTex>();
 	ret->colorPos = utki::makeUnique<OpenGLES2ShaderColorPos>();
 	ret->posClr = utki::makeUnique<OpenGLES2ShaderPosClr>();
