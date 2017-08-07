@@ -25,7 +25,7 @@ defs{
 			}
 			Column{
 				layout{
-					weight{1}
+					weight{1} dy{max}
 				}
 				Widget{
 					layout{
@@ -34,7 +34,7 @@ defs{
 				}
 				Pile{
 					layout{
-						weight{1}
+						weight{1} dx{max}
 					}
 					@{children}
 				}
