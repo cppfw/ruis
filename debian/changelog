@@ -1,3 +1,9 @@
+libmorda (0.5.47) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 23:47:25 +0300
+
 libmorda (0.5.46) unstable; urgency=medium
 
   * margins fixed
