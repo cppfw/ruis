@@ -60,7 +60,8 @@ before_install:
     brew tap igagis/tap &&
     brew update > /dev/null &&
     (brew list libpng || brew install libpng) &&
-    brew install prorab libutki libpapki libunikod libstob libsvgren jpeg z glew freetype libkolme libnitki;
+    (brew list jpeg || brew install jpeg) &&
+    brew install prorab libutki libpapki libunikod libstob libsvgren z glew freetype libkolme libnitki;
   fi
 - if [ "$BUILD_NAME" == "ios" ]; then
     brew tap igagis/tap &&
