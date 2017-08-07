@@ -18,7 +18,7 @@ protected:
 public:
 	std::function<void(FractionWidget&)> fractionChange;
 	
-	float fraction()const noexcept{
+	real fraction()const noexcept{
 		return this->fraction_v;
 	}
 	
