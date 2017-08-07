@@ -616,7 +616,7 @@ public:
 		morda::Morda::inst().inflater.addWidget<CubeWidget>("CubeWidget");
 
 		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater.inflate(
-				*this->createResourceFileInterface("res/test.gui.stob")
+				*this->createResourceFileInterface("res/test.gui")
 			);
 		morda::Morda::inst().setRootWidget(c);
 		

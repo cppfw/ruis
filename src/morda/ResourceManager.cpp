@@ -24,7 +24,7 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	std::string dir = fi.dir();
 	
 	if(fi.notDir().size() == 0){
-		fi.setPath(dir + "main.res.stob");
+		fi.setPath(dir + "main.res");
 	}
 
 	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();

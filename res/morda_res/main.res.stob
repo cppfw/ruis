@@ -1,7 +1,0 @@
-include{ui.res.stob}
-//include{fonts/font.res.stob}
-includeSubdirs
-
-morda_gui_defs{
-	file{defs.gui.stob}
-}
