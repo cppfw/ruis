@@ -1,3 +1,9 @@
+libmorda (0.5.45) unstable; urgency=medium
+
+  * margins fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 20:08:32 +0300
+
 libmorda (0.5.44) unstable; urgency=medium
 
   * margins fix

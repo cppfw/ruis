@@ -16,37 +16,43 @@ defs{
 		}
 	}
 
-	Margins{ left top right bottom
-		Row{
-			Widget{
-				layout{
-					dx{@{left}}
+	defs{
+		Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
+			Row{
+				Widget{
+					layout{
+						dx{@{left}}
+						weight{@{weightLeft}}
+					}
 				}
-			}
-			Column{
-				layout{
-					weight{1} dy{max}
+				Column{
+					layout{
+						weight{1} dy{max}
+					}
+					Widget{
+						layout{
+							dy{@{top}}
+							weight{@{weightTop}}
+						}
+					}
+					Pile{
+						layout{
+							weight{1} dx{max}
+						}
+						@{children}
+					}
+					Widget{
+						layout{
+							dy{@{bottom}}
+							weight{@{weightBottom}}
+						}
+					}
 				}
 				Widget{
 					layout{
-						dy{@{top}}
+						dx{@{right}}
+						weight{@{weightRight}}
 					}
-				}
-				Pile{
-					layout{
-						weight{1} dx{max}
-					}
-					@{children}
-				}
-				Widget{
-					layout{
-						dy{@{bottom}}
-					}
-				}
-			}
-			Widget{
-				layout{
-					dx{@{right}}
 				}
 			}
 		}
