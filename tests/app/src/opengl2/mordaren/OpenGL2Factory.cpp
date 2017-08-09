@@ -31,6 +31,7 @@ OpenGL2Factory::~OpenGL2Factory()noexcept{
 std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
+	ASSERT_INFO(dim.isPositive(), "dim = " << dim)
 	ASSERT(data.size() % dim.x == 0)
 
 	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dim.x == dim.y)

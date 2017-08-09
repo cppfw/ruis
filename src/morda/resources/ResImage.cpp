@@ -128,8 +128,11 @@ public:
 	};
 	
 	std::shared_ptr<const QuadTexture> get(Vec2r forDim)const override{
+//		TRACE(<< "forDim = " << forDim << std::endl)
 		unsigned imWidth = unsigned(forDim.x);
+//		TRACE(<< "imWidth = " << imWidth << std::endl)
 		unsigned imHeight = unsigned(forDim.y);
+//		TRACE(<< "imHeight = " << imHeight << std::endl)
 
 		{//check if in cache
 			auto i = this->cache.find(std::make_tuple(imWidth, imHeight));
@@ -139,8 +142,16 @@ public:
 				}
 			}
 		}
+//		TRACE(<< "not in cache" << std::endl)
 
+		ASSERT(this->dom)
+//		TRACE(<< "width = " << this->dom->width << std::endl)
+//		TRACE(<< "height = " << this->dom->height << std::endl)
+//		TRACE(<< "dpi = " << morda::Morda::inst().units.dpi() << std::endl)
+//		TRACE(<< "id = " << this->dom->id << std::endl)
 		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::Morda::inst().units.dpi());
+		ASSERT(imWidth != 0)
+		ASSERT(imHeight != 0)
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
 		//flip pixels vertically
