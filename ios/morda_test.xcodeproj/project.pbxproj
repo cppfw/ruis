@@ -123,6 +123,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C0C73A01F3CFAD900D53C71 /* morda */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = morda;
+			sourceTree = "<group>";
+		};
 		2C38DD171F3B8E52007DC8A0 /* test_app */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +173,7 @@
 		2C6512A11C0A60F700D295F5 /* morda_test */ = {
 			isa = PBXGroup;
 			children = (
+				2C0C73A01F3CFAD900D53C71 /* morda */,
 				2C38DD171F3B8E52007DC8A0 /* test_app */,
 				2CB100D51E525A83007D33DA /* mordaren */,
 				2C9352751D4FA90E00D58719 /* mordavokne */,
