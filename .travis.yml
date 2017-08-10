@@ -164,12 +164,20 @@ script:
 - if [ "$BUILD_NAME" == "ios" ]; then
     set -o pipefail &&
     xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-            | sed -e "s/export PATH=[^ ]*/export PATH=.../g"
+            | sed -e "s/export PATH=[^ ]*/%/g"
+            | sed -e "s/export LANG=en_US.US-ASCII/%/g"
             | sed -e "s/[^ ]*\/clang /clang /g"
-            | sed -e "s/\(-[IWfFL]\)[^ ]*/% /g"
+            | sed -e "s/\(-[IWfFL]\)[^ ]*/%/g"
             | sed -e "s/-isystem [^ ]*/%/g"
             | sed -e "s/-include [^ ]*/%/g"
-            | sed -e "s/-MF [^ ]*/-MF .../g"
+            | sed -e "s/-MF [^ ]*/%/g"
+            | sed -e "s/-std=gnu++11/%/g"
+            | sed -e "s/-stdlib=libc++/%/g"
+            | sed -e "s/-gmodules/%/g"
+            | sed -e "s/-mdynamic-no-pic/%/g"
+            | sed -e "s/-DDEBUG=1/%/g"
+            | sed -e "s/-DCOCOAPODS=1/%/g"
+            | sed -e "s/-miphoneos-version-min/%/g"
             | sed -e "s/--serialize-diagnostics [^ ]*/%/g"
             | sed -e "s/-o [^ ]*/%/g"
             | sed -e "s/-iquote [^ ]*/%/g"
