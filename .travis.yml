@@ -186,6 +186,7 @@ script:
             | sed -e "s/-o [^ ]*/%/g"
             | sed -e "s/-iquote [^ ]*/%/g"
             | sed -e "s/-isysroot [^ ]*/%/g";
+    if [ $? -ne 0 ]; then sleep 120; exit 1; fi;
   fi
 - if [ "$BUILD_NAME" == "raspberry_pi" ]; then
     sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
