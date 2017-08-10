@@ -162,18 +162,8 @@ script:
 # need to reduce output from xcodebuild because log size on travis-ci is limited by 4Mb, use grep for errors and warnings
 # Also, need to set pipefail to make pipe exit code nono-zero in case first command fails but second succeeds (because grep exits with 0 always)
 - if [ "$BUILD_NAME" == "ios" ]; then
-    set -o pipefail &&
-    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-            | sed -e "s/export PATH=[^ ]*/export PATH=.../g"
-            | sed -e "s/[^ ]*\/clang /clang /g"
-            | sed -e "s/\(-[IWfFL]\)[^ ]*/% /g"
-            | sed -e "s/-isystem [^ ]*/%/g"
-            | sed -e "s/-include [^ ]*/%/g"
-            | sed -e "s/-MF [^ ]*/-MF .../g"
-            | sed -e "s/--serialize-diagnostics [^ ]*/%/g"
-            | sed -e "s/-o [^ ]*/%/g"
-            | sed -e "s/-iquote [^ ]*/%/g"
-            | sed -e "s/-isysroot [^ ]*/%/g";
+    xcodebuild -workspace ios/morda_test.xcworkspace -scheme morda_test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO > log.txt;
+    if [ $? -ne 0 ]; then tail -n100 log.txt; exit 1; fi;
   fi
 - if [ "$BUILD_NAME" == "raspberry_pi" ]; then
     sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && prorab-deb-prepare.sh" &&
