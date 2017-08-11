@@ -1,6 +1,8 @@
 defs{
 	morda_color_text{0xffffffff}
 
+	morda_color_bg{0xff353535}
+
 	morda_color_bg_window_title{0xff903a42}
 	morda_color_bg_window_title_nontopmost{0xff404040}
 
@@ -154,39 +156,15 @@ defs{
 	}
 
 	WindowBackground{
-		Pile{
+		NinePatch{
 			layout{dx{fill} dy{fill}}
 
-			cache{true}
+			image{morda_npt_window_bg}
 
-			ImageLabel{
-				layout{
-					dx{fill} dy{fill}
-				}
-				image{morda_img_window_background}
-				repeatX{true} repeatY{true}
-			}
-
-			ColorLabel{
-				layout{dx{fill} dy{fill}}
-				gradient{morda_grd_window_background}
-			}
-
-			NinePatch{
-				layout{dx{fill} dy{fill}}
-				image{morda_npt_window_bg_mask}
-				left{@{morda_window_border_size}}
-				top{@{morda_window_border_size}}
-				right{@{morda_window_border_size}}
-				bottom{@{morda_window_border_size}}
-				centerVisible{false}
-
-				blend{true}
-				blendSrc{zero}
-				blendDst{srcAlpha}
-				blendSrcAlpha{one}
-				blendDstAlpha{zero}
-			}
+			left{@{morda_window_border_size}}
+			top{@{morda_window_border_size}}
+			right{@{morda_window_border_size}}
+			bottom{@{morda_window_border_size}}
 		}
 	}
 
@@ -194,7 +172,7 @@ defs{
 		NinePatch{
 			layout{dx{fill} dy{fill}}
 
-			image{morda_npt_window_empty_bg}
+			image{morda_npt_window_bg}
 
 			left{@{morda_window_border_size}}
 			top{@{morda_window_border_size}}

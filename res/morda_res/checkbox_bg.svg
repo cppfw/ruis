@@ -14,18 +14,18 @@
    height="7"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="checkbox_bg.svg">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient3755">
       <stop
-         style="stop-color:#2f2528;stop-opacity:1;"
+         style="stop-color:#2a2a2a;stop-opacity:1"
          offset="0"
          id="stop3757" />
       <stop
-         style="stop-color:#292023;stop-opacity:1;"
+         style="stop-color:#252525;stop-opacity:1"
          offset="1"
          id="stop3759" />
     </linearGradient>
@@ -48,15 +48,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="44.8"
-     inkscape:cx="6.2186883"
+     inkscape:cx="2.557974"
      inkscape:cy="4.5901236"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1014"
+     inkscape:window-height="894"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -80,7 +80,7 @@
      id="layer1"
      transform="translate(0,-1045.3622)">
     <rect
-       style="fill:#20191b;fill-opacity:1;stroke:none"
+       style="fill:#1d1d1d;fill-opacity:1;stroke:none"
        id="rect3765"
        width="5"
        height="5"
@@ -89,7 +89,7 @@
        rx="2"
        ry="2" />
     <rect
-       style="fill:#ffffff;fill-opacity:0.43921569;stroke:none"
+       style="fill:#ffffff;fill-opacity:0.17647059;stroke:none"
        id="rect3763"
        width="5"
        height="5"

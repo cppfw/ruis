@@ -56,25 +56,8 @@ morda_npt_textfield_background{
 	borders{4 5 4 5}
 }
 
-morda_npt_window_bg_mask{
-	file{window_bg_mask.svg}
-	borders{5 5 5 5}
-}
-
-morda_grd_window_background{
-	Stop{ pos{0} color{0} }
-	Stop{ pos{0.43} color{0x10ffffff} }
-	Stop{ pos{0.5} color{0x12ffffff} }
-	Stop{ pos{0.57} color{0x10ffffff} }
-	Stop{ pos{1} color{0} }
-}
-
-morda_img_window_background{
-	file{background.png}
-}
-
-morda_npt_window_empty_bg{
-	file{window_empty_bg.svg}
+morda_npt_window_bg{
+	file{window_bg.svg}
 	borders{5 5 5 5}
 }
 

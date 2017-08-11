@@ -14,18 +14,18 @@
    height="20"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="radiobutton_bg.svg">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient3757">
       <stop
-         style="stop-color:#2f2528;stop-opacity:1;"
+         style="stop-color:#2a2a2a;stop-opacity:1"
          offset="0"
          id="stop3759" />
       <stop
-         style="stop-color:#292023;stop-opacity:1;"
+         style="stop-color:#252525;stop-opacity:1"
          offset="1"
          id="stop3761" />
     </linearGradient>
@@ -68,15 +68,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="26.798601"
+     inkscape:cx="16.444537"
      inkscape:cy="17.262535"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1026"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-height="894"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -99,7 +99,7 @@
      id="layer1"
      transform="translate(0,-1032.3622)">
     <rect
-       style="fill:#241e20;fill-opacity:1;stroke:none"
+       style="fill:#222021;fill-opacity:1;stroke:none"
        id="rect2987-3"
        width="19.6"
        height="18.799999"
@@ -109,7 +109,7 @@
        ry="9.3999996"
        transform="scale(1,-1)" />
     <rect
-       style="fill:#ffffff;fill-opacity:0.43921569;stroke:none"
+       style="fill:#ffffff;fill-opacity:0.17647059;stroke:none"
        id="rect3765"
        width="20"
        height="18"

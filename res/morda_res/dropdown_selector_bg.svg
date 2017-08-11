@@ -14,18 +14,18 @@
    height="32"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="dropdown_selector_bg.svg">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient3774">
       <stop
-         style="stop-color:#2f2528;stop-opacity:1;"
+         style="stop-color:#2a2a2a;stop-opacity:1"
          offset="0"
          id="stop3776" />
       <stop
-         style="stop-color:#1e1719;stop-opacity:1;"
+         style="stop-color:#1b1b1b;stop-opacity:1"
          offset="1"
          id="stop3778" />
     </linearGradient>
@@ -89,13 +89,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="-1.7085272"
+     inkscape:cx="-12.062591"
      inkscape:cy="13.585659"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1012"
+     inkscape:window-height="894"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -111,7 +111,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -121,20 +121,20 @@
      id="layer1"
      transform="translate(0,-1020.3622)">
     <path
-       style="fill:#0d0a0b;fill-opacity:1;stroke:none"
-       d="m 4,1020.3622 5,0 0,6 c 0,2.216 -1.784,4 -4,4 l -1,0 c -2.216,0 -4,-1.784 -4,-4 l 0,-2 c 0,-2.216 1.784,-4 4,-4 z"
+       style="fill:#0c0c0c;fill-opacity:1;stroke:none"
+       d="m 4,1020.3622 h 5 v 6 c 0,2.216 -1.784,4 -4,4 H 4 c -2.216,0 -4,-1.784 -4,-4 v -2 c 0,-2.216 1.784,-4 4,-4 z"
        id="rect3004-5"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="scssssss" />
     <path
-       style="fill:#ffffff;fill-opacity:0.43921569;stroke:none"
-       d="m 4,1042.3622 1,0 c 2.216,0 4,1.784 4,4 l 0,6 -5,0 c -2.216,0 -4,-1.784 -4,-4 l 0,-2 c 0,-2.216 1.784,-4 4,-4 z"
+       style="fill:#ffffff;fill-opacity:0.17647059;stroke:none"
+       d="m 4,1042.3622 h 1 c 2.216,0 4,1.784 4,4 v 6 H 4 c -2.216,0 -4,-1.784 -4,-4 v -2 c 0,-2.216 1.784,-4 4,-4 z"
        id="rect3004-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ssscssss" />
     <path
        style="fill:url(#linearGradient3780);fill-opacity:1;stroke:none"
-       d="m 4,1021.3622 5,0 0,30 -5,0 c -2.216,0 -4,-1.784 -4,-4 l 0,-22 c 0,-2.216 1.784,-4 4,-4 z"
+       d="m 4,1021.3622 h 5 v 30 H 4 c -2.216,0 -4,-1.784 -4,-4 v -22 c 0,-2.216 1.784,-4 4,-4 z"
        id="rect3004"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sccssss" />
