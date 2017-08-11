@@ -14,7 +14,7 @@
    height="31"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="button_pressed.svg">
   <defs
      id="defs4">
@@ -23,9 +23,9 @@
       <stop
          id="stop3824"
          offset="0"
-         style="stop-color:#4c4041;stop-opacity:1;" />
+         style="stop-color:#464646;stop-opacity:1" />
       <stop
-         style="stop-color:#382c2e;stop-opacity:1;"
+         style="stop-color:#323232;stop-opacity:1"
          offset="1"
          id="stop3820" />
     </linearGradient>
@@ -49,7 +49,7 @@
        x2="49.649597"
        y2="1024.4716"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.1370274,0,0,0.85918958,-43.540756,170.63012)" />
+       gradientTransform="matrix(1.0422751,0,0,0.85918958,-39.41236,170.63016)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3816-3"
@@ -89,15 +89,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
-     inkscape:cx="-8.4363876"
-     inkscape:cy="16.891717"
+     inkscape:cx="-37.295184"
+     inkscape:cy="16.582358"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1014"
+     inkscape:window-height="894"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -148,40 +148,40 @@
      style="display:inline"
      transform="translate(0,-1021.3622)">
     <rect
-       style="display:inline;fill:#2f2b2b;fill-opacity:1;stroke:none"
+       style="display:inline;fill:#2d2d2d;fill-opacity:1;stroke:none"
        id="rect3007-3-9"
        width="11"
        height="15"
        x="0.50000006"
        y="1021.8622"
-       rx="5"
-       ry="5" />
+       rx="3"
+       ry="3" />
     <rect
-       style="display:inline;fill:#ffffff;fill-opacity:0.43921569;stroke:none"
+       style="display:inline;fill:#ffffff;fill-opacity:0.17647059;stroke:none"
        id="rect3007-3-9-8"
        width="12"
        height="15"
        x="0"
        y="1037.3622"
-       rx="5"
-       ry="5" />
+       rx="3"
+       ry="3" />
     <rect
-       style="display:inline;fill:url(#linearGradient3822);fill-opacity:1;stroke:none"
+       style="display:inline;fill:url(#linearGradient3822);fill-opacity:1;stroke:none;stroke-width:0.95742708"
        id="rect3007"
-       width="12"
+       width="11"
        height="27"
-       x="0"
+       x="0.5"
        y="1023.8622"
-       rx="5"
-       ry="5" />
+       rx="2.75"
+       ry="3" />
     <rect
        style="display:inline;fill:none;stroke:#1c1617;stroke-width:0.99655598;stroke-opacity:1"
        id="rect3007-3"
        width="11.003444"
-       height="29.003445"
+       height="29.003"
        x="0.49827799"
        y="1021.8605"
-       rx="5.0015655"
-       ry="5.0005941" />
+       rx="3"
+       ry="3" />
   </g>
 </svg>
