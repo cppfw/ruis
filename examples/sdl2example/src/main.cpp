@@ -337,7 +337,7 @@ int main( int argc, char* args[] ) {
 		const Uint32 userEventType;
 		
 		SDLMorda(Uint32 userEventType) :
-				morda::Morda(utki::makeShared<mordaren::OpenGL2Renderer>(),96, 1),
+				morda::Morda(utki::makeShared<mordaren::OpenGL2Renderer>(), 96, 1),
 				userEventType(userEventType)
 		{}
 				
