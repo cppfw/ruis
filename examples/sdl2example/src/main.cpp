@@ -361,7 +361,7 @@ int main( int argc, char* args[] ) {
 	
 	//Inflate widgets hierarchy from GUI description script and set it up
 	{
-		fi.setPath("res/main.gui.stob");
+		fi.setPath("res/main.gui");
 		auto c = morda::Morda::inst().inflater.inflate(fi);
 
 		//set the widgets hierarchy to the application

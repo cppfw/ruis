@@ -1,5 +1,5 @@
-Frame{
-	VerticalArea{
+Pile{
+	Column{
 		PushButton{
 			name{hw_button} //we can find this button by name from code
 			TextLabel{
