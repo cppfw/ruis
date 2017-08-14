@@ -23,40 +23,25 @@ using namespace morda;
 namespace{
 
 const char* selectorLayout_c = R"qwertyuiop(
+	layout{dx{max} dy{max}}
+
+	Row{
+		layout{dx{max}}
 		Pile{
-			layout{
-				dx{0}
-				weight{1}
-			}
-			NinePatch{
-				layout{dx{fill}dy{max}}
-				image{morda_npt_dropdown_selector_bg}
-
-				Pile{
-					name{morda_dropdown_selection}
-					layout{dx{fill}dy{max}}
-				}
-			}
-			MouseProxy{
-				name{morda_dropdown_mouseproxy}
-				layout{dx{fill}dy{fill}}
-			}
+			name{morda_dropdown_selection}
+			layout{dx{min}dy{max} weight{1}}
 		}
-		PushButton{
-			name{morda_dropdown_button}
-
-			layout{dy{max}}
-
-			look{
-				imageNormal{morda_npt_rightbutton_normal}
-				imagePressed{morda_npt_rightbutton_pressed}
-			}
-
-			ImageLabel{
-				image{morda_img_dropdown_arrow}
-			}
+		Widget{layout{dx{3pt}}}
+		ImageLabel{
+			image{morda_img_divider_vert}
+			layout{dy{fill}}
 		}
-	)qwertyuiop";
+		Widget{layout{dx{3pt}}}
+		ImageLabel{
+			image{morda_img_dropdown_arrow}
+		}
+	}
+)qwertyuiop";
 
 const char* itemLayout_c = R"qwertyuiop(
 		Pile{
@@ -127,7 +112,7 @@ void DropDownSelector::showDropdownMenu() {
 	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
 	ASSERT(np)
 
-	auto va = np->findChildByNameAs<Column>("morda_contextmenu_content");
+	auto va = np->findChildByNameAs<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
@@ -141,34 +126,16 @@ void DropDownSelector::showDropdownMenu() {
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		Row(stob::parse(selectorLayout_c).get()),
+		SimpleButton(stob::parse(selectorLayout_c).get()),
 		selectionContainer(*this->findChildByNameAs<Pile>("morda_dropdown_selection"))
-{	
-	{
-		auto b = this->findChildByNameAs<PushButton>("morda_dropdown_button");
-		ASSERT(b)
-		b->pressedChanged = [this](Button& b){
-			if(!b.isPressed()){
-				return;
-			}
+{
+	this->pressedChanged = [this](Button& b){
+		if(!b.isPressed()){
+			return;
+		}
 
-			this->showDropdownMenu();
-		};
-	}
-	{
-		auto mp = this->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
-		ASSERT(mp)
-		mp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
-			if(!isDown){
-				return false;
-			}
-			
-			this->showDropdownMenu();
-			
-			return true;
-		};
-	}
-	
+		this->showDropdownMenu();
+	};
 	
 	if(!chain){
 		return;
@@ -266,3 +233,23 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	return wd;
 }
+
+//bool DropDownSelector::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) {
+//	if(button != MouseButton_e::LEFT){
+//		return false;
+//	}
+//	if(!isDown){
+//		return false;
+//	}
+//	
+//	if(this->isPressed()){
+//		this->showDropdownMenu();
+//		return true;
+//	}
+//	
+//	return this->SimpleButton::onMouseButton(isDown, pos, button, pointerId);
+//}
+//
+//void DropDownSelector::onHoverChanged(unsigned pointerID) {
+//
+//}

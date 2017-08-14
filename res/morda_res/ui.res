@@ -1,3 +1,7 @@
+morda_img_divider_vert{
+	file{divider_vert.svg}
+}
+
 morda_npt_slider_bg{
 	file{slider_bg.svg}
 	borders{8 8 8 9}
@@ -30,11 +34,6 @@ morda_npt_rightbutton_pressed{
 
 morda_img_dropdown_arrow{
 	file{dropdown_arrow.svg}
-}
-
-morda_npt_dropdown_selector_bg{
-	file{dropdown_selector_bg.svg}
-	borders{4 5 4 5}
 }
 
 morda_npt_contextmenu_bg{

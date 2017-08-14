@@ -1846,8 +1846,9 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/widgets/core</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
-            <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/button</pElem>
+            <pElem>src/morda/widgets/base</pElem>
+            <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>

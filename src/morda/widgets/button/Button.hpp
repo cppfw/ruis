@@ -48,7 +48,7 @@ public:
 	
 	/**
 	 * @brief Pressed changed signal.
-	 * Emitted when button pressed satte changes.
+	 * Emitted when button pressed state changes.
 	 */
 	std::function<void(Button&)> pressedChanged;
 };

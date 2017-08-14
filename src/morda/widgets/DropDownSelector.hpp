@@ -1,8 +1,7 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "core/container/LinearContainer.hpp"
-#include "core/container/Pile.hpp"
+#include "button/SimpleButton.hpp"
 
 namespace morda{
 
@@ -14,7 +13,7 @@ namespace morda{
  */
 class DropDownSelector :
 		virtual public Widget,
-		private Row
+		private SimpleButton
 {
 	Pile& selectionContainer;
 public:
@@ -96,6 +95,11 @@ public:
 	}
 	
 private:
+//	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
+//	
+//	void onHoverChanged(unsigned pointerID) override;
+
+	
 	void handleDataSetChanged();
 	
 	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);

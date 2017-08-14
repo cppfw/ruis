@@ -26,7 +26,7 @@ public:
 	
 	SimpleButton(const stob::Node* chain = nullptr);
 	
-private:
+protected:
 	void onPressedChanged()override;
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
