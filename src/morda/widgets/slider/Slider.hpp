@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "../core/Widget.hpp"
 
 #include "../core/container/Pile.hpp"
@@ -15,19 +17,22 @@ namespace morda{
 
 
 class AreaSlider : public FractionWidget{
-	float curAreaSizeFactor = 0; //Current area size factor from 0 to 1
+	float curAreaSizeFraction = 0; //Current area size factor from 0 to 1
 protected:
 	AreaSlider(const stob::Node* chain = nullptr) :
 			Widget(chain)
 	{}
 	
+	virtual void onAreaSizeChanged();
+	
 public:
+	std::function<void(AreaSlider& s)> areaSizeChanged;
 	
-	real areaSizeFactor()const noexcept{
-		return this->curAreaSizeFactor;
+	void setAreasizeFraction(real fraction);
+	
+	real areaSizeFraction()const noexcept{
+		return this->curAreaSizeFraction;
 	}
-	
-	//TODO:
 };
 
 
@@ -35,9 +40,8 @@ class HandleSlider :
 		public AreaSlider,
 		private Pile //users do not need to know that it is a container
 {
-	//no copying
-	HandleSlider(const HandleSlider&);
-	HandleSlider& operator=(const HandleSlider&);
+	HandleSlider(const HandleSlider&) = delete;
+	HandleSlider& operator=(const HandleSlider&) = delete;
 	
 	unsigned getLongIndex()const noexcept{
 		return this->isVertical ? 1 : 0;
@@ -57,8 +61,10 @@ class HandleSlider :
 protected:
 	HandleSlider(bool isVertical, const stob::Node* chain);
 
-	virtual void onFractionChange() override;
+	void onFractionChange() override;
 
+	void onAreaSizeChanged() override;
+	
 public:
 
 	virtual ~HandleSlider()noexcept{}

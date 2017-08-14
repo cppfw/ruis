@@ -153,7 +153,7 @@ void HandleSlider::layOut(){
 	
 	morda::Vec2r newSize(this->rect().d);
 	
-	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFactor());
+	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFraction());
 	utki::clampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
 	
 	this->handle.resize(newSize);
@@ -177,4 +177,25 @@ void HandleSlider::layOut(){
 		}
 		this->handle.moveTo(newPos);
 	}
+}
+
+void AreaSlider::onAreaSizeChanged() {
+	if (this->areaSizeChanged) {
+		this->areaSizeChanged(*this);
+	}
+}
+
+
+void HandleSlider::onAreaSizeChanged() {
+
+}
+
+
+void AreaSlider::setAreasizeFraction(real fraction) {
+	if (this->curAreaSizeFraction == fraction) {
+		return;
+	}
+
+	this->curAreaSizeFraction = fraction;
+	this->onAreaSizeChanged();
 }
