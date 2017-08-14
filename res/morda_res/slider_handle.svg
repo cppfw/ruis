@@ -14,18 +14,18 @@
    height="17"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.2pre0 (973e216, 2017-07-25)"
    sodipodi:docname="slider_handle.svg">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient3757">
       <stop
-         style="stop-color:#aaa0a7;stop-opacity:1;"
+         style="stop-color:#474747;stop-opacity:1"
          offset="0"
          id="stop3759" />
       <stop
-         style="stop-color:#bdb6bb;stop-opacity:1;"
+         style="stop-color:#555555;stop-opacity:1"
          offset="1"
          id="stop3761" />
     </linearGradient>
@@ -48,13 +48,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.627416"
-     inkscape:cx="18.96648"
-     inkscape:cy="9.3734288"
+     inkscape:cx="4.7801498"
+     inkscape:cy="9.0640696"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="894"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -70,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,7 +80,7 @@
      id="layer1"
      transform="translate(0,-1035.3622)">
     <rect
-       style="fill:#dbd7da;fill-opacity:1;stroke:none;stroke-width:0.72074997"
+       style="fill:#717171;fill-opacity:1;stroke:none;stroke-width:0.72074997"
        id="rect3755-3"
        width="16"
        height="15"
@@ -89,7 +89,7 @@
        rx="8"
        ry="7.8571429" />
     <rect
-       style="fill:#000000;fill-opacity:0.17647059;stroke:none;stroke-width:0.70417881"
+       style="fill:#000000;fill-opacity:0.57894737;stroke:none;stroke-width:0.70417881"
        id="rect3755-2"
        width="16"
        height="15"

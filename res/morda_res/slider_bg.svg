@@ -14,7 +14,7 @@
    height="17"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.2pre0 (973e216, 2017-07-25)"
    sodipodi:docname="slider_bg.svg">
   <defs
      id="defs4">
@@ -32,11 +32,11 @@
     <linearGradient
        id="linearGradient3807">
       <stop
-         style="stop-color:#2d2d2d;stop-opacity:1"
+         style="stop-color:#2a2a2a;stop-opacity:1"
          offset="0"
          id="stop3809" />
       <stop
-         style="stop-color:#222222;stop-opacity:1"
+         style="stop-color:#1b1b1b;stop-opacity:1"
          offset="1"
          id="stop3811" />
     </linearGradient>
@@ -59,13 +59,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="-6.6712267"
-     inkscape:cy="14.074615"
+     inkscape:cx="-21.001584"
+     inkscape:cy="13.762115"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="894"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -82,7 +82,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
