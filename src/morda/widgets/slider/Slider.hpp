@@ -28,7 +28,7 @@ protected:
 public:
 	std::function<void(AreaSlider& s)> areaSizeChanged;
 	
-	void setAreasizeFraction(real fraction);
+	void setAreaSizeFraction(real fraction);
 	
 	real areaSizeFraction()const noexcept{
 		return this->curAreaSizeFraction;

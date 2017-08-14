@@ -146,3 +146,13 @@ void ScrollArea::updateEffectiveDim(){
 	this->effectiveDim = minDim - this->rect().d;
 	this->updateScrollFactor();
 }
+
+Vec2r ScrollArea::visibleAreaFraction() const noexcept{
+	auto ret = this->rect().d.compDiv(this->rect().d + this->effectiveDim);
+	
+	for(unsigned i = 0; i != ret.size(); ++i){
+		utki::clampTop(ret[i], real(1));
+	}
+	
+	return ret;
+}

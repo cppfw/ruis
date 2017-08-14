@@ -72,6 +72,8 @@ public:
 		return this->curScrollFactor;
 	}
 	
+	Vec2r visibleAreaFraction()const noexcept;
+	
 private:
 	void updateEffectiveDim();
 	

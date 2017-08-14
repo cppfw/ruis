@@ -139,7 +139,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 
 
 void HandleSlider::onFractionChange() {
-	this->HandleSlider::layOut();
+	this->layOut();
 	
 	this->FractionWidget::onFractionChange();
 }
@@ -150,11 +150,15 @@ void HandleSlider::layOut(){
 	this->Pile::layOut();
 	
 	unsigned longIndex = this->getLongIndex();
+	unsigned transIndex = this->getTransIndex();
 	
 	morda::Vec2r newSize(this->rect().d);
 	
 	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFraction());
-	utki::clampBottom(newSize[longIndex], this->measure(Vec2r(-1))[longIndex]);
+	
+	auto minHandleSize =  this->handle.measure(Vec2r(-1));
+	
+	utki::clampBottom(newSize[longIndex], real(1.5) * minHandleSize[transIndex]);
 	
 	this->handle.resize(newSize);
 	
@@ -187,11 +191,13 @@ void AreaSlider::onAreaSizeChanged() {
 
 
 void HandleSlider::onAreaSizeChanged() {
-
+	this->layOut();
+	
+	this->AreaSlider::onAreaSizeChanged();
 }
 
 
-void AreaSlider::setAreasizeFraction(real fraction) {
+void AreaSlider::setAreaSizeFraction(real fraction) {
 	if (this->curAreaSizeFraction == fraction) {
 		return;
 	}

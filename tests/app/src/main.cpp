@@ -667,14 +667,18 @@ public:
 					return;
 				}
 				
+				auto visibleArea = sc->visibleAreaFraction();
+				
 				if(auto v = vs.lock()){
 					v->setFraction(sc->scrollFactor().y);
+					v->setAreaSizeFraction(visibleArea.y);
 				}
 				if(auto h = hs.lock()){
 					h->setFraction(sc->scrollFactor().x);
+					h->setAreaSizeFraction(visibleArea.x);
 				}
 			};
-			
+			resizeProxy->resized(resizeProxy->rect().d);
 			
 			vertSlider->fractionChange = [sa](morda::FractionWidget& slider){
 				if(auto s = sa.lock()){
