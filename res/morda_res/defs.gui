@@ -3,8 +3,8 @@ defs{
 
 	morda_color_bg{0xff353535}
 
-	morda_color_bg_window_title{0xff903a42}
-	morda_color_bg_window_title_nontopmost{0xff404040}
+	morda_color_bg_window_title{0xffff6775}
+	morda_color_bg_window_title_nontopmost{0xff505050}
 
 	morda_window_border_size{5pt}
 
