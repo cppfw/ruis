@@ -10,11 +10,11 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="24"
-   height="25"
+   width="16"
+   height="17"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="slider_bg.svg">
   <defs
      id="defs4">
@@ -32,11 +32,11 @@
     <linearGradient
        id="linearGradient3807">
       <stop
-         style="stop-color:#32272a;stop-opacity:1;"
+         style="stop-color:#2d2d2d;stop-opacity:1"
          offset="0"
          id="stop3809" />
       <stop
-         style="stop-color:#261e20;stop-opacity:1;"
+         style="stop-color:#222222;stop-opacity:1"
          offset="1"
          id="stop3811" />
     </linearGradient>
@@ -49,17 +49,7 @@
        x2="25.071428"
        y2="1029.764"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0,1.0000183)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3815"
-       id="linearGradient3821"
-       x1="14.642857"
-       y1="1039.4067"
-       x2="14.535714"
-       y2="1037.3533"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-0.99999982,-0.9998774)" />
+       gradientTransform="matrix(0.66666667,0,0,0.65217391,0,366.34338)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -69,15 +59,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="15.15913"
-     inkscape:cy="14.387132"
+     inkscape:cx="-6.6712267"
+     inkscape:cy="14.074615"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1026"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-height="894"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -92,7 +82,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,51 +90,33 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-5.2173913e-7,-1027.3622)">
+     transform="translate(0,-1035.3622)">
     <rect
-       style="fill:#1a1517;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       style="fill:#181818;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6593805"
        id="rect3336-6"
-       width="24"
-       height="23"
+       width="16"
+       height="15"
        x="0"
-       y="1027.3622"
-       rx="12"
-       ry="11.5" />
+       y="1035.3622"
+       rx="8"
+       ry="7.5" />
     <rect
-       style="fill:#ffffff;fill-opacity:0.43921569;fill-rule:evenodd;stroke:none"
+       style="fill:#ffffff;fill-opacity:0.17647059;fill-rule:evenodd;stroke:none;stroke-width:0.6593805"
        id="rect3336-3"
-       width="24"
-       height="23"
+       width="16"
+       height="15"
        x="0"
-       y="1029.3622"
-       rx="12"
-       ry="11.5" />
+       y="1037.3622"
+       rx="8"
+       ry="7.5" />
     <rect
-       style="fill:url(#linearGradient3813);fill-opacity:1;fill-rule:evenodd;stroke:none"
+       style="fill:url(#linearGradient3813);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6593805"
        id="rect3336"
-       width="24"
-       height="23"
+       width="16"
+       height="15"
        x="0"
-       y="1028.3622"
-       rx="12"
-       ry="11.5" />
-    <rect
-       style="fill:#ffffff;fill-opacity:0.0627451;stroke:none"
-       id="rect2985-3"
-       width="6"
-       height="6.9000001"
-       x="9"
-       y="1036.4622"
-       rx="3"
-       ry="3" />
-    <rect
-       style="fill:url(#linearGradient3821);fill-opacity:1;stroke:none"
-       id="rect2985"
-       width="6"
-       height="6"
-       x="9"
        y="1036.3622"
-       rx="3"
-       ry="3" />
+       rx="8"
+       ry="7.5" />
   </g>
 </svg>
