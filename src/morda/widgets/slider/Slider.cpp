@@ -158,7 +158,7 @@ void HandleSlider::layOut(){
 	
 	auto minHandleSize =  this->handle.measure(Vec2r(-1));
 	
-	utki::clampBottom(newSize[longIndex], real(1.5) * minHandleSize[transIndex]);
+	utki::clampBottom(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex]));
 	
 	this->handle.resize(newSize);
 	
