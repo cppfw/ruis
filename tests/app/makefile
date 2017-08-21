@@ -18,6 +18,7 @@ this_srcs += src/main.cpp
 this_cxxflags := -Wall
 this_cxxflags += -Wno-comment #no warnings on nested comments
 this_cxxflags += -Wno-format
+this_cxxflags += -Wno-security-format
 this_cxxflags += -DDEBUG
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -g
@@ -75,7 +76,7 @@ endif
 this_ldlibs += $(d)../../src/libmorda$(soext)
 
 
-this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
+this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lunikod -lstdc++ -lm
 
 
 ifeq ($(ogles2), true)
