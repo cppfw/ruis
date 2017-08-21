@@ -18,7 +18,7 @@ model {
             toolchain = 'clang'
             abiFilters.addAll(['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64']) //this is default
             ldLibs.addAll(['android', 'log',
-                           'png', 'jpeg', 'stob', 'papki', 'svgren', 'svgdom',
+                           'png', 'jpeg', 'stob', 'papki', 'svgren', 'svgdom', 'unikod',
                            'z', 'freetype2', 'pugixml', 'cairo', 'pixman', 'c++'])
             stl = 'c++_shared'
             cppFlags.add("-std=c++11")
