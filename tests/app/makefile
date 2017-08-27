@@ -75,7 +75,7 @@ endif
 this_ldlibs += $(d)../../src/libmorda$(soext)
 
 
-this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
+this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lunikod -lstdc++ -lm
 
 
 ifeq ($(ogles2), true)

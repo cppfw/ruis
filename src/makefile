@@ -17,6 +17,7 @@ this_cxxflags += -Wfatal-errors # stop on first error encountered
 this_cxxflags += -fstrict-aliasing #strict aliasing (in order to comply with the c++ standard more strictly)
 this_cxxflags += -g #include debugging symbols
 this_cxxflags += -std=c++11
+this_cxxflags += -Wno-noexcept-type
 
 
 this_objcflags := 
@@ -47,6 +48,6 @@ else ifeq ($(os), macosx)
     this_ldlibs += -lfreetype
 endif
 
-this_ldlibs += -lpapki -lstob -lsvgdom -lsvgren -lpng -ljpeg -lstdc++ -lm
+this_ldlibs += -lpapki -lstob -lsvgdom -lsvgren -lunikod -lpng -ljpeg -lstdc++ -lm
 
 $(eval $(prorab-build-lib))
