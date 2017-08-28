@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/Widget.hpp"
-#include "button/SimpleButton.hpp"
+#include "button/NinePatchButton.hpp"
 
 namespace morda{
 
@@ -13,7 +13,7 @@ namespace morda{
  */
 class DropDownSelector :
 		virtual public Widget,
-		private SimpleButton
+		private NinePatchButton
 {
 	Pile& selectionContainer;
 public:

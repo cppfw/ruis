@@ -12,7 +12,7 @@ namespace morda{
  * initializing standard morda widgets.
  * Since the button is a NinePatch it can have children.
  */
-class SimpleButton :
+class NinePatchButton :
 		public PushButton,
 		public NinePatch
 {
@@ -21,10 +21,10 @@ class SimpleButton :
 	
 public:
 
-	SimpleButton(const SimpleButton&) = delete;
-	SimpleButton& operator=(const SimpleButton&) = delete;
+	NinePatchButton(const NinePatchButton&) = delete;
+	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
-	SimpleButton(const stob::Node* chain = nullptr);
+	NinePatchButton(const stob::Node* chain = nullptr);
 	
 protected:
 	void onPressedChanged()override;

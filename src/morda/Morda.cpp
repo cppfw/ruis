@@ -6,7 +6,7 @@
 
 #include "widgets/slider/Slider.hpp"
 
-#include "widgets/button/SimpleButton.hpp"
+#include "widgets/button/NinePatchButton.hpp"
 #include "widgets/button/CheckBox.hpp"
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/ChoiceGroup.hpp"
@@ -99,7 +99,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<ImageLabel>("ImageLabel");
 	this->inflater.addWidget<Window>("Window");
 	this->inflater.addWidget<NinePatch>("NinePatch");
-	this->inflater.addWidget<SimpleButton>("SimpleButton");
+	this->inflater.addWidget<NinePatchButton>("NinePatchButton");
 	this->inflater.addWidget<ColorLabel>("ColorLabel");
 	this->inflater.addWidget<TextField>("TextField");
 	this->inflater.addWidget<CheckBox>("CheckBox");

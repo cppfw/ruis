@@ -126,7 +126,7 @@ void DropDownSelector::showDropdownMenu() {
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		SimpleButton(stob::parse(selectorLayout_c).get()),
+		NinePatchButton(stob::parse(selectorLayout_c).get()),
 		selectionContainer(*this->findChildByNameAs<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){

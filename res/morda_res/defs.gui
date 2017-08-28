@@ -152,7 +152,7 @@ defs{
 	}
 
 	PushButton{
-		SimpleButton{
+		NinePatchButton{
 			@{children}
 		}
 	}

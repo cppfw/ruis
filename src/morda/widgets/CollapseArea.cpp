@@ -44,6 +44,9 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	this->contentArea = this->findChildByNameAs<Pile>("content");
 	ASSERT(this->contentArea)
 	
+	this->title_v = this->findChildByNameAs<Pile>("title");
+	ASSERT(this->title_v)
+			
 	if(chain){
 		this->contentArea->add(*chain);
 	}
