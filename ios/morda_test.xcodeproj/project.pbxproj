@@ -575,7 +575,6 @@
 					"\"${PODS_ROOT}/Headers/Public/libsvgren\"",
 					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
 					"\"${PODS_ROOT}/Headers/Public/libutki\"",
-					"\"${PODS_ROOT}/Headers/Public/pugixml\"",
 					../src,
 				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
@@ -593,7 +592,6 @@
 					"-l\"libstob\"",
 					"-l\"libsvgdom\"",
 					"-l\"libsvgren\"",
-					"-l\"pugixml\"",
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
@@ -629,7 +627,6 @@
 					"\"${PODS_ROOT}/Headers/Public/libsvgren\"",
 					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
 					"\"${PODS_ROOT}/Headers/Public/libutki\"",
-					"\"${PODS_ROOT}/Headers/Public/pugixml\"",
 					../src,
 				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
@@ -647,7 +644,6 @@
 					"-l\"libstob\"",
 					"-l\"libsvgdom\"",
 					"-l\"libsvgren\"",
-					"-l\"pugixml\"",
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.igagis.${PRODUCT_NAME:rfc1034identifier}";
