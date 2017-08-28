@@ -6,28 +6,26 @@ using namespace morda;
 
 
 
-ChoiceButton::ChoiceButton() :
-		Widget(nullptr)
-{}
+ChoiceButton::ChoiceButton(const stob::Node* chain) :
+		Widget(chain),
+		ToggleButton(chain)
+{
+}
 
-void ChoiceButton::setChecked(bool checked) {
-	if(checked){
+void ChoiceButton::onPressedChanged() {
+	if(this->isChecked()){
+		return;
+	}
+	this->ToggleButton::onPressedChanged();
+}
+
+
+void ChoiceButton::onCheckedChanged() {
+	if(this->isChecked()){
 		if(auto cg = this->findAncestor<ChoiceGroup>()){
 			cg->setActiveChoiceButton(this->sharedFromThis(this));
 		}
 	}
 	
-	if(this->isChecked_v == checked){
-		return;
-	}
-	
-	this->isChecked_v = checked;
-	this->onCheckedChanged();
-}
-
-
-void ChoiceButton::onCheckedChanged() {
-	if (this->checkedChanged) {
-		this->checkedChanged(*this, this->isChecked());
-	}
+	this->ToggleButton::onCheckedChanged();
 }

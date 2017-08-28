@@ -86,12 +86,13 @@ public:
  * In GUI script it has the 'checked{true/false}' attribute which can set initial
  * checked state of the widget.
  */
-class ToggleButton : public PushButton{
+class ToggleButton : public Button{
 	bool isChecked_v;
 	
-	void onClicked()override;
 protected:
 	ToggleButton(const stob::Node* chain);
+	
+	void onPressedChanged() override;
 	
 	/**
 	 * @brief Invoked when button checked state changes.

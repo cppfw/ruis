@@ -103,6 +103,8 @@ void ToggleButton::setChecked(bool checked) {
 	this->onCheckedChanged();
 }
 
-void ToggleButton::onClicked() {
-	this->toggle();
+void ToggleButton::onPressedChanged() {
+	if(this->isPressed()){
+		this->toggle();
+	}
 }
