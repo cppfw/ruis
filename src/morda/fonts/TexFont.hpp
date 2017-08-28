@@ -19,8 +19,6 @@
 
 
 namespace morda{
-
-
 /**
  * @brief A texture font.
  * This font implementation reads a Truetype font from 'ttf' file and renders given
@@ -88,7 +86,4 @@ private:
 
 	const Glyph& findGlyph(char32_t c)const;
 };
-
-
-
-}//~namespace
+}

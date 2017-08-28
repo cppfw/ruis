@@ -306,7 +306,6 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
-	
 	morda::inst().renderer().shader->colorPosTex->render(matrix, *this->tex, color, *g.vao);
 
 	return g.advance;
@@ -360,12 +359,14 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 	for(; s != str.end(); ++s){
 		auto i = this->glyphs.find(*s);
+		
+#ifdef DEBUG
 		if(i == this->glyphs.end()){
 			TRACE(<< "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s << std::endl)
-			continue;
 		}
+#endif
 
-		const Glyph& g = i->second;
+		const Glyph& g = i == this->glyphs.end() ? this->glyphs.at(unknownChar_c) : i->second;
 
 		if(g.verts[2].y > top){
 			top = g.verts[2].y;

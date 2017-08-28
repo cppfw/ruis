@@ -20,6 +20,7 @@
 #include "widgets/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
 #include "widgets/MouseCursor.hpp"
+#include "widgets/CollapseArea.hpp"
 
 using namespace morda;
 
@@ -109,6 +110,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<RadioButton>("RadioButton");
 	this->inflater.addWidget<ChoiceGroup>("ChoiceGroup");
 	this->inflater.addWidget<MouseCursor>("MouseCursor");
+	this->inflater.addWidget<CollapseArea>("CollapseArea");
 	
 	
 	try{

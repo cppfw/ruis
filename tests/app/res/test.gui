@@ -534,6 +534,13 @@ Container{
 							}
 						}
 
+						CollapseArea{
+							x{20} y{450}
+							TextLabel{
+								text{"I'm collapsable!!!"}
+							}
+						}
+
 						PushButton{
 							name{push_button_in_scroll_container}
 							x{10mm} y{20mm}
