@@ -51,6 +51,13 @@ void Button::onHoverChanged(unsigned pointerId){
 	}
 }
 
+void Button::onPressedChanged() {
+	if (this->pressedChanged) {
+		this->pressedChanged(*this);
+	}
+}
+
+
 
 void PushButton::onPressedChanged() {
 	this->Button::onPressedChanged();
@@ -61,6 +68,12 @@ void PushButton::onPressedChanged() {
 	}
 	
 	this->currentlyPressed = this->isPressed();
+}
+
+void PushButton::onClicked() {
+	if (this->clicked) {
+		this->clicked(*this);
+	}
 }
 
 
@@ -75,3 +88,21 @@ ToggleButton::ToggleButton(const stob::Node* chain) :
 	}
 }
 
+void ToggleButton::onCheckedChanged() {
+	if (this->checkedChanged) {
+		this->checkedChanged(*this, this->isChecked());
+	}
+}
+
+void ToggleButton::setChecked(bool checked) {
+	if (this->isChecked_v == checked) {
+		return;
+	}
+
+	this->isChecked_v = checked;
+	this->onCheckedChanged();
+}
+
+void ToggleButton::onClicked() {
+	this->toggle();
+}

@@ -26,11 +26,7 @@ protected:
 	 * @brief Called when button pressed state changes.
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
-	virtual void onPressedChanged(){
-		if(this->pressedChanged){
-			this->pressedChanged(*this);
-		}
-	}
+	virtual void onPressedChanged();
 	
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
 	
@@ -69,11 +65,7 @@ protected:
 	 * @brief Invoked when the button is clicked.
 	 * Default implementation emits 'clicked' signal.
 	 */
-	virtual void onClicked(){
-		if(this->clicked){
-			this->clicked(*this);
-		}
-	}
+	virtual void onClicked();
 	
 	PushButton() :
 			Widget(nullptr)
@@ -97,9 +89,7 @@ public:
 class ToggleButton : public PushButton{
 	bool isChecked_v;
 	
-	void onClicked()override{
-		this->toggle();
-	}
+	void onClicked()override;
 protected:
 	ToggleButton(const stob::Node* chain);
 	
@@ -107,11 +97,7 @@ protected:
 	 * @brief Invoked when button checked state changes.
 	 * Default implementation emits 'checkedChanged' signal.
 	 */
-	virtual void onCheckedChanged(){
-		if(this->checkedChanged){
-			this->checkedChanged(*this, this->isChecked());
-		}
-	}
+	virtual void onCheckedChanged();
 public:
 
 	/**
@@ -120,14 +106,7 @@ public:
 	 * invoke onCheckedChanged().
 	 * @param checked - whether the new state should be set to checked (true) or unchecked (false).
 	 */
-	void setChecked(bool checked){
-		if(this->isChecked_v == checked){
-			return;
-		}
-		
-		this->isChecked_v = checked;
-		this->onCheckedChanged();
-	}
+	void setChecked(bool checked);
 	
 	/**
 	 * @brief Change checked state to opposite.
