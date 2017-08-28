@@ -7,7 +7,8 @@ using namespace morda;
 
 
 ChoiceButton::ChoiceButton(const stob::Node* chain) :
-		Widget(chain)
+		Widget(chain),
+		Button(chain)
 {
 }
 

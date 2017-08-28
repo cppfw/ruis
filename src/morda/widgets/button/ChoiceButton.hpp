@@ -17,12 +17,12 @@ class ChoiceButton : public Button{
 	
 	bool isChecked_v = false;
 protected:
-	ChoiceButton(const stob::Node* chain = nullptr);
-	
 	void onPressedChanged()override;
 	
 	virtual void onCheckedChanged();
 public:
+	ChoiceButton(const stob::Node* chain = nullptr);
+	
 	ChoiceButton(const ChoiceButton&) = delete;
 	ChoiceButton& operator=(const ChoiceButton&) = delete;
 	

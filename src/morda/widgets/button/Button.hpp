@@ -18,10 +18,6 @@ class Button : public virtual Widget{
 	bool isPressed_v = false;
 	
 protected:
-	Button() :
-			Widget(nullptr)
-	{}
-	
 	/**
 	 * @brief Called when button pressed state changes.
 	 * Default implementation emits the 'pressedChanged' signal.
@@ -32,6 +28,9 @@ protected:
 	
 	void onHoverChanged(unsigned pointerID) override;
 public:	
+	Button(const stob::Node* chain = nullptr) :
+			Widget(chain)
+	{}
 	
 	/**
 	 * @brief Check if button is currently pressed.
@@ -67,11 +66,12 @@ protected:
 	 */
 	virtual void onClicked();
 	
-	PushButton() :
-			Widget(nullptr)
+public:
+	PushButton(const stob::Node* chain = nullptr) :
+			Widget(chain),
+			Button(chain)
 	{}
 	
-public:
 	/**
 	 * @brief Clicked signal.
 	 * Emitted when the button is clicked.
@@ -89,9 +89,7 @@ public:
 class ToggleButton : public Button{
 	bool isChecked_v;
 	
-protected:
-	ToggleButton(const stob::Node* chain);
-	
+protected:	
 	void onPressedChanged() override;
 	
 	/**
@@ -100,7 +98,8 @@ protected:
 	 */
 	virtual void onCheckedChanged();
 public:
-
+	ToggleButton(const stob::Node* chain = nullptr);
+	
 	/**
 	 * @brief Set checked state.
 	 * If checked state changes as a result of this function call it will also

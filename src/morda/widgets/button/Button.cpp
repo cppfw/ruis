@@ -79,7 +79,8 @@ void PushButton::onClicked() {
 
 
 ToggleButton::ToggleButton(const stob::Node* chain) :
-		Widget(chain)
+		Widget(chain),
+		Button(chain)
 {
 	if(const stob::Node* n = getProperty(chain, "checked")){
 		this->isChecked_v = n->asBool();
