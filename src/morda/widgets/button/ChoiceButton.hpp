@@ -12,17 +12,29 @@ namespace morda{
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class ChoiceButton : public ToggleButton{
+class ChoiceButton : public Button{
+	friend class ChoiceGroup;
+	
+	bool isChecked_v = false;
 protected:
 	ChoiceButton(const stob::Node* chain = nullptr);
 	
-	void onCheckedChanged()override;
-
+	void onPressedChanged()override;
+	
+	virtual void onCheckedChanged();
 public:
 	ChoiceButton(const ChoiceButton&) = delete;
 	ChoiceButton& operator=(const ChoiceButton&) = delete;
 	
+	bool isChecked()const noexcept{
+		return this->isChecked_v;
+	}
+	
+	void setChecked();
+	
+	std::function<void(ChoiceButton&)> checkedChanged;
 private:
+	void setChecked(bool checked);
 };
 
 }

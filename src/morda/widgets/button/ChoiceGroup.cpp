@@ -17,10 +17,9 @@ bool ChoiceGroup::isButtonActive(const ChoiceButton& b) const noexcept{
 
 
 void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb) {
-	auto old = this->activeChoiceButton_v;
-	this->activeChoiceButton_v = cb;
-	if(old){
-		old->setChecked(false);
+	if(this->activeChoiceButton_v){
+		this->activeChoiceButton_v->setChecked(false);
 	}
+	this->activeChoiceButton_v = cb;
 }
 
