@@ -12,20 +12,24 @@ ChoiceButton::ChoiceButton(const stob::Node* chain) :
 {
 }
 
-void ChoiceButton::onPressedChanged() {
-	if(this->isChecked()){
-		return;
-	}
-	this->ToggleButton::onPressedChanged();
-}
-
 
 void ChoiceButton::onCheckedChanged() {
+	auto cg = this->findAncestor<ChoiceGroup>();
+	if(!cg){
+		this->ToggleButton::onCheckedChanged();
+		return;
+	}
+		
 	if(this->isChecked()){
-		if(auto cg = this->findAncestor<ChoiceGroup>()){
+		if(!cg->isButtonActive(*this)){
 			cg->setActiveChoiceButton(this->sharedFromThis(this));
+			this->ToggleButton::onCheckedChanged();
+		}
+	}else{
+		if(cg->isButtonActive(*this)){
+			this->setChecked(true);
+		}else{
+			this->ToggleButton::onCheckedChanged();
 		}
 	}
-	
-	this->ToggleButton::onCheckedChanged();
 }

@@ -11,14 +11,16 @@ ChoiceGroup::ChoiceGroup(const stob::Node* chain) :
 {
 }
 
+bool ChoiceGroup::isButtonActive(const ChoiceButton& b) const noexcept{
+	return this->activeChoiceButton_v.get() == &b;
+}
+
+
 void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb) {
-	if(auto a = this->activeChoiceButton_v.lock()){
-		if(a == cb){
-			//given ChoiceButton is alreday active
-			return;
-		}
-		a->setChecked(false);
-	}
+	auto old = this->activeChoiceButton_v;
 	this->activeChoiceButton_v = cb;
+	if(old){
+		old->setChecked(false);
+	}
 }
 

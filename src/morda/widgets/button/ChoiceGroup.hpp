@@ -16,7 +16,7 @@ namespace morda{
 class ChoiceGroup : public Pile{
 	friend class ChoiceButton;
 	
-	std::weak_ptr<ChoiceButton> activeChoiceButton_v;
+	std::shared_ptr<ChoiceButton> activeChoiceButton_v;
 public:
 	ChoiceGroup(const stob::Node* chain = nullptr);
 	
@@ -24,7 +24,7 @@ public:
 	ChoiceGroup& operator=(const ChoiceGroup&) = delete;
 	
 private:
-
+	bool isButtonActive(const ChoiceButton& b)const noexcept;
 	void setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& rb);
 };
 

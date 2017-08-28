@@ -13,13 +13,10 @@ namespace morda{
  * of such button is a radio button.
  */
 class ChoiceButton : public ToggleButton{
-	friend class ChoiceGroup;
-	
 protected:
 	ChoiceButton(const stob::Node* chain = nullptr);
 	
 	void onCheckedChanged()override;
-	void onPressedChanged() override;
 
 public:
 	ChoiceButton(const ChoiceButton&) = delete;
