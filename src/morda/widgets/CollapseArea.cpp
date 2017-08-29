@@ -1,5 +1,6 @@
 #include "../Morda.hpp"
 
+#include "../util/util.hpp"
 #include "CollapseArea.hpp"
 #include "button/Button.hpp"
 
@@ -53,7 +54,11 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	
 	this->title_v = this->findChildByNameAs<Pile>("title");
 	ASSERT(this->title_v)
-			
+	
+	if(auto p = getProperty(chain, "title")){
+		this->title_v->add(*p);
+	}
+	
 	if(chain){
 		this->contentArea->add(*chain);
 	}

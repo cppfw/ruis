@@ -536,6 +536,12 @@ Container{
 
 						CollapseArea{
 							x{20} y{450}
+							title{
+								TextLabel{
+									text{"Collapsable stuff"}
+								}
+							}
+
 							TextLabel{
 								text{"I'm collapsable!!!"}
 							}
