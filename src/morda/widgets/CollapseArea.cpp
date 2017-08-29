@@ -14,18 +14,19 @@ const char* layout_c = R"qwertyuiop(
 			layout{dx{fill}dy{fill}}
 			color{@{morda_color_fg}}
 		}
-		Row{
+		Margins{
 			layout{dx{max}dy{max}}
-			Margins{
-				defs{
-					marHor{5pt}
-					marVer{3pt}
-				}
-				left{@{marHor}}
-				top{@{marVer}}
-				right{@{marHor}}
-				bottom{@{marVer}}
 
+			defs{
+				marHor{4pt}
+				marVer{1pt}
+			}
+			left{@{marHor}}
+			top{@{marVer}}
+			right{@{marHor}}
+			bottom{@{marVer}}
+
+			Row{
 				ImageToggle{
 					name{switch}
 					look{
@@ -33,9 +34,12 @@ const char* layout_c = R"qwertyuiop(
 						checked{morda_img_dropright_arrow}
 					}
 				}
-			}
-			Pile{
-				name{title}
+				Widget{
+					layout{dx{@{marHor}}}
+				}
+				Pile{
+					name{title}
+				}
 			}
 		}
 	}
