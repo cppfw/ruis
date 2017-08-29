@@ -10,6 +10,7 @@
 #include "widgets/button/CheckBox.hpp"
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/ChoiceGroup.hpp"
+#include "widgets/button/ImageToggle.hpp"
 
 #include "widgets/label/ColorLabel.hpp"
 #include "widgets/label/TextLabel.hpp"
@@ -111,6 +112,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<ChoiceGroup>("ChoiceGroup");
 	this->inflater.addWidget<MouseCursor>("MouseCursor");
 	this->inflater.addWidget<CollapseArea>("CollapseArea");
+	this->inflater.addWidget<ImageToggle>("ImageToggle");
 	
 	
 	try{

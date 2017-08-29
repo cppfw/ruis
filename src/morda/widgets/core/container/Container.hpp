@@ -106,6 +106,7 @@ public:
 	 */
 	const LayoutParams& getLayoutParams(const Widget& w)const;
 	
+	using Widget::getLayoutParams;
 public:
 	/**
 	 * @brief Constructor.

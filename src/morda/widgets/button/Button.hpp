@@ -128,7 +128,7 @@ public:
 	 * @brief Checked changed signal.
 	 * Emitted when checked state changes.
 	 */
-	std::function<void(ToggleButton&, bool)> checkedChanged;
+	std::function<void(ToggleButton&)> checkedChanged;
 };
 
 

@@ -91,7 +91,7 @@ ToggleButton::ToggleButton(const stob::Node* chain) :
 
 void ToggleButton::onCheckedChanged() {
 	if (this->checkedChanged) {
-		this->checkedChanged(*this, this->isChecked());
+		this->checkedChanged(*this);
 	}
 }
 

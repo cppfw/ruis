@@ -1,4 +1,7 @@
+#include "../Morda.hpp"
+
 #include "CollapseArea.hpp"
+#include "button/Button.hpp"
 
 using namespace morda;
 
@@ -21,9 +24,13 @@ const char* layout_c = R"qwertyuiop(
 				top{@{marVer}}
 				right{@{marHor}}
 				bottom{@{marVer}}
-				ImageLabel{
-					name{switch_arrow}
-					image{morda_img_dropdown_arrow}
+
+				ImageToggle{
+					name{switch}
+					look{
+						unchecked{morda_img_dropdown_arrow}
+						checked{morda_img_dropdown_arrow}
+					}
 				}
 			}
 			Pile{
@@ -49,5 +56,17 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 			
 	if(chain){
 		this->contentArea->add(*chain);
+	}
+	
+	{
+		auto sw = this->findChildByNameAs<ToggleButton>("switch");
+		ASSERT(sw)
+		sw->checkedChanged = [this](ToggleButton& tb){
+			if(tb.isChecked()){
+				this->contentArea->getLayoutParams().dim.y = 0;
+			}else{
+				this->contentArea->getLayoutParams().dim.y = Widget::LayoutParams::min_c;
+			}
+		};
 	}
 }
