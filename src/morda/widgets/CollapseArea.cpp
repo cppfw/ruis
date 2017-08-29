@@ -29,7 +29,7 @@ const char* layout_c = R"qwertyuiop(
 					name{switch}
 					look{
 						unchecked{morda_img_dropdown_arrow}
-						checked{morda_img_dropdown_arrow}
+						checked{morda_img_dropright_arrow}
 					}
 				}
 			}

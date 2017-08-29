@@ -36,6 +36,10 @@ morda_img_dropdown_arrow{
 	file{dropdown_arrow.svg}
 }
 
+morda_img_dropright_arrow{
+	file{dropright_arrow.svg}
+}
+
 morda_npt_contextmenu_bg{
 	file{contextmenu_bg.svg}
 	borders{4 5 4 5}
