@@ -16,7 +16,6 @@
 #include "widgets/label/TextLabel.hpp"
 
 #include "widgets/TextField.hpp"
-#include "widgets/List.hpp"
 #include "widgets/TreeView.hpp"
 #include "widgets/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
@@ -104,8 +103,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<ColorLabel>("ColorLabel");
 	this->inflater.addWidget<TextField>("TextField");
 	this->inflater.addWidget<CheckBox>("CheckBox");
-	this->inflater.addWidget<HorizontalList>("HorizontalList");
-	this->inflater.addWidget<VerticalList>("VerticalList");
 	this->inflater.addWidget<TreeView>("TreeView");
 	this->inflater.addWidget<DropDownSelector>("DropDownSelector");
 	this->inflater.addWidget<RadioButton>("RadioButton");

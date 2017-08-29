@@ -12,6 +12,8 @@
 #include "widgets/core/proxy/MouseProxy.hpp"
 #include "widgets/core/proxy/ResizeProxy.hpp"
 
+#include "widgets/core/List.hpp"
+
 #include "Morda.hpp"
 
 #include "util/util.hpp"
@@ -35,6 +37,8 @@ Inflater::Inflater(){
 	this->addWidget<KeyProxy>("KeyProxy");
 	this->addWidget<Overlay>("Overlay");
 	this->addWidget<ResizeProxy>("ResizeProxy");
+	this->addWidget<HorizontalList>("HorizontalList");
+	this->addWidget<VerticalList>("VerticalList");
 }
 
 

@@ -21,7 +21,7 @@
 #include "../../../src/morda/widgets/core/container/LinearContainer.hpp"
 #include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
-#include "../../../src/morda/widgets/List.hpp"
+#include "../../../src/morda/widgets/core/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
 #include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/core/proxy/ResizeProxy.hpp"
