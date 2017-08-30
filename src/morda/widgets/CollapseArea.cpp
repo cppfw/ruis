@@ -27,6 +27,7 @@ const char* layout_c = R"qwertyuiop(
 			bottom{@{marVer}}
 
 			Row{
+				layout{dx{max}}
 				ImageToggle{
 					name{switch}
 					look{

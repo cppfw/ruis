@@ -2,7 +2,7 @@ defs{
 	morda_color_text{0xffffffff}
 
 	morda_color_bg{0xff353535}
-
+	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
 
 	morda_color_bg_window_title{0xffff6775}
@@ -181,6 +181,17 @@ defs{
 			right{@{morda_window_border_size}}
 			bottom{@{morda_window_border_size}}
 			centerVisible{false}
+		}
+	}
+}
+
+defs{
+	Margin{ value
+		Margins{
+			left{@{value}}
+			top{@{value}}
+			right{@{value}}
+			bottom{@{value}}
 		}
 	}
 }

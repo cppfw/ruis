@@ -474,10 +474,34 @@ Container{
 			}
 		}*/
 
-		Bottom{
-			layout{
-				dx{max}
+		Column{
+			layout{dx{max}dy{max}}
+
+			Pile{
+				layout{dx{max}}
+				ColorLabel{
+					layout{dx{fill}dy{fill}}
+					color{@{morda_color_mg}}
+				}
+				Margin{
+					layout{dx{max}}
+					value{3pt}
+					
+					CollapseArea{
+						layout{dx{max}}
+						title{TextLabel{text{Hi!}}}
+						Column{
+							TextLabel{text{Hello!}}
+							PushButton{
+								TextLabel{text{button!!!}}
+							}
+						}
+					}
+				}
 			}
+
+			Widget{layout{dy{5pt}}}
+
 			TextField{
 				name{text_input}
 
