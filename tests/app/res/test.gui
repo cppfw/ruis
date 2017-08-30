@@ -492,9 +492,7 @@ Container{
 						title{TextLabel{text{Hi!}}}
 						Column{
 							TextLabel{text{Hello!}}
-							PushButton{
-								TextLabel{text{button!!!}}
-							}
+							PushButton{TextLabel{text{button!!!}}}
 						}
 					}
 				}
@@ -513,6 +511,17 @@ Container{
 					dx{max} dy{min}
 				}
 			}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+
 		}
 	}
 

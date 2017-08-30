@@ -32,12 +32,10 @@ LinearContainer::LinearContainer(bool isVertical, const stob::Node* chain) :
 
 
 namespace{
-
 class Info{
 public:
 	Vec2r measuredDim;
 };
-
 }
 
 
@@ -75,6 +73,8 @@ void LinearContainer::layOut(){
 		
 		real pos = 0;
 		
+		real remainder = 0;
+		
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(**i);
@@ -85,7 +85,15 @@ void LinearContainer::layOut(){
 				d[longIndex] = info->measuredDim[longIndex];
 				if(flexible > 0){
 					ASSERT(netWeight > 0)
-					d[longIndex] += flexible * lp.weight / netWeight;
+					real dl = flexible * lp.weight / netWeight;
+					real floored = std::floor(dl);
+					ASSERT(dl >= floored)
+					d[longIndex] += floored;
+					remainder += (dl - floored);
+					if(remainder >= real(1)){
+						d[longIndex] += real(1);
+						remainder -= real(1);
+					}
 				}
 				
 				if(lp.dim[transIndex] == LayoutParams::max_c || lp.dim[transIndex] == LayoutParams::fill_c){
@@ -105,7 +113,7 @@ void LinearContainer::layOut(){
 						}
 					}
 				}
-				(*i)->resize(d.rounded());
+				(*i)->resize(d);
 			}else{
 				(*i)->resize(info->measuredDim);
 			}
@@ -123,6 +131,14 @@ void LinearContainer::layOut(){
 			newPos[transIndex] = std::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 			
 			(*i)->moveTo(newPos);
+		}
+		
+		if(remainder > 0){
+			Vec2r d;
+			d[transIndex] = 0;
+			d[longIndex] = std::round(remainder);
+			this->children().back()->resizeBy(d);
+			this->children().back()->moveBy(-d);
 		}
 	}
 }
@@ -204,6 +220,10 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 	}
 	
 	{
+		real remainder = 0;
+		
+		auto lastChild = this->children().back().get();
+		
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(**i);
@@ -218,7 +238,23 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			d[longIndex] = info->measuredDim[longIndex];
 			
 			if(flexLen > 0){
-				d[longIndex] += flexLen * lp.weight / netWeight;
+				real dl = flexLen * lp.weight / netWeight;
+				real floored = std::floor(dl);
+				ASSERT(dl >= floored)
+				d[longIndex] += floored;
+				remainder += (dl- floored);
+				if(remainder >= real(1)){
+					d[longIndex] += real(1);
+					remainder -= real(1);
+				}
+				if((*i).get() == lastChild){
+					if(remainder > 0){
+						Vec2r correction;
+						correction[transIndex] = 0;
+						correction[longIndex] = std::round(remainder);
+						d += correction;
+					}
+				}
 			}
 			
 			if(lp.dim[transIndex] == LayoutParams::max_c){
