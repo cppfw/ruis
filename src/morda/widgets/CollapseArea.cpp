@@ -12,7 +12,7 @@ const char* layout_c = R"qwertyuiop(
 		layout{dx{max}}
 		ColorLabel{
 			layout{dx{fill}dy{fill}}
-			color{@{morda_color_fg}}
+			color{@{morda_color_mg}}
 		}
 		Margins{
 			layout{dx{max}dy{max}}

@@ -4,9 +4,11 @@ defs{
 	morda_color_bg{0xff353535}
 	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
+}
 
+defs{
 	morda_color_bg_window_title{0xffff6775}
-	morda_color_bg_window_title_nontopmost{0xff505050}
+	morda_color_bg_window_title_nontopmost{@{morda_color_fg}}
 
 	morda_window_border_size{5pt}
 

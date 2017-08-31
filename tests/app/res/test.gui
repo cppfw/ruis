@@ -482,17 +482,12 @@ Container{
 
 				image{morda_npt_frame}
 
-				Margin{
+				CollapseArea{
 					layout{dx{max}}
-					value{3pt}
-					
-					CollapseArea{
-						layout{dx{max}}
-						title{TextLabel{text{Hi!}}}
-						Column{
-							TextLabel{text{Hello!}}
-							PushButton{TextLabel{text{button!!!}}}
-						}
+					title{TextLabel{text{Hi!}}}
+					Column{
+						TextLabel{text{Hello!}}
+						PushButton{TextLabel{text{button!!!}}}
 					}
 				}
 			}
