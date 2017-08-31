@@ -66,7 +66,7 @@ morda_npt_window_bg{
 
 morda_npt_frame{
 	file{frame.svg}
-	borders{3 3 3 3}
+	borders{4 4 4 4}
 }
 
 morda_img_radiobutton_bg{
