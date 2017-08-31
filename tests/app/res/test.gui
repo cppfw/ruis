@@ -477,12 +477,11 @@ Container{
 		Column{
 			layout{dx{max}dy{max}}
 
-			Pile{
+			NinePatch{
 				layout{dx{max}}
-				ColorLabel{
-					layout{dx{fill}dy{fill}}
-					color{@{morda_color_mg}}
-				}
+
+				image{morda_npt_frame}
+
 				Margin{
 					layout{dx{max}}
 					value{3pt}
