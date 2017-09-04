@@ -344,9 +344,9 @@ App::App(const WindowParams& requestedWindowParams) :
 		xEmptyMouseCursor(xDisplay, xWindow),
 		xInputMethod(xDisplay, xWindow),
 #ifdef M_RENDER_OPENGLES2
-		renderer(utki::makeShared<mordaren::OpenGLES2Renderer>()),
+		renderer(std::make_shared<mordaren::OpenGLES2Renderer>()),
 #else
-		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
+		renderer(std::make_shared<mordaren::OpenGL2Renderer>()),
 #endif
 		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
 {

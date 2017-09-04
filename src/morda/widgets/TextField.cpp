@@ -11,7 +11,7 @@ using namespace morda;
 
 TextField::TextField(const stob::Node* chain) :
 		Widget(chain),
-		ti(utki::makeShared<TextInputLine>(chain))
+		ti(std::make_shared<TextInputLine>(chain))
 {
 	if(auto n = getProperty(chain, "background")){
 		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));

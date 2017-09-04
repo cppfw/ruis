@@ -43,7 +43,7 @@ std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Textu
 
 	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dim.x == dim.y)
 	
-	auto ret = utki::makeShared<OpenGLES2Texture2D>(dim.to<float>());
+	auto ret = std::make_shared<OpenGLES2Texture2D>(dim.to<float>());
 	
 	//TODO: save previous bind and restore it after?
 	ret->bind(0);
@@ -97,23 +97,23 @@ std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Textu
 }
 
 std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices){
-	return utki::makeShared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
-	return utki::makeShared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
-	return utki::makeShared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexArray> OpenGLES2Factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) {
-	return utki::makeShared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), mode);
+	return std::make_shared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), mode);
 }
 
 std::shared_ptr<morda::IndexBuffer> OpenGLES2Factory::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
-	return utki::makeShared<OpenGLES2IndexBuffer>(indices);
+	return std::make_shared<OpenGLES2IndexBuffer>(indices);
 }
 
 std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders() {
@@ -126,6 +126,6 @@ std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders()
 }
 
 std::shared_ptr<morda::FrameBuffer> OpenGLES2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
-	return utki::makeShared<OpenGLES2FrameBuffer>(std::move(color));
+	return std::make_shared<OpenGLES2FrameBuffer>(std::move(color));
 }
 

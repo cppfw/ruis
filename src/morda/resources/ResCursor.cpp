@@ -29,5 +29,5 @@ std::shared_ptr<ResCursor> ResCursor::load(const stob::Node& chain, const papki:
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return utki::makeShared<ResCursor>(*image, hotspot);
+	return std::make_shared<ResCursor>(*image, hotspot);
 }

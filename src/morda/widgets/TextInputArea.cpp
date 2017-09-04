@@ -12,7 +12,7 @@ size_t TextInputArea::LinesProvider::count() const noexcept{
 }
 
 std::shared_ptr<Widget> TextInputArea::LinesProvider::getWidget(size_t index) {
-	auto ret = utki::makeShared<TextInputLine>();
+	auto ret = std::make_shared<TextInputLine>();
 	
 	if(this->tia.lines.size() != 0){
 		ASSERT(index < this->tia.lines.size())

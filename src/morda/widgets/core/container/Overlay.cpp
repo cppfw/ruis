@@ -35,7 +35,7 @@ Overlay::Overlay(const stob::Node* chain) :
 
 void Overlay::onChildrenListChanged(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = utki::makeShared<Pile>(stob::parse(ContextMenuLayout_c).get());
+		this->overlayLayer = std::make_shared<Pile>(stob::parse(ContextMenuLayout_c).get());
 		this->add(this->overlayLayer);
 		
 		this->overlayContainer = this->overlayLayer->findChildByNameAs<Container>("morda_overlay_container");

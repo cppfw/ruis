@@ -460,7 +460,7 @@ public:
 			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 		
-		auto ret = utki::makeShared<morda::Row>();
+		auto ret = std::make_shared<morda::Row>();
 
 		ASSERT(isLastItemInParent.size() == path.size())
 		
@@ -729,7 +729,7 @@ public:
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};
-			auto state = utki::makeShared<State>();
+			auto state = std::make_shared<State>();
 			
 			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
 				if(button == morda::MouseButton_e::LEFT){
@@ -790,7 +790,7 @@ public:
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};
-			auto state = utki::makeShared<State>();
+			auto state = std::make_shared<State>();
 			
 			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
 				if(button == morda::MouseButton_e::LEFT){
@@ -821,7 +821,7 @@ public:
 		{
 			auto treeview = c->findChildByNameAs<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
-			auto provider = utki::makeShared<TreeViewItemsProvider>();
+			auto provider = std::make_shared<TreeViewItemsProvider>();
 			treeview->setItemsProvider(provider);
 			auto tv = utki::makeWeak(treeview);
 			

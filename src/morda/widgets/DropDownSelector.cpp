@@ -147,7 +147,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		return;
 	}
 	
-	std::shared_ptr<StaticProvider> p = utki::makeShared<StaticProvider>();
+	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
 	
 	for(; n; n = n->nextNonProperty().node()){
 		p->add(n->clone());
