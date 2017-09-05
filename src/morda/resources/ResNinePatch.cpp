@@ -12,7 +12,10 @@ using namespace morda;
 
 namespace{
 
-class ResSubImage : public ResImage, public ResImage::QuadTexture{
+class ResSubImage :
+		public ResImage,
+		public ResImage::QuadTexture
+{
 	friend class ResImage;
 	
 	std::shared_ptr<const ResImage::QuadTexture> tex;

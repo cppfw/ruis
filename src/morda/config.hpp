@@ -36,4 +36,4 @@ static_assert(sizeof(Vec4r) == sizeof(real) * 4, "size mismatch");
 
 typedef Sides<real> Sidesr;
 
-}//~namespace
+}
