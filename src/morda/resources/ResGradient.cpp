@@ -90,7 +90,7 @@ std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const pa
 		stops.push_back(std::make_tuple(pos, color));
 	}
 	
-	return utki::makeShared<ResGradient>(stops, vertical);
+	return std::make_shared<ResGradient>(stops, vertical);
 }
 
 

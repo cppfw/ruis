@@ -736,7 +736,7 @@ App::App(const WindowParams& requestedWindowParams) :
 		deviceContext(requestedWindowParams, window),
 		openglContext(deviceContext.hdc),
 		curWinRect(0, 0, -1, -1),
-		renderer(utki::makeShared<mordaren::OpenGL2Renderer>()),
+		renderer(std::make_shared<mordaren::OpenGL2Renderer>()),
 		gui(this->renderer, getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
 {
 	this->updateWindowRect(

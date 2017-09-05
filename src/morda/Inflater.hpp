@@ -62,7 +62,7 @@ public:
 		class Factory : public WidgetFactory{
 		public:
 			std::shared_ptr<morda::Widget> create(const stob::Node* chain)const override{
-				return utki::makeShared<T_Widget>(chain);
+				return std::make_shared<T_Widget>(chain);
 			}
 		};
 

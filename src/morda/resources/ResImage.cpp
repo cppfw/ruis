@@ -48,9 +48,9 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, cons
 	Rectr rect;
 	if(auto n = chain.childOfThisOrNext("rect")){
 		rect = makeRectrFromSTOB(n);
-		return utki::makeShared<ResAtlasImage>(tex, rect);
+		return std::make_shared<ResAtlasImage>(tex, rect);
 	}else{
-		return utki::makeShared<ResAtlasImage>(tex);
+		return std::make_shared<ResAtlasImage>(tex);
 	}
 }
 
@@ -93,7 +93,7 @@ public:
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
-		return utki::makeShared<ResRasterImage>(loadTexture(fi));
+		return std::make_shared<ResRasterImage>(loadTexture(fi));
 	}
 };
 
@@ -168,7 +168,7 @@ public:
 			}
 		}
 		
-		auto img = utki::makeShared<SvgTexture>(
+		auto img = std::make_shared<SvgTexture>(
 				this->sharedFromThis(this),
 				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(imWidth, imHeight), utki::wrapBuf(pixels))
 			);
@@ -181,7 +181,7 @@ public:
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
 	
 	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
-		return utki::makeShared<ResSvgImage>(svgdom::load(fi));
+		return std::make_shared<ResSvgImage>(svgdom::load(fi));
 	}	
 };
 }

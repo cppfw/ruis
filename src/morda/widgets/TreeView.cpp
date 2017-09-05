@@ -11,7 +11,7 @@ using namespace morda;
 TreeView::TreeView(const stob::Node* chain) :
 		Widget(chain)
 {
-	this->list = utki::makeShared<VerticalList>();
+	this->list = std::make_shared<VerticalList>();
 	this->add(this->list);
 	
 	auto& lp = this->getLayoutParams(*this->list);
