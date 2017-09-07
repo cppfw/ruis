@@ -12,20 +12,20 @@ namespace morda{
 /**
  * @brief Text label widget.
  * This widget shows text.
- * From GUI script it can be instantiated as "TextLabel".
+ * From GUI script it can be instantiated as "Text".
  */
-class TextLabel : public SingleLineTextWidget{
+class Text : public SingleLineTextWidget{
 	
 	
 public:
-	TextLabel(const stob::Node* chain = nullptr);
+	Text(const stob::Node* chain = nullptr);
 	
 public:
-	~TextLabel()noexcept{}
+	~Text()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 };
 
 
 
-}//~namespace
+}

@@ -20,7 +20,7 @@ extern "C"{
 
 
 
-#include "Image.hpp"
+#include "RasterImage.hpp"
 
 
 
@@ -28,7 +28,7 @@ using namespace morda;
 
 
 
-void Image::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
+void RasterImage::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
 	this->reset();
 	this->dim_v = dimensions;
 	this->colorDepth_v = typeOfImage;
@@ -37,14 +37,14 @@ void Image::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
 
 
 
-Image::Image(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
+RasterImage::RasterImage(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_v.begin(), srcBuf, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
 
-Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
+RasterImage::RasterImage(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const RasterImage& src){
 	if(src.dim().x == 0 || src.dim().y == 0){
 		throw utki::Exc("Image::Image(): source image has zero dimensions");
 	}
@@ -64,7 +64,7 @@ Image::Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src){
 
 
 //Fills image buffer with zeroes
-void Image::clear(std::uint8_t  val){
+void RasterImage::clear(std::uint8_t  val){
 	if (this->buf_v.size() == 0) {
 		return;
 	}
@@ -73,7 +73,7 @@ void Image::clear(std::uint8_t  val){
 
 
 
-void Image::clear(unsigned chan, std::uint8_t val){
+void RasterImage::clear(unsigned chan, std::uint8_t val){
 	for(unsigned i = 0; i < this->dim().x * this->dim().y; ++i){
 		this->buf_v[i * this->numChannels() + chan] = val;
 	}
@@ -81,7 +81,7 @@ void Image::clear(unsigned chan, std::uint8_t val){
 
 
 
-void Image::reset(){
+void RasterImage::reset(){
 	this->dim_v.set(0);
 	this->colorDepth_v = ColorDepth_e::UNKNOWN;
 	this->buf_v.clear();
@@ -93,7 +93,7 @@ void Image::reset(){
 //============Flip Image vertical method==============
 //====================================================
 //Flips vertically current image
-void Image::flipVertical(){
+void RasterImage::flipVertical(){
 	if(!this->buf_v.size()){
 		return;//nothing to flip
 	}
@@ -111,7 +111,7 @@ void Image::flipVertical(){
 
 
 
-void Image::blit(unsigned x, unsigned y, const Image& src){
+void RasterImage::blit(unsigned x, unsigned y, const RasterImage& src){
 	ASSERT(this->buf_v.size() != 0)
 	if(this->colorDepth() != src.colorDepth()){
 		throw utki::Exc("Image::Blit(): bits per pixel values do not match");
@@ -145,7 +145,7 @@ void Image::blit(unsigned x, unsigned y, const Image& src){
 
 
 
-void Image::blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan){
+void RasterImage::blit(unsigned x, unsigned y, const RasterImage& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_v.size())
 	if(dstChan >= this->numChannels()){
 		throw utki::Exc("Image::Blit(): destination channel index is greater than number of channels in the image");
@@ -194,7 +194,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 
 
 //Read PNG file method
-void Image::loadPNG(const papki::File& fi){
+void RasterImage::loadPNG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 	if(this->buf_v.size() > 0){
@@ -217,7 +217,7 @@ void Image::loadPNG(const papki::File& fi){
 	}
 
 	if(png_sig_cmp(&*sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){//if it is not a PNG-file
-		throw Image::Exc("Image::LoadPNG(): not a PNG file");
+		throw RasterImage::Exc("Image::LoadPNG(): not a PNG file");
 	}
 
 	//Great!!! We have a PNG-file!
@@ -274,22 +274,22 @@ void Image::loadPNG(const papki::File& fi){
 	ASSERT(bitDepth == 8)
 
 	//Set image type
-	Image::ColorDepth_e imageType;
+	RasterImage::ColorDepth_e imageType;
 	switch(colorType){
 		case PNG_COLOR_TYPE_GRAY:
-			imageType = Image::ColorDepth_e::GREY;
+			imageType = RasterImage::ColorDepth_e::GREY;
 			break;
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			imageType = Image::ColorDepth_e::GREYA;
+			imageType = RasterImage::ColorDepth_e::GREYA;
 			break;
 		case PNG_COLOR_TYPE_RGB:
-			imageType = Image::ColorDepth_e::RGB;
+			imageType = RasterImage::ColorDepth_e::RGB;
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			imageType = Image::ColorDepth_e::RGBA;
+			imageType = RasterImage::ColorDepth_e::RGBA;
 			break;
 		default:
-			throw Image::Exc("Image::LoadPNG(): unknown colorType");
+			throw RasterImage::Exc("Image::LoadPNG(): unknown colorType");
 			break;
 	}
 	//Great! Number of channels and bits per pixel are initialized now!
@@ -305,7 +305,7 @@ void Image::loadPNG(const papki::File& fi){
 
 	//check that our expectations are correct
 	if(bytesPerRow != this->dim().x * this->numChannels()){
-		throw Image::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
+		throw RasterImage::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
 	ASSERT((bytesPerRow * height) == this->buf_v.size())
@@ -435,7 +435,7 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 
 
 //Read JPEG function
-void Image::loadJPG(const papki::File& fi){
+void RasterImage::loadJPG(const papki::File& fi){
 	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
@@ -473,7 +473,7 @@ void Image::loadJPG(const papki::File& fi){
 			);
 		src = reinterpret_cast<DataManagerJPEGSource*>(cinfo.src);
 		if(!src){
-			throw Image::Exc("Image::LoadJPG(): memory alloc failed");
+			throw RasterImage::Exc("Image::LoadJPG(): memory alloc failed");
 		}
 		//Allocate memory for read data
 		src->buffer = reinterpret_cast<JOCTET*>(
@@ -485,7 +485,7 @@ void Image::loadJPG(const papki::File& fi){
 			);
 
 		if(!src->buffer){
-			throw Image::Exc("Image::LoadJPG(): memory alloc failed");
+			throw RasterImage::Exc("Image::LoadJPG(): memory alloc failed");
 		}
 
 		memset(src->buffer, 0, DJpegInputBufferSize * sizeof(JOCTET));
@@ -522,19 +522,19 @@ void Image::loadJPG(const papki::File& fi){
 	//this->SetNumChannels((Image::E_ImageChannelsNum)cinfo.output_components);
 	//Great! Number of channels and bits per pixel are initialized now
 
-	Image::ColorDepth_e imageType;
+	RasterImage::ColorDepth_e imageType;
 	switch(cinfo.output_components){
 		case 1:
-			imageType = Image::ColorDepth_e::GREY;
+			imageType = RasterImage::ColorDepth_e::GREY;
 			break;
 		case 2:
-			imageType = Image::ColorDepth_e::GREYA;
+			imageType = RasterImage::ColorDepth_e::GREYA;
 			break;
 		case 3:
-			imageType = Image::ColorDepth_e::RGB;
+			imageType = RasterImage::ColorDepth_e::RGB;
 			break;
 		case 4:
-			imageType = Image::ColorDepth_e::RGBA;
+			imageType = RasterImage::ColorDepth_e::RGBA;
 			break;
 		default:
 			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")
@@ -794,7 +794,7 @@ void Image::loadTGA(File& fi){
 
 
 
-void Image::load(const papki::File& fi){
+void RasterImage::load(const papki::File& fi){
 	std::string ext = fi.ext();
 
 	if(ext == "png"){
@@ -807,7 +807,7 @@ void Image::load(const papki::File& fi){
 //		TRACE(<< "Image::Load(): loading TGA image" << std::endl)
 		this->loadTGA(fi);
 	}*/else{
-		throw Image::Exc("Image::Load(): unknown image format");
+		throw RasterImage::Exc("Image::Load(): unknown image format");
 	}
 }
 

@@ -12,7 +12,7 @@ namespace morda{
 /**
  * @brief Utility class for loading and manipulating raster images.
  */
-class Image final{
+class RasterImage final{
 public:
 	/**
 	 * @brief Image color depth.
@@ -52,11 +52,11 @@ public:
 	 * @brief Default constructor.
 	 * Creates uninitialized Image object.
 	 */
-	Image() :
+	RasterImage() :
 			colorDepth_v(ColorDepth_e::UNKNOWN)
 	{}
 
-	Image(const Image& im) = default;
+	RasterImage(const RasterImage& im) = default;
 
 	/**
 	 * @brief Constructor.
@@ -64,7 +64,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	Image(kolme::Vec2ui dimensions, ColorDepth_e colorDepth){
+	RasterImage(kolme::Vec2ui dimensions, ColorDepth_e colorDepth){
 		this->init(dimensions, colorDepth);
 	}
 	
@@ -75,7 +75,7 @@ public:
 	 * @param colorDepth - color depth.
 	 * @param srcBuf - pointer to memory buffer to take image data from.
 	 */
-	Image(kolme::Vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
+	RasterImage(kolme::Vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
 
 	/**
 	 * @brief Constructor.
@@ -84,14 +84,14 @@ public:
 	 * @param dimensions - dimensions of the area to copy.
 	 * @param src - source image to copy area from.
 	 */
-	Image(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const Image& src);
+	RasterImage(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const RasterImage& src);
 
 	/**
 	 * @brief Constructor.
 	 * Creates an image by loading it from file. Supported file types are PNG and JPG.
 	 * @param f - file to load image from.
 	 */
-	Image(const papki::File& f){
+	RasterImage(const papki::File& f){
 		this->load(f);
 	}
 
@@ -184,7 +184,7 @@ public:
 	 * @param y - destination Y location.
 	 * @param src - image to copy to this image.
 	 */
-	void blit(unsigned x, unsigned y, const Image& src);
+	void blit(unsigned x, unsigned y, const RasterImage& src);
 
 	
 	/**
@@ -197,7 +197,7 @@ public:
 	 * @param dstChan - index of destination color channel.
 	 * @param srcChan - index of source color channel.
 	 */
-	void blit(unsigned x, unsigned y, const Image& src, unsigned dstChan, unsigned srcChan);
+	void blit(unsigned x, unsigned y, const RasterImage& src, unsigned dstChan, unsigned srcChan);
 
 	/**
 	 * @brief Get reference to specific channel for given pixel.

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Button.hpp"
-#include "../label/ImageLabel.hpp"
+#include "../label/Image.hpp"
 
 #include "../../resources/ResImage.hpp"
 
 namespace morda{
 class ImageToggle :
 		public ToggleButton,
-		private ImageLabel
+		private Image
 {
 	std::shared_ptr<ResImage> uncheckedImage;
 	std::shared_ptr<ResImage> checkedImage;

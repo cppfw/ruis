@@ -1,7 +1,7 @@
 #pragma once
 
-#include "label/TextLabel.hpp"
-#include "label/ColorLabel.hpp"
+#include "label/Text.hpp"
+#include "label/Color.hpp"
 
 #include "core/container/Pile.hpp"
 #include "core/proxy/MouseProxy.hpp"
@@ -25,11 +25,11 @@ class Window :
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 	
-	std::shared_ptr<ColorLabel> titleBg;
+	std::shared_ptr<Color> titleBg;
 	std::uint32_t titleBgColorTopmost;
 	std::uint32_t titleBgColorNonTopmost;
 	
-	std::shared_ptr<TextLabel> title;
+	std::shared_ptr<Text> title;
 	
 	std::shared_ptr<Pile> contentArea;
 	

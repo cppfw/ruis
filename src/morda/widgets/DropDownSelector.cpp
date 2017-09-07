@@ -8,8 +8,8 @@
 
 #include "button/Button.hpp"
 
-#include "label/TextLabel.hpp"
-#include "label/ColorLabel.hpp"
+#include "label/Text.hpp"
+#include "label/Color.hpp"
 
 #include "base/TextWidget.hpp"
 #include "NinePatch.hpp"
@@ -32,12 +32,12 @@ const char* selectorLayout_c = R"qwertyuiop(
 			layout{dx{min}dy{max} weight{1}}
 		}
 		Widget{layout{dx{3pt}}}
-		ImageLabel{
+		Image{
 			image{morda_img_divider_vert}
 			layout{dy{fill}}
 		}
 		Widget{layout{dx{3pt}}}
-		ImageLabel{
+		Image{
 			image{morda_img_dropdown_arrow}
 		}
 	}
@@ -54,7 +54,7 @@ const char* itemLayout_c = R"qwertyuiop(
 					dx{max} dy{max}
 				}
 			}
-			ColorLabel{
+			Color{
 				name{morda_dropdown_color}
 				color{@{morda_color_highlight}}
 				layout{
@@ -203,7 +203,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 	auto mp = wd->findChildByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd->findChildByNameAs<ColorLabel>("morda_dropdown_color");
+	auto cl = wd->findChildByNameAs<Color>("morda_dropdown_color");
 	ASSERT(cl)
 	auto clWeak = utki::makeWeak(cl);
 

@@ -10,7 +10,7 @@ namespace{
 const char* layout_c = R"qwertyuiop(
 	Pile{
 		layout{dx{max}}
-		ColorLabel{
+		Color{
 			layout{dx{fill}dy{fill}}
 			color{@{morda_color_mg}}
 		}

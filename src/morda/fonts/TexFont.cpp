@@ -6,7 +6,7 @@
 
 #include <utki/debug.hpp>
 
-#include "../util/Image.hpp"
+#include "../util/RasterImage.hpp"
 #include "../util/util.hpp"
 
 #include "TexFont.hpp"
@@ -20,7 +20,7 @@ using namespace morda;
 
 namespace{
 
-static void BlitIfGreater(Image& dst, unsigned dstChan, const Image& src, unsigned srcChan, unsigned x, unsigned y){
+static void BlitIfGreater(RasterImage& dst, unsigned dstChan, const RasterImage& src, unsigned srcChan, unsigned x, unsigned y){
 	ASSERT(dst.buf().size())
 	ASSERT(dstChan < dst.numChannels())
 	ASSERT(srcChan < src.numChannels())
@@ -128,7 +128,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	unsigned curY = DYGap;
 	unsigned maxHeightInRow = 0;
 
-	Image texImg(kolme::Vec2ui(texWidth, curTexHeight), Image::ColorDepth_e::GREYA);
+	RasterImage texImg(kolme::Vec2ui(texWidth, curTexHeight), RasterImage::ColorDepth_e::GREYA);
 	//clear the image because image buffer may contain trash data
 	//and glyphs will have artifacts on their edges
 	texImg.clear();
@@ -163,9 +163,9 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			}
 			continue;
 		}
-		Image glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), Image::ColorDepth_e::GREY, slot->bitmap.buffer);
+		RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
 
-		Image im(kolme::Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), Image::ColorDepth_e::GREYA);
+		RasterImage im(kolme::Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), RasterImage::ColorDepth_e::GREYA);
 		im.clear();
 		if(outline == 0){
 			im.blit(0, 0, glyphim, 1, 0);
@@ -201,7 +201,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 			//TODO: optimize somehow?
 			//resize texture image
-			Image copy(texImg);
+			RasterImage copy(texImg);
 			texImg.init(kolme::Vec2ui(copy.dim().x, newHeight), copy.colorDepth());
 			texImg.clear();
 			texImg.blit(0, 0, copy);
@@ -256,7 +256,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	if(curY == 0){
 		//TODO: optimize somehow?
 		//resize
-		Image copy(texImg);
+		RasterImage copy(texImg);
 		texImg.init(kolme::Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.colorDepth());
 		texImg.clear();
 		texImg.blit(0, 0, copy);

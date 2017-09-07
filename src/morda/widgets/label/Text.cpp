@@ -1,4 +1,4 @@
-#include "TextLabel.hpp"
+#include "Text.hpp"
 
 
 #include "../../Morda.hpp"
@@ -10,14 +10,14 @@ using namespace morda;
 
 
 
-TextLabel::TextLabel(const stob::Node* chain) :
+Text::Text(const stob::Node* chain) :
 		Widget(chain),
 		SingleLineTextWidget(chain)
 {}
 
 
 
-void TextLabel::render(const morda::Matr4r& matrix)const{
+void Text::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.translate(-this->textBoundingBox().p.x, -this->font().boundingBox().p.y);
 	

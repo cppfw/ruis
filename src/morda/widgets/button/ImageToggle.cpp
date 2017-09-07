@@ -10,7 +10,7 @@ using namespace morda;
 ImageToggle::ImageToggle(const stob::Node* chain) :
 		Widget(chain),
 		ToggleButton(chain),
-		ImageLabel(nullptr)
+		Image(nullptr)
 {
 	if(auto look = getProperty(chain, "look")){
 		if(auto p = getProperty(look, "checked")){

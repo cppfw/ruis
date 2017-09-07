@@ -10,10 +10,10 @@ using namespace morda;
 namespace{
 
 const char* D_Layout = R"qwertyuiop(
-		ImageLabel{
+		Image{
 			image{morda_img_radiobutton_bg}
 		}
-		ImageLabel{
+		Image{
 			image{morda_img_radiobutton_tick}
 		}
 	)qwertyuiop";

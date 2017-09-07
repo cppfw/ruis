@@ -16,8 +16,8 @@ defs{
 
 //	morda_color_highlight{0xff329ce1}
 
-	TextLabel{
-		TextLabel{
+	Text{
+		Text{
 			color{ @{morda_color_text} }
 		}
 	}

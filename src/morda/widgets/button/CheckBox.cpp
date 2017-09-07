@@ -10,7 +10,7 @@ using namespace morda;
 namespace{
 
 const char* D_Layout = R"qwertyuiop(
-		ImageLabel{
+		Image{
 			name{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
 		}

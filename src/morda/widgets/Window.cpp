@@ -76,7 +76,7 @@ const char* windowDesc_c = R"qwertyuiop(
 							}
 						}
 
-						ColorLabel{
+						Color{
 							name{morda_window_title_bg}
 							layout{
 								dx{max} dy{max}
@@ -98,7 +98,7 @@ const char* windowDesc_c = R"qwertyuiop(
 									weight{1}
 								}
 
-								TextLabel{
+								Text{
 									name{morda_title}
 								}
 							}
@@ -239,10 +239,10 @@ void morda::Window::setupWidgets(){
 	this->contentArea = this->findChildByNameAs<Pile>("morda_content");
 	ASSERT(this->contentArea)
 	
-	this->title = this->findChildByNameAs<TextLabel>("morda_title");
+	this->title = this->findChildByNameAs<Text>("morda_title");
 	ASSERT(this->title)
 	
-	this->titleBg = this->findChildByNameAs<ColorLabel>("morda_window_title_bg");
+	this->titleBg = this->findChildByNameAs<Color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 	
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){

@@ -12,19 +12,19 @@ namespace morda{
 /**
  * @brief Image widget.
  * This widget can display an image.
- * From GUI script it can be instantiated as "ImageLabel".
+ * From GUI script it can be instantiated as "Image".
  * 
  * @param image - image resource.
  * @param keepAspectRatio - try to keep aspect ratio of the image when scaling.
  * @param repeatX - replicate image horizontally if size of the widget is bigger than size of the image resource.
  * @param repeatY - replicate image vertically if size of the widget is bigger than size of the image resource.
  */
-class ImageLabel :
+class Image :
 		public virtual Widget,
 		public BlendingWidget
 {
-	ImageLabel(const ImageLabel&);
-	ImageLabel& operator=(const ImageLabel&);
+	Image(const Image&);
+	Image& operator=(const Image&);
 	
 	std::shared_ptr<const morda::ResImage> img;
 	
@@ -36,9 +36,9 @@ class ImageLabel :
 	mutable std::shared_ptr<VertexArray> vao;
 	
 public:
-	ImageLabel(const stob::Node* chain = nullptr);
+	Image(const stob::Node* chain = nullptr);
 public:
-	virtual ~ImageLabel()noexcept{}
+	virtual ~Image()noexcept{}
 	
 	void render(const morda::Matr4r& matrix)const override;
 

@@ -12,8 +12,8 @@
 #include "widgets/button/ChoiceGroup.hpp"
 #include "widgets/button/ImageToggle.hpp"
 
-#include "widgets/label/ColorLabel.hpp"
-#include "widgets/label/TextLabel.hpp"
+#include "widgets/label/Color.hpp"
+#include "widgets/label/Text.hpp"
 
 #include "widgets/TextField.hpp"
 #include "widgets/TreeView.hpp"
@@ -93,14 +93,14 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	
 	//add standard widgets to inflater
 	
-	this->inflater.addWidget<TextLabel>("TextLabel");
+	this->inflater.addWidget<Text>("Text");
+	this->inflater.addWidget<Color>("Color");
+	this->inflater.addWidget<Image>("Image");
 	this->inflater.addWidget<VerticalSlider>("VerticalSlider");
 	this->inflater.addWidget<HorizontalSlider>("HorizontalSlider");
-	this->inflater.addWidget<ImageLabel>("ImageLabel");
 	this->inflater.addWidget<Window>("Window");
 	this->inflater.addWidget<NinePatch>("NinePatch");
 	this->inflater.addWidget<NinePatchButton>("NinePatchButton");
-	this->inflater.addWidget<ColorLabel>("ColorLabel");
 	this->inflater.addWidget<TextField>("TextField");
 	this->inflater.addWidget<CheckBox>("CheckBox");
 	this->inflater.addWidget<TreeView>("TreeView");

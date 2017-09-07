@@ -1,4 +1,4 @@
-#include "ColorLabel.hpp"
+#include "Color.hpp"
 
 #include "../../Morda.hpp"
 
@@ -8,7 +8,7 @@
 using namespace morda;
 
 
-ColorLabel::ColorLabel(const stob::Node* chain) :
+Color::Color(const stob::Node* chain) :
 		Widget(chain),
 		ColorWidget(chain)
 {
@@ -21,7 +21,7 @@ ColorLabel::ColorLabel(const stob::Node* chain) :
 
 
 
-void ColorLabel::render(const morda::Matr4r& matrix)const{
+void Color::render(const morda::Matr4r& matrix)const{
 	applySimpleAlphaBlending();
 	
 	morda::Matr4r matr(matrix);

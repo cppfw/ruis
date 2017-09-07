@@ -1,7 +1,7 @@
 #include "ResTexture.hpp"
 
 #include "../Exc.hpp"
-#include "../util/Image.hpp"
+#include "../util/RasterImage.hpp"
 #include "../util/util.hpp"
 
 

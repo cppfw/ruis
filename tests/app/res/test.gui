@@ -1,8 +1,8 @@
 defs{
 	trololo{"saf"}
 
-	TextLabel{
-		TextLabel{
+	Text{
+		Text{
 //			text{"trololo"}
 
 //			color{0xff0000ff}
@@ -75,7 +75,7 @@ Container{
 					}
 				}
 
-				TextLabel{
+				Text{
 					text{"some checkbox"}
 				}
 			}
@@ -85,31 +85,31 @@ Container{
 					dx{max}
 				}
 
-				TextLabel{text{item0}}
-				TextLabel{text{item1}}
-				TextLabel{text{item2}}
-				TextLabel{text{item3}}
-				TextLabel{text{item4}}
-				TextLabel{text{item5}}
-				TextLabel{text{item6}}
-				TextLabel{text{item7}}
-				TextLabel{text{item8}}
-				TextLabel{text{item9}}
-				TextLabel{text{item10}}
+				Text{text{item0}}
+				Text{text{item1}}
+				Text{text{item2}}
+				Text{text{item3}}
+				Text{text{item4}}
+				Text{text{item5}}
+				Text{text{item6}}
+				Text{text{item7}}
+				Text{text{item8}}
+				Text{text{item9}}
+				Text{text{item10}}
 			}
 
 			Left{
 				PushButton{
 					name{showhide_mousecursor_button}
 
-					TextLabel{
+					Text{
 						text{"show/hide mouse"}
 					}
 				}
 				PushButton{
 					name{fullscreen_button}
 
-					TextLabel{
+					Text{
 						text{"toggle fullscreen"}
 					}
 				}
@@ -129,7 +129,7 @@ Container{
 								RadioButton
 							}
 
-							TextLabel{
+							Text{
 								text{"radiobutton"}
 							}
 						}
@@ -174,7 +174,7 @@ Container{
 					dx{max} dy{min}
 				}
 
-				TextLabel{
+				Text{
 					name {label1}
 					text {trololo}
 					padding {10 20 30 40}
@@ -186,7 +186,7 @@ Container{
 
 				}
 
-				TextLabel{
+				Text{
 					name {label2}
 					text {"blah bla"}
 					padding {0}
@@ -212,7 +212,7 @@ Container{
 					}
 
 
-					TextLabel{
+					Text{
 						text {"Show VK"}
 						color{0xffccfbff}
 					}
@@ -221,7 +221,7 @@ Container{
 
 			Pile{
 				layout{dx{fill} dy{50pt}}
-				ColorLabel{
+				Color{
 					layout{dx{fill}dy{fill}}
 					color{0xff808080}
 				}
@@ -243,41 +243,41 @@ Container{
 					}
 					name{horizontal_list}
 
-					TextLabel{
+					Text{
 						text{item1|}
 						layout{dy{max}}
 					}
-					TextLabel{
+					Text{
 						text{item2|}
 					}
-					TextLabel{
+					Text{
 						text{item3|}
 					}
-					TextLabel{
+					Text{
 						text{item4|}
 					}
-					TextLabel{
+					Text{
 						text{item5|}
 					}
-					TextLabel{
+					Text{
 						text{item6|}
 					}
-					TextLabel{
+					Text{
 						text{item7|}
 					}
-					TextLabel{
+					Text{
 						text{item8|}
 					}
-					TextLabel{
+					Text{
 						text{item9|}
 					}
-					TextLabel{
+					Text{
 						text{item10|}
 					}
-					TextLabel{
+					Text{
 						text{item11|}
 					}
-					TextLabel{
+					Text{
 						text{item12|}
 					}
 				}
@@ -367,24 +367,24 @@ Container{
 			}
 			TableRow{
 				Row{
-					TextLabel{
+					Text{
 						text{Insert:}
 					}
 					PushButton{
 						name{insert_before}
-						TextLabel{
+						Text{
 							text{"before"}
 						}
 					}
 					PushButton{
 						name{insert_after}
-						TextLabel{
+						Text{
 							text{"after"}
 						}
 					}
 					PushButton{
 						name{insert_child}
-						TextLabel{
+						Text{
 							text{"child"}
 						}
 					}
@@ -408,7 +408,7 @@ Container{
 				dx{max} dy{max}
 			}
 
-			ImageLabel{
+			Image{
 //				image{img_lattice}
 				image{img_camera}
 
@@ -443,7 +443,7 @@ Container{
 		title{"Spinning cube"}
 
 /*
-		ImageLabel{
+		Image{
 			layout{
 				dx{max} dy{max}
 			}
@@ -466,7 +466,7 @@ Container{
 
 		title{"TextInput"}
 
-		/*ColorLabel{
+		/*Color{
 			color{ @{morda_color_bg} }
 
 			layout{
@@ -484,10 +484,10 @@ Container{
 
 				CollapseArea{
 					layout{dx{max}}
-					title{TextLabel{text{Hi!}}}
+					title{Text{text{Hi!}}}
 					Column{
-						TextLabel{text{Hello!}}
-						PushButton{TextLabel{text{button!!!}}}
+						Text{text{Hello!}}
+						PushButton{Text{text{button!!!}}}
 					}
 				}
 			}
@@ -505,16 +505,16 @@ Container{
 					dx{max} dy{min}
 				}
 			}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}TextLabel{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
 
 		}
 	}
@@ -552,7 +552,7 @@ Container{
 							dx{max} dy{max}
 						}
 
-						ImageLabel{
+						Image{
 							image{img_sample}
 //							image{img_camera}
 
@@ -564,12 +564,12 @@ Container{
 						CollapseArea{
 							x{20} y{450}
 							title{
-								TextLabel{
+								Text{
 									text{"Collapsable stuff"}
 								}
 							}
 
-							TextLabel{
+							Text{
 								text{"I'm collapsable!!!"}
 							}
 						}
@@ -578,7 +578,7 @@ Container{
 							name{push_button_in_scroll_container}
 							x{10mm} y{20mm}
 
-							TextLabel{
+							Text{
 								x{0} y{0}
 								dx{100mm} dy{10mm}
 								text{"Hello World!!!"}
@@ -626,7 +626,7 @@ Container{
 		title{"Table"}
 
 
-		ColorLabel{
+		Color{
 			layout{dx{max}dy{max}}
 			color{0xff008000}
 			gradient{grd_sample}
@@ -640,14 +640,14 @@ Container{
 			}
 
 			TableRow{
-				ColorLabel{
+				Color{
 					color{0xff00ff00}
 					layout{
 						dx{50} dy{30}
 					}
 				}
 
-				ColorLabel{
+				Color{
 					color{0xffff0000}
 					layout{
 						dx{70} dy{20}
@@ -655,7 +655,7 @@ Container{
 					}
 				}
 
-				ColorLabel{
+				Color{
 					color{0xffffffff}
 					layout{
 						dx{10} dy{20}
@@ -664,21 +664,21 @@ Container{
 			}
 
 			TableRow{
-				ColorLabel{
+				Color{
 					color{0xff0000ff}
 					layout{
 						dx{20} dy{30}
 					}
 				}
 
-				ColorLabel{
+				Color{
 					color{0xffffff00}
 					layout{
 						dx{90} dy{20}
 					}
 				}
 
-				TextLabel{
+				Text{
 					text{"Long text"}
 				}
 			}
@@ -715,131 +715,131 @@ Container{
 						dx{max} dy{max}
 					}
 
-					TextLabel{
+					Text{
 						text{item0}
 					}
 
-					TextLabel{
+					Text{
 						text{item_1_iequwgfiew}
 					}
 
-					TextLabel{
+					Text{
 						text{item_2_werf}
 					}
 
 					PushButton{
-						TextLabel{
+						Text{
 							text {"item3"}
 							color{0xff0000ff}
 						}
 					//	text{item_3}
 					}
 
-					TextLabel{
+					Text{
 						text{item_4}
 					}
 
-					TextLabel{
+					Text{
 						text{item_5}
 					}
 
-					TextLabel{
+					Text{
 						text{item_6}
 					}
 
-					TextLabel{
+					Text{
 						text{item_7}
 					}
 
-					TextLabel{
+					Text{
 						text{item_8}
 					}
 
-					TextLabel{
+					Text{
 						text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
 					}
 
-					TextLabel{
+					Text{
 						text{item_10}
 					}
 
-					TextLabel{
+					Text{
 						text{item_4}
 					}
 
-					TextLabel{
+					Text{
 						text{item_5}
 					}
 
-					TextLabel{
+					Text{
 						text{item_6}
 					}
 
-					TextLabel{
+					Text{
 						text{item_7}
 					}
 
-					TextLabel{
+					Text{
 						text{item_8}
 					}
 
-					TextLabel{
+					Text{
 						text{item_4}
 					}
 
-					TextLabel{
+					Text{
 						text{item_5}
 					}
 
-					TextLabel{
+					Text{
 						text{item_6}
 					}
 
-					TextLabel{
+					Text{
 						text{item_7}
 					}
 
-					TextLabel{
+					Text{
 						text{item_8}
 					}
 
-					TextLabel{
+					Text{
 						text{item_4}
 					}
 
-					TextLabel{
+					Text{
 						text{item_5}
 					}
 
-					TextLabel{
+					Text{
 						text{item_6}
 					}
 
-					TextLabel{
+					Text{
 						text{item_7}
 					}
 
-					TextLabel{
+					Text{
 						text{item_8}
 					}
 
-					TextLabel{
+					Text{
 						text{item_4}
 					}
 
-					TextLabel{
+					Text{
 						text{item_5}
 					}
 
-					TextLabel{
+					Text{
 						text{item_6}
 					}
 
-					TextLabel{
+					Text{
 						text{item_7}
 					}
 
-					TextLabel{
+					Text{
 						text{item_8}
 					}
 

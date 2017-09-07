@@ -19,10 +19,10 @@ namespace morda{
  * From GUI script it can be instantiated as 'Container' and can  have child widgets specified. For example:
  * @code
  * Container{
- *     TextLabel{
+ *     Text{
  *         text{"Hello world!"}
  *     }
- *     TextLabel{
+ *     Text{
  *         text{"Hi!"}
  *     }
  * }

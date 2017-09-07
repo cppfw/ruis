@@ -1,4 +1,4 @@
-#include "ImageLabel.hpp"
+#include "Image.hpp"
 
 #include "../../Morda.hpp"
 
@@ -9,7 +9,7 @@ using namespace morda;
 
 
 
-ImageLabel::ImageLabel(const stob::Node* chain) :
+Image::Image(const stob::Node* chain) :
 		Widget(chain),
 		BlendingWidget(chain)
 {
@@ -43,7 +43,7 @@ const std::array<kolme::Vec2f, 4> quadFanTexCoords = {{
 }};
 }
 
-void ImageLabel::render(const morda::Matr4r& matrix) const{
+void Image::render(const morda::Matr4r& matrix) const{
 	if(!this->img){
 		return;
 	}
@@ -83,7 +83,7 @@ void ImageLabel::render(const morda::Matr4r& matrix) const{
 	this->scaledImage->render(matr, *this->vao);
 }
 
-morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 	if(!this->img){
 		return Vec2r(0);
 	}
@@ -133,7 +133,7 @@ morda::Vec2r ImageLabel::measure(const morda::Vec2r& quotum)const{
 
 
 
-void ImageLabel::setImage(const std::shared_ptr<const ResImage>& image) {
+void Image::setImage(const std::shared_ptr<const ResImage>& image) {
 	if(this->img && image && this->img->dim() == image->dim()){
 	}else{
 		this->setRelayoutNeeded();
@@ -143,7 +143,7 @@ void ImageLabel::setImage(const std::shared_ptr<const ResImage>& image) {
 	this->scaledImage.reset();
 }
 
-void ImageLabel::onResize() {
+void Image::onResize() {
 	this->Widget::onResize();
 	this->scaledImage.reset();
 }

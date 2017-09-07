@@ -43,8 +43,8 @@
             <in>unzip.cpp</in>
             <in>unzip.h</in>
           </df>
-          <in>Image.cpp</in>
-          <in>Image.hpp</in>
+          <in>RasterImage.cpp</in>
+          <in>RasterImage.hpp</in>
           <in>Sides.hpp</in>
           <in>ZipFile.cpp</in>
           <in>ZipFile.hpp</in>
@@ -89,9 +89,9 @@
             <in>Widget.cpp</in>
           </df>
           <df name="label">
-            <in>ColorLabel.cpp</in>
-            <in>ImageLabel.cpp</in>
-            <in>TextLabel.cpp</in>
+            <in>Color.cpp</in>
+            <in>Image.cpp</in>
+            <in>Text.cpp</in>
           </df>
           <df name="slider">
             <in>Slider.cpp</in>
@@ -550,7 +550,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -1206,10 +1206,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ColorLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Color.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -1229,10 +1226,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ImageLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -1252,10 +1246,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/TextLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets/core</pElem>
@@ -1887,7 +1878,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/c++/7/bits</pElem>
@@ -2837,10 +2828,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ColorLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Color.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/c++/7/bits</pElem>
@@ -2866,10 +2854,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ImageLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/c++/7/bits</pElem>
@@ -2896,10 +2881,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/TextLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/x86_64-linux-gnu/c++/7/bits</pElem>
@@ -3129,9 +3111,9 @@
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/util/RasterImage.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Sides.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3290,9 +3272,9 @@
       </item>
       <item path="src/morda/resources/ResTexture.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/morda/util/Image.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/morda/util/RasterImage.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/util/Sides.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -3486,7 +3468,7 @@
       </item>
       <item path="src/morda/resources/ResTexture.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
           <incDir>
             <pElem>/usr/include/freetype2</pElem>
@@ -3898,7 +3880,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/util/Image.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/morda/util/RasterImage.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -4386,10 +4368,7 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ColorLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Color.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -4406,10 +4385,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/ImageLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>
@@ -4427,10 +4403,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/morda/widgets/label/TextLabel.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
+      <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/utki</pElem>

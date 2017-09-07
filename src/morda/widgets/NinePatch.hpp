@@ -7,7 +7,7 @@
 #include "core/container/Pile.hpp"
 #include "core/container/Table.hpp"
 
-#include "label/ImageLabel.hpp"
+#include "label/Image.hpp"
 
 #include "base/BlendingWidget.hpp"
 
@@ -37,7 +37,7 @@ class NinePatch :
 	
 	Sidesr borders;
 	
-	std::array<std::array<std::shared_ptr<ImageLabel>, 3>, 3> imageLabelMatrix;
+	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix;
 	
 	std::shared_ptr<Pile> content_var;
 	
