@@ -983,6 +983,10 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/core/Widget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -1246,6 +1250,16 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -1399,6 +1413,7 @@
         <element flagsID="0" commonFlags="-O3 -std=c++11 -fPIC"/>
         <element flagsID="1"
                  commonFlags="-mtune=generic -march=x86-64 -std=c++11 -funsigned-char -fPIC"/>
+        <element flagsID="2" commonFlags="-std=c++11"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -2516,6 +2531,27 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>src/morda/widgets/button</pElem>
+            <pElem>/usr/include/c++/7</pElem>
+            <pElem>/usr/include/c++/7/bits</pElem>
+            <pElem>/usr/include/c++/7/debug</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/7/bits</pElem>
+            <pElem>/usr/include/c++/7/ext</pElem>
+            <pElem>/usr/lib/gcc/x86_64-linux-gnu/7/include</pElem>
+            <pElem>/usr/include/utki</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/c++/7</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/widgets/core/List.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -2881,6 +2917,17 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -3189,6 +3236,20 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -3346,6 +3407,20 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/base/TextWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3542,6 +3617,20 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="tests/app/src/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4244,6 +4333,10 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/button/Tabs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/Tabs.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/morda/widgets/core/Widget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
@@ -4402,6 +4495,16 @@
             <pElem>src/morda/render</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/label/NinePatchPiece.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/label/Text.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
