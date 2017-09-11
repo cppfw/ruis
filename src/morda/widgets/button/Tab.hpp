@@ -1,0 +1,26 @@
+#pragma once
+
+#include "../NinePatch.hpp"
+#include "ChoiceButton.hpp"
+
+namespace morda{
+class Tab :
+		public ChoiceButton,
+		private NinePatch
+{
+public:
+	Tab(const stob::Node* chain);
+	
+	Tab(const Tab&) = delete;
+	Tab& operator=(const Tab&) = delete;
+	
+	void onCheckedChanged() override;
+	
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override{
+		return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
+	}
+
+	void onHoverChanged(unsigned pointerID) override{}
+
+};
+}

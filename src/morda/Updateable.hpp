@@ -112,7 +112,7 @@ public:
 	void startUpdating(std::uint16_t dtMs = 30);
 	
 	/**
-	 * @brief Unsibscribe from updating.
+	 * @brief Unsubscribe from updating.
 	 * After calling this method there will be no updates done.
 	 * The function is not thread safe.
 	 */
@@ -126,4 +126,4 @@ public:
 	virtual void update(std::uint32_t dtMs) = 0;
 };
 
-}//~namespace
+}
