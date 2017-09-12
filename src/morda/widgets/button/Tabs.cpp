@@ -1,3 +1,6 @@
+#include "../../Exc.hpp"
+
+#include "Tab.hpp"
 #include "Tabs.hpp"
 
 
@@ -18,9 +21,16 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 	
 	real length = 0;
 	
+	Tab* prev = nullptr;
+	
 	for(auto& c : this->children()){
 		ASSERT(c)
 		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(*c);
+		
+		auto tab = dynamic_cast<Tab*>(c.get());
+		if(!tab){
+			throw morda::Exc("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
+		}
 		
 		morda::Vec2r d;
 		

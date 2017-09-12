@@ -14,7 +14,7 @@
    height="4"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.2pre0 (973e216, 2017-07-25)"
    sodipodi:docname="tabs_filler.svg">
   <defs
      id="defs4">
@@ -83,13 +83,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.999998"
-     inkscape:cx="-1.2041034"
-     inkscape:cy="0.62883324"
+     inkscape:cx="-6.7666037"
+     inkscape:cy="0.51945823"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="894"
+     inkscape:window-height="1018"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -106,7 +106,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -147,7 +147,7 @@
      style="display:inline"
      transform="translate(12.561922,-1051.3622)">
     <path
-       style="fill:#717171;fill-opacity:1;stroke:none;stroke-width:0.86235833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#5a5a5a;fill-opacity:1;stroke:none;stroke-width:0.86235833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m -12.561922,1051.8622 h 1 v 3.5 h -1 z"
        id="rect854"
        inkscape:connector-curvature="0"
