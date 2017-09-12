@@ -6,8 +6,11 @@
 namespace morda{
 class Tab :
 		public ChoiceButton,
-		private NinePatch
+		public NinePatch
 {
+	std::shared_ptr<ResNinePatch> activeNinePatch;
+	std::shared_ptr<ResNinePatch> inactiveNinePatch;
+	
 public:
 	Tab(const stob::Node* chain);
 	

@@ -477,6 +477,20 @@ Container{
 		Column{
 			layout{dx{max}dy{max}}
 
+			Tabs{
+				layout{dx{max}}
+
+				Tab{
+					Text{text{tab1}}
+				}
+				Tab{
+					Text{text{tab2}}
+				}
+				Tab{
+					Text{text{"tab 3"}}
+				}
+			}
+
 			NinePatch{
 				layout{dx{max}}
 

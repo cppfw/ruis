@@ -11,6 +11,8 @@
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/ChoiceGroup.hpp"
 #include "widgets/button/ImageToggle.hpp"
+#include "widgets/button/Tab.hpp"
+#include "widgets/button/Tabs.hpp"
 
 #include "widgets/label/Color.hpp"
 #include "widgets/label/Text.hpp"
@@ -110,7 +112,8 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<MouseCursor>("MouseCursor");
 	this->inflater.addWidget<CollapseArea>("CollapseArea");
 	this->inflater.addWidget<ImageToggle>("ImageToggle");
-	
+	this->inflater.addWidget<Tabs>("Tabs");
+	this->inflater.addWidget<Tab>("Tab");
 	
 	try{
 		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");

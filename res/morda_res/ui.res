@@ -1,3 +1,13 @@
+morda_npt_tab_active{
+	file{tab_active.svg}
+	borders{16 4 16 4}
+}
+
+morda_npt_tab_inactive{
+	file{tab_inactive.svg}
+	borders{16 4 16 4}
+}
+
 morda_img_divider_vert{
 	file{divider_vert.svg}
 }

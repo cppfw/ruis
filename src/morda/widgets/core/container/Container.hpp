@@ -92,6 +92,11 @@ protected:
 	}
 	
 public:
+	class LayoutExc : public Exc{
+	public:
+		LayoutExc(const std::string& message) : Exc(message){}
+	};
+	
 	/**
 	 * @brief Get layout parameters of child widget.
 	 * @param w - widget to get layout parameters for.

@@ -14,6 +14,7 @@ Table::Table(const stob::Node* chain) :
 {}
 
 void Table::updateRowsLayoutParam(const morda::Vec2r& constraint)const{
+	//We will iterate over the children of each TableRow simultaneously, so need to store iterators for that and pointer to layout parameters of current child.
 	std::vector<std::tuple<TableRow*, morda::Widget::T_ChildrenList::const_iterator, const TableRow::LayoutParams*>> iterators;
 	iterators.reserve(this->children().size());
 	
