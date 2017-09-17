@@ -402,7 +402,7 @@ public:
 	
 	/**
 	 * @brief Handle keyboard key event.
-	 * This method is called by framework when a widget is requested to handle a key event. So, the widget is either a focused widget or root widet.
+	 * This method is called by framework when a widget is requested to handle a key event. So, the widget is either a focused widget or root widget.
 	 * @param isDown - was the key pressed (true) or released (false).
 	 * @param keyCode - keyboard key code.
 	 * @return true to consume event and prevent its further propagation.
