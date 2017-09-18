@@ -489,6 +489,9 @@ Container{
 				Tab{
 					Text{text{"tab 3"}}
 				}
+				Tab{
+					Text{text{"tab four"}}
+				}
 			}
 
 			NinePatch{

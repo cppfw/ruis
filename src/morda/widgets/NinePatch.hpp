@@ -84,6 +84,8 @@ public:
 		return this->borders;
 	}
 	
+	Sidesr getActualBorders()const noexcept;
+	
 	void onBlendingChanged() override;
 
 	

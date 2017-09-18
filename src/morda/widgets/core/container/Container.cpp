@@ -69,18 +69,21 @@ void Container::add(const stob::Node& chain){
 	}
 }
 
+void Container::renderChild(const Matr4r& matrix, const Widget& c) const {
+	if(!c.isVisible()){
+		return;
+	}
+
+	morda::Matr4r matr(matrix);
+	matr.translate(c.rect().p);
+
+	c.renderInternal(matr);
+}
 
 
 void Container::render(const morda::Matr4r& matrix)const{
 	for(auto& w: this->children()){
-		if(!w->isVisible()){
-			continue;
-		}
-		
-		morda::Matr4r matr(matrix);
-		matr.translate(w->rect().p);
-
-		w->renderInternal(matr);
+		this->renderChild(matrix, *w);
 	}
 }
 

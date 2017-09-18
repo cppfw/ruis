@@ -8,6 +8,10 @@ morda_npt_tab_inactive{
 	borders{16 3 16 6}
 }
 
+morda_img_tabs_filler{
+	file{tabs_filler.svg}
+}
+
 morda_img_divider_vert{
 	file{divider_vert.svg}
 }

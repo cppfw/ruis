@@ -112,6 +112,8 @@ public:
 	const LayoutParams& getLayoutParams(const Widget& w)const;
 	
 	using Widget::getLayoutParams;
+protected:
+	void renderChild(const Matr4r& matrix, const Widget& c)const;
 public:
 	/**
 	 * @brief Constructor.

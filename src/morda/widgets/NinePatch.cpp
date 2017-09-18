@@ -156,6 +156,24 @@ void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
 
 
 
+Sidesr NinePatch::getActualBorders() const noexcept{
+	Sidesr ret;
+	
+	for(auto i = 0; i != ret.size(); ++i){
+		if(this->borders[i] >= 0){
+			ret[i] = this->borders[i];
+		}else if(!this->image){
+			ret[i] = 0;
+		}else{
+			ret[i] = this->image->borders()[i];
+		}
+	}
+	
+	return ret;
+}
+
+
+
 void NinePatch::applyImages(){
 	auto& minBorders = this->image->borders();
 //	TRACE(<< "minBorders = " << minBorders << std::endl)

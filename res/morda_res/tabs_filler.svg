@@ -14,7 +14,7 @@
    height="4"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.2pre0 (973e216, 2017-07-25)"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="tabs_filler.svg">
   <defs
      id="defs4">
@@ -83,13 +83,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.999998"
-     inkscape:cx="-6.7666037"
-     inkscape:cy="0.51945823"
+     inkscape:cx="-12.188479"
+     inkscape:cy="0.41008322"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1018"
+     inkscape:window-height="894"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -154,7 +154,7 @@
        sodipodi:nodetypes="ccccc" />
     <path
        style="opacity:1;fill:#353535;fill-opacity:1;stroke:none;stroke-width:1.10399997;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -12.561922,1053.8622 h 1 v 1.5 l -1,-5e-4 z"
+       d="m -12.561922,1053.3622 h 1 v 2 l -1,-5e-4 z"
        id="rect4506"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />

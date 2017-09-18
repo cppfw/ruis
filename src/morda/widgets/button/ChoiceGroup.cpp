@@ -11,8 +11,9 @@ ChoiceGroup::ChoiceGroup(const stob::Node* chain) :
 {
 }
 
-bool ChoiceGroup::isButtonActive(const ChoiceButton& b) const noexcept{
-	return this->activeChoiceButton_v.get() == &b;
+bool ChoiceGroup::isWidgetActive(const Widget& w) const noexcept{
+	Widget* aw = this->activeChoiceButton_v.get();
+	return aw == &w;
 }
 
 

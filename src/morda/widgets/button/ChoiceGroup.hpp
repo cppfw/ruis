@@ -23,8 +23,13 @@ public:
 	ChoiceGroup(const ChoiceGroup&) = delete;
 	ChoiceGroup& operator=(const ChoiceGroup&) = delete;
 	
+	bool isWidgetActive(const Widget& w)const noexcept;
+	
+	const decltype(activeChoiceButton_v)& getActiveButton()const noexcept{
+		return this->activeChoiceButton_v;
+	}
+	
 private:
-	bool isButtonActive(const ChoiceButton& b)const noexcept;
 	void setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& rb);
 };
 

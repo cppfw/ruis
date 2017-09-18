@@ -15,6 +15,10 @@ template <class T> class Sides : public std::array<T, 4>{
 public:
 	Sides(){}
 	
+	Sides(T b) :
+			Sides(b, b, b, b)
+	{}
+	
 	Sides(T l, T t, T r, T b) :
 			std::array<T, 4>({{l, t, r, b}})
 	{}
