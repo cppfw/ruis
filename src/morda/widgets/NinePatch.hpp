@@ -37,9 +37,9 @@ class NinePatch :
 	
 	Sidesr borders;
 	
-	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix;
+	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix_v;
 	
-	std::shared_ptr<Pile> content_var;
+	std::shared_ptr<Pile> content_v;
 	
 public:	
 	NinePatch(const NinePatch&) = delete;
@@ -54,22 +54,13 @@ public:
 	 * @return The content container. This is where the child widgets are stored.
 	 */
 	Pile& content(){
-		return *this->content_var;
+		return *this->content_v;
 	}
 	
 	void render(const morda::Matr4r& matrix) const override;
-
-	/**
-	 * @brief Get current border settings.
-	 * Border values are in pixels or min_c.
-	 * @return Current borders.
-	 */
-	decltype(borders) getBorders()const noexcept{
-		return this->borders;
-	}
 	
 	/**
-	 * @brief Show/hide centr4al part of nine-patch.
+	 * @brief Show/hide central part of nine-patch.
 	 * @param visible - show (true) or hide (false) central part of the nine-patch.
 	 */
 	void setCenterVisible(bool visible);
@@ -82,6 +73,15 @@ public:
 	void setBorders(Sidesr borders){
 		this->borders = borders;
 		this->applyImages();
+	}
+	
+	/**
+	 * @brief Get current border settings.
+	 * Border values are in pixels or min_c.
+	 * @return Current borders.
+	 */
+	decltype(borders) getBorders()const noexcept{
+		return this->borders;
 	}
 	
 	void onBlendingChanged() override;

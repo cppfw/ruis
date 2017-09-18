@@ -86,21 +86,21 @@ NinePatch::NinePatch(const stob::Node* chain) :
 		BlendingWidget(chain),
 		Table(stob::parse(ninePatchLayout_c).get())
 {
-	this->imageMatrix[0][0] = this->findChildByNameAs<Image>("morda_lt");
-	this->imageMatrix[0][1] = this->findChildByNameAs<Image>("morda_t");
-	this->imageMatrix[0][2] = this->findChildByNameAs<Image>("morda_rt");
+	this->imageMatrix_v[0][0] = this->findChildByNameAs<Image>("morda_lt");
+	this->imageMatrix_v[0][1] = this->findChildByNameAs<Image>("morda_t");
+	this->imageMatrix_v[0][2] = this->findChildByNameAs<Image>("morda_rt");
 	
-	this->imageMatrix[1][0] = this->findChildByNameAs<Image>("morda_l");
-	this->imageMatrix[1][1] = this->findChildByNameAs<Image>("morda_m");
-	this->imageMatrix[1][2] = this->findChildByNameAs<Image>("morda_r");
+	this->imageMatrix_v[1][0] = this->findChildByNameAs<Image>("morda_l");
+	this->imageMatrix_v[1][1] = this->findChildByNameAs<Image>("morda_m");
+	this->imageMatrix_v[1][2] = this->findChildByNameAs<Image>("morda_r");
 	
-	this->imageMatrix[2][0] = this->findChildByNameAs<Image>("morda_lb");
-	this->imageMatrix[2][1] = this->findChildByNameAs<Image>("morda_b");
-	this->imageMatrix[2][2] = this->findChildByNameAs<Image>("morda_rb");
+	this->imageMatrix_v[2][0] = this->findChildByNameAs<Image>("morda_lb");
+	this->imageMatrix_v[2][1] = this->findChildByNameAs<Image>("morda_b");
+	this->imageMatrix_v[2][2] = this->findChildByNameAs<Image>("morda_rb");
 	
 	this->onBlendingChanged();
 	
-	this->content_var = this->findChildByNameAs<Pile>("morda_content");
+	this->content_v = this->findChildByNameAs<Pile>("morda_content");
 	
 	if(auto n = getProperty(chain, "left")){
 		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'
@@ -136,7 +136,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	}
 	
 	if(chain){
-		this->content_var->add(*chain);
+		this->content_v->add(*chain);
 	}
 }
 
@@ -162,28 +162,28 @@ void NinePatch::applyImages(){
 	
 	{
 		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix[0][0].get())->getLayoutParams();
+		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->getLayoutParams();
 		
 		if(this->borders.left() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.left()){
-				auto& lp = this->imageMatrix[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
 				lp.dim.x = minBorders.left();
 			}
 		}else{
 			if(layoutParams.dim.x != this->borders.left()){
-				auto& lp = this->imageMatrix[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
 				lp.dim.x = this->borders.left();
 			}
 		}
 		
 		if(this->borders.top() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.top()){
-				auto& lp = this->imageMatrix[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
 				lp.dim.y = minBorders.top();
 			}
 		}else{
 			if(layoutParams.dim.y != this->borders.top()){
-				auto& lp = this->imageMatrix[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
 				lp.dim.y = this->borders.top();
 			}
 		}
@@ -191,28 +191,28 @@ void NinePatch::applyImages(){
 	}
 	{
 		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix[2][2].get())->getLayoutParams();
+		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->getLayoutParams();
 		
 		if(this->borders.right() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.right()){
-				auto& lp = this->imageMatrix[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
 				lp.dim.x = minBorders.right();
 			}
 		}else{
 			if(layoutParams.dim.x != this->borders.right()){
-				auto& lp = this->imageMatrix[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
 				lp.dim.x = this->borders.right();
 			}
 		}
 		
 		if(this->borders.bottom() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.bottom()){
-				auto& lp = this->imageMatrix[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
 				lp.dim.y = minBorders.bottom();
 			}
 		}else{
 			if(layoutParams.dim.y != this->borders.bottom()){
-				auto& lp = this->imageMatrix[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
 				lp.dim.y = this->borders.bottom();
 			}
 		}
@@ -224,20 +224,20 @@ void NinePatch::applyImages(){
 	
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix[i][j]->setImage(this->scaledImage->images()[i][j]);
+			this->imageMatrix_v[i][j]->setImage(this->scaledImage->images()[i][j]);
 		}
 	}
 }
 
 void NinePatch::setCenterVisible(bool visible){
-	ASSERT(this->imageMatrix[1][1])
-	this->imageMatrix[1][1]->setVisible(visible);
+	ASSERT(this->imageMatrix_v[1][1])
+	this->imageMatrix_v[1][1]->setVisible(visible);
 }
 
 void NinePatch::onBlendingChanged(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix[i][j]->setBlendingParams(this->blendingParams());
+			this->imageMatrix_v[i][j]->setBlendingParams(this->blendingParams());
 		}
 	}
 }

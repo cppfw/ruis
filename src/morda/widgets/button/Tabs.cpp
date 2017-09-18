@@ -23,7 +23,8 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 	
 	Tab* prev = nullptr;
 	
-	for(auto& c : this->children()){
+	for(auto b = this->children().begin(), e = this->children().end(), i = b; i != e; ++i){
+		auto& c = *i;
 		ASSERT(c)
 		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(*c);
 		
