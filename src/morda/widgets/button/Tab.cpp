@@ -4,6 +4,32 @@
 
 using namespace morda;
 
+
+bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) {
+	auto borders = this->getActualBorders();
+	
+	if(pos.x < borders.left()){
+		if(pos.y != 0 && this->rect().d.y != 0){
+			if(pos.x / pos.y < borders.left() / this->rect().d.y){
+				return false;
+			}
+		}
+	}else{
+		auto rb = this->rect().d.x - borders.right();
+		auto dx = pos.x - rb;
+		if(dx > 0){
+			if(pos.y != 0 && this->rect().d.y != 0){
+				if(dx / (this->rect().d.y - pos.y) > borders.right() / this->rect().d.y){
+					return false;
+				}
+			}
+		}
+	}
+	
+	return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
+}
+
+
 void Tab::onCheckedChanged() {
 	if(this->isChecked()){
 		this->setNinePatch(this->activeNinePatch);

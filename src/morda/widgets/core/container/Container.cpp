@@ -240,14 +240,14 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	Widget& widget = *w;
 	
 	if(insertBefore){
-		ret = this->children_v.insert(insertBefore->parentIter, std::move(w));
+		ret = this->children_v.insert(insertBefore->parentIter_v, std::move(w));
 	}else{
 		this->children_v.push_back(std::move(w));
 		ret = this->children_v.end();
 		--ret;
 	}
 	
-	widget.parentIter = ret;
+	widget.parentIter_v = ret;
 	widget.parent_v = this;
 	widget.onParentChanged();
 	
@@ -280,9 +280,9 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	
 	ASSERT(w.parent_v == this)
 	
-	auto ret = *w.parentIter;
+	auto ret = *w.parentIter_v;
 	
-	this->children_v.erase(w.parentIter);
+	this->children_v.erase(w.parentIter_v);
 	
 	w.parent_v = nullptr;
 	w.setUnhovered();

@@ -117,6 +117,7 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		this->renderChild(matrix, *ab);
 	}
 	
+	//render filler
 	if(this->children().size() != 0){
 		real ce = this->children().back()->rect().right();
 		real l = this->rect().d.x - ce;
@@ -128,3 +129,4 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		}
 	}
 }
+

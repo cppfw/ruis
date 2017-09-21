@@ -93,7 +93,7 @@ public:
 
 private:
 	Container* parent_v = nullptr;
-	T_ChildrenList::iterator parentIter;
+	T_ChildrenList::iterator parentIter_v;
 	
 	std::set<unsigned> hovered;
 
@@ -212,6 +212,14 @@ public:
 	 */
 	Container* parent()noexcept{
 		return this->parent_v;
+	}
+	
+	decltype(parentIter_v) parentIter()noexcept{
+		return this->parentIter_v;
+	}
+	
+	const decltype(parentIter_v) parentIter()const noexcept{
+		return this->parentIter_v;
 	}
 	
 	/**

@@ -19,9 +19,7 @@ public:
 	
 	void onCheckedChanged() override;
 	
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override{
-		return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
-	}
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
 
 	void onHoverChanged(unsigned pointerID) override{}
 
