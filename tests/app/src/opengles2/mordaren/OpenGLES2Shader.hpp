@@ -83,6 +83,7 @@ protected:
 	
 	void setMatrix(const kolme::Matr4f& m)const{
 		this->setUniformMatrix4f(this->matrixUniform, m);
+		assertOpenGLNoError();
 	}
 	
 	static GLenum modeMap[];

@@ -37,13 +37,16 @@ namespace{
 bool checkForCompileErrors(GLuint shader) {
 	GLint value = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &value);
+	assertOpenGLNoError();
 	if (value == 0) { //if not compiled
 		GLint logLen = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
+		assertOpenGLNoError();
 		if (logLen > 1) {//1 char is a terminating 0
 			std::vector<char> log(logLen);
 			GLint len;
 			glGetShaderInfoLog(shader, GLsizei(log.size()), &len, &*log.begin());
+			assertOpenGLNoError();
 			TRACE( << "===Compile log===\n" << &*log.begin() << std::endl)
 		} else {
 			TRACE( << "Shader compile log is empty" << std::endl)
@@ -57,13 +60,16 @@ bool checkForCompileErrors(GLuint shader) {
 bool checkForLinkErrors(GLuint program){
 	GLint value = 0;
 	glGetProgramiv(program, GL_LINK_STATUS, &value);
+	assertOpenGLNoError();
 	if(value == 0){ //if not linked
 		GLint logLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
+		assertOpenGLNoError();
 		if(logLen > 1){ //1 is for terminating 0 character.
 			std::vector<char> log(logLen);
 			GLint len;
 			glGetProgramInfoLog(program, GLsizei(log.size()), &len, &*log.begin());
+			assertOpenGLNoError();
 			TRACE(<< "===Link log===\n" << &*log.begin() << std::endl)
 		}
 		return true;
@@ -77,6 +83,7 @@ bool checkForLinkErrors(GLuint program){
 
 ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
+	assertOpenGLNoError();
 
 	if (this->s == 0) {
 		throw utki::Exc("glCreateShader() failed");
@@ -85,10 +92,13 @@ ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 	const char* c = code;
 
 	glShaderSource(this->s, 1, &c, 0);
+	assertOpenGLNoError();
 	glCompileShader(this->s);
-	if (checkForCompileErrors(this->s)) {
+	assertOpenGLNoError();
+	if(checkForCompileErrors(this->s)) {
 		TRACE( << "Error while compiling:\n" << c << std::endl)
 		glDeleteShader(this->s);
+		assertOpenGLNoError();
 		throw utki::Exc("Error compiling shader");
 	}
 }
@@ -99,11 +109,15 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
 {
 	this->p = glCreateProgram();
+	assertOpenGLNoError();
 	glAttachShader(this->p, vertexShader.s);
+	assertOpenGLNoError();
 	glAttachShader(this->p, fragmentShader.s);
+	assertOpenGLNoError();
 	
 	GLint maxAttribs;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttribs);
+	assertOpenGLNoError();
 	ASSERT(maxAttribs >= 0)
 	
 	for(GLuint i = 0; i < GLuint(maxAttribs); ++i){
@@ -115,9 +129,11 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 	}
 	
 	glLinkProgram(this->p);
+	assertOpenGLNoError();
 	if (checkForLinkErrors(this->p)) {
 		TRACE( << "Error while linking shader program" << vertexShaderCode << std::endl << fragmentShaderCode << std::endl)
 		glDeleteProgram(this->p);
+		assertOpenGLNoError();
 		throw utki::Exc("Error linking shader program");
 	}
 }
@@ -133,6 +149,7 @@ OpenGLES2Shader::OpenGLES2Shader(const char* vertexShaderCode, const char* fragm
 
 GLint OpenGLES2Shader::getUniform(const char* n) {
 	GLint ret = glGetUniformLocation(this->program.p, n);
+	assertOpenGLNoError();
 	if(ret < 0){
 		throw utki::Exc("No uniform found in the shader program");
 	}

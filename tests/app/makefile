@@ -10,8 +10,11 @@ this_name := tests
 this_srcs += $(call prorab-src-dir,src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 
-
-this_srcs += $(call prorab-src-dir,src/opengl2)
+ifeq ($(ogles2), true)
+    this_srcs += $(call prorab-src-dir,src/opengles2)
+else
+    this_srcs += $(call prorab-src-dir,src/opengl2)
+endif
 this_srcs += src/main.cpp
 
 

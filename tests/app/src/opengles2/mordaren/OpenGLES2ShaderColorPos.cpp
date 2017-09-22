@@ -37,7 +37,7 @@ OpenGLES2ShaderColorPos::OpenGLES2ShaderColorPos() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGLES2ShaderColorPos::render(const kolme::Matr4f& m, kolme::Vec4f color, const morda::VertexArray& va) {
+void OpenGLES2ShaderColorPos::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

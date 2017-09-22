@@ -1,12 +1,15 @@
 #pragma once
 
-#include <morda/render/ShaderColorPosTex.hpp>
+#include <morda/render/ShaderColorTexture.hpp>
 
 #include "OpenGLES2Shader.hpp"
 
 namespace mordaren{	
 
-class OpenGLES2ShaderColorPosTex : public morda::ShaderColorPosTex, public OpenGLES2Shader{
+class OpenGLES2ShaderColorPosTex :
+		public morda::ShaderColorTexture,
+		public OpenGLES2Shader
+{
 	GLint colorUniform;
 public:
 	OpenGLES2ShaderColorPosTex();
@@ -14,7 +17,7 @@ public:
 	OpenGLES2ShaderColorPosTex(const OpenGLES2ShaderColorPosTex&) = delete;
 	OpenGLES2ShaderColorPosTex& operator=(const OpenGLES2ShaderColorPosTex&) = delete;
 	
-	void render(const kolme::Matr4f& m, const morda::Texture2D& tex, kolme::Vec4f color, const morda::VertexArray& va) override;
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) override;
 };
 
 }
