@@ -5,6 +5,7 @@
 #include <kolme/Vector2.hpp>
 
 #include <utki/Shared.hpp>
+#include <utki/Unique.hpp>
 #include <utki/Buf.hpp>
 
 #include "Texture2D.hpp"
@@ -13,10 +14,10 @@
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
 
-#include "ShaderPosTex.hpp"
-#include "ShaderColorPos.hpp"
-#include "ShaderPosClr.hpp"
-#include "ShaderColorPosTex.hpp"
+#include "ShaderTexture.hpp"
+#include "ShaderColor.hpp"
+#include "Shader.hpp"
+#include "ShaderColorTexture.hpp"
 #include "FrameBuffer.hpp"
 
 namespace morda{
@@ -47,10 +48,10 @@ public:
 		) = 0;
 	
 	struct Shaders : public utki::Unique{
-		std::unique_ptr<ShaderPosTex> posTex;
-		std::unique_ptr<ShaderColorPos> colorPos;
-		std::unique_ptr<ShaderPosClr> posClr;
-		std::unique_ptr<ShaderColorPosTex> colorPosTex;
+		std::unique_ptr<ShaderTexture> posTex;
+		std::unique_ptr<ShaderColor> colorPos;
+		std::unique_ptr<Shader> posClr;
+		std::unique_ptr<ShaderColorTexture> colorPosTex;
 	};
 	
 	virtual std::unique_ptr<Shaders> createShaders() = 0;

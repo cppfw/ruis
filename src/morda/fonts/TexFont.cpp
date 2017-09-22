@@ -306,7 +306,7 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
-	morda::inst().renderer().shader->colorPosTex->render(matrix, *this->tex, color, *g.vao);
+	morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *this->tex);
 
 	return g.advance;
 }

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <morda/render/ShaderPosClr.hpp>
+#include <morda/render/Shader.hpp>
 
 #include "OpenGL2Shader.hpp"
 
 namespace mordaren{
 
-class OpenGL2ShaderPosClr : public morda::ShaderPosClr, public OpenGL2Shader{
+class OpenGL2ShaderPosClr : public morda::Shader, public OpenGL2Shader{
 public:
 	OpenGL2ShaderPosClr();
 	

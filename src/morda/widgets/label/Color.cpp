@@ -32,6 +32,6 @@ void Color::render(const morda::Matr4r& matrix)const{
 		this->gradient->render(matr);
 	}else{
 		auto& r = morda::inst().renderer();
-		r.shader->colorPos->render(matr, this->color(), *r.posQuad01VAO);
+		r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 	}
 }

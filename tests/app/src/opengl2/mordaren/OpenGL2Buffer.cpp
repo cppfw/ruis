@@ -4,17 +4,14 @@
 
 using namespace mordaren;
 
-namespace{
-inline GLuint createGLBuffer(){
-	GLuint ret;
-	glGenBuffers(1, &ret);
-	assertOpenGLNoError();
-	return ret;
-}
-}
 
 OpenGL2Buffer::OpenGL2Buffer() :
-		buffer(createGLBuffer())
+		buffer([]() -> GLuint{
+				GLuint ret;
+				glGenBuffers(1, &ret);
+				assertOpenGLNoError();
+				return ret;
+			}())
 {
 }
 

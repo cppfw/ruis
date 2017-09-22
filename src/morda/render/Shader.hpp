@@ -1,21 +1,20 @@
 #pragma once
 
+#include <kolme/Matrix4.hpp>
+
 #include <utki/Unique.hpp>
+
+#include "VertexArray.hpp"
 
 namespace morda{
 
-
 class Shader : public utki::Unique{
 public:
-	Shader();
-	
-	Shader(const Shader&) = delete;
-	Shader& operator=(const Shader&) = delete;
+	Shader(){}
 	
 	virtual ~Shader()noexcept{}
 	
-private:
-
+	virtual void render(const kolme::Matr4f& m, const VertexArray& va)const = 0;
 };
 
 }

@@ -10,7 +10,6 @@ using namespace mordaren;
 OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) :
 		morda::FrameBuffer(std::move(color))
 {
-	ASSERT_INFO(glGenFramebuffers, "glGenFramebuffers() is not defined")
 	glGenFramebuffers(1, &this->fbo);
 	assertOpenGLNoError();
 	
@@ -19,8 +18,6 @@ OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) 
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, this->fbo);
 	assertOpenGLNoError();
-	
-	ASSERT(this->color)
 	
 	ASSERT(dynamic_cast<OpenGL2Texture2D*>(this->color.operator->()))
 	auto& tex = static_cast<OpenGL2Texture2D&>(*this->color);

@@ -276,7 +276,7 @@ void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	
 	auto& r = morda::inst().renderer();
 	ASSERT(this->cacheTex)
-	r.shader->posTex->render(matr, *this->cacheTex, *r.posTexQuad01VAO);
+	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
 }
 
 void Widget::clearCache(){

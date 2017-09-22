@@ -118,7 +118,7 @@ public:
 			matr.scale(this->rect().d);
 
 			auto& r = morda::inst().renderer();
-			r.shader->posTex->render(matr, this->tex->tex(), *r.posTexQuad01VAO);
+			r.shader->posTex->render(matr, *r.posTexQuad01VAO, this->tex->tex());
 		}
 		
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -231,7 +231,7 @@ public:
 
 		glEnable(GL_CULL_FACE);
 		
-		morda::inst().renderer().shader->posTex->render(m, this->tex->tex(), *this->cubeVAO);
+		morda::inst().renderer().shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
 		
 		glDisable(GL_CULL_FACE);
 	}
