@@ -1,9 +1,9 @@
-#include "OpenGL2ShaderColorPos.hpp"
+#include "OpenGL2ShaderColor.hpp"
 
 using namespace mordaren;
 
-OpenGL2ShaderColorPos::OpenGL2ShaderColorPos() :
-		OpenGL2Shader(
+OpenGL2ShaderColor::OpenGL2ShaderColor() :
+		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -37,10 +37,10 @@ OpenGL2ShaderColorPos::OpenGL2ShaderColorPos() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPos::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) {
+void OpenGL2ShaderColor::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
 	
-	this->OpenGL2Shader::render(m, va);
+	this->OpenGL2ShaderBase::render(m, va);
 }

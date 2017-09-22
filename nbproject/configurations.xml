@@ -140,10 +140,10 @@
               <in>OpenGL2IndexBuffer.cpp</in>
               <in>OpenGL2Renderer.cpp</in>
               <in>OpenGL2Shader.cpp</in>
-              <in>OpenGL2ShaderColorPos.cpp</in>
-              <in>OpenGL2ShaderColorPosTex.cpp</in>
-              <in>OpenGL2ShaderPosClr.cpp</in>
-              <in>OpenGL2ShaderPosTex.cpp</in>
+              <in>OpenGL2ShaderBase.cpp</in>
+              <in>OpenGL2ShaderColor.cpp</in>
+              <in>OpenGL2ShaderColorTexture.cpp</in>
+              <in>OpenGL2ShaderTexture.cpp</in>
               <in>OpenGL2Texture2D.cpp</in>
               <in>OpenGL2VertexArray.cpp</in>
               <in>OpenGL2VertexBuffer.cpp</in>
@@ -1340,28 +1340,28 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPos.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderBase.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColor.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosClr.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
@@ -2621,28 +2621,28 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPos.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderBase.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColor.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosClr.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
@@ -4418,28 +4418,28 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPos.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderBase.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColor.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosClr.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderColorTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderPosTex.cpp"
+      <item path="tests/app/src/opengl2/mordaren/OpenGL2ShaderTexture.cpp"
             ex="false"
             tool="1"
             flavor2="8">
