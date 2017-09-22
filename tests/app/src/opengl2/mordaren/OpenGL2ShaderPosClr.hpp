@@ -6,15 +6,15 @@
 
 namespace mordaren{
 
-class OpenGL2Shader :
+class OpenGL2ShaderPosClr :
 		public morda::Shader,
 		public OpenGL2ShaderBase
 {
 public:
-	OpenGL2Shader();
+	OpenGL2ShaderPosClr();
 	
-	OpenGL2Shader(const OpenGL2Shader&) = delete;
-	OpenGL2Shader& operator=(const OpenGL2Shader&) = delete;
+	OpenGL2ShaderPosClr(const OpenGL2ShaderPosClr&) = delete;
+	OpenGL2ShaderPosClr& operator=(const OpenGL2ShaderPosClr&) = delete;
 	
 
 	void render(const kolme::Matr4f& m, const morda::VertexArray& va) const override;

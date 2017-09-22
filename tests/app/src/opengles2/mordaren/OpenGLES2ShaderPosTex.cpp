@@ -10,7 +10,7 @@
 using namespace mordaren;
 
 OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
-		OpenGLES2Shader(
+		OpenGLES2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -57,6 +57,6 @@ void OpenGLES2ShaderPosTex::render(const kolme::Matr4f& m, const morda::VertexAr
 	static_cast<const OpenGLES2Texture2D&>(tex).bind(0);
 	this->bind();
 	
-	this->OpenGLES2Shader::render(m, va);
+	this->OpenGLES2ShaderBase::render(m, va);
 }
 

@@ -2,13 +2,13 @@
 
 #include <morda/render/ShaderColorTexture.hpp>
 
-#include "OpenGLES2Shader.hpp"
+#include "OpenGLES2ShaderBase.hpp"
 
 namespace mordaren{	
 
 class OpenGLES2ShaderColorPosTex :
 		public morda::ShaderColorTexture,
-		public OpenGLES2Shader
+		public OpenGLES2ShaderBase
 {
 	GLint colorUniform;
 public:

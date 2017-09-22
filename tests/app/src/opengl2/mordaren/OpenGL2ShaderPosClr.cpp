@@ -1,9 +1,9 @@
-#include "OpenGL2Shader.hpp"
+#include "OpenGL2ShaderPosClr.hpp"
 
 using namespace mordaren;
 
 
-OpenGL2Shader::OpenGL2Shader() :
+OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -41,7 +41,7 @@ OpenGL2Shader::OpenGL2Shader() :
 {
 }
 
-void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va) const {
+void OpenGL2ShaderPosClr::render(const kolme::Matr4f& m, const morda::VertexArray& va) const {
 	this->bind();
 	
 	this->OpenGL2ShaderBase::render(m, va);

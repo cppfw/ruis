@@ -6,16 +6,16 @@
 
 namespace mordaren{	
 
-class OpenGL2ShaderColorTexture :
+class OpenGL2ShaderColorPosTex :
 		public morda::ShaderColorTexture,
 		public OpenGL2ShaderBase
 {
 	GLint colorUniform;
 public:
-	OpenGL2ShaderColorTexture();
+	OpenGL2ShaderColorPosTex();
 	
-	OpenGL2ShaderColorTexture(const OpenGL2ShaderColorTexture&) = delete;
-	OpenGL2ShaderColorTexture& operator=(const OpenGL2ShaderColorTexture&) = delete;
+	OpenGL2ShaderColorPosTex(const OpenGL2ShaderColorPosTex&) = delete;
+	OpenGL2ShaderColorPosTex& operator=(const OpenGL2ShaderColorPosTex&) = delete;
 	
 	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) override;
 };

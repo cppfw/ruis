@@ -10,7 +10,7 @@
 
 #include "OpenGLES2Texture2D.hpp"
 #include "OpenGLES2ShaderPosTex.hpp"
-#include "OpenGLES2ShaderColorPos.hpp"
+#include "OpenGLES2ShaderColor.hpp"
 #include "OpenGLES2ShaderPosClr.hpp"
 #include "OpenGLES2ShaderColorPosTex.hpp"
 #include "OpenGLES2FrameBuffer.hpp"
@@ -119,7 +119,7 @@ std::shared_ptr<morda::IndexBuffer> OpenGLES2Factory::createIndexBuffer(const ut
 std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders() {
 	auto ret = utki::makeUnique<morda::RenderFactory::Shaders>();
 	ret->posTex = utki::makeUnique<OpenGLES2ShaderPosTex>();
-	ret->colorPos = utki::makeUnique<OpenGLES2ShaderColorPos>();
+	ret->colorPos = utki::makeUnique<OpenGLES2ShaderColor>();
 	ret->posClr = utki::makeUnique<OpenGLES2ShaderPosClr>();
 	ret->colorPosTex = utki::makeUnique<OpenGLES2ShaderColorPosTex>();
 	return ret;

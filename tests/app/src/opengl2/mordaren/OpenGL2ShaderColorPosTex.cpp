@@ -1,10 +1,10 @@
-#include "OpenGL2ShaderColorTexture.hpp"
+#include "OpenGL2ShaderColorPosTex.hpp"
 
 #include "OpenGL2Texture2D.hpp"
 
 using namespace mordaren;
 
-OpenGL2ShaderColorTexture::OpenGL2ShaderColorTexture() :
+OpenGL2ShaderColorPosTex::OpenGL2ShaderColorPosTex() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -48,7 +48,7 @@ OpenGL2ShaderColorTexture::OpenGL2ShaderColorTexture() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorTexture::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) {
+void OpenGL2ShaderColorPosTex::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) {
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	

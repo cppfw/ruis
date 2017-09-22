@@ -2,13 +2,13 @@
 
 #include <morda/render/Shader.hpp>
 
-#include "OpenGLES2Shader.hpp"
+#include "OpenGLES2ShaderBase.hpp"
 
 namespace mordaren{
 
 class OpenGLES2ShaderPosClr :
 		public morda::Shader,
-		public OpenGLES2Shader
+		public OpenGLES2ShaderBase
 {
 public:
 	OpenGLES2ShaderPosClr();

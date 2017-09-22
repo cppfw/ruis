@@ -5,7 +5,7 @@
 using namespace mordaren;
 
 OpenGLES2ShaderColorPosTex::OpenGLES2ShaderColorPosTex() :
-		OpenGLES2Shader(
+		OpenGLES2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -55,5 +55,5 @@ void OpenGLES2ShaderColorPosTex::render(const kolme::Matr4f& m, const morda::Ver
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
 	
-	this->OpenGLES2Shader::render(m, va);
+	this->OpenGLES2ShaderBase::render(m, va);
 }
