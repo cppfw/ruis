@@ -4,14 +4,27 @@
 
 using namespace morda;
 
-
-bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) {
+bool Tab::maskOverlaps(Vec2r pos) {
 	auto borders = this->getActualBorders();
-	
+
 	if(pos.x < borders.left()){
 		if(pos.y != 0 && this->rect().d.y != 0){
 			if(pos.x / pos.y < borders.left() / this->rect().d.y){
 				return false;
+			}
+		}
+
+		if(this->parent() && this->parentIter() != this->parent()->children().begin()){ //if this is not the first widget in the parent
+			auto prevIter = this->parentIter();
+			ASSERT(prevIter != this->parent()->children().end())
+			--prevIter;
+
+			if(auto pt = dynamic_cast<Tab*>(prevIter->get())){ //previous tab
+				if(pt->isChecked()){
+					if(pt->maskOverlaps(pos + this->rect().p - pt->rect().p)){
+						return false;
+					}
+				}
 			}
 		}
 	}else{
@@ -23,6 +36,16 @@ bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e butt
 					return false;
 				}
 			}
+		}
+	}
+	return true;
+}
+
+
+bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) {
+	if(isDown){
+		if(!maskOverlaps(pos)){
+			return false;
 		}
 	}
 	

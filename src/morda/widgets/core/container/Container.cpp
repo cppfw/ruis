@@ -120,22 +120,24 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
-		if(!(*i)->isInteractive()){
+		auto& c = *i;
+		
+		if(!c->isInteractive()){
 			continue;
 		}
 		
-		if(!(*i)->rect().overlaps(pos)){
+		if(!c->rect().overlaps(pos)){
 			continue;
 		}
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		(*i)->setHovered(true, pointerID);
-		if((*i)->onMouseButton(isDown, pos - (*i)->rect().p, button, pointerID)){
+		c->setHovered(true, pointerID);
+		if(c->onMouseButton(isDown, pos - c->rect().p, button, pointerID)){
 			ASSERT(this->mouseCaptureMap.find(pointerID) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerID, std::make_pair(std::weak_ptr<Widget>(*i), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerID, std::make_pair(std::weak_ptr<Widget>(c), 1)));
 			}
 			
 			return true;
@@ -154,26 +156,29 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
-		if(!(*i)->isInteractive()){
-			ASSERT(!(*i)->isHovered())
+		auto& c = *i;
+		
+		if(!c->isInteractive()){
+			ASSERT(!c->isHovered())
 			continue;
 		}
 		
-		bool consumed = (*i)->onMouseMove(pos - (*i)->rect().p, pointerID);
+		bool consumed = c->onMouseMove(pos - c->rect().p, pointerID);
 		
 		//set hovered goes after move notification because position of widget could change
 		//during handling the notification, so need to check after that for hovering
-		if(!(*i)->rect().overlaps(pos)){
-			(*i)->setHovered(false, pointerID);
+		if(!c->rect().overlaps(pos)){
+			c->setHovered(false, pointerID);
 			continue;
 		}
 		
-		(*i)->setHovered(true, pointerID);
+		c->setHovered(true, pointerID);
 		
 		if(consumed){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
-				(*i)->setHovered(false, pointerID);
+				auto& c = *i;
+				c->setHovered(false, pointerID);
 			}
 			return true;
 		}		

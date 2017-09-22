@@ -11,6 +11,8 @@ class Tab :
 	std::shared_ptr<ResNinePatch> activeNinePatch;
 	std::shared_ptr<ResNinePatch> inactiveNinePatch;
 	
+	bool maskOverlaps(Vec2r pos);
+	
 public:
 	Tab(const stob::Node* chain);
 	
