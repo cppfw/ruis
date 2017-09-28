@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Button.hpp"
+#include "ToggleButton.hpp"
 #include "../label/Image.hpp"
 
 #include "../../resources/ResImage.hpp"

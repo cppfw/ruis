@@ -10,7 +10,7 @@
 #include "../../../src/morda/widgets/core/container/Container.hpp"
 #include "../../../src/morda/widgets/core/proxy/KeyProxy.hpp"
 
-#include "../../../src/morda/widgets/button/Button.hpp"
+#include "../../../src/morda/widgets/button/PushButton.hpp"
 #include "../../../src/morda/widgets/label/Text.hpp"
 
 #include "../../../src/morda/resources/ResTexture.hpp"

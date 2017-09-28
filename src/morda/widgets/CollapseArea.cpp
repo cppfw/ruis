@@ -2,7 +2,7 @@
 
 #include "../util/util.hpp"
 #include "CollapseArea.hpp"
-#include "button/Button.hpp"
+#include "button/ToggleButton.hpp"
 
 using namespace morda;
 
