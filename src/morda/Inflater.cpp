@@ -194,6 +194,10 @@ const Inflater::WidgetFactory* Inflater::findFactory(const std::string& widgetNa
 }
 
 
+std::shared_ptr<morda::Widget> Inflater::inflate(const char* str){
+	return this->inflate(*stob::parse(str));
+}
+
 
 std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 //	TODO:

@@ -469,11 +469,11 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(isLastItemInParent.back() ? DLineEnd : DLineMiddle)));
+			auto widget = std::dynamic_pointer_cast<morda::Pile>(morda::Morda::inst().inflater.inflate(isLastItemInParent.back() ? DLineEnd : DLineMiddle));
 			ASSERT(widget)
 			
 			if(n->child()){
-				auto w = morda::Morda::inst().inflater.inflate(*stob::parse(DPlusMinus));
+				auto w = morda::Morda::inst().inflater.inflate(DPlusMinus);
 
 				auto plusminus = w->findChildByNameAs<morda::Image>("plusminus");
 				ASSERT(plusminus)
@@ -513,7 +513,7 @@ public:
 		}
 		
 		{
-			auto v = morda::Morda::inst().inflater.inflate(*stob::parse(
+			auto v = morda::Morda::inst().inflater.inflate(
 					R"qwertyuiop(
 							Pile{
 								Color{
@@ -531,7 +531,7 @@ public:
 								}
 							}
 						)qwertyuiop"
-				));
+				);
 			
 			{
 				auto value = v->findChildByNameAs<morda::Text>("value");
@@ -562,7 +562,7 @@ public:
 		}
 		
 		{
-			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::Morda::inst().inflater.inflate(*stob::parse(
+			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::Morda::inst().inflater.inflate(
 					R"qwertyuiop(
 							PushButton{
 								Color{
@@ -571,7 +571,7 @@ public:
 								}
 							}
 						)qwertyuiop"
-				)));
+				));
 			b->clicked = [this, path, n, parent](morda::PushButton& button){
 				ASSERT(parent)
 				parent->removeChild(n);

@@ -85,6 +85,13 @@ public:
 	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
 
 	/**
+	 * @brief Create widgets hierarchy from GUI script.
+	 * @param str - string containing GUI description.
+	 * @return reference to the inflated widget.
+	 */
+	std::shared_ptr<morda::Widget> inflate(const char* str);
+	
+	/**
 	 * @brief Inflate widget described in GUI script.
 	 * @param fi - file interface to get the GUI script.
 	 * @return reference to the inflated widget.
