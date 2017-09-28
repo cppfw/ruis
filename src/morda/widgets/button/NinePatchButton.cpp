@@ -24,6 +24,7 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 			this->setPressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 		}
 	}
+	this->onPressedChanged();
 }
 
 void NinePatchButton::onPressedChanged(){

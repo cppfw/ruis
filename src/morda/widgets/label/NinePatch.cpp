@@ -173,13 +173,22 @@ Sidesr NinePatch::getActualBorders() const noexcept{
 
 
 void NinePatch::applyImages(){
-	auto& minBorders = this->image->borders();
-//	TRACE(<< "minBorders = " << minBorders << std::endl)
+	if(!this->image){
+		for(auto& i : this->imageMatrix_v){
+			for(auto& j : i){
+				j->setImage(nullptr);
+			}
+		}
+		return;
+	}
 	
+	auto& minBorders = this->image->borders();
+//		TRACE(<< "minBorders = " << minBorders << std::endl)
+
 	{
 		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->getLayoutParams();
-		
+
 		if(this->borders.left() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.left()){
 				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
@@ -191,7 +200,7 @@ void NinePatch::applyImages(){
 				lp.dim.x = this->borders.left();
 			}
 		}
-		
+
 		if(this->borders.top() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.top()){
 				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
@@ -203,12 +212,12 @@ void NinePatch::applyImages(){
 				lp.dim.y = this->borders.top();
 			}
 		}
-//		TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
+//			TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
 	}
 	{
 		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->getLayoutParams();
-		
+
 		if(this->borders.right() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.right()){
 				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
@@ -220,7 +229,7 @@ void NinePatch::applyImages(){
 				lp.dim.x = this->borders.right();
 			}
 		}
-		
+
 		if(this->borders.bottom() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.bottom()){
 				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
@@ -232,10 +241,10 @@ void NinePatch::applyImages(){
 				lp.dim.y = this->borders.bottom();
 			}
 		}
-//		TRACE(<< "lp.dim = " << lp.dim << std::endl)
+//			TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}
-//	TRACE(<< "this->borders = " << this->borders << std::endl)
-			
+//		TRACE(<< "this->borders = " << this->borders << std::endl)
+
 	this->scaledImage = this->image->get(this->borders);
 	
 	for(unsigned i = 0; i != 3; ++i){
