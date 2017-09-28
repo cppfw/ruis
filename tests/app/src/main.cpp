@@ -469,7 +469,7 @@ public:
 		}
 		
 		{
-			auto widget = std::dynamic_pointer_cast<morda::Pile>(morda::Morda::inst().inflater.inflate(isLastItemInParent.back() ? DLineEnd : DLineMiddle));
+			auto widget = morda::Morda::inst().inflater.inflateAs<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 			
 			if(n->child()){
@@ -562,7 +562,7 @@ public:
 		}
 		
 		{
-			auto b = std::dynamic_pointer_cast<morda::PushButton>(morda::Morda::inst().inflater.inflate(
+			auto b = morda::Morda::inst().inflater.inflateAs<morda::PushButton>(
 					R"qwertyuiop(
 							PushButton{
 								Color{
@@ -571,7 +571,7 @@ public:
 								}
 							}
 						)qwertyuiop"
-				));
+				);
 			b->clicked = [this, path, n, parent](morda::PushButton& button){
 				ASSERT(parent)
 				parent->removeChild(n);
@@ -632,7 +632,7 @@ public:
 //		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater().Inflate(zf);
 		
-		ASSERT(std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button")))
+		ASSERT(c->findChildByNameAs<morda::PushButton>("show_VK_button"))
 		std::dynamic_pointer_cast<morda::PushButton>(c->findChildByName("show_VK_button"))->clicked = [this](morda::PushButton&){
 			this->showVirtualKeyboard();
 		};

@@ -85,11 +85,31 @@ public:
 	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
 
 	/**
+	 * @brief Inflate widget and cast to specified type.
+	 * Only the first widget from the STOB chain is returned.
+	 * @param chain - STOB chain to inflate widget from.
+	 * @return reference to the inflated widget.
+	 */
+	template <typename T> std::shared_ptr<T> inflateAs(const stob::Node& chain){
+		return std::dynamic_pointer_cast<T>(this->inflate(chain));
+	}
+	
+	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param str - string containing GUI description.
 	 * @return reference to the inflated widget.
 	 */
 	std::shared_ptr<morda::Widget> inflate(const char* str);
+	
+	/**
+	 * @brief Inflate widget and cast to specified type.
+	 * Only the first widget from the GUI script is returned.
+	 * @param str - string holding the GUI script.
+	 * @return reference to the inflated widget.
+	 */
+	template <typename T> std::shared_ptr<T> inflateAs(const char* str){
+		return std::dynamic_pointer_cast<T>(this->inflate(str));
+	}
 	
 	/**
 	 * @brief Inflate widget described in GUI script.
