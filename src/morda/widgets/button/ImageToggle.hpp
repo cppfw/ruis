@@ -8,7 +8,6 @@ class ImageToggle :
 		public ToggleButton,
 		private ImageButton
 {
-//	void onPressedChanged() override;
 public:
 	ImageToggle(const stob::Node* chain = nullptr);
 	
