@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NinePatch.hpp"
+#include "../label/NinePatch.hpp"
 #include "ChoiceButton.hpp"
 
 namespace morda{

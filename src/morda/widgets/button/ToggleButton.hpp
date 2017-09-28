@@ -11,7 +11,7 @@ namespace morda{
  * In GUI script it has the 'checked{true/false}' attribute which can set initial
  * checked state of the widget.
  */
-class ToggleButton : public Button{
+class ToggleButton : virtual public Button{
 	bool isChecked_v;
 	
 protected:	
@@ -23,7 +23,7 @@ protected:
 	 */
 	virtual void onCheckedChanged();
 public:
-	ToggleButton(const stob::Node* chain = nullptr);
+	ToggleButton(const stob::Node* chain);
 	
 	/**
 	 * @brief Set checked state.

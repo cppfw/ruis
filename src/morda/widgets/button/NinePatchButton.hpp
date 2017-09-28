@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PushButton.hpp"
-#include "../NinePatch.hpp"
+#include "../label/NinePatch.hpp"
 
 namespace morda{
 
@@ -13,7 +13,7 @@ namespace morda{
  * Since the button is a NinePatch it can have children.
  */
 class NinePatchButton :
-		public PushButton,
+		virtual public Button,
 		public NinePatch
 {
 	std::shared_ptr<ResNinePatch> imgNormal;
@@ -24,17 +24,17 @@ public:
 	NinePatchButton(const NinePatchButton&) = delete;
 	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
-	NinePatchButton(const stob::Node* chain = nullptr);
-	
 protected:
+	NinePatchButton(const stob::Node* chain);
+	
 	void onPressedChanged()override;
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
-		return this->PushButton::onMouseButton(isDown, pos, button, pointerId);
+		return this->Button::onMouseButton(isDown, pos, button, pointerId);
 	}
 
 	void onHoverChanged(unsigned pointerID)override{
-		this->PushButton::onHoverChanged(pointerID);
+		this->Button::onHoverChanged(pointerID);
 	}
 };
 

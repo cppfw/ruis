@@ -12,7 +12,7 @@
 #include "label/Color.hpp"
 
 #include "base/TextWidget.hpp"
-#include "NinePatch.hpp"
+#include "label/NinePatch.hpp"
 
 
 
@@ -22,7 +22,7 @@ using namespace morda;
 
 namespace{
 
-const char* selectorLayout_c = R"qwertyuiop(
+const auto selectorLayout_c = stob::parse(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
 	Row{
@@ -41,7 +41,7 @@ const char* selectorLayout_c = R"qwertyuiop(
 			image{morda_img_dropdown_arrow}
 		}
 	}
-)qwertyuiop";
+)qwertyuiop");
 
 const char* itemLayout_c = R"qwertyuiop(
 		Pile{
@@ -123,10 +123,10 @@ void DropDownSelector::showDropdownMenu() {
 }
 
 
-
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
-		NinePatchButton(stob::parse(selectorLayout_c).get()),
+		Button(selectorLayout_c.get()),
+		NinePatchPushButton(selectorLayout_c.get()),
 		selectionContainer(*this->findChildByNameAs<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){

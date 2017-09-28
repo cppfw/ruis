@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TextInputLine.hpp"
-#include "NinePatch.hpp"
+#include "label/NinePatch.hpp"
 
 namespace morda{
 

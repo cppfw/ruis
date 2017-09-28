@@ -28,7 +28,7 @@ protected:
 	
 	void onHoverChanged(unsigned pointerID) override;
 public:	
-	Button(const stob::Node* chain = nullptr) :
+	Button(const stob::Node* chain) :
 			Widget(chain)
 	{}
 	

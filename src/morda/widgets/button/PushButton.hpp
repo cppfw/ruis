@@ -9,7 +9,7 @@ namespace morda{
  * Push button is a button which can be clicked.
  * Clicked means that the button was pressed and then released.
  */
-class PushButton : public Button{
+class PushButton : virtual public Button{
 	bool currentlyPressed = false;
 
 protected:
@@ -22,7 +22,7 @@ protected:
 	virtual void onClicked();
 	
 public:
-	PushButton(const stob::Node* chain = nullptr) :
+	PushButton(const stob::Node* chain) :
 			Widget(chain),
 			Button(chain)
 	{}

@@ -6,7 +6,7 @@
 
 #include "../core/proxy/MouseProxy.hpp"
 
-#include "../NinePatch.hpp"
+#include "../label/NinePatch.hpp"
 
 
 

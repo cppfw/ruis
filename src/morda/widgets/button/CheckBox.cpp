@@ -9,12 +9,12 @@ using namespace morda;
 
 namespace{
 
-const char* D_Layout = R"qwertyuiop(
+const auto D_Layout = stob::parse(R"qwertyuiop(
 		Image{
 			name{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 }
 
@@ -22,8 +22,9 @@ const char* D_Layout = R"qwertyuiop(
 
 CheckBox::CheckBox(const stob::Node* chain) :
 		Widget(chain),
+		Button(chain),
 		ToggleButton(chain),
-		NinePatch(stob::parse(D_Layout).get())
+		NinePatch(D_Layout.get())
 {
 	this->checkWidget = this->content().findChildByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isChecked());

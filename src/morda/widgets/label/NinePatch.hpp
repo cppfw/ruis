@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../util/Sides.hpp"
+#include "../../util/Sides.hpp"
 
-#include "../resources/ResNinePatch.hpp"
+#include "../../resources/ResNinePatch.hpp"
 
-#include "core/container/Pile.hpp"
-#include "core/container/Table.hpp"
+#include "../core/container/Pile.hpp"
+#include "../core/container/Table.hpp"
 
-#include "label/Image.hpp"
+#include "Image.hpp"
 
-#include "base/BlendingWidget.hpp"
+#include "../base/BlendingWidget.hpp"
 
 
 namespace morda{

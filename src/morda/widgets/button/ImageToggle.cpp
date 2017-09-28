@@ -9,6 +9,7 @@ using namespace morda;
 
 ImageToggle::ImageToggle(const stob::Node* chain) :
 		Widget(chain),
+		Button(chain),
 		ToggleButton(chain),
 		Image(nullptr)
 {

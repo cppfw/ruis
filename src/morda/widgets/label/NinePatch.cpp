@@ -1,11 +1,9 @@
 #include <utki/util.hpp>
 #include <utki/types.hpp>
 
-#include "../Morda.hpp"
-
-#include "../util/util.hpp"
-
-#include "core/proxy/ResizeProxy.hpp"
+#include "../../Morda.hpp"
+#include "../../util/util.hpp"
+#include "../core/proxy/ResizeProxy.hpp"
 
 #include "NinePatch.hpp"
 
