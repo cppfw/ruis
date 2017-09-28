@@ -44,6 +44,7 @@ private:
 	void addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory);
 
 public:
+	//TODO: remove deprecated method
 	template <class T_Widget> void addWidget(const std::string& widgetName){
 		TRACE(<< "Inflater::addWidget() is DEPRECATED. Use Inflater::registerType() instead." << std::endl)
 		this->registerType<T_Widget>(widgetName);
@@ -113,6 +114,7 @@ public:
 	 */
 	std::shared_ptr<morda::Widget> inflate(papki::File& fi);
 
+	//TODO: remove includes resolution and this load() method
 	/**
 	 * @brief Load GUI script.
 	 * Loads a GUI script resolving includes.
