@@ -65,6 +65,8 @@
             <in>CheckBox.cpp</in>
             <in>ChoiceButton.cpp</in>
             <in>ChoiceGroup.cpp</in>
+            <in>ImageButton.cpp</in>
+            <in>ImageButton.hpp</in>
             <in>ImageToggle.cpp</in>
             <in>NinePatchButton.cpp</in>
             <in>NinePatchPushButton.cpp</in>
@@ -932,6 +934,16 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/button/NinePatchButton.cpp"
             ex="false"
@@ -2203,21 +2215,44 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/button</pElem>
+            <pElem>src/morda/widgets/base</pElem>
+            <pElem>src/morda/widgets/label</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/resources</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/widgets/button/ImageToggle.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>src/morda/widgets/button</pElem>
             <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/label</pElem>
+            <pElem>src/morda/widgets/button</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -2233,6 +2268,7 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/core</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
             <pElem>src/morda/widgets/button</pElem>
@@ -2243,7 +2279,6 @@
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>.</pElem>
@@ -2982,6 +3017,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/button/NinePatchPushButton.cpp"
             ex="false"
             tool="1"
@@ -3185,6 +3230,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/base/TextWidget.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3429,6 +3484,16 @@
             ex="false"
             tool="1"
             flavor2="8">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/button/NinePatchPushButton.cpp"
             ex="false"
@@ -4230,6 +4295,16 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/button/ImageButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/button/ImageToggle.cpp"
             ex="false"

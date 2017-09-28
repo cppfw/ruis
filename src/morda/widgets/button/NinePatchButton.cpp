@@ -13,6 +13,17 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 		Button(chain),
 		NinePatch(chain)
 {
+	{
+		auto ch = getProperty(chain, "look");
+		
+		if(auto n = getProperty(ch, "unpressed")){
+			this->setUnpressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
+		}
+
+		if(auto n = getProperty(ch, "pressed")){
+			this->setPressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
+		}
+	}
 }
 
 void NinePatchButton::onPressedChanged(){
