@@ -25,31 +25,29 @@ using namespace morda;
 
 
 Inflater::Inflater(){
-	this->addWidget<Widget>("Widget");
-	this->addWidget<Container>("Container");
-	this->addWidget<Row>("Row");
-	this->addWidget<Column>("Column");
-	this->addWidget<Pile>("Pile");
-	this->addWidget<MouseProxy>("MouseProxy");
-	this->addWidget<ScrollArea>("ScrollArea");
-	this->addWidget<Table>("Table");
-	this->addWidget<TableRow>("TableRow");
-	this->addWidget<KeyProxy>("KeyProxy");
-	this->addWidget<Overlay>("Overlay");
-	this->addWidget<ResizeProxy>("ResizeProxy");
-	this->addWidget<HorizontalList>("HorizontalList");
-	this->addWidget<VerticalList>("VerticalList");
+	this->registerType<Widget>("Widget");
+	this->registerType<Container>("Container");
+	this->registerType<Row>("Row");
+	this->registerType<Column>("Column");
+	this->registerType<Pile>("Pile");
+	this->registerType<MouseProxy>("MouseProxy");
+	this->registerType<ScrollArea>("ScrollArea");
+	this->registerType<Table>("Table");
+	this->registerType<TableRow>("TableRow");
+	this->registerType<KeyProxy>("KeyProxy");
+	this->registerType<Overlay>("Overlay");
+	this->registerType<ResizeProxy>("ResizeProxy");
+	this->registerType<HorizontalList>("HorizontalList");
+	this->registerType<VerticalList>("VerticalList");
 }
 
 
 
-void Inflater::addWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory){
-	std::pair<T_FactoryMap::iterator, bool> ret = this->widgetFactories.insert(
-			std::pair<std::string, std::unique_ptr<Inflater::WidgetFactory> >(
-					widgetName,
-					std::move(factory)
-				)
-		);
+void Inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory){
+	auto ret = this->widgetFactories.insert(std::make_pair(
+			widgetName,
+			std::move(factory)
+		));
 	if(!ret.second){
 		throw Inflater::Exc("Failed registering widget type, widget type with given name is already added");
 	}
@@ -183,14 +181,14 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmpl, const std::set
 }
 }
 
-const Inflater::WidgetFactory* Inflater::findFactory(const std::string& widgetName) {
+const decltype(Inflater::widgetFactories)::value_type::second_type* Inflater::findFactory(const std::string& widgetName) {
 	auto i = this->widgetFactories.find(widgetName);
 
 	if(i == this->widgetFactories.end()){
 		return nullptr;
 	}
 	
-	return i->second.get();
+	return &i->second;
 }
 
 
@@ -265,7 +263,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		
 		this->substituteVariables(cloned.get());
 		
-		return fac->create(cloned.get());
+		return fac->operator()(cloned.get());
 	}
 }
 

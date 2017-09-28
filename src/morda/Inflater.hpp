@@ -37,36 +37,31 @@ public:
 	};
 
 private:
-	class WidgetFactory{
-	public:
-		virtual std::shared_ptr<morda::Widget> create(const stob::Node* chain)const = 0;
+	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const stob::Node*)> > widgetFactories;
 
-		virtual ~WidgetFactory()noexcept{}
-	};
+	const decltype(widgetFactories)::value_type::second_type* findFactory(const std::string& widgetName);
 	
-	typedef std::map<std::string, std::unique_ptr<WidgetFactory> > T_FactoryMap;
-	T_FactoryMap widgetFactories;
-
-	const WidgetFactory* findFactory(const std::string& widgetName);
-	
-	void addWidgetFactory(const std::string& widgetName, std::unique_ptr<WidgetFactory> factory);
+	void addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory);
 
 public:
+	template <class T_Widget> void addWidget(const std::string& widgetName){
+		TRACE(<< "Inflater::addWidget() is DEPRECATED. Use Inflater::registerType() instead." << std::endl)
+		this->registerType<T_Widget>(widgetName);
+	}
+	
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
 	 * in STOB GUI description.
 	 * @param widgetName - name of the widget as it appears in GUI script.
 	 */
-	template <class T_Widget> void addWidget(const std::string& widgetName){
-		class Factory : public WidgetFactory{
-		public:
-			std::shared_ptr<morda::Widget> create(const stob::Node* chain)const override{
-				return std::make_shared<T_Widget>(chain);
-			}
-		};
-
-		this->addWidgetFactory(widgetName, std::unique_ptr<WidgetFactory>(new Factory()));
+	template <class T_Widget> void registerType(const std::string& widgetName){
+		this->addWidgetFactory(
+				widgetName,
+				[](const stob::Node* chain) -> std::shared_ptr<morda::Widget> {
+					return std::make_shared<T_Widget>(chain);
+				}
+			);
 	}
 
 	/**

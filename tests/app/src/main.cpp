@@ -612,8 +612,8 @@ public:
 		morda::Morda::inst().resMan.mountResPack(*this->createResourceFileInterface("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 		
-		morda::Morda::inst().inflater.addWidget<SimpleWidget>("U_SimpleWidget");
-		morda::Morda::inst().inflater.addWidget<CubeWidget>("CubeWidget");
+		morda::Morda::inst().inflater.registerType<SimpleWidget>("U_SimpleWidget");
+		morda::Morda::inst().inflater.registerType<CubeWidget>("CubeWidget");
 
 		std::shared_ptr<morda::Widget> c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/test.gui")
