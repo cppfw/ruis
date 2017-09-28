@@ -6,6 +6,14 @@ tex_lattice{
 	file {lattice.png}
 }
 
+img_button_unpressed{
+	file{empty_cell_test.svg}
+}
+
+img_button_pressed{
+	file{shot_test.svg}
+}
+
 img_lattice{
 	file{lattice.png}
 }

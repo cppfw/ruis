@@ -1639,7 +1639,6 @@
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/slider</pElem>
-            <pElem>src</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
@@ -1696,8 +1695,8 @@
       <item path="src/morda/render/Renderer.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
           <incDir>
-            <pElem>/usr/include/utki</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>/usr/include/utki</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda</pElem>

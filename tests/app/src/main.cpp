@@ -902,6 +902,14 @@ public:
 				this->setFullscreen(!this->isFullscreen());
 			};
 		}
+		{
+			auto b = c->findChildByNameAs<morda::PushButton>("image_push_button");
+			ASSERT(b)
+			b->clicked = [this](morda::PushButton&) {
+				this->setFullscreen(true);
+			};
+		}
+		
 		
 		//mouse cursor
 		{

@@ -11,6 +11,7 @@
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/ChoiceGroup.hpp"
 #include "widgets/button/ImageToggle.hpp"
+#include "widgets/button/ImagePushButton.hpp"
 #include "widgets/button/Tab.hpp"
 #include "widgets/button/Tabs.hpp"
 
@@ -112,6 +113,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.addWidget<MouseCursor>("MouseCursor");
 	this->inflater.addWidget<CollapseArea>("CollapseArea");
 	this->inflater.addWidget<ImageToggle>("ImageToggle");
+	this->inflater.addWidget<ImagePushButton>("ImagePushButton");
 	this->inflater.addWidget<Tabs>("Tabs");
 	this->inflater.addWidget<Tab>("Tab");
 	

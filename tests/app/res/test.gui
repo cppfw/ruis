@@ -505,7 +505,19 @@ Container{
 					title{Text{text{Hi!}}}
 					Column{
 						Text{text{Hello!}}
-						PushButton{Text{text{button!!!}}}
+						Row{
+							PushButton{Text{text{button!!!}}}
+							ImagePushButton{
+								name{image_push_button}
+								layout{
+									dx{50pt} dy{50pt}
+								}
+								look{
+									pressed{img_button_pressed}
+									unpressed{img_button_unpressed}
+								}
+							}
+						}
 					}
 				}
 			}
