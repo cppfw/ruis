@@ -13,26 +13,17 @@ NinePatchButton::NinePatchButton(const stob::Node* chain) :
 		Button(chain),
 		NinePatch(chain)
 {
-	{
-		auto ch = getProperty(chain, "look");
-		
-		if(auto n = getProperty(ch, "normal")){
-			this->imgNormal = morda::Morda::inst().resMan.load<ResNinePatch>(n->value());
-		}else{
-			this->imgNormal = morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_button_normal");
-		}
-
-		if(auto n = getProperty(ch, "pressed")){
-			this->imgPressed = morda::Morda::inst().resMan.load<ResNinePatch>(n->value());
-		}else{
-			this->imgPressed = morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_button_pressed");
-		}
-	}
-	
-	//initialize nine-patch
-	this->NinePatchButton::onPressedChanged();
 }
 
 void NinePatchButton::onPressedChanged(){
-	this->setNinePatch(this->isPressed() ? this->imgPressed : this->imgNormal);
+	this->setNinePatch(this->isPressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
+	this->Button::onPressedChanged();
+}
+
+void NinePatchButton::setPressedNinePatch(std::shared_ptr<const ResNinePatch> np) {
+	this->pressedNinePatch_v = std::move(np);
+}
+
+void NinePatchButton::setUnpressedNinePatch(std::shared_ptr<const ResNinePatch> np) {
+	this->unpressedNinePatch_v = std::move(np);
 }

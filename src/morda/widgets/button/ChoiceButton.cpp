@@ -8,39 +8,29 @@ using namespace morda;
 
 ChoiceButton::ChoiceButton(const stob::Node* chain) :
 		Widget(chain),
-		Button(chain)
+		Button(chain),
+		ToggleButton(chain)
 {
 }
 
-void ChoiceButton::onCheckedChanged() {
-	if(this->checkedChanged){
-		this->checkedChanged(*this);
-	}
-}
-
-void ChoiceButton::setChecked() {
-	this->setChecked(true);
-}
-
-void ChoiceButton::setChecked(bool checked) {
-	if(this->isChecked() == checked){
-		return;
-	}
-	this->isChecked_v = checked;
-	this->onCheckedChanged();
-}
-
-
 
 void ChoiceButton::onPressedChanged() {
-	if(!this->isPressed()){
+	auto cg = this->findAncestor<ChoiceGroup>();
+	if(!cg){
+		this->ToggleButton::onPressedChanged();
 		return;
 	}
-	if(this->isChecked()){
-		return;
-	}
-	if(auto cg = this->findAncestor<ChoiceGroup>()){
+	
+	this->ToggleButton::onPressedChanged();
+	
+	if(this->isPressed()){
 		cg->setActiveChoiceButton(this->sharedFromThis(this));
 	}
-	this->setChecked();
+}
+
+bool ChoiceButton::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) {
+	if(this->isPressed()){
+		return true;
+	}
+	return this->ToggleButton::onMouseButton(isDown, pos, button, pointerID);
 }

@@ -143,8 +143,8 @@ void NinePatch::render(const morda::Matr4r& matrix) const {
 }
 
 
-void NinePatch::setNinePatch(const std::shared_ptr<ResNinePatch>& np){
-	this->image = np;
+void NinePatch::setNinePatch(std::shared_ptr<const ResNinePatch> np){
+	this->image = std::move(np);
 	this->scaledImage.reset();
 	
 	this->applyImages();

@@ -10,10 +10,10 @@ class ImageToggle :
 		public ToggleButton,
 		private Image
 {
-	std::shared_ptr<ResImage> uncheckedImage;
-	std::shared_ptr<ResImage> checkedImage;
+	std::shared_ptr<ResImage> unpressedImage;
+	std::shared_ptr<ResImage> pressedImage;
 	
-	void onCheckedChanged() override;
+	void onPressedChanged() override;
 public:
 	ImageToggle(const stob::Node* chain = nullptr);
 	

@@ -27,15 +27,15 @@ CheckBox::CheckBox(const stob::Node* chain) :
 		NinePatch(D_Layout.get())
 {
 	this->checkWidget = this->content().findChildByName("morda_checkbox_check");
-	this->checkWidget->setVisible(this->isChecked());
+	this->checkWidget->setVisible(this->isPressed());
 	
 	this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
 }
 
 
 
-void CheckBox::onCheckedChanged(){
-	this->checkWidget->setVisible(this->isChecked());
+void CheckBox::onPressedChanged(){
+	this->checkWidget->setVisible(this->isPressed());
 	this->clearCache();
-	this->ToggleButton::onCheckedChanged();
+	this->ToggleButton::onPressedChanged();
 }

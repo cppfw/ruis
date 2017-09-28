@@ -31,7 +31,7 @@ class NinePatch :
 		public BlendingWidget,
 		private Table
 {
-	std::shared_ptr<ResNinePatch> image;
+	std::shared_ptr<const ResNinePatch> image;
 	
 	std::shared_ptr<ResNinePatch::ImageMatrix> scaledImage;
 	
@@ -47,7 +47,7 @@ public:
 	
 	NinePatch(const stob::Node* chain = nullptr);
 	
-	void setNinePatch(const std::shared_ptr<ResNinePatch>& np);
+	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
 	
 	/**
 	 * @brief Get content container.

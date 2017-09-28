@@ -15,20 +15,20 @@ ImageToggle::ImageToggle(const stob::Node* chain) :
 {
 	if(auto look = getProperty(chain, "look")){
 		if(auto p = getProperty(look, "checked")){
-			this->checkedImage = morda::inst().resMan.load<ResImage>(p->value());
+			this->pressedImage = morda::inst().resMan.load<ResImage>(p->value());
 		}
 		if(auto p = getProperty(look, "unchecked")){
-			this->uncheckedImage = morda::inst().resMan.load<ResImage>(p->value());
+			this->unpressedImage = morda::inst().resMan.load<ResImage>(p->value());
 		}
 	}
-	this->onCheckedChanged();
+	this->onPressedChanged();
 }
 
-void ImageToggle::onCheckedChanged() {
-	if(this->isChecked()){
-		this->setImage(this->checkedImage);
+void ImageToggle::onPressedChanged() {
+	if(this->isPressed()){
+		this->setImage(this->pressedImage);
 	}else{
-		this->setImage(this->uncheckedImage);
+		this->setImage(this->unpressedImage);
 	}
-	this->ToggleButton::onCheckedChanged();
+	this->ToggleButton::onPressedChanged();
 }

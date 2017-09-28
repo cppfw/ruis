@@ -16,26 +16,30 @@ class NinePatchButton :
 		virtual public Button,
 		public NinePatch
 {
-	std::shared_ptr<ResNinePatch> imgNormal;
-	std::shared_ptr<ResNinePatch> imgPressed;
+	std::shared_ptr<const ResNinePatch> unpressedNinePatch_v;
+	std::shared_ptr<const ResNinePatch> pressedNinePatch_v;
 	
 public:
 
 	NinePatchButton(const NinePatchButton&) = delete;
 	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
+	void setUnpressedNinePatch(std::shared_ptr<const ResNinePatch> np);
+	
+	const decltype(unpressedNinePatch_v)& unpressedNinePatch()const noexcept{
+		return this->unpressedNinePatch_v;
+	}
+	
+	void setPressedNinePatch(std::shared_ptr<const ResNinePatch> np);
+	
+	const decltype(pressedNinePatch_v)& pressedNinePatch()const noexcept{
+		return this->pressedNinePatch_v;
+	}
+	
 protected:
 	NinePatchButton(const stob::Node* chain);
 	
 	void onPressedChanged()override;
-
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
-		return this->Button::onMouseButton(isDown, pos, button, pointerId);
-	}
-
-	void onHoverChanged(unsigned pointerID)override{
-		this->Button::onHoverChanged(pointerID);
-	}
 };
 
 }

@@ -20,7 +20,7 @@ bool Tab::maskOverlaps(Vec2r pos) {
 			--prevIter;
 
 			if(auto pt = dynamic_cast<Tab*>(prevIter->get())){ //previous tab
-				if(pt->isChecked()){
+				if(pt->isPressed()){
 					if(pt->maskOverlaps(pos + this->rect().p - pt->rect().p)){
 						return false;
 					}
@@ -52,36 +52,25 @@ bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e butt
 	return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
 }
 
-
-void Tab::onCheckedChanged() {
-	if(this->isChecked()){
-		this->setNinePatch(this->activeNinePatch);
-	}else{
-		this->setNinePatch(this->inactiveNinePatch);
-	}
-	this->ChoiceButton::onCheckedChanged();
+void Tab::onPressedChanged() {
+	this->ChoiceButton::onPressedChanged();
+	this->NinePatchToggle::onPressedChanged();
 }
 
 
 Tab::Tab(const stob::Node* chain) :
 		Widget(chain),
+		Button(chain),
+		ToggleButton(chain),
 		ChoiceButton(chain),
-		NinePatch(chain)
+		NinePatchToggle(chain)
 {
-	if(auto p = getProperty(chain, "look")){
-		if(auto im = getProperty(p, "active")){
-			this->activeNinePatch = morda::inst().resMan.load<ResNinePatch>(im->value());
-		}
-		if(auto im = getProperty(p, "inactive")){
-			this->inactiveNinePatch = morda::inst().resMan.load<ResNinePatch>(im->value());
-		}
+	if(!this->pressedNinePatch()){
+		this->setPressedNinePatch(morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_active"));
 	}
-	if(!this->activeNinePatch){
-		this->activeNinePatch = morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_active");
-	}
-	if(!this->inactiveNinePatch){
-		this->inactiveNinePatch = morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_inactive");
+	if(!this->unpressedNinePatch()){
+		this->setUnpressedNinePatch(morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_inactive"));
 	}
 	
-	this->onCheckedChanged();
+	this->onPressedChanged();//initialize nine-patch
 }

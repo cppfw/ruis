@@ -18,9 +18,16 @@ bool ChoiceGroup::isWidgetActive(const Widget& w) const noexcept{
 
 
 void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb) {
-	if(this->activeChoiceButton_v){
-		this->activeChoiceButton_v->setChecked(false);
+	if(cb == this->activeChoiceButton_v){
+		return;
 	}
+	
+	auto oldactive = this->activeChoiceButton_v;
+	
 	this->activeChoiceButton_v = cb;
+	
+	if(oldactive){
+		oldactive->setPressed(false);
+	}
 }
 

@@ -14,10 +14,15 @@ public:
 	NinePatchPushButton(const stob::Node* chain);
 	
 protected:
-	void onPressedChanged() override{
-		this->Button::onPressedChanged();
-		this->NinePatchButton::onPressedChanged();
-		this->PushButton::onPressedChanged();
+	void onPressedChanged() override;
+	
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override{
+		return this->PushButton::onMouseButton(isDown, pos, button, pointerID);
 	}
+
+	void onHoverChanged(unsigned pointerID) override{
+		this->PushButton::onHoverChanged(pointerID);
+	}
+
 };
 }

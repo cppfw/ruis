@@ -31,7 +31,7 @@ public:
 		this->ChoiceButton::onHoverChanged(pointerID);
 	}
 	
-	void onCheckedChanged() override;
+	void onPressedChanged() override;
 
 private:
 

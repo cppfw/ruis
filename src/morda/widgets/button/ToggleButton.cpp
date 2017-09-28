@@ -9,31 +9,15 @@ ToggleButton::ToggleButton(const stob::Node* chain) :
 		Widget(chain),
 		Button(chain)
 {
-	if(const stob::Node* n = getProperty(chain, "checked")){
-		this->isChecked_v = n->asBool();
-	}else{
-		this->isChecked_v = false;
-	}
 }
 
-void ToggleButton::onCheckedChanged() {
-	if (this->checkedChanged) {
-		this->checkedChanged(*this);
-	}
-}
-
-void ToggleButton::setChecked(bool checked) {
-	if (this->isChecked_v == checked) {
-		return;
+bool ToggleButton::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) {
+	if(button == MouseButton_e::LEFT){
+		if(isDown){
+			this->toggle();
+		}
+		return true;
 	}
 
-	this->isChecked_v = checked;
-	this->onCheckedChanged();
+	return false;
 }
-
-void ToggleButton::onPressedChanged() {
-	if(this->isPressed()){
-		this->toggle();
-	}
-}
-

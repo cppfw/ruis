@@ -24,17 +24,20 @@ const char* D_Layout = R"qwertyuiop(
 
 RadioButton::RadioButton(const stob::Node* chain) :
 		Widget(chain),
+		Button(chain),
+		ToggleButton(chain),
+		ChoiceButton(chain),
 		Pile(stob::parse(D_Layout).get())
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)
-	this->checkWidget->setVisible(this->isChecked());
+	this->checkWidget->setVisible(this->isPressed());
 }
 
 
 
-void RadioButton::onCheckedChanged(){
-	this->checkWidget->setVisible(this->isChecked());
+void RadioButton::onPressedChanged(){
+	this->ChoiceButton::onPressedChanged();
+	this->checkWidget->setVisible(this->isPressed());
 	this->clearCache();
-	this->ChoiceButton::onCheckedChanged();
 }

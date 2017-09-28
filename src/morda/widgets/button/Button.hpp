@@ -16,6 +16,7 @@ namespace morda{
  */
 class Button : public virtual Widget{
 	bool isPressed_v = false;
+	bool isPressedChangedNotified = true;
 	
 protected:
 	/**
@@ -23,14 +24,8 @@ protected:
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
 	virtual void onPressedChanged();
-	
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
-	
-	void onHoverChanged(unsigned pointerID) override;
 public:	
-	Button(const stob::Node* chain) :
-			Widget(chain)
-	{}
+	Button(const stob::Node* chain);
 	
 	/**
 	 * @brief Check if button is currently pressed.
@@ -40,6 +35,8 @@ public:
 	bool isPressed()const noexcept{
 		return this->isPressed_v;
 	}
+	
+	void setPressed(bool pressed);
 	
 	/**
 	 * @brief Pressed changed signal.

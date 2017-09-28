@@ -259,27 +259,9 @@ public:
 	}
 	
 private:
-	void setHovered(bool isHovered, unsigned pointerID){
-		if(isHovered){
-			if(this->isHovered(pointerID)){
-				return;
-			}
-			
-			this->hovered.insert(pointerID);
-		}else{
-			if(!this->isHovered(pointerID)){
-				return;
-			}
-			
-			this->hovered.erase(pointerID);
-		}
-		
-		this->onHoverChanged(pointerID);
-	}
+	void setHovered(bool isHovered, unsigned pointerID);
 	
-	void setUnhovered(){
-		this->hovered.clear();
-	}
+	void setUnhovered();
 public:
 
 	/**
@@ -524,12 +506,7 @@ public:
 	 * @brief Show/hide widget.
 	 * @param visible - whether to show (true) or hide (false) the widget.
 	 */
-	void setVisible(bool visible){
-		this->isVisible_v = visible;
-		if(!this->isVisible_v){
-			this->setUnhovered();
-		}
-	}
+	void setVisible(bool visible);
 	
 	/**
 	 * @brief Check if widget is visible.
@@ -544,9 +521,7 @@ public:
 	 * @brief Enable/disable the widget.
 	 * @param enable - whether to enable (true) or disable (false) the widget.
 	 */
-	void setEnabled(bool enable)noexcept{
-		this->isEnabled_v = enable;
-	}
+	void setEnabled(bool enable);
 	
 	/**
 	 * @brief Check if the widget is currently enabled.

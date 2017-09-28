@@ -71,7 +71,7 @@ Container{
 					bottom{5pt}
 
 					CheckBox{
-						checked{true}
+						pressed{true}
 					}
 				}
 
@@ -481,6 +481,7 @@ Container{
 				layout{dx{max}}
 
 				Tab{
+					name{tab1}
 					Text{text{tab1}}
 				}
 				Tab{

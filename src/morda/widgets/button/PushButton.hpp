@@ -21,6 +21,11 @@ protected:
 	 */
 	virtual void onClicked();
 	
+	
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
+	
+	void onHoverChanged(unsigned pointerID) override;
+	
 public:
 	PushButton(const stob::Node* chain) :
 			Widget(chain),

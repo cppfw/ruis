@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.hpp"
+#include "ToggleButton.hpp"
 
 namespace morda{
 
@@ -12,29 +13,19 @@ namespace morda{
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class ChoiceButton : public Button{
+class ChoiceButton : virtual public ToggleButton{
 	friend class ChoiceGroup;
 	
-	bool isChecked_v = false;
 protected:
-	void onPressedChanged()override;
+	void onPressedChanged() override;
 	
-	virtual void onCheckedChanged();
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
+
 public:
-	ChoiceButton(const stob::Node* chain = nullptr);
+	ChoiceButton(const stob::Node* chain);
 	
 	ChoiceButton(const ChoiceButton&) = delete;
 	ChoiceButton& operator=(const ChoiceButton&) = delete;
-	
-	bool isChecked()const noexcept{
-		return this->isChecked_v;
-	}
-	
-	void setChecked();
-	
-	std::function<void(ChoiceButton&)> checkedChanged;
-private:
-	void setChecked(bool checked);
 };
 
 }

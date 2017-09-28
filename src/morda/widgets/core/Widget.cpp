@@ -417,3 +417,46 @@ Widget& Widget::getChildByName(const std::string& name) {
 	}
 	return *w;
 }
+
+void Widget::setEnabled(bool enable) {
+//	TRACE(<< "Widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
+	this->isEnabled_v = enable;
+	if(!this->isEnabled()){
+		this->setUnhovered();
+	}
+}
+
+void Widget::setVisible(bool visible) {
+	this->isVisible_v = visible;
+	if (!this->isVisible_v) {
+		this->setUnhovered();
+	}
+}
+
+void Widget::setUnhovered() {
+	auto hoverSet = std::move(this->hovered);
+	ASSERT(this->hovered.size() == 0)
+	for(auto h : hoverSet){
+		this->onHoverChanged(h);
+	}
+}
+
+
+void Widget::setHovered(bool isHovered, unsigned pointerID) {
+//	TRACE(<< "Widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
+	if (isHovered) {
+		if (this->isHovered(pointerID)) {
+			return;
+		}
+
+		this->hovered.insert(pointerID);
+	} else {
+		if (!this->isHovered(pointerID)) {
+			return;
+		}
+
+		this->hovered.erase(pointerID);
+	}
+
+	this->onHoverChanged(pointerID);
+}

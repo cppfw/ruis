@@ -99,22 +99,23 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				w->setHovered(w->rect().overlaps(pos), pointerID);
-				w->onMouseButton(isDown, pos - w->rect().p, button, pointerID);
-				
-				unsigned& n = i->second.second;
-				if(isDown){
-					++n;
-				}else{
-					--n;
+				if(w->isInteractive()){
+					w->setHovered(w->rect().overlaps(pos), pointerID);
+					w->onMouseButton(isDown, pos - w->rect().p, button, pointerID);
+
+					unsigned& n = i->second.second;
+					if(isDown){
+						++n;
+					}else{
+						--n;
+					}
+					if(n == 0){
+						this->mouseCaptureMap.erase(i);
+					}
+					return true;//doesn't matter what to return
 				}
-				if(n == 0){
-					this->mouseCaptureMap.erase(i);
-				}
-				return true;//doesn't matter what to return
-			}else{
-				this->mouseCaptureMap.erase(i);
 			}
+			this->mouseCaptureMap.erase(i);
 		}
 	}
 	
@@ -159,7 +160,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		auto& c = *i;
 		
 		if(!c->isInteractive()){
-			ASSERT(!c->isHovered())
+			ASSERT_INFO(!c->isHovered(), "c->name() = " << c->name())
 			continue;
 		}
 		

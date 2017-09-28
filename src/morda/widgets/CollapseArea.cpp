@@ -71,8 +71,8 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	{
 		auto sw = this->findChildByNameAs<ToggleButton>("switch");
 		ASSERT(sw)
-		sw->checkedChanged = [this](ToggleButton& tb){
-			if(tb.isChecked()){
+		sw->pressedChanged = [this](Button& tb){
+			if(tb.isPressed()){
 				this->contentArea->getLayoutParams().dim.y = 0;
 			}else{
 				this->contentArea->getLayoutParams().dim.y = Widget::LayoutParams::min_c;
