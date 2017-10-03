@@ -15,7 +15,8 @@ void ImageButton::onPressedChanged() {
 
 ImageButton::ImageButton(const stob::Node* chain) :
 		Widget(chain),
-		Button(chain)
+		Button(chain),
+		Image(chain)
 {
 	{
 		auto look = getProperty(chain, "look");

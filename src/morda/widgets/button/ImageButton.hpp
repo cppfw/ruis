@@ -9,14 +9,14 @@
 namespace morda{
 class ImageButton :
 		virtual public Button,
-		private Image
+		public Image
 {
 	std::shared_ptr<const ResImage> unpressedImage;
 	std::shared_ptr<const ResImage> pressedImage;
 	
 protected:
 	void onPressedChanged() override;
-public:
+
 	ImageButton(const stob::Node* chain);
 };	
 }
