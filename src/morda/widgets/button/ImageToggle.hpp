@@ -6,7 +6,7 @@
 namespace morda{
 class ImageToggle :
 		public ToggleButton,
-		private ImageButton
+		public ImageButton
 {
 public:
 	ImageToggle(const stob::Node* chain = nullptr);
