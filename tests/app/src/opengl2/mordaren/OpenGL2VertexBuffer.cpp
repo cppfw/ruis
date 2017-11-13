@@ -40,3 +40,11 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<kolme::Vec2f> vertices)
 {
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
+
+OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<float> vertices) :
+		morda::VertexBuffer(vertices.size()),
+		numComponents(1),
+		type(GL_FLOAT)
+{
+	this->init(vertices.sizeInBytes(), &*vertices.begin());
+}

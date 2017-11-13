@@ -21,6 +21,8 @@ public:
 	
 	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec2f> vertices);
 	
+	OpenGL2VertexBuffer(const utki::Buf<float> vertices);
+	
 	OpenGL2VertexBuffer(const OpenGL2VertexBuffer&) = delete;
 	OpenGL2VertexBuffer& operator=(const OpenGL2VertexBuffer&) = delete;
 

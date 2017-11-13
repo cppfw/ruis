@@ -28,6 +28,10 @@ public:
 	{
 		return nullptr;
 	}
+	
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<float> vertices) override{
+		return nullptr;
+	}
 
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override{
 		return nullptr;

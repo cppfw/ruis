@@ -1,4 +1,5 @@
 #include "RenderFactory.hpp"
+#include "../Exc.hpp"
 
 using namespace morda;
 
@@ -14,4 +15,3 @@ std::shared_ptr<Texture2D> RenderFactory::createTexture2D(kolme::Vec2ui dim, con
 				)
 		);
 }
-
