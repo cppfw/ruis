@@ -57,6 +57,9 @@ env:
 
 before_install:
 - if [ "$BUILD_NAME" == "macosx" ]; then
+    rvm install ruby-2.3.3 &&
+    rvm use ruby-2.3.3 &&
+    
     brew tap igagis/tap &&
     brew update > /dev/null &&
     (brew list libpng || brew install libpng) &&
@@ -64,14 +67,13 @@ before_install:
     brew install prorab libutki libpapki libunikod libstob libsvgren z glew freetype libkolme libnitki;
   fi
 - if [ "$BUILD_NAME" == "ios" ]; then
+    rvm install ruby-2.3.3 &&
+    rvm use ruby-2.3.3 &&
+    
     brew tap igagis/tap &&
     brew update > /dev/null &&
     brew install prorab &&
-
     brew install --force openssl &&
-    rvm install ruby-2.2.1 &&
-    rvm install ruby-2.2.2 &&
-    rvm use ruby-2.2.2 &&
     
     rvm 2.2.1 do gem uninstall bundler -v '>1.12.5' --force &&
     rvm 2.2.1 do gem install bundler -v 1.12.5 --no-rdoc --no-ri --no-document --quiet &&
