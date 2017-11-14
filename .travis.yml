@@ -62,8 +62,8 @@ before_install:
     
     brew tap igagis/tap &&
     brew update > /dev/null &&
-    (brew list libpng || brew install libpng) &&
-    (brew list jpeg || brew install jpeg) &&
+    (rvm use ruby-2.3.3 && brew list libpng || rvm use ruby-2.3.3 && brew install libpng) &&
+    (rvm use ruby-2.3.3 && brew list jpeg || rvm use ruby-2.3.3 && brew install jpeg) &&
     brew install prorab libutki libpapki libunikod libstob libsvgren z glew freetype libkolme libnitki;
   fi
 - if [ "$BUILD_NAME" == "ios" ]; then
