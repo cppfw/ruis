@@ -1,3 +1,9 @@
+libmorda (0.5.58) unstable; urgency=medium
+
+  * float vertex buffer
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Nov 2017 15:24:45 +0200
+
 libmorda (0.5.57) unstable; urgency=medium
 
   * ImageToggle inheritance corrected
