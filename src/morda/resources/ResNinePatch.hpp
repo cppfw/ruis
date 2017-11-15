@@ -30,7 +30,7 @@ namespace morda{
 class ResNinePatch : public Resource{
 	friend class ResourceManager;
 	
-	const std::shared_ptr<ResImage> image;
+	const std::shared_ptr<const ResImage> image;
 	
 	Sidesr borders_v;
 	
@@ -38,7 +38,7 @@ public:
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
 	
-	ResNinePatch(const std::shared_ptr<ResImage> image, Sidesr borders) :
+	ResNinePatch(std::shared_ptr<const ResImage> image, Sidesr borders) :
 			image(std::move(image)),
 			borders_v(borders)
 	{}
