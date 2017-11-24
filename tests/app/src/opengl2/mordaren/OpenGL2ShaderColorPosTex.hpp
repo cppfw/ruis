@@ -17,7 +17,7 @@ public:
 	OpenGL2ShaderColorPosTex(const OpenGL2ShaderColorPosTex&) = delete;
 	OpenGL2ShaderColorPosTex& operator=(const OpenGL2ShaderColorPosTex&) = delete;
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) override;
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex)const override;
 };
 
 }

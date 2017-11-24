@@ -72,7 +72,7 @@ protected:
 		assertOpenGLNoError();
 	}
 	
-	void setUniform4f(GLint id, float x, float y, float z, float a) {
+	void setUniform4f(GLint id, float x, float y, float z, float a)const{
 		glUniform4f(id, x, y, z, a);
 		assertOpenGLNoError();
 	}

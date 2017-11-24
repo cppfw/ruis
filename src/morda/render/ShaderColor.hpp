@@ -17,9 +17,9 @@ public:
 	
 	virtual ~ShaderColor()noexcept{}
 	
-	virtual void render(const kolme::Matr4f &m, const VertexArray& va, kolme::Vec4f color) = 0;
+	virtual void render(const kolme::Matr4f &m, const VertexArray& va, kolme::Vec4f color)const = 0;
 
-	void render(const kolme::Matr4f &m, const VertexArray& va, std::uint32_t color){
+	void render(const kolme::Matr4f &m, const VertexArray& va, std::uint32_t color)const{
 		this->render(
 				m,
 				va,

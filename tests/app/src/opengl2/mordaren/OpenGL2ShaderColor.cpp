@@ -37,7 +37,7 @@ OpenGL2ShaderColor::OpenGL2ShaderColor() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColor::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) {
+void OpenGL2ShaderColor::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

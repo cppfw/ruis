@@ -52,7 +52,7 @@ OpenGL2ShaderTexture::OpenGL2ShaderTexture() :
 }
 
 
-void OpenGL2ShaderTexture::render(const kolme::Matr4f& m, const morda::VertexArray& va, const morda::Texture2D& tex){
+void OpenGL2ShaderTexture::render(const kolme::Matr4f& m, const morda::VertexArray& va, const morda::Texture2D& tex)const{
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	

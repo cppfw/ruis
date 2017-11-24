@@ -48,7 +48,7 @@ OpenGL2ShaderColorPosTex::OpenGL2ShaderColorPosTex() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPosTex::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) {
+void OpenGL2ShaderColorPosTex::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex)const{
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	

@@ -14,7 +14,7 @@ class OpenGL2ShaderTexture :
 public:
 	OpenGL2ShaderTexture();
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va, const morda::Texture2D& tex) override;
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va, const morda::Texture2D& tex)const override;
 };
 
 }

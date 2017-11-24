@@ -19,7 +19,7 @@ public:
 	
 	virtual ~ShaderColorTexture()noexcept{}
 	
-	virtual void render(const kolme::Matr4f &m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex) = 0;
+	virtual void render(const kolme::Matr4f &m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex)const = 0;
 };
 
 }

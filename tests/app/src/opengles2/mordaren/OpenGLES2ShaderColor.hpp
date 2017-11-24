@@ -18,7 +18,7 @@ public:
 	OpenGLES2ShaderColor& operator=(const OpenGLES2ShaderColor&) = delete;
 	
 
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) override;
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const override;
 };
 
 }

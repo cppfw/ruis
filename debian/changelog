@@ -1,3 +1,9 @@
+libmorda (0.5.60) unstable; urgency=medium
+
+  * shader render methods made const
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 24 Nov 2017 17:40:52 +0200
+
 libmorda (0.5.59) unstable; urgency=medium
 
   * cocoapods deploy

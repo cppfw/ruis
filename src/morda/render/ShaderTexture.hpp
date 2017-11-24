@@ -21,7 +21,7 @@ public:
 	
 	virtual ~ShaderTexture()noexcept{}
 	
-	virtual void render(const kolme::Matr4f &m, const morda::VertexArray& va, const Texture2D& tex) = 0;
+	virtual void render(const kolme::Matr4f &m, const morda::VertexArray& va, const Texture2D& tex)const = 0;
 private:
 
 };
