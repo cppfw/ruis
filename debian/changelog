@@ -1,3 +1,9 @@
+libmorda (0.5.61) unstable; urgency=medium
+
+  * bug fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 25 Nov 2017 18:00:58 +0200
+
 libmorda (0.5.60) unstable; urgency=medium
 
   * shader render methods made const
