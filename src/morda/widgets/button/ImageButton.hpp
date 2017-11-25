@@ -19,6 +19,8 @@ protected:
 
 	ImageButton(const stob::Node* chain);
 	
+	void updateImage();
+	
 public:
 	void setPressedImage(std::shared_ptr<const ResImage> image);
 	

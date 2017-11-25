@@ -4,12 +4,16 @@
 
 using namespace morda;
 
-void ImageButton::onPressedChanged() {
+void ImageButton::updateImage() {
 	if(this->isPressed()){
 		this->setImage(this->pressedImage_v);
 	}else{
 		this->setImage(this->unpressedImage_v);
 	}
+}
+
+void ImageButton::onPressedChanged() {
+	this->updateImage();
 	this->Button::onPressedChanged();
 }
 
@@ -27,16 +31,18 @@ ImageButton::ImageButton(const stob::Node* chain) :
 		if(auto p = getProperty(look, "unpressed")){
 			this->unpressedImage_v = morda::inst().resMan.load<ResImage>(p->value());
 		}
+		this->updateImage();
 	}
-	this->onPressedChanged();
 }
 
 void ImageButton::setPressedImage(std::shared_ptr<const ResImage> image) {
 	this->pressedImage_v = std::move(image);
+	this->updateImage();
 }
 
 void ImageButton::setUnpressedImage(std::shared_ptr<const ResImage> image) {
 	this->unpressedImage_v = std::move(image);
+	this->updateImage();
 }
 
 
