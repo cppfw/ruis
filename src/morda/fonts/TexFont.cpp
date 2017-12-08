@@ -141,7 +141,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
-	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({{0, 1, 2, 3}})));
+	auto indexBuffer = morda::inst().renderer().quadIndices;
 	
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
@@ -177,6 +177,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 					int dx = int(x) - int(outline);
 					int dy = int(y) - int(outline);
 					if(utki::pow2(dx) + utki::pow2(dy) <= int(utki::pow2(outline))){
+//TODO: remove commented code
 //					if(ting::Abs(dx) + ting::Abs(dy) <= int(outline)){
 						BlitIfGreater(im, 1, glyphim, 0, x, y);
 					}
@@ -269,8 +270,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 	//now the font image has its final width and heights (no more resizes will be done)
 
-	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
+		//normalize texture coordinates
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
 			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
 		}

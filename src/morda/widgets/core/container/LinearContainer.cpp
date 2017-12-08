@@ -120,11 +120,7 @@ void LinearContainer::layOut(){
 			
 			Vec2r newPos;
 
-			if(this->isVertical_v){
-				newPos[longIndex] = this->rect().d[longIndex] - pos - (*i)->rect().d[longIndex];
-			}else{
-				newPos[longIndex] = pos;
-			}
+			newPos[longIndex] = pos;
 			
 			pos += (*i)->rect().d[longIndex];
 			
