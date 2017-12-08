@@ -1,5 +1,7 @@
 #include "Morda.hpp"
 
+#include <GL/glew.h>
+
 #include <utki/config.hpp>
 
 #include "resources/ResSTOB.hpp"
@@ -155,9 +157,12 @@ void Morda::render(const Matr4r& matrix)const{
 		return;
 	}
 	
+	//TODO: remove
+	glEnable(GL_CULL_FACE);
+	
 	morda::Matr4r m(matrix);
-	m.translate(-1, -1);
-	m.scale(Vec2r(2.0f).compDivBy(this->viewportSize));
+	m.translate(-1, 1);
+	m.scale(Vec2r(2.0f, -2.0f).compDivBy(this->viewportSize));
 	
 	ASSERT(this->rootWidget)
 	

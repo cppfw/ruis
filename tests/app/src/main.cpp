@@ -221,7 +221,8 @@ public:
 		
 		morda::Matr4r matr(matrix);
 		matr.scale(this->rect().d / 2);
-		matr.translate(1, 1);
+		matr.scale(1, -1);
+		matr.translate(1, -1);
 		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
 		
 		morda::Matr4r m(matr);
@@ -229,11 +230,11 @@ public:
 		
 		m.rotate(this->rot);
 
-		glEnable(GL_CULL_FACE);
+//		glEnable(GL_CULL_FACE);
 		
 		morda::inst().renderer().shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
 		
-		glDisable(GL_CULL_FACE);
+//		glDisable(GL_CULL_FACE);
 	}
 };
 

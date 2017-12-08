@@ -260,8 +260,8 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 	
 	Matr4r matrix;
 	matrix.identity();
-	matrix.translate(-1, -1);
-	matrix.scale(Vec2r(2.0f).compDivBy(this->rect().d));
+	matrix.translate(-1, 1);
+	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
 	
 	this->render(matrix);
 	
@@ -364,10 +364,12 @@ void Widget::makeTopmost(){
 
 
 kolme::Recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
-	return kolme::Recti(
+	kolme::Recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
+	ret.p.y -= ret.d.y;
+	return ret;
 }
 
 
