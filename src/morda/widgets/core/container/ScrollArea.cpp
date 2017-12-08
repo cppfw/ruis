@@ -17,27 +17,30 @@ ScrollArea::ScrollArea(const stob::Node* chain) :
 
 
 bool ScrollArea::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) {
-	Vec2r d = this->curScrollPos;
-	d.y -= this->effectiveDim.y;
-	d.x = -d.x;
+	Vec2r d = -this->curScrollPos;
+//TODO: remove commented code
+//	d.y -= this->effectiveDim.y;
+//	d.x = -d.x;
 	return this->Container::onMouseButton(isDown, pos - d, button, pointerID);
 }
 
 
 
 bool ScrollArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
-	Vec2r d = this->curScrollPos;
-	d.y -= this->effectiveDim.y;
-	d.x = -d.x;
+	Vec2r d = -this->curScrollPos;
+//TODO: remove commented code
+//	d.y -= this->effectiveDim.y;
+//	d.x = -d.x;
 	return this->Container::onMouseMove(pos - d, pointerID);
 }
 
 
 
 void ScrollArea::render(const morda::Matr4r& matrix) const {
-	Vec2r d = this->curScrollPos;
-	d.y -= this->effectiveDim.y;
-	d.x = -d.x;
+	Vec2r d = -this->curScrollPos;
+//TODO: remove commented code
+//	d.y -= this->effectiveDim.y;
+//	d.x = -d.x;
 	
 	Matr4r matr(matrix);
 	matr.translate(d);

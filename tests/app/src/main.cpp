@@ -743,7 +743,7 @@ public:
 			
 			mouseProxy->mouseMove = [vs, vl, state](morda::Widget& w, const morda::Vec2r& pos, unsigned id){
 				if(state->isLeftButtonPressed){
-					auto dp = pos - state->oldPos;
+					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
 					if(auto l = vl.lock()){
 						l->scrollBy(dp.y);
