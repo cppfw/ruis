@@ -41,8 +41,8 @@ public:
 
 
 void LinearContainer::layOut(){
-	unsigned longIndex = this->GetLongIndex();
-	unsigned transIndex = this->GetTransIndex();
+	unsigned longIndex = this->getLongIndex();
+	unsigned transIndex = this->getTransIndex();
 	
 	std::vector<Info> infoArray(this->children().size());
 	
@@ -142,8 +142,8 @@ void LinearContainer::layOut(){
 
 
 morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
-	unsigned longIndex = this->GetLongIndex();
-	unsigned transIndex = this->GetTransIndex();
+	unsigned longIndex = this->getLongIndex();
+	unsigned transIndex = this->getTransIndex();
 	
 	std::vector<Info> infoArray(this->children().size());
 	

@@ -112,12 +112,7 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 	
-	real d;
-	if(this->isVertical()){
-		d = this->rect().d.y;
-	}else{
-		d = this->rect().d.x;
-	}
+	real d = this->rect().d[this->getLongIndex()];
 	
 	ASSERT(this->numTailItems != 0)
 	d = (d + this->firstTailItemOffset) / this->numTailItems;
@@ -147,12 +142,7 @@ void List::setScrollPosAsFactor(real factor){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
 		if(this->children().size() != 0){
-			real d;
-			if(this->isVertical()){
-				d = this->rect().d.y;
-			}else{
-				d = this->rect().d.x;
-			}
+			real d = this->rect().d[this->getLongIndex()];
 			d = (d + this->firstTailItemOffset) / this->numTailItems;
 			
 			this->posOffset = ::round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
@@ -173,68 +163,45 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 	Vec2r dim = this->dimForWidget(*w, lp);
 
 	w->resize(dim);
+	
+	unsigned longIndex = this->getLongIndex();
+	unsigned transIndex = this->getTransIndex();
 
-	if(this->isVertical()){
-		pos -= w->rect().d.y;
-		w->moveTo(Vec2r(0, pos));
+	{
+		Vec2r to;
+		to[longIndex] = pos;
+		to[transIndex] = 0;
+		w->moveTo(to);
+	}
+	pos += w->rect().d[longIndex];
 
-		if(pos < this->rect().d.y){
-			if(!added){
-				this->add(w, insertBefore);
-			}
-			if(this->addedIndex > index){
-				this->addedIndex = index;
-			}
-		}else{
-			++this->posIndex;
-			this->posOffset -= w->rect().d.y;
-			if(added){
-				auto widget = this->remove(*w);
-				if(this->provider){
-					this->provider->recycle(index, widget);
-				}
-				++this->addedIndex;
-			}else{
-				if(this->provider){
-					this->provider->recycle(index, w);
-				}
-			}
+	if(pos > 0){
+		if(!added){
+			this->add(w, insertBefore);
 		}
-
-		if(w->rect().p.y <= 0){
-			return true;
+		if(this->addedIndex > index){
+			this->addedIndex = index;
 		}
 	}else{
-		w->moveTo(Vec2r(pos, 0));
-		pos += w->rect().d.x;
-
-		if(pos > 0){
-			if(!added){
-				this->add(w, insertBefore);
+		++this->posIndex;
+		this->posOffset -= w->rect().d[longIndex];
+		if(added){
+			auto widget = this->remove(*w);
+			if(this->provider){
+				this->provider->recycle(index, widget);
 			}
-			if(this->addedIndex > index){
-				this->addedIndex = index;
-			}
+			++this->addedIndex;
 		}else{
-			++this->posIndex;
-			this->posOffset -= w->rect().d.x;
-			if(added){
-				auto widget = this->remove(*w);
-				if(this->provider){
-					this->provider->recycle(index, widget);
-				}
-				++this->addedIndex;
-			}else{
-				if(this->provider){
-					this->provider->recycle(index, w);
-				}
+			if(this->provider){
+				this->provider->recycle(index, w);
 			}
-		}
-
-		if(w->rect().right() >= this->rect().d.x){
-			return true;
 		}
 	}
+
+	if(w->rect().p[longIndex] + w->rect().d[longIndex] >= this->rect().d[longIndex]){
+		return true;
+	}
+
 	return false;
 }
 
@@ -262,13 +229,7 @@ void List::updateChildrenList(){
 		this->posOffset = this->firstTailItemOffset;
 	}
 	
-	real pos;
-	
-	if(this->isVertical()){
-		pos = this->rect().d.y + this->posOffset;
-	}else{
-		pos = -this->posOffset;
-	}
+	real pos = -this->posOffset;
 	
 //	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
 	
@@ -337,13 +298,9 @@ void List::updateTailItemsInfo(){
 		return;
 	}
 	
-	real dim;
+	unsigned longIndex = this->getLongIndex();
 	
-	if(this->isVertical()){
-		dim = this->rect().d.y;
-	}else{
-		dim = this->rect().d.x;
-	}
+	real dim = this->rect().d[longIndex];
 	
 	ASSERT(this->provider)
 	ASSERT(this->provider->count() > 0)
@@ -358,11 +315,7 @@ void List::updateTailItemsInfo(){
 		
 		Vec2r d = this->dimForWidget(*w, lp);
 		
-		if(this->isVertical()){
-			dim -= d.y;
-		}else{
-			dim -= d.x;
-		}
+		dim -= d[longIndex];
 	}
 	
 	this->firstTailItemIndex = this->provider->count() - this->numTailItems;
@@ -379,16 +332,8 @@ void List::scrollBy(real delta) {
 		return;
 	}
 	
-	unsigned longIndex;
+	unsigned longIndex = this->getLongIndex();
 //	unsigned transIndex;
-	
-	if(this->isVertical()){
-		longIndex = 1;
-//		transIndex = 0;
-	}else{
-		longIndex = 0;
-//		transIndex = 1;
-	}
 	
 //	TRACE(<< "delta = " << delta << std::endl)
 	
@@ -456,15 +401,8 @@ void List::scrollBy(real delta) {
 }
 
 morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
-	unsigned longIndex, transIndex;
-	
-	if(this->isVertical()){
-		longIndex = 1;
-		transIndex = 0;
-	}else{
-		longIndex = 0;
-		transIndex = 1;
-	}
+	unsigned longIndex = this->getLongIndex();
+	unsigned transIndex = this->getTransIndex();
 	
 	Vec2r ret(quotum);
 	

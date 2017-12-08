@@ -17,11 +17,11 @@ class LinearContainer : public Container{
 
 	bool isVertical_v;
 	
-	unsigned GetLongIndex()const noexcept{
+	unsigned getLongIndex()const noexcept{
 		return this->isVertical_v ? 1 : 0;
 	}
 
-	unsigned GetTransIndex()const noexcept{
+	unsigned getTransIndex()const noexcept{
 		return this->isVertical_v ? 0 : 1;
 	}
 	
