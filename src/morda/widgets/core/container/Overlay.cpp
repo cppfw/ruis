@@ -74,8 +74,6 @@ void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	
 	w->resize(dim);
 	
-	anchor.y -= dim.y;
-	
 	for(unsigned i = 0; i != 2; ++i){
 		utki::clampRange(anchor[i], 0.0f, this->overlay().rect().d[i] - w->rect().d[i]);
 	}
