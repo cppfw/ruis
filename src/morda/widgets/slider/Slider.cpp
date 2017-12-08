@@ -86,7 +86,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 			ASSERT(!this->isGrabbed)
 			this->isGrabbed = true;
 
-			unsigned longIndex = this->isVertical ? 1 : 0;
+			unsigned longIndex = this->getLongIndex();
 			this->clickPoint = pos[longIndex];
 
 			return true;
@@ -125,11 +125,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 				
 		if(maxPos > 0){
 			//update factor
-			if(this->isVertical){
-				this->setFraction((maxPos - newPos) / maxPos);
-			}else{
-				this->setFraction(newPos / maxPos);
-			}
+			this->setFraction(newPos / maxPos);
 		}
 
 		return true;
@@ -167,11 +163,7 @@ void HandleSlider::layOut(){
 		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		morda::Vec2r newPos(0);
 		if(effectiveLength > 0){
-			if(this->isVertical){
-				newPos[longIndex] = this->rect().d.y - this->handle.rect().d.y - ::round(effectiveLength * this->fraction());
-			}else{
-				newPos[longIndex] = ::round(effectiveLength * this->fraction());
-			}
+			newPos[longIndex] = ::round(effectiveLength * this->fraction());
 			ASSERT_INFO(
 					newPos[longIndex] <= effectiveLength,
 					"newPos[longIndex] = " << newPos[longIndex]
