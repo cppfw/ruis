@@ -16,7 +16,14 @@ unsigned getMaxTextureSize(){
 }
 
 OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
-		morda::Renderer(std::move(factory), getMaxTextureSize())
+		morda::Renderer(
+				std::move(factory),
+				[](){
+					Params p;
+					p.maxTextureSize = getMaxTextureSize();
+					return p;
+				}()
+			)
 {
 	//On some platforms the default framebuffer is not 0, so because of this
 	//check if default framebuffer value is saved or not everytime some

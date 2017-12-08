@@ -19,7 +19,12 @@ public:
 	const std::shared_ptr<VertexArray> posTexQuad01VAO;
 	
 protected:
-	Renderer(std::unique_ptr<RenderFactory> factory, unsigned maxTextureSize);
+	struct Params{
+		unsigned maxTextureSize = 2048;
+		bool isRighthanded = true;
+	};
+	
+	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
 	
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
@@ -28,6 +33,7 @@ private:
 	std::shared_ptr<FrameBuffer> curFB;
 public:
 	const unsigned maxTextureSize;
+	const bool isRighthanded;
 	
 	//can be nullptr = set screen framebuffer
 	void setFramebuffer(std::shared_ptr<FrameBuffer> fb);
