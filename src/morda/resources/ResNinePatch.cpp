@@ -23,7 +23,7 @@ class ResSubImage :
 	std::shared_ptr<VertexArray> vao;
 	
 public:
-	//rect is a rectangle on the texture, Y axis up.
+	//rect is a rectangle on the texture, Y axis down.
 	ResSubImage(decltype(tex) tex, const Rectr& rect) :
 			ResImage::QuadTexture(rect.d),
 			tex(std::move(tex))
@@ -31,9 +31,9 @@ public:
 		std::array<Vec2r, 4> texCoords;
 		
 		texCoords[0] = rect.p.compDiv(this->tex->dim());
-		texCoords[1] = rect.rightBottom().compDiv(this->tex->dim());
+		texCoords[1] = rect.leftTop().compDiv(this->tex->dim());
 		texCoords[2] = rect.rightTop().compDiv(this->tex->dim());
-		texCoords[3] = rect.leftTop().compDiv(this->tex->dim());
+		texCoords[3] = rect.rightBottom().compDiv(this->tex->dim());
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
 		auto& r = morda::inst().renderer();
 		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);

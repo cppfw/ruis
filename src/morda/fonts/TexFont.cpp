@@ -141,9 +141,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
-	//TODO: choose right index buffer
-//	auto indexBuffer = morda::inst().renderer().quadIndices;
-	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({{0, 1, 2, 3}})));
+	auto indexBuffer = morda::inst().renderer().quadIndices;
 	
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
@@ -178,9 +176,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 				for(unsigned x = 0; x < 2 * outline + 1; ++x){
 					int dx = int(x) - int(outline);
 					int dy = int(y) - int(outline);
-					if(utki::pow2(dx) + utki::pow2(dy) <= int(utki::pow2(outline))){
-//TODO: remove commented code
-//					if(ting::Abs(dx) + ting::Abs(dy) <= int(outline)){
+					using utki::pow2;
+					if(pow2(dx) + pow2(dy) <= int(pow2(outline))){
 						BlitIfGreater(im, 1, glyphim, 0, x, y);
 					}
 				}
@@ -400,7 +397,6 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	TRACE(<< "TexFont::stringBoundingBoxInternal(): ret = " << ret << std::endl)
 	return ret;
 }
-
 
 
 
