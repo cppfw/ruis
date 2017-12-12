@@ -123,7 +123,7 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		real l = this->rect().d.x - ce;
 		if(l > 0){
 			Matr4r m(matrix);
-			m.translate(ce, 0);
+			m.translate(ce, this->rect().d.y - this->fillerTexture->dim().y);
 			m.scale(l, this->fillerTexture->dim().y);
 			this->fillerTexture->render(m);
 		}
