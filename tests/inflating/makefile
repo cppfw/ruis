@@ -79,9 +79,9 @@ this_test := $(word $(words $(this_dirs)),$(this_dirs))
 
 define this_rules
 test:: $(prorab_this_name)
-	@prorab-running-test.sh $(this_test)
+	@myci-running-test.sh $(this_test)
 	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
-	@prorab-passed.sh
+	@myci-passed.sh
 endef
 $(eval $(this_rules))
 
