@@ -246,13 +246,11 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		curX += im.dim().x + DXGap;
 	}//~for
 	
-	//save bounding box
-	this->boundingBox_v.p.x = left;
-	this->boundingBox_v.p.y = top;
-	this->boundingBox_v.d.x = right - left;
-	this->boundingBox_v.d.y = -(top - bottom);
+	using std::ceil;
+	
+	this->height_v = ceil((static_cast<FT_Face&>(face)->size->metrics.height) / 64.0f);;
 
-	TRACE(<< "TexFont::load(): boundingBox = " << this->boundingBox_v << std::endl)
+	TRACE(<< "TexFont::load(): height_v = " << this->height_v << std::endl)
 	
 //	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
 
