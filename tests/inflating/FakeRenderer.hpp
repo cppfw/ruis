@@ -48,7 +48,9 @@ public:
 
 class FakeRenderer : public morda::Renderer{
 public:
-	FakeRenderer() : morda::Renderer(utki::makeUnique<FakeFactory>(), Params()){}
+	FakeRenderer() :
+			morda::Renderer(utki::makeUnique<FakeFactory>(), Params())
+	{}
 	
 	void clearFramebuffer() override{}
 	kolme::Recti getScissorRect() const override{

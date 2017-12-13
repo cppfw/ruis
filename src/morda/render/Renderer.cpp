@@ -13,7 +13,7 @@ Renderer::Renderer(std::unique_ptr<RenderFactory> factory, const Params& params)
 		posQuad01VAO(this->factory->createVertexArray({this->quad01VBO}, this->quadIndices, VertexArray::Mode_e::TRIANGLE_FAN)),
 		posTexQuad01VAO(this->factory->createVertexArray({this->quad01VBO, this->quad01VBO}, this->quadIndices, VertexArray::Mode_e::TRIANGLE_FAN)),
 		maxTextureSize(params.maxTextureSize),
-		isRighthanded(params.isRighthanded)
+		initialMatrix(params.initialMatrix)
 {
 }
 

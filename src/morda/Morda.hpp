@@ -85,9 +85,10 @@ public:
 	
 	/**
 	 * @brief Render GUI.
+	 * Y axis directed down. Left screen edge is at -1, right is at 1, top at -1, bottom at 1.
 	 * @param matrix - use this transformation matrix.
 	 */
-	void render(const Matr4r& matrix = Matr4r().identity())const;
+	void render(const Matr4r& matrix = Matr4r().identity().scale(1, -1))const;
 	
 	/**
 	 * @brief Initialize standard widgets library.

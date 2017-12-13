@@ -21,7 +21,7 @@ public:
 protected:
 	struct Params{
 		unsigned maxTextureSize = 2048;
-		bool isRighthanded = true;
+		kolme::Matr4f initialMatrix = kolme::Matr4f().identity().scale(1, -1);
 	};
 	
 	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
@@ -33,7 +33,7 @@ private:
 	std::shared_ptr<FrameBuffer> curFB;
 public:
 	const unsigned maxTextureSize;
-	const bool isRighthanded;
+	const kolme::Matr4f initialMatrix;
 	
 	//can be nullptr = set screen framebuffer
 	void setFramebuffer(std::shared_ptr<FrameBuffer> fb);

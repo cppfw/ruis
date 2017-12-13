@@ -162,14 +162,8 @@ void Morda::render(const Matr4r& matrix)const{
 	
 	morda::Matr4r m(matrix);
 	
-	if(this->renderer_v->isRighthanded){
-		//make Y axis look down
-		m.translate(-1, 1);
-		m.scale(Vec2r(2.0f, -2.0f).compDivBy(this->viewportSize));
-	}else{
-		m.translate(1, 1);
-		m.scale(Vec2r(2.0f, 2.0f).compDivBy(this->viewportSize));
-	}
+	m.translate(-1, -1);
+	m.scale(Vec2r(2.0f, 2.0f).compDivBy(this->viewportSize));
 	
 	ASSERT(this->rootWidget)
 	
