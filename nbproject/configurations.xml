@@ -3378,10 +3378,10 @@
             <pElem>src/morda</pElem>
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda/resources</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets/core</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -4101,8 +4101,8 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/core</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
@@ -4118,8 +4118,8 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/widgets/core</pElem>
+            <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/widgets/core/container</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>

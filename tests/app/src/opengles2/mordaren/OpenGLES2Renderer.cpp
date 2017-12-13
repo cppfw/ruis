@@ -22,7 +22,14 @@ unsigned getMaxTextureSize(){
 }
 
 OpenGLES2Renderer::OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory) :
-		morda::Renderer(std::move(factory), getMaxTextureSize())
+		morda::Renderer(
+				std::move(factory),
+				[](){
+					Params p;
+					p.maxTextureSize = getMaxTextureSize();
+					return p;
+				}()
+			)
 {}
 
 void OpenGLES2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
