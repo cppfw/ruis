@@ -1,3 +1,9 @@
+libmorda (0.5.62) unstable; urgency=medium
+
+  * y axis directed downwards
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 13 Dec 2017 17:08:52 +0200
+
 libmorda (0.5.61) unstable; urgency=medium
 
   * bug fix
