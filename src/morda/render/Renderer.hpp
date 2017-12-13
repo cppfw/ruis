@@ -33,6 +33,11 @@ private:
 	std::shared_ptr<FrameBuffer> curFB;
 public:
 	const unsigned maxTextureSize;
+	
+	/**
+	 * @brief Initial matrix to use for rendering.
+	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
+	 */
 	const kolme::Matr4f initialMatrix;
 	
 	//can be nullptr = set screen framebuffer
