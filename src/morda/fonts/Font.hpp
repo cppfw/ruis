@@ -22,6 +22,10 @@ protected:
 	 */
 	real height_v;
 	
+	real descender_v;
+	
+	real ascender_v;
+	
 	Font(){}
 	
 	Font(const Font&) = delete;
@@ -183,8 +187,16 @@ public:
 	 * Height of the font is the distance normally used between lines of text.
 	 * @return Height of the font.
 	 */
-	const morda::real height()const noexcept{
+	real height()const noexcept{
 		return this->height_v;
+	}
+	
+	real descender()const noexcept{
+		return this->descender_v;
+	}
+	
+	real ascender()const noexcept{
+		return this->ascender_v;
 	}
 };
 

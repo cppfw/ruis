@@ -245,7 +245,9 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	
 	using std::ceil;
 	
-	this->height_v = ceil((static_cast<FT_Face&>(face)->size->metrics.height) / 64.0f);;
+	this->height_v = ceil((static_cast<FT_Face&>(face)->size->metrics.height) / 64.0f);
+	this->descender_v = -ceil((static_cast<FT_Face&>(face)->size->metrics.descender) / 64.0f);
+	this->ascender_v = ceil((static_cast<FT_Face&>(face)->size->metrics.ascender) / 64.0f);
 
 	TRACE(<< "TexFont::load(): height_v = " << this->height_v << std::endl)
 	

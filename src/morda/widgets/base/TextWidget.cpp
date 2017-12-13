@@ -33,7 +33,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 
 
 Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret(this->bb.d);
+	Vec2r ret(this->bb.d.x, this->font().height());
 	
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){
