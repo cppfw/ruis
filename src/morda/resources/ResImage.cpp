@@ -154,21 +154,6 @@ public:
 		ASSERT(imHeight != 0)
 		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
 		
-		//flip pixels vertically
-		//TODO: remove commented code
-//		{
-//			std::vector<std::uint32_t> line(imWidth);
-//
-//			size_t stride = imWidth * sizeof(pixels[0]);
-//			
-//			//TODO: use iterators
-//			for(unsigned i = 0; i != imHeight / 2; ++i){
-//				memcpy(&*line.begin(), &*pixels.begin() + imWidth * i, stride);//move line to temp
-//				memcpy(&*pixels.begin() + imWidth * i, &*pixels.begin() + imWidth * (imHeight - i - 1), stride);//move bottom line to top
-//				memcpy(&*pixels.begin() + imWidth * (imHeight - i - 1), &*line.begin(), stride);
-//			}
-//		}
-		
 		auto img = std::make_shared<SvgTexture>(
 				this->sharedFromThis(this),
 				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(imWidth, imHeight), utki::wrapBuf(pixels))

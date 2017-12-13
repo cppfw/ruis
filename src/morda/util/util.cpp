@@ -197,9 +197,6 @@ std::shared_ptr<Texture2D> morda::loadTexture(const papki::File& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 	
-	//TODO: remove commented code
-//	image.flipVertical();
-	
 	return morda::inst().renderer().factory->createTexture2D(
 			numChannelsToTexType(image.numChannels()),
 			image.dim(),

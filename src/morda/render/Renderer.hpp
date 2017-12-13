@@ -21,7 +21,7 @@ public:
 protected:
 	struct Params{
 		unsigned maxTextureSize = 2048;
-		kolme::Matr4f initialMatrix = kolme::Matr4f().identity().scale(1, -1);
+		kolme::Matr4f initialMatrix = kolme::Matr4f().identity();
 	};
 	
 	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
