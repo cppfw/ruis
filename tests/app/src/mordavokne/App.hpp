@@ -411,7 +411,7 @@ private:
 
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
-		return morda::Vec2r(pos.x, this->curWinRect.d.y - pos.y - 1.0f);
+		return morda::Vec2r(pos.x, pos.y);
 	}
 
 	//pos is in usual window coordinates, y goes down.

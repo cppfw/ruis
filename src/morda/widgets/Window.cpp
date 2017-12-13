@@ -284,9 +284,9 @@ void morda::Window::setupWidgets(){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->moveBy(morda::Vec2r(d.x, 0));
-				this->resizeBy(morda::Vec2r(-d.x, d.y));
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				this->moveBy(d);
+				this->resizeBy(-d);
 			}
 			return false;
 		};
@@ -300,9 +300,9 @@ void morda::Window::setupWidgets(){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->moveBy(d);
-				this->resizeBy(morda::Vec2r(-d.x, -d.y));
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				this->moveBy(morda::Vec2r(d.x, 0));
+				this->resizeBy(morda::Vec2r(-d.x, d.y));
 			}
 			return false;
 		};
@@ -316,8 +316,9 @@ void morda::Window::setupWidgets(){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->resizeBy(d);
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				this->moveBy(morda::Vec2r(0, d.y));
+				this->resizeBy(morda::Vec2r(d.x, -d.y));
 			}
 			return false;
 		};
@@ -331,9 +332,8 @@ void morda::Window::setupWidgets(){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->moveBy(morda::Vec2r(0, d.y));
-				this->resizeBy(morda::Vec2r(d.x, -d.y));
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				this->resizeBy(d);
 			}
 			return false;
 		};
@@ -377,8 +377,9 @@ void morda::Window::setupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
-				this->resizeBy(morda::Vec2r(0, d.y));
+				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				this->moveBy(morda::Vec2r(0, d.y));
+				this->resizeBy(morda::Vec2r(0, -d.y));
 			}
 			return false;
 		};
@@ -392,9 +393,8 @@ void morda::Window::setupWidgets(){
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
-				this->moveBy(morda::Vec2r(0, d.y));
-				this->resizeBy(morda::Vec2r(0, -d.y));
+				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				this->resizeBy(morda::Vec2r(0, d.y));
 			}
 			return false;
 		};

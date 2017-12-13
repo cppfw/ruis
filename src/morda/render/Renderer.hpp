@@ -19,7 +19,12 @@ public:
 	const std::shared_ptr<VertexArray> posTexQuad01VAO;
 	
 protected:
-	Renderer(std::unique_ptr<RenderFactory> factory, unsigned maxTextureSize);
+	struct Params{
+		unsigned maxTextureSize = 2048;
+		kolme::Matr4f initialMatrix = kolme::Matr4f().identity();
+	};
+	
+	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
 	
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
@@ -28,6 +33,12 @@ private:
 	std::shared_ptr<FrameBuffer> curFB;
 public:
 	const unsigned maxTextureSize;
+	
+	/**
+	 * @brief Initial matrix to use for rendering.
+	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
+	 */
+	const kolme::Matr4f initialMatrix;
 	
 	//can be nullptr = set screen framebuffer
 	void setFramebuffer(std::shared_ptr<FrameBuffer> fb);

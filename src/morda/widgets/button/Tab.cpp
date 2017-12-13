@@ -9,7 +9,7 @@ bool Tab::maskOverlaps(Vec2r pos) {
 
 	if(pos.x < borders.left()){
 		if(pos.y != 0 && this->rect().d.y != 0){
-			if(pos.x / pos.y < borders.left() / this->rect().d.y){
+			if(pos.x / (this->rect().d.y - pos.y) < borders.left() / this->rect().d.y){
 				return false;
 			}
 		}
@@ -32,7 +32,7 @@ bool Tab::maskOverlaps(Vec2r pos) {
 		auto dx = pos.x - rb;
 		if(dx > 0){
 			if(pos.y != 0 && this->rect().d.y != 0){
-				if(dx / (this->rect().d.y - pos.y) > borders.right() / this->rect().d.y){
+				if(dx / pos.y > borders.right() / this->rect().d.y){
 					return false;
 				}
 			}

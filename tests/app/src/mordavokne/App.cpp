@@ -29,7 +29,7 @@ void App::render(){
 	
 	this->renderer->clearFramebuffer();
 
-	this->gui.render();
+	this->gui.render(this->renderer->initialMatrix);
 	
 	this->swapFrameBuffers();
 }

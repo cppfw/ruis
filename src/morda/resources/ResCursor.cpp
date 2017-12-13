@@ -24,7 +24,6 @@ std::shared_ptr<ResCursor> ResCursor::load(const stob::Node& chain, const papki:
 	Vec2r hotspot;
 	if(auto n = getProperty(&chain, "hotspot")){
 		hotspot = makeVec2rFromSTOB(n);
-		hotspot.y = image->dim().y - hotspot.y;
 	}else{
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}

@@ -23,7 +23,7 @@ class ResSubImage :
 	std::shared_ptr<VertexArray> vao;
 	
 public:
-	//rect is a rectangle on the texture, Y axis up.
+	//rect is a rectangle on the texture, Y axis down.
 	ResSubImage(decltype(tex) tex, const Rectr& rect) :
 			ResImage::QuadTexture(rect.d),
 			tex(std::move(tex))
@@ -31,9 +31,9 @@ public:
 		std::array<Vec2r, 4> texCoords;
 		
 		texCoords[0] = rect.p.compDiv(this->tex->dim());
-		texCoords[1] = rect.rightBottom().compDiv(this->tex->dim());
+		texCoords[1] = rect.leftTop().compDiv(this->tex->dim());
 		texCoords[2] = rect.rightTop().compDiv(this->tex->dim());
-		texCoords[3] = rect.leftTop().compDiv(this->tex->dim());
+		texCoords[3] = rect.rightBottom().compDiv(this->tex->dim());
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
 		auto& r = morda::inst().renderer();
 		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
@@ -130,19 +130,19 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 				{{
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							0,
-							std::round(quadTex->dim().y - scaledBorders.top()),
+							0,
 							scaledBorders.left(),
 							scaledBorders.top())
 						), //left top
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							scaledBorders.left(),
-							std::round(quadTex->dim().y - scaledBorders.top()),
+							0,
 							std::round(quadTex->dim().x - scaledBorders.left() - scaledBorders.right()),
 							scaledBorders.top())
 						), //top
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							std::round(quadTex->dim().x - scaledBorders.right()),
-							std::round(quadTex->dim().y - scaledBorders.top()),
+							0,
 							scaledBorders.right(),
 							scaledBorders.top())
 						) //right top
@@ -150,19 +150,19 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 				{{
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							0,
-							scaledBorders.bottom(),
+							scaledBorders.top(),
 							scaledBorders.left(),
 							std::round(quadTex->dim().y - scaledBorders.top() - scaledBorders.bottom()))
 						), //left
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							scaledBorders.left(),
-							scaledBorders.bottom(),
+							scaledBorders.top(),
 							std::round(quadTex->dim().x - scaledBorders.left() - scaledBorders.right()),
 							std::round(quadTex->dim().y - scaledBorders.top() - scaledBorders.bottom()))
 						), //middle
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							std::round(quadTex->dim().x - scaledBorders.right()),
-							scaledBorders.bottom(),
+							scaledBorders.top(),
 							scaledBorders.right(),
 							std::round(quadTex->dim().y - scaledBorders.top() - scaledBorders.bottom()))
 						) //right
@@ -170,19 +170,19 @@ std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) con
 				{{
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							0,
-							0,
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
 							scaledBorders.left(),
 							scaledBorders.bottom())
 						), //left bottom
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							scaledBorders.left(),
-							0,
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
 							std::round(quadTex->dim().x - scaledBorders.left() - scaledBorders.right()),
 							scaledBorders.bottom())
 						), //bottom
 					std::make_shared<ResSubImage>(quadTex, Rectr(
 							std::round(quadTex->dim().x - scaledBorders.right()),
-							0,
+							std::round(quadTex->dim().y - scaledBorders.bottom()),
 							scaledBorders.right(),
 							scaledBorders.bottom())
 						) //right bottom

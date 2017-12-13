@@ -50,7 +50,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	
 	{
 		morda::Matr4r matr(matrix);
-		matr.translate(-this->textBoundingBox().p.x + this->xOffset, -this->font().boundingBox().p.y);
+		matr.translate(-this->textBoundingBox().p.x + this->xOffset, (this->font().height() + this->font().ascender() - this->font().descender()) / 2);
 		
 		ASSERT(this->firstVisibleCharIndex <= this->text().size())
 		this->font().renderString(
@@ -104,7 +104,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	}
 	
 	if(quotum.y < 0){
-		ret.y = this->font().boundingBox().d.y - this->font().boundingBox().p.y;
+		ret.y = this->font().height();
 	}else{
 		ret.y = quotum.y;
 	}

@@ -27,6 +27,14 @@ class List :
 
 	const bool isVertical_v;
 	
+	unsigned getLongIndex()const noexcept{
+		return this->isVertical_v ? 1 : 0;
+	}
+
+	unsigned getTransIndex()const noexcept{
+		return this->isVertical_v ? 0 : 1;
+	}
+	
 protected:
 	List(bool isVertical, const stob::Node* chain);
 public:

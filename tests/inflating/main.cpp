@@ -6,7 +6,10 @@
 class TestMorda : public morda::Morda{
 	
 public:
-	TestMorda() : morda::Morda(std::make_shared<FakeRenderer>(), 0, 0){}
+	TestMorda() :
+			morda::Morda(std::make_shared<FakeRenderer>(), 0, 0)
+	{}
+	
 	void postToUiThread_ts(std::function<void()>&& f) override{
 		
 	}

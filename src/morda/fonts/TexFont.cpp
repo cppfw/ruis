@@ -53,7 +53,7 @@ const unsigned DYGap = 1;
 
 constexpr const char32_t unknownChar_c = 0xfffd;
 
-}//~namespace
+}
 
 
 
@@ -136,12 +136,12 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	//init bounding box to invalid values
 	float left = 1000000;
 	float right = -1000000;
-	float top = -1000000;
-	float bottom = 1000000;
+	float top = 1000000;
+	float bottom = -1000000;
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
-	auto indexBuffer = morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(std::array<std::uint16_t, 4>({{0, 1, 2, 3}})));
+	auto indexBuffer = morda::inst().renderer().quadIndices;
 	
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
@@ -176,8 +176,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 				for(unsigned x = 0; x < 2 * outline + 1; ++x){
 					int dx = int(x) - int(outline);
 					int dy = int(y) - int(outline);
-					if(utki::pow2(dx) + utki::pow2(dy) <= int(utki::pow2(outline))){
-//					if(ting::Abs(dx) + ting::Abs(dy) <= int(outline)){
+					using utki::pow2;
+					if(pow2(dx) + pow2(dy) <= int(pow2(outline))){
 						BlitIfGreater(im, 1, glyphim, 0, x, y);
 					}
 				}
@@ -219,10 +219,10 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			g.advance = real(m->horiAdvance) / (64.0f);
 			
 			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
-			g.verts[1] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
-			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
-			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
+			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
+			g.verts[1] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
+			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
+			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
 
 			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.dim().y));
 			g.texCoords[1] = morda::Vec2r(real(curX + im.dim().x), real(curY + im.dim().y));
@@ -232,10 +232,10 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			//update bounding box if needed
 			utki::clampTop(left, g.verts[0].x);
 			utki::clampBottom(right, g.verts[2].x);
-			utki::clampTop(bottom, g.verts[0].y);
-			utki::clampBottom(top, g.verts[2].y);
+			utki::clampBottom(bottom, g.verts[0].y);
+			utki::clampTop(top, g.verts[2].y);
 
-			ASSERT(top - bottom >= 0) //width >= 0
+			ASSERT(-(top - bottom) >= 0) //width >= 0
 			ASSERT(right - left >= 0) //height >= 0
 		}
 
@@ -243,12 +243,14 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		curX += im.dim().x + DXGap;
 	}//~for
 	
-	//save bounding box
-	this->boundingBox_v.p.x = left;
-	this->boundingBox_v.p.y = bottom;
-	this->boundingBox_v.d.x = right - left;
-	this->boundingBox_v.d.y = top - bottom;
+	using std::ceil;
+	
+	this->height_v = ceil((static_cast<FT_Face&>(face)->size->metrics.height) / 64.0f);
+	this->descender_v = -ceil((static_cast<FT_Face&>(face)->size->metrics.descender) / 64.0f);
+	this->ascender_v = ceil((static_cast<FT_Face&>(face)->size->metrics.ascender) / 64.0f);
 
+	TRACE(<< "TexFont::load(): height_v = " << this->height_v << std::endl)
+	
 //	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
 
 	//if there is only one row of characters on the texture image and it does not reach the right edge
@@ -269,8 +271,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 	//now the font image has its final width and heights (no more resizes will be done)
 
-	//normalize texture coordinates
 	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
+		//normalize texture coordinates
 		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
 			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
 		}
@@ -368,11 +370,11 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 		const Glyph& g = i == this->glyphs.end() ? this->glyphs.at(unknownChar_c) : i->second;
 
-		if(g.verts[2].y > top){
+		if(g.verts[2].y < top){
 			top = g.verts[2].y;
 		}
 
-		if(g.verts[0].y < bottom){
+		if(g.verts[0].y > bottom){
 			bottom = g.verts[0].y;
 		}
 
@@ -388,15 +390,15 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	}
 
 	ret.p.x = left;
-	ret.p.y = bottom;
+	ret.p.y = top;
 	ret.d.x = right - left;
-	ret.d.y = top - bottom;
+	ret.d.y = -(top - bottom);
 
 	ASSERT(ret.d.x >= 0)
 	ASSERT(ret.d.y >= 0)
+	TRACE(<< "TexFont::stringBoundingBoxInternal(): ret = " << ret << std::endl)
 	return ret;
 }
-
 
 
 

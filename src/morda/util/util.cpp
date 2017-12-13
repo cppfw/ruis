@@ -196,7 +196,6 @@ morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 std::shared_ptr<Texture2D> morda::loadTexture(const papki::File& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-	image.flipVertical();	
 	
 	return morda::inst().renderer().factory->createTexture2D(
 			numChannelsToTexType(image.numChannels()),

@@ -17,8 +17,14 @@ namespace morda{
  */
 class Font{
 protected:
-	//Bounding box holds the dimensions of the largest loaded glyph.
-	morda::Rectr boundingBox_v;
+	/**
+	 * @brief Distance between lines of text.
+	 */
+	real height_v;
+	
+	real descender_v;
+	
+	real ascender_v;
 	
 	Font(){}
 	
@@ -177,13 +183,20 @@ public:
 	}
 	
 	/**
-	 * @brief Get bounding box of the font.
-	 * Bounding box of the font is an 'or' operation of all font's character bounding boxes.
-	 * I.e. it is a bounding box into which any font's character will fit.
-	 * @return Bounding box of the font.
+	 * @brief Get height of the font.
+	 * Height of the font is the distance normally used between lines of text.
+	 * @return Height of the font.
 	 */
-	const morda::Rectr& boundingBox()const noexcept{
-		return this->boundingBox_v;
+	real height()const noexcept{
+		return this->height_v;
+	}
+	
+	real descender()const noexcept{
+		return this->descender_v;
+	}
+	
+	real ascender()const noexcept{
+		return this->ascender_v;
 	}
 };
 

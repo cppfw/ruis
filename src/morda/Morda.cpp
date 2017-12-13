@@ -156,8 +156,12 @@ void Morda::render(const Matr4r& matrix)const{
 	}
 	
 	morda::Matr4r m(matrix);
+	
+	//direct y axis down
+	m.scale(1, -1);
+	
 	m.translate(-1, -1);
-	m.scale(Vec2r(2.0f).compDivBy(this->viewportSize));
+	m.scale(Vec2r(2).compDivBy(this->viewportSize));
 	
 	ASSERT(this->rootWidget)
 	

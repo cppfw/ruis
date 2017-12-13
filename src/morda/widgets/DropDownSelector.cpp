@@ -119,7 +119,7 @@ void DropDownSelector::showDropdownMenu() {
 		va->add(this->wrapItem(this->provider->getWidget(i), i));
 	}
 
-	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay));
+	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
 
