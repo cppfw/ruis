@@ -157,9 +157,6 @@ void Morda::render(const Matr4r& matrix)const{
 		return;
 	}
 	
-	//TODO: remove
-	glEnable(GL_CULL_FACE);
-	
 	morda::Matr4r m(matrix);
 	
 	m.translate(-1, -1);
