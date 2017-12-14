@@ -1,3 +1,9 @@
+libmorda (0.5.63) unstable; urgency=medium
+
+  * font rendering fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 14 Dec 2017 20:35:31 +0200
+
 libmorda (0.5.62) unstable; urgency=medium
 
   * y axis directed downwards
