@@ -12,8 +12,9 @@
 
 #include <morda/Morda.hpp>
 #include <mordaren/OpenGL2Renderer.hpp>
-#include <morda/widgets/label/TextLabel.hpp>
+#include <morda/widgets/label/Text.hpp>
 #include <morda/widgets/button/Button.hpp>
+#include <morda/widgets/button/PushButton.hpp>
 
 
 int width = 640;
@@ -337,7 +338,7 @@ int main( int argc, char* args[] ) {
 		const Uint32 userEventType;
 		
 		SDLMorda(Uint32 userEventType) :
-				morda::Morda(utki::makeShared<mordaren::OpenGL2Renderer>(), 96, 1),
+				morda::Morda(std::make_shared<mordaren::OpenGL2Renderer>(), 96, 1),
 				userEventType(userEventType)
 		{}
 				
@@ -367,7 +368,7 @@ int main( int argc, char* args[] ) {
 		//set the widgets hierarchy to the application
 		morda::Morda::inst().setRootWidget(c);
 
-		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
+		auto textLabel = c->findChildByNameAs<morda::Text>("info_text");
 		ASSERT(textLabel)
 
 		auto button = c->findChildByNameAs<morda::PushButton>("hw_button");
@@ -423,14 +424,14 @@ int main( int argc, char* args[] ) {
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
-					morda::Morda::inst().onMouseMove(morda::Vec2r(morda::real(x), morda::real(height - y)), 0);
+					morda::Morda::inst().onMouseMove(morda::Vec2r(morda::real(x), morda::real(y)), 0);
 				}else if(e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
 					int x = 0, y = 0;
 					SDL_GetMouseState(&x, &y);
 
 					morda::Morda::inst().onMouseButton(
 							e.button.type == SDL_MOUSEBUTTONDOWN,
-							morda::Vec2r(morda::real(x), morda::real(height - y)),
+							morda::Vec2r(morda::real(x), morda::real(y)),
 							e.button.button == 1 ? morda::MouseButton_e::LEFT : morda::MouseButton_e::RIGHT,
 							0
 						);
