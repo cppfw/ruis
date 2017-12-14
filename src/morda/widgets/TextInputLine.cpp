@@ -50,7 +50,10 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	
 	{
 		morda::Matr4r matr(matrix);
-		matr.translate(-this->textBoundingBox().p.x + this->xOffset, (this->font().height() + this->font().ascender() - this->font().descender()) / 2);
+		
+		using std::round;
+		
+		matr.translate(-this->textBoundingBox().p.x + this->xOffset, round((this->font().height() + this->font().ascender() - this->font().descender()) / 2));
 		
 		ASSERT(this->firstVisibleCharIndex <= this->text().size())
 		this->font().renderString(
