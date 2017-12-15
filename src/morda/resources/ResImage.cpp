@@ -105,10 +105,8 @@ public:
 	{}
 	
 	Vec2r dim(real dpi)const noexcept override{
-		return Vec2r(
-				this->dom->width.toPx(dpi),
-				this->dom->height.toPx(dpi)
-			);
+		auto wh = this->dom->getDimensions(dpi);
+		return Vec2r(wh[0], wh[1]);
 	}
 	
 	class SvgTexture : public TexQuadTexture{
