@@ -17,6 +17,7 @@
 
 #include "widgets/label/Color.hpp"
 #include "widgets/label/Text.hpp"
+#include "widgets/label/Gradient.hpp"
 
 #include "widgets/TextField.hpp"
 #include "widgets/TreeView.hpp"
@@ -98,6 +99,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	
 	this->inflater.registerType<Text>("Text");
 	this->inflater.registerType<Color>("Color");
+	this->inflater.registerType<Gradient>("Gradient");
 	this->inflater.registerType<Image>("Image");
 	this->inflater.registerType<VerticalSlider>("VerticalSlider");
 	this->inflater.registerType<HorizontalSlider>("HorizontalSlider");

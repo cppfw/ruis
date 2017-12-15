@@ -656,13 +656,10 @@ Container{
 		title{"Table"}
 
 
-		Color{
+		Gradient{
 			layout{dx{max}dy{max}}
-			color{0xff008000}
 			gradient{grd_sample}
 		}
-
-
 
 		Table{
 			layout{

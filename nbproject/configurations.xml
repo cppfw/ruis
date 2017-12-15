@@ -103,6 +103,7 @@
           </df>
           <df name="label">
             <in>Color.cpp</in>
+            <in>Gradient.cpp</in>
             <in>Image.cpp</in>
             <in>NinePatch.cpp</in>
             <in>NinePatch.hpp</in>
@@ -2700,15 +2701,35 @@
         <ccTool flags="1">
           <incDir>
             <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/core</pElem>
             <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/render</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/label</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/label/Gradient.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/widgets/core</pElem>
+            <pElem>src/morda/widgets/label</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>.</pElem>
           </incDir>
