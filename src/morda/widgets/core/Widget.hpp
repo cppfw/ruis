@@ -577,6 +577,12 @@ public:
 	 */
 	template <class T> T* findAncestor(const char* name = nullptr); //defined in Container.hpp
 	
+	/**
+	 * @brief Get position relative to ancestor.
+	 * @param ancestor - ancestor widget relative to which to get the position.
+	 * @return The position of this widget in given ancestor's coordinates.
+	 */
+	Vec2r posInAncestor(const Widget& ancestor);
 	
 	/**
 	 * @brief Calculate position in parent coordinates.

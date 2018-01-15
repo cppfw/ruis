@@ -462,3 +462,14 @@ void Widget::setHovered(bool isHovered, unsigned pointerID) {
 
 	this->onHoverChanged(pointerID);
 }
+
+
+Vec2r Widget::posInAncestor(const Widget& ancestor) {
+	Vec2r ret = this->rect().p;
+	
+	if(this->parent() && static_cast<const Widget*>(this->parent()) != &ancestor){
+		ret += this->parent()->posInAncestor(ancestor);
+	}
+	
+	return ret;
+}
