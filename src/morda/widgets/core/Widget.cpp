@@ -473,3 +473,11 @@ Vec2r Widget::posInAncestor(const Widget& ancestor) {
 	
 	return ret;
 }
+
+namespace{
+Widget::T_ChildrenList dummyChildrenList;
+}
+
+const Widget::T_ChildrenList& Widget::getDirectChildren() const noexcept{
+	return dummyChildrenList;
+}

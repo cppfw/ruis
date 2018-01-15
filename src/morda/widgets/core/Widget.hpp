@@ -361,6 +361,31 @@ public:
 		return dynamic_cast<T&>(this->getChildByName(name));
 	}
 	
+	/**
+	 * @brief Get children.
+	 * @return reference to the list of children.
+	 */
+	virtual const T_ChildrenList& getDirectChildren()const noexcept;
+	
+	/**
+	 * @brief Recursively find all children of given type.
+	 * @return list of children found.
+	 */
+	template <class T> std::vector<std::shared_ptr<T>> findChildren(){
+		std::vector<std::shared_ptr<T>> ret;
+		
+		auto childrenList = this->getDirectChildren();
+		for(auto& child : childrenList){
+			auto cl = child->findChildren<T>();
+			ret.insert(ret.end(), std::make_move_iterator(cl.begin()), std::make_move_iterator(cl.end()));
+		}
+		if(auto t = std::dynamic_pointer_cast<T>(this->sharedFromThis(this))){
+			ret.emplace_back(std::move(t));
+		}
+		
+		return ret;
+	}
+	
 public:
 	/**
 	 * @brief Constructor.

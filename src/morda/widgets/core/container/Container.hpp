@@ -214,6 +214,10 @@ public:
 		return this->children_v;
 	}
 	
+	const T_ChildrenList& getDirectChildren() const noexcept override{
+		return this->children();
+	}
+	
 	/**
 	 * @brief Called when children list changes.
 	 * This implementation requests re-layout.
