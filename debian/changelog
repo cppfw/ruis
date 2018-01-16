@@ -1,3 +1,9 @@
+libmorda (0.5.66) unstable; urgency=medium
+
+  * find all children of give ntype
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 14:56:31 +0200
+
 libmorda (0.5.65) unstable; urgency=medium
 
   * find all children of give ntype
