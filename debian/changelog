@@ -1,3 +1,9 @@
+libmorda (0.5.67) unstable; urgency=medium
+
+  * find all children of given type return list instead of vector
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 16:32:40 +0200
+
 libmorda (0.5.66) unstable; urgency=medium
 
   * find all children of give ntype
