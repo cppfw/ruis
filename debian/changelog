@@ -1,3 +1,9 @@
+libmorda (0.5.68) unstable; urgency=medium
+
+  * findChildren does not return the parent
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 17 Jan 2018 16:28:55 +0200
+
 libmorda (0.5.67) unstable; urgency=medium
 
   * find all children of given type return list instead of vector
