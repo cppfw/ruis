@@ -198,13 +198,13 @@ public:
 	void removeAll();
 	
 	/**
-	 * @brief Find child widget by name.
+	 * @brief Find widget by name.
 	 * It searches through the whole widget sub-hierarchy, not just direct children of this container.
 	 * @param name - name of the child widget to look for.
 	 * @return pointer to widget with given name if found.
 	 * @return nullptr if no widget with given name found.
 	 */
-	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept override;
+	std::shared_ptr<Widget> findByName(const std::string& name)noexcept override;
 	
 	/**
 	 * @brief Get list of child widgets.

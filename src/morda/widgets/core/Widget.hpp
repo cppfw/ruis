@@ -319,14 +319,20 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if no widget with given name found.
 	 */
-	virtual std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept;
+	virtual std::shared_ptr<Widget> findByName(const std::string& name)noexcept;
+	
+	//TODO: remove deprecated
+	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept{
+		TRACE(<< "Widget::findChildByName(): DEPRECATED!!! Use Widget::findByName() instead" << std::endl)
+		return this->findByName(name);
+	}
 	
 	/**
 	 * @brief Child widget width requested name is not found within the parent container.
 	 */
-	class ChildNotFoundExc : public morda::Exc{
+	class WidgetNotFoundExc : public morda::Exc{
 	public:
-		ChildNotFoundExc(const std::string& childName) :
+		WidgetNotFoundExc(const std::string& childName) :
 				morda::Exc(childName)
 		{}
 	};
@@ -337,7 +343,13 @@ public:
 	 * @return reference to the child.
 	 * @throw ChildNotFoundExc - if no child with given name has been found.
 	 */
-	Widget& getChildByName(const std::string& name);
+	Widget& getByName(const std::string& name);
+	
+	//TODO: remove deprecated
+	Widget& getChildByName(const std::string& name){
+		TRACE(<< "Widget::getChildByName(): DEPRECATED!!! Use Widget::getByName() instead" << std::endl)
+		return this->getByName(name);
+	}
 	
 	/**
 	 * @brief Find widget by name.
@@ -376,10 +388,10 @@ public:
 		
 		auto childrenList = this->getDirectChildren();
 		for(auto& child : childrenList){
+			if(auto c = std::dynamic_pointer_cast<T>(child)){
+				ret.emplace_back(std::move(c));
+			}
 			ret.splice(ret.end(), child->findChildren<T>());
-		}
-		if(auto t = std::dynamic_pointer_cast<T>(this->sharedFromThis(this))){
-			ret.emplace_back(std::move(t));
 		}
 		
 		return ret;

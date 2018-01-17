@@ -88,7 +88,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::findChildByName(const std::string& name)noexcept{
+std::shared_ptr<Widget> Widget::findByName(const std::string& name)noexcept{
 	if(this->name() == name){
 		return this->sharedFromThis(this);
 	}
@@ -412,10 +412,10 @@ const Widget::LayoutParams& Widget::getLayoutParams()const {
 	return this->parent()->getLayoutParams(*this);
 }
 
-Widget& Widget::getChildByName(const std::string& name) {
-	auto w = this->findChildByName(name);
+Widget& Widget::getByName(const std::string& name) {
+	auto w = this->findByName(name);
 	if(!w){
-		throw ChildNotFoundExc(name);
+		throw WidgetNotFoundExc(name);
 	}
 	return *w;
 }

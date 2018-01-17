@@ -311,13 +311,13 @@ void Container::removeAll() {
 
 
 
-std::shared_ptr<Widget> Container::findChildByName(const std::string& name)noexcept{
-	if(auto r = this->Widget::findChildByName(name)){
+std::shared_ptr<Widget> Container::findByName(const std::string& name)noexcept{
+	if(auto r = this->Widget::findByName(name)){
 		return r;
 	}
 	
 	for(auto& w : this->children()){
-		if(auto r = w->findChildByName(name)){
+		if(auto r = w->findByName(name)){
 			return r;
 		}
 	}
