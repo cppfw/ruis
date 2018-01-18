@@ -358,8 +358,14 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if no widget with given name found or if the widget could not be cast to specified class.
 	 */
+	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
+		return std::dynamic_pointer_cast<T>(this->findByName(name));
+	}
+	
+	//TODO: remove deprecated
 	template <typename T> std::shared_ptr<T> findChildByNameAs(const std::string& name)noexcept{
-		return std::dynamic_pointer_cast<T>(this->findChildByName(name));
+		TRACE(<< "Widget::findChildByNameAs(): DEPRECATED!!! Use Widget::findByNameAs() instead" << std::endl)
+		return this->findByNameAs<T>(name);
 	}
 	
 	/**

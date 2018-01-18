@@ -1,3 +1,9 @@
+libmorda (0.5.69) unstable; urgency=medium
+
+  * refactoring
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 18 Jan 2018 15:03:54 +0200
+
 libmorda (0.5.68) unstable; urgency=medium
 
   * findChildren does not return the parent
