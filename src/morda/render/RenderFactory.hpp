@@ -52,6 +52,7 @@ public:
 	struct Shaders : public utki::Unique{
 		std::unique_ptr<ShaderTexture> posTex;
 		std::unique_ptr<ShaderColor> colorPos;
+		std::unique_ptr<ShaderColor> colorPosLum;
 		std::unique_ptr<Shader> posClr;
 		std::unique_ptr<ShaderColorTexture> colorPosTex;
 	};
