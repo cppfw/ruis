@@ -11,6 +11,7 @@
 #include "OpenGL2ShaderColor.hpp"
 #include "OpenGL2ShaderPosClr.hpp"
 #include "OpenGL2ShaderColorPosTex.hpp"
+#include "OpenGL2ShaderColorPosLum.hpp"
 #include "OpenGL2FrameBuffer.hpp"
 
 #include <GL/glew.h>
@@ -118,6 +119,7 @@ std::unique_ptr<morda::RenderFactory::Shaders> OpenGL2Factory::createShaders() {
 	ret->colorPos = utki::makeUnique<OpenGL2ShaderColor>();
 	ret->posClr = utki::makeUnique<OpenGL2ShaderPosClr>();
 	ret->colorPosTex = utki::makeUnique<OpenGL2ShaderColorPosTex>();
+	ret->colorPosLum = utki::makeUnique<OpenGL2ShaderColorPosLum>();
 	return ret;
 }
 
