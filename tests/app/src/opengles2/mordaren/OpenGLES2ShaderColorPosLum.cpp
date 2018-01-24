@@ -1,7 +1,7 @@
 #include "OpenGLES2ShaderColorPosLum.hpp"
 
 
-OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
+OpenGLES2ShaderColorPosLum::OpenGLES2ShaderColorPosLum() :
 		OpenGLES2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -42,7 +42,7 @@ OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPosLum::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const {
+void OpenGLES2ShaderColorPosLum::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

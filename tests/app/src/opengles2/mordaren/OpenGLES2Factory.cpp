@@ -13,6 +13,7 @@
 #include "OpenGLES2ShaderColor.hpp"
 #include "OpenGLES2ShaderPosClr.hpp"
 #include "OpenGLES2ShaderColorPosTex.hpp"
+#include "OpenGLES2ShaderColorPosLum.hpp"
 #include "OpenGLES2FrameBuffer.hpp"
 
 
@@ -126,6 +127,7 @@ std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders()
 	ret->colorPos = utki::makeUnique<OpenGLES2ShaderColor>();
 	ret->posClr = utki::makeUnique<OpenGLES2ShaderPosClr>();
 	ret->colorPosTex = utki::makeUnique<OpenGLES2ShaderColorPosTex>();
+	ret->colorPosLum = utki::makeUnique<OpenGLES2ShaderColorPosLum>();
 	return ret;
 }
 
