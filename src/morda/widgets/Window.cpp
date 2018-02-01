@@ -422,6 +422,8 @@ bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseBut
 				[this, isDown, pos, button, pointerId](){
 					this->makeTopmost();
 					this->focus();
+					
+					//TODO: how is this working with mouse capturing?
 					this->Container::onMouseButton(isDown, pos, button, pointerId);
 				}
 			);
