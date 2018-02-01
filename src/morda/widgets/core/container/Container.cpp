@@ -89,19 +89,19 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 
 
-bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
+bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 	
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	
 	//check if mouse captured
 	{
-		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerID);
+		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
 				if(w->isInteractive()){
-					w->setHovered(w->rect().overlaps(pos), pointerID);
-					w->onMouseButton(isDown, pos - w->rect().p, button, pointerID);
+					w->setHovered(w->rect().overlaps(pos), pointerId);
+					w->onMouseButton(isDown, pos - w->rect().p, button, pointerId);
 
 					unsigned& n = i->second.second;
 					if(isDown){
@@ -133,19 +133,19 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 		
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		c->setHovered(true, pointerID);
-		if(c->onMouseButton(isDown, pos - c->rect().p, button, pointerID)){
-			ASSERT(this->mouseCaptureMap.find(pointerID) == this->mouseCaptureMap.end())
+		c->setHovered(true, pointerId);
+		if(c->onMouseButton(isDown, pos - c->rect().p, button, pointerId)){
+			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 			
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerID, std::make_pair(std::weak_ptr<Widget>(c), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<Widget>(c), 1)));
 			}
 			
 			return true;
 		}
 	}
 	
-	return this->Widget::onMouseButton(isDown, pos, button, pointerID);
+	return this->Widget::onMouseButton(isDown, pos, button, pointerId);
 }
 
 
@@ -258,12 +258,6 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	widget.onParentChanged();
 	
 	this->onChildrenListChanged();
-	
-	if(this->children_v.size() > 1){
-		(*(++this->children_v.rbegin()))->onTopmostChanged();
-	}
-	
-	widget.onTopmostChanged();
 	
 	ASSERT(!widget.isHovered())
 	return ret;

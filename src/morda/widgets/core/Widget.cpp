@@ -327,39 +327,11 @@ void Widget::unfocus()noexcept{
 
 
 
-bool Widget::isTopmost()const noexcept{
-	if(!this->parent()){
-		return false;
-	}
-	
-	ASSERT(this->parent()->children().size() != 0)
-	
-	return this->parent()->children().back().get() == this;
-}
 
 
 
-void Widget::makeTopmost(){
-	if(!this->parent()){
-		return;
-	}
-	
-	ASSERT(this->parent()->children().size() != 0)
-	
-	if(this->parent()->children().size() == 1){
-		return;
-	}
-	
-	if(this->parent()->children().rbegin()->get() == this){
-		return;//already topmost
-	}
-	
-	Container* p = this->parent();
-	
-	auto w = this->removeFromParent();
-	
-	p->add(w);
-}
+
+
 
 
 

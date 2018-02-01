@@ -419,14 +419,13 @@ void morda::Window::setBorders(Sidesr borders) {
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(isDown){
 		morda::Morda::inst().postToUiThread_ts(
-				[this](){
+				[this, isDown, pos, button, pointerId](){
 					this->makeTopmost();
+					this->focus();
+					this->Container::onMouseButton(isDown, pos, button, pointerId);
 				}
 			);
-
-		if(!this->isTopmost()){
-			this->focus();
-		}
+		return true;
 	}
 	
 	this->Container::onMouseButton(isDown, pos, button, pointerId);
@@ -441,6 +440,56 @@ bool morda::Window::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 	return true;
 }
 
-void morda::Window::onTopmostChanged(){
-	this->titleBg->setColor(this->isTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost);
+
+void Window::makeTopmost(){
+	if(!this->parent()){
+		return;
+	}
+	
+	ASSERT(this->parent()->children().size() != 0)
+	
+	if(this->parent()->children().size() == 1){
+		return;
+	}
+	
+	auto prevTopmost = this->parent()->children().rbegin()->get();
+	ASSERT(prevTopmost)
+	if(prevTopmost == this){
+		return;//already topmost
+	}
+	
+	Container* p = this->parent();
+	
+	auto w = this->removeFromParent();
+	
+	p->add(w);
+	
+	this->updateTopmost();
+	
+	if(auto pt = dynamic_cast<Window*>(prevTopmost)){
+		pt->updateTopmost();
+	}
+}
+
+
+bool Window::isTopmost()const noexcept{
+	if(!this->parent()){
+		return false;
+	}
+	
+	ASSERT(this->parent()->children().size() != 0)
+	
+	return this->parent()->children().back().get() == this;
+}
+
+void Window::updateTopmost() {
+	this->titleBg->setColor(
+			this->isTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost
+		);
+}
+
+
+void Window::layOut() {
+	this->updateTopmost();
+	this->Pile::layOut();
 }

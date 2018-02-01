@@ -52,6 +52,20 @@ class Window :
 	
 	void setupWidgets();
 	
+	/**
+	 * @brief Move the widget to the top within its parent.
+	 */
+	void makeTopmost();
+	
+	/**
+	 * @brief Check if the widget is currently topmost within its parent.
+	 * @return true if the widget is topmost.
+	 * @return false otherwise.
+	 */
+	bool isTopmost()const noexcept;
+	
+	void updateTopmost();
+	
 public:
 	Window(const stob::Node* chain = nullptr);
 	
@@ -74,10 +88,10 @@ public:
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 	
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
-
-	void onTopmostChanged()override;
 	
 	void setBackground(std::shared_ptr<Widget> w);
+	
+	void layOut() override;
 	
 	/**
 	 * @brief Set window borders.

@@ -595,23 +595,6 @@ public:
 	}
 	
 	/**
-	 * @brief Called by framework when widget's topmost position within its parent has changed.
-	 */
-	virtual void onTopmostChanged(){}
-	
-	/**
-	 * @brief Check if the widget is currently topmost within its parent.
-	 * @return true if the widget is topmost.
-	 * @return false otherwise.
-	 */
-	bool isTopmost()const noexcept;
-	
-	/**
-	 * @brief Move the widget to the top within its parent.
-	 */
-	void makeTopmost();
-	
-	/**
 	 * @brief Find ancestor with given name and of given class.
 	 * @param name - name to look for. If nullptr, then any ancestor of the given class will match.
 	 * @return pointer to the found ancestor widget.
