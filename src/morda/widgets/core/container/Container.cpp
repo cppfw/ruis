@@ -104,6 +104,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 					w->onMouseButton(isDown, pos - w->rect().p, button, pointerId);
 
 					unsigned& n = i->second.second;
+					//TODO: why is this counter needed?
 					if(isDown){
 						++n;
 					}else{
