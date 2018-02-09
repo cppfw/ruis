@@ -47,10 +47,10 @@ class Container;
 class Widget : virtual public utki::Shared{
 	friend class Container;
 	friend class Morda;
-	
+
 public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
-	
+
 public:
 	/**
 	 * @brief Basic layout parameters.
@@ -62,23 +62,23 @@ public:
 		 * The widget will always be given minimal space it needs to properly draw.
 		 */
 		constexpr static const real min_c = real(-1);
-		
+
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
 		 * The widget will be given at least minimal space it needs to properly draw.
 		 */
 		constexpr static const real max_c = real(-2);
-		
+
 		/**
 		 * @brief Requests widget to be same size as its parent.
 		 * Minimal size of the widget is assumed to be 0.
 		 */
 		constexpr static const real fill_c = real(-3);
-		
+
 		LayoutParams(Vec2r dim = Vec2r(min_c)) :
 				dim(dim)
 		{}
-		
+
 		/**
 		 * @brief desired dimensions.
 		 * Components should hold positive value in pixels or min_c, max_c, fill_c.
@@ -87,14 +87,14 @@ public:
 
 	public:
 		LayoutParams(const stob::Node* chain = nullptr);
-		
+
 		virtual ~LayoutParams()noexcept{}
 	};
 
 private:
 	Container* parent_v = nullptr;
 	T_ChildrenList::iterator parentIter_v;
-	
+
 	std::set<unsigned> hovered;
 
 	bool isVisible_v;
@@ -102,7 +102,7 @@ private:
 	bool isEnabled_v;
 
 	morda::Rectr rectangle;
-	
+
 	//clip widgets contents by widget's border if set to true
 	bool clip_v;
 public:
@@ -114,7 +114,7 @@ public:
 	bool clip()const noexcept{
 		return this->clip_v;
 	}
-	
+
 	/**
 	 * @brief Enable/Disable scissor test.
 	 * @param clip - whether to enable (true) or disable (false) the scissor test.
@@ -122,18 +122,18 @@ public:
 	void setClip(bool clip)noexcept{
 		this->clip_v = clip;
 	}
-	
-	
+
+
 private:
 	bool cache;
 	mutable bool cacheDirty = true;
 	mutable std::shared_ptr<Texture2D> cacheTex;
 
 	void renderFromCache(const kolme::Matr4f& matrix)const;
-	
+
 protected:
 	void clearCache();
-	
+
 public:
 	/**
 	 * @brief Enable/disable caching.
@@ -145,7 +145,7 @@ public:
 	void setCache(bool enabled)noexcept{
 		this->cache = enabled;
 	}
-	
+
 	/**
 	 * @brief Render this widget to texture.
 	 * @param reuse - try to re-use the existing texture to avoid new texture allocation.
@@ -154,15 +154,15 @@ public:
 	 * @return Texture containing rendered widget.
 	 */
 	std::shared_ptr<Texture2D> renderToTexture(std::shared_ptr<Texture2D> reuse = nullptr)const;
-	
+
 private:
 	//logical ID of the widget
 	std::string nameOfWidget;
-	
+
 	bool relayoutNeeded = true;
-	
+
 	std::unique_ptr<stob::Node> layout;
-	
+
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
 	/**
@@ -172,7 +172,7 @@ public:
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
 	Widget::LayoutParams& getLayoutParams();
-	
+
 	/**
 	 * @brief Get layout parameters of the widget.
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
@@ -180,7 +180,7 @@ public:
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
 	const Widget::LayoutParams& getLayoutParams()const;
-	
+
 	/**
 	 * @brief Check if this widget's contents need to be layed out.
 	 * @return true if this widget needs re-layout.
@@ -189,7 +189,7 @@ public:
 	bool needsRelayout()const noexcept{
 		return this->relayoutNeeded;
 	}
-	
+
 	/**
 	 * @brief Get name of the widget.
 	 * @return Name of the widget.
@@ -197,7 +197,7 @@ public:
 	const std::string& name()const noexcept{
 		return this->nameOfWidget;
 	}
-	
+
 	/**
 	 * @brief Get widget's parent container.
 	 * @return Widget's parent container.
@@ -205,7 +205,7 @@ public:
 	const Container* parent()const noexcept{
 		return this->parent_v;
 	}
-	
+
 	/**
 	 * @brief Get widget's parent container.
 	 * @return Widget's parent container.
@@ -213,15 +213,15 @@ public:
 	Container* parent()noexcept{
 		return this->parent_v;
 	}
-	
+
 	decltype(parentIter_v) parentIter()noexcept{
 		return this->parentIter_v;
 	}
-	
+
 	const decltype(parentIter_v) parentIter()const noexcept{
 		return this->parentIter_v;
 	}
-	
+
 	/**
 	 * @brief Remove widget from parent container.
 	 * Be careful when calling this method from within another method of the widget
@@ -230,7 +230,7 @@ public:
 	 * @return pointer to this widget.
 	 */
 	std::shared_ptr<Widget> removeFromParent();
-	
+
 	/**
 	 * @brief Replace this widget by another widget.
 	 * Replaces this widget in its parent by the given widget.
@@ -238,29 +238,29 @@ public:
 	 * @return Shared pointer to this widget.
 	 */
 	std::shared_ptr<Widget> replaceBy(std::shared_ptr<Widget> w);
-	
+
 	/**
 	 * @brief Check if widget is hovered by any pointer.
-     * @return true if hovered by any pointer.
+	 * @return true if hovered by any pointer.
 	 * @return false otherwise.
-     */
+	 */
 	bool isHovered()const noexcept{
 		return this->hovered.size() != 0;
 	}
-	
+
 	/**
 	 * @brief Check if widget is hovered by given pointer.
-     * @param pointerID - pointer ID to check against.
-     * @return true if widget is hovered by given pointer ID.
+	 * @param pointerID - pointer ID to check against.
+	 * @return true if widget is hovered by given pointer ID.
 	 * @return false otherwise.
-     */
+	 */
 	bool isHovered(unsigned pointerID)const noexcept{
 		return this->hovered.find(pointerID) != this->hovered.end();
 	}
-	
+
 private:
 	void setHovered(bool isHovered, unsigned pointerID);
-	
+
 	void setUnhovered();
 public:
 
@@ -272,14 +272,14 @@ public:
 	const morda::Rectr& rect()const noexcept{
 		return this->rectangle;
 	}
-	
+
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.
 	 * @param matrix - transformation matrix which transforms point (0,0) to left bottom corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
 	kolme::Recti computeViewportRect(const Matr4r& matrix)const noexcept;
-	
+
 	/**
 	 * @brief Move widget to position within its parent.
 	 * @param newPos - new widget's position.
@@ -287,7 +287,7 @@ public:
 	void moveTo(const morda::Vec2r& newPos)noexcept{
 		this->rectangle.p = newPos;
 	}
-	
+
 	/**
 	 * @brief Shift widget within its parent.
 	 * @param delta - vector to shift the widget by.
@@ -301,7 +301,7 @@ public:
 	 * @param newDims - new dimensions of the widget.
 	 */
 	void resize(const morda::Vec2r& newDims);
-	
+
 	/**
 	 * @brief Extend or shrink the widget dimensions by given value.
 	 * @param delta - value to change the widget dimensions by.
@@ -320,13 +320,13 @@ public:
 	 * @return nullptr if no widget with given name found.
 	 */
 	virtual std::shared_ptr<Widget> findByName(const std::string& name)noexcept;
-	
+
 	//TODO: remove deprecated
 	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept{
 		TRACE(<< "Widget::findChildByName(): DEPRECATED!!! Use Widget::findByName() instead" << std::endl)
 		return this->findByName(name);
 	}
-	
+
 	/**
 	 * @brief Child widget width requested name is not found within the parent container.
 	 */
@@ -336,7 +336,7 @@ public:
 				morda::Exc(childName)
 		{}
 	};
-	
+
 	/**
 	 * @brief Get child by name.
 	 * @param name - name of the child to get.
@@ -344,13 +344,13 @@ public:
 	 * @throw ChildNotFoundExc - if no child with given name has been found.
 	 */
 	Widget& getByName(const std::string& name);
-	
+
 	//TODO: remove deprecated
 	Widget& getChildByName(const std::string& name){
 		TRACE(<< "Widget::getChildByName(): DEPRECATED!!! Use Widget::getByName() instead" << std::endl)
 		return this->getByName(name);
 	}
-	
+
 	/**
 	 * @brief Find widget by name.
 	 * Same as findChildByName() but also tries to cast the widget object to a specified class.
@@ -361,13 +361,13 @@ public:
 	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
 		return std::dynamic_pointer_cast<T>(this->findByName(name));
 	}
-	
+
 	//TODO: remove deprecated
 	template <typename T> std::shared_ptr<T> findChildByNameAs(const std::string& name)noexcept{
 		TRACE(<< "Widget::findChildByNameAs(): DEPRECATED!!! Use Widget::findByNameAs() instead" << std::endl)
 		return this->findByNameAs<T>(name);
 	}
-	
+
 	/**
 	 * @brief Get child widget of specific type by its name.
 	 * @param name - name of the widget to get.
@@ -378,20 +378,20 @@ public:
 	template <typename T> T& getChildByNameAs(const std::string& name){
 		return dynamic_cast<T&>(this->getChildByName(name));
 	}
-	
+
 	/**
 	 * @brief Get children.
 	 * @return reference to the list of children.
 	 */
 	virtual const T_ChildrenList& getDirectChildren()const noexcept;
-	
+
 	/**
 	 * @brief Recursively find all children of given type.
 	 * @return list of children found.
 	 */
 	template <class T> std::list<std::shared_ptr<T>> findChildren(){
 		std::list<std::shared_ptr<T>> ret;
-		
+
 		auto childrenList = this->getDirectChildren();
 		for(auto& child : childrenList){
 			if(auto c = std::dynamic_pointer_cast<T>(child)){
@@ -399,17 +399,17 @@ public:
 			}
 			ret.splice(ret.end(), child->findChildren<T>());
 		}
-		
+
 		return ret;
 	}
-	
+
 public:
 	/**
 	 * @brief Constructor.
 	 * @param chain - STOB description of the widget.
 	 */
 	Widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
-	
+
 public:
 
 	virtual ~Widget()noexcept{}
@@ -421,17 +421,17 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 */
 	virtual void render(const morda::Matr4r& matrix)const{}
-	
+
 private:
 	void renderInternal(const morda::Matr4r& matrix)const;
-	
+
 private:
 	void onKeyInternal(bool isDown, Key_e keyCode);
-	
+
 private:
 	bool isFocused_v = false;
 public:
-	
+
 	/**
 	 * @brief Handle keyboard key event.
 	 * This method is called by framework when a widget is requested to handle a key event. So, the widget is either a focused widget or root widget.
@@ -443,18 +443,18 @@ public:
 	virtual bool onKey(bool isDown, morda::Key_e keyCode){
 		return false;
 	}
-	
+
 	/**
 	 * @brief Set this widget as focused.
 	 * Focused widget will receive keyboard events.
 	 */
 	void focus()noexcept;
-	
+
 	/**
 	 * @brief Unfocus this widget.
 	 */
 	void unfocus()noexcept;
-	
+
 	/**
 	 * @brief Check if this widget is focused.
 	 * @return true if widget is focused.
@@ -463,13 +463,13 @@ public:
 	bool isFocused()const noexcept{
 		return this->isFocused_v;
 	}
-	
+
 	/**
 	 * @brief Called when keyboard input focus changes.
-     */
+	 */
 	virtual void onFocusChanged(){}
-		
-	
+
+
 	/**
 	 * @brief Handle mouse button event.
 	 * This function is called by framework when widget receives mouse button event.
@@ -483,7 +483,7 @@ public:
 	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
 		return false;
 	}
-	
+
 	/**
 	 * @brief Handle mouse move event.
 	 * Called by framework when mouse pointer was moved within the widget.
@@ -513,14 +513,14 @@ public:
 //		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
 		this->layOut();
 	}
-	
+
 	/**
 	 * @brief Called when parent of this widget changes.
 	 * Called when parent of the widget changes. This happens when widget is
 	 * added to or removed from a Container.
-     */
+	 */
 	virtual void onParentChanged(){}
-	
+
 	/**
 	 * @brief Measure how big a widget wants to be.
 	 * Given the given space determine what dimensions widget wants to have to properly draw.
@@ -528,7 +528,7 @@ public:
 	 * @return Measured desired widget dimensions.
 	 */
 	virtual morda::Vec2r measure(const morda::Vec2r& quotum)const;
-	
+
 public:
 
 	/**
@@ -543,13 +543,13 @@ public:
 	 * Override this method to arrange widgets contents if needed.
 	 */
 	virtual void layOut(){}
-	
+
 	/**
 	 * @brief Show/hide widget.
 	 * @param visible - whether to show (true) or hide (false) the widget.
 	 */
 	void setVisible(bool visible);
-	
+
 	/**
 	 * @brief Check if widget is visible.
 	 * @return true if the widget is visible.
@@ -564,7 +564,7 @@ public:
 	 * @param enable - whether to enable (true) or disable (false) the widget.
 	 */
 	void setEnabled(bool enable);
-	
+
 	/**
 	 * @brief Check if the widget is currently enabled.
 	 * @return true if the widget is currently enabled.
@@ -573,7 +573,7 @@ public:
 	bool isEnabled()const noexcept{
 		return this->isEnabled_v;
 	}
-	
+
 	/**
 	 * @brief Check if widget can receive user input.
 	 * Checks if widget is enabled and visible, so it can receive user input.
@@ -583,17 +583,17 @@ public:
 	bool isInteractive()const noexcept{
 		return this->isEnabled() && this->isVisible();
 	}
-	
+
 	/**
 	 * @brief Check if point is within the widget bounds.
-     * @param pos - point to check in widget coordinates.
-     * @return true if point is inside of the widget boundaries.
+	 * @param pos - point to check in widget coordinates.
+	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
-     */
+	 */
 	bool contains(const morda::Vec2r& pos)const noexcept{
 		return morda::Rectr(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
 	}
-	
+
 	/**
 	 * @brief Find ancestor with given name and of given class.
 	 * @param name - name to look for. If nullptr, then any ancestor of the given class will match.
@@ -601,21 +601,21 @@ public:
 	 * @return false if no ancestor which satisfies the conditions was found.
 	 */
 	template <class T> T* findAncestor(const char* name = nullptr); //defined in Container.hpp
-	
+
 	/**
 	 * @brief Get position relative to ancestor.
 	 * @param ancestor - ancestor widget relative to which to get the position.
 	 * @return The position of this widget in given ancestor's coordinates.
 	 */
 	Vec2r posInAncestor(const Widget& ancestor);
-	
+
 	/**
 	 * @brief Calculate position in parent coordinates.
-     * @param pos - position to translate to parent coordinates.
-     * @param parent - parent of the widget hierarchy relatively to which the translation is to be done.
+	 * @param pos - position to translate to parent coordinates.
+	 * @param parent - parent of the widget hierarchy relatively to which the translation is to be done.
 	 *        If null then it will go down till the root widget.
-     * @return translated position.
-     */
+	 * @return translated position.
+	 */
 	Vec2r calcPosInParent(Vec2r pos, const Widget* parent = nullptr);
 };
 

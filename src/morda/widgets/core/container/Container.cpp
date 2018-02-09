@@ -342,3 +342,23 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	}
 	return d;
 }
+
+void Container::changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore) {
+	if(child.parent() != this){
+		throw morda::Exc("widget is not a child of this parent");
+	}
+	
+	if(this->isBlocked){
+		throw morda::Exc("cannot modify children list while iterating through children");
+	}
+	
+	ASSERT(child.parent_v == this)
+	
+	auto w = *child.parentIter_v;
+	
+	this->children_v.erase(child.parentIter_v);
+	
+	child.parentIter_v = this->children_v.insert(toBefore, std::move(w));
+	
+	this->onChildrenListChanged();
+}

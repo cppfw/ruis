@@ -52,23 +52,10 @@ class Window :
 	
 	void setupWidgets();
 	
-	/**
-	 * @brief Move the widget to the top within its parent.
-	 */
-	void makeTopmost();
-	
-	/**
-	 * @brief Check if the widget is currently topmost within its parent.
-	 * @return true if the widget is topmost.
-	 * @return false otherwise.
-	 */
-	bool isTopmost()const noexcept;
-	
 	void updateTopmost();
 	
 public:
 	Window(const stob::Node* chain = nullptr);
-	
 	
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
@@ -84,6 +71,17 @@ public:
 		return *this->contentArea;
 	}
 	
+	/**
+	 * @brief Move the window to the Z order top within its parent.
+	 */
+	void makeTopmost();
+	
+	/**
+	 * @brief Check if the widget is currently topmost within its parent.
+	 * @return true if the widget is topmost.
+	 * @return false otherwise.
+	 */
+	bool isTopmost()const noexcept;
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 	

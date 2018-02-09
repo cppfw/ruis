@@ -155,6 +155,13 @@ public:
 	void layOut()override;
 	
 	/**
+	 * @brief Change Z order of a child widget.
+	 * @param child - child widget to change Z order of.
+	 * @param toBefore - iterator into the children list before which to insert the child.
+	 */
+	void changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore);
+	
+	/**
 	 * @brief Add child widget.
 	 * @param w - widget to add.
 	 * @param insertBefore - iterator into the list of children widgets before which to insert the new widget.

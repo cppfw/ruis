@@ -417,17 +417,13 @@ void morda::Window::setBorders(Sidesr borders) {
 
 
 bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
-	if(isDown){
+	if(isDown && !this->isTopmost()){
 		morda::Morda::inst().postToUiThread_ts(
-				[this, isDown, pos, button, pointerId](){
+				[this](){
 					this->makeTopmost();
 					this->focus();
-					
-					//TODO: how is this working with mouse capturing?
-					this->Container::onMouseButton(isDown, pos, button, pointerId);
 				}
 			);
-		return true;
 	}
 	
 	this->Container::onMouseButton(isDown, pos, button, pointerId);
@@ -462,9 +458,7 @@ void Window::makeTopmost(){
 	
 	Container* p = this->parent();
 	
-	auto w = this->removeFromParent();
-	
-	p->add(w);
+	p->changeChildZPosition(*this, p->children().end());
 	
 	this->updateTopmost();
 	
