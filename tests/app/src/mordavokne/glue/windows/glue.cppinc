@@ -612,10 +612,15 @@ App::App(const WindowParams& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		curWinRect(0, 0, -1, -1),
 		gui(
-				*this,
 				utki::makeShared<mordaren::OpenGL2Renderer>(),
 				getDotsPerInch(getImpl(this->windowPimpl).hdc),
-				getDotsPerPt(getImpl(this->windowPimpl).hdc)
+				getDotsPerPt(getImpl(this->windowPimpl).hdc),
+				[this](std::function<void()>&& a){
+					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){
+						throw morda::Exc("PostMessage(): failed");
+					}
+				}
 			)
 {
 	this->updateWindowRect(
@@ -628,14 +633,6 @@ App::App(const WindowParams& wp) :
 		);
 }
 
-
-
-void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& msg){
-	auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-	if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(msg)>::type(std::move(msg)))) == 0){
-		throw morda::Exc("PostMessage(): failed");
-	}
-}
 
 
 void App::quit()noexcept {
