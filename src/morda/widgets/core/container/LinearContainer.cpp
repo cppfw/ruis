@@ -218,7 +218,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 	{
 		real remainder = 0;
 		
-		auto lastChild = this->children().back().get();
+		auto lastChild = this->children().size() != 0 ? this->children().back().get() : nullptr;
 		
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
