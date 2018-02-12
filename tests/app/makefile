@@ -29,7 +29,7 @@ ifeq ($(debug), true)
 endif
 
 this_cxxflags += -I$(d)../../src
-this_objcflags += -I$(d)../../src
+this_objcflags += -I$(d)../../src -I$(d)src/opengl2
 
 ifeq ($(ogles2), true)
     this_srcs += $(call prorab-src-dir,src/opengles2)
