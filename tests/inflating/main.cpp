@@ -3,20 +3,8 @@
 #include "FakeRenderer.hpp"
 
 
-class TestMorda : public morda::Morda{
-	
-public:
-	TestMorda() :
-			morda::Morda(std::make_shared<FakeRenderer>(), 0, 0)
-	{}
-	
-	void postToUiThread_ts(std::function<void()>&& f) override{
-		
-	}
-};
-
 int main(int argc, char** argv){
-	TestMorda m;
+	morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 	
 	//test that whole definition chain is substituted
 	{

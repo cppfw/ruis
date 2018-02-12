@@ -535,7 +535,6 @@ morda::real getDotsPerPt(Display* display){
 App::App(const WindowParams& requestedWindowParams) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
-				*this,
 #ifdef M_RENDER_OPENGL2
 				utki::makeShared<mordaren::OpenGL2Renderer>(),
 #elif defined(M_RENDER_OPENGLES2)
@@ -544,7 +543,10 @@ App::App(const WindowParams& requestedWindowParams) :
 #	error "Unknown graphics API"
 #endif
 				getDotsPerInch(getImpl(windowPimpl).display),
-				::getDotsPerPt(getImpl(windowPimpl).display)
+				::getDotsPerPt(getImpl(windowPimpl).display),
+				[this](std::function<void()>&& a){
+					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
+				}
 			)
 {
 #ifdef M_RASPBERRYPI
@@ -1126,12 +1128,4 @@ void App::swapFrameBuffers(){
 #else
 #	error "Unknown graphics API"
 #endif
-}
-
-
-
-void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& f){
-	auto& ww = getImpl(getWindowPimpl(this->app));
-	
-	ww.uiQueue.pushMessage(std::move(f));
 }

@@ -38,9 +38,6 @@ class App :
 	friend T_Singleton;
 	static T_Instance instance;
 	
-	
-private:
-
 public:	
 	/**
 	 * @brief Desired window parameters.
@@ -77,18 +74,7 @@ private:
 	void swapFrameBuffers();
 
 public:
-	class MordaVOkne : public morda::Morda{
-		App& app;
-	public:
-		MordaVOkne(App& app, std::shared_ptr<morda::Renderer> r, morda::real dotsPerInch, morda::real dotsPerPt) :
-				Morda(r, dotsPerInch, dotsPerPt),
-				app(app)
-		{
-			TRACE(<< "MordaVOkne::MordaVOkne(): enter" << std::endl)
-		}
-
-		void postToUiThread_ts(std::function<void()>&& f) override;
-	} gui;
+	morda::Morda gui;
 	
 public:
 

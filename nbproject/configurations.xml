@@ -2058,11 +2058,11 @@
             <pElem>src/morda/fonts</pElem>
             <pElem>src/morda/resources</pElem>
             <pElem>src/morda/widgets/base</pElem>
+            <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/label</pElem>
             <pElem>.</pElem>
           </incDir>

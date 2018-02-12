@@ -32,10 +32,15 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
-	 * @param dotsPerInch - dpi of your display.
+	 * @param dotsPerInch - DPI of your display.
 	 * @param dotsPerPt - desired dots per point.
+	 * @param postToUiThreadFunction - function to use when posting an action to UI thread is needed.
 	 */
-	Morda(std::shared_ptr<morda::Renderer> r, real dotsPerInch, real dotsPerPt);
+	Morda(
+			std::shared_ptr<morda::Renderer> r,
+			real dotsPerInch,
+			real dotsPerPt,
+			std::function<void(std::function<void()>&&)>&& postToUiThreadFunction);
 
 	Morda(const Morda&) = delete;
 	Morda& operator=(const Morda&) = delete;
@@ -93,7 +98,7 @@ public:
 	/**
 	 * @brief Initialize standard widgets library.
 	 * In addition to core widgets it is possible to use standard widgets.
-	 * This function loads necessarey resource packs and initializes standard
+	 * This function loads necessary resource packs and initializes standard
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
@@ -109,6 +114,9 @@ public:
 		return this->updater.update();
 	}
 	
+private:
+	std::function<void(std::function<void()>&&)> postToUiThread_v;
+public:
 	/**
 	 * @brief Execute code on UI thread.
 	 * This function should be thread-safe.
@@ -116,7 +124,12 @@ public:
 	 * When the event is handled it should execute the specified function.
 	 * @param f - function to execute on UI thread.
 	 */
-	virtual void postToUiThread_ts(std::function<void()>&& f) = 0;
+	void postToUiThread(std::function<void()>&& f);
+	
+	void postToUiThread_ts(std::function<void()>&& f){
+		TRACE(<< "postToUiThread_ts(): DEPRECATED! use postToUiThread() instead" << std::endl)
+		this->postToUiThread(std::move(f));
+	}
 	
 	/**
 	 * @brief Feed in the mouse move event to GUI.

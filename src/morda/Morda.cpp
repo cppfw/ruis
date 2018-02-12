@@ -32,8 +32,14 @@ using namespace morda;
 Morda::T_Instance Morda::instance;
 
 
-Morda::Morda(std::shared_ptr<morda::Renderer> r, real dotsPerInch, real dotsPerPt) :
+Morda::Morda(
+		std::shared_ptr<morda::Renderer> r,
+		real dotsPerInch,
+		real dotsPerPt,
+		std::function<void(std::function<void()>&&)>&& postToUiThreadFunction
+	) :
 		renderer_v(std::move(r)),
+		postToUiThread_v(std::move(postToUiThreadFunction)),
 		units(dotsPerInch, dotsPerPt)
 {
 	if(!this->renderer_v){
@@ -248,4 +254,10 @@ void Morda::onCharacterInput(const UnicodeProvider& unicode, Key_e key){
 			c->onCharacterInput(unicode.get(), key);
 		}
 	}
+}
+
+void Morda::postToUiThread(std::function<void()>&& f) {
+	ASSERT(this->postToUiThread_v)
+	
+	this->postToUiThread_v(std::move(f));
 }
