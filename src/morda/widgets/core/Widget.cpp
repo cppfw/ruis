@@ -258,8 +258,7 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 	
 	morda::inst().renderer().clearFramebuffer();
 	
-	Matr4r matrix;
-	matrix.identity();
+	Matr4r matrix = morda::inst().renderer().initialMatrix;
 	matrix.translate(-1, 1);
 	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
 	
