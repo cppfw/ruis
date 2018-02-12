@@ -53,11 +53,11 @@ const char* DDescription = R"qwertyuiop(
 HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		Widget(chain),
 		Pile(stob::parse(DDescription).get()),
-		handle(*this->findChildByName("morda_handle")),
+		handle(*this->findByName("morda_handle")),
 		isVertical(isVertical)
 {
 	{
-		auto np = this->findChildByNameAs<NinePatch>("morda_slider_bg");
+		auto np = this->findByNameAs<NinePatch>("morda_slider_bg");
 		ASSERT(np)
 		if(auto n = getProperty(chain, "background")){
 			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
@@ -67,7 +67,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 	}
 	
 	{
-		auto hi = this->findChildByNameAs<NinePatch>("morda_handle_image");
+		auto hi = this->findByNameAs<NinePatch>("morda_handle_image");
 		ASSERT(hi)
 		if(auto n = getProperty(chain, "handleNinePatch")){
 			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
@@ -76,7 +76,7 @@ HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
 		}
 	}
 	
-	auto hp = this->findChildByNameAs<MouseProxy>("morda_handle_proxy");
+	auto hp = this->findByNameAs<MouseProxy>("morda_handle_proxy");
 	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
 		if(button != MouseButton_e::LEFT){
 			return false;

@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include <utki/Singleton.hpp>
 #include <utki/config.hpp>
+#include <utki/Singleton.hpp>
 #include <utki/Buf.hpp>
 #include <utki/Unique.hpp>
 #include <utki/Flags.hpp>
@@ -12,39 +12,11 @@
 
 #include <kolme/Vector2.hpp>
 
-#include "../../../../src/morda/Morda.hpp"
+#include <morda/Morda.hpp>
 
-#include "../../../../src/morda/render/Renderer.hpp"
+#include <morda/util/keycodes.hpp>
 
-
-#if defined M_RENDER_OPENGLES2 || M_OS_NAME == M_OS_NAME_IOS
-#	if M_OS_NAME == M_OS_NAME_IOS
-#		include <OpenGlES/ES2/glext.h>
-#	else
-#		include <GLES2/gl2.h>
-#		include <EGL/egl.h>
-#	endif
-#else
-#	include <GL/glew.h>
-
-#	if M_OS == M_OS_LINUX
-#		include <GL/glx.h>
-#	endif
-#endif
-
-#if M_OS == M_OS_LINUX
-#	include <X11/Xlib.h>
-#	include <X11/Xutil.h>
-#endif
-
-#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
-#	include <nitki/Queue.hpp>
-#endif
-
-#if M_OS == M_OS_WINDOWS
-#	include <utki/windows.hpp>
-#endif
-
+#include "config.hpp"
 
 
 
@@ -57,7 +29,7 @@ namespace mordavokne{
  * An application should subclass this class and return an instance from the
  * application factory function createApp(), see AppFactory.hpp for details.
  * When instance of this class is created it also creates a window and
- * initializes OpenGL (or OpenGL ES).
+ * initializes rendering API (e.g. OpenGL or OpenGL ES).
  */
 class App :
 		public utki::IntrusiveSingleton<App>,
@@ -78,7 +50,7 @@ public:
 		 * @brief Desired dimensions of the window
 		 */
 		kolme::Vec2ui dim;
-		
+
 		enum class Buffer_e{
 			DEPTH,
 			STENCIL,
@@ -96,298 +68,27 @@ public:
 		{}
 	};
 	
-public:
+private:
+	std::unique_ptr<utki::Unique> windowPimpl;
 	
-
-#if M_OS == M_OS_LINUX
-
-private:	
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-	struct EGLDisplayWrapper{
-		EGLDisplay d;
-		EGLDisplayWrapper();
-		~EGLDisplayWrapper()noexcept;
-	} eglDisplay;
-	
-	struct EGLConfigWrapper{
-		EGLConfig c;
-		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
-		~EGLConfigWrapper()noexcept{}
-	} eglConfig;
-	
-	struct EGLSurfaceWrapper{
-		EGLDisplayWrapper& d;
-		EGLSurface s;
-		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c);
-		~EGLSurfaceWrapper()noexcept;
-	} eglSurface;
-	
-	struct EGLContextWrapper{
-		EGLDisplayWrapper& d;
-		EGLContext c;
-		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
-		~EGLContextWrapper()noexcept;
-	} eglContext;
-#	else
-	struct XDisplayWrapper{
-		Display* d;
-		XDisplayWrapper();
-		~XDisplayWrapper()noexcept;
-	} xDisplay;
-
-#		ifdef M_RENDER_OPENGLES2
-	struct EGLDisplayWrapper{
-		EGLDisplay d;
-		EGLDisplayWrapper();
-		~EGLDisplayWrapper()noexcept;
-	} eglDisplay;
-	
-	struct EGLConfigWrapper{
-		EGLConfig c;
-		EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d);
-		~EGLConfigWrapper()noexcept{}
-	} eglConfig;
-#		endif
-	
-	struct XVisualInfoWrapper{
-		XVisualInfo *vi;
-		XVisualInfoWrapper(
-				const WindowParams& wp,
-				XDisplayWrapper& xDisplay
-#		ifdef M_RENDER_OPENGLES2
-				, EGLDisplayWrapper& eglDisplay
-				, EGLConfigWrapper& eglConfig
-#		endif
-			);
-		~XVisualInfoWrapper()noexcept;
-	} xVisualInfo;
-
-	struct XWindowWrapper{
-		::Window w;
-
-		XDisplayWrapper& d;
-
-		XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo);
-		~XWindowWrapper()noexcept;
-	} xWindow;
-
-#		ifdef M_RENDER_OPENGLES2
-	struct EGLSurfaceWrapper{
-		EGLDisplayWrapper& d;
-		EGLSurface s;
-		EGLSurfaceWrapper(EGLDisplayWrapper&d, EGLConfigWrapper& c, XWindowWrapper& w);
-		~EGLSurfaceWrapper()noexcept;
-	} eglSurface;
-	
-	struct EGLContextWrapper{
-		EGLDisplayWrapper& d;
-		EGLContext c;
-		EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s);
-		~EGLContextWrapper()noexcept;
-	} eglContext;
-#		else
-	struct GLXContextWrapper{
-		GLXContext glxContext;
-
-		XDisplayWrapper& d;
-		XWindowWrapper& w;
-
-		GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo);
-		~GLXContextWrapper()noexcept{
-			this->Destroy();
-		}
-
-		void Destroy()noexcept;
-	} glxContex;
-#		endif
-	
-	struct XEmptyMouseCursor{
-		Cursor c;
-		
-		XDisplayWrapper& d;
-		
-		XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XEmptyMouseCursor()noexcept;
-	} xEmptyMouseCursor;
-	
-	struct XInputMethodWrapper{
-		XIM xim;
-		XIC xic;
-
-		XDisplayWrapper& d;
-		XWindowWrapper& w;
-
-		XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow);
-		~XInputMethodWrapper()noexcept{
-			this->Destroy();
-		}
-
-		void Destroy()noexcept;
-	} xInputMethod;
-#	endif
-
-
-#	if M_OS_NAME == M_OS_NAME_ANDROID
-	friend void updateWindowRect(App& app, const morda::Rectr& rect);
-	friend void Render(App& app);
-	friend std::uint32_t Update(App& app);
-	friend void HandleInputEvents();
-	friend void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars);
-	friend void HandleQueueMessages(App& app);
-	friend int GetUIQueueHandle(App& app);
-	
-#	else
-	
-	friend void Main(int argc, const char** argv);
-	void exec();
-
-#	endif
-
-#elif M_OS == M_OS_WINDOWS
+	friend const decltype(windowPimpl)& getWindowPimpl(App& app);
 
 private:
-	struct WindowClassWrapper{
-		std::string name;
-
-		WindowClassWrapper();
-		~WindowClassWrapper()noexcept;
-	} windowClass;
-
-	struct WindowWrapper{
-		HWND hwnd;
-
-		bool isHovered = false; //for tracking when mouse enters or leaves window.
-
-		utki::Flags<morda::MouseButton_e> mouseButtonState;
-
-		WindowWrapper(const WindowParams& wp, const WindowClassWrapper& wc);
-		~WindowWrapper()noexcept;
-	} window;
-
-	struct DeviceContextWrapper{
-		const WindowWrapper& w;
-		HDC hdc;
-
-		DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w);
-		~DeviceContextWrapper()noexcept{
-			this->Destroy();
-		}
-
-	private:
-		void Destroy()noexcept;
-	} deviceContext;
-
-
-	struct OpenGLContextWrapper{
-		HGLRC hrc;
-	public:
-		OpenGLContextWrapper(HDC hdc);
-
-		~OpenGLContextWrapper()noexcept {
-			this->Destroy();
-		}
-
-		void Destroy() noexcept;
-	} openglContext;
-
-
-
-
-	bool mouseCursorIsCurrentlyVisible = true;
-	
-	friend void winmain(int argc, const char** argv);
-	void exec();
-	void postToUiThread_ts(std::function<void()>&& f);
-	friend bool handleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres);
-
-#elif M_OS == M_OS_MACOSX
-private:
-
-	void postToUiThread_ts(std::function<void()>&& f);
-	
-#	if M_OS_NAME == M_OS_NAME_IOS
-	struct WindowObject{
-		void* id;
-		WindowObject(const App::WindowParams& wp);
-		~WindowObject()noexcept;
-	} windowObject;
-	
-	WindowParams windowParams;
-	
-	friend void ios_render();
-	friend std::uint32_t ios_update();
-	friend void ios_updateWindowRect(morda::Vec2r dim);
-	friend void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id);
-	friend const App::WindowParams& ios_getWindowParams();
-	
-	void swapFrameBuffers(){}
-	
-#	else
-	
-	void exec();
-	
-	friend void macosx_Main(int argc, const char** argv);
-	friend void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id);
-	friend void macosx_HandleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id);
-	friend void macosx_HandleMouseHover(bool isHovered);
-	friend void macosx_HandleKeyEvent(bool isDown, morda::Key_e keyCode);
-	friend void macosx_HandleCharacterInput(const void* nsstring, morda::Key_e key);
-	friend void macosx_UpdateWindowRect(const morda::Rectr& r);
-	friend void macosx_SetQuitFlag();
-
-	struct ApplicationObject{
-		void* id;
-		ApplicationObject();
-		~ApplicationObject()noexcept;
-	} applicationObject;
-
-	struct WindowObject{
-		void* id;
-		WindowObject(const App::WindowParams& wp);
-		~WindowObject()noexcept;
-	} windowObject;
-
-	struct OpenGLContext{
-		void *id;
-		OpenGLContext(const App::WindowParams& wp, void* window);
-		~OpenGLContext()noexcept{
-			this->Destroy();
-		}
-
-		void Destroy()noexcept;
-	} openGLContext;
-	
-	bool mouseCursorIsCurrentlyVisible = true;
-	
-#	endif
-
-#else
-#	error "unsupported OS"
-#endif
-
-private:
-#if M_OS_NAME != M_OS_NAME_IOS
 	void swapFrameBuffers();
-#endif
-	
-	struct GLEWWrapper{
-		GLEWWrapper();
-	} glewWrapper;
-	
 
-#if M_OS_NAME != M_OS_NAME_ANDROID
-private:
-	volatile bool quitFlag = false;
-#endif
+public:
+	class MordaVOkne : public morda::Morda{
+		App& app;
+	public:
+		MordaVOkne(App& app, std::shared_ptr<morda::Renderer> r, morda::real dotsPerInch, morda::real dotsPerPt) :
+				Morda(r, dotsPerInch, dotsPerPt),
+				app(app)
+		{
+			TRACE(<< "MordaVOkne::MordaVOkne(): enter" << std::endl)
+		}
 
-
-#if M_OS != M_OS_WINDOWS && M_OS != M_OS_MACOSX
-private:
-	nitki::Queue uiQueue;
-#endif
-
-private:
+		void postToUiThread_ts(std::function<void()>&& f) override;
+	} gui;
 	
 public:
 
@@ -398,35 +99,51 @@ public:
 	 * @param path - file path to initialize the file interface with.
 	 * @return Instance of the file interface into the resources storage.
 	 */
-	std::unique_ptr<papki::File> createResourceFileInterface(const std::string& path = std::string())const;
-
+	std::unique_ptr<papki::File> getResFile(const std::string& path = std::string())const;
+	
+	
 private:
 	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
 	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
+public:
+	const morda::Vec2r& winDim()const noexcept{
+		return this->curWinRect.d;
+	}
+
 private:
+	void render();
+	
+	friend void render(App& app);
+	
 	void updateWindowRect(const morda::Rectr& rect);
 
-	void render();
-
+	friend void updateWindowRect(App& app, const morda::Rectr& rect);
+	
 	//pos is in usual window coordinates, y goes down.
 	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
-		return morda::Vec2r(pos.x, pos.y);
+		return pos;
 	}
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const kolme::Vec2f& pos, unsigned id){
 		this->gui.onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
 	}
+	
+	friend void handleMouseMove(App& app, const kolme::Vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::MouseButton_e button, unsigned id){
 		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
+	
+	friend void handleMouseButton(App& app, bool isDown, const kolme::Vec2f& pos, morda::MouseButton_e button, unsigned id);
 
 	void handleMouseHover(bool isHovered, unsigned pointerID){
 		this->gui.onMouseHover(isHovered, pointerID);
 	}
+	
+	friend void handleMouseHover(App& app, bool isHovered, unsigned pointerID);
 
 protected:
 	/**
@@ -461,10 +178,14 @@ private:
 	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
 		this->gui.onCharacterInput(unicodeResolver, key);
 	}
+	
+	friend void handleCharacterInput(App& app, const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key);
 
 	void handleKeyEvent(bool isDown, morda::Key_e keyCode){
 		this->gui.onKeyEvent(isDown, keyCode);
 	}
+	
+	friend void handleKeyEvent(App& app, bool isDown, morda::Key_e keyCode);
 
 public:
 	
@@ -505,34 +226,20 @@ public:
 	 */
 	void setMouseCursorVisible(bool visible);
 	
-private:
-	std::shared_ptr<morda::Renderer> renderer;
 	
-	class MordaVOkne : public morda::Morda{
-	public:
-		MordaVOkne(std::shared_ptr<morda::Renderer> r, morda::real dotsPerInch, morda::real dotsPerPt) :
-				Morda(r, dotsPerInch, dotsPerPt)
-		{}
-		
-		void postToUiThread_ts(std::function<void()>&& f) override{
-#if M_OS == M_OS_WINDOWS || M_OS == M_OS_MACOSX
-			App::inst().postToUiThread_ts(std::move(f));
-#else
-			App::inst().uiQueue.pushMessage(std::move(f));
-#endif
-		}
-	} gui;
+	/**
+	 * @brief Find dots per point for given display parameters.
+	 * The size of the point for desktop displays should normally be equal to one pixel.
+	 * For handheld devices size of the point depends on physical screen size and pixel resolution.
+	 * @param resolution - resolution of the display in pixels.
+	 * @param screenSizeMm - size of the display in millimeters.
+	 * @return Size of one display point in pixels.
+	 */
+	static morda::real findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
 };
 
-
-
-#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX || M_OS == M_OS_UNIX
-/**
- * @brief For internal use only.
- */
-std::unique_ptr<App> createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState);
-#endif
-
-
+inline App& inst(){
+	return App::inst();
+}
 
 }

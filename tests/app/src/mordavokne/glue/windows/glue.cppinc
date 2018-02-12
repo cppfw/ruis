@@ -1,20 +1,47 @@
-//This file contains implementations of platform dependent methods from App class.
-
 #include "../../App.hpp"
-#include "../../../../../../src/morda/util/util.hpp"
 
-#include "../../../../../../src/morda/Morda.hpp"
-
-#include "../../../opengl2/mordaren/OpenGL2Renderer.hpp"
+#include <morda/util/util.hpp>
+#include <morda/Morda.hpp>
 
 #include <utki/windows.hpp>
+#include <utki/Unique.hpp>
+
 #include <papki/FSFile.hpp>
 
 #include <windowsx.h>
 
+#include <mordaren/OpenGL2Renderer.hpp>
+
 
 using namespace mordavokne;
 
+
+namespace{
+struct WindowWrapper : public utki::Unique{
+	std::string windowClassName;
+	HWND hwnd;
+	HDC hdc;
+	HGLRC hrc;
+
+	bool quitFlag = false;
+
+	bool isHovered = false; //for tracking when mouse enters or leaves window.
+
+	utki::Flags<morda::MouseButton_e> mouseButtonState;
+
+	bool mouseCursorIsCurrentlyVisible = true;
+
+	WindowWrapper(const App::WindowParams& wp);
+
+	~WindowWrapper()noexcept;
+};
+
+WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
+	return static_cast<WindowWrapper&>(*pimpl);
+}
+
+}
 
 namespace{
 
@@ -280,7 +307,7 @@ namespace{
 	class KeyEventUnicodeProvider : public morda::Morda::UnicodeProvider{
 		char32_t c;
 	public:
-		KeyEventUnicodeProvider(std::uint32_t unicodeChar = 0) :
+		KeyEventUnicodeProvider(char32_t unicodeChar = 0) :
 			c(unicodeChar)
 		{}
 
@@ -298,13 +325,11 @@ namespace{
 }//~namespace
 
 
+namespace{
 
-namespace mordavokne{
 
-	bool handleWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LRESULT& lres){
-		mordavokne::App& app = mordavokne::App::inst();
-
-		switch (msg){
+LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
+	switch (msg){
 		case WM_ACTIVATE:
 			if (!HIWORD(wParam)){ //Check Minimization State
 				//window active
@@ -312,34 +337,34 @@ namespace mordavokne{
 			else{
 				//window is no longer active
 			}
-			lres = 0;
-			return true;
+			return 0;
 
 		case WM_SYSCOMMAND:
 			switch (wParam){
-			case SC_SCREENSAVE: //screensaver trying to start?
-			case SC_MONITORPOWER: //montor trying to enter powersave?
-				return 0; //prevent from happening
+				case SC_SCREENSAVE: //screensaver trying to start?
+				case SC_MONITORPOWER: //montor trying to enter powersave?
+					return 0; //prevent from happening
 			}
 			break;
 
 		case WM_CLOSE:
 			PostQuitMessage(0);
-			lres = 0;
-			return true;
+			return 0;
 
 		case WM_MOUSEMOVE:
-			if(!app.window.isHovered){
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			if(!ww.isHovered){
 				
 				TRACKMOUSEEVENT tme = { sizeof(tme) };
 				tme.dwFlags = TME_LEAVE;
 				tme.hwndTrack = hwnd;
 				TrackMouseEvent(&tme);
 
-				app.window.isHovered = true;
+				ww.isHovered = true;
 
 				//restore mouse cursor invisibility
-				if(!app.mouseCursorIsCurrentlyVisible){
+				if(!ww.mouseCursorIsCurrentlyVisible){
 					CURSORINFO ci;
 					ci.cbSize = sizeof(CURSORINFO);
 					if(GetCursorInfo(&ci) != 0){
@@ -351,34 +376,39 @@ namespace mordavokne{
 					}
 				}
 
-				app.handleMouseHover(true, 0);
+				handleMouseHover(mordavokne::inst(), true, 0);
 			}
-			app.handleMouseMove(
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				0
+			handleMouseMove(
+					mordavokne::inst(),
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					0
 				);
-			lres = 0;
-			return true;
+			return 0;
+		}
 		case WM_MOUSELEAVE:
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+
 			//Windows hides the mouse cursor even in non-client areas of the window,
 			//like caption bar and borders, so show cursor if it is hidden
-			if(!app.mouseCursorIsCurrentlyVisible){
+			if(!ww.mouseCursorIsCurrentlyVisible){
 				ShowCursor(TRUE);
 			}
 
-			app.window.isHovered = false;
-			app.handleMouseHover(false, 0);
+			ww.isHovered = false;
+			handleMouseHover(mordavokne::inst(), false, 0);
 
 			//Report mouse button up events for all pressed mouse buttons
 			for(
-					decltype(app.window.mouseButtonState)::index_t i = 0;
-					i != app.window.mouseButtonState.size();
+					decltype(ww.mouseButtonState)::index_t i = 0;
+					i != ww.mouseButtonState.size();
 					++i
 				)
 			{
-				if(app.window.mouseButtonState.get(i)){
-					app.window.mouseButtonState.clear(i);
-					app.handleMouseButton(
+				if(ww.mouseButtonState.get(i)){
+					ww.mouseButtonState.clear(i);
+					handleMouseButton(
+							mordavokne::inst(),
 							false,
 							morda::Vec2r(1000000, 1000000), //outside of the window
 							morda::MouseButton_e(i),
@@ -386,75 +416,86 @@ namespace mordavokne{
 						);
 				}
 			}
-
-			lres = 0;
-			return true;
+			return 0;
+		}
 		case WM_LBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::MouseButton_e::LEFT);
-			app.handleMouseButton(
-				true,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::LEFT,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.set(morda::MouseButton_e::LEFT);
+			handleMouseButton(
+					mordavokne::inst(),
+					true,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::LEFT,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_LBUTTONUP:
-			app.window.mouseButtonState.clear(morda::MouseButton_e::LEFT);
-			app.handleMouseButton(
-				false,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::LEFT,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.clear(morda::MouseButton_e::LEFT);
+			handleMouseButton(
+					mordavokne::inst(),
+					false,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::LEFT,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_MBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::MouseButton_e::MIDDLE);
-			app.handleMouseButton(
-				true,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::MIDDLE,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.set(morda::MouseButton_e::MIDDLE);
+			handleMouseButton(
+					mordavokne::inst(),
+					true,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::MIDDLE,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_MBUTTONUP:
-			app.window.mouseButtonState.clear(morda::MouseButton_e::MIDDLE);
-			app.handleMouseButton(
-				false,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::MIDDLE,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.clear(morda::MouseButton_e::MIDDLE);
+			handleMouseButton(
+					mordavokne::inst(),
+					false,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::MIDDLE,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_RBUTTONDOWN:
-			app.window.mouseButtonState.set(morda::MouseButton_e::RIGHT);
-			app.handleMouseButton(
-				true,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::RIGHT,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.set(morda::MouseButton_e::RIGHT);
+			handleMouseButton(
+					mordavokne::inst(),
+					true,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::RIGHT,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_RBUTTONUP:
-			app.window.mouseButtonState.clear(morda::MouseButton_e::RIGHT);
-			app.handleMouseButton(
-				false,
-				morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-				morda::MouseButton_e::RIGHT,
-				0
+		{
+			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			ww.mouseButtonState.clear(morda::MouseButton_e::RIGHT);
+			handleMouseButton(
+					mordavokne::inst(),
+					false,
+					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::MouseButton_e::RIGHT,
+					0
 				);
-			lres = 0;
-			return true;
-
+			return 0;
+		}
 		case WM_MOUSEWHEEL:
 			{
 				short int times = HIWORD(wParam);
@@ -478,13 +519,15 @@ namespace mordavokne{
 				}
 
 				for(unsigned i = 0; i != times; ++i){
-					app.handleMouseButton(
+					handleMouseButton(
+							mordavokne::inst(),
 							true,
 							morda::Vec2r(float(pos.x), float(pos.y)),
 							button,
 							0
 						);
-					app.handleMouseButton(
+					handleMouseButton(
+							mordavokne::inst(),
 							false,
 							morda::Vec2r(float(pos.x), float(pos.y)),
 							button,
@@ -492,227 +535,58 @@ namespace mordavokne{
 						);
 				}
 			}
-			lres = 0;
-			return true;
+			return 0;
 
 		case WM_KEYDOWN:
 		{
 			morda::Key_e key = keyCodeMap[std::uint8_t(wParam)];
 			if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
-				app.handleKeyEvent(true, key);
+				handleKeyEvent(mordavokne::inst(), true, key);
 			}
-			app.handleCharacterInput(KeyEventUnicodeProvider(), key);
-			lres = 0;
-			return true;
+			handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(), key);
+			return 0;
 		}
 		case WM_KEYUP:
-			app.handleKeyEvent(false, keyCodeMap[std::uint8_t(wParam)]);
-			lres = 0;
-			return true;
+			handleKeyEvent(mordavokne::inst(), false, keyCodeMap[std::uint8_t(wParam)]);
+			return 0;
 
 		case WM_CHAR:
-			app.handleCharacterInput(KeyEventUnicodeProvider(std::uint32_t(wParam)), morda::Key_e::UNKNOWN);
-			lres = 0;
-			return true;
+			switch(char32_t(wParam)){
+				case U'\U00000008': //Backspace character
+				case U'\U0000001b': //Escape character
+				case U'\U0000000d': //Carriage return
+					break;
+				default:
+					handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(char32_t(wParam)), morda::Key_e::UNKNOWN);
+					break;
+			}
+			return 0;
 		case WM_PAINT:
 			//we will redraw anyway on every cycle
 			//app.Render();
 			ValidateRect(hwnd, NULL);//This is to tell Windows that we have redrawn contents and WM_PAINT should go away from message queue.
-			lres = 0;
-			return true;
+			return 0;
 
 		case WM_SIZE:
 			//resize GL, LoWord=Width, HiWord=Height
-			app.updateWindowRect(morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
-			lres = 0;
-			return true;
+			updateWindowRect(mordavokne::inst(), morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
+			return 0;
 
 		case WM_USER:
 			{
 				std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(lParam));
 				(*m)();
 			}
-			return true;
+			return 0;
 
 		default:
 			break;
-		}
-		return false;
 	}
 
-}//~namespace
-
-
-
-namespace{
-
-
-	LRESULT	CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
-		LRESULT res;
-		if (mordavokne::handleWindowMessage(hwnd, msg, wParam, lParam, res)){
-			return res;
-		}
-
-		return DefWindowProc(hwnd, msg, wParam, lParam);
-	}
-
-}//~namespace
-
-
-
-App::WindowClassWrapper::WindowClassWrapper(){
-	this->name = "MordaWindowClassName";
-
-	WNDCLASS wc;
-	memset(&wc, 0, sizeof(wc));
-
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;//Redraw on resize, own DC for window
-	wc.lpfnWndProc = (WNDPROC)WndProc;
-	wc.cbClsExtra = 0;//no extra window data
-	wc.cbWndExtra = 0;//no extra window data
-	wc.hInstance = GetModuleHandle(NULL);// instance handle
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = NULL;//no background required for OpenGL
-	wc.lpszMenuName = NULL;//we don't want a menu
-	wc.lpszClassName = this->name.c_str();// Set the window class Name
-
-	if (!RegisterClass(&wc)){
-		throw morda::Exc("Failed to register window class");
-	}
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-
-
-App::WindowClassWrapper::~WindowClassWrapper()noexcept{
-	if (!UnregisterClass(this->name.c_str(), GetModuleHandle(NULL))){
-		ASSERT_INFO(false, "Failed to unregister window class")
-	}
-}
-
-
-
-App::WindowWrapper::WindowWrapper(const App::WindowParams& wp, const WindowClassWrapper& wc){
-	//	TRACE_AND_LOG(<< "App::WindowWrapper::WindowWrapper(): enter" << std::endl)
-	this->hwnd = CreateWindowEx(
-		WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, //extended style
-		wc.name.c_str(),
-		"morda app",
-		WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-		0, //x
-		0, //y
-		wp.dim.x + 2 * GetSystemMetrics(SM_CXSIZEFRAME),
-		wp.dim.y + GetSystemMetrics(SM_CYCAPTION) + 2 * GetSystemMetrics(SM_CYSIZEFRAME),
-		NULL, //no parent window
-		NULL, //no menu
-		GetModuleHandle(NULL),
-		NULL //do not pass anything to WM_CREATE
-		);
-
-	if (!this->hwnd){
-		throw morda::Exc("Failed to create a window");
-	}
-
-	//NOTE: window will be shown later, right before entering main loop and after all initial App data is initialized
-
-	//	TRACE_AND_LOG(<< "App::WindowWrapper::WindowWrapper(): exit" << std::endl)
-}
-
-
-
-App::WindowWrapper::~WindowWrapper()noexcept{
-	if (!DestroyWindow(this->hwnd)){
-		ASSERT_INFO(false, "Failed to destroy window")
-	}
-}
-
-
-
-App::DeviceContextWrapper::DeviceContextWrapper(const WindowParams& wp, const WindowWrapper& w) :
-		w(w)
-{
-	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): enter" << std::endl)
-
-	this->hdc = GetDC(this->w.hwnd);
-	if (!this->hdc){
-		throw morda::Exc("Failed to create a OpenGL device context");
-	}
-
-	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): DC created" << std::endl)
-	
-	static	PIXELFORMATDESCRIPTOR pfd = {
-		sizeof(PIXELFORMATDESCRIPTOR),
-		1, // Version number of the structure, should be 1
-		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
-		BYTE(PFD_TYPE_RGBA),
-		BYTE(32), //color depth
-		BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), //color bits ignored
-		BYTE(0), //no alpha buffer
-		BYTE(0), //shift bit ignored
-		BYTE(0), //no accumulation buffer
-		BYTE(0), BYTE(0), BYTE(0), BYTE(0), //accumulation bits ignored
-		wp.buffers.get(WindowParams::Buffer_e::DEPTH) ? BYTE(16) : BYTE(0), //16bit depth buffer
-		wp.buffers.get(WindowParams::Buffer_e::STENCIL) ? BYTE(8) : BYTE(0),
-		BYTE(0), //no auxiliary buffer
-		BYTE(PFD_MAIN_PLANE), //main drawing layer
-		BYTE(0), //reserved
-		0, 0, 0 //layer masks ignored
-	};
-
-	int pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
-	if (!pixelFormat){
-		this->Destroy();
-		throw morda::Exc("Could not find suitable pixel format");
-	}
-
-	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): pixel format chosen" << std::endl)
-
-	if (!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
-		this->Destroy();
-		throw morda::Exc("Could not sent pixel format");
-	}
-
-	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): pixel format set" << std::endl)
-}
-
-
-
-void App::DeviceContextWrapper::Destroy()noexcept{
-	if (!ReleaseDC(this->w.hwnd, this->hdc)){
-		ASSERT_INFO(false, "Failed to release device context")
-	}
-}
-
-
-
-
-App::OpenGLContextWrapper::OpenGLContextWrapper(HDC hdc) {
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): enter" << std::endl)
-
-	this->hrc = wglCreateContext(hdc);
-	if (!this->hrc) {
-		throw morda::Exc("Failed to create OpenGL rendering context");
-	}
-
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-
-	if (!wglMakeCurrent(hdc, this->hrc)) {
-		this->Destroy();
-		throw morda::Exc("Failed to activate OpenGL rendering context");
-	}
-
-	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
-}
-
-void App::OpenGLContextWrapper::Destroy()noexcept{
-	if (!wglMakeCurrent(NULL, NULL)) {
-		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
-	}
-
-	if (!wglDeleteContext(this->hrc)) {
-		ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
-	}
-}
+}//~namespac
 
 
 namespace{
@@ -725,77 +599,48 @@ morda::real getDotsPerInch(HDC dc){
 }
 
 morda::real getDotsPerPt(HDC dc){
-	return 1;
+	kolme::Vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
+	kolme::Vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
+
+	return mordavokne::App::findDotsPerPt(resolution, screenSizeMm);
 }
 
 }//~namespace
 
 
-App::App(const WindowParams& requestedWindowParams) :
-		window(requestedWindowParams, windowClass),
-		deviceContext(requestedWindowParams, window),
-		openglContext(deviceContext.hdc),
+App::App(const WindowParams& wp) :
+		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		curWinRect(0, 0, -1, -1),
-		renderer(std::make_shared<mordaren::OpenGL2Renderer>()),
-		gui(this->renderer, getDotsPerInch(deviceContext.hdc), getDotsPerPt(deviceContext.hdc))
+		gui(
+				*this,
+				utki::makeShared<mordaren::OpenGL2Renderer>(),
+				getDotsPerInch(getImpl(this->windowPimpl).hdc),
+				getDotsPerPt(getImpl(this->windowPimpl).hdc)
+			)
 {
 	this->updateWindowRect(
 			morda::Rectr(
 					0,
 					0,
-					float(requestedWindowParams.dim.x),
-					float(requestedWindowParams.dim.y)
+					float(wp.dim.x),
+					float(wp.dim.y)
 				)
 		);
 }
 
 
 
-void App::postToUiThread_ts(std::function<void()>&& msg){
-	if (PostMessage(this->window.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(msg)>::type(std::move(msg)))) == 0){
+void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& msg){
+	auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+	if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(msg)>::type(std::move(msg)))) == 0){
 		throw morda::Exc("PostMessage(): failed");
 	}
 }
 
 
-
-void App::exec(){
-	//	TRACE(<< "App::exec(): enter" << std::endl)
-
-	while (!this->quitFlag){
-		std::uint32_t timeout = this->gui.update();
-		//		TRACE(<< "timeout = " << timeout << std::endl)
-
-		DWORD status = MsgWaitForMultipleObjectsEx(
-				0,
-				NULL,
-				timeout,
-				QS_ALLINPUT,
-				MWMO_INPUTAVAILABLE
-			);
-
-		//		TRACE(<< "msg" << std::endl)
-
-		if (status == WAIT_OBJECT_0){
-			MSG msg;
-			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
-				//				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
-				if (msg.message == WM_QUIT){
-					this->quitFlag = true;
-					break;
-				}
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-
-		this->render();
-		//		TRACE(<< "loop" << std::endl)
-	}
-}
-
 void App::quit()noexcept {
-	this->quitFlag = true;
+	auto& ww = getImpl(this->windowPimpl);
+	ww.quitFlag = true;
 }
 
 namespace mordavokne{
@@ -822,9 +667,42 @@ void winmain(int argc, const char** argv){
 	ASSERT_INFO(f, "no app factory function found")
 	std::unique_ptr<mordavokne::App> a = f(argc, argv, nullptr);
 
-	ShowWindow(a->window.hwnd, SW_SHOW);
+	ASSERT(a)
 
-	a->exec();
+	auto& ww = getImpl(getWindowPimpl(*a));
+
+	ShowWindow(ww.hwnd, SW_SHOW);
+
+	while (!ww.quitFlag){
+		std::uint32_t timeout = a->gui.update();
+		//		TRACE(<< "timeout = " << timeout << std::endl)
+
+		DWORD status = MsgWaitForMultipleObjectsEx(
+				0,
+				NULL,
+				timeout,
+				QS_ALLINPUT,
+				MWMO_INPUTAVAILABLE
+			);
+
+		//		TRACE(<< "msg" << std::endl)
+
+		if (status == WAIT_OBJECT_0){
+			MSG msg;
+			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
+				//				TRACE(<< "msg got, msg.message = " << msg.message << std::endl)
+				if (msg.message == WM_QUIT){
+					ww.quitFlag = true;
+					break;
+				}
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+
+		render(*a);
+		//		TRACE(<< "loop" << std::endl)
+	}
 }
 
 }//~namespace
@@ -849,10 +727,12 @@ void App::setFullscreen(bool enable) {
 		return;
 	}
 
+	auto& ww = getImpl(this->windowPimpl);
+
 	if (enable) {
 		//save original window size
 		RECT rect;
-		if (GetWindowRect(this->window.hwnd, &rect) == 0) {
+		if (GetWindowRect(ww.hwnd, &rect) == 0) {
 			throw utki::Exc("Failed to get window rect");
 		}
 		this->beforeFullScreenWindowRect.p.x = rect.left;
@@ -862,24 +742,24 @@ void App::setFullscreen(bool enable) {
 
 		// Set new window style
 		SetWindowLong(
-				this->window.hwnd,
+				ww.hwnd,
 				GWL_STYLE,
-				GetWindowLong(this->window.hwnd, GWL_STYLE)
+				GetWindowLong(ww.hwnd, GWL_STYLE)
 						& ~(WS_CAPTION | WS_THICKFRAME)
 			);
 		SetWindowLong(
-				this->window.hwnd,
+				ww.hwnd,
 				GWL_EXSTYLE,
-				GetWindowLong(this->window.hwnd, GWL_EXSTYLE)
+				GetWindowLong(ww.hwnd, GWL_EXSTYLE)
 						& ~(WS_EX_DLGMODALFRAME | WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE)
 			);
 
 		//set new window size and position
 		MONITORINFO mi;
 		mi.cbSize = sizeof(mi);
-		GetMonitorInfo(MonitorFromWindow(this->window.hwnd, MONITOR_DEFAULTTONEAREST), &mi);
+		GetMonitorInfo(MonitorFromWindow(ww.hwnd, MONITOR_DEFAULTTONEAREST), &mi);
 		SetWindowPos(
-				this->window.hwnd,
+				ww.hwnd,
 				NULL,
 				mi.rcMonitor.left,
 				mi.rcMonitor.top,
@@ -890,20 +770,20 @@ void App::setFullscreen(bool enable) {
 	}else{
 		// Reset original window style
 		SetWindowLong(
-				this->window.hwnd,
+				ww.hwnd,
 				GWL_STYLE,
-				GetWindowLong(this->window.hwnd, GWL_STYLE)
+				GetWindowLong(ww.hwnd, GWL_STYLE)
 						| (WS_CAPTION | WS_THICKFRAME)
 			);
 		SetWindowLong(
-				this->window.hwnd,
+				ww.hwnd,
 				GWL_EXSTYLE,
-				GetWindowLong(this->window.hwnd, GWL_EXSTYLE)
+				GetWindowLong(ww.hwnd, GWL_EXSTYLE)
 						| (WS_EX_DLGMODALFRAME | WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE)
 			);
 
 			SetWindowPos(
-					this->window.hwnd,
+					ww.hwnd,
 					NULL,
 					this->beforeFullScreenWindowRect.p.x,
 					this->beforeFullScreenWindowRect.p.y,
@@ -918,15 +798,178 @@ void App::setFullscreen(bool enable) {
 
 
 void App::setMouseCursorVisible(bool visible){
+	auto& ww = getImpl(this->windowPimpl);
+
 	if(visible){
-		if(!this->mouseCursorIsCurrentlyVisible){
+		if(!ww.mouseCursorIsCurrentlyVisible){
 			ShowCursor(TRUE);
-			this->mouseCursorIsCurrentlyVisible = true;
+			ww.mouseCursorIsCurrentlyVisible = true;
 		}
 	}else{
-		if(this->mouseCursorIsCurrentlyVisible){
+		if(ww.mouseCursorIsCurrentlyVisible){
 			ShowCursor(FALSE);
-			this->mouseCursorIsCurrentlyVisible = false;
+			ww.mouseCursorIsCurrentlyVisible = false;
 		}
 	}
+}
+
+
+void App::swapFrameBuffers(){
+	auto& ww = getImpl(this->windowPimpl);
+	SwapBuffers(ww.hdc);
+}
+
+
+
+namespace{
+WindowWrapper::WindowWrapper(const App::WindowParams& wp){
+	this->windowClassName = "MordavokneWindowClassName";
+
+	{
+		WNDCLASS wc;
+		memset(&wc, 0, sizeof(wc));
+
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;//Redraw on resize, own DC for window
+		wc.lpfnWndProc = (WNDPROC)wndProc;
+		wc.cbClsExtra = 0;//no extra window data
+		wc.cbWndExtra = 0;//no extra window data
+		wc.hInstance = GetModuleHandle(NULL);// instance handle
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = NULL;//no background required for OpenGL
+		wc.lpszMenuName = NULL;//we don't want a menu
+		wc.lpszClassName = this->windowClassName.c_str();// Set the window class Name
+
+		if (!RegisterClass(&wc)){
+			throw morda::Exc("Failed to register window class");
+		}
+	}
+
+	utki::ScopeExit scopeExitWindowClass([this](){
+		if(!UnregisterClass(this->windowClassName.c_str(), GetModuleHandle(NULL))){
+			ASSERT_INFO(false, "Failed to unregister window class")
+		}
+	});
+
+
+	this->hwnd = CreateWindowEx(
+			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, //extended style
+			this->windowClassName.c_str(),
+			"morda app",
+			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+			0, //x
+			0, //y
+			wp.dim.x + 2 * GetSystemMetrics(SM_CXSIZEFRAME),
+			wp.dim.y + GetSystemMetrics(SM_CYCAPTION) + 2 * GetSystemMetrics(SM_CYSIZEFRAME),
+			NULL, //no parent window
+			NULL, //no menu
+			GetModuleHandle(NULL),
+			NULL //do not pass anything to WM_CREATE
+		);
+
+	if (!this->hwnd){
+		throw morda::Exc("Failed to create a window");
+	}
+
+	utki::ScopeExit scopeExitHwnd([this](){
+		if (!DestroyWindow(this->hwnd)){
+			ASSERT_INFO(false, "Failed to destroy window")
+		}
+	});
+
+	//NOTE: window will be shown later, right before entering main loop and after all initial App data is initialized
+
+	this->hdc = GetDC(this->hwnd);
+	if (!this->hdc){
+		throw morda::Exc("Failed to create a OpenGL device context");
+	}
+
+	utki::ScopeExit scopeExitHdc([this](){
+		if (!ReleaseDC(this->hwnd, this->hdc)){
+			ASSERT_INFO(false, "Failed to release device context")
+		}
+	});
+
+	//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): DC created" << std::endl)
+	
+	{
+		static PIXELFORMATDESCRIPTOR pfd = {
+			sizeof(PIXELFORMATDESCRIPTOR),
+			1, // Version number of the structure, should be 1
+			PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+			BYTE(PFD_TYPE_RGBA),
+			BYTE(32), //color depth
+			BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), BYTE(0), //color bits ignored
+			BYTE(0), //no alpha buffer
+			BYTE(0), //shift bit ignored
+			BYTE(0), //no accumulation buffer
+			BYTE(0), BYTE(0), BYTE(0), BYTE(0), //accumulation bits ignored
+			wp.buffers.get(App::WindowParams::Buffer_e::DEPTH) ? BYTE(16) : BYTE(0), //16bit depth buffer
+			wp.buffers.get(App::WindowParams::Buffer_e::STENCIL) ? BYTE(8) : BYTE(0),
+			BYTE(0), //no auxiliary buffer
+			BYTE(PFD_MAIN_PLANE), //main drawing layer
+			BYTE(0), //reserved
+			0, 0, 0 //layer masks ignored
+		};
+
+		int pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
+		if (!pixelFormat){
+			throw morda::Exc("Could not find suitable pixel format");
+		}
+
+		//	TRACE_AND_LOG(<< "App::DeviceContextWrapper::DeviceContextWrapper(): pixel format chosen" << std::endl)
+
+		if (!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
+			throw morda::Exc("Could not sent pixel format");
+		}
+	}
+
+	this->hrc = wglCreateContext(hdc);
+	if (!this->hrc) {
+		throw morda::Exc("Failed to create OpenGL rendering context");
+	}
+
+	utki::ScopeExit scopeExitHrc([this](){
+		if (!wglMakeCurrent(NULL, NULL)) {
+			ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
+		}
+		if (!wglDeleteContext(this->hrc)) {
+			ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
+		}
+	});
+
+	//	TRACE_AND_LOG(<< "App::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
+
+	if (!wglMakeCurrent(hdc, this->hrc)) {
+		throw morda::Exc("Failed to activate OpenGL rendering context");
+	}
+
+	if(glewInit() != GLEW_OK){
+		throw morda::Exc("GLEW initialization failed");
+	}
+
+	scopeExitHrc.reset();
+	scopeExitHdc.reset();
+	scopeExitHwnd.reset();
+	scopeExitWindowClass.reset();
+}
+
+WindowWrapper::~WindowWrapper()noexcept{
+	if (!wglMakeCurrent(NULL, NULL)) {
+		ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
+	}
+
+	if (!wglDeleteContext(this->hrc)) {
+		ASSERT_INFO(false, "Releasing OpenGL rendering context failed")
+	}
+	if (!ReleaseDC(this->hwnd, this->hdc)){
+		ASSERT_INFO(false, "Failed to release device context")
+	}
+	if (!DestroyWindow(this->hwnd)){
+		ASSERT_INFO(false, "Failed to destroy window")
+	}
+	if(!UnregisterClass(this->windowClassName.c_str(), GetModuleHandle(NULL))){
+		ASSERT_INFO(false, "Failed to unregister window class")
+	}
+}
 }

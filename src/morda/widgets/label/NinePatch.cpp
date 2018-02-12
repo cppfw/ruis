@@ -84,21 +84,21 @@ NinePatch::NinePatch(const stob::Node* chain) :
 		BlendingWidget(chain),
 		Table(stob::parse(ninePatchLayout_c).get())
 {
-	this->imageMatrix_v[0][0] = this->findChildByNameAs<Image>("morda_lt");
-	this->imageMatrix_v[0][1] = this->findChildByNameAs<Image>("morda_t");
-	this->imageMatrix_v[0][2] = this->findChildByNameAs<Image>("morda_rt");
+	this->imageMatrix_v[0][0] = this->findByNameAs<Image>("morda_lt");
+	this->imageMatrix_v[0][1] = this->findByNameAs<Image>("morda_t");
+	this->imageMatrix_v[0][2] = this->findByNameAs<Image>("morda_rt");
 	
-	this->imageMatrix_v[1][0] = this->findChildByNameAs<Image>("morda_l");
-	this->imageMatrix_v[1][1] = this->findChildByNameAs<Image>("morda_m");
-	this->imageMatrix_v[1][2] = this->findChildByNameAs<Image>("morda_r");
+	this->imageMatrix_v[1][0] = this->findByNameAs<Image>("morda_l");
+	this->imageMatrix_v[1][1] = this->findByNameAs<Image>("morda_m");
+	this->imageMatrix_v[1][2] = this->findByNameAs<Image>("morda_r");
 	
-	this->imageMatrix_v[2][0] = this->findChildByNameAs<Image>("morda_lb");
-	this->imageMatrix_v[2][1] = this->findChildByNameAs<Image>("morda_b");
-	this->imageMatrix_v[2][2] = this->findChildByNameAs<Image>("morda_rb");
+	this->imageMatrix_v[2][0] = this->findByNameAs<Image>("morda_lb");
+	this->imageMatrix_v[2][1] = this->findByNameAs<Image>("morda_b");
+	this->imageMatrix_v[2][2] = this->findByNameAs<Image>("morda_rb");
 	
 	this->onBlendingChanged();
 	
-	this->content_v = this->findChildByNameAs<Pile>("morda_content");
+	this->content_v = this->findByNameAs<Pile>("morda_content");
 	
 	if(auto n = getProperty(chain, "left")){
 		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'

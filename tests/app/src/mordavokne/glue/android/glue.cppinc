@@ -1,35 +1,426 @@
-//This file contains implementations of platform dependent methods from App class.
-
-
 #include <cerrno>
 #include <ctime>
 #include <csignal>
 
 #include <android/native_activity.h>
 #include <android/configuration.h>
+#include <android/asset_manager.h>
+#include <android/window.h>
 
-#include <ting/utf8.hpp>
-#include <ting/mt/Queue.hpp>
+#include <unikod/utf8.hpp>
+#include <nitki/Queue.hpp>
 
-#include <time.h>
-#include <signal.h>
 #include <sys/eventfd.h>
 
-#include "AssetFile.hpp"
+
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
+
+#include <mordaren/OpenGLES2Renderer.hpp>
+
+#include <EGL/egl.h>
 
 
 
 using namespace mordavokne;
 
-
+#include "../createAppUnix.cppinc"
 
 namespace{
 
+
+
+
 ANativeActivity* nativeActivity = 0;
 
+mordavokne::App& getApp(ANativeActivity* activity){
+	ASSERT(activity)
+	return *static_cast<mordavokne::App*>(activity->instance);
+}
+
 ANativeWindow* androidWindow = 0;
+
+
+	class JavaFunctionsWrapper : public utki::Unique{
+		JNIEnv *env;
+		jclass clazz;
+		jobject obj;
+
+		jmethodID resolveKeycodeUnicodeMeth;
+
+		jmethodID getDotsPerInchMeth;
+
+		jmethodID showVirtualKeyboardMeth;
+		jmethodID hideVirtualKeyboardMeth;
+
+		jmethodID listDirContentsMeth;
+	public:
+		JavaFunctionsWrapper(ANativeActivity* a){
+			this->env = a->env;
+			this->obj = a->clazz;
+			this->clazz = this->env->GetObjectClass(this->obj);
+			ASSERT(this->clazz)
+
+
+			this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
+			ASSERT(this->resolveKeycodeUnicodeMeth)
+
+			this->getDotsPerInchMeth = this->env->GetMethodID(this->clazz, "getDotsPerInch", "()F");
+
+			this->listDirContentsMeth = this->env->GetMethodID(this->clazz, "listDirContents", "(Ljava/lang/String;)[Ljava/lang/String;");
+			ASSERT(this->listDirContentsMeth)
+
+			this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
+			ASSERT(this->showVirtualKeyboardMeth)
+
+			this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
+			ASSERT(this->hideVirtualKeyboardMeth)
+		}
+
+		~JavaFunctionsWrapper()noexcept{
+		}
+
+		char32_t resolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+			return char32_t(this->env->CallIntMethod(
+					this->obj,
+					this->resolveKeycodeUnicodeMeth,
+					jint(devId),
+					jint(metaState),
+					jint(keyCode)
+				));
+		}
+
+		float getDotsPerInch(){
+			return float(this->env->CallFloatMethod(this->obj, this->getDotsPerInchMeth));
+		}
+
+		void hideVirtualKeyboard(){
+			this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
+		}
+
+		void showVirtualKeyboard(){
+			this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
+		}
+
+		std::vector<std::string> listDirContents(const std::string& path){
+			jstring p = this->env->NewStringUTF(path.c_str());
+			jobject res = this->env->CallObjectMethod(this->obj, this->listDirContentsMeth, p);
+			this->env->DeleteLocalRef(p);
+
+			utki::ScopeExit scopeExit([this, res](){
+				this->env->DeleteLocalRef(res);
+			});
+
+			std::vector<std::string> ret;
+
+			if(res == nullptr){
+				return ret;
+			}
+
+			jobjectArray arr = static_cast<jobjectArray>(res);
+
+			int count = env->GetArrayLength(arr);
+
+			for (int i = 0; i < count; ++i) {
+				jstring str = static_cast<jstring>(env->GetObjectArrayElement(arr, i));
+				auto chars = env->GetStringUTFChars(str, nullptr);
+				ret.push_back(std::string(chars));
+				this->env->ReleaseStringUTFChars(str, chars);
+				this->env->DeleteLocalRef(str);
+			}
+
+			return ret;
+		}
+	};
+
+
+std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
+
+struct WindowWrapper : public utki::Unique{
+	EGLDisplay display;
+	EGLSurface surface;
+	EGLContext context;
+
+	nitki::Queue uiQueue;
+
+	WindowWrapper(const App::WindowParams& wp){
+		this->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+		if(this->display == EGL_NO_DISPLAY){
+			throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
+		}
+
+		utki::ScopeExit eglDisplayScopeExit([this](){
+			eglTerminate(this->display);
+		});
+
+		if(eglInitialize(this->display, 0, 0) == EGL_FALSE){
+			throw morda::Exc("eglInitialize() failed");
+		}
+
+		//TODO: allow stencil configuration etc. via WindowParams
+		//Here specify the attributes of the desired configuration.
+		//Below, we select an EGLConfig with at least 8 bits per color
+		//component compatible with on-screen windows
+		const EGLint attribs[] = {
+				EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+				EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
+				EGL_BLUE_SIZE, 8,
+				EGL_GREEN_SIZE, 8,
+				EGL_RED_SIZE, 8,
+				EGL_NONE
+		};
+
+		EGLConfig config;
+
+		//Here, the application chooses the configuration it desires. In this
+		//sample, we have a very simplified selection process, where we pick
+		//the first EGLConfig that matches our criteria
+		EGLint numConfigs;
+		eglChooseConfig(this->display, attribs, &config, 1, &numConfigs);
+		if(numConfigs <= 0){
+			throw morda::Exc("eglChooseConfig() failed, no matching config found");
+		}
+
+		//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
+		//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
+		//As soon as we picked a EGLConfig, we can safely reconfigure the
+		//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
+		EGLint format;
+		if(eglGetConfigAttrib(this->display, config, EGL_NATIVE_VISUAL_ID, &format) == EGL_FALSE){
+			throw morda::Exc("eglGetConfigAttrib() failed");
+		}
+
+		ASSERT(androidWindow)
+		ANativeWindow_setBuffersGeometry(androidWindow, 0, 0, format);
+
+		this->surface = eglCreateWindowSurface(this->display, config, androidWindow, NULL);
+		if(this->surface == EGL_NO_SURFACE){
+			throw morda::Exc("eglCreateWindowSurface() failed");
+		}
+
+		utki::ScopeExit eglSurfaceScopeExit([this](){
+			eglDestroySurface(this->display, this->surface);
+		});
+
+
+		EGLint contextAttrs[] = {
+				EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+				EGL_NONE
+		};
+
+		this->context = eglCreateContext(this->display, config, NULL, contextAttrs);
+		if(this->context == EGL_NO_CONTEXT){
+			throw morda::Exc("eglCreateContext() failed");
+		}
+
+		utki::ScopeExit eglContextScopeExit([this](){
+			eglDestroyContext(this->display, this->context);
+		});
+
+		if(eglMakeCurrent(this->display, this->surface, this->surface, this->context) == EGL_FALSE){
+			throw morda::Exc("eglMakeCurrent() failed");
+		}
+
+		eglContextScopeExit.reset();
+		eglSurfaceScopeExit.reset();
+		eglDisplayScopeExit.reset();
+	}
+
+	kolme::Vec2ui getWindowSize(){
+		EGLint width, height;
+		eglQuerySurface(this->display, this->surface, EGL_WIDTH, &width);
+		eglQuerySurface(this->display, this->surface, EGL_HEIGHT, &height);
+		return kolme::Vec2ui(width, height);
+	}
+
+	void swapBuffers(){
+		eglSwapBuffers(this->display, this->surface);
+	}
+
+	~WindowWrapper()noexcept{
+		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		eglDestroyContext(this->display, this->context);
+		eglDestroySurface(this->display, this->surface);
+		eglTerminate(this->display);
+	}
+};
+
+WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
+	return static_cast<WindowWrapper&>(*pimpl);
+}
+
+
+class AssetFile : public papki::File{
+	AAssetManager* manager;
+
+	mutable AAsset* handle = nullptr;
+
+public:
+
+	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
+			manager(manager),
+			File(pathName)
+	{
+		ASSERT(this->manager)
+	}
+
+
+	virtual void openInternal(E_Mode mode)override{
+		switch(mode){
+			case papki::File::E_Mode::WRITE:
+			case papki::File::E_Mode::CREATE:
+				throw papki::Exc("WRITE and CREATE open modes are not supported by Android assets");
+				break;
+			case papki::File::E_Mode::READ:
+				break;
+			default:
+				throw papki::Exc("unknown mode");
+				break;
+		}
+		this->handle = AAssetManager_open(this->manager, this->path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE mean at all
+		if(!this->handle){
+			TRACE(<< "AAssetManager_open() failed, file path = " << this->path() << std::endl)
+			throw papki::Exc("AAssetManager_open() failed");
+		}
+	}
+
+	virtual void closeInternal()const noexcept override{
+		ASSERT(this->handle)
+		AAsset_close(this->handle);
+		this->handle = 0;
+	}
+
+	virtual size_t readInternal(utki::Buf<std::uint8_t> buf)const override{
+		ASSERT(this->handle)
+		int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
+		if(numBytesRead < 0){//something happened
+			throw papki::Exc("AAsset_read() error");
+		}
+		ASSERT(numBytesRead >= 0)
+		return size_t(numBytesRead);
+	}
+
+	virtual size_t writeInternal(const utki::Buf<std::uint8_t> buf)override{
+		ASSERT(this->handle)
+		throw papki::Exc("Write() is not supported by Android assets");
+		return 0;
+	}
+
+	virtual size_t seekForwardInternal(size_t numBytesToSeek)const override{
+		return this->seek(numBytesToSeek, true);
+	}
+
+	virtual size_t seekBackwardInternal(size_t numBytesToSeek)const override{
+		return this->seek(numBytesToSeek, false);
+	}
+
+	virtual void rewindInternal()const override{
+		if(!this->isOpened()){
+			throw papki::Exc("file is not opened, cannot rewind");
+		}
+
+		ASSERT(this->handle)
+		if(AAsset_seek(this->handle, 0, SEEK_SET) < 0){
+			throw papki::Exc("AAsset_seek() failed");
+		}
+	}
+
+	virtual bool exists()const override{
+		if(this->isOpened()){ //file is opened => it exists
+			return true;
+		}
+
+		if(this->path().size() == 0){
+			return false;
+		}
+
+		if(this->isDir()){
+			//try opening the directory to check its existence
+			AAssetDir* pdir = AAssetManager_openDir(this->manager, this->path().c_str());
+
+			if(!pdir){
+				return false;
+			}else{
+				AAssetDir_close(pdir);
+				return true;
+			}
+		}else{
+			return this->File::exists();
+		}
+	}
+
+	virtual std::vector<std::string> listDirContents(size_t maxEntries = 0)const override{
+		if(!this->isDir()){
+			throw papki::IllegalStateExc("AndroidAssetFile::ListDirContents(): this is not a directory");
+		}
+
+		//Trim away trailing '/', as Android does not work with it.
+		auto p = this->path().substr(0, this->path().size() - 1);
+
+		ASSERT(javaFunctionsWrapper)
+		return javaFunctionsWrapper->listDirContents(p);
+	}
+
+	std::unique_ptr<papki::File> spawn()override{
+		return utki::makeUnique<AssetFile>(this->manager);
+	}
+
+	~AssetFile()noexcept{
+	}
+
+	size_t seek(size_t numBytesToSeek, bool seekForward)const{
+		if(!this->isOpened()){
+			throw papki::Exc("file is not opened, cannot seek");
+		}
+
+		ASSERT(this->handle)
+
+		//NOTE: AAsset_seek() accepts 'off_t' as offset argument which is signed and can be
+		//      less than size_t value passed as argument to this function.
+		//      Therefore, do several seek operations with smaller offset if necessary.
+
+		off_t assetSize = AAsset_getLength(this->handle);
+		ASSERT(assetSize >= 0)
+
+		if(seekForward){
+			ASSERT(size_t(assetSize) >= this->curPos())
+			utki::clampTop(numBytesToSeek, size_t(assetSize) - this->curPos());
+		}else{
+			utki::clampTop(numBytesToSeek, this->curPos());
+		}
+
+		typedef off_t T_FSeekOffset;
+		const size_t DMax = ((size_t(T_FSeekOffset(-1))) >> 1);
+		ASSERT((size_t(1) << ((sizeof(T_FSeekOffset) * 8) - 1)) - 1 == DMax)
+		static_assert(size_t(-(-T_FSeekOffset(DMax))) == DMax, "size mismatch");
+
+		for(size_t numBytesLeft = numBytesToSeek; numBytesLeft != 0;){
+			ASSERT(numBytesLeft <= numBytesToSeek)
+
+			T_FSeekOffset offset;
+			if(numBytesLeft > DMax){
+				offset = T_FSeekOffset(DMax);
+			}else{
+				offset = T_FSeekOffset(numBytesLeft);
+			}
+
+			ASSERT(offset > 0)
+
+			if(AAsset_seek(this->handle, seekForward ? offset : (-offset), SEEK_CUR) < 0){
+				throw papki::Exc("AAsset_seek() failed");
+			}
+
+			ASSERT(size_t(offset) < size_t(-1))
+			ASSERT(numBytesLeft >= size_t(offset))
+
+			numBytesLeft -= size_t(offset);
+		}
+		return numBytesToSeek;
+	}
+};
+
+
 
 morda::Vec2r curWinDim(0, 0);
 
@@ -57,10 +448,10 @@ std::array<morda::Vec2r, 10> pointers;
 
 
 
-inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Rectr& winRect, const morda::Vec2r& p){
+inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Vec2r& winDim, const morda::Vec2r& p){
 	morda::Vec2r ret(
 			p.x,
-			p.y - (curWinDim.y - winRect.d.y)
+			p.y - (curWinDim.y - winDim.y)
 		);
 //	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
 	return ret.rounded();
@@ -88,93 +479,26 @@ std::unique_ptr<AndroidConfiguration> curConfig;
 
 
 
-class JavaFunctionsWrapper{
-	JNIEnv *env;
-	jclass clazz;
-	jobject obj;
-	
-	jmethodID resolveKeycodeUnicodeMeth;
-	
-	jmethodID getDotsPerCmMeth;
-	
-	jmethodID showVirtualKeyboardMeth;
-	jmethodID hideVirtualKeyboardMeth;
-protected:
-	JavaFunctionsWrapper(ANativeActivity* a){
-		this->env = a->env;
-		this->obj = a->clazz;
-		this->clazz = this->env->GetObjectClass(this->obj);
-		ASSERT(this->clazz)
-		
-		
-		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
-		ASSERT(this->resolveKeycodeUnicodeMeth)
-		
-		this->getDotsPerCmMeth = this->env->GetMethodID(this->clazz, "getDotsPerCm", "()F");
-		
-		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
-		ASSERT(this->showVirtualKeyboardMeth)
-		
-		this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
-		ASSERT(this->hideVirtualKeyboardMeth)
-	}
-	
-public:
-	
-	static std::unique_ptr<JavaFunctionsWrapper> New(ANativeActivity* a){
-		return std::unique_ptr<JavaFunctionsWrapper>(
-				new JavaFunctionsWrapper(a)
-			);
-	}
-	
-	~JavaFunctionsWrapper()noexcept{
-	}
-	
-	std::uint32_t ResolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
-		return std::uint32_t(this->env->CallIntMethod(this->obj, this->resolveKeycodeUnicodeMeth, jint(devId), jint(metaState), jint(keyCode)));
-	}
-	
-	float GetDotsPerCm(){
-		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerCmMeth));
-	}
-	
-	void HideVirtualKeyboard(){
-		this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
-	}
-	
-	void ShowVirtualKeyboard(){
-		this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
-	}
-};
-
-
-
-std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
-
-
-
-class KeyEventToUnicodeResolver{
+class KeyEventToUnicodeResolver : public morda::Morda::UnicodeProvider{
 public:	
 	int32_t kc;//key code
 	int32_t ms;//meta state
 	int32_t di;//device id
-	
-	std::vector<std::uint32_t> Resolve()const{
+
+	std::u32string get()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
-		std::uint32_t res = javaFunctionsWrapper->ResolveKeyUnicode(this->di, this->ms, this->kc);
+		char32_t res = javaFunctionsWrapper->resolveKeyUnicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
-			return std::vector<std::uint32_t>();
+			TRACE(<< "key did not produce any unicode character, returning empty string" << std::endl)
+			return std::u32string();
 		}
-		
-		std::vector<std::uint32_t> ret(1);
-		ret[0] = res;
-		
-		return ret;
+
+		return std::u32string(&res, 1);
 	}
-	
+
 
 } keyUnicodeResolver;
 
@@ -244,9 +568,9 @@ public:
 		}
 
 		struct sigaction sa;
-		sa._u._sa_handler = &LinuxTimer::OnSIGALRM;
+		sa.sa_handler = &LinuxTimer::OnSIGALRM;
 		sa.sa_flags = SA_NODEFER;
-		sa.sa_mask = 0;
+		memset(&sa.sa_mask, 0, sizeof(sa.sa_mask));
 
 		res = sigaction(SIGALRM, &sa, 0);
 		ASSERT(res == 0)
@@ -255,9 +579,9 @@ public:
 	~LinuxTimer()noexcept{
 		//set default handler for SIGALRM
 		struct sigaction sa;
-		sa._u._sa_handler = SIG_DFL;
+		sa.sa_handler = SIG_DFL;
 		sa.sa_flags = 0;
-		sa.sa_mask = 0;
+		memset(&sa.sa_mask, 0, sizeof(sa.sa_mask));
 
 #ifdef DEBUG
 		int res =
@@ -311,268 +635,268 @@ public:
 
 
 //TODO: this mapping is not final
-const std::array<morda::EKey, std::uint8_t(-1) + 1> keyCodeMap = {
-	EKey::UNKNOWN, //AKEYCODE_UNKNOWN
-	EKey::LEFT, //AKEYCODE_SOFT_LEFT
-	EKey::RIGHT, //AKEYCODE_SOFT_RIGHT
-	EKey::HOME, //AKEYCODE_HOME
-	EKey::ESCAPE, //AKEYCODE_BACK
-	EKey::F11, //AKEYCODE_CALL
-	EKey::F12, //AKEYCODE_ENDCALL
-	EKey::ZERO, //AKEYCODE_0
-	EKey::ONE, //AKEYCODE_1
-	EKey::TWO, //AKEYCODE_2
-	EKey::THREE, //AKEYCODE_3
-	EKey::FOUR, //AKEYCODE_4
-	EKey::FIVE, //AKEYCODE_5
-	EKey::SIX, //AKEYCODE_6
-	EKey::SEVEN, //AKEYCODE_7
-	EKey::EIGHT, //AKEYCODE_8
-	EKey::NINE, //AKEYCODE_9
-	EKey::UNKNOWN, //AKEYCODE_STAR
-	EKey::UNKNOWN, //AKEYCODE_POUND
-	EKey::UP, //AKEYCODE_DPAD_UP
-	EKey::DOWN, //AKEYCODE_DPAD_DOWN
-	EKey::LEFT, //AKEYCODE_DPAD_LEFT
-	EKey::RIGHT, //AKEYCODE_DPAD_RIGHT
-	EKey::ENTER, //AKEYCODE_DPAD_CENTER
-	EKey::PAGE_UP, //AKEYCODE_VOLUME_UP
-	EKey::PAGE_DOWN, //AKEYCODE_VOLUME_DOWN
-	EKey::F10, //AKEYCODE_POWER
-	EKey::F9, //AKEYCODE_CAMERA
-	EKey::BACKSPACE, //AKEYCODE_CLEAR
-	EKey::A, //AKEYCODE_A
-	EKey::B, //AKEYCODE_B
-	EKey::C, //AKEYCODE_C
-	EKey::D, //AKEYCODE_D
-	EKey::E, //AKEYCODE_E
-	EKey::F, //AKEYCODE_F
-	EKey::G, //AKEYCODE_G
-	EKey::H, //AKEYCODE_H
-	EKey::I, //AKEYCODE_I
-	EKey::G, //AKEYCODE_J
-	EKey::K, //AKEYCODE_K
-	EKey::L, //AKEYCODE_L
-	EKey::M, //AKEYCODE_M
-	EKey::N, //AKEYCODE_N
-	EKey::O, //AKEYCODE_O
-	EKey::P, //AKEYCODE_P
-	EKey::Q, //AKEYCODE_Q
-	EKey::R, //AKEYCODE_R
-	EKey::S, //AKEYCODE_S
-	EKey::T, //AKEYCODE_T
-	EKey::U, //AKEYCODE_U
-	EKey::V, //AKEYCODE_V
-	EKey::W, //AKEYCODE_W
-	EKey::X, //AKEYCODE_X
-	EKey::Y, //AKEYCODE_Y
-	EKey::Z, //AKEYCODE_Z
-	EKey::V, //AKEYCODE_COMMA
-	EKey::B, //AKEYCODE_PERIOD
-	EKey::N, //AKEYCODE_ALT_LEFT
-	EKey::M, //AKEYCODE_ALT_RIGHT
-	EKey::LEFT_SHIFT, //AKEYCODE_SHIFT_LEFT
-	EKey::RIGHT_SHIFT, //AKEYCODE_SHIFT_RIGHT
-	EKey::TAB, //AKEYCODE_TAB
-	EKey::SPACE, //AKEYCODE_SPACE
-	EKey::LEFT_CONTROL, //AKEYCODE_SYM
-	EKey::F8, //AKEYCODE_EXPLORER
-	EKey::F7, //AKEYCODE_ENVELOPE
-	EKey::ENTER, //AKEYCODE_ENTER
-	EKey::DELETE, //AKEYCODE_DEL
-	EKey::F6, //AKEYCODE_GRAVE
-	EKey::MINUS, //AKEYCODE_MINUS
-	EKey::EQUALS, //AKEYCODE_EQUALS
-	EKey::LEFT_SQUARE_BRACKET, //AKEYCODE_LEFT_BRACKET
-	EKey::RIGHT_SQUARE_BRACKET, //AKEYCODE_RIGHT_BRACKET
-	EKey::BACKSLASH, //AKEYCODE_BACKSLASH
-	EKey::SEMICOLON, //AKEYCODE_SEMICOLON
-	EKey::APOSTROPHE, //AKEYCODE_APOSTROPHE
-	EKey::SLASH, //AKEYCODE_SLASH
-	EKey::GRAVE, //AKEYCODE_AT
-	EKey::F5, //AKEYCODE_NUM
-	EKey::F4, //AKEYCODE_HEADSETHOOK
-	EKey::F3, //AKEYCODE_FOCUS (camera focus)
-	EKey::F2, //AKEYCODE_PLUS
-	EKey::F1, //AKEYCODE_MENU
-	EKey::END, //AKEYCODE_NOTIFICATION
-	EKey::RIGHT_CONTROL, //AKEYCODE_SEARCH
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_PLAY_PAUSE
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_STOP
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_NEXT
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_PREVIOUS
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_REWIND
-	EKey::UNKNOWN, //AKEYCODE_MEDIA_FAST_FORWARD
-	EKey::UNKNOWN, //AKEYCODE_MUTE
-	EKey::PAGE_UP, //AKEYCODE_PAGE_UP
-	EKey::PAGE_DOWN, //AKEYCODE_PAGE_DOWN
-	EKey::UNKNOWN, //AKEYCODE_PICTSYMBOLS
-	EKey::CAPSLOCK, //AKEYCODE_SWITCH_CHARSET
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_A
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_B
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_C
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_X
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_Y
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_Z
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_L1
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_R1
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_L2
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_R2
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_THUMBL
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_THUMBR
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_START
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_SELECT
-	EKey::UNKNOWN, //AKEYCODE_BUTTON_MODE
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN, //
-	EKey::UNKNOWN  //
+const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {
+	morda::Key_e::UNKNOWN, //AKEYCODE_UNKNOWN
+	morda::Key_e::LEFT, //AKEYCODE_SOFT_LEFT
+	morda::Key_e::RIGHT, //AKEYCODE_SOFT_RIGHT
+	morda::Key_e::HOME, //AKEYCODE_HOME
+	morda::Key_e::ESCAPE, //AKEYCODE_BACK
+	morda::Key_e::F11, //AKEYCODE_CALL
+	morda::Key_e::F12, //AKEYCODE_ENDCALL
+	morda::Key_e::ZERO, //AKEYCODE_0
+	morda::Key_e::ONE, //AKEYCODE_1
+	morda::Key_e::TWO, //AKEYCODE_2
+	morda::Key_e::THREE, //AKEYCODE_3
+	morda::Key_e::FOUR, //AKEYCODE_4
+	morda::Key_e::FIVE, //AKEYCODE_5
+	morda::Key_e::SIX, //AKEYCODE_6
+	morda::Key_e::SEVEN, //AKEYCODE_7
+	morda::Key_e::EIGHT, //AKEYCODE_8
+	morda::Key_e::NINE, //AKEYCODE_9
+	morda::Key_e::UNKNOWN, //AKEYCODE_STAR
+	morda::Key_e::UNKNOWN, //AKEYCODE_POUND
+	morda::Key_e::UP, //AKEYCODE_DPAD_UP
+	morda::Key_e::DOWN, //AKEYCODE_DPAD_DOWN
+	morda::Key_e::LEFT, //AKEYCODE_DPAD_LEFT
+	morda::Key_e::RIGHT, //AKEYCODE_DPAD_RIGHT
+	morda::Key_e::ENTER, //AKEYCODE_DPAD_CENTER
+	morda::Key_e::PAGE_UP, //AKEYCODE_VOLUME_UP
+	morda::Key_e::PAGE_DOWN, //AKEYCODE_VOLUME_DOWN
+	morda::Key_e::F10, //AKEYCODE_POWER
+	morda::Key_e::F9, //AKEYCODE_CAMERA
+	morda::Key_e::BACKSPACE, //AKEYCODE_CLEAR
+	morda::Key_e::A, //AKEYCODE_A
+	morda::Key_e::B, //AKEYCODE_B
+	morda::Key_e::C, //AKEYCODE_C
+	morda::Key_e::D, //AKEYCODE_D
+	morda::Key_e::E, //AKEYCODE_E
+	morda::Key_e::F, //AKEYCODE_F
+	morda::Key_e::G, //AKEYCODE_G
+	morda::Key_e::H, //AKEYCODE_H
+	morda::Key_e::I, //AKEYCODE_I
+	morda::Key_e::G, //AKEYCODE_J
+	morda::Key_e::K, //AKEYCODE_K
+	morda::Key_e::L, //AKEYCODE_L
+	morda::Key_e::M, //AKEYCODE_M
+	morda::Key_e::N, //AKEYCODE_N
+	morda::Key_e::O, //AKEYCODE_O
+	morda::Key_e::P, //AKEYCODE_P
+	morda::Key_e::Q, //AKEYCODE_Q
+	morda::Key_e::R, //AKEYCODE_R
+	morda::Key_e::S, //AKEYCODE_S
+	morda::Key_e::T, //AKEYCODE_T
+	morda::Key_e::U, //AKEYCODE_U
+	morda::Key_e::V, //AKEYCODE_V
+	morda::Key_e::W, //AKEYCODE_W
+	morda::Key_e::X, //AKEYCODE_X
+	morda::Key_e::Y, //AKEYCODE_Y
+	morda::Key_e::Z, //AKEYCODE_Z
+	morda::Key_e::V, //AKEYCODE_COMMA
+	morda::Key_e::B, //AKEYCODE_PERIOD
+	morda::Key_e::N, //AKEYCODE_ALT_LEFT
+	morda::Key_e::M, //AKEYCODE_ALT_RIGHT
+	morda::Key_e::LEFT_SHIFT, //AKEYCODE_SHIFT_LEFT
+	morda::Key_e::RIGHT_SHIFT, //AKEYCODE_SHIFT_RIGHT
+	morda::Key_e::TAB, //AKEYCODE_TAB
+	morda::Key_e::SPACE, //AKEYCODE_SPACE
+	morda::Key_e::LEFT_CONTROL, //AKEYCODE_SYM
+	morda::Key_e::F8, //AKEYCODE_EXPLORER
+	morda::Key_e::F7, //AKEYCODE_ENVELOPE
+	morda::Key_e::ENTER, //AKEYCODE_ENTER
+	morda::Key_e::DELETE, //AKEYCODE_DEL
+	morda::Key_e::F6, //AKEYCODE_GRAVE
+	morda::Key_e::MINUS, //AKEYCODE_MINUS
+	morda::Key_e::EQUALS, //AKEYCODE_EQUALS
+	morda::Key_e::LEFT_SQUARE_BRACKET, //AKEYCODE_LEFT_BRACKET
+	morda::Key_e::RIGHT_SQUARE_BRACKET, //AKEYCODE_RIGHT_BRACKET
+	morda::Key_e::BACKSLASH, //AKEYCODE_BACKSLASH
+	morda::Key_e::SEMICOLON, //AKEYCODE_SEMICOLON
+	morda::Key_e::APOSTROPHE, //AKEYCODE_APOSTROPHE
+	morda::Key_e::SLASH, //AKEYCODE_SLASH
+	morda::Key_e::GRAVE, //AKEYCODE_AT
+	morda::Key_e::F5, //AKEYCODE_NUM
+	morda::Key_e::F4, //AKEYCODE_HEADSETHOOK
+	morda::Key_e::F3, //AKEYCODE_FOCUS (camera focus)
+	morda::Key_e::F2, //AKEYCODE_PLUS
+	morda::Key_e::F1, //AKEYCODE_MENU
+	morda::Key_e::END, //AKEYCODE_NOTIFICATION
+	morda::Key_e::RIGHT_CONTROL, //AKEYCODE_SEARCH
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_PLAY_PAUSE
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_STOP
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_NEXT
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_PREVIOUS
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_REWIND
+	morda::Key_e::UNKNOWN, //AKEYCODE_MEDIA_FAST_FORWARD
+	morda::Key_e::UNKNOWN, //AKEYCODE_MUTE
+	morda::Key_e::PAGE_UP, //AKEYCODE_PAGE_UP
+	morda::Key_e::PAGE_DOWN, //AKEYCODE_PAGE_DOWN
+	morda::Key_e::UNKNOWN, //AKEYCODE_PICTSYMBOLS
+	morda::Key_e::CAPSLOCK, //AKEYCODE_SWITCH_CHARSET
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_A
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_B
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_C
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_X
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_Y
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_Z
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_L1
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_R1
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_L2
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_R2
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_THUMBL
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_THUMBR
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_START
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_SELECT
+	morda::Key_e::UNKNOWN, //AKEYCODE_BUTTON_MODE
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN, //
+	morda::Key_e::UNKNOWN  //
 };
 
 
 
-morda::EKey GetKeyFromKeyEvent(AInputEvent& event)noexcept{
+morda::Key_e getKeyFromKeyEvent(AInputEvent& event)noexcept{
 	size_t kc = size_t(AKeyEvent_getKeyCode(&event));
 	ASSERT(kc < keyCodeMap.size())
 	return keyCodeMap[kc];
@@ -580,11 +904,11 @@ morda::EKey GetKeyFromKeyEvent(AInputEvent& event)noexcept{
 
 
 
-struct UnicodeResolver{
-	std::vector<std::uint32_t> chars;
+struct UnicodeProvider : public morda::Morda::UnicodeProvider{
+	std::u32string chars;
 
-	std::vector<std::uint32_t> Resolve()const{
-		return this->chars;
+	std::u32string get()const override{
+		return std::move(this->chars);
 	}
 };
 
@@ -594,56 +918,45 @@ struct UnicodeResolver{
 
 
 
-namespace morda{
-
-void HandleCharacterInputEvent(std::vector<std::uint32_t>&& chars){
-	UnicodeResolver resolver;
-	resolver.chars = std::move(chars);
-	
-	//notify about input event
-	morda::App::inst().HandleCharacterInput(resolver, EKey::UNKNOWN);
-}
-
-}//~namespace
-
 
 
 namespace{
 
 
 
-JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleCharacterStringInput(
+JNIEXPORT void JNICALL Java_io_github_igagis_libmordavokne_MordaVOkneActivity_handleCharacterStringInput(
 		JNIEnv *env,
 		jclass clazz,
 		jstring chars
 	)
 {
 	TRACE(<< "handleCharacterStringInput(): invoked" << std::endl)
-	
+
 	const char *utf8Chars = env->GetStringUTFChars(chars, 0);
 
-	if(utf8Chars == 0 || *utf8Chars == 0){
+	utki::ScopeExit scopeExit([env, &chars, utf8Chars](){
+		env->ReleaseStringUTFChars(chars, utf8Chars);
+	});
+
+	if(utf8Chars == nullptr || *utf8Chars == 0){
 		TRACE(<< "handleCharacterStringInput(): empty string passed in" << std::endl)
 		return;
 	}
-	
-	typedef std::vector<std::uint32_t> T_Vector;
-	T_Vector utf32;
 
-	for(unikod::Utf8Iterator i(utf8Chars); i.IsNotEnd(); ++i){
-		utf32.push_back(i.Char());
-	}
-	
-	std::vector<std::uint32_t> utf32Chars(utf32.size());
+	TRACE(<< "handleCharacterStringInput(): utf8Chars = " << utf8Chars << std::endl)
 
-	std::uint32_t* dst = &*utf32Chars.begin();
-	for(T_Vector::iterator src = utf32.begin(); src != utf32.end(); ++src, ++dst){
-		*dst = *src;
+	std::vector<char32_t> utf32;
+
+	for(unikod::Utf8Iterator i(utf8Chars); !i.isEnd(); ++i){
+		utf32.push_back(i.character());
 	}
 
-	HandleCharacterInputEvent(std::move(utf32Chars));
+	UnicodeProvider resolver;
+	resolver.chars = std::u32string(&*utf32.begin(), utf32.size());
 
-	env->ReleaseStringUTFChars(chars, utf8Chars);
+//    TRACE(<< "handleCharacterStringInput(): resolver.chars = " << resolver.chars << std::endl)
+
+	mordavokne::handleCharacterInput(mordavokne::inst(), resolver, morda::Key_e::UNKNOWN);
 }
 
 
@@ -654,236 +967,128 @@ JNIEXPORT void JNICALL Java_com_googlecode_morda_tests_MordaActivity_handleChara
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved){
 	TRACE(<< "JNI_OnLoad(): invoked" << std::endl)
-	
-    JNIEnv* env;
-    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
-        return -1;
-    }
+
+	JNIEnv* env;
+	if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+		return -1;
+	}
 
 	static JNINativeMethod methods[] = {
-		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_com_googlecode_morda_tests_MordaActivity_handleCharacterStringInput},
+		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_io_github_igagis_libmordavokne_MordaVOkneActivity_handleCharacterStringInput},
 	};
-	jclass clazz = env->FindClass("com/googlecode/morda/MordaActivity");
+	jclass clazz = env->FindClass("io/github/igagis/libmordavokne/MordaVOkneActivity");
 	ASSERT(clazz)
 	if(env->RegisterNatives(clazz, methods, 1) < 0){
 		ASSERT(false)
 	}
 
-    return JNI_VERSION_1_6;
+	return JNI_VERSION_1_6;
 }
 
 
-
-namespace morda{
-
-
-
-App::DotsPerCmWrapper::DotsPerCmWrapper(){
-	ASSERT(javaFunctionsWrapper)
-	this->value = javaFunctionsWrapper->GetDotsPerCm();
-//	TRACE_ALWAYS(<< "App::App(): this->dotsPerCm = " << this->value << std::endl)
-}
-
-
-
-App::EGLDisplayWrapper::EGLDisplayWrapper(){
-	this->d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-	if(this->d == EGL_NO_DISPLAY){
-		throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
-	}
-
-	if(eglInitialize(this->d, 0, 0) == EGL_FALSE){
-		eglTerminate(this->d);
-		throw morda::Exc("eglInitialize() failed");
-	}
-}
-
-
-
-App::EGLDisplayWrapper::~EGLDisplayWrapper()noexcept{
-	eglTerminate(this->d);
-}
-
-
-
-App::EGLConfigWrapper::EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d){
-	//TODO: allow stencil configuration etc. via WindowParams
-	//Here specify the attributes of the desired configuration.
-	//Below, we select an EGLConfig with at least 8 bits per color
-	//component compatible with on-screen windows
-	const EGLint attribs[] = {
-			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-			EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
-			EGL_BLUE_SIZE, 8,
-			EGL_GREEN_SIZE, 8,
-			EGL_RED_SIZE, 8,
-			EGL_NONE
-	};
-
-	//Here, the application chooses the configuration it desires. In this
-	//sample, we have a very simplified selection process, where we pick
-	//the first EGLConfig that matches our criteria
-	EGLint numConfigs;
-	eglChooseConfig(d.d, attribs, &this->c, 1, &numConfigs);
-	if(numConfigs <= 0){
-		throw morda::Exc("eglChooseConfig() failed, no matching config found");
-	}
-}
-
-
-
-App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& c) :
-		d(d)
-{
-	//EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
-	//guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
-	//As soon as we picked a EGLConfig, we can safely reconfigure the
-	//ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
-	EGLint format;
-	if(eglGetConfigAttrib(d.d, c.c, EGL_NATIVE_VISUAL_ID, &format) == EGL_FALSE){
-		throw morda::Exc("eglGetConfigAttrib() failed");
-	}
-
-	ASSERT(androidWindow)
-	ANativeWindow_setBuffersGeometry(androidWindow, 0, 0, format);
-
-	this->s = eglCreateWindowSurface(d.d, c.c, androidWindow, NULL);
-	if(this->s == EGL_NO_SURFACE){
-		throw morda::Exc("eglCreateWindowSurface() failed");
-	}
-}
-
-
-
-App::EGLSurfaceWrapper::~EGLSurfaceWrapper()noexcept{
-	eglDestroySurface(this->d.d, this->s);
-}
-
-
-
-App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
-		d(d)
-{
-	EGLint contextAttrs[] = {
-		EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
-		EGL_NONE
-	};
-
-	this->c = eglCreateContext(d.d, config.c, NULL, contextAttrs);
-	if(this->c == EGL_NO_CONTEXT){
-		throw morda::Exc("eglCreateContext() failed");
-	}
-
-	if(eglMakeCurrent(d.d, s.s, s.s, this->c) == EGL_FALSE){
-		eglDestroyContext(d.d, this->c);
-		throw morda::Exc("eglMakeCurrent() failed");
-	}
-}
-
-
-
-App::EGLContextWrapper::~EGLContextWrapper()noexcept{
-	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-	eglDestroyContext(this->d.d, this->c);
-}
-
+namespace mordavokne{
 
 
 App::App(const WindowParams& requestedWindowParams) :
-		eglConfig(requestedWindowParams, eglDisplay),
-		eglSurface(eglDisplay, eglConfig),
-		eglContext(eglDisplay, eglConfig, eglSurface)
+		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
+		gui(
+				*this,
+				utki::makeShared<mordaren::OpenGLES2Renderer>(),
+				[]() -> float{
+					ASSERT(javaFunctionsWrapper)
+
+					return javaFunctionsWrapper->getDotsPerInch();
+				}(),
+				[this]() -> float{
+					auto res = getImpl(this->windowPimpl).getWindowSize();
+					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
+					return App::findDotsPerPt(res, dim.to<unsigned>());
+				}()
+			)
 {
-	EGLint width, height;
-	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_WIDTH, &width);
-	eglQuerySurface(eglDisplay.d, eglSurface.s, EGL_HEIGHT, &height);
-	
-	this->updateWindowRect(morda::Rectr(0, 0, float(width), float(height)));
+	auto winSize = getImpl(this->windowPimpl).getWindowSize();
+	this->updateWindowRect(morda::Rectr(morda::Vec2r(0), winSize.to<morda::real>()));
 }
 
 
 
-std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
-	return AssetFile::New(appInfo.assetManager, path);
+std::unique_ptr<papki::File> App::getResFile(const std::string& path)const{
+	return utki::makeUnique<AssetFile>(appInfo.assetManager, path);
 }
 
+void App::swapFrameBuffers() {
+	auto& ww = getImpl(this->windowPimpl);
+	ww.swapBuffers();
+}
 
+void App::setMouseCursorVisible(bool visible) {
+	//do nothing
+}
+
+void App::setFullscreen(bool enable) {
+	ASSERT(nativeActivity)
+	if(enable) {
+		ANativeActivity_setWindowFlags(nativeActivity, AWINDOW_FLAG_FULLSCREEN, 0);
+	}else{
+		ANativeActivity_setWindowFlags(nativeActivity, 0, AWINDOW_FLAG_FULLSCREEN);
+	}
+}
+
+void App::quit() noexcept{
+	//TODO:
+}
 
 void App::showVirtualKeyboard()noexcept{
 	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
-	
+
 	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->ShowVirtualKeyboard();
+	javaFunctionsWrapper->showVirtualKeyboard();
 }
 
 
 
 void App::hideVirtualKeyboard()noexcept{
 	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
-	
+
 	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->HideVirtualKeyboard();
+	javaFunctionsWrapper->hideVirtualKeyboard();
 }
 
-
-
-inline void UpdateWindowRect(App& app, const morda::Rectr& rect){
-//	TRACE(<< "UpdateWindowRect(): rect = " << rect << std::endl)
-	app.UpdateWindowRect(rect);
-}
-
-
-
-inline void Render(App& app){
-	app.Render();
-}
-
-
-
-inline std::uint32_t Update(App& app){
-	return app.updater.Update();
-}
-
-
-
-inline void HandleQueueMessages(App& app){
-	while(auto m = app.uiQueue.PeekMsg()){
-		m();
+	void App::MordaVOkne::postToUiThread_ts(std::function<void()> &&f) {
+		auto& ww = getImpl(getWindowPimpl(this->app));
+		ww.uiQueue.pushMessage(std::move(f));
 	}
-}
+
+}//~namespace
 
 
 
-inline int GetUIQueueHandle(App& app){
-	return static_cast<pogodi::Waitable&>(app.uiQueue).GetHandle();
-}
+namespace{
 
+	void handleInputEvents(){
+		auto& app = mordavokne::inst();
 
+		//Read and handle input events
+		AInputEvent* event;
+		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+			ASSERT(event)
 
-void HandleInputEvents(){
-	morda::App& app = morda::App::inst();
-
-	//Read and handle input events
-	AInputEvent* event;
-	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
-		ASSERT(event)
-		
 //		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
-		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
-			continue;
-		}
+			if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+				continue;
+			}
 
-		int32_t eventType = AInputEvent_getType(event);
-		int32_t eventAction = AMotionEvent_getAction(event);
+			int32_t eventType = AInputEvent_getType(event);
+			int32_t eventAction = AMotionEvent_getAction(event);
 
-		bool consume = false;
+			bool consume = false;
 
-		switch(eventType){
-			case AINPUT_EVENT_TYPE_MOTION:
-				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
-					case AMOTION_EVENT_ACTION_POINTER_DOWN:
+			switch(eventType){
+				case AINPUT_EVENT_TYPE_MOTION:
+					switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+						case AMOTION_EVENT_ACTION_POINTER_DOWN:
 //						TRACE(<< "Pointer down" << std::endl)
-					case AMOTION_EVENT_ACTION_DOWN:
+						case AMOTION_EVENT_ACTION_DOWN:
 						{
 							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
@@ -898,17 +1103,18 @@ void HandleInputEvents(){
 							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 							pointers[pointerId] = p;
 
-							app.HandleMouseButton(
+							handleMouseButton(
+									app,
 									true,
-									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
+									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
 									morda::MouseButton_e::LEFT,
 									pointerId
-								);
+							);
 						}
-						break;
-					case AMOTION_EVENT_ACTION_POINTER_UP:
+							break;
+						case AMOTION_EVENT_ACTION_POINTER_UP:
 //						TRACE(<< "Pointer up" << std::endl)
-					case AMOTION_EVENT_ACTION_UP:
+						case AMOTION_EVENT_ACTION_UP:
 						{
 							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
@@ -923,16 +1129,17 @@ void HandleInputEvents(){
 							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 							pointers[pointerId] = p;
 
-							app.HandleMouseButton(
+							handleMouseButton(
+									app,
 									false,
-									AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
+									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
 									morda::MouseButton_e::LEFT,
 									pointerId
-								);
+							);
 						}
-						break;
-					case AMOTION_EVENT_ACTION_MOVE:
-						{							
+							break;
+						case AMOTION_EVENT_ACTION_MOVE:
+						{
 							size_t numPointers = AMotionEvent_getPointerCount(event);
 							ASSERT(numPointers >= 1)
 							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
@@ -953,85 +1160,83 @@ void HandleInputEvents(){
 
 								pointers[pointerId] = p;
 
-								app.HandleMouseMove(
-										AndroidWinCoordsToMordaWinRectCoords(app.curWinRect, p),
+								handleMouseMove(
+										app,
+										AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
 										pointerId
-									);
+								);
 							}//~for(every pointer)
 						}
-						break;
-					default:
-						TRACE(<< "unknown eventAction = " << eventAction << std::endl)
-						break;
-				}//~switch(event action)
-				consume = true;
-				break;
-			case AINPUT_EVENT_TYPE_KEY:
-				{
-//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
-
-					morda::EKey key = GetKeyFromKeyEvent(*ASS(event));
-					
-					keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
-					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
-					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
-
-//					TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
-
-					//detect auto-repeated key events
-					if(AKeyEvent_getRepeatCount(event) != 0){
-						if(eventAction == AKEY_EVENT_ACTION_DOWN){
-							app.HandleCharacterInput(keyUnicodeResolver, key);
-						}
-						break;
-					}
-
-					switch(eventAction){
-						case AKEY_EVENT_ACTION_DOWN:
-//							TRACE(<< "AKEY_EVENT_ACTION_DOWN" << std::endl)
-							app.HandleKeyEvent(true, key);
-							app.HandleCharacterInput(keyUnicodeResolver, key);
-							break;
-						case AKEY_EVENT_ACTION_UP:
-//							TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-							app.HandleKeyEvent(false, key);
 							break;
 						default:
-							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction" << std::endl)
+							TRACE(<< "unknown eventAction = " << eventAction << std::endl)
 							break;
+					}//~switch(event action)
+					consume = true;
+					break;
+				case AINPUT_EVENT_TYPE_KEY:
+					{
+	//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
+
+						ASSERT(event)
+						morda::Key_e key = getKeyFromKeyEvent(*event);
+
+						keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
+						keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
+						keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
+
+//    					TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+
+						switch(eventAction){
+							case AKEY_EVENT_ACTION_DOWN:
+//    							TRACE(<< "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
+								//detect auto-repeated key events
+								if(AKeyEvent_getRepeatCount(event) == 0){
+									handleKeyEvent(app, true, key);
+								}
+								handleCharacterInput(app, keyUnicodeResolver, key);
+								break;
+							case AKEY_EVENT_ACTION_UP:
+//    							TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
+								handleKeyEvent(app, false, key);
+								break;
+							case AKEY_EVENT_ACTION_MULTIPLE:
+//                                TRACE(<< "AKEY_EVENT_ACTION_MULTIPLE"
+//                                              << " count = " << AKeyEvent_getRepeatCount(event)
+//                                              << " keyCode = " << AKeyEvent_getKeyCode(event)
+//                                              << std::endl)
+
+								//Ignore, it is handled on Java side.
+
+								break;
+							default:
+								TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
+								break;
+						}
 					}
-				}
-				break;
-			default:
-				break;
-		}//~switch(event type)
+					break;
+				default:
+					break;
+			}//~switch(event type)
 
 
-		AInputQueue_finishEvent(
-				curInputQueue,
-				event,
-				consume
+			AInputQueue_finishEvent(
+					curInputQueue,
+					event,
+					consume
 			);
-	}//~while(there are events in input queue)
+		}//~while(there are events in input queue)
 
-	app.Render();
+		render(app);
 
-	fdFlag.Set();
-}
-
-
-
-}//~namespace
-
-
-
-namespace{
+		fdFlag.Set();
+	}
 
 
 
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
-	
+
 	javaFunctionsWrapper.reset();
 }
 
@@ -1057,6 +1262,7 @@ void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
 	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
 	//TODO:
 //    return static_cast<morda::App*>(activity->instance)->OnSaveInstanceState(outSize);
+	return nullptr;
 }
 
 
@@ -1131,15 +1337,18 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-	std::uint32_t dt = Update(App::inst());
+	auto& app = App::inst();
+
+	std::uint32_t dt = app.gui.update();
 	if(dt == 0){
 		//do not arm the timer and do not clear the flag
 	}else{
 		fdFlag.Clear();
 		timer.Arm(dt);
 	}
-	
-	Render(App::inst());//after updating need to re-render everything
+
+	//after updating need to re-render everything
+	render(app);
 
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
@@ -1149,8 +1358,12 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 
 int OnQueueHasMessages(int fd, int events, void* data){
-	HandleQueueMessages(App::inst());
-	
+	auto& ww = getImpl(getWindowPimpl(App::inst()));
+
+	while(auto m = ww.uiQueue.peekMsg()){
+		m();
+	}
+
 	return 1; //1 means do not remove descriptor from looper
 }
 
@@ -1172,8 +1385,8 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
-		App* app = morda::CreateApp(0, 0, appInfo.savedState).release();
-		
+		App* app = createAppUnix(0, 0, utki::wrapBuf(appInfo.savedState)).release();
+
 		activity->instance = app;
 
 		//save current configuration in global variable
@@ -1181,7 +1394,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
-		
+
 		ALooper_addFd(
 				looper,
 				fdFlag.GetFD(),
@@ -1190,16 +1403,16 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				&OnUpdateTimerExpired,
 				0
 			);
-		
+
 		ALooper_addFd(
 				looper,
-				GetUIQueueHandle(*app),
+				static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(*app)).uiQueue).getHandle(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
 				0
 			);
-		
+
 		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating App object
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
@@ -1218,16 +1431,18 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	//save window dimensions
 	curWinDim.x = float(ANativeWindow_getWidth(window));
 	curWinDim.y = float(ANativeWindow_getHeight(window));
-	
+
 	TRACE(<< "OnNativeWindowResized(): curWinDim = " << curWinDim << std::endl)
 }
+
+
 
 
 
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
 
-	morda::Render(*static_cast<morda::App*>(activity->instance));
+	render(getApp(activity));
 }
 
 
@@ -1240,7 +1455,7 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 
 	//TODO: need to destroy app right before window is destroyed, i.e. OGL de-initialized
 	//destroy app object
-	delete static_cast<morda::App*>(activity->instance);
+	delete static_cast<mordavokne::App*>(activity->instance);
 	activity->instance = 0;
 
 	//delete configuration object
@@ -1255,7 +1470,7 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 	ASSERT(curInputQueue) //if we get events we should have input queue
 
 	//If window is not created yet, ignore events.
-	if(!morda::App::IsCreated()){
+	if(!mordavokne::App::isCreated()){
 		ASSERT(false)
 		AInputEvent* event;
 		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
@@ -1268,9 +1483,9 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 		return 1;
 	}
 
-	ASSERT(morda::App::IsCreated())
+	ASSERT(mordavokne::App::isCreated())
 
-	morda::HandleInputEvents();
+	handleInputEvents();
 
 	return 1; //we don't want to remove input queue descriptor from looper
 }
@@ -1311,11 +1526,11 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 //called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
-	TRACE(<< "OnContentRectChanged(): winDim = " << curWinDim << std::endl)
+	TRACE(<< "OnContentRectChanged(): curWinDim = " << curWinDim << std::endl)
 
-	morda::App& app = *static_cast<morda::App*>(activity->instance);
+	auto& app = getApp(activity);
 
-	UpdateWindowRect(
+	updateWindowRect(
 			app,
 			morda::Rectr(
 					float(rect->left),
@@ -1326,7 +1541,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 		);
 
 	//redraw, since WindowRedrawNeeded not always comes
-	Render(app);
+	render(app);
 }
 
 
@@ -1360,7 +1575,7 @@ void ANativeActivity_onCreate(
 	activity->callbacks->onContentRectChanged = &OnContentRectChanged;
 
 	activity->instance = 0;
-	
+
 	nativeActivity = activity;
 
 	appInfo.internalDataPath = activity->internalDataPath;
@@ -1372,7 +1587,5 @@ void ANativeActivity_onCreate(
 		memcpy(&*appInfo.savedState.begin(), savedState, savedStateSize);
 	}
 
-//	ANativeActivity_setWindowFlags(activity, 1024, 1024); //set fullscreen flag
-	
-	javaFunctionsWrapper = JavaFunctionsWrapper::New(activity);
+	javaFunctionsWrapper = utki::makeUnique<JavaFunctionsWrapper>(activity);
 }

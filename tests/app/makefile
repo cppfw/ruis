@@ -18,7 +18,7 @@ endif
 this_srcs += src/main.cpp
 
 
-this_cxxflags := -Wall
+this_cxxflags += -Wall
 this_cxxflags += -Wno-comment #no warnings on nested comments
 this_cxxflags += -Wno-format #no warnings about format
 this_cxxflags += -Wno-format-security #no warnings about format
@@ -44,6 +44,8 @@ ifeq ($(ogles2), true)
         this_cxxflags += -I/opt/vc/include
         this_ldflags += -L/opt/vc/lib
     endif
+else
+    this_cxxflags += -DM_RENDER_OPENGL2
 endif
 
 

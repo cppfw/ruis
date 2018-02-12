@@ -4,56 +4,19 @@
 #include <papki/FSFile.hpp>
 #include <papki/RootDirFile.hpp>
 
-#include "../../../opengles2/mordaren/OpenGLES2Renderer.hpp"
-
 #include <sstream>
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
+#include <mordaren/OpenGLES2Renderer.hpp>
+
 
 using namespace mordavokne;
 
-namespace mordavokne{
-	
-	void ios_render(){
-		App::inst().render();
-	}
-	
-	std::uint32_t ios_update(){
-		return App::inst().gui.update();
-	}
-	
-	void ios_updateWindowRect(morda::Vec2r dim){
-		App::inst().updateWindowRect(
-											morda::Rectr(
-														 morda::Vec2r(0),
-														 dim
-														 )
-											);
-	}
-	
-	void ios_handleMouseMove(const morda::Vec2r& pos, unsigned id){
-		App::inst().handleMouseMove(
-										   morda::Vec2r(pos.x, pos.y),
-										   id
-										   );
-	}
-	
-	void ios_handleMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
-//		TRACE(<< "mouse pos = " << morda::Vec2r(pos.x, pos.y) << std::endl)
-		App::inst().handleMouseButton(
-											 isDown,
-											 morda::Vec2r(pos.x, pos.y),
-											 button,
-											 id
-											 );
-	}
-	
-	const App::WindowParams& ios_getWindowParams(){
-		return App::inst().windowParams;
-	}
-}
+#include "../createAppUnix.cppinc"
+#include "../friendAccessors.cppinc"
+
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
@@ -103,114 +66,79 @@ namespace mordavokne{
 @end
 
 
-
+//WORKAROUND: for Cocoapods. ifdef-out the main function for the time of deployment to cocoapods.
+//The application then has to define macro M_MORDAVOKNE_COCOAPODS_WORKAROUND to make main() defined.
+#ifdef M_MORDAVOKNE_COCOAPODS_WORKAROUND
 int main(int argc, char * argv[]){
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
 	[pool release];
 	return retVal;
 }
-
-
-
-void App::postToUiThread_ts(std::function<void()>&& f){
-	auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)));
-	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
-		(*m)();
-	});
-}
-
-
-
-void App::setFullscreen(bool enable){
-	UIWindow* w = (UIWindow*)this->windowObject.id;
-	
-	float scale = [[UIScreen mainScreen] scale];
-	
-	if(enable){
-		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
-			CGRect rect = w.frame;
-			w.rootViewController.view.frame = rect;
-		}
-		ios_updateWindowRect(morda::Vec2r(
-												 std::round(w.frame.size.width * scale),
-												 std::round(w.frame.size.height * scale)
-			));
-		w.windowLevel = UIWindowLevelStatusBar;
-	}else{
-		CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-		
-		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
-				CGRect rect = w.frame;
-				rect.origin.y += statusBarSize.height;
-				rect.size.height -= statusBarSize.height;
-				w.rootViewController.view.frame = rect;
-		}
-		
-		ios_updateWindowRect(morda::Vec2r(
-												 std::round(w.frame.size.width * scale),
-												 std::round((w.frame.size.height - statusBarSize.height) * scale)
-			));
-		w.windowLevel = UIWindowLevelNormal;
-	}
-}
-
-
-void App::quit()noexcept{
-	//TODO:
-}
-
-
-namespace{
-
-morda::real getDotsPerInch(){
-	float scale = [[UIScreen mainScreen] scale];
-
-	morda::real value;
-	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		value = 132 * scale;
-	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		value = 163 * scale;
-	} else {
-		value = 160 * scale;
-	}
-	TRACE(<< "dpi = " << value << std::endl)
-	return value;
-}
-
-morda::real getDotsPerPt(){
-	float scale = [[UIScreen mainScreen] scale];
-
-	//TODO: use findDotsPerPt() function from morda util
-	
-	return morda::real(scale);
-}
-
-}//~namespace
-
-App::App(const App::WindowParams& wp) :
-		windowParams(wp),
-		windowObject(wp),
-		renderer(std::make_shared<mordaren::OpenGLES2Renderer>()),
-		gui(this->renderer, getDotsPerInch(), getDotsPerPt())
-{
-	this->setFullscreen(false);//this will intialize the viewport
-}
+#endif
 
 
 
 @interface ViewController : GLKViewController{
-	
+
 }
 
 @property (strong, nonatomic) EAGLContext *context;
 
 @end
 
+
+
+
+
+namespace{
+	App::WindowParams windowParams(0);
+	
+	struct WindowWrapper : public utki::Unique{
+		UIWindow *window;
+		
+		WindowWrapper(const App::WindowParams& wp){
+			windowParams = wp;
+			
+			this->window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+			
+			if(!this->window){
+				throw morda::Exc("failed to create a UIWindow");
+			}
+			
+			utki::ScopeExit scopeExitWindow([this](){
+				[this->window release];
+			});
+			
+			
+			this->window.screen = [UIScreen mainScreen];
+			
+			this->window.backgroundColor = [UIColor redColor];
+			this->window.rootViewController = [[ViewController alloc] init];
+			
+			[this->window makeKeyAndVisible];
+			
+			scopeExitWindow.reset();
+		}
+		~WindowWrapper()noexcept{
+			[this->window release];
+		}
+	};
+	
+	WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+		ASSERT(pimpl)
+		ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
+		return static_cast<WindowWrapper&>(*pimpl);
+	}
+}
+
+
+
+
+
+
 @implementation ViewController
+
 
 - (void)viewDidLoad{
 	[super viewDidLoad];
@@ -229,7 +157,7 @@ App::App(const App::WindowParams& wp) :
 	view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
 
 	{
-		const App::WindowParams& wp = ios_getWindowParams();
+		const App::WindowParams& wp = windowParams;
 		if(wp.buffers.get(App::WindowParams::Buffer_e::DEPTH)){
 			view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
 		}else{
@@ -267,11 +195,11 @@ App::App(const App::WindowParams& wp) :
 
 - (void)update{
 	//TODO: adapt to nothing to update, lower frame rate
-	ios_update();
+	mordavokne::inst().gui.update();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
-	ios_render();
+	render(mordavokne::inst());
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -281,11 +209,12 @@ App::App(const App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch began = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		ios_handleMouseButton(
+		handleMouseButton(
+				mordavokne::inst(),
 				true,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 				morda::MouseButton_e::LEFT,
-				0//TODO: id
+				0 //TODO: id
 			);
 	}
 }
@@ -297,9 +226,10 @@ App::App(const App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch moved = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		ios_handleMouseMove(
-									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
-									 0 //TODO: id
+		handleMouseMove(
+				mordavokne::inst(),
+				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
+				0 //TODO: id
 			);
 	}
 }
@@ -311,11 +241,12 @@ App::App(const App::WindowParams& wp) :
 		CGPoint p = [touch locationInView:self.view ];
 		
 //		TRACE(<< "touch ended = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		ios_handleMouseButton(
-									 false,
-									 morda::Vec2r(p.x * scale, p.y * scale).rounded(),
-									 morda::MouseButton_e::LEFT,
-									 0//TODO: id
+		handleMouseButton(
+				mordavokne::inst(),
+				false,
+				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
+				morda::MouseButton_e::LEFT,
+				0//TODO: id
 			);
 	}
 }
@@ -330,35 +261,106 @@ App::App(const App::WindowParams& wp) :
 
 
 
-
-
-
-
-
-
-
-App::WindowObject::WindowObject(const App::WindowParams& wp){
-	UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& f){
+	auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)));
 	
-	if(!window){
-		throw morda::Exc("failed to create a UIWindow");
+	dispatch_async(dispatch_get_main_queue(), ^{
+		std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
+		(*m)();
+	});
+}
+
+
+
+void App::setFullscreen(bool enable){
+	auto& ww = getImpl(this->windowPimpl);
+	UIWindow* w = ww.window;
+	
+	float scale = [[UIScreen mainScreen] scale];
+	
+	if(enable){
+		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
+			CGRect rect = w.frame;
+			w.rootViewController.view.frame = rect;
+		}
+		updateWindowRect(
+						 morda::Rectr(
+									  morda::Vec2r(0),
+									  morda::Vec2r(
+												   std::round(w.frame.size.width * scale),
+												   std::round(w.frame.size.height * scale)
+												   )
+									  )
+						 );
+		w.windowLevel = UIWindowLevelStatusBar;
+	}else{
+		CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+		
+		if( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f ) {
+			CGRect rect = w.frame;
+			rect.origin.y += statusBarSize.height;
+			rect.size.height -= statusBarSize.height;
+			w.rootViewController.view.frame = rect;
+		}
+		
+		updateWindowRect(
+						 morda::Rectr(
+									  morda::Vec2r(0),
+									  morda::Vec2r(
+												   std::round(w.frame.size.width * scale),
+												   std::round((w.frame.size.height - statusBarSize.height) * scale)
+												   )
+									  )
+						 );
+		w.windowLevel = UIWindowLevelNormal;
+	}
+}
+
+
+void App::quit()noexcept{
+	//TODO:
+}
+
+
+namespace{
+	
+	morda::real getDotsPerInch(){
+		float scale = [[UIScreen mainScreen] scale];
+		
+		morda::real value;
+		
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			value = 132 * scale;
+		} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+			value = 163 * scale;
+		} else {
+			value = 160 * scale;
+		}
+		TRACE(<< "dpi = " << value << std::endl)
+		return value;
 	}
 	
-	this->id = window;
+	morda::real getDotsPerPt(){
+		float scale = [[UIScreen mainScreen] scale];
+		
+		//TODO: use findDotsPerPt() function from morda util
+		
+		return morda::real(scale);
+	}
 	
-	window.screen = [UIScreen mainScreen];
-	
-	window.backgroundColor = [UIColor redColor];
-	window.rootViewController = [[ViewController alloc] init];
-	
-	[window makeKeyAndVisible];
+}//~namespace
+
+App::App(const App::WindowParams& wp) :
+		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
+		gui(*this, utki::makeShared<mordaren::OpenGLES2Renderer>(), getDotsPerInch(), getDotsPerPt())
+{
+	this->setFullscreen(false);//this will intialize the viewport
 }
 
-App::WindowObject::~WindowObject()noexcept{
-	UIWindow* window = (UIWindow*)this->id;
-	[window release];
-}
 
+void App::swapFrameBuffers(){
+	//do nothing
+}
 
 void App::showVirtualKeyboard()noexcept{
 	//TODO:
@@ -369,7 +371,7 @@ void App::hideVirtualKeyboard()noexcept{
 }
 
 
-std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::getResFile(const std::string& path)const{
 	std::string dir([[[NSBundle mainBundle] resourcePath] fileSystemRepresentation]);
 	
 //	TRACE(<< "res path = " << dir << std::endl)

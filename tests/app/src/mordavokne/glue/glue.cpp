@@ -1,5 +1,10 @@
 #include <utki/config.hpp>
 
+#include "../App.hpp"
+
+
+#include "friendAccessors.cppinc"
+
 
 #if M_OS == M_OS_WINDOWS
 #	include "windows/glue.cppinc"

@@ -5,303 +5,512 @@
 
 #include "../../AppFactory.hpp"
 
-#include "../../../../../../src/morda/util/util.hpp"
-
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
+#include <nitki/Queue.hpp>
+
 #include <unikod/utf8.hpp>
 
-#ifdef M_RENDER_OPENGLES2
-#	include "../../../opengles2/mordaren/OpenGLES2Renderer.hpp"
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#ifdef M_RENDER_OPENGL2
+#	include <GL/glew.h>
+#	include <GL/glx.h>
+
+#	include <mordaren/OpenGL2Renderer.hpp>
+
+#elif defined(M_RENDER_OPENGLES2)
+#	include <EGL/egl.h>
+#	ifdef M_RASPBERRYPI
+#		include <bcm_host.h>
+#	endif
+
+#	include <mordaren/OpenGLES2Renderer.hpp>
+
 #else
-#	include "../../../opengl2/mordaren/OpenGL2Renderer.hpp"
+#	error "Unknown graphics API"
 #endif
+
+
+
 
 using namespace mordavokne;
 
 
-
-App::XDisplayWrapper::XDisplayWrapper(){
-	this->d = XOpenDisplay(0);
-	if(!this->d){
-		throw morda::Exc("XOpenDisplay() failed");
-	}
-}
+#include "../createAppUnix.cppinc"
 
 
-
-App::XDisplayWrapper::~XDisplayWrapper()noexcept{
-	XCloseDisplay(this->d);
-}
-
-
-
-App::XVisualInfoWrapper::XVisualInfoWrapper(
-		const WindowParams& wp,
-		XDisplayWrapper& xDisplay
-#ifdef M_RENDER_OPENGLES2
-		, EGLDisplayWrapper& eglDisplay
-		, EGLConfigWrapper& eglConfig
-#endif
-	)
-{
-#ifdef M_RENDER_OPENGLES2
-	EGLint vid;
-	
-	if(!eglGetConfigAttrib(eglDisplay.d, eglConfig.c, EGL_NATIVE_VISUAL_ID, &vid)) {
-		throw morda::Exc("eglGetConfigAttrib() failed");
-	}
-	
-	int numVisuals;
-	XVisualInfo visTemplate;
-	visTemplate.visualid = vid;
-	this->vi = XGetVisualInfo(xDisplay.d, VisualIDMask, &visTemplate, &numVisuals);
-	if (!this->vi) {
-		throw morda::Exc("XGetVisualInfo() failed");
-	}
-	
+namespace{
+struct WindowWrapper : public utki::Unique{
+	Display* display;
+	Colormap colorMap;
+	::Window window;
+#ifdef M_RENDER_OPENGL2
+	GLXContext glContext;
+#elif defined(M_RENDER_OPENGLES2)
+#	ifdef M_RASPBERRYPI
+	EGL_DISPMANX_WINDOW_T rpiNativeWindow;
+	DISPMANX_DISPLAY_HANDLE_T rpiDispmanDisplay;
+	DISPMANX_UPDATE_HANDLE_T rpiDispmanUpdate;
+	DISPMANX_ELEMENT_HANDLE_T rpiDispmanElement;
+#	endif
+	EGLDisplay eglDisplay;
+	EGLSurface eglSurface;
+	EGLContext eglContext;
 #else
-	std::vector<int> attr;
-	attr.push_back(GLX_RGBA);
-	attr.push_back(GLX_DOUBLEBUFFER);
-	attr.push_back(GLX_RED_SIZE); attr.push_back(8);
-	attr.push_back(GLX_GREEN_SIZE); attr.push_back(8);
-	attr.push_back(GLX_BLUE_SIZE); attr.push_back(8);
-	attr.push_back(GLX_ALPHA_SIZE); attr.push_back(8);
-	
-	if(wp.buffers.get(WindowParams::Buffer_e::DEPTH)){
-		attr.push_back(GLX_DEPTH_SIZE); attr.push_back(24);
-	}
-	if(wp.buffers.get(WindowParams::Buffer_e::STENCIL)){
-		attr.push_back(GLX_STENCIL_SIZE); attr.push_back(8);
-	}
-	
-	attr.push_back(None);
-	
-	this->vi = glXChooseVisual(
-			xDisplay.d,
-			DefaultScreen(xDisplay.d),
-			&*attr.begin()
-		);
-	if(!this->vi){
-		throw morda::Exc("glXChooseVisual() failed");
-	}
+#	error "Unknown graphics API"
 #endif
-}
+	Cursor emptyCursor;
+	XIM inputMethod;
+	XIC inputContext;
+
+	nitki::Queue uiQueue;
+	
+	volatile bool quitFlag = false;
+	
+	WindowWrapper(const App::WindowParams& wp){
+		this->display = XOpenDisplay(0);
+		if(!this->display){
+			throw utki::Exc("XOpenDisplay() failed");
+		}
+		utki::ScopeExit scopeExitDisplay([this](){
+			XCloseDisplay(this->display);
+		});
+
+#ifdef M_RENDER_OPENGL2
+		{
+			int glxVerMajor, glxVerMinor;
+			if(!glXQueryVersion(this->display, &glxVerMajor, &glxVerMinor)){
+				throw utki::Exc("glXQueryVersion() failed");
+			}
+
+			// FBConfigs were added in GLX version 1.3.
+			if(glxVerMajor < 1 || (glxVerMajor == 1  && glxVerMinor < 3 )){
+				throw utki::Exc("GLX version 1.3 or above is required");
+			}
+		}
+		
+		GLXFBConfig bestFbc;
+		{
+			std::vector<int> visualAttribs;
+			visualAttribs.push_back(GLX_X_RENDERABLE); visualAttribs.push_back(True);
+			visualAttribs.push_back(GLX_X_VISUAL_TYPE); visualAttribs.push_back(GLX_TRUE_COLOR);
+			visualAttribs.push_back(GLX_DRAWABLE_TYPE); visualAttribs.push_back(GLX_WINDOW_BIT);
+			visualAttribs.push_back(GLX_RENDER_TYPE); visualAttribs.push_back(GLX_RGBA_BIT);
+			visualAttribs.push_back(GLX_DOUBLEBUFFER);visualAttribs.push_back(True);
+			visualAttribs.push_back(GLX_RED_SIZE); visualAttribs.push_back(8);
+			visualAttribs.push_back(GLX_GREEN_SIZE); visualAttribs.push_back(8);
+			visualAttribs.push_back(GLX_BLUE_SIZE); visualAttribs.push_back(8);
+			visualAttribs.push_back(GLX_ALPHA_SIZE); visualAttribs.push_back(8);
+
+			if(wp.buffers.get(App::WindowParams::Buffer_e::DEPTH)){
+				visualAttribs.push_back(GLX_DEPTH_SIZE); visualAttribs.push_back(24);
+			}
+			if(wp.buffers.get(App::WindowParams::Buffer_e::STENCIL)){
+				visualAttribs.push_back(GLX_STENCIL_SIZE); visualAttribs.push_back(8);
+			}
+
+			visualAttribs.push_back(None);
 
 
+			int fbcount;
+			GLXFBConfig* fbc = glXChooseFBConfig(this->display, DefaultScreen(this->display), &*visualAttribs.begin(), &fbcount);
+			if(!fbc){
+				throw utki::Exc("glXChooseFBConfig() returned empty list");
+			}
+			utki::ScopeExit scopeExitFbc([&fbc](){
+				XFree(fbc);
+			});
 
-App::XVisualInfoWrapper::~XVisualInfoWrapper()noexcept{
-	XFree(this->vi);
-}
+			int bestFbcIdx = -1, worstFbc = -1, bestNumSamp = -1, worstNumSamp = 999;
 
+			for(int i = 0; i < fbcount; ++i){
+				XVisualInfo *vi = glXGetVisualFromFBConfig( display, fbc[i] );
+				if(vi){
+					int samp_buf, samples;
+					glXGetFBConfigAttrib(this->display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
+					glXGetFBConfigAttrib(this->display, fbc[i], GLX_SAMPLES, &samples);
 
+					if ( bestFbcIdx < 0 || (samp_buf && samples > bestNumSamp )){
+						bestFbcIdx = i, bestNumSamp = samples;
+					}
+					if ( worstFbc < 0 || !samp_buf || samples < worstNumSamp ){
+						worstFbc = i, worstNumSamp = samples;
+					}
+				}
+				XFree( vi );
+			}
+			bestFbc = fbc[ bestFbcIdx ];
+		}
+#elif defined(M_RENDER_OPENGLES2)
+		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+		if(this->eglDisplay == EGL_NO_DISPLAY){
+			throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
+		}
 
-App::XWindowWrapper::XWindowWrapper(const App::WindowParams& wp, XDisplayWrapper& xDisplay, XVisualInfoWrapper& xVisualInfo) :
-		d(xDisplay)
-{
-	Colormap colorMap = XCreateColormap(
-			this->d.d,
-			RootWindow(this->d.d, xVisualInfo.vi->screen),
-			xVisualInfo.vi->visual,
-			AllocNone
-		);
-	//TODO: check for error
+		utki::ScopeExit scopeExitEGLDisplay([this](){
+			eglTerminate(this->eglDisplay);
+		});
+		
+		if(eglInitialize(this->eglDisplay, nullptr, nullptr) == EGL_FALSE){
+			eglTerminate(this->eglDisplay);
+			throw morda::Exc("eglInitialize() failed");
+		}
+		
+		EGLConfig eglConfig;
+		{
+			//TODO: allow stencil and depth configuration etc. via WindowParams
+			//Here specify the attributes of the desired configuration.
+			//Below, we select an EGLConfig with at least 8 bits per color
+			//component compatible with on-screen windows
+			const EGLint attribs[] = {
+					EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+					EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
+					EGL_BLUE_SIZE, 8,
+					EGL_GREEN_SIZE, 8,
+					EGL_RED_SIZE, 8,
+					EGL_ALPHA_SIZE, 8,
+					EGL_DEPTH_SIZE, 16,
+					EGL_NONE
+			};
 
-	XSetWindowAttributes attr;
-	attr.colormap = colorMap;
-	attr.border_pixel = 0;
-	attr.event_mask =
-			ExposureMask |
-			KeyPressMask |
-			KeyReleaseMask |
-			ButtonPressMask |
-			ButtonReleaseMask |
-			PointerMotionMask |
-			ButtonMotionMask |
-			StructureNotifyMask |
-			EnterWindowMask |
-			LeaveWindowMask
-		;
-	unsigned long fields = CWBorderPixel | CWColormap | CWEventMask;
-
-	this->w = XCreateWindow(
-			this->d.d,
-			RootWindow(this->d.d, xVisualInfo.vi->screen),
-			0,
-			0,
-			wp.dim.x,
-			wp.dim.y,
-			0,
-			xVisualInfo.vi->depth,
-			InputOutput,
-			xVisualInfo.vi->visual,
-			fields,
-			&attr
-		);
-	//TODO: check for error
-
-	{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
-		Atom a = XInternAtom(this->d.d, "WM_DELETE_WINDOW", True);
-		XSetWMProtocols(this->d.d, this->w, &a, 1);
-	}
-
-	XMapWindow(this->d.d, this->w);
-
-	XFlush(this->d.d);
-}
-
-
-
-App::XWindowWrapper::~XWindowWrapper()noexcept{
-	XDestroyWindow(this->d.d, this->w);
-}
-
-
-#ifndef M_RENDER_OPENGLES2
-App::GLXContextWrapper::GLXContextWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow, XVisualInfoWrapper& xVisualInfo) :
-		d(xDisplay),
-		w(xWindow)
-{
-	this->glxContext = glXCreateContext(this->d.d, xVisualInfo.vi, 0, GL_TRUE);
-	if(this->glxContext == NULL){
-		throw morda::Exc("glXCreateContext() failed");
-	}
-	glXMakeCurrent(this->d.d, this->w.w, this->glxContext);
-
-	TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
-}
-
-
-
-void App::GLXContextWrapper::Destroy()noexcept{
-//	TRACE(<< "App::GLXContextWrapper::Destroy(): invoked" << std::endl)
-	glXMakeCurrent(this->d.d, None, NULL);
-//	TRACE(<< "App::GLXContextWrapper::Destroy(): destroying context" << std::endl)
-	glXDestroyContext(this->d.d, this->glxContext);
-}
+			//Here, the application chooses the configuration it desires. In this
+			//sample, we have a very simplified selection process, where we pick
+			//the first EGLConfig that matches our criteria
+			EGLint numConfigs;
+			eglChooseConfig(this->eglDisplay, attribs, &eglConfig, 1, &numConfigs);
+			if(numConfigs <= 0){
+				throw morda::Exc("eglChooseConfig() failed, no matching config found");
+			}
+		}
+		
+		if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE){
+			throw morda::Exc("eglBindApi() failed");
+		}
 #else
-App::EGLContextWrapper::EGLContextWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& config, EGLSurfaceWrapper& s) :
-		d(d)
-{
-	EGLint contextAttrs[] = {
-		EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
-		EGL_NONE
-	};
-
-	this->c = eglCreateContext(d.d, config.c, NULL, contextAttrs);
-	if(this->c == EGL_NO_CONTEXT){
-		throw morda::Exc("eglCreateContext() failed");
-	}
-
-	if(eglMakeCurrent(d.d, s.s, s.s, this->c) == EGL_FALSE){
-		eglDestroyContext(d.d, this->c);
-		throw morda::Exc("eglMakeCurrent() failed");
-	}
-}
-
-
-
-App::EGLContextWrapper::~EGLContextWrapper()noexcept{
-	eglMakeCurrent(this->d.d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-	eglDestroyContext(this->d.d, this->c);
-}
-
-App::EGLSurfaceWrapper::EGLSurfaceWrapper(EGLDisplayWrapper& d, EGLConfigWrapper& c, XWindowWrapper& w) :
-		d(d)
-{
-	this->s = eglCreateWindowSurface(d.d, c.c, w.w, NULL);
-	if(this->s == EGL_NO_SURFACE){
-		throw morda::Exc("eglCreateWindowSurface() failed");
-	}
-}
-
-
-
-App::EGLSurfaceWrapper::~EGLSurfaceWrapper()noexcept{
-	eglDestroySurface(this->d.d, this->s);
-}
-
-
-App::EGLDisplayWrapper::EGLDisplayWrapper(){
-	this->d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-	if(this->d == EGL_NO_DISPLAY){
-		throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
-	}
-
-	if(eglInitialize(this->d, 0, 0) == EGL_FALSE){
-		eglTerminate(this->d);
-		throw morda::Exc("eglInitialize() failed");
-	}
-}
-
-
-
-App::EGLDisplayWrapper::~EGLDisplayWrapper()noexcept{
-	eglTerminate(this->d);
-}
-
-
-App::EGLConfigWrapper::EGLConfigWrapper(const WindowParams& wp, EGLDisplayWrapper& d){
-	//TODO: allow stencil configuration etc. via WindowParams
-	//Here specify the attributes of the desired configuration.
-	//Below, we select an EGLConfig with at least 8 bits per color
-	//component compatible with on-screen windows
-	const EGLint attribs[] = {
-			EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-			EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
-			EGL_BLUE_SIZE, 8,
-			EGL_GREEN_SIZE, 8,
-			EGL_RED_SIZE, 8,
-			EGL_NONE
-	};
-
-	//Here, the application chooses the configuration it desires. In this
-	//sample, we have a very simplified selection process, where we pick
-	//the first EGLConfig that matches our criteria
-	EGLint numConfigs;
-	eglChooseConfig(d.d, attribs, &this->c, 1, &numConfigs);
-	if(numConfigs <= 0){
-		throw morda::Exc("eglChooseConfig() failed, no matching config found");
-	}
-}
-
+#	error "Unknown graphics API"
 #endif
 
 
+		XVisualInfo *vi;
+#ifdef M_RENDER_OPENGL2
+		vi = glXGetVisualFromFBConfig(this->display, bestFbc);
+		if (!vi) {
+			throw morda::Exc("glXGetVisualFromFBConfig() failed");
+		}
+#elif defined(M_RENDER_OPENGLES2)
+#	ifdef M_RASPBERRYPI
+		{
+			int numVisuals;
+			XVisualInfo visTemplate;
+			visTemplate.screen = DefaultScreen(this->display); //LCD
+			vi = XGetVisualInfo(
+					this->display,
+					VisualScreenMask,
+					&visTemplate,
+					&numVisuals
+				);
+			if (!vi) {
+				throw morda::Exc("XGetVisualInfo() failed");
+			}
+		}
+#	else
+		{
+			EGLint vid;
+	
+			if(!eglGetConfigAttrib(this->eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &vid)) {
+				throw morda::Exc("eglGetConfigAttrib() failed");
+			}
 
-App::XInputMethodWrapper::XInputMethodWrapper(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow) :
-		d(xDisplay),
-		w(xWindow)
-{
-	this->xim = XOpenIM(this->d.d, NULL, NULL, NULL);
-	if(this->xim == NULL){
-		throw morda::Exc("XOpenIM() failed");
-	}
+			int numVisuals;
+			XVisualInfo visTemplate;
+			visTemplate.visualid = vid;
+			vi = XGetVisualInfo(
+					this->display,
+					VisualIDMask,
+					&visTemplate,
+					&numVisuals
+				);
+			if (!vi) {
+				throw morda::Exc("XGetVisualInfo() failed");
+			}
+		}
+#	endif
+#else
+#	error "Unknown graphics API"
+#endif
+		utki::ScopeExit scopeExitVisualInfo([vi](){
+			XFree(vi);
+		});
 
-	this->xic = XCreateIC(
-			this->xim,
-			XNClientWindow, this->w.w,
-			XNFocusWindow, this->w.w,
-			XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
-			NULL
-		);
-	if(this->xic == NULL){
-		this->Destroy();
+		this->colorMap = XCreateColormap(
+				this->display,
+				RootWindow(this->display, vi->screen),
+				vi->visual,
+				AllocNone
+			);
+		//TODO: check for error?
+		utki::ScopeExit scopeExitColorMap([this](){
+			XFreeColormap(this->display, this->colorMap);
+		});
+
+		{
+			XSetWindowAttributes attr;
+			attr.colormap = colorMap;
+			attr.border_pixel = 0;
+			attr.background_pixmap = None;
+			attr.event_mask =
+					ExposureMask |
+					KeyPressMask |
+					KeyReleaseMask |
+					ButtonPressMask |
+					ButtonReleaseMask |
+					PointerMotionMask |
+					ButtonMotionMask |
+					StructureNotifyMask |
+					EnterWindowMask |
+					LeaveWindowMask
+				;
+			unsigned long fields = CWBorderPixel | CWColormap | CWEventMask;
+
+			this->window = XCreateWindow(
+					this->display,
+					RootWindow(this->display, vi->screen),
+					0,
+					0,
+					wp.dim.x,
+					wp.dim.y,
+					0,
+					vi->depth,
+					InputOutput,
+					vi->visual,
+					fields,
+					&attr
+				);
+		}
+		if(!this->window){
+			throw utki::Exc("Failed to create window");
+		}
+		utki::ScopeExit scopeExitWindow([this](){
+			XDestroyWindow(this->display, this->window);
+		});
+
+		{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
+			Atom a = XInternAtom(this->display, "WM_DELETE_WINDOW", True);
+			XSetWMProtocols(this->display, this->window, &a, 1);
+		}
+
+		XMapWindow(this->display, this->window);
+
+		XFlush(this->display);
+
+#ifdef M_RENDER_OPENGL2
+		this->glContext = glXCreateContext(this->display, vi, 0, GL_TRUE);
+		if(this->glContext == NULL){
+			throw morda::Exc("glXCreateContext() failed");
+		}
+		utki::ScopeExit scopeExitGLContext([this](){
+			glXMakeCurrent(this->display, None, NULL);
+			glXDestroyContext(this->display, this->glContext);
+		});
+
+		glXMakeCurrent(this->display, this->window, this->glContext);
+
+		TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
+
+		if(glewInit() != GLEW_OK){
+			throw morda::Exc("GLEW initialization failed");
+		}
+#elif defined(M_RENDER_OPENGLES2)
+
+#	ifdef M_RASPBERRYPI
+		{
+			bcm_host_init();
+
+			VC_RECT_T dst_rect, src_rect;
+   
+			std::uint32_t display_width, display_height;
+
+			// create an EGL window surface, passing context width/height
+			if(graphics_get_display_size(
+					0, //LCD
+					&display_width,
+					&display_height
+				) < 0 )
+			{
+				throw morda::Exc("graphics_get_display_size() failed");
+			}
+
+			dst_rect.x = 0;
+			dst_rect.y = 0;
+			dst_rect.width = display_width;
+			dst_rect.height = display_height;
+
+			src_rect.x = 0;
+			src_rect.y = 0;
+			src_rect.width = display_width << 16;
+			src_rect.height = display_height << 16;   
+
+			this->rpiDispmanDisplay = vc_dispmanx_display_open(0); //0 = LCD
+			this->rpiDispmanUpdate = vc_dispmanx_update_start(0);
+
+			this->rpiDispmanElement = vc_dispmanx_element_add(
+					this->rpiDispmanUpdate,
+					this->rpiDispmanDisplay,
+					0, //layer
+					&dst_rect,
+					0, //src
+					&src_rect,
+					DISPMANX_PROTECTION_NONE,
+					0, //alpha
+					0, //clamp
+					DISPMANX_NO_ROTATE //transform
+				);
+
+			this->rpiNativeWindow.element = this->rpiDispmanElement;
+			this->rpiNativeWindow.width = display_width;
+			this->rpiNativeWindow.height = display_height;
+			vc_dispmanx_update_submit_sync(this->rpiDispmanUpdate);
+		}
+#	endif
+
+		this->eglSurface = eglCreateWindowSurface(
+				this->eglDisplay,
+				eglConfig,
+#	ifdef M_RASPBERRYPI
+				reinterpret_cast<EGLNativeWindowType>(&this->rpiNativeWindow),
+#	else
+				this->window,
+#	endif
+				nullptr
+			);
+		if(this->eglSurface == EGL_NO_SURFACE){
+			throw morda::Exc("eglCreateWindowSurface() failed");
+		}
+		utki::ScopeExit scopeExitEGLSurface([this](){
+			eglDestroySurface(this->eglDisplay, this->eglSurface);
+		});
+		
+		{
+			EGLint contextAttrs[] = {
+				EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed at least on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+				EGL_NONE
+			};
+
+			this->eglContext = eglCreateContext(this->eglDisplay, eglConfig, EGL_NO_CONTEXT, contextAttrs);
+			if(this->eglContext == EGL_NO_CONTEXT){
+				throw morda::Exc("eglCreateContext() failed");
+			}
+		}
+
+		if(eglMakeCurrent(this->eglDisplay, this->eglSurface, this->eglSurface, this->eglContext) == EGL_FALSE){
+			eglDestroyContext(this->eglDisplay, this->eglContext);
+			throw morda::Exc("eglMakeCurrent() failed");
+		}
+		utki::ScopeExit scopeExitEGLContext([this](){
+			eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+			eglDestroyContext(this->eglDisplay, this->eglContext);
+		});
+#else
+#	error "Unknown graphics API"
+#endif
+		
+		{
+			Pixmap blank;
+			XColor dummy;
+			char data[1] = {0};
+
+			blank = XCreateBitmapFromData(this->display, this->window, data, 1, 1);
+			if(blank == None){
+				throw utki::Exc("App::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
+			}
+			utki::ScopeExit scopeExit([this, &blank](){
+				XFreePixmap(this->display, blank);
+			});
+
+			this->emptyCursor = XCreatePixmapCursor(this->display, blank, blank, &dummy, &dummy, 0, 0);
+		}
+		utki::ScopeExit scopeExitEmptyCursor([this](){
+			XFreeCursor(this->display, this->emptyCursor);
+		});
+
+		this->inputMethod = XOpenIM(this->display, NULL, NULL, NULL);
+		if(this->inputMethod == NULL){
+			throw utki::Exc("XOpenIM() failed");
+		}
+		utki::ScopeExit scopeExitInputMethod([this](){
+			XCloseIM(this->inputMethod);
+		});
+
+		this->inputContext = XCreateIC(
+				this->inputMethod,
+				XNClientWindow, this->window,
+				XNFocusWindow, this->window,
+				XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
+				NULL
+			);
+		if(this->inputContext == NULL){
+			throw utki::Exc("XCreateIC() failed");
+		}
+		utki::ScopeExit scopeExitInputContext([this](){
+			XUnsetICFocus(this->inputContext);
+			XDestroyIC(this->inputContext);
+		});
+
+
+		scopeExitInputContext.reset();
+		scopeExitInputMethod.reset();
+		scopeExitEmptyCursor.reset();
+		scopeExitWindow.reset();
+		scopeExitColorMap.reset();
+		scopeExitDisplay.reset();
+#ifdef M_RENDER_OPENGL2
+		scopeExitGLContext.reset();
+#elif defined(M_RENDER_OPENGLES2)
+		scopeExitEGLDisplay.reset();
+		scopeExitEGLSurface.reset();
+		scopeExitEGLContext.reset();
+#else
+#	error "Unknown graphics API"
+#endif
 	}
+	~WindowWrapper()noexcept{
+		XUnsetICFocus(this->inputContext);
+		XDestroyIC(this->inputContext);
+
+		XCloseIM(this->inputMethod);
+		XFreeCursor(this->display, this->emptyCursor);
+
+#ifdef M_RENDER_OPENGL2
+		glXMakeCurrent(this->display, None, NULL);
+		glXDestroyContext(this->display, this->glContext);
+#elif defined(M_RENDER_OPENGLES2)
+		eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		eglDestroyContext(this->eglDisplay, this->eglContext);
+		eglDestroySurface(this->eglDisplay, this->eglSurface);
+#else
+#	error "Unknown graphics API"
+#endif
+
+		XDestroyWindow(this->display, this->window);
+		XFreeColormap(this->display, this->colorMap);
+		
+#ifdef M_RENDER_OPENGLES2
+		eglTerminate(this->eglDisplay);
+#endif
+		
+		XCloseDisplay(this->display);
+	}
+};
+
+WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
+	return static_cast<WindowWrapper&>(*pimpl);
 }
 
-
-
-void App::XInputMethodWrapper::Destroy()noexcept{
-	if(this->xic != NULL){
-		XUnsetICFocus(this->xic);
-		XDestroyIC(this->xic);
-	}
-	if(this->xim != NULL){
-		XCloseIM(this->xim);
-	}
 }
+
 
 
 namespace{
@@ -318,47 +527,28 @@ morda::real getDotsPerPt(Display* display){
 	kolme::Vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
 	kolme::Vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
 	
-	return 1;
+	return App::findDotsPerPt(resolution, screenSizeMm);
 }
 }//~namespace
 
+
 App::App(const WindowParams& requestedWindowParams) :
-#ifdef M_RENDER_OPENGLES2
-		eglConfig(requestedWindowParams, eglDisplay),
-#endif
-		xVisualInfo(
-				requestedWindowParams,
-				xDisplay
-#ifdef M_RENDER_OPENGLES2
-				, eglDisplay
-				, eglConfig
-#endif
-			),
-		xWindow(requestedWindowParams, xDisplay, xVisualInfo),
-#ifdef M_RENDER_OPENGLES2
-		eglSurface(eglDisplay, eglConfig, xWindow),
-		eglContext(eglDisplay, eglConfig, eglSurface),
+		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
+		gui(
+				*this,
+#ifdef M_RENDER_OPENGL2
+				utki::makeShared<mordaren::OpenGL2Renderer>(),
+#elif defined(M_RENDER_OPENGLES2)
+				utki::makeShared<mordaren::OpenGLES2Renderer>(),
 #else
-		glxContex(xDisplay, xWindow, xVisualInfo),
+#	error "Unknown graphics API"
 #endif
-		xEmptyMouseCursor(xDisplay, xWindow),
-		xInputMethod(xDisplay, xWindow),
-#ifdef M_RENDER_OPENGLES2
-		renderer(std::make_shared<mordaren::OpenGLES2Renderer>()),
-#else
-		renderer(std::make_shared<mordaren::OpenGL2Renderer>()),
-#endif
-		gui(this->renderer, getDotsPerInch(xDisplay.d), ::getDotsPerPt(xDisplay.d))
+				getDotsPerInch(getImpl(windowPimpl).display),
+				::getDotsPerPt(getImpl(windowPimpl).display)
+			)
 {
-#ifdef DEBUG
-#	ifndef M_RENDER_OPENGLES2
-	//print GLX version
-	{
-		int major, minor;
-		glXQueryVersion(this->xDisplay.d, &major, &minor);
-		TRACE(<< "GLX Version: " << major << "." << minor << std::endl)
-	}
-#	endif
+#ifdef M_RASPBERRYPI
+	this->setFullscreen(true);
 #endif
 }
 
@@ -382,7 +572,7 @@ public:
 	}
 };
 
-morda::MouseButton_e ButtonNumberToEnum(int number){
+morda::MouseButton_e buttonNumberToEnum(int number){
 	switch(number){
 		case 1:
 			return morda::MouseButton_e::LEFT;
@@ -721,190 +911,193 @@ public:
 
 
 void App::quit()noexcept{
-	this->quitFlag = true;
-}
-
-
-void App::exec(){
-	XEventWaitable xew(this->xDisplay.d);
-
-	pogodi::WaitSet waitSet(2);
-
-	waitSet.add(xew, pogodi::Waitable::READ);
-	waitSet.add(this->uiQueue, pogodi::Waitable::READ);
-
-	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
-	//So, render everything for the first time.
-	this->render();
-
-	while(!this->quitFlag){
-		waitSet.waitWithTimeout(this->gui.update());
-
-		if(this->uiQueue.canRead()){
-			while(auto m = this->uiQueue.peekMsg()){
-				m();
-			}
-			ASSERT(!this->uiQueue.canRead())
-		}
-
-//		if(xew.canRead()){
-			xew.clearCanReadFlag();
-			while(XPending(this->xDisplay.d) > 0){
-				XEvent event;
-				XNextEvent(this->xDisplay.d, &event);
-//				TRACE(<< "X event got, type = " << (event.type) << std::endl)
-				switch(event.type){
-					case Expose:
-//						TRACE(<< "Expose X event got" << std::endl)
-						if(event.xexpose.count != 0){
-							break;//~switch()
-						}
-						this->render();
-						break;
-					case ConfigureNotify:
-//						TRACE(<< "ConfigureNotify X event got" << std::endl)
-						this->updateWindowRect(morda::Rectr(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
-						break;
-					case KeyPress:
-//						TRACE(<< "KeyPress X event got" << std::endl)
-						{
-							morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
-							this->handleKeyEvent(true, key);
-							this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, event), key);
-						}
-						break;
-					case KeyRelease:
-//						TRACE(<< "KeyRelease X event got" << std::endl)
-						{
-							morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
-
-							//detect auto-repeated key events
-							if(XEventsQueued(this->xDisplay.d, QueuedAfterReading)){//if there are other events queued
-								XEvent nev;
-								XPeekEvent(this->xDisplay.d, &nev);
-
-								if(nev.type == KeyPress
-										&& nev.xkey.time == event.xkey.time
-										&& nev.xkey.keycode == event.xkey.keycode
-									)
-								{
-									//Key wasn't actually released
-									this->handleCharacterInput(KeyEventUnicodeProvider(this->xInputMethod.xic, nev), key);
-
-									XNextEvent(this->xDisplay.d, &nev);//remove the key down event from queue
-									break;
-								}
-							}
-
-							this->handleKeyEvent(false, key);
-						}
-						break;
-					case ButtonPress:
-//						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
-//						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-						this->handleMouseButton(
-								true,
-								morda::Vec2r(event.xbutton.x, event.xbutton.y),
-								ButtonNumberToEnum(event.xbutton.button),
-								0
-							);
-						break;
-					case ButtonRelease:
-//						TRACE(<< "ButtonRelease X event got, button mask = " << event.xbutton.button << std::endl)
-						this->handleMouseButton(
-								false,
-								morda::Vec2r(event.xbutton.x, event.xbutton.y),
-								ButtonNumberToEnum(event.xbutton.button),
-								0
-							);
-						break;
-					case MotionNotify:
-//						TRACE(<< "MotionNotify X event got" << std::endl)
-						this->handleMouseMove(
-								morda::Vec2r(event.xmotion.x, event.xmotion.y),
-								0
-							);
-						break;
-					case EnterNotify:
-						this->handleMouseHover(true, 0);
-						break;
-					case LeaveNotify:
-						this->handleMouseHover(false, 0);
-						break;
-					case ClientMessage:
-//						TRACE(<< "ClientMessage X event got" << std::endl)
-						//probably a WM_DELETE_WINDOW event
-						{
-							char* name = XGetAtomName(this->xDisplay.d, event.xclient.message_type);
-							if(*name == *"WM_PROTOCOLS"){
-								this->quitFlag = true;
-							}
-							XFree(name);
-						}
-						break;
-					default:
-						//ignore
-						break;
-				}//~switch()
-			}//~while()
-//		}//~if there are pending X events
-
-		this->render();
-	}//~while(!this->quitFlag)
-
-	waitSet.remove(this->uiQueue);
-	waitSet.remove(xew);
-}
-
-
-
-namespace mordavokne{
-
-inline void Main(int argc, const char** argv){
-	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	auto& ww = getImpl(this->windowPimpl);
 	
-	ASSERT(app)
-
-	app->exec();
+	ww.quitFlag = true;
 }
 
-}
+
 
 
 
 int main(int argc, const char** argv){
-	mordavokne::Main(argc, argv);
+	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	
+	ASSERT(app)
 
+	auto& ww = getImpl(getWindowPimpl(*app));
+	
+	
+	
+	XEventWaitable xew(ww.display);
+
+	pogodi::WaitSet waitSet(2);
+
+	waitSet.add(xew, pogodi::Waitable::READ);
+	waitSet.add(ww.uiQueue, pogodi::Waitable::READ);
+
+	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
+	//So, render everything for the first time.
+	render(*app);
+
+	while(!ww.quitFlag){
+		waitSet.waitWithTimeout(app->gui.update());
+
+		if(ww.uiQueue.canRead()){
+			while(auto m = ww.uiQueue.peekMsg()){
+				m();
+			}
+			ASSERT(!ww.uiQueue.canRead())
+		}
+
+		//NOTE: do not check canRead flag for X event, for some reason when waiting with 0 timeout it will never be set.
+		//      Maybe some bug in XWindows, maybe something else.
+		xew.clearCanReadFlag();
+		while(XPending(ww.display) > 0){
+			XEvent event;
+			XNextEvent(ww.display, &event);
+//				TRACE(<< "X event got, type = " << (event.type) << std::endl)
+			switch(event.type){
+				case Expose:
+//						TRACE(<< "Expose X event got" << std::endl)
+					if(event.xexpose.count != 0){
+						break;//~switch()
+					}
+					render(*app);
+					break;
+				case ConfigureNotify:
+//						TRACE(<< "ConfigureNotify X event got" << std::endl)
+					updateWindowRect(*app, morda::Rectr(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+					break;
+				case KeyPress:
+//						TRACE(<< "KeyPress X event got" << std::endl)
+					{
+						morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
+						handleKeyEvent(*app, true, key);
+						handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, event), key);
+					}
+					break;
+				case KeyRelease:
+//						TRACE(<< "KeyRelease X event got" << std::endl)
+					{
+						morda::Key_e key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
+
+						//detect auto-repeated key events
+						if(XEventsQueued(ww.display, QueuedAfterReading)){//if there are other events queued
+							XEvent nev;
+							XPeekEvent(ww.display, &nev);
+
+							if(nev.type == KeyPress
+									&& nev.xkey.time == event.xkey.time
+									&& nev.xkey.keycode == event.xkey.keycode
+								)
+							{
+								//Key wasn't actually released
+								handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
+
+								XNextEvent(ww.display, &nev);//remove the key down event from queue
+								break;
+							}
+						}
+
+						handleKeyEvent(*app, false, key);
+					}
+					break;
+				case ButtonPress:
+//						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
+//						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
+					handleMouseButton(
+							*app,
+							true,
+							morda::Vec2r(event.xbutton.x, event.xbutton.y),
+							buttonNumberToEnum(event.xbutton.button),
+							0
+						);
+					break;
+				case ButtonRelease:
+//						TRACE(<< "ButtonRelease X event got, button mask = " << event.xbutton.button << std::endl)
+					handleMouseButton(
+							*app,
+							false,
+							morda::Vec2r(event.xbutton.x, event.xbutton.y),
+							buttonNumberToEnum(event.xbutton.button),
+							0
+						);
+					break;
+				case MotionNotify:
+//						TRACE(<< "MotionNotify X event got" << std::endl)
+					handleMouseMove(
+							*app,
+							morda::Vec2r(event.xmotion.x, event.xmotion.y),
+							0
+						);
+					break;
+				case EnterNotify:
+					handleMouseHover(*app, true, 0);
+					break;
+				case LeaveNotify:
+					handleMouseHover(*app, false, 0);
+					break;
+				case ClientMessage:
+//						TRACE(<< "ClientMessage X event got" << std::endl)
+					//probably a WM_DELETE_WINDOW event
+					{
+						char* name = XGetAtomName(ww.display, event.xclient.message_type);
+						if(*name == *"WM_PROTOCOLS"){
+							ww.quitFlag = true;
+						}
+						XFree(name);
+					}
+					break;
+				default:
+					//ignore
+					break;
+			}//~switch()
+		}//~while()
+
+		render(*app);
+	}//~while(!ww.quitFlag)
+
+	waitSet.remove(ww.uiQueue);
+	waitSet.remove(xew);
+	
 	return 0;
 }
 
 
 
 void App::setFullscreen(bool enable){
+#ifdef M_RASPBERRYPI
+	if(this->isFullscreen()){
+		return;
+	}
+#endif
 	if(enable == this->isFullscreen()){
 		return;
 	}
+	
+	auto& ww = getImpl(this->windowPimpl);
 
 	XEvent event;
 	Atom stateAtom;
 	Atom atom;
 
-	stateAtom = XInternAtom(this->xDisplay.d, "_NET_WM_STATE", False);
-	atom = XInternAtom(this->xDisplay.d, "_NET_WM_STATE_FULLSCREEN", False);
+	stateAtom = XInternAtom(ww.display, "_NET_WM_STATE", False);
+	atom = XInternAtom(ww.display, "_NET_WM_STATE_FULLSCREEN", False);
 
 	event.xclient.type = ClientMessage;
 	event.xclient.serial = 0;
 	event.xclient.send_event = True;
-	event.xclient.window = this->xWindow.w;
+	event.xclient.window = ww.window;
 	event.xclient.message_type = stateAtom;
 	event.xclient.format = 32;
 	event.xclient.data.l[0]	= enable ? 1 : 0;
 	event.xclient.data.l[1]	= atom;
 	event.xclient.data.l[2]	= 0;
 
-	XSendEvent(this->xDisplay.d, DefaultRootWindow(this->xDisplay.d), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+	XSendEvent(ww.display, DefaultRootWindow(ww.display), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 
-	XFlush(this->xDisplay.d);
+	XFlush(ww.display);
 
 	this->isFullscreen_v = enable;
 }
@@ -912,30 +1105,33 @@ void App::setFullscreen(bool enable){
 
 
 void App::setMouseCursorVisible(bool visible){
+	auto& ww = getImpl(this->windowPimpl);
+	
 	if(visible){
-		XUndefineCursor(this->xDisplay.d, this->xWindow.w);
+		XUndefineCursor(ww.display, ww.window);
 	}else{
-		XDefineCursor(this->xDisplay.d, this->xWindow.w, this->xEmptyMouseCursor.c);
+		XDefineCursor(ww.display, ww.window, ww.emptyCursor);
 	}
 }
 
 
 
-App::XEmptyMouseCursor::XEmptyMouseCursor(XDisplayWrapper& xDisplay, XWindowWrapper& xWindow) :
-		d(xDisplay)
-{
-	Pixmap blank;
-	XColor dummy;
-	char data[1] = {0};
+void App::swapFrameBuffers(){
+	auto& ww = getImpl(this->windowPimpl);
 
-	blank = XCreateBitmapFromData(this->d.d, xWindow.w, data, 1, 1);
-	if(blank == None){
-		throw morda::Exc("App::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
-	}
-	this->c = XCreatePixmapCursor(this->d.d, blank, blank, &dummy, &dummy, 0, 0);
-	XFreePixmap(this->d.d, blank);
+#ifdef M_RENDER_OPENGL2	
+	glXSwapBuffers(ww.display, ww.window);
+#elif defined(M_RENDER_OPENGLES2)
+	eglSwapBuffers(ww.eglDisplay, ww.eglSurface);
+#else
+#	error "Unknown graphics API"
+#endif
 }
 
-App::XEmptyMouseCursor::~XEmptyMouseCursor()noexcept{
-	XFreeCursor(this->d.d, this->c);
+
+
+void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& f){
+	auto& ww = getImpl(getWindowPimpl(this->app));
+	
+	ww.uiQueue.pushMessage(std::move(f));
 }

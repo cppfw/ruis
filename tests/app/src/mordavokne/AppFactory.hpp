@@ -2,6 +2,8 @@
 
 #include "App.hpp"
 
+#include <utki/config.hpp>
+
 
 namespace mordavokne{
 

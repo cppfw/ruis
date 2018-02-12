@@ -7,14 +7,6 @@
 #include <papki/RootDirFile.hpp>
 
 
-#if M_OS == M_OS_UNIX || M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
-#	include <dlfcn.h>
-#endif
-
-
-
-
-
 using namespace mordavokne;
 
 
@@ -26,10 +18,9 @@ App::T_Instance App::instance;
 
 void App::render(){
 	//TODO: render only if needed?
+	this->gui.renderer().clearFramebuffer();
 	
-	this->renderer->clearFramebuffer();
-
-	this->gui.render(this->renderer->initialMatrix);
+	this->gui.render(this->gui.renderer().initialMatrix);
 	
 	this->swapFrameBuffers();
 }
@@ -44,7 +35,7 @@ void App::updateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	morda::inst().renderer().setViewport(kolme::Recti(
+	this->gui.renderer().setViewport(kolme::Recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),
@@ -58,7 +49,7 @@ void App::updateWindowRect(const morda::Rectr& rect){
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID && M_OS_NAME != M_OS_NAME_IOS
-std::unique_ptr<papki::File> App::createResourceFileInterface(const std::string& path)const{
+std::unique_ptr<papki::File> App::getResFile(const std::string& path)const{
 	return utki::makeUnique<papki::FSFile>(path);
 }
 
@@ -77,57 +68,28 @@ void App::hideVirtualKeyboard()noexcept{
 
 
 
+morda::real App::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
+	
+	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
+	//For high density displays it should be more than one pixel, depending on display ppi.
+	//For hand held devices the size of PT should be determined from physical screen size and pixel resolution.
 
-#if M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX || M_OS == M_OS_UNIX
-std::unique_ptr<App> mordavokne::createAppUnix(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
-	void* libHandle = dlopen(nullptr, RTLD_NOW);
-	if(!libHandle){
-		throw morda::Exc("dlopen(): failed");
-	}
-
-	utki::ScopeExit scopeexit([libHandle](){
-		dlclose(libHandle);
-	});
-
-	auto factory =
-			reinterpret_cast<
-					std::unique_ptr<App> (*)(int, const char**, const utki::Buf<std::uint8_t>)
-				>(dlsym(libHandle, "_ZN10mordavokne9createAppEiPPKcN4utki3BufIhEE"));
-	if(!factory){
-		throw morda::Exc("dlsym(): createApp() function not found!");
-	}
-
-	return factory(argc, argv, savedState);
-}
-#endif
-
-
-#if M_OS != M_OS_MACOSX
-void App::swapFrameBuffers(){
-#if M_OS == M_OS_WINDOWS
-	SwapBuffers(this->deviceContext.hdc);
-#elif M_OS == M_OS_LINUX
-#	ifdef M_RENDER_OPENGLES2
-	eglSwapBuffers(this->eglDisplay.d, this->eglSurface.s);
-#	else
-	glXSwapBuffers(this->xDisplay.d, this->xWindow.w);
-#	endif
+#if M_OS_NAME == M_OS_NAME_IOS
+	return morda::real(1);//TODO:
 #else
-#	error "unknown OS"
-#endif
-}
-#endif
-
-
-
-App::GLEWWrapper::GLEWWrapper(){
-#if M_OS_NAME != M_OS_NAME_IOS
-#ifdef M_RENDER_OPENGLES2
-#else
-	glewExperimental = GL_TRUE;
-	if(glewInit() != GLEW_OK){
-		throw utki::Exc("GLEW initialization failed");
+	unsigned xIndex;
+	if(resolution.x > resolution.y){
+		xIndex = 0;
+	}else{
+		xIndex = 1;
 	}
-#endif
+	
+	if(screenSizeMm[xIndex] < 300){
+		return resolution[xIndex] / morda::real(700);
+	}else if(screenSizeMm[xIndex] < 150) {
+        return resolution[xIndex] / morda::real(200);
+    }
+	
+	return morda::real(1);
 #endif
 }

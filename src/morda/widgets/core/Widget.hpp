@@ -321,12 +321,17 @@ public:
 	 */
 	virtual std::shared_ptr<Widget> findByName(const std::string& name)noexcept;
 
-	//TODO: remove deprecated
-	std::shared_ptr<Widget> findChildByName(const std::string& name)noexcept{
-		TRACE(<< "Widget::findChildByName(): DEPRECATED!!! Use Widget::findByName() instead" << std::endl)
-		return this->findByName(name);
+	/**
+	 * @brief Find widget by name.
+	 * Same as findByName() but also tries to cast the widget object to a specified class.
+	 * @param name - name of the widget to search for.
+	 * @return pointer to the widget if found.
+	 * @return nullptr if no widget with given name found or if the widget could not be cast to specified class.
+	 */
+	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
+		return std::dynamic_pointer_cast<T>(this->findByName(name));
 	}
-
+	
 	/**
 	 * @brief Child widget width requested name is not found within the parent container.
 	 */
@@ -345,38 +350,15 @@ public:
 	 */
 	Widget& getByName(const std::string& name);
 
-	//TODO: remove deprecated
-	Widget& getChildByName(const std::string& name){
-		TRACE(<< "Widget::getChildByName(): DEPRECATED!!! Use Widget::getByName() instead" << std::endl)
-		return this->getByName(name);
-	}
-
-	/**
-	 * @brief Find widget by name.
-	 * Same as findChildByName() but also tries to cast the widget object to a specified class.
-	 * @param name - name of the widget to search for.
-	 * @return pointer to the widget if found.
-	 * @return nullptr if no widget with given name found or if the widget could not be cast to specified class.
-	 */
-	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
-		return std::dynamic_pointer_cast<T>(this->findByName(name));
-	}
-
-	//TODO: remove deprecated
-	template <typename T> std::shared_ptr<T> findChildByNameAs(const std::string& name)noexcept{
-		TRACE(<< "Widget::findChildByNameAs(): DEPRECATED!!! Use Widget::findByNameAs() instead" << std::endl)
-		return this->findByNameAs<T>(name);
-	}
-
 	/**
 	 * @brief Get child widget of specific type by its name.
 	 * @param name - name of the widget to get.
 	 * @return reference to the requested child widget.
-	 * @throw ChildNotFoundExc - if no child with given name has been found.
+	 * @throw WidgetNotFoundExc - if no child with given name has been found.
 	 * @throw std::bad_cast - if requested child widget is not of the specified type.
 	 */
 	template <typename T> T& getChildByNameAs(const std::string& name){
-		return dynamic_cast<T&>(this->getChildByName(name));
+		return dynamic_cast<T&>(this->getByName(name));
 	}
 
 	/**
