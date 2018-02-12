@@ -45,6 +45,9 @@ Morda::Morda(
 	if(!this->renderer_v){
 		throw morda::Exc("no Renderer provided to Morda constructor");
 	}
+	if(!this->postToUiThread_v){
+		throw morda::Exc("no post to UI thread function provided");
+	}
 }
 
 

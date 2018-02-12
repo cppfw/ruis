@@ -992,7 +992,6 @@ namespace mordavokne{
 App::App(const WindowParams& requestedWindowParams) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
-				*this,
 				utki::makeShared<mordaren::OpenGLES2Renderer>(),
 				[]() -> float{
 					ASSERT(javaFunctionsWrapper)
@@ -1003,7 +1002,10 @@ App::App(const WindowParams& requestedWindowParams) :
 					auto res = getImpl(this->windowPimpl).getWindowSize();
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
 					return App::findDotsPerPt(res, dim.to<unsigned>());
-				}()
+				}(),
+				[this](std::function<void()>&& a){
+					getImpl(getWindowPimpl(this->app)).uiQueue.pushMessage(std::move(a));
+				}
 			)
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();
@@ -1054,10 +1056,6 @@ void App::hideVirtualKeyboard()noexcept{
 	javaFunctionsWrapper->hideVirtualKeyboard();
 }
 
-	void App::MordaVOkne::postToUiThread_ts(std::function<void()> &&f) {
-		auto& ww = getImpl(getWindowPimpl(this->app));
-		ww.uiQueue.pushMessage(std::move(f));
-	}
 
 }//~namespace
 

@@ -813,7 +813,28 @@ morda::real getDotsPerPt(){
 
 App::App(const App::WindowParams& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
-		gui(*this, utki::makeShared<mordaren::OpenGL2Renderer>(), getDotsPerInch(), getDotsPerPt())
+		gui(
+				utki::makeShared<mordaren::OpenGL2Renderer>(),
+				getDotsPerInch(),
+				getDotsPerPt(),
+				[this](std::function<void()>&& a){
+					auto& ww = getImpl(getWindowPimpl(*this));
+
+					NSEvent* e = [NSEvent
+							otherEventWithType: NSEventTypeApplicationDefined
+							location: NSMakePoint(0, 0)
+							modifierFlags:0
+							timestamp:0
+							windowNumber:0
+							context: nil
+							subtype: 0
+							data1: reinterpret_cast<NSInteger>(new std::function<void()>(std::move(a)))
+							data2: 0
+						];
+
+					[ww.applicationObjectId postEvent:e atStart:NO];
+				}
+			)
 {
 	TRACE(<< "App::App(): enter" << std::endl)
 	this->updateWindowRect(
@@ -831,25 +852,6 @@ App::App(const App::WindowParams& wp) :
 void App::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 	[ww.openglContextId flushBuffer];
-}
-
-
-void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& f){
-	auto& ww = getImpl(getWindowPimpl(this->app));
-	
-	NSEvent* e = [NSEvent
-			otherEventWithType: NSEventTypeApplicationDefined
-			location: NSMakePoint(0, 0)
-			modifierFlags:0
-			timestamp:0
-			windowNumber:0
-			context: nil
-			subtype: 0
-			data1: reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)))
-			data2: 0
-		];
-	
-	[ww.applicationObjectId postEvent:e atStart:NO];
 }
 
 

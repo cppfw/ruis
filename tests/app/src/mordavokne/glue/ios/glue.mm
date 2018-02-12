@@ -261,17 +261,6 @@ namespace{
 
 
 
-void App::MordaVOkne::postToUiThread_ts(std::function<void()>&& f){
-	auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(f)));
-	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
-		(*m)();
-	});
-}
-
-
-
 void App::setFullscreen(bool enable){
 	auto& ww = getImpl(this->windowPimpl);
 	UIWindow* w = ww.window;
@@ -352,7 +341,19 @@ namespace{
 
 App::App(const App::WindowParams& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
-		gui(*this, utki::makeShared<mordaren::OpenGLES2Renderer>(), getDotsPerInch(), getDotsPerPt())
+		gui(
+				utki::makeShared<mordaren::OpenGLES2Renderer>(),
+				getDotsPerInch(),
+				getDotsPerPt(),
+				[this](std::function<void()>&& a){
+					auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(a)));
+	
+					dispatch_async(dispatch_get_main_queue(), ^{
+						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
+						(*m)();
+					});
+				}
+			)
 {
 	this->setFullscreen(false);//this will intialize the viewport
 }
