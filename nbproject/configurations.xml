@@ -1602,7 +1602,6 @@
         <ccTool>
           <incDir>
             <pElem>src</pElem>
-            <pElem>.</pElem>
           </incDir>
           <preprocessorList>
             <Elem>DEBUG</Elem>
@@ -1611,9 +1610,20 @@
       </folder>
       <folder path="3/app">
         <ccTool>
+          <incDir>
+            <pElem>tests/app/src/opengles2</pElem>
+            <pElem>.</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>M_RENDER_OPENGL2</Elem>
           </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="3/inflating">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </folder>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">

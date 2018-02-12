@@ -9,12 +9,6 @@ this_name := tests
 
 this_srcs += $(call prorab-src-dir,src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
-
-ifeq ($(ogles2), true)
-    this_srcs += $(call prorab-src-dir,src/opengles2)
-else
-    this_srcs += $(call prorab-src-dir,src/opengl2)
-endif
 this_srcs += src/main.cpp
 
 
@@ -38,14 +32,20 @@ this_cxxflags += -I$(d)../../src
 this_objcflags += -I$(d)../../src
 
 ifeq ($(ogles2), true)
+    this_srcs += $(call prorab-src-dir,src/opengles2)
+
     this_cxxflags += -DM_RENDER_OPENGLES2
+
+    this_cxxflags += -I$(d)src/opengl2
 
     ifeq ($(raspberrypi),true)
         this_cxxflags += -I/opt/vc/include
         this_ldflags += -L/opt/vc/lib
     endif
 else
+    this_srcs += $(call prorab-src-dir,src/opengl2)
     this_cxxflags += -DM_RENDER_OPENGL2
+    this_cxxflags += -I$(d)src/opengles2
 endif
 
 
