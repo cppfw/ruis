@@ -36,7 +36,7 @@ ifeq ($(ogles2), true)
 
     this_cxxflags += -DM_RENDER_OPENGLES2
 
-    this_cxxflags += -I$(d)src/opengl2
+    this_cxxflags += -I$(d)src/opengles2
 
     ifeq ($(raspberrypi),true)
         this_cxxflags += -I/opt/vc/include
@@ -45,7 +45,7 @@ ifeq ($(ogles2), true)
 else
     this_srcs += $(call prorab-src-dir,src/opengl2)
     this_cxxflags += -DM_RENDER_OPENGL2
-    this_cxxflags += -I$(d)src/opengles2
+    this_cxxflags += -I$(d)src/opengl2
 endif
 
 
