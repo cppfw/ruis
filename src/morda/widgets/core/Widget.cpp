@@ -416,18 +416,16 @@ void Widget::setUnhovered() {
 
 
 void Widget::setHovered(bool isHovered, unsigned pointerID) {
+	if(isHovered == this->isHovered(pointerID)){
+		return;
+	}
 //	TRACE(<< "Widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
+	
 	if (isHovered) {
-		if (this->isHovered(pointerID)) {
-			return;
-		}
-
+		ASSERT(!this->isHovered(pointerID))
 		this->hovered.insert(pointerID);
 	} else {
-		if (!this->isHovered(pointerID)) {
-			return;
-		}
-
+		ASSERT(this->isHovered(pointerID))
 		this->hovered.erase(pointerID);
 	}
 
