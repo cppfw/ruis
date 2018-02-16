@@ -66,17 +66,12 @@ using namespace mordavokne;
 @end
 
 
-//WORKAROUND: for Cocoapods. ifdef-out the main function for the time of deployment to cocoapods.
-//The application then has to define macro M_MORDAVOKNE_COCOAPODS_WORKAROUND to make main() defined.
-#ifdef M_MORDAVOKNE_COCOAPODS_WORKAROUND
 int main(int argc, char * argv[]){
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
 	[pool release];
 	return retVal;
 }
-#endif
-
 
 
 @interface ViewController : GLKViewController{

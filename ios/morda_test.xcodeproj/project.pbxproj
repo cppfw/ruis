@@ -496,6 +496,7 @@
 					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
 					"\"${PODS_ROOT}/Headers/Public/libutki\"",
 					../src,
+					../tests/app/src/opengles2,
 				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
 				OTHER_LDFLAGS = (
@@ -548,6 +549,7 @@
 					"\"${PODS_ROOT}/Headers/Public/libunikod\"",
 					"\"${PODS_ROOT}/Headers/Public/libutki\"",
 					../src,
+					../tests/app/src/opengles2,
 				);
 				INFOPLIST_FILE = "morda_test/morda_test-Info.plist";
 				OTHER_LDFLAGS = (
