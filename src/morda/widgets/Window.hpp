@@ -4,7 +4,7 @@
 #include "label/Color.hpp"
 
 #include "core/container/Pile.hpp"
-#include "core/proxy/MouseProxy.hpp"
+#include "proxy/MouseProxy.hpp"
 #include "core/container/Table.hpp"
 
 namespace morda{

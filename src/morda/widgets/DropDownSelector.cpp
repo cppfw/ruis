@@ -4,7 +4,7 @@
 
 #include "core/container/Overlay.hpp"
 
-#include "core/proxy/MouseProxy.hpp"
+#include "proxy/MouseProxy.hpp"
 
 #include "button/Button.hpp"
 
@@ -223,7 +223,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 			if(!oc){
 				throw Exc("No Overlay found in ancestors of DropDownSelector");
 			}
-			morda::Morda::inst().postToUiThread_ts([oc](){
+			morda::Morda::inst().postToUiThread([oc](){
 				oc->hideContextMenu();
 			});
 		}

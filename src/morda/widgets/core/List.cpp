@@ -426,7 +426,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 		return;
 	}
 	
-	Morda::inst().postToUiThread_ts(
+	Morda::inst().postToUiThread(
 		[this](){
 			this->list->handleDataSetChanged();
 		}

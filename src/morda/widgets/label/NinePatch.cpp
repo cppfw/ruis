@@ -3,7 +3,7 @@
 
 #include "../../Morda.hpp"
 #include "../../util/util.hpp"
-#include "../core/proxy/ResizeProxy.hpp"
+#include "../proxy/ResizeProxy.hpp"
 
 #include "NinePatch.hpp"
 

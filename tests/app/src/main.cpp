@@ -9,7 +9,7 @@
 
 #include "../../../src/morda/widgets/core/Widget.hpp"
 #include "../../../src/morda/widgets/core/container/Container.hpp"
-#include "../../../src/morda/widgets/core/proxy/KeyProxy.hpp"
+#include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
 
 #include "../../../src/morda/widgets/button/PushButton.hpp"
 #include "../../../src/morda/widgets/label/Text.hpp"
@@ -20,12 +20,12 @@
 #include "../../../src/morda/widgets/core/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/core/container/ScrollArea.hpp"
 #include "../../../src/morda/widgets/core/container/LinearContainer.hpp"
-#include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
+#include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
 #include "../../../src/morda/widgets/core/List.hpp"
 #include "../../../src/morda/widgets/TreeView.hpp"
-#include "../../../src/morda/widgets/core/proxy/MouseProxy.hpp"
-#include "../../../src/morda/widgets/core/proxy/ResizeProxy.hpp"
+#include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
+#include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/Color.hpp"
 #include "../../../src/morda/widgets/label/Image.hpp"
 
@@ -640,7 +640,7 @@ public:
 		};
 		
 		std::dynamic_pointer_cast<morda::PushButton>(c->findByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
-			morda::Morda::inst().postToUiThread_ts(
+			morda::Morda::inst().postToUiThread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
 					}

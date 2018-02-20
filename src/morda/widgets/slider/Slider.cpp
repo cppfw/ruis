@@ -4,7 +4,7 @@
 
 #include "../../util/util.hpp"
 
-#include "../core/proxy/MouseProxy.hpp"
+#include "../proxy/MouseProxy.hpp"
 
 #include "../label/NinePatch.hpp"
 

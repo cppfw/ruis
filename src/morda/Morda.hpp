@@ -126,6 +126,7 @@ public:
 	 */
 	void postToUiThread(std::function<void()>&& f);
 	
+	//TODO: remove deprecated function
 	void postToUiThread_ts(std::function<void()>&& f){
 		TRACE(<< "postToUiThread_ts(): DEPRECATED! use postToUiThread() instead" << std::endl)
 		this->postToUiThread(std::move(f));

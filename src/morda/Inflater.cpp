@@ -8,9 +8,9 @@
 #include "widgets/core/container/TableRow.hpp"
 #include "widgets/core/container/Overlay.hpp"
 
-#include "widgets/core/proxy/KeyProxy.hpp"
-#include "widgets/core/proxy/MouseProxy.hpp"
-#include "widgets/core/proxy/ResizeProxy.hpp"
+#include "widgets/proxy/KeyProxy.hpp"
+#include "widgets/proxy/MouseProxy.hpp"
+#include "widgets/proxy/ResizeProxy.hpp"
 
 #include "widgets/core/List.hpp"
 
