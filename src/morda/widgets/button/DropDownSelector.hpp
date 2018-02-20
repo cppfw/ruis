@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/Widget.hpp"
-#include "button/NinePatchPushButton.hpp"
+#include "../core/Widget.hpp"
+#include "NinePatchPushButton.hpp"
 
 namespace morda{
 

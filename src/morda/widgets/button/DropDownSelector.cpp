@@ -1,18 +1,18 @@
 #include "DropDownSelector.hpp"
 
-#include "../Morda.hpp"
+#include "../../Morda.hpp"
 
-#include "core/container/Overlay.hpp"
+#include "../core/container/Overlay.hpp"
 
-#include "proxy/MouseProxy.hpp"
+#include "../proxy/MouseProxy.hpp"
 
-#include "button/Button.hpp"
+#include "../button/Button.hpp"
 
-#include "label/Text.hpp"
-#include "label/Color.hpp"
+#include "../label/Text.hpp"
+#include "../label/Color.hpp"
 
-#include "base/TextWidget.hpp"
-#include "label/NinePatch.hpp"
+#include "../base/TextWidget.hpp"
+#include "../label/NinePatch.hpp"
 
 
 

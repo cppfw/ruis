@@ -21,7 +21,7 @@
 
 #include "widgets/TextField.hpp"
 #include "widgets/TreeView.hpp"
-#include "widgets/DropDownSelector.hpp"
+#include "widgets/button/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
 #include "widgets/MouseCursor.hpp"
 #include "widgets/CollapseArea.hpp"
