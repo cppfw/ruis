@@ -4,7 +4,7 @@
 
 #include "../label/Image.hpp"
 
-#include "../../resources/ResImage.hpp"
+#include "../../res/ResImage.hpp"
 
 namespace morda{
 class ImageButton :

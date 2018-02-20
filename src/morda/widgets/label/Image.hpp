@@ -4,7 +4,7 @@
 
 #include "../base/BlendingWidget.hpp"
 
-#include "../../resources/ResImage.hpp"
+#include "../../res/ResImage.hpp"
 
 
 namespace morda{

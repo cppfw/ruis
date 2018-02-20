@@ -2,7 +2,7 @@
 
 #include <utki/config.hpp>
 
-#include "resources/ResSTOB.hpp"
+#include "res/ResSTOB.hpp"
 
 #include "widgets/slider/Slider.hpp"
 

@@ -2,7 +2,7 @@
 
 #include "../core/Widget.hpp"
 
-#include "../../resources/ResGradient.hpp"
+#include "../../res/ResGradient.hpp"
 
 namespace morda{
 

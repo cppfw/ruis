@@ -2,7 +2,7 @@
 
 #include "core/Widget.hpp"
 
-#include "../resources/ResCursor.hpp"
+#include "../res/ResCursor.hpp"
 
 namespace morda{
 

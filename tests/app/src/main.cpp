@@ -14,8 +14,8 @@
 #include "../../../src/morda/widgets/button/PushButton.hpp"
 #include "../../../src/morda/widgets/label/Text.hpp"
 
-#include "../../../src/morda/resources/ResTexture.hpp"
-#include "../../../src/morda/resources/ResFont.hpp"
+#include "../../../src/morda/res/ResTexture.hpp"
+#include "../../../src/morda/res/ResFont.hpp"
 
 #include "../../../src/morda/widgets/core/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/core/container/ScrollArea.hpp"

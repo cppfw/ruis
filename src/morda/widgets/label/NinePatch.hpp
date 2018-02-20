@@ -2,7 +2,7 @@
 
 #include "../../util/Sides.hpp"
 
-#include "../../resources/ResNinePatch.hpp"
+#include "../../res/ResNinePatch.hpp"
 
 #include "../core/container/Pile.hpp"
 #include "../core/container/Table.hpp"

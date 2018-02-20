@@ -3,7 +3,7 @@
 #include "../core/Widget.hpp"
 #include "ColorWidget.hpp"
 
-#include "../../resources/ResFont.hpp"
+#include "../../res/ResFont.hpp"
 
 #include <kolme/Rectangle.hpp>
 
