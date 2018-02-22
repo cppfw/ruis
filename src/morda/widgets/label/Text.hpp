@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../core/Widget.hpp"
+#include "../Widget.hpp"
 #include "../../res/ResFont.hpp"
 #include "../base/TextWidget.hpp"
 

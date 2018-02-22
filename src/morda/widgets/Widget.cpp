@@ -1,10 +1,10 @@
-#include "../../Morda.hpp"
+#include "../Morda.hpp"
 
-#include "../../util/util.hpp"
+#include "../util/util.hpp"
 
 #include "Widget.hpp"
 
-#include "container/Container.hpp"
+#include "Container.hpp"
 
 
 

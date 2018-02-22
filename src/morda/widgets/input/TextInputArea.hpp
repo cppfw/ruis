@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TextInputLine.hpp"
-#include "core/List.hpp"
+#include "../group/List.hpp"
 
 namespace morda{
 

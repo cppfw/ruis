@@ -4,8 +4,8 @@
 
 #include "../../res/ResNinePatch.hpp"
 
-#include "../core/container/Pile.hpp"
-#include "../core/container/Table.hpp"
+#include "../group/Pile.hpp"
+#include "../group/Table.hpp"
 
 #include "Image.hpp"
 

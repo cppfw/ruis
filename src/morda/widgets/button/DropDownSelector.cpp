@@ -2,7 +2,7 @@
 
 #include "../../Morda.hpp"
 
-#include "../core/container/Overlay.hpp"
+#include "../group/Overlay.hpp"
 
 #include "../proxy/MouseProxy.hpp"
 
@@ -10,9 +10,10 @@
 
 #include "../label/Text.hpp"
 #include "../label/Color.hpp"
+#include "../label/NinePatch.hpp"
 
 #include "../base/TextWidget.hpp"
-#include "../label/NinePatch.hpp"
+
 
 
 

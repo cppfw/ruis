@@ -1,8 +1,8 @@
-#include "../Morda.hpp"
+#include "../../Morda.hpp"
 
-#include "../util/util.hpp"
+#include "../../util/util.hpp"
 #include "CollapseArea.hpp"
-#include "button/ToggleButton.hpp"
+#include "../button/ToggleButton.hpp"
 
 using namespace morda;
 

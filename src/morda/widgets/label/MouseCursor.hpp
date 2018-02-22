@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Widget.hpp"
+#include "../Widget.hpp"
 
 #include "../../res/ResCursor.hpp"
 

@@ -5,7 +5,7 @@
 
 #include "Exc.hpp"
 
-#include "widgets/core/Widget.hpp"
+#include "widgets/Widget.hpp"
 
 
 

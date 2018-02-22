@@ -19,12 +19,12 @@
 #include "widgets/label/Text.hpp"
 #include "widgets/label/Gradient.hpp"
 
-#include "widgets/TextField.hpp"
-#include "widgets/TreeView.hpp"
+#include "widgets/input/TextField.hpp"
+#include "widgets/group/TreeView.hpp"
 #include "widgets/button/DropDownSelector.hpp"
-#include "widgets/Window.hpp"
+#include "widgets/group/Window.hpp"
 #include "widgets/label/MouseCursor.hpp"
-#include "widgets/CollapseArea.hpp"
+#include "widgets/group/CollapseArea.hpp"
 
 using namespace morda;
 

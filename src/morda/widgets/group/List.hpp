@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Widget.hpp"
-#include "container/Container.hpp"
+#include "../Widget.hpp"
+#include "../Container.hpp"
 
 namespace morda{
 

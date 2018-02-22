@@ -1,11 +1,12 @@
 #pragma once
 
-#include "label/Text.hpp"
-#include "label/Color.hpp"
+#include "../label/Text.hpp"
+#include "../label/Color.hpp"
 
-#include "core/container/Pile.hpp"
-#include "proxy/MouseProxy.hpp"
-#include "core/container/Table.hpp"
+#include "Pile.hpp"
+#include "Table.hpp"
+
+#include "../proxy/MouseProxy.hpp"
 
 namespace morda{
 

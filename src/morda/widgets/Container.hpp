@@ -5,8 +5,8 @@
 
 #include <utki/Unique.hpp>
 
-#include "../../../Exc.hpp"
-#include "../Widget.hpp"
+#include "../Exc.hpp"
+#include "Widget.hpp"
 
 
 namespace morda{

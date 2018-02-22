@@ -1,14 +1,13 @@
 #include <kolme/Quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
-#include <morda/widgets/core/Widget.hpp>
 
 #include "mordavokne/AppFactory.hpp"
 
 #include "../../../src/morda/config.hpp"
 
-#include "../../../src/morda/widgets/core/Widget.hpp"
-#include "../../../src/morda/widgets/core/container/Container.hpp"
+#include "../../../src/morda/widgets/Widget.hpp"
+#include "../../../src/morda/widgets/Container.hpp"
 #include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
 
 #include "../../../src/morda/widgets/button/PushButton.hpp"
@@ -17,13 +16,13 @@
 #include "../../../src/morda/res/ResTexture.hpp"
 #include "../../../src/morda/res/ResFont.hpp"
 
-#include "../../../src/morda/widgets/core/CharInputWidget.hpp"
-#include "../../../src/morda/widgets/core/container/ScrollArea.hpp"
-#include "../../../src/morda/widgets/core/container/LinearContainer.hpp"
+#include "../../../src/morda/widgets/CharInputWidget.hpp"
+#include "../../../src/morda/widgets/group/ScrollArea.hpp"
+#include "../../../src/morda/widgets/group/LinearContainer.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
-#include "../../../src/morda/widgets/core/List.hpp"
-#include "../../../src/morda/widgets/TreeView.hpp"
+#include "../../../src/morda/widgets/group/List.hpp"
+#include "../../../src/morda/widgets/group/TreeView.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/Color.hpp"

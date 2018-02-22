@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "core/Widget.hpp"
-#include "core/List.hpp"
+#include "../Widget.hpp"
+#include "List.hpp"
 
-#include "core/container/ScrollArea.hpp"
+#include "ScrollArea.hpp"
 
 
 namespace morda{

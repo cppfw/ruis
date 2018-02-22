@@ -1,10 +1,10 @@
 #pragma once
 
-#include "core/Widget.hpp"
-#include "base/TextWidget.hpp"
+#include "../Widget.hpp"
+#include "../base/TextWidget.hpp"
 
-#include "../Updateable.hpp"
-#include "core/CharInputWidget.hpp"
+#include "../../Updateable.hpp"
+#include "../CharInputWidget.hpp"
 
 
 namespace morda{

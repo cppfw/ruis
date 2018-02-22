@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ChoiceButton.hpp"
-#include "../core/container/Pile.hpp"
+#include "../group/Pile.hpp"
 
 namespace morda{
 

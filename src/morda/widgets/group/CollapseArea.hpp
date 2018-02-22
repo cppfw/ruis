@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/Widget.hpp"
-#include "core/container/LinearContainer.hpp"
-#include "core/container/Pile.hpp"
+#include "../Widget.hpp"
+#include "../group/LinearContainer.hpp"
+#include "../group/Pile.hpp"
 
 namespace morda{
 class CollapseArea :

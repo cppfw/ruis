@@ -1,8 +1,8 @@
 #include "TextField.hpp"
 
-#include "../Morda.hpp"
+#include "../../Morda.hpp"
 
-#include "../util/util.hpp"
+#include "../../util/util.hpp"
 
 
 using namespace morda;

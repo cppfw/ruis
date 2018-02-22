@@ -1,18 +1,18 @@
 #include "Inflater.hpp"
 
-#include "widgets/core/container/Container.hpp"
-#include "widgets/core/container/LinearContainer.hpp"
-#include "widgets/core/container/Pile.hpp"
-#include "widgets/core/container/ScrollArea.hpp"
-#include "widgets/core/container/Table.hpp"
-#include "widgets/core/container/TableRow.hpp"
-#include "widgets/core/container/Overlay.hpp"
+#include "widgets/Container.hpp"
+
+#include "widgets/group/LinearContainer.hpp"
+#include "widgets/group/Pile.hpp"
+#include "widgets/group/ScrollArea.hpp"
+#include "widgets/group/Table.hpp"
+#include "widgets/group/TableRow.hpp"
+#include "widgets/group/Overlay.hpp"
+#include "widgets/group/List.hpp"
 
 #include "widgets/proxy/KeyProxy.hpp"
 #include "widgets/proxy/MouseProxy.hpp"
 #include "widgets/proxy/ResizeProxy.hpp"
-
-#include "widgets/core/List.hpp"
 
 #include "Morda.hpp"
 

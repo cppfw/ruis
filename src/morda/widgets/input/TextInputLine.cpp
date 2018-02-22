@@ -1,7 +1,7 @@
 #include "TextInputLine.hpp"
 
-#include "../Morda.hpp"
-#include "../util/util.hpp"
+#include "../../Morda.hpp"
+#include "../../util/util.hpp"
 
 
 

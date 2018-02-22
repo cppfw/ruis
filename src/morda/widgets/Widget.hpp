@@ -12,14 +12,14 @@
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 
-#include "../../config.hpp"
+#include "../config.hpp"
 
-#include "../../render/Texture2D.hpp"
+#include "../render/Texture2D.hpp"
 
-#include "../../util/keycodes.hpp"
-#include "../../util/MouseButton.hpp"
+#include "../util/keycodes.hpp"
+#include "../util/MouseButton.hpp"
 
-#include "../../Exc.hpp"
+#include "../Exc.hpp"
 
 
 namespace morda{
@@ -607,4 +607,4 @@ public:
 
 
 //Widget depends on Container, so need to define it also in all cases when widget is used.
-#include "container/Container.hpp"
+#include "Container.hpp"

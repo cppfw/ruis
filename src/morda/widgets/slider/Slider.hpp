@@ -2,9 +2,9 @@
 
 #include <functional>
 
-#include "../core/Widget.hpp"
+#include "../Widget.hpp"
 
-#include "../core/container/Pile.hpp"
+#include "../group/Pile.hpp"
 #include "../base/FractionWidget.hpp"
 
 //disable stupid warnings

@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "../core/Widget.hpp"
+#include "../Widget.hpp"
 
 
 
