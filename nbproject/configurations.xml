@@ -94,10 +94,6 @@
           <df name="slider">
             <in>Slider.cpp</in>
           </df>
-          <in>TextInputArea.hpp</in>
-          <in>TextInputLine.hpp</in>
-          <in>TreeView.hpp</in>
-          <in>Window.hpp</in>
         </df>
         <in>Exc.hpp</in>
         <in>Inflater.cpp</in>
@@ -965,9 +961,59 @@
           <buildCommand>make debug=true -j8</buildCommand>
           <cleanCommand>make clean</cleanCommand>
           <executablePath>tests/app/tests</executablePath>
-          <ccTool flags="0">
+          <ccTool flags="1">
             <standard>8</standard>
+            <incDir>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>.</pElem>
+            </incDir>
             <preprocessorList>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
+              <Elem>DEBUG</Elem>
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </ccTool>
@@ -1099,28 +1145,6 @@
       </item>
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/Container.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/Widget.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/base/BlendingWidget.cpp"
@@ -1257,176 +1281,6 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/morda/widgets/group/CollapseArea.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/LinearContainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/List.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/Overlay.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/Pile.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/ScrollArea.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/Table.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/TableRow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/TreeView.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/group/Window.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/input/TextField.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/input/TextInputArea.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/input/TextInputLine.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </item>
       <item path="src/morda/widgets/label/Color.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -1440,20 +1294,6 @@
       </item>
       <item path="src/morda/widgets/label/Image.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/label/MouseCursor.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/morda/widgets/label/NinePatch.cpp"
@@ -1687,20 +1527,6 @@
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/morda/widgets/TextInputArea.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextInputLine.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TreeView.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/morda/widgets/base/FractionWidget.cpp"
             ex="false"
             tool="1"
@@ -1863,20 +1689,6 @@
       <item path="src/morda/util/util.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/morda/util/util.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextInputArea.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TextInputLine.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TreeView.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/morda/widgets/Window.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/base/FractionWidget.cpp"
             ex="false"
@@ -2092,13 +1904,6 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="src/morda/widgets/TextInputArea.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/morda/widgets/TreeView.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/morda/widgets/base/ColorWidget.cpp"
             ex="false"
