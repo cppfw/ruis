@@ -23,7 +23,7 @@
 #include "widgets/TreeView.hpp"
 #include "widgets/button/DropDownSelector.hpp"
 #include "widgets/Window.hpp"
-#include "widgets/MouseCursor.hpp"
+#include "widgets/label/MouseCursor.hpp"
 #include "widgets/CollapseArea.hpp"
 
 using namespace morda;
