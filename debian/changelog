@@ -1,3 +1,9 @@
+libmorda (0.5.71) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 27 Feb 2018 15:27:06 +0200
+
 libmorda (0.5.70) unstable; urgency=medium
 
   * colorPosLum shader added
