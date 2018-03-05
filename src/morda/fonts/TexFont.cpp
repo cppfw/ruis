@@ -396,7 +396,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 	ASSERT(ret.d.x >= 0)
 	ASSERT(ret.d.y >= 0)
-	TRACE(<< "TexFont::stringBoundingBoxInternal(): ret = " << ret << std::endl)
+//	TRACE(<< "TexFont::stringBoundingBoxInternal(): ret = " << ret << std::endl)
 	return ret;
 }
 

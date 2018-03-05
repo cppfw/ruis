@@ -907,9 +907,7 @@ public:
 	}
 };
 
-
-
-}//~namespace
+}
 
 
 void App::quit()noexcept{

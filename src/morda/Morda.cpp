@@ -14,16 +14,18 @@
 #include "widgets/button/ImagePushButton.hpp"
 #include "widgets/button/Tab.hpp"
 #include "widgets/button/Tabs.hpp"
+#include "widgets/button/DropDownSelector.hpp"
 
 #include "widgets/label/Color.hpp"
 #include "widgets/label/Text.hpp"
 #include "widgets/label/Gradient.hpp"
+#include "widgets/label/MouseCursor.hpp"
 
 #include "widgets/input/TextField.hpp"
+#include "widgets/input/TextInputArea.hpp"
+
 #include "widgets/group/TreeView.hpp"
-#include "widgets/button/DropDownSelector.hpp"
 #include "widgets/group/Window.hpp"
-#include "widgets/label/MouseCursor.hpp"
 #include "widgets/group/CollapseArea.hpp"
 
 using namespace morda;
@@ -127,6 +129,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.registerType<ImagePushButton>("ImagePushButton");
 	this->inflater.registerType<Tabs>("Tabs");
 	this->inflater.registerType<Tab>("Tab");
+	this->inflater.registerType<TextInputArea>("TextInputArea");
 	
 	try{
 		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");

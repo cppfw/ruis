@@ -24,7 +24,7 @@ class ScrollArea : public Container{
 	Vec2r curScrollFactor;
 	
 public:
-	ScrollArea(const stob::Node* chain = nullptr);
+	ScrollArea(const stob::Node* chain);
 	
 	ScrollArea(const ScrollArea&) = delete;
 	ScrollArea& operator=(const ScrollArea&) = delete;
