@@ -78,6 +78,9 @@
             <in>ToggleButton.cpp</in>
             <in>ToggleButton.hpp</in>
           </df>
+          <df name="input">
+            <in>TextInputArea.cpp</in>
+          </df>
           <df name="label">
             <in>Color.cpp</in>
             <in>Gradient.cpp</in>
@@ -966,54 +969,8 @@
             <incDir>
               <pElem>/usr/include/freetype2</pElem>
               <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
-              <pElem>/usr/include/freetype2</pElem>
-              <pElem>.</pElem>
             </incDir>
             <preprocessorList>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
-              <Elem>DEBUG</Elem>
               <Elem>DEBUG</Elem>
             </preprocessorList>
           </ccTool>
@@ -1023,21 +980,6 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <folder path="1">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="2">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
       <folder path="3">
         <ccTool>
           <incDir>
@@ -1049,18 +991,10 @@
         <ccTool>
           <incDir>
             <pElem>tests/app/src/opengl2</pElem>
-            <pElem>.</pElem>
           </incDir>
           <preprocessorList>
             <Elem>M_RENDER_OPENGL2</Elem>
           </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="3/inflating">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
         </ccTool>
       </folder>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
@@ -1275,6 +1209,13 @@
         </ccTool>
       </item>
       <item path="src/morda/widgets/button/ToggleButton.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/morda/widgets/input/TextInputArea.cpp"
             ex="false"
             tool="1"
             flavor2="8">

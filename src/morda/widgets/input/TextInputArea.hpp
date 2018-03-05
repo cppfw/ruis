@@ -10,21 +10,16 @@ class TextInputArea :
 		virtual public Widget
 {
 	class LinesProvider : public List::ItemsProvider{
-		TextInputArea& tia;
 	public:
-		LinesProvider(TextInputArea& tia) :
-				tia(tia)
-		{}
+		std::vector<std::u32string> lines;
 
 		size_t count() const noexcept override;
 
 		std::shared_ptr<Widget> getWidget(size_t index) override;
-	};
-	
-	std::vector<std::u32string> lines{std::u32string()};
+	} linesProvider;
 	
 public:
-	TextInputArea(const stob::Node* chain = nullptr);
+	TextInputArea(const stob::Node* chain);
 	
 	TextInputArea(const TextInputArea&) = delete;
 	TextInputArea& operator=(const TextInputArea&) = delete;

@@ -4,7 +4,7 @@
 using namespace morda;
 
 size_t TextInputArea::LinesProvider::count() const noexcept{
-	auto ret = this->tia.lines.size();
+	auto ret = this->lines.size();
 	if(ret == 0){
 		return 1;
 	}
@@ -14,15 +14,15 @@ size_t TextInputArea::LinesProvider::count() const noexcept{
 std::shared_ptr<Widget> TextInputArea::LinesProvider::getWidget(size_t index) {
 	auto ret = std::make_shared<TextInputLine>();
 	
-	if(this->tia.lines.size() != 0){
-		ASSERT(index < this->tia.lines.size())
-		ret->setText(std::u32string(this->tia.lines[index]));
+	if(this->lines.size() != 0){
+		ASSERT(index < this->lines.size())
+		ret->setText(std::u32string(this->lines[index]));
 	}else{
 		ASSERT(index == 0)
 	}
 	ret->textChanged = [this, index](SingleLineTextWidget& w){
-		ASSERT(index < this->tia.lines.size())
-		this->tia.lines[index] = w.text();
+		ASSERT(index < this->lines.size())
+		this->lines[index] = w.text();
 	};
 	
 	return ret;
