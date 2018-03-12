@@ -1,3 +1,9 @@
+libmorda (0.5.73) unstable; urgency=medium
+
+  * bintray access token renewed
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Mar 2018 18:17:17 +0200
+
 libmorda (0.5.72) unstable; urgency=medium
 
   * rebuild against latest dependancies
