@@ -205,6 +205,8 @@ before_deploy:
 
 deploy:
 - provider: bintray
+  edge:
+    branch: v1.8.47
   skip_cleanup: true
   on:
     tags: true
@@ -215,6 +217,8 @@ deploy:
     secure: "H/gaZWv+47cM2BgN8MFQctKvxdialYW7rTduiiZUrZH1kUWvRnASSKyI6jLnwvlXXIvF0V2PXEVVhasgCLvzCysTy1heTu/eXE8fRo7i9TFzvmiwFN8gq46n14tO3FcYxOBxwbTapt6JR0fWe+54cWcwCqcMrSMn1gfL8MTlnG3RRT6xDwac+beP8Him+fBJmcdG1H8ccMEhnkbBQqeLDDG6MnTW7Y10P5/xBVDFxESLZtRMmCyFkloNEaLyl73NjcNCt+GtU3N3qk8RnYcEgfZ38vEr3s50E8ZY2Qo0D+7vihO7S8p/vsZrD/bQyBapF9OZnOUSRWgncVGWjbe7TtLQRzxLqKdEM9S9IJ0O00h8TGBaFfYebENGPUtSEFT3iMRQGYxqP/OPUVZYewTW+aA/0xxNPRQpDT7Oa/3NXxxH+VcDhta4RAvCmxLoe9TSBJQcVPHTOlckUYRSx5o8Wmb9WVvwCEM+zgwEdRkD7VcHOyQCtBI9HV0R/V1Sncqw9WWEGdkMIfqx9NwDUwdEDIzYOtvK8VSoOs+9aG0ehafTlgVBog/AIDJLo5k2O7wDjg6ByIotu+uaaTLVgGVDolX+kfO4xrPW0u6StkcSmL9O1SZCUFeOmuAl209Bn5GZ+efPk1Zm1chyjN356lpZAD1LpI9jKLmY3nV5X4+t398="
   dry-run: false
 - provider: bintray
+  edge:
+    branch: v1.8.47
   skip_cleanup: true
   on:
     tags: true
@@ -225,6 +229,8 @@ deploy:
     secure: "H/gaZWv+47cM2BgN8MFQctKvxdialYW7rTduiiZUrZH1kUWvRnASSKyI6jLnwvlXXIvF0V2PXEVVhasgCLvzCysTy1heTu/eXE8fRo7i9TFzvmiwFN8gq46n14tO3FcYxOBxwbTapt6JR0fWe+54cWcwCqcMrSMn1gfL8MTlnG3RRT6xDwac+beP8Him+fBJmcdG1H8ccMEhnkbBQqeLDDG6MnTW7Y10P5/xBVDFxESLZtRMmCyFkloNEaLyl73NjcNCt+GtU3N3qk8RnYcEgfZ38vEr3s50E8ZY2Qo0D+7vihO7S8p/vsZrD/bQyBapF9OZnOUSRWgncVGWjbe7TtLQRzxLqKdEM9S9IJ0O00h8TGBaFfYebENGPUtSEFT3iMRQGYxqP/OPUVZYewTW+aA/0xxNPRQpDT7Oa/3NXxxH+VcDhta4RAvCmxLoe9TSBJQcVPHTOlckUYRSx5o8Wmb9WVvwCEM+zgwEdRkD7VcHOyQCtBI9HV0R/V1Sncqw9WWEGdkMIfqx9NwDUwdEDIzYOtvK8VSoOs+9aG0ehafTlgVBog/AIDJLo5k2O7wDjg6ByIotu+uaaTLVgGVDolX+kfO4xrPW0u6StkcSmL9O1SZCUFeOmuAl209Bn5GZ+efPk1Zm1chyjN356lpZAD1LpI9jKLmY3nV5X4+t398="
   dry-run: false
 - provider: bintray
+  edge:
+    branch: v1.8.47
   skip_cleanup: true
   on:
     tags: true
@@ -235,6 +241,8 @@ deploy:
     secure: "H/gaZWv+47cM2BgN8MFQctKvxdialYW7rTduiiZUrZH1kUWvRnASSKyI6jLnwvlXXIvF0V2PXEVVhasgCLvzCysTy1heTu/eXE8fRo7i9TFzvmiwFN8gq46n14tO3FcYxOBxwbTapt6JR0fWe+54cWcwCqcMrSMn1gfL8MTlnG3RRT6xDwac+beP8Him+fBJmcdG1H8ccMEhnkbBQqeLDDG6MnTW7Y10P5/xBVDFxESLZtRMmCyFkloNEaLyl73NjcNCt+GtU3N3qk8RnYcEgfZ38vEr3s50E8ZY2Qo0D+7vihO7S8p/vsZrD/bQyBapF9OZnOUSRWgncVGWjbe7TtLQRzxLqKdEM9S9IJ0O00h8TGBaFfYebENGPUtSEFT3iMRQGYxqP/OPUVZYewTW+aA/0xxNPRQpDT7Oa/3NXxxH+VcDhta4RAvCmxLoe9TSBJQcVPHTOlckUYRSx5o8Wmb9WVvwCEM+zgwEdRkD7VcHOyQCtBI9HV0R/V1Sncqw9WWEGdkMIfqx9NwDUwdEDIzYOtvK8VSoOs+9aG0ehafTlgVBog/AIDJLo5k2O7wDjg6ByIotu+uaaTLVgGVDolX+kfO4xrPW0u6StkcSmL9O1SZCUFeOmuAl209Bn5GZ+efPk1Zm1chyjN356lpZAD1LpI9jKLmY3nV5X4+t398="
   dry-run: false
 - provider: bintray
+  edge:
+    branch: v1.8.47
   skip_cleanup: true
   on:
     tags: true

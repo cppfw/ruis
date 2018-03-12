@@ -1,3 +1,9 @@
+libmorda (0.5.74) unstable; urgency=medium
+
+  * bintray deployment bug workaround
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Mar 2018 18:29:43 +0200
+
 libmorda (0.5.73) unstable; urgency=medium
 
   * bintray access token renewed
