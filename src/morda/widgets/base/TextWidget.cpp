@@ -6,6 +6,17 @@
 
 using namespace morda;
 
+void TextWidget::setFont(std::shared_ptr<ResFont> font) {
+	if (!font) {
+		throw morda::Exc("TextWidget::SetFont(): passed argument is null");
+	}
+
+	this->font_v = std::move(font);
+
+	this->setRelayoutNeeded();
+
+	this->onFontChanged();
+}
 
 
 TextWidget::TextWidget(const stob::Node* desc) :

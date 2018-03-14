@@ -23,17 +23,7 @@ public:
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
 	
-	void setFont(std::shared_ptr<ResFont> font){
-		if(!font){
-			throw morda::Exc("TextWidget::SetFont(): passed argument is null");
-		}
-		
-		this->font_v = std::move(font);
-		
-		this->setRelayoutNeeded();
-		
-		this->onFontChanged();
-	}
+	void setFont(std::shared_ptr<ResFont> font);
 	
 	const morda::Font& font()const{
 		return this->font_v->font();
