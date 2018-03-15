@@ -218,6 +218,8 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		return nullptr;
 	}
 	
+	ASSERT(!n->isProperty())
+	
 	std::unique_ptr<stob::Node> cloned;
 //	TRACE(<< "inflating = " << n->value() << std::endl)
 	if(auto tmpl = this->findTemplate(n->value())){
@@ -251,20 +253,18 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			needPopDefs = true;
 		}
 	}
-	
-	{
-		if(cloned){
-			cloned = cloned->removeChildren();
-		}else{
-			if(n->child()){
-				cloned = n->child()->cloneChain();
-			}
+
+	if(cloned){
+		cloned = cloned->removeChildren();
+	}else{
+		if(n->child()){
+			cloned = n->child()->cloneChain();
 		}
-		
-		this->substituteVariables(cloned.get());
-		
-		return fac->operator()(cloned.get());
 	}
+	
+	this->substituteVariables(cloned.get());
+
+	return fac->operator()(cloned.get());
 }
 
 

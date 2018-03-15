@@ -22,17 +22,15 @@ defs{
 		}
 	}
 
-
-/*
 	TextInputLine{ text
 		NinePatch{
 			image{morda_npt_textfield_background}
 			TextInputLine{
+				layout{dx{max}dy{max}}
 				text{@{text}}
 			}
 		}
-	}*/
-
+	}
 
 	Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
 		Row{

@@ -982,7 +982,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>make debug=true -j8</buildCommand>
           <cleanCommand>make clean</cleanCommand>
-          <executablePath>tests/app/tests</executablePath>
+          <executablePath>tests/inflating/tests</executablePath>
           <ccTool flags="1">
             <standard>8</standard>
           </ccTool>
@@ -992,6 +992,14 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <folder path="2">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="2/morda/fonts">
         <ccTool>
           <incDir>
@@ -1006,7 +1014,6 @@
             <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -1021,7 +1028,6 @@
         <ccTool>
           <incDir>
             <pElem>src/morda/util/unzip</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
@@ -1079,29 +1085,12 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/res</pElem>
-            <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
       <folder path="3">
         <ccTool>
           <incDir>
-            <pElem>/usr/include/freetype2</pElem>
-            <pElem>.</pElem>
-            <pElem>/usr/include/utki</pElem>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/widgets/group</pElem>
-            <pElem>src/morda/widgets/base</pElem>
-            <pElem>src/morda/widgets/input</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/res</pElem>
-            <pElem>src/morda/fonts</pElem>
             <pElem>src</pElem>
           </incDir>
           <preprocessorList>
@@ -1113,10 +1102,18 @@
         <ccTool>
           <incDir>
             <pElem>tests/app/src/opengl2</pElem>
+            <pElem>.</pElem>
           </incDir>
           <preprocessorList>
             <Elem>M_RENDER_OPENGL2</Elem>
           </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="3/inflating">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
       </folder>
       <item path="src/morda/Inflater.cpp" ex="false" tool="1" flavor2="8">
@@ -1300,6 +1297,7 @@
             <pElem>src/morda/res</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/svgdom/elements</pElem>
+            <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>

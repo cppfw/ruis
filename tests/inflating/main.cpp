@@ -170,5 +170,48 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
 	
+	//test template which nests same named widget on 2nd level
+	{
+		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+			defs{
+				Container{ x y layout dx
+					Pile{
+						Container{
+							x{@{x}} y{@{y}}
+							dy{@{dx}}
+							layout{
+								@{layout}
+								dx{fill} dy{max}
+							}
+						}
+					}
+				}
+			}
+			Container{
+				Container{
+					x{23} y{106}
+					dx{45}
+					layout{
+						dx{max}
+					}
+				}
+
+				Container{}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		ASSERT_ALWAYS(c)
+		ASSERT_ALWAYS(c->children().size() == 2)
+		ASSERT_ALWAYS(c->children().front()->rect().p.x == 0)
+		ASSERT_ALWAYS(c->children().front()->rect().p.y == 67)
+		ASSERT_ALWAYS(c->children().front()->rect().d.x == 0)
+		ASSERT_ALWAYS(c->children().front()->rect().d.y == 45)
+		auto lp = c->children().front()->getLayoutParams();
+		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
+		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
+	}
+	
 	return 0;
 }

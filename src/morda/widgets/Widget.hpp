@@ -3,6 +3,7 @@
 #include <string>
 #include <set>
 #include <memory>
+#include <list>
 
 #include <utki/Shared.hpp>
 
@@ -361,6 +362,7 @@ public:
 		return dynamic_cast<T&>(this->getByName(name));
 	}
 
+	//TODO: check if this method belongs to Container
 	/**
 	 * @brief Get children.
 	 * @return reference to the list of children.
