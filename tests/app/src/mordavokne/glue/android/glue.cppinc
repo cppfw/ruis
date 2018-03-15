@@ -992,7 +992,7 @@ namespace mordavokne{
 App::App(const WindowParams& requestedWindowParams) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
-				utki::makeShared<mordaren::OpenGLES2Renderer>(),
+				std::make_shared<mordaren::OpenGLES2Renderer>(),
 				[]() -> float{
 					ASSERT(javaFunctionsWrapper)
 

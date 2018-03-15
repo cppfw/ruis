@@ -337,7 +337,7 @@ namespace{
 App::App(const App::WindowParams& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
-				utki::makeShared<mordaren::OpenGLES2Renderer>(),
+				std::make_shared<mordaren::OpenGLES2Renderer>(),
 				getDotsPerInch(),
 				getDotsPerPt(),
 				[this](std::function<void()>&& a){

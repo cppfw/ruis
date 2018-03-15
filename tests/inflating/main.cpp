@@ -1,4 +1,5 @@
 #include "../../src/morda/Morda.hpp"
+#include "../../src/morda/widgets/group/Pile.hpp"
 
 #include "FakeRenderer.hpp"
 
@@ -183,34 +184,25 @@ int main(int argc, char** argv){
 								@{layout}
 								dx{fill} dy{max}
 							}
+							@{children}
 						}
 					}
 				}
+
+				Tmpl{
+					Container
+				}
 			}
 			Container{
-				Container{
-					x{23} y{106}
-					dx{45}
-					layout{
-						dx{max}
-					}
-				}
-
-				Container{}
+				Tmpl
 			}
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::Pile>(w);
 		ASSERT_ALWAYS(c)
-		ASSERT_ALWAYS(c->children().size() == 2)
-		ASSERT_ALWAYS(c->children().front()->rect().p.x == 0)
-		ASSERT_ALWAYS(c->children().front()->rect().p.y == 67)
-		ASSERT_ALWAYS(c->children().front()->rect().d.x == 0)
-		ASSERT_ALWAYS(c->children().front()->rect().d.y == 45)
-		auto lp = c->children().front()->getLayoutParams();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
+		ASSERT_ALWAYS(c->children().size() == 1)
+		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
 	}
 	
 	return 0;

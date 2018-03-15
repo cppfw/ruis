@@ -612,7 +612,7 @@ App::App(const WindowParams& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		curWinRect(0, 0, -1, -1),
 		gui(
-				utki::makeShared<mordaren::OpenGL2Renderer>(),
+				std::make_shared<mordaren::OpenGL2Renderer>(),
 				getDotsPerInch(getImpl(this->windowPimpl).hdc),
 				getDotsPerPt(getImpl(this->windowPimpl).hdc),
 				[this](std::function<void()>&& a){
