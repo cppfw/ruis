@@ -524,7 +524,7 @@ Container{
 
 			Widget{layout{dy{5pt}}}
 
-			TextField{
+			TextInputLine{
 				name{text_input}
 
 				text{"Hello Wrodl!!!"}

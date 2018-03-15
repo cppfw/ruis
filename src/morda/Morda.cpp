@@ -117,7 +117,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.registerType<Window>("Window");
 	this->inflater.registerType<NinePatch>("NinePatch");
 	this->inflater.registerType<NinePatchPushButton>("NinePatchPushButton");
-	this->inflater.registerType<TextField>("TextField");
 	this->inflater.registerType<CheckBox>("CheckBox");
 	this->inflater.registerType<TreeView>("TreeView");
 	this->inflater.registerType<DropDownSelector>("DropDownSelector");
@@ -129,6 +128,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.registerType<ImagePushButton>("ImagePushButton");
 	this->inflater.registerType<Tabs>("Tabs");
 	this->inflater.registerType<Tab>("Tab");
+	this->inflater.registerType<TextInputLine>("TextInputLine");
 	this->inflater.registerType<TextInputArea>("TextInputArea");
 	
 	try{

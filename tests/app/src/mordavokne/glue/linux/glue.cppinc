@@ -901,7 +901,7 @@ public:
 			case XLookupKeySym:
 			case XLookupNone:
 				break;
-		}//~switch
+		}
 
 		return std::u32string();
 	}

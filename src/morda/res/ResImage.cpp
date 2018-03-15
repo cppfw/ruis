@@ -127,13 +127,13 @@ public:
 	
 	std::shared_ptr<const QuadTexture> get(Vec2r forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
-		unsigned imWidth = unsigned(forDim.x);
+		unsigned width = unsigned(forDim.x);
 //		TRACE(<< "imWidth = " << imWidth << std::endl)
-		unsigned imHeight = unsigned(forDim.y);
+		unsigned height = unsigned(forDim.y);
 //		TRACE(<< "imHeight = " << imHeight << std::endl)
 
 		{//check if in cache
-			auto i = this->cache.find(std::make_tuple(imWidth, imHeight));
+			auto i = this->cache.find(std::make_tuple(width, height));
 			if(i != this->cache.end()){
 				if(auto p = i->second.lock()){
 					return p;
@@ -147,17 +147,21 @@ public:
 //		TRACE(<< "height = " << this->dom->height << std::endl)
 //		TRACE(<< "dpi = " << morda::Morda::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
-		auto pixels = svgren::render(*this->dom, imWidth, imHeight, morda::Morda::inst().units.dpi());
-		ASSERT(imWidth != 0)
-		ASSERT(imHeight != 0)
-		ASSERT_INFO(imWidth * imHeight == pixels.size(), "imWidth = " << imWidth << " imHeight = " << imHeight << " pixels.size() = " << pixels.size())
+		svgren::Parameters svgParams;
+		svgParams.dpi = morda::Morda::inst().units.dpi();
+		svgParams.widthRequest = width;
+		svgParams.heightRequest = height;
+		auto svg = svgren::render(*this->dom, svgParams);
+		ASSERT(svg.width != 0)
+		ASSERT(svg.height != 0)
+		ASSERT_INFO(svg.width * svg.height == svg.pixels.size(), "imWidth = " << svg.width << " imHeight = " << svg.height << " pixels.size() = " << svg.pixels.size())
 		
 		auto img = std::make_shared<SvgTexture>(
 				this->sharedFromThis(this),
-				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(imWidth, imHeight), utki::wrapBuf(pixels))
+				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
 			);
 
-		this->cache[std::make_tuple(imWidth, imHeight)] = img;
+		this->cache[std::make_tuple(svg.width, svg.height)] = img;
 
 		return img;
 	}
