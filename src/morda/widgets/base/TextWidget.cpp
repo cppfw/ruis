@@ -19,14 +19,18 @@ void TextWidget::setFont(std::shared_ptr<ResFont> font) {
 }
 
 
-TextWidget::TextWidget(const stob::Node* desc) :
-		Widget(desc),
-		ColorWidget(desc)
+TextWidget::TextWidget(const stob::Node* chain) :
+		Widget(chain),
+		ColorWidget(chain)
 {
-	if(const stob::Node* p = getProperty(desc, "font")){
+	if(const stob::Node* p = getProperty(chain, "font")){
 		this->font_v = Morda::inst().resMan.load<morda::ResFont>(p->value());
 	}else{
 		this->font_v = morda::Morda::inst().resMan.load<ResFont>("morda_fnt_normal");
+	}
+	
+	if(auto p = getProperty(chain, "text")){
+		this->setText(unikod::toUtf32(p->value()));
 	}
 }
 
@@ -36,9 +40,7 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 		Widget(chain),
 		TextWidget(chain)
 {
-	if(auto p = getProperty(chain, "text")){
-		this->setText(unikod::toUtf32(p->value()));
-	}
+	this->onTextChanged();
 }
 
 
@@ -56,8 +58,7 @@ Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
 }
 
 void SingleLineTextWidget::onTextChanged() {
-	if (this->textChanged) {
-		this->textChanged(*this);
-	}
+	this->recomputeBoundingBox();
+	this->TextWidget::onTextChanged();
 }
 

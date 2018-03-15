@@ -22,7 +22,7 @@ std::shared_ptr<Widget> TextInputArea::LinesProvider::getWidget(size_t index) {
 	}else{
 		ASSERT(index == 0)
 	}
-	ret->textChanged = [this, index](SingleLineTextWidget& w){
+	ret->textChanged = [this, index](TextWidget& w){
 		if(this->lines.size() == 0){
 			ASSERT(index == 0)
 			this->lines.emplace_back(std::u32string());
