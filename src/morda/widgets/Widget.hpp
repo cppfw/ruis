@@ -358,7 +358,7 @@ public:
 	 * @throw WidgetNotFoundExc - if no child with given name has been found.
 	 * @throw std::bad_cast - if requested child widget is not of the specified type.
 	 */
-	template <typename T> T& getChildByNameAs(const std::string& name){
+	template <typename T> T& getByNameAs(const std::string& name){
 		return dynamic_cast<T&>(this->getByName(name));
 	}
 
@@ -373,7 +373,7 @@ public:
 	 * @brief Recursively find all children of given type.
 	 * @return list of children found.
 	 */
-	template <class T> std::list<std::shared_ptr<T>> findChildren(){
+	template <class T> std::list<std::shared_ptr<T>> find(){
 		std::list<std::shared_ptr<T>> ret;
 
 		auto childrenList = this->getDirectChildren();
@@ -381,7 +381,7 @@ public:
 			if(auto c = std::dynamic_pointer_cast<T>(child)){
 				ret.emplace_back(std::move(c));
 			}
-			ret.splice(ret.end(), child->findChildren<T>());
+			ret.splice(ret.end(), child->find<T>());
 		}
 
 		return ret;
