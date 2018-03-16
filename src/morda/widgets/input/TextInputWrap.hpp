@@ -6,16 +6,16 @@
 
 namespace morda{
 
-class WrappedTextInput :
+class TextInputWrap :
 		public virtual Widget,
 		public TextWidget,
 		private List
 {
 public:
-	WrappedTextInput(const stob::Node* chain);
+	TextInputWrap(const stob::Node* chain);
 	
-	WrappedTextInput(const WrappedTextInput&) = delete;
-	WrappedTextInput& operator=(const WrappedTextInput&) = delete;
+	TextInputWrap(const TextInputWrap&) = delete;
+	TextInputWrap& operator=(const TextInputWrap&) = delete;
 	
 private:
 
