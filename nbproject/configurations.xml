@@ -982,7 +982,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>make debug=true -j8</buildCommand>
           <cleanCommand>make clean</cleanCommand>
-          <executablePath>tests/app/tests</executablePath>
+          <executablePath>tests/inflating/tests</executablePath>
           <ccTool flags="1">
             <standard>8</standard>
           </ccTool>

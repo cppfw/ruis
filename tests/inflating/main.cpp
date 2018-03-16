@@ -175,9 +175,12 @@ int main(int argc, char** argv){
 	{
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			defs{
+				Container_{Container}
+			}
+			defs{
 				Container{ x y layout dx
 					Pile{
-						Container{
+						Container_{
 							x{@{x}} y{@{y}}
 							dy{@{dx}}
 							layout{
@@ -186,7 +189,7 @@ int main(int argc, char** argv){
 							}
 							@{children}
 						}
-						Container{}
+						Container_{}
 					}
 				}
 
@@ -202,7 +205,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(w)
 		auto c = std::dynamic_pointer_cast<morda::Pile>(w);
 		ASSERT_ALWAYS(c)
-		ASSERT_ALWAYS(c->children().size() == 1)
+		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
 	}
 	

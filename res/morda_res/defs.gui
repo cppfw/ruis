@@ -4,6 +4,10 @@ defs{
 	morda_color_bg{0xff353535}
 	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
+
+	TextInputLine_{
+		TextInputLine
+	}
 }
 
 defs{
@@ -22,15 +26,15 @@ defs{
 		}
 	}
 
-/*	TextInputLine{ text
+	TextInputLine{ text
 		NinePatch{
 			image{morda_npt_textfield_background}
-			TextInputLine{
+			TextInputLine_{
 				layout{dx{max}dy{max}}
 				text{@{text}}
 			}
 		}
-	}*/
+	}
 
 	Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
 		Row{
