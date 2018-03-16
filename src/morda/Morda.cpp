@@ -21,8 +21,8 @@
 #include "widgets/label/Gradient.hpp"
 #include "widgets/label/MouseCursor.hpp"
 
-#include "widgets/input/TextField.hpp"
 #include "widgets/input/TextInputArea.hpp"
+#include "widgets/input/TextInputLine.hpp"
 
 #include "widgets/group/TreeView.hpp"
 #include "widgets/group/Window.hpp"
