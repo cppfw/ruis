@@ -982,7 +982,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>make debug=true -j8</buildCommand>
           <cleanCommand>make clean</cleanCommand>
-          <executablePath>tests/inflating/tests</executablePath>
+          <executablePath>tests/app/tests</executablePath>
           <ccTool flags="1">
             <standard>8</standard>
           </ccTool>
@@ -1297,6 +1297,7 @@
             <pElem>src/morda/res</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/svgdom/elements</pElem>
+            <pElem>/usr/include/svgdom</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/widgets</pElem>

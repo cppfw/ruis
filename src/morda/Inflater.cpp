@@ -116,16 +116,16 @@ void substituteVars(stob::Node* to, const std::function<const stob::Node*(const 
 
 namespace{
 //Merges two STOB chains. 
-std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmpl, const std::set<std::string>& varNames, std::unique_ptr<stob::Node> chain){
+std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std::set<std::string>& varNames, std::unique_ptr<stob::Node> chain){
 	if(!chain){
-		if(!tmpl){
+		if(!tmplChain){
 			return nullptr;
 		}
 	}
 	
 	std::unique_ptr<stob::Node> ret;
-	if(tmpl){
-		ret = tmpl->cloneChain();
+	if(tmplChain){
+		ret = tmplChain->cloneChain();
 	}
 	
 	//prepare variables and remove them from 'chain'
@@ -225,7 +225,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	if(auto tmpl = this->findTemplate(n->value())){
 //		TRACE(<< "template name = " << n->value() << std::endl)
 		cloned = utki::makeUnique<stob::Node>(tmpl->t->value());
-		cloned->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, n->child() ? n->child()->cloneChain() : nullptr));
+		cloned->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, n->cloneChildren()));
 		n = cloned.get();
 //		TRACE(<< "n = " << n->chainToString(true) << std::endl)
 	}
