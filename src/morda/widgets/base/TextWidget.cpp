@@ -60,3 +60,8 @@ void SingleLineTextWidget::onTextChanged() {
 	this->TextWidget::onTextChanged();
 }
 
+void SingleLineTextWidget::setText(std::u32string&& text) {
+	this->text_v = std::move(text);
+	this->setRelayoutNeeded();
+	this->onTextChanged();
+}

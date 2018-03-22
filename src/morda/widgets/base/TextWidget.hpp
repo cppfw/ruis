@@ -35,9 +35,11 @@ public:
 		this->setText(unikod::toUtf32(text));
 	}
 	
-	virtual std::u32string clear() = 0;
+	void clear(){
+		this->setText(std::u32string());
+	}
 	
-	virtual const std::u32string& getText()const = 0;
+	virtual std::u32string getText()const = 0;
 	
 	virtual void onFontChanged(){}
 	
@@ -83,17 +85,9 @@ public:
 	
 	using TextWidget::setText;
 	
-	void setText(std::u32string&& text)override{
-		this->text_v = std::move(text);
-		this->setRelayoutNeeded();
-		this->onTextChanged();
-	}
+	void setText(std::u32string&& text)override;
 	
-	std::u32string clear()override{
-		return std::move(this->text_v);
-	}
-	
-	const std::u32string& getText()const override{
+	std::u32string getText()const override{
 		return this->text_v;
 	}
 };

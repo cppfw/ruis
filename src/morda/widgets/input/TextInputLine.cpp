@@ -326,7 +326,8 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
 				if(this->cursorIndex != 0){
-					auto t = this->clear();
+					auto t = this->getText();
+					this->clear();
 					t.erase(t.begin() + (this->cursorIndex - 1));
 					this->setText(std::move(t));
 					this->setCursorIndex(this->cursorIndex - 1);
@@ -338,7 +339,8 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
 				if(this->cursorIndex < this->getText().size()){
-					auto t = this->clear();
+					auto t = this->getText();
+					this->clear();
 					t.erase(t.begin() + this->cursorIndex);
 					this->setText(std::move(t));
 				}
@@ -361,7 +363,8 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 					this->cursorIndex = this->deleteSelection();
 				}
 				
-				auto t = this->clear();
+				auto t = this->getText();
+				this->clear();
 				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
 				this->setText(std::move(t));
 				
@@ -388,7 +391,8 @@ size_t TextInputLine::deleteSelection(){
 		end = this->cursorIndex;
 	}
 	
-	auto t = this->clear();
+	auto t = this->getText();
+	this->clear();
 	t.erase(t.begin() + start, t.begin() + end);
 	this->setText(std::move(t));
 	

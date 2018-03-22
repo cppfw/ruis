@@ -2070,6 +2070,7 @@
         <ccTool flags="1">
           <incDir>
             <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/group</pElem>
             <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/input</pElem>
             <pElem>/usr/include/papki</pElem>
