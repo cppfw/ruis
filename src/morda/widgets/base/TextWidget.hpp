@@ -19,8 +19,6 @@ namespace morda{
 class TextWidget : public ColorWidget{
 	std::shared_ptr<ResFont> font_v;
 	
-	std::u32string text_v;
-	
 public:
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
@@ -31,23 +29,15 @@ public:
 		return this->font_v->font();
 	}
 	
-	void setText(decltype(text_v)&& text){
-		this->text_v = std::move(text);
-		this->setRelayoutNeeded();
-		this->onTextChanged();
-	}
+	virtual void setText(std::u32string&& text) = 0;
 	
 	void setText(const std::string& text){
 		this->setText(unikod::toUtf32(text));
 	}
 	
-	decltype(text_v) clear(){
-		return std::move(this->text_v);
-	}
+	virtual std::u32string clear() = 0;
 	
-	const decltype(text_v)& text()const noexcept{
-		return this->text_v;
-	}
+	virtual const std::u32string& getText()const = 0;
 	
 	virtual void onFontChanged(){}
 	
@@ -70,6 +60,8 @@ private:
 class SingleLineTextWidget : public TextWidget{
 	mutable Rectr bb;
 	
+	std::u32string text_v;
+	
 protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 	
@@ -80,7 +72,7 @@ protected:
 	}
 	
 	void recomputeBoundingBox(){
-		this->bb = this->font().stringBoundingBox(this->text());
+		this->bb = this->font().stringBoundingBox(this->text_v);
 	}
 public:
 	void onFontChanged()override{
@@ -88,6 +80,22 @@ public:
 	}
 
 	void onTextChanged()override;
+	
+	using TextWidget::setText;
+	
+	void setText(std::u32string&& text)override{
+		this->text_v = std::move(text);
+		this->setRelayoutNeeded();
+		this->onTextChanged();
+	}
+	
+	std::u32string clear()override{
+		return std::move(this->text_v);
+	}
+	
+	const std::u32string& getText()const override{
+		return this->text_v;
+	}
 };
 
 

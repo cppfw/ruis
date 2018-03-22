@@ -28,10 +28,6 @@ TextWidget::TextWidget(const stob::Node* chain) :
 	}else{
 		this->font_v = morda::Morda::inst().resMan.load<ResFont>("morda_fnt_normal");
 	}
-	
-	if(auto p = getProperty(chain, "text")){
-		this->setText(unikod::toUtf32(p->value()));
-	}
 }
 
 
@@ -40,7 +36,9 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 		Widget(chain),
 		TextWidget(chain)
 {
-	this->onTextChanged();
+	if(auto p = getProperty(chain, "text")){
+		this->setText(unikod::toUtf32(p->value()));
+	}
 }
 
 

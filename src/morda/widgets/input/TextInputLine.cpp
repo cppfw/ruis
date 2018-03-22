@@ -55,11 +55,11 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 		
 		matr.translate(-this->textBoundingBox().p.x + this->xOffset, round((this->font().height() + this->font().ascender() - this->font().descender()) / 2));
 		
-		ASSERT(this->firstVisibleCharIndex <= this->text().size())
+		ASSERT(this->firstVisibleCharIndex <= this->getText().size())
 		this->font().renderString(
 				matr,
 				morda::colorToVec4f(this->color()),
-				this->text().substr(this->firstVisibleCharIndex, this->text().size() - this->firstVisibleCharIndex)
+				this->getText().substr(this->firstVisibleCharIndex, this->getText().size() - this->firstVisibleCharIndex)
 			);
 	}
 	
@@ -118,7 +118,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 void TextInputLine::setCursorIndex(size_t index, bool selection){
 	this->cursorIndex = index;
 	
-	utki::clampTop(this->cursorIndex, this->text().size());
+	utki::clampTop(this->cursorIndex, this->getText().size());
 	
 	if(!selection){
 		this->selectionStartIndex = this->cursorIndex;
@@ -142,10 +142,10 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 		return;
 	}
 	
-	ASSERT(this->firstVisibleCharIndex <= this->text().size())
+	ASSERT(this->firstVisibleCharIndex <= this->getText().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
 	this->cursorPos = this->font().stringAdvance(
-			std::u32string(this->text(), this->firstVisibleCharIndex, this->cursorIndex - this->firstVisibleCharIndex)
+			std::u32string(this->getText(), this->firstVisibleCharIndex, this->cursorIndex - this->firstVisibleCharIndex)
 		) + this->xOffset;
 	
 	ASSERT(this->cursorPos >= 0)
@@ -157,12 +157,12 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 		this->firstVisibleCharIndex = this->cursorIndex;
 		
 		//calculate advance backwards
-		for(auto i = this->text().rbegin() + (this->text().size() - this->cursorIndex);
+		for(auto i = this->getText().rbegin() + (this->getText().size() - this->cursorIndex);
 				this->xOffset > 0;
 				++i
 			)
 		{
-			ASSERT(i != this->text().rend())
+			ASSERT(i != this->getText().rend())
 			this->xOffset -= this->font().charAdvance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
@@ -173,18 +173,18 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 
 
 real TextInputLine::indexToPos(size_t index){
-	ASSERT(this->firstVisibleCharIndex <= this->text().size())
+	ASSERT(this->firstVisibleCharIndex <= this->getText().size())
 	
 	if(index <= this->firstVisibleCharIndex){
 		return 0;
 	}
 	
-	utki::clampTop(index, this->text().size());
+	utki::clampTop(index, this->getText().size());
 	
 	real ret = this->xOffset;
 	
-	for(auto i = this->text().begin() + this->firstVisibleCharIndex;
-			i != this->text().end() && index != this->firstVisibleCharIndex;
+	for(auto i = this->getText().begin() + this->firstVisibleCharIndex;
+			i != this->getText().end() && index != this->firstVisibleCharIndex;
 			++i, --index
 		)
 	{
@@ -203,7 +203,7 @@ size_t TextInputLine::posToIndex(real pos){
 	size_t index = this->firstVisibleCharIndex;
 	real p = this->xOffset;
 	
-	for(auto i = this->text().begin() + this->firstVisibleCharIndex; i != this->text().end(); ++i){
+	for(auto i = this->getText().begin() + this->firstVisibleCharIndex; i != this->getText().end(); ++i){
 		real w = this->font().charAdvance(*i);
 		
 		if(pos < p + w){
@@ -269,12 +269,12 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 		case Key_e::ENTER:
 			break;
 		case Key_e::RIGHT:
-			if(this->cursorIndex != this->text().size()){
+			if(this->cursorIndex != this->getText().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
 					bool spaceSkipped = false;
 					newIndex = this->cursorIndex;
-					for(auto i = this->text().begin() + this->cursorIndex; i != this->text().end(); ++i, ++newIndex){
+					for(auto i = this->getText().begin() + this->cursorIndex; i != this->getText().end(); ++i, ++newIndex){
 						if(*i == std::uint32_t(' ')){
 							if(spaceSkipped){
 								break;
@@ -296,8 +296,8 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				if(this->ctrlPressed){
 					bool spaceSkipped = false;
 					newIndex = this->cursorIndex;
-					for(auto i = this->text().rbegin() + (this->text().size() - this->cursorIndex);
-							i != this->text().rend();
+					for(auto i = this->getText().rbegin() + (this->getText().size() - this->cursorIndex);
+							i != this->getText().rend();
 							++i, --newIndex
 						)
 					{
@@ -316,7 +316,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 			}
 			break;
 		case Key_e::END:
-			this->setCursorIndex(this->text().size(), this->shiftPressed);
+			this->setCursorIndex(this->getText().size(), this->shiftPressed);
 			break;
 		case Key_e::HOME:
 			this->setCursorIndex(0, this->shiftPressed);
@@ -337,7 +337,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 			if(this->thereIsSelection()){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
-				if(this->cursorIndex < this->text().size()){
+				if(this->cursorIndex < this->getText().size()){
 					auto t = this->clear();
 					t.erase(t.begin() + this->cursorIndex);
 					this->setText(std::move(t));
@@ -351,7 +351,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 		case Key_e::A:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
-				this->setCursorIndex(this->text().size(), true);
+				this->setCursorIndex(this->getText().size(), true);
 				break;
 			}
 			//fall through

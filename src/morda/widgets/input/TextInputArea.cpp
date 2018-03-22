@@ -29,7 +29,7 @@ std::shared_ptr<Widget> TextInputArea::LinesProvider::getWidget(size_t index) {
 		}
 		
 		ASSERT(index < this->lines.size())
-		this->lines[index] = w.text();
+		this->lines[index] = w.getText();
 	};
 	
 	return ret;

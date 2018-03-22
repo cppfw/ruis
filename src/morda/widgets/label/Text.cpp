@@ -24,5 +24,5 @@ void Text::render(const morda::Matr4r& matrix)const{
 	
 	matr.translate(-this->textBoundingBox().p.x, round((this->font().height() + this->font().ascender() - this->font().descender()) / 2));
 	
-	this->font().renderString(matr, morda::colorToVec4f(this->color()), this->text());
+	this->font().renderString(matr, morda::colorToVec4f(this->color()), this->getText());
 }
