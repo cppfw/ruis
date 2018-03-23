@@ -238,7 +238,7 @@ void TextInputLine::onFocusChanged(){
 }
 
 void TextInputLine::onResize(){
-	TRACE(<< "TextInputLine::onResize(): size = " << this->rect().d << std::endl)
+//	TRACE(<< "TextInputLine::onResize(): size = " << this->rect().d << std::endl)
 	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 }
 
