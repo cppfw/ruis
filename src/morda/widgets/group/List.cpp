@@ -158,7 +158,7 @@ void List::setScrollPosAsFactor(real factor){
 }
 
 bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, T_ChildrenList::const_iterator insertBefore){
-	auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 		
 	Vec2r dim = this->dimForWidget(*w, lp);
 
@@ -311,7 +311,7 @@ void List::updateTailItemsInfo(){
 		auto w = this->provider->getWidget(i - 1);
 		ASSERT(w)
 		
-		auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+		auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 		
 		Vec2r d = this->dimForWidget(*w, lp);
 		
@@ -360,7 +360,7 @@ void List::scrollBy(real delta) {
 				)
 			for(; this->posIndex < this->firstTailItemIndex;){
 				auto w = this->provider->getWidget(this->posIndex);
-				auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 				Vec2r d = this->dimForWidget(*w, lp);
 				this->add(w); //this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
@@ -384,7 +384,7 @@ void List::scrollBy(real delta) {
 				ASSERT(this->addedIndex == this->posIndex)
 				--this->posIndex;
 				auto w = this->provider->getWidget(this->posIndex);
-				auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 				Vec2r d = this->dimForWidget(*w, lp);
 				this->add(w, this->children().begin()); //this is just optimization, to avoid creating same widget twice
 				--this->addedIndex;

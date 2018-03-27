@@ -62,7 +62,7 @@ void Overlay::onChildrenListChanged(){
 
 
 void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
-	auto& lp = this->getLayoutParamsDuringLayoutAs<LayoutParams>(*w);
+	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 	
 	Vec2r dim = this->dimForWidget(*w, lp);
 

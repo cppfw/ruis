@@ -65,26 +65,18 @@ protected:
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 	
 protected:
-	/**
-	 * @brief Get layout parameters of child widget.
-	 * This method is for getting layout parameters when laying out child widgets.
-	 * Some subclass container can override this method to provide modified layout parameters while still use inherited layout algorithm.
-	 * @param w - child widget to get layout parameters for.
-	 * @return Layout parameters for given child widget.
-	 */
-	virtual const LayoutParams& getLayoutParamsDuringLayout(const Widget& w)const;
 	
 	/**
 	 * @brief Get layout parameters of child widget.
-	 * Same as getLayoutParamsDuringLayout() but also tries to cast the LayoutParams object to specified class.
+	 * Same as getLayoutParams() but also tries to cast the LayoutParams object to specified class.
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
 	 */
-	template <class T> const T& getLayoutParamsDuringLayoutAs(const Widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
+	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
+		auto p = dynamic_cast<const T*>(&this->getLayoutParams(w));
 		if(!p){
 			w.layoutParams.reset();
-			p = dynamic_cast<const T*>(&this->getLayoutParamsDuringLayout(w));
+			p = dynamic_cast<const T*>(&this->getLayoutParams(w));
 		}
 		
 		ASSERT(p)

@@ -39,7 +39,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 	
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(*c);
+		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(*c);
 		
 		auto tab = dynamic_cast<Tab*>(c.get());
 		if(!tab){
@@ -85,7 +85,7 @@ void Tabs::layOut() {
 	
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->getLayoutParamsDuringLayoutAs<Container::LayoutParams>(*c);
+		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(*c);
 		
 		auto dim = this->dimForWidget(*c, lp);
 		c->resize(dim);
