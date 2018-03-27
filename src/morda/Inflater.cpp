@@ -5,8 +5,6 @@
 #include "widgets/group/LinearContainer.hpp"
 #include "widgets/group/Pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
-#include "widgets/group/Table.hpp"
-#include "widgets/group/TableRow.hpp"
 #include "widgets/group/Overlay.hpp"
 #include "widgets/group/List.hpp"
 
@@ -32,8 +30,6 @@ Inflater::Inflater(){
 	this->registerType<Pile>("Pile");
 	this->registerType<MouseProxy>("MouseProxy");
 	this->registerType<ScrollArea>("ScrollArea");
-	this->registerType<Table>("Table");
-	this->registerType<TableRow>("TableRow");
 	this->registerType<KeyProxy>("KeyProxy");
 	this->registerType<Overlay>("Overlay");
 	this->registerType<ResizeProxy>("ResizeProxy");

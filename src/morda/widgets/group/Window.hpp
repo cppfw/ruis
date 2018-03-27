@@ -4,7 +4,6 @@
 #include "../label/Color.hpp"
 
 #include "Pile.hpp"
-#include "Table.hpp"
 
 #include "../proxy/MouseProxy.hpp"
 

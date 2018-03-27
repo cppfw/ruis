@@ -313,14 +313,14 @@ Container{
 		}
 
 
-		Table{
+		Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			TableRow{
+			Row{
 				layout{
-					dx{0} dy{0}
+					dx{max} dy{0}
 					weight{1}
 				}
 
@@ -355,38 +355,36 @@ Container{
 				}
 			}
 
-			TableRow{
-				HorizontalSlider{
-					name{treeview_horizontal_slider}
+			HorizontalSlider{
+				name{treeview_horizontal_slider}
 
-					layout{
-						dx{0}
+				layout{
+					dx{max}
+				}
+			}
+
+			Row{
+				layout{dx{max}}
+
+				Text{
+					text{Insert:}
+				}
+				PushButton{
+					name{insert_before}
+					Text{
+						text{"before"}
 					}
 				}
-				Widget{}
-			}
-			TableRow{
-				Row{
+				PushButton{
+					name{insert_after}
 					Text{
-						text{Insert:}
+						text{"after"}
 					}
-					PushButton{
-						name{insert_before}
-						Text{
-							text{"before"}
-						}
-					}
-					PushButton{
-						name{insert_after}
-						Text{
-							text{"after"}
-						}
-					}
-					PushButton{
-						name{insert_child}
-						Text{
-							text{"child"}
-						}
+				}
+				PushButton{
+					name{insert_child}
+					Text{
+						text{"child"}
 					}
 				}
 			}
@@ -556,15 +554,14 @@ Container{
 		title{"ScrollArea"}
 
 
-		Table{
+		Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			TableRow{
-
+			Row{
 				layout{
-					dx{0} dy{0}
+					dx{max} dy{0}
 					weight{1}
 				}
 
@@ -633,15 +630,12 @@ Container{
 				}
 			}
 
-			TableRow{
-				HorizontalSlider{
-					name{scroll_area_horizontal_slider}
+			HorizontalSlider{
+				name{scroll_area_horizontal_slider}
 
-					layout{
-						dx{0}
-					}
+				layout{
+					dx{max}
 				}
-				Widget
 			}
 		}
 	}
@@ -653,7 +647,7 @@ Container{
 
 		clip{true}
 
-		title{"Table"}
+		title{"none"}
 
 
 		Gradient{
@@ -661,57 +655,7 @@ Container{
 			gradient{grd_sample}
 		}
 
-		Table{
-			layout{
-				dx{max} dy{max}
-			}
-
-			TableRow{
-				Color{
-					color{0xff00ff00}
-					layout{
-						dx{50} dy{30}
-					}
-				}
-
-				Color{
-					color{0xffff0000}
-					layout{
-						dx{70} dy{20}
-						weight{1}
-					}
-				}
-
-				Color{
-					color{0xffffffff}
-					layout{
-						dx{10} dy{20}
-					}
-				}
-			}
-
-			TableRow{
-				Color{
-					color{0xff0000ff}
-					layout{
-						dx{20} dy{30}
-					}
-				}
-
-				Color{
-					color{0xffffff00}
-					layout{
-						dx{90} dy{20}
-					}
-				}
-
-				Text{
-					text{"Long text"}
-				}
-			}
-
-			TableRow{}
-		}
+		
 	}
 
 	Window{
@@ -898,12 +842,12 @@ Container{
 		title{"TextInputArea"}
 
 
-		Table{
+		Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			TableRow{
+			Row{
 				layout{
 					dx{0} dy{0}
 					weight{1}
@@ -940,7 +884,7 @@ Container{
 				}
 			}
 
-			TableRow{
+			Row{
 				HorizontalSlider{
 					name{textInputArea_horizontal_slider}
 
