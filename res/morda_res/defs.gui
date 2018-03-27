@@ -30,7 +30,7 @@ defs{
 		NinePatch{
 			image{morda_npt_textfield_background}
 			TextInputLine_{
-				layout{dx{max}dy{max}}
+				layout{dx{fill}dy{max}}
 				text{@{text}}
 			}
 		}
