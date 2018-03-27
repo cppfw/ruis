@@ -13,32 +13,31 @@ using namespace morda;
 
 namespace{
 const char* ninePatchLayout_c = R"qwertyuiop(
-		//1st row
-		TableRow{
+		Row{
+			layout{dx{fill}}
 			Image{
 				name{morda_lt}
 			}
 
 			Image{
-				layout{dx{0}dy{fill}}
+				layout{dx{0}weight{1}}
 				name{morda_t}
 			}
 
 			Image{
-				layout{dx{0}dy{fill}}
 				name{morda_rt}
 			}
 		}
 
-		//2nd row
-		TableRow{
+		Row{
 			layout{
+				dx{max}
 				weight{1}
 			}
 			
 			Image{
 				name{morda_l}
-				layout{dx{0}dy{fill}}
+				layout{dy{fill}}
 			}
 
 			Pile{
@@ -55,19 +54,18 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 			}
 			Image{
 				name{morda_r}
-				layout{dx{0}dy{fill}}
+				layout{dy{fill}}
 			}
 		}
 
-		//3rd row
-		TableRow{
+		Row{
+			layout{dx{fill}}
 			Image{
-				layout{dx{0}dy{fill}}
 				name{morda_lb}
 			}
 
 			Image{
-				layout{dx{0}dy{fill}}
+				layout{dx{0}weight{1}}
 				name{morda_b}
 			}
 
@@ -82,7 +80,7 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 NinePatch::NinePatch(const stob::Node* chain) :
 		Widget(chain),
 		BlendingWidget(chain),
-		Table(stob::parse(ninePatchLayout_c).get())
+		Column(stob::parse(ninePatchLayout_c).get())
 {
 	this->imageMatrix_v[0][0] = this->findByNameAs<Image>("morda_lt");
 	this->imageMatrix_v[0][1] = this->findByNameAs<Image>("morda_t");
@@ -139,7 +137,7 @@ NinePatch::NinePatch(const stob::Node* chain) :
 }
 
 void NinePatch::render(const morda::Matr4r& matrix) const {
-	this->Table::render(matrix);
+	this->Column::render(matrix);
 }
 
 

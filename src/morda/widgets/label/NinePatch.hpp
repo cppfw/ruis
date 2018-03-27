@@ -29,7 +29,7 @@ namespace morda{
 class NinePatch :
 		public virtual Widget,
 		public BlendingWidget,
-		private Table
+		private Column
 {
 	std::shared_ptr<const ResNinePatch> image;
 	
