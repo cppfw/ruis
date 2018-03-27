@@ -12,46 +12,39 @@ using namespace morda;
 namespace{
 
 const char* windowDesc_c = R"qwertyuiop(
-		Table{
+		Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			//1st row
-			TableRow{
+			Row{
+				layout{dx{fill}}
+
 				MouseProxy{
 					name{morda_lt_proxy}
-					layout{
-						dx{fill} dy{fill}
-					}
 				}
 
 				MouseProxy{
 					name{morda_t_proxy}
 					layout{
-						dx{0}
+						dx{0} dy{fill} weight{1}
 					}
 				}
 
 				MouseProxy{
 					name{morda_rt_proxy}
-					layout{
-						dx{fill} dy{fill}
-					}
 				}
-			}//~TableRow
+			}
 
-			//2nd row
-			TableRow{
+			Row{
 				layout{
 					weight{1}
+					dx{max}
 				}
 				
 				MouseProxy{
 					name{morda_l_proxy}
-					layout{
-						dy{fill}
-					}
+					layout{dy{fill}}
 				}
 
 				//middle
@@ -117,35 +110,31 @@ const char* windowDesc_c = R"qwertyuiop(
 
 				MouseProxy{
 					name{morda_r_proxy}
-					layout{
-						dy{fill}
-					}
+					layout{dy{fill}}
 				}
-			}//~TableRow
+			}
 
-			//3rd row
-			TableRow{
+			Row{
+				layout{
+					dx{fill}
+				}
 				MouseProxy{
 					name{morda_lb_proxy}
-					layout{
-						dx{fill} dy{fill}
-					}
 				}
 
 				MouseProxy{
 					name{morda_b_proxy}
 					layout{
-						dx{fill}
+						dy{fill}
+						dx{0}
+						weight{1}
 					}
 				}
 
 				MouseProxy{
 					name{morda_rb_proxy}
-					layout{
-						dx{fill} dy{fill}
-					}
 				}
-			}//~TableRow
+			}
 		}
 	)qwertyuiop";
 
@@ -290,6 +279,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->ltBorder = w;
 	}
 	
 	{	
@@ -306,6 +296,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->lbBorder = w;
 	}
 
 	{
@@ -322,6 +313,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->rtBorder = w;
 	}
 	
 	{
@@ -337,6 +329,7 @@ void morda::Window::setupWidgets(){
 			}
 			return false;
 		};
+		this->rbBorder = w;
 	}
 	
 	{
@@ -409,10 +402,22 @@ void morda::Window::setTitle(const std::string& str){
 }
 
 void morda::Window::setBorders(Sidesr borders) {
-	this->lBorder->getLayoutParams().dim.x = borders.left();
+	this->lBorder->getLayoutParams().dim.x = borders.left();	
 	this->tBorder->getLayoutParams().dim.y = borders.top();
 	this->rBorder->getLayoutParams().dim.x = borders.right();
 	this->bBorder->getLayoutParams().dim.y = borders.bottom();
+	
+	this->lbBorder->getLayoutParams().dim.x = borders.left();
+	this->lbBorder->getLayoutParams().dim.y = borders.bottom();
+	
+	this->rbBorder->getLayoutParams().dim.x = borders.right();
+	this->rbBorder->getLayoutParams().dim.y = borders.bottom();
+	
+	this->ltBorder->getLayoutParams().dim.x = borders.left();
+	this->ltBorder->getLayoutParams().dim.y = borders.top();
+	
+	this->rtBorder->getLayoutParams().dim.x = borders.right();
+	this->rtBorder->getLayoutParams().dim.y = borders.top();
 }
 
 

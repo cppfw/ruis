@@ -34,10 +34,14 @@ class Window :
 	
 	std::shared_ptr<Pile> contentArea;
 	
+	std::shared_ptr<Widget> ltBorder;
+	std::shared_ptr<Widget> rtBorder;
 	std::shared_ptr<Widget> tBorder;
 	std::shared_ptr<Widget> lBorder;
 	std::shared_ptr<Widget> rBorder;
 	std::shared_ptr<Widget> bBorder;
+	std::shared_ptr<Widget> lbBorder;
+	std::shared_ptr<Widget> rbBorder;
 	
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
