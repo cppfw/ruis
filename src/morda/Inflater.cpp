@@ -237,17 +237,17 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		throw Exc(ss.str());
 	}
 
-	bool needPopDefs = false;
-	utki::ScopeExit scopeExit([this, &needPopDefs](){
-		if(needPopDefs){
+	unsigned numPopDefs = 0;
+	utki::ScopeExit scopeExit([this, &numPopDefs](){
+		for(unsigned i = 0; i != numPopDefs; ++i){
 			this->popDefs();
 		}
 	});
 	
-	if(auto v = n->child(defs_c).node()){
+	for(auto v = n->child(defs_c).node(); v; v = v->next(defs_c).node()){
 		if(v->child()){
 			this->pushDefs(*v->child());
-			needPopDefs = true;
+			++numPopDefs;
 		}
 	}
 

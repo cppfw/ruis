@@ -5,10 +5,9 @@
 
 
 int main(int argc, char** argv){
-	morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-	
 	//test that whole definition chain is substituted
 	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			Container{
 				defs{
@@ -44,6 +43,7 @@ int main(int argc, char** argv){
 	
 	//test template properties overriding
 	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			Container{
 				defs{
@@ -83,6 +83,7 @@ int main(int argc, char** argv){
 	
 	//test template arguments
 	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			Container{
 				defs{
@@ -124,6 +125,7 @@ int main(int argc, char** argv){
 	
 	//test two levels of templates
 	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			defs{
 				Cont{ x y layout dx
@@ -173,6 +175,7 @@ int main(int argc, char** argv){
 	
 	//test template which nests same named widget on 2nd level
 	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
 			defs{
 				Container_{Container}
@@ -207,6 +210,31 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
+	}
+	
+	//test two defs blocks in widget
+	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+			Container{
+				defs{
+					Tmpl1{Pile}
+				}
+				defs{
+					Tmpl{
+						Tmpl1
+					}
+				}
+
+				Tmpl
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		ASSERT_ALWAYS(c)
+		ASSERT_ALWAYS(c->children().size() == 1)
+		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Pile>(c->children().front()))
 	}
 	
 	return 0;
