@@ -700,7 +700,7 @@ public:
 		
 		//VerticalList
 		{
-			auto verticalList = c->findByNameAs<morda::VerticalList>("vertical_list");
+			auto verticalList = c->findByNameAs<morda::VList>("vertical_list");
 			auto vl = utki::makeWeak(verticalList);
 			
 			auto verticalSlider = c->findByNameAs<morda::VerticalSlider>("vertical_list_slider");

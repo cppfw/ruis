@@ -122,32 +122,32 @@ private:
 
 /**
  * @brief Horizontal list widget.
- * From GUI script it can be instantiated as "HorizontalList".
+ * From GUI script it can be instantiated as "HList".
  */
-class HorizontalList : public List{
+class HList : public List{
 public:
-	HorizontalList(const stob::Node* chain) :
+	HList(const stob::Node* chain) :
 			Widget(chain),
 			List(chain, false)
 	{}
 	
-	HorizontalList(const HorizontalList&) = delete;
-	HorizontalList& operator=(const HorizontalList&) = delete;
+	HList(const HList&) = delete;
+	HList& operator=(const HList&) = delete;
 };
 
 /**
  * @brief Vertical list widget.
- * From GUI script it can be instantiated as "VerticalList".
+ * From GUI script it can be instantiated as "VList".
  */
-class VerticalList : public List{
+class VList : public List{
 public:
-	VerticalList(const stob::Node* chain) :
+	VList(const stob::Node* chain) :
 			Widget(chain),
 			List(chain, true)
 	{}
 	
-	VerticalList(const VerticalList&) = delete;
-	VerticalList& operator=(const VerticalList&) = delete;
+	VList(const VList&) = delete;
+	VList& operator=(const VList&) = delete;
 };
 
 }

@@ -12,7 +12,7 @@ TreeView::TreeView(const stob::Node* chain) :
 		Widget(chain),
 		ScrollArea(nullptr)
 {
-	this->list = std::make_shared<VerticalList>(nullptr);
+	this->list = std::make_shared<VList>(nullptr);
 	this->add(this->list);
 	
 	auto& lp = this->getLayoutParams(*this->list);

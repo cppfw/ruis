@@ -34,8 +34,8 @@ Inflater::Inflater(){
 	this->registerType<KeyProxy>("KeyProxy");
 	this->registerType<Overlay>("Overlay");
 	this->registerType<ResizeProxy>("ResizeProxy");
-	this->registerType<HorizontalList>("HorizontalList");
-	this->registerType<VerticalList>("VerticalList");
+	this->registerType<HList>("HList");
+	this->registerType<VList>("VList");
 }
 
 

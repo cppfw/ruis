@@ -236,7 +236,7 @@ Container{
 					dy{0}
 					weight{1}
 				}
-				HorizontalList{
+				HList{
 					layout{
 						dx{fill}
 						dy{fill}
@@ -680,7 +680,7 @@ Container{
 					dx{0} dy{max}
 					weight{1}
 				}
-				VerticalList{
+				VList{
 					name{vertical_list}
 					layout{
 						dx{max} dy{max}
