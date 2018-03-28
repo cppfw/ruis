@@ -60,8 +60,19 @@ void SingleLineTextWidget::onTextChanged() {
 	this->TextWidget::onTextChanged();
 }
 
-void SingleLineTextWidget::setText(std::u32string&& text) {
-	this->text_v = std::move(text);
+void TextWidget::setText(std::u32string&& text) {
+	this->lines.clear();
+	this->lines.emplace_back(std::move(text));
 	this->setRelayoutNeeded();
 	this->onTextChanged();
+}
+
+std::u32string TextWidget::getText() const {
+	std::u32string ret;
+	
+	for(auto& l : this->lines){
+		ret.append(l);
+	}
+	
+	return ret;
 }

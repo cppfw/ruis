@@ -19,6 +19,9 @@ namespace morda{
 class TextWidget : public ColorWidget{
 	std::shared_ptr<ResFont> font_v;
 	
+protected:
+	std::vector<std::u32string> lines;
+	
 public:
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
@@ -29,17 +32,17 @@ public:
 		return this->font_v->font();
 	}
 	
-	virtual void setText(std::u32string&& text) = 0;
-	
 	void setText(const std::string& text){
 		this->setText(unikod::toUtf32(text));
 	}
 	
+	void setText(std::u32string&& text);
+	
+	std::u32string getText()const;
+	
 	void clear(){
 		this->setText(std::u32string());
 	}
-	
-	virtual std::u32string getText()const = 0;
 	
 	virtual void onFontChanged(){}
 	
@@ -62,8 +65,6 @@ private:
 class SingleLineTextWidget : public TextWidget{
 	mutable Rectr bb;
 	
-	std::u32string text_v;
-	
 protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 	
@@ -74,7 +75,7 @@ protected:
 	}
 	
 	void recomputeBoundingBox(){
-		this->bb = this->font().stringBoundingBox(this->text_v);
+		this->bb = this->font().stringBoundingBox(this->getText());
 	}
 public:
 	void onFontChanged()override{
@@ -82,14 +83,6 @@ public:
 	}
 
 	void onTextChanged()override;
-	
-	using TextWidget::setText;
-	
-	void setText(std::u32string&& text)override;
-	
-	std::u32string getText()const override{
-		return this->text_v;
-	}
 };
 
 
