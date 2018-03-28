@@ -2,7 +2,8 @@
 
 #include "widgets/Container.hpp"
 
-#include "widgets/group/LinearContainer.hpp"
+#include "widgets/group/Column.hpp"
+#include "widgets/group/Row.hpp"
 #include "widgets/group/Pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
 #include "widgets/group/Overlay.hpp"

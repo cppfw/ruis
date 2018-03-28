@@ -18,7 +18,7 @@
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/group/ScrollArea.hpp"
-#include "../../../src/morda/widgets/group/LinearContainer.hpp"
+#include "../../../src/morda/widgets/group/Row.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/Slider.hpp"
 #include "../../../src/morda/widgets/group/List.hpp"

@@ -5,7 +5,7 @@
 #include "../../res/ResNinePatch.hpp"
 
 #include "../group/Pile.hpp"
-#include "../group/LinearContainer.hpp"
+#include "../group/Column.hpp"
 
 #include "Image.hpp"
 
