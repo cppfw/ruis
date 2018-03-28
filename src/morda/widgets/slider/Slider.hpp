@@ -5,7 +5,9 @@
 #include "../Widget.hpp"
 
 #include "../group/Pile.hpp"
+
 #include "../base/FractionWidget.hpp"
+#include "../base/OrientedWidget.hpp"
 
 //disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC
@@ -16,11 +18,16 @@
 namespace morda{
 
 
-class AreaSlider : public FractionWidget{
+class AreaSlider :
+		public FractionWidget,
+		public OrientedWidget
+{
 	float curAreaSizeFraction = 0; //Current area size factor from 0 to 1
 protected:
-	AreaSlider(const stob::Node* chain = nullptr) :
-			Widget(chain)
+	AreaSlider(const stob::Node* chain, bool vertical) :
+			Widget(chain),
+			FractionWidget(chain),
+			OrientedWidget(chain, vertical)
 	{}
 	
 	virtual void onAreaSizeChanged();
@@ -43,23 +50,13 @@ class HandleSlider :
 	HandleSlider(const HandleSlider&) = delete;
 	HandleSlider& operator=(const HandleSlider&) = delete;
 	
-	unsigned getLongIndex()const noexcept{
-		return this->isVertical ? 1 : 0;
-	}
-
-	unsigned getTransIndex()const noexcept{
-		return this->isVertical ? 0 : 1;
-	}
-	
 	Widget& handle;
-	
-	bool isVertical;
 	
 	bool isGrabbed = false;
 	float clickPoint;
 	
 protected:
-	HandleSlider(bool isVertical, const stob::Node* chain);
+	HandleSlider(const stob::Node* chain, bool vertical);
 
 	void onFractionChange() override;
 
@@ -79,7 +76,7 @@ class VerticalSlider : public HandleSlider{
 public:
 	VerticalSlider(const stob::Node* chain = nullptr) : 
 			Widget(chain),
-			HandleSlider(true, chain)
+			HandleSlider(chain, true)
 	{}
 	
 	VerticalSlider(const VerticalSlider&) = delete;
@@ -91,7 +88,7 @@ class HorizontalSlider : public HandleSlider{
 public:
 	HorizontalSlider(const stob::Node* chain = nullptr) : 
 			Widget(chain),
-			HandleSlider(false, chain)
+			HandleSlider(chain, false)
 	{}
 	
 	HorizontalSlider(const HorizontalSlider&) = delete;

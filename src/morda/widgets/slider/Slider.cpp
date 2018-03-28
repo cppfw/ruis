@@ -50,11 +50,11 @@ const char* DDescription = R"qwertyuiop(
 
 
 
-HandleSlider::HandleSlider(bool isVertical, const stob::Node* chain) :
+HandleSlider::HandleSlider(const stob::Node* chain, bool vertical) :
 		Widget(chain),
+		AreaSlider(nullptr, vertical),
 		Pile(stob::parse(DDescription).get()),
-		handle(*this->findByName("morda_handle")),
-		isVertical(isVertical)
+		handle(*this->findByName("morda_handle"))
 {
 	{
 		auto np = this->findByNameAs<NinePatch>("morda_slider_bg");
