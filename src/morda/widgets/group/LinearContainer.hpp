@@ -2,6 +2,8 @@
 
 #include "../Container.hpp"
 
+#include "../base/OrientedWidget.hpp"
+
 
 namespace morda{
 
@@ -11,30 +13,19 @@ namespace morda{
  * @brief Linear container widget.
  * Linear container lays out its child widgets in a row from left to right or in a column from top to bottom.
  */
-class LinearContainer : public Container{
+class LinearContainer :
+		public Container,
+		protected OrientedWidget
+{
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;
-
-	bool isVertical_v;
-	
-	unsigned getLongIndex()const noexcept{
-		return this->isVertical_v ? 1 : 0;
-	}
-
-	unsigned getTransIndex()const noexcept{
-		return this->isVertical_v ? 0 : 1;
-	}
 	
 public:
-	LinearContainer(bool isVertical, const stob::Node* chain = nullptr);
+	LinearContainer(const stob::Node* chain, bool vertical);
 
 	void layOut() override;	
 	
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
-	
-	bool isVertical()const noexcept{
-		return this->isVertical_v;
-	}
 	
 	/**
 	 * @brief Layout parameters for LinearArea container.
@@ -67,9 +58,9 @@ private:
  */
 class Column : public LinearContainer{
 public:
-	Column(const stob::Node* chain = nullptr) :
+	Column(const stob::Node* chain) :
 			Widget(chain),
-			LinearContainer(true, chain)
+			LinearContainer(chain, true)
 	{}
 	
 	Column(const Column&) = delete;
@@ -83,9 +74,9 @@ public:
  */
 class Row : public LinearContainer{
 public:
-	Row(const stob::Node* chain = nullptr) :
+	Row(const stob::Node* chain) :
 			Widget(chain),
-			LinearContainer(false, chain)
+			LinearContainer(chain, false)
 	{}
 	
 	Row(const Row&) = delete;

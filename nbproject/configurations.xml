@@ -91,7 +91,6 @@
             <in>Window.cpp</in>
           </df>
           <df name="input">
-            <in>TextInputArea.cpp</in>
             <in>TextInputLine.cpp</in>
             <in>TextInputWrap.cpp</in>
           </df>
@@ -1132,6 +1131,7 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/group</pElem>
+            <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/proxy</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -1159,7 +1159,6 @@
             <pElem>src/morda/util</pElem>
             <pElem>src/morda/render</pElem>
             <pElem>src/morda/widgets/button</pElem>
-            <pElem>src/morda/widgets/input</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>src/morda/widgets/label</pElem>
             <pElem>.</pElem>
@@ -1877,6 +1876,7 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/group</pElem>
+            <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/button</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>src/morda/util</pElem>
@@ -1898,6 +1898,7 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/group</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
@@ -1913,6 +1914,7 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/base</pElem>
             <pElem>src/morda/widgets/group</pElem>
             <pElem>/usr/include/kolme</pElem>
             <pElem>/usr/include/papki</pElem>
@@ -1986,6 +1988,7 @@
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
             <pElem>src/morda/widgets/group</pElem>
+            <pElem>src/morda/widgets/base</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/kolme</pElem>
@@ -2010,29 +2013,6 @@
             <pElem>src/morda/render</pElem>
             <pElem>src/morda</pElem>
             <pElem>src/morda/widgets/label</pElem>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </item>
-      <item path="src/morda/widgets/input/TextInputArea.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/stob</pElem>
-            <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/widgets/group</pElem>
-            <pElem>src/morda/widgets/input</pElem>
-            <pElem>/usr/include/papki</pElem>
-            <pElem>/usr/include/unikod</pElem>
-            <pElem>/usr/include/kolme</pElem>
-            <pElem>src/morda/util</pElem>
-            <pElem>src/morda/render</pElem>
-            <pElem>src/morda</pElem>
-            <pElem>src/morda/res</pElem>
-            <pElem>src/morda/widgets/base</pElem>
-            <pElem>src/morda/fonts</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -2068,8 +2048,8 @@
             <pElem>/usr/include/unikod</pElem>
             <pElem>/usr/include/stob</pElem>
             <pElem>src/morda/widgets</pElem>
-            <pElem>src/morda/widgets/group</pElem>
             <pElem>src/morda/widgets/base</pElem>
+            <pElem>src/morda/widgets/group</pElem>
             <pElem>src/morda/widgets/input</pElem>
             <pElem>/usr/include/papki</pElem>
             <pElem>/usr/include/kolme</pElem>

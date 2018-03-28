@@ -23,10 +23,10 @@ LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
 
 
 
-LinearContainer::LinearContainer(bool isVertical, const stob::Node* chain) :
+LinearContainer::LinearContainer(const stob::Node* chain, bool vertical) :
 		Widget(chain),
 		Container(chain),
-		isVertical_v(isVertical)
+		OrientedWidget(nullptr, vertical)
 {}
 
 

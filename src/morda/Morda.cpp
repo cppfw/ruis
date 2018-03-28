@@ -21,7 +21,6 @@
 #include "widgets/label/Gradient.hpp"
 #include "widgets/label/MouseCursor.hpp"
 
-#include "widgets/input/TextInputArea.hpp"
 #include "widgets/input/TextInputLine.hpp"
 
 #include "widgets/group/TreeView.hpp"
@@ -129,7 +128,6 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.registerType<Tabs>("Tabs");
 	this->inflater.registerType<Tab>("Tab");
 	this->inflater.registerType<TextInputLine>("TextInputLine");
-	this->inflater.registerType<TextInputArea>("TextInputArea");
 	
 	try{
 		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");

@@ -40,9 +40,9 @@ public:
 
 
 
-List::List(bool isVertical, const stob::Node* chain):
+List::List(const stob::Node* chain, bool vertical):
 		Widget(chain),
-		isVertical_v(isVertical)
+		OrientedWidget(nullptr, vertical)
 {
 	if(!chain){
 		return;

@@ -20,7 +20,7 @@ namespace morda{
 
 class AreaSlider :
 		public FractionWidget,
-		public OrientedWidget
+		protected OrientedWidget
 {
 	float curAreaSizeFraction = 0; //Current area size factor from 0 to 1
 protected:

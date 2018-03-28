@@ -27,7 +27,6 @@
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/Color.hpp"
 #include "../../../src/morda/widgets/label/Image.hpp"
-#include "../../../src/morda/widgets/input/TextInputArea.hpp"
 
 #include "../../../src/morda/util/ZipFile.hpp"
 #include "../../../src/morda/util/MouseButton.hpp"
@@ -462,7 +461,7 @@ public:
 			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 		
-		auto ret = std::make_shared<morda::Row>();
+		auto ret = std::make_shared<morda::Row>(nullptr);
 
 		ASSERT(isLastItemInParent.size() == path.size())
 		
@@ -922,57 +921,6 @@ public:
 				visible = !visible;
 				mordavokne::App::inst().setMouseCursorVisible(visible);
 			};
-		}
-		
-		//TextInputArea
-		{
-			auto textInputArea = c->findByNameAs<morda::TextInputArea>("textInputArea");
-			ASSERT(textInputArea)
-			auto tia = utki::makeWeak(textInputArea);
-			
-			auto verticalSlider = c->findByNameAs<morda::VerticalSlider>("textInputArea_vertical_slider");
-			auto vs = utki::makeWeak(verticalSlider);
-			
-			verticalSlider->fractionChange = [tia](morda::FractionWidget& slider){
-				if(auto t = tia.lock()){
-					t->setVerticalScrollPosAsFactor(slider.fraction());
-				}
-			};
-			
-			auto horizontalSlider = c->findByNameAs<morda::HorizontalSlider>("textInputArea_horizontal_slider");
-			ASSERT(horizontalSlider)
-			auto hs = utki::makeWeak(horizontalSlider);
-			
-			horizontalSlider->fractionChange = [tia](morda::FractionWidget& slider){
-				if(auto t = tia.lock()){
-					t->setHorizontalScrollPosAsFactor(slider.fraction());
-				}
-			};
-			
-			auto resizeProxy = c->findByNameAs<morda::ResizeProxy>("textInputArea_resize_proxy");
-			ASSERT(resizeProxy)
-			auto rp = utki::makeWeak(resizeProxy);
-			
-			resizeProxy->resized = [vs, hs, tia](const morda::Vec2r& newSize){
-				auto t = tia.lock();
-				if(!t){
-					return;
-				}
-				if(auto h = hs.lock()){
-					h->setFraction(t->scrollFactor().x);
-				}
-				if(auto v = vs.lock()){
-					v->setFraction(t->scrollFactor().y);
-				}
-			};
-			
-//			textInputArea->viewChanged = [rp](morda::TreeView&){
-//				if(auto r = rp.lock()){
-//					if(r->resized){
-//						r->resized(morda::Vec2r());
-//					}
-//				}
-//			};
 		}
 	}
 };

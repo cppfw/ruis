@@ -3,6 +3,8 @@
 #include "../Widget.hpp"
 #include "../Container.hpp"
 
+#include "../base/OrientedWidget.hpp"
+
 namespace morda{
 
 /**
@@ -13,7 +15,8 @@ class List :
 		//NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 		//      see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public Widget,
-		private Container
+		private Container,
+		protected OrientedWidget
 {
 	//index of the first item added to container as child
 	size_t addedIndex = size_t(-1);
@@ -24,19 +27,9 @@ class List :
 	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
 	size_t firstTailItemIndex = 0;
 	real firstTailItemOffset = real(0);
-
-	const bool isVertical_v;
-	
-	unsigned getLongIndex()const noexcept{
-		return this->isVertical_v ? 1 : 0;
-	}
-
-	unsigned getTransIndex()const noexcept{
-		return this->isVertical_v ? 0 : 1;
-	}
 	
 protected:
-	List(bool isVertical, const stob::Node* chain);
+	List(const stob::Node* chain, bool vertical);
 public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
@@ -81,10 +74,6 @@ public:
 	void layOut()override;
 	
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
-
-	bool isVertical()const noexcept{
-		return this->isVertical_v;
-	}
 	
 	/**
 	 * @brief Get number of items currently visible.
@@ -137,9 +126,9 @@ private:
  */
 class HorizontalList : public List{
 public:
-	HorizontalList(const stob::Node* chain = nullptr) :
+	HorizontalList(const stob::Node* chain) :
 			Widget(chain),
-			List(false, chain)
+			List(chain, false)
 	{}
 	
 	HorizontalList(const HorizontalList&) = delete;
@@ -152,9 +141,9 @@ public:
  */
 class VerticalList : public List{
 public:
-	VerticalList(const stob::Node* chain = nullptr) :
+	VerticalList(const stob::Node* chain) :
 			Widget(chain),
-			List(true, chain)
+			List(chain, true)
 	{}
 	
 	VerticalList(const VerticalList&) = delete;
