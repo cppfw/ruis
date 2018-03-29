@@ -289,7 +289,7 @@ Container{
 				}
 			}
 
-			HorizontalSlider{
+			HScrollBar{
 				name{horizontal_list_slider}
 
 				layout{
@@ -345,7 +345,7 @@ Container{
 				}
 
 				
-				VerticalSlider{
+				VScrollBar{
 
 					name{treeview_vertical_slider}
 
@@ -355,7 +355,7 @@ Container{
 				}
 			}
 
-			HorizontalSlider{
+			HScrollBar{
 				name{treeview_horizontal_slider}
 
 				layout{
@@ -417,14 +417,14 @@ Container{
 				}
 			}
 
-			HorizontalSlider{
+			HScrollBar{
 				layout{
 					dx{50} dy{40} //TODO: min min
 					weight{1}
 				}
 			}
 
-			VerticalSlider{
+			VScrollBar{
 				name {"vertical slider"}
 
 				layout{
@@ -620,7 +620,7 @@ Container{
 					}
 				}
 				
-				VerticalSlider{
+				VScrollBar{
 
 					name{scroll_area_vertical_slider}
 
@@ -630,7 +630,7 @@ Container{
 				}
 			}
 
-			HorizontalSlider{
+			HScrollBar{
 				name{scroll_area_horizontal_slider}
 
 				layout{
@@ -823,7 +823,7 @@ Container{
 				}
 			}
 
-			VerticalSlider{
+			VScrollBar{
 				name{vertical_list_slider}
 				layout{
 					dy{max}

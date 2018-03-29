@@ -4,7 +4,7 @@
 
 #include "res/ResSTOB.hpp"
 
-#include "widgets/slider/Slider.hpp"
+#include "widgets/slider/ScrollBar.hpp"
 
 #include "widgets/button/NinePatchPushButton.hpp"
 #include "widgets/button/CheckBox.hpp"
@@ -111,8 +111,8 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.registerType<Color>("Color");
 	this->inflater.registerType<Gradient>("Gradient");
 	this->inflater.registerType<Image>("Image");
-	this->inflater.registerType<VerticalSlider>("VerticalSlider");
-	this->inflater.registerType<HorizontalSlider>("HorizontalSlider");
+	this->inflater.registerType<VScrollBar>("VScrollBar");
+	this->inflater.registerType<HScrollBar>("HScrollBar");
 	this->inflater.registerType<Window>("Window");
 	this->inflater.registerType<NinePatch>("NinePatch");
 	this->inflater.registerType<NinePatchPushButton>("NinePatchPushButton");

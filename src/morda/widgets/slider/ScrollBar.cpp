@@ -1,4 +1,4 @@
-#include "Slider.hpp"
+#include "ScrollBar.hpp"
 
 #include "../../Morda.hpp"
 
@@ -50,9 +50,10 @@ const char* DDescription = R"qwertyuiop(
 
 
 
-HandleSlider::HandleSlider(const stob::Node* chain, bool vertical) :
+ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 		Widget(chain),
-		AreaSlider(nullptr, vertical),
+		FractionBandWidget(nullptr),
+		OrientedWidget(nullptr, vertical),
 		Pile(stob::parse(DDescription).get()),
 		handle(*this->findByName("morda_handle"))
 {
@@ -134,7 +135,7 @@ HandleSlider::HandleSlider(const stob::Node* chain, bool vertical) :
 
 
 
-void HandleSlider::onFractionChange() {
+void ScrollBar::onFractionChange() {
 	this->layOut();
 	
 	this->FractionWidget::onFractionChange();
@@ -142,7 +143,7 @@ void HandleSlider::onFractionChange() {
 
 
 
-void HandleSlider::layOut(){
+void ScrollBar::layOut(){
 	this->Pile::layOut();
 	
 	unsigned longIndex = this->getLongIndex();
@@ -150,7 +151,7 @@ void HandleSlider::layOut(){
 	
 	morda::Vec2r newSize(this->rect().d);
 	
-	newSize[longIndex] = ::round(newSize[longIndex] * this->areaSizeFraction());
+	newSize[longIndex] = ::round(newSize[longIndex] * this->bandSizeFraction());
 	
 	auto minHandleSize =  this->handle.measure(Vec2r(-1));
 	
@@ -175,25 +176,9 @@ void HandleSlider::layOut(){
 	}
 }
 
-void AreaSlider::onAreaSizeChanged() {
-	if (this->areaSizeChanged) {
-		this->areaSizeChanged(*this);
-	}
-}
 
-
-void HandleSlider::onAreaSizeChanged() {
+void ScrollBar::onBandSizeChanged(){
 	this->layOut();
 	
-	this->AreaSlider::onAreaSizeChanged();
-}
-
-
-void AreaSlider::setAreaSizeFraction(real fraction) {
-	if (this->curAreaSizeFraction == fraction) {
-		return;
-	}
-
-	this->curAreaSizeFraction = fraction;
-	this->onAreaSizeChanged();
+	this->FractionBandWidget::onBandSizeChanged();
 }
