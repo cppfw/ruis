@@ -156,11 +156,14 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		if(!slot->bitmap.buffer){//if glyph is empty (e.g. space character)
 			Glyph &g = this->glyphs[*c];
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
-			ASSERT(g.verts.size() == g.texCoords.size())
-			for(unsigned i = 0; i < g.verts.size(); ++i){
-				g.verts[i].set(0);
-				g.texCoords[i].set(0);
-			}
+			g.vao = morda::inst().renderer().posTexQuad01VAO;
+			std::uint32_t p = 0;
+			g.tex = morda::inst().renderer().factory->createTexture2D(1, utki::Buf<std::uint32_t>(&p, 1));
+//			ASSERT(g.verts.size() == g.texCoords.size())
+//			for(unsigned i = 0; i < g.verts.size(); ++i){
+//				g.verts[i].set(0);
+//				g.texCoords[i].set(0);
+//			}
 			continue;
 		}
 		RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
@@ -183,7 +186,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 				}
 			}
 		}
-
+		
 //		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
 
 		if(texImg.dim().x < curX + im.dim().x + DXGap){
@@ -237,6 +240,21 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 			ASSERT(-(top - bottom) >= 0) //width >= 0
 			ASSERT(right - left >= 0) //height >= 0
+			
+			auto& r = morda::inst().renderer();
+			g.vao = r.factory->createVertexArray(
+					{
+						r.factory->createVertexBuffer(utki::wrapBuf(g.verts)),
+						morda::inst().renderer().quad01VBO
+					},
+					indexBuffer,
+					VertexArray::Mode_e::TRIANGLE_STRIP
+				);
+			g.tex = morda::inst().renderer().factory->createTexture2D(
+					morda::numChannelsToTexType(im.numChannels()),
+					im.dim(),
+					im.buf()
+				);
 		}
 
 		texImg.blit(curX, curY, im);
@@ -271,21 +289,26 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 	//now the font image has its final width and heights (no more resizes will be done)
 
-	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
-		//normalize texture coordinates
-		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
-		}
-		auto& r = morda::inst().renderer();
-		i->second.vao = r.factory->createVertexArray(
-				{
-					r.factory->createVertexBuffer(utki::wrapBuf(i->second.verts)),
-					r.factory->createVertexBuffer(utki::wrapBuf(i->second.texCoords))
-				},
-				indexBuffer,
-				VertexArray::Mode_e::TRIANGLE_FAN
-			);
-	}
+//	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
+//		//normalize texture coordinates
+//		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
+//			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
+//		}
+//		auto& r = morda::inst().renderer();
+//		i->second.vao = r.factory->createVertexArray(
+//				{
+//					r.factory->createVertexBuffer(utki::wrapBuf(i->second.verts)),
+//					texCoords//r.factory->createVertexBuffer(utki::wrapBuf(i->second.texCoords))
+//				},
+//				indexBuffer,
+//				VertexArray::Mode_e::TRIANGLE_FAN
+//			);
+//		i->second.tex = morda::inst().renderer().factory->createTexture2D(
+//				morda::numChannelsToTexType(im.numChannels()),
+//				im.dim(),
+//				im.buf()
+//			);
+//	}
 
 //	TRACE(<< "TexFont::Load(): initing texture" << std::endl)
 	this->tex = morda::inst().renderer().factory->createTexture2D(
@@ -308,7 +331,7 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
-	morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *this->tex);
+	morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
 
 	return g.advance;
 }

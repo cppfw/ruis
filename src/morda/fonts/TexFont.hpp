@@ -33,6 +33,8 @@ class TexFont : public Font{
 		
 		std::shared_ptr<VertexArray> vao;
 		
+		std::shared_ptr<Texture2D> tex;
+		
 		real advance;
 	};
 
