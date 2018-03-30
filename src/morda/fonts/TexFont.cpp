@@ -222,10 +222,10 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			g.advance = real(m->horiAdvance) / (64.0f);
 			
 			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
-			g.verts[1] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
-			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
-			g.verts[3] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
+			g.verts[1] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
+			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
+			g.verts[3] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
+			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
 
 			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.dim().y));
 			g.texCoords[1] = morda::Vec2r(real(curX + im.dim().x), real(curY + im.dim().y));
@@ -234,9 +234,9 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 
 			//update bounding box if needed
 			utki::clampTop(left, g.verts[0].x);
-			utki::clampBottom(right, g.verts[2].x);
+			utki::clampBottom(right, g.verts[3].x);
 			utki::clampBottom(bottom, g.verts[0].y);
-			utki::clampTop(top, g.verts[2].y);
+			utki::clampTop(top, g.verts[3].y);
 
 			ASSERT(-(top - bottom) >= 0) //width >= 0
 			ASSERT(right - left >= 0) //height >= 0
@@ -251,9 +251,9 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 					VertexArray::Mode_e::TRIANGLE_STRIP
 				);
 			g.tex = morda::inst().renderer().factory->createTexture2D(
-					morda::numChannelsToTexType(im.numChannels()),
-					im.dim(),
-					im.buf()
+					morda::numChannelsToTexType(glyphim.numChannels()),
+					glyphim.dim(),
+					glyphim.buf()
 				);
 		}
 
