@@ -88,7 +88,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) {
 				morda::inst().renderer().quad01VBO
 			},
 			morda::inst().renderer().quadIndices,
-			VertexArray::Mode_e::TRIANGLE_STRIP
+			VertexArray::Mode_e::TRIANGLE_FAN
 		);
 	g.tex = morda::inst().renderer().factory->createTexture2D(
 			morda::numChannelsToTexType(im.numChannels()),
