@@ -48,7 +48,6 @@ public:
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
 	 * @param chars - set of characters to put to the font texture.
 	 * @param fontSize - size of the font in pixels.
-	 * @param outline - thickness of the outline effect.
 	 */
 	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize){
 		this->load(fi, chars, fontSize);

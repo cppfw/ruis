@@ -102,6 +102,8 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		if(!slot->bitmap.buffer){//if glyph is empty (e.g. space character)
 			Glyph &g = this->glyphs[*c];
 			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
+			g.topLeft.set(0);
+			g.bottomRight.set(0);
 			g.vao = morda::inst().renderer().posTexQuad01VAO;
 			std::uint32_t p = 0;
 			g.tex = morda::inst().renderer().factory->createTexture2D(1, utki::Buf<std::uint32_t>(&p, 1));
