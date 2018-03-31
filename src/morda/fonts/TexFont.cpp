@@ -141,6 +141,7 @@ TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fo
 
 const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);
+	//TODO: add caching
 	if(i == this->glyphs.end()){
 		return this->glyphs.at(unknownChar_c);
 	}
@@ -152,6 +153,7 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
+	//texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
 		ASSERT(g.vao)
 		morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
