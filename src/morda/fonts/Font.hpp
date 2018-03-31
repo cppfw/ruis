@@ -15,7 +15,7 @@ namespace morda{
 /**
  * @brief Basic class representing a font.
  */
-class Font{
+class Font : public utki::Unique{
 protected:
 	/**
 	 * @brief Distance between lines of text.

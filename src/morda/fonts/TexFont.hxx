@@ -4,6 +4,9 @@
 #include <sstream>
 #include <stdexcept>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 
@@ -42,6 +45,30 @@ class TexFont : public Font{
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
 	T_GlyphsMap glyphs;
 
+	struct FreeTypeLibWrapper{
+		FT_Library lib;
+
+		FreeTypeLibWrapper();
+		~FreeTypeLibWrapper()noexcept;
+		
+		operator FT_Library& (){
+			return this->lib;
+		}
+	} freetype;
+
+//	TRACE(<< "TexFont::Load(): FreeType library inited" << std::endl)
+
+	struct FreeTypeFaceWrapper{
+		FT_Face face;
+		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
+
+		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi);
+		~FreeTypeFaceWrapper()noexcept;
+		operator FT_Face& (){
+			return this->face;
+		}
+	} face;
+	
 public:
 	/**
 	 * @brief Constructor.
@@ -49,11 +76,7 @@ public:
 	 * @param chars - set of characters to put to the font texture.
 	 * @param fontSize - size of the font in pixels.
 	 */
-	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize){
-		this->load(fi, chars, fontSize);
-	}
-
-	~TexFont()noexcept{}
+	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
 
 	
 	real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const override;
@@ -66,10 +89,7 @@ public:
 	real charAdvance(char32_t c) const override;
 
 	
-private:
-
-	void load(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
-	
+private:	
 	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;
 
 	const Glyph& findGlyph(char32_t c)const;

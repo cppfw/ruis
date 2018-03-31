@@ -1,15 +1,12 @@
 #include <algorithm>
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 
 #include <utki/debug.hpp>
 
 #include "../util/RasterImage.hpp"
 #include "../util/util.hpp"
 
-#include "TexFont.hpp"
+#include "TexFont.hxx"
 #include "../Morda.hpp"
 
 
@@ -24,53 +21,34 @@ constexpr const char32_t unknownChar_c = 0xfffd;
 
 }
 
+TexFont::FreeTypeLibWrapper::FreeTypeLibWrapper() {
+	if (FT_Init_FreeType(&this->lib)) {
+		throw utki::Exc("FreeTypeLibWrapper::FreeTypeLibWrapper(): unable to init freetype library");
+	}
+}
 
+TexFont::FreeTypeLibWrapper::~FreeTypeLibWrapper() {
+	FT_Done_FreeType(this->lib);
+}
 
-void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned fontSize){
+TexFont::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi) {
+	this->fontFile = fi.loadWholeFileIntoMemory();
+	if (FT_New_Memory_Face(lib, & * this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->face) != 0) {
+		throw utki::Exc("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
+	}
+}
+
+TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper() {
+	FT_Done_Face(this->face);
+}
+
+TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
+		face(freetype, fi)
+{
 	std::u32string fontChars = chars;
 	fontChars.append(1, unknownChar_c);
 	
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
-
-	this->glyphs.clear();//clear glyphs map if some other font was loaded previously
-	
-	class FreeTypeLibWrapper{
-		FT_Library lib;// handle to freetype library object
-	public:
-		FreeTypeLibWrapper(){
-			if(FT_Init_FreeType(&this->lib)){
-				throw utki::Exc("TexFont::Load(): unable to init freetype library");
-			}
-		}
-		~FreeTypeLibWrapper()noexcept{
-			FT_Done_FreeType(this->lib);
-		}
-		operator FT_Library& (){
-			return this->lib;
-		}
-	} library;
-
-//	TRACE(<< "TexFont::Load(): FreeType library inited" << std::endl)
-
-	class FreeTypeFaceWrapper{
-		FT_Face face; // handle to face object
-		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
-	public:
-		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi){
-			this->fontFile = fi.loadWholeFileIntoMemory();
-			if(FT_New_Memory_Face(lib, &*this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->face) != 0){
-				throw utki::Exc("TexFont::Load(): unable to crate font face object");
-			}
-		}
-		~FreeTypeFaceWrapper()noexcept{
-			FT_Done_Face(this->face);
-		}
-		operator FT_Face& (){
-			return this->face;
-		}
-	} face(library, fi);
-
-//	TRACE(<< "TexFont::Load(): FreeType font face loaded" << std::endl)
 
 	//set character size in pixels
 	{
@@ -81,7 +59,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			); // pixel_height
 
 		if(error != 0){
-			throw utki::Exc("TexFont::Load(): unable to set char size");
+			throw utki::Exc("TexFont::TexFont(): unable to set char size");
 		}
 	}
 
@@ -92,7 +70,7 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
 		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
-			throw utki::Exc("TexFont::Load(): unable to load char");
+			throw utki::Exc("TexFont::TexFont(): unable to load char");
 		}
 		
 //		TRACE(<< "TexFont::Load(): char loaded" << std::endl)
@@ -107,18 +85,13 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			g.vao = morda::inst().renderer().posTexQuad01VAO;
 			std::uint32_t p = 0;
 			g.tex = morda::inst().renderer().factory->createTexture2D(1, utki::Buf<std::uint32_t>(&p, 1));
-//			ASSERT(g.verts.size() == g.texCoords.size())
-//			for(unsigned i = 0; i < g.verts.size(); ++i){
-//				g.verts[i].set(0);
-//				g.texCoords[i].set(0);
-//			}
 			continue;
 		}
 		RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
 
-		RasterImage im(kolme::Vec2ui(glyphim.dim().x, glyphim.dim().y), RasterImage::ColorDepth_e::GREYA);
-		im.clear(std::uint8_t(0xff));
+		RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
 		im.blit(0, 0, glyphim, 1, 0);
+		im.clear(0, std::uint8_t(0xff));
 		
 //		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
 
@@ -161,8 +134,9 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	this->descender_v = -ceil((static_cast<FT_Face&>(face)->size->metrics.descender) / 64.0f);
 	this->ascender_v = ceil((static_cast<FT_Face&>(face)->size->metrics.ascender) / 64.0f);
 
-	TRACE(<< "TexFont::load(): height_v = " << this->height_v << std::endl)
+	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
 }
+
 
 const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);

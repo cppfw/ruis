@@ -6,6 +6,8 @@
 
 #include "../util/util.hpp"
 
+#include "../fonts/TexFont.hxx"
+
 #include <unikod/utf8.hpp>
 
 using namespace morda;
@@ -13,7 +15,7 @@ using namespace morda;
 
 
 ResFont::ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
-		f(fi, chars, fontSize)
+		f(utki::makeUnique<TexFont>(fi, chars, fontSize))
 {}
 
 

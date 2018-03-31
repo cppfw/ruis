@@ -6,8 +6,7 @@
 
 #include "../ResourceManager.hpp"
 
-#include "../fonts/TexFont.hpp"
-
+#include "../fonts/Font.hpp"
 
 
 namespace morda{
@@ -37,7 +36,7 @@ namespace morda{
 class ResFont : public morda::Resource{
 	friend class morda::ResourceManager;
 
-	morda::TexFont f;
+	std::unique_ptr<morda::Font> f;
 
 public:
 	ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
@@ -49,7 +48,8 @@ public:
 	 * @return Font object.
 	 */
 	const morda::Font& font()noexcept{
-		return this->f;
+		ASSERT(this->f)
+		return *this->f;
 	}
 	
 private:
