@@ -41,8 +41,7 @@ TexFont::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::
 TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
 	FT_Done_Face(this->f);
 }
-
-TexFont::Glyph TexFont::loadGlyph(char32_t c) {
+TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
 		if(c == unknownChar_c){
 			throw morda::Exc("TexFont::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
@@ -100,12 +99,9 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) {
 }
 
 
-TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
+TexFont::TexFont(const papki::File& fi, unsigned fontSize) :
 		face(freetype.lib, fi)
 {
-	std::u32string fontChars = chars;
-	fontChars.append(1, unknownChar_c);
-	
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
 	//set character size in pixels
@@ -125,10 +121,6 @@ TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fo
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 	
-	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
-		this->glyphs.insert(std::make_pair(*c, loadGlyph(*c)));
-	}
-	
 	using std::ceil;
 	
 	this->height_v = ceil((this->face.f->size->metrics.height) / 64.0f);
@@ -139,11 +131,12 @@ TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fo
 }
 
 
-const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
+const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);
-	//TODO: add caching
 	if(i == this->glyphs.end()){
-		return this->glyphs.at(unknownChar_c);
+		auto r = this->glyphs.insert(std::make_pair(c, this->loadGlyph(c)));
+		ASSERT(r.second)
+		i = r.first;
 	}
 	return i->second;
 }
@@ -151,7 +144,7 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 
 
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
-	const Glyph& g = this->findGlyph(ch);
+	const Glyph& g = this->getGlyph(ch);
 	
 	//texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
@@ -171,7 +164,7 @@ real TexFont::stringAdvanceInternal(const std::u32string& str)const{
 	
 	for(; s != str.end(); ++s){
 		try{
-			const Glyph& g = this->findGlyph(*s);
+			const Glyph& g = this->getGlyph(*s);
 			ret += g.advance;
 		}catch(std::out_of_range&){
 			//ignore
@@ -199,7 +192,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	real left, right, top, bottom;
 	//init with bounding box of the first glyph
 	{
-		const Glyph& g = this->findGlyph(*s);
+		const Glyph& g = this->getGlyph(*s);
 		left = g.topLeft.x;
 		right = g.bottomRight.x;
 		top = g.topLeft.y;
@@ -209,15 +202,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	}
 
 	for(; s != str.end(); ++s){
-		auto i = this->glyphs.find(*s);
-		
-#ifdef DEBUG
-		if(i == this->glyphs.end()){
-			TRACE(<< "TexFont::StringBoundingLineInternal(): Character is not loaded, scan code = 0x" << std::hex << *s << std::endl)
-		}
-#endif
-
-		const Glyph& g = i == this->glyphs.end() ? this->glyphs.at(unknownChar_c) : i->second;
+		const Glyph& g = this->getGlyph(*s);
 
 		using std::min;
 		using std::max;
@@ -273,12 +258,6 @@ real TexFont::renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f col
 
 
 real TexFont::charAdvance(char32_t c) const{
-	auto i = this->glyphs.find(c);
-	if(i == this->glyphs.end()){
-		ASSERT(this->glyphs.find(unknownChar_c) != this->glyphs.end())
-		return this->glyphs.at(unknownChar_c).advance;
-	}
-	
-	const Glyph& g = i->second;
+	auto& g = this->getGlyph(c);
 	return g.advance;
 }

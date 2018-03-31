@@ -14,18 +14,13 @@ using namespace morda;
 
 
 
-ResFont::ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
-		f(utki::makeUnique<TexFont>(fi, chars, fontSize))
+ResFont::ResFont(const papki::File& fi, unsigned fontSize) :
+		f(utki::makeUnique<TexFont>(fi, fontSize))
 {}
 
 
 
 std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::File& fi){
-	//read chars attribute
-	auto wideChars = unikod::toUtf32(chain.side("chars").up().value());
-
-	ASSERT(wideChars.size() > 0)
-
 	//read size attribute
 	unsigned fontSize;
 	if(auto sizeProp = chain.childOfThisOrNext("size")){
@@ -36,6 +31,6 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 
 	fi.setPath(chain.side("file").up().value());
 
-	return std::make_shared<ResFont>(fi, wideChars, fontSize);
+	return std::make_shared<ResFont>(fi, fontSize);
 }
 

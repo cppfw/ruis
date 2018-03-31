@@ -42,7 +42,7 @@ class TexFont : public Font{
 
 	typedef std::map<char32_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
-	T_GlyphsMap glyphs;
+	mutable T_GlyphsMap glyphs;
 
 	struct FreeTypeLibWrapper{
 		FT_Library lib;
@@ -63,15 +63,14 @@ class TexFont : public Font{
 	
 	Glyph unknownGlyph;
 	
-	Glyph loadGlyph(char32_t c);
+	Glyph loadGlyph(char32_t c)const;
 public:
 	/**
 	 * @brief Constructor.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
-	 * @param chars - set of characters to put to the font texture.
 	 * @param fontSize - size of the font in pixels.
 	 */
-	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
+	TexFont(const papki::File& fi, unsigned fontSize);
 
 	real charAdvance(char32_t c) const override;
 	
@@ -85,6 +84,6 @@ protected:
 private:	
 	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;
 
-	const Glyph& findGlyph(char32_t c)const;
+	const Glyph& getGlyph(char32_t c)const;
 };
 }

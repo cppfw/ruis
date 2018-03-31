@@ -27,9 +27,7 @@ namespace morda{
  * @code
  * fnt_normal{
  *     file {Vera.ttf}
- *     chars {" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;?!()_*+-|\\/"}
  *     size {12pt}
- *     outline {0}
  * }
  * @endcode
  */
@@ -39,7 +37,7 @@ class ResFont : public morda::Resource{
 	std::unique_ptr<morda::Font> f;
 
 public:
-	ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
+	ResFont(const papki::File& fi, unsigned fontSize);
 
 	~ResFont()noexcept{}
 
