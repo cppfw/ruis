@@ -12,8 +12,8 @@ using namespace morda;
 
 
 
-ResFont::ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline) :
-		f(fi, chars, fontSize, outline)
+ResFont::ResFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
+		f(fi, chars, fontSize)
 {}
 
 
@@ -31,17 +31,9 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 	}else{
 		fontSize = 13;
 	}
-	
-	//read outline attribute
-	unsigned outline;
-	if(auto outlineProp = chain.childOfThisOrNext("outline")){
-		outline = unsigned(outlineProp->asUint32());
-	}else{
-		outline = 0;
-	}
 
 	fi.setPath(chain.side("file").up().value());
 
-	return std::make_shared<ResFont>(fi, wideChars, fontSize, outline);
+	return std::make_shared<ResFont>(fi, wideChars, fontSize);
 }
 

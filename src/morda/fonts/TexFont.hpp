@@ -28,8 +28,8 @@ namespace morda{
  */
 class TexFont : public Font{
 	struct Glyph{
-		std::array<kolme::Vec2f, 4> verts;
-		std::array<kolme::Vec2f, 4> texCoords;
+		morda::Vec2r topLeft;
+		morda::Vec2r bottomRight;
 		
 		std::shared_ptr<VertexArray> vao;
 		
@@ -37,8 +37,6 @@ class TexFont : public Font{
 		
 		real advance;
 	};
-
-	std::shared_ptr<Texture2D> tex;
 
 	typedef std::map<char32_t, Glyph> T_GlyphsMap;
 	typedef T_GlyphsMap::iterator T_GlyphsIter;
@@ -52,8 +50,8 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param outline - thickness of the outline effect.
 	 */
-	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline = 0){
-		this->load(fi, chars, fontSize, outline);
+	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize){
+		this->load(fi, chars, fontSize);
 	}
 
 	~TexFont()noexcept{}
@@ -66,23 +64,12 @@ public:
 
 	morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const override;
 
-//	void renderTex(PosTexShader& shader, const morda::Matr4r& matrix)const{
-//		morda::Matr4r matr(matrix);
-//		matr.scale(this->tex.dim());
-//		shader.setMatrix(matr);
-//
-//		this->tex.bind();
-//
-//		shader.render(utki::wrapBuf(PosShader::quad01Fan), utki::wrapBuf(shader.quadFanTexCoords));
-//	}
-
-
 	real charAdvance(char32_t c) const override;
 
 	
 private:
 
-	void load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline = 0);
+	void load(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
 	
 	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;
 

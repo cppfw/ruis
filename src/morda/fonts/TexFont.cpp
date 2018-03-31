@@ -20,44 +20,13 @@ using namespace morda;
 
 namespace{
 
-static void BlitIfGreater(RasterImage& dst, unsigned dstChan, const RasterImage& src, unsigned srcChan, unsigned x, unsigned y){
-	ASSERT(dst.buf().size())
-	ASSERT(dstChan < dst.numChannels())
-	ASSERT(srcChan < src.numChannels())
-
-	unsigned blitAreaW = std::min(src.dim().x, dst.dim().x - x);
-	unsigned blitAreaH = std::min(src.dim().y, dst.dim().y - y);
-
-	for(unsigned j = 0; j < blitAreaH; ++j){
-		for(unsigned i = 0; i < blitAreaW; ++i){
-			std::uint8_t &d = dst.pixChan(i + x, j + y, dstChan);
-			std::uint8_t s = src.pixChan(i, j, srcChan);
-			if(s > d){
-				d = s;
-			}
-		}
-	}
-}
-
-
-static unsigned FindNextPowOf2(unsigned n){
-	unsigned ret = 1;
-	while(ret <= n){
-		ret *= 2;
-	}
-	return ret;
-}
-
-const unsigned DXGap = 1;
-const unsigned DYGap = 1;
-
 constexpr const char32_t unknownChar_c = 0xfffd;
 
 }
 
 
 
-void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned fontSize, unsigned outline){
+void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned fontSize){
 	std::u32string fontChars = chars;
 	fontChars.append(1, unknownChar_c);
 	
@@ -116,29 +85,6 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		}
 	}
 
-	unsigned maxTexSize = morda::inst().renderer().maxTextureSize;
-
-	//guess for texture width
-	unsigned texWidth;
-	texWidth = std::max(unsigned(128), FindNextPowOf2(unsigned(fontChars.size() / 8) * fontSize)); //divide by 8 is a good guess that all font characters will be placed in 8 rows on texture
-	texWidth = std::min(std::min(maxTexSize, unsigned(1024)), texWidth); //clamp width to min of max texture size and 1024
-
-	unsigned curTexHeight = FindNextPowOf2(fontSize);//first guess of texture height
-	unsigned curX = DXGap;
-	unsigned curY = DYGap;
-	unsigned maxHeightInRow = 0;
-
-	RasterImage texImg(kolme::Vec2ui(texWidth, curTexHeight), RasterImage::ColorDepth_e::GREYA);
-	//clear the image because image buffer may contain trash data
-	//and glyphs will have artifacts on their edges
-	texImg.clear();
-
-	//init bounding box to invalid values
-	float left = 1000000;
-	float right = -1000000;
-	float top = 1000000;
-	float bottom = -1000000;
-
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
 
 	auto indexBuffer = morda::inst().renderer().quadIndices;
@@ -168,51 +114,11 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 		}
 		RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
 
-		RasterImage im(kolme::Vec2ui(glyphim.dim().x + 2 * outline, glyphim.dim().y + 2 * outline), RasterImage::ColorDepth_e::GREYA);
-		im.clear();
-		if(outline == 0){
-			im.blit(0, 0, glyphim, 1, 0);
-		}else{
-			im.blit(outline, outline, glyphim, 0, 0);
-
-			for(unsigned y = 0; y < 2 * outline + 1; ++y){
-				for(unsigned x = 0; x < 2 * outline + 1; ++x){
-					int dx = int(x) - int(outline);
-					int dy = int(y) - int(outline);
-					using utki::pow2;
-					if(pow2(dx) + pow2(dy) <= int(pow2(outline))){
-						BlitIfGreater(im, 1, glyphim, 0, x, y);
-					}
-				}
-			}
-		}
+		RasterImage im(kolme::Vec2ui(glyphim.dim().x, glyphim.dim().y), RasterImage::ColorDepth_e::GREYA);
+		im.clear(std::uint8_t(0xff));
+		im.blit(0, 0, glyphim, 1, 0);
 		
 //		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
-
-		if(texImg.dim().x < curX + im.dim().x + DXGap){
-			curX = DXGap;
-			curY += maxHeightInRow + DYGap;
-			maxHeightInRow = 0;
-		}
-
-		if(texImg.dim().y < curY + im.dim().y + DYGap){
-			//grow texture size
-			unsigned newHeight = FindNextPowOf2(curY + im.dim().y + DYGap);
-			if(newHeight > maxTexSize){//if it is impossible to grow texture image height anymore
-				throw utki::Exc("TexFont::Load(): there's not enough room on the texture for all the glyphs of the requested size");
-			}
-
-			//TODO: optimize somehow?
-			//resize texture image
-			RasterImage copy(texImg);
-			texImg.init(kolme::Vec2ui(copy.dim().x, newHeight), copy.colorDepth());
-			texImg.clear();
-			texImg.blit(0, 0, copy);
-		}
-
-		if(im.dim().y > maxHeightInRow){
-			maxHeightInRow = im.dim().y;
-		}
 
 		//record glyph information
 		{
@@ -221,45 +127,31 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 			Glyph &g = this->glyphs[*c];
 			g.advance = real(m->horiAdvance) / (64.0f);
 			
-			ASSERT(outline < (unsigned(-1) >> 1))
-			g.verts[1] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(-real(outline), -real(outline));
-			g.verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY - m->height)) / (64.0f)) + morda::Vec2r(real(outline), -real(outline));
-			g.verts[3] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(real(outline), real(outline));
-			g.verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f)) + morda::Vec2r(-real(outline), real(outline));
-
-			g.texCoords[0] = morda::Vec2r(real(curX), real(curY + im.dim().y));
-			g.texCoords[1] = morda::Vec2r(real(curX + im.dim().x), real(curY + im.dim().y));
-			g.texCoords[2] = morda::Vec2r(real(curX + im.dim().x), real(curY));
-			g.texCoords[3] = morda::Vec2r(real(curX), real(curY));
-
-			//update bounding box if needed
-			utki::clampTop(left, g.verts[0].x);
-			utki::clampBottom(right, g.verts[3].x);
-			utki::clampBottom(bottom, g.verts[0].y);
-			utki::clampTop(top, g.verts[3].y);
-
-			ASSERT(-(top - bottom) >= 0) //width >= 0
-			ASSERT(right - left >= 0) //height >= 0
+			std::array<kolme::Vec2f, 4> verts;
+			verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
+			verts[1] = (morda::Vec2r(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
+			verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
+			verts[3] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f));
+			
+			g.topLeft = verts[0];
+			g.bottomRight = verts[2];
 			
 			auto& r = morda::inst().renderer();
 			g.vao = r.factory->createVertexArray(
 					{
-						r.factory->createVertexBuffer(utki::wrapBuf(g.verts)),
+						r.factory->createVertexBuffer(utki::wrapBuf(verts)),
 						morda::inst().renderer().quad01VBO
 					},
 					indexBuffer,
 					VertexArray::Mode_e::TRIANGLE_STRIP
 				);
 			g.tex = morda::inst().renderer().factory->createTexture2D(
-					morda::numChannelsToTexType(glyphim.numChannels()),
-					glyphim.dim(),
-					glyphim.buf()
+					morda::numChannelsToTexType(im.numChannels()),
+					im.dim(),
+					im.buf()
 				);
 		}
-
-		texImg.blit(curX, curY, im);
-		curX += im.dim().x + DXGap;
-	}//~for
+	}
 	
 	using std::ceil;
 	
@@ -268,54 +160,6 @@ void TexFont::load(const papki::File& fi, const std::u32string& chars, unsigned 
 	this->ascender_v = ceil((static_cast<FT_Face&>(face)->size->metrics.ascender) / 64.0f);
 
 	TRACE(<< "TexFont::load(): height_v = " << this->height_v << std::endl)
-	
-//	TRACE(<< "TexFont::Load(): for loop finished" << std::endl)
-
-	//if there is only one row of characters on the texture image and it does not reach the right edge
-	//of the image, we can shrink the image, possibly.
-	if(curY == 0){
-		//TODO: optimize somehow?
-		//resize
-		RasterImage copy(texImg);
-		texImg.init(kolme::Vec2ui(FindNextPowOf2(curX), copy.dim().y), copy.colorDepth());
-		texImg.clear();
-		texImg.blit(0, 0, copy);
-	}
-
-	//fill luminance channel with 0xff
-	if(outline == 0){
-		texImg.clear(0, 0xff);
-	}
-
-	//now the font image has its final width and heights (no more resizes will be done)
-
-//	for(T_GlyphsIter i = this->glyphs.begin(); i != this->glyphs.end(); ++i){
-//		//normalize texture coordinates
-//		for(unsigned j = 0; j < i->second.texCoords.size(); ++j){
-//			i->second.texCoords[j].compDivBy(texImg.dim().to<float>());
-//		}
-//		auto& r = morda::inst().renderer();
-//		i->second.vao = r.factory->createVertexArray(
-//				{
-//					r.factory->createVertexBuffer(utki::wrapBuf(i->second.verts)),
-//					texCoords//r.factory->createVertexBuffer(utki::wrapBuf(i->second.texCoords))
-//				},
-//				indexBuffer,
-//				VertexArray::Mode_e::TRIANGLE_FAN
-//			);
-//		i->second.tex = morda::inst().renderer().factory->createTexture2D(
-//				morda::numChannelsToTexType(im.numChannels()),
-//				im.dim(),
-//				im.buf()
-//			);
-//	}
-
-//	TRACE(<< "TexFont::Load(): initing texture" << std::endl)
-	this->tex = morda::inst().renderer().factory->createTexture2D(
-			morda::numChannelsToTexType(texImg.numChannels()),
-			texImg.dim(),
-			texImg.buf()
-		);
 }
 
 const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
@@ -374,10 +218,10 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 	//init with bounding box of the first glyph
 	{
 		const Glyph& g = this->findGlyph(*s);
-		left = g.verts[0].x;
-		right = g.verts[2].x;
-		top = g.verts[2].y;
-		bottom = g.verts[0].y;
+		left = g.topLeft.x;
+		right = g.bottomRight.x;
+		top = g.topLeft.y;
+		bottom = g.bottomRight.y;
 		curAdvance = g.advance;
 		++s;
 	}
@@ -393,21 +237,10 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 		const Glyph& g = i == this->glyphs.end() ? this->glyphs.at(unknownChar_c) : i->second;
 
-		if(g.verts[2].y < top){
-			top = g.verts[2].y;
-		}
-
-		if(g.verts[0].y > bottom){
-			bottom = g.verts[0].y;
-		}
-
-		if(curAdvance + g.verts[0].x < left){
-			left = curAdvance + g.verts[0].x;
-		}
-
-		if(curAdvance + g.verts[2].x > right){
-			right = curAdvance + g.verts[2].x;
-		}
+		top = std::min(g.topLeft.y, top);
+		bottom = std::max(g.bottomRight.y, bottom);
+		left = std::min(curAdvance + g.topLeft.x, left);
+		right = std::max(curAdvance + g.bottomRight.x, right);
 
 		curAdvance += g.advance;
 	}
