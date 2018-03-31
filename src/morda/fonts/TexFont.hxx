@@ -35,7 +35,6 @@ class TexFont : public Font{
 		morda::Vec2r bottomRight;
 		
 		std::shared_ptr<VertexArray> vao;
-		
 		std::shared_ptr<Texture2D> tex;
 		
 		real advance;
@@ -50,25 +49,21 @@ class TexFont : public Font{
 
 		FreeTypeLibWrapper();
 		~FreeTypeLibWrapper()noexcept;
-		
-		operator FT_Library& (){
-			return this->lib;
-		}
 	} freetype;
 
 //	TRACE(<< "TexFont::Load(): FreeType library inited" << std::endl)
 
 	struct FreeTypeFaceWrapper{
-		FT_Face face;
+		FT_Face f;
 		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 
 		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi);
 		~FreeTypeFaceWrapper()noexcept;
-		operator FT_Face& (){
-			return this->face;
-		}
 	} face;
 	
+	Glyph unknownGlyph;
+	
+	Glyph loadGlyph(char32_t c);
 public:
 	/**
 	 * @brief Constructor.
@@ -78,16 +73,14 @@ public:
 	 */
 	TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize);
 
+	real charAdvance(char32_t c) const override;
 	
+protected:
 	real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const override;
 
-	
 	real stringAdvanceInternal(const std::u32string& str)const override;
 
 	morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const override;
-
-	real charAdvance(char32_t c) const override;
-
 	
 private:	
 	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;

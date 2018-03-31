@@ -27,23 +27,81 @@ TexFont::FreeTypeLibWrapper::FreeTypeLibWrapper() {
 	}
 }
 
-TexFont::FreeTypeLibWrapper::~FreeTypeLibWrapper() {
+TexFont::FreeTypeLibWrapper::~FreeTypeLibWrapper()noexcept{
 	FT_Done_FreeType(this->lib);
 }
 
 TexFont::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi) {
 	this->fontFile = fi.loadWholeFileIntoMemory();
-	if (FT_New_Memory_Face(lib, & * this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->face) != 0) {
+	if (FT_New_Memory_Face(lib, & * this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->f) != 0) {
 		throw utki::Exc("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
 	}
 }
 
-TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper() {
-	FT_Done_Face(this->face);
+TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
+	FT_Done_Face(this->f);
 }
 
+TexFont::Glyph TexFont::loadGlyph(char32_t c) {
+	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
+		if(c == unknownChar_c){
+			throw morda::Exc("TexFont::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
+		}
+		TRACE(<< "TexFont::loadGlyph(" << std::hex << std::uint32_t(c) << "): failed to load glyph" << std::endl)
+		return this->unknownGlyph;
+	}
+	
+	FT_GlyphSlot slot = this->face.f->glyph;
+	
+	FT_Glyph_Metrics *m = &slot->metrics;
+	
+	Glyph g;
+	g.advance = real(m->horiAdvance) / (64.0f);
+	
+	if(!slot->bitmap.buffer){
+		//empty glyph (space, tab, etc...)
+		
+		return g;
+	}
+	
+	RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
+
+	RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
+	im.blit(0, 0, glyphim, 1, 0);
+	im.clear(0, std::uint8_t(0xff));
+	
+	
+	
+	std::array<kolme::Vec2f, 4> verts;
+	verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
+	verts[1] = (morda::Vec2r(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
+	verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
+	verts[3] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f));
+
+	g.topLeft = verts[0];
+	g.bottomRight = verts[2];
+
+	auto& r = morda::inst().renderer();
+	g.vao = r.factory->createVertexArray(
+			{
+				r.factory->createVertexBuffer(utki::wrapBuf(verts)),
+				morda::inst().renderer().quad01VBO
+			},
+			morda::inst().renderer().quadIndices,
+			VertexArray::Mode_e::TRIANGLE_STRIP
+		);
+	g.tex = morda::inst().renderer().factory->createTexture2D(
+			morda::numChannelsToTexType(im.numChannels()),
+			im.dim(),
+			im.buf()
+		);
+	
+	return g;
+}
+
+
 TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fontSize) :
-		face(freetype, fi)
+		face(freetype.lib, fi)
 {
 	std::u32string fontChars = chars;
 	fontChars.append(1, unknownChar_c);
@@ -53,86 +111,29 @@ TexFont::TexFont(const papki::File& fi, const std::u32string& chars, unsigned fo
 	//set character size in pixels
 	{
 		FT_Error error = FT_Set_Pixel_Sizes(
-				face,// handle to face object
-				0,// pixel_width (0 means "same as height")
-				fontSize
-			); // pixel_height
+				this->face.f,
+				0, // pixel_width (0 means "same as height")
+				fontSize // pixel_height
+			);
 
 		if(error != 0){
 			throw utki::Exc("TexFont::TexFont(): unable to set char size");
 		}
 	}
+	
+	this->unknownGlyph = this->loadGlyph(unknownChar_c);
 
 //	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
-
-	auto indexBuffer = morda::inst().renderer().quadIndices;
 	
-	//print all the glyphs to the image
 	for(auto c = fontChars.begin(); c != fontChars.end(); ++c){
-		if(FT_Load_Char(static_cast<FT_Face&>(face), FT_ULong(*c), FT_LOAD_RENDER) != 0){
-			throw utki::Exc("TexFont::TexFont(): unable to load char");
-		}
-		
-//		TRACE(<< "TexFont::Load(): char loaded" << std::endl)
-
-		FT_GlyphSlot slot = static_cast<FT_Face&>(face)->glyph;
-
-		if(!slot->bitmap.buffer){//if glyph is empty (e.g. space character)
-			Glyph &g = this->glyphs[*c];
-			g.advance = float(slot->metrics.horiAdvance) / (64.0f);
-			g.topLeft.set(0);
-			g.bottomRight.set(0);
-			g.vao = morda::inst().renderer().posTexQuad01VAO;
-			std::uint32_t p = 0;
-			g.tex = morda::inst().renderer().factory->createTexture2D(1, utki::Buf<std::uint32_t>(&p, 1));
-			continue;
-		}
-		RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
-
-		RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
-		im.blit(0, 0, glyphim, 1, 0);
-		im.clear(0, std::uint8_t(0xff));
-		
-//		TRACE(<< "TexFont::Load(): glyph image created" << std::endl)
-
-		//record glyph information
-		{
-			FT_Glyph_Metrics *m = &slot->metrics;
-			
-			Glyph &g = this->glyphs[*c];
-			g.advance = real(m->horiAdvance) / (64.0f);
-			
-			std::array<kolme::Vec2f, 4> verts;
-			verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
-			verts[1] = (morda::Vec2r(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
-			verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
-			verts[3] = (morda::Vec2r(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f));
-			
-			g.topLeft = verts[0];
-			g.bottomRight = verts[2];
-			
-			auto& r = morda::inst().renderer();
-			g.vao = r.factory->createVertexArray(
-					{
-						r.factory->createVertexBuffer(utki::wrapBuf(verts)),
-						morda::inst().renderer().quad01VBO
-					},
-					indexBuffer,
-					VertexArray::Mode_e::TRIANGLE_STRIP
-				);
-			g.tex = morda::inst().renderer().factory->createTexture2D(
-					morda::numChannelsToTexType(im.numChannels()),
-					im.dim(),
-					im.buf()
-				);
-		}
+		this->glyphs.insert(std::make_pair(*c, loadGlyph(*c)));
 	}
 	
 	using std::ceil;
 	
-	this->height_v = ceil((static_cast<FT_Face&>(face)->size->metrics.height) / 64.0f);
-	this->descender_v = -ceil((static_cast<FT_Face&>(face)->size->metrics.descender) / 64.0f);
-	this->ascender_v = ceil((static_cast<FT_Face&>(face)->size->metrics.ascender) / 64.0f);
+	this->height_v = ceil((this->face.f->size->metrics.height) / 64.0f);
+	this->descender_v = -ceil((this->face.f->size->metrics.descender) / 64.0f);
+	this->ascender_v = ceil((this->face.f->size->metrics.ascender) / 64.0f);
 
 	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
 }
@@ -151,7 +152,10 @@ const TexFont::Glyph& TexFont::findGlyph(char32_t c)const{
 real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
 	const Glyph& g = this->findGlyph(ch);
 	
-	morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
+	if(g.tex){
+		ASSERT(g.vao)
+		morda::inst().renderer().shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
+	}
 
 	return g.advance;
 }
@@ -213,10 +217,13 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 		const Glyph& g = i == this->glyphs.end() ? this->glyphs.at(unknownChar_c) : i->second;
 
-		top = std::min(g.topLeft.y, top);
-		bottom = std::max(g.bottomRight.y, bottom);
-		left = std::min(curAdvance + g.topLeft.x, left);
-		right = std::max(curAdvance + g.bottomRight.x, right);
+		using std::min;
+		using std::max;
+		
+		top = min(g.topLeft.y, top);
+		bottom = max(g.bottomRight.y, bottom);
+		left = min(curAdvance + g.topLeft.x, left);
+		right = max(curAdvance + g.bottomRight.x, right);
 
 		curAdvance += g.advance;
 	}
