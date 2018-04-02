@@ -14,8 +14,8 @@ using namespace morda;
 
 
 
-ResFont::ResFont(const papki::File& fi, unsigned fontSize) :
-		f(utki::makeUnique<TexFont>(fi, fontSize))
+ResFont::ResFont(const papki::File& fi, unsigned fontSize, unsigned maxCached) :
+		f(utki::makeUnique<TexFont>(fi, fontSize, maxCached))
 {}
 
 
@@ -30,7 +30,12 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 	}
 
 	fi.setPath(chain.side("file").up().value());
+	
+	unsigned maxCached = unsigned(-1);
+	if(auto p = chain.thisOrNext("maxCached").node()){
+		maxCached = p->up().asUint32();
+	}
 
-	return std::make_shared<ResFont>(fi, fontSize);
+	return std::make_shared<ResFont>(fi, fontSize, maxCached);
 }
 

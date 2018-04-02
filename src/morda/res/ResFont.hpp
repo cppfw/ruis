@@ -37,7 +37,7 @@ class ResFont : public morda::Resource{
 	std::unique_ptr<morda::Font> f;
 
 public:
-	ResFont(const papki::File& fi, unsigned fontSize);
+	ResFont(const papki::File& fi, unsigned fontSize, unsigned maxCached);
 
 	~ResFont()noexcept{}
 

@@ -99,7 +99,8 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 }
 
 
-TexFont::TexFont(const papki::File& fi, unsigned fontSize) :
+TexFont::TexFont(const papki::File& fi, unsigned fontSize, unsigned maxCached) :
+		maxCached(maxCached),
 		face(freetype.lib, fi)
 {
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
@@ -137,7 +138,21 @@ const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 		auto r = this->glyphs.insert(std::make_pair(c, this->loadGlyph(c)));
 		ASSERT(r.second)
 		i = r.first;
+		this->lastUsedOrder.push_front(c);
+		i->second.lastUsedIter = this->lastUsedOrder.begin();
+		
+		if(this->lastUsedOrder.size() == this->maxCached){
+			this->glyphs.erase(this->lastUsedOrder.back());
+			this->lastUsedOrder.pop_back();
+		}
+		TRACE(<< "TexFont::getGlyph(): glyph loaded: " << c << std::endl)
+	}else{
+		Glyph& g = i->second;
+		this->lastUsedOrder.splice(this->lastUsedOrder.begin(), this->lastUsedOrder, g.lastUsedIter);
 	}
+	
+	ASSERT(this->lastUsedOrder.size() <= this->maxCached)
+		
 	return i->second;
 }
 

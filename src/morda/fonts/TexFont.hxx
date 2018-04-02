@@ -1,8 +1,9 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <sstream>
 #include <stdexcept>
+#include <list>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -30,6 +31,8 @@ namespace morda{
  * row of quads with texture coordinates corresponding to string characters on the texture.
  */
 class TexFont : public Font{
+	mutable std::list<char32_t> lastUsedOrder;
+	
 	struct Glyph{
 		morda::Vec2r topLeft;
 		morda::Vec2r bottomRight;
@@ -38,11 +41,14 @@ class TexFont : public Font{
 		std::shared_ptr<Texture2D> tex;
 		
 		real advance;
+		
+		decltype(lastUsedOrder)::iterator lastUsedIter;
 	};
-
-	typedef std::map<char32_t, Glyph> T_GlyphsMap;
-	typedef T_GlyphsMap::iterator T_GlyphsIter;
-	mutable T_GlyphsMap glyphs;
+	
+	mutable std::unordered_map<char32_t, Glyph> glyphs;
+	
+	
+	unsigned maxCached;
 
 	struct FreeTypeLibWrapper{
 		FT_Library lib;
@@ -69,8 +75,9 @@ public:
 	 * @brief Constructor.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
 	 * @param fontSize - size of the font in pixels.
+	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	TexFont(const papki::File& fi, unsigned fontSize);
+	TexFont(const papki::File& fi, unsigned fontSize, unsigned maxCached);
 
 	real charAdvance(char32_t c) const override;
 	
