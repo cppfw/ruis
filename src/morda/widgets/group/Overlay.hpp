@@ -13,7 +13,7 @@ class Overlay : public Pile{
 	std::shared_ptr<Widget> overlayLayer;
 	std::shared_ptr<Container> overlayContainer;
 public:
-	Overlay(const stob::Node* chain = nullptr);
+	Overlay(const stob::Node* chain);
 	
 	Overlay(const Overlay&) = delete;
 	Overlay& operator=(const Overlay&) = delete;
