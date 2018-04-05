@@ -1,3 +1,9 @@
+libmorda (0.5.77) unstable; urgency=medium
+
+  * texture font refactored
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 05 Apr 2018 18:06:45 +0300
+
 libmorda (0.5.76) unstable; urgency=medium
 
   * test release
