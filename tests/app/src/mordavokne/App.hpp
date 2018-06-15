@@ -156,6 +156,16 @@ public:
 	 */
 	void hideVirtualKeyboard()noexcept;
 
+	/**
+	 * @brief Request to save application state.
+	 * This function is called by the framework when application is about to be
+	 * temporarily destroyed by the system. So the application can save its state
+	 * to restore it later. The storage is persistent.
+	 * @return data to save in persistent storage, it will be passed to createApp()
+	 * method later, when application is launched again.
+	 */
+	virtual std::vector<std::uint8_t> onSaveState();
+	
 private:
 	
 

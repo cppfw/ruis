@@ -35,103 +35,104 @@ ANativeActivity* nativeActivity = 0;
 
 mordavokne::App& getApp(ANativeActivity* activity){
 	ASSERT(activity)
+	ASSERT(activity->instance)
 	return *static_cast<mordavokne::App*>(activity->instance);
 }
 
 ANativeWindow* androidWindow = 0;
 
 
-	class JavaFunctionsWrapper : public utki::Unique{
-		JNIEnv *env;
-		jclass clazz;
-		jobject obj;
+class JavaFunctionsWrapper : public utki::Unique{
+	JNIEnv *env;
+	jclass clazz;
+	jobject obj;
 
-		jmethodID resolveKeycodeUnicodeMeth;
+	jmethodID resolveKeycodeUnicodeMeth;
 
-		jmethodID getDotsPerInchMeth;
+	jmethodID getDotsPerInchMeth;
 
-		jmethodID showVirtualKeyboardMeth;
-		jmethodID hideVirtualKeyboardMeth;
+	jmethodID showVirtualKeyboardMeth;
+	jmethodID hideVirtualKeyboardMeth;
 
-		jmethodID listDirContentsMeth;
-	public:
-		JavaFunctionsWrapper(ANativeActivity* a){
-			this->env = a->env;
-			this->obj = a->clazz;
-			this->clazz = this->env->GetObjectClass(this->obj);
-			ASSERT(this->clazz)
+	jmethodID listDirContentsMeth;
+public:
+	JavaFunctionsWrapper(ANativeActivity* a){
+		this->env = a->env;
+		this->obj = a->clazz;
+		this->clazz = this->env->GetObjectClass(this->obj);
+		ASSERT(this->clazz)
 
 
-			this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
-			ASSERT(this->resolveKeycodeUnicodeMeth)
+		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
+		ASSERT(this->resolveKeycodeUnicodeMeth)
 
-			this->getDotsPerInchMeth = this->env->GetMethodID(this->clazz, "getDotsPerInch", "()F");
+		this->getDotsPerInchMeth = this->env->GetMethodID(this->clazz, "getDotsPerInch", "()F");
 
-			this->listDirContentsMeth = this->env->GetMethodID(this->clazz, "listDirContents", "(Ljava/lang/String;)[Ljava/lang/String;");
-			ASSERT(this->listDirContentsMeth)
+		this->listDirContentsMeth = this->env->GetMethodID(this->clazz, "listDirContents", "(Ljava/lang/String;)[Ljava/lang/String;");
+		ASSERT(this->listDirContentsMeth)
 
-			this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
-			ASSERT(this->showVirtualKeyboardMeth)
+		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
+		ASSERT(this->showVirtualKeyboardMeth)
 
-			this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
-			ASSERT(this->hideVirtualKeyboardMeth)
-		}
+		this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
+		ASSERT(this->hideVirtualKeyboardMeth)
+	}
 
-		~JavaFunctionsWrapper()noexcept{
-		}
+	~JavaFunctionsWrapper()noexcept{
+	}
 
-		char32_t resolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
-			return char32_t(this->env->CallIntMethod(
-					this->obj,
-					this->resolveKeycodeUnicodeMeth,
-					jint(devId),
-					jint(metaState),
-					jint(keyCode)
-				));
-		}
+	char32_t resolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+		return char32_t(this->env->CallIntMethod(
+				this->obj,
+				this->resolveKeycodeUnicodeMeth,
+				jint(devId),
+				jint(metaState),
+				jint(keyCode)
+			));
+	}
 
-		float getDotsPerInch(){
-			return float(this->env->CallFloatMethod(this->obj, this->getDotsPerInchMeth));
-		}
+	float getDotsPerInch(){
+		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerInchMeth));
+	}
 
-		void hideVirtualKeyboard(){
-			this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
-		}
+	void hideVirtualKeyboard(){
+		this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
+	}
 
-		void showVirtualKeyboard(){
-			this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
-		}
+	void showVirtualKeyboard(){
+		this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
+	}
 
-		std::vector<std::string> listDirContents(const std::string& path){
-			jstring p = this->env->NewStringUTF(path.c_str());
-			jobject res = this->env->CallObjectMethod(this->obj, this->listDirContentsMeth, p);
-			this->env->DeleteLocalRef(p);
+	std::vector<std::string> listDirContents(const std::string& path){
+		jstring p = this->env->NewStringUTF(path.c_str());
+		jobject res = this->env->CallObjectMethod(this->obj, this->listDirContentsMeth, p);
+		this->env->DeleteLocalRef(p);
 
-			utki::ScopeExit scopeExit([this, res](){
-				this->env->DeleteLocalRef(res);
-			});
+		utki::ScopeExit scopeExit([this, res](){
+			this->env->DeleteLocalRef(res);
+		});
 
-			std::vector<std::string> ret;
+		std::vector<std::string> ret;
 
-			if(res == nullptr){
-				return ret;
-			}
-
-			jobjectArray arr = static_cast<jobjectArray>(res);
-
-			int count = env->GetArrayLength(arr);
-
-			for (int i = 0; i < count; ++i) {
-				jstring str = static_cast<jstring>(env->GetObjectArrayElement(arr, i));
-				auto chars = env->GetStringUTFChars(str, nullptr);
-				ret.push_back(std::string(chars));
-				this->env->ReleaseStringUTFChars(str, chars);
-				this->env->DeleteLocalRef(str);
-			}
-
+		if(res == nullptr){
 			return ret;
 		}
-	};
+
+		jobjectArray arr = static_cast<jobjectArray>(res);
+
+		int count = env->GetArrayLength(arr);
+
+		for (int i = 0; i < count; ++i) {
+			jstring str = static_cast<jstring>(env->GetObjectArrayElement(arr, i));
+			auto chars = env->GetStringUTFChars(str, nullptr);
+			ret.push_back(std::string(chars));
+			this->env->ReleaseStringUTFChars(str, chars);
+			this->env->DeleteLocalRef(str);
+		}
+
+		return ret;
+	}
+};
 
 
 std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
@@ -278,10 +279,11 @@ public:
 				throw papki::Exc("unknown mode");
 				break;
 		}
-		this->handle = AAssetManager_open(this->manager, this->path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE mean at all
+		this->handle = AAssetManager_open(this->manager, this->path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE means at all
 		if(!this->handle){
-			TRACE(<< "AAssetManager_open() failed, file path = " << this->path() << std::endl)
-			throw papki::Exc("AAssetManager_open() failed");
+			std::stringstream ss;
+			ss << "AAssetManager_open(" << this->path() << ") failed";
+			throw papki::Exc(ss.str());
 		}
 	}
 
@@ -1004,7 +1006,7 @@ App::App(const WindowParams& requestedWindowParams) :
 					return App::findDotsPerPt(res, dim.to<unsigned>());
 				}(),
 				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(this->app)).uiQueue.pushMessage(std::move(a));
+					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
 				}
 			)
 {
@@ -1243,7 +1245,6 @@ void OnDestroy(ANativeActivity* activity){
 void OnStart(ANativeActivity* activity){
 	TRACE(<< "OnStart(): invoked" << std::endl)
 	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnStart();
 }
 
 
@@ -1251,16 +1252,26 @@ void OnStart(ANativeActivity* activity){
 void OnResume(ANativeActivity* activity){
 	TRACE(<< "OnResume(): invoked" << std::endl)
 	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnResume();
 }
 
 
 
 void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
 	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
-	//TODO:
-//    return static_cast<morda::App*>(activity->instance)->OnSaveInstanceState(outSize);
-	return nullptr;
+
+	auto data = getApp(activity).onSaveState();
+
+	//According to NativeActivity documentation the returned memory buffer has to be allocated by
+	//malloc() and the framework will take care of calling free() on it for us.
+	void* buf = malloc(data.size());
+	if(!buf){
+		return nullptr;
+	}
+
+	memcpy(buf, &*data.begin(), data.size());
+	*outSize = data.size();
+
+	return buf;
 }
 
 
@@ -1370,7 +1381,7 @@ int OnQueueHasMessages(int fd, int events, void* data){
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 
-	//save window in a static var, so it is accessible for OGL initializers from morda::App class
+	//save window in a static var, so it is accessible for OpenGL initializers from morda::App class
 	androidWindow = window;
 
 	curWinDim.x = float(ANativeWindow_getWidth(window));
