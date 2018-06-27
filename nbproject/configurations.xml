@@ -86,6 +86,8 @@
             <in>Overlay.cpp</in>
             <in>Pile.cpp</in>
             <in>ScrollArea.cpp</in>
+            <in>SizeContainer.cpp</in>
+            <in>SizeContainer.hpp</in>
             <in>TreeView.cpp</in>
             <in>Window.cpp</in>
           </df>
@@ -763,6 +765,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/button/ToggleButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1953,6 +1965,25 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/stob</pElem>
+            <pElem>src/morda/widgets</pElem>
+            <pElem>src/morda/widgets/group</pElem>
+            <pElem>/usr/include/papki</pElem>
+            <pElem>/usr/include/unikod</pElem>
+            <pElem>/usr/include/kolme</pElem>
+            <pElem>src/morda</pElem>
+            <pElem>src/morda/render</pElem>
+            <pElem>src/morda/util</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </item>
       <item path="src/morda/widgets/group/TreeView.cpp"
             ex="false"
             tool="1"
@@ -2523,6 +2554,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/morda/widgets/label/NinePatch.cpp"
             ex="false"
             tool="1"
@@ -2700,6 +2741,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/button/ToggleButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2935,6 +2986,16 @@
             flavor2="0">
       </item>
       <item path="src/morda/widgets/button/ToggleButton.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3890,6 +3951,16 @@
             <pElem>src/morda/util</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/morda/widgets/group/SizeContainer.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/morda/widgets/group/TreeView.cpp"
             ex="false"

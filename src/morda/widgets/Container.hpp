@@ -37,8 +37,23 @@ private:
 	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
 	T_MouseCaptureMap mouseCaptureMap;
 	
+protected:
 	//flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
+	
+	class BlockedFlagGuard{
+		bool& blocked;
+	public:
+		BlockedFlagGuard(bool& blocked) :
+				blocked(blocked)
+		{
+			this->blocked = true;
+		}
+
+		~BlockedFlagGuard()noexcept{
+			this->blocked = false;
+		}
+	};
 	
 	
 protected:

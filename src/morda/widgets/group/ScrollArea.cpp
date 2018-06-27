@@ -86,7 +86,7 @@ void ScrollArea::updateScrollFactor(){
 
 void ScrollArea::arrangeWidgets() {
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
+		auto& lp = this->getLayoutParams(**i);
 		
 		auto d = this->dimForWidget(**i, lp);
 		

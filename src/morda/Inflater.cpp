@@ -6,6 +6,7 @@
 #include "widgets/group/Row.hpp"
 #include "widgets/group/Pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
+#include "widgets/group/SizeContainer.hpp"
 #include "widgets/group/Overlay.hpp"
 #include "widgets/group/List.hpp"
 
@@ -26,6 +27,7 @@ using namespace morda;
 Inflater::Inflater(){
 	this->registerType<Widget>("Widget");
 	this->registerType<Container>("Container");
+	this->registerType<SizeContainer>("SizeContainer");
 	this->registerType<Row>("Row");
 	this->registerType<Column>("Column");
 	this->registerType<Pile>("Pile");

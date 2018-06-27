@@ -655,6 +655,14 @@ Container{
 			gradient{grd_sample}
 		}
 
+		SizeContainer{
+			layout{dx{fill}dy{fill}}
+
+			PushButton{
+				x{10} y{20}
+				Text{text{"Hello world!"}}
+			}
+		}
 		
 	}
 

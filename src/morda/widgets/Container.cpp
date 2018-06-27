@@ -10,24 +10,6 @@ using namespace morda;
 
 
 
-namespace{
-class BlockedFlagGuard{
-	bool& blocked;
-public:
-	BlockedFlagGuard(bool& blocked) :
-			blocked(blocked)
-	{
-		this->blocked = true;
-	}
-	
-	~BlockedFlagGuard()noexcept{
-		this->blocked = false;
-	}
-};
-}
-
-
-
 Container::Container(const stob::Node* chain) :
 		Widget(chain)
 {
