@@ -286,6 +286,14 @@ std::shared_ptr<Widget> Container::findByName(const std::string& name)noexcept{
 		return r;
 	}
 	
+	//first check direct children, because the closer to the tree root higher the priority is
+	for(auto& w : this->children()){
+		if(auto r = w->Widget::findByName(name)){
+			return r;
+		}
+	}
+	
+	//then check deeper by tree
 	for(auto& w : this->children()){
 		if(auto r = w->findByName(name)){
 			return r;
