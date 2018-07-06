@@ -559,6 +559,11 @@ public:
 	}
 
 	/**
+	 * @brief Invoked when enabled state of the widget changes.
+	 */
+	virtual void onEnabledChanged(){}
+	
+	/**
 	 * @brief Check if widget can receive user input.
 	 * Checks if widget is enabled and visible, so it can receive user input.
 	 * @return true if widget can receive user input.

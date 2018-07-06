@@ -393,10 +393,15 @@ Widget& Widget::getByName(const std::string& name) {
 
 void Widget::setEnabled(bool enable) {
 //	TRACE(<< "Widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
+	if(this->isEnabled_v == enable){
+		return;
+	}
+	
 	this->isEnabled_v = enable;
 	if(!this->isEnabled()){
 		this->setUnhovered();
 	}
+	this->onEnabledChanged();
 }
 
 void Widget::setVisible(bool visible) {
