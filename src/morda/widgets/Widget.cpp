@@ -398,9 +398,12 @@ void Widget::setEnabled(bool enable) {
 	}
 	
 	this->isEnabled_v = enable;
+	
+	//Un-hover this widget if it becomes disabled because it is not supposed to receive mouse input.
 	if(!this->isEnabled()){
 		this->setUnhovered();
 	}
+	
 	this->onEnabledChanged();
 }
 
