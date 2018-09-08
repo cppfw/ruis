@@ -85,6 +85,8 @@ Container{
 					dx{max}
 				}
 
+				name{dropdownselector}
+
 				Text{text{item0}}
 				Text{text{item1}}
 				Text{text{item2}}
@@ -97,7 +99,10 @@ Container{
 				Text{text{item9}}
 				Text{text{item10}}
 			}
-
+			Text{
+				name{dropdownselector_selection}
+				text{unknown}
+			}
 			Left{
 				PushButton{
 					name{showhide_mousecursor_button}

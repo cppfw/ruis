@@ -62,15 +62,15 @@ void Overlay::onChildrenListChanged(){
 
 
 void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
-	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
+	this->overlay().add(w);
+	
+	auto& lp = this->overlay().getLayoutParams(*w);
 	
 	Vec2r dim = this->dimForWidget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
 		utki::clampTop(dim[i], this->overlay().rect().d[i]);
 	}
-	
-	this->overlay().add(w);
 	
 	w->resize(dim);
 	

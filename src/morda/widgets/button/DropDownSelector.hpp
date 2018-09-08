@@ -75,7 +75,7 @@ public:
 	
 public:
 	
-	DropDownSelector(const stob::Node* chain = nullptr);
+	DropDownSelector(const stob::Node* chain);
 	
 	DropDownSelector(const DropDownSelector&) = delete;
 	DropDownSelector& operator=(const DropDownSelector&) = delete;
@@ -93,6 +93,8 @@ public:
 	std::size_t selectedItem()const noexcept{
 		return this->selectedItem_v;
 	}
+	
+	std::function<void(DropDownSelector& dds)> selectionChanged;
 	
 private:
 //	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;

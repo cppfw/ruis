@@ -30,6 +30,7 @@
 
 #include "../../../src/morda/util/ZipFile.hpp"
 #include "../../../src/morda/util/MouseButton.hpp"
+#include "morda/widgets/button/DropDownSelector.hpp"
 
 
 
@@ -920,6 +921,22 @@ public:
 			b->clicked = [this, visible](morda::PushButton&) mutable{
 				visible = !visible;
 				mordavokne::App::inst().setMouseCursorVisible(visible);
+			};
+		}
+		
+		//dropdown
+		{
+			auto dds = c->findByNameAs<morda::DropDownSelector>("dropdownselector");
+			auto ddst = c->findByNameAs<morda::Text>("dropdownselector_selection");
+			auto ddstw = utki::makeWeak(ddst);
+			
+			dds->selectionChanged = [ddstw](morda::DropDownSelector& dds){
+				if(auto t = ddstw.lock()){
+					std::stringstream ss;
+					ss << "index_" << dds.selectedItem();
+					
+					t->setText(ss.str());
+				}
 			};
 		}
 	}

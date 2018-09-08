@@ -68,7 +68,13 @@ const char* itemLayout_c = R"qwertyuiop(
 const char* contextMenuLayout_c = R"qwertyuiop(
 		NinePatch{
 			image{morda_npt_contextmenu_bg}
+			Widget{
+				name{minSizeSpacer}
+			}
 			Column{
+				layout{
+					dx{max}
+				}
 				name{morda_contextmenu_content}
 			}
 		}
@@ -113,13 +119,18 @@ void DropDownSelector::showDropdownMenu() {
 	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
 	ASSERT(np)
 
+	auto minSizeSpacer = np->findByName("minSizeSpacer");
+	
 	auto va = np->findByNameAs<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
 		va->add(this->wrapItem(this->provider->getWidget(i), i));
 	}
-
+	
+	auto& lp = overlay->overlay().getLayoutParams(*np);
+	lp.dim.x = this->rect().d.x;
+	
 	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
@@ -224,8 +235,12 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 			if(!oc){
 				throw Exc("No Overlay found in ancestors of DropDownSelector");
 			}
-			morda::Morda::inst().postToUiThread([oc](){
+			auto dds = this->sharedFromThis(this);
+			morda::Morda::inst().postToUiThread([dds, oc](){
 				oc->hideContextMenu();
+				if(dds->selectionChanged){
+					dds->selectionChanged(*dds);
+				}
 			});
 		}
 
