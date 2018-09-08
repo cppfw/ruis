@@ -1,3 +1,9 @@
+libmorda (0.5.81) unstable; urgency=medium
+
+  * DropDownSelector items selected callback added
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 08 Sep 2018 13:08:26 +0300
+
 libmorda (0.5.80) unstable; urgency=medium
 
   * test release
