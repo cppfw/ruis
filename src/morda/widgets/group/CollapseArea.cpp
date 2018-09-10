@@ -18,8 +18,8 @@ const char* layout_c = R"qwertyuiop(
 			layout{dx{max}dy{max}}
 
 			defs{
-				marHor{4pt}
-				marVer{1pt}
+				marHor{4dp}
+				marVer{1dp}
 			}
 			left{@{marHor}}
 			top{@{marVer}}

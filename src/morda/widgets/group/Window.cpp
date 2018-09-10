@@ -82,9 +82,9 @@ const char* windowDesc_c = R"qwertyuiop(
 							}
 
 							Margins{
-								left{3pt}
-								top{2pt}
-								bottom{2pt}
+								left{3dp}
+								top{2dp}
+								bottom{2dp}
 
 								layout{
 									dx{0}

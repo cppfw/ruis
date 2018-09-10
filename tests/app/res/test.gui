@@ -65,10 +65,10 @@ Container{
 
 			Right{
 				Margins{
-					left{5pt}
-					right{5pt}
-					top{5pt}
-					bottom{5pt}
+					left{5dp}
+					right{5dp}
+					top{5dp}
+					bottom{5dp}
 
 					CheckBox{
 						pressed{true}
@@ -127,10 +127,10 @@ Container{
 					RadBtn{
 						Row{
 							Margins{
-								left{5pt}
-								right{5pt}
-								top{5pt}
-								bottom{5pt}
+								left{5dp}
+								right{5dp}
+								top{5dp}
+								bottom{5dp}
 								RadioButton
 							}
 
@@ -225,7 +225,7 @@ Container{
 			}
 
 			Pile{
-				layout{dx{fill} dy{50pt}}
+				layout{dx{fill} dy{50dp}}
 				Color{
 					layout{dx{fill}dy{fill}}
 					color{0xff808080}
@@ -513,7 +513,7 @@ Container{
 							ImagePushButton{
 								name{image_push_button}
 								layout{
-									dx{50pt} dy{50pt}
+									dx{50dp} dy{50dp}
 								}
 								look{
 									pressed{img_button_pressed}
@@ -525,7 +525,7 @@ Container{
 				}
 			}
 
-			Widget{layout{dy{5pt}}}
+			Widget{layout{dy{5dp}}}
 
 			TextInputLine{
 				name{text_input}
@@ -683,7 +683,7 @@ Container{
 			}
 
 			MouseProxy{
-				layout{dx{50pt} dy{fill}}
+				layout{dx{50dp} dy{fill}}
 				name{list_mouseproxy}
 			}
 

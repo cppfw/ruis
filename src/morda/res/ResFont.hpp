@@ -20,14 +20,14 @@ namespace morda{
  * 
  * @param file - file to load the font from, TrueType ttf file.
  * @param chars - list of all chars for which the glyphs should be created.
- * @param size - size of glyphs, in length units, i.e.: no unit(pixels), pt, mm.
+ * @param size - size of glyphs, in length units, i.e.: no unit(pixels), dp, mm.
  * @param outline - thickness of the outline in length units.
  * 
  * Example:
  * @code
  * fnt_normal{
  *     file {Vera.ttf}
- *     size {12pt}
+ *     size {12dp}
  * }
  * @endcode
  */

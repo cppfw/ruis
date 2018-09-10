@@ -66,7 +66,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	if(this->isFocused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(Vec2r(cursorWidth_c * morda::inst().units.dotsPerPt(), this->rect().d.y));
+		matr.scale(Vec2r(cursorWidth_c * morda::inst().units.dotsPerDp(), this->rect().d.y));
 
 		auto& r = morda::inst().renderer();
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
@@ -101,7 +101,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * morda::inst().units.dotsPerPt();
+		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * morda::inst().units.dotsPerDp();
 	}else{
 		ret.x = quotum.x;
 	}
@@ -150,8 +150,8 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerPt()){
-		this->cursorPos = this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerPt();
+	if(this->cursorPos > this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerDp()){
+		this->cursorPos = this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerDp();
 		
 		this->xOffset = this->cursorPos;//start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;

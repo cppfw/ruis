@@ -33,13 +33,13 @@ public:
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
 	 * @param dotsPerInch - DPI of your display.
-	 * @param dotsPerPt - desired dots per point.
+	 * @param dotsPerDp - desired dots per density pixel.
 	 * @param postToUiThreadFunction - function to use when posting an action to UI thread is needed.
 	 */
 	Morda(
 			std::shared_ptr<morda::Renderer> r,
 			real dotsPerInch,
-			real dotsPerPt,
+			real dotsPerDp,
 			std::function<void(std::function<void()>&&)>&& postToUiThreadFunction);
 
 	Morda(const Morda&) = delete;
@@ -204,16 +204,16 @@ public:
 	 */
 	class Units{
 		real dotsPerInch_v;
-		real dotsPerPt_v;
+		real dotsPerDp_v;
 	public:
 		/**
 		 * @brief Constructor.
 		 * @param dotsPerInch - dots per inch.
-		 * @param dotsPerPt - dots per point.
+		 * @param dotsPerDp - dots per density pixel.
 		 */
-		Units(real dotsPerInch, real dotsPerPt) :
+		Units(real dotsPerInch, real dotsPerDp) :
 				dotsPerInch_v(dotsPerInch),
-				dotsPerPt_v(dotsPerPt)
+				dotsPerDp_v(dotsPerDp)
 		{}
 		
 		/**
@@ -236,8 +236,8 @@ public:
 		 * @brief Get dots (pixels) per point.
 		 * @return Dots per point.
 		 */
-		real dotsPerPt()const noexcept{
-			return this->dotsPerPt_v;
+		real dotsPerDp()const noexcept{
+			return this->dotsPerDp_v;
 		}
 		
 		/**
@@ -251,11 +251,11 @@ public:
 		
 		/**
 		 * @brief Convert points to pixels.
-		 * @param pt - value in points.
+		 * @param dp - value in density pixels.
 		 * @return  Value in pixels.
 		 */
-		real ptToPx(real pt)const noexcept{
-			return std::round(pt * this->dotsPerPt());
+		real dpToPx(real dp)const noexcept{
+			return std::round(dp * this->dotsPerDp());
 		}
 	} units;
 };

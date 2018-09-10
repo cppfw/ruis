@@ -67,8 +67,8 @@ real morda::dimValueFromSTOB(const stob::Node& n){
 	//check if millimeters
 	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
 		return Morda::inst().units.mmToPx(n.asFloat());
-	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 't' && n.value()[n.length() - 2] == 'p'){ //check if in points
-		return Morda::inst().units.ptToPx(n.asFloat());
+	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 'p' && n.value()[n.length() - 2] == 'd'){ //check if in density pixels
+		return Morda::inst().units.dpToPx(n.asFloat());
 	}
 	
 	return n.asFloat();

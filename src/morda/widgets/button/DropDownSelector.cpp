@@ -32,12 +32,12 @@ const auto selectorLayout_c = stob::parse(R"qwertyuiop(
 			name{morda_dropdown_selection}
 			layout{dx{min}dy{max} weight{1}}
 		}
-		Widget{layout{dx{3pt}}}
+		Widget{layout{dx{3dp}}}
 		Image{
 			image{morda_img_divider_vert}
 			layout{dy{fill}}
 		}
-		Widget{layout{dx{3pt}}}
+		Widget{layout{dx{3dp}}}
 		Image{
 			image{morda_img_dropdown_arrow}
 		}

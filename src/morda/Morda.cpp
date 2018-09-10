@@ -36,12 +36,12 @@ Morda::T_Instance Morda::instance;
 Morda::Morda(
 		std::shared_ptr<morda::Renderer> r,
 		real dotsPerInch,
-		real dotsPerPt,
+		real dotsPerDp,
 		std::function<void(std::function<void()>&&)>&& postToUiThreadFunction
 	) :
 		renderer_v(std::move(r)),
 		postToUiThread_v(std::move(postToUiThreadFunction)),
-		units(dotsPerInch, dotsPerPt)
+		units(dotsPerInch, dotsPerDp)
 {
 	if(!this->renderer_v){
 		throw morda::Exc("no Renderer provided to Morda constructor");

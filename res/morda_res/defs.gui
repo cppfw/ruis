@@ -14,7 +14,7 @@ defs{
 	morda_color_bg_window_title{0xffad9869}
 	morda_color_bg_window_title_nontopmost{@{morda_color_fg}}
 
-	morda_window_border_size{5pt}
+	morda_window_border_size{5dp}
 
 	morda_color_highlight{0xffad9869}
 
