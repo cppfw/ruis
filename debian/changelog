@@ -1,3 +1,9 @@
+libmorda (0.5.82) unstable; urgency=medium
+
+  * pt renamed to dp
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Sep 2018 23:07:19 +0300
+
 libmorda (0.5.81) unstable; urgency=medium
 
   * DropDownSelector items selected callback added
