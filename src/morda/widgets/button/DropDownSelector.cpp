@@ -254,23 +254,3 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	return wd;
 }
-
-//bool DropDownSelector::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) {
-//	if(button != MouseButton_e::LEFT){
-//		return false;
-//	}
-//	if(!isDown){
-//		return false;
-//	}
-//	
-//	if(this->isPressed()){
-//		this->showDropdownMenu();
-//		return true;
-//	}
-//	
-//	return this->SimpleButton::onMouseButton(isDown, pos, button, pointerId);
-//}
-//
-//void DropDownSelector::onHoverChanged(unsigned pointerID) {
-//
-//}

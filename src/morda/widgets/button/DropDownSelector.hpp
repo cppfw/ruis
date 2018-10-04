@@ -97,11 +97,6 @@ public:
 	std::function<void(DropDownSelector& dds)> selectionChanged;
 	
 private:
-//	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
-//	
-//	void onHoverChanged(unsigned pointerID) override;
-
-	
 	void handleDataSetChanged();
 	
 	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);
