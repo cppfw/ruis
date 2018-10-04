@@ -58,6 +58,7 @@ const char* itemLayout_c = R"qwertyuiop(
 			Color{
 				name{morda_dropdown_color}
 				color{@{morda_color_highlight}}
+				visible{false}
 				layout{
 					dx{fill} dy{fill}
 				}
@@ -231,7 +232,6 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 			c->setVisible(w.isHovered());
 		}
 	};
-	mp->hoverChanged(*mp, 0);
 
 	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
 		if(!isDown){
