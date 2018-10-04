@@ -1,3 +1,9 @@
+libmorda (0.5.83) unstable; urgency=medium
+
+  * DropDownSelector user experience improved
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 04 Oct 2018 18:26:03 +0300
+
 libmorda (0.5.82) unstable; urgency=medium
 
   * pt renamed to dp
