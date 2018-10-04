@@ -70,6 +70,8 @@ private:
 	std::shared_ptr<ItemsProvider> provider;
 	
 	std::size_t selectedItem_v = 0;
+	
+	int hoveredIndex = -1;
 public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 	
@@ -102,6 +104,10 @@ private:
 	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);
 	
 	void showDropdownMenu();
+	
+	void mouseButtonUpHandler(bool isFirstOne);
+	
+	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID)override;
 };
 
 }

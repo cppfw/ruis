@@ -83,6 +83,12 @@ const char* contextMenuLayout_c = R"qwertyuiop(
 					name{morda_contextmenu_content}
 				}
 			}
+			MouseProxy{
+				layout{
+					dx{fill} dy{fill}
+				}
+				name{contextMenuMouseProxy}
+			}
 		}
 	)qwertyuiop";
 
@@ -136,9 +142,55 @@ void DropDownSelector::showDropdownMenu() {
 	for(size_t i = 0; i != this->provider->count(); ++i){
 		va->add(this->wrapItem(this->provider->getWidget(i), i));
 	}
+
+	this->hoveredIndex = -1;
+	
+	np->getByNameAs<MouseProxy>("contextMenuMouseProxy").mouseButton
+			= [this](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
+				if(!isDown){
+					this->mouseButtonUpHandler(false);
+				}
+
+				return true;
+			};
 	
 	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
+
+bool DropDownSelector::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
+	if(!isDown){
+		this->mouseButtonUpHandler(true);
+	}
+
+	return this->NinePatchPushButton::onMouseButton(isDown, pos, button, pointerID);
+}
+
+void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
+	auto oc = this->findAncestor<Overlay>();
+	if(!oc){
+		throw Exc("No Overlay found in ancestors of DropDownSelector");
+	}
+
+	auto dds = this->sharedFromThis(this);
+
+	if(this->hoveredIndex < 0){
+		if(!isFirstOne){
+			morda::Morda::inst().postToUiThread([dds, oc](){
+				oc->hideContextMenu();
+			});
+		}
+		return;
+	}
+	this->setSelection(this->hoveredIndex);
+
+	morda::Morda::inst().postToUiThread([dds, oc](){
+		oc->hideContextMenu();
+		if(dds->selectionChanged){
+			dds->selectionChanged(*dds);
+		}
+	});
+}
+
 
 
 DropDownSelector::DropDownSelector(const stob::Node* chain) :
@@ -227,29 +279,17 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	wd->add(w);
 
-	mp->hoverChanged = [clWeak](Widget& w, unsigned id){
+	mp->hoverChanged = [this, clWeak, index](Widget& w, unsigned id){
 		if(auto c = clWeak.lock()){
 			c->setVisible(w.isHovered());
 		}
-	};
-
-	mp->mouseButton = [this, index](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
-		if(!isDown){
-			this->setSelection(index);
-			auto oc = this->findAncestor<Overlay>();
-			if(!oc){
-				throw Exc("No Overlay found in ancestors of DropDownSelector");
+		if(w.isHovered()){
+			this->hoveredIndex = index;
+		}else{
+			if(this->hoveredIndex > 0 && decltype(index)(this->hoveredIndex) == index){
+				this->hoveredIndex = -1;
 			}
-			auto dds = this->sharedFromThis(this);
-			morda::Morda::inst().postToUiThread([dds, oc](){
-				oc->hideContextMenu();
-				if(dds->selectionChanged){
-					dds->selectionChanged(*dds);
-				}
-			});
 		}
-
-		return true;
 	};
 
 	return wd;
