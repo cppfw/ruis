@@ -52,30 +52,35 @@ const char* itemLayout_c = R"qwertyuiop(
 			MouseProxy{
 				name{morda_dropdown_mouseproxy}
 				layout{
-					dx{max} dy{max}
+					dx{fill} dy{fill}
 				}
 			}
 			Color{
 				name{morda_dropdown_color}
 				color{@{morda_color_highlight}}
 				layout{
-					dx{max} dy{max}
+					dx{fill} dy{fill}
 				}
 			}
 		}
 	)qwertyuiop";
 
 const char* contextMenuLayout_c = R"qwertyuiop(
-		NinePatch{
-			image{morda_npt_contextmenu_bg}
+		Pile{
 			Widget{
 				name{minSizeSpacer}
 			}
-			Column{
+			NinePatch{
 				layout{
 					dx{max}
 				}
-				name{morda_contextmenu_content}
+				image{morda_npt_contextmenu_bg}
+				Column{
+					layout{
+						dx{max}
+					}
+					name{morda_contextmenu_content}
+				}
 			}
 		}
 	)qwertyuiop";
@@ -121,15 +126,15 @@ void DropDownSelector::showDropdownMenu() {
 
 	auto minSizeSpacer = np->findByName("minSizeSpacer");
 	
+	auto& lp = minSizeSpacer->getLayoutParams();
+	lp.dim.x = this->rect().d.x;
+	
 	auto va = np->findByNameAs<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
 		va->add(this->wrapItem(this->provider->getWidget(i), i));
 	}
-	
-	auto& lp = overlay->overlay().getLayoutParams(*np);
-	lp.dim.x = this->rect().d.x;
 	
 	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
