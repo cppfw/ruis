@@ -5,5 +5,5 @@ Basically one needs to push mouse, keyboard and window events to *morda*,
 call update() and render() methods from main loop and implement method
 of posting an event to main event queue.
 
-Refer to the link:https://github.com/igagis/morda/tree/master/examples/sdl2example[example] of using *morda* with SDL2.
+Refer to the link:https://github.com/igagis/sdl2Example[example] of using *morda* with SDL2.
 
