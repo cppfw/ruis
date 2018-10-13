@@ -173,9 +173,12 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 	auto dds = this->sharedFromThis(this);
 
+//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): this->hoveredIndex = " << this->hoveredIndex << std::endl)
+//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
+
 	if(this->hoveredIndex < 0){
 		if(!isFirstOne){
-			morda::Morda::inst().postToUiThread([dds, oc](){
+			morda::Morda::inst().postToUiThread([oc](){
 				oc->hideContextMenu();
 			});
 		}
@@ -183,9 +186,13 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 	}
 	this->setSelection(this->hoveredIndex);
 
+//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): selection set" << std::endl)
+
 	morda::Morda::inst().postToUiThread([dds, oc](){
+//		TRACE(<< "DropDownSelector::mouseButtonUpHandler(): hiding context menu" << std::endl)
 		oc->hideContextMenu();
 		if(dds->selectionChanged){
+//			TRACE(<< "DropDownSelector::mouseButtonUpHandler(): calling selection handler" << std::endl)
 			dds->selectionChanged(*dds);
 		}
 	});

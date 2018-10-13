@@ -61,6 +61,21 @@ model {
                 cppFlags.addAll(["-isystem", ndkInc + "/x86_64-linux-android"])
             }
         }
+
+        buildTypes {
+            release {
+                ndk {
+                    debuggable true
+                }
+            }
+            debug{
+                ndk {
+                    debuggable true
+                    cppFlags.add("-DDEBUG")
+                }
+            }
+        }
+
     }
 
     android.lintOptions {

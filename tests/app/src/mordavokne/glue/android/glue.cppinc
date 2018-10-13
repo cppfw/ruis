@@ -1402,23 +1402,31 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
 
-		ALooper_addFd(
+        //Add timer descriptor to looper, this is needed for Updatable to work
+		if(ALooper_addFd(
 				looper,
 				fdFlag.GetFD(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnUpdateTimerExpired,
 				0
-			);
+			) < 0)
+		{
+			throw utki::Exc("failed to add timer descriptor to looper");
+		}
 
-		ALooper_addFd(
+        //Add UI message queue descriptor to looper
+		if(ALooper_addFd(
 				looper,
 				static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(*app)).uiQueue).getHandle(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
 				0
-			);
+			) < 0)
+		{
+            throw utki::Exc("failed to add UI message queue descriptor to looper");
+		}
 
 		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating App object
 	}catch(std::exception& e){
@@ -1459,8 +1467,17 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 
+    ALooper* looper = ALooper_prepare(0);
+    ASSERT(looper)
+
+    //remove UI message queue descriptor from looper
+    ALooper_removeFd(
+            looper,
+            static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(App::inst())).uiQueue).getHandle()
+        );
+
 	//remove fdFlag from looper
-	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
+	ALooper_removeFd(looper, fdFlag.GetFD());
 
 	//Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
 	delete static_cast<mordavokne::App*>(activity->instance);

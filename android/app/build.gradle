@@ -97,6 +97,17 @@ model {
             release {
                 minifyEnabled false
                 proguardFiles.add(file('proguard-rules.pro'))
+                ndk {
+                    debuggable true
+                }
+            }
+            debug{
+                minifyEnabled false
+                proguardFiles.add(file('proguard-rules.pro'))
+                ndk {
+                    debuggable true
+                    cppFlags.add("-DDEBUG")
+                }
             }
         }
     }
