@@ -1,5 +1,14 @@
 apply plugin: "com.android.model.library"
 
+def ndkDir = System.getenv("ANDROID_NDK_HOME")
+def propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    Properties properties = new Properties()
+    properties.load(propertiesFile.newDataInputStream())
+    ndkDir = properties.getProperty('ndk.dir')
+}
+
+def ndkInc = ndkDir + "/sysroot/usr/include"
 
 model {
     android {
@@ -7,8 +16,8 @@ model {
         buildToolsVersion = '25.0.2'
 
         defaultConfig {
-            minSdkVersion.apiLevel = 9
-            targetSdkVersion.apiLevel = 9
+            minSdkVersion.apiLevel = 21
+            targetSdkVersion.apiLevel = 21
             versionCode = 1
             versionName = '1.0'
         }
@@ -16,7 +25,7 @@ model {
             platformVersion = 21
             moduleName = "morda"
             toolchain = 'clang'
-            abiFilters.addAll(['armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64']) //this is default
+            abiFilters.addAll(['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']) //this is default
             ldLibs.addAll(['android', 'log',
                            'png', 'jpeg', 'stob', 'papki', 'svgren', 'svgdom',
                            'z', 'freetype2', 'mikroxml', 'unikod', 'cairo', 'pixman', 'c++'])
@@ -30,28 +39,26 @@ model {
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libpng")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/libjpeg")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include/freetype2")
+            cppFlags.addAll(["-isystem", ndkInc])
+            cppFlags.add("-D__ANDROID_API__=" + platformVersion)
+            cppFlags.add("-DANDROID_STL=c++_shared")
         }
         abis {
-            create("armeabi") {
-                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/armeabi")
-            }
             create("armeabi-v7a") {
                 ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/armeabi-v7a")
+                cppFlags.addAll(["-isystem", ndkInc + "/arm-linux-androideabi"])
             }
             create("arm64-v8a") {
                 ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/arm64-v8a")
+                cppFlags.addAll(["-isystem", ndkInc + "/aarch64-linux-android"])
             }
             create("x86") {
                 ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/x86")
+                cppFlags.addAll(["-isystem", ndkInc + "/i686-linux-android"])
             }
             create("x86_64") {
                 ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/x86_64")
-            }
-            create("mips") {
-                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/mips")
-            }
-            create("mips64") {
-                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/mips64")
+                cppFlags.addAll(["-isystem", ndkInc + "/x86_64-linux-android"])
             }
         }
     }
