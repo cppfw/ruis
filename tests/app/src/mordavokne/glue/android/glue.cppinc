@@ -1410,7 +1410,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				ALOOPER_EVENT_INPUT,
 				&OnUpdateTimerExpired,
 				0
-			) < 0)
+			) == -1)
 		{
 			throw utki::Exc("failed to add timer descriptor to looper");
 		}
@@ -1423,7 +1423,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
 				0
-			) < 0)
+			) == -1)
 		{
 			throw utki::Exc("failed to add UI message queue descriptor to looper");
 		}
