@@ -1,5 +1,3 @@
-#include "../../App.hpp"
-
 #include <morda/util/util.hpp>
 #include <morda/Morda.hpp>
 
@@ -9,9 +7,13 @@
 #include <papki/FSFile.hpp>
 
 #include <windowsx.h>
+#include <Shlobj.h>
 
 #include <mordaren/OpenGL2Renderer.hpp>
 
+#include "../../App.hpp"
+
+#include "../../AppFactory.hpp"
 
 using namespace mordavokne;
 
@@ -602,13 +604,45 @@ morda::real getDotsPerPt(HDC dc){
 	kolme::Vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
 	kolme::Vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
 
-	return mordavokne::App::findDotsPerPt(resolution, screenSizeMm);
+	return mordavokne::App::findDotsPerDp(resolution, screenSizeMm);
 }
 
 }//~namespace
 
+namespace{
+std::string initializeStorageDir(const std::string& appName){
+	CHAR path[MAX_PATH];
+	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK) {
+		throw utki::Exc("failed to get user's profile directory.");
+	}
+	
+	path[sizeof(path) - 1] = '\0';//null-terminate the string just in case
+	
+	std::string homeDirStr(path, strlen(path));
+	
+	ASSERT(homeDirStr.size() != 0)
 
-App::App(const WindowParams& wp) :
+	if(homeDirStr[homeDirStr.size() - 1] == '\\'){
+		homeDirStr[homeDirStr.size() - 1] = '/';
+	}
+
+	if(homeDirStr[homeDirStr.size() - 1] != '/'){
+		homeDirStr.append(1, '/');
+	}
+
+	homeDirStr.append(1, '.').append(appName).append(1, '/');
+
+	papki::FSFile dir(homeDirStr);
+	if(!dir.exists()){
+		dir.makeDir();
+	}
+
+	return homeDirStr;
+}
+}
+
+App::App(std::string&& name, const WindowParams& wp) :
+		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		curWinRect(0, 0, -1, -1),
 		gui(
@@ -621,7 +655,8 @@ App::App(const WindowParams& wp) :
 						throw morda::Exc("PostMessage(): failed");
 					}
 				}
-			)
+			),
+		storageDir(initializeStorageDir(this->name))
 {
 	this->updateWindowRect(
 			morda::Rectr(
@@ -633,9 +668,7 @@ App::App(const WindowParams& wp) :
 		);
 }
 
-
-
-void App::quit()noexcept {
+void App::quit()noexcept{
 	auto& ww = getImpl(this->windowPimpl);
 	ww.quitFlag = true;
 }
@@ -643,35 +676,33 @@ void App::quit()noexcept {
 namespace mordavokne{
 
 void winmain(int argc, const char** argv){
-	typedef std::unique_ptr<mordavokne::App>(*Factory)(int, const char**, const utki::Buf<std::uint8_t>&);
-
-	Factory f;
+	decltype(mordavokne::createApp)* f;
 
 	//Try GCC name mangling first
-	f = reinterpret_cast<Factory>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN10mordavokne9createAppEiPPKcN4utki3BufIhEE")));
+	f = reinterpret_cast<decltype(f)>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN10mordavokne9createAppEiPPKc")));
 
 	if(!f){ //try MSVC function mangling style
-		f = reinterpret_cast<Factory>(GetProcAddress(
+		f = reinterpret_cast<decltype(f)>(GetProcAddress(
 				GetModuleHandle(NULL),			
 #if M_CPU == M_CPU_X86_64
-				TEXT("?createApp@mordavokne@@YA?AV?$unique_ptr@VApp@mordavokne@@U?$default_delete@VApp@mordavokne@@@std@@@std@@HPEAPEBDV?$Buf@E@utki@@@Z")
+				TEXT("?createApp@mordavokne@@YA?AV?$unique_ptr@VApp@mordavokne@@U?$default_delete@VApp@mordavokne@@@std@@@std@@HPEAPEBD@Z")
 #else
-				TEXT("?createApp@mordavokne@@YA?AV?$unique_ptr@VApp@mordavokne@@U?$default_delete@VApp@mordavokne@@@std@@@std@@HPAPBDV?$Buf@E@utki@@@Z")
+				TEXT("?createApp@mordavokne@@YA?AV?$unique_ptr@VApp@mordavokne@@U?$default_delete@VApp@mordavokne@@@std@@@std@@HPAPBD@Z")
 #endif
 			));
 	}
 
 	ASSERT_INFO(f, "no app factory function found")
-	std::unique_ptr<mordavokne::App> a = f(argc, argv, nullptr);
+	std::unique_ptr<mordavokne::App> app = f(argc, argv);
 
-	ASSERT(a)
+	ASSERT(app)
 
-	auto& ww = getImpl(getWindowPimpl(*a));
+	auto& ww = getImpl(getWindowPimpl(*app));
 
 	ShowWindow(ww.hwnd, SW_SHOW);
 
 	while (!ww.quitFlag){
-		std::uint32_t timeout = a->gui.update();
+		std::uint32_t timeout = app->gui.update();
 		//		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(
@@ -697,12 +728,12 @@ void winmain(int argc, const char** argv){
 			}
 		}
 
-		render(*a);
+		render(*app);
 		//		TRACE(<< "loop" << std::endl)
 	}
 }
 
-}//~namespace
+}
 
 
 

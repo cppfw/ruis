@@ -14,7 +14,7 @@
 
 using namespace mordavokne;
 
-#include "../createAppUnix.cppinc"
+#include "../unixCommon.cppinc"
 #include "../friendAccessors.cppinc"
 
 
@@ -29,7 +29,7 @@ using namespace mordavokne;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	self->app = createAppUnix(0, nullptr, utki::Buf<std::uint8_t>()).release();
+	self->app = createAppUnix(0, nullptr).release();
 	
 	return YES;
 }
@@ -324,22 +324,23 @@ namespace{
 		return value;
 	}
 	
-	morda::real getDotsPerPt(){
+	morda::real getDotsPerDp(){
 		float scale = [[UIScreen mainScreen] scale];
 		
-		//TODO: use findDotsPerPt() function from morda util
+		//TODO: use findDotsPerDp() function from morda util
 		
 		return morda::real(scale);
 	}
 	
 }//~namespace
 
-App::App(const App::WindowParams& wp) :
+App::App(std::string&& name, const App::WindowParams& wp) :
+		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
 				getDotsPerInch(),
-				getDotsPerPt(),
+				getDotsPerDp(),
 				[this](std::function<void()>&& a){
 					auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(a)));
 	
@@ -348,7 +349,8 @@ App::App(const App::WindowParams& wp) :
 						(*m)();
 					});
 				}
-			)
+			),
+		storageDir("") //TODO: initialize to proper value
 {
 	this->setFullscreen(false);//this will intialize the viewport
 }

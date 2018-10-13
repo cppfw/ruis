@@ -12,7 +12,6 @@
 
 #include <sys/eventfd.h>
 
-
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
 
@@ -20,17 +19,9 @@
 
 #include <EGL/egl.h>
 
-
-
 using namespace mordavokne;
 
-#include "../createAppUnix.cppinc"
-
 namespace{
-
-
-
-
 ANativeActivity* nativeActivity = 0;
 
 mordavokne::App& getApp(ANativeActivity* activity){
@@ -55,6 +46,8 @@ class JavaFunctionsWrapper : public utki::Unique{
 	jmethodID hideVirtualKeyboardMeth;
 
 	jmethodID listDirContentsMeth;
+
+	jmethodID getStorageDirMeth;
 public:
 	JavaFunctionsWrapper(ANativeActivity* a){
 		this->env = a->env;
@@ -76,6 +69,9 @@ public:
 
 		this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
 		ASSERT(this->hideVirtualKeyboardMeth)
+
+		this->getStorageDirMeth = this->env->GetMethodID(this->clazz, "getStorageDir", "()Ljava/lang/String;");
+		ASSERT(this->getStorageDirMeth)
 	}
 
 	~JavaFunctionsWrapper()noexcept{
@@ -131,6 +127,22 @@ public:
 		}
 
 		return ret;
+	}
+
+	std::string getStorageDir(){
+		jobject res = this->env->CallObjectMethod(this->obj, this->getStorageDirMeth);
+		utki::ScopeExit resScopeExit([this, &res](){
+			this->env->DeleteLocalRef(res);
+		});
+
+		jstring str = static_cast<jstring>(res);
+
+		auto chars = env->GetStringUTFChars(str, nullptr);
+		utki::ScopeExit charsScopeExit([this, &chars, &str](){
+			this->env->ReleaseStringUTFChars(str, chars);
+		});
+
+		return std::string(chars);
 	}
 };
 
@@ -438,9 +450,6 @@ struct AppInfo{
 	//Pointer to the Asset Manager instance for the application. The application
 	//uses this to access binary assets bundled inside its own .apk file.
 	AAssetManager* assetManager;
-
-	//Holds info about saved state if restoring from previously saved state.
-	std::vector<std::uint8_t> savedState;
 } appInfo;
 
 
@@ -507,7 +516,7 @@ public:
 
 
 //================
-// for Updateable
+// for Updatable
 //================
 
 class FDFlag{
@@ -987,11 +996,21 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 	return JNI_VERSION_1_6;
 }
 
+namespace{
+std::string initializeStorageDir(const std::string& appName){
+	ASSERT(javaFunctionsWrapper)
 
-namespace mordavokne{
+	auto dir = javaFunctionsWrapper->getStorageDir();
 
+	if(*dir.rend() != '/'){
+		dir.append(1, '/');
+	}
+	return dir;
+}
+}
 
-App::App(const WindowParams& requestedWindowParams) :
+mordavokne::App::App(std::string&& name, const WindowParams& requestedWindowParams) :
+		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
@@ -1003,33 +1022,32 @@ App::App(const WindowParams& requestedWindowParams) :
 				[this]() -> float{
 					auto res = getImpl(this->windowPimpl).getWindowSize();
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
-					return App::findDotsPerPt(res, dim.to<unsigned>());
+					return App::findDotsPerDp(res, dim.to<unsigned>());
 				}(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
 				}
-			)
+			),
+		storageDir(initializeStorageDir(this->name))
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();
 	this->updateWindowRect(morda::Rectr(morda::Vec2r(0), winSize.to<morda::real>()));
 }
 
-
-
-std::unique_ptr<papki::File> App::getResFile(const std::string& path)const{
+std::unique_ptr<papki::File> mordavokne::App::getResFile(const std::string& path)const{
 	return utki::makeUnique<AssetFile>(appInfo.assetManager, path);
 }
 
-void App::swapFrameBuffers() {
+void mordavokne::App::swapFrameBuffers() {
 	auto& ww = getImpl(this->windowPimpl);
 	ww.swapBuffers();
 }
 
-void App::setMouseCursorVisible(bool visible) {
+void mordavokne::App::setMouseCursorVisible(bool visible) {
 	//do nothing
 }
 
-void App::setFullscreen(bool enable) {
+void mordavokne::App::setFullscreen(bool enable) {
 	ASSERT(nativeActivity)
 	if(enable) {
 		ANativeActivity_setWindowFlags(nativeActivity, AWINDOW_FLAG_FULLSCREEN, 0);
@@ -1038,12 +1056,15 @@ void App::setFullscreen(bool enable) {
 	}
 }
 
-void App::quit() noexcept{
-	//TODO:
+void mordavokne::App::quit()noexcept{
+	ASSERT(nativeActivity)
+	ANativeActivity_finish(nativeActivity);
 }
 
-void App::showVirtualKeyboard()noexcept{
+void mordavokne::App::showVirtualKeyboard()noexcept{
+	//NOTE:
 	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+	//did not work for some reason.
 
 	ASSERT(javaFunctionsWrapper)
 	javaFunctionsWrapper->showVirtualKeyboard();
@@ -1051,189 +1072,186 @@ void App::showVirtualKeyboard()noexcept{
 
 
 
-void App::hideVirtualKeyboard()noexcept{
+void mordavokne::App::hideVirtualKeyboard()noexcept{
+	//NOTE:
 	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+	//did not work for some reason
 
 	ASSERT(javaFunctionsWrapper)
 	javaFunctionsWrapper->hideVirtualKeyboard();
 }
 
 
-}//~namespace
-
-
 
 namespace{
+void handleInputEvents(){
+	auto& app = mordavokne::inst();
 
-	void handleInputEvents(){
-		auto& app = mordavokne::inst();
-
-		//Read and handle input events
-		AInputEvent* event;
-		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
-			ASSERT(event)
+	//Read and handle input events
+	AInputEvent* event;
+	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+		ASSERT(event)
 
 //		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
-			if(AInputQueue_preDispatchEvent(curInputQueue, event)){
-				continue;
-			}
+		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+			continue;
+		}
 
-			int32_t eventType = AInputEvent_getType(event);
-			int32_t eventAction = AMotionEvent_getAction(event);
+		int32_t eventType = AInputEvent_getType(event);
+		int32_t eventAction = AMotionEvent_getAction(event);
 
-			bool consume = false;
+		bool consume = false;
 
-			switch(eventType){
-				case AINPUT_EVENT_TYPE_MOTION:
-					switch(eventAction & AMOTION_EVENT_ACTION_MASK){
-						case AMOTION_EVENT_ACTION_POINTER_DOWN:
+		switch(eventType){
+			case AINPUT_EVENT_TYPE_MOTION:
+				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
+					case AMOTION_EVENT_ACTION_POINTER_DOWN:
 //						TRACE(<< "Pointer down" << std::endl)
-						case AMOTION_EVENT_ACTION_DOWN:
-						{
-							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+					case AMOTION_EVENT_ACTION_DOWN:
+					{
+						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
-							if(pointerId >= pointers.size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
-								continue;
-							}
+						if(pointerId >= pointers.size()){
+							TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							continue;
+						}
 
 //								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
-							pointers[pointerId] = p;
+						morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+						pointers[pointerId] = p;
 
-							handleMouseButton(
-									app,
-									true,
-									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
-									morda::MouseButton_e::LEFT,
-									pointerId
-							);
-						}
-							break;
-						case AMOTION_EVENT_ACTION_POINTER_UP:
+						handleMouseButton(
+								app,
+								true,
+								AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+								morda::MouseButton_e::LEFT,
+								pointerId
+						);
+					}
+						break;
+					case AMOTION_EVENT_ACTION_POINTER_UP:
 //						TRACE(<< "Pointer up" << std::endl)
-						case AMOTION_EVENT_ACTION_UP:
-						{
-							unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
+					case AMOTION_EVENT_ACTION_UP:
+					{
+						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
+						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
+						if(pointerId >= pointers.size()){
+							TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							continue;
+						}
+
+//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+
+						morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+						pointers[pointerId] = p;
+
+						handleMouseButton(
+								app,
+								false,
+								AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+								morda::MouseButton_e::LEFT,
+								pointerId
+						);
+					}
+						break;
+					case AMOTION_EVENT_ACTION_MOVE:
+					{
+						size_t numPointers = AMotionEvent_getPointerCount(event);
+						ASSERT(numPointers >= 1)
+						for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
+							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
 							if(pointerId >= pointers.size()){
 								TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 								continue;
 							}
 
-//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
-
-							morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
-							pointers[pointerId] = p;
-
-							handleMouseButton(
-									app,
-									false,
-									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
-									morda::MouseButton_e::LEFT,
-									pointerId
-							);
-						}
-							break;
-						case AMOTION_EVENT_ACTION_MOVE:
-						{
-							size_t numPointers = AMotionEvent_getPointerCount(event);
-							ASSERT(numPointers >= 1)
-							for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
-								unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
-								if(pointerId >= pointers.size()){
-									TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
-									continue;
-								}
-
-								//notify root Container only if there was actual movement
-								morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
-								if(pointers[pointerId] == p){
-									//pointer position did not change
-									continue;
-								}
+							//notify root Container only if there was actual movement
+							morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
+							if(pointers[pointerId] == p){
+								//pointer position did not change
+								continue;
+							}
 
 //								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
 
-								pointers[pointerId] = p;
+							pointers[pointerId] = p;
 
-								handleMouseMove(
-										app,
-										AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
-										pointerId
-								);
-							}//~for(every pointer)
-						}
+							handleMouseMove(
+									app,
+									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+									pointerId
+							);
+						}//~for(every pointer)
+					}
+						break;
+					default:
+						TRACE(<< "unknown eventAction = " << eventAction << std::endl)
+						break;
+				}//~switch(event action)
+				consume = true;
+				break;
+			case AINPUT_EVENT_TYPE_KEY:
+				{
+//					TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
+
+					ASSERT(event)
+					morda::Key_e key = getKeyFromKeyEvent(*event);
+
+					keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
+					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
+					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
+
+//    				TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+
+					switch(eventAction){
+						case AKEY_EVENT_ACTION_DOWN:
+//    						TRACE(<< "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
+							//detect auto-repeated key events
+							if(AKeyEvent_getRepeatCount(event) == 0){
+								handleKeyEvent(app, true, key);
+							}
+							handleCharacterInput(app, keyUnicodeResolver, key);
+							break;
+						case AKEY_EVENT_ACTION_UP:
+//    						TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
+							handleKeyEvent(app, false, key);
+							break;
+						case AKEY_EVENT_ACTION_MULTIPLE:
+//                          TRACE(<< "AKEY_EVENT_ACTION_MULTIPLE"
+//                                  << " count = " << AKeyEvent_getRepeatCount(event)
+//                                  << " keyCode = " << AKeyEvent_getKeyCode(event)
+//                                  << std::endl)
+
+							//Ignore, it is handled on Java side.
+
 							break;
 						default:
-							TRACE(<< "unknown eventAction = " << eventAction << std::endl)
+							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
 							break;
-					}//~switch(event action)
-					consume = true;
-					break;
-				case AINPUT_EVENT_TYPE_KEY:
-					{
-	//						TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
-
-						ASSERT(event)
-						morda::Key_e key = getKeyFromKeyEvent(*event);
-
-						keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
-						keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
-						keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
-
-//    					TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
-
-						switch(eventAction){
-							case AKEY_EVENT_ACTION_DOWN:
-//    							TRACE(<< "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
-								//detect auto-repeated key events
-								if(AKeyEvent_getRepeatCount(event) == 0){
-									handleKeyEvent(app, true, key);
-								}
-								handleCharacterInput(app, keyUnicodeResolver, key);
-								break;
-							case AKEY_EVENT_ACTION_UP:
-//    							TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-								handleKeyEvent(app, false, key);
-								break;
-							case AKEY_EVENT_ACTION_MULTIPLE:
-//                                TRACE(<< "AKEY_EVENT_ACTION_MULTIPLE"
-//                                              << " count = " << AKeyEvent_getRepeatCount(event)
-//                                              << " keyCode = " << AKeyEvent_getKeyCode(event)
-//                                              << std::endl)
-
-								//Ignore, it is handled on Java side.
-
-								break;
-							default:
-								TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
-								break;
-						}
 					}
-					break;
-				default:
-					break;
-			}//~switch(event type)
+				}
+				break;
+			default:
+				break;
+		}//~switch(event type)
 
+		AInputQueue_finishEvent(
+				curInputQueue,
+				event,
+				consume
+		);
+	}//~while(there are events in input queue)
 
-			AInputQueue_finishEvent(
-					curInputQueue,
-					event,
-					consume
-			);
-		}//~while(there are events in input queue)
+	render(app);
 
-		render(app);
+	fdFlag.Set();
+}
+}
 
-		fdFlag.Set();
-	}
-
-
-
+namespace{
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
 
@@ -1244,50 +1262,32 @@ void OnDestroy(ANativeActivity* activity){
 
 void OnStart(ANativeActivity* activity){
 	TRACE(<< "OnStart(): invoked" << std::endl)
-	//TODO:
 }
 
 
 
 void OnResume(ANativeActivity* activity){
 	TRACE(<< "OnResume(): invoked" << std::endl)
-	//TODO:
 }
-
-
 
 void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
 	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
 
-	auto data = getApp(activity).onSaveState();
-
-	//According to NativeActivity documentation the returned memory buffer has to be allocated by
-	//malloc() and the framework will take care of calling free() on it for us.
-	void* buf = malloc(data.size());
-	if(!buf){
-		return nullptr;
-	}
-
-	memcpy(buf, &*data.begin(), data.size());
-	*outSize = data.size();
-
-	return buf;
+	//Do nothing, we don't use this mechanism of saving state.
+	
+	return nullptr;
 }
 
 
 
 void OnPause(ANativeActivity* activity){
 	TRACE(<< "OnPause(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnPause();
 }
 
 
 
 void OnStop(ANativeActivity* activity){
 	TRACE(<< "OnStop(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnStop();
 }
 
 
@@ -1337,8 +1337,6 @@ void OnLowMemory(ANativeActivity* activity){
 
 void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 	TRACE(<< "OnWindowFocusChanged(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnWindowFocusChanged(bool(hasFocus));
 }
 
 
@@ -1394,7 +1392,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
-		App* app = createAppUnix(0, 0, utki::wrapBuf(appInfo.savedState)).release();
+		App* app = mordavokne::createApp(0, nullptr).release();
 
 		activity->instance = app;
 
@@ -1456,16 +1454,17 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 
 
 
+//This function is called right before destroying Window object, according to documentation:
+//https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 
 	//remove fdFlag from looper
 	ALooper_removeFd(ALooper_prepare(0), fdFlag.GetFD());
 
-	//TODO: need to destroy app right before window is destroyed, i.e. OGL de-initialized
-	//destroy app object
+	//Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
 	delete static_cast<mordavokne::App*>(activity->instance);
-	activity->instance = 0;
+	activity->instance = nullptr;
 
 	//delete configuration object
 	curConfig.reset();
@@ -1537,6 +1536,14 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
 	TRACE(<< "OnContentRectChanged(): curWinDim = " << curWinDim << std::endl)
 
+	//Sometimes Android calls OnContentRectChanged() even after native window was destroyed,
+	//i.e. OnNativeWindowDestroyed() was called and, thus, application object was destroyed.
+	//So need to check if our application is still alive.
+	if(!activity->instance){
+		TRACE(<< "OnContentRectChanged(): application is not alive, ignoring content rect change." << std::endl)
+		return;
+	}
+	
 	auto& app = getApp(activity);
 
 	updateWindowRect(
@@ -1552,10 +1559,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	//redraw, since WindowRedrawNeeded not always comes
 	render(app);
 }
-
-
-
-}//~namespace
+}
 
 
 
@@ -1590,11 +1594,6 @@ void ANativeActivity_onCreate(
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
 	appInfo.assetManager = activity->assetManager;
-	if(savedState){
-		//copy saved state data because no guarantee that the data will be kept alive after returning from this function
-		appInfo.savedState.resize(savedStateSize);
-		memcpy(&*appInfo.savedState.begin(), savedState, savedStateSize);
-	}
 
 	javaFunctionsWrapper = utki::makeUnique<JavaFunctionsWrapper>(activity);
 }

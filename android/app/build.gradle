@@ -1,5 +1,14 @@
 apply plugin: 'com.android.model.application'
 
+def ndkDir = System.getenv("ANDROID_NDK_HOME")
+def propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    Properties properties = new Properties()
+    properties.load(propertiesFile.newDataInputStream())
+    ndkDir = properties.getProperty('ndk.dir')
+}
+
+def ndkInc = ndkDir + "/sysroot/usr/include"
 
 model {
 
@@ -12,17 +21,17 @@ model {
         compileSdkVersion = 25
         buildToolsVersion = '25.0.2'
 
-        defaultConfig{
+        defaultConfig {
             applicationId = "io.github.igagis.mordatests"
-            minSdkVersion.apiLevel = 9
-            targetSdkVersion.apiLevel = 9
+            minSdkVersion.apiLevel = 21
+            targetSdkVersion.apiLevel = 21
             versionCode = 1
             versionName = '1.0'
         }
 
         ndk {
             platformVersion = 21
-            moduleName = 'morda-tests'
+            moduleName = 'mordavokneapp'
             toolchain = 'clang'
             stl = 'c++_shared'
             cppFlags.add("-std=c++11")
@@ -30,9 +39,33 @@ model {
             cppFlags.add("-frtti")
             cppFlags.add("-I" + projectDir.getAbsolutePath() + "/build/ndkLibs/include")
             cppFlags.add("-fintegrated-as") //needed to avoid assembler error since NDK r15
-            ldLibs.addAll(['android', 'log'])
+            cppFlags.addAll(["-isystem", ndkInc])
+            cppFlags.add("-D__ANDROID_API__=" + platformVersion)
+            cppFlags.add("-DANDROID_STL=c++_shared")
+            ldLibs.addAll(['android', 'log', 'EGL',
+                           'png', 'jpeg', 'stob', 'papki', 'svgren', 'svgdom',
+                           'z', 'freetype2', 'mikroxml', 'unikod', 'nitki', 'GLESv2', 'cairo', 'pixman', 'c++'])
             // build a default combined apk including all ABIs.
-            // abiFilters.addAll(['x86'])
+            abiFilters.addAll(['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']) //this is default
+            cppFlags.add("-I" + projectDir.getAbsolutePath() + "/../../tests/app/src/opengles2/")
+        }
+        abis {
+            create("armeabi-v7a") {
+                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/armeabi-v7a")
+                cppFlags.addAll(["-isystem", ndkInc + "/arm-linux-androideabi"])
+            }
+            create("arm64-v8a") {
+                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/arm64-v8a")
+                cppFlags.addAll(["-isystem", ndkInc + "/aarch64-linux-android"])
+            }
+            create("x86") {
+                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/x86")
+                cppFlags.addAll(["-isystem", ndkInc + "/i686-linux-android"])
+            }
+            create("x86_64") {
+                ldFlags.add("-L" + projectDir.getAbsolutePath() + "/build/ndkLibs/x86_64")
+                cppFlags.addAll(["-isystem", ndkInc + "/x86_64-linux-android"])
+            }
         }
 
         sources {
@@ -42,8 +75,9 @@ model {
                         project ":libmorda" linkage "static"
                     }
                     source {
-//                        srcDirs '../../tests'
-                        exclude('**/main.cpp')
+                        srcDir '../../tests/app/src'
+                        exclude('**/OpenGL2*')
+//                        exclude('**/main.cpp')
                     }
                 }
                 jniLibs {
@@ -79,9 +113,16 @@ repositories {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile 'io.github.igagis:libutki:+'
-//    compile 'io.github.igagis:libpapki:+'
-//    compile 'io.github.igagis:libunikod:+'
+    compile 'io.github.igagis:libutki:+'
+    compile 'io.github.igagis:libkolme:+'
+    compile 'io.github.igagis:libpapki:+'
+    compile 'io.github.igagis:libstob:+'
+    compile 'io.github.igagis:libnitki:+'
+    compile 'io.github.igagis:libsvgdom:+'
+    compile 'io.github.igagis:libsvgren:+'
+    compile 'org.libpng:libpng:+'
+    compile 'org.ijg:libjpeg:+'
+    compile 'org.freetype:freetype2:+'
 }
 
 
@@ -102,5 +143,25 @@ build.dependsOn('extractNDKLibs')
 tasks.whenTaskAdded { task ->
     if (task.name.startsWith('compile')) {
         task.dependsOn('extractNDKLibs')
+    }
+}
+
+task copyResToAssets {
+    doLast {
+        copy{
+            from "../../tests/app/res"
+            into "src/main/assets/res"
+            include "**/*"
+        }
+        copy{
+            from "../../res/morda_res"
+            into "src/main/assets/morda_res"
+            include "**/*"
+        }
+    }
+}
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('generate')) {
+        task.dependsOn('copyResToAssets')
     }
 }

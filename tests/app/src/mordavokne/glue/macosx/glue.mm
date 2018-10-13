@@ -1,6 +1,8 @@
 #include "../../App.hpp"
 #include "../../AppFactory.hpp"
 
+#include <papki/FSFile.hpp>
+
 #include <morda/util/util.hpp>
 
 #include <mordaren/OpenGL2Renderer.hpp>
@@ -11,7 +13,7 @@
 using namespace mordavokne;
 
 
-#include "../createAppUnix.cppinc"
+#include "../unixCommon.cppinc"
 #include "../friendAccessors.cppinc"
 
 @interface CocoaView : NSView{
@@ -713,7 +715,7 @@ void App::quit()noexcept{
 
 int main (int argc, const char** argv){
 	TRACE(<< "main(): enter" << std::endl)
-	auto app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	auto app = createAppUnix(argc, argv);
 
 	TRACE(<< "main(): app created" << std::endl)
 	
@@ -805,13 +807,14 @@ morda::real getDotsPerPt(){
 	kolme::Vec2ui resolution(displayPixelSize.width, displayPixelSize.height);
 	kolme::Vec2ui screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
 	
-	return App::findDotsPerPt(resolution, screenSizeMm);
+	return App::findDotsPerDp(resolution, screenSizeMm);
 }
 
 }//~namespace
 
 
-App::App(const App::WindowParams& wp) :
+App::App(std::string&& name, const App::WindowParams& wp) :
+		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGL2Renderer>(),
@@ -834,7 +837,8 @@ App::App(const App::WindowParams& wp) :
 
 					[ww.applicationObjectId postEvent:e atStart:NO];
 				}
-			)
+			),
+		storageDir(initializeStorageDir(this->name))
 {
 	TRACE(<< "App::App(): enter" << std::endl)
 	this->updateWindowRect(
@@ -846,8 +850,6 @@ App::App(const App::WindowParams& wp) :
 				)
 		);
 }
-
-
 
 void App::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);

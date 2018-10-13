@@ -68,7 +68,7 @@ void App::hideVirtualKeyboard()noexcept{
 
 
 
-morda::real App::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
+morda::real App::findDotsPerDp(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
 	
 	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
 	//For high density displays it should be more than one pixel, depending on display ppi.
@@ -92,8 +92,4 @@ morda::real App::findDotsPerPt(kolme::Vec2ui resolution, kolme::Vec2ui screenSiz
 	
 	return morda::real(1);
 #endif
-}
-
-std::vector<std::uint8_t> App::onSaveState() {
-	return std::vector<std::uint8_t>();
 }

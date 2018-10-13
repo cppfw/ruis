@@ -38,7 +38,7 @@
 using namespace mordavokne;
 
 
-#include "../createAppUnix.cppinc"
+#include "../unixCommon.cppinc"
 
 
 namespace{
@@ -146,7 +146,7 @@ struct WindowWrapper : public utki::Unique{
 #elif defined(M_RENDER_OPENGLES2)
 		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 		if(this->eglDisplay == EGL_NO_DISPLAY){
-			throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
+			throw utki::Exc("eglGetDisplay(): failed, no matching display connection found");
 		}
 
 		utki::ScopeExit scopeExitEGLDisplay([this](){
@@ -155,7 +155,7 @@ struct WindowWrapper : public utki::Unique{
 		
 		if(eglInitialize(this->eglDisplay, nullptr, nullptr) == EGL_FALSE){
 			eglTerminate(this->eglDisplay);
-			throw morda::Exc("eglInitialize() failed");
+			throw utki::Exc("eglInitialize() failed");
 		}
 		
 		EGLConfig eglConfig;
@@ -181,12 +181,12 @@ struct WindowWrapper : public utki::Unique{
 			EGLint numConfigs;
 			eglChooseConfig(this->eglDisplay, attribs, &eglConfig, 1, &numConfigs);
 			if(numConfigs <= 0){
-				throw morda::Exc("eglChooseConfig() failed, no matching config found");
+				throw utki::Exc("eglChooseConfig() failed, no matching config found");
 			}
 		}
 		
 		if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE){
-			throw morda::Exc("eglBindApi() failed");
+			throw utki::Exc("eglBindApi() failed");
 		}
 #else
 #	error "Unknown graphics API"
@@ -197,7 +197,7 @@ struct WindowWrapper : public utki::Unique{
 #ifdef M_RENDER_OPENGL2
 		vi = glXGetVisualFromFBConfig(this->display, bestFbc);
 		if (!vi) {
-			throw morda::Exc("glXGetVisualFromFBConfig() failed");
+			throw utki::Exc("glXGetVisualFromFBConfig() failed");
 		}
 #elif defined(M_RENDER_OPENGLES2)
 #	ifdef M_RASPBERRYPI
@@ -212,7 +212,7 @@ struct WindowWrapper : public utki::Unique{
 					&numVisuals
 				);
 			if (!vi) {
-				throw morda::Exc("XGetVisualInfo() failed");
+				throw utki::Exc("XGetVisualInfo() failed");
 			}
 		}
 #	else
@@ -220,7 +220,7 @@ struct WindowWrapper : public utki::Unique{
 			EGLint vid;
 	
 			if(!eglGetConfigAttrib(this->eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &vid)) {
-				throw morda::Exc("eglGetConfigAttrib() failed");
+				throw utki::Exc("eglGetConfigAttrib() failed");
 			}
 
 			int numVisuals;
@@ -233,7 +233,7 @@ struct WindowWrapper : public utki::Unique{
 					&numVisuals
 				);
 			if (!vi) {
-				throw morda::Exc("XGetVisualInfo() failed");
+				throw utki::Exc("XGetVisualInfo() failed");
 			}
 		}
 #	endif
@@ -308,7 +308,7 @@ struct WindowWrapper : public utki::Unique{
 #ifdef M_RENDER_OPENGL2
 		this->glContext = glXCreateContext(this->display, vi, 0, GL_TRUE);
 		if(this->glContext == NULL){
-			throw morda::Exc("glXCreateContext() failed");
+			throw utki::Exc("glXCreateContext() failed");
 		}
 		utki::ScopeExit scopeExitGLContext([this](){
 			glXMakeCurrent(this->display, None, NULL);
@@ -320,7 +320,7 @@ struct WindowWrapper : public utki::Unique{
 		TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 
 		if(glewInit() != GLEW_OK){
-			throw morda::Exc("GLEW initialization failed");
+			throw utki::Exc("GLEW initialization failed");
 		}
 #elif defined(M_RENDER_OPENGLES2)
 
@@ -339,7 +339,7 @@ struct WindowWrapper : public utki::Unique{
 					&display_height
 				) < 0 )
 			{
-				throw morda::Exc("graphics_get_display_size() failed");
+				throw utki::Exc("graphics_get_display_size() failed");
 			}
 
 			dst_rect.x = 0;
@@ -386,7 +386,7 @@ struct WindowWrapper : public utki::Unique{
 				nullptr
 			);
 		if(this->eglSurface == EGL_NO_SURFACE){
-			throw morda::Exc("eglCreateWindowSurface() failed");
+			throw utki::Exc("eglCreateWindowSurface() failed");
 		}
 		utki::ScopeExit scopeExitEGLSurface([this](){
 			eglDestroySurface(this->eglDisplay, this->eglSurface);
@@ -400,13 +400,13 @@ struct WindowWrapper : public utki::Unique{
 
 			this->eglContext = eglCreateContext(this->eglDisplay, eglConfig, EGL_NO_CONTEXT, contextAttrs);
 			if(this->eglContext == EGL_NO_CONTEXT){
-				throw morda::Exc("eglCreateContext() failed");
+				throw utki::Exc("eglCreateContext() failed");
 			}
 		}
 
 		if(eglMakeCurrent(this->eglDisplay, this->eglSurface, this->eglSurface, this->eglContext) == EGL_FALSE){
 			eglDestroyContext(this->eglDisplay, this->eglContext);
-			throw morda::Exc("eglMakeCurrent() failed");
+			throw utki::Exc("eglMakeCurrent() failed");
 		}
 		utki::ScopeExit scopeExitEGLContext([this](){
 			eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -527,12 +527,13 @@ morda::real getDotsPerPt(Display* display){
 	kolme::Vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
 	kolme::Vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
 	
-	return App::findDotsPerPt(resolution, screenSizeMm);
+	return App::findDotsPerDp(resolution, screenSizeMm);
 }
 }//~namespace
 
 
-App::App(const WindowParams& requestedWindowParams) :
+App::App(std::string&& name, const WindowParams& requestedWindowParams) :
+		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
 #ifdef M_RENDER_OPENGL2
@@ -547,13 +548,13 @@ App::App(const WindowParams& requestedWindowParams) :
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
 				}
-			)
+			),
+		storageDir(initializeStorageDir(this->name))
 {
 #ifdef M_RASPBERRYPI
 	this->setFullscreen(true);
 #endif
 }
-
 
 
 namespace{
@@ -921,7 +922,7 @@ void App::quit()noexcept{
 
 
 int main(int argc, const char** argv){
-	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv, utki::Buf<std::uint8_t>());
+	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv);
 	
 	ASSERT(app)
 
