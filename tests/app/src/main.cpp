@@ -639,7 +639,7 @@ public:
 			this->showVirtualKeyboard();
 		};
 		
-		std::dynamic_pointer_cast<morda::PushButton>(c->findByName("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
+		std::dynamic_pointer_cast<morda::PushButton>(c->findByName("push_button_in_scroll_container"))->clicked = [](morda::PushButton&){
 			morda::Morda::inst().postToUiThread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
@@ -918,7 +918,7 @@ public:
 			auto b = c->findByNameAs<morda::PushButton>("showhide_mousecursor_button");
 			bool visible = true;
 			this->setMouseCursorVisible(visible);
-			b->clicked = [this, visible](morda::PushButton&) mutable{
+			b->clicked = [visible](morda::PushButton&) mutable{
 				visible = !visible;
 				mordavokne::App::inst().setMouseCursorVisible(visible);
 			};
