@@ -291,7 +291,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 			c->setVisible(w.isHovered());
 		}
 		if(w.isHovered()){
-			this->hoveredIndex = index;
+			this->hoveredIndex = int(index);
 		}else{
 			if(this->hoveredIndex > 0 && decltype(index)(this->hoveredIndex) == index){
 				this->hoveredIndex = -1;

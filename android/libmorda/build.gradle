@@ -12,8 +12,8 @@ def ndkInc = ndkDir + "/sysroot/usr/include"
 
 model {
     android {
-        compileSdkVersion = 25
-        buildToolsVersion = '25.0.2'
+        compileSdkVersion = 26
+        buildToolsVersion = '28.0.2'
 
         defaultConfig {
             minSdkVersion.apiLevel = 21
