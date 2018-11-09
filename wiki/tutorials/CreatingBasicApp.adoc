@@ -149,4 +149,3 @@ std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** ar
 ....
 Now we can run the app and press the button and see that it will do something :).
 
-Source code for this example is available link:https://github.com/igagis/morda/tree/master/examples/basic[here].
