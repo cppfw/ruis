@@ -118,10 +118,10 @@ public:
 		//set the widgets hierarchy to the application
 		morda::Morda::inst().setRootWidget(c);
 		
-		auto textLabel = c->findChildByNameAs<morda::TextLabel>("info_text");
+		auto textLabel = c->findByNameAs<morda::TextLabel>("info_text");
 		ASSERT(textLabel)
 		
-		auto button = c->findChildByNameAs<morda::PushButton>("hw_button");
+		auto button = c->findByNameAs<morda::PushButton>("hw_button");
 		
 		auto textLabelWeak = utki::makeWeak(textLabel);//make a weak pointer to the TextLabel widget.
 		
