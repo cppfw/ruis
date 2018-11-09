@@ -23,6 +23,15 @@
             "command": "make run",
             "problemMatcher": [],
             "dependsOn": "build"
+        },
+        {
+            "label": "rebuild",
+            "type": "shell",
+            "command": "",
+            "dependsOn":[
+                "clean", "build"
+            ],
+            "problemMatcher": []
         }
     ]
 }
