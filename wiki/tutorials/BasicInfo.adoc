@@ -2,7 +2,7 @@
 
 *morda* uses concept of _Widgets_ for structuring the Graphical User Interface (GUI).
 
-Common element of the GUI is called _Widget_ (window + gadget = widget). Basically, GUI is an hierarchy of widgets.
+Common element of the GUI is called _Widget_ (window + gadget = widget). Basically, GUI is a hierarchy of widgets.
 Simple widget represents a rectangular area on the screen, it can receive user input from mouse and keyboard.
 There is a _Container_ widget, this is a widget which can contain child widgets. It manages positions of its child widgets,
 dispatches user input to child widgets and renders them to screen.
