@@ -29,7 +29,7 @@ const auto selectorLayout_c = stob::parse(R"qwertyuiop(
 	Row{
 		layout{dx{max}}
 		Pile{
-			name{morda_dropdown_selection}
+			id{morda_dropdown_selection}
 			layout{dx{min}dy{max} weight{1}}
 		}
 		Widget{layout{dx{3dp}}}
@@ -50,13 +50,13 @@ const char* itemLayout_c = R"qwertyuiop(
 				dx{max}
 			}
 			MouseProxy{
-				name{morda_dropdown_mouseproxy}
+				id{morda_dropdown_mouseproxy}
 				layout{
 					dx{fill} dy{fill}
 				}
 			}
 			Color{
-				name{morda_dropdown_color}
+				id{morda_dropdown_color}
 				color{@{morda_color_highlight}}
 				visible{false}
 				layout{
@@ -69,7 +69,7 @@ const char* itemLayout_c = R"qwertyuiop(
 const char* contextMenuLayout_c = R"qwertyuiop(
 		Pile{
 			Widget{
-				name{minSizeSpacer}
+				id{minSizeSpacer}
 			}
 			NinePatch{
 				layout{
@@ -80,14 +80,14 @@ const char* contextMenuLayout_c = R"qwertyuiop(
 					layout{
 						dx{max}
 					}
-					name{morda_contextmenu_content}
+					id{morda_contextmenu_content}
 				}
 			}
 			MouseProxy{
 				layout{
 					dx{fill} dy{fill}
 				}
-				name{contextMenuMouseProxy}
+				id{contextMenuMouseProxy}
 			}
 		}
 	)qwertyuiop";
@@ -100,17 +100,17 @@ public:
 	size_t count() const noexcept override{
 		return this->widgets.size();
 	}
-	
+
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
 	}
-	
+
 
 	void recycle(size_t index, std::shared_ptr<Widget> w)override{
 //		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 
-	
+
 	void add(std::unique_ptr<stob::Node> w){
 		this->widgets.push_back(std::move(w));
 	}
@@ -132,10 +132,10 @@ void DropDownSelector::showDropdownMenu() {
 	ASSERT(np)
 
 	auto minSizeSpacer = np->findByName("minSizeSpacer");
-	
+
 	auto& lp = minSizeSpacer->getLayoutParams();
 	lp.dim.x = this->rect().d.x;
-	
+
 	auto va = np->findByNameAs<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
@@ -144,7 +144,7 @@ void DropDownSelector::showDropdownMenu() {
 	}
 
 	this->hoveredIndex = -1;
-	
+
 	np->getByNameAs<MouseProxy>("contextMenuMouseProxy").mouseButton
 			= [this](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
 				if(!isDown){
@@ -153,7 +153,7 @@ void DropDownSelector::showDropdownMenu() {
 
 				return true;
 			};
-	
+
 	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
@@ -213,23 +213,23 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 
 		this->showDropdownMenu();
 	};
-	
+
 	if(!chain){
 		return;
 	}
-	
+
 	const stob::Node* n = chain->thisOrNextNonProperty().node();
-	
+
 	if(!n){
 		return;
 	}
-	
+
 	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-	
+
 	for(; n; n = n->nextNonProperty().node()){
 		p->add(n->clone());
 	}
-	
+
 	this->setItemsProvider(std::move(p));
 }
 
@@ -237,7 +237,7 @@ void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider)
 	if(provider && provider->dd){
 		throw Exc("DropDownSelector::setItemsProvider(): given provider is already set to some DropDownSelector");
 	}
-	
+
 	if(this->provider){
 		this->provider->dd = nullptr;
 	}
@@ -256,20 +256,20 @@ void DropDownSelector::ItemsProvider::notifyDataSetChanged(){
 
 void DropDownSelector::handleDataSetChanged(){
 	this->selectionContainer.removeAll();
-	
+
 	if(!this->provider){
 		return;
 	}
 	if(this->selectedItem_v >= this->provider->count()){
 		return;
 	}
-	
+
 	this->selectionContainer.add(this->provider->getWidget(this->selectedItem_v));
 }
 
 void DropDownSelector::setSelection(size_t i){
 	this->selectedItem_v = i;
-	
+
 	this->handleDataSetChanged();
 }
 

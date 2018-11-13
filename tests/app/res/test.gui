@@ -27,7 +27,7 @@ defs{
 KeyProxy{
 
 Overlay{
-	name {overlay}
+	id {overlay}
 	layout{
 		dx{max} dy{max}
 	}
@@ -50,7 +50,7 @@ Container{
 			bbb{dDd}
 //			clr{0xffff0000}
 			clr{@{another_color}}
-			
+
 			lllayout{
 				dy{max} dx{max}
 			}
@@ -85,7 +85,7 @@ Container{
 					dx{max}
 				}
 
-				name{dropdownselector}
+				id{dropdownselector}
 
 				Text{text{item0}}
 				Text{text{item1}}
@@ -100,19 +100,19 @@ Container{
 				Text{text{item10}}
 			}
 			Text{
-				name{dropdownselector_selection}
+				id{dropdownselector_selection}
 				text{unknown}
 			}
 			Left{
 				PushButton{
-					name{showhide_mousecursor_button}
+					id{showhide_mousecursor_button}
 
 					Text{
 						text{"show/hide mouse"}
 					}
 				}
 				PushButton{
-					name{fullscreen_button}
+					id{fullscreen_button}
 
 					Text{
 						text{"toggle fullscreen"}
@@ -171,7 +171,7 @@ Container{
 				x{50} y{100}
 				dx{220} dy{100}
 
-				name { someContainer }
+				id { someContainer }
 
 				clip {true}
 
@@ -180,7 +180,7 @@ Container{
 				}
 
 				Text{
-					name {label1}
+					id {label1}
 					text {trololo}
 					padding {10 20 30 40}
 
@@ -192,7 +192,7 @@ Container{
 				}
 
 				Text{
-					name {label2}
+					id {label2}
 					text {"blah bla"}
 					padding {0}
 
@@ -204,7 +204,7 @@ Container{
 				}
 
 				PushButton{
-					name {show_VK_button}
+					id {show_VK_button}
 					x{50} y{80}
 					dx{10} dy{30}
 
@@ -232,7 +232,7 @@ Container{
 				}
 				MouseProxy{
 					layout{dx{fill} dy{fill}}
-					name{horizontal_list_mouseproxy}
+					id{horizontal_list_mouseproxy}
 				}
 			}
 			Pile{
@@ -246,7 +246,7 @@ Container{
 						dx{fill}
 						dy{fill}
 					}
-					name{horizontal_list}
+					id{horizontal_list}
 
 					Text{
 						text{item1|}
@@ -290,12 +290,12 @@ Container{
 					layout{
 						dx{fill} dy{fill}
 					}
-					name{horizontal_list_resize_proxy}
+					id{horizontal_list_resize_proxy}
 				}
 			}
 
 			HScrollBar{
-				name{horizontal_list_slider}
+				id{horizontal_list_slider}
 
 				layout{
 					dx{fill}
@@ -335,7 +335,7 @@ Container{
 						weight{1}
 					}
 					TreeView{
-						name{treeview_widget}
+						id{treeview_widget}
 						clip{true}
 						layout{
 							dx{fill} dy{fill}
@@ -345,14 +345,14 @@ Container{
 						layout{
 							dx{fill} dy{fill}
 						}
-						name{treeview_resize_proxy}
+						id{treeview_resize_proxy}
 					}
 				}
 
-				
+
 				VScrollBar{
 
-					name{treeview_vertical_slider}
+					id{treeview_vertical_slider}
 
 					layout{
 						dx{min} dy{max}
@@ -361,7 +361,7 @@ Container{
 			}
 
 			HScrollBar{
-				name{treeview_horizontal_slider}
+				id{treeview_horizontal_slider}
 
 				layout{
 					dx{max}
@@ -375,19 +375,19 @@ Container{
 					text{Insert:}
 				}
 				PushButton{
-					name{insert_before}
+					id{insert_before}
 					Text{
 						text{"before"}
 					}
 				}
 				PushButton{
-					name{insert_after}
+					id{insert_after}
 					Text{
 						text{"after"}
 					}
 				}
 				PushButton{
-					name{insert_child}
+					id{insert_child}
 					Text{
 						text{"child"}
 					}
@@ -405,7 +405,7 @@ Container{
 
 		Row{
 
-			name{horizontal_container}
+			id{horizontal_container}
 
 			layout{
 				dx{max} dy{max}
@@ -430,7 +430,7 @@ Container{
 			}
 
 			VScrollBar{
-				name {"vertical slider"}
+				id {"vertical slider"}
 
 				layout{
 					dx{40} dy{max} //TODO: min min
@@ -456,7 +456,7 @@ Container{
 */
 
 		CubeWidget{
-			name{cube_widget}
+			id{cube_widget}
 			layout{
 				dx{max} dy{max}
 			}
@@ -484,7 +484,7 @@ Container{
 				layout{dx{max}}
 
 				Tab{
-					name{tab1}
+					id{tab1}
 					Text{text{tab1}}
 				}
 				Tab{
@@ -511,7 +511,7 @@ Container{
 						Row{
 							PushButton{Text{text{button!!!}}}
 							ImagePushButton{
-								name{image_push_button}
+								id{image_push_button}
 								layout{
 									dx{50dp} dy{50dp}
 								}
@@ -528,7 +528,7 @@ Container{
 			Widget{layout{dy{5dp}}}
 
 			TextInputLine{
-				name{text_input}
+				id{text_input}
 
 				text{"Hello Wrodl!!!"}
 
@@ -576,7 +576,7 @@ Container{
 						weight{1}
 					}
 					ScrollArea{
-						name{scroll_area}
+						id{scroll_area}
 
 						clip{true}
 
@@ -607,7 +607,7 @@ Container{
 						}
 
 						PushButton{
-							name{push_button_in_scroll_container}
+							id{push_button_in_scroll_container}
 							x{10mm} y{20mm}
 
 							Text{
@@ -621,13 +621,13 @@ Container{
 						layout{
 							dx{max} dy{max}
 						}
-						name{scroll_area_resize_proxy}
+						id{scroll_area_resize_proxy}
 					}
 				}
-				
+
 				VScrollBar{
 
-					name{scroll_area_vertical_slider}
+					id{scroll_area_vertical_slider}
 
 					layout{
 						dx{min} dy{max}
@@ -636,7 +636,7 @@ Container{
 			}
 
 			HScrollBar{
-				name{scroll_area_horizontal_slider}
+				id{scroll_area_horizontal_slider}
 
 				layout{
 					dx{max}
@@ -668,7 +668,7 @@ Container{
 				Text{text{"Hello world!"}}
 			}
 		}
-		
+
 	}
 
 	Window{
@@ -684,7 +684,7 @@ Container{
 
 			MouseProxy{
 				layout{dx{50dp} dy{fill}}
-				name{list_mouseproxy}
+				id{list_mouseproxy}
 			}
 
 
@@ -694,7 +694,7 @@ Container{
 					weight{1}
 				}
 				VList{
-					name{vertical_list}
+					id{vertical_list}
 					layout{
 						dx{max} dy{max}
 					}
@@ -832,12 +832,12 @@ Container{
 					layout{
 						dx{max} dy{max}
 					}
-					name{vertical_list_resize_proxy}
+					id{vertical_list_resize_proxy}
 				}
 			}
 
 			VScrollBar{
-				name{vertical_list_slider}
+				id{vertical_list_slider}
 				layout{
 					dy{max}
 				}

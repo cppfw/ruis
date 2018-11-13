@@ -29,7 +29,7 @@ const char* layout_c = R"qwertyuiop(
 			Row{
 				layout{dx{max}}
 				ImageToggle{
-					name{switch}
+					id{switch}
 					look{
 						unpressed{morda_img_dropdown_arrow}
 						pressed{morda_img_dropright_arrow}
@@ -39,13 +39,13 @@ const char* layout_c = R"qwertyuiop(
 					layout{dx{@{marHor}}}
 				}
 				Pile{
-					name{title}
+					id{title}
 				}
 			}
 		}
 	}
 	Pile{
-		name{content}
+		id{content}
 	}
 )qwertyuiop";
 }
@@ -56,18 +56,18 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 {
 	this->contentArea = this->findByNameAs<Pile>("content");
 	ASSERT(this->contentArea)
-	
+
 	this->title_v = this->findByNameAs<Pile>("title");
 	ASSERT(this->title_v)
-	
+
 	if(auto p = getProperty(chain, "title")){
 		this->title_v->add(*p);
 	}
-	
+
 	if(chain){
 		this->contentArea->add(*chain);
 	}
-	
+
 	{
 		auto sw = this->findByNameAs<ToggleButton>("switch");
 		ASSERT(sw)

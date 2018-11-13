@@ -12,6 +12,14 @@
             ]
         },
         {
+            "label": "build_debug",
+            "type": "shell",
+            "command": "make autojobs=true debug=true",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "clean",
             "type": "shell",
             "command": "make clean",
@@ -25,12 +33,22 @@
             "dependsOn": "build"
         },
         {
+            "label": "run_debug",
+            "type": "shell",
+            "command": "make run debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
+        },
+        {
             "label": "rebuild",
             "type": "shell",
-            "command": "",
-            "dependsOn":[
-                "clean", "build"
-            ],
+            "command": "make clean && make autojobs=true",
+            "problemMatcher": []
+        },
+        {
+            "label": "rebuild_debug",
+            "type": "shell",
+            "command": "make clean && make autojobs=true debug=true",
             "problemMatcher": []
         }
     ]

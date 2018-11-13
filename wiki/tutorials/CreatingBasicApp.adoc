@@ -56,14 +56,14 @@ Let's describe our GUI using the GUI script. Create a file named _main.gui.stob_
 Pile{// frame layout places widgets in the center one on top of another
 	Column{ //vertical area layout places widgets one below each other
 		PushButton{
-			name{hw_button} //we can find this button by name from code
+			id{hw_button} //we can find this button by ID from code
 			TextLabel{
 				text{"Hello world!!!"}
 			}
 		}
 
 		TextLabel{
-			name{info_text} //we can find this label by name from code
+			id{info_text} //we can find this label by ID from code
 			text{Information}
 		}
 	}
@@ -80,12 +80,12 @@ public:
 			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
 		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
-		
+
 		//Inflate widgets hierarchy from GUI description script
 		auto c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.stob")
 			);
-		
+
 		//set the widgets hierarchy to the application
 		morda::Morda::inst().setRootWidget(c);
 	}
@@ -109,24 +109,24 @@ public:
 			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
 		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
-		
+
 		//Inflate widgets hierarchy from GUI description script
 		auto c = morda::Morda::inst().inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.stob")
 			);
-		
+
 		//set the widgets hierarchy to the application
 		morda::Morda::inst().setRootWidget(c);
-		
-		auto textLabel = c->findByNameAs<morda::TextLabel>("info_text");
+
+		auto textLabel = c->findByIdAs<morda::TextLabel>("info_text");
 		ASSERT(textLabel)
-		
-		auto button = c->findByNameAs<morda::PushButton>("hw_button");
-		
+
+		auto button = c->findByIdAs<morda::PushButton>("hw_button");
+
 		auto textLabelWeak = utki::makeWeak(textLabel);//make a weak pointer to the TextLabel widget.
-		
+
 		bool even = true;
-		
+
 		//connect some action on button click
 		button->clicked = [textLabelWeak, even](morda::PushButton&) mutable {
 			if(auto tl = textLabelWeak.lock()){

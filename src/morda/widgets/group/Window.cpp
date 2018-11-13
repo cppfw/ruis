@@ -21,18 +21,18 @@ const char* windowDesc_c = R"qwertyuiop(
 				layout{dx{fill}}
 
 				MouseProxy{
-					name{morda_lt_proxy}
+					id{morda_lt_proxy}
 				}
 
 				MouseProxy{
-					name{morda_t_proxy}
+					id{morda_t_proxy}
 					layout{
 						dx{0} dy{fill} weight{1}
 					}
 				}
 
 				MouseProxy{
-					name{morda_rt_proxy}
+					id{morda_rt_proxy}
 				}
 			}
 
@@ -41,9 +41,9 @@ const char* windowDesc_c = R"qwertyuiop(
 					weight{1}
 					dx{max}
 				}
-				
+
 				MouseProxy{
-					name{morda_l_proxy}
+					id{morda_l_proxy}
 					layout{dy{fill}}
 				}
 
@@ -63,14 +63,14 @@ const char* windowDesc_c = R"qwertyuiop(
 						clip{true}
 
 						MouseProxy{
-							name{morda_caption_proxy}
+							id{morda_caption_proxy}
 							layout{
 								dx{max} dy{max}
 							}
 						}
 
 						Color{
-							name{morda_window_title_bg}
+							id{morda_window_title_bg}
 							layout{
 								dx{max} dy{max}
 							}
@@ -92,14 +92,14 @@ const char* windowDesc_c = R"qwertyuiop(
 								}
 
 								Text{
-									name{morda_title}
+									id{morda_title}
 								}
 							}
 						}
 					}
 
 					Pile{
-						name{morda_content}
+						id{morda_content}
 						clip{true}
 						layout{
 							dx{fill} dy{0}
@@ -109,7 +109,7 @@ const char* windowDesc_c = R"qwertyuiop(
 				}
 
 				MouseProxy{
-					name{morda_r_proxy}
+					id{morda_r_proxy}
 					layout{dy{fill}}
 				}
 			}
@@ -119,11 +119,11 @@ const char* windowDesc_c = R"qwertyuiop(
 					dx{fill}
 				}
 				MouseProxy{
-					name{morda_lb_proxy}
+					id{morda_lb_proxy}
 				}
 
 				MouseProxy{
-					name{morda_b_proxy}
+					id{morda_b_proxy}
 					layout{
 						dy{fill}
 						dx{0}
@@ -132,7 +132,7 @@ const char* windowDesc_c = R"qwertyuiop(
 				}
 
 				MouseProxy{
-					name{morda_rb_proxy}
+					id{morda_rb_proxy}
 				}
 			}
 		}
@@ -146,9 +146,9 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 	if(this->children().size() == 2){
 		this->remove(this->children().begin());
 	}
-	
+
 	ASSERT(this->children().size() == 1)
-	
+
 	if(w){
 		this->add(std::move(w), this->children().begin());
 	}
@@ -161,14 +161,14 @@ morda::Window::Window(const stob::Node* chain) :
 		Pile(stob::parse(windowDesc_c).get())
 {
 	this->setupWidgets();
-	
+
 	if(auto n = getProperty(chain, "title")){
 		this->setTitle(n->value());
 	}
-	
+
 	{
 		auto ch = getProperty(chain, "look");
-		
+
 		if(auto n = getProperty(ch, "titleColorTopmost")){
 			this->titleBgColorTopmost = n->asUint32();
 		}else{
@@ -215,10 +215,10 @@ morda::Window::Window(const stob::Node* chain) :
 			this->setBorders(borders);
 		}
 	}
-	
+
 	//this should go after initializing borders
 	this->emptyMinDim = this->measure(Vec2r(-1));
-	
+
 	if(chain){
 		this->contentArea->add(*chain);
 	}
@@ -227,13 +227,13 @@ morda::Window::Window(const stob::Node* chain) :
 void morda::Window::setupWidgets(){
 	this->contentArea = this->findByNameAs<Pile>("morda_content");
 	ASSERT(this->contentArea)
-	
+
 	this->title = this->findByNameAs<Text>("morda_title");
 	ASSERT(this->title)
-	
+
 	this->titleBg = this->findByNameAs<Color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
-	
+
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
 		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 			if(button != MouseButton_e::LEFT){
@@ -249,11 +249,11 @@ void morda::Window::setupWidgets(){
 			return false;
 		});
 	};
-	
+
 	{
 		auto caption = this->findByNameAs<MouseProxy>("morda_caption_proxy");
 		ASSERT(caption)
-	
+
 		caption->mouseButton = getButtonFunc(this->captionCaptured);
 
 		caption->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -264,7 +264,7 @@ void morda::Window::setupWidgets(){
 			return false;
 		};
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_lt_proxy");
 		ASSERT(w)
@@ -281,8 +281,8 @@ void morda::Window::setupWidgets(){
 		};
 		this->ltBorder = w;
 	}
-	
-	{	
+
+	{
 		auto w = this->findByNameAs<MouseProxy>("morda_lb_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftBottomResizeCaptured);
@@ -315,7 +315,7 @@ void morda::Window::setupWidgets(){
 		};
 		this->rtBorder = w;
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_rb_proxy");
 		ASSERT(w)
@@ -331,7 +331,7 @@ void morda::Window::setupWidgets(){
 		};
 		this->rbBorder = w;
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_l_proxy");
 		ASSERT(w)
@@ -347,7 +347,7 @@ void morda::Window::setupWidgets(){
 		};
 		this->lBorder = w;
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_r_proxy");
 		ASSERT(w)
@@ -362,7 +362,7 @@ void morda::Window::setupWidgets(){
 		};
 		this->rBorder = w;
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_t_proxy");
 		ASSERT(w)
@@ -378,7 +378,7 @@ void morda::Window::setupWidgets(){
 		};
 		this->tBorder = w;
 	}
-	
+
 	{
 		auto w = this->findByNameAs<MouseProxy>("morda_b_proxy");
 		ASSERT(w)
@@ -402,20 +402,20 @@ void morda::Window::setTitle(const std::string& str){
 }
 
 void morda::Window::setBorders(Sidesr borders) {
-	this->lBorder->getLayoutParams().dim.x = borders.left();	
+	this->lBorder->getLayoutParams().dim.x = borders.left();
 	this->tBorder->getLayoutParams().dim.y = borders.top();
 	this->rBorder->getLayoutParams().dim.x = borders.right();
 	this->bBorder->getLayoutParams().dim.y = borders.bottom();
-	
+
 	this->lbBorder->getLayoutParams().dim.x = borders.left();
 	this->lbBorder->getLayoutParams().dim.y = borders.bottom();
-	
+
 	this->rbBorder->getLayoutParams().dim.x = borders.right();
 	this->rbBorder->getLayoutParams().dim.y = borders.bottom();
-	
+
 	this->ltBorder->getLayoutParams().dim.x = borders.left();
 	this->ltBorder->getLayoutParams().dim.y = borders.top();
-	
+
 	this->rtBorder->getLayoutParams().dim.x = borders.right();
 	this->rtBorder->getLayoutParams().dim.y = borders.top();
 }
@@ -430,9 +430,9 @@ bool morda::Window::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseBut
 				}
 			);
 	}
-	
+
 	this->Container::onMouseButton(isDown, pos, button, pointerId);
-	
+
 	return true;
 }
 
@@ -448,25 +448,25 @@ void Window::makeTopmost(){
 	if(!this->parent()){
 		return;
 	}
-	
+
 	ASSERT(this->parent()->children().size() != 0)
-	
+
 	if(this->parent()->children().size() == 1){
 		return;
 	}
-	
+
 	auto prevTopmost = this->parent()->children().rbegin()->get();
 	ASSERT(prevTopmost)
 	if(prevTopmost == this){
 		return;//already topmost
 	}
-	
+
 	Container* p = this->parent();
-	
+
 	p->changeChildZPosition(*this, p->children().end());
-	
+
 	this->updateTopmost();
-	
+
 	if(auto pt = dynamic_cast<Window*>(prevTopmost)){
 		pt->updateTopmost();
 	}
@@ -477,9 +477,9 @@ bool Window::isTopmost()const noexcept{
 	if(!this->parent()){
 		return false;
 	}
-	
+
 	ASSERT(this->parent()->children().size() != 0)
-	
+
 	return this->parent()->children().back().get() == this;
 }
 

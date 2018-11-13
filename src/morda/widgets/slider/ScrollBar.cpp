@@ -18,7 +18,7 @@ namespace{
 
 const char* DDescription = R"qwertyuiop(
 		NinePatch{
-			name{morda_slider_bg}
+			id{morda_slider_bg}
 			layout{
 				dx{max} dy{max}
 			}
@@ -28,16 +28,16 @@ const char* DDescription = R"qwertyuiop(
 				dx{max} dy{max}
 			}
 			Pile{
-				name{morda_handle}
+				id{morda_handle}
 				NinePatch{
-					name{morda_handle_image}
+					id{morda_handle_image}
 
 					layout{
 						dx{max} dy{max}
 					}
 				}
 				MouseProxy{
-					name{morda_handle_proxy}
+					id{morda_handle_proxy}
 					layout{
 						dx{fill} dy{fill}
 					}
@@ -66,7 +66,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
 		}
 	}
-	
+
 	{
 		auto hi = this->findByNameAs<NinePatch>("morda_handle_image");
 		ASSERT(hi)
@@ -76,7 +76,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
 		}
 	}
-	
+
 	auto hp = this->findByNameAs<MouseProxy>("morda_handle_proxy");
 	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
 		if(button != MouseButton_e::LEFT){
@@ -100,7 +100,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 			}
 		}
 	};
-	
+
 	hp->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
 		if(!this->isGrabbed){
 			return false;
@@ -116,14 +116,14 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 		utki::clampRange(newPos, 0.0f, maxPos);
 
 		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
-		
+
 		morda::Vec2r newPosition(0);
 		newPosition[longIndex] = newPos;
 
 		this->handle.moveTo(newPosition);
-		
+
 		ASSERT(maxPos >= 0)
-				
+
 		if(maxPos > 0){
 			//update factor
 			this->setFraction(newPos / maxPos);
@@ -137,7 +137,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 
 void ScrollBar::onFractionChange() {
 	this->layOut();
-	
+
 	this->FractionWidget::onFractionChange();
 }
 
@@ -145,20 +145,20 @@ void ScrollBar::onFractionChange() {
 
 void ScrollBar::layOut(){
 	this->Pile::layOut();
-	
+
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
-	
+
 	morda::Vec2r newSize(this->rect().d);
-	
+
 	newSize[longIndex] = ::round(newSize[longIndex] * this->bandSizeFraction());
-	
+
 	auto minHandleSize =  this->handle.measure(Vec2r(-1));
-	
+
 	utki::clampBottom(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex]));
-	
+
 	this->handle.resize(newSize);
-	
+
 	//move
 	{
 		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
@@ -179,6 +179,6 @@ void ScrollBar::layOut(){
 
 void ScrollBar::onBandSizeChanged(){
 	this->layOut();
-	
+
 	this->FractionBandWidget::onBandSizeChanged();
 }

@@ -22,7 +22,7 @@ Widget::Widget(const stob::Node* chain){
 	}else{
 		this->rectangle.p.x = 0;
 	}
-	
+
 	if(const stob::Node* n = getProperty(chain, "y")){
 		this->rectangle.p.y = morda::dimValueFromSTOB(*n);
 	}else{
@@ -34,15 +34,21 @@ Widget::Widget(const stob::Node* chain){
 	}else{
 		this->rectangle.d.x = 0;
 	}
-	
+
 	if(const stob::Node* n = getProperty(chain, "dy")){
 		this->rectangle.d.y = morda::dimValueFromSTOB(*n);
 	}else{
 		this->rectangle.d.y = 0;
 	}
 
+	//TODO: remove reading 'name' because it was deprecated in favor of id
 	if(const stob::Node* p = getProperty(chain, "name")){
-		this->nameOfWidget = p->value();
+		TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << p->value() << "'), use 'id' instead" << std::endl)
+		this->id = p->value();
+	}
+
+	if(const stob::Node* p = getProperty(chain, "id")){
+		this->id = p->value();
 	}
 
 	if(const stob::Node* p = getProperty(chain, "clip")){
@@ -50,19 +56,19 @@ Widget::Widget(const stob::Node* chain){
 	}else{
 		this->clip_v = false;
 	}
-	
+
 	if(const stob::Node* p = getProperty(chain, "cache")){
 		this->cache = p->asBool();
 	}else{
 		this->cache = false;
 	}
-	
+
 	if(const stob::Node* p = getProperty(chain, "visible")){
 		this->isVisible_v = p->asBool();
 	}else{
 		this->isVisible_v = true;
 	}
-	
+
 	if(const stob::Node* p = getProperty(chain, "enabled")){
 		this->isEnabled_v = p->asBool();
 	}else{
@@ -78,7 +84,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 	}else{
 		this->dim.x = LayoutParams::min_c;
 	}
-	
+
 	if(auto n = getProperty(chain, "dy")){
 		this->dim.y = real(dimValueFromLayoutStob(*n));
 	}else{
@@ -88,8 +94,8 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::findByName(const std::string& name)noexcept{
-	if(this->name() == name){
+std::shared_ptr<Widget> Widget::findById(const std::string& id)noexcept{
+	if(this->id == id){
 		return this->sharedFromThis(this);
 	}
 	return nullptr;
@@ -130,13 +136,13 @@ std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
 	if(!this->parent()){
 		throw morda::Exc("this widget is not added to any parent");
 	}
-	
+
 	this->parent()->add(w, this->parentIter_v);
-	
+
 	if(w && !w->layout){
 		w->layout = std::move(this->layout);
 	}
-	
+
 	return this->removeFromParent();
 }
 
@@ -159,7 +165,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	if(!this->rect().d.isPositive()){
 		return;
 	}
-	
+
 	if(this->cache){
 		if(this->cacheDirty){
 			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
@@ -172,14 +178,14 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 				ASSERT(this->cacheTex->dim() == this->rect().d)
 				this->cacheTex = this->renderToTexture(std::move(this->cacheTex));
 			}
-			
+
 			morda::inst().renderer().setScissorEnabled(scissorTestWasEnabled);
 			this->cacheDirty = false;
 		}
-		
+
 		//After rendering to texture it is most likely there will be transparent areas, so enable simple blending
 		applySimpleAlphaBlending();
-		
+
 		this->renderFromCache(matrix);
 	}else{
 		if(this->clip_v){
@@ -230,7 +236,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 
 std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> reuse) const {
 	std::shared_ptr<Texture2D> tex;
-	
+
 	if(reuse && reuse->dim() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
@@ -240,39 +246,39 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 				nullptr
 			);
 	}
-	
+
 	auto& r = morda::inst().renderer();
-	
+
 	ASSERT(tex)
-	
+
 	r.setFramebuffer(r.factory->createFramebuffer(tex));
-	
+
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
-	
+
 	auto oldViewport = morda::inst().renderer().getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){
 		morda::inst().renderer().setViewport(oldViewport);
 	});
-	
+
 	morda::inst().renderer().setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
-	
+
 	morda::inst().renderer().clearFramebuffer();
-	
+
 	Matr4r matrix = morda::inst().renderer().initialMatrix;
 	matrix.translate(-1, 1);
 	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
-	
+
 	this->render(matrix);
-	
+
 	r.setFramebuffer(nullptr);
-	
+
 	return tex;
 }
 
 void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
-	
+
 	auto& r = morda::inst().renderer();
 	ASSERT(this->cacheTex)
 	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
@@ -359,9 +365,9 @@ Vec2r Widget::calcPosInParent(Vec2r pos, const Widget* parent) {
 	if(parent == this || !this->parent()){
 		return pos;
 	}
-	
+
 	ASSERT(this->parent())
-	
+
 	return this->parent()->calcPosInParent(this->rect().p + pos, parent);
 }
 
@@ -370,7 +376,7 @@ Widget::LayoutParams& Widget::getLayoutParams() {
 	if(!this->parent()){
 		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
-	
+
 	return this->parent()->getLayoutParams(*this);
 }
 
@@ -379,14 +385,14 @@ const Widget::LayoutParams& Widget::getLayoutParams()const {
 	if(!this->parent()){
 		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
-	
+
 	return this->parent()->getLayoutParams(*this);
 }
 
-Widget& Widget::getByName(const std::string& name) {
-	auto w = this->findByName(name);
+Widget& Widget::getById(const std::string& id) {
+	auto w = this->findById(id);
 	if(!w){
-		throw WidgetNotFoundExc(name);
+		throw WidgetNotFoundExc(id);
 	}
 	return *w;
 }
@@ -396,14 +402,14 @@ void Widget::setEnabled(bool enable) {
 	if(this->isEnabled_v == enable){
 		return;
 	}
-	
+
 	this->isEnabled_v = enable;
-	
+
 	//Un-hover this widget if it becomes disabled because it is not supposed to receive mouse input.
 	if(!this->isEnabled()){
 		this->setUnhovered();
 	}
-	
+
 	this->onEnabledChanged();
 }
 
@@ -428,7 +434,7 @@ void Widget::setHovered(bool isHovered, unsigned pointerID) {
 		return;
 	}
 //	TRACE(<< "Widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
-	
+
 	if (isHovered) {
 		ASSERT(!this->isHovered(pointerID))
 		this->hovered.insert(pointerID);
@@ -443,11 +449,11 @@ void Widget::setHovered(bool isHovered, unsigned pointerID) {
 
 Vec2r Widget::posInAncestor(const Widget& ancestor) {
 	Vec2r ret = this->rect().p;
-	
+
 	if(this->parent() && static_cast<const Widget*>(this->parent()) != &ancestor){
 		ret += this->parent()->posInAncestor(ancestor);
 	}
-	
+
 	return ret;
 }
 

@@ -157,15 +157,14 @@ public:
 	std::shared_ptr<Texture2D> renderToTexture(std::shared_ptr<Texture2D> reuse = nullptr)const;
 
 private:
-	//logical ID of the widget
-	std::string nameOfWidget;
-
 	bool relayoutNeeded = true;
 
 	std::unique_ptr<stob::Node> layout;
 
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
+	std::string id;
+
 	/**
 	 * @brief Get layout parameters of the widget.
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
@@ -195,8 +194,10 @@ public:
 	 * @brief Get name of the widget.
 	 * @return Name of the widget.
 	 */
+	//TODO: remove deprecated code
 	const std::string& name()const noexcept{
-		return this->nameOfWidget;
+		TRACE(<< "DEPRECATED!!! name is deprecated, use id" << std::endl)
+		return this->id;
 	}
 
 	/**
@@ -276,7 +277,7 @@ public:
 
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.
-	 * @param matrix - transformation matrix which transforms point (0,0) to left bottom corner point of the widget.
+	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
 	kolme::Recti computeViewportRect(const Matr4r& matrix)const noexcept;
@@ -312,29 +313,42 @@ public:
 	}
 
 	/**
-	 * @brief Find widget by name.
-	 * Find a widget by name in the widget hierarchy. Since simple Widget cannot have children,
-	 * this implementation just checks if name of this widget is the looked up name and if so it returns
+	 * @brief Find widget by ID.
+	 * Find a widget by ID in the widget hierarchy. Since simple Widget cannot have children,
+	 * this implementation just checks if ID of this widget is the looked up ID and if so it returns
 	 * pointer to this widget or nullptr otherwise.
-	 * @param name - name of the widget to search for.
+	 * @param id - ID of the widget to search for.
 	 * @return pointer to the widget if found.
-	 * @return nullptr if no widget with given name found.
+	 * @return nullptr if there is no widget with given ID found.
 	 */
-	virtual std::shared_ptr<Widget> findByName(const std::string& name)noexcept;
+	virtual std::shared_ptr<Widget> findById(const std::string& id)noexcept;
+
+
+	//TODO: remove deprecated code
+	std::shared_ptr<Widget> findByName(const std::string& name)noexcept{
+		TRACE(<< "DEPRECATED!!! findByName() is deprecated, use findById()" << std::endl)
+		return this->findById(name);
+	}
 
 	/**
-	 * @brief Find widget by name.
-	 * Same as findByName() but also tries to cast the widget object to a specified class.
-	 * @param name - name of the widget to search for.
+	 * @brief Find widget by ID.
+	 * Same as findById() but also tries to cast the widget object to a specified class.
+	 * @param id - ID of the widget to search for.
 	 * @return pointer to the widget if found.
-	 * @return nullptr if no widget with given name found or if the widget could not be cast to specified class.
+	 * @return nullptr if there is no widget with given ID found or if the widget could not be cast to specified class.
 	 */
-	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
-		return std::dynamic_pointer_cast<T>(this->findByName(name));
+	template <typename T> std::shared_ptr<T> findByIdAs(const std::string& id)noexcept{
+		return std::dynamic_pointer_cast<T>(this->findById(id));
 	}
-	
+
+	//TODO: remove deprecated code
+	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
+		TRACE(<< "DEPRECATED!!! findByNameAs() is deprecated, use findByIdAs()" << std::endl)
+		return this->findByIdAs<T>(name);
+	}
+
 	/**
-	 * @brief Child widget width requested name is not found within the parent container.
+	 * @brief Child widget width requested ID is not found within the parent container.
 	 */
 	class WidgetNotFoundExc : public morda::Exc{
 	public:
@@ -344,22 +358,34 @@ public:
 	};
 
 	/**
-	 * @brief Get child by name.
-	 * @param name - name of the child to get.
+	 * @brief Get child by ID.
+	 * @param id - ID of the child to get.
 	 * @return reference to the child.
-	 * @throw ChildNotFoundExc - if no child with given name has been found.
+	 * @throw ChildNotFoundExc - if no child with given ID has been found.
 	 */
-	Widget& getByName(const std::string& name);
+	Widget& getById(const std::string& id);
+
+	//TODO: remove deprecated code
+	Widget& getByName(const std::string& name){
+		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use getById()" << std::endl)
+		return this->getById(name);
+	}
 
 	/**
-	 * @brief Get child widget of specific type by its name.
-	 * @param name - name of the widget to get.
+	 * @brief Get child widget of specific type by its ID.
+	 * @param id - ID of the widget to get.
 	 * @return reference to the requested child widget.
-	 * @throw WidgetNotFoundExc - if no child with given name has been found.
+	 * @throw WidgetNotFoundExc - if no child with given ID has been found.
 	 * @throw std::bad_cast - if requested child widget is not of the specified type.
 	 */
+	template <typename T> T& getByIdAs(const std::string& id){
+		return dynamic_cast<T&>(this->getById(id));
+	}
+
+	//TODO: remove deprecated code
 	template <typename T> T& getByNameAs(const std::string& name){
-		return dynamic_cast<T&>(this->getByName(name));
+		TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use getByIdAs()" << std::endl)
+		return this->getByIdAs<T>(name);
 	}
 
 	//TODO: check if this method belongs to Container
@@ -562,7 +588,7 @@ public:
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
 	virtual void onEnabledChanged(){}
-	
+
 	/**
 	 * @brief Check if widget can receive user input.
 	 * Checks if widget is enabled and visible, so it can receive user input.

@@ -20,9 +20,9 @@ Container::Container(const stob::Node* chain) :
 
 Widget::LayoutParams& Container::getLayoutParams(Widget& w){
 	this->setRelayoutNeeded();
-	
+
 	auto& lp = const_cast<std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type>(this)->getLayoutParams(w);
-	
+
 	return const_cast<std::add_lvalue_reference<std::remove_const<std::remove_reference<decltype(lp)>::type>::type>::type>(lp);
 }
 
@@ -30,11 +30,11 @@ const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
 	if(w.parent() && w.parent() != this){
 		throw morda::Exc("Container::getLayoutParams(): the widget is added to another container");
 	}
-	
+
 	if(!w.layoutParams){
 		w.layoutParams = this->createLayoutParams(w.layout.get());
 	}
-	
+
 	return *w.layoutParams;
 }
 
@@ -66,9 +66,9 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 //	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
-	
+
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	
+
 	//check if mouse captured
 	{
 		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
@@ -94,33 +94,33 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 			this->mouseCaptureMap.erase(i);
 		}
 	}
-	
+
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
-		
+
 		if(!c->isInteractive()){
 			continue;
 		}
-		
+
 		if(!c->rect().overlaps(pos)){
 			continue;
 		}
-		
+
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
 		c->setHovered(true, pointerId);
 		if(c->onMouseButton(isDown, pos - c->rect().p, button, pointerId)){
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
-			
+
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
 				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<Widget>(c), 1)));
 			}
-			
+
 			return true;
 		}
 	}
-	
+
 	return this->Widget::onMouseButton(isDown, pos, button, pointerId);
 }
 
@@ -128,29 +128,29 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 
 bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 //	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
-	
+
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
-	
+
 	//call children in reverse order
 	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
-		
+
 		if(!c->isInteractive()){
 			ASSERT_INFO(!c->isHovered(), "c->name() = " << c->name())
 			continue;
 		}
-		
+
 		bool consumed = c->onMouseMove(pos - c->rect().p, pointerID);
-		
+
 		//set hovered goes after move notification because position of widget could change
 		//during handling the notification, so need to check after that for hovering
 		if(!c->rect().overlaps(pos)){
 			c->setHovered(false, pointerID);
 			continue;
 		}
-		
+
 		c->setHovered(true, pointerID);
-		
+
 		if(consumed){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
@@ -158,9 +158,9 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 				c->setHovered(false, pointerID);
 			}
 			return true;
-		}		
+		}
 	}
-	
+
 	return this->Widget::onMouseMove(pos, pointerID);
 }
 
@@ -170,7 +170,7 @@ void Container::onHoverChanged(unsigned pointerID){
 	if(this->isHovered(pointerID)){
 		return;
 	}
-	
+
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
@@ -203,7 +203,7 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	if(!w){
 		return this->children_v.end();
 	}
-	
+
 	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
 	if(w->parent()){
 		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
@@ -212,15 +212,15 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	if(this->isBlocked){
 		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
 	}
-	
+
 	if(insertBefore && insertBefore->parent() != this){
 		throw morda::Exc("Container::Add(): cannot insert before provided iterator, it points to a different container");
 	}
 
 	T_ChildrenList::iterator ret;
-	
+
 	Widget& widget = *w;
-	
+
 	if(insertBefore){
 		ret = this->children_v.insert(insertBefore->parentIter_v, std::move(w));
 	}else{
@@ -228,13 +228,13 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 		ret = this->children_v.end();
 		--ret;
 	}
-	
+
 	widget.parentIter_v = ret;
 	widget.parent_v = this;
 	widget.onParentChanged();
-	
+
 	this->onChildrenListChanged();
-	
+
 	ASSERT(!widget.isHovered())
 	return ret;
 }
@@ -248,25 +248,25 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	if(w.parent_v != this){
 		throw morda::Exc("Container::remove(): widget is not added to this container");
 	}
-	
+
 	if(this->isBlocked){
 		throw morda::Exc("Container::remove(): cannot remove child while iterating through children, try deferred removing.");
 	}
 //	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
-	
+
 	ASSERT(w.parent_v == this)
-	
+
 	auto ret = *w.parentIter_v;
-	
+
 	this->children_v.erase(w.parentIter_v);
-	
+
 	w.parent_v = nullptr;
 	w.setUnhovered();
-	
+
 	w.onParentChanged();
-	
+
 	this->onChildrenListChanged();
-	
+
 	return ret;
 }
 
@@ -281,21 +281,21 @@ void Container::removeAll() {
 
 
 
-std::shared_ptr<Widget> Container::findByName(const std::string& name)noexcept{
-	if(auto r = this->Widget::findByName(name)){
+std::shared_ptr<Widget> Container::findById(const std::string& id)noexcept{
+	if(auto r = this->Widget::findById(id)){
 		return r;
 	}
-	
+
 	//first check direct children, because the closer to the tree root higher the priority is
 	for(auto& w : this->children()){
-		if(auto r = w->Widget::findByName(name)){
+		if(auto r = w->Widget::findById(id)){
 			return r;
 		}
 	}
-	
+
 	//then check deeper by tree
 	for(auto& w : this->children()){
-		if(auto r = w->findByName(name)){
+		if(auto r = w->findById(id)){
 			return r;
 		}
 	}
@@ -330,18 +330,18 @@ void Container::changeChildZPosition(Widget& child, T_ChildrenList::const_iterat
 	if(child.parent() != this){
 		throw morda::Exc("widget is not a child of this parent");
 	}
-	
+
 	if(this->isBlocked){
 		throw morda::Exc("cannot modify children list while iterating through children");
 	}
-	
+
 	ASSERT(child.parent_v == this)
-	
+
 	auto w = *child.parentIter_v;
-	
+
 	this->children_v.erase(child.parentIter_v);
-	
+
 	child.parentIter_v = this->children_v.insert(toBefore, std::move(w));
-	
+
 	this->onChildrenListChanged();
 }

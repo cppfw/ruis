@@ -16,16 +16,16 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 		Row{
 			layout{dx{fill}}
 			Image{
-				name{morda_lt}
+				id{morda_lt}
 			}
 
 			Image{
 				layout{dx{0}weight{1}}
-				name{morda_t}
+				id{morda_t}
 			}
 
 			Image{
-				name{morda_rt}
+				id{morda_rt}
 			}
 		}
 
@@ -34,26 +34,26 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 				dx{max}
 				weight{1}
 			}
-			
+
 			Image{
-				name{morda_l}
+				id{morda_l}
 				layout{dy{fill}}
 			}
 
 			Pile{
-				name{morda_content}
+				id{morda_content}
 				layout{
 					weight{1}
 					dy{max}
 				}
 
 				Image{
-					name{morda_m}
+					id{morda_m}
 					layout{dx{fill}dy{fill}}
 				}
 			}
 			Image{
-				name{morda_r}
+				id{morda_r}
 				layout{dy{fill}}
 			}
 		}
@@ -61,16 +61,16 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 		Row{
 			layout{dx{fill}}
 			Image{
-				name{morda_lb}
+				id{morda_lb}
 			}
 
 			Image{
 				layout{dx{0}weight{1}}
-				name{morda_b}
+				id{morda_b}
 			}
 
 			Image{
-				name{morda_rb}
+				id{morda_rb}
 			}
 		}
 	)qwertyuiop";
@@ -85,52 +85,52 @@ NinePatch::NinePatch(const stob::Node* chain) :
 	this->imageMatrix_v[0][0] = this->findByNameAs<Image>("morda_lt");
 	this->imageMatrix_v[0][1] = this->findByNameAs<Image>("morda_t");
 	this->imageMatrix_v[0][2] = this->findByNameAs<Image>("morda_rt");
-	
+
 	this->imageMatrix_v[1][0] = this->findByNameAs<Image>("morda_l");
 	this->imageMatrix_v[1][1] = this->findByNameAs<Image>("morda_m");
 	this->imageMatrix_v[1][2] = this->findByNameAs<Image>("morda_r");
-	
+
 	this->imageMatrix_v[2][0] = this->findByNameAs<Image>("morda_lb");
 	this->imageMatrix_v[2][1] = this->findByNameAs<Image>("morda_b");
 	this->imageMatrix_v[2][2] = this->findByNameAs<Image>("morda_rb");
-	
+
 	this->onBlendingChanged();
-	
+
 	this->content_v = this->findByNameAs<Pile>("morda_content");
-	
+
 	if(auto n = getProperty(chain, "left")){
 		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'
 	}else{
 		this->borders.left() = LayoutParams::min_c;
 	}
-	
+
 	if(auto n = getProperty(chain, "right")){
 		this->borders.right() = dimValueFromSTOB(*n);
 	}else{
 		this->borders.right() = LayoutParams::min_c;
 	}
-	
+
 	if(auto n = getProperty(chain, "top")){
 		this->borders.top() = dimValueFromSTOB(*n);
 	}else{
 		this->borders.top() = LayoutParams::min_c;
 	}
-	
+
 	if(auto n = getProperty(chain, "bottom")){
 		this->borders.bottom() = dimValueFromSTOB(*n);
 	}else{
 		this->borders.bottom() = LayoutParams::min_c;
 	}
-	
+
 	if(auto n = getProperty(chain, "centerVisible")){
 		this->setCenterVisible(n->asBool());
 	}
-	
+
 	//this should go after setting up border widgets
 	if(const stob::Node* n = getProperty(chain, "image")){
 		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
 	}
-	
+
 	if(chain){
 		this->content_v->add(*chain);
 	}
@@ -144,9 +144,9 @@ void NinePatch::render(const morda::Matr4r& matrix) const {
 void NinePatch::setNinePatch(std::shared_ptr<const ResNinePatch> np){
 	this->image = std::move(np);
 	this->scaledImage.reset();
-	
+
 	this->applyImages();
-	
+
 	this->clearCache();
 }
 
@@ -154,7 +154,7 @@ void NinePatch::setNinePatch(std::shared_ptr<const ResNinePatch> np){
 
 Sidesr NinePatch::getActualBorders() const noexcept{
 	Sidesr ret;
-	
+
 	for(auto i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){
 			ret[i] = this->borders[i];
@@ -164,7 +164,7 @@ Sidesr NinePatch::getActualBorders() const noexcept{
 			ret[i] = this->image->borders()[i];
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -179,7 +179,7 @@ void NinePatch::applyImages(){
 		}
 		return;
 	}
-	
+
 	auto& minBorders = this->image->borders();
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
@@ -244,7 +244,7 @@ void NinePatch::applyImages(){
 //		TRACE(<< "this->borders = " << this->borders << std::endl)
 
 	this->scaledImage = this->image->get(this->borders);
-	
+
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
 			this->imageMatrix_v[i][j]->setImage(this->scaledImage->images()[i][j]);

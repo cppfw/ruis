@@ -11,7 +11,7 @@ namespace{
 
 const auto D_Layout = stob::parse(R"qwertyuiop(
 		Image{
-			name{morda_checkbox_check}
+			id{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
 		}
 	)qwertyuiop");
@@ -28,7 +28,7 @@ CheckBox::CheckBox(const stob::Node* chain) :
 {
 	this->checkWidget = this->content().findByName("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isPressed());
-	
+
 	this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
 }
 
