@@ -53,7 +53,7 @@ ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
+    this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
     #WORKAROUND for MinGW bug:
     #this_cxxflags += -D__STDC_FORMAT_MACROS
@@ -87,11 +87,10 @@ this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lunikod -lstdc++ -lm
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`
 else
-    this_ldlibs += -lGLEW
-
     ifeq ($(os), macosx)
+    else ifeq ($(os), windows)
     else
-        this_ldlibs += -lGL
+        this_ldlibs += -lGL -lGLEW
     endif
 
 endif
