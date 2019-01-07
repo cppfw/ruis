@@ -1,3 +1,11 @@
+configurations {
+	UserPlatformToolset {
+		// Needed because autopackage lacks VS2015+ support
+		key = "PlatformToolset";
+		choices: "v140,v141";
+	};
+}
+
 nuget{
 	nuspec{
 		id = libmorda;
@@ -43,23 +51,44 @@ nuget{
  			#destination : ${d_bin}\morda_res;
 		};
 
-		[x86,release] {
-			lib: ..\msvs_solution\Release\libmorda.lib;
+
+		[x86,v140,release] {
+			lib: ..\msvs_solution\v140_Release\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x86,debug] {
-			lib: ..\msvs_solution\Debug\libmorda.lib;
+		[x86,v140,debug] {
+			lib: ..\msvs_solution\v140_Debug\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x64,release] {
-			lib: ..\msvs_solution\x64\Release\libmorda.lib;
+		[x64,v140,release] {
+			lib: ..\msvs_solution\x64\v140_Release\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
 
-		[x64,debug] {
-			lib: ..\msvs_solution\x64\Debug\libmorda.lib;
+		[x64,v140,debug] {
+			lib: ..\msvs_solution\x64\v140_Debug\libmorda.lib;
+			res: ..\res\morda_res\**\*;
+		}
+
+		[x86,v141,release] {
+			lib: ..\msvs_solution\v141_Release\libmorda.lib;
+			res: ..\res\morda_res\**\*;
+		}
+
+		[x86,v141,debug] {
+			lib: ..\msvs_solution\v141_Debug\libmorda.lib;
+			res: ..\res\morda_res\**\*;
+		}
+
+		[x64,v141,release] {
+			lib: ..\msvs_solution\x64\v141_Release\libmorda.lib;
+			res: ..\res\morda_res\**\*;
+		}
+
+		[x64,v141,debug] {
+			lib: ..\msvs_solution\x64\v141_Debug\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
 	}
