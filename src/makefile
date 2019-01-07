@@ -21,8 +21,6 @@ this_cxxflags += -std=c++11
 #this_cxxflags += -Wno-noexcept-type
 
 
-this_objcflags := 
-
 ifeq ($(debug),true)
     this_cxxflags += -DDEBUG
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
@@ -36,9 +34,11 @@ ifeq ($(os), linux)
     this_cxxflags += `pkg-config --cflags freetype2`
     this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz
 else ifeq ($(os), windows)
+    this_cxxflags += `pkg-config --cflags freetype2`
+    this_ldlibs += `pkg-config --libs freetype2`
+
+    #TODO: remove this commented stuff
 #    this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings
-#    this_cxxflags += -I/usr/include -I/usr/local/include/ -I/usr/local/include/freetype2
-#    this_ldflags += -L/usr/local/lib -L/usr/lib
 
     #NOTE: order matters in MinGW, libs referenced by other libs should go after those libs which reference them.
 #    this_ldlibs += -lfreetype -lz -lopengl32 -lglew32 -lgdi32

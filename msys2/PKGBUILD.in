@@ -36,7 +36,7 @@ depends=(
 		"${pkgPrefix}svgren"
 		"${pkgPrefix}stob"
 		"${pkgPrefix}libpng"
-		"${pkgPrefix}libjpeg"
+		"${pkgPrefix}libjpeg-turbo"
 		"${pkgPrefix}freetype"
 	)
 
