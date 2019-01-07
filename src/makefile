@@ -35,7 +35,7 @@ ifeq ($(os), linux)
     this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz
 else ifeq ($(os), windows)
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += `pkg-config --libs freetype2`
+    this_ldlibs += `pkg-config --libs freetype2` -lz
 
     #TODO: remove this commented stuff
 #    this_cxxflags += -Wno-format #due to bugs in some g++ versions it warns about format when not needed, so disable format warnings

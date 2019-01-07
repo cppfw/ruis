@@ -53,15 +53,14 @@ ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
-    this_cxxflags += -I/usr/include -I/usr/local/include
-
     #WORKAROUND for MinGW bug:
-    this_cxxflags += -D__STDC_FORMAT_MACROS
+    #this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+
+    this_ldflags += -rdynamic
 
     this_mm_obj := $(d)$(prorab_obj_dir)objcpp/src/mordavokne/glue/macosx/glue.o
 
@@ -76,6 +75,7 @@ else ifeq ($(os),linux)
     this_cxxflags += -fPIC
     this_srcs += src/mordavokne/glue/glue.cpp
     this_ldlibs += -pthread -lX11 -ldl
+    this_ldflags += -rdynamic
 endif
 
 this_ldlibs += $(d)../../src/libmorda$(soext)
@@ -95,8 +95,6 @@ else
     endif
 
 endif
-
-this_ldflags += -rdynamic
 
 $(eval $(prorab-build-app))
 

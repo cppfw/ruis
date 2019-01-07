@@ -38,6 +38,7 @@ depends=(
 		"${pkgPrefix}libpng"
 		"${pkgPrefix}libjpeg-turbo"
 		"${pkgPrefix}freetype"
+		"${pkgPrefix}glew"
 	)
 
 makedepends=('myci' 'prorab' 'prorab-extra' 'doxygen' 'pkg-config')

@@ -40,13 +40,10 @@ ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldflags += -L/usr/lib -L/usr/local/lib
     this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
-    this_cxxflags += -I/usr/include -I/usr/local/include
-
     #WORKAROUND for MinGW bug:
-    this_cxxflags += -D__STDC_FORMAT_MACROS
+    #this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
