@@ -23,6 +23,9 @@
     <ClCompile Include="..\..\tests\app\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\tests\app\src\mordavokne\App.cpp" />
     <ClCompile Include="..\..\tests\app\src\main.cpp">
       <Filter>Source Files</Filter>
@@ -57,24 +60,6 @@
     <ClCompile Include="..\..\tests\app\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\mordavokne\App.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordavokne\glue\glue.cpp" />
-    <ClCompile Include="..\..\tests\app\src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2Buffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2Factory.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2FrameBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2IndexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2Shader.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2ShaderColorPos.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2ShaderColorPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2ShaderPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2Texture2D.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2VertexArray.cpp" />
-    <ClCompile Include="..\..\tests\app\src\mordaren\OpenGL2VertexBuffer.cpp" />
     <ClCompile Include="..\..\tests\app\src\mordavokne\App.cpp" />
     <ClCompile Include="..\..\tests\app\src\mordavokne\glue\glue.cpp" />
     <ClCompile Include="..\..\tests\app\src\main.cpp">
@@ -265,21 +250,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\tests\app\src\mordavokne\glue\glue.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Factory.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Shader.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPos.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -660,12 +630,8 @@
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderBase.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColor.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPosLum.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderTexture.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
@@ -868,6 +834,48 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\app\src\mordavokne\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp">
