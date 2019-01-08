@@ -7,7 +7,7 @@ this_name := tests
 this_srcs += $(call prorab-src-dir,.)
 
 
-this_cxxflags := -Wall
+this_cxxflags += -Wall
 this_cxxflags += -Wno-comment #no warnings on nested comments
 this_cxxflags += -Wno-format #no warnings about format
 this_cxxflags += -Wno-format-security #no warnings about format
