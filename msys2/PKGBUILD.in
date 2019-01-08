@@ -41,7 +41,15 @@ depends=(
 		"${pkgPrefix}glew"
 	)
 
-makedepends=('myci' 'prorab' 'prorab-extra' 'doxygen' 'pkg-config')
+makedepends=(
+		'myci'
+		'prorab'
+		'prorab-extra'
+		'doxygen'
+		'pkg-config'
+		"${pkgPrefix}pogodi"
+		"${pkgPrefix}nitki"
+	)
 checkdepends=('myci')
 optdepends=()
 provides=()

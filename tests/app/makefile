@@ -55,6 +55,7 @@ ifeq ($(os),windows)
     this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
+    #TODO: remove this commented stuff
     #WORKAROUND for MinGW bug:
     #this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(os),macosx)
