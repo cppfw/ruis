@@ -1,3 +1,9 @@
+libmorda (0.5.84) unstable; urgency=medium
+
+  * deploying to msys2 and updating to v141 tools
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 09 Jan 2019 19:10:19 +0200
+
 libmorda (0.5.83) unstable; urgency=medium
 
   * DropDownSelector user experience improved
