@@ -288,7 +288,7 @@
     <Import Project="..\packages\pixman_static.0.32.4.5\build\native\pixman_static.targets" Condition="Exists('..\packages\pixman_static.0.32.4.5\build\native\pixman_static.targets')" />
     <Import Project="..\packages\cairo_static.1.15.4.2\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.15.4.2\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libsvgren.0.4.57\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.4.57\build\native\libsvgren.targets')" />
-    <Import Project="..\packages\libjpeg_static.6.1.1.1\build\native\libjpeg_static.targets" Condition="Exists('..\packages\libjpeg_static.6.1.1.1\build\native\libjpeg_static.targets')" />
+    <Import Project="..\packages\libjpeg_static.6.1.1.2\build\native\libjpeg_static.targets" Condition="Exists('..\packages\libjpeg_static.6.1.1.2\build\native\libjpeg_static.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -312,6 +312,6 @@
     <Error Condition="!Exists('..\packages\pixman_static.0.32.4.5\build\native\pixman_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pixman_static.0.32.4.5\build\native\pixman_static.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.15.4.2\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.15.4.2\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.4.57\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.4.57\build\native\libsvgren.targets'))" />
-    <Error Condition="!Exists('..\packages\libjpeg_static.6.1.1.1\build\native\libjpeg_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg_static.6.1.1.1\build\native\libjpeg_static.targets'))" />
+    <Error Condition="!Exists('..\packages\libjpeg_static.6.1.1.2\build\native\libjpeg_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg_static.6.1.1.2\build\native\libjpeg_static.targets'))" />
   </Target>
 </Project>
