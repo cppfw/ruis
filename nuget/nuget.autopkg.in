@@ -21,7 +21,7 @@ nuget{
 
 		description: @"C++ GUI library";
 		releaseNotes: "Initial release";
-		copyright: Copyright 2016 Ivan Gagis;
+		copyright: Copyright 2019 Ivan Gagis;
 		tags: { native};
 	}
 	dependencies {
@@ -34,9 +34,9 @@ nuget{
 			libstob/3.2.7;
 			libunikod/2.0.4;
 			libutki/1.0.22;
-			zlib/1.2.8.8;
+			zlib_native/1.2.11;
 			libsvgdom/0.2.14;
-			libsvgren/0.3.14;
+			libsvgren/0.4.57;
 		};
 	}
 	files {
