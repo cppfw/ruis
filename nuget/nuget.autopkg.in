@@ -30,7 +30,7 @@ nuget{
 			freetype/2.6.5.1;
 			libjpeg_static/6.1.1.2;
 			libpapki/1.0.15;
-			libpng/1.6.23.1;
+			libpng_native/1.6.30;
 			libstob/3.2.7;
 			libunikod/2.0.4;
 			libutki/1.0.22;

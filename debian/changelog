@@ -1,3 +1,9 @@
+libmorda (0.5.85) unstable; urgency=medium
+
+  * nuget dependencies corrected
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 12 Jan 2019 16:08:59 +0200
+
 libmorda (0.5.84) unstable; urgency=medium
 
   * deploying to msys2 and updating to v141 tools
