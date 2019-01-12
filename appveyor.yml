@@ -32,7 +32,7 @@ build_script:
   - C:\msys64\usr\bin\bash -lc "cd /c/build/ && myci-apply-version.sh -v `myci-deb-version.sh debian/changelog` msys2/PKGBUILD.in"
   - C:\msys64\usr\bin\bash -lc "cd /c/build/msys2 && makepkg-mingw --syncdeps --noconfirm --skipinteg"
   - ps: .\nuget\build_nuget.ps1
-  - ps: .\nuget\keep_bin_dir_structure.ps1
+#  - ps: .\nuget\keep_bin_dir_structure.ps1
 
 test_script:
 
