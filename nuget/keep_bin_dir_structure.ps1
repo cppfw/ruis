@@ -48,10 +48,10 @@ ForEach ($nugetFile in $nugetFiles) {
 			#$nodes
 			ForEach($node in $nodes){
 				$path = $node.SourceFiles
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
 				
 				#$path
 				#$node.DestinationFolder
