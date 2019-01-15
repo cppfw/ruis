@@ -118,9 +118,14 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 		ret.y = quotum.y;
 		ret.x = ratio * quotum.y;
 		return ret;
+	}else if(quotum.y >= 0){
+		ASSERT(quotum.x >= 0)
+		ASSERT(quotum.y >= 0)
+		TRACE_ALWAYS(<< "WARNING: keepAspectRatio has no effect for Image with id  '" << this->id << "' because both widget dimensions are rigid. Check layout parameters." << std::endl)
+		return quotum;
 	}else{
 		ASSERT(quotum.x >= 0)
-		ASSERT(quotum.y < 0)
+		ASSERT_INFO(quotum.y < 0, "quotum =" << quotum)
 		
 		ASSERT(ratio > 0)
 		
