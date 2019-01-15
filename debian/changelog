@@ -1,3 +1,9 @@
+libmorda (0.5.89) unstable; urgency=medium
+
+  * removed unnecessary logging
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 16 Jan 2019 00:17:29 +0200
+
 libmorda (0.5.88) unstable; urgency=medium
 
   * small check of layout parameters

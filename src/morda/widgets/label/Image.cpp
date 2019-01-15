@@ -121,7 +121,10 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 	}else if(quotum.y >= 0){
 		ASSERT(quotum.x >= 0)
 		ASSERT(quotum.y >= 0)
-		TRACE_ALWAYS(<< "WARNING: keepAspectRatio has no effect for Image with id  '" << this->id << "' because both widget dimensions are rigid. Check layout parameters." << std::endl)
+		//This case is possible when Image layout parameters are, for example 'dx{max} dy{fill}', so the
+		//minimum x size will be determined to keep aspect ratio, but later, the x size of the Image widget can be
+		//set to fill all the allowed space, in this case the measure() method will be called with
+		//both quotum components to be positive numbers.
 		return quotum;
 	}else{
 		ASSERT(quotum.x >= 0)
