@@ -1,3 +1,9 @@
+libmorda (0.5.88) unstable; urgency=medium
+
+  * small check of layout parameters
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 15 Jan 2019 23:48:33 +0200
+
 libmorda (0.5.87) unstable; urgency=medium
 
   * nuget res path correction
