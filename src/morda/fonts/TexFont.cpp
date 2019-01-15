@@ -128,7 +128,7 @@ TexFont::TexFont(const papki::File& fi, unsigned fontSize, unsigned maxCached) :
 	this->descender_v = -ceil((this->face.f->size->metrics.descender) / 64.0f);
 	this->ascender_v = ceil((this->face.f->size->metrics.ascender) / 64.0f);
 
-	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
+//	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
 }
 
 
@@ -145,7 +145,7 @@ const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 			this->glyphs.erase(this->lastUsedOrder.back());
 			this->lastUsedOrder.pop_back();
 		}
-		TRACE(<< "TexFont::getGlyph(): glyph loaded: " << c << std::endl)
+//		TRACE(<< "TexFont::getGlyph(): glyph loaded: " << c << std::endl)
 	}else{
 		Glyph& g = i->second;
 		this->lastUsedOrder.splice(this->lastUsedOrder.begin(), this->lastUsedOrder, g.lastUsedIter);

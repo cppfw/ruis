@@ -131,12 +131,12 @@ void DropDownSelector::showDropdownMenu() {
 	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
 	ASSERT(np)
 
-	auto minSizeSpacer = np->findByName("minSizeSpacer");
+	auto minSizeSpacer = np->findById("minSizeSpacer");
 
 	auto& lp = minSizeSpacer->getLayoutParams();
 	lp.dim.x = this->rect().d.x;
 
-	auto va = np->findByNameAs<morda::Column>("morda_contextmenu_content");
+	auto va = np->findByIdAs<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
@@ -204,7 +204,7 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		Widget(chain),
 		Button(selectorLayout_c.get()),
 		NinePatchPushButton(selectorLayout_c.get()),
-		selectionContainer(*this->findByNameAs<Pile>("morda_dropdown_selection"))
+		selectionContainer(*this->findByIdAs<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){
 		if(!b.isPressed()){
@@ -277,10 +277,10 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
 	ASSERT(wd)
 
-	auto mp = wd->findByNameAs<MouseProxy>("morda_dropdown_mouseproxy");
+	auto mp = wd->findByIdAs<MouseProxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd->findByNameAs<Color>("morda_dropdown_color");
+	auto cl = wd->findByIdAs<Color>("morda_dropdown_color");
 	ASSERT(cl)
 	auto clWeak = utki::makeWeak(cl);
 

@@ -54,10 +54,10 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 		Widget(chain),
 		Column(stob::parse(layout_c).get())
 {
-	this->contentArea = this->findByNameAs<Pile>("content");
+	this->contentArea = this->findByIdAs<Pile>("content");
 	ASSERT(this->contentArea)
 
-	this->title_v = this->findByNameAs<Pile>("title");
+	this->title_v = this->findByIdAs<Pile>("title");
 	ASSERT(this->title_v)
 
 	if(auto p = getProperty(chain, "title")){
@@ -69,7 +69,7 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	}
 
 	{
-		auto sw = this->findByNameAs<ToggleButton>("switch");
+		auto sw = this->findByIdAs<ToggleButton>("switch");
 		ASSERT(sw)
 		sw->pressedChanged = [this](Button& tb){
 			if(tb.isPressed()){

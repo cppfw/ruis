@@ -55,10 +55,10 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 		FractionBandWidget(nullptr),
 		OrientedWidget(nullptr, vertical),
 		Pile(stob::parse(DDescription).get()),
-		handle(*this->findByName("morda_handle"))
+		handle(*this->findById("morda_handle"))
 {
 	{
-		auto np = this->findByNameAs<NinePatch>("morda_slider_bg");
+		auto np = this->findByIdAs<NinePatch>("morda_slider_bg");
 		ASSERT(np)
 		if(auto n = getProperty(chain, "background")){
 			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
@@ -68,7 +68,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 	}
 
 	{
-		auto hi = this->findByNameAs<NinePatch>("morda_handle_image");
+		auto hi = this->findByIdAs<NinePatch>("morda_handle_image");
 		ASSERT(hi)
 		if(auto n = getProperty(chain, "handleNinePatch")){
 			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
@@ -77,7 +77,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 		}
 	}
 
-	auto hp = this->findByNameAs<MouseProxy>("morda_handle_proxy");
+	auto hp = this->findByIdAs<MouseProxy>("morda_handle_proxy");
 	hp->mouseButton = [this](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) -> bool{
 		if(button != MouseButton_e::LEFT){
 			return false;
