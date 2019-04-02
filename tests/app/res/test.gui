@@ -589,7 +589,7 @@ Container{
 //							image{img_camera}
 
 							layout{
-								dx{min} dy{min}
+								dx{min} dy{max}
 							}
 						}
 

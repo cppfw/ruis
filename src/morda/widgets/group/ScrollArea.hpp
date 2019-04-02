@@ -12,6 +12,10 @@ namespace morda{
  * @brief Scroll area container widget.
  * Scroll area is a container which can add an offset to its children widget positions.
  * From GUI scripts it can be instantiated as "ScrollArea".
+ * Note, that Scrollarea has same layout parameters as simple Container and those work similarly,
+ * except 'max' value. If layout dimension is specified as 'max' then child widget will be stretched to the
+ * parent (ScrollArea) size in case child's minimal size is less than ScrollArea size, otherwise child will be assigned
+ * its minimal size.
  */
 class ScrollArea : public Container{
 	//offset from top left corner
@@ -23,6 +27,9 @@ class ScrollArea : public Container{
 	//cached scroll factor
 	Vec2r curScrollFactor;
 	
+protected:
+	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
+
 public:
 	ScrollArea(const stob::Node* chain);
 	

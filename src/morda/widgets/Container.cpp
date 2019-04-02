@@ -310,7 +310,7 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 		if(lp.dim[i] == LayoutParams::max_c || lp.dim[i] == LayoutParams::fill_c){
 			d[i] = this->rect().d[i];
 		}else if(lp.dim[i] == LayoutParams::min_c){
-			d[i] = -1; //will be updated below
+			d[i] = -1; // will be updated below
 		}else{
 			d[i] = lp.dim[i];
 		}
