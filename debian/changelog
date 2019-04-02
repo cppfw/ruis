@@ -1,3 +1,9 @@
+libmorda (0.5.90) unstable; urgency=medium
+
+  * ScrollArea 'max' layout parameter improved
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Apr 2019 23:25:26 +0300
+
 libmorda (0.5.89) unstable; urgency=medium
 
   * removed unnecessary logging
