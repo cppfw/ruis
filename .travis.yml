@@ -16,36 +16,30 @@ addons:
     packages:
     - myci
 
+os: linux
+language: cpp
+
 matrix:
   include:
     - os: osx
       env: BUILD_NAME=macosx
       compiler: clang
-      language: cpp
       osx_image: xcode8.2
     - os: osx
       env: BUILD_NAME=ios
       compiler: clang
-      language: cpp
       osx_image: xcode8.2
-    - os: linux
-      env: BUILD_NAME=debian
+    - env: BUILD_NAME=debian
       compiler: gcc
-      language: cpp
       dist: trusty
     - env:
         - OS_DISTRO=ubuntu OS_RELEASE=bionic OS=linux PACKAGE_TYPE=deb
       os: linux
-      language: cpp
-    - os: linux
-      env: BUILD_NAME=ubuntu_xenial
+    - env: BUILD_NAME=ubuntu_xenial
       compiler: gcc
-      language: cpp
       dist: trusty
-    - os: linux
-      env: BUILD_NAME=raspberry_pi
+    - env: BUILD_NAME=raspberry_pi
       compiler: gcc
-      language: cpp
       dist: trusty
     - env: BUILD_NAME=android
       language: android
