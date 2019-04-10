@@ -21,6 +21,12 @@ matrix:
       compiler: gcc
       language: cpp
       dist: trusty
+    - env:
+        - BUILD_NAME=linux
+        - DOCKER_IMAGE=amd64/ubuntu:bionic
+        - PACKAGE_TYPE=deb
+      os: linux
+      dist: xenial
     - os: linux
       env: BUILD_NAME=ubuntu_xenial
       compiler: gcc
@@ -34,6 +40,14 @@ matrix:
     - env: BUILD_NAME=android
       language: android
 
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb https://dl.bintray.com/igagis/ubu unstable main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x379CE192D401AB61'
+    update: true
+    packages:
+    - myci
 
 android:
   components:
