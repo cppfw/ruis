@@ -4,6 +4,18 @@ branches:
 
 sudo: required
 
+services:
+        - docker
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb https://dl.bintray.com/igagis/ubu unstable main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x379CE192D401AB61'
+    update: true
+    packages:
+    - myci
+
 matrix:
   include:
     - os: osx
@@ -22,15 +34,9 @@ matrix:
       language: cpp
       dist: trusty
     - env:
-        - OS_DISTRO=ubuntu
-        - OS_RELEASE=bionic
-        - OS=linux
-        - PACKAGE_TYPE=deb
+        - OS_DISTRO=ubuntu OS_RELEASE=bionic OS=linux PACKAGE_TYPE=deb
       os: linux
-      dist: xenial
       language: cpp
-      services:
-        - docker
     - os: linux
       env: BUILD_NAME=ubuntu_xenial
       compiler: gcc
@@ -52,14 +58,6 @@ matrix:
 #          - sys-img-armeabi-v7a-android-22
           - extra-android-m2repository
 
-addons:
-  apt:
-    sources:
-      - sourceline: 'deb https://dl.bintray.com/igagis/ubu unstable main'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x379CE192D401AB61'
-    update: true
-    packages:
-    - myci
 
 
 env:
