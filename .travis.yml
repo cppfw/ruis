@@ -22,12 +22,15 @@ matrix:
       language: cpp
       dist: trusty
     - env:
-        - BUILD_NAME=linux
-        - DOCKER_IMAGE=amd64/ubuntu:bionic
+        - OS_DISTRO=ubuntu
+        - OS_RELEASE=bionic
+        - OS=linux
         - PACKAGE_TYPE=deb
       os: linux
       dist: xenial
       language: cpp
+      services:
+        - docker
     - os: linux
       env: BUILD_NAME=ubuntu_xenial
       compiler: gcc
@@ -71,6 +74,9 @@ env:
 
 
 before_install:
+- if [ "$OS" == "linux" ]; then
+    docker pull amd64/$OS_DISTRO:$OS_RELEASE
+  fi
 - if [ "$BUILD_NAME" == "macosx" ]; then
     rvm install ruby-2.3.3 &&
     rvm use ruby-2.3.3 &&
