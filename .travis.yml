@@ -75,7 +75,7 @@ env:
 
 before_install:
 - if [ "$OS" == "linux" ]; then
-    docker pull amd64/$OS_DISTRO:$OS_RELEASE
+    docker pull amd64/$OS_DISTRO:$OS_RELEASE;
   fi
 - if [ "$BUILD_NAME" == "macosx" ]; then
     rvm install ruby-2.3.3 &&
