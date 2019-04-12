@@ -2,12 +2,6 @@
 %:
 	dh $@
 
-
-#.PHONY: override_dh_auto_test
-#override_dh_auto_test:
-#do nothing
-
-
 .PHONY: override_dh_strip
 override_dh_strip:
 	dh_strip --dbg-package=$(filter %-dbg, $(shell awk '/^Package: /{print $2}' debian/control))
