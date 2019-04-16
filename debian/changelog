@@ -1,3 +1,9 @@
+libmorda (0.5.91) unstable; urgency=medium
+
+  * deploy to bionic
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Apr 2019 19:10:10 +0300
+
 libmorda (0.5.90) unstable; urgency=medium
 
   * ScrollArea 'max' layout parameter improved
