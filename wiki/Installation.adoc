@@ -1,5 +1,6 @@
 # Installation instructions
 
 - link:installation/Linux.adoc[Linux]
-- link:installation/Windows.adoc[Windows]
+- link:installation/Windows.adoc[Windows MSVC2015+]
+- link:installation/WindowsMsys2.adoc[Windows Msys2]
 - link:installation/MacOSX.adoc[MacOS X]
