@@ -8,9 +8,6 @@
         android:xlargeScreens="true"
         />
 
-    <!-- This is the platform API where NativeActivity was introduced. -->
-    <uses-sdk android:minSdkVersion="9" />
-
     <application>
         <activity
             android:icon="@mipmap/ic_launcher"
