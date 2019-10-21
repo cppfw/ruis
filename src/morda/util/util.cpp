@@ -85,7 +85,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 	
 	auto n = begin->thisOrNext(DIncludeTag);
 	for(; n.get_node();){
-		ASSERT(n.node())
+		ASSERT(n.get_node())
 		stob::Node* incPathNode = n.get_node()->child();
 		if(!incPathNode){
 			throw Exc("include tag without value encountered in resource script");
