@@ -148,7 +148,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 				chain = chain->chopNext();
 				continue;
 			}else if(ret){
-				if(auto n = ret->thisOrNext(chain->value()).node()){
+				if(auto n = ret->thisOrNext(chain->value()).get_node()){
 					n->setChildren(chain->removeChildren());
 					chain = chain->chopNext();
 					continue;
@@ -246,7 +246,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		}
 	});
 	
-	for(auto v = n->child(defs_c).node(); v; v = v->next(defs_c).node()){
+	for(auto v = n->child(defs_c).get_node(); v; v = v->next(defs_c).get_node()){
 		if(v->child()){
 			this->pushDefs(*v->child());
 			++numPopDefs;
@@ -301,7 +301,7 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 	
 	//for each variable create a stub property if needed
 	for(auto& v : ret.vars){
-		auto p = ret.t->child(v.c_str()).node();
+		auto p = ret.t->child(v.c_str()).get_node();
 		if(!p){
 			ret.t->addAsFirstChild(v.c_str());
 			ret.t->child()->addAsFirstChild(nullptr);

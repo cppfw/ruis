@@ -7,7 +7,7 @@
 #include <kolme/Vector2.hpp>
 #include <kolme/Rectangle.hpp>
 
-#include <stob/dom.hpp>
+#include <puu/dom.hpp>
 
 #include "../config.hpp"
 

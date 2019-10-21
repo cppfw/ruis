@@ -84,9 +84,9 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 	const char* DIncludeTag = "include";
 	
 	auto n = begin->thisOrNext(DIncludeTag);
-	for(; n.node();){
+	for(; n.get_node();){
 		ASSERT(n.node())
-		stob::Node* incPathNode = n.node()->child();
+		stob::Node* incPathNode = n.get_node()->child();
 		if(!incPathNode){
 			throw Exc("include tag without value encountered in resource script");
 		}
@@ -106,7 +106,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 				//include tag is the very first tag
 
 				ASSERT(!lastChild->next())
-				lastChild->insertNext(n.node()->chopNext());
+				lastChild->insertNext(n.get_node()->chopNext());
 				begin = std::move(std::get<0>(ri));
 			}else{
 				//include tag is not the first one
@@ -120,7 +120,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 			}
 			n = lastChild->next(DIncludeTag);
 		}else{
-			n = n.node()->next(DIncludeTag);
+			n = n.get_node()->next(DIncludeTag);
 		}
 	}
 	return std::make_tuple(std::move(begin), n.prev());
@@ -164,7 +164,7 @@ const stob::Node* morda::getProperty(const stob::Node* chain, const char* proper
 	if(!chain){
 		return nullptr;
 	}
-	if(auto n = chain->thisOrNext(property).node()){
+	if(auto n = chain->thisOrNext(property).get_node()){
 		if(n->child() && n->child()->value()){
 			return n->child();
 		}

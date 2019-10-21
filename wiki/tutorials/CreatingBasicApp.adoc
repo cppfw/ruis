@@ -51,7 +51,7 @@ public:
 };
 ....
 
-Let's describe our GUI using the GUI script. Create a file named _main.gui.stob_ in the _res/_ directory of your project with following contents
+Let's describe our GUI using the GUI script. Create a file named _main.gui._ in the _res/_ directory of your project with following contents
 ....
 Pile{// frame layout places widgets in the center one on top of another
 	Column{ //vertical area layout places widgets one below each other
@@ -83,7 +83,7 @@ public:
 
 		//Inflate widgets hierarchy from GUI description script
 		auto c = morda::Morda::inst().inflater.inflate(
-				*this->createResourceFileInterface("res/main.gui.stob")
+				*this->createResourceFileInterface("res/main.gui.")
 			);
 
 		//set the widgets hierarchy to the application
@@ -112,7 +112,7 @@ public:
 
 		//Inflate widgets hierarchy from GUI description script
 		auto c = morda::Morda::inst().inflater.inflate(
-				*this->createResourceFileInterface("res/main.gui.stob")
+				*this->createResourceFileInterface("res/main.gui.")
 			);
 
 		//set the widgets hierarchy to the application

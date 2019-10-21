@@ -30,8 +30,8 @@
 	  </dependency>
           <dependency>
 		  <groupId>io.github.igagis</groupId>
-		  <artifactId>libstob</artifactId>
-		  <version>[3.3.12,)</version>
+		  <artifactId>libpuu</artifactId>
+		  <version>[0.1.1,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>

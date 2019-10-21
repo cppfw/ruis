@@ -47,7 +47,7 @@ dependencies {
     implementation 'io.github.igagis:libutki:+'
     implementation 'io.github.igagis:libkolme:+'
     implementation 'io.github.igagis:libpapki:+'
-    implementation 'io.github.igagis:libstob:+'
+    implementation 'io.github.igagis:libpuu:+'
     implementation 'io.github.igagis:libnitki:+'
     implementation 'io.github.igagis:libsvgdom:+'
     implementation 'io.github.igagis:libsvgren:+'

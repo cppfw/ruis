@@ -25,7 +25,7 @@
 - Install necessary libraries
 
 	```
-	brew install lzlib libpng jpeg glew freetype libstob libaika libnitki libkolme libsvgren
+	brew install lzlib libpng jpeg glew freetype lib libaika libnitki libkolme libsvgren
 	```
 
 - Check out **morda** sources, build it and run test app:

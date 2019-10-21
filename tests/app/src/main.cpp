@@ -381,7 +381,7 @@ public:
 			parent = n;
 			auto next = n->child(*i);
 
-			n = next.node();
+			n = next.get_node();
 			prev = next.prev();
 		}
 
@@ -411,7 +411,7 @@ public:
 
 		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
 			auto next = n->child(*i);
-			n = next.node();
+			n = next.get_node();
 		}
 
 		if(!n){
@@ -433,7 +433,7 @@ public:
 
 		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
 			auto next = n->child(*i);
-			n = next.node();
+			n = next.get_node();
 		}
 
 		if(!n || this->selectedItem.size() == 0){
@@ -458,7 +458,7 @@ public:
 
 		for(auto i = path.begin(); i != path.end(); ++i){
 			parent = n;
-			n = n->child(*i).node();
+			n = n->child(*i).get_node();
 			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 
@@ -589,7 +589,7 @@ public:
 		auto n = this->root.get();
 
 		for(auto i = path.begin(); i != path.end(); ++i){
-			n = n->child(*i).node();
+			n = n->child(*i).get_node();
 		}
 
 		return n->count();

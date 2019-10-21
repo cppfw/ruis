@@ -31,7 +31,7 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	resScript->setNext(stob::load(fi));
 	ASSERT(!fi.isOpened())
 	//handle includeSubdirs
-	if(resScript->next(includeSubdirs_c).node()){
+	if(resScript->next(includeSubdirs_c).get_node()){
 //		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
 		fi.setPath(fi.dir());
 		auto dirContents = fi.listDirContents();
@@ -46,7 +46,7 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	}
 	
 	//handle includes
-	for(auto np = resScript->next(include_c); np.node(); np = np.prev()->next(include_c)){
+	for(auto np = resScript->next(include_c); np.get_node(); np = np.prev()->next(include_c)){
 		ASSERT(np.prev())
 		auto incNode = np.prev()->removeNext()->removeChildren();
 		

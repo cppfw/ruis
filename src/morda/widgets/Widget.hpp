@@ -7,7 +7,7 @@
 
 #include <utki/Shared.hpp>
 
-#include <stob/dom.hpp>
+#include <puu/dom.hpp>
 
 #include <kolme/Matrix4.hpp>
 #include <kolme/Vector2.hpp>

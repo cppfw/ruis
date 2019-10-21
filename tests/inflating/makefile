@@ -65,7 +65,7 @@ endif
 this_ldlibs += $(d)../../src/libmorda$(soext)
 
 
-this_ldlibs += -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm
+this_ldlibs += -lnitki -lpogodi -lpuu -lpapki -lstdc++ -lm
 
 this_no_install := true
 

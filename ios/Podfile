@@ -5,7 +5,7 @@ target "morda_test" do
 	pod 'libutki', '>= 1.0.20'
 	pod 'libpapki', '>= 1.0.3'
 	pod 'libkolme', '>= 1.0.1'
-	pod 'libstob', '>= 3.1.1'
+	pod 'puu', '>= 0.1.1'
 	pod 'libsvgren', '>= 0.3.3'
 	pod 'libnitki', '>= 1.0.0'
 	pod 'libpng_igagis', '>= 1.4.1'

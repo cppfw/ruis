@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <stob/dom.hpp>
+#include <puu/dom.hpp>
 
 #include "../ResourceManager.hpp"
 

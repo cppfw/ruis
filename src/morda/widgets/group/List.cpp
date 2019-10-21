@@ -48,7 +48,7 @@ List::List(const stob::Node* chain, bool vertical):
 		return;
 	}
 	
-	const stob::Node* n = chain->thisOrNextNonProperty().node();
+	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
 	
 	if(!n){
 		return;
@@ -56,7 +56,7 @@ List::List(const stob::Node* chain, bool vertical):
 	
 	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
 	
-	for(; n; n = n->nextNonProperty().node()){
+	for(; n; n = n->nextNonProperty().get_node()){
 		p->add(n->clone());
 	}
 	

@@ -177,7 +177,7 @@ public:
 
 
 std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
-	if(auto f = chain.thisOrNext("file").node()){
+	if(auto f = chain.thisOrNext("file").get_node()){
 		if(auto fn = f->child()){
 			fi.setPath(fn->value());
 			return ResImage::load(fi);
