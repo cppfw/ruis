@@ -34,7 +34,7 @@ depends=(
 		"${pkgPrefix}papki"
 		"${pkgPrefix}kolme"
 		"${pkgPrefix}svgren"
-		"${pkgPrefix}"
+		"${pkgPrefix}puu"
 		"${pkgPrefix}libpng"
 		"${pkgPrefix}libjpeg-turbo"
 		"${pkgPrefix}freetype"
