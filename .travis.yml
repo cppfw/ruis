@@ -82,7 +82,7 @@ before_install:
     brew update > /dev/null &&
     brew tap igagis/tap &&
     brew update > /dev/null &&
-    brew install myci prorab prorab-extra libutki libpapki libunikod libpuu libsvgren z glew freetype libkolme libnitki libpng;
+    brew install myci prorab prorab-extra libutki libpapki libunikod puu libsvgren z glew freetype libkolme libnitki libpng;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then
     rvm install ruby-2.3.3 &&
