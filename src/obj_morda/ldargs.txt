@@ -1,0 +1,1 @@
+cc   -dynamiclib -Wl,-install_name,/Users/ivan/prj/morda/src/libmorda.0.dylib,-headerpad_max_install_names,-undefined,dynamic_lookup,-compatibility_version,1.0,-current_version,1.0  -lc++ -lfreetype -lpapki -lstob -lsvgdom -lsvgren -lunikod -lpng -ljpeg -lstdc++ -lm 

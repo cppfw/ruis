@@ -1,0 +1,1 @@
+cc  -rdynamic    -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype ../../src/libmorda.dylib -lnitki -lpogodi -lstob -lpapki -lstdc++ -lm 
