@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.dependency 'libkolme', '>= 1.0.6'
   s.dependency 'puu', '>= 0.1.1'
   s.dependency 'libpng_igagis', '>= 1.4.1'
-  s.dependency 'freetype', '>= 2.6.4'
+  s.dependency 'freetype_igagis', '>= 2.6.4'
   s.dependency 'libjpeg', '>= 6.1.1'
   s.dependency 'libsvgdom', '>= 0.2.13'
   s.dependency 'libsvgren', '>= 0.3.13'
