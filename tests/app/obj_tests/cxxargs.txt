@@ -1,1 +1,0 @@
-c++    -Wall -Wno-comment  -Wno-format  -Wno-format-security  -DDEBUG -fstrict-aliasing  -g -O3 -std=c++11 -I../../src -DM_RENDER_OPENGL2 -Isrc/opengl2 

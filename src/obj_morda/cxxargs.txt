@@ -1,1 +1,0 @@
-c++    -Wall  -Wno-comment  -funsigned-char  -Wnon-virtual-dtor  -fno-operator-names  -Wfatal-errors  -fstrict-aliasing  -g  -std=c++11 -O3 -stdlib=libc++  -I/usr/local/include/freetype2 
