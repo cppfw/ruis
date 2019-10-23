@@ -53,7 +53,7 @@ dependencies {
     implementation 'io.github.igagis:libsvgren:+'
     implementation 'org.libpng:libpng:+'
     implementation 'org.ijg:libjpeg:+'
-    implementation 'org.freetype:freetype2:+'
+    implementation 'io.github.igagis:freetype:+'
 }
 
 
