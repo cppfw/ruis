@@ -25,13 +25,13 @@ Pod::Spec.new do |s|
 
   s.resources = "res/morda_res"
 
-  s.dependency 'libpapki', '>= 1.0.11'
+  s.dependency 'papki', '>= 1.0.58'
   s.dependency 'libkolme', '>= 1.0.6'
   s.dependency 'puu', '>= 0.1.1'
-  s.dependency 'libpng_igagis', '>= 1.4.1'
+  s.dependency 'png', '>= 1.4.1.4'
   s.dependency 'freetype', '>= 2.10.1.1'
-  s.dependency 'libjpeg', '>= 6.1.1'
-  s.dependency 'libsvgdom', '>= 0.2.13'
-  s.dependency 'libsvgren', '>= 0.3.13'
+  s.dependency 'jpeg', '>= 6.1.1.5'
+  s.dependency 'svgdom', '>= 0.3.26'
+  s.dependency 'svgren', '>= 0.4.59'
   s.dependency 'utki', '>= 1.1.30'
 end
