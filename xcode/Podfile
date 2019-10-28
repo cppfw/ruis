@@ -6,12 +6,12 @@ platform :ios, '8.0'
 
 target "morda" do
 	pod 'utki', '>= 1.1.30'
-	pod 'libpapki', '>= 1.0.3'
+	pod 'papki', '>= 1.0.58'
 	pod 'libkolme', '>= 1.0.1'
 	pod 'puu', '>= 0.1.1'
-	pod 'libsvgren', '>= 0.3.3'
+	pod 'svgren', '>= 0.4.59'
 	pod 'libnitki', '>= 1.0.0'
-	pod 'libpng_igagis', '>= 1.4.1'
-	pod 'freetype', '>= 2.6.4'
-	pod 'libjpeg', '>= 6.1.1'
+	pod 'png', '>= 1.4.1.4'
+	pod 'freetype', '>= 2.10.1.1'
+	pod 'jpeg', '>= 6.1.1.5'
 end
