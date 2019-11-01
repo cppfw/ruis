@@ -5,8 +5,8 @@
 #include <utki/Buf.hpp>
 #include <unikod/utf8.hpp>
 
-#include <kolme/Matrix4.hpp>
-#include <kolme/Rectangle.hpp>
+#include <r4/matrix4.hpp>
+#include <r4/rectangle.hpp>
 
 #include "../config.hpp"
 
@@ -38,7 +38,7 @@ protected:
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const = 0;
+	virtual real renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -63,7 +63,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, unikod::Utf8Iterator str)const{
+	real renderString(const morda::Matr4r& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
 		return this->renderStringInternal(matrix, color, unikod::toUtf32(str));
 	}
 	
@@ -74,7 +74,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const{
+	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
 		return this->renderStringInternal(matrix, color, str);
 	}
 	
@@ -85,7 +85,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const char* str)const{
+	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const char* str)const{
 		return this->renderString(matrix, color, unikod::Utf8Iterator(str));
 	}
 	
@@ -96,7 +96,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, kolme::Vec4f color, const std::string& str)const{
+	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const std::string& str)const{
 		return this->renderString(matrix, color, str.c_str());
 	}
 	

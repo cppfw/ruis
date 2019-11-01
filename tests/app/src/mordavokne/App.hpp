@@ -10,7 +10,7 @@
 
 #include <papki/File.hpp>
 
-#include <kolme/Vector2.hpp>
+#include <r4/vector2.hpp>
 
 #include <morda/Morda.hpp>
 
@@ -48,7 +48,7 @@ public:
 		/**
 		 * @brief Desired dimensions of the window
 		 */
-		kolme::Vec2ui dim;
+		r4::vec2ui dim;
 
 		//TODO: add window title string
 		
@@ -64,7 +64,7 @@ public:
 		 */
 		utki::Flags<Buffer_e> buffers = utki::Flags<Buffer_e>(false);
 		
-		WindowParams(kolme::Vec2ui dim) :
+		WindowParams(r4::vec2ui dim) :
 				dim(dim)
 		{}
 	};
@@ -120,23 +120,23 @@ private:
 	friend void updateWindowRect(App& app, const morda::Rectr& rect);
 	
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r nativeWindowToRootCoordinates(const kolme::Vec2f& pos)const noexcept{
+	morda::Vec2r nativeWindowToRootCoordinates(const r4::vec2f& pos)const noexcept{
 		return pos;
 	}
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseMove(const kolme::Vec2f& pos, unsigned id){
+	void handleMouseMove(const r4::vec2f& pos, unsigned id){
 		this->gui.onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
 	}
 	
-	friend void handleMouseMove(App& app, const kolme::Vec2f& pos, unsigned id);
+	friend void handleMouseMove(App& app, const r4::vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const kolme::Vec2f& pos, morda::MouseButton_e button, unsigned id){
+	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::MouseButton_e button, unsigned id){
 		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
 	
-	friend void handleMouseButton(App& app, bool isDown, const kolme::Vec2f& pos, morda::MouseButton_e button, unsigned id);
+	friend void handleMouseButton(App& app, bool isDown, const r4::vec2f& pos, morda::MouseButton_e button, unsigned id);
 
 	void handleMouseHover(bool isHovered, unsigned pointerID){
 		this->gui.onMouseHover(isHovered, pointerID);
@@ -200,7 +200,7 @@ public:
 private:
 	bool isFullscreen_v = false;
 
-	kolme::Rectu beforeFullScreenWindowRect;
+	r4::rectu beforeFullScreenWindowRect;
 
 public:
 	/**
@@ -234,7 +234,7 @@ public:
 	 * @param screenSizeMm - size of the display in millimeters.
 	 * @return Size of one display density pixel in pixels.
 	 */
-	static morda::real findDotsPerDp(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm);
+	static morda::real findDotsPerDp(r4::vec2ui resolution, r4::vec2ui screenSizeMm);
 };
 
 inline App& inst(){

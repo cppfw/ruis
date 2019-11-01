@@ -32,7 +32,7 @@ class Image :
 	
 	bool keepAspectRatio;
 	
-	kolme::Vec2b repeat_v;
+	r4::vec2b repeat_v;
 	mutable std::shared_ptr<VertexArray> vao;
 	
 public:

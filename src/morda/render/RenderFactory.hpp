@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <kolme/Vector2.hpp>
+#include <r4/vector2.hpp>
 
 #include <utki/Shared.hpp>
 #include <utki/Unique.hpp>
@@ -29,15 +29,15 @@ protected:
 public:
 	virtual ~RenderFactory()noexcept{}	
 	
-	virtual std::shared_ptr<Texture2D> createTexture2D(Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
+	virtual std::shared_ptr<Texture2D> createTexture2D(Texture2D::TexType_e type, r4::vec2ui dim, const utki::Buf<std::uint8_t>& data) = 0;
 	
-	std::shared_ptr<Texture2D> createTexture2D(kolme::Vec2ui dim, const utki::Buf<std::uint32_t>& data);
+	std::shared_ptr<Texture2D> createTexture2D(r4::vec2ui dim, const utki::Buf<std::uint32_t>& data);
 	
-	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) = 0;
+	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec4f> vertices) = 0;
 	
-	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) = 0;
+	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec3f> vertices) = 0;
 	
-	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) = 0;
+	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec2f> vertices) = 0;
 	
 	virtual std::shared_ptr<VertexBuffer> createVertexBuffer(const utki::Buf<float> vertices) = 0;
 	

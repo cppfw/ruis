@@ -2,7 +2,7 @@
 
 #include <papki/File.hpp>
 
-#include <kolme/Vector2.hpp>
+#include <r4/vector2.hpp>
 
 
 
@@ -44,7 +44,7 @@ public:
 	
 private:
 	ColorDepth_e colorDepth_v;
-	kolme::Vec2ui dim_v = kolme::Vec2ui(0);
+	r4::vec2ui dim_v = r4::vec2ui(0);
 	std::vector<std::uint8_t> buf_v;//image pixels data
 
 public:
@@ -64,7 +64,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	RasterImage(kolme::Vec2ui dimensions, ColorDepth_e colorDepth){
+	RasterImage(r4::vec2ui dimensions, ColorDepth_e colorDepth){
 		this->init(dimensions, colorDepth);
 	}
 	
@@ -75,7 +75,7 @@ public:
 	 * @param colorDepth - color depth.
 	 * @param srcBuf - pointer to memory buffer to take image data from.
 	 */
-	RasterImage(kolme::Vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
+	RasterImage(r4::vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
 
 	/**
 	 * @brief Constructor.
@@ -84,7 +84,7 @@ public:
 	 * @param dimensions - dimensions of the area to copy.
 	 * @param src - source image to copy area from.
 	 */
-	RasterImage(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const RasterImage& src);
+	RasterImage(r4::vec2ui pos, r4::vec2ui dimensions, const RasterImage& src);
 
 	/**
 	 * @brief Constructor.
@@ -99,7 +99,7 @@ public:
 	 * @brief Get image dimensions.
 	 * @return Image dimensions.
 	 */
-	const kolme::Vec2ui& dim()const noexcept{
+	const r4::vec2ui& dim()const noexcept{
 		return this->dim_v;
 	}
 
@@ -150,7 +150,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	void init(kolme::Vec2ui dimensions, ColorDepth_e colorDepth);
+	void init(r4::vec2ui dimensions, ColorDepth_e colorDepth);
 	
 	
 	/**

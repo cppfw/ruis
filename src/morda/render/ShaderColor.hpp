@@ -2,7 +2,7 @@
 
 #include <utki/Unique.hpp>
 
-#include <kolme/Matrix4.hpp>
+#include <r4/matrix4.hpp>
 
 #include "VertexArray.hpp"
 
@@ -17,13 +17,13 @@ public:
 	
 	virtual ~ShaderColor()noexcept{}
 	
-	virtual void render(const kolme::Matr4f &m, const VertexArray& va, kolme::Vec4f color)const = 0;
+	virtual void render(const r4::mat4f &m, const VertexArray& va, r4::vec4f color)const = 0;
 
-	void render(const kolme::Matr4f &m, const VertexArray& va, std::uint32_t color)const{
+	void render(const r4::mat4f &m, const VertexArray& va, std::uint32_t color)const{
 		this->render(
 				m,
 				va,
-				kolme::Vec4f(
+				r4::vec4f(
 						float(color & 0xff) / float(0xff),
 						float((color >> 8) & 0xff) / float(0xff),
 						float((color >> 16) & 0xff) / float(0xff),

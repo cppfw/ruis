@@ -24,13 +24,13 @@ public:
 	
 	void setScissorEnabled(bool enabled) override;
 	
-	kolme::Recti getScissorRect() const override;
+	r4::recti getScissorRect() const override;
 	
-	void setScissorRect(kolme::Recti r) override;
+	void setScissorRect(r4::recti r) override;
 
-	kolme::Recti getViewport()const override;
+	r4::recti getViewport()const override;
 	
-	void setViewport(kolme::Recti r) override;
+	void setViewport(r4::recti r) override;
 	
 	void setBlendEnabled(bool enable) override;
 

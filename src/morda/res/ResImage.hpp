@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include <kolme/Rectangle.hpp>
+#include <r4/rectangle.hpp>
 
 #include "ResTexture.hpp"
 

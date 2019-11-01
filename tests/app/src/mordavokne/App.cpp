@@ -35,7 +35,7 @@ void App::updateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "App::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	this->gui.renderer().setViewport(kolme::Recti(
+	this->gui.renderer().setViewport(r4::recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),
@@ -68,7 +68,7 @@ void App::hideVirtualKeyboard()noexcept{
 
 
 
-morda::real App::findDotsPerDp(kolme::Vec2ui resolution, kolme::Vec2ui screenSizeMm){
+morda::real App::findDotsPerDp(r4::vec2ui resolution, r4::vec2ui screenSizeMm){
 	
 	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
 	//For high density displays it should be more than one pixel, depending on display ppi.

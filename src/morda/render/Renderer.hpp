@@ -21,7 +21,7 @@ public:
 protected:
 	struct Params{
 		unsigned maxTextureSize = 2048;
-		kolme::Matr4f initialMatrix = kolme::Matr4f().identity();
+		r4::mat4f initialMatrix = r4::mat4f().identity();
 	};
 	
 	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
@@ -38,7 +38,7 @@ public:
 	 * @brief Initial matrix to use for rendering.
 	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
 	 */
-	const kolme::Matr4f initialMatrix;
+	const r4::mat4f initialMatrix;
 	
 	//can be nullptr = set screen framebuffer
 	void setFramebuffer(std::shared_ptr<FrameBuffer> fb);
@@ -49,13 +49,13 @@ public:
 	
 	virtual void setScissorEnabled(bool enabled) = 0;
 	
-	virtual kolme::Recti getScissorRect()const = 0;
+	virtual r4::recti getScissorRect()const = 0;
 	
-	virtual void setScissorRect(kolme::Recti r) = 0;
+	virtual void setScissorRect(r4::recti r) = 0;
 	
-	virtual kolme::Recti getViewport()const = 0;
+	virtual r4::recti getViewport()const = 0;
 	
-	virtual void setViewport(kolme::Recti r) = 0;
+	virtual void setViewport(r4::recti r) = 0;
 	
 	virtual void setBlendEnabled(bool enable) = 0;
 	

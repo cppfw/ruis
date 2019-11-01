@@ -42,7 +42,7 @@ OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPosLum::render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const {
+void OpenGL2ShaderColorPosLum::render(const r4::mat4f& m, const morda::VertexArray& va, r4::vec4f color)const {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

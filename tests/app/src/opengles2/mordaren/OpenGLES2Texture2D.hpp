@@ -15,7 +15,7 @@ namespace mordaren{
 struct OpenGLES2Texture2D : public morda::Texture2D{
 	GLuint tex;
 	
-	OpenGLES2Texture2D(kolme::Vec2f dim);
+	OpenGLES2Texture2D(r4::vec2f dim);
 	
 	~OpenGLES2Texture2D()noexcept;
 	

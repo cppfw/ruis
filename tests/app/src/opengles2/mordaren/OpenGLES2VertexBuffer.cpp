@@ -17,7 +17,7 @@ void OpenGLES2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 }
 
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<kolme::Vec4f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<r4::vec4f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
@@ -25,7 +25,7 @@ OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<kolme::Vec4f> verti
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<kolme::Vec3f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<r4::vec3f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
@@ -33,7 +33,7 @@ OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<kolme::Vec3f> verti
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<kolme::Vec2f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::Buf<r4::vec2f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)

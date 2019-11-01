@@ -2,7 +2,7 @@
 
 #include <utki/Buf.hpp>
 
-#include <kolme/Vector2.hpp>
+#include <r4/vector2.hpp>
 
 #include <morda/render/VertexBuffer.hpp>
 
@@ -15,11 +15,11 @@ public:
 	const GLint numComponents;
 	const GLenum type;
 	
-	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec4f> vertices);
+	OpenGL2VertexBuffer(const utki::Buf<r4::vec4f> vertices);
 	
-	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec3f> vertices);
+	OpenGL2VertexBuffer(const utki::Buf<r4::vec3f> vertices);
 	
-	OpenGL2VertexBuffer(const utki::Buf<kolme::Vec2f> vertices);
+	OpenGL2VertexBuffer(const utki::Buf<r4::vec2f> vertices);
 	
 	OpenGL2VertexBuffer(const utki::Buf<float> vertices);
 	

@@ -804,8 +804,8 @@ morda::real getDotsPerPt(){
 			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
 		);
 	
-	kolme::Vec2ui resolution(displayPixelSize.width, displayPixelSize.height);
-	kolme::Vec2ui screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
+	r4::vec2ui resolution(displayPixelSize.width, displayPixelSize.height);
+	r4::vec2ui screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
 	
 	return App::findDotsPerDp(resolution, screenSizeMm);
 }

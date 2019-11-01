@@ -16,7 +16,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) override{
+	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::Buf<std::uint8_t>& data) override{
 		return nullptr;
 	}
 
@@ -33,14 +33,14 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec2f> vertices) override{
 		return nullptr;
 	}
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec3f> vertices) override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec4f> vertices) override{
 		return nullptr;
 	}
 
@@ -53,11 +53,11 @@ public:
 	{}
 	
 	void clearFramebuffer() override{}
-	kolme::Recti getScissorRect() const override{
-		return kolme::Recti(0);
+	r4::recti getScissorRect() const override{
+		return r4::recti(0);
 	}
-	kolme::Recti getViewport() const override{
-		return kolme::Recti(0);
+	r4::recti getViewport() const override{
+		return r4::recti(0);
 	}
 	bool isScissorEnabled() const override{
 		return false;
@@ -66,6 +66,6 @@ public:
 	void setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) override{}
 	void setFramebufferInternal(morda::FrameBuffer* fb) override{}
 	void setScissorEnabled(bool enabled) override{}
-	void setScissorRect(kolme::Recti r) override{}
-	void setViewport(kolme::Recti r) override{}
+	void setScissorRect(r4::recti r) override{}
+	void setViewport(r4::recti r) override{}
 };

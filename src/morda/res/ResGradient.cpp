@@ -1,4 +1,4 @@
-#include <kolme/Vector4.hpp>
+#include <r4/vector4.hpp>
 
 #include "ResGradient.hpp"
 
@@ -12,13 +12,13 @@ using namespace morda;
 
 
 ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical){
-	std::vector<kolme::Vec2f> vertices;
+	std::vector<r4::vec2f> vertices;
 //	std::vector<std::uint32_t> colors;
-	std::vector<kolme::Vec4f> colors;
+	std::vector<r4::vec4f> colors;
 	for(auto& s : stops){
 		{
 			auto c = std::get<1>(s);
-			kolme::Vec4f clr(
+			r4::vec4f clr(
 					float(c & 0xff) / 255,
 					float((c >> 8) & 0xff) / 255,
 					float((c >> 16) & 0xff) / 255,
@@ -32,11 +32,11 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 //		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 		
 		if(vertical){
-			vertices.push_back(kolme::Vec2f(0, std::get<0>(s)));
-			vertices.push_back(kolme::Vec2f(1, std::get<0>(s)));
+			vertices.push_back(r4::vec2f(0, std::get<0>(s)));
+			vertices.push_back(r4::vec2f(1, std::get<0>(s)));
 		}else{ ASSERT(!vertical)
-			vertices.push_back(kolme::Vec2f(std::get<0>(s), 1));
-			vertices.push_back(kolme::Vec2f(std::get<0>(s), 0));
+			vertices.push_back(r4::vec2f(std::get<0>(s), 1));
+			vertices.push_back(r4::vec2f(std::get<0>(s), 0));
 		}
 //		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}

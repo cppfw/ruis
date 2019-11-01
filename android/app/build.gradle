@@ -45,7 +45,7 @@ repositories {
 }
 dependencies {
     implementation 'io.github.igagis:libutki:+'
-    implementation 'io.github.igagis:libkolme:+'
+    implementation 'io.github.igagis:r4:+'
     implementation 'io.github.igagis:libpapki:+'
     implementation 'io.github.igagis:puu:+'
     implementation 'io.github.igagis:libnitki:+'

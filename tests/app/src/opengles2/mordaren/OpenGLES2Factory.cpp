@@ -37,7 +37,7 @@ OpenGLES2Factory::~OpenGLES2Factory()noexcept{
 
 
 
-std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Texture2D::TexType_e type, 2ui dim, const utki::Buf<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
 	ASSERT(data.size() % dim.x == 0)
@@ -97,15 +97,15 @@ std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Textu
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<4f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<3f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::Buf<2f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 

@@ -41,7 +41,7 @@ OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 {
 }
 
-void OpenGL2ShaderPosClr::render(const kolme::Matr4f& m, const morda::VertexArray& va) const {
+void OpenGL2ShaderPosClr::render(const r4::mat4f& m, const morda::VertexArray& va) const {
 	this->bind();
 	
 	this->OpenGL2ShaderBase::render(m, va);

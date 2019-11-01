@@ -133,7 +133,7 @@ GLint OpenGL2ShaderBase::getUniform(const char* n) {
 	return ret;
 }
 
-void OpenGL2ShaderBase::render(const kolme::Matr4f& m, const morda::VertexArray& va)const{
+void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::VertexArray& va)const{
 	ASSERT(this->isBound())
 	
 	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))

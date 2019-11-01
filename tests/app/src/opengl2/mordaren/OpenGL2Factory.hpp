@@ -13,13 +13,13 @@ public:
 	
 	virtual ~OpenGL2Factory()noexcept;
 
-	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::Buf<std::uint8_t>& data) override;
+	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::Buf<std::uint8_t>& data) override;
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec4f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec4f> vertices) override;
 	
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec3f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec3f> vertices) override;
 	
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<kolme::Vec2f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec2f> vertices) override;
 
 	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<float> vertices) override;
 	

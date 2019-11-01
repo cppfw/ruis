@@ -9,9 +9,9 @@
 
 #include <puu/dom.hpp>
 
-#include <kolme/Matrix4.hpp>
-#include <kolme/Vector2.hpp>
-#include <kolme/Rectangle.hpp>
+#include <r4/matrix4.hpp>
+#include <r4/vector2.hpp>
+#include <r4/rectangle.hpp>
 
 #include "../config.hpp"
 
@@ -130,7 +130,7 @@ private:
 	mutable bool cacheDirty = true;
 	mutable std::shared_ptr<Texture2D> cacheTex;
 
-	void renderFromCache(const kolme::Matr4f& matrix)const;
+	void renderFromCache(const r4::mat4f& matrix)const;
 
 protected:
 	void clearCache();
@@ -280,7 +280,7 @@ public:
 	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
-	kolme::Recti computeViewportRect(const Matr4r& matrix)const noexcept;
+	r4::recti computeViewportRect(const Matr4r& matrix)const noexcept;
 
 	/**
 	 * @brief Move widget to position within its parent.

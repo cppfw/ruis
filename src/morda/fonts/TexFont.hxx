@@ -8,8 +8,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <kolme/Vector2.hpp>
-#include <kolme/Rectangle.hpp>
+#include <r4/vector2.hpp>
+#include <r4/rectangle.hpp>
 
 #include <utki/Exc.hpp>
 #include <papki/File.hpp>
@@ -82,14 +82,14 @@ public:
 	real charAdvance(char32_t c) const override;
 	
 protected:
-	real renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const override;
+	real renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const override;
 
 	real stringAdvanceInternal(const std::u32string& str)const override;
 
 	morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const override;
 	
 private:	
-	real renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const;
+	real renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const;
 
 	const Glyph& getGlyph(char32_t c)const;
 };

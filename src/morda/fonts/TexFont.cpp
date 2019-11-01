@@ -63,7 +63,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 		return g;
 	}
 	
-	RasterImage glyphim(kolme::Vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
+	RasterImage glyphim(r4::vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
 
 	RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
 	im.blit(0, 0, glyphim, 1, 0);
@@ -71,7 +71,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	
 	
 	
-	std::array<kolme::Vec2f, 4> verts;
+	std::array<r4::vec2f, 4> verts;
 	verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
 	verts[1] = (morda::Vec2r(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
 	verts[2] = (morda::Vec2r(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
@@ -158,7 +158,7 @@ const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 
 
 
-real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, kolme::Vec4f color, char32_t ch)const{
+real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const{
 	const Glyph& g = this->getGlyph(ch);
 	
 	//texture can be null for glyph of empty characters, like space, tab etc...
@@ -243,7 +243,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 
 
-real TexFont::renderStringInternal(const morda::Matr4r& matrix, kolme::Vec4f color, const std::u32string& str)const{
+real TexFont::renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
 		return 0;
 	}

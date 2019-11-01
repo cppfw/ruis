@@ -119,7 +119,7 @@ public:
 
 		~SvgTexture()noexcept{
 			if(auto p = this->parent.lock()){
-				kolme::Vec2ui d = this->tex_v->dim().to<unsigned>();
+				r4::vec2ui d = this->tex_v->dim().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}
@@ -158,7 +158,7 @@ public:
 		
 		auto img = std::make_shared<SvgTexture>(
 				this->sharedFromThis(this),
-				morda::inst().renderer().factory->createTexture2D(kolme::Vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
+				morda::inst().renderer().factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;

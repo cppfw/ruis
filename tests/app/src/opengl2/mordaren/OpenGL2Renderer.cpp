@@ -79,26 +79,26 @@ void OpenGL2Renderer::setScissorEnabled(bool enabled) {
 	}
 }
 
-kolme::Recti OpenGL2Renderer::getScissorRect() const {
+r4::recti OpenGL2Renderer::getScissorRect() const {
 	GLint osb[4];
 	glGetIntegerv(GL_SCISSOR_BOX, osb);
-	return kolme::Recti(osb[0], osb[1], osb[2], osb[3]);
+	return r4::recti(osb[0], osb[1], osb[2], osb[3]);
 }
 
-void OpenGL2Renderer::setScissorRect(kolme::Recti r) {
+void OpenGL2Renderer::setScissorRect(r4::recti r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
 	assertOpenGLNoError();
 }
 
-kolme::Recti OpenGL2Renderer::getViewport()const {
+r4::recti OpenGL2Renderer::getViewport()const {
 	GLint vp[4];
 
 	glGetIntegerv(GL_VIEWPORT, vp);
 	
-	return kolme::Recti(vp[0], vp[1], vp[2], vp[3]);
+	return r4::recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
-void OpenGL2Renderer::setViewport(kolme::Recti r) {
+void OpenGL2Renderer::setViewport(r4::recti r) {
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
 	assertOpenGLNoError();
 }

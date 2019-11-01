@@ -5,8 +5,8 @@
 
 #include <utki/Unique.hpp>
 
-#include <kolme/Matrix4.hpp>
-#include <kolme/Vector4.hpp>
+#include <r4/matrix4.hpp>
+#include <r4/vector4.hpp>
 
 namespace morda{
 
@@ -19,7 +19,7 @@ public:
 	
 	virtual ~ShaderColorTexture()noexcept{}
 	
-	virtual void render(const kolme::Matr4f &m, const morda::VertexArray& va, kolme::Vec4f color, const morda::Texture2D& tex)const = 0;
+	virtual void render(const r4::mat4f &m, const morda::VertexArray& va, r4::vec4f color, const morda::Texture2D& tex)const = 0;
 };
 
 }

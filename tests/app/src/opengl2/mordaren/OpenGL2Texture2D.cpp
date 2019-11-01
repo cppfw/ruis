@@ -4,7 +4,7 @@
 
 using namespace mordaren;
 
-OpenGL2Texture2D::OpenGL2Texture2D(kolme::Vec2f dim) :
+OpenGL2Texture2D::OpenGL2Texture2D(r4::vec2f dim) :
 		morda::Texture2D(dim)
 {
 	glGenTextures(1, &this->tex);

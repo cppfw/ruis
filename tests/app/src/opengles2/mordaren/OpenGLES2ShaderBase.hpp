@@ -5,7 +5,7 @@
 #include <utki/Exc.hpp>
 #include <utki/Buf.hpp>
 
-#include <kolme/Matrix4.hpp>
+#include </matrix4.hpp>
 
 #include <vector>
 
@@ -71,8 +71,8 @@ protected:
 		return this == boundShader;
 	}
 	
-	void setUniformMatrix4f(GLint id, const kolme::Matr4f& m)const{
-		glUniformMatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
+	void setUniformmatrix4f(GLint id, const r4::mat4f& m)const{
+		glUniformmatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		assertOpenGLNoError();
 	}
 	
@@ -81,8 +81,8 @@ protected:
 		assertOpenGLNoError();
 	}
 	
-	void setMatrix(const kolme::Matr4f& m)const{
-		this->setUniformMatrix4f(this->matrixUniform, m);
+	void setMatrix(const r4::mat4f& m)const{
+		this->setUniformmatrix4f(this->matrixUniform, m);
 		assertOpenGLNoError();
 	}
 	
@@ -92,7 +92,7 @@ protected:
 		return modeMap[unsigned(mode)];
 	}
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va)const;
+	void render(const r4::mat4f& m, const morda::VertexArray& va)const;
 };
 
 }

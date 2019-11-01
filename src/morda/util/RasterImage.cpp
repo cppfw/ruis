@@ -28,7 +28,7 @@ using namespace morda;
 
 
 
-void RasterImage::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
+void RasterImage::init(r4::vec2ui dimensions, ColorDepth_e typeOfImage){
 	this->reset();
 	this->dim_v = dimensions;
 	this->colorDepth_v = typeOfImage;
@@ -37,14 +37,14 @@ void RasterImage::init(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage){
 
 
 
-RasterImage::RasterImage(kolme::Vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
+RasterImage::RasterImage(r4::vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_v.begin(), srcBuf, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
 
-RasterImage::RasterImage(kolme::Vec2ui pos, kolme::Vec2ui dimensions, const RasterImage& src){
+RasterImage::RasterImage(r4::vec2ui pos, r4::vec2ui dimensions, const RasterImage& src){
 	if(src.dim().x == 0 || src.dim().y == 0){
 		throw utki::Exc("Image::Image(): source image has zero dimensions");
 	}
@@ -295,7 +295,7 @@ void RasterImage::loadPNG(const papki::File& fi){
 	//Great! Number of channels and bits per pixel are initialized now!
 
 	//set image dimensions and set buffer size
-	this->init(kolme::Vec2ui(width, height), imageType);//Set buf array size (allocate memory)
+	this->init(r4::vec2ui(width, height), imageType);//Set buf array size (allocate memory)
 	//Great! height and width are initialized and buffer memory allocated
 
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
@@ -542,7 +542,7 @@ void RasterImage::loadJPG(const papki::File& fi){
 	}
 	
 	//Set buffer size (allocate memory for image)
-	this->init(kolme::Vec2ui(cinfo.output_width, cinfo.output_height), imageType);
+	this->init(r4::vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	//calculate the size of a row in bytes
 	int bytesRow = this->dim().x * this->numChannels();

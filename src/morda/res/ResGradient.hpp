@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kolme/Vector2.hpp>
+#include <r4/vector2.hpp>
 
 #include "../ResourceManager.hpp"
 #include "../config.hpp"

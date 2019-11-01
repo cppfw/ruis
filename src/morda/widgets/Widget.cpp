@@ -192,9 +192,9 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
-			kolme::Recti scissor = this->computeViewportRect(matrix);
+			r4::recti scissor = this->computeViewportRect(matrix);
 
-			kolme::Recti oldScissor;
+			r4::recti oldScissor;
 			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
 			if(scissorTestWasEnabled){
 				oldScissor = morda::inst().renderer().getScissorRect();
@@ -226,9 +226,9 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 	s.SetMatrix(matr);
 
 	if(this->isHovered()){
-		s.SetColor(kolme::Vec3f(0, 1, 0));
+		s.SetColor(r4::vec3f(0, 1, 0));
 	}else{
-		s.SetColor(kolme::Vec3f(1, 0, 1));
+		s.SetColor(r4::vec3f(1, 0, 1));
 	}
 	s.render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
@@ -260,7 +260,7 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 		morda::inst().renderer().setViewport(oldViewport);
 	});
 
-	morda::inst().renderer().setViewport(kolme::Recti(kolme::Vec2i(0), this->rect().d.to<int>()));
+	morda::inst().renderer().setViewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
 
 	morda::inst().renderer().clearFramebuffer();
 
@@ -275,7 +275,7 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 	return tex;
 }
 
-void Widget::renderFromCache(const kolme::Matr4f& matrix) const {
+void Widget::renderFromCache(const r4::mat4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
@@ -340,8 +340,8 @@ void Widget::unfocus()noexcept{
 
 
 
-kolme::Recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
-	kolme::Recti ret(
+r4::recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
+	r4::recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);

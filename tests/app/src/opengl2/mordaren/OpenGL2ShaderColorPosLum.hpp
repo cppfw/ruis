@@ -16,6 +16,6 @@ public:
 	
 	using morda::ShaderColor::render;
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const override;
+	void render(const r4::mat4f& m, const morda::VertexArray& va, r4::vec4f color)const override;
 };
 

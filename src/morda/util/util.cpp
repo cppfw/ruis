@@ -128,9 +128,9 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 
 
 
-kolme::Vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
+r4::vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 	unsigned i;
-	kolme::Vec2b ret;
+	r4::vec2b ret;
 	
 	bool v = false;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
@@ -216,8 +216,8 @@ void morda::applySimpleAlphaBlending(){
 }
 
 
-kolme::Vec4f morda::colorToVec4f(std::uint32_t color){
-	return kolme::Vec4f(
+r4::vec4f morda::colorToVec4f(std::uint32_t color){
+	return r4::vec4f(
 			float(color & 0xff) / float(0xff),
 			float((color >> 8) & 0xff) / float(0xff),
 			float((color >> 16) & 0xff) / float(0xff),

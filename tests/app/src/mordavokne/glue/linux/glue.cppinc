@@ -524,8 +524,8 @@ morda::real getDotsPerInch(Display* display){
 
 morda::real getDotsPerPt(Display* display){
 	int scrNum = 0;
-	kolme::Vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
-	kolme::Vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
+	r4::vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
+	r4::vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
 	
 	return App::findDotsPerDp(resolution, screenSizeMm);
 }

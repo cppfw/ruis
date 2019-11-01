@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kolme/Matrix4.hpp>
+#include <r4/matrix4.hpp>
 
 #include <utki/Unique.hpp>
 
@@ -14,7 +14,7 @@ public:
 	
 	virtual ~Shader()noexcept{}
 	
-	virtual void render(const kolme::Matr4f& m, const VertexArray& va)const = 0;
+	virtual void render(const r4::mat4f& m, const VertexArray& va)const = 0;
 };
 
 }

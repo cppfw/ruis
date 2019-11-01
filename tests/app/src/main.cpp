@@ -1,4 +1,4 @@
-#include <kolme/Quaternion.hpp>
+#include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
 
@@ -146,45 +146,45 @@ public:
 			Widget(desc)
 	{
 		std::array<morda::Vec3r, 36> cubePos = {{
-			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, 1), kolme::Vec3f(-1, 1, 1),
-			kolme::Vec3f(1, -1, 1), kolme::Vec3f(1, 1, 1), kolme::Vec3f(-1, 1, 1),
+			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
+			r4::vec3f(1, -1, 1), r4::vec3f(1, 1, 1), r4::vec3f(-1, 1, 1),
 
-			kolme::Vec3f(1, -1, 1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, 1, 1),
-			kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, 1, -1), kolme::Vec3f(1, 1, 1),
+			r4::vec3f(1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, 1, 1),
+			r4::vec3f(1, -1, -1), r4::vec3f(1, 1, -1), r4::vec3f(1, 1, 1),
 
-			kolme::Vec3f(1, -1, -1), kolme::Vec3f(-1, -1, -1), kolme::Vec3f(1, 1, -1),
-			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(-1, 1, -1), kolme::Vec3f(1, 1, -1),
+			r4::vec3f(1, -1, -1), r4::vec3f(-1, -1, -1), r4::vec3f(1, 1, -1),
+			r4::vec3f(-1, -1, -1), r4::vec3f(-1, 1, -1), r4::vec3f(1, 1, -1),
 
-			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(-1, -1, 1), kolme::Vec3f(-1, 1, -1),
-			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(-1, 1, 1), kolme::Vec3f(-1, 1, -1),
+			r4::vec3f(-1, -1, -1), r4::vec3f(-1, -1, 1), r4::vec3f(-1, 1, -1),
+			r4::vec3f(-1, -1, 1), r4::vec3f(-1, 1, 1), r4::vec3f(-1, 1, -1),
 
-			kolme::Vec3f(-1, 1, -1), kolme::Vec3f(-1, 1, 1), kolme::Vec3f(1, 1, -1),
-			kolme::Vec3f(-1, 1, 1), kolme::Vec3f(1, 1, 1), kolme::Vec3f(1, 1, -1),
+			r4::vec3f(-1, 1, -1), r4::vec3f(-1, 1, 1), r4::vec3f(1, 1, -1),
+			r4::vec3f(-1, 1, 1), r4::vec3f(1, 1, 1), r4::vec3f(1, 1, -1),
 
-			kolme::Vec3f(-1, -1, -1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(-1, -1, 1),
-			kolme::Vec3f(-1, -1, 1), kolme::Vec3f(1, -1, -1), kolme::Vec3f(1, -1, 1)
+			r4::vec3f(-1, -1, -1), r4::vec3f(1, -1, -1), r4::vec3f(-1, -1, 1),
+			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, -1, 1)
 		}};
 
 		auto posVBO = morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(cubePos));
 
-		std::array<kolme::Vec2f, 36> cubeTex = {{
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+		std::array<r4::vec2f, 36> cubeTex = {{
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
 
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
 
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
 
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
 
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1),
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
 
-			kolme::Vec2f(0, 0), kolme::Vec2f(1, 0), kolme::Vec2f(0, 1),
-			kolme::Vec2f(1, 0), kolme::Vec2f(1, 1), kolme::Vec2f(0, 1)
+			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
+			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
 		}};
 
 		auto texVBO = morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(cubeTex));
@@ -209,7 +209,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::Quatr().initRot(kolme::Vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::Quatr().initRot(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;
@@ -601,7 +601,7 @@ public:
 
 class Application : public mordavokne::App{
 	static mordavokne::App::WindowParams GetWindowParams()noexcept{
-		mordavokne::App::WindowParams wp(kolme::Vec2ui(1024, 800));
+		mordavokne::App::WindowParams wp(r4::vec2ui(1024, 800));
 
 		return wp;
 	}

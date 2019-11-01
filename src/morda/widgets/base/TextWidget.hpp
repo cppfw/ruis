@@ -5,7 +5,7 @@
 
 #include "../../res/ResFont.hpp"
 
-#include <kolme/Rectangle.hpp>
+#include <r4/rectangle.hpp>
 
 #include <list>
 #include <vector>

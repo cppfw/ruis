@@ -2,12 +2,12 @@
 
 #include <utki/config.hpp>
 
-#include <kolme/Matrix4.hpp>
-#include <kolme/Vector4.hpp>
-#include <kolme/Vector3.hpp>
-#include <kolme/Vector2.hpp>
-#include <kolme/Quaternion.hpp>
-#include <kolme/Rectangle.hpp>
+#include <r4/matrix4.hpp>
+#include <r4/vector4.hpp>
+#include <r4/vector3.hpp>
+#include <r4/vector2.hpp>
+#include <r4/quaternion.hpp>
+#include <r4/rectangle.hpp>
 
 #include "util/Sides.hpp"
 
@@ -17,21 +17,21 @@ namespace morda{
 
 typedef float real;
 
-typedef kolme::Matrix4<real> Matr4r;
+typedef r4::matrix4<real> Matr4r;
 static_assert(sizeof(Matr4r) == sizeof(real) * 4 * 4, "size mismatch");
 
-typedef kolme::Quaternion<real> Quatr;
+typedef r4::quaternion<real> Quatr;
 static_assert(sizeof(Quatr) == sizeof(real) * 4, "size mismatch");
 
-typedef kolme::Rectangle<real> Rectr;
+typedef r4::rectangle<real> Rectr;
 
-typedef kolme::Vector2<real> Vec2r;
+typedef r4::vector2<real> Vec2r;
 static_assert(sizeof(Vec2r) == sizeof(real) * 2, "size mismatch");
 
-typedef kolme::Vector3<real> Vec3r;
+typedef r4::vector3<real> Vec3r;
 static_assert(sizeof(Vec3r) == sizeof(real) * 3, "size mismatch");
 
-typedef kolme::Vector4<real> Vec4r;
+typedef r4::vector4<real> Vec4r;
 static_assert(sizeof(Vec4r) == sizeof(real) * 4, "size mismatch");
 
 typedef Sides<real> Sidesr;

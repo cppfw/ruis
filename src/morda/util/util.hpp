@@ -4,8 +4,8 @@
 
 #include <utki/config.hpp>
 
-#include <kolme/Vector2.hpp>
-#include <kolme/Rectangle.hpp>
+#include <r4/vector2.hpp>
+#include <r4/rectangle.hpp>
 
 #include <puu/dom.hpp>
 
@@ -70,7 +70,7 @@ morda::Vec2r dimVec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting vector will be filled with false's.
  * @return parsed Vec2b.
  */
-kolme::Vec2b makeVec2bFromSTOB(const stob::Node* chain);
+r4::vec2b makeVec2bFromSTOB(const stob::Node* chain);
 
 
 
@@ -133,6 +133,6 @@ void applySimpleAlphaBlending();
 
 morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);
 
-kolme::Vec4f colorToVec4f(std::uint32_t color);
+r4::vec4f colorToVec4f(std::uint32_t color);
 
 }
