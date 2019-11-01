@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.resources = "res/morda_res"
 
   s.dependency 'papki', '>= 1.0.58'
-  s.dependency 'libkolme', '>= 1.0.6'
+  s.dependency 'r4', '>= 1.0.6'
   s.dependency 'puu', '>= 0.1.1'
   s.dependency 'png', '>= 1.4.1.4'
   s.dependency 'freetype', '>= 2.10.1.1'

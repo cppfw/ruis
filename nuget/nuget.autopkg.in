@@ -26,7 +26,7 @@ nuget{
 	}
 	dependencies {
 		packages : {
-			libkolme/1.0.6;
+			r4/1.0.6;
 			freetype_static/2.10.1.1;
 			libjpeg_static/6.1.1.2;
 			libpapki/1.0.15;
