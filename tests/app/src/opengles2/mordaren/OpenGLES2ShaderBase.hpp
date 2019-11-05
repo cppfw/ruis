@@ -5,7 +5,7 @@
 #include <utki/Exc.hpp>
 #include <utki/Buf.hpp>
 
-#include </matrix4.hpp>
+#include <r4/matrix4.hpp>
 
 #include <vector>
 
@@ -71,8 +71,8 @@ protected:
 		return this == boundShader;
 	}
 	
-	void setUniformmatrix4f(GLint id, const r4::mat4f& m)const{
-		glUniformmatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
+	void setUniformMatrix4f(GLint id, const r4::mat4f& m)const{
+		glUniformMatrix4fv(id, 1, GL_FALSE, reinterpret_cast<const GLfloat*>(&m));
 		assertOpenGLNoError();
 	}
 	
@@ -82,7 +82,7 @@ protected:
 	}
 	
 	void setMatrix(const r4::mat4f& m)const{
-		this->setUniformmatrix4f(this->matrixUniform, m);
+		this->setUniformMatrix4f(this->matrixUniform, m);
 		assertOpenGLNoError();
 	}
 	

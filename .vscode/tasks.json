@@ -12,6 +12,14 @@
             ]
         },
         {
+            "label": "build_ogles2",
+            "type": "shell",
+            "command": "make autojobs=true ogles2=true",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "build_debug",
             "type": "shell",
             "command": "make autojobs=true debug=true",
@@ -31,6 +39,13 @@
             "command": "make run",
             "problemMatcher": [],
             "dependsOn": "build"
+        },
+        {
+            "label": "run_ogles2",
+            "type": "shell",
+            "command": "make run ogles2=true",
+            "problemMatcher": [],
+            "dependsOn": "build_ogles2"
         },
         {
             "label": "run_debug",
