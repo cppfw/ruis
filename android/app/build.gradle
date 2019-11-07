@@ -44,16 +44,16 @@ repositories {
     }
 }
 dependencies {
-    implementation 'io.github.igagis:libutki:+'
+    implementation 'io.github.igagis:utki:+'
     implementation 'io.github.igagis:r4:+'
-    implementation 'io.github.igagis:libpapki:+'
+    implementation 'io.github.igagis:papki:+'
     implementation 'io.github.igagis:puu:+'
-    implementation 'io.github.igagis:libnitki:+'
-    implementation 'io.github.igagis:libsvgdom:+'
-    implementation 'io.github.igagis:libsvgren:+'
-    implementation 'org.libpng:libpng:+'
-    implementation 'org.ijg:libjpeg:+'
-    implementation 'org.freetype:freetype2:+'
+    implementation 'io.github.igagis:nitki:+'
+    implementation 'io.github.igagis:svgdom:+'
+    implementation 'io.github.igagis:svgren:+'
+    implementation 'io.github.igagis:png:+'
+    implementation 'io.github.igagis:jpeg:+'
+    implementation 'io.github.igagis:freetype:+'
     implementation project(path: ':libmorda', configuration: 'default')
 }
 
