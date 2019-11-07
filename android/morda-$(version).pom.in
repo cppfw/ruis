@@ -3,20 +3,20 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.igagis</groupId>
-  <artifactId>libmorda</artifactId>
+  <artifactId>morda</artifactId>
   <version>$(version)</version>
   <packaging>aar</packaging>
   <dependencies>
 	  <dependency>
 		  <groupId>io.github.igagis</groupId>
-		  <artifactId>libutki</artifactId>
+		  <artifactId>utki</artifactId>
 		  <version>[1.1.7,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
 	  <dependency>
 		  <groupId>io.github.igagis</groupId>
-		  <artifactId>libpapki</artifactId>
+		  <artifactId>papki</artifactId>
 		  <version>[1.0.34,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
@@ -30,36 +30,36 @@
 	  </dependency>
           <dependency>
 		  <groupId>io.github.igagis</groupId>
-		  <artifactId>libpuu</artifactId>
+		  <artifactId>puu</artifactId>
 		  <version>[0.1.1,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.igagis</groupId>
-		  <artifactId>libsvgren</artifactId>
+		  <artifactId>svgren</artifactId>
 		  <version>[0.4.10,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>org.libpng</groupId>
-		  <artifactId>libpng</artifactId>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>png</artifactId>
 		  <version>[1.4.1,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>org.ijg</groupId>
-		  <artifactId>libjpeg</artifactId>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>jpeg</artifactId>
 		  <version>[1.0.0,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
-		  <groupId>org.freetype</groupId>
-		  <artifactId>freetype2</artifactId>
-		  <version>[1.0.0,)</version>
+		  <groupId>io.github.igagis</groupId>
+		  <artifactId>freetype</artifactId>
+		  <version>[2.0.0,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
