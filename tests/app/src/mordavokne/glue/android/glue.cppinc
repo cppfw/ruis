@@ -935,7 +935,7 @@ namespace{
 
 
 
-JNIEXPORT void JNICALL Java_io_github_igagis_libmordavokne_MordaVOkneActivity_handleCharacterStringInput(
+JNIEXPORT void JNICALL Java_io_github_igagis_mordavokne_MordaVOkneActivity_handleCharacterStringInput(
 		JNIEnv *env,
 		jclass clazz,
 		jstring chars
@@ -985,9 +985,9 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 	}
 
 	static JNINativeMethod methods[] = {
-		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_io_github_igagis_libmordavokne_MordaVOkneActivity_handleCharacterStringInput},
+		{"handleCharacterStringInput", "(Ljava/lang/String;)V", (void*)&Java_io_github_igagis_mordavokne_MordaVOkneActivity_handleCharacterStringInput},
 	};
-	jclass clazz = env->FindClass("io/github/igagis/libmordavokne/MordaVOkneActivity");
+	jclass clazz = env->FindClass("io/github/igagis/mordavokne/MordaVOkneActivity");
 	ASSERT(clazz)
 	if(env->RegisterNatives(clazz, methods, 1) < 0){
 		ASSERT(false)

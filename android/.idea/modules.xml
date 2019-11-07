@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libmorda/libmorda.iml" filepath="$PROJECT_DIR$/libmorda/libmorda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/morda/morda.iml" filepath="$PROJECT_DIR$/morda/morda.iml" />
     </modules>
   </component>
 </project>

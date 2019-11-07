@@ -54,7 +54,7 @@ dependencies {
     implementation 'io.github.igagis:png:+'
     implementation 'io.github.igagis:jpeg:+'
     implementation 'io.github.igagis:freetype:+'
-    implementation project(path: ':libmorda', configuration: 'default')
+    implementation project(path: ':morda', configuration: 'default')
 }
 
 

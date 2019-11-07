@@ -21,7 +21,7 @@ foreach (TMP_PATH ${srcs})
     endif ()
 endforeach(TMP_PATH)
 
-link_directories( build/ndkLibs/${ANDROID_ABI}/ ../libmorda/build/intermediates/cmake/debug/obj/${ANDROID_ABI} )
+link_directories( build/ndkLibs/${ANDROID_ABI}/ ../morda/build/intermediates/cmake/debug/obj/${ANDROID_ABI} )
 
 add_library( # Specifies the name of the library.
              mordavokneapp # this has to be 'mordavokneapp' so that MordaVOkneActivity loads that named .so

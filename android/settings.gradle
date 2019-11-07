@@ -1,1 +1,1 @@
-include ':app', ':libmorda'
+include ':app', ':morda'
