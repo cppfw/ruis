@@ -38,5 +38,5 @@ include_directories( build/ndkLibs/include/ ../../src/ ../../tests/app/src/openg
 
 target_link_libraries(
         mordavokneapp
-        morda android log EGL png jpeg puu papki svgren svgdom z freetype2 mikroxml unikod nitki GLESv2 cairo pixman
+        morda android log EGL png jpeg puu papki svgren svgdom z freetype mikroxml unikod nitki GLESv2 cairo pixman
     )

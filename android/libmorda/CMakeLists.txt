@@ -27,12 +27,12 @@ add_library( # Specifies the name of the library.
 
 include_directories(
         build/ndkLibs/include/
-        build/ndkLibs/include/freetype2
+        build/ndkLibs/include/freetype
         build/ndkLibs/include/png
         build/ndkLibs/include/jpeg
     )
 
 target_link_libraries(
         morda
-        android log png jpeg puu papki svgren svgdom z freetype2 mikroxml unikod cairo pixman
+        android log png jpeg puu papki svgren svgdom z freetype mikroxml unikod cairo pixman
     )
