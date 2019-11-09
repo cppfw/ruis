@@ -1,3 +1,9 @@
+libmorda (0.5.93) unstable; urgency=medium
+
+  * binary cocoapod: pack resources to zip
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Nov 2019 21:38:26 +0200
+
 libmorda (0.5.92) unstable; urgency=medium
 
   * r4 adaptation
