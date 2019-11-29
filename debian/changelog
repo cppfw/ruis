@@ -1,3 +1,9 @@
+libmorda (0.5.95) unstable; urgency=medium
+
+  * travis access tokens updated
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Nov 2019 17:07:49 +0200
+
 libmorda (0.5.94) unstable; urgency=medium
 
   * debian buster
