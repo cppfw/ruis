@@ -1,3 +1,9 @@
+libmorda (0.5.94) unstable; urgency=medium
+
+  * debian buster
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Nov 2019 16:13:28 +0200
+
 libmorda (0.5.93) unstable; urgency=medium
 
   * binary cocoapod: pack resources to zip
