@@ -3,7 +3,7 @@
 #include <vector>
 #include <array>
 
-#include "../../AppFactory.hpp"
+#include "../../application.hpp"
 
 #include <pogodi/WaitSet.hpp>
 #include <papki/FSFile.hpp>
@@ -33,12 +33,11 @@
 #endif
 
 
+#include "../friendAccessors.cxx"
+#include "../unixCommon.cxx"
 
 
 using namespace mordavokne;
-
-
-#include "../unixCommon.cppinc"
 
 
 namespace{
@@ -66,10 +65,10 @@ struct WindowWrapper : public utki::Unique{
 	XIC inputContext;
 
 	nitki::Queue uiQueue;
-	
+
 	volatile bool quitFlag = false;
-	
-	WindowWrapper(const App::WindowParams& wp){
+
+	WindowWrapper(const window_params& wp){
 		this->display = XOpenDisplay(0);
 		if(!this->display){
 			throw utki::Exc("XOpenDisplay() failed");
@@ -90,7 +89,7 @@ struct WindowWrapper : public utki::Unique{
 				throw utki::Exc("GLX version 1.3 or above is required");
 			}
 		}
-		
+
 		GLXFBConfig bestFbc;
 		{
 			std::vector<int> visualAttribs;
@@ -104,10 +103,10 @@ struct WindowWrapper : public utki::Unique{
 			visualAttribs.push_back(GLX_BLUE_SIZE); visualAttribs.push_back(8);
 			visualAttribs.push_back(GLX_ALPHA_SIZE); visualAttribs.push_back(8);
 
-			if(wp.buffers.get(App::WindowParams::Buffer_e::DEPTH)){
+			if(wp.buffers.get(window_params::buffer_type::depth)){
 				visualAttribs.push_back(GLX_DEPTH_SIZE); visualAttribs.push_back(24);
 			}
-			if(wp.buffers.get(App::WindowParams::Buffer_e::STENCIL)){
+			if(wp.buffers.get(window_params::buffer_type::stencil)){
 				visualAttribs.push_back(GLX_STENCIL_SIZE); visualAttribs.push_back(8);
 			}
 
@@ -152,15 +151,15 @@ struct WindowWrapper : public utki::Unique{
 		utki::ScopeExit scopeExitEGLDisplay([this](){
 			eglTerminate(this->eglDisplay);
 		});
-		
+
 		if(eglInitialize(this->eglDisplay, nullptr, nullptr) == EGL_FALSE){
 			eglTerminate(this->eglDisplay);
 			throw utki::Exc("eglInitialize() failed");
 		}
-		
+
 		EGLConfig eglConfig;
 		{
-			//TODO: allow stencil and depth configuration etc. via WindowParams
+			//TODO: allow stencil and depth configuration etc. via window_params
 			//Here specify the attributes of the desired configuration.
 			//Below, we select an EGLConfig with at least 8 bits per color
 			//component compatible with on-screen windows
@@ -184,7 +183,7 @@ struct WindowWrapper : public utki::Unique{
 				throw utki::Exc("eglChooseConfig() failed, no matching config found");
 			}
 		}
-		
+
 		if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE){
 			throw utki::Exc("eglBindApi() failed");
 		}
@@ -218,7 +217,7 @@ struct WindowWrapper : public utki::Unique{
 #	else
 		{
 			EGLint vid;
-	
+
 			if(!eglGetConfigAttrib(this->eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &vid)) {
 				throw utki::Exc("eglGetConfigAttrib() failed");
 			}
@@ -329,7 +328,7 @@ struct WindowWrapper : public utki::Unique{
 			bcm_host_init();
 
 			VC_RECT_T dst_rect, src_rect;
-   
+
 			std::uint32_t display_width, display_height;
 
 			// create an EGL window surface, passing context width/height
@@ -350,7 +349,7 @@ struct WindowWrapper : public utki::Unique{
 			src_rect.x = 0;
 			src_rect.y = 0;
 			src_rect.width = display_width << 16;
-			src_rect.height = display_height << 16;   
+			src_rect.height = display_height << 16;
 
 			this->rpiDispmanDisplay = vc_dispmanx_display_open(0); //0 = LCD
 			this->rpiDispmanUpdate = vc_dispmanx_update_start(0);
@@ -391,7 +390,7 @@ struct WindowWrapper : public utki::Unique{
 		utki::ScopeExit scopeExitEGLSurface([this](){
 			eglDestroySurface(this->eglDisplay, this->eglSurface);
 		});
-		
+
 		{
 			EGLint contextAttrs[] = {
 				EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed at least on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
@@ -415,7 +414,7 @@ struct WindowWrapper : public utki::Unique{
 #else
 #	error "Unknown graphics API"
 #endif
-		
+
 		{
 			Pixmap blank;
 			XColor dummy;
@@ -423,7 +422,7 @@ struct WindowWrapper : public utki::Unique{
 
 			blank = XCreateBitmapFromData(this->display, this->window, data, 1, 1);
 			if(blank == None){
-				throw utki::Exc("App::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
+				throw utki::Exc("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
 			}
 			utki::ScopeExit scopeExit([this, &blank](){
 				XFreePixmap(this->display, blank);
@@ -495,11 +494,11 @@ struct WindowWrapper : public utki::Unique{
 
 		XDestroyWindow(this->display, this->window);
 		XFreeColormap(this->display, this->colorMap);
-		
+
 #ifdef M_RENDER_OPENGLES2
 		eglTerminate(this->eglDisplay);
 #endif
-		
+
 		XCloseDisplay(this->display);
 	}
 };
@@ -526,13 +525,13 @@ morda::real getDotsPerPt(Display* display){
 	int scrNum = 0;
 	r4::vec2ui resolution(DisplayWidth(display, scrNum), DisplayHeight(display, scrNum));
 	r4::vec2ui screenSizeMm(DisplayWidthMM(display, scrNum), DisplayHeightMM(display, scrNum));
-	
-	return App::findDotsPerDp(resolution, screenSizeMm);
+
+	return application::get_pixels_per_dp(resolution, screenSizeMm);
 }
 }//~namespace
 
 
-App::App(std::string&& name, const WindowParams& requestedWindowParams) :
+application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
@@ -549,10 +548,10 @@ App::App(std::string&& name, const WindowParams& requestedWindowParams) :
 					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
 				}
 			),
-		storageDir(initializeStorageDir(this->name))
+		storage_dir(initializeStorageDir(this->name))
 {
 #ifdef M_RASPBERRYPI
-	this->setFullscreen(true);
+	this->set_fullscreen(true);
 #endif
 }
 
@@ -911,9 +910,9 @@ public:
 }
 
 
-void App::quit()noexcept{
+void application::quit()noexcept{
 	auto& ww = getImpl(this->windowPimpl);
-	
+
 	ww.quitFlag = true;
 }
 
@@ -922,14 +921,14 @@ void App::quit()noexcept{
 
 
 int main(int argc, const char** argv){
-	std::unique_ptr<mordavokne::App> app = createAppUnix(argc, argv);
-	
+	std::unique_ptr<mordavokne::application> app = createAppUnix(argc, argv);
+
 	ASSERT(app)
 
 	auto& ww = getImpl(getWindowPimpl(*app));
-	
-	
-	
+
+
+
 	XEventWaitable xew(ww.display);
 
 	pogodi::WaitSet waitSet(2);
@@ -1061,22 +1060,22 @@ int main(int argc, const char** argv){
 
 	waitSet.remove(ww.uiQueue);
 	waitSet.remove(xew);
-	
+
 	return 0;
 }
 
 
 
-void App::setFullscreen(bool enable){
+void application::set_fullscreen(bool enable){
 #ifdef M_RASPBERRYPI
-	if(this->isFullscreen()){
+	if(this->is_fullscreen()){
 		return;
 	}
 #endif
-	if(enable == this->isFullscreen()){
+	if(enable == this->is_fullscreen()){
 		return;
 	}
-	
+
 	auto& ww = getImpl(this->windowPimpl);
 
 	XEvent event;
@@ -1105,9 +1104,9 @@ void App::setFullscreen(bool enable){
 
 
 
-void App::setMouseCursorVisible(bool visible){
+void application::set_mouse_cursor_visible(bool visible){
 	auto& ww = getImpl(this->windowPimpl);
-	
+
 	if(visible){
 		XUndefineCursor(ww.display, ww.window);
 	}else{
@@ -1117,10 +1116,10 @@ void App::setMouseCursorVisible(bool visible){
 
 
 
-void App::swapFrameBuffers(){
+void application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 
-#ifdef M_RENDER_OPENGL2	
+#ifdef M_RENDER_OPENGL2
 	glXSwapBuffers(ww.display, ww.window);
 #elif defined(M_RENDER_OPENGLES2)
 	eglSwapBuffers(ww.eglDisplay, ww.eglSurface);

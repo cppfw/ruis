@@ -607,7 +607,7 @@ class Application : public mordavokne::App{
 	}
 public:
 	Application() :
-			App("morda-tests", GetWindowParams())
+			mordavokne::App("morda-tests", GetWindowParams())
 	{
 		morda::Morda::inst().initStandardWidgets(*this->getResFile("../../res/morda_res/"));
 
@@ -636,7 +636,7 @@ public:
 
 		ASSERT(c->findByIdAs<morda::PushButton>("show_VK_button"))
 		std::dynamic_pointer_cast<morda::PushButton>(c->findById("show_VK_button"))->clicked = [this](morda::PushButton&){
-			this->showVirtualKeyboard();
+			this->show_virtual_keyboard();
 		};
 
 		std::dynamic_pointer_cast<morda::PushButton>(c->findById("push_button_in_scroll_container"))->clicked = [](morda::PushButton&){

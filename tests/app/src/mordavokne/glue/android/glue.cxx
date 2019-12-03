@@ -12,22 +12,23 @@
 
 #include <sys/eventfd.h>
 
-#include "../../App.hpp"
-#include "../../AppFactory.hpp"
+#include "../../application.hpp"
 
 #include <mordaren/OpenGLES2Renderer.hpp>
 
 #include <EGL/egl.h>
+
+#include "../friendAccessors.cxx"
 
 using namespace mordavokne;
 
 namespace{
 ANativeActivity* nativeActivity = 0;
 
-mordavokne::App& getApp(ANativeActivity* activity){
+mordavokne::application& getApp(ANativeActivity* activity){
 	ASSERT(activity)
 	ASSERT(activity->instance)
-	return *static_cast<mordavokne::App*>(activity->instance);
+	return *static_cast<mordavokne::application*>(activity->instance);
 }
 
 ANativeWindow* androidWindow = 0;
@@ -91,11 +92,11 @@ public:
 		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerInchMeth));
 	}
 
-	void hideVirtualKeyboard(){
+	void hide_virtual_keyboard(){
 		this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
 	}
 
-	void showVirtualKeyboard(){
+	void show_virtual_keyboard(){
 		this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
 	}
 
@@ -156,7 +157,7 @@ struct WindowWrapper : public utki::Unique{
 
 	nitki::Queue uiQueue;
 
-	WindowWrapper(const App::WindowParams& wp){
+	WindowWrapper(const window_params& wp){
 		this->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 		if(this->display == EGL_NO_DISPLAY){
 			throw morda::Exc("eglGetDisplay(): failed, no matching display connection found");
@@ -170,7 +171,7 @@ struct WindowWrapper : public utki::Unique{
 			throw morda::Exc("eglInitialize() failed");
 		}
 
-		//TODO: allow stencil configuration etc. via WindowParams
+		//TODO: allow stencil configuration etc. via window_params
 		//Here specify the attributes of the desired configuration.
 		//Below, we select an EGLConfig with at least 8 bits per color
 		//component compatible with on-screen windows
@@ -491,7 +492,7 @@ std::unique_ptr<AndroidConfiguration> curConfig;
 
 
 class KeyEventToUnicodeResolver : public morda::Morda::UnicodeProvider{
-public:	
+public:
 	int32_t kc;//key code
 	int32_t ms;//meta state
 	int32_t di;//device id
@@ -567,7 +568,7 @@ class LinuxTimer{
 		fdFlag.Set();
 	}
 
-public:	
+public:
 	LinuxTimer(){
 		int res = timer_create(
 				CLOCK_MONOTONIC,
@@ -1009,7 +1010,7 @@ std::string initializeStorageDir(const std::string& appName){
 }
 }
 
-mordavokne::App::App(std::string&& name, const WindowParams& requestedWindowParams) :
+mordavokne::application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
@@ -1022,32 +1023,32 @@ mordavokne::App::App(std::string&& name, const WindowParams& requestedWindowPara
 				[this]() -> float{
 					auto res = getImpl(this->windowPimpl).getWindowSize();
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
-					return App::findDotsPerDp(res, dim.to<unsigned>());
+					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
 				}
 			),
-		storageDir(initializeStorageDir(this->name))
+		storage_dir(initializeStorageDir(this->name))
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();
 	this->updateWindowRect(morda::Rectr(morda::Vec2r(0), winSize.to<morda::real>()));
 }
 
-std::unique_ptr<papki::File> mordavokne::App::getResFile(const std::string& path)const{
+std::unique_ptr<papki::File> mordavokne::application::get_res_file(const std::string& path)const{
 	return utki::makeUnique<AssetFile>(appInfo.assetManager, path);
 }
 
-void mordavokne::App::swapFrameBuffers() {
+void mordavokne::application::swapFrameBuffers() {
 	auto& ww = getImpl(this->windowPimpl);
 	ww.swapBuffers();
 }
 
-void mordavokne::App::setMouseCursorVisible(bool visible) {
+void mordavokne::application::set_mouse_cursor_visible(bool visible) {
 	//do nothing
 }
 
-void mordavokne::App::setFullscreen(bool enable) {
+void mordavokne::application::set_fullscreen(bool enable) {
 	ASSERT(nativeActivity)
 	if(enable) {
 		ANativeActivity_setWindowFlags(nativeActivity, AWINDOW_FLAG_FULLSCREEN, 0);
@@ -1056,29 +1057,29 @@ void mordavokne::App::setFullscreen(bool enable) {
 	}
 }
 
-void mordavokne::App::quit()noexcept{
+void mordavokne::application::quit()noexcept{
 	ASSERT(nativeActivity)
 	ANativeActivity_finish(nativeActivity);
 }
 
-void mordavokne::App::showVirtualKeyboard()noexcept{
+void mordavokne::application::show_virtual_keyboard()noexcept{
 	//NOTE:
 	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 	//did not work for some reason.
 
 	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->showVirtualKeyboard();
+	javaFunctionsWrapper->show_virtual_keyboard();
 }
 
 
 
-void mordavokne::App::hideVirtualKeyboard()noexcept{
+void mordavokne::application::hide_virtual_keyboard()noexcept{
 	//NOTE:
 	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 	//did not work for some reason
 
 	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->hideVirtualKeyboard();
+	javaFunctionsWrapper->hide_virtual_keyboard();
 }
 
 
@@ -1125,7 +1126,7 @@ void handleInputEvents(){
 						handleMouseButton(
 								app,
 								true,
-								AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+								AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
 								morda::MouseButton_e::LEFT,
 								pointerId
 						);
@@ -1151,7 +1152,7 @@ void handleInputEvents(){
 						handleMouseButton(
 								app,
 								false,
-								AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+								AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
 								morda::MouseButton_e::LEFT,
 								pointerId
 						);
@@ -1181,7 +1182,7 @@ void handleInputEvents(){
 
 							handleMouseMove(
 									app,
-									AndroidWinCoordsToMordaWinRectCoords(app.winDim(), p),
+									AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
 									pointerId
 							);
 						}//~for(every pointer)
@@ -1330,7 +1331,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 void OnLowMemory(ANativeActivity* activity){
 	TRACE(<< "OnLowMemory(): invoked" << std::endl)
 	//TODO:
-//    static_cast<morda::App*>(activity->instance)->OnLowMemory();
+//    static_cast<morda::application*>(activity->instance)->OnLowMemory();
 }
 
 
@@ -1344,7 +1345,7 @@ void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
 
-	auto& app = App::inst();
+	auto& app = application::inst();
 
 	std::uint32_t dt = app.gui.update();
 	if(dt == 0){
@@ -1365,7 +1366,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 
 int OnQueueHasMessages(int fd, int events, void* data){
-	auto& ww = getImpl(getWindowPimpl(App::inst()));
+	auto& ww = getImpl(getWindowPimpl(application::inst()));
 
 	while(auto m = ww.uiQueue.peekMsg()){
 		m();
@@ -1379,7 +1380,7 @@ int OnQueueHasMessages(int fd, int events, void* data){
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 
-	//save window in a static var, so it is accessible for OpenGL initializers from morda::App class
+	//save window in a static var, so it is accessible for OpenGL initializers from morda::application class
 	androidWindow = window;
 
 	curWinDim.x = float(ANativeWindow_getWidth(window));
@@ -1392,7 +1393,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		//retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
-		App* app = mordavokne::createApp(0, nullptr).release();
+		application* app = mordavokne::create_application(0, nullptr).release();
 
 		activity->instance = app;
 
@@ -1428,12 +1429,12 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 			throw utki::Exc("failed to add UI message queue descriptor to looper");
 		}
 
-		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating App object
+		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating application object
 	}catch(std::exception& e){
-		TRACE(<< "std::exception uncaught while creating App instance: " << e.what() << std::endl)
+		TRACE(<< "std::exception uncaught while creating application instance: " << e.what() << std::endl)
 		throw;
 	}catch(...){
-		TRACE(<< "unknown exception uncaught while creating App instance!" << std::endl)
+		TRACE(<< "unknown exception uncaught while creating application instance!" << std::endl)
 		throw;
 	}
 }
@@ -1473,14 +1474,14 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	//remove UI message queue descriptor from looper
 	ALooper_removeFd(
 			looper,
-			static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(App::inst())).uiQueue).getHandle()
+			static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(application::inst())).uiQueue).getHandle()
 		);
 
 	//remove fdFlag from looper
 	ALooper_removeFd(looper, fdFlag.GetFD());
 
 	//Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
-	delete static_cast<mordavokne::App*>(activity->instance);
+	delete static_cast<mordavokne::application*>(activity->instance);
 	activity->instance = nullptr;
 
 	//delete configuration object
@@ -1495,7 +1496,7 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 	ASSERT(curInputQueue) //if we get events we should have input queue
 
 	//If window is not created yet, ignore events.
-	if(!mordavokne::App::isCreated()){
+	if(!mordavokne::application::isCreated()){
 		ASSERT(false)
 		AInputEvent* event;
 		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
@@ -1508,7 +1509,7 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 		return 1;
 	}
 
-	ASSERT(mordavokne::App::isCreated())
+	ASSERT(mordavokne::application::isCreated())
 
 	handleInputEvents();
 
