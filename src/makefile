@@ -3,6 +3,8 @@ include prorab.mk
 
 this_name := morda
 
+this_out_dir := build
+
 this_soname := $(shell cat $(d)/soname.txt)
 
 this_srcs += $(call prorab-src-dir,morda)

@@ -62,7 +62,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += $(d)../../src/libmorda$(soext)
+this_ldlibs += $(d)../../src/build/libmorda$(soext)
 
 
 this_ldlibs += -lnitki -lpogodi -lpuu -lpapki -lstdc++ -lm
@@ -85,7 +85,7 @@ $(eval $(this_rules))
 
 #add dependency on libmorda
 ifeq ($(os),windows)
-    $(d)libmorda$(soext): $(abspath $(d)../../src/libmorda$(soext))
+    $(d)libmorda$(soext): $(abspath $(d)../../src/build/libmorda$(soext))
 	@cp $< $@
 
     $(prorab_this_name): $(d)libmorda$(soext)
@@ -96,7 +96,7 @@ ifeq ($(os),windows)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/libmorda$(soext))
+    $(prorab_this_name): $(abspath $(d)../../src/build/libmorda$(soext))
 endif
 
 
