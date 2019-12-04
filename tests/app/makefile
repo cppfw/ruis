@@ -111,7 +111,7 @@ endif
 define this_rules
 run:: $(prorab_this_name)
 	@echo running $$^...
-	@(cd $(d); LD_LIBRARY_PATH=../../src $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src/build $$^)
 endef
 $(eval $(this_rules))
 

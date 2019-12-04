@@ -41,7 +41,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 		ASSERT(c)
 		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(*c);
 		
-		auto tab = dynamic_cast<Tab*>(c.get());
+		auto tab = dynamic_cast<const Tab*>(c.get());
 		if(!tab){
 			throw morda::Exc("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
 		}

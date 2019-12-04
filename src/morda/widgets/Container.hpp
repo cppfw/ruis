@@ -224,11 +224,15 @@ public:
 	 * @brief Get list of child widgets.
 	 * @return List of child widgets.
 	 */
-	const T_ChildrenList& children()const noexcept{
+	const T_ChildrenList& children()noexcept{
 		return this->children_v;
 	}
 
-	const T_ChildrenList& getDirectChildren() const noexcept override{
+	const T_ConstChildrenList& children()const noexcept{
+		return reinterpret_cast<const T_ConstChildrenList&>(this->children_v);
+	}
+
+	const T_ChildrenList& getDirectChildren()noexcept override{
 		return this->children();
 	}
 

@@ -48,11 +48,10 @@ class Container;
 class Widget : virtual public utki::Shared{
 	friend class Container;
 	friend class Morda;
-
 public:
 	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
+	typedef std::list<std::shared_ptr<const Widget>> T_ConstChildrenList;
 
-public:
 	/**
 	 * @brief Basic layout parameters.
 	 */
@@ -393,7 +392,7 @@ public:
 	 * @brief Get children.
 	 * @return reference to the list of children.
 	 */
-	virtual const T_ChildrenList& getDirectChildren()const noexcept;
+	virtual const T_ChildrenList& getDirectChildren()noexcept;
 
 	/**
 	 * @brief Recursively find all children of given type.
