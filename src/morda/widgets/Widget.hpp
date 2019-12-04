@@ -112,16 +112,16 @@ public:
 	 * @return true if scissor test is enabled.
 	 * @return false otherwise.
 	 */
-	bool clip()const noexcept{
+	bool is_clip_enabled()const noexcept{
 		return this->clip_v;
 	}
 
 	/**
 	 * @brief Enable/Disable scissor test.
-	 * @param clip - whether to enable (true) or disable (false) the scissor test.
+	 * @param enable - whether to enable (true) or disable (false) the scissor test.
 	 */
-	void setClip(bool clip)noexcept{
-		this->clip_v = clip;
+	void set_clip(bool enable)noexcept{
+		this->clip_v = enable;
 	}
 
 
@@ -544,7 +544,7 @@ public:
 	/**
 	 * @brief Request re-layout.
 	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
-	 * The layout will be performed when needed.
+	 * The layout will be performed before drawing.
 	 */
 	void setRelayoutNeeded()noexcept;
 

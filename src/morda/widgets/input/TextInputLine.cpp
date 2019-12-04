@@ -29,7 +29,7 @@ TextInputLine::TextInputLine(const stob::Node* chain) :
 		Widget(chain),
 		SingleLineTextWidget(chain)
 {
-	this->setClip(true);
+	this->set_clip(true);
 }
 
 
