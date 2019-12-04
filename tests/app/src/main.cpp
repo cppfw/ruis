@@ -944,6 +944,6 @@ public:
 
 
 
-std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv){
+std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
 	return utki::makeUnique<Application>();
 }
