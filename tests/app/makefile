@@ -52,12 +52,9 @@ endif
 ifeq ($(os),windows)
     this_srcs += src/mordavokne/glue/glue.cpp
 
-    this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
+    this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 
-    #TODO: remove this commented stuff
-    #WORKAROUND for MinGW bug:
-    #this_cxxflags += -D__STDC_FORMAT_MACROS
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
@@ -116,7 +113,7 @@ endef
 $(eval $(this_rules))
 
 
-#add dependency on libmorda
+# add dependency on libmorda
 ifeq ($(os),windows)
     $(d)libmorda$(soext): $(abspath $(d)../../src/build/libmorda$(soext))
 	@cp $< $@
