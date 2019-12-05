@@ -41,7 +41,7 @@ const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
 
 void Container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().get_node(); n; n = n->nextNonProperty().get_node()){
-		this->insert(morda::Morda::inst().inflater.inflate(*n));
+		this->push_back(morda::Morda::inst().inflater.inflate(*n));
 	}
 }
 

@@ -187,7 +187,7 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::const_iterator insert(std::shared_ptr<Widget> w){
+	list::const_iterator push_back(std::shared_ptr<Widget> w){
 		return this->insert(std::move(w), this->children().end());
 	}
 

@@ -362,7 +362,7 @@ void List::scrollBy(real delta) {
 				auto w = this->provider->getWidget(this->posIndex);
 				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 				Vec2r d = this->dimForWidget(*w, lp);
-				this->insert(w); //this is just optimization, to avoid creating same widget twice
+				this->push_back(w); //this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->posOffset = delta;
 					break;

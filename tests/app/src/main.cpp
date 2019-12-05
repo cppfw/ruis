@@ -509,9 +509,9 @@ public:
 
 					return true;
 				};
-				widget->insert(w);
+				widget->push_back(w);
 			}
-			ret->insert(widget);
+			ret->push_back(widget);
 		}
 
 		{
@@ -560,7 +560,7 @@ public:
 				};
 			}
 
-			ret->insert(v);
+			ret->push_back(v);
 		}
 
 		{
@@ -579,7 +579,7 @@ public:
 				parent->removeChild(n);
 				this->notifyItemRemoved(path);
 			};
-			ret->insert(b);
+			ret->push_back(b);
 		}
 
 		return ret;

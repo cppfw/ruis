@@ -13,7 +13,7 @@ TreeView::TreeView(const stob::Node* chain) :
 		ScrollArea(nullptr)
 {
 	this->list = std::make_shared<VList>(nullptr);
-	this->insert(this->list);
+	this->push_back(this->list);
 
 	auto& lp = this->getLayoutParams(*this->list);
 
