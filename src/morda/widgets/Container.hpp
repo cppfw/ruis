@@ -232,8 +232,22 @@ public:
 		return reinterpret_cast<const T_ConstChildrenList&>(this->children_v);
 	}
 
-	const T_ChildrenList& getDirectChildren()noexcept override{
-		return this->children();
+	/**
+	 * @brief Recursively find all children of given type.
+	 * @return list of children found.
+	 */
+	template <class T> std::list<std::shared_ptr<T>> find(){
+		std::list<std::shared_ptr<T>> ret;
+
+		auto childrenList = this->children();
+		for(auto& child : childrenList){
+			if(auto c = std::dynamic_pointer_cast<T>(child)){
+				ret.emplace_back(std::move(c));
+			}
+			ret.splice(ret.end(), child->find<T>());
+		}
+
+		return ret;
 	}
 
 	/**

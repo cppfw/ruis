@@ -387,31 +387,6 @@ public:
 		return this->getByIdAs<T>(name);
 	}
 
-	//TODO: check if this method belongs to Container
-	/**
-	 * @brief Get children.
-	 * @return reference to the list of children.
-	 */
-	virtual const T_ChildrenList& getDirectChildren()noexcept;
-
-	/**
-	 * @brief Recursively find all children of given type.
-	 * @return list of children found.
-	 */
-	template <class T> std::list<std::shared_ptr<T>> find(){
-		std::list<std::shared_ptr<T>> ret;
-
-		auto childrenList = this->getDirectChildren();
-		for(auto& child : childrenList){
-			if(auto c = std::dynamic_pointer_cast<T>(child)){
-				ret.emplace_back(std::move(c));
-			}
-			ret.splice(ret.end(), child->find<T>());
-		}
-
-		return ret;
-	}
-
 public:
 	/**
 	 * @brief Constructor.
