@@ -172,7 +172,7 @@ public:
 	 * @param before - iterator into the children list before which to insert the child.
 	 * @return new child iterator.
 	 */
-	list::const_iterator change_child_z_position(Widget& child, list::const_iterator before);
+	list::const_iterator change_child_z_position(list::const_iterator child, list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the container.
@@ -250,7 +250,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	list::iterator find(const Widget* w);
+	list::const_iterator find(const Widget* w);
 
 	/**
 	 * @brief Find widget in the list of container's children.
@@ -258,7 +258,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	const_list::iterator find(const Widget* w)const;
+	const_list::const_iterator find(const Widget* w)const;
 
 	/**
 	 * @brief Recursively find all children of given type.

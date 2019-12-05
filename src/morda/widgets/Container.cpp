@@ -313,54 +313,55 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	return d;
 }
 
-Container::list::const_iterator Container::change_child_z_position(Widget& child, list::const_iterator before) {
-	if(child.parent() != this){
-		throw std::invalid_argument("container::change_child_z_position(): given child widget belongs to a different container");
-	}
-
+Container::list::const_iterator Container::change_child_z_position(list::const_iterator child, list::const_iterator before) {
 	if(this->isBlocked){
 		throw morda::exception("container::change_child_z_position(): children list is locked");
+	}
+
+	if(child == this->children().end()){
+		throw std::invalid_argument("container::insert(): given 'child' iterator is invalid");
+	}
+
+	if((*child)->parent() != this){
+		throw std::invalid_argument("container::change_child_z_position(): given child widget belongs to a different container");
 	}
 
 	if(before != this->children().end() && (*before)->parent() != this){
 		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
 	}
 
-	auto const_iter = std::find_if(this->children().begin(), this->children().end(), [&child](const decltype(this->children_v)::value_type& v) -> bool{return v.get() == &child;});
-
-	if(const_iter == before){
+	if(child == before){
 		// child is already at the right place
-		return const_iter;
+		return child;
 	}
 
 	auto b = this->children_v.erase(before, before); // remove constness
-	auto iter = this->children_v.erase(const_iter, const_iter);
+	auto i = this->children_v.erase(child, child); // remove constness
 
-	decltype(b) ret;
+	decltype(child) ret;
 
-	auto distance = std::distance(iter, b);
+	auto distance = std::distance(i, b);
 	ASSERT(distance != 0)
 	if(distance > 0){
-		ret = std::rotate(iter, std::next(iter), b);
+		ret = std::rotate(i, std::next(i), b);
 	}else{
-		ret = std::rotate(b, iter, std::next(iter));
+		ret = std::rotate(b, i, std::next(i));
 		--ret;
 	}
 
-	child.parentIter_v = ret;
+	(*ret)->parentIter_v = ret;
 
 	this->onChildrenListChanged();
 
 	return ret;
 }
 
-
-// Container::list::iterator Container::find(const Widget* w){
-// 	return std::find_if(
-// 			this->children().begin(),
-// 			this->children().end(),
-// 			[w](const decltype(this->children_v)::value_type& v) -> bool{
-// 				return v.get() == w;
-// 			}
-// 		);
-// }
+Container::list::const_iterator Container::find(const Widget* w){
+	return std::find_if(
+			this->children().begin(),
+			this->children().end(),
+			[w](const decltype(this->children_v)::value_type& v) -> bool{
+				return v.get() == w;
+			}
+		);
+}
