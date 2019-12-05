@@ -3,7 +3,6 @@
 #include <string>
 #include <set>
 #include <memory>
-#include <list>
 
 #include <utki/Shared.hpp>
 

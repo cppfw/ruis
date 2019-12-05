@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <list>
+#include <vector>
 
 #include <utki/Unique.hpp>
 
@@ -30,13 +30,23 @@ namespace morda{
 class Container : virtual public Widget{
 
 public:
-	// TODO: define to std::vector<std::shared_ptr<Widget>>
-	typedef std::list<std::shared_ptr<Widget>> list;
-
-	// TODO: define to std::vector<std::shared_ptr<const Widget>>
-	typedef std::list<std::shared_ptr<const Widget>> const_list;
+	typedef std::vector<std::shared_ptr<Widget>> list;
+	typedef std::vector<std::shared_ptr<const Widget>> const_list;
 private:
-	list children_v;
+	static_assert(sizeof(list) == sizeof(const_list), "sizeof(list) differs from sizeof(const_list)");
+	static_assert(sizeof(list::value_type) == sizeof(const_list::value_type), "sizeof(list::value_type) differs from sizeof(const_list::value_type)");
+
+	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
+	//       but we rely on compiler implementing it the right way.
+	union children_union{
+		list variable;
+		const_list constant; // this member never becomes active one, but we will read it when we need constant list of children
+
+		children_union() :
+				variable() // this sets the 'variable' member of the union as an active one
+		{}
+		~children_union(){}
+	} children_v;
 
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
@@ -168,6 +178,7 @@ public:
 
 	/**
 	 * @brief Change Z order of a child widget.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param child - child widget to change Z order of.
 	 * @param before - iterator into the children list before which to insert the child.
 	 * @return new child iterator.
@@ -176,6 +187,7 @@ public:
 
 	/**
 	 * @brief Insert a widget to the container.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param w - widget to insert.
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
@@ -184,6 +196,7 @@ public:
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
@@ -195,6 +208,7 @@ public:
 	// TODO: rename to 'inflate_and_push_back'?
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param chain - STOB chain describing child widgets to add.
 	 */
 	void add(const stob::Node& chain);
@@ -219,6 +233,7 @@ public:
 
 	/**
 	 * @brief Remove child from container.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param child - iterator of the child to remove.
 	 * @return iterator pointing to the next child after removed one.
 	 */
@@ -227,6 +242,7 @@ public:
 	//TODO: rename to clear().
 	/**
 	 * @brief Remove all child widgets.
+	 * This function invalidates iterators which were obtained before calling to it.
 	 */
 	void removeAll();
 
@@ -244,7 +260,7 @@ public:
 	 * @return List of child widgets.
 	 */
 	const list& children()noexcept{
-		return this->children_v;
+		return this->children_v.variable;
 	}
 
 	/**
@@ -252,7 +268,9 @@ public:
 	 * @return Constant list of child widgets.
 	 */
 	const const_list& children()const noexcept{
-		return reinterpret_cast<const const_list&>(this->children_v);
+		// TRACE(<< "sizeof(list::value_type) = " << sizeof(list::value_type) << std::endl)
+		// TRACE(<< "sizeof(const_list::value_type) = " << sizeof(const_list::value_type) << std::endl)
+		return this->children_v.constant;
 	}
 
 	/**

@@ -213,7 +213,7 @@ Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, lis
 
 	Widget& ww = *w;
 
-	auto ret = this->children_v.emplace(before, std::move(w));
+	auto ret = this->children_v.variable.emplace(before, std::move(w));
 
 	ww.parent_v = this;
 	ww.onParentChanged();
@@ -252,7 +252,7 @@ Container::list::const_iterator Container::erase(list::const_iterator child){
 
 	auto w = *child;
 
-	auto ret = this->children_v.erase(child);
+	auto ret = this->children_v.variable.erase(child);
 
 	w->parent_v = nullptr;
 	w->setUnhovered();
@@ -339,8 +339,8 @@ Container::list::const_iterator Container::change_child_z_position(list::const_i
 		return child;
 	}
 
-	auto b = this->children_v.erase(before, before); // remove constness
-	auto i = this->children_v.erase(child, child); // remove constness
+	auto b = this->children_v.variable.erase(before, before); // remove constness
+	auto i = this->children_v.variable.erase(child, child); // remove constness
 
 	decltype(child) ret;
 
@@ -362,7 +362,7 @@ Container::list::const_iterator Container::find(const Widget* w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),
-			[w](const decltype(this->children_v)::value_type& v) -> bool{
+			[w](const decltype(this->children_v.variable)::value_type& v) -> bool{
 				return v.get() == w;
 			}
 		);
