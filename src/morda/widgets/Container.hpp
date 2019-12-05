@@ -31,10 +31,10 @@ class Container : virtual public Widget{
 
 public:
 	// TODO: define to std::vector<std::shared_ptr<Widget>>
-	typedef T_ChildrenList list;
+	typedef std::list<std::shared_ptr<Widget>> list;
 
 	// TODO: define to std::vector<std::shared_ptr<const Widget>>
-	typedef T_ConstChildrenList const_list;
+	typedef std::list<std::shared_ptr<const Widget>> const_list;
 private:
 	list children_v;
 
@@ -206,7 +206,7 @@ public:
 	 * @return Removed widget.
 	 * @throw morda::Exc if iterator does not point to child widget of this container.
 	 */
-	std::shared_ptr<Widget> remove(T_ChildrenList::const_iterator iter);
+	std::shared_ptr<Widget> remove(list::const_iterator iter);
 
 	//TODO: depreacted, remove.
 	/**
@@ -252,7 +252,7 @@ public:
 	 * @return Constant list of child widgets.
 	 */
 	const const_list& children()const noexcept{
-		return reinterpret_cast<const T_ConstChildrenList&>(this->children_v);
+		return reinterpret_cast<const const_list&>(this->children_v);
 	}
 
 	/**

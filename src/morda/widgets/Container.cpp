@@ -97,7 +97,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 	}
 
 	//call children in reverse order
-	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
+	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
 		if(!c->isInteractive()){
@@ -133,7 +133,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 
 	//call children in reverse order
-	for(Widget::T_ChildrenList::const_reverse_iterator i = this->children().rbegin(); i != this->children().rend(); ++i){
+	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
 		if(!c->isInteractive()){
@@ -224,7 +224,7 @@ Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, lis
 	return ret;
 }
 
-std::shared_ptr<Widget> Container::remove(T_ChildrenList::const_iterator iter){
+std::shared_ptr<Widget> Container::remove(list::const_iterator iter){
 	return this->remove(**iter);
 }
 

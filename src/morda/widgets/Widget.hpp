@@ -49,9 +49,6 @@ class Widget : virtual public utki::Shared{
 	friend class Container;
 	friend class Morda;
 public:
-	typedef std::list<std::shared_ptr<Widget>> T_ChildrenList;
-	typedef std::list<std::shared_ptr<const Widget>> T_ConstChildrenList;
-
 	/**
 	 * @brief Basic layout parameters.
 	 */

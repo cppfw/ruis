@@ -157,7 +157,7 @@ void List::setScrollPosAsFactor(real factor){
 	this->updateChildrenList();
 }
 
-bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, T_ChildrenList::const_iterator insertBefore){
+bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, list::const_iterator insertBefore){
 	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 
 	Vec2r dim = this->dimForWidget(*w, lp);
