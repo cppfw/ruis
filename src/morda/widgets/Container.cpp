@@ -215,8 +215,6 @@ Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, lis
 
 	auto ret = this->children_v.emplace(before, std::move(w));
 
-	ww.parentIter_v = ret;
-
 	ww.parent_v = this;
 	ww.onParentChanged();
 
@@ -354,8 +352,6 @@ Container::list::const_iterator Container::change_child_z_position(list::const_i
 		ret = std::rotate(b, i, std::next(i));
 		--ret;
 	}
-
-	(*ret)->parentIter_v = ret;
 
 	this->onChildrenListChanged();
 

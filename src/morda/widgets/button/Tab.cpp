@@ -14,8 +14,8 @@ bool Tab::maskOverlaps(Vec2r pos) {
 			}
 		}
 
-		if(this->parent() && this->parentIter() != this->parent()->children().begin()){ //if this is not the first widget in the parent
-			auto prevIter = this->parentIter();
+		if(this->parent() && this->parent()->children().front().get() != this){ //if this is not the first widget in the parent
+			auto prevIter = this->parent()->find(this);
 			ASSERT(prevIter != this->parent()->children().end())
 			--prevIter;
 
@@ -48,7 +48,7 @@ bool Tab::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e butt
 			return false;
 		}
 	}
-	
+
 	return this->ChoiceButton::onMouseButton(isDown, pos, button, pointerId);
 }
 
@@ -71,6 +71,6 @@ Tab::Tab(const stob::Node* chain) :
 	if(!this->unpressedNinePatch()){
 		this->setUnpressedNinePatch(morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_inactive"));
 	}
-	
+
 	this->onPressedChanged();//initialize nine-patch
 }

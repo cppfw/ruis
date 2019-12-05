@@ -139,7 +139,7 @@ std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
 		throw morda::Exc("this widget is not added to any parent");
 	}
 
-	this->parent()->insert(w, this->parentIter_v);
+	this->parent()->insert(w, this->parent()->find(this));
 
 	if(w && !w->layout){
 		w->layout = std::move(this->layout);
