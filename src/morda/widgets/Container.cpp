@@ -194,7 +194,7 @@ void Container::layOut(){
 
 
 
-Container::list::iterator Container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
+Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
 	if(!w){
 		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
 	}
@@ -208,7 +208,7 @@ Container::list::iterator Container::insert(std::shared_ptr<Widget> w, list::con
 	}
 
 	if(before != this->children().end() && (*before)->parent() != this){
-		throw std::invalid_argument("container::insert(): cannot insert before provided iterator, it points to a different container");
+		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
 	}
 
 	Widget& ww = *w;
@@ -313,22 +313,54 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	return d;
 }
 
-void Container::changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore) {
+Container::list::const_iterator Container::change_child_z_position(Widget& child, list::const_iterator before) {
 	if(child.parent() != this){
-		throw morda::Exc("widget is not a child of this parent");
+		throw std::invalid_argument("container::change_child_z_position(): given child widget belongs to a different container");
 	}
 
 	if(this->isBlocked){
-		throw morda::Exc("cannot modify children list while iterating through children");
+		throw morda::exception("container::change_child_z_position(): children list is locked");
 	}
 
-	ASSERT(child.parent_v == this)
+	if(before != this->children().end() && (*before)->parent() != this){
+		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
+	}
 
-	auto w = *child.parentIter_v;
+	auto const_iter = std::find_if(this->children().begin(), this->children().end(), [&child](const decltype(this->children_v)::value_type& v) -> bool{return v.get() == &child;});
 
-	this->children_v.erase(child.parentIter_v);
+	if(const_iter == before){
+		// child is already at the right place
+		return const_iter;
+	}
 
-	child.parentIter_v = this->children_v.insert(toBefore, std::move(w));
+	auto b = this->children_v.erase(before, before); // remove constness
+	auto iter = this->children_v.erase(const_iter, const_iter);
+
+	decltype(b) ret;
+
+	auto distance = std::distance(iter, b);
+	ASSERT(distance != 0)
+	if(distance > 0){
+		ret = std::rotate(iter, std::next(iter), b);
+	}else{
+		ret = std::rotate(b, iter, std::next(iter));
+		--ret;
+	}
+
+	child.parentIter_v = ret;
 
 	this->onChildrenListChanged();
+
+	return ret;
 }
+
+
+// Container::list::iterator Container::find(const Widget* w){
+// 	return std::find_if(
+// 			this->children().begin(),
+// 			this->children().end(),
+// 			[w](const decltype(this->children_v)::value_type& v) -> bool{
+// 				return v.get() == w;
+// 			}
+// 		);
+// }

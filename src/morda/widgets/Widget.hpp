@@ -93,7 +93,7 @@ public:
 
 private:
 	Container* parent_v = nullptr;
-	T_ChildrenList::iterator parentIter_v;
+	T_ChildrenList::const_iterator parentIter_v;
 
 	std::set<unsigned> hovered;
 

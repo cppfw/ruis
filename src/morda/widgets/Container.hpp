@@ -169,9 +169,10 @@ public:
 	/**
 	 * @brief Change Z order of a child widget.
 	 * @param child - child widget to change Z order of.
-	 * @param toBefore - iterator into the children list before which to insert the child.
+	 * @param before - iterator into the children list before which to insert the child.
+	 * @return new child iterator.
 	 */
-	void changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore);
+	list::const_iterator change_child_z_position(Widget& child, list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the container.
@@ -179,14 +180,14 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::iterator insert(std::shared_ptr<Widget> w, list::const_iterator before);
+	list::const_iterator insert(std::shared_ptr<Widget> w, list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
-	 * @param w - widgeet to insert.
+	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::iterator insert(std::shared_ptr<Widget> w){
+	list::const_iterator insert(std::shared_ptr<Widget> w){
 		return this->insert(std::move(w), this->children().end());
 	}
 
@@ -235,9 +236,29 @@ public:
 		return this->children_v;
 	}
 
+	/**
+	 * @brief Get constant list of child widgets.
+	 * @return Constant list of child widgets.
+	 */
 	const const_list& children()const noexcept{
 		return reinterpret_cast<const T_ConstChildrenList&>(this->children_v);
 	}
+
+	/**
+	 * @brief Find widget in the list of container's children.
+	 * @param w - child widget to find.
+	 * @return iterator for child widget.
+	 * @return end iterator if given widget was not found from the list of container's children.
+	 */
+	list::iterator find(const Widget* w);
+
+	/**
+	 * @brief Find widget in the list of container's children.
+	 * @param w - child widget to find.
+	 * @return iterator for child widget.
+	 * @return end iterator if given widget was not found from the list of container's children.
+	 */
+	const_list::iterator find(const Widget* w)const;
 
 	/**
 	 * @brief Recursively find all children of given type.

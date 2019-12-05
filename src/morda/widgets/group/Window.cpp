@@ -463,7 +463,7 @@ void Window::makeTopmost(){
 
 	Container* p = this->parent();
 
-	p->changeChildZPosition(*this, p->children().end());
+	p->change_child_z_position(*this, p->children().end());
 
 	this->updateTopmost();
 
