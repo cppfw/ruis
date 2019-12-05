@@ -125,9 +125,11 @@ void Widget::resize(const morda::Vec2r& newDims){
 
 std::shared_ptr<Widget> Widget::removeFromParent(){
 	if(!this->parent_v){
-		throw morda::Exc("Widget::RemoveFromParent(): widget is not added to the parent");
+		throw morda::exception("Widget::RemoveFromParent(): widget is not added to the parent");
 	}
-	return this->parent_v->remove(*this);
+	auto ret = this->sharedFromThis(this);
+	this->parent_v->erase(this->parent_v->find(this));
+	return ret;
 }
 
 
