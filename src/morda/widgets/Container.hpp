@@ -5,7 +5,7 @@
 
 #include <utki/Unique.hpp>
 
-#include "../Exc.hpp"
+#include "../exception.hpp"
 #include "Widget.hpp"
 
 
@@ -173,6 +173,7 @@ public:
 	 */
 	void changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore);
 
+	// TODO: deprecated, remove.
 	/**
 	 * @brief Add child widget.
 	 * @param w - widget to add.
@@ -181,8 +182,16 @@ public:
 	 */
 	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore);
 
+	/**
+	 * @brief Insert a widget to the container.
+	 * @param w - widget to insert.
+	 * @param before - iterator within this container before which the widget will be inserted.
+	 * @return iterator pointing to the newly inserted widget.
+	 */
+	list::iterator insert(std::shared_ptr<Widget> w, list::iterator before);
 
 
+	// TODO: deprecated, remove.
 	/**
 	 * @brief Add child widget.
 	 * @param w - widget to add.
@@ -191,6 +200,7 @@ public:
 	 */
 	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, const Widget* insertBefore = nullptr);
 
+	// TODO: rename to 'insert'?
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
 	 * @param chain - STOB chain describing child widgets to add.

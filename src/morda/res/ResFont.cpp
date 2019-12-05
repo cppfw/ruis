@@ -1,6 +1,6 @@
 #include "ResFont.hpp"
 
-#include "../Exc.hpp"
+#include "../exception.hpp"
 
 #include "../Morda.hpp"
 
@@ -30,7 +30,7 @@ std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::Fil
 	}
 
 	fi.setPath(chain.side("file").up().value());
-	
+
 	unsigned maxCached = unsigned(-1);
 	if(auto p = chain.thisOrNext("maxCached").get_node()){
 		maxCached = p->up().asUint32();

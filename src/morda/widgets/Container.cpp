@@ -1,5 +1,6 @@
 #include "Container.hpp"
 
+#include "../exception.hpp"
 #include "../Morda.hpp"
 
 #include "../util/util.hpp"
@@ -236,6 +237,38 @@ Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const
 	this->onChildrenListChanged();
 
 	ASSERT(!widget.isHovered())
+	return ret;
+}
+
+Container::list::iterator Container::insert(std::shared_ptr<Widget> w, list::iterator before){
+	if(!w){
+		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
+	}
+
+	if(w->parent()){
+		throw std::invalid_argument("container::insert(): given widget is already added to some container");
+	}
+
+	if(this->isBlocked){
+		throw morda::exception("container::insert(): children list is locked");
+	}
+
+	if(before != this->children().end() && (*before)->parent() != this){
+		throw std::invalid_argument("container::insert(): cannot insert before provided iterator, it points to a different container");
+	}
+
+	Widget& ww = *w;
+
+	auto ret = this->children_v.emplace(before, std::move(w));
+
+	ww.parentIter_v = ret;
+
+	ww.parent_v = this;
+	ww.onParentChanged();
+
+	this->onChildrenListChanged();
+
+	ASSERT(!ww.isHovered())
 	return ret;
 }
 

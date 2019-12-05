@@ -1,5 +1,5 @@
 #include "VertexArray.hpp"
-#include "../Exc.hpp"
+#include "../exception.hpp"
 
 #include <utki/debug.hpp>
 

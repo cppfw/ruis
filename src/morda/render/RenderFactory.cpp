@@ -1,5 +1,5 @@
 #include "RenderFactory.hpp"
-#include "../Exc.hpp"
+#include "../exception.hpp"
 
 using namespace morda;
 

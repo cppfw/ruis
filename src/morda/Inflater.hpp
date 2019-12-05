@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 
-#include "Exc.hpp"
+#include "exception.hpp"
 
 #include "widgets/Widget.hpp"
 
@@ -40,7 +40,7 @@ private:
 	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const stob::Node*)> > widgetFactories;
 
 	const decltype(widgetFactories)::value_type::second_type* findFactory(const std::string& widgetName);
-	
+
 	void addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory);
 
 public:
@@ -49,7 +49,7 @@ public:
 		TRACE(<< "Inflater::addWidget() is DEPRECATED. Use Inflater::registerType() instead." << std::endl)
 		this->registerType<T_Widget>(widgetName);
 	}
-	
+
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
@@ -89,14 +89,14 @@ public:
 	template <typename T> std::shared_ptr<T> inflateAs(const stob::Node& chain){
 		return std::dynamic_pointer_cast<T>(this->inflate(chain));
 	}
-	
+
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param str - string containing GUI description.
 	 * @return reference to the inflated widget.
 	 */
 	std::shared_ptr<morda::Widget> inflate(const char* str);
-	
+
 	/**
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the GUI script is returned.
@@ -106,7 +106,7 @@ public:
 	template <typename T> std::shared_ptr<T> inflateAs(const char* str){
 		return std::dynamic_pointer_cast<T>(this->inflate(str));
 	}
-	
+
 	/**
 	 * @brief Inflate widget described in GUI script.
 	 * @param fi - file interface to get the GUI script.
@@ -122,35 +122,35 @@ public:
 	 * @return Pointer to a root node of the GUI hierarchy.
 	 */
 	static std::unique_ptr<stob::Node> load(papki::File& fi);
-	
+
 private:
 	struct Template{
 		std::unique_ptr<stob::Node> t;
 		std::set<std::string> vars;
 	};
-	
+
 	Inflater::Template parseTemplate(const stob::Node& chain);
-	
+
 	std::list<std::map<std::string, Template>> templates;
-	
+
 	const Template* findTemplate(const std::string& name)const;
-	
+
 	void pushTemplates(const stob::Node& chain);
-	
+
 	void popTemplates();
-	
-	
+
+
 	//variable name - value mapping
 	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> variables;
-	
+
 	const stob::Node* findVariable(const std::string& name)const;
-	
+
 	void pushVariables(const stob::Node& chain);
-	
+
 	void popVariables();
-	
+
 	void substituteVariables(stob::Node* to)const;
-	
+
 	void pushDefs(const stob::Node& chain);
 	void popDefs();
 };

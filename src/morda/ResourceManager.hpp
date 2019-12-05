@@ -6,7 +6,7 @@
 #include <papki/File.hpp>
 #include <puu/dom.hpp>
 
-#include "Exc.hpp"
+#include "exception.hpp"
 
 
 namespace morda{
@@ -20,19 +20,19 @@ class Resource;
 /**
  * @brief Resource manager.
  * This class manages application recources loading from STOB resource description scripts.
- * 
+ *
  * Format of resource description scripts is simple. It uses STOB markup.
  * Each resource is a root-level STOB node, the value is a name of the resource, by that name
  * the application will load that resource.The children of resource name are the properties of the resource.
  * Each resource type defines their own properties.
- * 
+ *
  * It is also possible to include another resource descriptions using the include directive at the root level.
- * 
+ *
  * Example:
  * @code
  * //include another resource script into this one
  * include{some_other.res.stob}
- * 
+ *
  * //Example of resource declaration
  * img_may_image_resource //resource name
  * {
@@ -40,19 +40,19 @@ class Resource;
  *     //from which file to load the image
  *     file{sample_image.png}
  * }
- * 
+ *
  * @endcode
  */
 class ResourceManager{
 	friend class Morda;
 	friend class Resource;
-	
+
 	std::map<const std::string, std::weak_ptr<Resource>> resMap;
 
 	class ResPackEntry{
 	public:
 		ResPackEntry() = default;
-		
+
 		//For MSVC compiler, it does not generate move constructor automatically
 		ResPackEntry(ResPackEntry&& r){
 			this->fi = std::move(r.fi);
@@ -117,17 +117,17 @@ public:
 	 * This is a template function. Resource types are not indicated anyhow in
 	 * resource descriptions, so it is necessary to indicate resource of which type
 	 * you are loading by specifying a resource class as a template parameter of the function.
-	 * 
+	 *
 	 * Example:
 	 * @code
 	 * auto image = morda::Morda::inst().resMan().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
-	 * 
+	 *
 	 * @param resName - name of the resource as it appears in resource description.
 	 * @return Loaded resource.
 	 */
 	template <class T> std::shared_ptr<T> load(const char* resName);
-	
+
 private:
 };
 
@@ -176,7 +176,7 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 	if(!ret.e.child()){
 		throw Exc("ResourceManager::Load(): resource description is empty");
 	}
-	
+
 	auto resource = T::load(*ret.e.child(), *ret.rp.fi);
 
 	this->addResource(resource, ret.e);

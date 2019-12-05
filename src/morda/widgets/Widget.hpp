@@ -20,7 +20,7 @@
 #include "../util/keycodes.hpp"
 #include "../util/MouseButton.hpp"
 
-#include "../Exc.hpp"
+#include "../exception.hpp"
 
 
 namespace morda{
