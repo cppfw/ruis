@@ -41,7 +41,7 @@ const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
 
 void Container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().get_node(); n; n = n->nextNonProperty().get_node()){
-		this->add(morda::Morda::inst().inflater.inflate(*n));
+		this->insert(morda::Morda::inst().inflater.inflate(*n));
 	}
 }
 
@@ -193,54 +193,8 @@ void Container::layOut(){
 }
 
 
-Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore){
-	if(insertBefore == this->children().end()){
-		return this->add(std::move(w));
-	}
-	return this->add(std::move(w), (*insertBefore).get());
-}
 
-Widget::T_ChildrenList::iterator Container::add(std::shared_ptr<Widget> w, const Widget* insertBefore){
-	if(!w){
-		return this->children_v.end();
-	}
-
-	ASSERT_INFO(w, "Container::Add(): widget pointer is 0")
-	if(w->parent()){
-		throw morda::Exc("Container::Add(): cannot add widget, it is already added to some container");
-	}
-
-	if(this->isBlocked){
-		throw morda::Exc("Container::Add(): cannot add child while iterating through children, try deferred adding.");
-	}
-
-	if(insertBefore && insertBefore->parent() != this){
-		throw morda::Exc("Container::Add(): cannot insert before provided iterator, it points to a different container");
-	}
-
-	T_ChildrenList::iterator ret;
-
-	Widget& widget = *w;
-
-	if(insertBefore){
-		ret = this->children_v.insert(insertBefore->parentIter_v, std::move(w));
-	}else{
-		this->children_v.push_back(std::move(w));
-		ret = this->children_v.end();
-		--ret;
-	}
-
-	widget.parentIter_v = ret;
-	widget.parent_v = this;
-	widget.onParentChanged();
-
-	this->onChildrenListChanged();
-
-	ASSERT(!widget.isHovered())
-	return ret;
-}
-
-Container::list::iterator Container::insert(std::shared_ptr<Widget> w, list::iterator before){
+Container::list::iterator Container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
 	if(!w){
 		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
 	}

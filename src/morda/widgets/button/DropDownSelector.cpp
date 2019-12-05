@@ -140,7 +140,7 @@ void DropDownSelector::showDropdownMenu() {
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->provider->count(); ++i){
-		va->add(this->wrapItem(this->provider->getWidget(i), i));
+		va->insert(this->wrapItem(this->provider->getWidget(i), i));
 	}
 
 	this->hoveredIndex = -1;
@@ -264,7 +264,7 @@ void DropDownSelector::handleDataSetChanged(){
 		return;
 	}
 
-	this->selectionContainer.add(this->provider->getWidget(this->selectedItem_v));
+	this->selectionContainer.insert(this->provider->getWidget(this->selectedItem_v));
 }
 
 void DropDownSelector::setSelection(size_t i){
@@ -284,7 +284,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 	ASSERT(cl)
 	auto clWeak = utki::makeWeak(cl);
 
-	wd->add(w);
+	wd->insert(w);
 
 	mp->hoverChanged = [this, clWeak, index](Widget& w, unsigned id){
 		if(auto c = clWeak.lock()){

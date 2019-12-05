@@ -36,7 +36,7 @@ Overlay::Overlay(const stob::Node* chain) :
 void Overlay::onChildrenListChanged(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
 		this->overlayLayer = std::make_shared<Pile>(stob::parse(ContextMenuLayout_c).get());
-		this->add(this->overlayLayer);
+		this->insert(this->overlayLayer);
 
 		this->overlayContainer = this->overlayLayer->findByIdAs<Container>("morda_overlay_container");
 		ASSERT(this->overlayContainer)
@@ -55,14 +55,14 @@ void Overlay::onChildrenListChanged(){
 
 	if(this->children().back() != this->overlayLayer){
 		auto w = this->overlayLayer->removeFromParent();
-		this->add(w);
+		this->insert(w);
 	}
 }
 
 
 
 void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
-	this->overlay().add(w);
+	this->overlay().insert(w);
 
 	auto& lp = this->overlay().getLayoutParams(*w);
 

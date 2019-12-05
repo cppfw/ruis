@@ -13,13 +13,13 @@ TreeView::TreeView(const stob::Node* chain) :
 		ScrollArea(nullptr)
 {
 	this->list = std::make_shared<VList>(nullptr);
-	this->add(this->list);
-	
+	this->insert(this->list);
+
 	auto& lp = this->getLayoutParams(*this->list);
-	
+
 	lp.dim.y = Widget::LayoutParams::max_c;
 	lp.dim.x = Widget::LayoutParams::min_c;
-	
+
 	this->list->dataSetChanged = [this](List&){
 		if(this->viewChanged){
 			this->viewChanged(*this);
@@ -54,15 +54,15 @@ size_t TreeView::ItemsProvider::count() const noexcept{
 
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
 	auto i = this->iterForIndex(index);
-	
+
 //	TRACE(<< "i.path() = " << (*i).numChildren() << std::endl)
-	
+
 	return this->getWidget(i.path(), (*i).numChildren() == 0);
 }
 
 void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
 	auto i = this->iterForIndex(index);
-	
+
 	this->recycle(i.path(), std::move(w));
 }
 
@@ -71,9 +71,9 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iterForI
 		this->iter = this->visibleTree.begin();
 		this->iterIndex = 0;
 	}
-	
+
 	ASSERT(this->iter.path().size() != 0)
-	
+
 	if(index != this->iterIndex){
 		if(index > this->iterIndex){
 			this->iter += index - this->iterIndex;
@@ -82,18 +82,18 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iterForI
 		}
 		this->iterIndex = index;
 	}
-	
+
 	return this->iter;
 }
 
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 	auto i = this->visibleTree.pos(path);
 	ASSERT(i != this->visibleTree.end())
-	
+
 	if(this->iter > i){
 		auto pnext = path;
 		++pnext.back();
-		
+
 		if(this->iter.path() < pnext){
 			while(this->iter != i){
 				--this->iter;
@@ -103,9 +103,9 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
 			this->iterIndex -= (*i).size();
 		}
 	}
-	
+
 	this->visibleTree.removeAll(i);
-	
+
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
@@ -115,18 +115,18 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
 	if(s == 0){
 		return;
 	}
-	
+
 	auto i = this->visibleTree.pos(path);
 	ASSERT(i != this->visibleTree.end())
-	
+
 	ASSERT((*i).numChildren() == 0)
-	
+
 	if(this->iter > i){
 		this->iterIndex += s;
 	}
-	
+
 	this->visibleTree.resetChildren(i, s);
-	
+
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
@@ -135,30 +135,30 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
 	if(!i || i.path().back() > i.parent().numChildren()){
 		return;
 	}
-	
+
 	if(i.parent().numChildren() == 0){
 		this->List::ItemsProvider::notifyDataSetChanged();
 		return;
 	}
-	
+
 	if(this->iter >= i){
 		++this->iterIndex;
 	}
-	
+
 	this->visibleTree.add(i);
 	this->visibleTree.correctIteratorAfterAddition(this->iter, i.path());
-	
+
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path) {
 	auto i = this->visibleTree.pos(path);
 //	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
-	
+
 	if(this->iter >= i){
 		auto pnext = path;
 		++pnext.back();
-		
+
 		if(this->iter.path() < pnext){
 			while(this->iter != i){
 				ASSERT(this->iterIndex != 0)
@@ -169,9 +169,9 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path)
 			this->iterIndex -= ((*i).size() + 1);
 		}
 	}
-	
+
 	this->visibleTree.remove(i);
 	this->visibleTree.correctIteratorAfterDeletion(this->iter, i.path());
-	
+
 	this->List::ItemsProvider::notifyDataSetChanged();
 }

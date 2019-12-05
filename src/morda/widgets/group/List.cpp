@@ -18,18 +18,18 @@ public:
 	size_t count() const noexcept override{
 		return this->widgets.size();
 	}
-	
+
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
 	}
-	
+
 
 	void recycle(size_t index, std::shared_ptr<Widget> w)override{
 //		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 
-	
+
 	void add(std::unique_ptr<stob::Node> w){
 		this->widgets.push_back(std::move(w));
 	}
@@ -47,19 +47,19 @@ List::List(const stob::Node* chain, bool vertical):
 	if(!chain){
 		return;
 	}
-	
+
 	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
-	
+
 	if(!n){
 		return;
 	}
-	
+
 	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-	
+
 	for(; n; n = n->nextNonProperty().get_node()){
 		p->add(n->clone());
 	}
-	
+
 	this->setItemsProvider(std::move(p));
 }
 
@@ -67,9 +67,9 @@ List::List(const stob::Node* chain, bool vertical):
 
 void List::layOut() {
 //	TRACE(<< "List::layOut(): invoked" << std::endl)
-	
+
 	this->numTailItems = 0;//means that it needs to be recomputed
-	
+
 	this->updateChildrenList();
 }
 
@@ -78,7 +78,7 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(provider && provider->list){
 		throw Exc("given provider is already set to some List");
 	}
-	
+
 	if(this->provider){
 		this->provider->list = nullptr;
 	}
@@ -95,32 +95,32 @@ real List::scrollFactor()const noexcept{
 	if(!this->provider || this->provider->count() == 0){
 		return 0;
 	}
-	
+
 	if(this->children().size() == 0){
 		return 0;
 	}
-	
+
 	ASSERT(this->provider->count() >= this->numTailItems)
-	
+
 	size_t length = this->provider->count() - this->numTailItems;
-	
+
 	if(length == 0){
 		return 0;
 	}
-	
+
 	if(this->numTailItems == 0){
 		return 0;
 	}
-	
+
 	real d = this->rect().d[this->getLongIndex()];
-	
+
 	ASSERT(this->numTailItems != 0)
 	d = (d + this->firstTailItemOffset) / this->numTailItems;
-	
+
 	if(d <= 0){
 		return 0;
 	}
-	
+
 	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d + this->firstTailItemOffset);
 }
 
@@ -129,22 +129,22 @@ void List::setScrollPosAsFactor(real factor){
 	if(!this->provider || this->provider->count() == 0){
 		return;
 	}
-	
+
 	if(this->numTailItems == 0){
 		this->updateTailItemsInfo();
 	}
-	
+
 	this->posIndex = size_t(factor * real(this->provider->count() - this->numTailItems));
-	
+
 //	TRACE(<< "List::setScrollPosAsFactor(): this->posIndex = " << this->posIndex << std::endl)
-	
+
 	if(this->provider->count() != this->numTailItems){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
 		if(this->children().size() != 0){
 			real d = this->rect().d[this->getLongIndex()];
 			d = (d + this->firstTailItemOffset) / this->numTailItems;
-			
+
 			this->posOffset = ::round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
 		}else{
 			this->posOffset = 0;
@@ -153,17 +153,17 @@ void List::setScrollPosAsFactor(real factor){
 		ASSERT(this->posIndex == 0)
 		this->posOffset = ::round(factor * this->firstTailItemOffset);
 	}
-	
+
 	this->updateChildrenList();
 }
 
 bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, T_ChildrenList::const_iterator insertBefore){
 	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
-		
+
 	Vec2r dim = this->dimForWidget(*w, lp);
 
 	w->resize(dim);
-	
+
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
 
@@ -177,7 +177,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 
 	if(pos > 0){
 		if(!added){
-			this->add(w, insertBefore);
+			this->insert(w, insertBefore);
 		}
 		if(this->addedIndex > index){
 			this->addedIndex = index;
@@ -210,16 +210,16 @@ void List::updateChildrenList(){
 	if(!this->provider){
 		this->posIndex = 0;
 		this->posOffset = 0;
-		
+
 		this->removeAll();
 		this->addedIndex = size_t(-1);
 		return;
 	}
-	
+
 	if(this->numTailItems == 0){
 		this->updateTailItemsInfo();
 	}
-	
+
 	if(this->posIndex == this->firstTailItemIndex){
 		if(this->posOffset > this->firstTailItemOffset){
 			this->posOffset = this->firstTailItemOffset;
@@ -228,11 +228,11 @@ void List::updateChildrenList(){
 		this->posIndex = this->firstTailItemIndex;
 		this->posOffset = this->firstTailItemOffset;
 	}
-	
+
 	real pos = -this->posOffset;
-	
+
 //	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
-	
+
 	//remove widgets from top
 	for(; this->children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
 		auto w = (*this->children().begin())->removeFromParent();
@@ -240,7 +240,7 @@ void List::updateChildrenList(){
 			this->provider->recycle(this->addedIndex, w);
 		}
 	}
-	
+
 	auto iter = this->children().begin();
 	size_t iterIndex = this->addedIndex;
 	const size_t iterEndIndex = iterIndex + this->children().size();
@@ -257,14 +257,14 @@ void List::updateChildrenList(){
 			w = this->provider->getWidget(index);
 			isAdded = false;
 		}
-		
+
 		if(this->arrangeWidget(w, pos, isAdded, index, iter)){
 			++index;
 			break;
 		}
 		++index;
 	}
-	
+
 	//remove rest
 	if(iterIndex < iterEndIndex){
 		size_t oldIterIndex = iterIndex;
@@ -285,7 +285,7 @@ void List::updateChildrenList(){
 			this->provider->recycle(oldIterIndex, w);
 		}
 	}
-	
+
 }
 
 
@@ -293,33 +293,33 @@ void List::updateChildrenList(){
 
 void List::updateTailItemsInfo(){
 	this->numTailItems = 0;
-	
+
 	if(!this->provider || this->provider->count() == 0){
 		return;
 	}
-	
+
 	unsigned longIndex = this->getLongIndex();
-	
+
 	real dim = this->rect().d[longIndex];
-	
+
 	ASSERT(this->provider)
 	ASSERT(this->provider->count() > 0)
-	
+
 	for(size_t i = this->provider->count(); i != 0 && dim > 0; --i){
 		++this->numTailItems;
-		
+
 		auto w = this->provider->getWidget(i - 1);
 		ASSERT(w)
-		
+
 		auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
-		
+
 		Vec2r d = this->dimForWidget(*w, lp);
-		
+
 		dim -= d[longIndex];
 	}
-	
+
 	this->firstTailItemIndex = this->provider->count() - this->numTailItems;
-	
+
 	if(dim > 0){
 		this->firstTailItemOffset = -1;
 	}else{
@@ -331,12 +331,12 @@ void List::scrollBy(real delta) {
 	if(!this->provider){
 		return;
 	}
-	
+
 	unsigned longIndex = this->getLongIndex();
 //	unsigned transIndex;
-	
+
 //	TRACE(<< "delta = " << delta << std::endl)
-	
+
 	if(delta >= 0){
 		for(auto& c : this->children()){
 			auto wd = c->rect().d[longIndex] - this->posOffset;
@@ -345,12 +345,12 @@ void List::scrollBy(real delta) {
 				delta -= wd;
 				break;
 			}
-			
+
 			delta -= wd;
 			this->posOffset = 0;
 			++this->posIndex;
 		}
-		
+
 		if(delta > 0){
 			ASSERT_INFO(
 					this->posIndex > this->addedIndex + this->children().size(),
@@ -362,7 +362,7 @@ void List::scrollBy(real delta) {
 				auto w = this->provider->getWidget(this->posIndex);
 				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 				Vec2r d = this->dimForWidget(*w, lp);
-				this->add(w); //this is just optimization, to avoid creating same widget twice
+				this->insert(w); //this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->posOffset = delta;
 					break;
@@ -386,7 +386,7 @@ void List::scrollBy(real delta) {
 				auto w = this->provider->getWidget(this->posIndex);
 				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 				Vec2r d = this->dimForWidget(*w, lp);
-				this->add(w, this->children().begin()); //this is just optimization, to avoid creating same widget twice
+				this->insert(w, this->children().begin()); //this is just optimization, to avoid creating same widget twice
 				--this->addedIndex;
 				if(d[longIndex] > delta){
 					this->posOffset = d[longIndex] - delta;
@@ -396,28 +396,28 @@ void List::scrollBy(real delta) {
 			}
 		}
 	}
-	
+
 	this->updateChildrenList();
 }
 
 morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
-	
+
 	Vec2r ret(quotum);
-	
+
 	utki::clampBottom(ret[longIndex], real(0));
-	
+
 	if(ret[transIndex] > 0){
 		return ret;
 	}
-	
+
 	ret[transIndex] = 0;
-	
+
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		utki::clampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
 	}
-	
+
 	return ret;
 }
 
@@ -425,7 +425,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 	if (!this->list) {
 		return;
 	}
-	
+
 	Morda::inst().postToUiThread(
 		[this](){
 			this->list->handleDataSetChanged();

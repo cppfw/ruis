@@ -150,7 +150,7 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 	ASSERT(this->children().size() == 1)
 
 	if(w){
-		this->add(std::move(w), this->children().begin());
+		this->insert(std::move(w), this->children().begin());
 	}
 }
 

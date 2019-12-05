@@ -173,34 +173,24 @@ public:
 	 */
 	void changeChildZPosition(Widget& child, T_ChildrenList::const_iterator toBefore);
 
-	// TODO: deprecated, remove.
-	/**
-	 * @brief Add child widget.
-	 * @param w - widget to add.
-	 * @param insertBefore - iterator into the list of children widgets before which to insert the new widget.
-	 * @return Iterator for the newly added widget.
-	 */
-	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore);
-
 	/**
 	 * @brief Insert a widget to the container.
 	 * @param w - widget to insert.
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::iterator insert(std::shared_ptr<Widget> w, list::iterator before);
+	list::iterator insert(std::shared_ptr<Widget> w, list::const_iterator before);
 
-
-	// TODO: deprecated, remove.
 	/**
-	 * @brief Add child widget.
-	 * @param w - widget to add.
-	 * @param insertBefore - child widget before which to insert the new widget.
-	 * @return Iterator of the newly added widget.
+	 * @brief Insert a widget to the end of children list of the container.
+	 * @param w - widgeet to insert.
+	 * @return iterator pointing to the newly inserted widget.
 	 */
-	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, const Widget* insertBefore = nullptr);
+	list::iterator insert(std::shared_ptr<Widget> w){
+		return this->insert(std::move(w), this->children().end());
+	}
 
-	// TODO: rename to 'insert'?
+	// TODO: rename to 'inflate_and_insert'?
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
 	 * @param chain - STOB chain describing child widgets to add.
