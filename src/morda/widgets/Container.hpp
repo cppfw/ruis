@@ -12,7 +12,6 @@
 namespace morda{
 
 
-
 /**
  * @brief Container widget.
  * A widget which can contain children widgets.
@@ -30,8 +29,14 @@ namespace morda{
  */
 class Container : virtual public Widget{
 
+public:
+	// TODO: define to std::vector<std::shared_ptr<Widget>>
+	typedef T_ChildrenList list;
+
+	// TODO: define to std::vector<std::shared_ptr<const Widget>>
+	typedef T_ConstChildrenList const_list;
 private:
-	T_ChildrenList children_v;
+	list children_v;
 
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
@@ -176,6 +181,8 @@ public:
 	 */
 	T_ChildrenList::iterator add(std::shared_ptr<Widget> w, T_ChildrenList::const_iterator insertBefore);
 
+
+
 	/**
 	 * @brief Add child widget.
 	 * @param w - widget to add.
@@ -224,11 +231,11 @@ public:
 	 * @brief Get list of child widgets.
 	 * @return List of child widgets.
 	 */
-	const T_ChildrenList& children()noexcept{
+	const list& children()noexcept{
 		return this->children_v;
 	}
 
-	const T_ConstChildrenList& children()const noexcept{
+	const const_list& children()const noexcept{
 		return reinterpret_cast<const T_ConstChildrenList&>(this->children_v);
 	}
 
@@ -236,8 +243,8 @@ public:
 	 * @brief Recursively find all children of given type.
 	 * @return list of children found.
 	 */
-	template <class T> std::list<std::shared_ptr<T>> find(){
-		std::list<std::shared_ptr<T>> ret;
+	template <class T> std::vector<std::shared_ptr<T>> find(){
+		std::vector<std::shared_ptr<T>> ret;
 
 		auto childrenList = this->children();
 		for(auto& child : childrenList){
