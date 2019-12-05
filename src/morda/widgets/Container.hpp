@@ -188,16 +188,18 @@ public:
 	 * @return iterator pointing to the newly inserted widget.
 	 */
 	list::const_iterator push_back(std::shared_ptr<Widget> w){
+		//TODO: rewrite using push_back()?
 		return this->insert(std::move(w), this->children().end());
 	}
 
-	// TODO: rename to 'inflate_and_insert'?
+	// TODO: rename to 'inflate_and_push_back'?
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
 	 * @param chain - STOB chain describing child widgets to add.
 	 */
 	void add(const stob::Node& chain);
 
+	//TODO: depreacted, remove.
 	/**
 	 * @brief Remove child widget.
 	 * @param iter - iterator of the widget to remove.
@@ -206,6 +208,7 @@ public:
 	 */
 	std::shared_ptr<Widget> remove(T_ChildrenList::const_iterator iter);
 
+	//TODO: depreacted, remove.
 	/**
 	 * @brief Remove child widget.
 	 * @param w - child widget to remove.
@@ -214,6 +217,14 @@ public:
 	 */
 	std::shared_ptr<Widget> remove(Widget& w);
 
+	/**
+	 * @brief Remove child from container.
+	 * @param child - iterator of the child to remove.
+	 * @return iterator pointing to the next child after removed one.
+	 */
+	list::const_iterator erase(list::const_iterator child);
+
+	//TODO: rename to clear().
 	/**
 	 * @brief Remove all child widgets.
 	 */

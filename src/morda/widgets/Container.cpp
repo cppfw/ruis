@@ -232,32 +232,38 @@ std::shared_ptr<Widget> Container::remove(T_ChildrenList::const_iterator iter){
 
 
 std::shared_ptr<Widget> Container::remove(Widget& w){
-	if(w.parent_v != this){
-		throw morda::Exc("Container::remove(): widget is not added to this container");
-	}
+	auto ret = w.sharedFromThis(&w);
 
+	this->erase(this->find(&w));
+
+	return ret;
+}
+
+Container::list::const_iterator Container::erase(list::const_iterator child){
 	if(this->isBlocked){
-		throw morda::Exc("Container::remove(): cannot remove child while iterating through children, try deferred removing.");
+		throw morda::exception("container::erase(): children list is locked");
 	}
-//	TRACE(<< "Container::Remove(): w = " << (&w) << std::endl)
 
-	ASSERT(w.parent_v == this)
+	if(child == this->children().end()){
+		throw std::invalid_argument("container::erase(): given 'child' iterator is invalid");
+	}
 
-	auto ret = *w.parentIter_v;
+	if((*child)->parent() != this){
+		throw std::invalid_argument("container::erase(): given child widget belongs to a different container");
+	}
 
-	this->children_v.erase(w.parentIter_v);
+	auto w = *child;
 
-	w.parent_v = nullptr;
-	w.setUnhovered();
+	auto ret = this->children_v.erase(child);
 
-	w.onParentChanged();
+	w->parent_v = nullptr;
+	w->setUnhovered();
+	w->onParentChanged();
 
 	this->onChildrenListChanged();
 
 	return ret;
 }
-
-
 
 void Container::removeAll() {
 	while(this->children().size()){
@@ -319,7 +325,7 @@ Container::list::const_iterator Container::change_child_z_position(list::const_i
 	}
 
 	if(child == this->children().end()){
-		throw std::invalid_argument("container::insert(): given 'child' iterator is invalid");
+		throw std::invalid_argument("container::change_child_z_position(): given 'child' iterator is invalid");
 	}
 
 	if((*child)->parent() != this){
@@ -327,7 +333,7 @@ Container::list::const_iterator Container::change_child_z_position(list::const_i
 	}
 
 	if(before != this->children().end() && (*before)->parent() != this){
-		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
+		throw std::invalid_argument("container::change_child_z_position(): given 'before' iterator points to a different container");
 	}
 
 	if(child == before){
