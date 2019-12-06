@@ -26,7 +26,7 @@ CheckBox::CheckBox(const stob::Node* chain) :
 		ToggleButton(chain),
 		NinePatch(D_Layout.get())
 {
-	this->checkWidget = this->content().findById("morda_checkbox_check");
+	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->setVisible(this->isPressed());
 
 	this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));

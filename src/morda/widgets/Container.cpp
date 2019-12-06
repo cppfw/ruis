@@ -269,21 +269,21 @@ void Container::clear() {
 
 
 
-std::shared_ptr<Widget> Container::findById(const std::string& id)noexcept{
-	if(auto r = this->Widget::findById(id)){
+std::shared_ptr<Widget> Container::try_get_widget(const std::string& id)noexcept{
+	if(auto r = this->Widget::try_get_widget(id)){
 		return r;
 	}
 
 	//first check direct children, because the closer to the tree root higher the priority is
 	for(auto& w : this->children()){
-		if(auto r = w->Widget::findById(id)){
+		if(auto r = w->Widget::try_get_widget(id)){
 			return r;
 		}
 	}
 
 	//then check deeper by tree
 	for(auto& w : this->children()){
-		if(auto r = w->findById(id)){
+		if(auto r = w->try_get_widget(id)){
 			return r;
 		}
 	}

@@ -246,13 +246,13 @@ public:
 	void clear();
 
 	/**
-	 * @brief Find widget by ID.
+	 * @brief Try get widget by id.
 	 * It searches through the whole widget sub-hierarchy, not just direct children of this container.
-	 * @param id - ID of the child widget to look for.
-	 * @return pointer to widget with given ID if found.
-	 * @return nullptr if there is no widget with given ID found.
+	 * @param id - id of the child widget to look for.
+	 * @return pointer to widget with given id if found.
+	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<Widget> findById(const std::string& id)noexcept override;
+	std::shared_ptr<Widget> try_get_widget(const std::string& id)noexcept override;
 
 	/**
 	 * @brief Get list of child widgets.

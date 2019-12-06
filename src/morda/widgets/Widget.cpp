@@ -94,7 +94,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::findById(const std::string& id)noexcept{
+std::shared_ptr<Widget> Widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
 		return this->sharedFromThis(this);
 	}
@@ -391,10 +391,12 @@ const Widget::LayoutParams& Widget::getLayoutParams()const {
 	return this->parent()->getLayoutParams(*this);
 }
 
-Widget& Widget::getById(const std::string& id) {
-	auto w = this->findById(id);
+Widget& Widget::get_widget(const std::string& id) {
+	auto w = this->try_get_widget(id);
 	if(!w){
-		throw WidgetNotFoundExc(id);
+		std::stringstream ss;
+		ss << "Widget '" << id << "' not found in '" << this->id << "'";
+		throw utki::not_found(ss.str());
 	}
 	return *w;
 }

@@ -225,13 +225,13 @@ morda::Window::Window(const stob::Node* chain) :
 }
 
 void morda::Window::setupWidgets(){
-	this->contentArea = this->findByIdAs<Pile>("morda_content");
+	this->contentArea = this->try_get_widget_as<Pile>("morda_content");
 	ASSERT(this->contentArea)
 
-	this->title = this->findByIdAs<Text>("morda_title");
+	this->title = this->try_get_widget_as<Text>("morda_title");
 	ASSERT(this->title)
 
-	this->titleBg = this->findByIdAs<Color>("morda_window_title_bg");
+	this->titleBg = this->try_get_widget_as<Color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
@@ -251,7 +251,7 @@ void morda::Window::setupWidgets(){
 	};
 
 	{
-		auto caption = this->findByIdAs<MouseProxy>("morda_caption_proxy");
+		auto caption = this->try_get_widget_as<MouseProxy>("morda_caption_proxy");
 		ASSERT(caption)
 
 		caption->mouseButton = getButtonFunc(this->captionCaptured);
@@ -266,7 +266,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_lt_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_lt_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftTopResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -283,7 +283,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_lb_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_lb_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftBottomResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -300,7 +300,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_rt_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_rt_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightTopResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -317,7 +317,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_rb_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_rb_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightBottomResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -333,7 +333,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_l_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_l_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -349,7 +349,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_r_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_r_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -364,7 +364,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_t_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_t_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->topResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
@@ -380,7 +380,7 @@ void morda::Window::setupWidgets(){
 	}
 
 	{
-		auto w = this->findByIdAs<MouseProxy>("morda_b_proxy");
+		auto w = this->try_get_widget_as<MouseProxy>("morda_b_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->bottomResizeCaptured);
 		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){

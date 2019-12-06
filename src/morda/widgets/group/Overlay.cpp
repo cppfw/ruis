@@ -38,10 +38,10 @@ void Overlay::onChildrenListChanged(){
 		this->overlayLayer = std::make_shared<Pile>(stob::parse(ContextMenuLayout_c).get());
 		this->push_back(this->overlayLayer);
 
-		this->overlayContainer = this->overlayLayer->findByIdAs<Container>("morda_overlay_container");
+		this->overlayContainer = this->overlayLayer->try_get_widget_as<Container>("morda_overlay_container");
 		ASSERT(this->overlayContainer)
 
-		auto mp = this->overlayLayer->findByIdAs<MouseProxy>("morda_overlay_mouseproxy");
+		auto mp = this->overlayLayer->try_get_widget_as<MouseProxy>("morda_overlay_mouseproxy");
 		ASSERT(mp)
 
 		mp->mouseButton = [this](Widget& w, bool isDown, const Vec2r& pos, MouseButton_e button, unsigned id) -> bool{

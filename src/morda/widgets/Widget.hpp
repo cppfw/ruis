@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <utki/Shared.hpp>
+#include <utki/exception.hpp>
 
 #include <puu/dom.hpp>
 
@@ -299,79 +300,98 @@ public:
 	}
 
 	/**
-	 * @brief Find widget by ID.
-	 * Find a widget by ID in the widget hierarchy. Since simple Widget cannot have children,
-	 * this implementation just checks if ID of this widget is the looked up ID and if so it returns
+	 * @brief Try get widget by id.
+	 * Get widget by ID from the widget hierarchy. Since simple Widget cannot have children,
+	 * this implementation just checks if id of this widget is the looked up id and if so it returns
 	 * pointer to this widget or nullptr otherwise.
-	 * @param id - ID of the widget to search for.
+	 * @param id - id of the widget to search for.
 	 * @return pointer to the widget if found.
-	 * @return nullptr if there is no widget with given ID found.
+	 * @return nullptr if there is no widget with given id found.
 	 */
-	virtual std::shared_ptr<Widget> findById(const std::string& id)noexcept;
+	virtual std::shared_ptr<Widget> try_get_widget(const std::string& id)noexcept;
 
+	//TODO: remove deprecated code
+	std::shared_ptr<Widget> findById(const std::string& id)noexcept{
+		TRACE(<< "DEPRECATED!!! findById() is deprecated, use try_get_widget()" << std::endl)
+		return this->try_get_widget(id);
+	}
 
 	//TODO: remove deprecated code
 	std::shared_ptr<Widget> findByName(const std::string& name)noexcept{
-		TRACE(<< "DEPRECATED!!! findByName() is deprecated, use findById()" << std::endl)
-		return this->findById(name);
+		TRACE(<< "DEPRECATED!!! findByName() is deprecated, use try_get_widget()" << std::endl)
+		return this->try_get_widget(name);
 	}
 
 	/**
-	 * @brief Find widget by ID.
-	 * Same as findById() but also tries to cast the widget object to a specified class.
-	 * @param id - ID of the widget to search for.
+	 * @brief Try get widget by id.
+	 * Same as try_get_widget() but also tries to cast the widget object to a specified class.
+	 * @param id - id of the widget to search for.
 	 * @return pointer to the widget if found.
-	 * @return nullptr if there is no widget with given ID found or if the widget could not be cast to specified class.
+	 * @return nullptr if there is no widget with given id found or if the widget could not be cast to specified class.
 	 */
+	template <typename T> std::shared_ptr<T> try_get_widget_as(const std::string& id)noexcept{
+		return std::dynamic_pointer_cast<T>(this->try_get_widget(id));
+	}
+
+	//TODO: remove deprecated code
 	template <typename T> std::shared_ptr<T> findByIdAs(const std::string& id)noexcept{
-		return std::dynamic_pointer_cast<T>(this->findById(id));
+		TRACE(<< "DEPRECATED!!! findByIdAs() is deprecated, use try_get_widget_as()" << std::endl)
+		return this->try_get_widget_as<T>(id);
 	}
 
 	//TODO: remove deprecated code
 	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
-		TRACE(<< "DEPRECATED!!! findByNameAs() is deprecated, use findByIdAs()" << std::endl)
-		return this->findByIdAs<T>(name);
+		TRACE(<< "DEPRECATED!!! findByNameAs() is deprecated, use try_get_widget_as()" << std::endl)
+		return this->try_get_widget_as<T>(name);
 	}
 
+	//TODO: deprecated, remove.
 	/**
 	 * @brief Child widget with requested ID is not found within the parent container.
 	 */
-	class WidgetNotFoundExc : public morda::Exc{
-	public:
-		WidgetNotFoundExc(const std::string& childName) :
-				morda::Exc(childName)
-		{}
-	};
+	typedef utki::not_found WidgetNotFoundExc;
 
 	/**
-	 * @brief Get child by ID.
-	 * @param id - ID of the child to get.
-	 * @return reference to the child.
-	 * @throw ChildNotFoundExc - if no child with given ID has been found.
+	 * @brief Get widget.
+	 * @param id - id of the widget to get.
+	 * @return reference to the widget.
+	 * @throw utki::not_found - if no widget with given id has been found.
 	 */
-	Widget& getById(const std::string& id);
+	Widget& get_widget(const std::string& id);
+
+	//TODO: remove deprecated code
+	Widget& getById(const std::string& id){
+		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
+		return this->get_widget(id);
+	}
 
 	//TODO: remove deprecated code
 	Widget& getByName(const std::string& name){
-		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use getById()" << std::endl)
-		return this->getById(name);
+		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
+		return this->get_widget(name);
 	}
 
 	/**
-	 * @brief Get child widget of specific type by its ID.
-	 * @param id - ID of the widget to get.
-	 * @return reference to the requested child widget.
-	 * @throw WidgetNotFoundExc - if no child with given ID has been found.
-	 * @throw std::bad_cast - if requested child widget is not of the specified type.
+	 * @brief Get widget of specific type by its id.
+	 * @param id - id of the widget to get.
+	 * @return reference to the requested widget.
+	 * @throw utki::not_found - if no widget with given id has been found.
+	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
+	template <typename T> T& get_widget_as(const std::string& id){
+		return dynamic_cast<T&>(this->get_widget(id));
+	}
+
+	//TODO: remove deprecated code
 	template <typename T> T& getByIdAs(const std::string& id){
-		return dynamic_cast<T&>(this->getById(id));
+	TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use get_widget_as()" << std::endl)
+		return this->get_widget_as<T>(id);
 	}
 
 	//TODO: remove deprecated code
 	template <typename T> T& getByNameAs(const std::string& name){
-		TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use getByIdAs()" << std::endl)
-		return this->getByIdAs<T>(name);
+		TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use get_widget_as()" << std::endl)
+		return this->get_widget_as<T>(name);
 	}
 
 public:
