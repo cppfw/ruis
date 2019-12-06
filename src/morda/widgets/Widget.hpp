@@ -38,7 +38,7 @@ class Container;
  * @param y - vertical position within parent widget.
  * @param dx - width of the widget.
  * @param dy - height of the widget.
- * @param name - name assigned to widget.
+ * @param id - id assigned to widget.
  * @param clip - enable (true) or disable (false) the scissor test for this widget boundaries when rendering. Default value is false.
  * @param cache - enable (true) or disable (false) pre-rendering this widget to texture and render from texture for faster rendering.
  * @param visible - should the widget be initially visible (true) or hidden (false). Default value is true.
@@ -334,7 +334,7 @@ public:
 	}
 
 	/**
-	 * @brief Child widget width requested ID is not found within the parent container.
+	 * @brief Child widget with requested ID is not found within the parent container.
 	 */
 	class WidgetNotFoundExc : public morda::Exc{
 	public:
@@ -566,6 +566,7 @@ public:
 	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
 	 */
+	// TODO: rename to overlaps()
 	bool contains(const morda::Vec2r& pos)const noexcept{
 		return morda::Rectr(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
 	}

@@ -328,7 +328,7 @@ template <class T> T* Widget::findAncestor(const char* name){
 	auto p = dynamic_cast<T*>(this->parent());
 
 	if(p){
-		if(!name || p->name() == name){
+		if(!name || p->id == name){
 			return p;
 		}
 	}
