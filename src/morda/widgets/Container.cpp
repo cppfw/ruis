@@ -72,7 +72,7 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 
 	//check if mouse captured
 	{
-		T_MouseCaptureMap::iterator i = this->mouseCaptureMap.find(pointerId);
+		auto i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
 				if(w->isInteractive()){

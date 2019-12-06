@@ -49,8 +49,7 @@ private:
 	} children_v;
 
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
-	typedef std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned> > T_MouseCaptureMap;
-	T_MouseCaptureMap mouseCaptureMap;
+	std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned>> mouseCaptureMap;
 
 protected:
 	//flag indicating that modifications to children list are blocked
