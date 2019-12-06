@@ -239,12 +239,11 @@ public:
 	 */
 	list::const_iterator erase(list::const_iterator child);
 
-	//TODO: rename to clear().
 	/**
 	 * @brief Remove all child widgets.
 	 * This function invalidates iterators which were obtained before calling to it.
 	 */
-	void removeAll();
+	void clear();
 
 	/**
 	 * @brief Find widget by ID.
@@ -294,6 +293,7 @@ public:
 	 * @return list of children found.
 	 */
 	//TODO: rewrite using std::find_if
+	//		name find_recursively()
 	// template <class T> std::vector<std::shared_ptr<T>> find(){
 	// 	std::vector<std::shared_ptr<T>> ret;
 

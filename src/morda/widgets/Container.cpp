@@ -263,11 +263,8 @@ Container::list::const_iterator Container::erase(list::const_iterator child){
 	return ret;
 }
 
-void Container::removeAll() {
-	while(this->children().size()){
-//		TRACE(<< "Container::removeAll(): w = " << (this->Children().front().get()) << std::endl)
-		this->remove(*this->children().front());
-	}
+void Container::clear() {
+	for(auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)){}
 }
 
 

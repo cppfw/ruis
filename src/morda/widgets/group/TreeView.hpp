@@ -321,7 +321,7 @@ public:
 		}
 	}
 	
-	void removeAll(){
+	void clear(){
 		this->children.clear();
 		this->size_var = 0;
 	}

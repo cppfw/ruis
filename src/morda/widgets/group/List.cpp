@@ -212,7 +212,7 @@ void List::updateChildrenList(){
 		this->posIndex = 0;
 		this->posOffset = 0;
 
-		this->removeAll();
+		this->clear();
 		this->addedIndex = size_t(-1);
 		return;
 	}
@@ -437,7 +437,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 void List::handleDataSetChanged() {
 	this->numTailItems = 0; //means that it needs to be recomputed
 
-	this->removeAll();
+	this->clear();
 	this->addedIndex = size_t(-1);
 
 	this->updateChildrenList();

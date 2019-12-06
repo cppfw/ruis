@@ -34,7 +34,7 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 }
 
 void TreeView::ItemsProvider::notifyDataSetChanged() {
-	this->visibleTree.removeAll();
+	this->visibleTree.clear();
 	this->iterIndex = 0;
 	this->iter = this->visibleTree.begin();
 	this->List::ItemsProvider::notifyDataSetChanged();

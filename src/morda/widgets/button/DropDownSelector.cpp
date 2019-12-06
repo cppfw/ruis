@@ -255,7 +255,7 @@ void DropDownSelector::ItemsProvider::notifyDataSetChanged(){
 }
 
 void DropDownSelector::handleDataSetChanged(){
-	this->selectionContainer.removeAll();
+	this->selectionContainer.clear();
 
 	if(!this->provider){
 		return;
