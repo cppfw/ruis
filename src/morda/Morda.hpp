@@ -16,19 +16,19 @@ namespace morda{
 class Morda : public utki::IntrusiveSingleton<Morda>{
 	friend T_Singleton;
 	static T_Instance instance;
-	
+
 	friend class Updateable;
-	friend class Widget;
-	
+	friend class widget;
+
 	std::shared_ptr<Renderer> renderer_v;
-	
+
 public:
 
 	Renderer& renderer()noexcept{
 		ASSERT(this->renderer_v)
 		return *this->renderer_v;
 	}
-	
+
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
@@ -44,14 +44,14 @@ public:
 
 	Morda(const Morda&) = delete;
 	Morda& operator=(const Morda&) = delete;
-	
+
 	virtual ~Morda()noexcept{}
 
 
 private:
 	Updateable::Updater updater;
 public:
-	
+
 	/**
 	 * @brief Instantiation of the resource manager.
 	 */
@@ -61,23 +61,23 @@ public:
 	 * @brief Instantiation of the GUI inflater.
 	 */
 	Inflater inflater;
-	
-	
+
+
 private:
 	//NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 	std::shared_ptr<morda::Widget> rootWidget;
-	
+
 	std::weak_ptr<Widget> focusedWidget;
 
 	void setFocusedWidget(const std::shared_ptr<Widget> w);
-	
+
 public:
 	/**
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
 	void setRootWidget(const std::shared_ptr<morda::Widget> w);
-	
+
 private:
 	Vec2r viewportSize;
 public:
@@ -87,14 +87,14 @@ public:
 	 * @param size - dimensions of the viewport, in pixels.
 	 */
 	void setViewportSize(const morda::Vec2r& size);
-	
+
 	/**
 	 * @brief Render GUI.
 	 * Y axis directed upwards. Left screen edge is at -1, right is at 1, top at 1, bottom at -1.
 	 * @param matrix - use this transformation matrix.
 	 */
 	void render(const Matr4r& matrix = Matr4r().identity())const;
-	
+
 	/**
 	 * @brief Initialize standard widgets library.
 	 * In addition to core widgets it is possible to use standard widgets.
@@ -103,8 +103,8 @@ public:
 	 * @param fi - file interface to use for resource loading.
 	 */
 	void initStandardWidgets(papki::File& fi);
-	
-	
+
+
 	/**
 	 * @brief Update GUI.
 	 * Call this function from main loop of the program.
@@ -113,7 +113,7 @@ public:
 	std::uint32_t update(){
 		return this->updater.update();
 	}
-	
+
 private:
 	std::function<void(std::function<void()>&&)> postToUiThread_v;
 public:
@@ -125,20 +125,20 @@ public:
 	 * @param f - function to execute on UI thread.
 	 */
 	void postToUiThread(std::function<void()>&& f);
-	
+
 	//TODO: remove deprecated function
 	void postToUiThread_ts(std::function<void()>&& f){
 		TRACE(<< "postToUiThread_ts(): DEPRECATED! use postToUiThread() instead" << std::endl)
 		this->postToUiThread(std::move(f));
 	}
-	
+
 	/**
 	 * @brief Feed in the mouse move event to GUI.
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
 	void onMouseMove(const Vec2r& pos, unsigned id);
-	
+
 	/**
 	 * @brief Feed in the mouse button event to GUI.
 	 * @param isDown - is mouse button pressed (true) or released (false).
@@ -155,7 +155,7 @@ public:
 	 * @param id - mouse pointer ID.
 	 */
 	void onMouseHover(bool isHovered, unsigned id);
-	
+
 	/**
 	 * @brief Feed in the key event to GUI.
 	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
@@ -163,7 +163,7 @@ public:
 	 * @param keyCode - code of the key.
 	 */
 	void onKeyEvent(bool isDown, Key_e keyCode);
-	
+
 	/**
 	 * @brief Unicode input provider.
 	 * Override this class to pass in the character input information when user makes character input.
@@ -175,10 +175,10 @@ public:
 		 * @return The text that the user has entered.
 		 */
 		virtual std::u32string get()const = 0;
-		
+
 		virtual ~UnicodeProvider()noexcept{}
 	};
-	
+
 	/**
 	 * @brief Feed in the character input event to the GUI.
 	 * The idea with UnicodeProvider parameter is that we don't want to calculate the unicode string
@@ -189,8 +189,8 @@ public:
 	 * @param key - key code associated with character input, can be UNKNOWN.
 	 */
 	void onCharacterInput(const UnicodeProvider& unicode, Key_e key);
-	
-	
+
+
 	/**
 	 * @brief Information about screen units.
 	 * This class holds information about screen units and performs conversion
@@ -215,7 +215,7 @@ public:
 				dotsPerInch_v(dotsPerInch),
 				dotsPerDp_v(dotsPerDp)
 		{}
-		
+
 		/**
 		 * @brief Get dots (pixels) per inch.
 		 * @return Dots per inch.
@@ -223,7 +223,7 @@ public:
 		real dpi()const noexcept{
 			return this->dotsPerInch_v;
 		}
-		
+
 		/**
 		 * @brief Get dots (pixels) per centimeter.
 		 * @return Dots per centimeter.
@@ -231,7 +231,7 @@ public:
 		real dotsPerCm()const noexcept{
 			return this->dpi() / 2.54f;
 		}
-		
+
 		/**
 		 * @brief Get dots (pixels) per point.
 		 * @return Dots per point.
@@ -239,7 +239,7 @@ public:
 		real dotsPerDp()const noexcept{
 			return this->dotsPerDp_v;
 		}
-		
+
 		/**
 		 * @brief Convert millimeters to pixels (dots).
 		 * @param mm - value in millimeters.
@@ -248,7 +248,7 @@ public:
 		real mmToPx(real mm)const noexcept{
 			return std::round(mm * this->dotsPerCm() / 10.0f);
 		}
-		
+
 		/**
 		 * @brief Convert points to pixels.
 		 * @param dp - value in density pixels.

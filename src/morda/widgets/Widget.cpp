@@ -12,7 +12,7 @@ using namespace morda;
 
 
 
-Widget::Widget(const stob::Node* chain){
+widget::widget(const stob::Node* chain){
 	if(const stob::Node* n = getProperty(chain, "layout")){
 		this->layout = n->cloneChain();
 	}
@@ -78,7 +78,7 @@ Widget::Widget(const stob::Node* chain){
 
 
 
-Widget::LayoutParams::LayoutParams(const stob::Node* chain){
+widget::LayoutParams::LayoutParams(const stob::Node* chain){
 	if(auto n = getProperty(chain, "dx")){
 		this->dim.x = real(dimValueFromLayoutStob(*n));
 	}else{
@@ -94,7 +94,7 @@ Widget::LayoutParams::LayoutParams(const stob::Node* chain){
 
 
 
-std::shared_ptr<Widget> Widget::try_get_widget(const std::string& id)noexcept{
+std::shared_ptr<Widget> widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
 		return this->sharedFromThis(this);
 	}
@@ -103,7 +103,7 @@ std::shared_ptr<Widget> Widget::try_get_widget(const std::string& id)noexcept{
 
 
 
-void Widget::resize(const morda::Vec2r& newDims){
+void widget::resize(const morda::Vec2r& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
 			this->clearCache();
@@ -123,9 +123,9 @@ void Widget::resize(const morda::Vec2r& newDims){
 
 
 
-std::shared_ptr<Widget> Widget::removeFromParent(){
+std::shared_ptr<Widget> widget::removeFromParent(){
 	if(!this->parent_v){
-		throw morda::exception("Widget::RemoveFromParent(): widget is not added to the parent");
+		throw morda::exception("widget::RemoveFromParent(): widget is not added to the parent");
 	}
 	auto ret = this->sharedFromThis(this);
 	this->parent_v->erase(this->parent_v->find(this));
@@ -134,7 +134,7 @@ std::shared_ptr<Widget> Widget::removeFromParent(){
 
 
 
-std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
+std::shared_ptr<Widget> widget::replaceBy(std::shared_ptr<Widget> w) {
 	if(!this->parent()){
 		throw morda::Exc("this widget is not added to any parent");
 	}
@@ -150,7 +150,7 @@ std::shared_ptr<Widget> Widget::replaceBy(std::shared_ptr<Widget> w) {
 
 
 
-void Widget::setRelayoutNeeded()noexcept{
+void widget::setRelayoutNeeded()noexcept{
 	if(this->relayoutNeeded){
 		return;
 	}
@@ -163,7 +163,7 @@ void Widget::setRelayoutNeeded()noexcept{
 
 
 
-void Widget::renderInternal(const morda::Matr4r& matrix)const{
+void widget::renderInternal(const morda::Matr4r& matrix)const{
 	if(!this->rect().d.isPositive()){
 		return;
 	}
@@ -191,7 +191,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 		this->renderFromCache(matrix);
 	}else{
 		if(this->clip_v){
-	//		TRACE(<< "Widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
+	//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
 			r4::recti scissor = this->computeViewportRect(matrix);
@@ -236,7 +236,7 @@ void Widget::renderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> reuse) const {
+std::shared_ptr<Texture2D> widget::renderToTexture(std::shared_ptr<Texture2D> reuse) const {
 	std::shared_ptr<Texture2D> tex;
 
 	if(reuse && reuse->dim() == this->rect().d){
@@ -277,7 +277,7 @@ std::shared_ptr<Texture2D> Widget::renderToTexture(std::shared_ptr<Texture2D> re
 	return tex;
 }
 
-void Widget::renderFromCache(const r4::mat4f& matrix) const {
+void widget::renderFromCache(const r4::mat4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
@@ -286,7 +286,7 @@ void Widget::renderFromCache(const r4::mat4f& matrix) const {
 	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
 }
 
-void Widget::clearCache(){
+void widget::clearCache(){
 	this->cacheDirty = true;
 	if(this->parent_v){
 		this->parent_v->clearCache();
@@ -294,7 +294,7 @@ void Widget::clearCache(){
 }
 
 
-void Widget::onKeyInternal(bool isDown, Key_e keyCode){
+void widget::onKeyInternal(bool isDown, Key_e keyCode){
 	if(this->isInteractive()){
 		if(this->onKey(isDown, keyCode)){
 			return;
@@ -308,7 +308,7 @@ void Widget::onKeyInternal(bool isDown, Key_e keyCode){
 
 
 
-void Widget::focus()noexcept{
+void widget::focus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 
 	if(this->isFocused()){
@@ -320,7 +320,7 @@ void Widget::focus()noexcept{
 
 
 
-void Widget::unfocus()noexcept{
+void widget::unfocus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 
 	if(!this->isFocused()){
@@ -342,7 +342,7 @@ void Widget::unfocus()noexcept{
 
 
 
-r4::recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
+r4::recti widget::computeViewportRect(const Matr4r& matrix) const noexcept{
 	r4::recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
@@ -352,7 +352,7 @@ r4::recti Widget::computeViewportRect(const Matr4r& matrix) const noexcept{
 }
 
 
-Vec2r Widget::measure(const morda::Vec2r& quotum) const{
+Vec2r widget::measure(const morda::Vec2r& quotum) const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){
@@ -363,7 +363,7 @@ Vec2r Widget::measure(const morda::Vec2r& quotum) const{
 }
 
 
-Vec2r Widget::calcPosInParent(Vec2r pos, const Widget* parent) {
+Vec2r widget::calcPosInParent(Vec2r pos, const Widget* parent) {
 	if(parent == this || !this->parent()){
 		return pos;
 	}
@@ -374,24 +374,24 @@ Vec2r Widget::calcPosInParent(Vec2r pos, const Widget* parent) {
 }
 
 
-Widget::LayoutParams& Widget::getLayoutParams() {
+widget::LayoutParams& widget::getLayoutParams() {
 	if(!this->parent()){
-		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw morda::Exc("widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->getLayoutParams(*this);
 }
 
 
-const Widget::LayoutParams& Widget::getLayoutParams()const {
+const widget::LayoutParams& widget::getLayoutParams()const {
 	if(!this->parent()){
-		throw morda::Exc("Widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw morda::Exc("widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->getLayoutParams(*this);
 }
 
-Widget& Widget::get_widget(const std::string& id) {
+Widget& widget::get_widget(const std::string& id) {
 	auto w = this->try_get_widget(id);
 	if(!w){
 		std::stringstream ss;
@@ -401,8 +401,8 @@ Widget& Widget::get_widget(const std::string& id) {
 	return *w;
 }
 
-void Widget::setEnabled(bool enable) {
-//	TRACE(<< "Widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
+void widget::setEnabled(bool enable) {
+//	TRACE(<< "widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
 	if(this->isEnabled_v == enable){
 		return;
 	}
@@ -417,14 +417,14 @@ void Widget::setEnabled(bool enable) {
 	this->onEnabledChanged();
 }
 
-void Widget::setVisible(bool visible) {
+void widget::setVisible(bool visible) {
 	this->isVisible_v = visible;
 	if (!this->isVisible_v) {
 		this->setUnhovered();
 	}
 }
 
-void Widget::setUnhovered() {
+void widget::setUnhovered() {
 	auto hoverSet = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for(auto h : hoverSet){
@@ -433,11 +433,11 @@ void Widget::setUnhovered() {
 }
 
 
-void Widget::setHovered(bool isHovered, unsigned pointerID) {
+void widget::setHovered(bool isHovered, unsigned pointerID) {
 	if(isHovered == this->isHovered(pointerID)){
 		return;
 	}
-//	TRACE(<< "Widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
+//	TRACE(<< "widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
 
 	if (isHovered) {
 		ASSERT(!this->isHovered(pointerID))
@@ -451,7 +451,7 @@ void Widget::setHovered(bool isHovered, unsigned pointerID) {
 }
 
 
-Vec2r Widget::posInAncestor(const Widget& ancestor) {
+Vec2r widget::posInAncestor(const Widget& ancestor) {
 	Vec2r ret = this->rect().p;
 
 	if(this->parent() && static_cast<const Widget*>(this->parent()) != &ancestor){

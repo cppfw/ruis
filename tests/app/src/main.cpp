@@ -143,7 +143,7 @@ public:
 	std::shared_ptr<morda::VertexArray> cubeVAO;
 
 	CubeWidget(const stob::Node* desc) :
-			Widget(desc)
+			morda::Widget(desc)
 	{
 		std::array<morda::Vec3r, 36> cubePos = {{
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
@@ -218,7 +218,7 @@ public:
 	}
 
 	void render(const morda::Matr4r& matrix)const override{
-		this->Widget::render(matrix);
+		this->widget::render(matrix);
 
 		morda::Matr4r matr(matrix);
 		matr.scale(this->rect().d / 2);

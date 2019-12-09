@@ -34,7 +34,7 @@ class Container;
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "Widget".
  * It can have the following parameters:
- * @param layout - layout parameters description. See Widget::LayoutParams for details.
+ * @param layout - layout parameters description. See widget::LayoutParams for details.
  * @param x - horizontal position within parent widget.
  * @param y - vertical position within parent widget.
  * @param dx - width of the widget.
@@ -45,7 +45,7 @@ class Container;
  * @param visible - should the widget be initially visible (true) or hidden (false). Default value is true.
  * @param enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
  */
-class Widget : virtual public utki::Shared{
+class widget : virtual public utki::Shared{
 	friend class Container;
 	friend class Morda;
 public:
@@ -166,7 +166,7 @@ public:
 	 * @return Layout parameters of the widget.
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
-	Widget::LayoutParams& getLayoutParams();
+	LayoutParams& getLayoutParams();
 
 	/**
 	 * @brief Get layout parameters of the widget.
@@ -174,7 +174,7 @@ public:
 	 * @return Layout parameters of the widget.
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
-	const Widget::LayoutParams& getLayoutParams()const;
+	const LayoutParams& getLayoutParams()const;
 
 	/**
 	 * @brief Check if this widget's contents need to be layed out.
@@ -218,7 +218,7 @@ public:
 	 * pointers to this widget left.
 	 * @return pointer to this widget.
 	 */
-	std::shared_ptr<Widget> removeFromParent();
+	std::shared_ptr<widget> removeFromParent();
 
 	/**
 	 * @brief Replace this widget by another widget.
@@ -226,7 +226,7 @@ public:
 	 * @param w - widget to replace this one by.
 	 * @return Shared pointer to this widget.
 	 */
-	std::shared_ptr<Widget> replaceBy(std::shared_ptr<Widget> w);
+	std::shared_ptr<widget> replaceBy(std::shared_ptr<widget> w);
 
 	/**
 	 * @brief Check if widget is hovered by any pointer.
@@ -308,16 +308,16 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	virtual std::shared_ptr<Widget> try_get_widget(const std::string& id)noexcept;
+	virtual std::shared_ptr<widget> try_get_widget(const std::string& id)noexcept;
 
 	//TODO: remove deprecated code
-	std::shared_ptr<Widget> findById(const std::string& id)noexcept{
+	std::shared_ptr<widget> findById(const std::string& id)noexcept{
 		TRACE(<< "DEPRECATED!!! findById() is deprecated, use try_get_widget()" << std::endl)
 		return this->try_get_widget(id);
 	}
 
 	//TODO: remove deprecated code
-	std::shared_ptr<Widget> findByName(const std::string& name)noexcept{
+	std::shared_ptr<widget> findByName(const std::string& name)noexcept{
 		TRACE(<< "DEPRECATED!!! findByName() is deprecated, use try_get_widget()" << std::endl)
 		return this->try_get_widget(name);
 	}
@@ -357,16 +357,16 @@ public:
 	 * @return reference to the widget.
 	 * @throw utki::not_found - if no widget with given id has been found.
 	 */
-	Widget& get_widget(const std::string& id);
+	widget& get_widget(const std::string& id);
 
 	//TODO: remove deprecated code
-	Widget& getById(const std::string& id){
+	widget& getById(const std::string& id){
 		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
 		return this->get_widget(id);
 	}
 
 	//TODO: remove deprecated code
-	Widget& getByName(const std::string& name){
+	widget& getByName(const std::string& name){
 		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
 		return this->get_widget(name);
 	}
@@ -399,11 +399,11 @@ public:
 	 * @brief Constructor.
 	 * @param chain - STOB description of the widget.
 	 */
-	Widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
+	widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
 
 public:
 
-	virtual ~Widget()noexcept{}
+	virtual ~widget()noexcept{}
 
 	/**
 	 * @brief Render widget to screen.
@@ -493,7 +493,7 @@ public:
 	 * @param pointerID - ID of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 */
 	virtual void onHoverChanged(unsigned pointerID){
-//		TRACE(<< "Widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
+//		TRACE(<< "widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
 	/**
@@ -501,7 +501,7 @@ public:
 	 * Default implementation performs laying out of the widget by calling its layout() method.
 	 */
 	virtual void onResize(){
-//		TRACE(<< "Widget::OnResize(): invoked" << std::endl)
+//		TRACE(<< "widget::OnResize(): invoked" << std::endl)
 		this->layOut();
 	}
 
@@ -603,7 +603,7 @@ public:
 	 * @param ancestor - ancestor widget relative to which to get the position.
 	 * @return The position of this widget in given ancestor's coordinates.
 	 */
-	Vec2r posInAncestor(const Widget& ancestor);
+	Vec2r posInAncestor(const widget& ancestor);
 
 	/**
 	 * @brief Calculate position in parent coordinates.
@@ -612,10 +612,10 @@ public:
 	 *        If null then it will go down till the root widget.
 	 * @return translated position.
 	 */
-	Vec2r calcPosInParent(Vec2r pos, const Widget* parent = nullptr);
+	Vec2r calcPosInParent(Vec2r pos, const widget* parent = nullptr);
 };
 
-
+typedef widget Widget;
 
 }
 
