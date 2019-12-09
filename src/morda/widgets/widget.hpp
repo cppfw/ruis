@@ -52,41 +52,59 @@ public:
 	/**
 	 * @brief Basic layout parameters.
 	 */
-	class LayoutParams : public utki::Unique{
+	class layout_params : public utki::Unique{
 	public:
 		/**
 		 * @brief Requests minimal dimensions of the widget.
 		 * The widget will always be given minimal space it needs to properly draw.
 		 */
-		constexpr static const real min_c = real(-1);
+		constexpr static const real min = real(-1);
+
+		//TODO: deprecated, remove.
+		constexpr static const real min_c = min;
 
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
 		 * The widget will be given at least minimal space it needs to properly draw.
 		 */
-		constexpr static const real max_c = real(-2);
+		constexpr static const real max = real(-2);
+
+		//TODO: deprecated, remove.
+		constexpr static const real max_c = max;
 
 		/**
 		 * @brief Requests widget to be same size as its parent.
 		 * Minimal size of the widget is assumed to be 0.
 		 */
-		constexpr static const real fill_c = real(-3);
+		constexpr static const real fill = real(-3);
 
-		LayoutParams(Vec2r dim = Vec2r(min_c)) :
-				dim(dim)
+		//TODO: deprecated, remove.
+		constexpr static const real fill_c = fill;
+
+		/**
+		 * @param dims - desired dimensions within the layout. Each component can be a non-negative value in pixels or [min, max, fill].
+		 */
+		layout_params(vector2 dims = vector2(min)) :
+				dims(dims)
 		{}
 
 		/**
 		 * @brief desired dimensions.
-		 * Components should hold positive value in pixels or min_c, max_c, fill_c.
+		 * Components should hold non-negative value in pixels or [min, max, fill].
 		 */
-		Vec2r dim;
+		vector2 dims;
+
+		//TODO: deprecated, remove.
+		vector2& dim = dims;
 
 	public:
-		LayoutParams(const stob::Node* chain = nullptr);
+		layout_params(const stob::Node* chain = nullptr);
 
-		virtual ~LayoutParams()noexcept{}
+		virtual ~layout_params()noexcept{}
 	};
+
+	//TODO: deprecated, remove.
+	typedef layout_params LayoutParams;
 
 private:
 	container* parent_v = nullptr;
@@ -138,8 +156,13 @@ public:
 	 * Next time the texture will be re-rendered only when cache is cleared.
 	 * @param enabled - whether to enable or disable the caching.
 	 */
-	void setCache(bool enabled)noexcept{
+	void set_cache(bool enabled)noexcept{
 		this->cache = enabled;
+	}
+
+	//TODO: deprecated, remove.
+	void setCache(bool enabled)noexcept{
+		this->set_cache(enabled);
 	}
 
 	/**
@@ -149,12 +172,17 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	std::shared_ptr<Texture2D> renderToTexture(std::shared_ptr<Texture2D> reuse = nullptr)const;
+	std::shared_ptr<Texture2D> render_to_texture(std::shared_ptr<Texture2D> reuse = nullptr)const;
+
+	//TODO: deprecated, remove.
+	std::shared_ptr<Texture2D> renderToTexture(std::shared_ptr<Texture2D> reuse = nullptr)const{
+		return this->render_to_texture(std::move(reuse));
+	}
 
 private:
 	bool relayoutNeeded = true;
 
-	std::unique_ptr<stob::Node> layout;
+	std::unique_ptr<stob::Node> layout_description;
 
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
@@ -166,7 +194,12 @@ public:
 	 * @return Layout parameters of the widget.
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
-	LayoutParams& getLayoutParams();
+	layout_params& get_layout_params();
+
+	//TODO: deprecated, remove.
+	layout_params& getLayoutParams(){
+		return this->get_layout_params();
+	}
 
 	/**
 	 * @brief Get layout parameters of the widget.
@@ -174,20 +207,48 @@ public:
 	 * @return Layout parameters of the widget.
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
-	const LayoutParams& getLayoutParams()const;
+	const LayoutParams& get_layout_params()const;
+
+	//TODO: deprecated, remove.
+	const LayoutParams& getLayoutParams()const{
+		return this->get_layout_params();
+	}
+
+	/**
+	 * @brief Request re-layout.
+	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
+	 * The layout will be performed before drawing.
+	 */
+	void set_lay_out_needed()noexcept;
+
+	//TODO: deprecated, remove.
+	void setRelayoutNeeded()noexcept{
+		this->set_lay_out_needed();
+	}
+
+	/**
+	 * @brief Perform layout of the widget.
+	 * Override this method to arrange widgets contents if needed.
+	 */
+	virtual void lay_out(){
+		this->layOut(); // TODO: deprecated, remove.
+	}
+
+	//TODO: deprecated, remove.
+	virtual void layOut(){}
 
 	/**
 	 * @brief Check if this widget's contents need to be layed out.
 	 * @return true if this widget needs re-layout.
 	 * @return false otherwise.
 	 */
-	bool is_layout_needed()const noexcept{
+	bool is_lay_out_needed()const noexcept{
 		return this->relayoutNeeded;
 	}
 
 	//TODO: deprecated, remove.
 	bool needsRelayout()const noexcept{
-		return this->is_layout_needed();
+		return this->is_lay_out_needed();
 	}
 
 	/**
@@ -223,7 +284,12 @@ public:
 	 * pointers to this widget left.
 	 * @return pointer to this widget.
 	 */
-	std::shared_ptr<widget> removeFromParent();
+	std::shared_ptr<widget> remove_from_parent();
+
+	//TODO: deprecated, remove.
+	std::shared_ptr<widget> removeFromParent(){
+		return this->remove_from_parent();
+	}
 
 	/**
 	 * @brief Replace this widget by another widget.
@@ -231,25 +297,40 @@ public:
 	 * @param w - widget to replace this one by.
 	 * @return Shared pointer to this widget.
 	 */
-	std::shared_ptr<widget> replaceBy(std::shared_ptr<widget> w);
+	std::shared_ptr<widget> replace_by(std::shared_ptr<widget> w);
+
+	//TODO: deprecaed, remove.
+	std::shared_ptr<widget> replaceBy(std::shared_ptr<widget> w){
+		return this->replace_by(std::move(w));
+	}
 
 	/**
-	 * @brief Check if widget is hovered by any pointer.
-	 * @return true if hovered by any pointer.
+	 * @brief Check if the widget is hovered by at least one pointer.
+	 * @return true if hovered by at least one pointer.
 	 * @return false otherwise.
 	 */
-	bool isHovered()const noexcept{
+	bool is_hovered()const noexcept{
 		return this->hovered.size() != 0;
+	}
+
+	//TODO: deprecated, remove.
+	bool isHovered()const noexcept{
+		return this->is_hovered();
 	}
 
 	/**
 	 * @brief Check if widget is hovered by given pointer.
-	 * @param pointerID - pointer ID to check against.
-	 * @return true if widget is hovered by given pointer ID.
+	 * @param pointer_id - pointer id to check against.
+	 * @return true if widget is hovered by given pointer id.
 	 * @return false otherwise.
 	 */
+	bool is_hovered(unsigned pointer_id)const noexcept{
+		return this->hovered.find(pointer_id) != this->hovered.end();
+	}
+
+	//TODO: deprecated, remove.
 	bool isHovered(unsigned pointerID)const noexcept{
-		return this->hovered.find(pointerID) != this->hovered.end();
+		return this->is_hovered(pointerID);
 	}
 
 private:
@@ -263,7 +344,7 @@ public:
 	 * The rectangle is in parent's coordinates.
 	 * @return Widget's rectangle.
 	 */
-	const morda::Rectr& rect()const noexcept{
+	const morda::rectangle& rect()const noexcept{
 		return this->rectangle;
 	}
 
@@ -272,36 +353,56 @@ public:
 	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
-	r4::recti computeViewportRect(const Matr4r& matrix)const noexcept;
+	r4::recti compute_viewport_rect(const matrix4& matrix)const noexcept;
+
+	//TODO: deprecated, remove.
+	r4::recti computeViewportRect(const Matr4r& matrix)const noexcept{
+		return this->compute_viewport_rect(matrix);
+	}
 
 	/**
 	 * @brief Move widget to position within its parent.
 	 * @param newPos - new widget's position.
 	 */
+	void move_to(const vector2& new_pos)noexcept{
+		this->rectangle.p = new_pos;
+	}
+
+	//TODO: deprecated, remove.
 	void moveTo(const morda::Vec2r& newPos)noexcept{
-		this->rectangle.p = newPos;
+		this->move_to(newPos);
 	}
 
 	/**
 	 * @brief Shift widget within its parent.
 	 * @param delta - vector to shift the widget by.
 	 */
-	void moveBy(const morda::Vec2r& delta)noexcept{
+	void move_by(const vector2& delta)noexcept{
 		this->rectangle.p += delta;
+	}
+
+	//TODO: deprecated, remove.
+	void moveBy(const morda::Vec2r& delta)noexcept{
+		this->move_by(delta);
 	}
 
 	/**
 	 * @brief Set new dimensions of the widget.
-	 * @param newDims - new dimensions of the widget.
+	 * @param new_dims - new dimensions of the widget.
 	 */
-	void resize(const morda::Vec2r& newDims);
+	void resize(const vector2& new_dims);
 
 	/**
 	 * @brief Extend or shrink the widget dimensions by given value.
 	 * @param delta - value to change the widget dimensions by.
 	 */
-	void resizeBy(const morda::Vec2r& delta){
+	void resize_by(const vector2& delta){
 		this->resize(this->rect().d + delta);
+	}
+
+	//TODO: deprecated, remove.
+	void resizeBy(const morda::Vec2r& delta){
+		this->resize_by(delta);
 	}
 
 	/**
@@ -431,11 +532,16 @@ public:
 	/**
 	 * @brief Handle keyboard key event.
 	 * This method is called by framework when a widget is requested to handle a key event. So, the widget is either a focused widget or root widget.
-	 * @param isDown - was the key pressed (true) or released (false).
-	 * @param keyCode - keyboard key code.
+	 * @param is_down - was the key pressed (true) or released (false).
+	 * @param key_code - keyboard key code.
 	 * @return true to consume event and prevent its further propagation.
 	 * @return false to allow the event to be propagated further.
 	 */
+	virtual bool on_key(bool is_down, morda::Key_e key_code){
+		return this->onKey(is_down, key_code); //TODO: deprecated, remove. Should just return false.
+	}
+
+	//TODO: deprecated, remove.
 	virtual bool onKey(bool isDown, morda::Key_e keyCode){
 		return false;
 	}
@@ -456,26 +562,34 @@ public:
 	 * @return true if widget is focused.
 	 * @return false otherwise.
 	 */
-	bool isFocused()const noexcept{
+	bool is_focused()const noexcept{
 		return this->isFocused_v;
+	}
+
+	bool isFocused()const noexcept{
+		return is_focused();
 	}
 
 	/**
 	 * @brief Called when keyboard input focus changes.
 	 */
-	virtual void onFocusChanged(){}
-
+	virtual void on_focus_changed(){}
 
 	/**
 	 * @brief Handle mouse button event.
 	 * This function is called by framework when widget receives mouse button event.
-	 * @param isDown - was the button pressed (true) or released (false).
+	 * @param is_down - was the button pressed (true) or released (false).
 	 * @param pos - position of the mouse cursor at the moment when the button event has occurred, in widget local coordinates.
 	 * @param button - mouse button.
-	 * @param pointerID - ID of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
+	virtual bool on_mouse_button(bool is_down, const morda::Vec2r& pos, MouseButton_e button, unsigned pointer_id){
+		return this->onMouseButton(is_down, pos, button, pointer_id); //TODO: deprecated, remove. Should return false.
+	}
+
+	//TODO: deprecated, remove.
 	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
 		return false;
 	}
@@ -526,24 +640,6 @@ public:
 	virtual morda::Vec2r measure(const morda::Vec2r& quotum)const;
 
 public:
-
-	/**
-	 * @brief Request re-layout.
-	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
-	 * The layout will be performed before drawing.
-	 */
-	void set_layout_needed()noexcept;
-
-	//TODO: deprecated, remove.
-	void setRelayoutNeeded()noexcept{
-		this->set_layout_needed();
-	}
-
-	/**
-	 * @brief Perform layout of the widget.
-	 * Override this method to arrange widgets contents if needed.
-	 */
-	virtual void layOut(){}
 
 	/**
 	 * @brief Show/hide widget.

@@ -14,7 +14,7 @@ using namespace morda;
 
 widget::widget(const stob::Node* chain){
 	if(const stob::Node* n = getProperty(chain, "layout")){
-		this->layout = n->cloneChain();
+		this->layout_description = n->cloneChain();
 	}
 
 	if(const stob::Node* n = getProperty(chain, "x")){
@@ -78,17 +78,17 @@ widget::widget(const stob::Node* chain){
 
 
 
-widget::LayoutParams::LayoutParams(const stob::Node* chain){
+widget::layout_params::layout_params(const stob::Node* chain){
 	if(auto n = getProperty(chain, "dx")){
 		this->dim.x = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.x = LayoutParams::min_c;
+		this->dim.x = layout_params::min_c;
 	}
 
 	if(auto n = getProperty(chain, "dy")){
 		this->dim.y = real(dimValueFromLayoutStob(*n));
 	}else{
-		this->dim.y = LayoutParams::min_c;
+		this->dim.y = layout_params::min_c;
 	}
 }
 
@@ -123,7 +123,7 @@ void widget::resize(const morda::Vec2r& newDims){
 
 
 
-std::shared_ptr<Widget> widget::removeFromParent(){
+std::shared_ptr<Widget> widget::remove_from_parent(){
 	if(!this->parent_v){
 		throw morda::exception("widget::RemoveFromParent(): widget is not added to the parent");
 	}
@@ -134,29 +134,29 @@ std::shared_ptr<Widget> widget::removeFromParent(){
 
 
 
-std::shared_ptr<Widget> widget::replaceBy(std::shared_ptr<Widget> w) {
+std::shared_ptr<Widget> widget::replace_by(std::shared_ptr<Widget> w) {
 	if(!this->parent()){
 		throw morda::Exc("this widget is not added to any parent");
 	}
 
 	this->parent()->insert(w, this->parent()->find(this));
 
-	if(w && !w->layout){
-		w->layout = std::move(this->layout);
+	if(w && !w->layout_description){
+		w->layout_description = std::move(this->layout_description);
 	}
 
-	return this->removeFromParent();
+	return this->remove_from_parent();
 }
 
 
 
-void widget::set_layout_needed()noexcept{
+void widget::set_lay_out_needed()noexcept{
 	if(this->relayoutNeeded){
 		return;
 	}
 	this->relayoutNeeded = true;
 	if(this->parent_v){
-		this->parent_v->set_layout_needed();
+		this->parent_v->set_lay_out_needed();
 	}
 	this->cacheTex.reset();
 }
@@ -236,7 +236,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::shared_ptr<Texture2D> widget::renderToTexture(std::shared_ptr<Texture2D> reuse) const {
+std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> reuse) const {
 	std::shared_ptr<Texture2D> tex;
 
 	if(reuse && reuse->dim() == this->rect().d){
@@ -296,7 +296,7 @@ void widget::clearCache(){
 
 void widget::onKeyInternal(bool isDown, Key_e keyCode){
 	if(this->isInteractive()){
-		if(this->onKey(isDown, keyCode)){
+		if(this->on_key(isDown, keyCode)){
 			return;
 		}
 	}
@@ -334,15 +334,7 @@ void widget::unfocus()noexcept{
 
 
 
-
-
-
-
-
-
-
-
-r4::recti widget::computeViewportRect(const Matr4r& matrix) const noexcept{
+r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
 	r4::recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
@@ -374,18 +366,18 @@ Vec2r widget::calcPosInParent(Vec2r pos, const Widget* parent) {
 }
 
 
-widget::LayoutParams& widget::getLayoutParams() {
+widget::LayoutParams& widget::get_layout_params() {
 	if(!this->parent()){
-		throw morda::Exc("widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->getLayoutParams(*this);
 }
 
 
-const widget::LayoutParams& widget::getLayoutParams()const {
+const widget::LayoutParams& widget::get_layout_params()const {
 	if(!this->parent()){
-		throw morda::Exc("widget::getLayoutParams(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->getLayoutParams(*this);

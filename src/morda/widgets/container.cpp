@@ -33,7 +33,7 @@ const Widget::LayoutParams& container::getLayoutParams(const Widget& w)const{
 	}
 
 	if(!w.layoutParams){
-		w.layoutParams = this->createLayoutParams(w.layout.get());
+		w.layoutParams = this->createLayoutParams(w.layout_description.get());
 	}
 
 	return *w.layoutParams;

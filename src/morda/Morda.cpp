@@ -208,7 +208,7 @@ void Morda::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, u
 
 	if(this->rootWidget->isInteractive()){
 		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
-		this->rootWidget->onMouseButton(isDown, pos, button, pointerID);
+		this->rootWidget->on_mouse_button(isDown, pos, button, pointerID);
 	}
 }
 
@@ -240,14 +240,14 @@ void Morda::onKeyEvent(bool isDown, Key_e keyCode){
 void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
 	if(auto prev = this->focusedWidget.lock()){
 		prev->isFocused_v = false;
-		prev->onFocusChanged();
+		prev->on_focus_changed();
 	}
 	
 	this->focusedWidget = w;
 	
 	if(w){
 		w->isFocused_v = true;
-		w->onFocusChanged();
+		w->on_focus_changed();
 	}
 }
 

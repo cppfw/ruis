@@ -51,7 +51,7 @@ public:
 
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void onFocusChanged()override;
+	void on_focus_changed()override;
 
 	bool onKey(bool isDown, Key_e keyCode)override;
 
