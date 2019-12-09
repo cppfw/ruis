@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../Container.hpp"
+#include "../container.hpp"
 
 
 namespace morda{
@@ -16,14 +16,14 @@ class Pile : public Container{
 public:
 	Pile(const Pile&) = delete;
 	Pile& operator=(const Pile&) = delete;
-	
+
 	/**
 	 * @brief Constructor.
 	 * @param chain - STOB chain describing the widget.
 	 */
 	Pile(const stob::Node* chain = nullptr);
-	
-public:	
+
+public:
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 
 	void layOut() override;

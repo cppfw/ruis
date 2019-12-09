@@ -6,7 +6,7 @@
 
 #include "exception.hpp"
 
-#include "widgets/Widget.hpp"
+#include "widgets/widget.hpp"
 
 
 

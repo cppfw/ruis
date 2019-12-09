@@ -45,13 +45,13 @@ SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
 
 Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret(this->bb.d.x, this->font().height());
-	
+
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){
 			ret[i] = quotum[i];
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -69,10 +69,10 @@ void TextWidget::setText(std::u32string&& text) {
 
 std::u32string TextWidget::getText() const {
 	std::u32string ret;
-	
+
 	for(auto& l : this->lines){
 		ret.append(l);
 	}
-	
+
 	return ret;
 }

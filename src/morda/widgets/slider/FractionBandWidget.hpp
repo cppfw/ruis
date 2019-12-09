@@ -12,14 +12,14 @@ protected:
 			Widget(chain),
 			FractionWidget(chain)
 	{}
-	
+
 	virtual void onBandSizeChanged();
-	
+
 public:
 	std::function<void(FractionBandWidget& s)> bandSizeChanged;
-	
+
 	void setBandSizeFraction(real fraction);
-	
+
 	real bandSizeFraction()const noexcept{
 		return this->curBandSizeFraction;
 	}

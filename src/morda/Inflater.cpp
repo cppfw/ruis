@@ -1,6 +1,6 @@
 #include "Inflater.hpp"
 
-#include "widgets/Container.hpp"
+#include "widgets/container.hpp"
 
 #include "widgets/group/Column.hpp"
 #include "widgets/group/Row.hpp"
@@ -80,7 +80,7 @@ void substituteVars(stob::Node* to, const std::function<const stob::Node*(const 
 	if(!to || !findVar){
 		return;
 	}
-	
+
 	for(; to;){
 		if(*to == "@"){
 			if(!to->child()){
@@ -114,19 +114,19 @@ void substituteVars(stob::Node* to, const std::function<const stob::Node*(const 
 }
 
 namespace{
-//Merges two STOB chains. 
+//Merges two STOB chains.
 std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std::set<std::string>& varNames, std::unique_ptr<stob::Node> chain){
 	if(!chain){
 		if(!tmplChain){
 			return nullptr;
 		}
 	}
-	
+
 	std::unique_ptr<stob::Node> ret;
 	if(tmplChain){
 		ret = tmplChain->cloneChain();
 	}
-	
+
 	//prepare variables and remove them from 'chain'
 	std::map<std::string, std::unique_ptr<stob::Node>> vars;
 	{
@@ -161,7 +161,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 		}
 		vars["children"] = childrenChain->chopNext();
 	}
-	
+
 	substituteVars(
 			ret.get(),
 			[&vars](const std::string& name) -> const stob::Node*{
@@ -175,7 +175,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 				return i->second.get();
 			}
 		);
-	
+
 	return ret;
 }
 }
@@ -186,7 +186,7 @@ const decltype(Inflater::widgetFactories)::value_type::second_type* Inflater::fi
 	if(i == this->widgetFactories.end()){
 		return nullptr;
 	}
-	
+
 	return &i->second;
 }
 
@@ -201,7 +201,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 //	if(!App::inst().thisIsUIThread()){
 //		throw Exc("Inflate called not from UI thread");
 //	}
-	
+
 	const stob::Node* n = &chain;
 	for(; n && n->isProperty(); n = n->next()){
 		if(*n == defs_c){
@@ -212,13 +212,13 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
 		}
 	}
-	
+
 	if(!n){
 		return nullptr;
 	}
-	
+
 	ASSERT(!n->isProperty())
-	
+
 	std::unique_ptr<stob::Node> cloned;
 //	TRACE(<< "inflating = " << n->value() << std::endl)
 	if(auto tmpl = this->findTemplate(n->value())){
@@ -228,10 +228,10 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 		n = cloned.get();
 //		TRACE(<< "n = " << n->chainToString(true) << std::endl)
 	}
-	
-	
+
+
 	auto fac = this->findFactory(n->value());
-	
+
 	if(!fac){
 		TRACE(<< "Inflater::Inflate(): n->value() = " << n->value() << std::endl)
 		std::stringstream ss;
@@ -245,7 +245,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			this->popDefs();
 		}
 	});
-	
+
 	for(auto v = n->child(defs_c).get_node(); v; v = v->next(defs_c).get_node()){
 		if(v->child()){
 			this->pushDefs(*v->child());
@@ -260,7 +260,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 			cloned = n->child()->cloneChain();
 		}
 	}
-	
+
 	this->substituteVariables(cloned.get());
 
 	return fac->operator()(cloned.get());
@@ -270,7 +270,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 
 std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 	std::unique_ptr<stob::Node> ret = stob::load(fi);
-	
+
 	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));
 
 	return ret;
@@ -278,7 +278,7 @@ std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 
 Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 	Template ret;
-	
+
 	for(auto n = &chain; n; n = n->next()){
 		if(n->isProperty()){
 			//possibly variable name
@@ -298,7 +298,7 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 		throw Exc("malformed GUI declaration: template has no definition");
 	}
 	ASSERT(ret.t)
-	
+
 	//for each variable create a stub property if needed
 	for(auto& v : ret.vars){
 		auto p = ret.t->child(v.c_str()).get_node();
@@ -307,15 +307,15 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 			ret.t->child()->addAsFirstChild(nullptr);
 		}
 	}
-	
+
 //	TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
-	
+
 	if(auto tmpl = this->findTemplate(ret.t->value())){
 		ret.t->setValue(tmpl->t->value());
 		ret.t->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, ret.t->removeChildren()));
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end());//forward all variables
 	}
-	
+
 //	TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
 	return ret;
 }
@@ -334,12 +334,12 @@ void Inflater::popDefs() {
 
 void Inflater::pushTemplates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
-	
+
 	for(auto c = &chain; c; c = c->next()){
 		if(c->isProperty()){
 			continue;
 		}
-		
+
 		if(!c->child()){
 			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
 		}
@@ -348,9 +348,9 @@ void Inflater::pushTemplates(const stob::Node& chain){
 			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
-	
+
 	this->templates.push_front(std::move(m));
-	
+
 //#ifdef DEBUG
 //	TRACE(<< "Templates Stack:" << std::endl)
 //	for(auto& i : this->templates){
@@ -405,16 +405,16 @@ void Inflater::popVariables(){
 
 void Inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
-	
+
 	for(auto n = &chain; n; n = n->next()){
 		if(!n->isProperty()){
 			continue;
 		}
-		
+
 		auto value = n->cloneChildren();
-		
+
 		this->substituteVariables(value.get());
-		
+
 		if(!m.insert(
 				std::make_pair(n->value(), std::move(value))
 			).second)
@@ -422,9 +422,9 @@ void Inflater::pushVariables(const stob::Node& chain){
 			throw morda::Exc("Inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}
-	
+
 	this->variables.push_front(std::move(m));
-	
+
 //#ifdef DEBUG
 //	TRACE(<< "Variables Stack:" << std::endl)
 //	for(auto& i : this->variables){

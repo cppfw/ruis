@@ -46,25 +46,25 @@ BlendingWidget::BlendingWidget(const stob::Node* chain) :
 	}else{
 		this->isBlendingEnabled_v = true;
 	}
-	
+
 	if(auto n = getProperty(chain, "blendSrc")){
 		this->blend_v.src = blendFactorFromString(n->value());
 	}else{
 		this->blend_v.src = Renderer::BlendFactor_e::SRC_ALPHA;
 	}
-	
+
 	if(auto n = getProperty(chain, "blendDst")){
 		this->blend_v.dst = blendFactorFromString(n->value());
 	}else{
 		this->blend_v.dst = Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA;
 	}
-	
+
 	if(auto n = getProperty(chain, "blendSrcAlpha")){
 		this->blend_v.srcAlpha = blendFactorFromString(n->value());
 	}else{
 		this->blend_v.srcAlpha = Renderer::BlendFactor_e::ONE;
 	}
-	
+
 	if(auto n = getProperty(chain, "blendDstAlpha")){
 		this->blend_v.dstAlpha = blendFactorFromString(n->value());
 	}else{

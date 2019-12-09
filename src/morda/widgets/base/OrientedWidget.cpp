@@ -7,7 +7,7 @@ OrientedWidget::OrientedWidget(const stob::Node* chain, bool vertical) :
 		Widget(chain),
 		isVertical_v(vertical)
 {
-	
+
 }
 
 void OrientedWidget::setVertical(bool vertical) {

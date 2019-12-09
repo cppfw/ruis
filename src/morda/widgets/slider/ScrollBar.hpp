@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "../Widget.hpp"
+#include "../widget.hpp"
 
 #include "../group/Pile.hpp"
 
@@ -26,23 +26,23 @@ class ScrollBar :
 {
 	ScrollBar(const ScrollBar&) = delete;
 	ScrollBar& operator=(const ScrollBar&) = delete;
-	
+
 	Widget& handle;
-	
+
 	bool isGrabbed = false;
 	float clickPoint;
-	
+
 protected:
 	ScrollBar(const stob::Node* chain, bool vertical);
 
 	void onFractionChange() override;
 
 	void onBandSizeChanged() override;
-	
+
 public:
 
 	virtual ~ScrollBar()noexcept{}
-	
+
 private:
 	void layOut() override;
 };
@@ -51,11 +51,11 @@ private:
 
 class VScrollBar : public ScrollBar{
 public:
-	VScrollBar(const stob::Node* chain) : 
+	VScrollBar(const stob::Node* chain) :
 			Widget(chain),
 			ScrollBar(chain, true)
 	{}
-	
+
 	VScrollBar(const VScrollBar&) = delete;
 	VScrollBar& operator=(const VScrollBar&) = delete;
 };
@@ -63,11 +63,11 @@ public:
 
 class HScrollBar : public ScrollBar{
 public:
-	HScrollBar(const stob::Node* chain) : 
+	HScrollBar(const stob::Node* chain) :
 			Widget(chain),
 			ScrollBar(chain, false)
 	{}
-	
+
 	HScrollBar(const HScrollBar&) = delete;
 	HScrollBar& operator=(const HScrollBar&) = delete;
 };

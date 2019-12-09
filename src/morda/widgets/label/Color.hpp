@@ -14,10 +14,10 @@ namespace morda{
 class Color : public ColorWidget{
 public:
 	Color(const stob::Node* chain);
-	
+
 	Color(const Color&) = delete;
 	Color& operator=(const Color&) = delete;
-	
+
 	void render(const morda::Matr4r& matrix)const override;
 };
 

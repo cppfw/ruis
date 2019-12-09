@@ -43,42 +43,42 @@ public:
 void LinearContainer::layOut(){
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
-	
+
 	std::vector<Info> infoArray(this->children().size());
-	
+
 	//Calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real netWeight = 0;
-	
+
 	{
 		auto info = infoArray.begin();
 		for(auto i = this->children().cbegin(); i != this->children().cend(); ++i, ++info){
 			auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
-			
+
 			netWeight += lp.weight;
-			
+
 			ASSERT(lp.dim[longIndex] != LayoutParams::max_c)
 			ASSERT(lp.dim[longIndex] != LayoutParams::fill_c)
-			
+
 			Vec2r d = this->dimForWidget(**i, lp);
 			info->measuredDim = d;
-			
+
 			rigid += d[longIndex];
 		}
 	}
-	
+
 	//arrange widgets
 	{
 		real flexible = this->rect().d[longIndex] - rigid;
-		
+
 		real pos = 0;
-		
+
 		real remainder = 0;
-		
+
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
-			
+
 			if(lp.weight != 0){
 				ASSERT(lp.weight > 0)
 				Vec2r d;
@@ -95,7 +95,7 @@ void LinearContainer::layOut(){
 						remainder -= real(1);
 					}
 				}
-				
+
 				if(lp.dim[transIndex] == LayoutParams::max_c || lp.dim[transIndex] == LayoutParams::fill_c){
 					d[transIndex] = this->rect().d[transIndex];
 				}else{
@@ -117,18 +117,18 @@ void LinearContainer::layOut(){
 			}else{
 				(*i)->resize(info->measuredDim);
 			}
-			
+
 			Vec2r newPos;
 
 			newPos[longIndex] = pos;
-			
+
 			pos += (*i)->rect().d[longIndex];
-			
+
 			newPos[transIndex] = std::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
-			
+
 			(*i)->moveTo(newPos);
 		}
-		
+
 		if(remainder > 0){
 			Vec2r d;
 			d[transIndex] = 0;
@@ -144,14 +144,14 @@ void LinearContainer::layOut(){
 morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
-	
+
 	std::vector<Info> infoArray(this->children().size());
-	
+
 	//calculate rigid length
 	real rigidLength = 0;
 	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
 	real netWeight = 0;
-	
+
 	{
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
@@ -202,11 +202,11 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			}
 		}
 	}
-	
+
 	Vec2r ret;
-	
+
 	real flexLen;
-	
+
 	if(quotum[longIndex] < 0){
 		ret[longIndex] = rigidLength;
 		flexLen = 0;
@@ -214,12 +214,12 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 		ret[longIndex] = quotum[longIndex];
 		flexLen = quotum[longIndex] - rigidLength;
 	}
-	
+
 	{
 		real remainder = 0;
-		
+
 		auto lastChild = this->children().size() != 0 ? this->children().back().get() : nullptr;
-		
+
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
@@ -232,7 +232,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 
 			Vec2r d;
 			d[longIndex] = info->measuredDim[longIndex];
-			
+
 			if(flexLen > 0){
 				real dl = flexLen * lp.weight / netWeight;
 				real floored = std::floor(dl);
@@ -252,7 +252,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 					}
 				}
 			}
-			
+
 			if(lp.dim[transIndex] == LayoutParams::max_c){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
@@ -270,14 +270,14 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			}else{
 				d[transIndex] = lp.dim[transIndex];
 			}
-			
+
 			d = (*i)->measure(d);
 			if(quotum[transIndex] < 0){
 				utki::clampBottom(height, d[transIndex]);
 			}
 		}
 	}
-	
+
 	ret[transIndex] = height;
 	return ret;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Widget.hpp"
-#include "../Container.hpp"
+#include "../widget.hpp"
+#include "../container.hpp"
 
 #include "../base/OrientedWidget.hpp"
 

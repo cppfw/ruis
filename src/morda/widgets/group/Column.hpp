@@ -14,7 +14,7 @@ public:
 			Widget(chain),
 			LinearContainer(chain, true)
 	{}
-	
+
 	Column(const Column&) = delete;
 	Column& operator=(const Column&) = delete;
 };

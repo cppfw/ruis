@@ -2,7 +2,7 @@
 
 #include <utki/Buf.hpp>
 
-#include "Widget.hpp"
+#include "widget.hpp"
 
 #include "../util/keycodes.hpp"
 
@@ -19,14 +19,14 @@ protected:
 			Widget(nullptr)
 	{}
 
-public:	
+public:
 	/**
 	 * @brief Handler for character input.
      * @param unicode - unicode string of entered characters in UTF-32.
 	 * @param key - key code associated with character input, can be UNKNOWN.
      */
 	virtual void onCharacterInput(const std::u32string& unicode, Key_e key) = 0;
-	
+
 	virtual ~CharInputWidget()noexcept{}
 };
 

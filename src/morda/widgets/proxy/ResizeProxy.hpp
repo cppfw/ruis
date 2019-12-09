@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Widget.hpp"
+#include "../widget.hpp"
 
 
 namespace morda{
@@ -14,10 +14,10 @@ public:
 	ResizeProxy(const stob::Node* chain = nullptr) :
 			Widget(chain)
 	{}
-	
+
 	ResizeProxy(const ResizeProxy&) = delete;
 	ResizeProxy& operator=(const ResizeProxy&) = delete;
-	
+
 	void onResize() override;
 
 	/**

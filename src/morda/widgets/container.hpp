@@ -6,7 +6,7 @@
 #include <utki/Unique.hpp>
 
 #include "../exception.hpp"
-#include "Widget.hpp"
+#include "widget.hpp"
 
 
 namespace morda{

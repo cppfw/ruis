@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Widget.hpp"
+#include "../widget.hpp"
 
 #include "../../render/Renderer.hpp"
 
@@ -13,7 +13,7 @@ namespace morda{
  * @param blendDst - destination RGB components blend factor.
  * @param blendSrcAlpha - source alpha component blend factor.
  * @param blendDstAlpha - destination alpha component blend factor.
- * 
+ *
  * List of possible blend factor values: zero, one, srcColor, oneMinusSrcColor, dstColor, oneMinusDstColor, srcAlpha,
  * oneMinusSrcAlpha, dstAlpha, oneMinusDstAlpha, constantColor, oneMinusConstantColor, constantAlpha, oneMinusConstantAlpha,
  * srcAlphaSaturate.
@@ -29,21 +29,21 @@ public:
 		Renderer::BlendFactor_e dst;
 		Renderer::BlendFactor_e srcAlpha;
 		Renderer::BlendFactor_e dstAlpha;
-		
+
 		bool operator==(const BlendingParams& b){
 			return this->src == b.src && this->dst == b.dst && this->srcAlpha == b.srcAlpha && this->dstAlpha == b.dstAlpha;
 		}
 	};
 private:
 	BlendingParams blend_v;
-	
+
 protected:
 	BlendingWidget(const stob::Node* chain);
-	
+
 public:
 	BlendingWidget(const BlendingWidget&) = delete;
 	BlendingWidget& operator=(const BlendingWidget&) = delete;
-	
+
 	/**
 	 * @brief Set blending to rendering context.
 	 */
@@ -53,19 +53,19 @@ public:
 	 * @brief Enable/disable blending for this widget.
 	 */
 	void setBlendingEnabled(bool enable);
-	
+
 	/**
 	 * @brief Check if blending is enabled for this widget.
 	 */
 	bool isBlendingEnabled()const noexcept{
 		return this->isBlendingEnabled_v;
 	}
-	
+
 	/**
 	 * @brief Set blending parameters for this widget.
 	 */
 	void setBlendingParams(const BlendingParams& blend);
-	
+
 	/**
 	 * @brief Get blending parameters of this widget.
 	 * @return Blending parameters of this widget.
@@ -73,7 +73,7 @@ public:
 	const BlendingParams& blendingParams()const noexcept{
 		return this->blend_v;
 	}
-	
+
 	/**
 	 * @brief Invoked when blending parameters are changed.
 	 * Also invoked if blending enabled/disabled status has changed.

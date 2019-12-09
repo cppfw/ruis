@@ -6,8 +6,8 @@
 
 #include "../../../src/morda/config.hpp"
 
-#include "../../../src/morda/widgets/Widget.hpp"
-#include "../../../src/morda/widgets/Container.hpp"
+#include "../../../src/morda/widgets/widget.hpp"
+#include "../../../src/morda/widgets/container.hpp"
 #include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
 
 #include "../../../src/morda/widgets/button/PushButton.hpp"

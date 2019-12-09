@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Container.hpp"
+#include "../container.hpp"
 
 #include "../base/OrientedWidget.hpp"
 
@@ -19,14 +19,14 @@ class LinearContainer :
 {
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;
-	
+
 public:
 	LinearContainer(const stob::Node* chain, bool vertical);
 
-	void layOut() override;	
-	
+	void layOut() override;
+
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
-	
+
 	/**
 	 * @brief Layout parameters for LinearArea container.
 	 */
@@ -37,7 +37,7 @@ public:
 		 * @param chain - STOB chain describing the layout parameters. Can be nullptr, then all layout params are set to default values.
 		 */
 		LayoutParams(const stob::Node* chain = nullptr);
-		
+
 		/**
 		 * @brief Weight of the widget.
 		 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.

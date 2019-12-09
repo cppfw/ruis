@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "../Widget.hpp"
+#include "../widget.hpp"
 
 
 
@@ -17,16 +17,16 @@ namespace morda{
 class Button : public virtual Widget{
 	bool isPressed_v = false;
 	bool isPressedChangedNotified = true;
-	
+
 protected:
 	/**
 	 * @brief Called when button pressed state changes.
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
 	virtual void onPressedChanged();
-public:	
+public:
 	Button(const stob::Node* chain);
-	
+
 	/**
 	 * @brief Check if button is currently pressed.
 	 * @return true if button is pressed.
@@ -35,9 +35,9 @@ public:
 	bool isPressed()const noexcept{
 		return this->isPressed_v;
 	}
-	
+
 	void setPressed(bool pressed);
-	
+
 	/**
 	 * @brief Pressed changed signal.
 	 * Emitted when button pressed state changes.
