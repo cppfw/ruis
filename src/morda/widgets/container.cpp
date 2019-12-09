@@ -11,15 +11,15 @@ using namespace morda;
 
 
 
-Container::Container(const stob::Node* chain) :
-		Widget(chain)
+container::container(const stob::Node* chain) :
+		widget(chain)
 {
 	if(chain){
 		this->add(*chain);
 	}
 }
 
-Widget::LayoutParams& Container::getLayoutParams(Widget& w){
+Widget::LayoutParams& container::getLayoutParams(Widget& w){
 	this->setRelayoutNeeded();
 
 	auto& lp = const_cast<std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type>(this)->getLayoutParams(w);
@@ -27,9 +27,9 @@ Widget::LayoutParams& Container::getLayoutParams(Widget& w){
 	return const_cast<std::add_lvalue_reference<std::remove_const<std::remove_reference<decltype(lp)>::type>::type>::type>(lp);
 }
 
-const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
+const Widget::LayoutParams& container::getLayoutParams(const Widget& w)const{
 	if(w.parent() && w.parent() != this){
-		throw morda::Exc("Container::getLayoutParams(): the widget is added to another container");
+		throw morda::Exc("container::getLayoutParams(): the widget is added to another container");
 	}
 
 	if(!w.layoutParams){
@@ -39,13 +39,13 @@ const Widget::LayoutParams& Container::getLayoutParams(const Widget& w)const{
 	return *w.layoutParams;
 }
 
-void Container::add(const stob::Node& chain){
+void container::add(const stob::Node& chain){
 	for(auto n = chain.thisOrNextNonProperty().get_node(); n; n = n->nextNonProperty().get_node()){
 		this->push_back(morda::Morda::inst().inflater.inflate(*n));
 	}
 }
 
-void Container::renderChild(const Matr4r& matrix, const Widget& c) const {
+void container::renderChild(const Matr4r& matrix, const Widget& c) const {
 	if(!c.isVisible()){
 		return;
 	}
@@ -57,7 +57,7 @@ void Container::renderChild(const Matr4r& matrix, const Widget& c) const {
 }
 
 
-void Container::render(const morda::Matr4r& matrix)const{
+void container::render(const morda::Matr4r& matrix)const{
 	for(auto& w: this->children()){
 		this->renderChild(matrix, *w);
 	}
@@ -65,8 +65,8 @@ void Container::render(const morda::Matr4r& matrix)const{
 
 
 
-bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
-//	TRACE(<< "Container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
+bool container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+//	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 
@@ -127,8 +127,8 @@ bool Container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 
 
 
-bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
-//	TRACE(<< "Container::OnMouseMove(): pos = " << pos << std::endl)
+bool container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
+//	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 
@@ -167,7 +167,7 @@ bool Container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 
 
 
-void Container::onHoverChanged(unsigned pointerID){
+void container::onHoverChanged(unsigned pointerID){
 	if(this->isHovered(pointerID)){
 		return;
 	}
@@ -181,8 +181,8 @@ void Container::onHoverChanged(unsigned pointerID){
 
 
 
-void Container::layOut(){
-//	TRACE(<< "Container::layOut(): invoked" << std::endl)
+void container::layOut(){
+//	TRACE(<< "container::layOut(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
 		if(w->needsRelayout()){
@@ -194,7 +194,7 @@ void Container::layOut(){
 
 
 
-Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
+container::list::const_iterator container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
 	if(!w){
 		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
 	}
@@ -224,12 +224,12 @@ Container::list::const_iterator Container::insert(std::shared_ptr<Widget> w, lis
 	return ret;
 }
 
-std::shared_ptr<Widget> Container::remove(list::const_iterator iter){
+std::shared_ptr<Widget> container::remove(list::const_iterator iter){
 	return this->remove(**iter);
 }
 
 
-std::shared_ptr<Widget> Container::remove(Widget& w){
+std::shared_ptr<Widget> container::remove(Widget& w){
 	auto ret = w.sharedFromThis(&w);
 
 	this->erase(this->find(&w));
@@ -237,7 +237,7 @@ std::shared_ptr<Widget> Container::remove(Widget& w){
 	return ret;
 }
 
-Container::list::const_iterator Container::erase(list::const_iterator child){
+container::list::const_iterator container::erase(list::const_iterator child){
 	if(this->isBlocked){
 		throw morda::exception("container::erase(): children list is locked");
 	}
@@ -263,13 +263,13 @@ Container::list::const_iterator Container::erase(list::const_iterator child){
 	return ret;
 }
 
-void Container::clear() {
+void container::clear() {
 	for(auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)){}
 }
 
 
 
-std::shared_ptr<Widget> Container::try_get_widget(const std::string& id)noexcept{
+std::shared_ptr<Widget> container::try_get_widget(const std::string& id)noexcept{
 	if(auto r = this->Widget::try_get_widget(id)){
 		return r;
 	}
@@ -292,7 +292,7 @@ std::shared_ptr<Widget> Container::try_get_widget(const std::string& id)noexcept
 
 
 
-Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
+Vec2r container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dim[i] == LayoutParams::max_c || lp.dim[i] == LayoutParams::fill_c){
@@ -314,7 +314,7 @@ Vec2r Container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	return d;
 }
 
-Container::list::const_iterator Container::change_child_z_position(list::const_iterator child, list::const_iterator before) {
+container::list::const_iterator container::change_child_z_position(list::const_iterator child, list::const_iterator before) {
 	if(this->isBlocked){
 		throw morda::exception("container::change_child_z_position(): children list is locked");
 	}
@@ -355,7 +355,7 @@ Container::list::const_iterator Container::change_child_z_position(list::const_i
 	return ret;
 }
 
-Container::list::const_iterator Container::find(const Widget* w){
+container::list::const_iterator container::find(const Widget* w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),

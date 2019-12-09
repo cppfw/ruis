@@ -27,7 +27,7 @@ namespace morda{
 
 
 
-class Container;
+class container;
 
 
 /**
@@ -46,7 +46,7 @@ class Container;
  * @param enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
  */
 class widget : virtual public utki::Shared{
-	friend class Container;
+	friend class container;
 	friend class Morda;
 public:
 	/**
@@ -89,7 +89,7 @@ public:
 	};
 
 private:
-	Container* parent_v = nullptr;
+	container* parent_v = nullptr;
 
 	std::set<unsigned> hovered;
 
@@ -199,7 +199,7 @@ public:
 	 * @brief Get widget's parent container.
 	 * @return Widget's parent container.
 	 */
-	const Container* parent()const noexcept{
+	const container* parent()const noexcept{
 		return this->parent_v;
 	}
 
@@ -207,7 +207,7 @@ public:
 	 * @brief Get widget's parent container.
 	 * @return Widget's parent container.
 	 */
-	Container* parent()noexcept{
+	container* parent()noexcept{
 		return this->parent_v;
 	}
 
