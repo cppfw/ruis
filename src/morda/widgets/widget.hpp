@@ -615,6 +615,7 @@ public:
 	Vec2r calcPosInParent(Vec2r pos, const widget* parent = nullptr);
 };
 
+//TODO: deprecated, remove.
 typedef widget Widget;
 
 }
