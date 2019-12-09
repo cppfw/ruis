@@ -150,13 +150,13 @@ std::shared_ptr<Widget> widget::replaceBy(std::shared_ptr<Widget> w) {
 
 
 
-void widget::setRelayoutNeeded()noexcept{
+void widget::set_layout_needed()noexcept{
 	if(this->relayoutNeeded){
 		return;
 	}
 	this->relayoutNeeded = true;
 	if(this->parent_v){
-		this->parent_v->setRelayoutNeeded();
+		this->parent_v->set_layout_needed();
 	}
 	this->cacheTex.reset();
 }

@@ -181,8 +181,13 @@ public:
 	 * @return true if this widget needs re-layout.
 	 * @return false otherwise.
 	 */
-	bool needsRelayout()const noexcept{
+	bool is_layout_needed()const noexcept{
 		return this->relayoutNeeded;
+	}
+
+	//TODO: deprecated, remove.
+	bool needsRelayout()const noexcept{
+		return this->is_layout_needed();
 	}
 
 	/**
@@ -527,7 +532,12 @@ public:
 	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
 	 * The layout will be performed before drawing.
 	 */
-	void setRelayoutNeeded()noexcept;
+	void set_layout_needed()noexcept;
+
+	//TODO: deprecated, remove.
+	void setRelayoutNeeded()noexcept{
+		this->set_layout_needed();
+	}
 
 	/**
 	 * @brief Perform layout of the widget.
