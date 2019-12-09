@@ -8,7 +8,7 @@
 			"name": "(gdb) debug",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/tests",
+			"program": "${workspaceFolder}/tests/get_all_widgets/build/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",

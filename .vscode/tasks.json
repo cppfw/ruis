@@ -34,6 +34,14 @@
             "problemMatcher": []
         },
         {
+            "label": "test_debug",
+            "type": "shell",
+            "command": "make test debug=true",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "run",
             "type": "shell",
             "command": "make run",

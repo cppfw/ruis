@@ -291,21 +291,27 @@ public:
 	 * @brief Recursively find all children of given type.
 	 * @return list of children found.
 	 */
-	//TODO: rewrite using std::find_if
-	//		name find_recursively()
-	// template <class T> std::vector<std::shared_ptr<T>> find(){
-	// 	std::vector<std::shared_ptr<T>> ret;
+	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets(){
+		std::vector<std::shared_ptr<T>> ret;
 
-	// 	auto childrenList = this->children();
-	// 	for(auto& child : childrenList){
-	// 		if(auto c = std::dynamic_pointer_cast<T>(child)){
-	// 			ret.emplace_back(std::move(c));
-	// 		}
-	// 		ret.splice(ret.end(), child->find<T>());
-	// 	}
+		if(auto t = std::dynamic_pointer_cast<T>(this->sharedFromThis(this))){
+			ret.emplace_back(t);
+		}
 
-	// 	return ret;
-	// }
+		for(auto& child : this->children()){
+			if(auto c = std::dynamic_pointer_cast<Container>(child)){
+				auto res = c->get_all_widgets<T>();
+				ret.insert(
+						ret.end(),
+						std::make_move_iterator(res.begin()),
+						std::make_move_iterator(res.end())
+					);
+			}else if(auto c = std::dynamic_pointer_cast<T>(child)){
+				ret.emplace_back(std::move(c));
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * @brief Called when children list changes.

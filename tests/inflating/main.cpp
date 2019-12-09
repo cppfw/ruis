@@ -1,7 +1,7 @@
 #include "../../src/morda/Morda.hpp"
 #include "../../src/morda/widgets/group/Pile.hpp"
 
-#include "FakeRenderer.hpp"
+#include "../helpers/fake_renderer/FakeRenderer.hpp"
 
 
 int main(int argc, char** argv){
@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_ALWAYS(lp.dim[1] == 123)
 	}
-	
+
 	//test template properties overriding
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
@@ -80,7 +80,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
 	}
-	
+
 	//test template arguments
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
@@ -122,7 +122,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
-	
+
 	//test two levels of templates
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
@@ -172,7 +172,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
-	
+
 	//test template which nests same named widget on 2nd level
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
@@ -211,7 +211,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
 	}
-	
+
 	//test two defs blocks in widget
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
@@ -236,6 +236,6 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().size() == 1)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Pile>(c->children().front()))
 	}
-	
+
 	return 0;
 }
