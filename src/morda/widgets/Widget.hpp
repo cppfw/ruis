@@ -586,8 +586,7 @@ public:
 	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
 	 */
-	// TODO: rename to overlaps()
-	bool contains(const morda::Vec2r& pos)const noexcept{
+	bool overlaps(const morda::Vec2r& pos)const noexcept{
 		return morda::Rectr(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
 	}
 
