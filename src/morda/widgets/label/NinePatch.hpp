@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../util/Sides.hpp"
-
 #include "../../res/ResNinePatch.hpp"
 
 #include "../group/Pile.hpp"
@@ -18,7 +16,7 @@ namespace morda{
  * @brief Nine patch widget.
  * Nine patch widget displays a nine-patch and can hold child widgets in its central area.
  * From GUI script it can be instantiated as "NinePatch".
- * 
+ *
  * @param left - width of left border, in length units.
  * @param right - width of right border, in length units.
  * @param top - height of top border, in length units.
@@ -32,23 +30,23 @@ class NinePatch :
 		private Column
 {
 	std::shared_ptr<const ResNinePatch> image;
-	
+
 	std::shared_ptr<ResNinePatch::ImageMatrix> scaledImage;
-	
+
 	Sidesr borders;
-	
+
 	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix_v;
-	
+
 	std::shared_ptr<Pile> content_v;
-	
-public:	
+
+public:
 	NinePatch(const NinePatch&) = delete;
 	NinePatch& operator=(const NinePatch&) = delete;
-	
+
 	NinePatch(const stob::Node* chain = nullptr);
-	
+
 	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
-	
+
 	/**
 	 * @brief Get content container.
 	 * @return The content container. This is where the child widgets are stored.
@@ -56,15 +54,15 @@ public:
 	Pile& content(){
 		return *this->content_v;
 	}
-	
+
 	void render(const morda::Matr4r& matrix) const override;
-	
+
 	/**
 	 * @brief Show/hide central part of nine-patch.
 	 * @param visible - show (true) or hide (false) central part of the nine-patch.
 	 */
 	void setCenterVisible(bool visible);
-	
+
 	/**
 	 * @brief Set border settings.
 	 * Border values are in pixels or min_c.
@@ -74,7 +72,7 @@ public:
 		this->borders = borders;
 		this->applyImages();
 	}
-	
+
 	/**
 	 * @brief Get current border settings.
 	 * Border values are in pixels or min_c.
@@ -83,12 +81,12 @@ public:
 	decltype(borders) getBorders()const noexcept{
 		return this->borders;
 	}
-	
+
 	Sidesr getActualBorders()const noexcept;
-	
+
 	void onBlendingChanged() override;
 
-	
+
 private:
 	void applyImages();
 };
