@@ -288,8 +288,8 @@ public:
 	const_list::const_iterator find(const Widget* w)const;
 
 	/**
-	 * @brief Recursively find all children of given type.
-	 * @return list of children found.
+	 * @brief Recursively find all widgets of given type.
+	 * @return list of widgets found.
 	 */
 	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets(){
 		std::vector<std::shared_ptr<T>> ret;
