@@ -1,6 +1,7 @@
 #include "TextInputLine.hpp"
 
 #include "../../Morda.hpp"
+#include "../../util/key.hpp"
 #include "../../util/util.hpp"
 
 
@@ -265,8 +266,8 @@ bool TextInputLine::on_key(bool isDown, key keyCode){
 	return false;
 }
 
-void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
-	switch(key){
+void TextInputLine::onCharacterInput(const std::u32string& unicode, key keycode){
+	switch(keycode){
 		case key::enter:
 			break;
 		case key::right:
