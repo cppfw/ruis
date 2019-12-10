@@ -11,7 +11,7 @@ SizeContainer::SizeContainer(const stob::Node* chain) :
 void SizeContainer::layOut() {
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
-		if(w->needsRelayout()){
+		if(w->is_layout_invalid()){
 			auto d = this->dimForWidget(*w, this->getLayoutParams(*w));
 			w->resize(d);
 		}

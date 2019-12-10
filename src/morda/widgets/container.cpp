@@ -185,9 +185,9 @@ void container::layOut(){
 //	TRACE(<< "container::layOut(): invoked" << std::endl)
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
-		if(w->needsRelayout()){
+		if(w->is_layout_invalid()){
 			w->relayoutNeeded = false;
-			w->layOut();
+			w->lay_out();
 		}
 	}
 }
