@@ -325,7 +325,7 @@ public:
 
 
 
-template <class T> T* Widget::findAncestor(const char* name){
+template <class T> T* widget::find_ancestor(const char* id){
 	if(!this->parent()){
 		return nullptr;
 	}
@@ -333,7 +333,7 @@ template <class T> T* Widget::findAncestor(const char* name){
 	auto p = dynamic_cast<T*>(this->parent());
 
 	if(p){
-		if(!name || p->id == name){
+		if(!id || p->id == id){
 			return p;
 		}
 	}

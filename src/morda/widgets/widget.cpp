@@ -355,14 +355,14 @@ Vec2r widget::measure(const morda::Vec2r& quotum) const{
 }
 
 
-Vec2r widget::calcPosInParent(Vec2r pos, const Widget* parent) {
-	if(parent == this || !this->parent()){
+vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor) {
+	if(ancestor == this || !this->parent()){
 		return pos;
 	}
 
 	ASSERT(this->parent())
 
-	return this->parent()->calcPosInParent(this->rect().p + pos, parent);
+	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
 
@@ -393,7 +393,7 @@ Widget& widget::get_widget(const std::string& id) {
 	return *w;
 }
 
-void widget::setEnabled(bool enable) {
+void widget::set_enabled(bool enable) {
 //	TRACE(<< "widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
 	if(this->isEnabled_v == enable){
 		return;
@@ -409,7 +409,7 @@ void widget::setEnabled(bool enable) {
 	this->onEnabledChanged();
 }
 
-void widget::setVisible(bool visible) {
+void widget::set_visible(bool visible) {
 	this->isVisible_v = visible;
 	if (!this->isVisible_v) {
 		this->setUnhovered();
@@ -440,15 +440,4 @@ void widget::setHovered(bool isHovered, unsigned pointerID) {
 	}
 
 	this->onHoverChanged(pointerID);
-}
-
-
-Vec2r widget::posInAncestor(const Widget& ancestor) {
-	Vec2r ret = this->rect().p;
-
-	if(this->parent() && static_cast<const Widget*>(this->parent()) != &ancestor){
-		ret += this->parent()->posInAncestor(ancestor);
-	}
-
-	return ret;
 }

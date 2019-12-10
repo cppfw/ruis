@@ -668,35 +668,60 @@ public:
 	 * @brief Show/hide widget.
 	 * @param visible - whether to show (true) or hide (false) the widget.
 	 */
-	void setVisible(bool visible);
+	void set_visible(bool visible);
+
+	//TODO: deprecated, remove.
+	void setVisible(bool visible){
+		this->set_visible(visible);
+	}
 
 	/**
 	 * @brief Check if widget is visible.
 	 * @return true if the widget is visible.
 	 * @return false otherwise.
 	 */
-	bool isVisible()const noexcept{
+	bool is_visible()const noexcept{
 		return this->isVisible_v;
+	}
+
+	//TODO: deprecated, remove.
+	bool isVisible()const noexcept{
+		return this->is_visible();
 	}
 
 	/**
 	 * @brief Enable/disable the widget.
 	 * @param enable - whether to enable (true) or disable (false) the widget.
 	 */
-	void setEnabled(bool enable);
+	void set_enabled(bool enable);
+
+	//TODO: deprecated, remove.
+	void setEnabled(bool enable){
+		this->set_enabled(enable);
+	}
 
 	/**
 	 * @brief Check if the widget is currently enabled.
 	 * @return true if the widget is currently enabled.
 	 * @return false otherwise.
 	 */
-	bool isEnabled()const noexcept{
+	bool is_enabled()const noexcept{
 		return this->isEnabled_v;
+	}
+
+	//TODO: deprecated, remove.
+	bool isEnabled()const noexcept{
+		return this->is_enabled();
 	}
 
 	/**
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
+	virtual void on_enabled_changed(){
+		this->onEnabledChanged(); //TODO: deprecated, remove.
+	}
+
+	//TODO: deprecated, remove.
 	virtual void onEnabledChanged(){}
 
 	/**
@@ -705,8 +730,13 @@ public:
 	 * @return true if widget can receive user input.
 	 * @return false otherwise.
 	 */
+	bool is_interactive()const noexcept{
+		return this->is_enabled() && this->is_visible();
+	}
+
+	//TODO: deprecated, remove.
 	bool isInteractive()const noexcept{
-		return this->isEnabled() && this->isVisible();
+		return this->is_interactive();
 	}
 
 	/**
@@ -720,28 +750,36 @@ public:
 	}
 
 	/**
-	 * @brief Find ancestor with given name and of given class.
-	 * @param name - name to look for. If nullptr, then any ancestor of the given class will match.
+	 * @brief Find ancestor with given id and of given class.
+	 * @param id - id to look for. If nullptr, then any ancestor of the given class will match.
 	 * @return pointer to the found ancestor widget.
 	 * @return false if no ancestor which satisfies the conditions was found.
 	 */
-	template <class T> T* findAncestor(const char* name = nullptr); //defined in Container.hpp
+	template <class T> T* find_ancestor(const char* id = nullptr); //defined in container.hpp
+
+	//TODO: deprecated, remove.
+	template <class T> T* findAncestor(const char* name = nullptr){
+		return this->find_ancestor<T>(name);
+	}
 
 	/**
-	 * @brief Get position relative to ancestor.
-	 * @param ancestor - ancestor widget relative to which to get the position.
-	 * @return The position of this widget in given ancestor's coordinates.
-	 */
-	Vec2r posInAncestor(const widget& ancestor);
-
-	/**
-	 * @brief Calculate position in parent coordinates.
-	 * @param pos - position to translate to parent coordinates.
-	 * @param parent - parent of the widget hierarchy relatively to which the translation is to be done.
+	 * @brief Calculate position in ancestor coordinates.
+	 * @param pos - position to translate to ancestor coordinates.
+	 * @param ancestor - ancestor of the widget hierarchy relatively to which the translation is to be done.
 	 *        If null then it will go down till the root widget.
 	 * @return translated position.
 	 */
-	Vec2r calcPosInParent(Vec2r pos, const widget* parent = nullptr);
+	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
+
+	//TODO: deprecated, remove.
+	Vec2r calcPosInParent(Vec2r pos, const widget* parent = nullptr){
+		return this->pos_in_ancestor(pos, parent);
+	}
+
+	//TODO: deprecated, remove.
+	Vec2r posInAncestor(const widget& ancestor){
+		return this->pos_in_ancestor(vector2(0), &ancestor);
+	}
 };
 
 //TODO: deprecated, remove.
