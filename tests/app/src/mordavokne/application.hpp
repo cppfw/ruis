@@ -14,7 +14,7 @@
 
 #include <morda/Morda.hpp>
 
-#include <morda/util/keycodes.hpp>
+#include <morda/util/key.hpp>
 
 #include "config.hpp"
 
