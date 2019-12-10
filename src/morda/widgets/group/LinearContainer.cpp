@@ -126,15 +126,15 @@ void LinearContainer::lay_out(){
 
 			newPos[transIndex] = std::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
 
-			(*i)->moveTo(newPos);
+			(*i)->move_to(newPos);
 		}
 
 		if(remainder > 0){
 			Vec2r d;
 			d[transIndex] = 0;
 			d[longIndex] = std::round(remainder);
-			this->children().back()->resizeBy(d);
-			this->children().back()->moveBy(-d);
+			this->children().back()->resize_by(d);
+			this->children().back()->move_by(-d);
 		}
 	}
 }

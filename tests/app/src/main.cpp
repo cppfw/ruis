@@ -61,7 +61,7 @@ public:
 		}
 	}
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId) override{
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -76,7 +76,7 @@ public:
 		return true;
 	}
 
-	bool onKey(bool isDown, morda::Key_e keyCode) override{
+	bool on_key(bool isDown, morda::Key_e keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){

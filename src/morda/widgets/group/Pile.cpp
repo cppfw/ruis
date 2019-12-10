@@ -19,7 +19,7 @@ void Pile::lay_out() {
 
 		(*i)->resize(this->dimForWidget(**i, lp));
 
-		(*i)->moveTo(((this->rect().d - (*i)->rect().d) / 2).round());
+		(*i)->move_to(((this->rect().d - (*i)->rect().d) / 2).round());
 	}
 }
 

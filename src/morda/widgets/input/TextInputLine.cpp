@@ -63,7 +63,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 			);
 	}
 	
-	if(this->isFocused() && this->cursorBlinkVisible){
+	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.translate(this->cursorPos, 0);
 		matr.scale(Vec2r(cursorWidth_c * morda::inst().units.dotsPerDp(), this->rect().d.y));
@@ -73,7 +73,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInputLine::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(button != MouseButton_e::LEFT){
 		return false;
 	}
@@ -127,7 +127,7 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	utki::ScopeExit scopeExit([this](){
 		this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 		
-		if(!this->isFocused()){
+		if(!this->is_focused()){
 			this->focus();
 		}
 		this->startCursorBlinking();
@@ -228,7 +228,7 @@ void TextInputLine::update(std::uint32_t dt){
 }
 
 void TextInputLine::on_focus_changed(){
-	if(this->isFocused()){
+	if(this->is_focused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;
 		this->startCursorBlinking();
@@ -249,7 +249,7 @@ void TextInputLine::startCursorBlinking(){
 	this->startUpdating(cursorBlinkPeriod_c);
 }
 
-bool TextInputLine::onKey(bool isDown, Key_e keyCode){
+bool TextInputLine::on_key(bool isDown, Key_e keyCode){
 	switch(keyCode){
 		case Key_e::LEFT_CONTROL:
 		case Key_e::RIGHT_CONTROL:

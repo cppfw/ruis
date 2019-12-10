@@ -98,7 +98,7 @@ void Tabs::lay_out() {
 		auto borders = tab->getActualBorders();
 
 		pos -= std::min(prevBorders.right(), borders.left());
-		c->moveTo(Vec2r(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));
+		c->move_to(Vec2r(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));
 		pos += dim.x;
 
 		prevBorders = borders;

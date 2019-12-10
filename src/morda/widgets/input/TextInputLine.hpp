@@ -47,13 +47,13 @@ public:
 
 	void render(const morda::Matr4r& matrix) const override;
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void on_focus_changed()override;
 
-	bool onKey(bool isDown, Key_e keyCode)override;
+	bool on_key(bool isDown, Key_e keyCode)override;
 
 	void onResize()override;
 

@@ -78,7 +78,7 @@ void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 		utki::clampRange(anchor[i], 0.0f, this->overlay().rect().d[i] - w->rect().d[i]);
 	}
 
-	w->moveTo(anchor);
+	w->move_to(anchor);
 }
 
 void Overlay::hideContextMenu(){

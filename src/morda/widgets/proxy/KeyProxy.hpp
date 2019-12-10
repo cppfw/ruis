@@ -24,7 +24,7 @@ public:
 	 */
 	std::function<bool(bool isDown, morda::Key_e keyCode)> key;
 	
-	virtual bool onKey(bool isDown, morda::Key_e keyCode)override;
+	virtual bool on_key(bool isDown, morda::Key_e keyCode)override;
 };
 
 }

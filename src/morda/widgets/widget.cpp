@@ -194,7 +194,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 	//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			//set scissor test
-			r4::recti scissor = this->computeViewportRect(matrix);
+			r4::recti scissor = this->compute_viewport_rect(matrix);
 
 			r4::recti oldScissor;
 			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
@@ -311,7 +311,7 @@ void widget::onKeyInternal(bool isDown, Key_e keyCode){
 void widget::focus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 
-	if(this->isFocused()){
+	if(this->is_focused()){
 		return;
 	}
 
@@ -323,7 +323,7 @@ void widget::focus()noexcept{
 void widget::unfocus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 
-	if(!this->isFocused()){
+	if(!this->is_focused()){
 		return;
 	}
 

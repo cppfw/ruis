@@ -350,11 +350,6 @@ public:
 	 */
 	r4::recti compute_viewport_rect(const matrix4& matrix)const noexcept;
 
-	//TODO: deprecated, remove.
-	r4::recti computeViewportRect(const Matr4r& matrix)const noexcept{
-		return this->compute_viewport_rect(matrix);
-	}
-
 	/**
 	 * @brief Move widget to position within its parent.
 	 * @param newPos - new widget's position.
@@ -445,12 +440,6 @@ public:
 		TRACE(<< "DEPRECATED!!! findByNameAs() is deprecated, use try_get_widget_as()" << std::endl)
 		return this->try_get_widget_as<T>(name);
 	}
-
-	//TODO: deprecated, remove.
-	/**
-	 * @brief Child widget with requested ID is not found within the parent container.
-	 */
-	typedef utki::not_found WidgetNotFoundExc;
 
 	/**
 	 * @brief Get widget.
@@ -559,10 +548,6 @@ public:
 	 */
 	bool is_focused()const noexcept{
 		return this->isFocused_v;
-	}
-
-	bool isFocused()const noexcept{
-		return this->is_focused();
 	}
 
 	/**

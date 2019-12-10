@@ -23,8 +23,8 @@ public:
 	CheckBox(const CheckBox&) = delete;
 	CheckBox& operator=(const CheckBox&) = delete;
 
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
-		return this->ToggleButton::onMouseButton(isDown, pos, button, pointerId);
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override{
+		return this->ToggleButton::on_mouse_button(isDown, pos, button, pointerId);
 	}
 
 	void onHoverChanged(unsigned pointerID)override{

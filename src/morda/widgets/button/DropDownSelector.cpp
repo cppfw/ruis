@@ -157,12 +157,12 @@ void DropDownSelector::showDropdownMenu() {
 	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
-bool DropDownSelector::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
+bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
 	if(!isDown){
 		this->mouseButtonUpHandler(true);
 	}
 
-	return this->NinePatchPushButton::onMouseButton(isDown, pos, button, pointerID);
+	return this->NinePatchPushButton::on_mouse_button(isDown, pos, button, pointerID);
 }
 
 void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {

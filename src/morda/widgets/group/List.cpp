@@ -171,7 +171,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 		Vec2r to;
 		to[longIndex] = pos;
 		to[transIndex] = 0;
-		w->moveTo(to);
+		w->move_to(to);
 	}
 	pos += w->rect().d[longIndex];
 

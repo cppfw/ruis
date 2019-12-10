@@ -120,7 +120,7 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 		morda::Vec2r newPosition(0);
 		newPosition[longIndex] = newPos;
 
-		this->handle.moveTo(newPosition);
+		this->handle.move_to(newPosition);
 
 		ASSERT(maxPos >= 0)
 
@@ -172,7 +172,7 @@ void ScrollBar::lay_out(){
 							<< ", this->factor() = " << this->fraction()
 				)
 		}
-		this->handle.moveTo(newPos);
+		this->handle.move_to(newPos);
 	}
 }
 
