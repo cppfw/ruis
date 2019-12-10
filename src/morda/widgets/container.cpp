@@ -20,7 +20,7 @@ container::container(const stob::Node* chain) :
 }
 
 widget::layout_params& container::get_layout_params(widget& w){
-	this->setRelayoutNeeded();
+	this->invalidate_layout();
 
 	auto& lp = const_cast<
 			std::add_pointer<
@@ -148,7 +148,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 		auto& c = *i;
 
 		if(!c->isInteractive()){
-			ASSERT_INFO(!c->isHovered(), "c->name() = " << c->name())
+			ASSERT_INFO(!c->is_hovered(), "c->name() = " << c->name())
 			continue;
 		}
 
@@ -179,7 +179,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 
 
 void container::on_hover_changed(unsigned pointerID){
-	if(this->isHovered(pointerID)){
+	if(this->is_hovered(pointerID)){
 		return;
 	}
 
@@ -230,7 +230,7 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 
 	this->on_children_changed();
 
-	ASSERT(!ww.isHovered())
+	ASSERT(!ww.is_hovered())
 	return ret;
 }
 
@@ -265,7 +265,7 @@ container::list::const_iterator container::erase(list::const_iterator child){
 	auto ret = this->children_v.variable.erase(child);
 
 	w->parent_v = nullptr;
-	w->setUnhovered();
+	w->set_unhovered();
 	w->on_parent_changed();
 
 	this->on_children_changed();

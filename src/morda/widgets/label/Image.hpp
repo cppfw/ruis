@@ -59,7 +59,7 @@ public:
 
 	void setKeepAspectRatio(bool keepAspectRatio){
 		this->keepAspectRatio = keepAspectRatio;
-		this->setRelayoutNeeded();
+		this->invalidate_layout();
 	}
 private:
 

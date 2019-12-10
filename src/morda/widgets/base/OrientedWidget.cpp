@@ -15,5 +15,5 @@ void OrientedWidget::setVertical(bool vertical) {
 		return;
 	}
 	this->isVertical_v = vertical;
-	this->setRelayoutNeeded();
+	this->invalidate_layout();
 }

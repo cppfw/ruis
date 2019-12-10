@@ -35,7 +35,7 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	if(!this->cursor){
 		return;
 	}
-	if(!this->isHovered(0)){
+	if(!this->is_hovered(0)){
 		return;
 	}
 	

@@ -236,7 +236,7 @@ void List::updateChildrenList(){
 
 	//remove widgets from top
 	for(; this->children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
-		auto w = (*this->children().begin())->removeFromParent();
+		auto w = (*this->children().begin())->remove_from_parent();
 		if(this->provider){
 			this->provider->recycle(this->addedIndex, w);
 		}

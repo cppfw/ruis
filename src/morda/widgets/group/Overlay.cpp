@@ -54,7 +54,7 @@ void Overlay::on_children_changed(){
 	ASSERT(this->children().size() >= 1)
 
 	if(this->children().back() != this->overlayLayer){
-		auto w = this->overlayLayer->removeFromParent();
+		auto w = this->overlayLayer->remove_from_parent();
 		this->push_back(w);
 	}
 }

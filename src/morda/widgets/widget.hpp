@@ -299,11 +299,6 @@ public:
 	 */
 	std::shared_ptr<widget> replace_by(std::shared_ptr<widget> w);
 
-	//TODO: deprecaed, remove.
-	std::shared_ptr<widget> replaceBy(std::shared_ptr<widget> w){
-		return this->replace_by(std::move(w));
-	}
-
 	/**
 	 * @brief Check if the widget is hovered by at least one pointer.
 	 * @return true if hovered by at least one pointer.
@@ -336,7 +331,7 @@ public:
 private:
 	void set_hovered(bool isHovered, unsigned pointerID);
 
-	void setUnhovered();
+	void set_unhovered();
 public:
 
 	/**

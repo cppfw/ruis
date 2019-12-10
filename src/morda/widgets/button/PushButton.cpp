@@ -36,7 +36,7 @@ void PushButton::onHoverChanged(unsigned pointerId){
 
 	//TODO: check if was hovered by the same pointer
 
-	if(!this->isHovered(pointerId)){
+	if(!this->is_hovered(pointerId)){
 		if(this->isPressed()){
 			this->setPressed(false);
 		}
@@ -46,7 +46,7 @@ void PushButton::onHoverChanged(unsigned pointerId){
 void PushButton::onPressedChanged() {
 	this->Button::onPressedChanged();
 
-	if(this->currentlyPressed && this->isHovered()){
+	if(this->currentlyPressed && this->is_hovered()){
 		ASSERT(!this->isPressed())
 		this->onClicked();
 	}

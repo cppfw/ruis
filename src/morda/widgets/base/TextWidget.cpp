@@ -13,7 +13,7 @@ void TextWidget::setFont(std::shared_ptr<ResFont> font) {
 
 	this->font_v = std::move(font);
 
-	this->setRelayoutNeeded();
+	this->invalidate_layout();
 
 	this->onFontChanged();
 }
@@ -63,7 +63,7 @@ void SingleLineTextWidget::onTextChanged() {
 void TextWidget::setText(std::u32string&& text) {
 	this->lines.clear();
 	this->lines.emplace_back(std::move(text));
-	this->setRelayoutNeeded();
+	this->invalidate_layout();
 	this->onTextChanged();
 }
 

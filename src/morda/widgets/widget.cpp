@@ -227,7 +227,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 	matr.scale(this->rect().d);
 	s.SetMatrix(matr);
 
-	if(this->isHovered()){
+	if(this->is_hovered()){
 		s.SetColor(r4::vec3f(0, 1, 0));
 	}else{
 		s.SetColor(r4::vec3f(1, 0, 1));
@@ -403,7 +403,7 @@ void widget::set_enabled(bool enable) {
 
 	//Un-hover this widget if it becomes disabled because it is not supposed to receive mouse input.
 	if(!this->isEnabled()){
-		this->setUnhovered();
+		this->set_unhovered();
 	}
 
 	this->onEnabledChanged();
@@ -412,15 +412,15 @@ void widget::set_enabled(bool enable) {
 void widget::set_visible(bool visible) {
 	this->isVisible_v = visible;
 	if (!this->isVisible_v) {
-		this->setUnhovered();
+		this->set_unhovered();
 	}
 }
 
-void widget::setUnhovered() {
+void widget::set_unhovered() {
 	auto hoverSet = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for(auto h : hoverSet){
-		this->onHoverChanged(h);
+		this->on_hover_changed(h);
 	}
 }
 

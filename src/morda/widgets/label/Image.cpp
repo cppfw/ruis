@@ -144,7 +144,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 void Image::setImage(const std::shared_ptr<const ResImage>& image) {
 	if(this->img && image && this->img->dim() == image->dim()){
 	}else{
-		this->setRelayoutNeeded();
+		this->invalidate_layout();
 	}
 	
 	this->img = image;
