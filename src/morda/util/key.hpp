@@ -3,13 +3,6 @@
 #include <utki/config.hpp>
 
 
-#if M_OS == M_OS_WINDOWS
-#	ifdef DELETE
-#		undef DELETE
-#	endif
-#endif
-
-
 namespace morda{
 
 
