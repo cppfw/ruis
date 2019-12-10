@@ -251,12 +251,12 @@ void TextInputLine::startCursorBlinking(){
 
 bool TextInputLine::on_key(bool isDown, key keyCode){
 	switch(keyCode){
-		case key::LEFT_CONTROL:
-		case key::RIGHT_CONTROL:
+		case key::left_control:
+		case key::right_control:
 			this->ctrlPressed = isDown;
 			break;
-		case key::LEFT_SHIFT:
-		case key::RIGHT_SHIFT:
+		case key::left_shift:
+		case key::right_shift:
 			this->shiftPressed = isDown;
 			break;
 		default:
@@ -267,9 +267,9 @@ bool TextInputLine::on_key(bool isDown, key keyCode){
 
 void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 	switch(key){
-		case key::ENTER:
+		case key::enter:
 			break;
-		case key::RIGHT:
+		case key::right:
 			if(this->cursorIndex != this->getText().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -291,7 +291,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
-		case key::LEFT:
+		case key::left:
 			if(this->cursorIndex != 0){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -316,13 +316,13 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
-		case key::END:
+		case key::end:
 			this->setCursorIndex(this->getText().size(), this->shiftPressed);
 			break;
-		case key::HOME:
+		case key::home:
 			this->setCursorIndex(0, this->shiftPressed);
 			break;
-		case key::BACKSPACE:
+		case key::backspace:
 			if(this->thereIsSelection()){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
@@ -335,7 +335,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 				}
 			}
 			break;
-		case key::DELETE:
+		case key::deletion:
 			if(this->thereIsSelection()){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
@@ -348,10 +348,10 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 			}
 			this->startCursorBlinking();
 			break;
-		case key::ESCAPE:
+		case key::escape:
 			//do nothing
 			break;
-		case key::A:
+		case key::a:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
 				this->setCursorIndex(this->getText().size(), true);

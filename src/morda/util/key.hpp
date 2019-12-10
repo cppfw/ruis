@@ -18,101 +18,101 @@ namespace morda{
  */
 enum class key{
 //WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
-	UNKNOWN,
-	SPACE,
-	ENTER,
-	ZERO,
-	ONE,
-	TWO, //5
-	THREE,
-	FOUR,
-	FIVE,
-	SIX,
-	SEVEN, //10
-	EIGHT,
-	NINE,
-	A,
-	B,
-	C, //15
-	D,
-	E,
-	F,
-	G,
-	H, //20
-	I,
-	J,
-	K,
-	L,
-	M, //25
-	N,
-	O,
-	P,
-	Q,
-	R, //30
-	S,
-	T,
-	U,
-	V,
-	W, //35
-	X,
-	Y,
-	Z,
-	LEFT,
-	RIGHT, //40
-	UP,
-	DOWN,
-	COMMA,
-	SEMICOLON,
-	APOSTROPHE,//', 45
-	PERIOD,
-	SLASH,
-	BACKSLASH,
-	TAB,
-	LEFT_SHIFT, //50
-	RIGHT_SHIFT,
-	END,
-	LEFT_SQUARE_BRACKET,
-	RIGHT_SQUARE_BRACKET,
-	GRAVE, //`, 55
-	MINUS,
-	EQUALS,
-	BACKSPACE,
-	CAPSLOCK,
-	ESCAPE, //60
-	LEFT_CONTROL,
-	LEFT_ALT,
-	F1,
-	F2,
-	F3, //65
-	F4,
-	F5,
-	F6,
-	F7,
-	F8, //70
-	F9,
-	F10,
-	F11,
-	F12,
-	RIGHT_CONTROL, //75
-	PRINT_SCREEN,
-	RIGHT_ALT,
-	HOME,
-	PAGE_UP,
-	PAGE_DOWN, //80
-	INSERT,
-	DELETE,
-	PAUSE,
-	WINDOWS,
-	WINDOWS_MENU, //85
-	FUNCTION,
-	F17,
-	F18,
-	F19,
-	F20, //90
-	F13,
-	F16,
-	F14,
-	F15,
+	unknown,
+	space,
+	enter,
+	zero,
+	one,
+	two, //5
+	three,
+	four,
+	five,
+	six,
+	seven, //10
+	eight,
+	nine,
+	a,
+	b,
+	c, //15
+	d,
+	e,
+	f,
+	g,
+	h, //20
+	i,
+	j,
+	k,
+	l,
+	m, //25
+	n,
+	o,
+	p,
+	q,
+	r, //30
+	s,
+	t,
+	u,
+	v,
+	w, //35
+	x,
+	y,
+	z,
+	left,
+	right, //40
+	up,
+	down,
+	comma,
+	semicolon,
+	apostrophe,//', 45
+	period,
+	slash,
+	backslash,
+	tabulator,
+	left_shift, //50
+	right_shift,
+	end,
+	left_square_bracket,
+	right_square_bracket,
+	grave, //`, 55
+	minus,
+	equals,
+	backspace,
+	capslock,
+	escape, //60
+	left_control,
+	left_alt,
+	f1,
+	f2,
+	f3, //65
+	f4,
+	f5,
+	f6,
+	f7,
+	f8, //70
+	f9,
+	f10,
+	f11,
+	f12,
+	right_control, //75
+	print_screen,
+	right_alt,
+	home,
+	page_up,
+	page_down, //80
+	insert,
+	deletion,
+	pause,
+	command,
+	menu, //85
+	function,
+	f17,
+	f18,
+	f19,
+	f20, //90
+	f13,
+	f16,
+	f14,
+	f15,
 	
 	ENUM_SIZE
 };

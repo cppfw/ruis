@@ -162,262 +162,262 @@ void macosx_UpdateWindowRect(const morda::Rectr& r){
 }
 
 const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
-	morda::key::A, //0
-	morda::key::S,
-	morda::key::D,
-	morda::key::F,
-	morda::key::H,
-	morda::key::G, //5
-	morda::key::Z,
-	morda::key::X,
-	morda::key::C,
-	morda::key::V,
-	morda::key::UNKNOWN, //0x0A
-	morda::key::B,
-	morda::key::Q,
-	morda::key::W,
-	morda::key::E,
-	morda::key::R, //15
-	morda::key::Y,
-	morda::key::T,
-	morda::key::ONE,
-	morda::key::TWO,
-	morda::key::THREE, //20
-	morda::key::FOUR,
-	morda::key::SIX,
-	morda::key::FIVE, //0x17
-	morda::key::EQUALS,
-	morda::key::NINE, //25
-	morda::key::SEVEN,
-	morda::key::MINUS,
-	morda::key::EIGHT,
-	morda::key::ZERO,
-	morda::key::RIGHT_SQUARE_BRACKET, //30
-	morda::key::O,
-	morda::key::U,
-	morda::key::LEFT_SQUARE_BRACKET,
-	morda::key::I,
-	morda::key::P, //35
-	morda::key::ENTER, //0x24
-	morda::key::L,
-	morda::key::J,
-	morda::key::APOSTROPHE,
-	morda::key::K, //40
-	morda::key::SEMICOLON,
-	morda::key::BACKSLASH,
-	morda::key::COMMA,
-	morda::key::SLASH,
-	morda::key::N, //0x2D, 45
-	morda::key::M,
-	morda::key::PERIOD,
-	morda::key::TAB, //0x30
-	morda::key::SPACE, //0x31
-	morda::key::GRAVE, //50
-	morda::key::BACKSPACE, //0x33
-	morda::key::UNKNOWN, //0x34
-	morda::key::ESCAPE, //0x35
-	morda::key::UNKNOWN, //0x36
-	morda::key::WINDOWS, //Command, 0x37, 55
-	morda::key::LEFT_SHIFT, //0x38
-	morda::key::CAPSLOCK, //0x39
-	morda::key::UNKNOWN, //Option, 0x3A
-	morda::key::LEFT_CONTROL, //0x3B
-	morda::key::RIGHT_SHIFT, //0x3C, 60
-	morda::key::UNKNOWN, //RightOption, 0x3D
-	morda::key::RIGHT_CONTROL, //0x3E
-	morda::key::FUNCTION, //0x3F
-	morda::key::F17, //0x40
-	morda::key::UNKNOWN, //KeypadDecimal, 0x41, 65
-	morda::key::UNKNOWN, //0x42
-	morda::key::UNKNOWN, //KeypadMultiplym 0x43
-	morda::key::UNKNOWN, //0x44
-	morda::key::UNKNOWN, //KeypadPlus, 0x45
-	morda::key::UNKNOWN, //0x46, 70
-	morda::key::UNKNOWN, //KeypadClear, 0x47
-	morda::key::UNKNOWN, //VolumeUp, 0x48
-	morda::key::UNKNOWN, //VolumeDown, 0x49
-	morda::key::UNKNOWN, //Mute, 0x4A
-	morda::key::UNKNOWN, //KeypadDivide, 0x4B, 75
-	morda::key::UNKNOWN, //KeypadEnter, 0x4C
-	morda::key::UNKNOWN, //0x4D
-	morda::key::UNKNOWN, //KeypadMinus
-	morda::key::F18, //0x4F
-	morda::key::F19, //0x50, 80
-	morda::key::UNKNOWN, //KeypadEquals, 0x51
-	morda::key::UNKNOWN, //Keypad0
-	morda::key::UNKNOWN, //Keypad1
-	morda::key::UNKNOWN, //Keypad2
-	morda::key::UNKNOWN, //Keypad3, 85
-	morda::key::UNKNOWN, //Keypad4
-	morda::key::UNKNOWN, //Keypad5
-	morda::key::UNKNOWN, //Keypad6
-	morda::key::UNKNOWN, //Keypad7, 0x59
-	morda::key::F20, //0x5A, 90
-	morda::key::UNKNOWN, //Keypad8, 0x5B
-	morda::key::UNKNOWN, //Keypad9, 0x5C
-	morda::key::UNKNOWN, //0x5D
-	morda::key::UNKNOWN, //0x5E
-	morda::key::UNKNOWN, //0x5F, 95
-	morda::key::F5, //0x60
-	morda::key::F6, //0x61
-	morda::key::F7, //0x62
-	morda::key::F3, //0x63
-	morda::key::F8, //0x64, 100
-	morda::key::F9, //0x65
-	morda::key::UNKNOWN, //0x66
-	morda::key::F11, //0x67
-	morda::key::UNKNOWN, //0x68
-	morda::key::F13, //0x69
-	morda::key::F16, //0x6A
-	morda::key::F14, //0x6B
-	morda::key::UNKNOWN, //0x6C
-	morda::key::F10, //0x6D
-	morda::key::UNKNOWN, //0x6E
-	morda::key::F12, //0x6F
-	morda::key::UNKNOWN, //0x70
-	morda::key::F15, //0x71
-	morda::key::UNKNOWN, //Help, 0x72
-	morda::key::HOME, //0x73
-	morda::key::PAGE_UP, //0x74
-	morda::key::DELETE, //0x75
-	morda::key::F4, //0x76
-	morda::key::END, //0x77
-	morda::key::F2, //0x78
-	morda::key::PAGE_DOWN, //0x79
-	morda::key::F1, //0x7A
-	morda::key::LEFT, //0x7B
-	morda::key::RIGHT, //0x7C
-	morda::key::DOWN, //0x7D
-	morda::key::UP, //0x7E
-	morda::key::UNKNOWN, //0x7F
-	morda::key::UNKNOWN, //0x80
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0x90
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xA0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xB0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xC0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xD0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xE0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN, //0xF0
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN,
-	morda::key::UNKNOWN //0xFF
+	morda::key::a, //0
+	morda::key::s,
+	morda::key::d,
+	morda::key::f,
+	morda::key::h,
+	morda::key::g, //5
+	morda::key::z,
+	morda::key::x,
+	morda::key::c,
+	morda::key::v,
+	morda::key::unknown, //0x0A
+	morda::key::b,
+	morda::key::q,
+	morda::key::w,
+	morda::key::e,
+	morda::key::r, //15
+	morda::key::y,
+	morda::key::t,
+	morda::key::one,
+	morda::key::two,
+	morda::key::three, //20
+	morda::key::four,
+	morda::key::six,
+	morda::key::five, //0x17
+	morda::key::equals,
+	morda::key::nine, //25
+	morda::key::seven,
+	morda::key::minus,
+	morda::key::eight,
+	morda::key::zero,
+	morda::key::right_square_bracket, //30
+	morda::key::o,
+	morda::key::u,
+	morda::key::left_square_bracket,
+	morda::key::i,
+	morda::key::p, //35
+	morda::key::enter, //0x24
+	morda::key::l,
+	morda::key::j,
+	morda::key::apostrophe,
+	morda::key::k, //40
+	morda::key::semicolon,
+	morda::key::backslash,
+	morda::key::comma,
+	morda::key::slash,
+	morda::key::n, //0x2D, 45
+	morda::key::m,
+	morda::key::period,
+	morda::key::tabulator, //0x30
+	morda::key::space, //0x31
+	morda::key::grave, //50
+	morda::key::backspace, //0x33
+	morda::key::unknown, //0x34
+	morda::key::escape, //0x35
+	morda::key::unknown, //0x36
+	morda::key::command, //Command, 0x37, 55
+	morda::key::left_shift, //0x38
+	morda::key::capslock, //0x39
+	morda::key::unknown, //Option, 0x3A
+	morda::key::left_control, //0x3B
+	morda::key::right_shift, //0x3C, 60
+	morda::key::unknown, //RightOption, 0x3D
+	morda::key::right_control, //0x3E
+	morda::key::function, //0x3F
+	morda::key::f17, //0x40
+	morda::key::unknown, //KeypadDecimal, 0x41, 65
+	morda::key::unknown, //0x42
+	morda::key::unknown, //KeypadMultiplym 0x43
+	morda::key::unknown, //0x44
+	morda::key::unknown, //KeypadPlus, 0x45
+	morda::key::unknown, //0x46, 70
+	morda::key::unknown, //KeypadClear, 0x47
+	morda::key::unknown, //VolumeUp, 0x48
+	morda::key::unknown, //VolumeDown, 0x49
+	morda::key::unknown, //Mute, 0x4A
+	morda::key::unknown, //KeypadDivide, 0x4B, 75
+	morda::key::unknown, //KeypadEnter, 0x4C
+	morda::key::unknown, //0x4D
+	morda::key::unknown, //KeypadMinus
+	morda::key::f18, //0x4F
+	morda::key::f19, //0x50, 80
+	morda::key::unknown, //KeypadEquals, 0x51
+	morda::key::unknown, //Keypad0
+	morda::key::unknown, //Keypad1
+	morda::key::unknown, //Keypad2
+	morda::key::unknown, //Keypad3, 85
+	morda::key::unknown, //Keypad4
+	morda::key::unknown, //Keypad5
+	morda::key::unknown, //Keypad6
+	morda::key::unknown, //Keypad7, 0x59
+	morda::key::f20, //0x5A, 90
+	morda::key::unknown, //Keypad8, 0x5B
+	morda::key::unknown, //Keypad9, 0x5C
+	morda::key::unknown, //0x5D
+	morda::key::unknown, //0x5E
+	morda::key::unknown, //0x5F, 95
+	morda::key::f5, //0x60
+	morda::key::f6, //0x61
+	morda::key::f7, //0x62
+	morda::key::f3, //0x63
+	morda::key::f8, //0x64, 100
+	morda::key::f9, //0x65
+	morda::key::unknown, //0x66
+	morda::key::f11, //0x67
+	morda::key::unknown, //0x68
+	morda::key::f13, //0x69
+	morda::key::f16, //0x6A
+	morda::key::f14, //0x6B
+	morda::key::unknown, //0x6C
+	morda::key::f10, //0x6D
+	morda::key::unknown, //0x6E
+	morda::key::f12, //0x6F
+	morda::key::unknown, //0x70
+	morda::key::f15, //0x71
+	morda::key::unknown, //Help, 0x72
+	morda::key::home, //0x73
+	morda::key::page_up, //0x74
+	morda::key::deletion, //0x75
+	morda::key::f4, //0x76
+	morda::key::end, //0x77
+	morda::key::f2, //0x78
+	morda::key::page_down, //0x79
+	morda::key::f1, //0x7A
+	morda::key::left, //0x7B
+	morda::key::right, //0x7C
+	morda::key::down, //0x7D
+	morda::key::up, //0x7E
+	morda::key::unknown, //0x7F
+	morda::key::unknown, //0x80
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0x90
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xA0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xB0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xC0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xD0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xE0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown, //0xF0
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::unknown //0xFF
 }};
 
 }

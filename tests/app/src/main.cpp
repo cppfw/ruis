@@ -79,10 +79,10 @@ public:
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::key::LEFT:
+				case morda::key::left:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
-				case morda::key::A:
+				case morda::key::a:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -91,10 +91,10 @@ public:
 		}else{
 			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::key::LEFT:
+				case morda::key::left:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
-				case morda::key::A:
+				case morda::key::a:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -623,7 +623,7 @@ public:
 
 		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
-				if(keyCode == morda::key::ESCAPE){
+				if(keyCode == morda::key::escape){
 					this->quit();
 				}
 			}
