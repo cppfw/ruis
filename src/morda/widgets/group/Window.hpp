@@ -24,15 +24,15 @@ class Window :
 		private Pile
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
-	
+
 	std::shared_ptr<Color> titleBg;
 	std::uint32_t titleBgColorTopmost;
 	std::uint32_t titleBgColorNonTopmost;
-	
+
 	std::shared_ptr<Text> title;
-	
+
 	std::shared_ptr<Pile> contentArea;
-	
+
 	std::shared_ptr<Widget> ltBorder;
 	std::shared_ptr<Widget> rtBorder;
 	std::shared_ptr<Widget> tBorder;
@@ -41,7 +41,7 @@ class Window :
 	std::shared_ptr<Widget> bBorder;
 	std::shared_ptr<Widget> lbBorder;
 	std::shared_ptr<Widget> rbBorder;
-	
+
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
 	bool leftBottomResizeCaptured = false;
@@ -51,21 +51,21 @@ class Window :
 	bool rightResizeCaptured = false;
 	bool topResizeCaptured = false;
 	bool bottomResizeCaptured = false;
-	
+
 	morda::Vec2r capturePoint;
-	
+
 	void setupWidgets();
-	
+
 	void updateTopmost();
-	
+
 public:
 	Window(const stob::Node* chain = nullptr);
-	
+
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
-	
+
 	void setTitle(const std::string& str);
-	
+
 	/**
 	 * @brief Get window content area.
 	 * This is where child widgets are stored.
@@ -74,12 +74,12 @@ public:
 	Pile& content(){
 		return *this->contentArea;
 	}
-	
+
 	/**
 	 * @brief Move the window to the Z order top within its parent.
 	 */
 	void makeTopmost();
-	
+
 	/**
 	 * @brief Check if the widget is currently topmost within its parent.
 	 * @return true if the widget is topmost.
@@ -88,13 +88,13 @@ public:
 	bool isTopmost()const noexcept;
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
-	
+
 	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
-	
+
 	void setBackground(std::shared_ptr<Widget> w);
-	
-	void layOut() override;
-	
+
+	void lay_out() override;
+
 	/**
 	 * @brief Set window borders.
 	 * @param borders - borders in pixels.

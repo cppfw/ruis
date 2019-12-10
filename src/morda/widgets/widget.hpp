@@ -567,7 +567,7 @@ public:
 	}
 
 	bool isFocused()const noexcept{
-		return is_focused();
+		return this->is_focused();
 	}
 
 	/**

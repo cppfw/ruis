@@ -490,7 +490,7 @@ void Window::updateTopmost() {
 }
 
 
-void Window::layOut() {
+void Window::lay_out() {
 	this->updateTopmost();
-	this->Pile::layOut();
+	this->Pile::lay_out();
 }

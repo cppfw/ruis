@@ -23,7 +23,7 @@ class LinearContainer :
 public:
 	LinearContainer(const stob::Node* chain, bool vertical);
 
-	void layOut() override;
+	void lay_out() override;
 
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 

@@ -71,7 +71,7 @@ public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 
 
-	void layOut()override;
+	void lay_out()override;
 
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
 

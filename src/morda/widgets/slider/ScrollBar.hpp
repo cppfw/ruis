@@ -44,7 +44,7 @@ public:
 	virtual ~ScrollBar()noexcept{}
 
 private:
-	void layOut() override;
+	void lay_out() override;
 };
 
 

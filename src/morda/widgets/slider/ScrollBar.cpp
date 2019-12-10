@@ -136,15 +136,15 @@ ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
 
 
 void ScrollBar::onFractionChange() {
-	this->layOut();
+	this->lay_out();
 
 	this->FractionWidget::onFractionChange();
 }
 
 
 
-void ScrollBar::layOut(){
-	this->Pile::layOut();
+void ScrollBar::lay_out(){
+	this->Pile::lay_out();
 
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
@@ -178,7 +178,7 @@ void ScrollBar::layOut(){
 
 
 void ScrollBar::onBandSizeChanged(){
-	this->layOut();
+	this->lay_out();
 
 	this->FractionBandWidget::onBandSizeChanged();
 }

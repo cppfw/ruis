@@ -8,7 +8,7 @@ SizeContainer::SizeContainer(const stob::Node* chain) :
 {
 }
 
-void SizeContainer::layOut(){
+void SizeContainer::lay_out(){
 	for(auto& w : this->children()){
 		if(w->is_layout_invalid()){
 			auto d = this->dimForWidget(*w, this->getLayoutParams(*w));

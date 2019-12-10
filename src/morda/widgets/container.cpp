@@ -88,7 +88,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 			if(auto w = i->second.first.lock()){
 				if(w->isInteractive()){
 					w->setHovered(w->rect().overlaps(pos), pointerId);
-					w->onMouseButton(isDown, pos - w->rect().p, button, pointerId);
+					w->on_mouse_button(isDown, pos - w->rect().p, button, pointerId);
 
 					unsigned& n = i->second.second;
 					//TODO: why is this counter needed?
@@ -122,7 +122,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
 		c->setHovered(true, pointerId);
-		if(c->onMouseButton(isDown, pos - c->rect().p, button, pointerId)){
+		if(c->on_mouse_button(isDown, pos - c->rect().p, button, pointerId)){
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
@@ -133,7 +133,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 		}
 	}
 
-	return this->Widget::onMouseButton(isDown, pos, button, pointerId);
+	return this->Widget::on_mouse_button(isDown, pos, button, pointerId);
 }
 
 
@@ -152,7 +152,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 			continue;
 		}
 
-		bool consumed = c->onMouseMove(pos - c->rect().p, pointerID);
+		bool consumed = c->on_mouse_move(pos - c->rect().p, pointerID);
 
 		//set hovered goes after move notification because position of widget could change
 		//during handling the notification, so need to check after that for hovering
@@ -173,7 +173,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 		}
 	}
 
-	return this->Widget::onMouseMove(pos, pointerID);
+	return this->Widget::on_mouse_move(pos, pointerID);
 }
 
 
@@ -192,8 +192,8 @@ void container::on_hover_changed(unsigned pointerID){
 
 
 
-void container::layOut(){
-//	TRACE(<< "container::layOut(): invoked" << std::endl)
+void container::lay_out(){
+//	TRACE(<< "container::lay_out(): invoked" << std::endl)
 	for(auto& w : this->children()){
 		if(w->is_layout_invalid()){
 			w->relayoutNeeded = false;

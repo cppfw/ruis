@@ -47,7 +47,7 @@ public:
 		return this->Widget::measure(quotum);
 	}
 
-	void layOut()override;
+	void lay_out()override;
 
 	void onChildrenListChanged()override;
 

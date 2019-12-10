@@ -12,13 +12,13 @@ Pile::Pile(const stob::Node* chain) :
 
 
 
-void Pile::layOut() {
-//	TRACE(<< "Pile::layOut(): invoked" << std::endl)
+void Pile::lay_out() {
+//	TRACE(<< "Pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
-		
+
 		(*i)->resize(this->dimForWidget(**i, lp));
-		
+
 		(*i)->moveTo(((this->rect().d - (*i)->rect().d) / 2).round());
 	}
 }
@@ -30,12 +30,12 @@ morda::Vec2r Pile::measure(const morda::Vec2r& quotum)const{
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
 	}
-	
+
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
-		
+
 		morda::Vec2r d;
-		
+
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dim[j] == LayoutParams::max_c){
 				if(quotum[j] >= 0){
@@ -55,16 +55,16 @@ morda::Vec2r Pile::measure(const morda::Vec2r& quotum)const{
 				d[j] = lp.dim[j];
 			}
 		}
-		
+
 		d = (*i)->measure(d);
-		
+
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){
 				utki::clampBottom(ret[j], d[j]);
 			}
 		}
 	}
-	
+
 	return ret;
 }
 

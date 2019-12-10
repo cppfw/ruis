@@ -32,10 +32,10 @@ bool ScrollArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 
 void ScrollArea::render(const morda::Matr4r& matrix) const {
 	Vec2r d = -this->curScrollPos;
-	
+
 	Matr4r matr(matrix);
 	matr.translate(d);
-	
+
 	this->Container::render(matr);
 }
 
@@ -43,7 +43,7 @@ void ScrollArea::clampScrollPos() {
 	if(this->effectiveDim.x < 0){
 		this->curScrollPos.x = 0;
 	}
-	
+
 	if(this->effectiveDim.y < 0){
 		this->curScrollPos.y = 0;
 	}
@@ -53,16 +53,16 @@ void ScrollArea::clampScrollPos() {
 
 void ScrollArea::setScrollPos(const Vec2r& newScrollPos) {
 	this->curScrollPos = newScrollPos.rounded();
-	
+
 	this->clampScrollPos();
 	this->updateScrollFactor();
 }
 
 
 
-void ScrollArea::setScrollPosAsFactor(const Vec2r& factor){	
+void ScrollArea::setScrollPosAsFactor(const Vec2r& factor){
 	Vec2r newScrollPos = this->effectiveDim.compMul(factor);
-	
+
 	this->setScrollPos(newScrollPos);
 }
 
@@ -70,11 +70,11 @@ void ScrollArea::setScrollPosAsFactor(const Vec2r& factor){
 void ScrollArea::updateScrollFactor(){
 	//at this point effective dimension should be updated
 	Vec2r factor = this->curScrollPos.compDiv(this->effectiveDim);
-	
+
 	if(this->curScrollFactor == factor){
 		return;
 	}
-	
+
 	for(unsigned i = 0; i != 2; ++i){
 		if(this->effectiveDim[i] <= 0){
 			this->curScrollFactor[i] = 0;
@@ -113,15 +113,15 @@ Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 void ScrollArea::arrangeWidgets() {
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->getLayoutParams(**i);
-		
+
 		auto d = this->dimForWidget(**i, lp);
-		
+
 		(*i)->resize(d);
 	}
 }
 
 
-void ScrollArea::layOut(){
+void ScrollArea::lay_out(){
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 
@@ -135,7 +135,7 @@ void ScrollArea::layOut(){
 			this->curScrollPos.x = 0;
 		}
 	}
-	
+
 	if(br.y > 0){
 		if(br.y <= this->curScrollPos.y){
 			this->curScrollPos.y -= br.y;
@@ -158,21 +158,21 @@ void ScrollArea::updateEffectiveDim(){
 		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
 
 		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
-		
+
 		utki::clampBottom(minDim.x, d.x);
 		utki::clampBottom(minDim.y, d.y);
-	}	
-	
+	}
+
 	this->effectiveDim = minDim - this->rect().d;
 	this->updateScrollFactor();
 }
 
 Vec2r ScrollArea::visibleAreaFraction() const noexcept{
 	auto ret = this->rect().d.compDiv(this->rect().d + this->effectiveDim);
-	
+
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampTop(ret[i], real(1));
 	}
-	
+
 	return ret;
 }

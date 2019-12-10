@@ -40,7 +40,7 @@ public:
 
 
 
-void LinearContainer::layOut(){
+void LinearContainer::lay_out(){
 	unsigned longIndex = this->getLongIndex();
 	unsigned transIndex = this->getTransIndex();
 

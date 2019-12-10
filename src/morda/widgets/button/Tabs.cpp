@@ -78,7 +78,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 	return ret;
 }
 
-void Tabs::layOut() {
+void Tabs::lay_out() {
 	real pos = 0;
 
 	Sidesr prevBorders = 0;
