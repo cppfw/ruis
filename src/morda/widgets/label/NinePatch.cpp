@@ -184,58 +184,58 @@ void NinePatch::applyImages(){
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
-		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->getLayoutParams();
+		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->get_layout_params();
 
 		if(this->borders.left() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.left()){
-				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dim.x = minBorders.left();
 			}
 		}else{
 			if(layoutParams.dim.x != this->borders.left()){
-				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dim.x = this->borders.left();
 			}
 		}
 
 		if(this->borders.top() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.top()){
-				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dim.y = minBorders.top();
 			}
 		}else{
 			if(layoutParams.dim.y != this->borders.top()){
-				auto& lp = this->imageMatrix_v[0][0].get()->getLayoutParams();
+				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dim.y = this->borders.top();
 			}
 		}
 //			TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
 	}
 	{
-		//non-const call to getLayoutParams requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->getLayoutParams();
+		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->get_layout_params();
 
 		if(this->borders.right() == LayoutParams::min_c){
 			if(layoutParams.dim.x != minBorders.right()){
-				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dim.x = minBorders.right();
 			}
 		}else{
 			if(layoutParams.dim.x != this->borders.right()){
-				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dim.x = this->borders.right();
 			}
 		}
 
 		if(this->borders.bottom() == LayoutParams::min_c){
 			if(layoutParams.dim.y != minBorders.bottom()){
-				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dim.y = minBorders.bottom();
 			}
 		}else{
 			if(layoutParams.dim.y != this->borders.bottom()){
-				auto& lp = this->imageMatrix_v[2][2]->getLayoutParams();
+				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dim.y = this->borders.bottom();
 			}
 		}

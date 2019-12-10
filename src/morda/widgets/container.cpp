@@ -28,7 +28,7 @@ widget::layout_params& container::get_layout_params(widget& w){
 							std::remove_pointer<decltype(this)>::type
 						>::type
 				>::type
-		>(this)->getLayoutParams(w);
+		>(this)->get_layout_params(w);
 
 	return const_cast<
 			std::add_lvalue_reference<
@@ -86,8 +86,8 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 		auto i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
-				if(w->isInteractive()){
-					w->setHovered(w->rect().overlaps(pos), pointerId);
+				if(w->is_interactive()){
+					w->set_hovered(w->rect().overlaps(pos), pointerId);
 					w->on_mouse_button(isDown, pos - w->rect().p, button, pointerId);
 
 					unsigned& n = i->second.second;
@@ -111,7 +111,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
-		if(!c->isInteractive()){
+		if(!c->is_interactive()){
 			continue;
 		}
 
@@ -121,7 +121,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 
 		//Sometimes mouse click event comes without prior mouse move,
 		//but, since we get mouse click, then the widget was hovered before the click.
-		c->setHovered(true, pointerId);
+		c->set_hovered(true, pointerId);
 		if(c->on_mouse_button(isDown, pos - c->rect().p, button, pointerId)){
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 
@@ -133,7 +133,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 		}
 	}
 
-	return this->Widget::on_mouse_button(isDown, pos, button, pointerId);
+	return this->widget::on_mouse_button(isDown, pos, button, pointerId);
 }
 
 
@@ -157,17 +157,17 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 		//set hovered goes after move notification because position of widget could change
 		//during handling the notification, so need to check after that for hovering
 		if(!c->rect().overlaps(pos)){
-			c->setHovered(false, pointerID);
+			c->set_hovered(false, pointerID);
 			continue;
 		}
 
-		c->setHovered(true, pointerID);
+		c->set_hovered(true, pointerID);
 
 		if(consumed){//consumed mouse move event
 			//un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
 				auto& c = *i;
-				c->setHovered(false, pointerID);
+				c->set_hovered(false, pointerID);
 			}
 			return true;
 		}
@@ -186,7 +186,7 @@ void container::on_hover_changed(unsigned pointerID){
 	//un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
-		w->setHovered(false, pointerID);
+		w->set_hovered(false, pointerID);
 	}
 }
 
@@ -228,7 +228,7 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 	ww.parent_v = this;
 	ww.on_parent_changed();
 
-	this->onChildrenListChanged();
+	this->on_children_changed();
 
 	ASSERT(!ww.isHovered())
 	return ret;
@@ -268,7 +268,7 @@ container::list::const_iterator container::erase(list::const_iterator child){
 	w->setUnhovered();
 	w->on_parent_changed();
 
-	this->onChildrenListChanged();
+	this->on_children_changed();
 
 	return ret;
 }
@@ -360,7 +360,7 @@ container::list::const_iterator container::change_child_z_position(list::const_i
 		--ret;
 	}
 
-	this->onChildrenListChanged();
+	this->on_children_changed();
 
 	return ret;
 }

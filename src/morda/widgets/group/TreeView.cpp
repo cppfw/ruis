@@ -15,7 +15,7 @@ TreeView::TreeView(const stob::Node* chain) :
 	this->list = std::make_shared<VList>(nullptr);
 	this->push_back(this->list);
 
-	auto& lp = this->getLayoutParams(*this->list);
+	auto& lp = this->get_layout_params(*this->list);
 
 	lp.dim.y = Widget::LayoutParams::max_c;
 	lp.dim.x = Widget::LayoutParams::min_c;

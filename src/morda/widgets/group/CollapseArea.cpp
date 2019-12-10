@@ -73,9 +73,9 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 		ASSERT(sw)
 		sw->pressedChanged = [this](Button& tb){
 			if(tb.isPressed()){
-				this->contentArea->getLayoutParams().dim.y = 0;
+				this->contentArea->get_layout_params().dim.y = 0;
 			}else{
-				this->contentArea->getLayoutParams().dim.y = Widget::LayoutParams::min_c;
+				this->contentArea->get_layout_params().dim.y = Widget::LayoutParams::min_c;
 			}
 		};
 	}

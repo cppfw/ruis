@@ -40,7 +40,7 @@ public:
 	 */
 	void hideContextMenu();
 	
-	void onChildrenListChanged() override;
+	void on_children_changed() override;
 
 private:
 

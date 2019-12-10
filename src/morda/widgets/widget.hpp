@@ -334,7 +334,7 @@ public:
 	}
 
 private:
-	void setHovered(bool isHovered, unsigned pointerID);
+	void set_hovered(bool isHovered, unsigned pointerID);
 
 	void setUnhovered();
 public:

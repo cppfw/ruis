@@ -30,10 +30,10 @@ Overlay::Overlay(const stob::Node* chain) :
 		Widget(chain),
 		Pile(chain)
 {
-	this->onChildrenListChanged();
+	this->on_children_changed();
 }
 
-void Overlay::onChildrenListChanged(){
+void Overlay::on_children_changed(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
 		this->overlayLayer = std::make_shared<Pile>(stob::parse(ContextMenuLayout_c).get());
 		this->push_back(this->overlayLayer);
@@ -64,7 +64,7 @@ void Overlay::onChildrenListChanged(){
 void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 	this->overlay().push_back(w);
 
-	auto& lp = this->overlay().getLayoutParams(*w);
+	auto& lp = this->overlay().get_layout_params(*w);
 
 	Vec2r dim = this->dimForWidget(*w, lp);
 

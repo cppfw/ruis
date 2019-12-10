@@ -402,22 +402,22 @@ void morda::Window::setTitle(const std::string& str){
 }
 
 void morda::Window::setBorders(Sidesr borders) {
-	this->lBorder->getLayoutParams().dim.x = borders.left();
-	this->tBorder->getLayoutParams().dim.y = borders.top();
-	this->rBorder->getLayoutParams().dim.x = borders.right();
-	this->bBorder->getLayoutParams().dim.y = borders.bottom();
+	this->lBorder->get_layout_params().dim.x = borders.left();
+	this->tBorder->get_layout_params().dim.y = borders.top();
+	this->rBorder->get_layout_params().dim.x = borders.right();
+	this->bBorder->get_layout_params().dim.y = borders.bottom();
 
-	this->lbBorder->getLayoutParams().dim.x = borders.left();
-	this->lbBorder->getLayoutParams().dim.y = borders.bottom();
+	this->lbBorder->get_layout_params().dim.x = borders.left();
+	this->lbBorder->get_layout_params().dim.y = borders.bottom();
 
-	this->rbBorder->getLayoutParams().dim.x = borders.right();
-	this->rbBorder->getLayoutParams().dim.y = borders.bottom();
+	this->rbBorder->get_layout_params().dim.x = borders.right();
+	this->rbBorder->get_layout_params().dim.y = borders.bottom();
 
-	this->ltBorder->getLayoutParams().dim.x = borders.left();
-	this->ltBorder->getLayoutParams().dim.y = borders.top();
+	this->ltBorder->get_layout_params().dim.x = borders.left();
+	this->ltBorder->get_layout_params().dim.y = borders.top();
 
-	this->rtBorder->getLayoutParams().dim.x = borders.right();
-	this->rtBorder->getLayoutParams().dim.y = borders.top();
+	this->rtBorder->get_layout_params().dim.x = borders.right();
+	this->rtBorder->get_layout_params().dim.y = borders.top();
 }
 
 

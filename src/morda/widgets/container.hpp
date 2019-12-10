@@ -107,15 +107,15 @@ protected:
 
 	/**
 	 * @brief Get layout parameters of child widget.
-	 * Same as getLayoutParams() but also tries to cast the LayoutParams object to specified class.
+	 * Same as get_layout_params() but also tries to cast the LayoutParams object to specified class.
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
 	 */
 	template <class T> const T& get_layout_params_as(const widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->getLayoutParams(w));
+		auto p = dynamic_cast<const T*>(&this->get_layout_params(w));
 		if(!p){
 			w.layoutParams.reset();
-			p = dynamic_cast<const T*>(&this->getLayoutParams(w));
+			p = dynamic_cast<const T*>(&this->get_layout_params(w));
 		}
 
 		ASSERT(p)
@@ -331,8 +331,8 @@ public:
 	 * @brief Called when children list changes.
 	 * This implementation requests re-layout.
      */
-	virtual void onChildrenListChanged(){
-		this->setRelayoutNeeded();
+	virtual void on_children_changed(){
+		this->invalidate_layout();
 	}
 };
 
@@ -352,7 +352,7 @@ template <class T> T* widget::find_ancestor(const char* id){
 		}
 	}
 
-	return this->parent()->findAncestor<T>();
+	return this->parent()->find_ancestor<T>();
 }
 
 //TODO: deprecated, remove.

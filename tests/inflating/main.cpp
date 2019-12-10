@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 		auto c = std::dynamic_pointer_cast<morda::Container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
-		auto lp = c->children().front()->getLayoutParams();
+		auto lp = c->children().front()->get_layout_params();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_ALWAYS(lp.dim[1] == 123)
 	}
@@ -76,7 +76,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 12)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
-		auto lp = c->children().front()->getLayoutParams();
+		auto lp = c->children().front()->get_layout_params();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
 	}
@@ -118,7 +118,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
-		auto lp = c->children().front()->getLayoutParams();
+		auto lp = c->children().front()->get_layout_params();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
@@ -168,7 +168,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 67)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 0)
 		ASSERT_ALWAYS(c->children().front()->rect().d.y == 45)
-		auto lp = c->children().front()->getLayoutParams();
+		auto lp = c->children().front()->get_layout_params();
 		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}

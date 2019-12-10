@@ -175,10 +175,10 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 
 			//check if can re-use old texture
 			if(!this->cacheTex || this->cacheTex->dim() != this->rect().d){
-				this->cacheTex = this->renderToTexture();
+				this->cacheTex = this->render_to_texture();
 			}else{
 				ASSERT(this->cacheTex->dim() == this->rect().d)
-				this->cacheTex = this->renderToTexture(std::move(this->cacheTex));
+				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
 			morda::inst().renderer().setScissorEnabled(scissorTestWasEnabled);
@@ -371,7 +371,7 @@ widget::LayoutParams& widget::get_layout_params() {
 		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
-	return this->parent()->getLayoutParams(*this);
+	return this->parent()->get_layout_params(*this);
 }
 
 
@@ -380,7 +380,7 @@ const widget::LayoutParams& widget::get_layout_params()const {
 		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
-	return this->parent()->getLayoutParams(*this);
+	return this->parent()->get_layout_params(*this);
 }
 
 Widget& widget::get_widget(const std::string& id) {
@@ -425,19 +425,19 @@ void widget::setUnhovered() {
 }
 
 
-void widget::setHovered(bool isHovered, unsigned pointerID) {
-	if(isHovered == this->isHovered(pointerID)){
+void widget::set_hovered(bool isHovered, unsigned pointerID) {
+	if(isHovered == this->is_hovered(pointerID)){
 		return;
 	}
 //	TRACE(<< "widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
 
 	if (isHovered) {
-		ASSERT(!this->isHovered(pointerID))
+		ASSERT(!this->is_hovered(pointerID))
 		this->hovered.insert(pointerID);
 	} else {
-		ASSERT(this->isHovered(pointerID))
+		ASSERT(this->is_hovered(pointerID))
 		this->hovered.erase(pointerID);
 	}
 
-	this->onHoverChanged(pointerID);
+	this->on_hover_changed(pointerID);
 }

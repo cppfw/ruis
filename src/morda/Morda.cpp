@@ -193,8 +193,8 @@ void Morda::onMouseMove(const Vec2r& pos, unsigned id){
 		return;
 	}
 
-	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
+	if(this->rootWidget->is_interactive()){
+		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), id);
 		this->rootWidget->on_mouse_move(pos, id);
 	}
 }
@@ -206,8 +206,8 @@ void Morda::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, u
 		return;
 	}
 
-	if(this->rootWidget->isInteractive()){
-		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), pointerID);
+	if(this->rootWidget->is_interactive()){
+		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), pointerID);
 		this->rootWidget->on_mouse_button(isDown, pos, button, pointerID);
 	}
 }
@@ -219,7 +219,7 @@ void Morda::onMouseHover(bool isHovered, unsigned pointerID){
 		return;
 	}
 
-	this->rootWidget->setHovered(isHovered, pointerID);
+	this->rootWidget->set_hovered(isHovered, pointerID);
 }
 
 void Morda::onKeyEvent(bool isDown, Key_e keyCode){

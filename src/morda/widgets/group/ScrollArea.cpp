@@ -112,7 +112,7 @@ Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 
 void ScrollArea::arrangeWidgets() {
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParams(**i);
+		auto& lp = this->get_layout_params(**i);
 
 		auto d = this->dimForWidget(**i, lp);
 
@@ -145,8 +145,8 @@ void ScrollArea::lay_out(){
 	}
 }
 
-void ScrollArea::onChildrenListChanged(){
-	this->Container::onChildrenListChanged();
+void ScrollArea::on_children_changed(){
+	this->Container::on_children_changed();
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 }
