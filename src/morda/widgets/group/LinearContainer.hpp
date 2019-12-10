@@ -46,7 +46,7 @@ public:
 		real weight;
 	};
 private:
-	std::unique_ptr<Widget::LayoutParams> createLayoutParams(const stob::Node* chain)const override{
+	std::unique_ptr<Widget::LayoutParams> create_layout_params(const stob::Node* chain)const override{
 		return utki::makeUnique<LayoutParams>(chain);
 	}
 };

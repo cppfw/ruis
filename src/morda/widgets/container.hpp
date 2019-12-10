@@ -79,11 +79,6 @@ protected:
 	 * @return A new instance of layout parameters object.
 	 */
 	virtual std::unique_ptr<LayoutParams> create_layout_params(const stob::Node* chain = nullptr)const{
-		return this->createLayoutParams(chain); // TODO: deprecated, remove.
-	}
-
-	//TODO: deprecated, remove.
-	virtual std::unique_ptr<LayoutParams> createLayoutParams(const stob::Node* chain = nullptr)const{
 		return utki::makeUnique<Widget::LayoutParams>(chain);
 	}
 
