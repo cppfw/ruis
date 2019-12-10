@@ -216,7 +216,7 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 	auto ret = this->children_v.variable.emplace(before, std::move(w));
 
 	ww.parent_v = this;
-	ww.onParentChanged();
+	ww.on_parent_changed();
 
 	this->onChildrenListChanged();
 
@@ -256,7 +256,7 @@ container::list::const_iterator container::erase(list::const_iterator child){
 
 	w->parent_v = nullptr;
 	w->setUnhovered();
-	w->onParentChanged();
+	w->on_parent_changed();
 
 	this->onChildrenListChanged();
 

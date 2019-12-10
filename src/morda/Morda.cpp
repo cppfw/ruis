@@ -195,7 +195,7 @@ void Morda::onMouseMove(const Vec2r& pos, unsigned id){
 
 	if(this->rootWidget->isInteractive()){
 		this->rootWidget->setHovered(this->rootWidget->rect().overlaps(pos), id);
-		this->rootWidget->onMouseMove(pos, id);
+		this->rootWidget->on_mouse_move(pos, id);
 	}
 }
 

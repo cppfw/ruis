@@ -108,7 +108,7 @@ void widget::resize(const morda::Vec2r& newDims){
 		if(this->relayoutNeeded){
 			this->clearCache();
 			this->relayoutNeeded = false;
-			this->layOut();
+			this->lay_out();
 		}
 		return;
 	}
@@ -118,7 +118,7 @@ void widget::resize(const morda::Vec2r& newDims){
 	utki::clampBottom(this->rectangle.d.x, real(0.0f));
 	utki::clampBottom(this->rectangle.d.y, real(0.0f));
 	this->relayoutNeeded = false;
-	this->onResize();//call virtual method
+	this->on_resize(); // call virtual method
 }
 
 

@@ -598,10 +598,15 @@ public:
 	 * @brief Handle mouse move event.
 	 * Called by framework when mouse pointer was moved within the widget.
 	 * @param pos - new position of the mouse cursor in widget local coordinates.
-	 * @param pointerID - ID of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
+	virtual bool on_mouse_move(const morda::Vec2r& pos, unsigned pointer_id){
+		return this->onMouseMove(pos, pointer_id); //TODO: deprecated, remove. Should return false.
+	}
+
+	//TODO: deprecated, remove.
 	virtual bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		return false;
 	}
@@ -609,8 +614,14 @@ public:
 	/**
 	 * @brief Handle mouse hover changed event.
 	 * Called by framework when mouse pointer enters or leaves the widget boundaries.
-	 * @param pointerID - ID of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 */
+	virtual void on_hover_changed(unsigned pointer_id){
+//		TRACE(<< "widget::on_hover_changed(): this->IsHovered() = " << this->IsHovered() << std::endl)
+		this->onHoverChanged(pointer_id); //TODO: deprecated, remove.
+	}
+
+	//TODO: deprecated, remove.
 	virtual void onHoverChanged(unsigned pointerID){
 //		TRACE(<< "widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
@@ -619,9 +630,16 @@ public:
 	 * @brief Invoked when widget's size changes.
 	 * Default implementation performs laying out of the widget by calling its layout() method.
 	 */
+	virtual void on_resize(){
+//		TRACE(<< "widget::OnResize(): invoked" << std::endl)
+		this->onResize(); //TODO: deprecated, remove.
+		// this->lay_out(); //TODO: uncomment
+	}
+
+	//TODO: deprecated, remove.
 	virtual void onResize(){
 //		TRACE(<< "widget::OnResize(): invoked" << std::endl)
-		this->layOut();
+		this->lay_out();
 	}
 
 	/**
@@ -629,6 +647,11 @@ public:
 	 * Called when parent of the widget changes. This happens when widget is
 	 * added to or removed from a Container.
 	 */
+	virtual void on_parent_changed(){
+		this->onParentChanged(); //TODO: deprecated, remove.
+	}
+
+	//TODO: deprecated, remove.
 	virtual void onParentChanged(){}
 
 	/**
