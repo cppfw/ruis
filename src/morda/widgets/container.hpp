@@ -48,11 +48,11 @@ private:
 		~children_union(){}
 	} children_v;
 
-	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
+	// Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned>> mouseCaptureMap;
 
 private:
-	//flag indicating that modifications to children list are blocked
+	// flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
 
 	class BlockedFlagGuard{
@@ -78,6 +78,11 @@ protected:
 	 * @param chain - STOB chain describing layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
+	virtual std::unique_ptr<LayoutParams> create_layout_params(const stob::Node* chain = nullptr)const{
+		return this->createLayoutParams(chain); // TODO: deprecated, remove.
+	}
+
+	//TODO: deprecated, remove.
 	virtual std::unique_ptr<LayoutParams> createLayoutParams(const stob::Node* chain = nullptr)const{
 		return utki::makeUnique<Widget::LayoutParams>(chain);
 	}
@@ -91,7 +96,12 @@ protected:
 	 * @param lp - layout parameters of the widget.
 	 * @return Dimensions of widget.
 	 */
-	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
+	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
+
+	//TODO: deprecated, remove.
+	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const{
+		return this->dims_for_widget(w, lp);
+	}
 
 protected:
 
@@ -101,7 +111,7 @@ protected:
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
 	 */
-	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
+	template <class T> const T& get_layout_params_as(const widget& w)const{
 		auto p = dynamic_cast<const T*>(&this->getLayoutParams(w));
 		if(!p){
 			w.layoutParams.reset();
@@ -112,11 +122,19 @@ protected:
 		return *p;
 	}
 
+	//TODO: deprecated, remove.
+	template <class T> const T& getLayoutParamsAs(const Widget& w)const{
+		return this->get_layout_params_as<T>(w);
+	}
+
 public:
-	class LayoutExc : public Exc{
+	class layout_exception : public exception{
 	public:
-		LayoutExc(const std::string& message) : Exc(message){}
+		layout_exception(const std::string& message) : exception(message){}
 	};
+
+	// TODO: deprecated, remove.
+	typedef layout_exception LayoutExc;
 
 	/**
 	 * @brief Get layout parameters of child widget.

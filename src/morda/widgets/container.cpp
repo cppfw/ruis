@@ -291,7 +291,7 @@ std::shared_ptr<Widget> container::try_get_widget(const std::string& id)noexcept
 
 
 
-Vec2r container::dimForWidget(const Widget& w, const LayoutParams& lp)const{
+vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dim[i] == LayoutParams::max_c || lp.dim[i] == LayoutParams::fill_c){
