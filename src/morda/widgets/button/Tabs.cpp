@@ -108,13 +108,13 @@ void Tabs::layOut() {
 void Tabs::render(const morda::Matr4r& matrix) const {
 	for(auto& w: this->children()){
 		if(!this->isWidgetActive(*w)){
-			this->renderChild(matrix, *w);
+			this->render_child(matrix, *w);
 		}
 	}
 
 	auto& ab = this->getActiveButton();
 	if(ab){
-		this->renderChild(matrix, *ab);
+		this->render_child(matrix, *ab);
 	}
 
 	//render filler

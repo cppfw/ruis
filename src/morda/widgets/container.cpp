@@ -19,17 +19,28 @@ container::container(const stob::Node* chain) :
 	}
 }
 
-Widget::LayoutParams& container::getLayoutParams(Widget& w){
+widget::layout_params& container::get_layout_params(widget& w){
 	this->setRelayoutNeeded();
 
-	auto& lp = const_cast<std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type>(this)->getLayoutParams(w);
+	auto& lp = const_cast<
+			std::add_pointer<
+					std::add_const<
+							std::remove_pointer<decltype(this)>::type
+						>::type
+				>::type
+		>(this)->getLayoutParams(w);
 
-	return const_cast<std::add_lvalue_reference<std::remove_const<std::remove_reference<decltype(lp)>::type>::type>::type>(lp);
+	return const_cast<
+			std::add_lvalue_reference<
+					std::remove_const<
+							std::remove_reference<decltype(lp)>::type
+						>::type
+				>::type>(lp);
 }
 
-const Widget::LayoutParams& container::getLayoutParams(const Widget& w)const{
+const widget::layout_params& container::get_layout_params(const widget& w)const{
 	if(w.parent() && w.parent() != this){
-		throw morda::Exc("container::getLayoutParams(): the widget is added to another container");
+		throw std::invalid_argument("container::get_layout_params(): the given widget is not a child of this container");
 	}
 
 	if(!w.layoutParams){
@@ -45,7 +56,7 @@ void container::add(const stob::Node& chain){
 	}
 }
 
-void container::renderChild(const Matr4r& matrix, const Widget& c) const {
+void container::render_child(const Matr4r& matrix, const Widget& c) const {
 	if(!c.isVisible()){
 		return;
 	}
@@ -59,7 +70,7 @@ void container::renderChild(const Matr4r& matrix, const Widget& c) const {
 
 void container::render(const morda::Matr4r& matrix)const{
 	for(auto& w: this->children()){
-		this->renderChild(matrix, *w);
+		this->render_child(matrix, *w);
 	}
 }
 

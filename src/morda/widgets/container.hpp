@@ -128,8 +128,7 @@ protected:
 	}
 
 public:
-	class layout_exception : public exception{
-	public:
+	struct layout_exception : public exception{
 		layout_exception(const std::string& message) : exception(message){}
 	};
 
@@ -140,19 +139,36 @@ public:
 	 * @brief Get layout parameters of child widget.
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
+	 * @throw std::invalid_argument - in case the given widget is not a child of this container.
 	 */
-	LayoutParams& getLayoutParams(Widget& w);
+	layout_params& get_layout_params(widget& w);
+
+	//TODO: deprecated, remove.
+	LayoutParams& getLayoutParams(Widget& w){
+		return this->get_layout_params(w);
+	}
 
 	/**
 	 * @brief Get layout parameters of child widget.
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
+	 * @throw std::invalid_argument - in case the given widget is not a child of this container.
 	 */
-	const LayoutParams& getLayoutParams(const Widget& w)const;
+	const layout_params& get_layout_params(const widget& w)const;
 
+	//TODO: deprecated, remove.
+	const LayoutParams& getLayoutParams(const Widget& w)const{
+		return this->get_layout_params(w);
+	}
+
+	//TODO: deprecated, remove.
 	using Widget::getLayoutParams;
+
+	using widget::get_layout_params;
+
 protected:
-	void renderChild(const Matr4r& matrix, const Widget& c)const;
+
+	void render_child(const matrix4& matrix, const widget& c)const;
 public:
 	/**
 	 * @brief Constructor.
