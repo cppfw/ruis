@@ -57,7 +57,7 @@ void container::add(const stob::Node& chain){
 }
 
 void container::render_child(const Matr4r& matrix, const Widget& c) const {
-	if(!c.isVisible()){
+	if(!c.is_visible()){
 		return;
 	}
 
@@ -147,7 +147,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
-		if(!c->isInteractive()){
+		if(!c->is_interactive()){
 			ASSERT_INFO(!c->is_hovered(), "c->name() = " << c->name())
 			continue;
 		}

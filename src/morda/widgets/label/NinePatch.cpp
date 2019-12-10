@@ -254,7 +254,7 @@ void NinePatch::applyImages(){
 
 void NinePatch::setCenterVisible(bool visible){
 	ASSERT(this->imageMatrix_v[1][1])
-	this->imageMatrix_v[1][1]->setVisible(visible);
+	this->imageMatrix_v[1][1]->set_visible(visible);
 }
 
 void NinePatch::onBlendingChanged(){

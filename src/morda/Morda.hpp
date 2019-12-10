@@ -4,7 +4,7 @@
 
 #include "render/Renderer.hpp"
 
-#include "util/MouseButton.hpp"
+#include "util/mouse_button.hpp"
 
 #include "Updateable.hpp"
 

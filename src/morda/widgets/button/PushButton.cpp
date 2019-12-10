@@ -31,7 +31,7 @@ bool PushButton::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButt
 
 
 
-void PushButton::onHoverChanged(unsigned pointerId){
+void PushButton::on_hover_changed(unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 
 	//TODO: check if was hovered by the same pointer

@@ -30,7 +30,7 @@ public:
 	 */
 	std::function<bool (Widget& widget, const morda::Vec2r& pos, unsigned pointerId)> mouseMove;
 
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	/**
 	 * @brief Hover changed event signal.
@@ -38,7 +38,7 @@ public:
 	 */
 	std::function<void(Widget& widget, unsigned pointerID)> hoverChanged;
 
-	void onHoverChanged(unsigned pointerID)override;
+	void on_hover_changed(unsigned pointerID)override;
 };
 
 }

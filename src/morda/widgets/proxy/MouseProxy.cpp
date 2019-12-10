@@ -19,7 +19,7 @@ bool MouseProxy::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButt
 
 
 
-bool MouseProxy::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+bool MouseProxy::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
 	if(this->mouseMove){
 		return this->mouseMove(*this, pos, pointerId);
 	}
@@ -28,7 +28,7 @@ bool MouseProxy::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
 
 
 
-void MouseProxy::onHoverChanged(unsigned pointerID){
+void MouseProxy::on_hover_changed(unsigned pointerID){
 	if(this->hoverChanged){
 		this->hoverChanged(*this, pointerID);
 	}

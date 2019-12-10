@@ -123,7 +123,7 @@ void DropDownSelector::showDropdownMenu() {
 		return;
 	}
 
-	auto overlay = this->findAncestor<Overlay>();
+	auto overlay = this->find_ancestor<Overlay>();
 	if(!overlay){
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
@@ -154,7 +154,7 @@ void DropDownSelector::showDropdownMenu() {
 				return true;
 			};
 
-	overlay->showContextMenu(np, this->calcPosInParent(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
+	overlay->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
 bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
@@ -166,7 +166,7 @@ bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, Mou
 }
 
 void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
-	auto oc = this->findAncestor<Overlay>();
+	auto oc = this->find_ancestor<Overlay>();
 	if(!oc){
 		throw Exc("No Overlay found in ancestors of DropDownSelector");
 	}
@@ -288,7 +288,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	mp->hoverChanged = [this, clWeak, index](Widget& w, unsigned id){
 		if(auto c = clWeak.lock()){
-			c->setVisible(w.is_hovered());
+			c->set_visible(w.is_hovered());
 		}
 		if(w.is_hovered()){
 			this->hoveredIndex = int(index);

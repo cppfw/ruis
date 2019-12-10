@@ -295,7 +295,7 @@ void widget::clearCache(){
 
 
 void widget::onKeyInternal(bool isDown, Key_e keyCode){
-	if(this->isInteractive()){
+	if(this->is_interactive()){
 		if(this->on_key(isDown, keyCode)){
 			return;
 		}
@@ -394,7 +394,7 @@ Widget& widget::get_widget(const std::string& id) {
 }
 
 void widget::set_enabled(bool enable) {
-//	TRACE(<< "widget::setEnabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
+//	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
 	if(this->isEnabled_v == enable){
 		return;
 	}
@@ -402,11 +402,11 @@ void widget::set_enabled(bool enable) {
 	this->isEnabled_v = enable;
 
 	//Un-hover this widget if it becomes disabled because it is not supposed to receive mouse input.
-	if(!this->isEnabled()){
+	if(!this->is_enabled()){
 		this->set_unhovered();
 	}
 
-	this->onEnabledChanged();
+	this->on_enabled_changed();
 }
 
 void widget::set_visible(bool visible) {

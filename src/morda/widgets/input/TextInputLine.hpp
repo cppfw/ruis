@@ -49,13 +49,13 @@ public:
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void on_focus_changed()override;
 
 	bool on_key(bool isDown, Key_e keyCode)override;
 
-	void onResize()override;
+	void on_resize()override;
 
 	void update(std::uint32_t dt)override;
 

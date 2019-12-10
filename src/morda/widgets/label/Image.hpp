@@ -46,7 +46,7 @@ public:
 
 	void setImage(const std::shared_ptr<const ResImage>& image);
 
-	void onResize() override;
+	void on_resize() override;
 
 	const decltype(repeat_v)& repeat()const noexcept{
 		return this->repeat_v;

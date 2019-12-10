@@ -27,8 +27,8 @@ public:
 	}
 	
 
-	void onHoverChanged(unsigned pointerID)override{
-		this->ChoiceButton::onHoverChanged(pointerID);
+	void on_hover_changed(unsigned pointerID)override{
+		this->ChoiceButton::on_hover_changed(pointerID);
 	}
 	
 	void onPressedChanged() override;

@@ -27,8 +27,8 @@ public:
 		return this->ToggleButton::on_mouse_button(isDown, pos, button, pointerId);
 	}
 
-	void onHoverChanged(unsigned pointerID)override{
-		this->ToggleButton::onHoverChanged(pointerID);
+	void on_hover_changed(unsigned pointerID)override{
+		this->ToggleButton::on_hover_changed(pointerID);
 	}
 
 	void onPressedChanged()override;

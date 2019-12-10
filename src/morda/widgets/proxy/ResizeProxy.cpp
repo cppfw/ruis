@@ -6,8 +6,8 @@ using namespace morda;
 
 
 
-void ResizeProxy::onResize() {
-	this->Widget::onResize();
+void ResizeProxy::on_resize() {
+	this->Widget::on_resize();
 
 	if (this->resized) {
 		this->resized(this->rect().d);

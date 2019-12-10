@@ -23,9 +23,9 @@ bool ScrollArea::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButt
 
 
 
-bool ScrollArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool ScrollArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 	Vec2r d = -this->curScrollPos;
-	return this->Container::onMouseMove(pos - d, pointerID);
+	return this->Container::on_mouse_move(pos - d, pointerID);
 }
 
 

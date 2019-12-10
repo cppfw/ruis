@@ -15,7 +15,7 @@ ChoiceButton::ChoiceButton(const stob::Node* chain) :
 
 
 void ChoiceButton::onPressedChanged() {
-	auto cg = this->findAncestor<ChoiceGroup>();
+	auto cg = this->find_ancestor<ChoiceGroup>();
 	if(!cg){
 		this->ToggleButton::onPressedChanged();
 		return;

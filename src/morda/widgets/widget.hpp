@@ -18,7 +18,7 @@
 #include "../render/Texture2D.hpp"
 
 #include "../util/keycodes.hpp"
-#include "../util/MouseButton.hpp"
+#include "../util/mouse_button.hpp"
 
 #include "../exception.hpp"
 
@@ -598,12 +598,6 @@ public:
 	 */
 	virtual void on_hover_changed(unsigned pointer_id){
 //		TRACE(<< "widget::on_hover_changed(): this->IsHovered() = " << this->IsHovered() << std::endl)
-		this->onHoverChanged(pointer_id); //TODO: deprecated, remove.
-	}
-
-	//TODO: deprecated, remove.
-	virtual void onHoverChanged(unsigned pointerID){
-//		TRACE(<< "widget::OnHoverChanged(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
 	/**
@@ -611,13 +605,6 @@ public:
 	 * Default implementation performs laying out of the widget by calling its layout() method.
 	 */
 	virtual void on_resize(){
-//		TRACE(<< "widget::OnResize(): invoked" << std::endl)
-		this->onResize(); //TODO: deprecated, remove.
-		// this->lay_out(); //TODO: uncomment
-	}
-
-	//TODO: deprecated, remove.
-	virtual void onResize(){
 //		TRACE(<< "widget::OnResize(): invoked" << std::endl)
 		this->lay_out();
 	}
@@ -627,12 +614,7 @@ public:
 	 * Called when parent of the widget changes. This happens when widget is
 	 * added to or removed from a Container.
 	 */
-	virtual void on_parent_changed(){
-		this->onParentChanged(); //TODO: deprecated, remove.
-	}
-
-	//TODO: deprecated, remove.
-	virtual void onParentChanged(){}
+	virtual void on_parent_changed(){}
 
 	/**
 	 * @brief Measure how big a widget wants to be.
@@ -640,7 +622,7 @@ public:
 	 * @param quotum - space available to widget. If value is negative then a minimum size needed for proper widget drawing is assumed.
 	 * @return Measured desired widget dimensions.
 	 */
-	virtual morda::Vec2r measure(const morda::Vec2r& quotum)const;
+	virtual vector2 measure(const vector2& quotum)const;
 
 public:
 
@@ -675,11 +657,6 @@ public:
 	 */
 	void set_enabled(bool enable);
 
-	//TODO: deprecated, remove.
-	void setEnabled(bool enable){
-		this->set_enabled(enable);
-	}
-
 	/**
 	 * @brief Check if the widget is currently enabled.
 	 * @return true if the widget is currently enabled.
@@ -689,20 +666,10 @@ public:
 		return this->isEnabled_v;
 	}
 
-	//TODO: deprecated, remove.
-	bool isEnabled()const noexcept{
-		return this->is_enabled();
-	}
-
 	/**
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
-	virtual void on_enabled_changed(){
-		this->onEnabledChanged(); //TODO: deprecated, remove.
-	}
-
-	//TODO: deprecated, remove.
-	virtual void onEnabledChanged(){}
+	virtual void on_enabled_changed(){}
 
 	/**
 	 * @brief Check if widget can receive user input.
@@ -712,11 +679,6 @@ public:
 	 */
 	bool is_interactive()const noexcept{
 		return this->is_enabled() && this->is_visible();
-	}
-
-	//TODO: deprecated, remove.
-	bool isInteractive()const noexcept{
-		return this->is_interactive();
 	}
 
 	/**
@@ -737,11 +699,6 @@ public:
 	 */
 	template <class T> T* find_ancestor(const char* id = nullptr); //defined in container.hpp
 
-	//TODO: deprecated, remove.
-	template <class T> T* findAncestor(const char* name = nullptr){
-		return this->find_ancestor<T>(name);
-	}
-
 	/**
 	 * @brief Calculate position in ancestor coordinates.
 	 * @param pos - position to translate to ancestor coordinates.
@@ -750,16 +707,6 @@ public:
 	 * @return translated position.
 	 */
 	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
-
-	//TODO: deprecated, remove.
-	Vec2r calcPosInParent(Vec2r pos, const widget* parent = nullptr){
-		return this->pos_in_ancestor(pos, parent);
-	}
-
-	//TODO: deprecated, remove.
-	Vec2r posInAncestor(const widget& ancestor){
-		return this->pos_in_ancestor(vector2(0), &ancestor);
-	}
 };
 
 //TODO: deprecated, remove.

@@ -28,7 +28,7 @@ public:
 
 	void setCursor(std::shared_ptr<const ResCursor> cursor);
 
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) override;
 
 	void render(const morda::Matr4r& matrix) const override;
 };

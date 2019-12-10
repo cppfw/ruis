@@ -87,7 +87,7 @@ bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseB
 	return true;
 }
 
-bool TextInputLine::onMouseMove(const morda::Vec2r& pos, unsigned pointerId){
+bool TextInputLine::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
@@ -237,8 +237,8 @@ void TextInputLine::on_focus_changed(){
 	}
 }
 
-void TextInputLine::onResize(){
-//	TRACE(<< "TextInputLine::onResize(): size = " << this->rect().d << std::endl)
+void TextInputLine::on_resize(){
+//	TRACE(<< "TextInputLine::on_resize(): size = " << this->rect().d << std::endl)
 	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 }
 

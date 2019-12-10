@@ -89,7 +89,7 @@ public:
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId)override;
 
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
 
 	void setBackground(std::shared_ptr<Widget> w);
 

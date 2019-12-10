@@ -31,13 +31,13 @@ RadioButton::RadioButton(const stob::Node* chain) :
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)
-	this->checkWidget->setVisible(this->isPressed());
+	this->checkWidget->set_visible(this->isPressed());
 }
 
 
 
 void RadioButton::onPressedChanged(){
 	this->ChoiceButton::onPressedChanged();
-	this->checkWidget->setVisible(this->isPressed());
+	this->checkWidget->set_visible(this->isPressed());
 	this->clearCache();
 }

@@ -24,7 +24,7 @@ void MouseCursor::setCursor(std::shared_ptr<const ResCursor> cursor) {
 	}
 }
 
-bool MouseCursor::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool MouseCursor::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 	if(pointerID == 0){
 		this->cursorPos = pos;
 	}

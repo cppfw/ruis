@@ -24,7 +24,7 @@ protected:
 	
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId) override;
 	
-	void onHoverChanged(unsigned pointerID) override;
+	void on_hover_changed(unsigned pointerID) override;
 	
 public:
 	PushButton(const stob::Node* chain) :

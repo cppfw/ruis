@@ -29,7 +29,6 @@
 #include "../../../src/morda/widgets/label/Image.hpp"
 
 #include "../../../src/morda/util/ZipFile.hpp"
-#include "../../../src/morda/util/MouseButton.hpp"
 #include "morda/widgets/button/DropDownSelector.hpp"
 
 
@@ -543,7 +542,7 @@ public:
 			{
 				auto colorLabel = v->try_get_widget_as<morda::Color>("selection");
 
-				colorLabel->setVisible(this->selectedItem == path);
+				colorLabel->set_visible(this->selectedItem == path);
 
 				auto mp = v->try_get_widget_as<morda::MouseProxy>("mouse_proxy");
 				ASSERT(mp)

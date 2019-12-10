@@ -20,8 +20,8 @@ protected:
 		return this->PushButton::on_mouse_button(isDown, pos, button, pointerID);
 	}
 
-	void onHoverChanged(unsigned pointerID) override{
-		this->PushButton::onHoverChanged(pointerID);
+	void on_hover_changed(unsigned pointerID) override{
+		this->PushButton::on_hover_changed(pointerID);
 	}
 
 };
