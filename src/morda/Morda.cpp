@@ -222,7 +222,7 @@ void Morda::onMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->set_hovered(isHovered, pointerID);
 }
 
-void Morda::onKeyEvent(bool isDown, Key_e keyCode){
+void Morda::onKeyEvent(bool isDown, key keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){
@@ -251,7 +251,7 @@ void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
 	}
 }
 
-void Morda::onCharacterInput(const UnicodeProvider& unicode, Key_e key){
+void Morda::onCharacterInput(const UnicodeProvider& unicode, key key){
 	if(auto w = this->focusedWidget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){

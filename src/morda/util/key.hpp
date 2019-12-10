@@ -16,7 +16,7 @@ namespace morda{
 /**
  * @brief Keyboard keys enumeration.
  */
-enum class Key_e{
+enum class key{
 //WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
 	UNKNOWN,
 	SPACE,
@@ -116,7 +116,5 @@ enum class Key_e{
 	
 	ENUM_SIZE
 };
-
-
 
 }

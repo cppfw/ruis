@@ -24,11 +24,11 @@ void handleMouseHover(application& app, bool isHovered, unsigned pointerID){
 	app.handleMouseHover(isHovered, pointerID);
 }
 
-void handleCharacterInput(application& app, const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
+void handleCharacterInput(application& app, const morda::Morda::UnicodeProvider& unicodeResolver, morda::key key){
 	app.handleCharacterInput(unicodeResolver, key);
 }
 
-void handleKeyEvent(application& app, bool isDown, morda::Key_e keyCode){
+void handleKeyEvent(application& app, bool isDown, morda::key keyCode){
 	app.handleKeyEvent(isDown, keyCode);
 }
 

@@ -162,7 +162,7 @@ public:
 	 * @param isDown - is the key pressed (true) or released (false).
 	 * @param keyCode - code of the key.
 	 */
-	void onKeyEvent(bool isDown, Key_e keyCode);
+	void onKeyEvent(bool isDown, key keyCode);
 
 	/**
 	 * @brief Unicode input provider.
@@ -188,7 +188,7 @@ public:
 	 * @param unicode - unicode string provider.
 	 * @param key - key code associated with character input, can be UNKNOWN.
 	 */
-	void onCharacterInput(const UnicodeProvider& unicode, Key_e key);
+	void onCharacterInput(const UnicodeProvider& unicode, key key);
 
 
 	/**

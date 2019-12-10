@@ -47,263 +47,263 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
 
 namespace{
 
-	const std::array<morda::Key_e, std::uint8_t(-1) + 1> keyCodeMap = {
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //VK_LBUTTON
-		morda::Key_e::UNKNOWN, //VK_RBUTTON
-		morda::Key_e::UNKNOWN, //VK_CANCEL
-		morda::Key_e::UNKNOWN, //VK_MBUTTON
-		morda::Key_e::UNKNOWN, //VK_XBUTTON1, 5
-		morda::Key_e::UNKNOWN, //VK_XBUTTON2
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::BACKSPACE, //VK_BACK = backspace key
-		morda::Key_e::TAB, //VK_TAB
-		morda::Key_e::UNKNOWN, //Reserved, 10
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //VK_CLEAR = clear key???
-		morda::Key_e::ENTER, //VK_RETURN
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined, 15
-		morda::Key_e::LEFT_SHIFT, //VK_SHIFT
-		morda::Key_e::LEFT_CONTROL, //VK_CONTROL
-		morda::Key_e::LEFT_ALT, //VK_MENU = alt key
-		morda::Key_e::PAUSE, //VK_PAUSE
-		morda::Key_e::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
-		morda::Key_e::UNKNOWN, //VK_KANA, VK_HANGUEL, VK_HANGUL
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //VK_JUNJA
-		morda::Key_e::UNKNOWN, //VK_FINAL
-		morda::Key_e::UNKNOWN, //VK_HANJA, VK_KANJI, 25
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::ESCAPE, //VK_ESCAPE
-		morda::Key_e::UNKNOWN, //VK_CONVERT
-		morda::Key_e::UNKNOWN, //VK_NONCONVERT
-		morda::Key_e::UNKNOWN, //VK_ACCEPT, 30
-		morda::Key_e::UNKNOWN, //VK_MODECHANGE
-		morda::Key_e::SPACE, //VK_SPACE = space bar key
-		morda::Key_e::PAGE_UP, //VK_PRIOR = page up key
-		morda::Key_e::PAGE_DOWN,//VK_NEXT = page down key
-		morda::Key_e::END, //VK_END, 35
-		morda::Key_e::HOME,//VK_HOME
-		morda::Key_e::LEFT,//VK_LEFT
-		morda::Key_e::UP, //VK_UP
-		morda::Key_e::RIGHT, //VK_RIGHT
-		morda::Key_e::DOWN, //VK_DOWN, 40
-		morda::Key_e::UNKNOWN, //VK_SELECT
-		morda::Key_e::UNKNOWN, //VK_PRINT
-		morda::Key_e::UNKNOWN, //VK_EXECUTE
-		morda::Key_e::PRINT_SCREEN,//VK_SNAPSHOT = print screen key
-		morda::Key_e::INSERT, //VK_INSERT, 45
-		morda::Key_e::DELETE, //VK_DELETE
-		morda::Key_e::UNKNOWN, //VK_HELP
-		morda::Key_e::ZERO, //0 key
-		morda::Key_e::ONE, //1 key
-		morda::Key_e::TWO, //2 key, 50
-		morda::Key_e::THREE, //3 key
-		morda::Key_e::FOUR, //4 key
-		morda::Key_e::FIVE, //5 key
-		morda::Key_e::SIX, //6 key
-		morda::Key_e::SEVEN, //7 key, 55
-		morda::Key_e::EIGHT, //8 key
-		morda::Key_e::NINE, //9 key
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined, 60
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::UNKNOWN, //Undefined
-		morda::Key_e::A, //A key, 65
-		morda::Key_e::B, //B key
-		morda::Key_e::C, //C key
-		morda::Key_e::D, //D key
-		morda::Key_e::E, //E key
-		morda::Key_e::F, //F key, 70
-		morda::Key_e::G, //G key
-		morda::Key_e::H, //H key
-		morda::Key_e::I, //I key
-		morda::Key_e::J, //J key
-		morda::Key_e::K, //K key, 75
-		morda::Key_e::L, //L key
-		morda::Key_e::M, //M key
-		morda::Key_e::N, //N key
-		morda::Key_e::O, //O key
-		morda::Key_e::P, //P key, 80
-		morda::Key_e::Q, //Q key
-		morda::Key_e::R, //R key
-		morda::Key_e::S, //S key
-		morda::Key_e::T, //T key
-		morda::Key_e::U, //U key, 85
-		morda::Key_e::V, //V key
-		morda::Key_e::W, //W key
-		morda::Key_e::X, //X key
-		morda::Key_e::Y, //Y key
-		morda::Key_e::Z, //Z key, 90
-		morda::Key_e::WINDOWS, //VK_LWIN = left windows key
-		morda::Key_e::WINDOWS, //VK_RWIN = right windows key
-		morda::Key_e::UNKNOWN, //VK_APPS = applications key
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //VK_SLEEP = computer sleep key, 95
-		morda::Key_e::ZERO, //VK_NUMPAD0 = numeric keypad 0 key
-		morda::Key_e::ONE, //VK_NUMPAD1 = numeric keypad 1 key
-		morda::Key_e::TWO, //VK_NUMPAD2 = numeric keypad 2 key
-		morda::Key_e::THREE, //VK_NUMPAD3 = numeric keypad 3 key
-		morda::Key_e::FOUR, //VK_NUMPAD4 = numeric keypad 4 key, 100
-		morda::Key_e::FIVE, //VK_NUMPAD5 = numeric keypad 5 key
-		morda::Key_e::SIX, //VK_NUMPAD6 = numeric keypad 6 key
-		morda::Key_e::SEVEN, //VK_NUMPAD7 = numeric keypad 7 key
-		morda::Key_e::EIGHT, //VK_NUMPAD8 = numeric keypad 8 key
-		morda::Key_e::NINE, //VK_NUMPAD9 = numeric keypad 9 key, 105
-		morda::Key_e::UNKNOWN, //VK_MULTIPLY = multiply key
-		morda::Key_e::UNKNOWN, //VK_ADD
-		morda::Key_e::UNKNOWN, //VK_SEPARATOR
-		morda::Key_e::UNKNOWN, //VK_SUBTRACT
-		morda::Key_e::UNKNOWN, //VK_DECIMAL, 110
-		morda::Key_e::UNKNOWN, //VK_DIVIDE
-		morda::Key_e::F1, //VK_F1
-		morda::Key_e::F2, //VK_F2
-		morda::Key_e::F3, //VK_F3
-		morda::Key_e::F4, //VK_F4, 115
-		morda::Key_e::F5, //VK_F5
-		morda::Key_e::F6, //VK_F6
-		morda::Key_e::F7, //VK_F7
-		morda::Key_e::F8, //VK_F8
-		morda::Key_e::F9, //VK_F9, 120
-		morda::Key_e::F10, //VK_F10
-		morda::Key_e::F11, //VK_F11
-		morda::Key_e::F12, //VK_F12
-		morda::Key_e::UNKNOWN, //VK_F13
-		morda::Key_e::UNKNOWN, //VK_F14, 125
-		morda::Key_e::UNKNOWN, //VK_F15
-		morda::Key_e::UNKNOWN, //VK_F16
-		morda::Key_e::UNKNOWN, //VK_F17
-		morda::Key_e::UNKNOWN, //VK_F18
-		morda::Key_e::UNKNOWN, //VK_F19, 130
-		morda::Key_e::UNKNOWN, //VK_F20
-		morda::Key_e::UNKNOWN, //VK_F21
-		morda::Key_e::UNKNOWN, //VK_F22
-		morda::Key_e::UNKNOWN, //VK_F23
-		morda::Key_e::UNKNOWN, //VK_F24, 135
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned, 140
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //VK_NUMLOCK
-		morda::Key_e::UNKNOWN, //VK_SCROLL = scroll lock key, 145
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific, 150
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned, 155
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::LEFT_SHIFT, //VK_LSHIFT, 160
-		morda::Key_e::RIGHT_SHIFT, //VK_RSHIFT
-		morda::Key_e::LEFT_CONTROL, //VK_LCONTROL
-		morda::Key_e::RIGHT_CONTROL, //VK_RCONTROL
-		morda::Key_e::WINDOWS_MENU, //VK_LMENU = left menu key
-		morda::Key_e::WINDOWS_MENU, //VK_RMENU, 165
-		morda::Key_e::UNKNOWN, //VK_BROWSER_BACK
-		morda::Key_e::UNKNOWN, //VK_BROWSER_FORWARD
-		morda::Key_e::UNKNOWN, //VK_BROWSER_REFRESH
-		morda::Key_e::UNKNOWN, //VK_BROWSER_STOP
-		morda::Key_e::UNKNOWN, //VK_BROWSER_SEARCH, 170
-		morda::Key_e::UNKNOWN, //VK_BROWSER_FAVORITES
-		morda::Key_e::UNKNOWN, //VK_BROWSER_HOME
-		morda::Key_e::UNKNOWN, //VK_VOLUME_MUTE
-		morda::Key_e::UNKNOWN, //VK_VOLUME_DOWN
-		morda::Key_e::UNKNOWN, //VK_VOLUME_UP, 175
-		morda::Key_e::UNKNOWN, //VK_MEDIA_NEXT_TRACK
-		morda::Key_e::UNKNOWN, //VK_MEDIA_PREV_TRACK
-		morda::Key_e::UNKNOWN, //VK_MEDIA_STOP
-		morda::Key_e::UNKNOWN, //VK_MEDIA_PLAY_PAUSE
-		morda::Key_e::UNKNOWN, //VK_LAUNCH_MAIL, 180
-		morda::Key_e::UNKNOWN, //VK_LAUNCH_MEDIA_SELECT
-		morda::Key_e::UNKNOWN, //VK_LAUNCH_APP1
-		morda::Key_e::UNKNOWN, //VK_LAUNCH_APP2
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 185
-		morda::Key_e::UNKNOWN, //VK_OEM_1
-		morda::Key_e::UNKNOWN, //VK_OEM_PLUS
-		morda::Key_e::UNKNOWN, //VK_OEM_COMMA
-		morda::Key_e::UNKNOWN, //VK_OEM_MINUS
-		morda::Key_e::UNKNOWN, //VK_OEM_PERIOD, 190
-		morda::Key_e::UNKNOWN, //VK_OEM_2
-		morda::Key_e::UNKNOWN, //VK_OEM_3
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 195
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 200
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 205
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 210
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //Reserved, 215
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //VK_OEM_4
-		morda::Key_e::UNKNOWN, //VK_OEM_5, 220
-		morda::Key_e::UNKNOWN, //VK_OEM_6
-		morda::Key_e::UNKNOWN, //VK_OEM_7
-		morda::Key_e::UNKNOWN, //VK_OEM_8
-		morda::Key_e::UNKNOWN, //Reserved
-		morda::Key_e::UNKNOWN, //OEM specific, 225
-		morda::Key_e::UNKNOWN, //VK_OEM_102
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //VK_PROCESSKEY
-		morda::Key_e::UNKNOWN, //OEM specific, 230
-		morda::Key_e::UNKNOWN, //VK_PACKET
-		morda::Key_e::UNKNOWN, //Unassigned
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific, 235
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific, 240
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific
-		morda::Key_e::UNKNOWN, //OEM specific, 245
-		morda::Key_e::UNKNOWN, //VK_ATTN
-		morda::Key_e::UNKNOWN, //VK_CRSEL
-		morda::Key_e::UNKNOWN, //VK_EXSEL
-		morda::Key_e::UNKNOWN, //VK_EREOF
-		morda::Key_e::UNKNOWN, //VK_PLAY, 250
-		morda::Key_e::UNKNOWN, //VK_ZOOM
-		morda::Key_e::UNKNOWN, //VK_NONAME
-		morda::Key_e::UNKNOWN, //VK_PA1
-		morda::Key_e::UNKNOWN, //VK_OEM_CLEAR
-		morda::Key_e::UNKNOWN
+	const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //VK_LBUTTON
+		morda::key::UNKNOWN, //VK_RBUTTON
+		morda::key::UNKNOWN, //VK_CANCEL
+		morda::key::UNKNOWN, //VK_MBUTTON
+		morda::key::UNKNOWN, //VK_XBUTTON1, 5
+		morda::key::UNKNOWN, //VK_XBUTTON2
+		morda::key::UNKNOWN, //Undefined
+		morda::key::BACKSPACE, //VK_BACK = backspace key
+		morda::key::TAB, //VK_TAB
+		morda::key::UNKNOWN, //Reserved, 10
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //VK_CLEAR = clear key???
+		morda::key::ENTER, //VK_RETURN
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined, 15
+		morda::key::LEFT_SHIFT, //VK_SHIFT
+		morda::key::LEFT_CONTROL, //VK_CONTROL
+		morda::key::LEFT_ALT, //VK_MENU = alt key
+		morda::key::PAUSE, //VK_PAUSE
+		morda::key::CAPSLOCK, //VK_CAPITAL = caps lock key, 20
+		morda::key::UNKNOWN, //VK_KANA, VK_HANGUEL, VK_HANGUL
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //VK_JUNJA
+		morda::key::UNKNOWN, //VK_FINAL
+		morda::key::UNKNOWN, //VK_HANJA, VK_KANJI, 25
+		morda::key::UNKNOWN, //Undefined
+		morda::key::ESCAPE, //VK_ESCAPE
+		morda::key::UNKNOWN, //VK_CONVERT
+		morda::key::UNKNOWN, //VK_NONCONVERT
+		morda::key::UNKNOWN, //VK_ACCEPT, 30
+		morda::key::UNKNOWN, //VK_MODECHANGE
+		morda::key::SPACE, //VK_SPACE = space bar key
+		morda::key::PAGE_UP, //VK_PRIOR = page up key
+		morda::key::PAGE_DOWN,//VK_NEXT = page down key
+		morda::key::END, //VK_END, 35
+		morda::key::HOME,//VK_HOME
+		morda::key::LEFT,//VK_LEFT
+		morda::key::UP, //VK_UP
+		morda::key::RIGHT, //VK_RIGHT
+		morda::key::DOWN, //VK_DOWN, 40
+		morda::key::UNKNOWN, //VK_SELECT
+		morda::key::UNKNOWN, //VK_PRINT
+		morda::key::UNKNOWN, //VK_EXECUTE
+		morda::key::PRINT_SCREEN,//VK_SNAPSHOT = print screen key
+		morda::key::INSERT, //VK_INSERT, 45
+		morda::key::DELETE, //VK_DELETE
+		morda::key::UNKNOWN, //VK_HELP
+		morda::key::ZERO, //0 key
+		morda::key::ONE, //1 key
+		morda::key::TWO, //2 key, 50
+		morda::key::THREE, //3 key
+		morda::key::FOUR, //4 key
+		morda::key::FIVE, //5 key
+		morda::key::SIX, //6 key
+		morda::key::SEVEN, //7 key, 55
+		morda::key::EIGHT, //8 key
+		morda::key::NINE, //9 key
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined, 60
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined
+		morda::key::UNKNOWN, //Undefined
+		morda::key::A, //A key, 65
+		morda::key::B, //B key
+		morda::key::C, //C key
+		morda::key::D, //D key
+		morda::key::E, //E key
+		morda::key::F, //F key, 70
+		morda::key::G, //G key
+		morda::key::H, //H key
+		morda::key::I, //I key
+		morda::key::J, //J key
+		morda::key::K, //K key, 75
+		morda::key::L, //L key
+		morda::key::M, //M key
+		morda::key::N, //N key
+		morda::key::O, //O key
+		morda::key::P, //P key, 80
+		morda::key::Q, //Q key
+		morda::key::R, //R key
+		morda::key::S, //S key
+		morda::key::T, //T key
+		morda::key::U, //U key, 85
+		morda::key::V, //V key
+		morda::key::W, //W key
+		morda::key::X, //X key
+		morda::key::Y, //Y key
+		morda::key::Z, //Z key, 90
+		morda::key::WINDOWS, //VK_LWIN = left windows key
+		morda::key::WINDOWS, //VK_RWIN = right windows key
+		morda::key::UNKNOWN, //VK_APPS = applications key
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //VK_SLEEP = computer sleep key, 95
+		morda::key::ZERO, //VK_NUMPAD0 = numeric keypad 0 key
+		morda::key::ONE, //VK_NUMPAD1 = numeric keypad 1 key
+		morda::key::TWO, //VK_NUMPAD2 = numeric keypad 2 key
+		morda::key::THREE, //VK_NUMPAD3 = numeric keypad 3 key
+		morda::key::FOUR, //VK_NUMPAD4 = numeric keypad 4 key, 100
+		morda::key::FIVE, //VK_NUMPAD5 = numeric keypad 5 key
+		morda::key::SIX, //VK_NUMPAD6 = numeric keypad 6 key
+		morda::key::SEVEN, //VK_NUMPAD7 = numeric keypad 7 key
+		morda::key::EIGHT, //VK_NUMPAD8 = numeric keypad 8 key
+		morda::key::NINE, //VK_NUMPAD9 = numeric keypad 9 key, 105
+		morda::key::UNKNOWN, //VK_MULTIPLY = multiply key
+		morda::key::UNKNOWN, //VK_ADD
+		morda::key::UNKNOWN, //VK_SEPARATOR
+		morda::key::UNKNOWN, //VK_SUBTRACT
+		morda::key::UNKNOWN, //VK_DECIMAL, 110
+		morda::key::UNKNOWN, //VK_DIVIDE
+		morda::key::F1, //VK_F1
+		morda::key::F2, //VK_F2
+		morda::key::F3, //VK_F3
+		morda::key::F4, //VK_F4, 115
+		morda::key::F5, //VK_F5
+		morda::key::F6, //VK_F6
+		morda::key::F7, //VK_F7
+		morda::key::F8, //VK_F8
+		morda::key::F9, //VK_F9, 120
+		morda::key::F10, //VK_F10
+		morda::key::F11, //VK_F11
+		morda::key::F12, //VK_F12
+		morda::key::UNKNOWN, //VK_F13
+		morda::key::UNKNOWN, //VK_F14, 125
+		morda::key::UNKNOWN, //VK_F15
+		morda::key::UNKNOWN, //VK_F16
+		morda::key::UNKNOWN, //VK_F17
+		morda::key::UNKNOWN, //VK_F18
+		morda::key::UNKNOWN, //VK_F19, 130
+		morda::key::UNKNOWN, //VK_F20
+		morda::key::UNKNOWN, //VK_F21
+		morda::key::UNKNOWN, //VK_F22
+		morda::key::UNKNOWN, //VK_F23
+		morda::key::UNKNOWN, //VK_F24, 135
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned, 140
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //VK_NUMLOCK
+		morda::key::UNKNOWN, //VK_SCROLL = scroll lock key, 145
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific, 150
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned, 155
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::LEFT_SHIFT, //VK_LSHIFT, 160
+		morda::key::RIGHT_SHIFT, //VK_RSHIFT
+		morda::key::LEFT_CONTROL, //VK_LCONTROL
+		morda::key::RIGHT_CONTROL, //VK_RCONTROL
+		morda::key::WINDOWS_MENU, //VK_LMENU = left menu key
+		morda::key::WINDOWS_MENU, //VK_RMENU, 165
+		morda::key::UNKNOWN, //VK_BROWSER_BACK
+		morda::key::UNKNOWN, //VK_BROWSER_FORWARD
+		morda::key::UNKNOWN, //VK_BROWSER_REFRESH
+		morda::key::UNKNOWN, //VK_BROWSER_STOP
+		morda::key::UNKNOWN, //VK_BROWSER_SEARCH, 170
+		morda::key::UNKNOWN, //VK_BROWSER_FAVORITES
+		morda::key::UNKNOWN, //VK_BROWSER_HOME
+		morda::key::UNKNOWN, //VK_VOLUME_MUTE
+		morda::key::UNKNOWN, //VK_VOLUME_DOWN
+		morda::key::UNKNOWN, //VK_VOLUME_UP, 175
+		morda::key::UNKNOWN, //VK_MEDIA_NEXT_TRACK
+		morda::key::UNKNOWN, //VK_MEDIA_PREV_TRACK
+		morda::key::UNKNOWN, //VK_MEDIA_STOP
+		morda::key::UNKNOWN, //VK_MEDIA_PLAY_PAUSE
+		morda::key::UNKNOWN, //VK_LAUNCH_MAIL, 180
+		morda::key::UNKNOWN, //VK_LAUNCH_MEDIA_SELECT
+		morda::key::UNKNOWN, //VK_LAUNCH_APP1
+		morda::key::UNKNOWN, //VK_LAUNCH_APP2
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 185
+		morda::key::UNKNOWN, //VK_OEM_1
+		morda::key::UNKNOWN, //VK_OEM_PLUS
+		morda::key::UNKNOWN, //VK_OEM_COMMA
+		morda::key::UNKNOWN, //VK_OEM_MINUS
+		morda::key::UNKNOWN, //VK_OEM_PERIOD, 190
+		morda::key::UNKNOWN, //VK_OEM_2
+		morda::key::UNKNOWN, //VK_OEM_3
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 195
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 200
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 205
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 210
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //Reserved, 215
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //VK_OEM_4
+		morda::key::UNKNOWN, //VK_OEM_5, 220
+		morda::key::UNKNOWN, //VK_OEM_6
+		morda::key::UNKNOWN, //VK_OEM_7
+		morda::key::UNKNOWN, //VK_OEM_8
+		morda::key::UNKNOWN, //Reserved
+		morda::key::UNKNOWN, //OEM specific, 225
+		morda::key::UNKNOWN, //VK_OEM_102
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //VK_PROCESSKEY
+		morda::key::UNKNOWN, //OEM specific, 230
+		morda::key::UNKNOWN, //VK_PACKET
+		morda::key::UNKNOWN, //Unassigned
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific, 235
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific, 240
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific
+		morda::key::UNKNOWN, //OEM specific, 245
+		morda::key::UNKNOWN, //VK_ATTN
+		morda::key::UNKNOWN, //VK_CRSEL
+		morda::key::UNKNOWN, //VK_EXSEL
+		morda::key::UNKNOWN, //VK_EREOF
+		morda::key::UNKNOWN, //VK_PLAY, 250
+		morda::key::UNKNOWN, //VK_ZOOM
+		morda::key::UNKNOWN, //VK_NONAME
+		morda::key::UNKNOWN, //VK_PA1
+		morda::key::UNKNOWN, //VK_OEM_CLEAR
+		morda::key::UNKNOWN
 	};
 
 	class KeyEventUnicodeProvider : public morda::Morda::UnicodeProvider{
@@ -541,7 +541,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 		case WM_KEYDOWN:
 		{
-			morda::Key_e key = keyCodeMap[std::uint8_t(wParam)];
+			morda::key key = keyCodeMap[std::uint8_t(wParam)];
 			if ((lParam & 0x40000000) == 0){//ignore auto-repeated keypress event
 				handleKeyEvent(mordavokne::inst(), true, key);
 			}
@@ -559,7 +559,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 				case U'\U0000000d': //Carriage return
 					break;
 				default:
-					handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(char32_t(wParam)), morda::Key_e::UNKNOWN);
+					handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(char32_t(wParam)), morda::key::UNKNOWN);
 					break;
 			}
 			return 0;

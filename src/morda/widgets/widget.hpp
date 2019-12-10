@@ -17,7 +17,7 @@
 
 #include "../render/Texture2D.hpp"
 
-#include "../util/keycodes.hpp"
+#include "../util/key.hpp"
 #include "../util/mouse_button.hpp"
 
 #include "../exception.hpp"
@@ -507,7 +507,7 @@ private:
 	void renderInternal(const morda::Matr4r& matrix)const;
 
 private:
-	void onKeyInternal(bool isDown, Key_e keyCode);
+	void onKeyInternal(bool isDown, key keyCode);
 
 private:
 	bool isFocused_v = false;
@@ -521,12 +521,12 @@ public:
 	 * @return true to consume event and prevent its further propagation.
 	 * @return false to allow the event to be propagated further.
 	 */
-	virtual bool on_key(bool is_down, morda::Key_e key_code){
+	virtual bool on_key(bool is_down, morda::key key_code){
 		return this->onKey(is_down, key_code); //TODO: deprecated, remove. Should just return false.
 	}
 
 	//TODO: deprecated, remove.
-	virtual bool onKey(bool isDown, morda::Key_e keyCode){
+	virtual bool onKey(bool isDown, morda::key keyCode){
 		return false;
 	}
 

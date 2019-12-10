@@ -294,7 +294,7 @@ void widget::clearCache(){
 }
 
 
-void widget::onKeyInternal(bool isDown, Key_e keyCode){
+void widget::onKeyInternal(bool isDown, key keyCode){
 	if(this->is_interactive()){
 		if(this->on_key(isDown, keyCode)){
 			return;

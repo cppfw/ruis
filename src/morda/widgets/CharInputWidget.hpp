@@ -4,7 +4,7 @@
 
 #include "widget.hpp"
 
-#include "../util/keycodes.hpp"
+#include "../util/key.hpp"
 
 namespace morda{
 
@@ -25,7 +25,7 @@ public:
      * @param unicode - unicode string of entered characters in UTF-32.
 	 * @param key - key code associated with character input, can be UNKNOWN.
      */
-	virtual void onCharacterInput(const std::u32string& unicode, Key_e key) = 0;
+	virtual void onCharacterInput(const std::u32string& unicode, key key) = 0;
 
 	virtual ~CharInputWidget()noexcept{}
 };

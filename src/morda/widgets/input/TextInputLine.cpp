@@ -249,14 +249,14 @@ void TextInputLine::startCursorBlinking(){
 	this->startUpdating(cursorBlinkPeriod_c);
 }
 
-bool TextInputLine::on_key(bool isDown, Key_e keyCode){
+bool TextInputLine::on_key(bool isDown, key keyCode){
 	switch(keyCode){
-		case Key_e::LEFT_CONTROL:
-		case Key_e::RIGHT_CONTROL:
+		case key::LEFT_CONTROL:
+		case key::RIGHT_CONTROL:
 			this->ctrlPressed = isDown;
 			break;
-		case Key_e::LEFT_SHIFT:
-		case Key_e::RIGHT_SHIFT:
+		case key::LEFT_SHIFT:
+		case key::RIGHT_SHIFT:
 			this->shiftPressed = isDown;
 			break;
 		default:
@@ -265,11 +265,11 @@ bool TextInputLine::on_key(bool isDown, Key_e keyCode){
 	return false;
 }
 
-void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
+void TextInputLine::onCharacterInput(const std::u32string& unicode, key key){
 	switch(key){
-		case Key_e::ENTER:
+		case key::ENTER:
 			break;
-		case Key_e::RIGHT:
+		case key::RIGHT:
 			if(this->cursorIndex != this->getText().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -291,7 +291,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
-		case Key_e::LEFT:
+		case key::LEFT:
 			if(this->cursorIndex != 0){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -316,13 +316,13 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				this->setCursorIndex(newIndex, this->shiftPressed);
 			}
 			break;
-		case Key_e::END:
+		case key::END:
 			this->setCursorIndex(this->getText().size(), this->shiftPressed);
 			break;
-		case Key_e::HOME:
+		case key::HOME:
 			this->setCursorIndex(0, this->shiftPressed);
 			break;
-		case Key_e::BACKSPACE:
+		case key::BACKSPACE:
 			if(this->thereIsSelection()){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
@@ -335,7 +335,7 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 				}
 			}
 			break;
-		case Key_e::DELETE:
+		case key::DELETE:
 			if(this->thereIsSelection()){
 				this->setCursorIndex(this->deleteSelection());
 			}else{
@@ -348,10 +348,10 @@ void TextInputLine::onCharacterInput(const std::u32string& unicode, Key_e key){
 			}
 			this->startCursorBlinking();
 			break;
-		case Key_e::ESCAPE:
+		case key::ESCAPE:
 			//do nothing
 			break;
-		case Key_e::A:
+		case key::A:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
 				this->setCursorIndex(this->getText().size(), true);

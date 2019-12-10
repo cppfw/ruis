@@ -188,17 +188,17 @@ private:
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key){
+	void handleCharacterInput(const morda::Morda::UnicodeProvider& unicodeResolver, morda::key key){
 		this->gui.onCharacterInput(unicodeResolver, key);
 	}
 
-	friend void handleCharacterInput(application& app, const morda::Morda::UnicodeProvider& unicodeResolver, morda::Key_e key);
+	friend void handleCharacterInput(application& app, const morda::Morda::UnicodeProvider& unicodeResolver, morda::key key);
 
-	void handleKeyEvent(bool isDown, morda::Key_e keyCode){
+	void handleKeyEvent(bool isDown, morda::key keyCode){
 		this->gui.onKeyEvent(isDown, keyCode);
 	}
 
-	friend void handleKeyEvent(application& app, bool isDown, morda::Key_e keyCode);
+	friend void handleKeyEvent(application& app, bool isDown, morda::key keyCode);
 
 public:
 

@@ -75,14 +75,14 @@ public:
 		return true;
 	}
 
-	bool on_key(bool isDown, morda::Key_e keyCode) override{
+	bool on_key(bool isDown, morda::key keyCode) override{
 		if(isDown){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::Key_e::LEFT:
+				case morda::key::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
-				case morda::Key_e::A:
+				case morda::key::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -91,10 +91,10 @@ public:
 		}else{
 			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
 			switch(keyCode){
-				case morda::Key_e::LEFT:
+				case morda::key::LEFT:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
-				case morda::Key_e::A:
+				case morda::key::A:
 					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
 					return true;
 				default:
@@ -104,7 +104,7 @@ public:
 		return false;
 	}
 
-	void onCharacterInput(const std::u32string& unicode, morda::Key_e key) override{
+	void onCharacterInput(const std::u32string& unicode, morda::key key) override{
 		if(unicode.size() == 0){
 			return;
 		}
@@ -621,9 +621,9 @@ public:
 			);
 		morda::Morda::inst().setRootWidget(c);
 
-		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::Key_e keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
-				if(keyCode == morda::Key_e::ESCAPE){
+				if(keyCode == morda::key::ESCAPE){
 					this->quit();
 				}
 			}
