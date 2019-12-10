@@ -76,7 +76,7 @@ void container::render(const morda::Matr4r& matrix)const{
 
 
 
-bool container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button button, unsigned pointerId){
 //	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
@@ -138,7 +138,7 @@ bool container::onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_
 
 
 
-bool container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
+bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 //	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
@@ -178,7 +178,7 @@ bool container::onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 
 
 
-void container::onHoverChanged(unsigned pointerID){
+void container::on_hover_changed(unsigned pointerID){
 	if(this->isHovered(pointerID)){
 		return;
 	}

@@ -176,32 +176,13 @@ public:
 	 */
 	container(const stob::Node* chain = nullptr);
 
-	/**
-	 * @brief Render to screen.
-	 * This is an override of Widget::render(). It just renders all container widgets.
-	 * Normally, users do not need to call this method, it will be called by framework when needed.
-	 */
-	void render(const morda::Matr4r& matrix)const override;
+	void render(const matrix4& matrix)const override;
 
-	/**
-	 * @brief Handle mouse button event.
-	 * Override of Widget::onMouseButton() method. It passes the event to the container's child widgets in reverse order.
-	 * Normally, users do not need to call this method, it will be called by framework when needed.
-	 */
-	bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
+	bool on_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) override;
 
-	/**
-	 * @brief Handle mouse move event.
-	 * Override of Widget::onMouseMove() method. It passes the event to the container's child widgets in reverse order.
-	 * Normally, users do not need to call this method, it will be called by framework when needed.
-	 */
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool on_mouse_move(const vector2& pos, unsigned pointer_id) override;
 
-	/**
-	 * @brief Handle hover changed event.
-	 * Normally, users do not need to call this method, it will be called by framework when needed.
-	 */
-	void onHoverChanged(unsigned pointerID)override;
+	void on_hover_changed(unsigned pointer_id)override;
 
 	/**
 	 * @brief Layout child widgets.
@@ -234,7 +215,6 @@ public:
 	 * @return iterator pointing to the newly inserted widget.
 	 */
 	list::const_iterator push_back(std::shared_ptr<Widget> w){
-		//TODO: rewrite using push_back()?
 		return this->insert(std::move(w), this->children().end());
 	}
 
