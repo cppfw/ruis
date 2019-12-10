@@ -51,7 +51,7 @@ private:
 	//Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned>> mouseCaptureMap;
 
-protected:
+private:
 	//flag indicating that modifications to children list are blocked
 	bool isBlocked = false;
 

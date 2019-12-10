@@ -183,7 +183,6 @@ void container::onHoverChanged(unsigned pointerID){
 
 void container::layOut(){
 //	TRACE(<< "container::layOut(): invoked" << std::endl)
-	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
 		if(w->is_layout_invalid()){
 			w->relayoutNeeded = false;
