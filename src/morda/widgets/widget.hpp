@@ -8,6 +8,7 @@
 #include <utki/exception.hpp>
 
 #include <puu/dom.hpp>
+#include <puu/tree.hpp>
 
 #include <r4/matrix4.hpp>
 #include <r4/vector2.hpp>
@@ -184,6 +185,9 @@ private:
 
 	std::unique_ptr<stob::Node> layout_description;
 
+	puu::trees layout_desc;
+
+	//TODO: remove mutable?
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
 	std::string id;
@@ -491,6 +495,11 @@ public:
 	 */
 	widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
 
+	/**
+	 * @brief Constructor.
+	 * @param desc - widget description.
+	 */
+	widget(const puu::trees& desc);
 public:
 
 	virtual ~widget()noexcept{}

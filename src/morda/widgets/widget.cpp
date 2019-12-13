@@ -11,6 +11,10 @@
 using namespace morda;
 
 
+widget::widget(const puu::trees& desc){
+	
+}
+
 
 widget::widget(const stob::Node* chain){
 	if(const stob::Node* n = getProperty(chain, "layout")){
