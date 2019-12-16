@@ -12,7 +12,36 @@ using namespace morda;
 
 
 widget::widget(const puu::trees& desc){
-	
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "layout"){
+			this->layout_desc = p.children;
+		}else if(p.value == "x"){
+			this->rectangle.p.x = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "y"){
+			this->rectangle.p.y = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "dx"){
+			this->rectangle.d.x = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "dy"){
+			this->rectangle.d.y = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "id"){
+			this->id = get_property_value(p).to_string();
+		}else if(p.value == "name"){ //TODO: remove deprecated stuff.
+			this->id = get_property_value(p).to_string();
+			TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << this->id << "'), use 'id' instead" << std::endl)
+		}else if(p.value == "clip"){
+			this->clip_v = get_property_value(p).to_bool();
+		}else if(p.value == "cache"){
+			this->cache = get_property_value(p).to_bool();
+		}else if(p.value == "visible"){
+			this->isVisible_v = get_property_value(p).to_bool();
+		}else if(p.value == "enabled"){
+			this->isEnabled_v = get_property_value(p).to_bool();
+		}
+	}
 }
 
 
@@ -23,26 +52,18 @@ widget::widget(const stob::Node* chain){
 
 	if(const stob::Node* n = getProperty(chain, "x")){
 		this->rectangle.p.x = morda::dimValueFromSTOB(*n);
-	}else{
-		this->rectangle.p.x = 0;
 	}
 
 	if(const stob::Node* n = getProperty(chain, "y")){
 		this->rectangle.p.y = morda::dimValueFromSTOB(*n);
-	}else{
-		this->rectangle.p.y = 0;
 	}
 
 	if(const stob::Node* n = getProperty(chain, "dx")){
 		this->rectangle.d.x = morda::dimValueFromSTOB(*n);
-	}else{
-		this->rectangle.d.x = 0;
 	}
 
 	if(const stob::Node* n = getProperty(chain, "dy")){
 		this->rectangle.d.y = morda::dimValueFromSTOB(*n);
-	}else{
-		this->rectangle.d.y = 0;
 	}
 
 	//TODO: remove reading 'name' because it was deprecated in favor of id
@@ -57,26 +78,18 @@ widget::widget(const stob::Node* chain){
 
 	if(const stob::Node* p = getProperty(chain, "clip")){
 		this->clip_v = p->asBool();
-	}else{
-		this->clip_v = false;
 	}
 
 	if(const stob::Node* p = getProperty(chain, "cache")){
 		this->cache = p->asBool();
-	}else{
-		this->cache = false;
 	}
 
 	if(const stob::Node* p = getProperty(chain, "visible")){
 		this->isVisible_v = p->asBool();
-	}else{
-		this->isVisible_v = true;
 	}
 
 	if(const stob::Node* p = getProperty(chain, "enabled")){
 		this->isEnabled_v = p->asBool();
-	}else{
-		this->isEnabled_v = true;
 	}
 }
 

@@ -8,6 +8,7 @@
 #include <r4/rectangle.hpp>
 
 #include <puu/dom.hpp>
+#include <puu/tree.hpp>
 
 #include "../config.hpp"
 
@@ -81,9 +82,9 @@ r4::vec2b makeVec2bFromSTOB(const stob::Node* chain);
  * @param n - stob node holding the value.
  * @return Parsed value in pixels.
  */
-float dimValueFromSTOB(const stob::Node& n);
+real dimValueFromSTOB(const stob::Node& n);
 
-
+real parse_dimension_value(const puu::leaf& l);
 
 /**
  * @brief Parse layout dimension value.
@@ -91,7 +92,7 @@ float dimValueFromSTOB(const stob::Node& n);
  * @param n - stob node holding the value.
  * @return Parsed value.
  */
-float dimValueFromLayoutStob(const stob::Node& n);
+real dimValueFromLayoutStob(const stob::Node& n);
 
 
 
@@ -114,6 +115,8 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(papki::File
  */
 const stob::Node* getProperty(const stob::Node* chain, const char* property);
 
+bool is_property(const puu::tree& t);
+
 /**
  * @brief Load texture from file.
  * @param fi - file to load texture from.
@@ -134,5 +137,9 @@ void applySimpleAlphaBlending();
 morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);
 
 r4::vec4f colorToVec4f(std::uint32_t color);
+
+inline const puu::leaf& get_property_value(const puu::tree& p){
+    return p.children.front().value;
+}
 
 }

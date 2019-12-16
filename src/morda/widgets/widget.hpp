@@ -112,14 +112,14 @@ private:
 
 	std::set<unsigned> hovered;
 
-	bool isVisible_v;
+	bool isVisible_v = true;
 
-	bool isEnabled_v;
+	bool isEnabled_v = true;
 
-	morda::Rectr rectangle;
+	morda::Rectr rectangle = Rectr(0);
 
 	//clip widgets contents by widget's border if set to true
-	bool clip_v;
+	bool clip_v = false;
 public:
 	/**
 	 * @brief Check if scissor test is enabled for this widget.
@@ -140,7 +140,7 @@ public:
 
 
 private:
-	bool cache;
+	bool cache = false;
 	mutable bool cacheDirty = true;
 	mutable std::shared_ptr<Texture2D> cacheTex;
 

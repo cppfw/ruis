@@ -14,17 +14,17 @@ using namespace morda;
 morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2r ret;
-	
+
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
 		v = chain->asFloat();
 		ret[i] = v;
 	}
-	
+
 	for(; i != 2; ++i){
 		ret[i] = v;
 	}
-	
+
 	return ret;
 }
 
@@ -47,17 +47,17 @@ Sidesr morda::makeSidesrFromSTOB(const stob::Node* chain){
 morda::Vec2r morda::dimVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
 	morda::Vec2r ret;
-	
+
 	float v = 0;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
 		v = dimValueFromSTOB(*chain);
 		ret[i] = v;
 	}
-	
+
 	for(; i != 2; ++i){
 		ret[i] = v;
 	}
-	
+
 	return ret;
 }
 
@@ -70,8 +70,19 @@ real morda::dimValueFromSTOB(const stob::Node& n){
 	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 'p' && n.value()[n.length() - 2] == 'd'){ //check if in density pixels
 		return Morda::inst().units.dpToPx(n.asFloat());
 	}
-	
+
 	return n.asFloat();
+}
+
+real morda::parse_dimension_value(const puu::leaf& l){
+	//check if millimeters
+	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
+		return Morda::inst().units.mmToPx(l.to_float());
+	}else if(l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'd'){ //check if in density pixels
+		return Morda::inst().units.dpToPx(l.to_float());
+	}
+
+	return l.to_float();
 }
 
 
@@ -80,9 +91,9 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 	if(!begin){
 		return std::make_tuple(nullptr, nullptr);
 	}
-	
+
 	const char* DIncludeTag = "include";
-	
+
 	auto n = begin->thisOrNext(DIncludeTag);
 	for(; n.get_node();){
 		ASSERT(n.get_node())
@@ -99,7 +110,7 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 		auto ri = resolveIncludes(fi, std::move(incNodes));
 
 		stob::Node* lastChild = std::get<1>(ri);
-		
+
 		if(lastChild){
 			//substitute includes
 			if(!n.prev()){
@@ -131,17 +142,17 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papk
 r4::vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 	unsigned i;
 	r4::vec2b ret;
-	
+
 	bool v = false;
 	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
 		v = chain->asBool();
 		ret[i] = v;
 	}
-	
+
 	for(; i != 2; ++i){
 		ret[i] = v;
 	}
-	
+
 	return ret;
 }
 
@@ -196,7 +207,7 @@ morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 std::shared_ptr<Texture2D> morda::loadTexture(const papki::File& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-	
+
 	return morda::inst().renderer().factory->createTexture2D(
 			numChannelsToTexType(image.numChannels()),
 			image.dim(),
@@ -223,4 +234,9 @@ r4::vec4f morda::colorToVec4f(std::uint32_t color){
 			float((color >> 16) & 0xff) / float(0xff),
 			float((color >> 24) & 0xff) / float(0xff)
 		);
+}
+
+
+bool morda::is_property(const puu::tree& t){
+	return (t.value.length() == 0 || t.value[0] < 'A' || 'Z' < t.value[0]) && t.children.size() != 0;
 }
