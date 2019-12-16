@@ -5,7 +5,7 @@
 
 
 int main(int argc, char** argv){
-	//test that whole definition chain is substituted
+	// test the get_all_widgets() function
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
