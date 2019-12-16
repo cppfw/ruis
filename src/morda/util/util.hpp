@@ -142,4 +142,6 @@ inline const puu::leaf& get_property_value(const puu::tree& p){
     return p.children.front().value;
 }
 
+std::unique_ptr<stob::Node> puu_to_stob(const puu::trees& trees);
+
 }

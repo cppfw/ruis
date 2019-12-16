@@ -240,3 +240,14 @@ r4::vec4f morda::colorToVec4f(std::uint32_t color){
 bool morda::is_property(const puu::tree& t){
 	return (t.value.length() == 0 || t.value[0] < 'A' || 'Z' < t.value[0]) && t.children.size() != 0;
 }
+
+std::unique_ptr<stob::Node> morda::puu_to_stob(const puu::trees& trees){
+	auto ret = utki::makeUnique<stob::Node>();
+	auto cur = ret.get();
+	for(auto& t : trees){
+		cur->insertNext(utki::makeUnique<stob::Node>(t.value.c_str()));
+		cur = cur->next();
+		cur->set_children(puu_to_stob(t.children));
+	}
+	return ret->chopNext();
+}
