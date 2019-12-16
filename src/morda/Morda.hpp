@@ -8,7 +8,7 @@
 
 #include "Updateable.hpp"
 
-#include "Inflater.hpp"
+#include "inflater.hpp"
 #include "ResourceManager.hpp"
 
 namespace morda{
@@ -60,7 +60,7 @@ public:
 	/**
 	 * @brief Instantiation of the GUI inflater.
 	 */
-	Inflater inflater;
+	morda::inflater inflater;
 
 
 private:

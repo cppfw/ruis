@@ -21,10 +21,10 @@ namespace morda{
  * A widget name should start with capital letter. A widget property should start
  * with small letter. Specific widgets define more detailed rules of their description.
  */
-class Inflater{
+class inflater{
 	friend class Morda;
 
-	Inflater();
+	inflater();
 public:
 	/**
 	 * @brief Basic Inflater Exception class.
@@ -130,7 +130,7 @@ private:
 		std::set<std::string> vars;
 	};
 
-	Inflater::Template parseTemplate(const stob::Node& chain);
+	Template parseTemplate(const stob::Node& chain);
 
 	std::list<std::map<std::string, Template>> templates;
 

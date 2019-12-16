@@ -1,4 +1,4 @@
-#include "Inflater.hpp"
+#include "inflater.hpp"
 
 #include "widgets/container.hpp"
 
@@ -24,7 +24,7 @@ using namespace morda;
 
 
 
-Inflater::Inflater(){
+inflater::inflater(){
 	this->registerType<Widget>("Widget");
 	this->registerType<Container>("Container");
 	this->registerType<SizeContainer>("SizeContainer");
@@ -42,19 +42,19 @@ Inflater::Inflater(){
 
 
 
-void Inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory){
+void inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory){
 	auto ret = this->widgetFactories.insert(std::make_pair(
 			widgetName,
 			std::move(factory)
 		));
 	if(!ret.second){
-		throw Inflater::Exc("Failed registering widget type, widget type with given name is already added");
+		throw inflater::Exc("Failed registering widget type, widget type with given name is already added");
 	}
 }
 
 
 
-bool Inflater::removeWidget(const std::string& widgetName)noexcept{
+bool inflater::removeWidget(const std::string& widgetName)noexcept{
 	if(this->widgetFactories.erase(widgetName) == 0){
 		return false;
 	}
@@ -63,7 +63,7 @@ bool Inflater::removeWidget(const std::string& widgetName)noexcept{
 
 
 
-std::shared_ptr<morda::Widget> Inflater::inflate(papki::File& fi) {
+std::shared_ptr<morda::Widget> inflater::inflate(papki::File& fi) {
 	std::unique_ptr<stob::Node> root = this->load(fi);
 	ASSERT(root)
 
@@ -180,7 +180,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 }
 }
 
-const decltype(Inflater::widgetFactories)::value_type::second_type* Inflater::findFactory(const std::string& widgetName) {
+const decltype(inflater::widgetFactories)::value_type::second_type* inflater::findFactory(const std::string& widgetName) {
 	auto i = this->widgetFactories.find(widgetName);
 
 	if(i == this->widgetFactories.end()){
@@ -191,12 +191,12 @@ const decltype(Inflater::widgetFactories)::value_type::second_type* Inflater::fi
 }
 
 
-std::shared_ptr<morda::Widget> Inflater::inflate(const char* str){
+std::shared_ptr<morda::Widget> inflater::inflate(const char* str){
 	return this->inflate(*stob::parse(str));
 }
 
 
-std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
+std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
 //		throw Exc("Inflate called not from UI thread");
@@ -209,7 +209,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 				this->pushDefs(*n->child());
 			}
 		}else{
-			throw Exc("Inflater::Inflate(): unknown declaration encountered before first widget");
+			throw Exc("inflater::Inflate(): unknown declaration encountered before first widget");
 		}
 	}
 
@@ -233,7 +233,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 	auto fac = this->findFactory(n->value());
 
 	if(!fac){
-		TRACE(<< "Inflater::Inflate(): n->value() = " << n->value() << std::endl)
+		TRACE(<< "inflater::Inflate(): n->value() = " << n->value() << std::endl)
 		std::stringstream ss;
 		ss << "Failed to inflate, no matching factory found for requested widget name: " << n->value();
 		throw Exc(ss.str());
@@ -268,7 +268,7 @@ std::shared_ptr<morda::Widget> Inflater::inflate(const stob::Node& chain){
 
 
 
-std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
+std::unique_ptr<stob::Node> inflater::load(papki::File& fi){
 	std::unique_ptr<stob::Node> ret = stob::load(fi);
 
 	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));
@@ -276,7 +276,7 @@ std::unique_ptr<stob::Node> Inflater::load(papki::File& fi){
 	return ret;
 }
 
-Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
+inflater::Template inflater::parseTemplate(const stob::Node& chain){
 	Template ret;
 
 	for(auto n = &chain; n; n = n->next()){
@@ -320,19 +320,19 @@ Inflater::Template Inflater::parseTemplate(const stob::Node& chain){
 	return ret;
 }
 
-void Inflater::pushDefs(const stob::Node& chain) {
+void inflater::pushDefs(const stob::Node& chain) {
 	this->pushVariables(chain);
 	this->pushTemplates(chain);
 }
 
-void Inflater::popDefs() {
+void inflater::popDefs() {
 	this->popVariables();
 	this->popTemplates();
 }
 
 
 
-void Inflater::pushTemplates(const stob::Node& chain){
+void inflater::pushTemplates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
 
 	for(auto c = &chain; c; c = c->next()){
@@ -341,11 +341,11 @@ void Inflater::pushTemplates(const stob::Node& chain){
 		}
 
 		if(!c->child()){
-			throw Exc("Inflater::pushTemplates(): template name has no children, error.");
+			throw Exc("inflater::pushTemplates(): template name has no children, error.");
 		}
 //		TRACE(<< "pushing template = " << c->value() << std::endl)
 		if(!m.insert(std::make_pair(c->value(), parseTemplate(c->up()))).second){
-			throw Exc("Inflater::PushTemplates(): template name is already defined in given templates chain, error.");
+			throw Exc("inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
 
@@ -364,46 +364,46 @@ void Inflater::pushTemplates(const stob::Node& chain){
 
 
 
-void Inflater::popTemplates(){
+void inflater::popTemplates(){
 	ASSERT(this->templates.size() != 0)
 	this->templates.pop_front();
 }
 
 
 
-const Inflater::Template* Inflater::findTemplate(const std::string& name)const{
+const inflater::Template* inflater::findTemplate(const std::string& name)const{
 	for(auto& i : this->templates){
 		auto r = i.find(name);
 		if(r != i.end()){
 			return &r->second;
 		}
 	}
-//	TRACE(<< "Inflater::FindTemplate(): template '" << name <<"' not found!!!" << std::endl)
+//	TRACE(<< "inflater::FindTemplate(): template '" << name <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 
 
 
-const stob::Node* Inflater::findVariable(const std::string& name)const{
+const stob::Node* inflater::findVariable(const std::string& name)const{
 	for(auto& i : this->variables){
 		auto r = i.find(name);
 		if(r != i.end()){
 			return r->second.get();
 		}
 	}
-//	TRACE(<< "Inflater::findVariable(): variable '" << name <<"' not found!!!" << std::endl)
+//	TRACE(<< "inflater::findVariable(): variable '" << name <<"' not found!!!" << std::endl)
 	return nullptr;
 }
 
 
 
-void Inflater::popVariables(){
+void inflater::popVariables(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_front();
 }
 
 
-void Inflater::pushVariables(const stob::Node& chain){
+void inflater::pushVariables(const stob::Node& chain){
 	decltype(this->variables)::value_type m;
 
 	for(auto n = &chain; n; n = n->next()){
@@ -419,7 +419,7 @@ void Inflater::pushVariables(const stob::Node& chain){
 				std::make_pair(n->value(), std::move(value))
 			).second)
 		{
-			throw morda::Exc("Inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
+			throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}
 
@@ -436,7 +436,7 @@ void Inflater::pushVariables(const stob::Node& chain){
 //#endif
 }
 
-void Inflater::substituteVariables(stob::Node* to)const{
+void inflater::substituteVariables(stob::Node* to)const{
 	substituteVars(
 			to,
 			[this](const std::string& name) -> const stob::Node*{

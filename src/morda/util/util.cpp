@@ -241,6 +241,7 @@ bool morda::is_property(const puu::tree& t){
 	return (t.value.length() == 0 || t.value[0] < 'A' || 'Z' < t.value[0]) && t.children.size() != 0;
 }
 
+//TODO: remove
 std::unique_ptr<stob::Node> morda::puu_to_stob(const puu::trees& trees){
 	auto ret = utki::makeUnique<stob::Node>();
 	auto cur = ret.get();
@@ -250,4 +251,19 @@ std::unique_ptr<stob::Node> morda::puu_to_stob(const puu::trees& trees){
 		cur->set_children(puu_to_stob(t.children));
 	}
 	return ret->chopNext();
+}
+
+//TODO: remove
+puu::trees morda::stob_to_puu(const puu::Node& chain){
+	puu::trees ret;
+
+	for(auto n = &chain; n; n = n->next()){
+		if(n->child()){
+			ret.push_back(puu::tree(n->value(), stob_to_puu(*n->child())));
+		}else{
+			ret.push_back(puu::tree{n->value()});
+		}
+	}
+
+	return ret;
 }
