@@ -28,17 +28,10 @@ public:
 	/**
 	 * @brief Basic image exception.
 	 */
-	class Exc : public utki::Exc{
+	class exception : public utki::exception{
 	public:
-		Exc(const std::string& msg = std::string()) :
-				utki::Exc(msg.c_str())
-		{}
-	};
-	
-	class IllegalArgumentExc : public Exc{
-	public:
-		IllegalArgumentExc(const std::string& msg = std::string()) :
-				Exc(msg)
+		exception(const std::string& message) :
+				utki::exception(message)
 		{}
 	};
 	

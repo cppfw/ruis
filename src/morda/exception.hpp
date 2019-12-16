@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <utki/Exc.hpp>
+#include <utki/exception.hpp>
 
 
 namespace morda{
@@ -9,10 +9,10 @@ namespace morda{
 /**
  * @brief Basic morda exception class.
  */
-class exception : public utki::Exc{
+class exception : public utki::exception{
 public:
 	exception(const std::string& message) :
-			utki::Exc(message)
+			utki::exception(message)
 	{}
 };
 

@@ -217,7 +217,7 @@ void RasterImage::loadPNG(const papki::File& fi){
 	}
 
 	if(png_sig_cmp(&*sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){//if it is not a PNG-file
-		throw RasterImage::Exc("Image::LoadPNG(): not a PNG file");
+		throw RasterImage::exception("Image::LoadPNG(): not a PNG file");
 	}
 
 	//Great!!! We have a PNG-file!
@@ -289,7 +289,7 @@ void RasterImage::loadPNG(const papki::File& fi){
 			imageType = RasterImage::ColorDepth_e::RGBA;
 			break;
 		default:
-			throw RasterImage::Exc("Image::LoadPNG(): unknown colorType");
+			throw RasterImage::exception("Image::LoadPNG(): unknown colorType");
 			break;
 	}
 	//Great! Number of channels and bits per pixel are initialized now!
@@ -305,7 +305,7 @@ void RasterImage::loadPNG(const papki::File& fi){
 
 	//check that our expectations are correct
 	if(bytesPerRow != this->dim().x * this->numChannels()){
-		throw RasterImage::Exc("Image::LoadPNG(): number of bytes per row does not match expected value");
+		throw RasterImage::exception("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
 	ASSERT((bytesPerRow * height) == this->buf_v.size())
@@ -382,7 +382,7 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 		utki::Buf<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
 		ASSERT(src->fi)
 		nbytes = src->fi->read(bufWrapper);
-	}catch(papki::Exc&){
+	}catch(papki::exception&){
 		if(src->sof){
 			return FALSE;//the specified file is empty
 		}
@@ -473,7 +473,7 @@ void RasterImage::loadJPG(const papki::File& fi){
 			);
 		src = reinterpret_cast<DataManagerJPEGSource*>(cinfo.src);
 		if(!src){
-			throw RasterImage::Exc("Image::LoadJPG(): memory alloc failed");
+			throw std::bad_alloc();
 		}
 		//Allocate memory for read data
 		src->buffer = reinterpret_cast<JOCTET*>(
@@ -485,7 +485,7 @@ void RasterImage::loadJPG(const papki::File& fi){
 			);
 
 		if(!src->buffer){
-			throw RasterImage::Exc("Image::LoadJPG(): memory alloc failed");
+			throw std::bad_alloc();
 		}
 
 		memset(src->buffer, 0, DJpegInputBufferSize * sizeof(JOCTET));
@@ -807,7 +807,7 @@ void RasterImage::load(const papki::File& fi){
 //		TRACE(<< "Image::Load(): loading TGA image" << std::endl)
 		this->loadTGA(fi);
 	}*/else{
-		throw RasterImage::Exc("Image::Load(): unknown image format");
+		throw std::invalid_argument("Image::Load(): unknown image format");
 	}
 }
 

@@ -20,7 +20,7 @@ voidpf ZCALLBACK UnzipOpen(voidpf opaque, const char* filename, int mode){
 			f->open(papki::File::E_Mode::READ);
 			break;
 		default:
-			throw papki::Exc("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
+			throw std::invalid_argument("UnzipOpen(): tried opening zip file something else than READ. Only READ is supported.");
 	}
 	
 	return f;
@@ -94,7 +94,7 @@ ZipFile::ZipFile(std::unique_ptr<papki::File> zipFile, const std::string& path) 
 	this->handle = unzOpen2(this->zipFile->path().c_str(), &ff);
 
 	if(!this->handle){
-		throw papki::Exc("ZipFile::OpenZipFile(): opening zip file failed");
+		throw papki::exception("ZipFile::OpenZipFile(): opening zip file failed");
 	}
 }
 
@@ -112,25 +112,25 @@ ZipFile::~ZipFile()noexcept{
 
 void ZipFile::openInternal(E_Mode mode) {
 	if(mode != File::E_Mode::READ){
-		throw papki::Exc("illegal mode requested, only READ supported inside ZIP file");
+		throw std::invalid_argument("illegal mode requested, only READ supported inside ZIP file");
 	}
 
 	if(unzLocateFile(this->handle, this->path().c_str(), 0) != UNZ_OK){
 		std::stringstream ss;
 		ss << "ZipFile::OpenInternal(): file not found: " << this->path();
-		throw papki::Exc(ss.str());
+		throw papki::exception(ss.str());
 	}
 
 	{
 		unz_file_info zipFileInfo;
 
 		if(unzGetCurrentFileInfo(this->handle, &zipFileInfo, 0, 0, 0, 0, 0, 0) != UNZ_OK){
-			throw papki::Exc("failed obtaining file info");
+			throw papki::exception("failed obtaining file info");
 		}
 	}
 
 	if(unzOpenCurrentFile(this->handle) != UNZ_OK){
-		throw papki::Exc("file opening failed");
+		throw papki::exception("file opening failed");
 	}
 }
 
@@ -145,7 +145,7 @@ size_t ZipFile::readInternal(utki::Buf<std::uint8_t> buf)const{
 	ASSERT(buf.size() <= unsigned(-1))
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), unsigned(buf.size()));
 	if(numBytesRead < 0){
-		throw papki::Exc("ZipFile::Read(): file reading failed");
+		throw papki::exception("ZipFile::Read(): file reading failed");
 	}
 
 	ASSERT(numBytesRead >= 0)
@@ -173,14 +173,14 @@ bool ZipFile::exists()const{
 
 std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 	if(!this->isDir()){
-		throw papki::Exc("ZipFile::ListDirContents(): this is not a directory");
+		throw utki::illegal_state("ZipFile::ListDirContents(): this is not a directory");
 	}
 
 	//if path refers to directory then there should be no files opened
 	ASSERT(!this->isOpened())
 
 	if(!this->handle){
-		throw papki::Exc("ZipFile::ListDirContents(): zip file is not opened");
+		throw utki::illegal_state("ZipFile::ListDirContents(): zip file is not opened");
 	}
 
 	std::vector<std::string> files;
@@ -191,7 +191,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 		int ret = unzGoToFirstFile(this->handle);
 
 		if(ret != UNZ_OK){
-			throw papki::Exc("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
+			throw papki::exception("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
 		}
 
 		do{
@@ -208,7 +208,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 					0
 				) != UNZ_OK)
 			{
-				throw papki::Exc("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
+				throw papki::exception("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
 			}
 
 			fileNameBuf[fileNameBuf.size() - 1] = 0;//null-terminate, just to be on a safe side
@@ -247,7 +247,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 		}while((ret = unzGoToNextFile(this->handle)) == UNZ_OK);
 
 		if(ret != UNZ_END_OF_LIST_OF_FILE && ret != UNZ_OK){
-			throw papki::Exc("ZipFile::ListDirContents(): unzGoToNextFile() failed.");
+			throw papki::exception("ZipFile::ListDirContents(): unzGoToNextFile() failed.");
 		}
 	}
 

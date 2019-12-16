@@ -2,7 +2,7 @@
 
 #include <utki/config.hpp>
 #include <utki/debug.hpp>
-#include <utki/Exc.hpp>
+#include <utki/exception.hpp>
 #include <utki/Buf.hpp>
 
 #include <r4/matrix4.hpp>
