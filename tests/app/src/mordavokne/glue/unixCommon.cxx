@@ -7,7 +7,7 @@ namespace{
 std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** argv){
 	void* libHandle = dlopen(nullptr, RTLD_NOW);
 	if(!libHandle){
-		throw morda::Exc("dlopen(): failed");
+		throw morda::exception("dlopen(): failed");
 	}
 
 	utki::ScopeExit scopeExit([libHandle](){
@@ -26,7 +26,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 	}
 
 	if(!factory){
-		throw morda::Exc("dlsym(): mordavokne::create_application() function not found!");
+		throw morda::exception("dlsym(): mordavokne::create_application() function not found!");
 	}
 
 	return factory(argc, argv);
@@ -35,7 +35,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 std::string initializeStorageDir(const std::string& appName){
 	auto homeDir = getenv("HOME");
 	if(!homeDir){
-		throw utki::Exc("failed to get user home directory. Is HOME environment variable set?");
+		throw utki::exception("failed to get user home directory. Is HOME environment variable set?");
 	}
 
 	std::string homeDirStr(homeDir);

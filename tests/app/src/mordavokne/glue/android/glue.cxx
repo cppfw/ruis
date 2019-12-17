@@ -284,19 +284,19 @@ public:
 		switch(mode){
 			case papki::File::E_Mode::WRITE:
 			case papki::File::E_Mode::CREATE:
-				throw papki::Exc("WRITE and CREATE open modes are not supported by Android assets");
+				throw papki::exception("WRITE and CREATE open modes are not supported by Android assets");
 				break;
 			case papki::File::E_Mode::READ:
 				break;
 			default:
-				throw papki::Exc("unknown mode");
+				throw papki::exception("unknown mode");
 				break;
 		}
 		this->handle = AAssetManager_open(this->manager, this->path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE means at all
 		if(!this->handle){
 			std::stringstream ss;
 			ss << "AAssetManager_open(" << this->path() << ") failed";
-			throw papki::Exc(ss.str());
+			throw papki::exception(ss.str());
 		}
 	}
 
@@ -310,7 +310,7 @@ public:
 		ASSERT(this->handle)
 		int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
 		if(numBytesRead < 0){//something happened
-			throw papki::Exc("AAsset_read() error");
+			throw papki::exception("AAsset_read() error");
 		}
 		ASSERT(numBytesRead >= 0)
 		return size_t(numBytesRead);
@@ -318,7 +318,7 @@ public:
 
 	virtual size_t writeInternal(const utki::Buf<std::uint8_t> buf)override{
 		ASSERT(this->handle)
-		throw papki::Exc("Write() is not supported by Android assets");
+		throw papki::exception("Write() is not supported by Android assets");
 		return 0;
 	}
 
@@ -332,12 +332,12 @@ public:
 
 	virtual void rewindInternal()const override{
 		if(!this->isOpened()){
-			throw papki::Exc("file is not opened, cannot rewind");
+			throw papki::exception("file is not opened, cannot rewind");
 		}
 
 		ASSERT(this->handle)
 		if(AAsset_seek(this->handle, 0, SEEK_SET) < 0){
-			throw papki::Exc("AAsset_seek() failed");
+			throw papki::exception("AAsset_seek() failed");
 		}
 	}
 
@@ -386,7 +386,7 @@ public:
 
 	size_t seek(size_t numBytesToSeek, bool seekForward)const{
 		if(!this->isOpened()){
-			throw papki::Exc("file is not opened, cannot seek");
+			throw papki::exception("file is not opened, cannot seek");
 		}
 
 		ASSERT(this->handle)
@@ -423,7 +423,7 @@ public:
 			ASSERT(offset > 0)
 
 			if(AAsset_seek(this->handle, seekForward ? offset : (-offset), SEEK_CUR) < 0){
-				throw papki::Exc("AAsset_seek() failed");
+				throw papki::exception("AAsset_seek() failed");
 			}
 
 			ASSERT(size_t(offset) < size_t(-1))

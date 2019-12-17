@@ -613,7 +613,7 @@ namespace{
 std::string initializeStorageDir(const std::string& appName){
 	CHAR path[MAX_PATH];
 	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK) {
-		throw utki::Exc("failed to get user's profile directory.");
+		throw utki::exception("failed to get user's profile directory.");
 	}
 
 	path[sizeof(path) - 1] = '\0';// null-terminate the string just in case
@@ -651,7 +651,7 @@ application::application(std::string&& name, const window_params& wp) :
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
 					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){
-						throw morda::Exc("PostMessage(): failed");
+						throw morda::exception("PostMessage(): failed");
 					}
 				}
 			),
@@ -778,7 +778,7 @@ void application::set_fullscreen(bool enable) {
 		// save original window size
 		RECT rect;
 		if (GetWindowRect(ww.hwnd, &rect) == 0) {
-			throw utki::Exc("Failed to get window rect");
+			throw utki::exception("Failed to get window rect");
 		}
 		this->beforeFullScreenWindowRect.p.x = rect.left;
 		this->beforeFullScreenWindowRect.p.y = rect.top;
@@ -886,7 +886,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		wc.lpszClassName = this->windowClassName.c_str();// Set the window class Name
 
 		if (!RegisterClass(&wc)){
-			throw morda::Exc("Failed to register window class");
+			throw morda::exception("Failed to register window class");
 		}
 	}
 
@@ -913,7 +913,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		);
 
 	if (!this->hwnd){
-		throw morda::Exc("Failed to create a window");
+		throw morda::exception("Failed to create a window");
 	}
 
 	utki::ScopeExit scopeExitHwnd([this](){
@@ -926,7 +926,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 	this->hdc = GetDC(this->hwnd);
 	if (!this->hdc){
-		throw morda::Exc("Failed to create a OpenGL device context");
+		throw morda::exception("Failed to create a OpenGL device context");
 	}
 
 	utki::ScopeExit scopeExitHdc([this](){
@@ -959,19 +959,19 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 		int pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
 		if (!pixelFormat){
-			throw morda::Exc("Could not find suitable pixel format");
+			throw morda::exception("Could not find suitable pixel format");
 		}
 
 		//	TRACE_AND_LOG(<< "application::DeviceContextWrapper::DeviceContextWrapper(): pixel format chosen" << std::endl)
 
 		if (!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
-			throw morda::Exc("Could not sent pixel format");
+			throw morda::exception("Could not sent pixel format");
 		}
 	}
 
 	this->hrc = wglCreateContext(hdc);
 	if (!this->hrc) {
-		throw morda::Exc("Failed to create OpenGL rendering context");
+		throw morda::exception("Failed to create OpenGL rendering context");
 	}
 
 	utki::ScopeExit scopeExitHrc([this](){
@@ -986,11 +986,11 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	//	TRACE_AND_LOG(<< "application::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
 
 	if (!wglMakeCurrent(hdc, this->hrc)) {
-		throw morda::Exc("Failed to activate OpenGL rendering context");
+		throw morda::exception("Failed to activate OpenGL rendering context");
 	}
 
 	if(glewInit() != GLEW_OK){
-		throw morda::Exc("GLEW initialization failed");
+		throw morda::exception("GLEW initialization failed");
 	}
 
 	scopeExitHrc.reset();
