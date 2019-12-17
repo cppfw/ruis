@@ -63,11 +63,11 @@ bool inflater::removeWidget(const std::string& widgetName)noexcept{
 
 
 
-std::shared_ptr<morda::Widget> inflater::inflate(papki::File& fi) {
+std::shared_ptr<morda::Widget> inflater::inflate(const papki::File& fi) {
 	std::unique_ptr<stob::Node> root = this->load(fi);
 	ASSERT(root)
 
-	return this->inflate(*root);
+	return this->inflate(stob_to_puu(*root));
 }
 
 
@@ -191,10 +191,13 @@ const decltype(inflater::widgetFactories)::value_type::second_type* inflater::fi
 }
 
 
-std::shared_ptr<morda::Widget> inflater::inflate(const char* str){
+std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(*stob::parse(str));
 }
 
+std::shared_ptr<widget> inflater::inflate(const puu::trees& gui_script){
+	return this->inflate(*puu_to_stob(gui_script));
+}
 
 std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 //	TODO:
@@ -268,7 +271,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 
 
 
-std::unique_ptr<stob::Node> inflater::load(papki::File& fi){
+std::unique_ptr<stob::Node> inflater::load(const papki::File& fi){
 	std::unique_ptr<stob::Node> ret = stob::load(fi);
 
 	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));

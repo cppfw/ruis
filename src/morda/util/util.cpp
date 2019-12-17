@@ -87,7 +87,7 @@ real morda::parse_dimension_value(const puu::leaf& l){
 
 
 
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin){
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(const papki::File& fi, std::unique_ptr<stob::Node> begin){
 	if(!begin){
 		return std::make_tuple(nullptr, nullptr);
 	}

@@ -76,9 +76,12 @@ public:
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
-	 * @param chain - GUI script to use.
+	 * @param gui_script - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
+	std::shared_ptr<widget> inflate(const puu::trees& gui_script);
+
+	//TOSO: deprecated, remove
 	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
 
 	/**
@@ -96,7 +99,7 @@ public:
 	 * @param str - string containing GUI description.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> inflate(const char* str);
+	std::shared_ptr<widget> inflate(const char* str);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -113,7 +116,7 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> inflate(papki::File& fi);
+	std::shared_ptr<morda::Widget> inflate(const papki::File& fi);
 
 	//TODO: remove includes resolution and this load() method
 	/**
@@ -122,7 +125,7 @@ public:
 	 * @param fi - file interface providing GUI script and its dependencies.
 	 * @return Pointer to a root node of the GUI hierarchy.
 	 */
-	static std::unique_ptr<stob::Node> load(papki::File& fi);
+	static std::unique_ptr<stob::Node> load(const papki::File& fi);
 
 private:
 	struct Template{

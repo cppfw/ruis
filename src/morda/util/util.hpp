@@ -102,7 +102,7 @@ real dimValueFromLayoutStob(const stob::Node& n);
  * @param begin - first node of the original STOB document.
  * @return New first node and pointer to the last child node of the script.
  */
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(papki::File& fi, std::unique_ptr<stob::Node> begin);
+std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(const papki::File& fi, std::unique_ptr<stob::Node> begin);
 
 
 
