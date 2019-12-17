@@ -144,7 +144,7 @@ private:
 	void popTemplates();
 
 
-	//variable name - value mapping
+	// variable name - value mapping
 	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> variables;
 
 	const stob::Node* findVariable(const std::string& name)const;

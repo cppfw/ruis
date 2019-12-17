@@ -192,7 +192,7 @@ const decltype(inflater::widgetFactories)::value_type::second_type* inflater::fi
 
 
 std::shared_ptr<widget> inflater::inflate(const char* str){
-	return this->inflate(*stob::parse(str));
+	return this->inflate(puu::read(str));
 }
 
 std::shared_ptr<widget> inflater::inflate(const puu::trees& gui_script){
