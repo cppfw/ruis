@@ -356,7 +356,7 @@ public:
 
 	/**
 	 * @brief Move widget to position within its parent.
-	 * @param newPos - new widget's position.
+	 * @param new_pos - new widget's position.
 	 */
 	void move_to(const vector2& new_pos)noexcept{
 		this->rectangle.p = new_pos;

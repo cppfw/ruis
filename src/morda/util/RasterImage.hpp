@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utki/exception.hpp>
+
 #include <papki/File.hpp>
 
 #include <r4/vector2.hpp>
@@ -34,7 +36,7 @@ public:
 				utki::exception(message)
 		{}
 	};
-	
+
 private:
 	ColorDepth_e colorDepth_v;
 	r4::vec2ui dim_v = r4::vec2ui(0);
@@ -60,7 +62,7 @@ public:
 	RasterImage(r4::vec2ui dimensions, ColorDepth_e colorDepth){
 		this->init(dimensions, colorDepth);
 	}
-	
+
 	/**
 	 * @brief Constructor.
 	 * Creates an image with given parameters and initializes image data from given memory buffer.
@@ -144,20 +146,20 @@ public:
 	 * @param colorDepth - color depth.
 	 */
 	void init(r4::vec2ui dimensions, ColorDepth_e colorDepth);
-	
-	
+
+
 	/**
 	 * @brief Reset this Image object to uninitialized state.
 	 * All resources are freed.
 	 */
 	void reset();
-	
+
 	/**
 	 * @brief Fill each image channel with specified value.
 	 * @param val - value to use when filling pixel data.
 	 */
 	void clear(std::uint8_t  val = 0);
-	
+
 	/**
 	 * @brief Fill specified color channel with given value.
 	 * @param chan - index of color channel to clear.
@@ -179,7 +181,7 @@ public:
 	 */
 	void blit(unsigned x, unsigned y, const RasterImage& src);
 
-	
+
 	/**
 	 * @brief Blit another image to this image for desired color channels only.
 	 * Copy specified color channel of the whole given image to specified color
@@ -223,13 +225,13 @@ public:
 	 * @param f - PNG file.
 	 */
 	void loadPNG(const papki::File& f);//Load image from PNG-file
-	
+
 	/**
 	 * @brief Load image from JPG file.
 	 * @param f - JPG file.
 	 */
 	void loadJPG(const papki::File& f);//Load image from JPG-file
-	
+
 //	void loadTGA(papki::File& f);//Load image from TGA-file
 
 	/**
