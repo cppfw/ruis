@@ -367,7 +367,7 @@ public:
 
 	virtual std::vector<std::string> listDirContents(size_t maxEntries = 0)const override{
 		if(!this->isDir()){
-			throw papki::IllegalStateExc("AndroidAssetFile::ListDirContents(): this is not a directory");
+			throw utki::invlaid_state("AndroidAssetFile::ListDirContents(): this is not a directory");
 		}
 
 		//Trim away trailing '/', as Android does not work with it.
