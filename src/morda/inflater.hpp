@@ -30,10 +30,10 @@ public:
 	 * @brief Basic Inflater Exception class.
 	 * @param message
 	 */
-	class Exc : public morda::Exc{
+	class exception : public morda::exception{
 	public:
-		Exc(const std::string& message) :
-				morda::Exc(message)
+		exception(const std::string& message) :
+				morda::exception(message)
 		{}
 	};
 

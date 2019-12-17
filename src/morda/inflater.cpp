@@ -48,7 +48,7 @@ void inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFa
 			std::move(factory)
 		));
 	if(!ret.second){
-		throw inflater::Exc("Failed registering widget type, widget type with given name is already added");
+		throw inflater::exception("Failed registering widget type, widget type with given name is already added");
 	}
 }
 
