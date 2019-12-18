@@ -26,17 +26,6 @@ class inflater{
 	friend class Morda;
 
 	inflater();
-public:
-	/**
-	 * @brief Basic Inflater Exception class.
-	 * @param message
-	 */
-	class exception : public morda::exception{
-	public:
-		exception(const std::string& message) :
-				morda::exception(message)
-		{}
-	};
 
 private:
 	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::trees&)> > factories;
