@@ -260,8 +260,10 @@ puu::trees morda::stob_to_puu(const puu::Node& chain){
 	for(auto n = &chain; n; n = n->next()){
 		if(n->child()){
 			ret.push_back(puu::tree(n->value(), stob_to_puu(*n->child())));
+		}else if(n->value()){
+			ret.push_back(puu::tree(n->as_string()));
 		}else{
-			ret.push_back(puu::tree{n->value()});
+			ret.push_back(puu::tree());
 		}
 	}
 

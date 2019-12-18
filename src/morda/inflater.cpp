@@ -42,9 +42,9 @@ inflater::inflater(){
 
 
 
-void inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory){
-	auto ret = this->widgetFactories.insert(std::make_pair(
-			widgetName,
+void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_type::second_type&& factory){
+	auto ret = this->factories.insert(std::make_pair(
+			std::move(widgetName),
 			std::move(factory)
 		));
 	if(!ret.second){
@@ -55,7 +55,7 @@ void inflater::addWidgetFactory(const std::string& widgetName, decltype(widgetFa
 
 
 bool inflater::removeWidget(const std::string& widgetName)noexcept{
-	if(this->widgetFactories.erase(widgetName) == 0){
+	if(this->factories.erase(widgetName) == 0){
 		return false;
 	}
 	return true;
@@ -180,14 +180,16 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 }
 }
 
-const decltype(inflater::widgetFactories)::value_type::second_type* inflater::findFactory(const std::string& widgetName) {
-	auto i = this->widgetFactories.find(widgetName);
+const decltype(inflater::factories)::value_type::second_type& inflater::find_factory(const std::string& widgetName) {
+	auto i = this->factories.find(widgetName);
 
-	if(i == this->widgetFactories.end()){
-		return nullptr;
+	if(i == this->factories.end()){
+		std::stringstream ss;
+		ss << "inflater::find_factory(): widget name '" << widgetName << "' not found";
+		throw utki::not_found(ss.str());
 	}
 
-	return &i->second;
+	return i->second;
 }
 
 
@@ -233,14 +235,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}
 
 
-	auto fac = this->findFactory(n->value());
-
-	if(!fac){
-		TRACE(<< "inflater::Inflate(): n->value() = " << n->value() << std::endl)
-		std::stringstream ss;
-		ss << "Failed to inflate, no matching factory found for requested widget name: " << n->value();
-		throw Exc(ss.str());
-	}
+	auto fac = this->find_factory(n->value());
 
 	unsigned numPopDefs = 0;
 	utki::ScopeExit scopeExit([this, &numPopDefs](){
@@ -266,7 +261,11 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 
 	this->substituteVariables(cloned.get());
 
-	return fac->operator()(cloned.get());
+	if(cloned){
+		return fac(stob_to_puu(*cloned));
+	}else{
+		return fac(puu::trees());
+	}
 }
 
 

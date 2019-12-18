@@ -3,12 +3,12 @@
 #include <map>
 #include <list>
 #include <memory>
-#include <string_view>
 
 #include "exception.hpp"
 
 #include "widgets/widget.hpp"
 
+#include "util/util.hpp"
 
 
 namespace morda{
@@ -41,7 +41,7 @@ public:
 private:
 	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::trees&)> > factories;
 
-	const decltype(factories)::value_type::second_type& find_factory(std::string_view widget_name);
+	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 
 	void add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory);
 
@@ -60,9 +60,9 @@ public:
 	 */
 	template <class T_Widget> void registerType(const std::string& widgetName){
 		this->add_factory(
-				widgetName,
-				[](const stob::Node* chain) -> std::shared_ptr<morda::Widget> {
-					return std::make_shared<T_Widget>(chain);
+				std::string(widgetName),
+				[](const puu::trees& desc) -> std::shared_ptr<morda::Widget> {
+					return std::make_shared<T_Widget>(puu_to_stob(desc).get());
 				}
 			);
 	}
