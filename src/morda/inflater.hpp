@@ -3,6 +3,7 @@
 #include <map>
 #include <list>
 #include <memory>
+#include <string_view>
 
 #include "exception.hpp"
 
@@ -38,11 +39,11 @@ public:
 	};
 
 private:
-	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const stob::Node*)> > widgetFactories;
+	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::trees&)> > factories;
 
-	const decltype(widgetFactories)::value_type::second_type* findFactory(const std::string& widgetName);
+	const decltype(factories)::value_type::second_type& find_factory(std::string_view widget_name);
 
-	void addWidgetFactory(const std::string& widgetName, decltype(widgetFactories)::value_type::second_type factory);
+	void add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory);
 
 public:
 	//TODO: remove deprecated method
@@ -58,7 +59,7 @@ public:
 	 * @param widgetName - name of the widget as it appears in GUI script.
 	 */
 	template <class T_Widget> void registerType(const std::string& widgetName){
-		this->addWidgetFactory(
+		this->add_factory(
 				widgetName,
 				[](const stob::Node* chain) -> std::shared_ptr<morda::Widget> {
 					return std::make_shared<T_Widget>(chain);
@@ -81,18 +82,20 @@ public:
 	 */
 	std::shared_ptr<widget> inflate(const puu::trees& gui_script);
 
-	//TOSO: deprecated, remove
-	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
-
 	/**
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the STOB chain is returned.
-	 * @param chain - STOB chain to inflate widget from.
+	 * @param gui_script - gui script to inflate widget from.
 	 * @return reference to the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflateAs(const stob::Node& chain){
-		return std::dynamic_pointer_cast<T>(this->inflate(chain));
+	template <typename T> std::shared_ptr<T> inflate_as(const puu::trees& gui_script){
+		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
 	}
+
+	//TODO: deprecated, remove
+	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
+
+
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
