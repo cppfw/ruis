@@ -46,12 +46,6 @@ private:
 	void add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory);
 
 public:
-	//TODO: remove deprecated method
-	template <class T_Widget> void addWidget(const std::string& widgetName){
-		TRACE(<< "Inflater::addWidget() is DEPRECATED. Use Inflater::registerType() instead." << std::endl)
-		this->register_widget<T_Widget>(widgetName);
-	}
-
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
@@ -69,11 +63,11 @@ public:
 
 	/**
 	 * @brief Remove previously registered widget type.
-	 * @param widgetName - widget name as it appears in GUI script.
+	 * @param widget_name - widget name as it appears in GUI script.
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
 	 */
-	bool removeWidget(const std::string& widgetName)noexcept;
+	bool unregister_widget(const std::string& widget_name)noexcept;
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
@@ -107,10 +101,10 @@ public:
 	/**
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the GUI script is returned.
-	 * @param str - string holding the GUI script.
+	 * @param str - string of the GUI script.
 	 * @return reference to the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflateAs(const char* str){
+	template <typename T> std::shared_ptr<T> inflate_as(const char* str){
 		return std::dynamic_pointer_cast<T>(this->inflate(str));
 	}
 

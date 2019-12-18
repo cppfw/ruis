@@ -54,7 +54,7 @@ void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_
 
 
 
-bool inflater::removeWidget(const std::string& widgetName)noexcept{
+bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	if(this->factories.erase(widgetName) == 0){
 		return false;
 	}

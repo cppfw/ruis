@@ -470,7 +470,7 @@ public:
 		}
 
 		{
-			auto widget = morda::Morda::inst().inflater.inflateAs<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+			auto widget = morda::Morda::inst().inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
 			if(n->child()){
@@ -563,7 +563,7 @@ public:
 		}
 
 		{
-			auto b = morda::Morda::inst().inflater.inflateAs<morda::PushButton>(
+			auto b = morda::Morda::inst().inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
 							PushButton{
 								Color{
