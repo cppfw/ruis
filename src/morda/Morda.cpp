@@ -107,27 +107,27 @@ void Morda::initStandardWidgets(papki::File& fi) {
 
 	//add standard widgets to inflater
 
-	this->inflater.registerType<Text>("Text");
-	this->inflater.registerType<Color>("Color");
-	this->inflater.registerType<Gradient>("Gradient");
-	this->inflater.registerType<Image>("Image");
-	this->inflater.registerType<VScrollBar>("VScrollBar");
-	this->inflater.registerType<HScrollBar>("HScrollBar");
-	this->inflater.registerType<Window>("Window");
-	this->inflater.registerType<NinePatch>("NinePatch");
-	this->inflater.registerType<NinePatchPushButton>("NinePatchPushButton");
-	this->inflater.registerType<CheckBox>("CheckBox");
-	this->inflater.registerType<TreeView>("TreeView");
-	this->inflater.registerType<DropDownSelector>("DropDownSelector");
-	this->inflater.registerType<RadioButton>("RadioButton");
-	this->inflater.registerType<ChoiceGroup>("ChoiceGroup");
-	this->inflater.registerType<MouseCursor>("MouseCursor");
-	this->inflater.registerType<CollapseArea>("CollapseArea");
-	this->inflater.registerType<ImageToggle>("ImageToggle");
-	this->inflater.registerType<ImagePushButton>("ImagePushButton");
-	this->inflater.registerType<Tabs>("Tabs");
-	this->inflater.registerType<Tab>("Tab");
-	this->inflater.registerType<TextInputLine>("TextInputLine");
+	this->inflater.register_widget<Text>("Text");
+	this->inflater.register_widget<Color>("Color");
+	this->inflater.register_widget<Gradient>("Gradient");
+	this->inflater.register_widget<Image>("Image");
+	this->inflater.register_widget<VScrollBar>("VScrollBar");
+	this->inflater.register_widget<HScrollBar>("HScrollBar");
+	this->inflater.register_widget<Window>("Window");
+	this->inflater.register_widget<NinePatch>("NinePatch");
+	this->inflater.register_widget<NinePatchPushButton>("NinePatchPushButton");
+	this->inflater.register_widget<CheckBox>("CheckBox");
+	this->inflater.register_widget<TreeView>("TreeView");
+	this->inflater.register_widget<DropDownSelector>("DropDownSelector");
+	this->inflater.register_widget<RadioButton>("RadioButton");
+	this->inflater.register_widget<ChoiceGroup>("ChoiceGroup");
+	this->inflater.register_widget<MouseCursor>("MouseCursor");
+	this->inflater.register_widget<CollapseArea>("CollapseArea");
+	this->inflater.register_widget<ImageToggle>("ImageToggle");
+	this->inflater.register_widget<ImagePushButton>("ImagePushButton");
+	this->inflater.register_widget<Tabs>("Tabs");
+	this->inflater.register_widget<Tab>("Tab");
+	this->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
 		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");

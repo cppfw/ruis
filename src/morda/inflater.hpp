@@ -49,18 +49,18 @@ public:
 	//TODO: remove deprecated method
 	template <class T_Widget> void addWidget(const std::string& widgetName){
 		TRACE(<< "Inflater::addWidget() is DEPRECATED. Use Inflater::registerType() instead." << std::endl)
-		this->registerType<T_Widget>(widgetName);
+		this->register_widget<T_Widget>(widgetName);
 	}
 
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
 	 * in STOB GUI description.
-	 * @param widgetName - name of the widget as it appears in GUI script.
+	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
-	template <class T_Widget> void registerType(const std::string& widgetName){
+	template <class T_Widget> void register_widget(const std::string& widget_name){
 		this->add_factory(
-				std::string(widgetName),
+				std::string(widget_name),
 				[](const puu::trees& desc) -> std::shared_ptr<morda::Widget> {
 					return std::make_shared<T_Widget>(puu_to_stob(desc).get());
 				}

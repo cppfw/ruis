@@ -25,19 +25,19 @@ using namespace morda;
 
 
 inflater::inflater(){
-	this->registerType<Widget>("Widget");
-	this->registerType<Container>("Container");
-	this->registerType<SizeContainer>("SizeContainer");
-	this->registerType<Row>("Row");
-	this->registerType<Column>("Column");
-	this->registerType<Pile>("Pile");
-	this->registerType<MouseProxy>("MouseProxy");
-	this->registerType<ScrollArea>("ScrollArea");
-	this->registerType<KeyProxy>("KeyProxy");
-	this->registerType<Overlay>("Overlay");
-	this->registerType<ResizeProxy>("ResizeProxy");
-	this->registerType<HList>("HList");
-	this->registerType<VList>("VList");
+	this->register_widget<Widget>("Widget");
+	this->register_widget<Container>("Container");
+	this->register_widget<SizeContainer>("SizeContainer");
+	this->register_widget<Row>("Row");
+	this->register_widget<Column>("Column");
+	this->register_widget<Pile>("Pile");
+	this->register_widget<MouseProxy>("MouseProxy");
+	this->register_widget<ScrollArea>("ScrollArea");
+	this->register_widget<KeyProxy>("KeyProxy");
+	this->register_widget<Overlay>("Overlay");
+	this->register_widget<ResizeProxy>("ResizeProxy");
+	this->register_widget<HList>("HList");
+	this->register_widget<VList>("VList");
 }
 
 
