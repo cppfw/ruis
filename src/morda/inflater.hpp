@@ -115,15 +115,6 @@ public:
 	 */
 	std::shared_ptr<morda::Widget> inflate(const papki::File& fi);
 
-	//TODO: remove includes resolution and this load() method
-	/**
-	 * @brief Load GUI script.
-	 * Loads a GUI script resolving includes.
-	 * @param fi - file interface providing GUI script and its dependencies.
-	 * @return Pointer to a root node of the GUI hierarchy.
-	 */
-	static std::unique_ptr<stob::Node> load(const papki::File& fi);
-
 private:
 	struct Template{
 		std::unique_ptr<stob::Node> t;

@@ -64,10 +64,7 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 
 
 std::shared_ptr<morda::Widget> inflater::inflate(const papki::File& fi) {
-	std::unique_ptr<stob::Node> root = this->load(fi);
-	ASSERT(root)
-
-	return this->inflate(stob_to_puu(*root));
+	return this->inflate(stob_to_puu(*stob::load(fi)));
 }
 
 
@@ -266,16 +263,6 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}else{
 		return fac(puu::trees());
 	}
-}
-
-
-
-std::unique_ptr<stob::Node> inflater::load(const papki::File& fi){
-	std::unique_ptr<stob::Node> ret = stob::load(fi);
-
-	ret = std::move(std::get<0>(resolveIncludes(fi, std::move(ret))));
-
-	return ret;
 }
 
 inflater::Template inflater::parseTemplate(const stob::Node& chain){
