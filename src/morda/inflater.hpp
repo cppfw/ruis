@@ -107,18 +107,19 @@ public:
 private:
 	struct widget_template{
 		std::unique_ptr<stob::Node> t;
+		puu::tree templ;
 		std::set<std::string> vars;
 	};
 
-	widget_template parseTemplate(const stob::Node& chain);
+	widget_template parse_template(const stob::Node& chain);
 
 	std::list<std::map<std::string, widget_template>> templates;
 
 	const widget_template* findTemplate(const std::string& name)const;
 
-	void pushTemplates(const stob::Node& chain);
+	void push_templates(const stob::Node& chain);
 
-	void popTemplates();
+	void pop_templates();
 
 
 	// variable name - value mapping

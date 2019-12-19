@@ -278,30 +278,32 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}
 }
 
-inflater::widget_template inflater::parseTemplate(const stob::Node& chain){
+inflater::widget_template inflater::parse_template(const stob::Node& chain){
 	widget_template ret;
 
 	for(auto n = &chain; n; n = n->next()){
+		//template definition
+		if(ret.t){
+			break;
+		}
+
 		if(n->isProperty()){
 			//possibly variable name
 			if(n->child()){
-				throw Exc("malformed GUI declaration: template argument name has children");
+				throw std::invalid_argument("inflater::parse_template(): template argument name has children");
 			}
 			ret.vars.insert(n->value());
 			continue;
 		}
-		//template definition
-		if(ret.t){
-			continue;
-		}
+		
 		ret.t = n->clone();
 	}
 	if(!ret.t){
-		throw Exc("malformed GUI declaration: template has no definition");
+		throw std::invalid_argument("inflater::parse_template(): template has no definition");
 	}
 	ASSERT(ret.t)
 
-	//for each variable create a stub property if needed
+	// for each variable create a stub property if needed
 	for(auto& v : ret.vars){
 		auto p = ret.t->child(v.c_str()).get_node();
 		if(!p){
@@ -310,7 +312,7 @@ inflater::widget_template inflater::parseTemplate(const stob::Node& chain){
 		}
 	}
 
-//	TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
+	// TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
 
 	if(auto tmpl = this->findTemplate(ret.t->value())){
 		ret.t->setValue(tmpl->t->value());
@@ -318,23 +320,23 @@ inflater::widget_template inflater::parseTemplate(const stob::Node& chain){
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end());//forward all variables
 	}
 
-//	TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
+	// TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
 	return ret;
 }
 
 void inflater::pushDefs(const stob::Node& chain) {
 	this->push_variables(stob_to_puu(chain));
-	this->pushTemplates(chain);
+	this->push_templates(chain);
 }
 
 void inflater::popDefs() {
 	this->pop_variables();
-	this->popTemplates();
+	this->pop_templates();
 }
 
 
 
-void inflater::pushTemplates(const stob::Node& chain){
+void inflater::push_templates(const stob::Node& chain){
 	decltype(this->templates)::value_type m;
 
 	for(auto c = &chain; c; c = c->next()){
@@ -343,10 +345,10 @@ void inflater::pushTemplates(const stob::Node& chain){
 		}
 
 		if(!c->child()){
-			throw Exc("inflater::pushTemplates(): template name has no children, error.");
+			throw std::invalid_argument("inflater::pushTemplates(): template name has no children, error.");
 		}
 //		TRACE(<< "pushing template = " << c->value() << std::endl)
-		if(!m.insert(std::make_pair(c->value(), parseTemplate(c->up()))).second){
+		if(!m.insert(std::make_pair(c->value(), parse_template(c->up()))).second){
 			throw Exc("inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
@@ -366,7 +368,7 @@ void inflater::pushTemplates(const stob::Node& chain){
 
 
 
-void inflater::popTemplates(){
+void inflater::pop_templates(){
 	ASSERT(this->templates.size() != 0)
 	this->templates.pop_front();
 }

@@ -5,7 +5,7 @@
 
 
 int main(int argc, char** argv){
-	//test that whole definition chain is substituted
+	// test that whole definition chain is substituted
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
@@ -41,7 +41,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(lp.dim[1] == 123)
 	}
 
-	//test template properties overriding
+	// test template properties overriding
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
@@ -81,7 +81,7 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
 	}
 
-	//test template arguments
+	// test template arguments
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
@@ -123,7 +123,7 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
 
-	//test two levels of templates
+	// test two levels of templates
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
@@ -173,7 +173,7 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
 	}
 
-	//test template which nests same named widget on 2nd level
+	// test template which nests same named widget on 2nd level
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
@@ -212,7 +212,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
 	}
 
-	//test two defs blocks in widget
+	// test two defs blocks in widget
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
