@@ -128,7 +128,7 @@ private:
 
 	void push_variables(const puu::trees& trees);
 
-	void popVariables();
+	void pop_variables();
 
 	void substituteVariables(stob::Node* to)const;
 

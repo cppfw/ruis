@@ -321,7 +321,7 @@ void inflater::pushDefs(const stob::Node& chain) {
 }
 
 void inflater::popDefs() {
-	this->popVariables();
+	this->pop_variables();
 	this->popTemplates();
 }
 
@@ -392,7 +392,7 @@ const stob::Node* inflater::findVariable(const std::string& name)const{
 
 
 
-void inflater::popVariables(){
+void inflater::pop_variables(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_front();
 }
@@ -417,23 +417,6 @@ void inflater::push_variables(const puu::trees& trees){
 			throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}
-
-	// for(auto n = &chain; n; n = n->next()){
-	// 	if(!n->isProperty()){
-	// 		continue;
-	// 	}
-
-	// 	auto value = n->cloneChildren();
-
-	// 	this->substituteVariables(value.get());
-
-	// 	if(!m.insert(
-	// 			std::make_pair(n->value(), std::move(value))
-	// 		).second)
-	// 	{
-	// 		throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
-	// 	}
-	// }
 
 	this->variables.push_front(std::move(m));
 
