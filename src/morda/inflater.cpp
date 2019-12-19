@@ -73,7 +73,7 @@ const char* defs_c = "defs";
 }
 
 namespace{
-void substituteVars(stob::Node* to, const std::function<const stob::Node*(const std::string&)>& findVar){
+void substituteVars(stob::Node* to, const std::function<const puu::trees*(const std::string&)>& findVar){
 	if(!to || !findVar){
 		return;
 	}
@@ -101,10 +101,12 @@ void substituteVars(stob::Node* to, const std::function<const stob::Node*(const 
 			}
 
 			if(auto var = findVar(name->value())){
-				auto next = to->next();
-				to->replace(*var);
-				to = next;
-				continue;
+				if(var->size() != 0){
+					auto next = to->next();
+					to->replace(puu_to_stob(*var));
+					to = next;
+					continue;
+				}
 			}
 		}else{
 			if(to->child()){
@@ -131,7 +133,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 	}
 
 	//prepare variables and remove them from 'chain'
-	std::map<std::string, std::unique_ptr<stob::Node>> vars;
+	std::map<std::string, puu::trees> vars;
 	{
 		auto childrenChain = utki::makeUnique<stob::Node>();
 		stob::Node* lastChild = childrenChain.get();
@@ -147,7 +149,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 				lastChild = lastChild->next();
 				continue;
 			}else if(varNames.find(chain->value()) != varNames.end()){
-				vars[chain->value()] = chain->removeChildren();
+				vars[chain->value()] = stob_to_puu(*chain->removeChildren());
 				chain = chain->chopNext();
 				continue;
 			}else if(ret){
@@ -162,12 +164,12 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 			ret = std::move(chain);
 			chain = std::move(tail);
 		}
-		vars["children"] = childrenChain->chopNext();
+		vars["children"] = stob_to_puu(*childrenChain->chopNext());
 	}
 
 	substituteVars(
 			ret.get(),
-			[&vars](const std::string& name) -> const stob::Node*{
+			[&vars](const std::string& name) -> const puu::trees*{
 //				TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
 				if(i == vars.end()){
@@ -175,7 +177,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 					return nullptr;
 				}
 //				TRACE(<< "found = " << i->second.get() << std::endl)
-				return i->second.get();
+				return &i->second;
 			}
 		);
 
@@ -379,11 +381,11 @@ const inflater::widget_template* inflater::findTemplate(const std::string& name)
 
 
 
-const stob::Node* inflater::findVariable(const std::string& name)const{
+const puu::trees* inflater::find_variable(const std::string& name)const{
 	for(auto& i : this->variables){
 		auto r = i.find(name);
 		if(r != i.end()){
-			return r->second.get();
+			return &r->second;
 		}
 	}
 //	TRACE(<< "inflater::findVariable(): variable '" << name <<"' not found!!!" << std::endl)
@@ -411,7 +413,7 @@ void inflater::push_variables(const puu::trees& trees){
 		this->substituteVariables(value.get());
 
 		if(!m.insert(
-				std::make_pair(t.value.to_string(), std::move(value))
+				std::make_pair(t.value.to_string(), stob_to_puu(*value))
 			).second)
 		{
 			throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
@@ -434,8 +436,21 @@ void inflater::push_variables(const puu::trees& trees){
 void inflater::substituteVariables(stob::Node* to)const{
 	substituteVars(
 			to,
-			[this](const std::string& name) -> const stob::Node*{
-				return this->findVariable(name);
+			[this](const std::string& name) -> const puu::trees*{
+				return this->find_variable(name);
 			}
 		);
+}
+
+void inflater::substitute_variables(puu::trees& to)const{
+	auto tmp = puu_to_stob(to);
+
+	substituteVars(
+			tmp.get(),
+			[this](const std::string& name) -> const puu::trees*{
+				return this->find_variable(name);
+			}
+		);
+	
+	to = stob_to_puu(*tmp);
 }

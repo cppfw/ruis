@@ -135,7 +135,7 @@ Container{
 							}
 
 							Text{
-								text{"radiobutton"}
+								text{"radio button"}
 							}
 						}
 					}

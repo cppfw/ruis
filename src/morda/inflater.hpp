@@ -122,15 +122,17 @@ private:
 
 
 	// variable name - value mapping
-	std::list<std::map<std::string, std::unique_ptr<stob::Node>>> variables;
+	std::list<std::map<std::string, puu::trees>> variables;
 
-	const stob::Node* findVariable(const std::string& name)const;
+	const puu::trees* find_variable(const std::string& name)const;
 
 	void push_variables(const puu::trees& trees);
 
 	void pop_variables();
 
 	void substituteVariables(stob::Node* to)const;
+
+	void substitute_variables(puu::trees& to)const;
 
 	void pushDefs(const stob::Node& chain);
 	void popDefs();
