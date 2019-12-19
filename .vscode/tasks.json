@@ -39,7 +39,8 @@
             "command": "make test debug=true",
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "dependsOn": "build_debug"
         },
         {
             "label": "run",
@@ -73,12 +74,6 @@
             "label": "rebuild",
             "type": "shell",
             "command": "make clean && make autojobs=true",
-            "problemMatcher": []
-        },
-        {
-            "label": "rebuild_debug",
-            "type": "shell",
-            "command": "make clean && make autojobs=true debug=true",
             "problemMatcher": []
         }
     ]
