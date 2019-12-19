@@ -264,7 +264,12 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 		}
 	}
 
-	this->substituteVariables(cloned.get());
+	substituteVars(
+			cloned.get(),
+			[this](const std::string& name) -> const puu::trees*{
+				return this->find_variable(name);
+			}
+		);
 
 	if(cloned){
 		return fac(stob_to_puu(*cloned));
@@ -433,15 +438,6 @@ void inflater::push_variables(const puu::trees& trees){
 //		}
 //	}
 //#endif
-}
-
-void inflater::substituteVariables(stob::Node* to)const{
-	substituteVars(
-			to,
-			[this](const std::string& name) -> const puu::trees*{
-				return this->find_variable(name);
-			}
-		);
 }
 
 void inflater::substitute_variables(puu::trees& to)const{

@@ -130,8 +130,6 @@ private:
 
 	void pop_variables();
 
-	void substituteVariables(stob::Node* to)const;
-
 	void substitute_variables(puu::trees& to)const;
 
 	void pushDefs(const stob::Node& chain);
