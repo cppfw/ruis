@@ -126,7 +126,7 @@ private:
 
 	const stob::Node* findVariable(const std::string& name)const;
 
-	void pushVariables(const stob::Node& chain);
+	void push_variables(const puu::trees& trees);
 
 	void popVariables();
 

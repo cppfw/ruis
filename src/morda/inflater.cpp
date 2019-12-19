@@ -316,7 +316,7 @@ inflater::widget_template inflater::parseTemplate(const stob::Node& chain){
 }
 
 void inflater::pushDefs(const stob::Node& chain) {
-	this->pushVariables(chain);
+	this->push_variables(stob_to_puu(chain));
 	this->pushTemplates(chain);
 }
 
@@ -398,25 +398,42 @@ void inflater::popVariables(){
 }
 
 
-void inflater::pushVariables(const stob::Node& chain){
+void inflater::push_variables(const puu::trees& trees){
 	decltype(this->variables)::value_type m;
 
-	for(auto n = &chain; n; n = n->next()){
-		if(!n->isProperty()){
+	for(auto& t : trees){
+		if(!is_property(t)){
 			continue;
 		}
 
-		auto value = n->cloneChildren();
+		auto value = puu_to_stob(t.children);
 
 		this->substituteVariables(value.get());
 
 		if(!m.insert(
-				std::make_pair(n->value(), std::move(value))
+				std::make_pair(t.value.to_string(), std::move(value))
 			).second)
 		{
 			throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
 		}
 	}
+
+	// for(auto n = &chain; n; n = n->next()){
+	// 	if(!n->isProperty()){
+	// 		continue;
+	// 	}
+
+	// 	auto value = n->cloneChildren();
+
+	// 	this->substituteVariables(value.get());
+
+	// 	if(!m.insert(
+	// 			std::make_pair(n->value(), std::move(value))
+	// 		).second)
+	// 	{
+	// 		throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
+	// 	}
+	// }
 
 	this->variables.push_front(std::move(m));
 
