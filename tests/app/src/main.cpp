@@ -301,7 +301,7 @@ public:
 				layout{dx{5mm} dy{fill}}
 				Color{
 					layout{dx{1pt}dy{fill}}
-					color{@{morda_color_highlight}}
+					color{${morda_color_highlight}}
 				}
 			}
 		)qwertyuiop";
@@ -313,7 +313,7 @@ public:
 					layout{dx{max}dy{max}}
 					Color{
 						layout{dx{1pt}dy{0}weight{1}}
-						color{@{morda_color_highlight}}
+						color{${morda_color_highlight}}
 					}
 					Widget{layout{dx{max}dy{0}weight{1}}}
 				}
@@ -322,7 +322,7 @@ public:
 					Widget{layout{dx{0}dy{max}weight{1}}}
 					Color{
 						layout{dx{0}dy{1pt}weight{1}}
-						color{@{morda_color_highlight}}
+						color{${morda_color_highlight}}
 					}
 				}
 			}
@@ -333,14 +333,14 @@ public:
 				layout{dx{5mm} dy{max}}
 				Color{
 					layout{dx{1pt}dy{max}}
-					color{@{morda_color_highlight}}
+					color{${morda_color_highlight}}
 				}
 				Row{
 					layout{dx{max}dy{max}}
 					Widget{layout{dx{0}dy{max}weight{1}}}
 					Color{
 						layout{dx{0}dy{1pt}weight{1}}
-						color{@{morda_color_highlight}}
+						color{${morda_color_highlight}}
 					}
 				}
 			}
@@ -520,7 +520,7 @@ public:
 								Color{
 									id{selection}
 									layout{dx{max}dy{max}}
-									color{@{morda_color_highlight}}
+									color{${morda_color_highlight}}
 									visible{false}
 								}
 								Text{

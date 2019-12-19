@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 
 				Cont{
 					layout{
-						@{dims}
+						${dims}
 					}
 				}
 
@@ -90,9 +90,9 @@ int main(int argc, char** argv){
 					Cont{
 						x y layout
 						Container{
-							x{@{x}} y{@{x}}
+							x{${x}} y{${x}}
 							layout{
-								@{layout}
+								${layout}
 								dx{fill} dy{max}
 							}
 						}
@@ -130,10 +130,10 @@ int main(int argc, char** argv){
 			defs{
 				Cont{ x y layout dx
 					Container{
-						x{@{x}} y{@{y}}
-						dy{@{dx}}
+						x{${x}} y{${y}}
+						dy{${dx}}
 						layout{
-							@{layout}
+							${layout}
 							dx{fill} dy{max}
 						}
 					}
@@ -184,13 +184,13 @@ int main(int argc, char** argv){
 				Container{ x y layout dx
 					Pile{
 						Container_{
-							x{@{x}} y{@{y}}
-							dy{@{dx}}
+							x{${x}} y{${y}}
+							dy{${dx}}
 							layout{
-								@{layout}
+								${layout}
 								dx{fill} dy{max}
 							}
-							@{children}
+							${children}
 						}
 						Container_{}
 					}

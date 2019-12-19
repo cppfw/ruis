@@ -12,7 +12,7 @@ const char* layout_c = R"qwertyuiop(
 		layout{dx{max}}
 		Color{
 			layout{dx{fill}dy{fill}}
-			color{@{morda_color_mg}}
+			color{${morda_color_mg}}
 		}
 		Margins{
 			layout{dx{max}dy{max}}
@@ -21,10 +21,10 @@ const char* layout_c = R"qwertyuiop(
 				marHor{4dp}
 				marVer{1dp}
 			}
-			left{@{marHor}}
-			top{@{marVer}}
-			right{@{marHor}}
-			bottom{@{marVer}}
+			left{${marHor}}
+			top{${marVer}}
+			right{${marHor}}
+			bottom{${marVer}}
 
 			Row{
 				layout{dx{max}}
@@ -36,7 +36,7 @@ const char* layout_c = R"qwertyuiop(
 					}
 				}
 				Widget{
-					layout{dx{@{marHor}}}
+					layout{dx{${marHor}}}
 				}
 				Pile{
 					id{title}

@@ -12,7 +12,7 @@ defs{
 
 defs{
 	morda_color_bg_window_title{0xffad9869}
-	morda_color_bg_window_title_nontopmost{@{morda_color_fg}}
+	morda_color_bg_window_title_nontopmost{${morda_color_fg}}
 
 	morda_window_border_size{5dp}
 
@@ -22,7 +22,7 @@ defs{
 
 	Text{
 		Text{
-			color{ @{morda_color_text} }
+			color{ ${morda_color_text} }
 		}
 	}
 
@@ -31,7 +31,7 @@ defs{
 			image{morda_npt_textfield_background}
 			TextInputLine_{
 				layout{dx{fill}dy{max}}
-				text{@{text}}
+				text{${text}}
 			}
 		}
 	}
@@ -40,8 +40,8 @@ defs{
 		Row{
 			Widget{
 				layout{
-					dx{@{left}}
-					weight{@{weightLeft}}
+					dx{${left}}
+					weight{${weightLeft}}
 				}
 			}
 			Column{
@@ -50,27 +50,27 @@ defs{
 				}
 				Widget{
 					layout{
-						dy{@{top}}
-						weight{@{weightTop}}
+						dy{${top}}
+						weight{${weightTop}}
 					}
 				}
 				Pile{
 					layout{
 						weight{1} dx{max}
 					}
-					@{children}
+					${children}
 				}
 				Widget{
 					layout{
-						dy{@{bottom}}
-						weight{@{weightBottom}}
+						dy{${bottom}}
+						weight{${weightBottom}}
 					}
 				}
 			}
 			Widget{
 				layout{
-					dx{@{right}}
-					weight{@{weightRight}}
+					dx{${right}}
+					weight{${weightRight}}
 				}
 			}
 		}
@@ -79,11 +79,11 @@ defs{
 	Left{ layout
 		Row{
 			layout{
-				@{layout}
+				${layout}
 				dx{max}
 			}
 
-			@{children}
+			${children}
 
 			Widget{
 				layout{
@@ -97,7 +97,7 @@ defs{
 	Right{ layout
 		Row{
 			layout{
-				@{layout}
+				${layout}
 				dx{max}
 			}
 
@@ -108,18 +108,18 @@ defs{
 				}
 			}
 
-			@{children}
+			${children}
 		}
 	}
 
 	Top{ layout
 		Column{
 			layout{
-				@{layout}
+				${layout}
 				dy{max}
 			}
 
-			@{children}
+			${children}
 
 			Widget{
 				layout{
@@ -133,7 +133,7 @@ defs{
 	Bottom{ layout
 		Column{
 			layout{
-				@{layout}
+				${layout}
 				dy{max}
 			}
 
@@ -144,7 +144,7 @@ defs{
 				}
 			}
 
-			@{children}
+			${children}
 		}
 	}
 
@@ -152,23 +152,23 @@ defs{
 		look
 		Window{
 			look{
-				@{look}
-				titleColorTopmost{ @{morda_color_bg_window_title} }
-				titleColorNonTopmost{ @{morda_color_bg_window_title_nontopmost} }
+				${look}
+				titleColorTopmost{ ${morda_color_bg_window_title} }
+				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
 				background{WindowBackground}
-				left{@{morda_window_border_size}}
-				top{@{morda_window_border_size}}
-				right{@{morda_window_border_size}}
-				bottom{@{morda_window_border_size}}
+				left{${morda_window_border_size}}
+				top{${morda_window_border_size}}
+				right{${morda_window_border_size}}
+				bottom{${morda_window_border_size}}
 			}
 
-			@{children}
+			${children}
 		}
 	}
 
 	PushButton{
 		NinePatchPushButton{
-			@{children}
+			${children}
 		}
 	}
 
@@ -178,10 +178,10 @@ defs{
 
 			image{morda_npt_window_bg}
 
-			left{@{morda_window_border_size}}
-			top{@{morda_window_border_size}}
-			right{@{morda_window_border_size}}
-			bottom{@{morda_window_border_size}}
+			left{${morda_window_border_size}}
+			top{${morda_window_border_size}}
+			right{${morda_window_border_size}}
+			bottom{${morda_window_border_size}}
 		}
 	}
 
@@ -191,10 +191,10 @@ defs{
 
 			image{morda_npt_window_bg}
 
-			left{@{morda_window_border_size}}
-			top{@{morda_window_border_size}}
-			right{@{morda_window_border_size}}
-			bottom{@{morda_window_border_size}}
+			left{${morda_window_border_size}}
+			top{${morda_window_border_size}}
+			right{${morda_window_border_size}}
+			bottom{${morda_window_border_size}}
 			centerVisible{false}
 		}
 	}
@@ -203,10 +203,10 @@ defs{
 defs{
 	Margin{ value
 		Margins{
-			left{@{value}}
-			top{@{value}}
-			right{@{value}}
-			bottom{@{value}}
+			left{${value}}
+			top{${value}}
+			right{${value}}
+			bottom{${value}}
 		}
 	}
 }

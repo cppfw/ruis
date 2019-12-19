@@ -79,7 +79,13 @@ void substituteVars(stob::Node* to, const std::function<const stob::Node*(const 
 	}
 
 	for(; to;){
-		if(*to == "@"){
+		if(*to == "@" || *to == "$"){ //TODO: @ is deprecated, remove check for @.
+
+			//TODO: deprecated, remove.
+			if(*to == "@"){
+				TRACE_ALWAYS(<< "DEPRACATED: use $ instead of @" << std::endl)
+			}
+
 			if(!to->child()){
 				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
 			}

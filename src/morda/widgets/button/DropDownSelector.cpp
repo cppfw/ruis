@@ -57,7 +57,7 @@ const char* itemLayout_c = R"qwertyuiop(
 			}
 			Color{
 				id{morda_dropdown_color}
-				color{@{morda_color_highlight}}
+				color{${morda_color_highlight}}
 				visible{false}
 				layout{
 					dx{fill} dy{fill}

@@ -17,7 +17,7 @@ defs{
 	variable{and_its_value}
 	trololo{"tro lo lo"}
 
-	c{@{trololo}}
+	c{${trololo}}
 
 	another_color{0xff00ff00}
 
@@ -49,7 +49,7 @@ Container{
 		defs{
 			bbb{dDd}
 //			clr{0xffff0000}
-			clr{@{another_color}}
+			clr{${another_color}}
 
 			lllayout{
 				dy{max} dx{max}
@@ -59,7 +59,7 @@ Container{
 		Column{
 			layout{
 //				dx{max} dy{max}
-				@{lllayout}
+				${lllayout}
 			}
 
 
@@ -470,7 +470,7 @@ Container{
 		title{"TextInput"}
 
 		/*Color{
-			color{ @{morda_color_bg} }
+			color{ ${morda_color_bg} }
 
 			layout{
 				dx{max} dy{max}
@@ -532,7 +532,7 @@ Container{
 
 				text{"Hello Wrodl!!!"}
 
-				color{ @{morda_color_text} }
+				color{ ${morda_color_text} }
 
 				layout{
 					dx{max} dy{min}
