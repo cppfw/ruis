@@ -105,16 +105,16 @@ public:
 	std::shared_ptr<morda::Widget> inflate(const papki::File& fi);
 
 private:
-	struct Template{
+	struct widget_template{
 		std::unique_ptr<stob::Node> t;
 		std::set<std::string> vars;
 	};
 
-	Template parseTemplate(const stob::Node& chain);
+	widget_template parseTemplate(const stob::Node& chain);
 
-	std::list<std::map<std::string, Template>> templates;
+	std::list<std::map<std::string, widget_template>> templates;
 
-	const Template* findTemplate(const std::string& name)const;
+	const widget_template* findTemplate(const std::string& name)const;
 
 	void pushTemplates(const stob::Node& chain);
 

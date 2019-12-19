@@ -265,8 +265,8 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}
 }
 
-inflater::Template inflater::parseTemplate(const stob::Node& chain){
-	Template ret;
+inflater::widget_template inflater::parseTemplate(const stob::Node& chain){
+	widget_template ret;
 
 	for(auto n = &chain; n; n = n->next()){
 		if(n->isProperty()){
@@ -360,7 +360,7 @@ void inflater::popTemplates(){
 
 
 
-const inflater::Template* inflater::findTemplate(const std::string& name)const{
+const inflater::widget_template* inflater::findTemplate(const std::string& name)const{
 	for(auto& i : this->templates){
 		auto r = i.find(name);
 		if(r != i.end()){
