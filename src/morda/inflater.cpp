@@ -408,15 +408,17 @@ void inflater::push_variables(const puu::trees& trees){
 			continue;
 		}
 
-		auto value = puu_to_stob(t.children);
+		auto value = t.children;
 
-		this->substituteVariables(value.get());
+		this->substitute_variables(value);
 
 		if(!m.insert(
-				std::make_pair(t.value.to_string(), stob_to_puu(*value))
+				std::make_pair(t.value.to_string(), std::move(value))
 			).second)
 		{
-			throw morda::Exc("inflater::pushDefinitions(): failed to add variable, variable with same name is already defined in this variables block");
+			std::stringstream ss;
+			ss << "inflater::push_variables(): failed to add variable '" << t.value.to_string() << "', variable with same name is already defined in this defs block";
+			throw utki::invalid_state(ss.str());
 		}
 	}
 
