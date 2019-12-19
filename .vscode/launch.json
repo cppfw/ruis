@@ -8,10 +8,10 @@
 			"name": "(gdb) debug",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/tests",
+			"program": "${workspaceFolder}/tests/inflating/tests",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/app",
+			"cwd": "${workspaceFolder}/tests/inflating",
 			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
@@ -22,7 +22,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build"
 		}
 	]
 }

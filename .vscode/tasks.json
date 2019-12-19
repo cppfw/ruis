@@ -49,6 +49,13 @@
             "dependsOn": "build"
         },
         {
+            "label": "test",
+            "type": "shell",
+            "command": "make test",
+            "problemMatcher": [],
+            "dependsOn": "build"
+        },
+        {
             "label": "run_ogles2",
             "type": "shell",
             "command": "make run ogles2=true",
