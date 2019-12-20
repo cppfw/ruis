@@ -7,8 +7,8 @@
 
 using namespace morda;
 
-ResCursor::ResCursor(std::shared_ptr<ResImage> image, const Vec2r& hotspot) :
-		image_v(std::move(image)),
+ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
+		image_v(std::dynamic_pointer_cast<ResImage>(image.shared_from_this())),
 		hotspot_v(hotspot)
 {}
 
@@ -28,5 +28,5 @@ std::shared_ptr<ResCursor> ResCursor::load(const stob::Node& chain, const papki:
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return std::make_shared<ResCursor>(std::move(image), hotspot);
+	return std::make_shared<ResCursor>(*image, hotspot);
 }
