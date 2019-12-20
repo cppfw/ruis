@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utki/Singleton.hpp>
+#include <utki/singleton.hpp>
 
 #include "render/Renderer.hpp"
 
@@ -13,7 +13,7 @@
 
 namespace morda{
 
-class Morda : public utki::IntrusiveSingleton<Morda>{
+class Morda : public utki::intrusive_singleton<Morda>{
 	friend T_Singleton;
 	static T_Instance instance;
 

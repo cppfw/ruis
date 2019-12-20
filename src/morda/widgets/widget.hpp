@@ -4,7 +4,7 @@
 #include <set>
 #include <memory>
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 #include <utki/exception.hpp>
 
 #include <puu/dom.hpp>
@@ -46,7 +46,7 @@ class container;
  * @param visible - should the widget be initially visible (true) or hidden (false). Default value is true.
  * @param enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
  */
-class widget : virtual public utki::Shared{
+class widget : virtual public utki::shared{
 	friend class container;
 	friend class Morda;
 public:

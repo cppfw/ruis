@@ -3,7 +3,7 @@
 #include <memory>
 
 #include <utki/config.hpp>
-#include <utki/Singleton.hpp>
+#include <utki/singleton.hpp>
 #include <utki/Buf.hpp>
 #include <utki/Unique.hpp>
 #include <utki/Flags.hpp>
@@ -59,7 +59,7 @@ struct window_params{
  * initializes rendering API (e.g. OpenGL or OpenGL ES).
  */
 class application :
-		public utki::IntrusiveSingleton<application>,
+		public utki::intrusive_singleton<application>,
 		public utki::Unique
 {
 	friend T_Singleton;

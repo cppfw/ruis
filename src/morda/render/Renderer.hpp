@@ -4,7 +4,7 @@
 
 namespace morda{
 
-class Renderer : virtual public utki::Shared{
+class Renderer : virtual public utki::shared{
 public:
 	const std::unique_ptr<RenderFactory> factory;
 	

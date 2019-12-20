@@ -38,7 +38,7 @@ public:
 	 * @brief List items provider.
 	 * User should subclass this class to provide items to the list.
 	 */
-	class ItemsProvider : virtual public utki::Shared{
+	class ItemsProvider : virtual public utki::shared{
 		friend class List;
 
 		List* list = nullptr;

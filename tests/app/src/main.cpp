@@ -726,7 +726,7 @@ public:
 			};
 
 			auto mouseProxy = c->try_get_widget_as<morda::MouseProxy>("list_mouseproxy");
-			struct State : public utki::Shared{
+			struct State : public utki::shared{
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};
@@ -787,7 +787,7 @@ public:
 			};
 
 			auto mouseProxy = c->try_get_widget_as<morda::MouseProxy>("horizontal_list_mouseproxy");
-			struct State : public utki::Shared{
+			struct State : public utki::shared{
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};

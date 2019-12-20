@@ -384,7 +384,7 @@ public:
 
 
 	class ItemsProvider :
-			public virtual utki::Shared,
+			public virtual utki::shared,
 			private List::ItemsProvider
 	{
 		friend class TreeView;

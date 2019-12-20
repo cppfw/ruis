@@ -1,13 +1,13 @@
 #pragma once
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 
 #include "Texture2D.hpp"
 
 namespace morda{
 
 
-class FrameBuffer : public utki::Shared{
+class FrameBuffer : public utki::shared{
 protected:
 	const std::shared_ptr<Texture2D> color;
 public:

@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 #include <papki/File.hpp>
 #include <puu/dom.hpp>
 
@@ -136,7 +136,7 @@ private:
 /**
  * @brief Base class for all resources.
  */
-class Resource : virtual public utki::Shared{
+class Resource : virtual public utki::shared{
 	friend class ResourceManager;
 protected:
 	//this can only be used as a base class

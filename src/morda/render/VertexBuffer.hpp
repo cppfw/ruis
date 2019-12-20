@@ -1,10 +1,10 @@
 #pragma once
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 
 namespace morda{
 	
-class VertexBuffer : virtual public utki::Shared{
+class VertexBuffer : virtual public utki::shared{
 public:
 	const size_t size;
 	

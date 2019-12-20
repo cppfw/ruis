@@ -3,13 +3,13 @@
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 
 #include <vector>
 
 namespace morda{
 
-class VertexArray : virtual public utki::Shared{
+class VertexArray : virtual public utki::shared{
 public:
 	const std::vector<std::shared_ptr<VertexBuffer>> buffers;
 	

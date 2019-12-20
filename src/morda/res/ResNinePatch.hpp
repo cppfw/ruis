@@ -44,7 +44,7 @@ public:
 	{}
 	
 	
-	class ImageMatrix :	virtual public utki::Shared{
+	class ImageMatrix :	virtual public utki::shared{
 		const std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3> images_v;
 		
 		std::weak_ptr<const ResNinePatch> parent;

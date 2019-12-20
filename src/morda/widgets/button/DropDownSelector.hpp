@@ -21,7 +21,7 @@ public:
 	 * @brief Item provider class.
 	 * User should subclass this class to provide items to a dropdown selector.
 	 */
-	class ItemsProvider : virtual public utki::Shared{
+	class ItemsProvider : virtual public utki::shared{
 		friend class DropDownSelector;
 
 		DropDownSelector* dd = nullptr;

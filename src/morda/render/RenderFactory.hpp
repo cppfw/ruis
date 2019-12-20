@@ -4,7 +4,7 @@
 
 #include <r4/vector2.hpp>
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 #include <utki/Unique.hpp>
 #include <utki/Buf.hpp>
 

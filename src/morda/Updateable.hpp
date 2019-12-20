@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <list>
 
-#include <utki/Shared.hpp>
+#include <utki/shared.hpp>
 
 #include "exception.hpp"
 
@@ -18,7 +18,7 @@ namespace morda{
  * A subclass of this class can subscribe for periodic updates to be performed from UI thread.
  * For example every 30 milliseconds it will call the update() method.
  */
-class Updateable : virtual public utki::Shared{
+class Updateable : virtual public utki::shared{
 	friend class Morda;
 
 private:

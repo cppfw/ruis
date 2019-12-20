@@ -41,7 +41,7 @@ public:
 	 * The texture which was created from an image resource.
 	 * This texture is to be used on a quad to render the image.
 	 */
-	class QuadTexture : virtual public utki::Shared{
+	class QuadTexture : virtual public utki::shared{
 		Vec2r dim_v;
 	protected:
 		QuadTexture(Vec2r dim) :
