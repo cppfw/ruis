@@ -218,7 +218,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	for(; n && n->isProperty(); n = n->next()){
 		if(*n == defs_c){
 			if(n->child()){
-				this->pushDefs(*n->child());
+				this->pushDefs(stob_to_puu(*n->child()));
 			}
 		}else{
 			throw Exc("inflater::Inflate(): unknown declaration encountered before first widget");
@@ -258,7 +258,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 
 	for(auto v = n->child(defs_c).get_node(); v; v = v->next(defs_c).get_node()){
 		if(v->child()){
-			this->pushDefs(*v->child());
+			this->pushDefs(stob_to_puu(*v->child()));
 			++numPopDefs;
 		}
 	}
@@ -337,8 +337,8 @@ inflater::widget_template inflater::parse_template(const stob::Node& chain){
 	return ret;
 }
 
-void inflater::pushDefs(const stob::Node& chain) {
-	this->push_variables(stob_to_puu(chain));
+void inflater::pushDefs(const puu::trees& chain) {
+	this->push_variables(chain);
 	this->push_templates(chain);
 }
 
@@ -349,19 +349,24 @@ void inflater::popDefs() {
 
 
 
-void inflater::push_templates(const stob::Node& chain){
+void inflater::push_templates(const puu::trees& chain){
 	decltype(this->templates)::value_type m;
 
-	for(auto c = &chain; c; c = c->next()){
-		if(c->isProperty()){
+	for(auto& c : chain){
+		if(is_property(c)){
 			continue;
 		}
 
-		if(!c->child()){
+		if(c.children.empty()){
 			throw std::invalid_argument("inflater::pushTemplates(): template name has no children, error.");
 		}
 //		TRACE(<< "pushing template = " << c->value() << std::endl)
-		if(!m.insert(std::make_pair(c->value(), parse_template(c->up()))).second){
+
+		auto res = m.insert(
+				std::make_pair(c.value.to_string(), parse_template(*puu_to_stob(c.children)))
+			);
+
+		if(!res.second){
 			throw Exc("inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}

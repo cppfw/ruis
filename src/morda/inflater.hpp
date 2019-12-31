@@ -117,7 +117,7 @@ private:
 
 	const widget_template* findTemplate(const std::string& name)const;
 
-	void push_templates(const stob::Node& chain);
+	void push_templates(const puu::trees& chain);
 
 	void pop_templates();
 
@@ -133,7 +133,7 @@ private:
 
 	void substitute_variables(puu::trees& to)const;
 
-	void pushDefs(const stob::Node& chain);
+	void pushDefs(const puu::trees& chain);
 	void popDefs();
 };
 
