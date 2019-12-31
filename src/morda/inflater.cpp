@@ -73,47 +73,43 @@ const char* defs_c = "defs";
 }
 
 namespace{
-void substituteVars(stob::Node* to, const std::function<const puu::trees*(const std::string&)>& findVar){
-	if(!to || !findVar){
+void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const std::string&)>& findVar){
+	if(!findVar){
 		return;
 	}
 
-	for(; to;){
-		if(*to == "@" || *to == "$"){ //TODO: @ is deprecated, remove check for @.
+	for(auto i = to.begin(); i != to.end();){
+		if(i->value == "@" || i->value == "$"){ //TODO: @ is deprecated, remove check for @.
 
 			//TODO: deprecated, remove.
-			if(*to == "@"){
+			if(i->value == "@"){
 				TRACE_ALWAYS(<< "DEPRACATED: use $ instead of @" << std::endl)
 			}
 
-			if(!to->child()){
+			if(i->children.empty()){
 				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
 			}
 
-			const auto name = to->child();
-
-			if(name->next()){
+			if(i->children.size() != 1){
 				throw Exc("malformed GUI definition: reference to variable holds more than one variable name");
 			}
 
-			if(name->child()){
+			if(!i->children.front().children.empty()){
 				throw Exc("malformed GUI definition: variable name has children");
 			}
 
-			if(auto var = findVar(name->value())){
+			if(auto var = findVar(i->children.front().value.to_string())){
 				if(var->size() != 0){
-					auto next = to->next();
-					to->replace(puu_to_stob(*var));
-					to = next;
+					i = to.insert(i, var->begin(), var->end());
+					i = std::next(i, std::distance(var->begin(), var->end()));
+					i = to.erase(i);
 					continue;
 				}
 			}
 		}else{
-			if(to->child()){
-				substituteVars(to->child(), findVar);
-			}
+			substitute_vars(i->children, findVar);
 		}
-		to = to->next();
+		++i;
 	}
 }
 }
@@ -167,8 +163,12 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 		vars["children"] = stob_to_puu(*childrenChain->chopNext());
 	}
 
-	substituteVars(
-			ret.get(),
+	ASSERT(ret)
+
+	auto retret = stob_to_puu(*ret);
+
+	substitute_vars(
+			retret,
 			[&vars](const std::string& name) -> const puu::trees*{
 //				TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
@@ -181,7 +181,7 @@ std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std
 			}
 		);
 
-	return ret;
+	return puu_to_stob(retret);
 }
 }
 
@@ -264,15 +264,16 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 		}
 	}
 
-	substituteVars(
-			cloned.get(),
-			[this](const std::string& name) -> const puu::trees*{
-				return this->find_variable(name);
-			}
-		);
-
 	if(cloned){
-		return fac(stob_to_puu(*cloned));
+		auto c = stob_to_puu(*cloned);
+
+		substitute_vars(
+				c,
+				[this](const std::string& name) -> const puu::trees*{
+					return this->find_variable(name);
+				}
+			);
+		return fac(c);
 	}else{
 		return fac(puu::trees());
 	}
@@ -443,14 +444,10 @@ void inflater::push_variables(const puu::trees& trees){
 }
 
 void inflater::substitute_variables(puu::trees& to)const{
-	auto tmp = puu_to_stob(to);
-
-	substituteVars(
-			tmp.get(),
+	substitute_vars(
+			to,
 			[this](const std::string& name) -> const puu::trees*{
 				return this->find_variable(name);
 			}
 		);
-	
-	to = stob_to_puu(*tmp);
 }
