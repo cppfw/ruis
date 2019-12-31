@@ -106,7 +106,6 @@ public:
 
 private:
 	struct widget_template{
-		std::unique_ptr<stob::Node> t;
 		puu::tree templ;
 		std::set<std::string> vars;
 	};

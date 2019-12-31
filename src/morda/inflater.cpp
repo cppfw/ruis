@@ -291,7 +291,7 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 
 	for(auto& n : chain){
 		//template definition
-		if(ret.t){
+		if(!ret.templ.value.empty()){
 			break;
 		}
 
@@ -308,42 +308,26 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 		// TRACE(<< "template name = " << n.value.to_string() << std::endl)
 
 		ret.templ = n;
-
-		auto nn = utki::makeUnique<stob::node>(n.value.to_string());
-		nn->setChildren(puu_to_stob(n.children));
-
-		ret.t = std::move(nn);
 	}
 	if(ret.templ.value.empty()){
 		throw std::invalid_argument("inflater::parse_template(): template has no definition");
 	}
-	ASSERT(ret.t)
 
 	// for each variable create a stub property if needed
 	for(auto& v : ret.vars){
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if(i == ret.templ.children.end()){
-			//TODO: push_front() ?
 			ret.templ.children.push_back(puu::tree(v));
 			ret.templ.children.back().children.push_back(puu::tree());
-			ret.t->addAsFirstChild(v.c_str());
-			ret.t->child()->addAsFirstChild(nullptr);
 		}
 	}
 
 	// TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
 
 	if(auto tmpl = this->findTemplate(ret.templ.value.to_string())){
-		ret.t->setValue(tmpl->t->value());
-		ret.t->setChildren(
-				puu_to_stob(
-						mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, stob_to_puu(*ret.t->removeChildren()))
-					)
-			);
-		
 		ret.templ.value = tmpl->templ.value;
 		ret.templ.children = mergeGUIChain(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
-
+		
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
