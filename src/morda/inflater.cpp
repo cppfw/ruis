@@ -233,7 +233,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 
 	std::unique_ptr<stob::Node> cloned;
 //	TRACE(<< "inflating = " << n->value() << std::endl)
-	if(auto tmpl = this->findTemplate(n->value())){
+	if(auto tmpl = this->find_template(n->value())){
 //		TRACE(<< "template name = " << n->value() << std::endl)
 
 		cloned = utki::makeUnique<stob::Node>(tmpl->templ.value.to_string());
@@ -324,10 +324,10 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 
 	// TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
 
-	if(auto tmpl = this->findTemplate(ret.templ.value.to_string())){
+	if(auto tmpl = this->find_template(ret.templ.value.to_string())){
 		ret.templ.value = tmpl->templ.value;
 		ret.templ.children = mergeGUIChain(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
-		
+
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
@@ -391,7 +391,7 @@ void inflater::pop_templates(){
 
 
 
-const inflater::widget_template* inflater::findTemplate(const std::string& name)const{
+const inflater::widget_template* inflater::find_template(const std::string& name)const{
 	for(auto& i : this->templates){
 		auto r = i.find(name);
 		if(r != i.end()){

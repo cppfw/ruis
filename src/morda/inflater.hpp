@@ -114,7 +114,7 @@ private:
 
 	std::list<std::map<std::string, widget_template>> templates;
 
-	const widget_template* findTemplate(const std::string& name)const;
+	const widget_template* find_template(const std::string& name)const;
 
 	void push_templates(const puu::trees& chain);
 
