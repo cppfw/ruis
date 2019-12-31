@@ -116,17 +116,19 @@ void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const
 
 namespace{
 //Merges two STOB chains.
-std::unique_ptr<stob::Node> mergeGUIChain(const stob::Node* tmplChain, const std::set<std::string>& varNames, std::unique_ptr<stob::Node> chain){
-	if(!chain){
-		if(!tmplChain){
+std::unique_ptr<stob::Node> mergeGUIChain(const puu::trees& tmplChain, const std::set<std::string>& varNames, puu::trees& trees){
+	if(trees.empty()){
+		if(tmplChain.empty()){
 			return nullptr;
 		}
 	}
 
 	std::unique_ptr<stob::Node> ret;
-	if(tmplChain){
-		ret = tmplChain->cloneChain();
+	if(!tmplChain.empty()){
+		ret = puu_to_stob(tmplChain);
 	}
+
+	std::unique_ptr<puu::node> chain = puu_to_stob(trees);
 
 	//prepare variables and remove them from 'chain'
 	std::map<std::string, puu::trees> vars;
@@ -234,7 +236,8 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	if(auto tmpl = this->findTemplate(n->value())){
 //		TRACE(<< "template name = " << n->value() << std::endl)
 		cloned = utki::makeUnique<stob::Node>(tmpl->t->value());
-		cloned->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, n->cloneChildren()));
+		auto trees = stob_to_puu(*n->cloneChildren());
+		cloned->setChildren(mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, trees));
 		n = cloned.get();
 //		TRACE(<< "n = " << n->chainToString(true) << std::endl)
 	}
@@ -317,7 +320,8 @@ inflater::widget_template inflater::parse_template(const stob::Node& chain){
 
 	if(auto tmpl = this->findTemplate(ret.t->value())){
 		ret.t->setValue(tmpl->t->value());
-		ret.t->setChildren(mergeGUIChain(tmpl->t->child(), tmpl->vars, ret.t->removeChildren()));
+		auto trees = stob_to_puu(*ret.t->removeChildren());
+		ret.t->setChildren(mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, trees));
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end());//forward all variables
 	}
 
