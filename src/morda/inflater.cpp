@@ -307,20 +307,22 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 		ASSERT(!is_leaf_property(n.value))
 		// TRACE(<< "template name = " << n.value.to_string() << std::endl)
 
+		ret.templ = n;
+
 		auto nn = utki::makeUnique<stob::node>(n.value.to_string());
 		nn->setChildren(puu_to_stob(n.children));
 
 		ret.t = std::move(nn);
 	}
-	if(!ret.t){
+	if(ret.templ.value.length() == 0){ //TODO: use empty()
 		throw std::invalid_argument("inflater::parse_template(): template has no definition");
 	}
 	ASSERT(ret.t)
 
 	// for each variable create a stub property if needed
 	for(auto& v : ret.vars){
-		auto p = ret.t->child(v.c_str()).get_node();
-		if(!p){
+		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
+		if(i == ret.templ.children.end()){
 			ret.t->addAsFirstChild(v.c_str());
 			ret.t->child()->addAsFirstChild(nullptr);
 		}
