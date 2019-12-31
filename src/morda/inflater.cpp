@@ -286,25 +286,31 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}
 }
 
-inflater::widget_template inflater::parse_template(const stob::Node& chain){
+inflater::widget_template inflater::parse_template(const puu::trees& chain){
 	widget_template ret;
 
-	for(auto n = &chain; n; n = n->next()){
+	for(auto& n : chain){
 		//template definition
 		if(ret.t){
 			break;
 		}
 
-		if(n->isProperty()){
+		if(is_leaf_property(n.value)){
 			//possibly variable name
-			if(n->child()){
+			if(!n.children.empty()){
 				throw std::invalid_argument("inflater::parse_template(): template argument name has children");
 			}
-			ret.vars.insert(n->value());
+			ret.vars.insert(n.value.to_string());
 			continue;
 		}
-		
-		ret.t = n->clone();
+
+		ASSERT(!is_leaf_property(n.value))
+		// TRACE(<< "template name = " << n.value.to_string() << std::endl)
+
+		auto nn = utki::makeUnique<stob::node>(n.value.to_string());
+		nn->setChildren(puu_to_stob(n.children));
+
+		ret.t = std::move(nn);
 	}
 	if(!ret.t){
 		throw std::invalid_argument("inflater::parse_template(): template has no definition");
@@ -363,7 +369,7 @@ void inflater::push_templates(const puu::trees& chain){
 //		TRACE(<< "pushing template = " << c->value() << std::endl)
 
 		auto res = m.insert(
-				std::make_pair(c.value.to_string(), parse_template(*puu_to_stob(c.children)))
+				std::make_pair(c.value.to_string(), parse_template(c.children))
 			);
 
 		if(!res.second){

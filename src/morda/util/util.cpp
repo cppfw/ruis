@@ -236,9 +236,12 @@ r4::vec4f morda::colorToVec4f(std::uint32_t color){
 		);
 }
 
+bool morda::is_leaf_property(const puu::leaf& l){
+	return l.length() == 0 || l[0] < 'A' || 'Z' < l[0];
+}
 
 bool morda::is_property(const puu::tree& t){
-	return (t.value.length() == 0 || t.value[0] < 'A' || 'Z' < t.value[0]) && t.children.size() != 0;
+	return is_leaf_property(t.value) && t.children.size() != 0;
 }
 
 //TODO: remove

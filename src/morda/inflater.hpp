@@ -111,7 +111,7 @@ private:
 		std::set<std::string> vars;
 	};
 
-	widget_template parse_template(const stob::Node& chain);
+	widget_template parse_template(const puu::trees& chain);
 
 	std::list<std::map<std::string, widget_template>> templates;
 
