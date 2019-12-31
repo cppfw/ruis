@@ -116,7 +116,7 @@ void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const
 
 namespace{
 //Merges two STOB chains.
-puu::trees mergeGUIChain(const puu::trees& tmplChain, const std::set<std::string>& varNames, puu::trees& trees){
+puu::trees mergeGUIChain(const puu::trees& tmplChain, const std::set<std::string>& varNames, puu::trees&& trees){
 	if(trees.empty()){
 		if(tmplChain.empty()){
 			return puu::trees();
@@ -235,11 +235,11 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 //	TRACE(<< "inflating = " << n->value() << std::endl)
 	if(auto tmpl = this->findTemplate(n->value())){
 //		TRACE(<< "template name = " << n->value() << std::endl)
-		cloned = utki::makeUnique<stob::Node>(tmpl->t->value());
-		auto trees = stob_to_puu(*n->cloneChildren());
+
+		cloned = utki::makeUnique<stob::Node>(tmpl->templ.value.to_string());
 		cloned->setChildren(
 				puu_to_stob(
-						mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, trees)
+						mergeGUIChain(tmpl->templ.children, tmpl->vars, stob_to_puu(*n->cloneChildren()))
 					)
 			);
 		n = cloned.get();
@@ -314,7 +314,7 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 
 		ret.t = std::move(nn);
 	}
-	if(ret.templ.value.length() == 0){ //TODO: use empty()
+	if(ret.templ.value.empty()){
 		throw std::invalid_argument("inflater::parse_template(): template has no definition");
 	}
 	ASSERT(ret.t)
@@ -323,6 +323,9 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 	for(auto& v : ret.vars){
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if(i == ret.templ.children.end()){
+			//TODO: push_front() ?
+			ret.templ.children.push_back(puu::tree(v));
+			ret.templ.children.back().children.push_back(puu::tree());
 			ret.t->addAsFirstChild(v.c_str());
 			ret.t->child()->addAsFirstChild(nullptr);
 		}
@@ -330,15 +333,18 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 
 	// TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
 
-	if(auto tmpl = this->findTemplate(ret.t->value())){
+	if(auto tmpl = this->findTemplate(ret.templ.value.to_string())){
 		ret.t->setValue(tmpl->t->value());
-		auto trees = stob_to_puu(*ret.t->removeChildren());
 		ret.t->setChildren(
 				puu_to_stob(
-						mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, trees)
+						mergeGUIChain(stob_to_puu(*tmpl->t->child()), tmpl->vars, stob_to_puu(*ret.t->removeChildren()))
 					)
 			);
-		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end());//forward all variables
+		
+		ret.templ.value = tmpl->templ.value;
+		ret.templ.children = mergeGUIChain(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
+
+		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
 	// TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
