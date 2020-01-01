@@ -405,9 +405,9 @@ const inflater::widget_template* inflater::find_template(const std::string& name
 
 
 const puu::trees* inflater::find_variable(const std::string& name)const{
-	for(auto& i : this->variables){
-		auto r = i.find(name);
-		if(r != i.end()){
+	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
+		auto r = i->find(name);
+		if(r != i->end()){
 			return &r->second;
 		}
 	}
@@ -419,7 +419,7 @@ const puu::trees* inflater::find_variable(const std::string& name)const{
 
 void inflater::pop_variables(){
 	ASSERT(this->variables.size() != 0)
-	this->variables.pop_front();
+	this->variables.pop_back();
 }
 
 
@@ -445,7 +445,7 @@ void inflater::push_variables(const puu::trees& trees){
 		}
 	}
 
-	this->variables.push_front(std::move(m));
+	this->variables.push_back(std::move(m));
 
 //#ifdef DEBUG
 //	TRACE(<< "Variables Stack:" << std::endl)

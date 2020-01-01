@@ -122,7 +122,7 @@ private:
 
 
 	// variable name - value mapping
-	std::list<std::map<std::string, puu::trees>> variables;
+	std::vector<std::map<std::string, puu::trees>> variables;
 
 	const puu::trees* find_variable(const std::string& name)const;
 

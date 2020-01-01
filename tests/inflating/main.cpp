@@ -237,5 +237,31 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Pile>(c->children().front()))
 	}
 
+	// test variables overriding
+	{
+		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
+			defs{
+				test_var{13}
+			}
+			defs{
+				test_var{42}
+			}
+			Widget{
+				defs{
+					test_var{666}
+				}
+				defs{
+					test_var{2}
+				}
+
+				x{${test_var}}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		ASSERT_INFO_ALWAYS(w->rect().p.x == 2, "w->rect().p.x = " << w->rect().p.x)
+	}
+
 	return 0;
 }
