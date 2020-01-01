@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <list>
 #include <memory>
 
 #include "exception.hpp"
