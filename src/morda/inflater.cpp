@@ -218,7 +218,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	for(; n && n->isProperty(); n = n->next()){
 		if(*n == defs_c){
 			if(n->child()){
-				this->pushDefs(stob_to_puu(*n->child()));
+				this->push_defs(stob_to_puu(*n->child()));
 			}
 		}else{
 			throw Exc("inflater::Inflate(): unknown declaration encountered before first widget");
@@ -252,13 +252,13 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	unsigned numPopDefs = 0;
 	utki::ScopeExit scopeExit([this, &numPopDefs](){
 		for(unsigned i = 0; i != numPopDefs; ++i){
-			this->popDefs();
+			this->pop_defs();
 		}
 	});
 
 	for(auto v = n->child(defs_c).get_node(); v; v = v->next(defs_c).get_node()){
 		if(v->child()){
-			this->pushDefs(stob_to_puu(*v->child()));
+			this->push_defs(stob_to_puu(*v->child()));
 			++numPopDefs;
 		}
 	}
@@ -335,12 +335,12 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 	return ret;
 }
 
-void inflater::pushDefs(const puu::trees& chain) {
+void inflater::push_defs(const puu::trees& chain) {
 	this->push_variables(chain);
 	this->push_templates(chain);
 }
 
-void inflater::popDefs() {
+void inflater::pop_defs() {
 	this->pop_variables();
 	this->pop_templates();
 }
