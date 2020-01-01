@@ -112,7 +112,7 @@ private:
 
 	widget_template parse_template(const puu::trees& chain);
 
-	std::list<std::map<std::string, widget_template>> templates;
+	std::vector<std::map<std::string, widget_template>> templates;
 
 	const widget_template* find_template(const std::string& name)const;
 

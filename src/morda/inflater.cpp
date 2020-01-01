@@ -369,7 +369,7 @@ void inflater::push_templates(const puu::trees& chain){
 		}
 	}
 
-	this->templates.push_front(std::move(m));
+	this->templates.push_back(std::move(m));
 
 //#ifdef DEBUG
 //	TRACE(<< "Templates Stack:" << std::endl)
@@ -386,15 +386,15 @@ void inflater::push_templates(const puu::trees& chain){
 
 void inflater::pop_templates(){
 	ASSERT(this->templates.size() != 0)
-	this->templates.pop_front();
+	this->templates.pop_back();
 }
 
 
 
 const inflater::widget_template* inflater::find_template(const std::string& name)const{
-	for(auto& i : this->templates){
-		auto r = i.find(name);
-		if(r != i.end()){
+	for(auto i = this->templates.rbegin(); i != this->templates.rend(); ++i){
+		auto r = i->find(name);
+		if(r != i->end()){
 			return &r->second;
 		}
 	}
