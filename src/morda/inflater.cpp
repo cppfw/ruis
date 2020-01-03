@@ -207,6 +207,10 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 
 	ASSERT(!n->isProperty())
 
+	std::string widget_name;
+
+	puu::trees widget_desc;
+
 	std::unique_ptr<stob::Node> cloned;
 //	TRACE(<< "inflating = " << n->value() << std::endl)
 	if(auto tmpl = this->find_template(n->value())){
@@ -220,23 +224,31 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 			);
 		n = cloned.get();
 //		TRACE(<< "n = " << n->chainToString(true) << std::endl)
+
+		widget_desc = stob_to_puu(*cloned->child());
+
+		widget_name = cloned->value();
+	}else{
+		widget_name = n->value();
+		widget_desc = i->children;
 	}
 
 
-	auto fac = this->find_factory(n->value());
+	auto fac = this->find_factory(widget_name);
 
-	unsigned numPopDefs = 0;
-	utki::ScopeExit scopeExit([this, &numPopDefs](){
-		for(unsigned i = 0; i != numPopDefs; ++i){
+	unsigned num_pop_defs = 0;
+	utki::scope_exit pop_defs_scope_exit([this, &num_pop_defs](){
+		for(unsigned i = 0; i != num_pop_defs; ++i){
 			this->pop_defs();
 		}
 	});
 
-	for(auto v = n->child(defs_c).get_node(); v; v = v->next(defs_c).get_node()){
-		if(v->child()){
-			this->push_defs(stob_to_puu(*v->child()));
-			++numPopDefs;
+	for(auto& d : widget_desc){
+		if(d.value != defs_c){
+			continue;
 		}
+		this->push_defs(d.children);
+		++num_pop_defs;
 	}
 
 	if(cloned){
@@ -257,9 +269,9 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 				}
 			);
 		return fac(c);
-	}else{
-		return fac(puu::trees());
 	}
+
+	return fac(puu::trees());
 }
 
 inflater::widget_template inflater::parse_template(const puu::trees& templ){

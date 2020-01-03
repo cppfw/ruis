@@ -119,8 +119,7 @@ private:
 
 	void pop_templates();
 
-
-	// variable name - value mapping
+	// variable name-value mapping
 	std::vector<std::map<std::string, puu::trees>> variables;
 
 	const puu::trees* find_variable(const std::string& name)const;
