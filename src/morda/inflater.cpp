@@ -258,10 +258,10 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	}
 }
 
-inflater::widget_template inflater::parse_template(const puu::trees& chain){
+inflater::widget_template inflater::parse_template(const puu::trees& templ){
 	widget_template ret;
 
-	for(auto& n : chain){
+	for(auto& n : templ){
 		//template definition
 		if(!ret.templ.value.empty()){
 			break;
