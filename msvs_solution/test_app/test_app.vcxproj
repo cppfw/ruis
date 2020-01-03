@@ -309,15 +309,15 @@
     <Import Project="..\packages\libpng_static.1.4.1.6\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.6\build\native\libpng_static.targets')" />
     <Import Project="..\packages\cairo_static.1.15.4.5\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.15.4.5\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libpogodi.1.0.30\build\native\libpogodi.targets" Condition="Exists('..\packages\libpogodi.1.0.30\build\native\libpogodi.targets')" />
-    <Import Project="..\packages\libunikod.2.0.36\build\native\libunikod.targets" Condition="Exists('..\packages\libunikod.2.0.36\build\native\libunikod.targets')" />
-    <Import Project="..\packages\libmikroxml.0.1.16\build\native\libmikroxml.targets" Condition="Exists('..\packages\libmikroxml.0.1.16\build\native\libmikroxml.targets')" />
     <Import Project="..\packages\libsvgdom.0.3.29\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.3.29\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\r4.1.0.18\build\native\r4.targets" Condition="Exists('..\packages\r4.1.0.18\build\native\r4.targets')" />
     <Import Project="..\packages\libsvgren.0.4.62\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.4.62\build\native\libsvgren.targets')" />
     <Import Project="..\packages\libutki.1.1.53\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.1.53\build\native\libutki.targets')" />
-    <Import Project="..\packages\libpapki.1.0.63\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.63\build\native\libpapki.targets')" />
     <Import Project="..\packages\libnitki.1.0.26\build\native\libnitki.targets" Condition="Exists('..\packages\libnitki.1.0.26\build\native\libnitki.targets')" />
-    <Import Project="..\packages\puu.0.1.9\build\native\puu.targets" Condition="Exists('..\packages\puu.0.1.9\build\native\puu.targets')" />
+    <Import Project="..\packages\libpapki.1.0.64\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.64\build\native\libpapki.targets')" />
+    <Import Project="..\packages\libunikod.2.0.37\build\native\libunikod.targets" Condition="Exists('..\packages\libunikod.2.0.37\build\native\libunikod.targets')" />
+    <Import Project="..\packages\libmikroxml.0.1.17\build\native\libmikroxml.targets" Condition="Exists('..\packages\libmikroxml.0.1.17\build\native\libmikroxml.targets')" />
+    <Import Project="..\packages\puu.0.1.10\build\native\puu.targets" Condition="Exists('..\packages\puu.0.1.10\build\native\puu.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -332,14 +332,14 @@
     <Error Condition="!Exists('..\packages\libpng_static.1.4.1.6\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.6\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.15.4.5\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.15.4.5\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libpogodi.1.0.30\build\native\libpogodi.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpogodi.1.0.30\build\native\libpogodi.targets'))" />
-    <Error Condition="!Exists('..\packages\libunikod.2.0.36\build\native\libunikod.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libunikod.2.0.36\build\native\libunikod.targets'))" />
-    <Error Condition="!Exists('..\packages\libmikroxml.0.1.16\build\native\libmikroxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libmikroxml.0.1.16\build\native\libmikroxml.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.3.29\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.3.29\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\r4.1.0.18\build\native\r4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\r4.1.0.18\build\native\r4.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.4.62\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.4.62\build\native\libsvgren.targets'))" />
     <Error Condition="!Exists('..\packages\libutki.1.1.53\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.1.53\build\native\libutki.targets'))" />
-    <Error Condition="!Exists('..\packages\libpapki.1.0.63\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.63\build\native\libpapki.targets'))" />
     <Error Condition="!Exists('..\packages\libnitki.1.0.26\build\native\libnitki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libnitki.1.0.26\build\native\libnitki.targets'))" />
-    <Error Condition="!Exists('..\packages\puu.0.1.9\build\native\puu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\puu.0.1.9\build\native\puu.targets'))" />
+    <Error Condition="!Exists('..\packages\libpapki.1.0.64\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.64\build\native\libpapki.targets'))" />
+    <Error Condition="!Exists('..\packages\libunikod.2.0.37\build\native\libunikod.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libunikod.2.0.37\build\native\libunikod.targets'))" />
+    <Error Condition="!Exists('..\packages\libmikroxml.0.1.17\build\native\libmikroxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libmikroxml.0.1.17\build\native\libmikroxml.targets'))" />
+    <Error Condition="!Exists('..\packages\puu.0.1.10\build\native\puu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\puu.0.1.10\build\native\puu.targets'))" />
   </Target>
 </Project>
