@@ -115,61 +115,34 @@ void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const
 }
 
 namespace{
-puu::trees merge_gui(const puu::trees& tmplChain, const std::set<std::string>& varNames, puu::trees&& trees){
-	if(trees.empty()){
-		if(tmplChain.empty()){
-			return puu::trees();
-		}
-	}
+puu::trees merge_gui(const puu::trees& templ, const std::set<std::string>& var_names, puu::trees&& trees){
+	puu::trees ret = templ;
 
-	std::unique_ptr<stob::Node> ret;
-	if(!tmplChain.empty()){
-		ret = puu_to_stob(tmplChain);
-	}
-
-	std::unique_ptr<puu::node> chain = puu_to_stob(trees);
-
-	//prepare variables and remove them from 'chain'
 	std::map<std::string, puu::trees> vars;
-	{
-		auto childrenChain = utki::makeUnique<stob::Node>();
-		stob::Node* lastChild = childrenChain.get();
-		for(; chain;){
-			auto tail = chain->chopNext();
-			if(!chain->isProperty()){
-				ASSERT(lastChild)
-				ASSERT(!lastChild->next())
-				ASSERT(chain)
-				ASSERT(!chain->next())
-				lastChild->insertNext(std::move(chain));
-				lastChild = lastChild->next();
-				chain = std::move(tail);
-				continue;
-			}else if(varNames.find(chain->value()) != varNames.end()){
-				vars[chain->value()] = stob_to_puu(*chain->removeChildren());
-				chain = std::move(tail);
-				continue;
-			}else if(ret){
-				if(auto n = ret->thisOrNext(chain->value()).get_node()){
-					n->setChildren(chain->removeChildren());
-					chain = std::move(tail);
-					continue;
-				}
-			}
-			chain->setNext(std::move(ret));
-			ret = std::move(chain);
-			
-			chain = std::move(tail);
+	puu::trees children;
+	for(auto& i : trees){
+		if(!is_leaf_property(i.value)){
+			children.emplace_back(std::move(i));
+			continue;
 		}
-		vars["children"] = stob_to_puu(*childrenChain->chopNext());
+
+		if(var_names.find(i.value.to_string()) != var_names.end()){
+			vars[i.value.to_string()] = std::move(i.children);
+			continue;
+		}
+
+		auto t = std::find(ret.begin(), ret.end(), i.value);
+		if(t != ret.end()){
+			t->children = std::move(i.children);
+			continue;
+		}
+	
+		ret.emplace_back(std::move(i));
 	}
-
-	ASSERT(ret)
-
-	auto retret = stob_to_puu(*ret);
+	vars["children"] = std::move(children);
 
 	substitute_vars(
-			retret,
+			ret,
 			[&vars](const std::string& name) -> const puu::trees*{
 //				TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
@@ -182,7 +155,7 @@ puu::trees merge_gui(const puu::trees& tmplChain, const std::set<std::string>& v
 			}
 		);
 
-	return retret;
+	return ret;
 }
 }
 
