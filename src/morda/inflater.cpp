@@ -181,20 +181,24 @@ std::shared_ptr<widget> inflater::inflate(const puu::trees& gui_script){
 }
 
 std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
+	auto desc = stob_to_puu(chain);
+
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
-//		throw Exc("Inflate called not from UI thread");
+//		throw utki::invalid_state("inflate() called from non-UI thread");
 //	}
 
 	const stob::Node* n = &chain;
-	for(; n && n->isProperty(); n = n->next()){
-		if(*n == defs_c){
-			if(n->child()){
-				this->push_defs(stob_to_puu(*n->child()));
-			}
+
+	auto i = desc.begin();
+
+	for(; i != desc.end() && is_leaf_property(i->value); ++i){
+		if(i->value == defs_c){
+			this->push_defs(i->children);
 		}else{
-			throw Exc("inflater::Inflate(): unknown declaration encountered before first widget");
+			throw std::invalid_argument("inflater::inflate(): unknown declaration encountered before first widget");
 		}
+		n = n->next();
 	}
 
 	if(!n){
