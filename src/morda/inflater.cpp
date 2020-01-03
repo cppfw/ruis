@@ -135,30 +135,30 @@ puu::trees merge_gui(const puu::trees& tmplChain, const std::set<std::string>& v
 		auto childrenChain = utki::makeUnique<stob::Node>();
 		stob::Node* lastChild = childrenChain.get();
 		for(; chain;){
+			auto tail = chain->chopNext();
 			if(!chain->isProperty()){
 				ASSERT(lastChild)
 				ASSERT(!lastChild->next())
 				ASSERT(chain)
-				auto tail = chain->chopNext();
 				ASSERT(!chain->next())
 				lastChild->insertNext(std::move(chain));
-				chain = std::move(tail);
 				lastChild = lastChild->next();
+				chain = std::move(tail);
 				continue;
 			}else if(varNames.find(chain->value()) != varNames.end()){
 				vars[chain->value()] = stob_to_puu(*chain->removeChildren());
-				chain = chain->chopNext();
+				chain = std::move(tail);
 				continue;
 			}else if(ret){
 				if(auto n = ret->thisOrNext(chain->value()).get_node()){
 					n->setChildren(chain->removeChildren());
-					chain = chain->chopNext();
+					chain = std::move(tail);
 					continue;
 				}
 			}
-			auto tail = chain->chopNext();
 			chain->setNext(std::move(ret));
 			ret = std::move(chain);
+			
 			chain = std::move(tail);
 		}
 		vars["children"] = stob_to_puu(*childrenChain->chopNext());
@@ -316,8 +316,9 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 	for(auto& v : ret.vars){
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if(i == ret.templ.children.end()){
-			ret.templ.children.push_back(puu::tree(v));
-			ret.templ.children.back().children.push_back(puu::tree());
+			ret.templ.children.push_back(
+					puu::tree(puu::leaf(v), {puu::tree()})
+				);
 		}
 	}
 
