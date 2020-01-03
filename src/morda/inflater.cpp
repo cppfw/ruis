@@ -115,7 +115,7 @@ void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const
 }
 
 namespace{
-puu::trees merge_gui(const puu::trees& templ, const std::set<std::string>& var_names, puu::trees&& trees){
+puu::trees apply_gui_template(const puu::trees& templ, const std::set<std::string>& var_names, puu::trees&& trees){
 	puu::trees ret = templ;
 
 	std::map<std::string, puu::trees> vars;
@@ -211,7 +211,7 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 		cloned = utki::makeUnique<stob::Node>(tmpl->templ.value.to_string());
 		cloned->setChildren(
 				puu_to_stob(
-						merge_gui(tmpl->templ.children, tmpl->vars, stob_to_puu(*n->cloneChildren()))
+						apply_gui_template(tmpl->templ.children, tmpl->vars, stob_to_puu(*n->cloneChildren()))
 					)
 			);
 		n = cloned.get();
@@ -299,7 +299,7 @@ inflater::widget_template inflater::parse_template(const puu::trees& chain){
 
 	if(auto tmpl = this->find_template(ret.templ.value.to_string())){
 		ret.templ.value = tmpl->templ.value;
-		ret.templ.children = merge_gui(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
+		ret.templ.children = apply_gui_template(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
 
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
