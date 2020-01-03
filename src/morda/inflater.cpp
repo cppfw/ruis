@@ -176,63 +176,45 @@ std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(puu::read(str));
 }
 
-std::shared_ptr<widget> inflater::inflate(const puu::trees& gui_script){
-	return this->inflate(*puu_to_stob(gui_script));
+std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
+	return this->inflate(stob_to_puu(chain));
 }
 
-std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
-	auto desc = stob_to_puu(chain);
+std::shared_ptr<widget> inflater::inflate(const puu::trees& desc){
 
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
 //		throw utki::invalid_state("inflate() called from non-UI thread");
 //	}
 
-	const stob::Node* n = &chain;
-
 	auto i = desc.begin();
 
 	for(; i != desc.end() && is_leaf_property(i->value); ++i){
+		// TRACE(<< "inflater::inflate(): i->value = " << i->value.to_string() << std::endl)
 		if(i->value == defs_c){
 			this->push_defs(i->children);
 		}else{
 			throw std::invalid_argument("inflater::inflate(): unknown declaration encountered before first widget");
 		}
-		n = n->next();
 	}
 
-	if(!n){
+	if(i == desc.end()){
 		return nullptr;
 	}
 
-	ASSERT(!n->isProperty())
+	ASSERT_INFO(!is_leaf_property(i->value), "i->value = " << i->value.to_string())
 
 	std::string widget_name;
-
 	puu::trees widget_desc;
 
-	std::unique_ptr<stob::Node> cloned;
-//	TRACE(<< "inflating = " << n->value() << std::endl)
-	if(auto tmpl = this->find_template(n->value())){
-//		TRACE(<< "template name = " << n->value() << std::endl)
-
-		cloned = utki::makeUnique<stob::Node>(tmpl->templ.value.to_string());
-		cloned->setChildren(
-				puu_to_stob(
-						apply_gui_template(tmpl->templ.children, tmpl->vars, stob_to_puu(*n->cloneChildren()))
-					)
-			);
-		n = cloned.get();
-//		TRACE(<< "n = " << n->chainToString(true) << std::endl)
-
-		widget_desc = stob_to_puu(*cloned->child());
-
-		widget_name = cloned->value();
+//	TRACE(<< "inflating = " << i->value.to_string() << std::endl)
+	if(auto tmpl = this->find_template(i->value.to_string())){
+		widget_name = tmpl->templ.value.to_string();
+		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::trees(i->children));
 	}else{
-		widget_name = n->value();
+		widget_name = i->value.to_string();
 		widget_desc = i->children;
 	}
-
 
 	auto fac = this->find_factory(widget_name);
 
@@ -251,27 +233,14 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 		++num_pop_defs;
 	}
 
-	if(cloned){
-		cloned = cloned->removeChildren();
-	}else{
-		if(n->child()){
-			cloned = n->child()->cloneChain();
-		}
-	}
-
-	if(cloned){
-		auto c = stob_to_puu(*cloned);
-
-		substitute_vars(
-				c,
-				[this](const std::string& name) -> const puu::trees*{
-					return this->find_variable(name);
-				}
-			);
-		return fac(c);
-	}
-
-	return fac(puu::trees());
+	substitute_vars(
+			widget_desc,
+			[this](const std::string& name) -> const puu::trees*{
+				return this->find_variable(name);
+			}
+		);
+	
+	return fac(widget_desc);
 }
 
 inflater::widget_template inflater::parse_template(const puu::trees& templ){
@@ -311,8 +280,6 @@ inflater::widget_template inflater::parse_template(const puu::trees& templ){
 		}
 	}
 
-	// TRACE(<< "stubbed template = " << ret.t->chainToString(true) << std::endl)
-
 	if(auto tmpl = this->find_template(ret.templ.value.to_string())){
 		ret.templ.value = tmpl->templ.value;
 		ret.templ.children = apply_gui_template(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
@@ -320,7 +287,6 @@ inflater::widget_template inflater::parse_template(const puu::trees& templ){
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
-	// TRACE(<< "parsed template = " << ret.t->chainToString(true) << std::endl)
 	return ret;
 }
 
