@@ -59,10 +59,21 @@ public:
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
+	 * @param begin - begin iterator into the GUI script.
+	 * @param end - begin iterator into the GUI script.
+	 * @return reference to the inflated widget.
+	 */
+	std::shared_ptr<widget> inflate(puu::trees::const_iterator begin, puu::trees::const_iterator end);
+
+	/**
+	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const puu::trees& gui_script);
+	std::shared_ptr<widget> inflate(const puu::trees& gui_script){
+		return this->inflate(gui_script.begin(), gui_script.end());
+	}
+		
 
 	/**
 	 * @brief Inflate widget and cast to specified type.

@@ -6,6 +6,7 @@
 #include <utki/Unique.hpp>
 
 #include "../exception.hpp"
+#include "../util/util.hpp"
 #include "widget.hpp"
 
 
@@ -213,13 +214,17 @@ public:
 		return this->insert(std::move(w), this->children().end());
 	}
 
-	// TODO: rename to 'inflate_and_push_back'?
 	/**
 	 * @brief Add child widgets inflating them from GUI description.
 	 * This function invalidates iterators which were obtained before calling to it.
-	 * @param chain - STOB chain describing child widgets to add.
+	 * @param desc - GUI description of the widgets to add.
 	 */
-	void add(const stob::Node& chain);
+	void inflate_push_back(const puu::trees& desc);
+
+	//TODO: deprecated, remove.
+	void add(const stob::Node& chain){
+		this->inflate_push_back(stob_to_puu(chain));
+	}
 
 	//TODO: depreacted, remove.
 	/**

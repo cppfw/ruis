@@ -15,7 +15,7 @@ container::container(const stob::Node* chain) :
 		widget(chain)
 {
 	if(chain){
-		this->add(*chain);
+		this->inflate_push_back(stob_to_puu(*chain));
 	}
 }
 
@@ -50,9 +50,12 @@ const widget::layout_params& container::get_layout_params(const widget& w)const{
 	return *w.layoutParams;
 }
 
-void container::add(const stob::Node& chain){
-	for(auto n = chain.thisOrNextNonProperty().get_node(); n; n = n->nextNonProperty().get_node()){
-		this->push_back(morda::Morda::inst().inflater.inflate(*n));
+void container::inflate_push_back(const puu::trees& desc){
+	for(auto i = desc.begin(); i != desc.end(); ++i){
+		if(is_leaf_property(i->value)){
+			continue;
+		}
+		this->push_back(morda::inst().inflater.inflate(i, i + 1));
 	}
 }
 

@@ -180,16 +180,16 @@ std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
 	return this->inflate(stob_to_puu(chain));
 }
 
-std::shared_ptr<widget> inflater::inflate(const puu::trees& desc){
+std::shared_ptr<widget> inflater::inflate(puu::trees::const_iterator begin, puu::trees::const_iterator end){
 
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
 //		throw utki::invalid_state("inflate() called from non-UI thread");
 //	}
 
-	auto i = desc.begin();
+	auto i = begin;
 
-	for(; i != desc.end() && is_leaf_property(i->value); ++i){
+	for(; i != end && is_leaf_property(i->value); ++i){
 		// TRACE(<< "inflater::inflate(): i->value = " << i->value.to_string() << std::endl)
 		if(i->value == defs_c){
 			this->push_defs(i->children);
@@ -198,7 +198,7 @@ std::shared_ptr<widget> inflater::inflate(const puu::trees& desc){
 		}
 	}
 
-	if(i == desc.end()){
+	if(i == end){
 		return nullptr;
 	}
 
