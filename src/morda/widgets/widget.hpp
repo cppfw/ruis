@@ -185,7 +185,6 @@ private:
 
 	puu::trees layout_desc;
 
-	//TODO: remove mutable?
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
 	std::string id;
