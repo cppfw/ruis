@@ -265,14 +265,14 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
 }
 
 
-class AssetFile : public papki::file{
+class asset_file : public papki::file{
 	AAssetManager* manager;
 
 	mutable AAsset* handle = nullptr;
 
 public:
 
-	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
+	asset_file(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
 			papki::file(pathName)
 	{
@@ -359,13 +359,13 @@ public:
 				return true;
 			}
 		}else{
-			return this->File::exists();
+			return this->file::exists();
 		}
 	}
 
 	virtual std::vector<std::string> list_dir(size_t maxEntries = 0)const override{
 		if(!this->isDir()){
-			throw utki::invalid_state("AndroidAssetFile::ListDirContents(): this is not a directory");
+			throw utki::invalid_state("asset_file::list_dir(): this is not a directory");
 		}
 
 		//Trim away trailing '/', as Android does not work with it.
@@ -376,10 +376,10 @@ public:
 	}
 
 	std::unique_ptr<papki::file> spawn()override{
-		return utki::make_unique<AssetFile>(this->manager);
+		return utki::make_unique<asset_file>(this->manager);
 	}
 
-	~AssetFile()noexcept{
+	~asset_file()noexcept{
 	}
 
 	size_t seek(size_t numBytesToSeek, bool seekForward)const{
@@ -1034,7 +1034,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
-	return utki::makeUnique<AssetFile>(appInfo.assetManager, path);
+	return utki::make_unique<asset_file>(appInfo.assetManager, path);
 }
 
 void mordavokne::application::swapFrameBuffers() {
