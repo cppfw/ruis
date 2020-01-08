@@ -76,7 +76,7 @@ protected:
 	 * @brief Create layout parameters object specific for this container.
 	 * Other widgets which subclass Container and need additional parameters for laying out children widgets should extend the Widget::LayoutParams class
 	 * and override this method to construct the correct LayoutParams instance.
-	 * @param chain - STOB chain describing layout parameters.
+	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
 	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::trees& desc)const{

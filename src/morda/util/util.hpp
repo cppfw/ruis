@@ -89,7 +89,7 @@ real parse_dimension_value(const puu::leaf& l);
 /**
  * @brief Parse layout dimension value.
  * Parses value of dimension value of layout parameters from puu.
- * @param n - puu leaf holding the value.
+ * @param l - puu leaf holding the value.
  * @return Parsed value.
  */
 real parse_layout_dimension_value(const puu::leaf& l);
