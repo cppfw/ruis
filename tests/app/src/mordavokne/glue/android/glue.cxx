@@ -524,10 +524,7 @@ public:
 	FDFlag(){
 		this->eventFD = eventfd(0, EFD_NONBLOCK);
 		if(this->eventFD < 0){
-			std::stringstream ss;
-			ss << "FDFlag::FDFlag(): could not create eventFD (*nix) for implementing Waitable,"
-					<< " error code = " << errno << ": " << strerror(errno);
-			throw utki::Exc(ss.str().c_str());
+			throw std::system_error(errno, std::generic_category(), "could not create eventFD (*nix) for implementing Waitable");
 		}
 	}
 
@@ -1347,18 +1344,18 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 	std::uint32_t dt = app.gui.update();
 	if(dt == 0){
-		//do not arm the timer and do not clear the flag
+		// do not arm the timer and do not clear the flag
 	}else{
 		fdFlag.Clear();
 		timer.Arm(dt);
 	}
 
-	//after updating need to re-render everything
+	// after updating need to re-render everything
 	render(app);
 
 //	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
 
-	return 1; //1 means do not remove descriptor from looper
+	return 1; // 1 means do not remove descriptor from looper
 }
 
 
@@ -1370,7 +1367,7 @@ int OnQueueHasMessages(int fd, int events, void* data){
 		m();
 	}
 
-	return 1; //1 means do not remove descriptor from looper
+	return 1; // 1 means do not remove descriptor from looper
 }
 
 
@@ -1378,7 +1375,7 @@ int OnQueueHasMessages(int fd, int events, void* data){
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 
-	//save window in a static var, so it is accessible for OpenGL initializers from morda::application class
+	// save window in a static var, so it is accessible for OpenGL initializers from morda::application class
 	androidWindow = window;
 
 	curWinDim.x = float(ANativeWindow_getWidth(window));
@@ -1386,22 +1383,22 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 
 	ASSERT(!activity->instance)
 	try{
-		//use local auto-pointer for now because an exception can be thrown and need to delete object then.
+		// use local auto-pointer for now because an exception can be thrown and need to delete object then.
 		std::unique_ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
-		//retrieve current configuration
+		// retrieve current configuration
 		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
 
 		application* app = mordavokne::create_application(0, nullptr).release();
 
 		activity->instance = app;
 
-		//save current configuration in global variable
+		// save current configuration in global variable
 		curConfig = std::move(cfg);
 
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
 
-		//Add timer descriptor to looper, this is needed for Updatable to work
+		// Add timer descriptor to looper, this is needed for Updatable to work
 		if(ALooper_addFd(
 				looper,
 				fdFlag.GetFD(),
@@ -1411,10 +1408,10 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				0
 			) == -1)
 		{
-			throw utki::Exc("failed to add timer descriptor to looper");
+			throw std::runtime_error("failed to add timer descriptor to looper");
 		}
 
-		//Add UI message queue descriptor to looper
+		// Add UI message queue descriptor to looper
 		if(ALooper_addFd(
 				looper,
 				static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(*app)).uiQueue).getHandle(),
@@ -1424,10 +1421,10 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				0
 			) == -1)
 		{
-			throw utki::Exc("failed to add UI message queue descriptor to looper");
+			throw std::runtime_error("failed to add UI message queue descriptor to looper");
 		}
 
-		fdFlag.Set();//this is to call the Update() for the first time if there were any Updateables started during creating application object
+		fdFlag.Set(); // this is to call the Update() for the first time if there were any Updateables started during creating application object
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating application instance: " << e.what() << std::endl)
 		throw;
