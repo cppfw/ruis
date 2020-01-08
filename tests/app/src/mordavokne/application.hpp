@@ -6,9 +6,9 @@
 #include <utki/singleton.hpp>
 #include <utki/Buf.hpp>
 #include <utki/Unique.hpp>
-#include <utki/Flags.hpp>
+#include <utki/flags.hpp>
 
-#include <papki/File.hpp>
+#include <papki/file.hpp>
 
 #include <r4/vector2.hpp>
 
@@ -43,7 +43,7 @@ struct window_params{
 	/**
 	 * @brief Flags describing desired buffers for OpneGL context.
 	 */
-	utki::Flags<buffer_type> buffers = utki::Flags<buffer_type>(false);
+	utki::flags<buffer_type> buffers = false;
 
 	window_params(r4::vec2ui dim) :
 			dim(dim)

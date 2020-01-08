@@ -71,7 +71,7 @@ struct WindowWrapper : public utki::Unique{
 	WindowWrapper(const window_params& wp){
 		this->display = XOpenDisplay(0);
 		if(!this->display){
-			throw utki::Exc("XOpenDisplay() failed");
+			throw std::runtime_error("XOpenDisplay() failed");
 		}
 		utki::ScopeExit scopeExitDisplay([this](){
 			XCloseDisplay(this->display);
@@ -81,12 +81,12 @@ struct WindowWrapper : public utki::Unique{
 		{
 			int glxVerMajor, glxVerMinor;
 			if(!glXQueryVersion(this->display, &glxVerMajor, &glxVerMinor)){
-				throw utki::Exc("glXQueryVersion() failed");
+				throw std::runtime_error("glXQueryVersion() failed");
 			}
 
 			// FBConfigs were added in GLX version 1.3.
 			if(glxVerMajor < 1 || (glxVerMajor == 1  && glxVerMinor < 3 )){
-				throw utki::Exc("GLX version 1.3 or above is required");
+				throw std::runtime_error("GLX version 1.3 or above is required");
 			}
 		}
 
@@ -116,7 +116,7 @@ struct WindowWrapper : public utki::Unique{
 			int fbcount;
 			GLXFBConfig* fbc = glXChooseFBConfig(this->display, DefaultScreen(this->display), &*visualAttribs.begin(), &fbcount);
 			if(!fbc){
-				throw utki::Exc("glXChooseFBConfig() returned empty list");
+				throw std::runtime_error("glXChooseFBConfig() returned empty list");
 			}
 			utki::ScopeExit scopeExitFbc([&fbc](){
 				XFree(fbc);
@@ -196,7 +196,7 @@ struct WindowWrapper : public utki::Unique{
 #ifdef M_RENDER_OPENGL2
 		vi = glXGetVisualFromFBConfig(this->display, bestFbc);
 		if (!vi) {
-			throw utki::Exc("glXGetVisualFromFBConfig() failed");
+			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
 #elif defined(M_RENDER_OPENGLES2)
 #	ifdef M_RASPBERRYPI
@@ -289,7 +289,7 @@ struct WindowWrapper : public utki::Unique{
 				);
 		}
 		if(!this->window){
-			throw utki::Exc("Failed to create window");
+			throw std::runtime_error("Failed to create window");
 		}
 		utki::ScopeExit scopeExitWindow([this](){
 			XDestroyWindow(this->display, this->window);
@@ -307,7 +307,7 @@ struct WindowWrapper : public utki::Unique{
 #ifdef M_RENDER_OPENGL2
 		this->glContext = glXCreateContext(this->display, vi, 0, GL_TRUE);
 		if(this->glContext == NULL){
-			throw utki::Exc("glXCreateContext() failed");
+			throw std::runtime_error("glXCreateContext() failed");
 		}
 		utki::ScopeExit scopeExitGLContext([this](){
 			glXMakeCurrent(this->display, None, NULL);
@@ -319,7 +319,7 @@ struct WindowWrapper : public utki::Unique{
 		TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 
 		if(glewInit() != GLEW_OK){
-			throw utki::Exc("GLEW initialization failed");
+			throw std::runtime_error("GLEW initialization failed");
 		}
 #elif defined(M_RENDER_OPENGLES2)
 
@@ -422,7 +422,7 @@ struct WindowWrapper : public utki::Unique{
 
 			blank = XCreateBitmapFromData(this->display, this->window, data, 1, 1);
 			if(blank == None){
-				throw utki::Exc("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
+				throw std::runtime_error("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
 			}
 			utki::ScopeExit scopeExit([this, &blank](){
 				XFreePixmap(this->display, blank);
@@ -436,7 +436,7 @@ struct WindowWrapper : public utki::Unique{
 
 		this->inputMethod = XOpenIM(this->display, NULL, NULL, NULL);
 		if(this->inputMethod == NULL){
-			throw utki::Exc("XOpenIM() failed");
+			throw std::runtime_error("XOpenIM() failed");
 		}
 		utki::ScopeExit scopeExitInputMethod([this](){
 			XCloseIM(this->inputMethod);
@@ -450,7 +450,7 @@ struct WindowWrapper : public utki::Unique{
 				NULL
 			);
 		if(this->inputContext == NULL){
-			throw utki::Exc("XCreateIC() failed");
+			throw std::runtime_error("XCreateIC() failed");
 		}
 		utki::ScopeExit scopeExitInputContext([this](){
 			XUnsetICFocus(this->inputContext);

@@ -49,8 +49,8 @@ void application::updateWindowRect(const morda::Rectr& rect){
 
 
 #if M_OS_NAME != M_OS_NAME_ANDROID && M_OS_NAME != M_OS_NAME_IOS
-std::unique_ptr<papki::File> application::get_res_file(const std::string& path)const{
-	return utki::makeUnique<papki::FSFile>(path);
+std::unique_ptr<papki::file> application::get_res_file(const std::string& path)const{
+	return utki::make_unique<papki::fs_file>(path);
 }
 
 void application::show_virtual_keyboard()noexcept{

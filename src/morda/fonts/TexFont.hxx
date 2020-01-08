@@ -12,7 +12,7 @@
 #include <r4/rectangle.hpp>
 
 #include <utki/Exc.hpp>
-#include <papki/File.hpp>
+#include <papki/file.hpp>
 
 #include "../config.hpp"
 

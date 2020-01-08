@@ -3,7 +3,7 @@
 #include <map>
 
 #include <utki/shared.hpp>
-#include <papki/File.hpp>
+#include <papki/file.hpp>
 #include <puu/dom.hpp>
 
 #include "exception.hpp"

@@ -94,7 +94,7 @@ ZipFile::ZipFile(std::unique_ptr<papki::File> zipFile, const std::string& path) 
 	this->handle = unzOpen2(this->zipFile->path().c_str(), &ff);
 
 	if(!this->handle){
-		throw papki::exception("ZipFile::OpenZipFile(): opening zip file failed");
+		throw std::runtime_error("ZipFile: opening zip file failed");
 	}
 }
 
@@ -110,42 +110,42 @@ ZipFile::~ZipFile()noexcept{
 
 
 
-void ZipFile::openInternal(E_Mode mode) {
-	if(mode != File::E_Mode::READ){
+void ZipFile::open_internal(E_Mode mode) {
+	if(mode != file::mode::read){
 		throw std::invalid_argument("illegal mode requested, only READ supported inside ZIP file");
 	}
 
 	if(unzLocateFile(this->handle, this->path().c_str(), 0) != UNZ_OK){
 		std::stringstream ss;
 		ss << "ZipFile::OpenInternal(): file not found: " << this->path();
-		throw papki::exception(ss.str());
+		throw std::runtime_error(ss.str());
 	}
 
 	{
 		unz_file_info zipFileInfo;
 
 		if(unzGetCurrentFileInfo(this->handle, &zipFileInfo, 0, 0, 0, 0, 0, 0) != UNZ_OK){
-			throw papki::exception("failed obtaining file info");
+			throw std::runtime_error("failed obtaining file info");
 		}
 	}
 
 	if(unzOpenCurrentFile(this->handle) != UNZ_OK){
-		throw papki::exception("file opening failed");
+		throw std::runtime_error("file opening failed");
 	}
 }
 
-void ZipFile::closeInternal()const noexcept{
+void ZipFile::close_internal()const noexcept{
 	if(unzCloseCurrentFile(this->handle) == UNZ_CRCERROR){
 		TRACE(<< "[WARNING] ZipFile::Close(): CRC is not good" << std::endl)
 		ASSERT(false)
 	}
 }
 
-size_t ZipFile::readInternal(utki::Buf<std::uint8_t> buf)const{
+size_t ZipFile::read_internal(utki::Buf<std::uint8_t> buf)const{
 	ASSERT(buf.size() <= unsigned(-1))
 	int numBytesRead = unzReadCurrentFile(this->handle, buf.begin(), unsigned(buf.size()));
 	if(numBytesRead < 0){
-		throw papki::exception("ZipFile::Read(): file reading failed");
+		throw std::runtime_error("ZipFile::Read(): file reading failed");
 	}
 
 	ASSERT(numBytesRead >= 0)
@@ -155,7 +155,7 @@ size_t ZipFile::readInternal(utki::Buf<std::uint8_t> buf)const{
 bool ZipFile::exists()const{
 	//if directory
 	if(this->path()[this->path().size() - 1] == '/'){
-		return this->File::exists();
+		return this->file::exists();
 	}
 	
 	if(this->path().size() == 0){
@@ -171,16 +171,16 @@ bool ZipFile::exists()const{
 
 
 
-std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
+std::vector<std::string> ZipFile::list_dir(size_t maxEntries)const{
 	if(!this->isDir()){
-		throw utki::illegal_state("ZipFile::ListDirContents(): this is not a directory");
+		throw utki::invalid_state("ZipFile::list_dir(): this is not a directory");
 	}
 
 	//if path refers to directory then there should be no files opened
 	ASSERT(!this->isOpened())
 
 	if(!this->handle){
-		throw utki::illegal_state("ZipFile::ListDirContents(): zip file is not opened");
+		throw utki::invalid_state("ZipFile::list_dir(): zip file is not opened");
 	}
 
 	std::vector<std::string> files;
@@ -191,7 +191,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 		int ret = unzGoToFirstFile(this->handle);
 
 		if(ret != UNZ_OK){
-			throw papki::exception("ZipFile::ListDirContents(): unzGoToFirstFile() failed.");
+			throw std::runtime_error("ZipFile::list_dir(): unzGoToFirstFile() failed.");
 		}
 
 		do{
@@ -208,7 +208,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 					0
 				) != UNZ_OK)
 			{
-				throw papki::exception("ZipFile::ListDirContents(): unzGetCurrentFileInfo() failed.");
+				throw std::runtime_error("ZipFile::list_dir(): unzGetCurrentFileInfo() failed.");
 			}
 
 			fileNameBuf[fileNameBuf.size() - 1] = 0;//null-terminate, just to be on a safe side
@@ -247,7 +247,7 @@ std::vector<std::string> ZipFile::listDirContents(size_t maxEntries)const{
 		}while((ret = unzGoToNextFile(this->handle)) == UNZ_OK);
 
 		if(ret != UNZ_END_OF_LIST_OF_FILE && ret != UNZ_OK){
-			throw papki::exception("ZipFile::ListDirContents(): unzGoToNextFile() failed.");
+			throw std::runtime_error("ZipFile::list_dir(): unzGoToNextFile() failed.");
 		}
 	}
 

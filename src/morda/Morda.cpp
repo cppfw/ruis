@@ -93,7 +93,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 			fi.setPath(s);
 //			TRACE(<< "fi.path() = " << fi.path() << std::endl)
 			this->resMan.mountResPack(fi);
-		}catch(papki::exception&){
+		}catch(std::runtime_error&){
 //			TRACE(<< "could not mount " << s << std::endl)
 			continue;
 		}

@@ -48,7 +48,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 	papki::FSFile dir(homeDirStr);
 	if(!dir.exists()){
-		dir.makeDir();
+		dir.make_dir();
 	}
 
 	return homeDirStr;

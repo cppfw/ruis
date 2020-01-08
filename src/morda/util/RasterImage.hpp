@@ -1,8 +1,9 @@
 #pragma once
 
 #include <utki/exception.hpp>
+#include <utki/span.hpp>
 
-#include <papki/File.hpp>
+#include <papki/file.hpp>
 
 #include <r4/vector2.hpp>
 
@@ -126,16 +127,16 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::Buf<std::uint8_t> buf(){
-		return utki::wrapBuf(this->buf_v);
+	utki::span<std::uint8_t> buf(){
+		return utki::make_span(this->buf_v);
 	}
 
 	/**
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	const utki::Buf<std::uint8_t> buf()const{
-		return utki::wrapBuf(this->buf_v);
+	const utki::span<std::uint8_t> buf()const{
+		return utki::make_span(this->buf_v);
 	}
 
 public:

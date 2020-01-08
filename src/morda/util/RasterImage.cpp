@@ -180,7 +180,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 	ASSERT(fi)
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
-		utki::Buf<png_byte> bufWrapper(data, size_t(length));
+		auto bufWrapper = utki::make_span(data, size_t(length));
 		fi->read(bufWrapper);
 //		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	}catch(...){
@@ -212,7 +212,7 @@ void RasterImage::loadPNG(const papki::File& fi){
 #ifdef DEBUG
 		auto ret = //TODO: we should not rely on that it will always read the requested number of bytes
 #endif
-		fi.read(utki::wrapBuf(sig));
+		fi.read(utki::make_span(sig));
 		ASSERT(ret == sig.size() * sizeof(sig[0]))
 	}
 
@@ -379,10 +379,10 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo){
 	size_t nbytes;
 
 	try{
-		utki::Buf<std::uint8_t> bufWrapper(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
+		auto bufWrapper = utki::make_span(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
 		ASSERT(src->fi)
 		nbytes = src->fi->read(bufWrapper);
-	}catch(papki::exception&){
+	}catch(std::runtime_error&){
 		if(src->sof){
 			return FALSE;//the specified file is empty
 		}

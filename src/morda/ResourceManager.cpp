@@ -34,7 +34,7 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	if(resScript->next(includeSubdirs_c).get_node()){
 //		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
 		fi.setPath(fi.dir());
-		auto dirContents = fi.listDirContents();
+		auto dirContents = fi.list_dir();
 		ASSERT(!fi.isOpened())
 		for(auto& fileName : dirContents){
 			if(fileName.size() != 0 && fileName[fileName.size() - 1] == '/'){
