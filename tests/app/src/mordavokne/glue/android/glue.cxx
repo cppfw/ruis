@@ -265,7 +265,7 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
 }
 
 
-class AssetFile : public papki::File{
+class AssetFile : public papki::file{
 	AAssetManager* manager;
 
 	mutable AAsset* handle = nullptr;
@@ -274,75 +274,73 @@ public:
 
 	AssetFile(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
-			File(pathName)
+			papki::file(pathName)
 	{
 		ASSERT(this->manager)
 	}
 
 
-	virtual void openInternal(E_Mode mode)override{
+	virtual void open_internal(mode mode)override{
 		switch(mode){
-			case papki::File::E_Mode::WRITE:
-			case papki::File::E_Mode::CREATE:
-				throw papki::exception("WRITE and CREATE open modes are not supported by Android assets");
-				break;
-			case papki::File::E_Mode::READ:
+			case papki::file::mode::WRITE:
+			case papki::file::mode::CREATE:
+				throw std::invalid_argument("WRITE and CREATE open modes are not supported by Android assets");
+			case papki::file::mode::READ:
 				break;
 			default:
-				throw papki::exception("unknown mode");
-				break;
+				throw std::invalid_argument("unknown mode");
 		}
 		this->handle = AAssetManager_open(this->manager, this->path().c_str(), AASSET_MODE_UNKNOWN); //don't know what this MODE means at all
 		if(!this->handle){
 			std::stringstream ss;
 			ss << "AAssetManager_open(" << this->path() << ") failed";
-			throw papki::exception(ss.str());
+			throw std::runtime_error(ss.str());
 		}
 	}
 
-	virtual void closeInternal()const noexcept override{
+	virtual void close_internal()const noexcept override{
 		ASSERT(this->handle)
 		AAsset_close(this->handle);
 		this->handle = 0;
 	}
 
-	virtual size_t readInternal(utki::Buf<std::uint8_t> buf)const override{
+	virtual size_t read_internal(utki::span<std::uint8_t> buf)const override{
 		ASSERT(this->handle)
 		int numBytesRead = AAsset_read(this->handle, &*buf.begin(), buf.size());
-		if(numBytesRead < 0){//something happened
-			throw papki::exception("AAsset_read() error");
+		if(numBytesRead < 0){ // something happened
+			throw std::runtime_error("AAsset_read() error");
 		}
 		ASSERT(numBytesRead >= 0)
 		return size_t(numBytesRead);
 	}
 
-	virtual size_t writeInternal(const utki::Buf<std::uint8_t> buf)override{
+	virtual size_t write_internal(const utki::span<std::uint8_t> buf)override{
 		ASSERT(this->handle)
-		throw papki::exception("Write() is not supported by Android assets");
+		throw std::runtime_error("write() is not supported by Android assets");
 		return 0;
 	}
 
-	virtual size_t seekForwardInternal(size_t numBytesToSeek)const override{
+	virtual size_t seek_forward_internal(size_t numBytesToSeek)const override{
 		return this->seek(numBytesToSeek, true);
 	}
 
-	virtual size_t seekBackwardInternal(size_t numBytesToSeek)const override{
+	virtual size_t seek_backward_internal(size_t numBytesToSeek)const override{
 		return this->seek(numBytesToSeek, false);
 	}
 
-	virtual void rewindInternal()const override{
-		if(!this->isOpened()){
-			throw papki::exception("file is not opened, cannot rewind");
+	virtual void rewind_internal()const override{
+		if(!this->is_open()){
+			throw utki::invalid_state("file is not opened, cannot rewind");
 		}
 
 		ASSERT(this->handle)
 		if(AAsset_seek(this->handle, 0, SEEK_SET) < 0){
-			throw papki::exception("AAsset_seek() failed");
+			throw std::runtime_error("AAsset_seek() failed");
 		}
 	}
 
 	virtual bool exists()const override{
-		if(this->isOpened()){ //file is opened => it exists
+		if(this->is_open()){ // file is opened => it exists
 			return true;
 		}
 
@@ -350,7 +348,7 @@ public:
 			return false;
 		}
 
-		if(this->isDir()){
+		if(this->is_dir()){
 			//try opening the directory to check its existence
 			AAssetDir* pdir = AAssetManager_openDir(this->manager, this->path().c_str());
 
@@ -365,7 +363,7 @@ public:
 		}
 	}
 
-	virtual std::vector<std::string> listDirContents(size_t maxEntries = 0)const override{
+	virtual std::vector<std::string> list_dir(size_t maxEntries = 0)const override{
 		if(!this->isDir()){
 			throw utki::invalid_state("AndroidAssetFile::ListDirContents(): this is not a directory");
 		}
@@ -377,16 +375,16 @@ public:
 		return javaFunctionsWrapper->listDirContents(p);
 	}
 
-	std::unique_ptr<papki::File> spawn()override{
-		return utki::makeUnique<AssetFile>(this->manager);
+	std::unique_ptr<papki::file> spawn()override{
+		return utki::make_unique<AssetFile>(this->manager);
 	}
 
 	~AssetFile()noexcept{
 	}
 
 	size_t seek(size_t numBytesToSeek, bool seekForward)const{
-		if(!this->isOpened()){
-			throw papki::exception("file is not opened, cannot seek");
+		if(!this->is_open()){
+			throw utki::invalid_state("file is not opened, cannot seek");
 		}
 
 		ASSERT(this->handle)
@@ -423,7 +421,7 @@ public:
 			ASSERT(offset > 0)
 
 			if(AAsset_seek(this->handle, seekForward ? offset : (-offset), SEEK_CUR) < 0){
-				throw papki::exception("AAsset_seek() failed");
+				throw std::runtime_error("AAsset_seek() failed");
 			}
 
 			ASSERT(size_t(offset) < size_t(-1))
@@ -1035,7 +1033,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 	this->updateWindowRect(morda::Rectr(morda::Vec2r(0), winSize.to<morda::real>()));
 }
 
-std::unique_ptr<papki::File> mordavokne::application::get_res_file(const std::string& path)const{
+std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
 	return utki::makeUnique<AssetFile>(appInfo.assetManager, path);
 }
 
