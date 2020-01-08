@@ -29,7 +29,7 @@ struct WindowWrapper : public utki::Unique{
 
 	bool isHovered = false; // for tracking when mouse enters or leaves window.
 
-	utki::Flags<morda::MouseButton_e> mouseButtonState;
+	utki::flags<morda::MouseButton_e> mouseButtonState;
 
 	bool mouseCursorIsCurrentlyVisible = true;
 
@@ -402,7 +402,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 			// Report mouse button up events for all pressed mouse buttons
 			for(
-					decltype(ww.mouseButtonState)::index_t i = 0;
+					decltype(ww.mouseButtonState)::index_type i = 0;
 					i != ww.mouseButtonState.size();
 					++i
 				)
@@ -634,7 +634,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 	papki::FSFile dir(homeDirStr);
 	if(!dir.exists()){
-		dir.makeDir();
+		dir.make_dir();
 	}
 
 	return homeDirStr;
