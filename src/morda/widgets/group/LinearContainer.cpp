@@ -10,13 +10,17 @@ using namespace morda;
 
 
 
-LinearContainer::LayoutParams::LayoutParams(const stob::Node* chain) :
-		Container::LayoutParams(chain)
+LinearContainer::layout_params::layout_params(const puu::trees& desc) :
+		Container::layout_params(desc)
 {
-	if(auto n = getProperty(chain, "weight")){
-		this->weight = n->asFloat();
-	}else{
-		this->weight = 0;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "weight"){
+			this->weight = get_property_value(p).to_float();
+		}
 	}
 }
 

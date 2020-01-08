@@ -30,24 +30,27 @@ public:
 	/**
 	 * @brief Layout parameters for LinearArea container.
 	 */
-	class LayoutParams : public Container::LayoutParams{
+	class layout_params : public container::layout_params{
 	public:
 		/**
 		 * @brief Constructor.
-		 * @param chain - STOB chain describing the layout parameters. Can be nullptr, then all layout params are set to default values.
+		 * @param desc - description of the layout parameters.
 		 */
-		LayoutParams(const stob::Node* chain = nullptr);
+		layout_params(const puu::trees& desc);
 
 		/**
 		 * @brief Weight of the widget.
 		 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
 		 * Default value is 0, which means that the widget will not occupy extra space.
 		 */
-		real weight;
+		real weight = 0;
 	};
+
+	// TODO: deprecated, remove.
+	typedef layout_params LayoutParams;
 private:
-	std::unique_ptr<Widget::LayoutParams> create_layout_params(const stob::Node* chain)const override{
-		return utki::makeUnique<LayoutParams>(chain);
+	std::unique_ptr<Widget::LayoutParams> create_layout_params(const puu::trees& desc)const override{
+		return utki::make_unique<LayoutParams>(desc);
 	}
 };
 

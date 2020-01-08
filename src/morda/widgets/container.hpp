@@ -79,8 +79,8 @@ protected:
 	 * @param chain - STOB chain describing layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
-	virtual std::unique_ptr<LayoutParams> create_layout_params(const stob::Node* chain = nullptr)const{
-		return utki::makeUnique<Widget::LayoutParams>(chain);
+	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::trees& desc)const{
+		return utki::make_unique<Widget::LayoutParams>(desc);
 	}
 
 	/**

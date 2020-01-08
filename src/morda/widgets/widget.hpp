@@ -53,7 +53,7 @@ public:
 	/**
 	 * @brief Basic layout parameters.
 	 */
-	class layout_params : public utki::Unique{
+	class layout_params{
 	public:
 		/**
 		 * @brief Requests minimal dimensions of the widget.
@@ -93,13 +93,13 @@ public:
 		 * @brief desired dimensions.
 		 * Components should hold non-negative value in pixels or [min, max, fill].
 		 */
-		vector2 dims;
+		vector2 dims = vector2(layout_params::min_c);
 
 		//TODO: deprecated, remove.
 		vector2& dim = dims;
 
 	public:
-		layout_params(const stob::Node* chain = nullptr);
+		layout_params(const puu::trees& desc);
 
 		virtual ~layout_params()noexcept{}
 	};
@@ -183,8 +183,6 @@ public:
 private:
 	bool relayoutNeeded = true;
 
-	std::unique_ptr<stob::Node> layout_description;
-
 	puu::trees layout_desc;
 
 	//TODO: remove mutable?
@@ -200,7 +198,7 @@ public:
 	 */
 	layout_params& get_layout_params();
 
-	//TODO: deprecated, remove.
+	// TODO: deprecated, remove.
 	layout_params& getLayoutParams(){
 		return this->get_layout_params();
 	}
@@ -211,10 +209,10 @@ public:
 	 * @return Layout parameters of the widget.
 	 * @throw morda::Exc if the widget is not added to any container.
 	 */
-	const LayoutParams& get_layout_params()const;
+	const layout_params& get_layout_params()const;
 
 	//TODO: deprecated, remove.
-	const LayoutParams& getLayoutParams()const{
+	const layout_params& getLayoutParams()const{
 		return this->get_layout_params();
 	}
 

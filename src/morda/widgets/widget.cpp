@@ -19,7 +19,6 @@ widget::widget(const puu::trees& desc){
 
 		if(p.value == "layout"){
 			this->layout_desc = p.children;
-			this->layout_description = puu_to_stob(p.children);
 		}else if(p.value == "x"){
 			this->rectangle.p.x = parse_dimension_value(get_property_value(p));
 		}else if(p.value == "y"){
@@ -47,22 +46,20 @@ widget::widget(const puu::trees& desc){
 
 
 widget::widget(const stob::Node* chain) :
-		widget(chain ? stob_to_puu(*chain) : puu::trees())
+		widget(stob_to_puu(chain))
 {}
 
+widget::layout_params::layout_params(const puu::trees& desc){
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
 
-
-widget::layout_params::layout_params(const stob::Node* chain){
-	if(auto n = getProperty(chain, "dx")){
-		this->dim.x = real(dimValueFromLayoutStob(*n));
-	}else{
-		this->dim.x = layout_params::min_c;
-	}
-
-	if(auto n = getProperty(chain, "dy")){
-		this->dim.y = real(dimValueFromLayoutStob(*n));
-	}else{
-		this->dim.y = layout_params::min_c;
+		if(p.value == "dx"){
+			this->dims.x = parse_layout_dimension_value(get_property_value(p));
+		}else if(p.value == "dy"){
+			this->dims.y = parse_layout_dimension_value(get_property_value(p));
+		}
 	}
 }
 
@@ -115,8 +112,8 @@ std::shared_ptr<Widget> widget::replace_by(std::shared_ptr<Widget> w) {
 
 	this->parent()->insert(w, this->parent()->find(this));
 
-	if(w && !w->layout_description){
-		w->layout_description = std::move(this->layout_description);
+	if(w && w->layout_desc.empty()){
+		w->layout_desc = std::move(this->layout_desc);
 	}
 
 	return this->remove_from_parent();

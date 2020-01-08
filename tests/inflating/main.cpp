@@ -92,8 +92,8 @@ int main(int argc, char** argv){
 						Container{
 							x{${x}} y{${x}}
 							layout{
-								${layout}
 								dx{fill} dy{max}
+								${layout}
 							}
 						}
 					}
@@ -119,8 +119,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
 		auto lp = c->children().front()->get_layout_params();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
+		ASSERT_INFO_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max_c, "lp.dims[0] = " << lp.dims[0])
+		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::Widget::LayoutParams::max_c, "lp.dims[1] = " << lp.dims[1])
 	}
 
 	// test two levels of templates
@@ -133,8 +133,8 @@ int main(int argc, char** argv){
 						x{${x}} y{${y}}
 						dy{${dx}}
 						layout{
-							${layout}
 							dx{fill} dy{max}
+							${layout}
 						}
 					}
 				}

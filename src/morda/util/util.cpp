@@ -157,6 +157,16 @@ r4::vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
 }
 
 
+real morda::parse_layout_dimension_value(const puu::leaf& l){
+	if(l == "min"){
+		return widget::layout_params::min;
+	}else if(l == "fill"){
+		return widget::layout_params::fill;
+	}else if(l == "max"){
+		return widget::layout_params::max;
+	}
+	return parse_dimension_value(l);
+}
 
 float morda::dimValueFromLayoutStob(const stob::Node& n){
 	if(n == "min"){
@@ -254,6 +264,11 @@ std::unique_ptr<stob::Node> morda::puu_to_stob(const puu::trees& trees){
 		cur->set_children(puu_to_stob(t.children));
 	}
 	return ret->chopNext();
+}
+
+//TODO: remove
+puu::trees morda::stob_to_puu(const puu::Node* chain){
+	return chain ? stob_to_puu(*chain) : puu::trees();
 }
 
 //TODO: remove

@@ -88,10 +88,12 @@ real parse_dimension_value(const puu::leaf& l);
 
 /**
  * @brief Parse layout dimension value.
- * Parses value of 'dim' value of layout parameters from STOB.
- * @param n - stob node holding the value.
+ * Parses value of dimension value of layout parameters from puu.
+ * @param n - puu leaf holding the value.
  * @return Parsed value.
  */
+real parse_layout_dimension_value(const puu::leaf& l);
+
 real dimValueFromLayoutStob(const stob::Node& n);
 
 
@@ -149,5 +151,6 @@ std::unique_ptr<stob::Node> puu_to_stob(const puu::trees& trees);
 
 //TODO: remove
 puu::trees stob_to_puu(const puu::Node& chain);
+puu::trees stob_to_puu(const puu::Node* chain);
 
 }
