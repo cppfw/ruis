@@ -37,40 +37,31 @@ Renderer::BlendFactor_e blendFactorFromString(const std::string& s){
 }
 
 
-
-BlendingWidget::BlendingWidget(const stob::Node* chain) :
-		Widget(chain)
+BlendingWidget::BlendingWidget(const puu::trees& desc) :
+		widget(desc)
 {
-	if(auto n = getProperty(chain, "blend")){
-		this->isBlendingEnabled_v = n->asBool();
-	}else{
-		this->isBlendingEnabled_v = true;
-	}
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
 
-	if(auto n = getProperty(chain, "blendSrc")){
-		this->blend_v.src = blendFactorFromString(n->value());
-	}else{
-		this->blend_v.src = Renderer::BlendFactor_e::SRC_ALPHA;
-	}
-
-	if(auto n = getProperty(chain, "blendDst")){
-		this->blend_v.dst = blendFactorFromString(n->value());
-	}else{
-		this->blend_v.dst = Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA;
-	}
-
-	if(auto n = getProperty(chain, "blendSrcAlpha")){
-		this->blend_v.srcAlpha = blendFactorFromString(n->value());
-	}else{
-		this->blend_v.srcAlpha = Renderer::BlendFactor_e::ONE;
-	}
-
-	if(auto n = getProperty(chain, "blendDstAlpha")){
-		this->blend_v.dstAlpha = blendFactorFromString(n->value());
-	}else{
-		this->blend_v.dstAlpha = Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA;
+		if(p.value == "blend"){
+			this->isBlendingEnabled_v = get_property_value(p).to_bool();
+		}else if(p.value == "blendSrc"){
+			this->blend_v.src = blendFactorFromString(get_property_value(p).to_string());
+		}else if(p.value == "blendDst"){
+			this->blend_v.dst = blendFactorFromString(get_property_value(p).to_string());
+		}else if(p.value == "blendSrcAlpha"){
+			this->blend_v.srcAlpha = blendFactorFromString(get_property_value(p).to_string());
+		}else if(p.value == "blendDstAlpha"){
+			this->blend_v.dstAlpha = blendFactorFromString(get_property_value(p).to_string());
+		}
 	}
 }
+
+BlendingWidget::BlendingWidget(const stob::Node* chain) :
+		BlendingWidget(chain ? stob_to_puu(*chain) : puu::trees())
+{}
 
 void BlendingWidget::applyBlending() const{
 	morda::inst().renderer().setBlendEnabled(this->isBlendingEnabled());

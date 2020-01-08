@@ -18,8 +18,8 @@ namespace morda{
  * oneMinusSrcAlpha, dstAlpha, oneMinusDstAlpha, constantColor, oneMinusConstantColor, constantAlpha, oneMinusConstantAlpha,
  * srcAlphaSaturate.
  */
-class BlendingWidget : public virtual Widget{
-	bool isBlendingEnabled_v;
+class BlendingWidget : public virtual widget{
+	bool isBlendingEnabled_v = true;
 public:
 	/**
 	 * @brief Structure holding blending settings.
@@ -35,10 +35,17 @@ public:
 		}
 	};
 private:
-	BlendingParams blend_v;
+	BlendingParams blend_v = {
+		Renderer::BlendFactor_e::SRC_ALPHA,
+		Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
+		Renderer::BlendFactor_e::ONE,
+		Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+	};
 
 protected:
 	BlendingWidget(const stob::Node* chain);
+
+	BlendingWidget(const puu::trees& desc);
 
 public:
 	BlendingWidget(const BlendingWidget&) = delete;

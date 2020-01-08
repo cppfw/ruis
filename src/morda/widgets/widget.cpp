@@ -19,6 +19,7 @@ widget::widget(const puu::trees& desc){
 
 		if(p.value == "layout"){
 			this->layout_desc = p.children;
+			this->layout_description = puu_to_stob(p.children);
 		}else if(p.value == "x"){
 			this->rectangle.p.x = parse_dimension_value(get_property_value(p));
 		}else if(p.value == "y"){
@@ -45,53 +46,9 @@ widget::widget(const puu::trees& desc){
 }
 
 
-widget::widget(const stob::Node* chain){
-	if(const stob::Node* n = getProperty(chain, "layout")){
-		this->layout_description = n->cloneChain();
-	}
-
-	if(const stob::Node* n = getProperty(chain, "x")){
-		this->rectangle.p.x = morda::dimValueFromSTOB(*n);
-	}
-
-	if(const stob::Node* n = getProperty(chain, "y")){
-		this->rectangle.p.y = morda::dimValueFromSTOB(*n);
-	}
-
-	if(const stob::Node* n = getProperty(chain, "dx")){
-		this->rectangle.d.x = morda::dimValueFromSTOB(*n);
-	}
-
-	if(const stob::Node* n = getProperty(chain, "dy")){
-		this->rectangle.d.y = morda::dimValueFromSTOB(*n);
-	}
-
-	//TODO: remove reading 'name' because it was deprecated in favor of id
-	if(const stob::Node* p = getProperty(chain, "name")){
-		TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << p->value() << "'), use 'id' instead" << std::endl)
-		this->id = p->value();
-	}
-
-	if(const stob::Node* p = getProperty(chain, "id")){
-		this->id = p->value();
-	}
-
-	if(const stob::Node* p = getProperty(chain, "clip")){
-		this->clip_v = p->asBool();
-	}
-
-	if(const stob::Node* p = getProperty(chain, "cache")){
-		this->cache = p->asBool();
-	}
-
-	if(const stob::Node* p = getProperty(chain, "visible")){
-		this->isVisible_v = p->asBool();
-	}
-
-	if(const stob::Node* p = getProperty(chain, "enabled")){
-		this->isEnabled_v = p->asBool();
-	}
-}
+widget::widget(const stob::Node* chain) :
+		widget(chain ? stob_to_puu(*chain) : puu::trees())
+{}
 
 
 
