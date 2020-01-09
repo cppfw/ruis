@@ -42,7 +42,7 @@ public:
 
 List::List(const stob::Node* chain, bool vertical):
 		widget(chain),
-		container(puu::trees()),
+		container(puu::forest()),
 		OrientedWidget(nullptr, vertical)
 {
 	if(!chain){

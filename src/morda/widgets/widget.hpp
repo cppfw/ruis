@@ -99,7 +99,7 @@ public:
 		vector2& dim = dims;
 
 	public:
-		layout_params(const puu::trees& desc);
+		layout_params(const puu::forest& desc);
 
 		virtual ~layout_params()noexcept{}
 	};
@@ -183,7 +183,7 @@ public:
 private:
 	bool relayoutNeeded = true;
 
-	puu::trees layout_desc;
+	puu::forest layout_desc;
 
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
@@ -496,7 +496,7 @@ public:
 	 * @brief Constructor.
 	 * @param desc - widget description.
 	 */
-	widget(const puu::trees& desc);
+	widget(const puu::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

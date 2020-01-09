@@ -16,7 +16,7 @@ protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
 	
 public:
-	ToggleButton(const puu::trees& desc);
+	ToggleButton(const puu::forest& desc);
 
 	ToggleButton(const stob::Node* chain) : ToggleButton(stob_to_puu(chain)){}
 	

@@ -147,10 +147,10 @@ inline const puu::leaf& get_property_value(const puu::tree& p){
 }
 
 //TODO: remove
-std::unique_ptr<stob::Node> puu_to_stob(const puu::trees& trees);
+std::unique_ptr<stob::Node> puu_to_stob(const puu::forest& trees);
 
 //TODO: remove
-puu::trees stob_to_puu(const puu::Node& chain);
-puu::trees stob_to_puu(const puu::Node* chain);
+puu::forest stob_to_puu(const puu::Node& chain);
+puu::forest stob_to_puu(const puu::Node* chain);
 
 }

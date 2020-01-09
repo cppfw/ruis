@@ -17,7 +17,7 @@ class ColorWidget : public virtual Widget{
 protected:
 	ColorWidget(const stob::Node* chain);
 
-	ColorWidget(const puu::trees& desc);
+	ColorWidget(const puu::forest& desc);
 
 public:
 	ColorWidget(const ColorWidget&) = delete;

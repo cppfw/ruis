@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-LinearContainer::layout_params::layout_params(const puu::trees& desc) :
+LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 		Container::layout_params(desc)
 {
 	for(const auto& p : desc){

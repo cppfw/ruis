@@ -20,7 +20,7 @@ const auto D_Layout = stob::parse(R"qwertyuiop(
 
 
 
-CheckBox::CheckBox(const puu::trees& desc) :
+CheckBox::CheckBox(const puu::forest& desc) :
 		widget(desc),
 		Button(desc),
 		ToggleButton(desc),

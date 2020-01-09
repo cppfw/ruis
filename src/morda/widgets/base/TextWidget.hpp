@@ -55,7 +55,7 @@ public:
 	std::function<void(TextWidget& w)> textChanged;
 
 protected:
-	TextWidget(const puu::trees& desc);
+	TextWidget(const puu::forest& desc);
 
 	TextWidget(const stob::Node* desc) :
 			TextWidget(stob_to_puu(desc))

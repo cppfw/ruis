@@ -18,7 +18,7 @@ class CheckBox :
 {
 	std::shared_ptr<Widget> checkWidget;
 public:
-	CheckBox(const puu::trees& desc);
+	CheckBox(const puu::forest& desc);
 
 	CheckBox(const stob::Node* chain) : CheckBox(stob_to_puu(chain)){}
 	

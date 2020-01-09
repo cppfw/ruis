@@ -5,7 +5,7 @@ using namespace morda;
 
 
 
-ChoiceGroup::ChoiceGroup(const puu::trees& desc) :
+ChoiceGroup::ChoiceGroup(const puu::forest& desc) :
 		widget(desc),
 		Pile(desc)
 {}

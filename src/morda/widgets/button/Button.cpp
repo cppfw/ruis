@@ -7,7 +7,7 @@
 
 using namespace morda;
 
-Button::Button(const puu::trees& desc) :
+Button::Button(const puu::forest& desc) :
 		widget(desc)
 {
 	for(const auto& p : desc){

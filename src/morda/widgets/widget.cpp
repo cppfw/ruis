@@ -11,7 +11,7 @@
 using namespace morda;
 
 
-widget::widget(const puu::trees& desc){
+widget::widget(const puu::forest& desc){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -49,7 +49,7 @@ widget::widget(const stob::Node* chain) :
 		widget(stob_to_puu(chain))
 {}
 
-widget::layout_params::layout_params(const puu::trees& desc){
+widget::layout_params::layout_params(const puu::forest& desc){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;

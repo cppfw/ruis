@@ -21,7 +21,7 @@ public:
 	 * @brief Constructor.
 	 * @param desc - description of the widget.
 	 */
-	Pile(const puu::trees& desc);
+	Pile(const puu::forest& desc);
 
 	Pile(const stob::Node* chain) : Pile(stob_to_puu(chain)){}
 

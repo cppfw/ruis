@@ -19,7 +19,7 @@ void TextWidget::setFont(std::shared_ptr<ResFont> font) {
 }
 
 
-TextWidget::TextWidget(const puu::trees& desc) :
+TextWidget::TextWidget(const puu::forest& desc) :
 		widget(desc),
 		ColorWidget(desc)
 {

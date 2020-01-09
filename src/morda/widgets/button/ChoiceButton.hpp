@@ -22,7 +22,7 @@ protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
 
 public:
-	ChoiceButton(const puu::trees& desc);
+	ChoiceButton(const puu::forest& desc);
 
 	ChoiceButton(const stob::Node* chain) : ChoiceButton(stob_to_puu(chain)){}
 	

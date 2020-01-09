@@ -6,7 +6,7 @@ using namespace morda;
 
 
 
-ChoiceButton::ChoiceButton(const puu::trees& desc) :
+ChoiceButton::ChoiceButton(const puu::forest& desc) :
 		widget(desc),
 		Button(desc),
 		ToggleButton(desc)

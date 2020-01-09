@@ -27,7 +27,7 @@ class inflater{
 	inflater();
 
 private:
-	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::trees&)> > factories;
+	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::forest&)> > factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 
@@ -43,7 +43,7 @@ public:
 	template <class T_Widget> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](const puu::trees& desc) -> std::shared_ptr<morda::Widget> {
+				[](const puu::forest& desc) -> std::shared_ptr<morda::Widget> {
 					return std::make_shared<T_Widget>(puu_to_stob(desc).get());
 				}
 			);
@@ -63,14 +63,14 @@ public:
 	 * @param end - begin iterator into the GUI script.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(puu::trees::const_iterator begin, puu::trees::const_iterator end);
+	std::shared_ptr<widget> inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const puu::trees& gui_script){
+	std::shared_ptr<widget> inflate(const puu::forest& gui_script){
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
 		
@@ -81,7 +81,7 @@ public:
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return reference to the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const puu::trees& gui_script){
+	template <typename T> std::shared_ptr<T> inflate_as(const puu::forest& gui_script){
 		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
 	}
 
@@ -120,28 +120,28 @@ private:
 		std::set<std::string> vars;
 	};
 
-	widget_template parse_template(const puu::trees& chain);
+	widget_template parse_template(const puu::forest& chain);
 
 	std::vector<std::map<std::string, widget_template>> templates;
 
 	const widget_template* find_template(const std::string& name)const;
 
-	void push_templates(const puu::trees& chain);
+	void push_templates(const puu::forest& chain);
 
 	void pop_templates();
 
 	// variable name-value mapping
-	std::vector<std::map<std::string, puu::trees>> variables;
+	std::vector<std::map<std::string, puu::forest>> variables;
 
-	const puu::trees* find_variable(const std::string& name)const;
+	const puu::forest* find_variable(const std::string& name)const;
 
-	void push_variables(const puu::trees& trees);
+	void push_variables(const puu::forest& trees);
 
 	void pop_variables();
 
-	void substitute_variables(puu::trees& to)const;
+	void substitute_variables(puu::forest& to)const;
 
-	void push_defs(const puu::trees& chain);
+	void push_defs(const puu::forest& chain);
 	void pop_defs();
 };
 

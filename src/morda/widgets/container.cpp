@@ -11,7 +11,7 @@ using namespace morda;
 
 
 
-container::container(const puu::trees& desc) :
+container::container(const puu::forest& desc) :
 		widget(desc)
 {
 	this->inflate_push_back(desc);
@@ -48,7 +48,7 @@ const widget::layout_params& container::get_layout_params(const widget& w)const{
 	return *w.layoutParams;
 }
 
-void container::inflate_push_back(const puu::trees& desc){
+void container::inflate_push_back(const puu::forest& desc){
 	for(auto i = desc.begin(); i != desc.end(); ++i){
 		if(is_leaf_property(i->value)){
 			continue;

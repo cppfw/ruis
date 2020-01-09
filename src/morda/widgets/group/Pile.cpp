@@ -5,7 +5,7 @@
 using namespace morda;
 
 
-Pile::Pile(const puu::trees& desc) :
+Pile::Pile(const puu::forest& desc) :
 		widget(desc),
 		container(desc)
 {}

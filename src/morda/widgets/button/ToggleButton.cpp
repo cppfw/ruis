@@ -5,7 +5,7 @@
 using namespace morda;
 
 
-ToggleButton::ToggleButton(const puu::trees& desc) :
+ToggleButton::ToggleButton(const puu::forest& desc) :
 		widget(desc),
 		Button(desc)
 {

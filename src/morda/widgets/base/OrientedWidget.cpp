@@ -3,7 +3,7 @@
 using namespace morda;
 
 
-OrientedWidget::OrientedWidget(const puu::trees& desc, bool vertical) :
+OrientedWidget::OrientedWidget(const puu::forest& desc, bool vertical) :
 		widget(desc),
 		isVertical_v(vertical)
 {}

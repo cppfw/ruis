@@ -25,7 +25,7 @@ protected:
 	 */
 	virtual void onPressedChanged();
 public:
-	Button(const puu::trees& desc);
+	Button(const puu::forest& desc);
 
 	Button(const stob::Node* chain) :
 			Button(stob_to_puu(chain))

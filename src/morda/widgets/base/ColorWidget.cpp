@@ -5,7 +5,7 @@
 using namespace morda;
 
 
-ColorWidget::ColorWidget(const puu::trees& desc) :
+ColorWidget::ColorWidget(const puu::forest& desc) :
 		widget(desc)
 {
 	for(const auto& p : desc){
