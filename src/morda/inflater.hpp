@@ -40,11 +40,11 @@ public:
 	 * in STOB GUI description.
 	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
-	template <class T_Widget> void register_widget(const std::string& widget_name){
+	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](const puu::forest& desc) -> std::shared_ptr<morda::Widget> {
-					return std::make_shared<T_Widget>(desc);
+				[](const puu::forest& desc) -> std::shared_ptr<morda::widget> {
+					return std::make_shared<T>(desc);
 				}
 			);
 	}

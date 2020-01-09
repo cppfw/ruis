@@ -105,7 +105,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 		throw morda::Exc("Morda::initStandardWidgets(): could not mount default resource pack");
 	}
 
-	//add standard widgets to inflater
+	// add standard widgets to inflater
 
 	this->inflater.register_widget<Text>("Text");
 	this->inflater.register_widget<Color>("Color");
