@@ -10,11 +10,9 @@ void NinePatchToggle::onPressedChanged() {
 }
 
 
-NinePatchToggle::NinePatchToggle(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		NinePatchButton(chain)
-{
-
-}
+NinePatchToggle::NinePatchToggle(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		NinePatchButton(desc)
+{}
