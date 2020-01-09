@@ -12,5 +12,4 @@ ImageToggle::ImageToggle(const puu::forest& desc) :
 		Button(desc),
 		ToggleButton(desc),
 		ImageButton(desc)
-{	
-}
+{}

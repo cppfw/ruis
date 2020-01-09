@@ -77,9 +77,9 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 }
 
 
-NinePatch::NinePatch(const stob::Node* chain) :
-		Widget(chain),
-		BlendingWidget(chain),
+NinePatch::NinePatch(const puu::forest& desc) :
+		widget(desc),
+		BlendingWidget(desc),
 		Column(stob::parse(ninePatchLayout_c).get())
 {
 	this->imageMatrix_v[0][0] = this->try_get_widget_as<Image>("morda_lt");
@@ -98,42 +98,35 @@ NinePatch::NinePatch(const stob::Node* chain) :
 
 	this->content_v = this->try_get_widget_as<Pile>("morda_content");
 
-	if(auto n = getProperty(chain, "left")){
-		this->borders.left() = dimValueFromSTOB(*n);//'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill'
-	}else{
-		this->borders.left() = LayoutParams::min_c;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "left"){
+			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
+			// so, use parse_dimension_value().
+			this->borders.left() = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "right"){
+			this->borders.right() = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "top"){
+			this->borders.top() = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "bottom"){
+			this->borders.bottom() = parse_dimension_value(get_property_value(p));
+		}else if(p.value == "centerVisible"){
+			this->setCenterVisible(get_property_value(p).to_bool());
+		}
 	}
 
-	if(auto n = getProperty(chain, "right")){
-		this->borders.right() = dimValueFromSTOB(*n);
-	}else{
-		this->borders.right() = LayoutParams::min_c;
+	// this should go after setting up border widgets
+	{
+		auto i = std::find(desc.begin(), desc.end(), "image");
+		if(i != desc.end()){
+			this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(*i).to_string()));
+		}
 	}
 
-	if(auto n = getProperty(chain, "top")){
-		this->borders.top() = dimValueFromSTOB(*n);
-	}else{
-		this->borders.top() = LayoutParams::min_c;
-	}
-
-	if(auto n = getProperty(chain, "bottom")){
-		this->borders.bottom() = dimValueFromSTOB(*n);
-	}else{
-		this->borders.bottom() = LayoutParams::min_c;
-	}
-
-	if(auto n = getProperty(chain, "centerVisible")){
-		this->setCenterVisible(n->asBool());
-	}
-
-	//this should go after setting up border widgets
-	if(const stob::Node* n = getProperty(chain, "image")){
-		this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
-	}
-
-	if(chain){
-		this->content_v->add(*chain);
-	}
+	this->content_v->inflate_push_back(desc);
 }
 
 void NinePatch::render(const morda::Matr4r& matrix) const {
