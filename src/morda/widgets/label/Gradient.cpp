@@ -7,13 +7,17 @@
 using namespace morda;
 
 
-Gradient::Gradient(const stob::Node* chain) :
-		Widget(chain)
+Gradient::Gradient(const puu::forest& desc) :
+		widget(desc)
 {
-	if(auto p = getProperty(chain, "gradient")){
-		this->gradient = Morda::inst().resMan.load<ResGradient>(p->value());
-	}else{
-		ASSERT(!this->gradient)
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "gradient"){
+			this->gradient = morda::inst().resMan.load<ResGradient>(get_property_value(p).to_string());
+		}
 	}
 }
 
