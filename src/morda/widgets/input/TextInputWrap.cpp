@@ -5,12 +5,18 @@
 using namespace morda;
 
 
-TextInputWrap::TextInputWrap(const stob::Node* chain) :
-		Widget(chain),
-		TextWidget(chain),
+TextInputWrap::TextInputWrap(const puu::forest& desc) :
+		widget(desc),
+		TextWidget(desc),
 		List(nullptr, true)
 {
-	if(auto p = getProperty(chain, "text")){
-		this->setText(unikod::toUtf32(p->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "text"){
+			this->setText(unikod::toUtf32(get_property_value(p).to_string()));
+		}
 	}
 }

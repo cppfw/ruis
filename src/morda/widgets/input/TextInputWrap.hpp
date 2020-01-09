@@ -12,7 +12,8 @@ class TextInputWrap :
 		private List
 {
 public:
-	TextInputWrap(const stob::Node* chain);
+	TextInputWrap(const puu::forest& desc);
+	TextInputWrap(const stob::Node* chain) : TextInputWrap(stob_to_puu(chain)){}
 
 	TextInputWrap(const TextInputWrap&) = delete;
 	TextInputWrap& operator=(const TextInputWrap&) = delete;
