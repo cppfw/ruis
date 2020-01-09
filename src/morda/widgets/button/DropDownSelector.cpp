@@ -200,8 +200,8 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 
 
-DropDownSelector::DropDownSelector(const stob::Node* chain) :
-		Widget(chain),
+DropDownSelector::DropDownSelector(const puu::forest& desc) :
+		widget(desc),
 		Button(selectorLayout_c.get()),
 		NinePatchPushButton(selectorLayout_c.get()),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
@@ -214,23 +214,17 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		this->showDropdownMenu();
 	};
 
-	if(!chain){
-		return;
+	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
+
+	for(const auto& p : desc){
+		if(is_property(p)){
+			continue;
+		}
+
+		pr->add(puu_to_stob({puu::tree(p)}));
 	}
 
-	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
-
-	if(!n){
-		return;
-	}
-
-	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-
-	for(; n; n = n->nextNonProperty().get_node()){
-		p->add(n->clone());
-	}
-
-	this->setItemsProvider(std::move(p));
+	this->setItemsProvider(std::move(pr));
 }
 
 void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
