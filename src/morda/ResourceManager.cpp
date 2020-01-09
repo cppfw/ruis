@@ -60,11 +60,11 @@ void ResourceManager::mountResPack(const papki::File& fi){
 	
 	ResPackEntry rpe;
 	rpe.fi = papki::RootDirFile::makeUniqueConst(fi.spawn(), dir);
-	rpe.resScript = resScript->chopNext();
+	rpe.script = stob_to_puu(resScript->chopNext().get());
 
 	this->resPacks.push_back(std::move(rpe));
 	ASSERT(this->resPacks.back().fi)
-	ASSERT(this->resPacks.back().resScript)
+	ASSERT(!this->resPacks.back().script.empty())
 }
 
 
@@ -73,13 +73,11 @@ ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std
 //	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
 
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
-		for(const stob::Node* e = i->resScript.operator->(); e; e = e->next()){
-			if(resName.compare(e->value()) == 0){
-//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-				return FindInScriptRet(*i, *e);
-			}
-		}//~for(res)
-	}//~for(resPack)
+		auto j = std::find(i->script.begin(), i->script.end(), resName);
+		if(j != i->script.end()){
+			return FindInScriptRet(*i, *j);
+		}
+	}
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
@@ -88,17 +86,14 @@ ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std
 
 
 
-void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
+void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const std::string& name){
 	ASSERT(res)
 
-	ASSERT(this->resMap.find(node.value()) == this->resMap.end())
+	ASSERT(this->resMap.find(name) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
 	auto result = this->resMap.insert(
-			std::pair<const char*, std::weak_ptr<Resource>>(
-					node.value(),
-					std::weak_ptr<Resource>(res)
-				)
+			std::make_pair(name, std::weak_ptr<Resource>(res))
 		);
 	if(!result.second){
 		ASSERT(false)

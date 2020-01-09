@@ -15,7 +15,7 @@ using namespace morda;
 
 
 ResFont::ResFont(const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		f(utki::makeUnique<TexFont>(fi, fontSize, maxCached))
+		f(utki::make_unique<TexFont>(fi, fontSize, maxCached))
 {}
 
 
