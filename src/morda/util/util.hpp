@@ -7,7 +7,6 @@
 #include <r4/vector2.hpp>
 #include <r4/rectangle.hpp>
 
-#include <puu/dom.hpp>
 #include <puu/tree.hpp>
 
 #include "../config.hpp"
