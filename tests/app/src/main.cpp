@@ -1,6 +1,7 @@
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/FSFile.hpp>
+#include <puu/dom.hpp>
 
 #include "mordavokne/AppFactory.hpp"
 
