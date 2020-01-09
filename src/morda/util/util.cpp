@@ -165,25 +165,6 @@ std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(cons
 }
 
 
-
-r4::vec2b morda::makeVec2bFromSTOB(const stob::Node* chain){
-	unsigned i;
-	r4::vec2b ret;
-
-	bool v = false;
-	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
-		v = chain->asBool();
-		ret[i] = v;
-	}
-
-	for(; i != 2; ++i){
-		ret[i] = v;
-	}
-
-	return ret;
-}
-
-
 real morda::parse_layout_dimension_value(const puu::leaf& l){
 	if(l == "min"){
 		return widget::layout_params::min;

@@ -76,17 +76,6 @@ morda::Vec2r dimVec2rFromSTOB(const stob::Node* chain);
 
 
 
-/**
- * @brief Parse chain of 2 STOB nodes as Vec2b.
- * @param chain - chain of at least two nodes holding Vec2b values.
- *                If there are less than 2 nodes in the chain then the rest of
- *                vector components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting vector will be filled with false's.
- * @return parsed Vec2b.
- */
-r4::vec2b makeVec2bFromSTOB(const stob::Node* chain);
-
-
 
 /**
  * @brief Parse dimension value.
