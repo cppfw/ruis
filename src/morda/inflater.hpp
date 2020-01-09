@@ -44,7 +44,7 @@ public:
 		this->add_factory(
 				std::string(widget_name),
 				[](const puu::forest& desc) -> std::shared_ptr<morda::Widget> {
-					return std::make_shared<T_Widget>(puu_to_stob(desc).get());
+					return std::make_shared<T_Widget>(desc);
 				}
 			);
 	}
