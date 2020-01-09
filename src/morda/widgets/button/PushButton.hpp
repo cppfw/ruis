@@ -27,10 +27,11 @@ protected:
 	void on_hover_changed(unsigned pointerID) override;
 	
 public:
-	PushButton(const stob::Node* chain) :
-			Widget(chain),
-			Button(chain)
+	PushButton(const puu::forest& desc) :
+			widget(desc),
+			Button(desc)
 	{}
+	PushButton(const stob::Node* chain) : PushButton(stob_to_puu(chain)){}
 	
 	/**
 	 * @brief Clicked signal.
