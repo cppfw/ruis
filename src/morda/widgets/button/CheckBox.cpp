@@ -20,10 +20,10 @@ const auto D_Layout = stob::parse(R"qwertyuiop(
 
 
 
-CheckBox::CheckBox(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
+CheckBox::CheckBox(const puu::trees& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
 		NinePatch(D_Layout.get())
 {
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
