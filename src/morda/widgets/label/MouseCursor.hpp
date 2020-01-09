@@ -21,7 +21,8 @@ class MouseCursor : virtual public Widget{
 
 	Vec2r cursorPos;
 public:
-	MouseCursor(const stob::Node* chain = nullptr);
+	MouseCursor(const puu::forest& desc);
+	MouseCursor(const stob::Node* chain) : MouseCursor(stob_to_puu(chain)){}
 
 	MouseCursor(const MouseCursor&) = delete;
 	MouseCursor& operator=(const MouseCursor&) = delete;

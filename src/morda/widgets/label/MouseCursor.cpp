@@ -8,11 +8,17 @@
 using namespace morda;
 
 
-MouseCursor::MouseCursor(const stob::Node* chain) :
-		Widget(chain)
+MouseCursor::MouseCursor(const puu::forest& desc) :
+		widget(desc)
 {
-	if(auto n = getProperty(chain, "cursor")){
-		this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(n->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "cursor"){
+			this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
+		}
 	}
 }
 
