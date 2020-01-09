@@ -107,8 +107,6 @@ real parse_dimension_value(const puu::leaf& l);
  */
 real parse_layout_dimension_value(const puu::leaf& l);
 
-real dimValueFromLayoutStob(const stob::Node& n);
-
 
 
 /**

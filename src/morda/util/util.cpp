@@ -195,18 +195,6 @@ real morda::parse_layout_dimension_value(const puu::leaf& l){
 	return parse_dimension_value(l);
 }
 
-float morda::dimValueFromLayoutStob(const stob::Node& n){
-	if(n == "min"){
-		return Widget::LayoutParams::min_c;
-	}else if(n == "max"){
-		return Widget::LayoutParams::max_c;
-	}else if(n == "fill"){
-		return Widget::LayoutParams::fill_c;
-	}
-	return dimValueFromSTOB(n);
-}
-
-
 
 const stob::Node* morda::getProperty(const stob::Node* chain, const char* property){
 	if(!chain){
