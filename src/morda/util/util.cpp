@@ -46,10 +46,7 @@ morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 
 morda::Rectr morda::parse_rect(const puu::forest& desc){
 	Vec2r p = parse_vec2(desc.begin(), desc.end());
-	Vec2r d(p.y);
-	if(p.size() > 2){
-		d = parse_vec2(std::next(desc.begin(), 2), desc.end());
-	}
+	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
 	return Rectr(p, d);
 }
 
@@ -62,10 +59,7 @@ Rectr morda::makeRectrFromSTOB(const stob::Node* chain){
 
 morda::Sidesr morda::parse_sides(const puu::forest& desc){
 	Vec2r p = parse_vec2(desc.begin(), desc.end());
-	Vec2r d(p.y);
-	if(p.size() > 2){
-		d = parse_vec2(std::next(desc.begin(), 2), desc.end());
-	}
+	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
 	return Sidesr(p.x, p.y, d.x, d.y);
 }
 
