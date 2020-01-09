@@ -10,9 +10,7 @@ protected:
 		widget(desc)
 	{}
 
-	FractionWidget(const stob::Node* chain) :
-			FractionWidget(stob_to_puu(chain))
-	{}
+	FractionWidget(const stob::Node* chain) : FractionWidget(stob_to_puu(chain)){}
 
 	virtual void onFractionChange();
 public:

@@ -8,10 +8,11 @@ class FractionBandWidget : public FractionWidget
 {
 	float curBandSizeFraction = 0; //Current bar size factor from 0 to 1
 protected:
-	FractionBandWidget(const stob::Node* chain) :
-			Widget(chain),
-			FractionWidget(chain)
+	FractionBandWidget(const puu::forest& desc) :
+			widget(desc),
+			FractionWidget(desc)
 	{}
+	FractionBandWidget(const stob::Node* chain) : FractionBandWidget(stob_to_puu(chain)){}
 
 	virtual void onBandSizeChanged();
 
