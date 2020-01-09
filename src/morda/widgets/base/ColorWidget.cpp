@@ -5,13 +5,20 @@
 using namespace morda;
 
 
-
-ColorWidget::ColorWidget(const stob::Node* chain) :
-		Widget(chain)
+ColorWidget::ColorWidget(const puu::trees& desc) :
+		widget(desc)
 {
-	if(const stob::Node* n = getProperty(chain, "color")){
-		this->color_v = n->asUint32();
-	}else{
-		this->color_v = 0xffffffff;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "color"){
+			this->color_v = get_property_value(p).to_uint32();
+		}
 	}
 }
+
+ColorWidget::ColorWidget(const stob::Node* chain) :
+		ColorWidget(stob_to_puu(chain))
+{}
