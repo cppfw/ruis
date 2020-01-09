@@ -19,13 +19,22 @@ void TextWidget::setFont(std::shared_ptr<ResFont> font) {
 }
 
 
-TextWidget::TextWidget(const stob::Node* chain) :
-		Widget(chain),
-		ColorWidget(chain)
+TextWidget::TextWidget(const puu::trees& desc) :
+		widget(desc),
+		ColorWidget(desc)
 {
-	if(const stob::Node* p = getProperty(chain, "font")){
-		this->font_v = Morda::inst().resMan.load<morda::ResFont>(p->value());
-	}else{
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "font"){
+			this->font_v = Morda::inst().resMan.load<morda::ResFont>(get_property_value(p).to_string().c_str());
+		}
+	}
+
+	// load default font if needed
+	if(!this->font_v){
 		this->font_v = morda::Morda::inst().resMan.load<ResFont>("morda_fnt_normal");
 	}
 }
