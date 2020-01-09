@@ -176,9 +176,6 @@ std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(puu::read(str));
 }
 
-std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
-	return this->inflate(stob_to_puu(chain));
-}
 
 std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
 

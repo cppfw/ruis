@@ -85,10 +85,6 @@ public:
 		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
 	}
 
-	//TODO: deprecated, remove
-	std::shared_ptr<morda::Widget> inflate(const stob::Node& chain);
-
-
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.

@@ -44,7 +44,7 @@ const auto selectorLayout_c = stob::parse(R"qwertyuiop(
 	}
 )qwertyuiop");
 
-const char* itemLayout_c = R"qwertyuiop(
+const auto itemLayout_c = puu::read(R"qwertyuiop(
 		Pile{
 			layout{
 				dx{max}
@@ -64,9 +64,9 @@ const char* itemLayout_c = R"qwertyuiop(
 				}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
-const char* contextMenuLayout_c = R"qwertyuiop(
+const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
 		Pile{
 			Widget{
 				id{minSizeSpacer}
@@ -90,7 +90,7 @@ const char* contextMenuLayout_c = R"qwertyuiop(
 				id{contextMenuMouseProxy}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 
 class StaticProvider : public DropDownSelector::ItemsProvider{
@@ -129,7 +129,7 @@ void DropDownSelector::showDropdownMenu() {
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
 
-	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
+	auto np = morda::Morda::inst().inflater.inflate(contextMenuLayout_c);
 	ASSERT(np)
 
 	auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
@@ -269,7 +269,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
+	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");

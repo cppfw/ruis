@@ -132,9 +132,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	try{
 		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");
 
-		if(t->chain()){
-			this->inflater.inflate(*t->chain());
-		}
+		this->inflater.inflate(stob_to_puu(t->chain()));
 
 	}catch(ResourceManager::Exc&){
 		//ignore
