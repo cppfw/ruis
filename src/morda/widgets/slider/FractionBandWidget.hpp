@@ -12,7 +12,6 @@ protected:
 			widget(desc),
 			FractionWidget(desc)
 	{}
-	FractionBandWidget(const stob::Node* chain) : FractionBandWidget(stob_to_puu(chain)){}
 
 	virtual void onBandSizeChanged();
 

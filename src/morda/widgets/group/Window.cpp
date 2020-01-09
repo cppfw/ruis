@@ -11,7 +11,7 @@ using namespace morda;
 
 namespace{
 
-const char* windowDesc_c = R"qwertyuiop(
+const auto windowDesc_c = puu::read(R"qwertyuiop(
 		Column{
 			layout{
 				dx{max} dy{max}
@@ -136,7 +136,7 @@ const char* windowDesc_c = R"qwertyuiop(
 				}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 }
 
@@ -158,7 +158,7 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 morda::Window::Window(const puu::forest& desc) :
 		widget(desc),
-		Pile(stob::parse(windowDesc_c).get())
+		Pile(windowDesc_c)
 {
 	this->setupWidgets();
 

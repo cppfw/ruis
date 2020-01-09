@@ -14,7 +14,6 @@ public:
 	ResizeProxy(const puu::forest& desc) :
 			widget(desc)
 	{}
-	ResizeProxy(const stob::Node* chain) : ResizeProxy(stob_to_puu(chain)){}
 
 	ResizeProxy(const ResizeProxy&) = delete;
 	ResizeProxy& operator=(const ResizeProxy&) = delete;

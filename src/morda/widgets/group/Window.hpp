@@ -60,7 +60,6 @@ class Window :
 
 public:
 	Window(const puu::forest& desc);
-	Window(const stob::Node* chain) : Window(stob_to_puu(chain)){}
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;

@@ -7,7 +7,7 @@
 using namespace morda;
 
 namespace{
-const char* layout_c = R"qwertyuiop(
+const auto layout_c = puu::read(R"qwertyuiop(
 	Pile{
 		layout{dx{max}}
 		Color{
@@ -47,12 +47,12 @@ const char* layout_c = R"qwertyuiop(
 	Pile{
 		id{content}
 	}
-)qwertyuiop";
+)qwertyuiop");
 }
 
 CollapseArea::CollapseArea(const puu::forest& desc) :
 		widget(desc),
-		Column(stob::parse(layout_c).get())
+		Column(layout_c)
 {
 	this->contentArea = this->try_get_widget_as<Pile>("content");
 	ASSERT(this->contentArea)

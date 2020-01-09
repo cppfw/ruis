@@ -34,7 +34,6 @@ class ScrollBar :
 
 protected:
 	ScrollBar(const puu::forest& desc, bool vertical);
-	ScrollBar(const stob::Node* chain, bool vertical) : ScrollBar(stob_to_puu(chain), vertical){}
 
 	void onFractionChange() override;
 
@@ -56,7 +55,6 @@ public:
 			widget(desc),
 			ScrollBar(desc, true)
 	{}
-	VScrollBar(const stob::Node* chain) : VScrollBar(stob_to_puu(chain)){}
 
 	VScrollBar(const VScrollBar&) = delete;
 	VScrollBar& operator=(const VScrollBar&) = delete;
@@ -69,7 +67,6 @@ public:
 			widget(desc),
 			ScrollBar(desc, false)
 	{}
-	HScrollBar(const stob::Node* chain) : HScrollBar(stob_to_puu(chain)){}
 
 	HScrollBar(const HScrollBar&) = delete;
 	HScrollBar& operator=(const HScrollBar&) = delete;

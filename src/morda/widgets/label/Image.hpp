@@ -38,7 +38,6 @@ class Image :
 
 public:
 	Image(const puu::forest& desc);
-	Image(const stob::Node* chain) : Image(stob_to_puu(chain)){}
 public:
 	virtual ~Image()noexcept{}
 

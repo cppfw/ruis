@@ -14,7 +14,6 @@ public:
 			widget(desc),
 			Pile(desc)
 	{}
-	KeyProxy(const stob::Node* chain) : KeyProxy(stob_to_puu(chain)){}
 	
 	KeyProxy(const KeyProxy&) = delete;
 	KeyProxy& operator=(const KeyProxy&) = delete;

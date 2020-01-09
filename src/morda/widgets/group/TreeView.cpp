@@ -10,9 +10,9 @@ using namespace morda;
 
 TreeView::TreeView(const puu::forest& desc) :
 		widget(desc),
-		ScrollArea(nullptr)
+		ScrollArea(puu::forest())
 {
-	this->list = std::make_shared<VList>(nullptr);
+	this->list = std::make_shared<VList>(puu::forest());
 	this->push_back(this->list);
 
 	auto& lp = this->get_layout_params(*this->list);

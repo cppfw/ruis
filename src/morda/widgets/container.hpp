@@ -172,8 +172,6 @@ public:
 	 */
 	container(const puu::forest& desc);
 
-	container(const stob::Node* chain) : container(stob_to_puu(chain)){}
-
 	void render(const matrix4& matrix)const override;
 
 	bool on_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) override;
@@ -222,11 +220,6 @@ public:
 	 * @param desc - GUI description of the widgets to add.
 	 */
 	void inflate_push_back(const puu::forest& desc);
-
-	//TODO: deprecated, remove.
-	void add(const stob::Node& chain){
-		this->inflate_push_back(stob_to_puu(chain));
-	}
 
 	//TODO: depreacted, remove.
 	/**

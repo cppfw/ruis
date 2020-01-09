@@ -30,7 +30,6 @@ class List :
 
 protected:
 	List(const puu::forest& desc, bool vertical);
-	List(const stob::Node* chain, bool vertical) : List(stob_to_puu(chain), vertical){}
 public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
@@ -131,7 +130,6 @@ public:
 			widget(desc),
 			List(desc, false)
 	{}
-	HList(const stob::Node* chain) : HList(stob_to_puu(chain)){}
 
 	HList(const HList&) = delete;
 	HList& operator=(const HList&) = delete;
@@ -147,7 +145,6 @@ public:
 			widget(desc),
 			List(desc, true)
 	{}
-	VList(const stob::Node* chain) : VList(stob_to_puu(chain)){}
 
 	VList(const VList&) = delete;
 	VList& operator=(const VList&) = delete;

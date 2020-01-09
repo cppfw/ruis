@@ -488,12 +488,6 @@ public:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param chain - STOB description of the widget.
-	 */
-	widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
-
-	/**
-	 * @brief Constructor.
 	 * @param desc - widget description.
 	 */
 	widget(const puu::forest& desc);

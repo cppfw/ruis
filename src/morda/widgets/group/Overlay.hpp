@@ -14,7 +14,6 @@ class Overlay : public Pile{
 	std::shared_ptr<Container> overlayContainer;
 public:
 	Overlay(const puu::forest& desc);
-	Overlay(const stob::Node* chain) : Overlay(stob_to_puu(chain)){}
 	
 	Overlay(const Overlay&) = delete;
 	Overlay& operator=(const Overlay&) = delete;

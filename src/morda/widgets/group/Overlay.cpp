@@ -6,7 +6,7 @@ using namespace morda;
 
 namespace{
 
-const char* ContextMenuLayout_c = R"qwertyuiop(
+const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
 	layout{
 		dx{fill} dy{fill}
 	}
@@ -22,7 +22,7 @@ const char* ContextMenuLayout_c = R"qwertyuiop(
 			dx{fill} dy{fill}
 		}
 	}
-)qwertyuiop";
+)qwertyuiop");
 
 }
 
@@ -35,7 +35,7 @@ Overlay::Overlay(const puu::forest& desc) :
 
 void Overlay::on_children_changed(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = std::make_shared<Pile>(stob::parse(ContextMenuLayout_c).get());
+		this->overlayLayer = std::make_shared<Pile>(ContextMenuLayout_c);
 		this->push_back(this->overlayLayer);
 
 		this->overlayContainer = this->overlayLayer->try_get_widget_as<Container>("morda_overlay_container");

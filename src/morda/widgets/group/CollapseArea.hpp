@@ -13,7 +13,6 @@ class CollapseArea :
 	std::shared_ptr<Pile> title_v;
 public:
 	CollapseArea(const puu::forest& desc);
-	CollapseArea(const stob::Node* chain) : CollapseArea(stob_to_puu(chain)){}
 
 	Pile& content()noexcept{
 		ASSERT(this->contentArea)

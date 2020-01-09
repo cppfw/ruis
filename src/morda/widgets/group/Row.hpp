@@ -14,7 +14,6 @@ public:
 			widget(desc),
 			LinearContainer(desc, false)
 	{}
-	Row(const stob::Node* chain) : Row(stob_to_puu(chain)){}
 
 	Row(const Row&) = delete;
 	Row& operator=(const Row&) = delete;

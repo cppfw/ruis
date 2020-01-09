@@ -32,7 +32,6 @@ protected:
 
 public:
 	ScrollArea(const puu::forest& desc);
-	ScrollArea(const stob::Node* chain) : ScrollArea(stob_to_puu(chain)){}
 
 	ScrollArea(const ScrollArea&) = delete;
 	ScrollArea& operator=(const ScrollArea&) = delete;

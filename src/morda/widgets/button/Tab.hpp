@@ -13,7 +13,6 @@ class Tab :
 	
 public:
 	Tab(const puu::forest& desc);
-	Tab(const stob::Node* chain) : Tab(stob_to_puu(chain)){}
 	
 	Tab(const Tab&) = delete;
 	Tab& operator=(const Tab&) = delete;

@@ -461,12 +461,12 @@ public:
 			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 
-		auto ret = std::make_shared<morda::Row>(nullptr);
+		auto ret = std::make_shared<morda::Row>(puu::forest());
 
 		ASSERT(isLastItemInParent.size() == path.size())
 
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->add(*(isLastItemInParent[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
+			ret->inflate_push_back(isLastItemInParent[i] ? puu::read(DEmpty) : puu::read(DLine));
 		}
 
 		{

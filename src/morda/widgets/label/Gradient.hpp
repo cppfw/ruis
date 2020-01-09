@@ -18,7 +18,6 @@ class Gradient : public Widget{
 
 public:
 	Gradient(const puu::forest& desc);
-	Gradient(const stob::Node* chain) : Gradient(stob_to_puu(chain)){}
 
 	Gradient(const Gradient&) = delete;
 	Gradient& operator=(const Gradient&) = delete;

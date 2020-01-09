@@ -12,7 +12,7 @@ using namespace morda;
 
 
 namespace{
-const char* ninePatchLayout_c = R"qwertyuiop(
+const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 		Row{
 			layout{dx{fill}}
 			Image{
@@ -73,14 +73,14 @@ const char* ninePatchLayout_c = R"qwertyuiop(
 				id{morda_rb}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 }
 
 
 NinePatch::NinePatch(const puu::forest& desc) :
 		widget(desc),
 		BlendingWidget(desc),
-		Column(stob::parse(ninePatchLayout_c).get())
+		Column(ninePatchLayout_c)
 {
 	this->imageMatrix_v[0][0] = this->try_get_widget_as<Image>("morda_lt");
 	this->imageMatrix_v[0][1] = this->try_get_widget_as<Image>("morda_t");

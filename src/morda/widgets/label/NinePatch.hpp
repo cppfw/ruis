@@ -44,7 +44,6 @@ public:
 	NinePatch& operator=(const NinePatch&) = delete;
 
 	NinePatch(const puu::forest& desc);
-	NinePatch(const stob::Node* chain) : NinePatch(stob_to_puu(chain)){}
 
 	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
 

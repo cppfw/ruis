@@ -23,8 +23,6 @@ public:
 	 */
 	Pile(const puu::forest& desc);
 
-	Pile(const stob::Node* chain) : Pile(stob_to_puu(chain)){}
-
 public:
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 

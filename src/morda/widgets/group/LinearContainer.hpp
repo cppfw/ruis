@@ -22,7 +22,6 @@ class LinearContainer :
 
 public:
 	LinearContainer(const puu::forest& desc, bool vertical);
-	LinearContainer(const stob::Node* chain, bool vertical) : LinearContainer(stob_to_puu(chain), vertical){}
 
 	void lay_out() override;
 

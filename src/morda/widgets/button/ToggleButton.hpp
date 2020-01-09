@@ -17,8 +17,6 @@ protected:
 	
 public:
 	ToggleButton(const puu::forest& desc);
-
-	ToggleButton(const stob::Node* chain) : ToggleButton(stob_to_puu(chain)){}
 	
 	/**
 	 * @brief Change checked state to opposite.

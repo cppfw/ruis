@@ -12,7 +12,6 @@ namespace morda{
 class MouseProxy : virtual public Widget{
 public:
 	MouseProxy(const puu::forest& desc);
-	MouseProxy(const stob::Node* chain) : MouseProxy(stob_to_puu(chain)){}
 
 	MouseProxy(const MouseProxy&) = delete;
 	MouseProxy& operator=(const MouseProxy&) = delete;

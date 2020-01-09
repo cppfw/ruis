@@ -44,11 +44,6 @@ widget::widget(const puu::forest& desc){
 	}
 }
 
-
-widget::widget(const stob::Node* chain) :
-		widget(stob_to_puu(chain))
-{}
-
 widget::layout_params::layout_params(const puu::forest& desc){
 	for(const auto& p : desc){
 		if(!is_property(p)){

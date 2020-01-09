@@ -8,7 +8,7 @@ using namespace morda;
 TextInputWrap::TextInputWrap(const puu::forest& desc) :
 		widget(desc),
 		TextWidget(desc),
-		List(nullptr, true)
+		List(puu::forest(), true)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

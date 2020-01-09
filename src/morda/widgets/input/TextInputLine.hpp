@@ -40,7 +40,6 @@ public:
 	TextInputLine& operator=(const TextInputLine&) = delete;
 
 	TextInputLine(const puu::forest& desc);
-	TextInputLine(const stob::Node* chain) : TextInputLine(stob_to_puu(chain)){}
 
 	virtual ~TextInputLine()noexcept{}
 
