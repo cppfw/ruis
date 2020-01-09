@@ -20,13 +20,16 @@ namespace morda{
 
 
 /**
- * @brief Parse chain of 2 STOB nodes as Vec2r.
+ * @brief Parse 2 values from puu as Vec2r.
  * @param chain - chain of at least two nodes holding Vec2r values.
  *                If there are less than 2 nodes in the chain then the rest of
  *                vector components will be filled with latest parsed value.
  *                If zero pointer is passed the resulting vector will be filled with zeros.
  * @return parsed Vec2r.
  */
+morda::Vec2r parse_vec2(const puu::forest& desc);
+
+//TODO: deprecated, remove.
 morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
 
 /**

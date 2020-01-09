@@ -14,26 +14,24 @@ using namespace morda;
 
 
 
-ResFont::ResFont(const papki::File& fi, unsigned fontSize, unsigned maxCached) :
+ResFont::ResFont(const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		f(utki::makeUnique<TexFont>(fi, fontSize, maxCached))
 {}
 
 
 
-std::shared_ptr<ResFont> ResFont::load(const stob::Node& chain, const papki::File& fi){
-	//read size attribute
-	unsigned fontSize;
-	if(auto sizeProp = chain.childOfThisOrNext("size")){
-		fontSize = unsigned(morda::dimValueFromSTOB(*sizeProp));
-	}else{
-		fontSize = 13;
-	}
-
-	fi.setPath(chain.side("file").up().value());
-
+std::shared_ptr<ResFont> ResFont::load(const puu::forest& desc, const papki::file& fi){
+	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
-	if(auto p = chain.thisOrNext("maxCached").get_node()){
-		maxCached = p->up().asUint32();
+
+	for(auto& p : desc){
+		if(p.value == "size"){
+			fontSize = unsigned(parse_dimension_value(get_property_value(p)));
+		}else if(p.value == "maxCached"){
+			maxCached = unsigned(get_property_value(p).to_uint32());
+		}else if(p.value == "file"){
+			fi.setPath(get_property_value(p).to_string());
+		}
 	}
 
 	return std::make_shared<ResFont>(fi, fontSize, maxCached);

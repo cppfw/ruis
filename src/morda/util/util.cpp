@@ -10,6 +10,22 @@
 using namespace morda;
 
 
+morda::Vec2r morda::parse_vec2(const puu::forest& desc){
+	morda::Vec2r ret;
+
+	unsigned n = 0;
+	real v = 0;
+	for(auto i = desc.begin(); n != 2 && i != desc.end(); ++n, ++i){
+		v = real(i->value.to_float());
+		ret[n] = v;
+	}
+
+	for(; n != 2; ++n){
+		ret[n] = v;
+	}
+
+	return ret;
+}
 
 morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;

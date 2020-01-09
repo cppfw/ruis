@@ -2,11 +2,13 @@
 
 #include <string>
 
-#include <puu/dom.hpp>
+#include <puu/tree.hpp>
 
 #include "../ResourceManager.hpp"
 
 #include "../fonts/Font.hpp"
+
+#include "../util/util.hpp"
 
 
 namespace morda{
@@ -51,9 +53,12 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> load(const stob::Node& chain, const papki::File &fi);
+	static std::shared_ptr<ResFont> load(const stob::Node& chain, const papki::File &fi){
+		return load(stob_to_puu(chain), fi);
+	}
+	static std::shared_ptr<ResFont> load(const puu::forest& desc, const papki::file &fi);
 };
 
 
 
-}//~namespace
+}

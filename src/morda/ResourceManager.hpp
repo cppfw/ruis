@@ -59,7 +59,7 @@ class ResourceManager{
 			this->resScript = std::move(r.resScript);
 		}
 
-		std::unique_ptr<const papki::File> fi;
+		std::unique_ptr<const papki::file> fi;
 		std::unique_ptr<const stob::Node> resScript;
 	};
 
