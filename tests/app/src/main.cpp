@@ -1,6 +1,6 @@
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
-#include <papki/FSFile.hpp>
+#include <papki/fs_file.hpp>
 #include <puu/dom.hpp>
 
 #include "mordavokne/AppFactory.hpp"
@@ -30,7 +30,7 @@
 #include "../../../src/morda/widgets/label/Image.hpp"
 
 #include "../../../src/morda/util/ZipFile.hpp"
-#include "morda/widgets/button/DropDownSelector.hpp"
+#include "../../../src/morda/widgets/button/DropDownSelector.hpp"
 
 
 
