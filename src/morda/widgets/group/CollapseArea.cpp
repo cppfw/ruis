@@ -50,8 +50,8 @@ const char* layout_c = R"qwertyuiop(
 )qwertyuiop";
 }
 
-CollapseArea::CollapseArea(const stob::Node* chain) :
-		Widget(chain),
+CollapseArea::CollapseArea(const puu::forest& desc) :
+		widget(desc),
 		Column(stob::parse(layout_c).get())
 {
 	this->contentArea = this->try_get_widget_as<Pile>("content");
@@ -60,13 +60,17 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	this->title_v = this->try_get_widget_as<Pile>("title");
 	ASSERT(this->title_v)
 
-	if(auto p = getProperty(chain, "title")){
-		this->title_v->add(*p);
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "title"){
+			this->title_v->inflate_push_back(p.children);
+		}
 	}
 
-	if(chain){
-		this->contentArea->add(*chain);
-	}
+	this->contentArea->inflate_push_back(desc);
 
 	{
 		auto sw = this->try_get_widget_as<ToggleButton>("switch");
