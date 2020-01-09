@@ -13,18 +13,25 @@ ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
 {}
 
 
-std::shared_ptr<ResCursor> ResCursor::load(const stob::Node& chain, const papki::File& fi) {
+std::shared_ptr<ResCursor> ResCursor::load(const puu::forest& desc, const papki::file& fi) {
 	std::shared_ptr<ResImage> image;
-	if(auto n = getProperty(&chain, "image")){
-		image = morda::Morda::inst().resMan.load<ResImage>(n->value());
-	}else{
+	Vec2r hotspot;
+	bool hotspot_set = false;
+
+	for(auto& p : desc){
+		if(p.value == "image"){
+			image = morda::Morda::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+		}else if(p.value == "hotspot"){
+			hotspot = parse_vec2(p.children);
+			hotspot_set = true;
+		}
+	}
+
+	if(!image){
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'image' property");
 	}
 	
-	Vec2r hotspot;
-	if(auto n = getProperty(&chain, "hotspot")){
-		hotspot = makeVec2rFromSTOB(n);
-	}else{
+	if(!hotspot_set){
 		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	

@@ -7,13 +7,17 @@
 
 using namespace morda;
 
-Button::Button(const stob::Node* chain) :
-		Widget(chain)
+Button::Button(const puu::forest& desc) :
+		widget(desc)
 {
-	if(const stob::Node* n = getProperty(chain, "pressed")){
-		this->isPressed_v = n->asBool();
-	}else{
-		this->isPressed_v = false;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "pressed"){
+			this->isPressed_v = get_property_value(p).to_bool();
+		}
 	}
 }
 

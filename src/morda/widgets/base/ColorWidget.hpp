@@ -12,10 +12,10 @@ namespace morda{
  * @param color - color value.
  */
 class ColorWidget : public virtual Widget{
-	std::uint32_t color_v;
+	std::uint32_t color_v = 0xffffffff;
 
 protected:
-	ColorWidget(const stob::Node* chain);
+	ColorWidget(const puu::forest& desc);
 
 public:
 	ColorWidget(const ColorWidget&) = delete;

@@ -17,7 +17,7 @@ class Gradient : public Widget{
 	std::shared_ptr<ResGradient> gradient;
 
 public:
-	Gradient(const stob::Node* chain);
+	Gradient(const puu::forest& desc);
 
 	Gradient(const Gradient&) = delete;
 	Gradient& operator=(const Gradient&) = delete;

@@ -12,7 +12,7 @@ using namespace morda;
 namespace{
 
 class StaticProvider : public List::ItemsProvider{
-	std::vector<std::unique_ptr<stob::Node>> widgets;
+	std::vector<puu::tree> widgets;
 public:
 
 	size_t count() const noexcept override{
@@ -21,7 +21,8 @@ public:
 
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
-		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
+		auto i = std::next(this->widgets.begin(), index);
+		return morda::Morda::inst().inflater.inflate(i, i + 1);
 	}
 
 
@@ -30,8 +31,8 @@ public:
 	}
 
 
-	void add(std::unique_ptr<stob::Node> w){
-		this->widgets.push_back(std::move(w));
+	void add(puu::tree&& w){
+		this->widgets.emplace_back(std::move(w));
 	}
 };
 
@@ -40,27 +41,22 @@ public:
 
 
 
-List::List(const stob::Node* chain, bool vertical):
-		Widget(chain),
-		OrientedWidget(nullptr, vertical)
+List::List(const puu::forest& desc, bool vertical):
+		widget(desc),
+		container(puu::forest()),
+		OrientedWidget(puu::forest(), vertical)
 {
-	if(!chain){
-		return;
+	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
+
+	for(const auto& p : desc){
+		if(is_property(p)){
+			continue;
+		}
+
+		pr->add(puu::tree(p));
 	}
 
-	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
-
-	if(!n){
-		return;
-	}
-
-	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-
-	for(; n; n = n->nextNonProperty().get_node()){
-		p->add(n->clone());
-	}
-
-	this->setItemsProvider(std::move(p));
+	this->setItemsProvider(std::move(pr));
 }
 
 

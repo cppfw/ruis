@@ -41,7 +41,7 @@ public:
 private:
 	friend class ResourceManager;
 	
-	static std::shared_ptr<ResCursor> load(const stob::Node& chain, const papki::File &fi);
+	static std::shared_ptr<ResCursor> load(const puu::forest& desc, const papki::file &fi);
 };
 
 }

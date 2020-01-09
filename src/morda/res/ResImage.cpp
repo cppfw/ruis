@@ -34,20 +34,30 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 }
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
-		ResImage::QuadTexture(tex->tex().dim()),
+		ResImage::QuadTexture(tex->tex().dims()),
 		tex(std::move(tex)),
 		vao(morda::inst().renderer().posTexQuad01VAO)
-{
-}
+{}
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, const papki::File& fi){
-	auto tex = Morda::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const puu::forest& desc, const papki::file& fi){
+	std::shared_ptr<ResTexture> tex;
+	Rectr rect(-1);
+
+	for(auto& p : desc){
+		if(p.value == "tex"){
+			tex = morda::inst().resMan.load<ResTexture>(get_property_value(p).to_string());
+		}else if(p.value == "rect"){
+			rect = parse_rect(p.children);
+		}
+	}
+
+	if(!tex){
+		throw std::runtime_error("ResAtlasImage::load(): could not load texture");
+	}
 	
-	Rectr rect;
-	if(auto n = chain.childOfThisOrNext("rect")){
-		rect = makeRectrFromSTOB(n);
+	if(rect.p.x >= 0){
 		return std::make_shared<ResAtlasImage>(tex, rect);
 	}else{
 		return std::make_shared<ResAtlasImage>(tex);
@@ -68,7 +78,7 @@ protected:
 	std::shared_ptr<Texture2D> tex_v;
 	
 	TexQuadTexture(std::shared_ptr<Texture2D> tex) :
-			ResImage::QuadTexture(tex->dim()),
+			ResImage::QuadTexture(tex->dims()),
 			tex_v(std::move(tex))
 	{}
 	
@@ -88,11 +98,11 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	Vec2r dim(real dpi) const noexcept override{
-		return this->tex_v->dim();
+	Vec2r dims(real dpi) const noexcept override{
+		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
+	static std::shared_ptr<ResRasterImage> load(const papki::file& fi){
 		return std::make_shared<ResRasterImage>(loadTexture(fi));
 	}
 };
@@ -104,7 +114,7 @@ public:
 			dom(std::move(dom))
 	{}
 	
-	Vec2r dim(real dpi)const noexcept override{
+	Vec2r dims(real dpi)const noexcept override{
 		auto wh = this->dom->getDimensions(dpi);
 		return Vec2r(wh[0], wh[1]);
 	}
@@ -119,7 +129,7 @@ public:
 
 		~SvgTexture()noexcept{
 			if(auto p = this->parent.lock()){
-				r4::vec2ui d = this->tex_v->dim().to<unsigned>();
+				r4::vec2ui d = this->tex_v->dims().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}
@@ -168,7 +178,7 @@ public:
 	
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
 	
-	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
+	static std::shared_ptr<ResSvgImage> load(const papki::file& fi){
 		return std::make_shared<ResSvgImage>(svgdom::load(fi));
 	}	
 };
@@ -176,19 +186,19 @@ public:
 
 
 
-std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
-	if(auto f = chain.thisOrNext("file").get_node()){
-		if(auto fn = f->child()){
-			fi.setPath(fn->value());
+std::shared_ptr<ResImage> ResImage::load(const puu::forest& desc, const papki::file& fi) {
+	for(auto& p : desc){
+		if(p.value == "file"){
+			fi.setPath(get_property_value(p).to_string());
 			return ResImage::load(fi);
 		}
 	}
-	
-	return ResAtlasImage::load(chain, fi);
+
+	return ResAtlasImage::load(desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(const papki::File& fi) {
-	if(fi.ext().compare("svg") == 0){
+std::shared_ptr<ResImage> ResImage::load(const papki::file& fi) {
+	if(fi.suffix().compare("svg") == 0){
 		return ResSvgImage::load(fi);
 	}else{
 		return ResRasterImage::load(fi);

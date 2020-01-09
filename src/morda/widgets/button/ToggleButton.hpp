@@ -16,7 +16,7 @@ protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) override;
 	
 public:
-	ToggleButton(const stob::Node* chain);
+	ToggleButton(const puu::forest& desc);
 	
 	/**
 	 * @brief Change checked state to opposite.

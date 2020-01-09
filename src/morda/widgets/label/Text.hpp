@@ -18,7 +18,7 @@ class Text : public SingleLineTextWidget{
 
 
 public:
-	Text(const stob::Node* chain = nullptr);
+	Text(const puu::forest& desc);
 
 public:
 	~Text()noexcept{}

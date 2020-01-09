@@ -11,7 +11,7 @@ using namespace morda;
 
 namespace{
 
-const char* windowDesc_c = R"qwertyuiop(
+const auto windowDesc_c = puu::read(R"qwertyuiop(
 		Column{
 			layout{
 				dx{max} dy{max}
@@ -136,7 +136,7 @@ const char* windowDesc_c = R"qwertyuiop(
 				}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 }
 
@@ -156,72 +156,51 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 
 
-morda::Window::Window(const stob::Node* chain) :
-		Widget(chain),
-		Pile(stob::parse(windowDesc_c).get())
+morda::Window::Window(const puu::forest& desc) :
+		widget(desc),
+		Pile(windowDesc_c)
 {
 	this->setupWidgets();
 
-	if(auto n = getProperty(chain, "title")){
-		this->setTitle(n->value());
-	}
+	Sidesr borders(0);
 
-	{
-		auto ch = getProperty(chain, "look");
-
-		if(auto n = getProperty(ch, "titleColorTopmost")){
-			this->titleBgColorTopmost = n->asUint32();
-		}else{
-			this->titleBgColorTopmost = 0xffff0000;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
 		}
 
-		if(auto n = getProperty(ch, "titleColorNonTopmost")){
-			this->titleBgColorNonTopmost = n->asUint32();
-		}else{
-			this->titleBgColorNonTopmost = 0xff808080;
-		}
+		if(p.value == "title"){
+			this->setTitle(get_property_value(p).to_string());
+		}else if(p.value == "look"){
+			for(const auto& pp : p.children){
+				if(!is_property(pp)){
+					continue;
+				}
 
-		if(auto n = getProperty(ch, "background")){
-			this->setBackground(morda::Morda::inst().inflater.inflate(*n));
-		}
-
-		{
-			Sidesr borders;
-
-			if(auto n = getProperty(ch, "left")){
-				borders.left() = dimValueFromSTOB(*n);
-			}else{
-				borders.left() = 0;
+				if(pp.value == "titleColorTopmost"){
+					this->titleBgColorTopmost = get_property_value(pp).to_uint32();
+				}else if(pp.value == "titleColorNonTopmost"){
+					this->titleBgColorNonTopmost = get_property_value(pp).to_uint32();
+				}else if(pp.value == "background"){
+					this->setBackground(morda::inst().inflater.inflate(pp.children));
+				}else if(pp.value == "left"){
+					borders.left() = parse_dimension_value(get_property_value(pp));
+				}else if(pp.value == "top"){
+					borders.top() = parse_dimension_value(get_property_value(pp));
+				}else if(pp.value == "right"){
+					borders.right() = parse_dimension_value(get_property_value(pp));
+				}else if(pp.value == "bottom"){
+					borders.bottom() = parse_dimension_value(get_property_value(pp));
+				}
 			}
-
-			if(auto n = getProperty(ch, "top")){
-				borders.top() = dimValueFromSTOB(*n);
-			}else{
-				borders.top() = 0;
-			}
-
-			if(auto n = getProperty(ch, "right")){
-				borders.right() = dimValueFromSTOB(*n);
-			}else{
-				borders.right() = 0;
-			}
-
-			if(auto n = getProperty(ch, "bottom")){
-				borders.bottom() = dimValueFromSTOB(*n);
-			}else{
-				borders.bottom() = 0;
-			}
-
-			this->setBorders(borders);
 		}
 	}
+	this->setBorders(borders);
 
-	//this should go after initializing borders
+	// this should go after initializing borders
 	this->emptyMinDim = this->measure(Vec2r(-1));
 
-	if(chain){
-		this->contentArea->add(*chain);
-	}
+	this->contentArea->inflate_push_back(desc);
 }
 
 void morda::Window::setupWidgets(){

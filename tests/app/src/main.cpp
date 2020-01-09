@@ -37,8 +37,8 @@ class SimpleWidget : virtual public morda::Widget, public morda::Updateable, pub
 	std::shared_ptr<morda::ResTexture> tex;
 
 public:
-	SimpleWidget(const stob::Node* desc) :
-			morda::Widget(desc)
+	SimpleWidget(const puu::forest& desc) :
+			morda::widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::Morda::inst().resMan.load<morda::ResTexture>("tex_sample");
@@ -141,8 +141,8 @@ class CubeWidget : public morda::Widget, public morda::Updateable{
 public:
 	std::shared_ptr<morda::VertexArray> cubeVAO;
 
-	CubeWidget(const stob::Node* desc) :
-			morda::Widget(desc)
+	CubeWidget(const puu::forest& desc) :
+			morda::widget(desc)
 	{
 		std::array<morda::Vec3r, 36> cubePos = {{
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
@@ -461,12 +461,12 @@ public:
 			isLastItemInParent.push_back(n->next() == nullptr);
 		}
 
-		auto ret = std::make_shared<morda::Row>(nullptr);
+		auto ret = std::make_shared<morda::Row>(puu::forest());
 
 		ASSERT(isLastItemInParent.size() == path.size())
 
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->add(*(isLastItemInParent[i] ? stob::parse(DEmpty) : stob::parse(DLine)));
+			ret->inflate_push_back(isLastItemInParent[i] ? puu::read(DEmpty) : puu::read(DLine));
 		}
 
 		{

@@ -33,7 +33,7 @@ class ScrollBar :
 	float clickPoint;
 
 protected:
-	ScrollBar(const stob::Node* chain, bool vertical);
+	ScrollBar(const puu::forest& desc, bool vertical);
 
 	void onFractionChange() override;
 
@@ -51,9 +51,9 @@ private:
 
 class VScrollBar : public ScrollBar{
 public:
-	VScrollBar(const stob::Node* chain) :
-			Widget(chain),
-			ScrollBar(chain, true)
+	VScrollBar(const puu::forest& desc) :
+			widget(desc),
+			ScrollBar(desc, true)
 	{}
 
 	VScrollBar(const VScrollBar&) = delete;
@@ -63,9 +63,9 @@ public:
 
 class HScrollBar : public ScrollBar{
 public:
-	HScrollBar(const stob::Node* chain) :
-			Widget(chain),
-			ScrollBar(chain, false)
+	HScrollBar(const puu::forest& desc) :
+			widget(desc),
+			ScrollBar(desc, false)
 	{}
 
 	HScrollBar(const HScrollBar&) = delete;

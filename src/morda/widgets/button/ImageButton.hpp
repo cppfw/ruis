@@ -17,7 +17,7 @@ class ImageButton :
 protected:
 	void onPressedChanged() override;
 
-	ImageButton(const stob::Node* chain);
+	ImageButton(const puu::forest& desc);
 	
 	void updateImage();
 	

@@ -9,7 +9,7 @@ class ImageToggle :
 		public ImageButton
 {
 public:
-	ImageToggle(const stob::Node* chain = nullptr);
+	ImageToggle(const puu::forest& desc);
 	
 	ImageToggle(const ImageToggle&) = delete;
 	ImageToggle& operator=(const ImageToggle&) = delete;

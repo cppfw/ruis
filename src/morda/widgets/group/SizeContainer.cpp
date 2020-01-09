@@ -2,11 +2,10 @@
 
 using namespace morda;
 
-SizeContainer::SizeContainer(const stob::Node* chain) :
-		Widget(chain),
-		Container(chain)
-{
-}
+SizeContainer::SizeContainer(const puu::forest& desc) :
+		widget(desc),
+		container(desc)
+{}
 
 void SizeContainer::lay_out(){
 	for(auto& w : this->children()){

@@ -8,11 +8,17 @@
 using namespace morda;
 
 
-MouseCursor::MouseCursor(const stob::Node* chain) :
-		Widget(chain)
+MouseCursor::MouseCursor(const puu::forest& desc) :
+		widget(desc)
 {
-	if(auto n = getProperty(chain, "cursor")){
-		this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(n->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "cursor"){
+			this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
+		}
 	}
 }
 
@@ -44,7 +50,7 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
-	matr.scale(this->quadTex->dim());
+	matr.scale(this->quadTex->dims());
 	
 //	TRACE(<< "MouseCursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	

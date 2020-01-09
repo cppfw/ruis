@@ -23,7 +23,7 @@ using namespace morda;
 
 namespace{
 
-const auto selectorLayout_c = stob::parse(R"qwertyuiop(
+const auto selectorLayout_c = puu::read(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
 	Row{
@@ -44,7 +44,7 @@ const auto selectorLayout_c = stob::parse(R"qwertyuiop(
 	}
 )qwertyuiop");
 
-const char* itemLayout_c = R"qwertyuiop(
+const auto itemLayout_c = puu::read(R"qwertyuiop(
 		Pile{
 			layout{
 				dx{max}
@@ -64,9 +64,9 @@ const char* itemLayout_c = R"qwertyuiop(
 				}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
-const char* contextMenuLayout_c = R"qwertyuiop(
+const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
 		Pile{
 			Widget{
 				id{minSizeSpacer}
@@ -90,11 +90,11 @@ const char* contextMenuLayout_c = R"qwertyuiop(
 				id{contextMenuMouseProxy}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 
 class StaticProvider : public DropDownSelector::ItemsProvider{
-	std::vector<std::unique_ptr<stob::Node>> widgets;
+	std::vector<puu::tree> widgets;
 public:
 
 	size_t count() const noexcept override{
@@ -102,7 +102,8 @@ public:
 	}
 
 	std::shared_ptr<Widget> getWidget(size_t index)override{
-		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
+		auto i = std::next(this->widgets.begin(), index);
+		return morda::Morda::inst().inflater.inflate(i, i + 1);
 	}
 
 
@@ -111,8 +112,8 @@ public:
 	}
 
 
-	void add(std::unique_ptr<stob::Node> w){
-		this->widgets.push_back(std::move(w));
+	void add(puu::tree&& w){
+		this->widgets.emplace_back(std::move(w));
 	}
 };
 
@@ -128,7 +129,7 @@ void DropDownSelector::showDropdownMenu() {
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
 
-	auto np = morda::Morda::inst().inflater.inflate(*stob::parse(contextMenuLayout_c));
+	auto np = morda::Morda::inst().inflater.inflate(contextMenuLayout_c);
 	ASSERT(np)
 
 	auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
@@ -200,10 +201,10 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 
 
-DropDownSelector::DropDownSelector(const stob::Node* chain) :
-		Widget(chain),
-		Button(selectorLayout_c.get()),
-		NinePatchPushButton(selectorLayout_c.get()),
+DropDownSelector::DropDownSelector(const puu::forest& desc) :
+		widget(desc),
+		Button(selectorLayout_c),
+		NinePatchPushButton(selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){
@@ -214,23 +215,17 @@ DropDownSelector::DropDownSelector(const stob::Node* chain) :
 		this->showDropdownMenu();
 	};
 
-	if(!chain){
-		return;
+	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
+
+	for(const auto& p : desc){
+		if(is_property(p)){
+			continue;
+		}
+
+		pr->add(puu::tree(p));
 	}
 
-	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
-
-	if(!n){
-		return;
-	}
-
-	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-
-	for(; n; n = n->nextNonProperty().get_node()){
-		p->add(n->clone());
-	}
-
-	this->setItemsProvider(std::move(p));
+	this->setItemsProvider(std::move(pr));
 }
 
 void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
@@ -274,7 +269,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(*stob::parse(itemLayout_c)));
+	auto wd = std::dynamic_pointer_cast<Pile>(morda::Morda::inst().inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");

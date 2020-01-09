@@ -7,7 +7,7 @@
 using namespace morda;
 
 namespace{
-const char* layout_c = R"qwertyuiop(
+const auto layout_c = puu::read(R"qwertyuiop(
 	Pile{
 		layout{dx{max}}
 		Color{
@@ -47,12 +47,12 @@ const char* layout_c = R"qwertyuiop(
 	Pile{
 		id{content}
 	}
-)qwertyuiop";
+)qwertyuiop");
 }
 
-CollapseArea::CollapseArea(const stob::Node* chain) :
-		Widget(chain),
-		Column(stob::parse(layout_c).get())
+CollapseArea::CollapseArea(const puu::forest& desc) :
+		widget(desc),
+		Column(layout_c)
 {
 	this->contentArea = this->try_get_widget_as<Pile>("content");
 	ASSERT(this->contentArea)
@@ -60,13 +60,17 @@ CollapseArea::CollapseArea(const stob::Node* chain) :
 	this->title_v = this->try_get_widget_as<Pile>("title");
 	ASSERT(this->title_v)
 
-	if(auto p = getProperty(chain, "title")){
-		this->title_v->add(*p);
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "title"){
+			this->title_v->inflate_push_back(p.children);
+		}
 	}
 
-	if(chain){
-		this->contentArea->add(*chain);
-	}
+	this->contentArea->inflate_push_back(desc);
 
 	{
 		auto sw = this->try_get_widget_as<ToggleButton>("switch");

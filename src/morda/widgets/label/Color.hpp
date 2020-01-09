@@ -13,7 +13,7 @@ namespace morda{
  */
 class Color : public ColorWidget{
 public:
-	Color(const stob::Node* chain);
+	Color(const puu::forest& desc);
 
 	Color(const Color&) = delete;
 	Color& operator=(const Color&) = delete;

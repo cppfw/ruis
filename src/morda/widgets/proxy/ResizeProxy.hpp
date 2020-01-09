@@ -11,8 +11,8 @@ namespace morda{
  */
 class ResizeProxy : virtual public Widget{
 public:
-	ResizeProxy(const stob::Node* chain = nullptr) :
-			Widget(chain)
+	ResizeProxy(const puu::forest& desc) :
+			widget(desc)
 	{}
 
 	ResizeProxy(const ResizeProxy&) = delete;

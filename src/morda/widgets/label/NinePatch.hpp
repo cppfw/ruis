@@ -33,7 +33,7 @@ class NinePatch :
 
 	std::shared_ptr<ResNinePatch::ImageMatrix> scaledImage;
 
-	Sidesr borders;
+	Sidesr borders = Sidesr(layout_params::min);
 
 	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix_v;
 
@@ -43,7 +43,7 @@ public:
 	NinePatch(const NinePatch&) = delete;
 	NinePatch& operator=(const NinePatch&) = delete;
 
-	NinePatch(const stob::Node* chain = nullptr);
+	NinePatch(const puu::forest& desc);
 
 	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
 

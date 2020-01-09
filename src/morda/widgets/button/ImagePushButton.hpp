@@ -12,6 +12,6 @@ protected:
 	void onPressedChanged() override;
 
 public:
-	ImagePushButton(const stob::Node* chain);
+	ImagePushButton(const puu::forest& desc);
 };
 }

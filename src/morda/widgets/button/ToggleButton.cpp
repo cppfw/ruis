@@ -5,9 +5,9 @@
 using namespace morda;
 
 
-ToggleButton::ToggleButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain)
+ToggleButton::ToggleButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc)
 {
 }
 

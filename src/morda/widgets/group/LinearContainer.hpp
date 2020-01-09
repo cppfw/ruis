@@ -21,7 +21,7 @@ class LinearContainer :
 	LinearContainer& operator=(const LinearContainer&) = delete;
 
 public:
-	LinearContainer(const stob::Node* chain, bool vertical);
+	LinearContainer(const puu::forest& desc, bool vertical);
 
 	void lay_out() override;
 
@@ -36,7 +36,7 @@ public:
 		 * @brief Constructor.
 		 * @param desc - description of the layout parameters.
 		 */
-		layout_params(const puu::trees& desc);
+		layout_params(const puu::forest& desc);
 
 		/**
 		 * @brief Weight of the widget.
@@ -49,7 +49,7 @@ public:
 	// TODO: deprecated, remove.
 	typedef layout_params LayoutParams;
 private:
-	std::unique_ptr<Widget::LayoutParams> create_layout_params(const puu::trees& desc)const override{
+	std::unique_ptr<Widget::LayoutParams> create_layout_params(const puu::forest& desc)const override{
 		return utki::make_unique<LayoutParams>(desc);
 	}
 };

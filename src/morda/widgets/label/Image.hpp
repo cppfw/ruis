@@ -30,13 +30,14 @@ class Image :
 
 	mutable std::shared_ptr<const morda::ResImage::QuadTexture> scaledImage;
 
-	bool keepAspectRatio;
+	bool keepAspectRatio = false;
 
-	r4::vec2b repeat_v;
+	r4::vec2b repeat_v = r4::vec2b(false);
+	
 	mutable std::shared_ptr<VertexArray> vao;
 
 public:
-	Image(const stob::Node* chain = nullptr);
+	Image(const puu::forest& desc);
 public:
 	virtual ~Image()noexcept{}
 

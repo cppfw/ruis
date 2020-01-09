@@ -10,7 +10,7 @@ class NinePatchToggle :
 		public NinePatchButton
 {
 public:
-	NinePatchToggle(const stob::Node* chain);
+	NinePatchToggle(const puu::forest& desc);
 	
 protected:
 	void onPressedChanged() override;

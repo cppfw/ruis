@@ -8,11 +8,10 @@
 using namespace morda;
 
 
-Color::Color(const stob::Node* chain) :
-		Widget(chain),
-		ColorWidget(chain)
-{
-}
+Color::Color(const puu::forest& desc) :
+		widget(desc),
+		ColorWidget(desc)
+{}
 
 
 

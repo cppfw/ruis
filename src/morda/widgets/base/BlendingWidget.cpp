@@ -37,7 +37,7 @@ Renderer::BlendFactor_e blendFactorFromString(const std::string& s){
 }
 
 
-BlendingWidget::BlendingWidget(const puu::trees& desc) :
+BlendingWidget::BlendingWidget(const puu::forest& desc) :
 		widget(desc)
 {
 	for(const auto& p : desc){
@@ -58,10 +58,6 @@ BlendingWidget::BlendingWidget(const puu::trees& desc) :
 		}
 	}
 }
-
-BlendingWidget::BlendingWidget(const stob::Node* chain) :
-		BlendingWidget(chain ? stob_to_puu(*chain) : puu::trees())
-{}
 
 void BlendingWidget::applyBlending() const{
 	morda::inst().renderer().setBlendEnabled(this->isBlendingEnabled());

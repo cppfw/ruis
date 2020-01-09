@@ -10,6 +10,22 @@
 using namespace morda;
 
 
+morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end){
+	morda::Vec2r ret;
+
+	unsigned n = 0;
+	real v = 0;
+	for(auto i = begin; n != 2 && i != end; ++n, ++i){
+		v = real(i->value.to_float());
+		ret[n] = v;
+	}
+
+	for(; n != 2; ++n){
+		ret[n] = v;
+	}
+
+	return ret;
+}
 
 morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	unsigned i;
@@ -28,12 +44,23 @@ morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	return ret;
 }
 
+morda::Rectr morda::parse_rect(const puu::forest& desc){
+	Vec2r p = parse_vec2(desc.begin(), desc.end());
+	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	return Rectr(p, d);
+}
 
 Rectr morda::makeRectrFromSTOB(const stob::Node* chain){
 	Vec2r p = makeVec2rFromSTOB(chain);
 	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
 	Vec2r d = makeVec2rFromSTOB(chain);
 	return Rectr(p, d);
+}
+
+morda::Sidesr morda::parse_sides(const puu::forest& desc){
+	Vec2r p = parse_vec2(desc.begin(), desc.end());
+	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	return Sidesr(p.x, p.y, d.x, d.y);
 }
 
 Sidesr morda::makeSidesrFromSTOB(const stob::Node* chain){
@@ -255,25 +282,13 @@ bool morda::is_property(const puu::tree& t){
 }
 
 //TODO: remove
-std::unique_ptr<stob::Node> morda::puu_to_stob(const puu::trees& trees){
-	auto ret = utki::makeUnique<stob::Node>();
-	auto cur = ret.get();
-	for(auto& t : trees){
-		cur->insertNext(utki::makeUnique<stob::Node>(t.value.c_str()));
-		cur = cur->next();
-		cur->set_children(puu_to_stob(t.children));
-	}
-	return ret->chopNext();
+puu::forest morda::stob_to_puu(const puu::Node* chain){
+	return chain ? stob_to_puu(*chain) : puu::forest();
 }
 
 //TODO: remove
-puu::trees morda::stob_to_puu(const puu::Node* chain){
-	return chain ? stob_to_puu(*chain) : puu::trees();
-}
-
-//TODO: remove
-puu::trees morda::stob_to_puu(const puu::Node& chain){
-	puu::trees ret;
+puu::forest morda::stob_to_puu(const puu::Node& chain){
+	puu::forest ret;
 
 	for(auto n = &chain; n; n = n->next()){
 		if(n->child()){

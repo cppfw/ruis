@@ -4,7 +4,7 @@
 
 #include <utki/shared.hpp>
 #include <papki/file.hpp>
-#include <puu/dom.hpp>
+#include <puu/tree.hpp>
 
 #include "exception.hpp"
 
@@ -19,10 +19,10 @@ class Resource;
 
 /**
  * @brief Resource manager.
- * This class manages application recources loading from STOB resource description scripts.
+ * This class manages application recources loading from puu resource description scripts.
  *
  * Format of resource description scripts is simple. It uses STOB markup.
- * Each resource is a root-level STOB node, the value is a name of the resource, by that name
+ * Each resource is a root-level puu node, the value is a name of the resource, by that name
  * the application will load that resource.The children of resource name are the properties of the resource.
  * Each resource type defines their own properties.
  *
@@ -30,14 +30,14 @@ class Resource;
  *
  * Example:
  * @code
- * //include another resource script into this one
- * include{some_other.res.stob}
+ * // include another resource script into this one
+ * include{some_other.res}
  *
- * //Example of resource declaration
+ * // Example of resource declaration
  * img_may_image_resource //resource name
  * {
- *     //image resource has only one attribute 'file' which tells from
- *     //from which file to load the image
+ *     // image resource has only one attribute 'file' which tells from
+ *     // from which file to load the image
  *     file{sample_image.png}
  * }
  *
@@ -54,38 +54,35 @@ class ResourceManager{
 		ResPackEntry() = default;
 
 		//For MSVC compiler, it does not generate move constructor automatically
+		//TODO: check if this is still needed.
 		ResPackEntry(ResPackEntry&& r){
 			this->fi = std::move(r.fi);
-			this->resScript = std::move(r.resScript);
+			this->script = std::move(r.script);
 		}
 
-		std::unique_ptr<const papki::File> fi;
-		std::unique_ptr<const stob::Node> resScript;
+		std::unique_ptr<const papki::file> fi;
+		puu::forest script;
 	};
 
-	typedef std::vector<ResPackEntry> T_ResPackList;
-
-	//list of mounted resource packs
-	T_ResPackList resPacks;
-
+	std::vector<ResPackEntry> resPacks;
 
 	class FindInScriptRet{
 	public:
-		FindInScriptRet(ResPackEntry& resPack, const stob::Node& element) :
+		FindInScriptRet(ResPackEntry& resPack, const puu::tree& element) :
 				rp(resPack),
 				e(element)
 		{}
 
 		ResPackEntry& rp;
-		const stob::Node& e;
+		const puu::tree& e;
 	};
 
 	FindInScriptRet findResourceInScript(const std::string& resName);
 
 	template <class T> std::shared_ptr<T> findResourceInResMap(const char* resName);
 
-	//Add resource to resources map
-	void addResource(const std::shared_ptr<Resource>& res, const stob::Node& node);
+	// Add resource to resources map
+	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
 
 private:
 	ResourceManager() = default;
@@ -127,6 +124,10 @@ public:
 	 * @return Loaded resource.
 	 */
 	template <class T> std::shared_ptr<T> load(const char* resName);
+
+	template <class T> std::shared_ptr<T> load(const std::string& resName){
+		return this->load<T>(resName.c_str());
+	}
 
 private:
 };
@@ -173,13 +174,13 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	if(!ret.e.child()){
+	if(ret.e.children.empty()){
 		throw Exc("ResourceManager::Load(): resource description is empty");
 	}
 
-	auto resource = T::load(*ret.e.child(), *ret.rp.fi);
+	auto resource = T::load(ret.e.children, *ret.rp.fi);
 
-	this->addResource(resource, ret.e);
+	this->addResource(resource, ret.e.value.to_string());
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;

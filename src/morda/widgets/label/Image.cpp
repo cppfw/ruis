@@ -9,31 +9,25 @@ using namespace morda;
 
 
 
-Image::Image(const stob::Node* chain) :
-		Widget(chain),
-		BlendingWidget(chain)
+Image::Image(const puu::forest& desc) :
+		widget(desc),
+		BlendingWidget(desc)
 {
-	if(auto image = getProperty(chain, "image")){
-		this->img = Morda::inst().resMan.load<ResImage>(image->value());
-		this->resize(this->img->dim());
-	}
-	
-	if(auto n = getProperty(chain, "keepAspectRatio")){
-		this->keepAspectRatio = n->asBool();
-	}else{
-		this->keepAspectRatio = false;
-	}
-	
-	if(auto n = getProperty(chain, "repeatX")){
-		this->repeat_v.x = n->asBool();
-	}else{
-		this->repeat_v.x = false;
-	}
-	
-	if(auto n = getProperty(chain, "repeatY")){
-		this->repeat_v.y = n->asBool();
-	}else{
-		this->repeat_v.y = false;
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "image"){
+			this->img = Morda::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+			this->resize(this->img->dims());
+		}else if(p.value == "keepAspectRatio"){
+			this->keepAspectRatio = get_property_value(p).to_bool();
+		}else if(p.value == "repeatX"){
+			this->repeat_v.x = get_property_value(p).to_bool();
+		}else if(p.value == "repeatY"){
+			this->repeat_v.y = get_property_value(p).to_bool();
+		}
 	}
 }
 
@@ -60,7 +54,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 			ASSERT(quadFanTexCoords.size() == texCoords.size())
 			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();
-			auto scale = this->rect().d.compDiv(this->img->dim());
+			auto scale = this->rect().d.compDiv(this->img->dims());
 			if(!this->repeat_v.x){
 				scale.x = 1;
 			}
@@ -88,7 +82,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	Vec2r imgDim = this->img->dim(morda::Morda::inst().units.dpi());
+	Vec2r imgDim = this->img->dims(morda::Morda::inst().units.dpi());
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	
@@ -142,7 +136,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 
 
 void Image::setImage(const std::shared_ptr<const ResImage>& image) {
-	if(this->img && image && this->img->dim() == image->dim()){
+	if(this->img && image && this->img->dims() == image->dims()){
 	}else{
 		this->invalidate_layout();
 	}

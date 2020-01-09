@@ -8,20 +8,28 @@
 using namespace morda;
 
 
-NinePatchButton::NinePatchButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		NinePatch(chain)
+NinePatchButton::NinePatchButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		NinePatch(desc)
 {
-	{
-		auto ch = getProperty(chain, "look");
-		
-		if(auto n = getProperty(ch, "unpressed")){
-			this->setUnpressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
 		}
 
-		if(auto n = getProperty(ch, "pressed")){
-			this->setPressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
+		if(p.value == "look"){
+			for(const auto& pp : p.children){
+				if(!is_property(pp)){
+					continue;
+				}
+
+				if(pp.value == "unpressed"){
+					this->setUnpressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
+				}else if(pp.value == "pressed"){
+					this->setPressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
+				}
+			}
 		}
 	}
 	this->onPressedChanged();

@@ -9,7 +9,7 @@ using namespace morda;
 
 namespace{
 
-const auto D_Layout = stob::parse(R"qwertyuiop(
+const auto D_Layout = puu::read(R"qwertyuiop(
 		Image{
 			id{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
@@ -20,11 +20,11 @@ const auto D_Layout = stob::parse(R"qwertyuiop(
 
 
 
-CheckBox::CheckBox(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		NinePatch(D_Layout.get())
+CheckBox::CheckBox(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		NinePatch(D_Layout)
 {
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->isPressed());

@@ -25,7 +25,7 @@ protected:
 	 */
 	virtual void onPressedChanged();
 public:
-	Button(const stob::Node* chain);
+	Button(const puu::forest& desc);
 
 	/**
 	 * @brief Check if button is currently pressed.

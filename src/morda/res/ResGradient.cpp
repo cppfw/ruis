@@ -60,34 +60,28 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 
 
 
-std::shared_ptr<ResGradient> ResGradient::load(const stob::Node& chain, const papki::File& fi) {
-	bool vertical;
-	
-	if(auto n = getProperty(&chain, "vertical")){
-		vertical = n->asBool();
-	}else{
-		vertical = false;
-	}
-	
+std::shared_ptr<ResGradient> ResGradient::load(const puu::forest& desc, const papki::file& fi) {
+	bool vertical = false;
+
 	std::vector<std::tuple<real,std::uint32_t>> stops;
-	
+
 	const char* stop_c = "Stop";
-	for(auto n = chain.thisOrNext(stop_c).get_node(); n; n = n->next(stop_c).get_node()){
-		real pos;
-		if(auto p = getProperty(n->child(), "pos")){
-			pos = p->asFloat();
-		}else{
-			pos = 0;
+
+	for(auto& p : desc){
+		if(p.value == "vertical"){
+			vertical = get_property_value(p).to_bool();
+		}else if(p.value == stop_c){
+			real pos = 0;
+			uint32_t color = 0xffffffff;
+			for(auto& pp : p.children){
+				if(pp.value == "pos"){
+					pos = get_property_value(pp).to_float();
+				}else if(pp.value == "color"){
+					color = get_property_value(pp).to_uint32();
+				}
+			}
+			stops.push_back(std::make_tuple(pos, color));
 		}
-		
-		std::uint32_t color;
-		if(auto p = getProperty(n->child(), "color")){
-			color = p->asUint32();
-		}else{
-			color = 0xffffffff;
-		}
-		
-		stops.push_back(std::make_tuple(pos, color));
 	}
 	
 	return std::make_shared<ResGradient>(stops, vertical);

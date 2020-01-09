@@ -10,9 +10,9 @@ namespace morda{
  */
 class Column : public LinearContainer{
 public:
-	Column(const stob::Node* chain) :
-			Widget(chain),
-			LinearContainer(chain, true)
+	Column(const puu::forest& desc) :
+			widget(desc),
+			LinearContainer(desc, true)
 	{}
 
 	Column(const Column&) = delete;

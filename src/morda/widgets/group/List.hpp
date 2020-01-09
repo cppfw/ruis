@@ -29,7 +29,7 @@ class List :
 	real firstTailItemOffset = real(0);
 
 protected:
-	List(const stob::Node* chain, bool vertical);
+	List(const puu::forest& desc, bool vertical);
 public:
 	List(const List&) = delete;
 	List& operator=(const List&) = delete;
@@ -126,9 +126,9 @@ private:
  */
 class HList : public List{
 public:
-	HList(const stob::Node* chain) :
-			Widget(chain),
-			List(chain, false)
+	HList(const puu::forest& desc) :
+			widget(desc),
+			List(desc, false)
 	{}
 
 	HList(const HList&) = delete;
@@ -141,9 +141,9 @@ public:
  */
 class VList : public List{
 public:
-	VList(const stob::Node* chain) :
-			Widget(chain),
-			List(chain, true)
+	VList(const puu::forest& desc) :
+			widget(desc),
+			List(desc, true)
 	{}
 
 	VList(const VList&) = delete;

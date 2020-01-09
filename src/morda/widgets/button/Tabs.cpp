@@ -7,15 +7,28 @@
 
 using namespace morda;
 
-Tabs::Tabs(const stob::Node* chain) :
-		Widget(chain),
-		ChoiceGroup(chain)
+Tabs::Tabs(const puu::forest& desc) :
+		widget(desc),
+		ChoiceGroup(desc)
 {
-	if(auto l = getProperty(chain, "look")){
-		if(auto p = getProperty(l, "filler")){
-			this->setFiller(morda::inst().resMan.load<ResImage>(p->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "look"){
+			for(const auto& pp : p.children){
+				if(!is_property(pp)){
+					continue;
+				}
+
+				if(p.value == "filler"){
+					this->setFiller(morda::inst().resMan.load<ResImage>(get_property_value(pp).to_string()));
+				}
+			}
 		}
 	}
+
 	if(!this->filler){
 		this->setFiller(morda::inst().resMan.load<ResImage>("morda_img_tabs_filler"));
 	}
@@ -123,8 +136,8 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		real l = this->rect().d.x - ce;
 		if(l > 0){
 			Matr4r m(matrix);
-			m.translate(ce, this->rect().d.y - this->fillerTexture->dim().y);
-			m.scale(l, this->fillerTexture->dim().y);
+			m.translate(ce, this->rect().d.y - this->fillerTexture->dims().y);
+			m.scale(l, this->fillerTexture->dims().y);
 			this->fillerTexture->render(m);
 		}
 	}

@@ -16,7 +16,7 @@ class CharInputWidget : virtual public widget{
 
 protected:
 	CharInputWidget() :
-			widget(nullptr)
+			widget(puu::forest())
 	{}
 
 public:

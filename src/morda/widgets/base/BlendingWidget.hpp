@@ -43,9 +43,7 @@ private:
 	};
 
 protected:
-	BlendingWidget(const stob::Node* chain);
-
-	BlendingWidget(const puu::trees& desc);
+	BlendingWidget(const puu::forest& desc);
 
 public:
 	BlendingWidget(const BlendingWidget&) = delete;

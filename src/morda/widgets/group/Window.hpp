@@ -26,8 +26,8 @@ class Window :
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 
 	std::shared_ptr<Color> titleBg;
-	std::uint32_t titleBgColorTopmost;
-	std::uint32_t titleBgColorNonTopmost;
+	std::uint32_t titleBgColorTopmost = 0xffff0000;
+	std::uint32_t titleBgColorNonTopmost = 0xff808080;
 
 	std::shared_ptr<Text> title;
 
@@ -59,7 +59,7 @@ class Window :
 	void updateTopmost();
 
 public:
-	Window(const stob::Node* chain = nullptr);
+	Window(const puu::forest& desc);
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;

@@ -7,10 +7,9 @@
 using namespace morda;
 
 
-ImageToggle::ImageToggle(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		ImageButton(chain)
-{	
-}
+ImageToggle::ImageToggle(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		ImageButton(desc)
+{}

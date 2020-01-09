@@ -76,8 +76,7 @@ public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 
 public:
-
-	DropDownSelector(const stob::Node* chain);
+	DropDownSelector(const puu::forest& desc);
 
 	DropDownSelector(const DropDownSelector&) = delete;
 	DropDownSelector& operator=(const DropDownSelector&) = delete;

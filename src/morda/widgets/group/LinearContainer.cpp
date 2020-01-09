@@ -10,7 +10,7 @@ using namespace morda;
 
 
 
-LinearContainer::layout_params::layout_params(const puu::trees& desc) :
+LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 		Container::layout_params(desc)
 {
 	for(const auto& p : desc){
@@ -27,10 +27,10 @@ LinearContainer::layout_params::layout_params(const puu::trees& desc) :
 
 
 
-LinearContainer::LinearContainer(const stob::Node* chain, bool vertical) :
-		Widget(chain),
-		Container(chain),
-		OrientedWidget(nullptr, vertical)
+LinearContainer::LinearContainer(const puu::forest& desc, bool vertical) :
+		widget(desc),
+		container(desc),
+		OrientedWidget(puu::forest(), vertical)
 {}
 
 

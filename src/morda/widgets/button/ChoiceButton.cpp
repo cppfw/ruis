@@ -6,10 +6,10 @@ using namespace morda;
 
 
 
-ChoiceButton::ChoiceButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain)
+ChoiceButton::ChoiceButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc)
 {
 }
 

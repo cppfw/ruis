@@ -7,7 +7,6 @@
 #include <utki/shared.hpp>
 #include <utki/exception.hpp>
 
-#include <puu/dom.hpp>
 #include <puu/tree.hpp>
 
 #include <r4/matrix4.hpp>
@@ -99,7 +98,7 @@ public:
 		vector2& dim = dims;
 
 	public:
-		layout_params(const puu::trees& desc);
+		layout_params(const puu::forest& desc);
 
 		virtual ~layout_params()noexcept{}
 	};
@@ -183,7 +182,7 @@ public:
 private:
 	bool relayoutNeeded = true;
 
-	puu::trees layout_desc;
+	puu::forest layout_desc;
 
 	mutable std::unique_ptr<LayoutParams> layoutParams;
 public:
@@ -488,15 +487,9 @@ public:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param chain - STOB description of the widget.
-	 */
-	widget(const stob::Node* chain);//NOTE: no default nullptr to force initializing Widget when it is virtually inherited
-
-	/**
-	 * @brief Constructor.
 	 * @param desc - widget description.
 	 */
-	widget(const puu::trees& desc);
+	widget(const puu::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

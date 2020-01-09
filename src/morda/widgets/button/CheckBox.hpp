@@ -18,7 +18,7 @@ class CheckBox :
 {
 	std::shared_ptr<Widget> checkWidget;
 public:
-	CheckBox(const stob::Node* chain = nullptr);
+	CheckBox(const puu::forest& desc);
 	
 	CheckBox(const CheckBox&) = delete;
 	CheckBox& operator=(const CheckBox&) = delete;

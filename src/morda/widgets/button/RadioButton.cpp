@@ -9,25 +9,25 @@ using namespace morda;
 
 namespace{
 
-const char* D_Layout = R"qwertyuiop(
+const auto D_Layout = puu::read(R"qwertyuiop(
 		Image{
 			image{morda_img_radiobutton_bg}
 		}
 		Image{
 			image{morda_img_radiobutton_tick}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 }
 
 
 
-RadioButton::RadioButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		ChoiceButton(chain),
-		Pile(stob::parse(D_Layout).get())
+RadioButton::RadioButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		ChoiceButton(desc),
+		Pile(D_Layout)
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)

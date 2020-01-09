@@ -6,7 +6,7 @@ namespace morda{
 
 class SizeContainer : public Container{
 public:
-	SizeContainer(const stob::Node* chain);
+	SizeContainer(const puu::forest& desc);
 
 	SizeContainer(const SizeContainer&) = delete;
 	SizeContainer& operator=(const SizeContainer&) = delete;

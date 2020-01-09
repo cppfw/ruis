@@ -8,12 +8,10 @@ void ImagePushButton::onPressedChanged() {
 }
 
 
-ImagePushButton::ImagePushButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		PushButton(chain),
-		ImageButton(chain)
-{
-
-}
+ImagePushButton::ImagePushButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		PushButton(desc),
+		ImageButton(desc)
+{}
 

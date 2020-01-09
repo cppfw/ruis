@@ -19,9 +19,9 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param chain - STOB chain describing the widget.
+	 * @param desc - description of the widget.
 	 */
-	Pile(const stob::Node* chain = nullptr);
+	Pile(const puu::forest& desc);
 
 public:
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;

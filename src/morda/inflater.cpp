@@ -73,7 +73,7 @@ const char* defs_c = "defs";
 }
 
 namespace{
-void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const std::string&)>& findVar){
+void substitute_vars(puu::forest& to, const std::function<const puu::forest*(const std::string&)>& findVar){
 	if(!findVar){
 		return;
 	}
@@ -115,11 +115,11 @@ void substitute_vars(puu::trees& to, const std::function<const puu::trees*(const
 }
 
 namespace{
-puu::trees apply_gui_template(const puu::trees& templ, const std::set<std::string>& var_names, puu::trees&& trees){
-	puu::trees ret = templ;
+puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::string>& var_names, puu::forest&& trees){
+	puu::forest ret = templ;
 
-	std::map<std::string, puu::trees> vars;
-	puu::trees children;
+	std::map<std::string, puu::forest> vars;
+	puu::forest children;
 	for(auto& i : trees){
 		if(!is_leaf_property(i.value)){
 			children.emplace_back(std::move(i));
@@ -143,7 +143,7 @@ puu::trees apply_gui_template(const puu::trees& templ, const std::set<std::strin
 
 	substitute_vars(
 			ret,
-			[&vars](const std::string& name) -> const puu::trees*{
+			[&vars](const std::string& name) -> const puu::forest*{
 //				TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
 				if(i == vars.end()){
@@ -176,11 +176,8 @@ std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(puu::read(str));
 }
 
-std::shared_ptr<morda::Widget> inflater::inflate(const stob::Node& chain){
-	return this->inflate(stob_to_puu(chain));
-}
 
-std::shared_ptr<widget> inflater::inflate(puu::trees::const_iterator begin, puu::trees::const_iterator end){
+std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
 
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
@@ -205,12 +202,12 @@ std::shared_ptr<widget> inflater::inflate(puu::trees::const_iterator begin, puu:
 	ASSERT_INFO(!is_leaf_property(i->value), "i->value = " << i->value.to_string())
 
 	std::string widget_name;
-	puu::trees widget_desc;
+	puu::forest widget_desc;
 
 //	TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if(auto tmpl = this->find_template(i->value.to_string())){
 		widget_name = tmpl->templ.value.to_string();
-		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::trees(i->children));
+		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::forest(i->children));
 	}else{
 		widget_name = i->value.to_string();
 		widget_desc = i->children;
@@ -235,7 +232,7 @@ std::shared_ptr<widget> inflater::inflate(puu::trees::const_iterator begin, puu:
 
 	substitute_vars(
 			widget_desc,
-			[this](const std::string& name) -> const puu::trees*{
+			[this](const std::string& name) -> const puu::forest*{
 				return this->find_variable(name);
 			}
 		);
@@ -243,7 +240,7 @@ std::shared_ptr<widget> inflater::inflate(puu::trees::const_iterator begin, puu:
 	return fac(widget_desc);
 }
 
-inflater::widget_template inflater::parse_template(const puu::trees& templ){
+inflater::widget_template inflater::parse_template(const puu::forest& templ){
 	widget_template ret;
 
 	for(auto& n : templ){
@@ -290,7 +287,7 @@ inflater::widget_template inflater::parse_template(const puu::trees& templ){
 	return ret;
 }
 
-void inflater::push_defs(const puu::trees& chain) {
+void inflater::push_defs(const puu::forest& chain) {
 	this->push_variables(chain);
 	this->push_templates(chain);
 }
@@ -302,7 +299,7 @@ void inflater::pop_defs() {
 
 
 
-void inflater::push_templates(const puu::trees& chain){
+void inflater::push_templates(const puu::forest& chain){
 	decltype(this->templates)::value_type m;
 
 	for(auto& c : chain){
@@ -359,7 +356,7 @@ const inflater::widget_template* inflater::find_template(const std::string& name
 
 
 
-const puu::trees* inflater::find_variable(const std::string& name)const{
+const puu::forest* inflater::find_variable(const std::string& name)const{
 	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
 		auto r = i->find(name);
 		if(r != i->end()){
@@ -378,7 +375,7 @@ void inflater::pop_variables(){
 }
 
 
-void inflater::push_variables(const puu::trees& trees){
+void inflater::push_variables(const puu::forest& trees){
 	decltype(this->variables)::value_type m;
 
 	for(auto& t : trees){
@@ -413,10 +410,10 @@ void inflater::push_variables(const puu::trees& trees){
 //#endif
 }
 
-void inflater::substitute_variables(puu::trees& to)const{
+void inflater::substitute_variables(puu::forest& to)const{
 	substitute_vars(
 			to,
-			[this](const std::string& name) -> const puu::trees*{
+			[this](const std::string& name) -> const puu::forest*{
 				return this->find_variable(name);
 			}
 		);

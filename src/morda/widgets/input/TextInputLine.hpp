@@ -39,7 +39,7 @@ public:
 	TextInputLine(const TextInputLine&) = delete;
 	TextInputLine& operator=(const TextInputLine&) = delete;
 
-	TextInputLine(const stob::Node* chain);
+	TextInputLine(const puu::forest& desc);
 
 	virtual ~TextInputLine()noexcept{}
 

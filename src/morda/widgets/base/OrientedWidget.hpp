@@ -16,7 +16,7 @@ protected:
 		return this->isVertical_v ? 0 : 1;
 	}
 
-	OrientedWidget(const stob::Node* chain, bool vertical);
+	OrientedWidget(const puu::forest& desc, bool vertical);
 
 public:
 	OrientedWidget(const OrientedWidget&) = delete;

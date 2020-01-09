@@ -11,7 +11,7 @@
 using namespace morda;
 
 
-widget::widget(const puu::trees& desc){
+widget::widget(const puu::forest& desc){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -44,12 +44,7 @@ widget::widget(const puu::trees& desc){
 	}
 }
 
-
-widget::widget(const stob::Node* chain) :
-		widget(stob_to_puu(chain))
-{}
-
-widget::layout_params::layout_params(const puu::trees& desc){
+widget::layout_params::layout_params(const puu::forest& desc){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -145,10 +140,10 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			morda::inst().renderer().setScissorEnabled(false);
 
 			//check if can re-use old texture
-			if(!this->cacheTex || this->cacheTex->dim() != this->rect().d){
+			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
 				this->cacheTex = this->render_to_texture();
 			}else{
-				ASSERT(this->cacheTex->dim() == this->rect().d)
+				ASSERT(this->cacheTex->dims() == this->rect().d)
 				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
@@ -210,7 +205,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> reuse) const {
 	std::shared_ptr<Texture2D> tex;
 
-	if(reuse && reuse->dim() == this->rect().d){
+	if(reuse && reuse->dims() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = morda::inst().renderer().factory->createTexture2D(
@@ -226,7 +221,7 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 
 	r.setFramebuffer(r.factory->createFramebuffer(tex));
 
-//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
+//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
 	auto oldViewport = morda::inst().renderer().getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){

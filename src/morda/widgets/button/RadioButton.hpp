@@ -17,7 +17,7 @@ class RadioButton :
 {
 	std::shared_ptr<Widget> checkWidget;
 public:
-	RadioButton(const stob::Node* chain = nullptr);
+	RadioButton(const puu::forest& desc);
 	
 	RadioButton(const RadioButton&) = delete;
 	RadioButton& operator=(const RadioButton&) = delete;

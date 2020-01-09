@@ -44,7 +44,7 @@ int main(int argc, char** argv){
 	// test template properties overriding
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
 					Cont{
@@ -84,7 +84,7 @@ int main(int argc, char** argv){
 	// test template arguments
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
 					Cont{
@@ -126,7 +126,7 @@ int main(int argc, char** argv){
 	// test two levels of templates
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				Cont{ x y layout dx
 					Container{
@@ -176,7 +176,7 @@ int main(int argc, char** argv){
 	// test template which nests same named widget on 2nd level
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				Container_{Container}
 			}

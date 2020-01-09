@@ -79,7 +79,7 @@ protected:
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
-	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::trees& desc)const{
+	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::forest& desc)const{
 		return utki::make_unique<Widget::LayoutParams>(desc);
 	}
 
@@ -168,9 +168,9 @@ protected:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param chain - STOB chain describing the widget. Can be nullptr in which case empty container widget is created.
+	 * @param chain - description of the widget.
 	 */
-	container(const stob::Node* chain = nullptr);
+	container(const puu::forest& desc);
 
 	void render(const matrix4& matrix)const override;
 
@@ -219,12 +219,7 @@ public:
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param desc - GUI description of the widgets to add.
 	 */
-	void inflate_push_back(const puu::trees& desc);
-
-	//TODO: deprecated, remove.
-	void add(const stob::Node& chain){
-		this->inflate_push_back(stob_to_puu(chain));
-	}
+	void inflate_push_back(const puu::forest& desc);
 
 	//TODO: depreacted, remove.
 	/**

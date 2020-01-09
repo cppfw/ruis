@@ -17,69 +17,55 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 
 
-void ResourceManager::mountResPack(const papki::File& fi){
-	ASSERT(!fi.isOpened())
-//	TRACE(<< "ResourceManager::mountResPack(): fi->path() = " << fi.path() << std::endl)
+void ResourceManager::mountResPack(const papki::file& fi){
+	ASSERT(!fi.is_open())
 	
 	std::string dir = fi.dir();
 	
-	if(fi.notDir().size() == 0){
-		fi.setPath(dir + "main.res");
+	if(fi.not_dir().size() == 0){
+		fi.set_path(dir + "main.res");
 	}
 
-	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();
-	resScript->setNext(stob::load(fi));
-	ASSERT(!fi.isOpened())
-	//handle includeSubdirs
-	if(resScript->next(includeSubdirs_c).get_node()){
-//		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
-		fi.setPath(fi.dir());
-		auto dirContents = fi.list_dir();
-		ASSERT(!fi.isOpened())
-		for(auto& fileName : dirContents){
-			if(fileName.size() != 0 && fileName[fileName.size() - 1] == '/'){
-				fi.setPath(dir + fileName);
-//				TRACE(<< "mounting respack " << fi.path() << std::endl)
-				this->mountResPack(fi);
+	auto script = puu::read(fi);
+	ASSERT(!fi.is_open())
+
+	// handle includes
+	for(auto& p : script){
+		if(p.value == include_c){
+			fi.set_path(dir + get_property_value(p).to_string());
+			this->mountResPack(fi);
+			// TODO: remove "include" tree from the forest?
+		}else if(p.value == includeSubdirs_c){
+			fi.set_path(fi.dir());
+			for(auto& f : fi.list_dir()){
+				// TODO: use papki::is_dir()
+				if(f.length() != 0 && f[f.size() - 1] == '/'){
+					fi.set_path(dir + f);
+					this->mountResPack(fi);
+				}
 			}
+			// TODO: remove "includeSubdirs" tree from the forest?
 		}
 	}
 	
-	//handle includes
-	for(auto np = resScript->next(include_c); np.get_node(); np = np.prev()->next(include_c)){
-		ASSERT(np.prev())
-		auto incNode = np.prev()->removeNext()->removeChildren();
-		
-		fi.setPath(dir + incNode->value());
-		this->mountResPack(fi);
-	}
-
-	if(!resScript->next()){
-		return;
-	}
-	
 	ResPackEntry rpe;
-	rpe.fi = papki::RootDirFile::makeUniqueConst(fi.spawn(), dir);
-	rpe.resScript = resScript->chopNext();
+	rpe.fi = papki::root_dir::make(fi.spawn(), dir);
+	rpe.script = std::move(script);
 
 	this->resPacks.push_back(std::move(rpe));
 	ASSERT(this->resPacks.back().fi)
-	ASSERT(this->resPacks.back().resScript)
+	ASSERT(!this->resPacks.back().script.empty())
 }
 
 
 
 ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std::string& resName){
-//	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
-
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
-		for(const stob::Node* e = i->resScript.operator->(); e; e = e->next()){
-			if(resName.compare(e->value()) == 0){
-//				TRACE(<< "ResourceManager::FindResourceInScript(): resource found" << std::endl)
-				return FindInScriptRet(*i, *e);
-			}
-		}//~for(res)
-	}//~for(resPack)
+		auto j = std::find(i->script.begin(), i->script.end(), resName);
+		if(j != i->script.end()){
+			return FindInScriptRet(*i, *j);
+		}
+	}
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
@@ -88,21 +74,16 @@ ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std
 
 
 
-void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const stob::Node& node){
+void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const std::string& name){
 	ASSERT(res)
 
-	ASSERT(this->resMap.find(node.value()) == this->resMap.end())
+	ASSERT(this->resMap.find(name) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
 	auto result = this->resMap.insert(
-			std::pair<const char*, std::weak_ptr<Resource>>(
-					node.value(),
-					std::weak_ptr<Resource>(res)
-				)
+			std::make_pair(name, std::weak_ptr<Resource>(res))
 		);
-	if(!result.second){
-		ASSERT(false)
-	}
+	ASSERT(result.second)
 	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){

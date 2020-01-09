@@ -10,9 +10,9 @@ namespace morda{
  */
 class KeyProxy : public Pile{
 public:
-	KeyProxy(const stob::Node* chain = nullptr) :
-			Widget(chain),
-			Pile(chain)
+	KeyProxy(const puu::forest& desc) :
+			widget(desc),
+			Pile(desc)
 	{}
 	
 	KeyProxy(const KeyProxy&) = delete;

@@ -2,7 +2,7 @@
 
 #include <utki/config.hpp>
 
-#include "res/ResSTOB.hpp"
+#include "res/res_puu.hpp"
 
 #include "widgets/slider/ScrollBar.hpp"
 
@@ -105,7 +105,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 		throw morda::Exc("Morda::initStandardWidgets(): could not mount default resource pack");
 	}
 
-	//add standard widgets to inflater
+	// add standard widgets to inflater
 
 	this->inflater.register_widget<Text>("Text");
 	this->inflater.register_widget<Color>("Color");
@@ -130,11 +130,9 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
-		auto t = morda::Morda::inst().resMan.load<ResSTOB>("morda_gui_defs");
+		auto t = morda::Morda::inst().resMan.load<res_puu>("morda_gui_defs");
 
-		if(t->chain()){
-			this->inflater.inflate(*t->chain());
-		}
+		this->inflater.inflate(t->forest());
 
 	}catch(ResourceManager::Exc&){
 		//ignore

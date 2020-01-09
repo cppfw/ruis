@@ -8,7 +8,7 @@ int main(int argc, char** argv){
 	// test the get_all_widgets() function
 	{
 		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
-		auto w = m.inflater.inflate(*stob::parse(R"qwertyuiop(
+		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				Column{
 					id{1}
