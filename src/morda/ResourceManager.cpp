@@ -80,10 +80,9 @@ void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const st
 	ASSERT(this->resMap.find(name) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
-	auto result = this->resMap.insert(
+	this->resMap.insert(
 			std::make_pair(name, std::weak_ptr<Resource>(res))
 		);
-	ASSERT(result.second)
 	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
