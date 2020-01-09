@@ -5,11 +5,10 @@ using namespace morda;
 
 
 
-ChoiceGroup::ChoiceGroup(const stob::Node* chain) :
-		Widget(chain),
-		Pile(chain)
-{
-}
+ChoiceGroup::ChoiceGroup(const puu::trees& desc) :
+		widget(desc),
+		Pile(desc)
+{}
 
 bool ChoiceGroup::isWidgetActive(const Widget& w) const noexcept{
 	Widget* aw = this->activeChoiceButton_v.get();

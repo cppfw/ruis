@@ -5,9 +5,9 @@
 using namespace morda;
 
 
-Pile::Pile(const stob::Node* chain) :
-		Widget(chain),
-		Container(chain)
+Pile::Pile(const puu::trees& desc) :
+		widget(desc),
+		container(desc)
 {}
 
 

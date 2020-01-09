@@ -11,12 +11,10 @@ using namespace morda;
 
 
 
-container::container(const stob::Node* chain) :
-		widget(chain)
+container::container(const puu::trees& desc) :
+		widget(desc)
 {
-	if(chain){
-		this->inflate_push_back(stob_to_puu(*chain));
-	}
+	this->inflate_push_back(desc);
 }
 
 widget::layout_params& container::get_layout_params(widget& w){

@@ -168,9 +168,11 @@ protected:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param chain - STOB chain describing the widget. Can be nullptr in which case empty container widget is created.
+	 * @param chain - description of the widget.
 	 */
-	container(const stob::Node* chain = nullptr);
+	container(const puu::trees& desc);
+
+	container(const stob::Node* chain) : container(stob_to_puu(chain)){}
 
 	void render(const matrix4& matrix)const override;
 
