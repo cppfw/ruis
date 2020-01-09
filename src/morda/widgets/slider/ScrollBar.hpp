@@ -52,10 +52,11 @@ private:
 
 class VScrollBar : public ScrollBar{
 public:
-	VScrollBar(const stob::Node* chain) :
-			Widget(chain),
-			ScrollBar(chain, true)
+	VScrollBar(const puu::forest& desc) :
+			widget(desc),
+			ScrollBar(desc, true)
 	{}
+	VScrollBar(const stob::Node* chain) : VScrollBar(stob_to_puu(chain)){}
 
 	VScrollBar(const VScrollBar&) = delete;
 	VScrollBar& operator=(const VScrollBar&) = delete;
@@ -64,10 +65,11 @@ public:
 
 class HScrollBar : public ScrollBar{
 public:
-	HScrollBar(const stob::Node* chain) :
-			Widget(chain),
-			ScrollBar(chain, false)
+	HScrollBar(const puu::forest& desc) :
+			widget(desc),
+			ScrollBar(desc, false)
 	{}
+	HScrollBar(const stob::Node* chain) : HScrollBar(stob_to_puu(chain)){}
 
 	HScrollBar(const HScrollBar&) = delete;
 	HScrollBar& operator=(const HScrollBar&) = delete;
