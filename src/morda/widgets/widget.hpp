@@ -7,7 +7,6 @@
 #include <utki/shared.hpp>
 #include <utki/exception.hpp>
 
-#include <puu/dom.hpp>
 #include <puu/tree.hpp>
 
 #include <r4/matrix4.hpp>
