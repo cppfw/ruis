@@ -41,12 +41,23 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const stob::Node& chain, const papki::File& fi){
-	auto tex = Morda::inst().resMan.load<ResTexture>(chain.side("tex").up().value());
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const puu::forest& desc, const papki::file& fi){
+	std::shared_ptr<ResTexture> tex;
+	Rectr rect(-1);
+
+	for(auto& p : desc){
+		if(p.value == "tex"){
+			tex = morda::inst().resMan.load<ResTexture>(get_property_value(p).to_string());
+		}else if(p.value == "rect"){
+			rect = parse_rect(p.children);
+		}
+	}
+
+	if(!tex){
+		throw std::runtime_error("ResAtlasImage::load(): could not load texture");
+	}
 	
-	Rectr rect;
-	if(auto n = chain.childOfThisOrNext("rect")){
-		rect = makeRectrFromSTOB(n);
+	if(rect.p.x >= 0){
 		return std::make_shared<ResAtlasImage>(tex, rect);
 	}else{
 		return std::make_shared<ResAtlasImage>(tex);
@@ -91,7 +102,7 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
+	static std::shared_ptr<ResRasterImage> load(const papki::file& fi){
 		return std::make_shared<ResRasterImage>(loadTexture(fi));
 	}
 };
@@ -167,7 +178,7 @@ public:
 	
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
 	
-	static std::shared_ptr<ResSvgImage> load(const papki::File& fi){
+	static std::shared_ptr<ResSvgImage> load(const papki::file& fi){
 		return std::make_shared<ResSvgImage>(svgdom::load(fi));
 	}	
 };
@@ -175,19 +186,19 @@ public:
 
 
 
-std::shared_ptr<ResImage> ResImage::load(const stob::Node& chain, const papki::File& fi) {
-	if(auto f = chain.thisOrNext("file").get_node()){
-		if(auto fn = f->child()){
-			fi.setPath(fn->value());
+std::shared_ptr<ResImage> ResImage::load(const puu::forest& desc, const papki::file& fi) {
+	for(auto& p : desc){
+		if(p.value == "file"){
+			fi.setPath(get_property_value(p).to_string());
 			return ResImage::load(fi);
 		}
 	}
-	
-	return ResAtlasImage::load(chain, fi);
+
+	return ResAtlasImage::load(desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(const papki::File& fi) {
-	if(fi.ext().compare("svg") == 0){
+std::shared_ptr<ResImage> ResImage::load(const papki::file& fi) {
+	if(fi.suffix().compare("svg") == 0){
 		return ResSvgImage::load(fi);
 	}else{
 		return ResRasterImage::load(fi);

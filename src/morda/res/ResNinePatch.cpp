@@ -59,11 +59,19 @@ public:
 }
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::load(const stob::Node& chain, const papki::File& fi){
-	auto borders = makeSidesrFromSTOB(&chain.side("borders").up());
-	
-	auto file = chain.side("file").up().asString();
-	fi.setPath(file);
+std::shared_ptr<ResNinePatch> ResNinePatch::load(const puu::forest& desc, const papki::file& fi){
+	Sidesr borders(-1);
+	for(auto& p : desc){
+		if(p.value == "borders"){
+			borders = parse_sides(p.children);
+		}else if(p.value == "file"){
+			fi.set_path(get_property_value(p).to_string());
+		}
+	}
+	if(borders.left() < 0){
+		throw std::runtime_error("ResNinePatch::load(): could not read borders");
+	}
+
 	auto image = ResImage::load(fi);
 	
 	return std::make_shared<ResNinePatch>(image, borders);

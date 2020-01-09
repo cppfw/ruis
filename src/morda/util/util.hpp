@@ -27,7 +27,11 @@ namespace morda{
  *                If zero pointer is passed the resulting vector will be filled with zeros.
  * @return parsed Vec2r.
  */
-morda::Vec2r parse_vec2(const puu::forest& desc);
+morda::Vec2r parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
+
+inline morda::Vec2r parse_vec2(const puu::forest& desc){
+    return parse_vec2(desc.begin(), desc.end());
+}
 
 //TODO: deprecated, remove.
 morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
@@ -40,6 +44,9 @@ morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed Rectr.
  */
+morda::Rectr parse_rect(const puu::forest& desc);
+
+//TODO: deprecated, remove.
 morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
 
 /**
@@ -50,6 +57,9 @@ morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
  *                If zero pointer is passed the resulting Sidesr will be filled with zeros.
  * @return parsed Sidesr.
  */
+morda::Sidesr parse_sides(const puu::forest& desc);
+
+//TODO: deprecated, remove.
 morda::Sidesr makeSidesrFromSTOB(const stob::Node* chain);
 
 
@@ -146,6 +156,9 @@ morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);
 r4::vec4f colorToVec4f(std::uint32_t color);
 
 inline const puu::leaf& get_property_value(const puu::tree& p){
+    if(p.children.size() != 1){
+        throw std::invalid_argument("get_property_value(): property has no value");
+    }
     return p.children.front().value;
 }
 

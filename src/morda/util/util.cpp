@@ -10,12 +10,12 @@
 using namespace morda;
 
 
-morda::Vec2r morda::parse_vec2(const puu::forest& desc){
+morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end){
 	morda::Vec2r ret;
 
 	unsigned n = 0;
 	real v = 0;
-	for(auto i = desc.begin(); n != 2 && i != desc.end(); ++n, ++i){
+	for(auto i = begin; n != 2 && i != end; ++n, ++i){
 		v = real(i->value.to_float());
 		ret[n] = v;
 	}
@@ -44,12 +44,29 @@ morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
 	return ret;
 }
 
+morda::Rectr morda::parse_rect(const puu::forest& desc){
+	Vec2r p = parse_vec2(desc.begin(), desc.end());
+	Vec2r d(p.y);
+	if(p.size() > 2){
+		d = parse_vec2(std::next(desc.begin(), 2), desc.end());
+	}
+	return Rectr(p, d);
+}
 
 Rectr morda::makeRectrFromSTOB(const stob::Node* chain){
 	Vec2r p = makeVec2rFromSTOB(chain);
 	for(unsigned i = 0; i != 2 && chain; ++i, chain = chain->next()){}
 	Vec2r d = makeVec2rFromSTOB(chain);
 	return Rectr(p, d);
+}
+
+morda::Sidesr morda::parse_sides(const puu::forest& desc){
+	Vec2r p = parse_vec2(desc.begin(), desc.end());
+	Vec2r d(p.y);
+	if(p.size() > 2){
+		d = parse_vec2(std::next(desc.begin(), 2), desc.end());
+	}
+	return Sidesr(p.x, p.y, d.x, d.y);
 }
 
 Sidesr morda::makeSidesrFromSTOB(const stob::Node* chain){
