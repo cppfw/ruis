@@ -79,9 +79,6 @@ public:
 	 */
 	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDims = 0)const = 0;
 private:
-	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi){
-		return load(stob_to_puu(chain), fi);
-	}
 	static std::shared_ptr<ResImage> load(const puu::forest& desc, const papki::file& fi);
 	
 public:
@@ -123,9 +120,6 @@ public:
 	void render(const Matr4r& matrix, const VertexArray& vao) const override;
 	
 private:
-	static std::shared_ptr<ResAtlasImage> load(const stob::Node& chain, const papki::File& fi){
-		return load(stob_to_puu(chain), fi);
-	}
 	static std::shared_ptr<ResAtlasImage> load(const puu::forest& desc, const papki::file& fi);
 };
 

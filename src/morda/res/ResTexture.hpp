@@ -51,9 +51,6 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> load(const stob::Node& chain, const papki::File& fi){
-		return load(stob_to_puu(chain), fi);
-	}
 	static std::shared_ptr<ResTexture> load(const puu::forest& desc, const papki::file& fi);
 };
 
