@@ -26,9 +26,9 @@ const real cursorWidth_c = real(1.0);
 
 
 
-TextInputLine::TextInputLine(const stob::Node* chain) :
-		Widget(chain),
-		SingleLineTextWidget(chain)
+TextInputLine::TextInputLine(const puu::forest& desc) :
+		widget(desc),
+		SingleLineTextWidget(desc)
 {
 	this->set_clip(true);
 }

@@ -41,12 +41,18 @@ TextWidget::TextWidget(const puu::forest& desc) :
 
 
 
-SingleLineTextWidget::SingleLineTextWidget(const stob::Node* chain) :
-		Widget(chain),
-		TextWidget(chain)
+SingleLineTextWidget::SingleLineTextWidget(const puu::forest& desc) :
+		widget(desc),
+		TextWidget(desc)
 {
-	if(auto p = getProperty(chain, "text")){
-		this->setText(unikod::toUtf32(p->value()));
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "text"){
+			this->setText(unikod::toUtf32(get_property_value(p).to_string()));
+		}
 	}
 }
 
