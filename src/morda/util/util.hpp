@@ -71,15 +71,6 @@ real parse_layout_dimension_value(const puu::leaf& l);
 
 
 
-/**
- * @brief Resolve includes in STOB document.
- * @param fi - file interface set to the original STOB document. Because resolving include paths is done relatively to original STOB document path.
- * @param begin - first node of the original STOB document.
- * @return New first node and pointer to the last child node of the script.
- */
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(const papki::File& fi, std::unique_ptr<stob::Node> begin);
-
-
 bool is_property(const puu::tree& t);
 
 bool is_leaf_property(const puu::leaf& l);

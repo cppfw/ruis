@@ -51,58 +51,6 @@ real morda::parse_dimension_value(const puu::leaf& l){
 }
 
 
-
-std::tuple<std::unique_ptr<stob::Node>, stob::Node*> morda::resolveIncludes(const papki::File& fi, std::unique_ptr<stob::Node> begin){
-	if(!begin){
-		return std::make_tuple(nullptr, nullptr);
-	}
-
-	const char* DIncludeTag = "include";
-
-	auto n = begin->thisOrNext(DIncludeTag);
-	for(; n.get_node();){
-		ASSERT(n.get_node())
-		stob::Node* incPathNode = n.get_node()->child();
-		if(!incPathNode){
-			throw Exc("include tag without value encountered in resource script");
-		}
-		TRACE(<< "ResolveIncludes(): incPathNode->Value = " << incPathNode->value() << std::endl)
-
-		fi.setPath(fi.dir() + incPathNode->value());
-		std::unique_ptr<stob::Node> incNodes = stob::load(fi);
-
-		//recursive call
-		auto ri = resolveIncludes(fi, std::move(incNodes));
-
-		stob::Node* lastChild = std::get<1>(ri);
-
-		if(lastChild){
-			//substitute includes
-			if(!n.prev()){
-				//include tag is the very first tag
-
-				ASSERT(!lastChild->next())
-				lastChild->insertNext(n.get_node()->chopNext());
-				begin = std::move(std::get<0>(ri));
-			}else{
-				//include tag is not the first one
-
-				n.prev()->removeNext();
-
-				ASSERT(!lastChild->next())
-				std::unique_ptr<stob::Node> tail = n.prev()->chopNext();
-				n.prev()->setNext(std::move(std::get<0>(ri)));
-				lastChild->setNext(std::move(tail));
-			}
-			n = lastChild->next(DIncludeTag);
-		}else{
-			n = n.get_node()->next(DIncludeTag);
-		}
-	}
-	return std::make_tuple(std::move(begin), n.prev());
-}
-
-
 real morda::parse_layout_dimension_value(const puu::leaf& l){
 	if(l == "min"){
 		return widget::layout_params::min;
