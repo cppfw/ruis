@@ -18,17 +18,15 @@
 namespace morda{
 
 
+morda::Vec2r parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
 
 /**
  * @brief Parse 2 values from puu as Vec2r.
- * @param chain - chain of at least two nodes holding Vec2r values.
- *                If there are less than 2 nodes in the chain then the rest of
+ * @param desc - forest of at least two trees holding Vec2r values.
+ *                If there are less than 2 trees in the forest then the rest of
  *                vector components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting vector will be filled with zeros.
  * @return parsed Vec2r.
  */
-morda::Vec2r parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
-
 inline morda::Vec2r parse_vec2(const puu::forest& desc){
     return parse_vec2(desc.begin(), desc.end());
 }
@@ -56,13 +54,11 @@ morda::Sidesr parse_sides(const puu::forest& desc);
 
 /**
  * @brief Parse dimension value.
- * Parses value of 'pos' or 'dim' property from STOB.
+ * Parses value of 'pos' or 'dim' property from puu leaf.
  * In case the value is given in millimeters or points it will do the conversion.
- * @param n - stob node holding the value.
+ * @param n - puu leaf holding the value.
  * @return Parsed value in pixels.
  */
-real dimValueFromSTOB(const stob::Node& n);
-
 real parse_dimension_value(const puu::leaf& l);
 
 /**

@@ -39,17 +39,6 @@ morda::Sidesr morda::parse_sides(const puu::forest& desc){
 	return Sidesr(p.x, p.y, d.x, d.y);
 }
 
-real morda::dimValueFromSTOB(const stob::Node& n){
-	//check if millimeters
-	if(n.length() >= 2 && n.value()[n.length() - 1] == 'm' && n.value()[n.length() - 2] == 'm'){
-		return Morda::inst().units.mmToPx(n.asFloat());
-	}else if(n.length() >= 2 && n.value()[n.length() - 1] == 'p' && n.value()[n.length() - 2] == 'd'){ //check if in density pixels
-		return Morda::inst().units.dpToPx(n.asFloat());
-	}
-
-	return n.asFloat();
-}
-
 real morda::parse_dimension_value(const puu::leaf& l){
 	//check if millimeters
 	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
