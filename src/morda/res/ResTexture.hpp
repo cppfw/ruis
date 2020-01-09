@@ -1,11 +1,12 @@
 #pragma once
 
-#include <puu/dom.hpp>
+#include <puu/tree.hpp>
 
 #include "../ResourceManager.hpp"
 
 #include "../render/Texture2D.hpp"
 
+#include "../util/util.hpp"
 
 namespace morda{
 
@@ -24,7 +25,6 @@ namespace morda{
  * }
  * @endcode
  */
-//TODO: make intrusive PoolStored
 class ResTexture : public morda::Resource{
 	friend class morda::ResourceManager;
 
@@ -51,9 +51,12 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResTexture> load(const stob::Node& chain, const papki::File& fi){
+		return load(stob_to_puu(chain), fi);
+	}
+	static std::shared_ptr<ResTexture> load(const puu::forest& desc, const papki::file& fi);
 };
 
 
 
-}//~namespace
+}

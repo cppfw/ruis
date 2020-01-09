@@ -10,12 +10,12 @@ using namespace morda;
 
 
 
-//static
-std::shared_ptr<ResTexture> ResTexture::load(const stob::Node& chain, const papki::File& fi){
-//	TRACE(<< "ResTexture::Load(): enter" << std::endl)
-
-//	TRACE(<< "ResTexture::Load(): Loading image, file path = " << fileVal->value() << std::endl)
-	fi.setPath(chain.side("file").up().value());
+std::shared_ptr<ResTexture> ResTexture::load(const puu::forest& desc, const papki::file& fi){
+	for(auto& p: desc){
+		if(p.value == "file"){
+			fi.set_path(get_property_value(p).to_string());
+		}
+	}
 
 	return std::make_shared<ResTexture>(loadTexture(fi));
 }
