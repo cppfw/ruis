@@ -4,8 +4,8 @@
 using namespace morda;
 
 
-MouseProxy::MouseProxy(const stob::Node* chain) :
-		Widget(chain)
+MouseProxy::MouseProxy(const puu::forest& desc) :
+		widget(desc)
 {}
 
 
