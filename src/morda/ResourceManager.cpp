@@ -53,10 +53,6 @@ void ResourceManager::mountResPack(const papki::File& fi){
 		fi.setPath(dir + incNode->value());
 		this->mountResPack(fi);
 	}
-
-	if(!resScript->next()){
-		return;
-	}
 	
 	ResPackEntry rpe;
 	rpe.fi = papki::RootDirFile::makeUniqueConst(fi.spawn(), dir);
