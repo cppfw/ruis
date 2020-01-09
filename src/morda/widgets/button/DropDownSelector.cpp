@@ -94,7 +94,7 @@ const char* contextMenuLayout_c = R"qwertyuiop(
 
 
 class StaticProvider : public DropDownSelector::ItemsProvider{
-	std::vector<std::unique_ptr<stob::Node>> widgets;
+	std::vector<puu::tree> widgets;
 public:
 
 	size_t count() const noexcept override{
@@ -102,7 +102,8 @@ public:
 	}
 
 	std::shared_ptr<Widget> getWidget(size_t index)override{
-		return morda::Morda::inst().inflater.inflate(*(this->widgets[index]));
+		auto i = std::next(this->widgets.begin(), index);
+		return morda::Morda::inst().inflater.inflate(i, i + 1);
 	}
 
 
@@ -111,8 +112,8 @@ public:
 	}
 
 
-	void add(std::unique_ptr<stob::Node> w){
-		this->widgets.push_back(std::move(w));
+	void add(puu::tree&& w){
+		this->widgets.emplace_back(std::move(w));
 	}
 };
 
@@ -221,7 +222,7 @@ DropDownSelector::DropDownSelector(const puu::forest& desc) :
 			continue;
 		}
 
-		pr->add(puu_to_stob({puu::tree(p)}));
+		pr->add(puu::tree(p));
 	}
 
 	this->setItemsProvider(std::move(pr));

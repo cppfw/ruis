@@ -146,8 +146,6 @@ inline const puu::leaf& get_property_value(const puu::tree& p){
     return p.children.front().value;
 }
 
-//TODO: remove
-std::unique_ptr<stob::Node> puu_to_stob(const puu::forest& trees);
 
 //TODO: remove
 puu::forest stob_to_puu(const puu::Node& chain);
