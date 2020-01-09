@@ -145,7 +145,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			morda::inst().renderer().setScissorEnabled(false);
 
 			//check if can re-use old texture
-			if(!this->cacheTex || this->cacheTex->dim() != this->rect().d){
+			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
 				this->cacheTex = this->render_to_texture();
 			}else{
 				ASSERT(this->cacheTex->dim() == this->rect().d)
@@ -210,7 +210,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> reuse) const {
 	std::shared_ptr<Texture2D> tex;
 
-	if(reuse && reuse->dim() == this->rect().d){
+	if(reuse && reuse->dims() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = morda::inst().renderer().factory->createTexture2D(

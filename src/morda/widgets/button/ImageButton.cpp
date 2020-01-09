@@ -17,21 +17,30 @@ void ImageButton::onPressedChanged() {
 	this->Button::onPressedChanged();
 }
 
-ImageButton::ImageButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		Image(chain)
+ImageButton::ImageButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		Image(desc)
 {
-	{
-		auto look = getProperty(chain, "look");
-		
-		if(auto p = getProperty(look, "pressed")){
-			this->pressedImage_v = morda::inst().resMan.load<ResImage>(p->value());
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
 		}
-		if(auto p = getProperty(look, "unpressed")){
-			this->unpressedImage_v = morda::inst().resMan.load<ResImage>(p->value());
+
+		if(p.value == "look"){
+			for(const auto& pp : p.children){
+				if(!is_property(pp)){
+					continue;
+				}
+
+				if(pp.value == "pressed"){
+					this->pressedImage_v = morda::inst().resMan.load<ResImage>(get_property_value(pp).to_string());
+				}else if(pp.value == "unpressed"){
+					this->unpressedImage_v = morda::inst().resMan.load<ResImage>(get_property_value(pp).to_string());
+				}
+				this->updateImage();
+			}
 		}
-		this->updateImage();
 	}
 }
 

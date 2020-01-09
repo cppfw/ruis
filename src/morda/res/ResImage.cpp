@@ -34,11 +34,10 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 }
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
-		ResImage::QuadTexture(tex->tex().dim()),
+		ResImage::QuadTexture(tex->tex().dims()),
 		tex(std::move(tex)),
 		vao(morda::inst().renderer().posTexQuad01VAO)
-{
-}
+{}
 
 
 
@@ -68,7 +67,7 @@ protected:
 	std::shared_ptr<Texture2D> tex_v;
 	
 	TexQuadTexture(std::shared_ptr<Texture2D> tex) :
-			ResImage::QuadTexture(tex->dim()),
+			ResImage::QuadTexture(tex->dims()),
 			tex_v(std::move(tex))
 	{}
 	
@@ -88,8 +87,8 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	Vec2r dim(real dpi) const noexcept override{
-		return this->tex_v->dim();
+	Vec2r dims(real dpi) const noexcept override{
+		return this->tex_v->dims();
 	}
 	
 	static std::shared_ptr<ResRasterImage> load(const papki::File& fi){
@@ -104,7 +103,7 @@ public:
 			dom(std::move(dom))
 	{}
 	
-	Vec2r dim(real dpi)const noexcept override{
+	Vec2r dims(real dpi)const noexcept override{
 		auto wh = this->dom->getDimensions(dpi);
 		return Vec2r(wh[0], wh[1]);
 	}
@@ -119,7 +118,7 @@ public:
 
 		~SvgTexture()noexcept{
 			if(auto p = this->parent.lock()){
-				r4::vec2ui d = this->tex_v->dim().to<unsigned>();
+				r4::vec2ui d = this->tex_v->dims().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
 			}
 		}

@@ -44,7 +44,7 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
-	matr.scale(this->quadTex->dim());
+	matr.scale(this->quadTex->dims());
 	
 //	TRACE(<< "MouseCursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	

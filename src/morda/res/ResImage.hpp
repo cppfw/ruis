@@ -42,18 +42,18 @@ public:
 	 * This texture is to be used on a quad to render the image.
 	 */
 	class QuadTexture : virtual public utki::shared{
-		Vec2r dim_v;
+		Vec2r dims_v;
 	protected:
-		QuadTexture(Vec2r dim) :
-				dim_v(dim)
+		QuadTexture(Vec2r dims) :
+				dims_v(dims)
 		{}
 	public:
 		/**
 		 * @brief Get dimensions of the texture.
 		 * @return Dimensions of the texture.
 		 */
-		const decltype(dim_v)& dim()const noexcept{
-			return this->dim_v;
+		const decltype(dims_v)& dims()const noexcept{
+			return this->dims_v;
 		}
 		
 		/**
@@ -69,15 +69,15 @@ public:
 	 * @param dpi - dots per inch.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual Vec2r dim(real dpi = morda::Morda::inst().units.dpi())const noexcept = 0;
+	virtual Vec2r dims(real dpi = morda::Morda::inst().units.dpi())const noexcept = 0;
 	
 	/**
 	 * @brief Get raster texture of given dimensions.
-	 * @param forDim - dimensions request for raster texture.
+	 * @param forDims - dimensions request for raster texture.
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDim = 0)const = 0;
+	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDims = 0)const = 0;
 private:
 	static std::shared_ptr<ResImage> load(const stob::Node& chain, const papki::File& fi);
 	
@@ -109,8 +109,8 @@ public:
 	ResAtlasImage(const ResAtlasImage& orig) = delete;
 	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;
 	
-	Vec2r dim(real dpi) const noexcept override{
-		return this->ResImage::QuadTexture::dim();
+	Vec2r dims(real dpi) const noexcept override{
+		return this->ResImage::QuadTexture::dims();
 	}
 	
 	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{

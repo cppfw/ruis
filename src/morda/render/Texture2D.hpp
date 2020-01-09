@@ -8,11 +8,11 @@ namespace morda{
 	
 
 class Texture2D : virtual public utki::shared{
-	Vec2r dim_v;
+	Vec2r dims_v;
 	
 public:
-	Texture2D(Vec2r dim) :
-			dim_v(dim)
+	Texture2D(Vec2r dims) :
+			dims_v(dims)
 	{}
 	
 	Texture2D(const Texture2D&) = delete;
@@ -20,8 +20,8 @@ public:
 	
 	virtual ~Texture2D()noexcept{}
 
-	const decltype(dim_v)& dim()const noexcept{
-		return this->dim_v;
+	const decltype(dims_v)& dims()const noexcept{
+		return this->dims_v;
 	}
 
 	enum class TexType_e{

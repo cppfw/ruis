@@ -128,6 +128,10 @@ public:
 	 */
 	template <class T> std::shared_ptr<T> load(const char* resName);
 
+	template <class T> std::shared_ptr<T> load(const std::string& resName){
+		return this->load<T>(resName.c_str());
+	}
+
 private:
 };
 
