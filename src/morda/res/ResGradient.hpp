@@ -2,10 +2,14 @@
 
 #include <r4/vector2.hpp>
 
+#include <puu/tree.hpp>
+
 #include "../ResourceManager.hpp"
 #include "../config.hpp"
 
 #include "../render/VertexArray.hpp"
+
+#include "../util/util.hpp"
 
 
 namespace morda{
@@ -60,7 +64,10 @@ public:
 	void render(const morda::Matr4r& m)const;
 	
 private:
-	static std::shared_ptr<ResGradient> load(const stob::Node& chain, const papki::File& fi);
+	static std::shared_ptr<ResGradient> load(const stob::Node& chain, const papki::File& fi){
+		return load(stob_to_puu(chain), fi);
+	}
+	static std::shared_ptr<ResGradient> load(const puu::forest& desc, const papki::file& fi);
 };
 
 }
