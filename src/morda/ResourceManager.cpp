@@ -17,9 +17,8 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 
 
-void ResourceManager::mountResPack(const papki::File& fi){
+void ResourceManager::mountResPack(const papki::file& fi){
 	ASSERT(!fi.is_open())
-//	TRACE(<< "ResourceManager::mountResPack(): fi->path() = " << fi.path() << std::endl)
 	
 	std::string dir = fi.dir();
 	
@@ -61,8 +60,6 @@ void ResourceManager::mountResPack(const papki::File& fi){
 
 
 ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std::string& resName){
-//	TRACE(<< "ResourceManager::FindResourceInScript(): resName = " << (resName.c_str()) << std::endl)
-
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
 		auto j = std::find(i->script.begin(), i->script.end(), resName);
 		if(j != i->script.end()){
@@ -86,9 +83,7 @@ void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const st
 	auto result = this->resMap.insert(
 			std::make_pair(name, std::weak_ptr<Resource>(res))
 		);
-	if(!result.second){
-		ASSERT(false)
-	}
+	ASSERT(result.second)
 	
 //#ifdef DEBUG
 //	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
