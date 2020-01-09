@@ -46,8 +46,6 @@ morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
  */
 morda::Rectr parse_rect(const puu::forest& desc);
 
-//TODO: deprecated, remove.
-morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
 
 /**
  * @brief Parse chain of 4 STOB nodes as Siders.
@@ -58,24 +56,6 @@ morda::Rectr makeRectrFromSTOB(const stob::Node* chain);
  * @return parsed Sidesr.
  */
 morda::Sidesr parse_sides(const puu::forest& desc);
-
-//TODO: deprecated, remove.
-morda::Sidesr makeSidesrFromSTOB(const stob::Node* chain);
-
-
-/**
- * @brief Parse dimension Vec2r from STOB.
- * Same as Vec2rFromSTOB but using DimValue() to parse values.
- * @param chain - chain of at least two nodes holding Vec2r values.
- *                If there are less than 2 nodes in the chain then the rest of
- *                vector components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting vector will be filled with zeroes.
- * @return parsed Vec2r.
- */
-morda::Vec2r dimVec2rFromSTOB(const stob::Node* chain);
-
-
-
 
 /**
  * @brief Parse dimension value.
