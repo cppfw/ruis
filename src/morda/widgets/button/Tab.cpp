@@ -58,12 +58,12 @@ void Tab::onPressedChanged() {
 }
 
 
-Tab::Tab(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		ChoiceButton(chain),
-		NinePatchToggle(chain)
+Tab::Tab(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		ChoiceButton(desc),
+		NinePatchToggle(desc)
 {
 	if(!this->pressedNinePatch()){
 		this->setPressedNinePatch(morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_active"));
@@ -72,5 +72,6 @@ Tab::Tab(const stob::Node* chain) :
 		this->setUnpressedNinePatch(morda::inst().resMan.load<ResNinePatch>("morda_npt_tab_inactive"));
 	}
 
-	this->onPressedChanged();//initialize nine-patch
+	// initialize nine-patch
+	this->onPressedChanged();
 }
