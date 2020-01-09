@@ -27,9 +27,9 @@ LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 
 
 
-LinearContainer::LinearContainer(const stob::Node* chain, bool vertical) :
-		Widget(chain),
-		Container(chain),
+LinearContainer::LinearContainer(const puu::forest& desc, bool vertical) :
+		widget(desc),
+		container(desc),
 		OrientedWidget(nullptr, vertical)
 {}
 

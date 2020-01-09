@@ -40,28 +40,22 @@ public:
 
 
 
-List::List(const stob::Node* chain, bool vertical):
-		widget(chain),
+List::List(const puu::forest& desc, bool vertical):
+		widget(desc),
 		container(puu::forest()),
 		OrientedWidget(nullptr, vertical)
 {
-	if(!chain){
-		return;
+	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
+
+	for(const auto& p : desc){
+		if(is_property(p)){
+			continue;
+		}
+
+		pr->add(puu_to_stob({puu::tree(p)}));
 	}
 
-	const stob::Node* n = chain->thisOrNextNonProperty().get_node();
-
-	if(!n){
-		return;
-	}
-
-	std::shared_ptr<StaticProvider> p = std::make_shared<StaticProvider>();
-
-	for(; n; n = n->nextNonProperty().get_node()){
-		p->add(n->clone());
-	}
-
-	this->setItemsProvider(std::move(p));
+	this->setItemsProvider(std::move(pr));
 }
 
 
