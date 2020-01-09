@@ -162,9 +162,4 @@ inline const puu::leaf& get_property_value(const puu::tree& p){
     return p.children.front().value;
 }
 
-
-//TODO: remove
-puu::forest stob_to_puu(const puu::Node& chain);
-puu::forest stob_to_puu(const puu::Node* chain);
-
 }

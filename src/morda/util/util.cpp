@@ -280,25 +280,3 @@ bool morda::is_leaf_property(const puu::leaf& l){
 bool morda::is_property(const puu::tree& t){
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
-
-//TODO: remove
-puu::forest morda::stob_to_puu(const puu::Node* chain){
-	return chain ? stob_to_puu(*chain) : puu::forest();
-}
-
-//TODO: remove
-puu::forest morda::stob_to_puu(const puu::Node& chain){
-	puu::forest ret;
-
-	for(auto n = &chain; n; n = n->next()){
-		if(n->child()){
-			ret.push_back(puu::tree(n->value(), stob_to_puu(*n->child())));
-		}else if(n->value()){
-			ret.push_back(puu::tree(n->as_string()));
-		}else{
-			ret.push_back(puu::tree());
-		}
-	}
-
-	return ret;
-}
