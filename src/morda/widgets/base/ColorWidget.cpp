@@ -18,7 +18,3 @@ ColorWidget::ColorWidget(const puu::forest& desc) :
 		}
 	}
 }
-
-ColorWidget::ColorWidget(const stob::Node* chain) :
-		ColorWidget(stob_to_puu(chain))
-{}

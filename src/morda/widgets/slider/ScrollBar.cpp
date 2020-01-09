@@ -16,7 +16,7 @@ using namespace morda;
 
 namespace{
 
-const char* DDescription = R"qwertyuiop(
+const auto DDescription = puu::read(R"qwertyuiop(
 		NinePatch{
 			id{morda_slider_bg}
 			layout{
@@ -44,7 +44,7 @@ const char* DDescription = R"qwertyuiop(
 				}
 			}
 		}
-	)qwertyuiop";
+	)qwertyuiop");
 
 }
 
@@ -52,9 +52,9 @@ const char* DDescription = R"qwertyuiop(
 
 ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
 		widget(desc),
-		FractionBandWidget(nullptr),
-		OrientedWidget(nullptr, vertical),
-		Pile(stob::parse(DDescription).get()),
+		FractionBandWidget(puu::forest()),
+		OrientedWidget(puu::forest(), vertical),
+		Pile(DDescription),
 		handle(*this->try_get_widget("morda_handle"))
 {
 	auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");

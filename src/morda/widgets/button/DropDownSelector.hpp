@@ -77,7 +77,6 @@ public:
 
 public:
 	DropDownSelector(const puu::forest& desc);
-	DropDownSelector(const stob::Node* chain) : DropDownSelector(stob_to_puu(chain)){}
 
 	DropDownSelector(const DropDownSelector&) = delete;
 	DropDownSelector& operator=(const DropDownSelector&) = delete;

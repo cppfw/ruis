@@ -31,7 +31,6 @@ public:
 			widget(desc),
 			Button(desc)
 	{}
-	PushButton(const stob::Node* chain) : PushButton(stob_to_puu(chain)){}
 	
 	/**
 	 * @brief Clicked signal.

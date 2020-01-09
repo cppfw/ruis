@@ -15,8 +15,6 @@ class ColorWidget : public virtual Widget{
 	std::uint32_t color_v = 0xffffffff;
 
 protected:
-	ColorWidget(const stob::Node* chain);
-
 	ColorWidget(const puu::forest& desc);
 
 public:

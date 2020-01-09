@@ -18,10 +18,6 @@ protected:
 
 	OrientedWidget(const puu::forest& desc, bool vertical);
 
-	OrientedWidget(const stob::Node* chain, bool vertical) :
-			OrientedWidget(stob_to_puu(chain), vertical)
-	{}
-
 public:
 	OrientedWidget(const OrientedWidget&) = delete;
 	OrientedWidget& operator=(const OrientedWidget&) = delete;

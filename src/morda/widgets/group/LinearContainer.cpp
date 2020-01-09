@@ -30,7 +30,7 @@ LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 LinearContainer::LinearContainer(const puu::forest& desc, bool vertical) :
 		widget(desc),
 		container(desc),
-		OrientedWidget(nullptr, vertical)
+		OrientedWidget(puu::forest(), vertical)
 {}
 
 

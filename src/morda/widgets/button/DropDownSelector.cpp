@@ -23,7 +23,7 @@ using namespace morda;
 
 namespace{
 
-const auto selectorLayout_c = stob::parse(R"qwertyuiop(
+const auto selectorLayout_c = puu::read(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
 	Row{
@@ -203,8 +203,8 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 DropDownSelector::DropDownSelector(const puu::forest& desc) :
 		widget(desc),
-		Button(selectorLayout_c.get()),
-		NinePatchPushButton(selectorLayout_c.get()),
+		Button(selectorLayout_c),
+		NinePatchPushButton(selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){

@@ -57,10 +57,6 @@ public:
 protected:
 	TextWidget(const puu::forest& desc);
 
-	TextWidget(const stob::Node* desc) :
-			TextWidget(stob_to_puu(desc))
-	{}
-
 private:
 
 };
@@ -73,7 +69,6 @@ protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
 	SingleLineTextWidget(const puu::forest& desc);
-	SingleLineTextWidget(const stob::Node* chain) : SingleLineTextWidget(stob_to_puu(chain)){}
 
 	const Rectr& textBoundingBox()const{
 		return this->bb;

@@ -10,7 +10,6 @@ class ImageToggle :
 {
 public:
 	ImageToggle(const puu::forest& desc);
-	ImageToggle(const stob::Node* chain) : ImageToggle(stob_to_puu(chain)){}
 	
 	ImageToggle(const ImageToggle&) = delete;
 	ImageToggle& operator=(const ImageToggle&) = delete;

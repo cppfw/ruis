@@ -44,7 +44,7 @@ public:
 List::List(const puu::forest& desc, bool vertical):
 		widget(desc),
 		container(puu::forest()),
-		OrientedWidget(nullptr, vertical)
+		OrientedWidget(puu::forest(), vertical)
 {
 	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
 

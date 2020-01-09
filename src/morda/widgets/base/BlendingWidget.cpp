@@ -59,10 +59,6 @@ BlendingWidget::BlendingWidget(const puu::forest& desc) :
 	}
 }
 
-BlendingWidget::BlendingWidget(const stob::Node* chain) :
-		BlendingWidget(chain ? stob_to_puu(*chain) : puu::forest())
-{}
-
 void BlendingWidget::applyBlending() const{
 	morda::inst().renderer().setBlendEnabled(this->isBlendingEnabled());
 	if(this->isBlendingEnabled()){

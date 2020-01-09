@@ -38,7 +38,6 @@ public:
 	
 protected:
 	NinePatchButton(const puu::forest& desc);
-	NinePatchButton(const stob::Node* chain) : NinePatchButton(stob_to_puu(chain)){}
 	
 	void onPressedChanged()override;
 };

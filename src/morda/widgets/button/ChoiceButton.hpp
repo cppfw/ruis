@@ -23,8 +23,6 @@ protected:
 
 public:
 	ChoiceButton(const puu::forest& desc);
-
-	ChoiceButton(const stob::Node* chain) : ChoiceButton(stob_to_puu(chain)){}
 	
 	ChoiceButton(const ChoiceButton&) = delete;
 	ChoiceButton& operator=(const ChoiceButton&) = delete;

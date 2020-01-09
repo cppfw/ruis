@@ -19,7 +19,6 @@ class ChoiceGroup : public Pile{
 	std::shared_ptr<ChoiceButton> activeChoiceButton_v;
 public:
 	ChoiceGroup(const puu::forest& desc);
-	ChoiceGroup(const stob::Node* chain) : ChoiceGroup(stob_to_puu(chain)){}
 	
 	ChoiceGroup(const ChoiceGroup&) = delete;
 	ChoiceGroup& operator=(const ChoiceGroup&) = delete;

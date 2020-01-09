@@ -27,10 +27,6 @@ protected:
 public:
 	Button(const puu::forest& desc);
 
-	Button(const stob::Node* chain) :
-			Button(stob_to_puu(chain))
-	{}
-
 	/**
 	 * @brief Check if button is currently pressed.
 	 * @return true if button is pressed.
