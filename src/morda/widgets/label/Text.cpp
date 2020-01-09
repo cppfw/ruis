@@ -10,9 +10,9 @@ using namespace morda;
 
 
 
-Text::Text(const stob::Node* chain) :
-		Widget(chain),
-		SingleLineTextWidget(chain)
+Text::Text(const puu::forest& desc) :
+		widget(desc),
+		SingleLineTextWidget(desc)
 {}
 
 
