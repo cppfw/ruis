@@ -27,23 +27,6 @@ morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::c
 	return ret;
 }
 
-morda::Vec2r morda::makeVec2rFromSTOB(const stob::Node* chain){
-	unsigned i;
-	morda::Vec2r ret;
-
-	float v = 0;
-	for(i = 0; i != 2 && chain; ++i, chain = chain->next()){
-		v = chain->asFloat();
-		ret[i] = v;
-	}
-
-	for(; i != 2; ++i){
-		ret[i] = v;
-	}
-
-	return ret;
-}
-
 morda::Rectr morda::parse_rect(const puu::forest& desc){
 	Vec2r p = parse_vec2(desc.begin(), desc.end());
 	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());

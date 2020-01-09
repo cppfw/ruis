@@ -33,9 +33,6 @@ inline morda::Vec2r parse_vec2(const puu::forest& desc){
     return parse_vec2(desc.begin(), desc.end());
 }
 
-//TODO: deprecated, remove.
-morda::Vec2r makeVec2rFromSTOB(const stob::Node* chain);
-
 /**
  * @brief Parse chain of 4 STOB nodes as Rectr.
  * @param chain - chain of at least four nodes holding Rectr values.
