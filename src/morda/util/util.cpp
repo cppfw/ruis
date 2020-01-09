@@ -115,20 +115,6 @@ real morda::parse_layout_dimension_value(const puu::leaf& l){
 }
 
 
-const stob::Node* morda::getProperty(const stob::Node* chain, const char* property){
-	if(!chain){
-		return nullptr;
-	}
-	if(auto n = chain->thisOrNext(property).get_node()){
-		if(n->child() && n->child()->value()){
-			return n->child();
-		}
-	}
-	return nullptr;
-}
-
-
-
 morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 	switch(numChannels){
 		default:

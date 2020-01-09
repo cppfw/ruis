@@ -80,16 +80,6 @@ real parse_layout_dimension_value(const puu::leaf& l);
 std::tuple<std::unique_ptr<stob::Node>, stob::Node*> resolveIncludes(const papki::File& fi, std::unique_ptr<stob::Node> begin);
 
 
-
-/**
- * @brief Get property by name from STOB chain.
- * @param chain - STOB chain of properties.
- * @param property - property name to look for.
- * @return Pointer to property value if property was found in the STOB chain.
- * @return nullptr if property was not found or if the property has no value assigned.
- */
-const stob::Node* getProperty(const stob::Node* chain, const char* property);
-
 bool is_property(const puu::tree& t);
 
 bool is_leaf_property(const puu::leaf& l);
