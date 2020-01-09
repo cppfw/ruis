@@ -18,45 +18,40 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 
 void ResourceManager::mountResPack(const papki::File& fi){
-	ASSERT(!fi.isOpened())
+	ASSERT(!fi.is_open())
 //	TRACE(<< "ResourceManager::mountResPack(): fi->path() = " << fi.path() << std::endl)
 	
 	std::string dir = fi.dir();
 	
-	if(fi.notDir().size() == 0){
-		fi.setPath(dir + "main.res");
+	if(fi.not_dir().size() == 0){
+		fi.set_path(dir + "main.res");
 	}
 
-	std::unique_ptr<stob::Node> resScript = utki::makeUnique<stob::Node>();
-	resScript->setNext(stob::load(fi));
-	ASSERT(!fi.isOpened())
-	//handle includeSubdirs
-	if(resScript->next(includeSubdirs_c).get_node()){
-//		TRACE(<< "includeSubdirs encountered!!!!!!!!!!!!!!!" << std::endl)
-		fi.setPath(fi.dir());
-		auto dirContents = fi.list_dir();
-		ASSERT(!fi.isOpened())
-		for(auto& fileName : dirContents){
-			if(fileName.size() != 0 && fileName[fileName.size() - 1] == '/'){
-				fi.setPath(dir + fileName);
-//				TRACE(<< "mounting respack " << fi.path() << std::endl)
-				this->mountResPack(fi);
+	auto script = puu::read(fi);
+	ASSERT(!fi.is_open())
+
+	// handle includes
+	for(auto& p : script){
+		if(p.value == include_c){
+			fi.set_path(dir + get_property_value(p).to_string());
+			this->mountResPack(fi);
+			// TODO: remove "include" tree from the forest?
+		}else if(p.value == includeSubdirs_c){
+			fi.set_path(fi.dir());
+			for(auto& f : fi.list_dir()){
+				// TODO: use papki::is_dir()
+				if(f.length() != 0 && f[f.size() - 1] == '/'){
+					fi.set_path(dir + f);
+					this->mountResPack(fi);
+				}
 			}
+			// TODO: remove "includeSubdirs" tree from the forest?
 		}
 	}
 	
-	//handle includes
-	for(auto np = resScript->next(include_c); np.get_node(); np = np.prev()->next(include_c)){
-		ASSERT(np.prev())
-		auto incNode = np.prev()->removeNext()->removeChildren();
-		
-		fi.setPath(dir + incNode->value());
-		this->mountResPack(fi);
-	}
-	
 	ResPackEntry rpe;
-	rpe.fi = papki::RootDirFile::makeUniqueConst(fi.spawn(), dir);
-	rpe.script = stob_to_puu(resScript->chopNext().get());
+	rpe.fi = papki::root_dir::make(fi.spawn(), dir);
+	rpe.script = std::move(script);
 
 	this->resPacks.push_back(std::move(rpe));
 	ASSERT(this->resPacks.back().fi)
