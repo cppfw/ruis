@@ -4,11 +4,11 @@
 
 using namespace morda;
 
-NinePatchPushButton::NinePatchPushButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		PushButton(chain),
-		NinePatchButton(chain)
+NinePatchPushButton::NinePatchPushButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		PushButton(desc),
+		NinePatchButton(desc)
 {
 	if(!this->unpressedNinePatch()){
 		this->setUnpressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_button_normal"));

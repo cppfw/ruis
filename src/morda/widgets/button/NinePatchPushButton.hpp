@@ -11,7 +11,8 @@ class NinePatchPushButton :
 		public NinePatchButton
 {
 public:
-	NinePatchPushButton(const stob::Node* chain);
+	NinePatchPushButton(const puu::forest& desc);
+	NinePatchPushButton(const stob::Node* chain) : NinePatchPushButton(stob_to_puu(chain)){}
 	
 protected:
 	void onPressedChanged() override;
