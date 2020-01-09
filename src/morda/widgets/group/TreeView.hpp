@@ -377,7 +377,8 @@ class TreeView :
 {
 	std::shared_ptr<List> list;
 public:
-	TreeView(const stob::Node* chain = nullptr);
+	TreeView(const puu::forest& desc);
+	TreeView(const stob::Node* chain) : TreeView(stob_to_puu(chain)){}
 
 	TreeView(const TreeView&) = delete;
 	TreeView& operator=(const TreeView&) = delete;

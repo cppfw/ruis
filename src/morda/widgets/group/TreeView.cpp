@@ -8,8 +8,8 @@ using namespace morda;
 
 
 
-TreeView::TreeView(const stob::Node* chain) :
-		Widget(chain),
+TreeView::TreeView(const puu::forest& desc) :
+		widget(desc),
 		ScrollArea(nullptr)
 {
 	this->list = std::make_shared<VList>(nullptr);
