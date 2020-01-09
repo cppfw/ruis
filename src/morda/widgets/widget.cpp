@@ -148,7 +148,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
 				this->cacheTex = this->render_to_texture();
 			}else{
-				ASSERT(this->cacheTex->dim() == this->rect().d)
+				ASSERT(this->cacheTex->dims() == this->rect().d)
 				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
@@ -226,7 +226,7 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 
 	r.setFramebuffer(r.factory->createFramebuffer(tex));
 
-//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dim() = " << tex.dim())
+//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
 	auto oldViewport = morda::inst().renderer().getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){
