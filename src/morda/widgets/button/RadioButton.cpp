@@ -22,11 +22,11 @@ const char* D_Layout = R"qwertyuiop(
 
 
 
-RadioButton::RadioButton(const stob::Node* chain) :
-		Widget(chain),
-		Button(chain),
-		ToggleButton(chain),
-		ChoiceButton(chain),
+RadioButton::RadioButton(const puu::forest& desc) :
+		widget(desc),
+		Button(desc),
+		ToggleButton(desc),
+		ChoiceButton(desc),
 		Pile(stob::parse(D_Layout).get())
 {
 	this->checkWidget = *this->children().rbegin();
