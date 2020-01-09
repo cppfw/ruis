@@ -50,31 +50,42 @@ const char* DDescription = R"qwertyuiop(
 
 
 
-ScrollBar::ScrollBar(const stob::Node* chain, bool vertical) :
-		Widget(chain),
+ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
+		widget(desc),
 		FractionBandWidget(nullptr),
 		OrientedWidget(nullptr, vertical),
 		Pile(stob::parse(DDescription).get()),
 		handle(*this->try_get_widget("morda_handle"))
 {
-	{
-		auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");
-		ASSERT(np)
-		if(auto n = getProperty(chain, "background")){
-			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
-		}else{
-			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+	auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");
+	ASSERT(np)
+
+	auto hi = this->try_get_widget_as<NinePatch>("morda_handle_image");
+	ASSERT(hi)
+
+	bool background_set = false;
+	bool handle_set = false;
+	
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "background"){
+			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			background_set = true;
+		}else if(p.value == "handleNinePatch"){
+			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			handle_set = true;
 		}
 	}
 
-	{
-		auto hi = this->try_get_widget_as<NinePatch>("morda_handle_image");
-		ASSERT(hi)
-		if(auto n = getProperty(chain, "handleNinePatch")){
-			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(n->value()));
-		}else{
-			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
-		}
+	if(!background_set){
+		np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+	}
+
+	if(!handle_set){
+		hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
 	}
 
 	auto hp = this->try_get_widget_as<MouseProxy>("morda_handle_proxy");

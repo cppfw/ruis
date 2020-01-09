@@ -33,7 +33,8 @@ class ScrollBar :
 	float clickPoint;
 
 protected:
-	ScrollBar(const stob::Node* chain, bool vertical);
+	ScrollBar(const puu::forest& desc, bool vertical);
+	ScrollBar(const stob::Node* chain, bool vertical) : ScrollBar(stob_to_puu(chain), vertical){}
 
 	void onFractionChange() override;
 
