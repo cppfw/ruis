@@ -9,9 +9,9 @@ using namespace morda;
 
 
 
-ScrollArea::ScrollArea(const stob::Node* chain) :
-		Widget(chain),
-		Container(chain)
+ScrollArea::ScrollArea(const puu::forest& desc) :
+		widget(desc),
+		container(desc)
 {}
 
 

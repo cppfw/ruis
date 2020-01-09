@@ -31,7 +31,8 @@ protected:
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 
 public:
-	ScrollArea(const stob::Node* chain);
+	ScrollArea(const puu::forest& desc);
+	ScrollArea(const stob::Node* chain) : ScrollArea(stob_to_puu(chain)){}
 
 	ScrollArea(const ScrollArea&) = delete;
 	ScrollArea& operator=(const ScrollArea&) = delete;
