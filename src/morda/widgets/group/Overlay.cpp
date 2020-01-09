@@ -26,9 +26,9 @@ const char* ContextMenuLayout_c = R"qwertyuiop(
 
 }
 
-Overlay::Overlay(const stob::Node* chain) :
-		Widget(chain),
-		Pile(chain)
+Overlay::Overlay(const puu::forest& desc) :
+		widget(desc),
+		Pile(desc)
 {
 	this->on_children_changed();
 }
