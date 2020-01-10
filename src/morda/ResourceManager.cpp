@@ -1,4 +1,5 @@
-#include <papki/RootDirFile.hpp>
+#include <papki/root_dir.hpp>
+#include <papki/util.hpp>
 
 #include "ResourceManager.hpp"
 
@@ -38,8 +39,7 @@ void ResourceManager::mountResPack(const papki::file& fi){
 		}else if(p.value == includeSubdirs_c){
 			fi.set_path(fi.dir());
 			for(auto& f : fi.list_dir()){
-				// TODO: use papki::is_dir()
-				if(f.length() != 0 && f[f.size() - 1] == '/'){
+				if(papki::is_dir(f)){
 					fi.set_path(dir + f);
 					this->mountResPack(fi);
 				}
