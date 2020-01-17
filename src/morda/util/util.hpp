@@ -32,10 +32,10 @@ inline morda::Vec2r parse_vec2(const puu::forest& desc){
 
 /**
  * @brief Parse chain of 4 STOB nodes as Rectr.
- * @param chain - chain of at least four nodes holding Rectr values.
- *                If there are less than 4 nodes in the chain then the rest of
- *                rectangle components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting rectangle will be filled with zeros.
+ * @param desc - chain of at least four nodes holding Rectr values.
+ *               If there are less than 4 nodes in the chain then the rest of
+ *               rectangle components will be filled with latest parsed value.
+ *               If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed Rectr.
  */
 morda::Rectr parse_rect(const puu::forest& desc);
@@ -43,10 +43,10 @@ morda::Rectr parse_rect(const puu::forest& desc);
 
 /**
  * @brief Parse chain of 4 STOB nodes as Siders.
- * @param chain - chain of at least four nodes holding Siders values.
- *                If there are less than 4 nodes in the chain then the rest of
- *                Sidesr components will be filled with latest parsed value.
- *                If zero pointer is passed the resulting Sidesr will be filled with zeros.
+ * @param desc - chain of at least four nodes holding Siders values.
+ *               If there are less than 4 nodes in the chain then the rest of
+ *               Sidesr components will be filled with latest parsed value.
+ *               If zero pointer is passed the resulting Sidesr will be filled with zeros.
  * @return parsed Sidesr.
  */
 morda::Sidesr parse_sides(const puu::forest& desc);
@@ -55,7 +55,7 @@ morda::Sidesr parse_sides(const puu::forest& desc);
  * @brief Parse dimension value.
  * Parses value of 'pos' or 'dim' property from puu leaf.
  * In case the value is given in millimeters or points it will do the conversion.
- * @param n - puu leaf holding the value.
+ * @param l - puu leaf holding the value.
  * @return Parsed value in pixels.
  */
 real parse_dimension_value(const puu::leaf& l);

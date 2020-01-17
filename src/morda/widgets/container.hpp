@@ -168,7 +168,7 @@ protected:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param chain - description of the widget.
+	 * @param desc - description of the widget.
 	 */
 	container(const puu::forest& desc);
 

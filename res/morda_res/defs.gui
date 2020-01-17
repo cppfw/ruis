@@ -152,7 +152,6 @@ defs{
 		look
 		Window{
 			look{
-				${look}
 				titleColorTopmost{ ${morda_color_bg_window_title} }
 				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
 				background{WindowBackground}
@@ -160,6 +159,7 @@ defs{
 				top{${morda_window_border_size}}
 				right{${morda_window_border_size}}
 				bottom{${morda_window_border_size}}
+				${look}
 			}
 
 			${children}
