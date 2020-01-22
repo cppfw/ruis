@@ -40,7 +40,7 @@ morda::Sidesr morda::parse_sides(const puu::forest& desc){
 }
 
 real morda::parse_dimension_value(const puu::leaf& l){
-	//check if millimeters
+	// check if millimeters
 	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
 		return Morda::inst().units.mmToPx(l.to_float());
 	}else if(l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'd'){ //check if in density pixels

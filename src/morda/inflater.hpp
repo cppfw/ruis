@@ -135,8 +135,6 @@ private:
 
 	void pop_variables();
 
-	void substitute_variables(puu::forest& to)const;
-
 	void push_defs(const puu::forest& chain);
 	void pop_defs();
 };
