@@ -1,3 +1,9 @@
+libmorda (0.5.101) unstable; urgency=medium
+
+  * fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 23 Jan 2020 16:02:57 +0200
+
 libmorda (0.5.100) unstable; urgency=medium
 
   * relink against latest puu
