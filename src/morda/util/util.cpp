@@ -47,7 +47,11 @@ real morda::parse_dimension_value(const puu::leaf& l){
 		return Morda::inst().units.dpToPx(l.to_float());
 	}
 
-	return l.to_float();
+	if(l.empty()){
+		return real(0);
+	}
+
+	return real(l.to_float());
 }
 
 

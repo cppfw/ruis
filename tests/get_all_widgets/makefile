@@ -14,13 +14,14 @@ this_cxxflags += -Wno-format-security #no warnings about format
 this_cxxflags += -DDEBUG
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -g
-this_cxxflags += -Og
 this_cxxflags += -std=c++11
 
 
 
 ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
+else
+    this_cxxflags += -O3
 endif
 
 this_cxxflags += -I$(d)../../src

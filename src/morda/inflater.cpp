@@ -119,7 +119,7 @@ void substitute_vars(puu::forest& to, const std::function<const puu::forest*(con
 
 namespace{
 puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::string>& var_names, puu::forest&& trees){
-	TRACE(<< "applying template" << std::endl)
+	// TRACE(<< "applying template" << std::endl)
 	puu::forest ret = templ;
 
 	std::map<std::string, puu::forest> vars;
@@ -145,11 +145,11 @@ puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::str
 	}
 	vars["children"] = std::move(children);
 
-#ifdef DEBUG
-	for(auto& v : vars){
-		TRACE(<< "v = " << v.first << std::endl)
-	}
-#endif
+// #ifdef DEBUG
+// 	for(auto& v : vars){
+// 		TRACE(<< "v = " << v.first << std::endl)
+// 	}
+// #endif
 
 	substitute_vars(
 			ret,
@@ -215,7 +215,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	std::string widget_name;
 	puu::forest widget_desc;
 
-	TRACE(<< "inflating = " << i->value.to_string() << std::endl)
+	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if(auto tmpl = this->find_template(i->value.to_string())){
 		widget_name = tmpl->templ.value.to_string();
 		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::forest(i->children));
@@ -249,7 +249,12 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 			true
 		);
 	
-	return fac(widget_desc);
+	try{
+		return fac(widget_desc);
+	}catch(...){
+		TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
+		throw;
+	}
 }
 
 inflater::widget_template inflater::parse_template(const puu::forest& templ){

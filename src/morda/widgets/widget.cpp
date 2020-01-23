@@ -17,29 +17,34 @@ widget::widget(const puu::forest& desc){
 			continue;
 		}
 
-		if(p.value == "layout"){
-			this->layout_desc = p.children;
-		}else if(p.value == "x"){
-			this->rectangle.p.x = parse_dimension_value(get_property_value(p));
-		}else if(p.value == "y"){
-			this->rectangle.p.y = parse_dimension_value(get_property_value(p));
-		}else if(p.value == "dx"){
-			this->rectangle.d.x = parse_dimension_value(get_property_value(p));
-		}else if(p.value == "dy"){
-			this->rectangle.d.y = parse_dimension_value(get_property_value(p));
-		}else if(p.value == "id"){
-			this->id = get_property_value(p).to_string();
-		}else if(p.value == "name"){ //TODO: remove deprecated stuff.
-			this->id = get_property_value(p).to_string();
-			TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << this->id << "'), use 'id' instead" << std::endl)
-		}else if(p.value == "clip"){
-			this->clip_v = get_property_value(p).to_bool();
-		}else if(p.value == "cache"){
-			this->cache = get_property_value(p).to_bool();
-		}else if(p.value == "visible"){
-			this->isVisible_v = get_property_value(p).to_bool();
-		}else if(p.value == "enabled"){
-			this->isEnabled_v = get_property_value(p).to_bool();
+		try{
+			if(p.value == "layout"){
+				this->layout_desc = p.children;
+			}else if(p.value == "x"){
+				this->rectangle.p.x = parse_dimension_value(get_property_value(p));
+			}else if(p.value == "y"){
+				this->rectangle.p.y = parse_dimension_value(get_property_value(p));
+			}else if(p.value == "dx"){
+				this->rectangle.d.x = parse_dimension_value(get_property_value(p));
+			}else if(p.value == "dy"){
+				this->rectangle.d.y = parse_dimension_value(get_property_value(p));
+			}else if(p.value == "id"){
+				this->id = get_property_value(p).to_string();
+			}else if(p.value == "name"){ //TODO: remove deprecated stuff.
+				this->id = get_property_value(p).to_string();
+				TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << this->id << "'), use 'id' instead" << std::endl)
+			}else if(p.value == "clip"){
+				this->clip_v = get_property_value(p).to_bool();
+			}else if(p.value == "cache"){
+				this->cache = get_property_value(p).to_bool();
+			}else if(p.value == "visible"){
+				this->isVisible_v = get_property_value(p).to_bool();
+			}else if(p.value == "enabled"){
+				this->isEnabled_v = get_property_value(p).to_bool();
+			}
+		}catch(std::invalid_argument& e){
+			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
+			throw;
 		}
 	}
 }
@@ -50,10 +55,15 @@ widget::layout_params::layout_params(const puu::forest& desc){
 			continue;
 		}
 
-		if(p.value == "dx"){
-			this->dims.x = parse_layout_dimension_value(get_property_value(p));
-		}else if(p.value == "dy"){
-			this->dims.y = parse_layout_dimension_value(get_property_value(p));
+		try{
+			if(p.value == "dx"){
+				this->dims.x = parse_layout_dimension_value(get_property_value(p));
+			}else if(p.value == "dy"){
+				this->dims.y = parse_layout_dimension_value(get_property_value(p));
+			}
+		}catch(std::invalid_argument& e){
+			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
+			throw;
 		}
 	}
 }
