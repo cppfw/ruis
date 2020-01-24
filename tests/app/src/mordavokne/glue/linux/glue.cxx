@@ -145,7 +145,7 @@ struct WindowWrapper : public utki::Unique{
 #elif defined(M_RENDER_OPENGLES2)
 		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 		if(this->eglDisplay == EGL_NO_DISPLAY){
-			throw utki::Exc("eglGetDisplay(): failed, no matching display connection found");
+			throw std::runtime_error("eglGetDisplay(): failed, no matching display connection found");
 		}
 
 		utki::ScopeExit scopeExitEGLDisplay([this](){
@@ -154,7 +154,7 @@ struct WindowWrapper : public utki::Unique{
 
 		if(eglInitialize(this->eglDisplay, nullptr, nullptr) == EGL_FALSE){
 			eglTerminate(this->eglDisplay);
-			throw utki::Exc("eglInitialize() failed");
+			throw std::runtime_error("eglInitialize() failed");
 		}
 
 		EGLConfig eglConfig;
@@ -180,12 +180,12 @@ struct WindowWrapper : public utki::Unique{
 			EGLint numConfigs;
 			eglChooseConfig(this->eglDisplay, attribs, &eglConfig, 1, &numConfigs);
 			if(numConfigs <= 0){
-				throw utki::Exc("eglChooseConfig() failed, no matching config found");
+				throw std::runtime_error("eglChooseConfig() failed, no matching config found");
 			}
 		}
 
 		if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE){
-			throw utki::Exc("eglBindApi() failed");
+			throw std::runtime_error("eglBindApi() failed");
 		}
 #else
 #	error "Unknown graphics API"
@@ -211,7 +211,7 @@ struct WindowWrapper : public utki::Unique{
 					&numVisuals
 				);
 			if (!vi) {
-				throw utki::Exc("XGetVisualInfo() failed");
+				throw std::runtime_error("XGetVisualInfo() failed");
 			}
 		}
 #	else
@@ -219,7 +219,7 @@ struct WindowWrapper : public utki::Unique{
 			EGLint vid;
 
 			if(!eglGetConfigAttrib(this->eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &vid)) {
-				throw utki::Exc("eglGetConfigAttrib() failed");
+				throw std::runtime_error("eglGetConfigAttrib() failed");
 			}
 
 			int numVisuals;
@@ -232,7 +232,7 @@ struct WindowWrapper : public utki::Unique{
 					&numVisuals
 				);
 			if (!vi) {
-				throw utki::Exc("XGetVisualInfo() failed");
+				throw std::runtime_error("XGetVisualInfo() failed");
 			}
 		}
 #	endif
@@ -338,7 +338,7 @@ struct WindowWrapper : public utki::Unique{
 					&display_height
 				) < 0 )
 			{
-				throw utki::Exc("graphics_get_display_size() failed");
+				throw std::runtime_error("graphics_get_display_size() failed");
 			}
 
 			dst_rect.x = 0;
@@ -385,7 +385,7 @@ struct WindowWrapper : public utki::Unique{
 				nullptr
 			);
 		if(this->eglSurface == EGL_NO_SURFACE){
-			throw utki::Exc("eglCreateWindowSurface() failed");
+			throw std::runtime_error("eglCreateWindowSurface() failed");
 		}
 		utki::ScopeExit scopeExitEGLSurface([this](){
 			eglDestroySurface(this->eglDisplay, this->eglSurface);
@@ -399,13 +399,13 @@ struct WindowWrapper : public utki::Unique{
 
 			this->eglContext = eglCreateContext(this->eglDisplay, eglConfig, EGL_NO_CONTEXT, contextAttrs);
 			if(this->eglContext == EGL_NO_CONTEXT){
-				throw utki::Exc("eglCreateContext() failed");
+				throw std::runtime_error("eglCreateContext() failed");
 			}
 		}
 
 		if(eglMakeCurrent(this->eglDisplay, this->eglSurface, this->eglSurface, this->eglContext) == EGL_FALSE){
 			eglDestroyContext(this->eglDisplay, this->eglContext);
-			throw utki::Exc("eglMakeCurrent() failed");
+			throw std::runtime_error("eglMakeCurrent() failed");
 		}
 		utki::ScopeExit scopeExitEGLContext([this](){
 			eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
