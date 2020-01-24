@@ -79,7 +79,7 @@ endif
 this_ldlibs += $(d)../../src/build/libmorda$(soext)
 
 
-this_ldlibs += -lnitki -lpogodi -lpuu -lpapki -lunikod -lstdc++ -lm
+this_ldlibs += -lnitki -lopros -lpuu -lpapki -lunikod -lstdc++ -lm
 
 
 ifeq ($(ogles2), true)

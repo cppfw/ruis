@@ -1,13 +1,11 @@
-//This file contains implementations of platform dependent methods from App class.
-
 #include <vector>
 #include <array>
 
 #include "../../application.hpp"
 
-#include <pogodi/WaitSet.hpp>
-#include <papki/FSFile.hpp>
-#include <nitki/Queue.hpp>
+#include <opros/wait_set.hpp>
+#include <papki/fs_file.hpp>
+#include <nitki/queue.hpp>
 
 #include <unikod/utf8.hpp>
 
@@ -64,7 +62,7 @@ struct WindowWrapper : public utki::Unique{
 	XIM inputMethod;
 	XIC inputContext;
 
-	nitki::Queue uiQueue;
+	nitki::queue ui_queue;
 
 	volatile bool quitFlag = false;
 
@@ -545,7 +543,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 				getDotsPerInch(getImpl(windowPimpl).display),
 				::getDotsPerPt(getImpl(windowPimpl).display),
 				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
+					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
 				}
 			),
 		storage_dir(initializeStorageDir(this->name))
@@ -558,19 +556,19 @@ application::application(std::string&& name, const window_params& requestedWindo
 
 namespace{
 
-class XEventWaitable : public pogodi::Waitable{
+class XEvent_waitable : public opros::waitable{
 	int fd;
 
-	int getHandle() override{
+	int get_handle() override{
 		return this->fd;
 	}
 public:
-	XEventWaitable(Display* d){
+	XEvent_waitable(Display* d){
 		this->fd = XConnectionNumber(d);
 	}
 
-	void clearCanReadFlag(){
-		this->pogodi::Waitable::clearCanReadFlag();
+	void clear_read_flag(){
+		this->readiness_flags.clear(opros::ready::read);
 	}
 };
 
@@ -929,30 +927,30 @@ int main(int argc, const char** argv){
 
 
 
-	XEventWaitable xew(ww.display);
+	XEvent_waitable xew(ww.display);
 
-	pogodi::WaitSet waitSet(2);
+	opros::wait_set wait_set(2);
 
-	waitSet.add(xew, pogodi::Waitable::READ);
-	waitSet.add(ww.uiQueue, pogodi::Waitable::READ);
+	wait_set.add(xew, {opros::ready::read});
+	wait_set.add(ww.ui_queue, {opros::ready::read});
 
-	//Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
-	//So, render everything for the first time.
+	// Sometimes the first Expose event does not come for some reason. It happens constantly in some systems and never happens on all the others.
+	// So, render everything for the first time.
 	render(*app);
 
 	while(!ww.quitFlag){
-		waitSet.waitWithTimeout(app->gui.update());
+		wait_set.wait(app->gui.update());
 
-		if(ww.uiQueue.canRead()){
-			while(auto m = ww.uiQueue.peekMsg()){
+		if(ww.ui_queue.flags().get(opros::ready::read)){
+			while(auto m = ww.ui_queue.pop_front()){
 				m();
 			}
-			ASSERT(!ww.uiQueue.canRead())
+			ASSERT(!ww.ui_queue.flags().get(opros::ready::read))
 		}
 
-		//NOTE: do not check canRead flag for X event, for some reason when waiting with 0 timeout it will never be set.
-		//      Maybe some bug in XWindows, maybe something else.
-		xew.clearCanReadFlag();
+		// NOTE: do not check canRead flag for X event, for some reason when waiting with 0 timeout it will never be set.
+		//       Maybe some bug in XWindows, maybe something else.
+		xew.clear_read_flag();
 		while(XPending(ww.display) > 0){
 			XEvent event;
 			XNextEvent(ww.display, &event);
@@ -961,7 +959,7 @@ int main(int argc, const char** argv){
 				case Expose:
 //						TRACE(<< "Expose X event got" << std::endl)
 					if(event.xexpose.count != 0){
-						break;//~switch()
+						break;
 					}
 					render(*app);
 					break;
@@ -982,8 +980,8 @@ int main(int argc, const char** argv){
 					{
 						morda::key key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 
-						//detect auto-repeated key events
-						if(XEventsQueued(ww.display, QueuedAfterReading)){//if there are other events queued
+						// detect auto-repeated key events
+						if(XEventsQueued(ww.display, QueuedAfterReading)){ // if there are other events queued
 							XEvent nev;
 							XPeekEvent(ww.display, &nev);
 
@@ -992,10 +990,10 @@ int main(int argc, const char** argv){
 									&& nev.xkey.keycode == event.xkey.keycode
 								)
 							{
-								//Key wasn't actually released
+								// Key wasn't actually released
 								handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
 
-								XNextEvent(ww.display, &nev);//remove the key down event from queue
+								XNextEvent(ww.display, &nev); // remove the key down event from queue
 								break;
 							}
 						}
@@ -1040,7 +1038,7 @@ int main(int argc, const char** argv){
 					break;
 				case ClientMessage:
 //						TRACE(<< "ClientMessage X event got" << std::endl)
-					//probably a WM_DELETE_WINDOW event
+					// probably a WM_DELETE_WINDOW event
 					{
 						char* name = XGetAtomName(ww.display, event.xclient.message_type);
 						if(*name == *"WM_PROTOCOLS"){
@@ -1050,16 +1048,16 @@ int main(int argc, const char** argv){
 					}
 					break;
 				default:
-					//ignore
+					// ignore
 					break;
-			}//~switch()
-		}//~while()
+			}
+		}
 
 		render(*app);
-	}//~while(!ww.quitFlag)
+	}
 
-	waitSet.remove(ww.uiQueue);
-	waitSet.remove(xew);
+	wait_set.remove(ww.ui_queue);
+	wait_set.remove(xew);
 
 	return 0;
 }

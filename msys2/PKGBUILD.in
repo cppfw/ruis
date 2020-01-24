@@ -47,7 +47,7 @@ makedepends=(
 		'prorab-extra'
 		'doxygen'
 		'pkg-config'
-		"${pkgPrefix}pogodi"
+		"${pkgPrefix}opros"
 		"${pkgPrefix}nitki"
 	)
 checkdepends=('myci')

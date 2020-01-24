@@ -8,7 +8,7 @@
 #include <android/window.h>
 
 #include <unikod/utf8.hpp>
-#include <nitki/Queue.hpp>
+#include <nitki/queue.hpp>
 
 #include <sys/eventfd.h>
 
@@ -155,7 +155,7 @@ struct WindowWrapper : public utki::Unique{
 	EGLSurface surface;
 	EGLContext context;
 
-	nitki::Queue uiQueue;
+	nitki::queue uiQueue;
 
 	WindowWrapper(const window_params& wp){
 		this->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -1021,7 +1021,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}(),
 				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(*this)).uiQueue.pushMessage(std::move(a));
+					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
 				}
 			),
 		storage_dir(initializeStorageDir(this->name))
@@ -1083,7 +1083,7 @@ namespace{
 void handleInputEvents(){
 	auto& app = mordavokne::inst();
 
-	//Read and handle input events
+	// read and handle input events
 	AInputEvent* event;
 	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
 		ASSERT(event)
@@ -1164,10 +1164,10 @@ void handleInputEvents(){
 								continue;
 							}
 
-							//notify root Container only if there was actual movement
+							// notify root Container only if there was actual movement
 							morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 							if(pointers[pointerId] == p){
-								//pointer position did not change
+								// pointer position did not change
 								continue;
 							}
 
@@ -1180,13 +1180,13 @@ void handleInputEvents(){
 									AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
 									pointerId
 							);
-						}//~for(every pointer)
+						}
 					}
 						break;
 					default:
 						TRACE(<< "unknown eventAction = " << eventAction << std::endl)
 						break;
-				}//~switch(event action)
+				}
 				consume = true;
 				break;
 			case AINPUT_EVENT_TYPE_KEY:
@@ -1205,7 +1205,7 @@ void handleInputEvents(){
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
 //    						TRACE(<< "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
-							//detect auto-repeated key events
+							// detect auto-repeated key events
 							if(AKeyEvent_getRepeatCount(event) == 0){
 								handleKeyEvent(app, true, key);
 							}
@@ -1221,7 +1221,7 @@ void handleInputEvents(){
 //                                  << " keyCode = " << AKeyEvent_getKeyCode(event)
 //                                  << std::endl)
 
-							//Ignore, it is handled on Java side.
+							// Ignore, it is handled on Java side.
 
 							break;
 						default:
@@ -1232,14 +1232,14 @@ void handleInputEvents(){
 				break;
 			default:
 				break;
-		}//~switch(event type)
+		}
 
 		AInputQueue_finishEvent(
 				curInputQueue,
 				event,
 				consume
 		);
-	}//~while(there are events in input queue)
+	}
 
 	render(app);
 
@@ -1363,7 +1363,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 int OnQueueHasMessages(int fd, int events, void* data){
 	auto& ww = getImpl(getWindowPimpl(application::inst()));
 
-	while(auto m = ww.uiQueue.peekMsg()){
+	while(auto m = ww.uiQueue.pop_front()){
 		m();
 	}
 
@@ -1414,7 +1414,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		// Add UI message queue descriptor to looper
 		if(ALooper_addFd(
 				looper,
-				static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(*app)).uiQueue).getHandle(),
+				getImpl(getWindowPimpl(*app)).uiQueue.get_handle(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
@@ -1458,28 +1458,28 @@ void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
 
 
 
-//This function is called right before destroying Window object, according to documentation:
-//https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
+// This function is called right before destroying Window object, according to documentation:
+// https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
 void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
 
 	ALooper* looper = ALooper_prepare(0);
 	ASSERT(looper)
 
-	//remove UI message queue descriptor from looper
+	// remove UI message queue descriptor from looper
 	ALooper_removeFd(
 			looper,
-			static_cast<pogodi::Waitable&>(getImpl(getWindowPimpl(application::inst())).uiQueue).getHandle()
+			getImpl(getWindowPimpl(application::inst())).uiQueue.get_handle()
 		);
 
-	//remove fdFlag from looper
+	// remove fdFlag from looper
 	ALooper_removeFd(looper, fdFlag.GetFD());
 
-	//Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
+	// Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
 	delete static_cast<mordavokne::application*>(activity->instance);
 	activity->instance = nullptr;
 
-	//delete configuration object
+	// delete configuration object
 	curConfig.reset();
 }
 
@@ -1488,9 +1488,9 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 //	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
 
-	ASSERT(curInputQueue) //if we get events we should have input queue
+	ASSERT(curInputQueue) // if we get events we should have input queue
 
-	//If window is not created yet, ignore events.
+	// if window is not created yet, ignore events
 	if(!mordavokne::application::isCreated()){
 		ASSERT(false)
 		AInputEvent* event;
@@ -1508,7 +1508,7 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 
 	handleInputEvents();
 
-	return 1; //we don't want to remove input queue descriptor from looper
+	return 1; // we don't want to remove input queue descriptor from looper
 }
 
 
@@ -1519,11 +1519,11 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 	ASSERT(!curInputQueue)
 	curInputQueue = queue;
 
-	//attach queue to looper
+	// attach queue to looper
 	AInputQueue_attachLooper(
 			curInputQueue,
-			ALooper_prepare(0), //get looper for current thread (main thread)
-			0, //'ident' is ignored since we are using callback
+			ALooper_prepare(0), // get looper for current thread (main thread)
+			0, // 'ident' is ignored since we are using callback
 			&OnInputEventsReadyForReadingFromQueue,
 			activity->instance
 		);
@@ -1536,7 +1536,7 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 	ASSERT(queue)
 	ASSERT(curInputQueue == queue)
 
-	//detach queue from looper
+	// detach queue from looper
 	AInputQueue_detachLooper(queue);
 
 	curInputQueue = 0;
@@ -1544,14 +1544,14 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 
 
 
-//called when, for example, on-screen keyboard has been shown
+// called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
 	TRACE(<< "OnContentRectChanged(): curWinDim = " << curWinDim << std::endl)
 
-	//Sometimes Android calls OnContentRectChanged() even after native window was destroyed,
-	//i.e. OnNativeWindowDestroyed() was called and, thus, application object was destroyed.
-	//So need to check if our application is still alive.
+	// Sometimes Android calls OnContentRectChanged() even after native window was destroyed,
+	// i.e. OnNativeWindowDestroyed() was called and, thus, application object was destroyed.
+	// So need to check if our application is still alive.
 	if(!activity->instance){
 		TRACE(<< "OnContentRectChanged(): application is not alive, ignoring content rect change." << std::endl)
 		return;
@@ -1569,7 +1569,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 				)
 		);
 
-	//redraw, since WindowRedrawNeeded not always comes
+	// redraw, since WindowRedrawNeeded not always comes
 	render(app);
 }
 }
