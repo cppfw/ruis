@@ -1,7 +1,6 @@
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
-#include <puu/dom.hpp>
 
 #include "mordavokne/AppFactory.hpp"
 
@@ -242,40 +241,38 @@ public:
 
 
 class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
-	std::unique_ptr<stob::Node> root;
+	puu::forest root;
 
 public:
 
 	TreeViewItemsProvider(){
-		this->root = stob::parse(R"qwertyuiop(
-				{
-					root1{
-						subroot1{
-							subsubroot1
-							subsubroot2
-							subsubroot3
-							subsubroot4
-						}
-						subroot2
-						subroot3{
-							subsubroot0
-							subsubroot1{
-								subsubsubroot1
-								subsubsubroot2
-							}
-							subsubroot2
-						}
-					}
-					root2{
+		this->root = puu::read(R"qwertyuiop(
+				root1{
+					subroot1{
 						subsubroot1
-						subsubroot2{
-							trololo
-							"hello world!"
-						}
+						subsubroot2
+						subsubroot3
+						subsubroot4
 					}
-					root3
-					root4
+					subroot2
+					subroot3{
+						subsubroot0
+						subsubroot1{
+							subsubsubroot1
+							subsubsubroot2
+						}
+						subsubroot2
+					}
 				}
+				root2{
+					subsubroot1
+					subsubroot2{
+						trololo
+						"hello world!"
+					}
+				}
+				root3
+				root4
 			)qwertyuiop");
 	}
 
@@ -369,31 +366,19 @@ public:
 			return;
 		}
 
-		auto n = this->root.get();
-		if(!n){
+		puu::forest* list = &this->root;
+		puu::forest* parent_list = nullptr;
+
+		for(auto& i : this->selectedItem){
+			parent_list = list;
+			list = &(*list)[i].children;
+		}
+
+		if(!parent_list){
 			return;
 		}
 
-		decltype(n) parent = nullptr;
-		decltype(n) prev = nullptr;
-
-		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
-			parent = n;
-			auto next = n->child(*i);
-
-			n = next.get_node();
-			prev = next.prev();
-		}
-
-		if(!n){
-			return;
-		}
-
-		if(prev){
-			prev->insertNext(utki::makeUnique<stob::Node>(this->generateNewItemvalue().c_str()));
-		}else{
-			parent->addAsFirstChild(this->generateNewItemvalue().c_str());
-		}
+		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back()), puu::leaf(this->generateNewItemvalue()));
 
 		this->notifyItemAdded(this->selectedItem);
 		++this->selectedItem.back();
@@ -404,21 +389,19 @@ public:
 			return;
 		}
 
-		auto n = this->root.get();
-		if(!n){
+		puu::forest* list = &this->root;
+		puu::forest* parent_list = nullptr;
+
+		for(auto& i : this->selectedItem){
+			parent_list = list;
+			list = &(*list)[i].children;
+		}
+
+		if(!parent_list){
 			return;
 		}
 
-		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
-			auto next = n->child(*i);
-			n = next.get_node();
-		}
-
-		if(!n){
-			return;
-		}
-
-		n->insertNext(utki::makeUnique<stob::Node>(this->generateNewItemvalue().c_str()));
+		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back() + 1), puu::leaf(this->generateNewItemvalue()));
 
 		++this->selectedItem.back();
 		this->notifyItemAdded(this->selectedItem);
@@ -426,24 +409,19 @@ public:
 	}
 
 	void insertChild(){
-		auto n = this->root.get();
-		if(!n){
+		if(this->selectedItem.size() == 0){
 			return;
 		}
 
-		for(auto i = this->selectedItem.begin(); n && i != this->selectedItem.end(); ++i){
-			auto next = n->child(*i);
-			n = next.get_node();
+		puu::forest* list = &this->root;
+
+		for(auto& i : this->selectedItem){
+			list = &(*list)[i].children;
 		}
 
-		if(!n || this->selectedItem.size() == 0){
-			this->selectedItem.clear();
-			n = this->root.get();
-		}
+		list->push_back(puu::leaf(this->generateNewItemvalue()));
 
-		n->addAsFirstChild(this->generateNewItemvalue().c_str());
-
-		this->selectedItem.push_back(0);
+		this->selectedItem.push_back(list->size() - 1);
 		this->notifyItemAdded(this->selectedItem);
 		this->selectedItem.pop_back();
 	}
@@ -451,15 +429,18 @@ public:
 	std::shared_ptr<morda::Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 
-		auto n = this->root.get();
-		decltype(n) parent = nullptr;
+		auto list = &this->root;
+		decltype(list) parent_list = nullptr;
 
 		std::vector<bool> isLastItemInParent;
 
+		puu::tree* n = nullptr;
+
 		for(auto i = path.begin(); i != path.end(); ++i){
-			parent = n;
-			n = n->child(*i).get_node();
-			isLastItemInParent.push_back(n->next() == nullptr);
+			isLastItemInParent.push_back(*i + 1 == list->size());
+			n = &(*list)[*i];
+			parent_list = list;
+			list = &n->children;
 		}
 
 		auto ret = std::make_shared<morda::Row>(puu::forest());
@@ -474,7 +455,7 @@ public:
 			auto widget = morda::Morda::inst().inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
-			if(n->child()){
+			if(!n->children.empty()){
 				auto w = morda::Morda::inst().inflater.inflate(DPlusMinus);
 
 				auto plusminus = w->try_get_widget_as<morda::Image>("plusminus");
@@ -538,7 +519,7 @@ public:
 			{
 				auto value = v->try_get_widget_as<morda::Text>("value");
 				ASSERT(value)
-				value->setText(n->value());
+				value->setText(n->value.to_string());
 			}
 			{
 				auto colorLabel = v->try_get_widget_as<morda::Color>("selection");
@@ -574,9 +555,9 @@ public:
 							}
 						)qwertyuiop"
 				);
-			b->clicked = [this, path, n, parent](morda::PushButton& button){
-				ASSERT(parent)
-				parent->removeChild(n);
+			b->clicked = [this, path, parent_list](morda::PushButton& button){
+				ASSERT(parent_list)
+				parent_list->erase(std::next(parent_list->begin(), path.back()));
 				this->notifyItemRemoved(path);
 			};
 			ret->push_back(b);
@@ -586,13 +567,13 @@ public:
 	}
 
 	size_t count(const std::vector<size_t>& path) const noexcept override{
-		auto n = this->root.get();
+		auto children = &this->root;
 
-		for(auto i = path.begin(); i != path.end(); ++i){
-			n = n->child(*i).get_node();
+		for(auto& i : path){
+			children = &(*children)[i].children;
 		}
 
-		return n->count();
+		return children->size();
 	}
 
 };

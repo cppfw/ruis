@@ -87,26 +87,6 @@ public:
 			return *this;
 		}
 
-		Iterator& moveToNext(){
-			if(!this->operator bool()){
-				return *this;
-			}
-			ASSERT(this->pathIdx.size() != 0)
-			ASSERT(this->pathPtr.size() == this->pathIdx.size())
-			++this->pathIdx.back();
-			return *this;
-		}
-
-		Iterator& moveToPrev(){
-			if(!this->operator bool()){
-				return *this;
-			}
-			ASSERT(this->pathIdx.size() != 0)
-			ASSERT(this->pathPtr.size() == this->pathIdx.size())
-			--this->pathIdx.back();
-			return *this;
-		}
-
 		Iterator operator+(size_t i)const{
 			return Iterator(*this) += i;
 		}
