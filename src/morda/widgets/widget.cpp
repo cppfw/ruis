@@ -42,7 +42,7 @@ widget::widget(const puu::forest& desc){
 			}else if(p.value == "enabled"){
 				this->isEnabled_v = get_property_value(p).to_bool();
 			}
-		}catch(std::invalid_argument& e){
+		}catch(std::invalid_argument&){
 			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
 			throw;
 		}
@@ -61,7 +61,7 @@ widget::layout_params::layout_params(const puu::forest& desc){
 			}else if(p.value == "dy"){
 				this->dims.y = parse_layout_dimension_value(get_property_value(p));
 			}
-		}catch(std::invalid_argument& e){
+		}catch(std::invalid_argument&){
 			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
 			throw;
 		}
