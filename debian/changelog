@@ -1,3 +1,9 @@
+libmorda (0.5.102) unstable; urgency=medium
+
+  * relink to latest svgren
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 31 Jan 2020 01:20:33 +0200
+
 libmorda (0.5.101) unstable; urgency=medium
 
   * fix
