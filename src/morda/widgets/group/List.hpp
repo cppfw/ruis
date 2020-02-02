@@ -12,19 +12,19 @@ namespace morda{
  * This is a base class for vertical and horizontal lists.
  */
 class List :
-		//NOTE: order of virtual public and private declarations here matters for clang due to some bug,
-		//      see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
-		virtual public Widget,
-		private Container,
+		// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
+		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
+		virtual public widget,
+		private container,
 		protected OrientedWidget
 {
-	//index of the first item added to container as child
+	// index of the first item added to container as child
 	size_t addedIndex = size_t(-1);
 
 	size_t posIndex = 0;
 	real posOffset = real(0);
 
-	size_t numTailItems = 0;//Zero means that number of tail items has to be recomputed
+	size_t numTailItems = 0; // Zero means that number of tail items has to be recomputed
 	size_t firstTailItemIndex = 0;
 	real firstTailItemOffset = real(0);
 

@@ -153,7 +153,8 @@ void List::setScrollPosAsFactor(real factor){
 	this->updateChildrenList();
 }
 
-bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size_t index, list::const_iterator& insertBefore){
+// TODO: refactor
+bool List::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, list::const_iterator& insertBefore){
 	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
 
 	Vec2r dim = this->dimForWidget(*w, lp);
@@ -174,8 +175,8 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 	if(pos > 0){
 		if(!added){
 			insertBefore = this->insert(w, insertBefore);
-			++insertBefore;
 		}
+		++insertBefore;
 		if(this->addedIndex > index){
 			this->addedIndex = index;
 		}
@@ -183,9 +184,9 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 		++this->posIndex;
 		this->posOffset -= w->rect().d[longIndex];
 		if(added){
-			auto widget = this->remove(*w);
+			insertBefore = this->erase(insertBefore);
 			if(this->provider){
-				this->provider->recycle(index, widget);
+				this->provider->recycle(index, w);
 			}
 			++this->addedIndex;
 		}else{
@@ -202,7 +203,7 @@ bool List::arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool added, size
 	return false;
 }
 
-
+// TODO: refactor
 void List::updateChildrenList(){
 	if(!this->provider){
 		this->posIndex = 0;
@@ -230,9 +231,11 @@ void List::updateChildrenList(){
 
 //	TRACE(<< "List::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
 
-	//remove widgets from top
+	// remove widgets from top
 	for(; this->children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
-		auto w = (*this->children().begin())->remove_from_parent();
+		auto i = this->children().begin();
+		auto w = *i;
+		this->erase(i);
 		if(this->provider){
 			this->provider->recycle(this->addedIndex, w);
 		}
@@ -242,12 +245,11 @@ void List::updateChildrenList(){
 	size_t iterIndex = this->addedIndex;
 	const size_t iterEndIndex = iterIndex + this->children().size();
 	size_t index = this->posIndex;
-	for(; index < this->provider->count();){
-		std::shared_ptr<Widget> w;
+	for(bool is_last = false; index < this->provider->count() && !is_last;){
+		std::shared_ptr<widget> w;
 		bool isAdded;
 		if(iterIndex <= index && index < iterEndIndex && iter != this->children().end()){
 			w = *iter;
-			++iter;
 			++iterIndex;
 			isAdded = true;
 		}else{
@@ -255,34 +257,21 @@ void List::updateChildrenList(){
 			isAdded = false;
 		}
 
-		if(this->arrangeWidget(w, pos, isAdded, index, iter)){
-			++index;
-			break;
-		}
+		is_last = this->arrangeWidget(w, pos, isAdded, index, iter);
 		++index;
 	}
 
-	//remove rest
+	// remove rest
 	if(iterIndex < iterEndIndex){
-		size_t oldIterIndex = iterIndex;
-		for(;;){
-			auto i = iter;
-			++i;
-			++iterIndex;
-			if(i == this->children().end()){
-				break;
-			}
-			auto w = this->remove(i);
+		ASSERT(iter != this->children().end())
+		for(; iter != this->children().end(); ++iterIndex){
+			auto w = *iter;
+			iter = this->erase(iter);
 			if(this->provider){
 				this->provider->recycle(iterIndex, w);
 			}
 		}
-		auto w = this->remove(iter);
-		if(this->provider){
-			this->provider->recycle(oldIterIndex, w);
-		}
 	}
-
 }
 
 
