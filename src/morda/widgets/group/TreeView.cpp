@@ -38,7 +38,7 @@ void TreeView::ItemsProvider::notifyDataSetChanged() {
 	this->visible_tree.value = 0;
 	// this->visibleTree.clear();
 	this->iter_index = 0;
-	this->iter = utki::make_traversal(this->visible_tree.children).begin();
+	this->iter = this->traversal().begin();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
@@ -69,13 +69,11 @@ void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
 }
 
 const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for(size_t index)const{
-	auto traversal = utki::make_traversal(this->visible_tree.children);
-
 	if(index != this->iter_index){
 		if(index > this->iter_index){
 			this->iter = std::next(this->iter, index - this->iter_index);
 		}else{
-			ASSERT(index < this->iterIndex)
+			ASSERT(index < this->iter_index)
 			this->iter = std::prev(this->iter, this->iter_index - index);
 		}
 		this->iter_index = index;
@@ -85,9 +83,8 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for
 }
 
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
-	auto traversal = utki::make_traversal(this->visible_tree.children);
-	ASSERT(traversal.is_valid(index))
-	
+	ASSERT(this->traversal().is_valid(index))
+
 	auto i = this->visibleTree.pos(index);
 	ASSERT(i != this->visibleTree.end())
 

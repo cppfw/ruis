@@ -380,11 +380,15 @@ public:
 
 		mutable utki::tree<size_t> visible_tree{0};
 
+		utki::traversal<decltype(visible_tree.children)> traversal()noexcept{
+			return utki::make_traversal(this->visible_tree.children);
+		}
+
 		// mutable Tree visibleTree; // TODO: remove
 
 		// cached values for faster lookup by index
 		mutable size_t iter_index = 0;
-		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = utki::make_traversal(this->visible_tree.children).begin();
+		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
 
 		// TODO: remove
 		// mutable size_t iterIndex;
