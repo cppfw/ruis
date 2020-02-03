@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include <utki/tree.hpp>
+
 #include "../widget.hpp"
 #include "List.hpp"
 
@@ -11,343 +13,343 @@
 namespace morda{
 
 
-class Tree{
-	size_t size_var = 0;
+// class Tree{
+// 	size_t size_var = 0;
 
-	std::vector<Tree> children;
+// 	std::vector<Tree> children;
 
-public:
-	class Iterator{
-		friend class Tree;
+// public:
+// 	class Iterator{
+// 		friend class Tree;
 
-		std::vector<size_t> pathIdx;
-		std::vector<Tree*> pathPtr;
+// 		std::vector<size_t> pathIdx;
+// 		std::vector<Tree*> pathPtr;
 
-		Iterator(Tree* node, size_t idx){
-			ASSERT(node)
-			this->pathPtr.push_back(node);
-			this->pathIdx.push_back(idx);
-		}
-	public:
-		Iterator() = default;
+// 		Iterator(Tree* node, size_t idx){
+// 			ASSERT(node)
+// 			this->pathPtr.push_back(node);
+// 			this->pathIdx.push_back(idx);
+// 		}
+// 	public:
+// 		Iterator() = default;
 
-		Iterator(const Iterator&) = default;
-		Iterator& operator=(const Iterator&) = default;
+// 		Iterator(const Iterator&) = default;
+// 		Iterator& operator=(const Iterator&) = default;
 
-		size_t depth()const noexcept{
-			return this->pathIdx.size();
-		}
+// 		size_t depth()const noexcept{
+// 			return this->pathIdx.size();
+// 		}
 
-		const decltype(pathIdx)& path()const noexcept{
-			return this->pathIdx;
-		}
+// 		const decltype(pathIdx)& path()const noexcept{
+// 			return this->pathIdx;
+// 		}
 
-		Tree& parent(){
-			ASSERT(this->pathPtr.size() != 0)
-			return *this->pathPtr.back();
-		}
+// 		Tree& parent(){
+// 			ASSERT(this->pathPtr.size() != 0)
+// 			return *this->pathPtr.back();
+// 		}
 
-		Tree& operator*(){
-			ASSERT(this->pathPtr.size() != 0)
-			ASSERT(this->pathIdx.size() == this->pathPtr.size())
-			ASSERT(this->pathIdx.back() < this->pathPtr.back()->children.size())
-			return this->pathPtr.back()->children[this->pathIdx.back()];
-		}
+// 		Tree& operator*(){
+// 			ASSERT(this->pathPtr.size() != 0)
+// 			ASSERT(this->pathIdx.size() == this->pathPtr.size())
+// 			ASSERT(this->pathIdx.back() < this->pathPtr.back()->children.size())
+// 			return this->pathPtr.back()->children[this->pathIdx.back()];
+// 		}
 
-		Iterator& operator++(){
-			if(this->pathIdx.size() == 0){
-				return *this;
-			}
+// 		Iterator& operator++(){
+// 			if(this->pathIdx.size() == 0){
+// 				return *this;
+// 			}
 
-			{
-				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->pathIdx.back();
+// 			{
+// 				auto& list = this->pathPtr.back()->children;
+// 				auto& idx = this->pathIdx.back();
 
-				if(list[idx].children.size() != 0){
-					this->pathPtr.push_back(&list[idx]);
-					this->pathIdx.push_back(0);
-					return *this;
-				}
-			}
+// 				if(list[idx].children.size() != 0){
+// 					this->pathPtr.push_back(&list[idx]);
+// 					this->pathIdx.push_back(0);
+// 					return *this;
+// 				}
+// 			}
 
-			for(; this->pathIdx.size() != 0;){
-				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->pathIdx.back();
+// 			for(; this->pathIdx.size() != 0;){
+// 				auto& list = this->pathPtr.back()->children;
+// 				auto& idx = this->pathIdx.back();
 
-				++idx;
+// 				++idx;
 
-				if(idx == list.size()){
-					this->pathPtr.pop_back();
-					this->pathIdx.pop_back();
-				}else{
-					break;
-				}
-			}
+// 				if(idx == list.size()){
+// 					this->pathPtr.pop_back();
+// 					this->pathIdx.pop_back();
+// 				}else{
+// 					break;
+// 				}
+// 			}
 
-			return *this;
-		}
+// 			return *this;
+// 		}
 
-		Iterator operator+(size_t i)const{
-			return Iterator(*this) += i;
-		}
+// 		Iterator operator+(size_t i)const{
+// 			return Iterator(*this) += i;
+// 		}
 
-		Iterator& operator--(){
-			if(this->pathIdx.size() == 0){
-				return *this;
-			}
+// 		Iterator& operator--(){
+// 			if(this->pathIdx.size() == 0){
+// 				return *this;
+// 			}
 
-			if(this->pathIdx.back() == 0){
-				this->pathPtr.pop_back();
-				this->pathIdx.pop_back();
-				return *this;
-			}
+// 			if(this->pathIdx.back() == 0){
+// 				this->pathPtr.pop_back();
+// 				this->pathIdx.pop_back();
+// 				return *this;
+// 			}
 
-			for(;;){
-				auto& list = this->pathPtr.back()->children;
-				auto& idx = this->pathIdx.back();
-				ASSERT(idx != 0)
-				--idx;
+// 			for(;;){
+// 				auto& list = this->pathPtr.back()->children;
+// 				auto& idx = this->pathIdx.back();
+// 				ASSERT(idx != 0)
+// 				--idx;
 
-				if(list[idx].children.size() != 0){
-					this->pathPtr.push_back(&list[idx]);
-					this->pathIdx.push_back(list[idx].children.size());
-				}else{
-					break;
-				}
-			}
+// 				if(list[idx].children.size() != 0){
+// 					this->pathPtr.push_back(&list[idx]);
+// 					this->pathIdx.push_back(list[idx].children.size());
+// 				}else{
+// 					break;
+// 				}
+// 			}
 
-			return *this;
-		}
+// 			return *this;
+// 		}
 
 
 
-		Iterator& operator+=(size_t d){
-			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
-				this->operator++();
-			}
-			return *this;
-		}
+// 		Iterator& operator+=(size_t d){
+// 			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
+// 				this->operator++();
+// 			}
+// 			return *this;
+// 		}
 
-		Iterator& operator-=(size_t d){
-			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
-				this->operator--();
-			}
-			return *this;
-		}
+// 		Iterator& operator-=(size_t d){
+// 			for(decltype(d) i = 0; i != d && this->pathIdx.size() != 0; ++i){
+// 				this->operator--();
+// 			}
+// 			return *this;
+// 		}
 
-		bool operator==(const Iterator& i)const{
-			return this->pathIdx == i.pathIdx;
-		}
+// 		bool operator==(const Iterator& i)const{
+// 			return this->pathIdx == i.pathIdx;
+// 		}
 
-		bool operator!=(const Iterator& i)const{
-			return !this->operator==(i);
-		}
+// 		bool operator!=(const Iterator& i)const{
+// 			return !this->operator==(i);
+// 		}
 
-		bool operator>(const Iterator& i)const{
-			return this->pathIdx > i.pathIdx;
-		}
+// 		bool operator>(const Iterator& i)const{
+// 			return this->pathIdx > i.pathIdx;
+// 		}
 
-		bool operator<(const Iterator& i)const{
-			return this->pathIdx < i.pathIdx;
-		}
+// 		bool operator<(const Iterator& i)const{
+// 			return this->pathIdx < i.pathIdx;
+// 		}
 
-		bool operator>=(const Iterator& i)const{
-			return this->operator>(i) || this->operator ==(i);
-		}
+// 		bool operator>=(const Iterator& i)const{
+// 			return this->operator>(i) || this->operator ==(i);
+// 		}
 
-		bool operator<=(const Iterator& i)const{
-			return this->operator<(i) || this->operator ==(i);
-		}
+// 		bool operator<=(const Iterator& i)const{
+// 			return this->operator<(i) || this->operator ==(i);
+// 		}
 
-		explicit operator bool()const{
-			return this->path().size() != 0;
-		}
+// 		explicit operator bool()const{
+// 			return this->path().size() != 0;
+// 		}
 
-		Iterator& ascent(){
-			this->pathIdx.pop_back();
-			this->pathPtr.pop_back();
-			return *this;
-		}
+// 		Iterator& ascent(){
+// 			this->pathIdx.pop_back();
+// 			this->pathPtr.pop_back();
+// 			return *this;
+// 		}
 
-		Iterator& descent(size_t index){
-			if(this->pathIdx.size() == 0){
-				return *this;
-			}
+// 		Iterator& descent(size_t index){
+// 			if(this->pathIdx.size() == 0){
+// 				return *this;
+// 			}
 
-			if(this->pathIdx.back() >= this->pathPtr.back()->children.size()){
-				return *this;
-			}
-			this->pathPtr.push_back(&this->operator*());
-			this->pathIdx.push_back(index);
-			return *this;
-		}
-	};
+// 			if(this->pathIdx.back() >= this->pathPtr.back()->children.size()){
+// 				return *this;
+// 			}
+// 			this->pathPtr.push_back(&this->operator*());
+// 			this->pathIdx.push_back(index);
+// 			return *this;
+// 		}
+// 	};
 
-	void correctIteratorAfterDeletion(Iterator& iter, const std::vector<size_t>& deletedPath){
-		auto i = iter.pathIdx.begin();
-		auto j = deletedPath.begin();
-		for(; i != iter.pathIdx.end() && j != deletedPath.end(); ++i, ++j){
-			if(*i != *j){
-				if(j != deletedPath.end() - 1){
-					break;//items are in different branches, no correction is needed
-				}
+// 	void correctIteratorAfterDeletion(Iterator& iter, const std::vector<size_t>& deletedPath){
+// 		auto i = iter.pathIdx.begin();
+// 		auto j = deletedPath.begin();
+// 		for(; i != iter.pathIdx.end() && j != deletedPath.end(); ++i, ++j){
+// 			if(*i != *j){
+// 				if(j != deletedPath.end() - 1){
+// 					break;//items are in different branches, no correction is needed
+// 				}
 
-				if(*i > *j){
-					--(*i);
-				}
-				break;
-			}else{
-				if(j == deletedPath.end() - 1){
-					iter.pathIdx = deletedPath;
-					break;
-				}
-			}
-		}
-		iter.pathPtr = this->pos(iter.path()).pathPtr;
-		ASSERT(iter.pathPtr.size() != 0 && iter.pathIdx.size() == iter.pathPtr.size())
-		ASSERT_INFO(iter.pathPtr.back()->numChildren() >= iter.pathIdx.back(), "given iterator was malformed")
-		while(iter.path().size() != 0 && iter.pathPtr.back()->numChildren() == iter.pathIdx.back()){
-			iter.ascent();
-			if(iter.pathIdx.size() != 0){
-				++iter.pathIdx.back();
-			}
-		}
-	}
+// 				if(*i > *j){
+// 					--(*i);
+// 				}
+// 				break;
+// 			}else{
+// 				if(j == deletedPath.end() - 1){
+// 					iter.pathIdx = deletedPath;
+// 					break;
+// 				}
+// 			}
+// 		}
+// 		iter.pathPtr = this->pos(iter.path()).pathPtr;
+// 		ASSERT(iter.pathPtr.size() != 0 && iter.pathIdx.size() == iter.pathPtr.size())
+// 		ASSERT_INFO(iter.pathPtr.back()->numChildren() >= iter.pathIdx.back(), "given iterator was malformed")
+// 		while(iter.path().size() != 0 && iter.pathPtr.back()->numChildren() == iter.pathIdx.back()){
+// 			iter.ascent();
+// 			if(iter.pathIdx.size() != 0){
+// 				++iter.pathIdx.back();
+// 			}
+// 		}
+// 	}
 
-	void correctIteratorAfterAddition(Iterator& iter, const std::vector<size_t>& addedPath){
-		auto i = iter.pathIdx.begin();
-		auto j = addedPath.begin();
-		for(; i != iter.pathIdx.end() && j != addedPath.end(); ++i, ++j){
-			if(*i != *j){
-				if(j != addedPath.end() - 1){
-					break;//items are in different branches, no correction needed
-				}
+// 	void correctIteratorAfterAddition(Iterator& iter, const std::vector<size_t>& addedPath){
+// 		auto i = iter.pathIdx.begin();
+// 		auto j = addedPath.begin();
+// 		for(; i != iter.pathIdx.end() && j != addedPath.end(); ++i, ++j){
+// 			if(*i != *j){
+// 				if(j != addedPath.end() - 1){
+// 					break;//items are in different branches, no correction needed
+// 				}
 
-				if(*i > *j){
-					++(*i);
-				}
-				break;
-			}else{
-				if(j == addedPath.end() - 1){
-					++(*i);
-					break;
-				}
-			}
-		}
-		iter.pathPtr = this->pos(iter.path()).pathPtr;
-	}
+// 				if(*i > *j){
+// 					++(*i);
+// 				}
+// 				break;
+// 			}else{
+// 				if(j == addedPath.end() - 1){
+// 					++(*i);
+// 					break;
+// 				}
+// 			}
+// 		}
+// 		iter.pathPtr = this->pos(iter.path()).pathPtr;
+// 	}
 
-	void resetChildren(Iterator childrenOf, size_t numberOfChildren){
-		for(auto t : childrenOf.pathPtr){
-//			TRACE(<< "t = " << t << std::endl)
-			t->size_var -= (*childrenOf).size();
-			t->size_var += numberOfChildren;
-		}
+// 	void resetChildren(Iterator childrenOf, size_t numberOfChildren){
+// 		for(auto t : childrenOf.pathPtr){
+// //			TRACE(<< "t = " << t << std::endl)
+// 			t->size_var -= (*childrenOf).size();
+// 			t->size_var += numberOfChildren;
+// 		}
 
-		(*childrenOf).resetChildren(numberOfChildren);
-	}
+// 		(*childrenOf).resetChildren(numberOfChildren);
+// 	}
 
-	void resetChildren(size_t numberOfChildren){
-		this->children.clear();
-		this->children.resize(this->children.size() + numberOfChildren);
-		this->size_var = numberOfChildren;
-	}
+// 	void resetChildren(size_t numberOfChildren){
+// 		this->children.clear();
+// 		this->children.resize(this->children.size() + numberOfChildren);
+// 		this->size_var = numberOfChildren;
+// 	}
 
-	void add(size_t before){
-		this->children.insert(this->children.begin() + before, Tree());
-		++this->size_var;
-	}
+// 	void add(size_t before){
+// 		this->children.insert(this->children.begin() + before, Tree());
+// 		++this->size_var;
+// 	}
 
-	void add(Iterator before){
-		for(auto t : before.pathPtr){
-//			TRACE(<< "t = " << t << std::endl)
-			++t->size_var;
-		}
+// 	void add(Iterator before){
+// 		for(auto t : before.pathPtr){
+// //			TRACE(<< "t = " << t << std::endl)
+// 			++t->size_var;
+// 		}
 
-		before.parent().children.insert(before.parent().children.begin() + before.path().back(), Tree());
-	}
+// 		before.parent().children.insert(before.parent().children.begin() + before.path().back(), Tree());
+// 	}
 
-	void remove(Iterator i){
-		if(!i){
-			return;
-		}
+// 	void remove(Iterator i){
+// 		if(!i){
+// 			return;
+// 		}
 
-		size_t numNodesToRemove = (*i).size() + 1;
+// 		size_t numNodesToRemove = (*i).size() + 1;
 
-		for(auto p : i.pathPtr){
-			p->size_var -= numNodesToRemove;
-		}
+// 		for(auto p : i.pathPtr){
+// 			p->size_var -= numNodesToRemove;
+// 		}
 
-		size_t index = i.path().back();
-		i.ascent();
-		Tree* node;
-		if(!i){
-			node = this;
-		}else{
-			node = &(*i);
-		}
-		ASSERT(index < node->children.size())
-		node->children.erase(node->children.begin() + index);
-	}
+// 		size_t index = i.path().back();
+// 		i.ascent();
+// 		Tree* node;
+// 		if(!i){
+// 			node = this;
+// 		}else{
+// 			node = &(*i);
+// 		}
+// 		ASSERT(index < node->children.size())
+// 		node->children.erase(node->children.begin() + index);
+// 	}
 
-	void removeAll(Iterator& from){
-		size_t numChildrenToRemove = (*from).size();
-		(*from).children.clear();
-		(*from).size_var -= numChildrenToRemove;
-		ASSERT((*from).size() == 0)
-		for(auto t : from.pathPtr){
-			ASSERT(t->size_var >= numChildrenToRemove)
-			t->size_var -= numChildrenToRemove;
-		}
-	}
+// 	void removeAll(Iterator& from){
+// 		size_t numChildrenToRemove = (*from).size();
+// 		(*from).children.clear();
+// 		(*from).size_var -= numChildrenToRemove;
+// 		ASSERT((*from).size() == 0)
+// 		for(auto t : from.pathPtr){
+// 			ASSERT(t->size_var >= numChildrenToRemove)
+// 			t->size_var -= numChildrenToRemove;
+// 		}
+// 	}
 
-	void clear(){
-		this->children.clear();
-		this->size_var = 0;
-	}
+// 	void clear(){
+// 		this->children.clear();
+// 		this->size_var = 0;
+// 	}
 
-	decltype(size_var) size()const noexcept{
-		return this->size_var;
-	}
+// 	decltype(size_var) size()const noexcept{
+// 		return this->size_var;
+// 	}
 
-	size_t numChildren()const noexcept{
-		return this->children.size();
-	}
+// 	size_t numChildren()const noexcept{
+// 		return this->children.size();
+// 	}
 
-	Iterator begin(){
-		if(this->children.size() == 0){
-			return Iterator();
-		}
-		return Iterator(this, 0);
-	}
+// 	Iterator begin(){
+// 		if(this->children.size() == 0){
+// 			return Iterator();
+// 		}
+// 		return Iterator(this, 0);
+// 	}
 
-	Iterator end(){
-		return Iterator();
-	}
+// 	Iterator end(){
+// 		return Iterator();
+// 	}
 
-	Iterator pos(const std::vector<size_t>& path){
-		auto i = path.begin();
-		if(i == path.end()){
-			return this->end();
-		}
+// 	Iterator pos(const std::vector<size_t>& path){
+// 		auto i = path.begin();
+// 		if(i == path.end()){
+// 			return this->end();
+// 		}
 
-		Iterator ret(this, *i);
-		++i;
+// 		Iterator ret(this, *i);
+// 		++i;
 
-		for(; i != path.end(); ++i){
-			auto oldDepth = ret.depth();
-			ret.descent(*i);
-			if(oldDepth == ret.depth()){
-				break;
-			}
-		}
+// 		for(; i != path.end(); ++i){
+// 			auto oldDepth = ret.depth();
+// 			ret.descent(*i);
+// 			if(oldDepth == ret.depth()){
+// 				break;
+// 			}
+// 		}
 
-		return ret;
-	}
+// 		return ret;
+// 	}
 
-private:
+// private:
 
-};
+// };
 
 
 
@@ -376,13 +378,22 @@ public:
 
 		size_t count() const noexcept override;
 
-		mutable Tree visibleTree;
+		mutable utki::tree<size_t> visible_tree{0};
 
-		//cached values for faster lookup by index
-		mutable size_t iterIndex;
-		mutable decltype(visibleTree)::Iterator iter;
+		// mutable Tree visibleTree; // TODO: remove
 
-		const decltype(iter)& iterForIndex(size_t index)const;
+		// cached values for faster lookup by index
+		mutable size_t iter_index = 0;
+		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = utki::make_traversal(this->visible_tree.children).begin();
+
+		// TODO: remove
+		// mutable size_t iterIndex;
+		// mutable decltype(visibleTree)::Iterator iter;
+
+		// TODO: remove
+		// const decltype(iter)& iterForIndex(size_t index)const;
+
+		const decltype(iter)& iter_for(size_t index)const;
 
 	protected:
 		ItemsProvider(){

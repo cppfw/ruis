@@ -34,64 +34,65 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 }
 
 void TreeView::ItemsProvider::notifyDataSetChanged() {
-	this->visibleTree.clear();
-	this->iterIndex = 0;
-	this->iter = this->visibleTree.begin();
+	this->visible_tree.children.clear();
+	this->visible_tree.value = 0;
+	// this->visibleTree.clear();
+	this->iter_index = 0;
+	this->iter = utki::make_traversal(this->visible_tree.children).begin();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 
 size_t TreeView::ItemsProvider::count() const noexcept{
-	if(this->visibleTree.size() == 0){
-		auto size = this->count(std::vector<size_t>());
-		this->visibleTree.resetChildren(size);
-		this->iter = this->visibleTree.begin();
-		this->iterIndex = 0;
-	}
-	return this->visibleTree.size();
+	// if(this->visibleTree.size() == 0){
+	// 	auto size = this->count(std::vector<size_t>());
+	// 	this->visibleTree.resetChildren(size);
+	// 	this->iter = this->visibleTree.begin();
+	// 	this->iterIndex = 0;
+	// }
+	return this->visible_tree.value;
 }
 
 
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
-	auto i = this->iterForIndex(index);
+	auto& i = this->iter_for(index);
 
 //	TRACE(<< "i.path() = " << (*i).numChildren() << std::endl)
 
-	return this->getWidget(i.path(), (*i).numChildren() == 0);
+	return this->getWidget(i.index(), i->value == 0);
 }
 
 void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
-	auto i = this->iterForIndex(index);
+	auto& i = this->iter_for(index);
 
-	this->recycle(i.path(), std::move(w));
+	this->recycle(i.index(), std::move(w));
 }
 
-const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iterForIndex(size_t index) const {
-	if(this->iter == this->visibleTree.end()){
-		this->iter = this->visibleTree.begin();
-		this->iterIndex = 0;
-	}
+const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for(size_t index)const{
+	auto traversal = utki::make_traversal(this->visible_tree.children);
 
-	ASSERT(this->iter.path().size() != 0)
-
-	if(index != this->iterIndex){
-		if(index > this->iterIndex){
-			this->iter += index - this->iterIndex;
-		}else{ ASSERT(index < this->iterIndex)
-			this->iter -= this->iterIndex - index;
+	if(index != this->iter_index){
+		if(index > this->iter_index){
+			this->iter = std::next(this->iter, index - this->iter_index);
+		}else{
+			ASSERT(index < this->iterIndex)
+			this->iter = std::prev(this->iter, this->iter_index - index);
 		}
-		this->iterIndex = index;
+		this->iter_index = index;
 	}
 
 	return this->iter;
 }
 
-void TreeView::ItemsProvider::collapse(const std::vector<size_t>& path) {
-	auto i = this->visibleTree.pos(path);
+void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
+	auto traversal = utki::make_traversal(this->visible_tree.children);
+	ASSERT(traversal.is_valid(index))
+	
+	auto i = this->visibleTree.pos(index);
 	ASSERT(i != this->visibleTree.end())
 
 	if(this->iter > i){
-		auto pnext = path;
+		auto pnext = index;
 		++pnext.back();
 
 		if(this->iter.path() < pnext){
