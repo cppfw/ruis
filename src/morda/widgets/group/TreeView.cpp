@@ -33,23 +33,16 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 		);
 }
 
-void TreeView::ItemsProvider::notifyDataSetChanged() {
+void TreeView::ItemsProvider::notifyDataSetChanged(){
 	this->visible_tree.children.clear();
 	this->visible_tree.value = 0;
-	// this->visibleTree.clear();
 	this->iter_index = 0;
 	this->iter = this->traversal().begin();
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
 
-size_t TreeView::ItemsProvider::count() const noexcept{
-	// if(this->visibleTree.size() == 0){
-	// 	auto size = this->count(std::vector<size_t>());
-	// 	this->visibleTree.resetChildren(size);
-	// 	this->iter = this->visibleTree.begin();
-	// 	this->iterIndex = 0;
-	// }
+size_t TreeView::ItemsProvider::count()const noexcept{
 	return this->visible_tree.value;
 }
 
@@ -82,69 +75,132 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for
 	return this->iter;
 }
 
+void TreeView::ItemsProvider::remove_children(decltype(iter) from){
+	auto num_to_remove = from->value;
+	from->children.clear();
+	from->value = 0;
+
+	auto index = from.index();
+
+	auto p = &this->visible_tree;
+	for(auto t : index){
+		p->value -= num_to_remove;
+		p = &p->children[t];
+	}
+	ASSERT(p->children[index.back()] == 0)
+}
+
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 	ASSERT(this->traversal().is_valid(index))
 
-	auto i = this->visibleTree.pos(index);
-	ASSERT(i != this->visibleTree.end())
+	auto i = this->traversal().make_iterator(index);
 
 	if(this->iter > i){
 		auto pnext = index;
 		++pnext.back();
 
-		if(this->iter.path() < pnext){
+		if(this->iter.index() < pnext){
 			while(this->iter != i){
 				--this->iter;
-				--this->iterIndex;
+				--this->iter_index;
 			}
 		}else{
-			this->iterIndex -= (*i).size();
+			this->iter_index -= i->value;
 		}
 	}
 
-	this->visibleTree.removeAll(i);
+	this->remove_children(i);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
-void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& path) {
-	auto s = this->count(path);
+void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children){
+	auto index = i.index();
+	ASSERT(this->traversal().is_valid(index));
+
+	auto old_num_children = i->value;
+
+	auto p = &this->visible_tree;
+	for(auto t : index){
+		p->value -= old_num_children;
+		p->value += num_children;
+		p = &p->children[t];
+	}
+
+	i->children.clear();
+	i->children.resize(num_children);
+	i->value = num_children;
+	for(auto& k : i->children){
+		k = 0;
+	}
+}
+
+void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
+	auto num_children = this->count(index);
 //	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
-	if(s == 0){
+	if(num_children == 0){
 		return;
 	}
 
-	auto i = this->visibleTree.pos(path);
-	ASSERT(i != this->visibleTree.end())
+	ASSERT(this->traversal().is_valid(index))
+	auto i = this->traversal().make_iterator(index);
 
-	ASSERT((*i).numChildren() == 0)
+	ASSERT(i->value == 0)
 
 	if(this->iter > i){
-		this->iterIndex += s;
+		this->iter_index += num_children;
 	}
 
-	this->visibleTree.resetChildren(i, s);
+	this->set_children(i, num_children);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
-void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& path) {
-	auto i = this->visibleTree.pos(path);
-	if(!i || i.path().back() > i.parent().numChildren()){
+void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) {
+	if(index.empty()){
+		throw std::invalid_argument("passed in index is empty");
+	}
+	auto parent_index = utki::make_span(index.data(), index.size() - 1);
+	if(!this->traversal().is_valid(parent_index)){
 		return;
 	}
+	auto parent_iter = this->traversal().make_iterator(parent_index);
 
-	if(i.parent().numChildren() == 0){
-		this->List::ItemsProvider::notifyDataSetChanged();
-		return;
+	auto old_iter_index = this->iter.index();
+	if(old_iter_index >= index){
+		++this->iter_index;
 	}
 
-	if(this->iter >= i){
-		++this->iterIndex;
+	parent_iter->children.insert(std::next(parent_iter->children.begin(), index.back()), 0);
+
+	auto p = &this->visible_tree;
+	for(auto k : index){
+		++p->value;
+		p = &p->children[k];
 	}
 
-	this->visibleTree.add(i);
-	this->visibleTree.correctIteratorAfterAddition(this->iter, i.path());
+	// correct current iterator after insertion
+
+	auto i = old_iter_index.begin();
+	auto j = index.begin();
+	for(; i != old_iter_index.end() && j != index.end(); ++i, ++j){
+		if(*i != *j){
+			if(j != index.end() - 1){
+				break; // items are in different branches, no correction needed
+			}
+
+			if(*i > *j){
+				++(*i);
+			}
+			break;
+		}else{
+			if(j == index.end() - 1){
+				++(*i);
+				break;
+			}
+		}
+	}
+	this->iter = this->traversal().make_iterator(old_iter_index);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }

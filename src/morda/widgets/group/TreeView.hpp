@@ -378,40 +378,35 @@ public:
 
 		size_t count() const noexcept override;
 
+		// value of each tree node is the number of children in whole subtreee
 		mutable utki::tree<size_t> visible_tree{0};
 
 		utki::traversal<decltype(visible_tree.children)> traversal()noexcept{
 			return utki::make_traversal(this->visible_tree.children);
 		}
 
-		// mutable Tree visibleTree; // TODO: remove
-
 		// cached values for faster lookup by index
 		mutable size_t iter_index = 0;
 		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
 
-		// TODO: remove
-		// mutable size_t iterIndex;
-		// mutable decltype(visibleTree)::Iterator iter;
-
-		// TODO: remove
-		// const decltype(iter)& iterForIndex(size_t index)const;
-
 		const decltype(iter)& iter_for(size_t index)const;
+
+		void remove_children(decltype(iter) from);
+		void set_children(decltype(iter) i, size_t num_children);
 
 	protected:
 		ItemsProvider(){
 		}
 	public:
 
-		virtual std::shared_ptr<Widget> getWidget(const std::vector<size_t>& path, bool isCollapsed) = 0;
+		virtual std::shared_ptr<widget> getWidget(const std::vector<size_t>& index, bool isCollapsed) = 0;
 
-		virtual void recycle(const std::vector<size_t>& path, std::shared_ptr<Widget> w){}
+		virtual void recycle(const std::vector<size_t>& index, std::shared_ptr<widget> w){}
 
-		virtual size_t count(const std::vector<size_t>& path)const noexcept = 0;
+		virtual size_t count(const std::vector<size_t>& index)const noexcept = 0;
 
-		void uncollapse(const std::vector<size_t>& path);
-		void collapse(const std::vector<size_t>& path);
+		void uncollapse(const std::vector<size_t>& index);
+		void collapse(const std::vector<size_t>& index);
 
 		void notifyDataSetChanged();
 
@@ -421,16 +416,16 @@ public:
 
 		/**
 		 * @brief Notify that an item has been removed.
-		 * @param path - index path of the removed item.
+		 * @param index - index path of the removed item.
 		 */
-		void notifyItemRemoved(const std::vector<size_t>& path);
+		void notifyItemRemoved(const std::vector<size_t>& index);
 
 		/**
 		 * @brief Notify that a new item has been added.
-		 * @param path - index path to a newly added item. Essentially, it is a path
-		 *               to an item before which a new item has been added.
+		 * @param index - index path to a newly added item. Essentially, it is a path
+		 *                to an item before which a new item has been added.
 		 */
-		void notifyItemAdded(const std::vector<size_t>& path);
+		void notifyItemAdded(const std::vector<size_t>& index);
 
 	private:
 
