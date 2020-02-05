@@ -205,27 +205,70 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
 
-void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& path) {
-	auto i = this->visibleTree.pos(path);
-//	TRACE(<< " sss = " << i.path()[0] << " iter = " << this->iter.path()[0] << std::endl)
+void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index){
+	if(index.empty()){
+		throw std::invalid_argument("passed in index is empty");
+	}
+	
+	ASSERT(this->traversal().is_valid(index))
+	auto ri = this->traversal().make_iterator(index);
 
-	if(this->iter >= i){
-		auto pnext = path;
-		++pnext.back();
+	auto iter_index = this->iter.index();
+	if(iter_index >= index){
+		auto next_index = index;
+		++next_index.back();
 
-		if(this->iter.path() < pnext){
-			while(this->iter != i){
-				ASSERT(this->iterIndex != 0)
+		if(iter_index < next_index){
+			while(this->iter != ri){
+				ASSERT(this->iter_index != 0)
 				--this->iter;
-				--this->iterIndex;
+				--this->iter_index;
 			}
 		}else{
-			this->iterIndex -= ((*i).size() + 1);
+			this->iter_index -= (ri->value + 1);
 		}
 	}
 
-	this->visibleTree.remove(i);
-	this->visibleTree.correctIteratorAfterDeletion(this->iter, i.path());
+	iter_index = this->iter.index();
+
+	this->traversal().erase(ri);
+
+	// correct current iterator after deletion
+	{
+		auto i = iter_index.begin();
+		auto j = index.begin();
+		for(; i != iter_index.end() && j != index.end(); ++i, ++j){
+			if(*i != *j){
+				if(j != index.end() - 1){
+					break; // items are in different branches, no correction is needed
+				}
+
+				if(*i > *j){
+					--(*i);
+				}
+				break;
+			}else{
+				if(j == index.end() - 1){
+					iter_index = index;
+					break;
+				}
+			}
+		}
+	}
+	ASSERT(this->traversal().is_valid(iter_index))
+	ASSERT(iter_index.size() != 0)
+	while(iter_index.size() != 1){
+		auto parent_iter_span = utki::make_span(iter_index.data(), iter_index.size() - 1);
+		ASSERT(this->traversal().is_valid(parent_iter_span));
+		auto parent_iter = this->traversal().make_iterator(parent_iter_span);
+		if(parent_iter->children.size() != iter_index.back()){
+			break;
+		}
+		iter_index.pop_back();
+		ASSERT(!iter_index.empty())
+		++iter_index.back();
+	}
+	this->iter = this->traversal().make_iterator(iter_index);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
