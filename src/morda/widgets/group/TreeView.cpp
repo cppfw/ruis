@@ -43,6 +43,17 @@ void TreeView::ItemsProvider::notifyDataSetChanged(){
 
 
 size_t TreeView::ItemsProvider::count()const noexcept{
+	if(this->visible_tree.value == 0){
+		ASSERT(this->visible_tree.children.empty())
+		auto size = this->count(std::vector<size_t>());
+		this->visible_tree.value = size;
+		this->visible_tree.children.resize(size);
+		for(auto& k : this->visible_tree.children){
+			k.value = 0;
+		}
+		this->iter = this->traversal().begin();
+		this->iter_index = 0;
+	}
 	return this->visible_tree.value;
 }
 
@@ -209,7 +220,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}
-	
+
 	ASSERT(this->traversal().is_valid(index))
 	auto ri = this->traversal().make_iterator(index);
 

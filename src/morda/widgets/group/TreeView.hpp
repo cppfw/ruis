@@ -376,12 +376,12 @@ public:
 
 		std::shared_ptr<Widget> getWidget(size_t index)override;
 
-		size_t count() const noexcept override;
+		size_t count()const noexcept override;
 
-		// value of each tree node is the number of children in whole subtreee
-		mutable utki::tree<size_t> visible_tree{0};
+		// value of each tree node is the number of children in whole subtree
+		mutable utki::tree<size_t> visible_tree = decltype(visible_tree)(0);
 
-		utki::traversal<decltype(visible_tree.children)> traversal()noexcept{
+		utki::traversal<decltype(visible_tree.children)> traversal()const noexcept{
 			return utki::make_traversal(this->visible_tree.children);
 		}
 
