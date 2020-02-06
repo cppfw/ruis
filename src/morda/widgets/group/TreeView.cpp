@@ -305,6 +305,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 			}
 		}
 	}
+
 	ASSERT(this->traversal().is_valid(cur_iter_index))
 	ASSERT(cur_iter_index.size() != 0)
 	while(cur_iter_index.size() != 1){
