@@ -86,17 +86,18 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for
 
 void TreeView::ItemsProvider::remove_children(decltype(iter) from){
 	auto num_to_remove = from->value;
+	auto index = from.index();
+
 	from->children.clear();
 	from->value = 0;
-
-	auto index = from.index();
 
 	auto p = &this->visible_tree;
 	for(auto t : index){
 		p->value -= num_to_remove;
 		p = &p->children[t];
 	}
-	ASSERT(p->children[index.back()] == 0)
+	ASSERT(p->children.empty())
+	ASSERT(p->value == 0)
 }
 
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
@@ -105,10 +106,10 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 	auto i = this->traversal().make_iterator(index);
 
 	if(this->iter > i){
-		auto pnext = index;
-		++pnext.back();
+		auto next_index = index;
+		++next_index.back();
 
-		if(this->iter.index() < pnext){
+		if(this->iter.index() < next_index){
 			while(this->iter != i){
 				--this->iter;
 				--this->iter_index;
@@ -118,7 +119,11 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 		}
 	}
 
+	auto ii = this->iter.index();
+
 	this->remove_children(i);
+
+	this->iter = this->traversal().make_iterator(ii);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
