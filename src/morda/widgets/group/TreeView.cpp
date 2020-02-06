@@ -35,7 +35,7 @@ void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 
 void TreeView::ItemsProvider::notifyDataSetChanged(){
 	this->visible_tree.children.clear();
-	this->visible_tree.value = 0;
+	this->visible_tree.value.subtree_size = 0;
 	this->iter_index = 0;
 	this->iter = this->traversal().begin();
 	this->List::ItemsProvider::notifyDataSetChanged();
@@ -43,25 +43,24 @@ void TreeView::ItemsProvider::notifyDataSetChanged(){
 
 
 size_t TreeView::ItemsProvider::count()const noexcept{
-	if(this->visible_tree.value == 0){
+	if(this->visible_tree.value.subtree_size == 0){
 		ASSERT(this->visible_tree.children.empty())
 		auto size = this->count(std::vector<size_t>());
-		this->visible_tree.value = size;
-		this->visible_tree.children.resize(size);
-		for(auto& k : this->visible_tree.children){
-			k.value = 0;
+		if(size != 0){
+			this->visible_tree.value.subtree_size = size;
+			this->visible_tree.children.resize(size);
+			this->iter = this->traversal().begin();
+			this->iter_index = 0;
 		}
-		this->iter = this->traversal().begin();
-		this->iter_index = 0;
 	}
-	return this->visible_tree.value;
+	return this->visible_tree.value.subtree_size;
 }
 
 
 std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
 	auto& i = this->iter_for(index);
 
-	return this->getWidget(i.index(), i->value == 0);
+	return this->getWidget(i.index(), i->value.subtree_size == 0);
 }
 
 void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
@@ -85,19 +84,19 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for
 }
 
 void TreeView::ItemsProvider::remove_children(decltype(iter) from){
-	auto num_to_remove = from->value;
+	auto num_to_remove = from->value.subtree_size;
 	auto index = from.index();
 
 	from->children.clear();
-	from->value = 0;
+	from->value.subtree_size = 0;
 
 	auto p = &this->visible_tree;
 	for(auto t : index){
-		p->value -= num_to_remove;
+		p->value.subtree_size -= num_to_remove;
 		p = &p->children[t];
 	}
 	ASSERT(p->children.empty())
-	ASSERT(p->value == 0)
+	ASSERT(p->value.subtree_size == 0)
 }
 
 void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
@@ -115,14 +114,16 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 				--this->iter_index;
 			}
 		}else{
-			this->iter_index -= i->value;
+			this->iter_index -= i->value.subtree_size;
 		}
 	}
 
+	// iterator is invalidated after removing children form the tree node, so save its index to re-create it after
 	auto ii = this->iter.index();
 
 	this->remove_children(i);
 
+	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
@@ -132,21 +133,18 @@ void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children
 	auto index = i.index();
 	ASSERT(this->traversal().is_valid(index));
 
-	auto old_num_children = i->value;
+	auto old_num_children = i->value.subtree_size;
 
 	auto p = &this->visible_tree;
 	for(auto t : index){
-		p->value -= old_num_children;
-		p->value += num_children;
+		p->value.subtree_size -= old_num_children;
+		p->value.subtree_size += num_children;
 		p = &p->children[t];
 	}
 
 	i->children.clear();
 	i->children.resize(num_children);
-	i->value = num_children;
-	for(auto& k : i->children){
-		k = 0;
-	}
+	i->value.subtree_size = num_children;
 }
 
 void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
@@ -159,7 +157,7 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
 	ASSERT(this->traversal().is_valid(index))
 	auto i = this->traversal().make_iterator(index);
 
-	ASSERT(i->value == 0)
+	ASSERT(i->value.subtree_size == 0)
 
 	if(this->iter > i){
 		this->iter_index += num_children;
@@ -185,11 +183,11 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) 
 		++this->iter_index;
 	}
 
-	parent_iter->children.insert(std::next(parent_iter->children.begin(), index.back()), 0);
+	parent_iter->children.insert(std::next(parent_iter->children.begin(), index.back()), {});
 
 	auto p = &this->visible_tree;
 	for(auto k : index){
-		++p->value;
+		++p->value.subtree_size;
 		p = &p->children[k];
 	}
 
@@ -239,7 +237,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 				--this->iter_index;
 			}
 		}else{
-			this->iter_index -= (ri->value + 1);
+			this->iter_index -= (ri->value.subtree_size + 1);
 		}
 	}
 

@@ -37,8 +37,11 @@ public:
 
 		size_t count()const noexcept override;
 
-		// value of each tree node is the number of children in whole subtree
-		mutable utki::tree<size_t> visible_tree = decltype(visible_tree)(0);
+		struct node{
+			size_t subtree_size = 0;
+		};
+		
+		mutable utki::tree<node> visible_tree;
 
 		utki::traversal<decltype(visible_tree.children)> traversal()const noexcept{
 			return utki::make_traversal(this->visible_tree.children);
@@ -55,6 +58,7 @@ public:
 
 	protected:
 		ItemsProvider(){
+			this->notifyDataSetChanged();
 		}
 	public:
 
