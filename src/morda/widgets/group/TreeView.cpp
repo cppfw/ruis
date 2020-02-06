@@ -63,7 +63,7 @@ std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
 	return this->getWidget(i.index(), i->value.subtree_size == 0);
 }
 
-void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<Widget> w){
+void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<widget> w){
 	auto& i = this->iter_for(index);
 
 	this->recycle(i.index(), std::move(w));
@@ -118,7 +118,7 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 		}
 	}
 
-	// iterator is invalidated after removing children form the tree node, so save its index to re-create it after
+	// iterator is invalidated after removing children from the tree node, so save its index to re-create it after
 	auto ii = this->iter.index();
 
 	this->remove_children(i);
@@ -142,6 +142,8 @@ void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children
 		p = &p->children[t];
 	}
 
+	ASSERT(p == i.operator->())
+
 	i->children.clear();
 	i->children.resize(num_children);
 	i->value.subtree_size = num_children;
@@ -163,7 +165,11 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
 		this->iter_index += num_children;
 	}
 
+	auto ii = this->iter.index();
+
 	this->set_children(i, num_children);
+
+	this->iter = this->traversal().make_iterator(ii);
 
 	this->List::ItemsProvider::notifyDataSetChanged();
 }
@@ -172,24 +178,42 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) 
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}
+
+	// find parent tree node list to which the new node was added
 	auto parent_index = utki::make_span(index.data(), index.size() - 1);
-	if(!this->traversal().is_valid(parent_index)){
+	decltype(this->visible_tree.children)* parent_list;
+	if(parent_index.empty()){ // if added to root node
+		parent_list = &this->visible_tree.children;
+	}else{
+		ASSERT(this->traversal().is_valid(parent_index))
+		auto parent_iter = this->traversal().make_iterator(parent_index);
+		parent_list = &parent_iter->children;
+	}
+
+	if(parent_list->empty()){
+		// item was added to a collapsed subtree
+		this->List::ItemsProvider::notifyDataSetChanged();
 		return;
 	}
-	auto parent_iter = this->traversal().make_iterator(parent_index);
 
 	auto old_iter_index = this->iter.index();
 	if(old_iter_index >= index){
 		++this->iter_index;
 	}
 
-	parent_iter->children.insert(std::next(parent_iter->children.begin(), index.back()), {});
+	// TRACE(<< "parent_list->size() = " << parent_list->size() << std::endl)
+
+	parent_list->insert(std::next(parent_list->begin(), index.back()), node());
+
+	// TRACE(<< "parent_list->size() = " << parent_list->size() << std::endl)
 
 	auto p = &this->visible_tree;
 	for(auto k : index){
 		++p->value.subtree_size;
 		p = &p->children[k];
 	}
+
+	ASSERT(p->value.subtree_size == 0)
 
 	// correct current iterator after insertion
 

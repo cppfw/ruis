@@ -534,6 +534,11 @@ public:
 					}
 
 					this->selectedItem = path;
+					TRACE(<< " selected item = ")
+					for(auto& k : this->selectedItem){
+						TRACE(<< k << ", ")
+					}
+					TRACE(<< std::endl)
 					this->notifyItemChanged();
 					//TODO:
 
