@@ -91,9 +91,9 @@ before_install:
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
     choco upgrade --no-progress -y msys2 &&
     export msys2="/c/tools/msys64/msys2_shell.cmd -defterm -no-start -msys -here -c" &&
-    $msys2 "echo -e '[igagis_msys]\\nSigLevel ^= Optional TrustAll\\nServer ^= https://dl.bintray.com/igagis/msys2/msys' ^>^> /etc/pacman.conf" &&
-    $msys2 "echo -e '[igagis_mingw64]\\nSigLevel ^= Optional TrustAll\\nServer ^= https://dl.bintray.com/igagis/msys2/mingw64' ^>^> /etc/pacman.conf" &&
-    $msys2 "echo -e '[igagis_mingw32]\\nSigLevel ^= Optional TrustAll\\nServer ^= https://dl.bintray.com/igagis/msys2/mingw32' ^>^> /etc/pacman.conf" &&
+    $msys2 "echo -e '[igagis_msys]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/msys' ^>^> /etc/pacman.conf" &&
+    $msys2 "echo -e '[igagis_mingw64]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw64' ^>^> /etc/pacman.conf" &&
+    $msys2 "echo -e '[igagis_mingw32]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw32' ^>^> /etc/pacman.conf" &&
     $msys2 "pacman -Sy --noconfirm myci mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain";
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ] || [ "$TRAVIS_OS_NAME" == "osx" ]; then
