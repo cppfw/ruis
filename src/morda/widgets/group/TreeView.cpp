@@ -272,6 +272,15 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 
 	cur_iter_index = this->iter.index();
 
+	{
+		auto num_children_removed = ri->value.subtree_size + 1;
+		auto* p = &this->visible_tree;
+		for(auto k : index){
+			p->value.subtree_size -= num_children_removed;
+			p = &p->children[k];
+		}
+	}
+
 	this->traversal().erase(ri);
 
 	// correct current iterator after deletion
