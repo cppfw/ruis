@@ -1,5 +1,5 @@
 #include <morda/util/util.hpp>
-#include <morda/Morda.hpp>
+#include <morda/context.hpp>
 
 #include <utki/windows.hpp>
 #include <utki/Unique.hpp>
