@@ -1,6 +1,6 @@
 #include "List.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 
 
@@ -22,7 +22,7 @@ public:
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		auto i = std::next(this->widgets.begin(), index);
-		return morda::Morda::inst().inflater.inflate(i, i + 1);
+		return morda::context::inst().inflater.inflate(i, i + 1);
 	}
 
 
@@ -412,7 +412,7 @@ void List::ItemsProvider::notifyDataSetChanged() {
 		return;
 	}
 
-	Morda::inst().postToUiThread(
+	context::inst().postToUiThread(
 		[this](){
 			this->list->handleDataSetChanged();
 		}

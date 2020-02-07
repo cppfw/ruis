@@ -1,7 +1,7 @@
 #include <utki/util.hpp>
 #include <utki/types.hpp>
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 #include "../../util/util.hpp"
 #include "../proxy/ResizeProxy.hpp"
 
@@ -122,7 +122,7 @@ NinePatch::NinePatch(const puu::forest& desc) :
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(*i).to_string()));
+			this->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(*i).to_string()));
 		}
 	}
 

@@ -1,4 +1,4 @@
-#include "Morda.hpp"
+#include "context.hpp"
 
 #include <utki/config.hpp>
 
@@ -30,10 +30,10 @@
 using namespace morda;
 
 
-Morda::T_Instance Morda::instance;
+context::T_Instance context::instance;
 
 
-Morda::Morda(
+context::context(
 		std::shared_ptr<morda::Renderer> r,
 		real dotsPerInch,
 		real dotsPerDp,
@@ -44,7 +44,7 @@ Morda::Morda(
 		units(dotsPerInch, dotsPerDp)
 {
 	if(!this->renderer_v){
-		throw morda::Exc("no Renderer provided to Morda constructor");
+		throw morda::Exc("no Renderer provided to context constructor");
 	}
 	if(!this->postToUiThread_v){
 		throw morda::Exc("no post to UI thread function provided");
@@ -54,7 +54,7 @@ Morda::Morda(
 
 
 
-void Morda::initStandardWidgets(papki::File& fi) {
+void context::initStandardWidgets(papki::File& fi) {
 
 	//mount default resource pack
 
@@ -102,7 +102,7 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	}
 
 	if(!mounted){
-		throw morda::Exc("Morda::initStandardWidgets(): could not mount default resource pack");
+		throw morda::Exc("context::initStandardWidgets(): could not mount default resource pack");
 	}
 
 	// add standard widgets to inflater
@@ -130,17 +130,17 @@ void Morda::initStandardWidgets(papki::File& fi) {
 	this->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
-		auto t = morda::Morda::inst().resMan.load<res_puu>("morda_gui_defs");
+		auto t = morda::context::inst().resMan.load<res_puu>("morda_gui_defs");
 
 		this->inflater.inflate(t->forest());
 
 	}catch(ResourceManager::Exc&){
 		//ignore
-		TRACE(<< "Morda::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
+		TRACE(<< "context::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}
 }
 
-void Morda::setViewportSize(const morda::Vec2r& size){
+void context::setViewportSize(const morda::Vec2r& size){
 	this->viewportSize = size;
 
 	if(!this->rootWidget){
@@ -152,16 +152,16 @@ void Morda::setViewportSize(const morda::Vec2r& size){
 
 
 
-void Morda::setRootWidget(const std::shared_ptr<morda::Widget> w){
+void context::setRootWidget(const std::shared_ptr<morda::Widget> w){
 	this->rootWidget = std::move(w);
 
 	this->rootWidget->move_to(morda::Vec2r(0));
 	this->rootWidget->resize(this->viewportSize);
 }
 
-void Morda::render(const Matr4r& matrix)const{
+void context::render(const Matr4r& matrix)const{
 	if(!this->rootWidget){
-		TRACE(<< "Morda::render(): root widget is not set" << std::endl)
+		TRACE(<< "context::render(): root widget is not set" << std::endl)
 		return;
 	}
 
@@ -186,7 +186,7 @@ void Morda::render(const Matr4r& matrix)const{
 
 
 
-void Morda::onMouseMove(const Vec2r& pos, unsigned id){
+void context::onMouseMove(const Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -199,7 +199,7 @@ void Morda::onMouseMove(const Vec2r& pos, unsigned id){
 
 
 
-void Morda::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
+void context::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -212,7 +212,7 @@ void Morda::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, u
 
 
 
-void Morda::onMouseHover(bool isHovered, unsigned pointerID){
+void context::onMouseHover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -220,7 +220,7 @@ void Morda::onMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->set_hovered(isHovered, pointerID);
 }
 
-void Morda::onKeyEvent(bool isDown, key keyCode){
+void context::onKeyEvent(bool isDown, key keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){
@@ -235,7 +235,7 @@ void Morda::onKeyEvent(bool isDown, key keyCode){
 }
 
 
-void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
+void context::setFocusedWidget(const std::shared_ptr<Widget> w){
 	if(auto prev = this->focusedWidget.lock()){
 		prev->isFocused_v = false;
 		prev->on_focus_changed();
@@ -249,7 +249,7 @@ void Morda::setFocusedWidget(const std::shared_ptr<Widget> w){
 	}
 }
 
-void Morda::onCharacterInput(const UnicodeProvider& unicode, key key){
+void context::onCharacterInput(const UnicodeProvider& unicode, key key){
 	if(auto w = this->focusedWidget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
@@ -258,7 +258,7 @@ void Morda::onCharacterInput(const UnicodeProvider& unicode, key key){
 	}
 }
 
-void Morda::postToUiThread(std::function<void()>&& f) {
+void context::postToUiThread(std::function<void()>&& f) {
 	ASSERT(this->postToUiThread_v)
 
 	this->postToUiThread_v(std::move(f));

@@ -306,7 +306,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
 	morda::key::unknown
 };
 
-class KeyEventUnicodeProvider : public morda::Morda::UnicodeProvider{
+class KeyEventUnicodeProvider : public morda::context::UnicodeProvider{
 	char32_t c;
 public:
 	KeyEventUnicodeProvider(char32_t unicodeChar = 0) :
@@ -321,11 +321,7 @@ public:
 		return std::u32string(&this->c, 1);
 	}
 };
-
-
-
-}// ~namespace
-
+}
 
 namespace{
 

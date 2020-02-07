@@ -1,4 +1,4 @@
-#include "../Morda.hpp"
+#include "../context.hpp"
 
 #include "../util/util.hpp"
 
@@ -291,7 +291,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	Morda::inst().setFocusedWidget(this->sharedFromThis(this));
+	context::inst().setFocusedWidget(this->sharedFromThis(this));
 }
 
 
@@ -303,9 +303,9 @@ void widget::unfocus()noexcept{
 		return;
 	}
 
-	ASSERT(Morda::inst().focusedWidget.lock() && Morda::inst().focusedWidget.lock().operator->() == this)
+	ASSERT(context::inst().focusedWidget.lock() && context::inst().focusedWidget.lock().operator->() == this)
 
-	Morda::inst().setFocusedWidget(nullptr);
+	context::inst().setFocusedWidget(nullptr);
 }
 
 

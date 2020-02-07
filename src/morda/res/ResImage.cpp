@@ -11,15 +11,11 @@
 
 #include "ResImage.hpp"
 
-#include "../Morda.hpp"
+#include "../context.hpp"
 
 #include "../util/util.hpp"
 
-
-
 using namespace morda;
-
-
 
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
 		ResImage::QuadTexture(rect.d.abs()),
@@ -155,10 +151,10 @@ public:
 		ASSERT(this->dom)
 //		TRACE(<< "width = " << this->dom->width << std::endl)
 //		TRACE(<< "height = " << this->dom->height << std::endl)
-//		TRACE(<< "dpi = " << morda::Morda::inst().units.dpi() << std::endl)
+//		TRACE(<< "dpi = " << morda::context::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::Parameters svgParams;
-		svgParams.dpi = morda::Morda::inst().units.dpi();
+		svgParams.dpi = morda::context::inst().units.dpi();
 		svgParams.widthRequest = width;
 		svgParams.heightRequest = height;
 		auto svg = svgren::render(*this->dom, svgParams);

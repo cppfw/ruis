@@ -8,7 +8,7 @@
 
 #include "../ResourceManager.hpp"
 
-#include "../Morda.hpp"
+#include "../context.hpp"
 
 namespace morda{
 
@@ -69,7 +69,7 @@ public:
 	 * @param dpi - dots per inch.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual Vec2r dims(real dpi = morda::Morda::inst().units.dpi())const noexcept = 0;
+	virtual Vec2r dims(real dpi = morda::context::inst().units.dpi())const noexcept = 0;
 	
 	/**
 	 * @brief Get raster texture of given dimensions.

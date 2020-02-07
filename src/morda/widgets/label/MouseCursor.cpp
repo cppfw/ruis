@@ -1,6 +1,6 @@
 #include "MouseCursor.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
@@ -17,7 +17,7 @@ MouseCursor::MouseCursor(const puu::forest& desc) :
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(morda::Morda::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
+			this->setCursor(morda::context::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
 		}
 	}
 }

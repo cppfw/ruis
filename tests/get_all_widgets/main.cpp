@@ -1,4 +1,4 @@
-#include "../../src/morda/Morda.hpp"
+#include "../../src/morda/context.hpp"
 #include "../../src/morda/widgets/group/Column.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
@@ -7,7 +7,7 @@
 int main(int argc, char** argv){
 	// test the get_all_widgets() function
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				Column{

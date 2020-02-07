@@ -19,7 +19,7 @@ namespace morda{
  * For example every 30 milliseconds it will call the update() method.
  */
 class Updateable : virtual public utki::shared{
-	friend class Morda;
+	friend class context;
 
 private:
 	class Updater{

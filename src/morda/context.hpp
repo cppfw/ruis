@@ -13,7 +13,7 @@
 
 namespace morda{
 
-class Morda : public utki::intrusive_singleton<Morda>{
+class context : public utki::intrusive_singleton<context>{
 	friend T_Singleton;
 	static T_Instance instance;
 
@@ -36,20 +36,20 @@ public:
 	 * @param dotsPerDp - desired dots per density pixel.
 	 * @param postToUiThreadFunction - function to use when posting an action to UI thread is needed.
 	 */
-	Morda(
-			std::shared_ptr<morda::Renderer> r,
+	context(
+			std::shared_ptr<morda::Renderer> r, // TODO: should the renderer be constant?
 			real dotsPerInch,
 			real dotsPerDp,
 			std::function<void(std::function<void()>&&)>&& postToUiThreadFunction);
 
-	Morda(const Morda&) = delete;
-	Morda& operator=(const Morda&) = delete;
+	context(const context&) = delete;
+	context& operator=(const context&) = delete;
 
-	virtual ~Morda()noexcept{}
+	virtual ~context()noexcept{}
 
 
 private:
-	Updateable::Updater updater;
+	Updateable::Updater updater; // TODO: inject as dependency
 public:
 
 	/**
@@ -261,8 +261,8 @@ public:
 };
 
 
-inline Morda& inst(){
-	return morda::Morda::inst();
+inline context& inst(){
+	return morda::context::inst();
 }
 
 }

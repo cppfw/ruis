@@ -1,6 +1,6 @@
 #include "Updateable.hpp"
 
-#include "Morda.hpp"
+#include "context.hpp"
 
 #include <chrono>
 
@@ -181,7 +181,7 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	
 	this->pendingAddition = true;
 	
-	Morda::inst().updater.toAdd.push_front(this->sharedFromThis(this));
+	context::inst().updater.toAdd.push_front(this->sharedFromThis(this));
 }
 
 
@@ -193,7 +193,7 @@ void Updateable::stopUpdating()noexcept{
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		Morda::inst().updater.removeFromToAdd(this);
+		context::inst().updater.removeFromToAdd(this);
 	}
 
 	this->isUpdating_v = false;

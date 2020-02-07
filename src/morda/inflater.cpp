@@ -14,7 +14,7 @@
 #include "widgets/proxy/MouseProxy.hpp"
 #include "widgets/proxy/ResizeProxy.hpp"
 
-#include "Morda.hpp"
+#include "context.hpp"
 
 #include "util/util.hpp"
 

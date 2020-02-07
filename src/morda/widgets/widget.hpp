@@ -47,7 +47,7 @@ class container;
  */
 class widget : virtual public utki::shared{
 	friend class container;
-	friend class Morda;
+	friend class context;
 public:
 	/**
 	 * @brief Basic layout parameters.

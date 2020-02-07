@@ -1,4 +1,4 @@
-#include "../../src/morda/Morda.hpp"
+#include "../../src/morda/context.hpp"
 #include "../../src/morda/widgets/group/Pile.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
@@ -7,7 +7,7 @@
 int main(int argc, char** argv){
 	// test that whole definition chain is substituted
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
@@ -43,7 +43,7 @@ int main(int argc, char** argv){
 
 	// test template properties overriding
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
 
 	// test template arguments
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
@@ -125,7 +125,7 @@ int main(int argc, char** argv){
 
 	// test two levels of templates
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				Cont{ x y layout dx
@@ -175,7 +175,7 @@ int main(int argc, char** argv){
 
 	// test template which nests same named widget on 2nd level
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				Container_{Container}
@@ -214,7 +214,7 @@ int main(int argc, char** argv){
 
 	// test two defs blocks in widget
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				defs{
@@ -239,7 +239,7 @@ int main(int argc, char** argv){
 
 	// test variables overriding
 	{
-		morda::Morda m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
+		morda::context m(std::make_shared<FakeRenderer>(), 0, 0, [](std::function<void()>&&){});
 		auto w = m.inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				test_var{13}

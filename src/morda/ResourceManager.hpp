@@ -44,7 +44,7 @@ class Resource;
  * @endcode
  */
 class ResourceManager{
-	friend class Morda;
+	friend class context;
 	friend class Resource;
 
 	std::map<const std::string, std::weak_ptr<Resource>> resMap;
@@ -117,7 +117,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = morda::Morda::inst().resMan().load<morda::ResImage>("img_my_image_name");
+	 * auto image = morda::context::inst().resMan().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param resName - name of the resource as it appears in resource description.

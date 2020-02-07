@@ -1,6 +1,6 @@
 #include "NinePatchButton.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
@@ -25,9 +25,9 @@ NinePatchButton::NinePatchButton(const puu::forest& desc) :
 				}
 
 				if(pp.value == "unpressed"){
-					this->setUnpressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
+					this->setUnpressedNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
 				}else if(pp.value == "pressed"){
-					this->setPressedNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
+					this->setPressedNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(pp).to_string()));
 				}
 			}
 		}

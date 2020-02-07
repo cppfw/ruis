@@ -1,6 +1,6 @@
 #include "ResCursor.hpp"
 
-#include "../Morda.hpp"
+#include "../context.hpp"
 
 #include "../util/util.hpp"
 
@@ -20,7 +20,7 @@ std::shared_ptr<ResCursor> ResCursor::load(const puu::forest& desc, const papki:
 
 	for(auto& p : desc){
 		if(p.value == "image"){
-			image = morda::Morda::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+			image = morda::context::inst().resMan.load<ResImage>(get_property_value(p).to_string());
 		}else if(p.value == "hotspot"){
 			hotspot = parse_vec2(p.children);
 			hotspot_set = true;

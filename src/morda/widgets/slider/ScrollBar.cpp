@@ -1,6 +1,6 @@
 #include "ScrollBar.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
@@ -72,20 +72,20 @@ ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
 		}
 
 		if(p.value == "background"){
-			np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			np->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
 			background_set = true;
 		}else if(p.value == "handleNinePatch"){
-			hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			hi->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
 			handle_set = true;
 		}
 	}
 
 	if(!background_set){
-		np->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+		np->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
 	}
 
 	if(!handle_set){
-		hi->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
+		hi->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
 	}
 
 	auto hp = this->try_get_widget_as<MouseProxy>("morda_handle_proxy");

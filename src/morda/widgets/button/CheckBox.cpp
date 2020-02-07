@@ -1,6 +1,6 @@
 #include "CheckBox.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 
 using namespace morda;
@@ -29,7 +29,7 @@ CheckBox::CheckBox(const puu::forest& desc) :
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->isPressed());
 
-	this->setNinePatch(morda::Morda::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
+	this->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>("morda_npt_checkbox_bg"));
 }
 
 

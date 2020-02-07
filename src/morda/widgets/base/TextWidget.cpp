@@ -1,6 +1,6 @@
 #include "TextWidget.hpp"
 
-#include "../../Morda.hpp"
+#include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
@@ -29,13 +29,13 @@ TextWidget::TextWidget(const puu::forest& desc) :
 		}
 
 		if(p.value == "font"){
-			this->font_v = Morda::inst().resMan.load<morda::ResFont>(get_property_value(p).to_string().c_str());
+			this->font_v = context::inst().resMan.load<morda::ResFont>(get_property_value(p).to_string().c_str());
 		}
 	}
 
 	// load default font if needed
 	if(!this->font_v){
-		this->font_v = morda::Morda::inst().resMan.load<ResFont>("morda_fnt_normal");
+		this->font_v = morda::context::inst().resMan.load<ResFont>("morda_fnt_normal");
 	}
 }
 
