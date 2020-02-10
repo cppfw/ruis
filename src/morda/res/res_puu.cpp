@@ -8,7 +8,7 @@ res_puu::res_puu(puu::forest&& forest) :
 		s(std::move(forest))
 {}
 
-std::shared_ptr<res_puu> res_puu::load(const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<res_puu> res_puu::load(context& ctx, const puu::forest& desc, const papki::file& fi){
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());

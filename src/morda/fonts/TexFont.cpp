@@ -99,13 +99,13 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 }
 
 
-TexFont::TexFont(const papki::File& fi, unsigned fontSize, unsigned maxCached) :
+TexFont::TexFont(const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {
 //	TRACE(<< "TexFont::Load(): enter" << std::endl)
 
-	//set character size in pixels
+	// set character size in pixels
 	{
 		FT_Error error = FT_Set_Pixel_Sizes(
 				this->face.f,

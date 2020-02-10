@@ -51,7 +51,7 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> load(const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResTexture> load(context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 

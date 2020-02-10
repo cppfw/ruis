@@ -40,6 +40,7 @@ context::context(
 		std::function<void(std::function<void()>&&)>&& postToUiThreadFunction
 	) :
 		renderer_v(std::move(r)),
+		resMan(*this),
 		postToUiThread_v(std::move(postToUiThreadFunction)),
 		units(dotsPerInch, dotsPerDp)
 {

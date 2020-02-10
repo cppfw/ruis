@@ -11,6 +11,7 @@
 
 #include "../config.hpp"
 
+#include "../render/Renderer.hpp"
 #include "../render/Texture2D.hpp"
 #include "../render/RenderFactory.hpp"
 
@@ -79,7 +80,7 @@ bool is_leaf_property(const puu::leaf& l);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-std::shared_ptr<Texture2D> loadTexture(const papki::File& fi);
+std::shared_ptr<Texture2D> loadTexture(Renderer& r, const papki::file& fi);
 
 
 /**

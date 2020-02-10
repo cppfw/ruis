@@ -37,13 +37,13 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<ResTexture> tex;
 	Rectr rect(-1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = morda::inst().resMan.load<ResTexture>(get_property_value(p).to_string());
+			tex = ctx.resMan.load<ResTexture>(get_property_value(p).to_string());
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
@@ -98,8 +98,8 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(const papki::file& fi){
-		return std::make_shared<ResRasterImage>(loadTexture(fi));
+	static std::shared_ptr<ResRasterImage> load(context& ctx, const papki::file& fi){
+		return std::make_shared<ResRasterImage>(loadTexture(ctx.renderer(), fi));
 	}
 };
 
@@ -138,7 +138,7 @@ public:
 		unsigned height = unsigned(forDim.y);
 //		TRACE(<< "imHeight = " << imHeight << std::endl)
 
-		{//check if in cache
+		{ // check if in cache
 			auto i = this->cache.find(std::make_tuple(width, height));
 			if(i != this->cache.end()){
 				if(auto p = i->second.lock()){
@@ -180,23 +180,21 @@ public:
 };
 }
 
-
-
-std::shared_ptr<ResImage> ResImage::load(const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
-			return ResImage::load(fi);
+			return ResImage::load(ctx, fi);
 		}
 	}
 
-	return ResAtlasImage::load(desc, fi);
+	return ResAtlasImage::load(ctx, desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return ResSvgImage::load(fi);
 	}else{
-		return ResRasterImage::load(fi);
+		return ResRasterImage::load(ctx, fi);
 	}
 }

@@ -14,7 +14,7 @@ namespace morda{
 
 
 class Resource;
-
+class context;
 
 
 /**
@@ -85,7 +85,10 @@ class resource_loader{
 	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
 
 private:
-	resource_loader() = default;
+	context& ctx;
+	resource_loader(context& ctx) :
+			ctx(ctx)
+	{}
 
 public:
 	/**
@@ -178,7 +181,7 @@ template <class T> std::shared_ptr<T> resource_loader::load(const char* resName)
 		throw Exc("resource_loader::Load(): resource description is empty");
 	}
 
-	auto resource = T::load(ret.e.children, *ret.rp.fi);
+	auto resource = T::load(this->ctx, ret.e.children, *ret.rp.fi);
 
 	this->addResource(resource, ret.e.value.to_string());
 

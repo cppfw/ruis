@@ -13,14 +13,14 @@ ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
 {}
 
 
-std::shared_ptr<ResCursor> ResCursor::load(const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResCursor> ResCursor::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
 	std::shared_ptr<ResImage> image;
 	Vec2r hotspot;
 	bool hotspot_set = false;
 
 	for(auto& p : desc){
 		if(p.value == "image"){
-			image = morda::context::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+			image = ctx.resMan.load<ResImage>(get_property_value(p).to_string());
 		}else if(p.value == "hotspot"){
 			hotspot = parse_vec2(p.children);
 			hotspot_set = true;

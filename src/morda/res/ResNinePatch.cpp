@@ -59,7 +59,7 @@ public:
 }
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::load(const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResNinePatch> ResNinePatch::load(context& ctx, const puu::forest& desc, const papki::file& fi){
 	Sidesr borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){
@@ -72,7 +72,7 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(const puu::forest& desc, const 
 		throw std::runtime_error("ResNinePatch::load(): could not read borders");
 	}
 
-	auto image = ResImage::load(fi);
+	auto image = ResImage::load(ctx, fi);
 	
 	return std::make_shared<ResNinePatch>(image, borders);
 }

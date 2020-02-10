@@ -63,7 +63,7 @@ class TexFont : public Font{
 		FT_Face f;
 		std::vector<std::uint8_t> fontFile;//the buffer should be alive as long as the Face is alive!!!
 
-		FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi);
+		FreeTypeFaceWrapper(FT_Library& lib, const papki::file& fi);
 		~FreeTypeFaceWrapper()noexcept;
 	} face;
 	
@@ -77,7 +77,7 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	TexFont(const papki::File& fi, unsigned fontSize, unsigned maxCached);
+	TexFont(const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real charAdvance(char32_t c) const override;
 	
