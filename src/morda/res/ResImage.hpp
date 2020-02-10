@@ -6,7 +6,7 @@
 
 #include "ResTexture.hpp"
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 #include "../context.hpp"
 
@@ -27,7 +27,7 @@ namespace morda{
  * @endcode
  */
 class ResImage : public Resource{
-	friend class ResourceManager;
+	friend class resource_loader;
 	
 protected:
 	ResImage(){}

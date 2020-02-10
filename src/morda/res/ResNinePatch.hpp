@@ -2,7 +2,7 @@
 
 #include "../config.hpp"
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 #include "ResImage.hpp"
 
@@ -28,7 +28,7 @@ namespace morda{
  * @endcode
  */
 class ResNinePatch : public Resource{
-	friend class ResourceManager;
+	friend class resource_loader;
 	
 	const std::shared_ptr<const ResImage> image;
 	

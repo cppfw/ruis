@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 #include <puu/tree.hpp>
 
@@ -23,7 +23,7 @@ namespace morda{
  * @endcode
  */
 class res_puu : public Resource{
-	friend class ResourceManager;
+	friend class resource_loader;
 	
 	puu::forest s;
 public:

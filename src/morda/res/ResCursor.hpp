@@ -39,7 +39,7 @@ public:
 		return this->hotspot_v;
 	}
 private:
-	friend class ResourceManager;
+	friend class resource_loader;
 	
 	static std::shared_ptr<ResCursor> load(const puu::forest& desc, const papki::file &fi);
 };

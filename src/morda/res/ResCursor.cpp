@@ -28,11 +28,11 @@ std::shared_ptr<ResCursor> ResCursor::load(const puu::forest& desc, const papki:
 	}
 
 	if(!image){
-		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'image' property");
+		throw resource_loader::Exc("ResCursor::load(): resource description does not contain 'image' property");
 	}
 	
 	if(!hotspot_set){
-		throw ResourceManager::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
+		throw resource_loader::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
 	return std::make_shared<ResCursor>(*image, hotspot);

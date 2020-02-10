@@ -1,7 +1,7 @@
 #include <papki/root_dir.hpp>
 #include <papki/util.hpp>
 
-#include "ResourceManager.hpp"
+#include "resource_loader.hpp"
 
 #include "util/util.hpp"
 
@@ -18,7 +18,7 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 
 
-void ResourceManager::mountResPack(const papki::file& fi){
+void resource_loader::mountResPack(const papki::file& fi){
 	ASSERT(!fi.is_open())
 	
 	std::string dir = fi.dir();
@@ -59,7 +59,7 @@ void ResourceManager::mountResPack(const papki::file& fi){
 
 
 
-ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std::string& resName){
+resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std::string& resName){
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
 		auto j = std::find(i->script.begin(), i->script.end(), resName);
 		if(j != i->script.end()){
@@ -69,12 +69,12 @@ ResourceManager::FindInScriptRet ResourceManager::findResourceInScript(const std
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
-	throw ResourceManager::Exc(ss.str());
+	throw resource_loader::Exc(ss.str());
 }
 
 
 
-void ResourceManager::addResource(const std::shared_ptr<Resource>& res, const std::string& name){
+void resource_loader::addResource(const std::shared_ptr<Resource>& res, const std::string& name){
 	ASSERT(res)
 
 	ASSERT(this->resMap.find(name) == this->resMap.end())

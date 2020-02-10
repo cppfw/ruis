@@ -1,5 +1,5 @@
 #include "res_puu.hpp"
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 
 using namespace morda;

@@ -9,7 +9,7 @@
 #include "Updateable.hpp"
 
 #include "inflater.hpp"
-#include "ResourceManager.hpp"
+#include "resource_loader.hpp"
 
 namespace morda{
 
@@ -55,7 +55,7 @@ public:
 	/**
 	 * @brief Instantiation of the resource manager.
 	 */
-	ResourceManager resMan;
+	resource_loader resMan;
 
 	/**
 	 * @brief Instantiation of the GUI inflater.
@@ -65,18 +65,18 @@ public:
 
 private:
 	//NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
-	std::shared_ptr<morda::Widget> rootWidget;
+	std::shared_ptr<morda::widget> rootWidget;
 
-	std::weak_ptr<Widget> focusedWidget;
+	std::weak_ptr<widget> focusedWidget;
 
-	void setFocusedWidget(const std::shared_ptr<Widget> w);
+	void setFocusedWidget(const std::shared_ptr<widget> w);
 
 public:
 	/**
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void setRootWidget(const std::shared_ptr<morda::Widget> w);
+	void setRootWidget(const std::shared_ptr<morda::widget> w);
 
 private:
 	Vec2r viewportSize;
@@ -102,7 +102,7 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
-	void initStandardWidgets(papki::File& fi);
+	void initStandardWidgets(papki::file& fi);
 
 
 	/**

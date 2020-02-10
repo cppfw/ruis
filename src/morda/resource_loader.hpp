@@ -43,7 +43,7 @@ class Resource;
  *
  * @endcode
  */
-class ResourceManager{
+class resource_loader{
 	friend class context;
 	friend class Resource;
 
@@ -85,7 +85,7 @@ class ResourceManager{
 	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
 
 private:
-	ResourceManager() = default;
+	resource_loader() = default;
 
 public:
 	/**
@@ -138,17 +138,17 @@ private:
  * @brief Base class for all resources.
  */
 class Resource : virtual public utki::shared{
-	friend class ResourceManager;
+	friend class resource_loader;
 protected:
 	//this can only be used as a base class
-	Resource(){}
+	Resource() = default;
 public:
 	virtual ~Resource()noexcept{}
 };
 
 
 
-template <class T> std::shared_ptr<T> ResourceManager::findResourceInResMap(const char* resName){
+template <class T> std::shared_ptr<T> resource_loader::findResourceInResMap(const char* resName){
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
 		if(auto r = (*i).second.lock()){
@@ -161,7 +161,7 @@ template <class T> std::shared_ptr<T> ResourceManager::findResourceInResMap(cons
 
 
 
-template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName){
+template <class T> std::shared_ptr<T> resource_loader::load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
 	if(auto r = this->findResourceInResMap<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
@@ -175,7 +175,7 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
 	if(ret.e.children.empty()){
-		throw Exc("ResourceManager::Load(): resource description is empty");
+		throw Exc("resource_loader::Load(): resource description is empty");
 	}
 
 	auto resource = T::load(ret.e.children, *ret.rp.fi);
@@ -186,10 +186,4 @@ template <class T> std::shared_ptr<T> ResourceManager::load(const char* resName)
 	return resource;
 }
 
-
-
-
-
-
-
-}//~namespace
+}

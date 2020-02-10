@@ -2,7 +2,7 @@
 
 #include <puu/tree.hpp>
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 #include "../render/Texture2D.hpp"
 
@@ -26,7 +26,7 @@ namespace morda{
  * @endcode
  */
 class ResTexture : public morda::Resource{
-	friend class morda::ResourceManager;
+	friend class morda::resource_loader;
 
 	std::shared_ptr<Texture2D> tex_v;
 public:

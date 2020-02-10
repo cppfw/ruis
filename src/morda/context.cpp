@@ -134,7 +134,7 @@ void context::initStandardWidgets(papki::File& fi) {
 
 		this->inflater.inflate(t->forest());
 
-	}catch(ResourceManager::Exc&){
+	}catch(resource_loader::Exc&){
 		//ignore
 		TRACE(<< "context::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}

@@ -4,7 +4,7 @@
 
 #include <puu/tree.hpp>
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 
 #include "../fonts/Font.hpp"
 
@@ -34,7 +34,7 @@ namespace morda{
  * @endcode
  */
 class ResFont : public morda::Resource{
-	friend class morda::ResourceManager;
+	friend class morda::resource_loader;
 
 	std::unique_ptr<morda::Font> f;
 

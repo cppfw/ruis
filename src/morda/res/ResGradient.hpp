@@ -4,7 +4,7 @@
 
 #include <puu/tree.hpp>
 
-#include "../ResourceManager.hpp"
+#include "../resource_loader.hpp"
 #include "../config.hpp"
 
 #include "../render/VertexArray.hpp"
@@ -38,7 +38,7 @@ namespace morda{
  * @endcode
  */
 class ResGradient : public Resource{
-	friend class ResourceManager;
+	friend class resource_loader;
 	
 	std::shared_ptr<VertexArray> vao;
 	
