@@ -44,7 +44,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	auto& r = morda::inst().renderer();
+	auto& r = *morda::inst().renderer;
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);
@@ -66,7 +66,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 			}
 			this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
 		}else{
-			this->vao = morda::inst().renderer().posTexQuad01VAO;
+			this->vao = morda::inst().renderer->posTexQuad01VAO;
 		}
 	}
 	ASSERT(this->scaledImage)

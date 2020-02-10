@@ -146,8 +146,8 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 
 	if(this->cache){
 		if(this->cacheDirty){
-			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
-			morda::inst().renderer().setScissorEnabled(false);
+			bool scissorTestWasEnabled = morda::inst().renderer->isScissorEnabled();
+			morda::inst().renderer->setScissorEnabled(false);
 
 			//check if can re-use old texture
 			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
@@ -157,7 +157,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
-			morda::inst().renderer().setScissorEnabled(scissorTestWasEnabled);
+			morda::inst().renderer->setScissorEnabled(scissorTestWasEnabled);
 			this->cacheDirty = false;
 		}
 
@@ -173,22 +173,22 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			r4::recti scissor = this->compute_viewport_rect(matrix);
 
 			r4::recti oldScissor;
-			bool scissorTestWasEnabled = morda::inst().renderer().isScissorEnabled();
+			bool scissorTestWasEnabled = morda::inst().renderer->isScissorEnabled();
 			if(scissorTestWasEnabled){
-				oldScissor = morda::inst().renderer().getScissorRect();
+				oldScissor = morda::inst().renderer->getScissorRect();
 				scissor.intersect(oldScissor);
 			}else{
-				morda::inst().renderer().setScissorEnabled(true);
+				morda::inst().renderer->setScissorEnabled(true);
 			}
 
-			morda::inst().renderer().setScissorRect(scissor);
+			morda::inst().renderer->setScissorRect(scissor);
 
 			this->render(matrix);
 
 			if(scissorTestWasEnabled){
-				morda::inst().renderer().setScissorRect(oldScissor);
+				morda::inst().renderer->setScissorRect(oldScissor);
 			}else{
-				morda::inst().renderer().setScissorEnabled(false);
+				morda::inst().renderer->setScissorEnabled(false);
 			}
 		}else{
 			this->render(matrix);
@@ -218,14 +218,14 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 	if(reuse && reuse->dims() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
-		tex = morda::inst().renderer().factory->createTexture2D(
+		tex = morda::inst().renderer->factory->createTexture2D(
 				morda::Texture2D::TexType_e::RGBA,
 				this->rect().d.to<unsigned>(),
 				nullptr
 			);
 	}
 
-	auto& r = morda::inst().renderer();
+	auto& r = *morda::inst().renderer;
 
 	ASSERT(tex)
 
@@ -233,16 +233,16 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
-	auto oldViewport = morda::inst().renderer().getViewport();
+	auto oldViewport = morda::inst().renderer->getViewport();
 	utki::ScopeExit scopeExit([&oldViewport](){
-		morda::inst().renderer().setViewport(oldViewport);
+		morda::inst().renderer->setViewport(oldViewport);
 	});
 
-	morda::inst().renderer().setViewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
+	morda::inst().renderer->setViewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
 
-	morda::inst().renderer().clearFramebuffer();
+	morda::inst().renderer->clearFramebuffer();
 
-	Matr4r matrix = morda::inst().renderer().initialMatrix;
+	Matr4r matrix = morda::inst().renderer->initialMatrix;
 	matrix.translate(-1, 1);
 	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
 
@@ -257,7 +257,7 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = morda::inst().renderer();
+	auto& r = *morda::inst().renderer;
 	ASSERT(this->cacheTex)
 	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
 }
@@ -312,7 +312,7 @@ void widget::unfocus()noexcept{
 
 r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
 	r4::recti ret(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer().getViewport().d.to<real>()).rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().renderer->getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y -= ret.d.y;

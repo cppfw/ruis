@@ -60,9 +60,9 @@ BlendingWidget::BlendingWidget(const puu::forest& desc) :
 }
 
 void BlendingWidget::applyBlending() const{
-	morda::inst().renderer().setBlendEnabled(this->isBlendingEnabled());
+	morda::inst().renderer->setBlendEnabled(this->isBlendingEnabled());
 	if(this->isBlendingEnabled()){
-		morda::inst().renderer().setBlendFunc(this->blend_v.src, this->blend_v.dst, this->blend_v.srcAlpha, this->blend_v.dstAlpha);
+		morda::inst().renderer->setBlendFunc(this->blend_v.src, this->blend_v.dst, this->blend_v.srcAlpha, this->blend_v.dstAlpha);
 	}
 }
 

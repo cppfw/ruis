@@ -45,7 +45,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 			);
 		matr.scale(Vec2r(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
-		auto& r = morda::inst().renderer();
+		auto& r = *morda::inst().renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, 0xff804040);
 	}
 	
@@ -69,7 +69,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 		matr.translate(this->cursorPos, 0);
 		matr.scale(Vec2r(cursorWidth_c * morda::inst().units.dotsPerDp(), this->rect().d.y));
 
-		auto& r = morda::inst().renderer();
+		auto& r = *morda::inst().renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 	}
 }

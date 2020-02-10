@@ -35,7 +35,7 @@ public:
 		texCoords[2] = rect.rightTop().compDiv(this->tex->dims());
 		texCoords[3] = rect.rightBottom().compDiv(this->tex->dims());
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
-		auto& r = morda::inst().renderer();
+		auto& r = *morda::inst().renderer;
 		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
 	}
 	

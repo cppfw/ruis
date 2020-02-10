@@ -18,9 +18,9 @@ application::T_Instance application::instance;
 
 void application::render(){
 	//TODO: render only if needed?
-	this->gui.renderer().clearFramebuffer();
+	this->gui.renderer->clearFramebuffer();
 
-	this->gui.render(this->gui.renderer().initialMatrix);
+	this->gui.render(this->gui.renderer->initialMatrix);
 
 	this->swapFrameBuffers();
 }
@@ -35,7 +35,7 @@ void application::updateWindowRect(const morda::Rectr& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "application::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	this->gui.renderer().setViewport(r4::recti(
+	this->gui.renderer->setViewport(r4::recti(
 			int(this->curWinRect.p.x),
 			int(this->curWinRect.p.y),
 			int(this->curWinRect.d.x),

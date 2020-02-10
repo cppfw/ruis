@@ -17,5 +17,5 @@ std::shared_ptr<ResTexture> ResTexture::load(context& ctx, const puu::forest& de
 		}
 	}
 
-	return std::make_shared<ResTexture>(loadTexture(ctx.renderer(), fi));
+	return std::make_shared<ResTexture>(loadTexture(*ctx.renderer, fi));
 }

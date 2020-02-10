@@ -39,16 +39,16 @@ context::context(
 		real dotsPerDp,
 		std::function<void(std::function<void()>&&)>&& postToUiThreadFunction
 	) :
-		renderer_v(std::move(r)),
+		renderer(std::move(r)),
 		resMan(*this),
 		postToUiThread_v(std::move(postToUiThreadFunction)),
 		units(dotsPerInch, dotsPerDp)
 {
-	if(!this->renderer_v){
-		throw morda::Exc("no Renderer provided to context constructor");
+	if(!this->renderer){
+		throw std::invalid_argument("context::context(): passed in renderer pointer is null");
 	}
 	if(!this->postToUiThread_v){
-		throw morda::Exc("no post to UI thread function provided");
+		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
 }
 

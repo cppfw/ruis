@@ -20,14 +20,8 @@ class context : public utki::intrusive_singleton<context>{
 	friend class Updateable;
 	friend class widget;
 
-	std::shared_ptr<Renderer> renderer_v;
-
 public:
-
-	Renderer& renderer()noexcept{
-		ASSERT(this->renderer_v)
-		return *this->renderer_v;
-	}
+	const std::shared_ptr<Renderer> renderer;
 
 	/**
 	 * @brief Constructor.

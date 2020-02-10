@@ -56,6 +56,6 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	
 	//TODO:
 //	s.setMatrix(matr);
-	this->quadTex->render(matr, *morda::inst().renderer().posTexQuad01VAO);
+	this->quadTex->render(matr, *morda::inst().renderer->posTexQuad01VAO);
 }
 

@@ -47,7 +47,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 		indices.push_back(std::uint16_t(i));
 	}
 	
-	auto& r = morda::inst().renderer();
+	auto& r = *morda::inst().renderer;
 	this->vao = r.factory->createVertexArray(
 			{
 				r.factory->createVertexBuffer(utki::wrapBuf(vertices)),
@@ -89,6 +89,6 @@ std::shared_ptr<ResGradient> ResGradient::load(context& ctx, const puu::forest& 
 
 
 void ResGradient::render(const morda::Matr4r& m) const {
-	morda::inst().renderer().shader->posClr->render(m, *this->vao);
+	morda::inst().renderer->shader->posClr->render(m, *this->vao);
 }
 
