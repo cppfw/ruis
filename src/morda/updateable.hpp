@@ -58,24 +58,6 @@ public:
 	}
 
 	/**
-	 * @brief Subscribe for updates.
-	 * Normally, updates will start from the next UI cycle.
-	 * The virtual update() method will be called periodically.
-	 * Due to limitations specific to each particular platform the actual period
-	 * can be different from requested period.
-	 * The function is not thread safe.
-	 * @param dtMs - time period between updates, in milliseconds.
-	 */
-	void startUpdating(std::uint16_t dtMs = 30);
-
-	/**
-	 * @brief Unsubscribe from updating.
-	 * After calling this method there will be no updates done.
-	 * The function is not thread safe.
-	 */
-	void stopUpdating()noexcept;
-
-	/**
 	 * @brief A method to perform an update.
 	 * Override this method to perform an update.
 	 * @param dtMs - actual time elapsed since the previous update.

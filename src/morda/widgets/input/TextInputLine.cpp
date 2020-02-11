@@ -236,7 +236,7 @@ void TextInputLine::on_focus_changed(){
 		this->shiftPressed = false;
 		this->startCursorBlinking();
 	}else{
-		this->stopUpdating();
+		morda::inst().context->updater->stop(*this);
 	}
 }
 
@@ -247,9 +247,12 @@ void TextInputLine::on_resize(){
 
 
 void TextInputLine::startCursorBlinking(){
-	this->stopUpdating();
+	morda::inst().context->updater->stop(*this);
 	this->cursorBlinkVisible = true;
-	this->startUpdating(cursorBlinkPeriod_c);
+	morda::inst().context->updater->start(
+			std::dynamic_pointer_cast<updateable>(this->shared_from_this()),
+			cursorBlinkPeriod_c
+		);
 }
 
 bool TextInputLine::on_key(bool isDown, key keyCode){

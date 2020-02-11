@@ -67,9 +67,12 @@ public:
 		}
 
 		if(this->isUpdating()){
-			this->stopUpdating();
+			morda::inst().context->updater->stop(*this);
 		}else{
-			this->startUpdating(30);
+			morda::inst().context->updater->start(
+					std::dynamic_pointer_cast<morda::updateable>(this->shared_from_this()),
+					30
+				);
 		}
 		this->focus();
 		return true;
@@ -631,9 +634,12 @@ public:
 				);
 		};
 
-		std::dynamic_pointer_cast<CubeWidget>(c->try_get_widget("cube_widget"))->startUpdating(0);
+		morda::inst().context->updater->start(
+				std::dynamic_pointer_cast<CubeWidget>(c->try_get_widget("cube_widget")),
+				0
+			);
 
-		//ScrollArea
+		// ScrollArea
 		{
 			auto scrollArea = c->try_get_widget_as<morda::ScrollArea>("scroll_area");
 			auto sa = utki::makeWeak(scrollArea);
