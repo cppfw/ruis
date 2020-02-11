@@ -15,9 +15,9 @@ class context : public std::enable_shared_from_this<context>{
 public:
 	const std::shared_ptr<Renderer> renderer;
 
-	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
+	const std::shared_ptr<morda::updater> updater;
 
-	morda::Updater updater; // TODO: inject as dependency
+	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
 
 	/**
 	 * @brief Instantiation of the resource loader.
@@ -32,12 +32,14 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
+	 * @param u - updater to use along with this context.
 	 * @param run_from_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	context(
 			std::shared_ptr<morda::Renderer>&& r,
+			std::shared_ptr<morda::updater>&& u,
 			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 			real dots_per_inch,
 			real dots_per_dp

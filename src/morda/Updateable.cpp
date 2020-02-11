@@ -22,16 +22,16 @@ std::uint32_t getTicks(){
 }
 
 
-Updater::UpdateQueue::iterator Updater::UpdateQueue::insertPair(const T_Pair& p){
+updater::UpdateQueue::iterator updater::UpdateQueue::insertPair(const T_Pair& p){
 	if(this->size() == 0 || this->back().first <= p.first){
 		this->push_back(p);
 		return --(this->end());
 	}
 	
-	//otherwise, go from the beginning
+	// otherwise, go from the beginning
 	for(auto i = this->begin(); i != this->end(); ++i){
 		if(i->first >= p.first){
-			return this->insert(i, p); //inserts before iterator
+			return this->insert(i, p); // inserts before iterator
 		}
 	}
 	
@@ -41,7 +41,7 @@ Updater::UpdateQueue::iterator Updater::UpdateQueue::insertPair(const T_Pair& p)
 
 
 
-void Updater::addPending(){
+void updater::addPending(){
 	while(this->toAdd.size() != 0){
 		T_Pair p;
 		
@@ -66,7 +66,7 @@ void Updater::addPending(){
 
 
 
-void Updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
+void updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -87,7 +87,7 @@ void Updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 
 
 
-std::uint32_t Updater::update(){
+std::uint32_t updater::update(){
 	std::uint32_t curTime = getTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
@@ -154,7 +154,7 @@ std::uint32_t Updater::update(){
 
 
 
-void Updater::removeFromToAdd(Updateable* u){
+void updater::removeFromToAdd(Updateable* u){
 	ASSERT(u->pendingAddition)
 	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
 		if((*i).operator->() == u){
@@ -165,8 +165,6 @@ void Updater::removeFromToAdd(Updateable* u){
 		}
 	}
 }
-
-
 
 void Updateable::startUpdating(std::uint16_t dtMs){
 //	ASSERT(App::inst().thisIsUIThread())
@@ -183,10 +181,8 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	
 	this->pendingAddition = true;
 	
-	gui::inst().context->updater.toAdd.push_front(this->sharedFromThis(this));
+	gui::inst().context->updater->toAdd.push_front(this->sharedFromThis(this));
 }
-
-
 
 void Updateable::stopUpdating()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
@@ -195,7 +191,7 @@ void Updateable::stopUpdating()noexcept{
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		gui::inst().context->updater.removeFromToAdd(this);
+		gui::inst().context->updater->removeFromToAdd(this);
 	}
 
 	this->isUpdating_v = false;

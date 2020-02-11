@@ -5,11 +5,13 @@ using namespace morda;
 
 context::context(
 		std::shared_ptr<morda::Renderer>&& r,
+		std::shared_ptr<morda::updater>&& u,
 		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 		real dots_per_inch,
 		real dots_per_dp
 	) :
 		renderer(std::move(r)),
+		updater(std::move(u)),
 		run_from_ui_thread(std::move(run_from_ui_thread_function)),
 		loader(*this),
 		units(dots_per_inch, dots_per_dp)

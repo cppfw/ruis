@@ -13,7 +13,7 @@ namespace morda{
 
 class Updateable;
 
-class Updater{
+class updater : public std::enable_shared_from_this<updater>{
 	friend class morda::Updateable;
 
 	typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
@@ -42,7 +42,7 @@ class Updater{
 
 	void updateUpdateable(const std::shared_ptr<morda::Updateable>& u);
 public:
-	Updater() :
+	updater() :
 			activeQueue(&q1),
 			inactiveQueue(&q2)
 	{}
@@ -61,7 +61,7 @@ public:
  */
 class Updateable : virtual public utki::shared{
 	friend class gui;
-	friend class Updater;
+	friend class updater;
 
 private:
 	std::uint16_t dt;
@@ -75,9 +75,9 @@ private:
 	bool isUpdating_v = false;
 
 	// pointer to the queue the updateable is inserted into
-	Updater::UpdateQueue* queue = nullptr;
+	updater::UpdateQueue* queue = nullptr;
 
-	Updater::UpdateQueue::iterator iter; // iterator into the queue.
+	updater::UpdateQueue::iterator iter; // iterator into the queue.
 
 	bool pendingAddition = false;
 
@@ -121,7 +121,7 @@ public:
 
 	/**
 	 * @brief A method to perform an update.
-	 * Override this method to perform
+	 * Override this method to perform an update.
 	 * @param dtMs - actual time elapsed since the previous update.
 	 */
 	virtual void update(std::uint32_t dtMs) = 0;

@@ -3,6 +3,7 @@
 #include <utki/singleton.hpp>
 
 #include "context.hpp"
+#include "Updateable.hpp"
 
 namespace morda{
 
@@ -19,12 +20,14 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
+     * @param u - updater to use along with this gui.
 	 * @param post_to_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	gui(
 			std::shared_ptr<morda::Renderer>&& r,
+            std::shared_ptr<morda::updater>&& u,
 			std::function<void(std::function<void()>&&)>&& post_to_ui_thread_function,
 			real dots_per_inch,
 			real dots_per_dp
@@ -83,7 +86,7 @@ public:
 	 * @return number of milliseconds to sleep before next call.
 	 */
 	std::uint32_t update(){
-		return this->context->updater.update();
+		return this->context->updater->update();
 	}
 
 public:

@@ -540,6 +540,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 #else
 #	error "Unknown graphics API"
 #endif
+				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
 				},

@@ -6,7 +6,7 @@
 int main(int argc, char** argv){
 	// test the get_all_widgets() function
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			Container{
 				Column{
