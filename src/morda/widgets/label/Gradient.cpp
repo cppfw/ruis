@@ -16,7 +16,7 @@ Gradient::Gradient(const puu::forest& desc) :
 		}
 
 		if(p.value == "gradient"){
-			this->gradient = morda::inst().resMan.load<ResGradient>(get_property_value(p).to_string());
+			this->gradient = morda::inst().context->loader.load<ResGradient>(get_property_value(p).to_string());
 		}
 	}
 }

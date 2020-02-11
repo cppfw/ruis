@@ -23,14 +23,14 @@ Tabs::Tabs(const puu::forest& desc) :
 				}
 
 				if(p.value == "filler"){
-					this->setFiller(morda::inst().resMan.load<ResImage>(get_property_value(pp).to_string()));
+					this->setFiller(morda::inst().context->loader.load<ResImage>(get_property_value(pp).to_string()));
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->setFiller(morda::inst().resMan.load<ResImage>("morda_img_tabs_filler"));
+		this->setFiller(morda::inst().context->loader.load<ResImage>("morda_img_tabs_filler"));
 	}
 }
 

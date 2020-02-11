@@ -41,7 +41,7 @@ public:
 			morda::widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::gui::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::gui::inst().context->loader.load<morda::ResTexture>("tex_sample");
 	}
 
 	std::uint32_t timer = 0;
@@ -117,7 +117,7 @@ public:
 			morda::Matr4r matr(matrix);
 			matr.scale(this->rect().d);
 
-			auto& r = *morda::inst().renderer;
+			auto& r = *morda::inst().context->renderer;
 			r.shader->posTex->render(matr, *r.posTexQuad01VAO, this->tex->tex());
 		}
 
@@ -164,7 +164,7 @@ public:
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, -1, 1)
 		}};
 
-		auto posVBO = morda::inst().renderer->factory->createVertexBuffer(utki::wrapBuf(cubePos));
+		auto posVBO = morda::inst().context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubePos));
 
 		std::array<r4::vec2f, 36> cubeTex = {{
 			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
@@ -186,20 +186,18 @@ public:
 			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
 		}};
 
-		auto texVBO = morda::inst().renderer->factory->createVertexBuffer(utki::wrapBuf(cubeTex));
+		auto texVBO = morda::inst().context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubeTex));
 
 		std::array<std::uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
-		auto cubeIndices = morda::inst().renderer->factory->createIndexBuffer(utki::wrapBuf(indices));
+		auto cubeIndices = morda::inst().context->renderer->factory->createIndexBuffer(utki::wrapBuf(indices));
 
-		this->cubeVAO = morda::inst().renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
+		this->cubeVAO = morda::inst().context->renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
 
-		this->tex = morda::gui::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::gui::inst().context->loader.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
-
-
 	}
 
 	unsigned fps = 0;
@@ -232,7 +230,7 @@ public:
 
 //		glEnable(GL_CULL_FACE);
 
-		morda::inst().renderer->shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
+		morda::inst().context->renderer->shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
 	}
@@ -452,18 +450,18 @@ public:
 		}
 
 		{
-			auto widget = morda::gui::inst().inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+			auto widget = morda::gui::inst().context->inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
 			if(!n->children.empty()){
-				auto w = morda::gui::inst().inflater.inflate(DPlusMinus);
+				auto w = morda::gui::inst().context->inflater.inflate(DPlusMinus);
 
 				auto plusminus = w->try_get_widget_as<morda::Image>("plusminus");
 				ASSERT(plusminus)
 				plusminus->setImage(
 						isCollapsed ?
-								morda::gui::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
-								morda::gui::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
+								morda::gui::inst().context->loader.load<morda::ResImage>("morda_img_treeview_plus") :
+								morda::gui::inst().context->loader.load<morda::ResImage>("morda_img_treeview_minus")
 					);
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");
@@ -496,7 +494,7 @@ public:
 		}
 
 		{
-			auto v = morda::gui::inst().inflater.inflate(
+			auto v = morda::gui::inst().context->inflater.inflate(
 					R"qwertyuiop(
 							Pile{
 								Color{
@@ -550,7 +548,7 @@ public:
 		}
 
 		{
-			auto b = morda::gui::inst().inflater.inflate_as<morda::PushButton>(
+			auto b = morda::gui::inst().context->inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
 							PushButton{
 								Color{
@@ -597,13 +595,13 @@ public:
 	{
 		morda::gui::inst().initStandardWidgets(*this->getResFile("../../res/morda_res/"));
 
-		morda::gui::inst().resMan.mountResPack(*this->getResFile("res/"));
+		morda::gui::inst().context->loader.mountResPack(*this->getResFile("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		morda::gui::inst().inflater.register_widget<SimpleWidget>("U_SimpleWidget");
-		morda::gui::inst().inflater.register_widget<CubeWidget>("CubeWidget");
+		morda::gui::inst().context->inflater.register_widget<SimpleWidget>("U_SimpleWidget");
+		morda::gui::inst().context->inflater.register_widget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::gui::inst().inflater.inflate(
+		std::shared_ptr<morda::Widget> c = morda::gui::inst().context->inflater.inflate(
 				*this->getResFile("res/test.gui")
 			);
 		morda::gui::inst().setRootWidget(c);

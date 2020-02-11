@@ -17,7 +17,7 @@ MouseCursor::MouseCursor(const puu::forest& desc) :
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(morda::gui::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
+			this->setCursor(morda::gui::inst().context->loader.load<ResCursor>(get_property_value(p).to_string()));
 		}
 	}
 }
@@ -56,6 +56,6 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	
 	//TODO:
 //	s.setMatrix(matr);
-	this->quadTex->render(matr, *morda::inst().renderer->posTexQuad01VAO);
+	this->quadTex->render(matr, *morda::inst().context->renderer->posTexQuad01VAO);
 }
 

@@ -41,7 +41,7 @@ public:
 private:
 	friend class resource_loader;
 	
-	static std::shared_ptr<ResCursor> load(gui& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<ResCursor> load(context& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 }

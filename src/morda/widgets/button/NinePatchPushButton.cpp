@@ -11,11 +11,11 @@ NinePatchPushButton::NinePatchPushButton(const puu::forest& desc) :
 		NinePatchButton(desc)
 {
 	if(!this->unpressedNinePatch()){
-		this->setUnpressedNinePatch(morda::gui::inst().resMan.load<ResNinePatch>("morda_npt_button_normal"));
+		this->setUnpressedNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>("morda_npt_button_normal"));
 	}
 	
 	if(!this->pressedNinePatch()){
-		this->setPressedNinePatch(morda::gui::inst().resMan.load<ResNinePatch>("morda_npt_button_pressed"));
+		this->setPressedNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>("morda_npt_button_pressed"));
 	}
 	
 	this->onPressedChanged();

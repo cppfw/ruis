@@ -19,7 +19,7 @@ Image::Image(const puu::forest& desc) :
 		}
 
 		if(p.value == "image"){
-			this->img = gui::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+			this->img = gui::inst().context->loader.load<ResImage>(get_property_value(p).to_string());
 			this->resize(this->img->dims());
 		}else if(p.value == "keepAspectRatio"){
 			this->keepAspectRatio = get_property_value(p).to_bool();
@@ -44,7 +44,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 
 	this->applyBlending();
 	
-	auto& r = *morda::inst().renderer;
+	auto& r = *morda::inst().context->renderer;
 	
 	if(!this->scaledImage){
 		this->scaledImage = this->img->get(this->rect().d);
@@ -66,7 +66,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 			}
 			this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
 		}else{
-			this->vao = morda::inst().renderer->posTexQuad01VAO;
+			this->vao = morda::inst().context->renderer->posTexQuad01VAO;
 		}
 	}
 	ASSERT(this->scaledImage)
@@ -82,7 +82,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	Vec2r imgDim = this->img->dims(morda::gui::inst().units.dpi());
+	Vec2r imgDim = this->img->dims(morda::gui::inst().context->units.dots_per_inch);
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	

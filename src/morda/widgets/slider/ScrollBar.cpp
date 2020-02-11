@@ -72,20 +72,20 @@ ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
 		}
 
 		if(p.value == "background"){
-			np->setNinePatch(morda::gui::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			np->setNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>(get_property_value(p).to_string()));
 			background_set = true;
 		}else if(p.value == "handleNinePatch"){
-			hi->setNinePatch(morda::gui::inst().resMan.load<ResNinePatch>(get_property_value(p).to_string()));
+			hi->setNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>(get_property_value(p).to_string()));
 			handle_set = true;
 		}
 	}
 
 	if(!background_set){
-		np->setNinePatch(morda::gui::inst().resMan.load<ResNinePatch>("morda_npt_slider_bg"));
+		np->setNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>("morda_npt_slider_bg"));
 	}
 
 	if(!handle_set){
-		hi->setNinePatch(morda::gui::inst().resMan.load<ResNinePatch>("morda_npt_slider_handle"));
+		hi->setNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>("morda_npt_slider_handle"));
 	}
 
 	auto hp = this->try_get_widget_as<MouseProxy>("morda_handle_proxy");
@@ -112,7 +112,7 @@ ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
 		}
 	};
 
-	hp->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
+	hp->mouseMove = [this](morda::widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
 		if(!this->isGrabbed){
 			return false;
 		}

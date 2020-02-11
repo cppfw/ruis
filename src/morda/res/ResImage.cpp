@@ -32,18 +32,18 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
 		ResImage::QuadTexture(tex->tex().dims()),
 		tex(std::move(tex)),
-		vao(morda::inst().renderer->posTexQuad01VAO)
+		vao(morda::inst().context->renderer->posTexQuad01VAO)
 {}
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(gui& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<ResTexture> tex;
 	Rectr rect(-1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx.resMan.load<ResTexture>(get_property_value(p).to_string());
+			tex = ctx.loader.load<ResTexture>(get_property_value(p).to_string());
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
@@ -62,7 +62,7 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(gui& ctx, const puu::forest& 
 
 
 void ResAtlasImage::render(const Matr4r& matrix, const VertexArray& vao) const {
-	morda::inst().renderer->shader->posTex->render(matrix, *this->vao, this->tex->tex());
+	morda::inst().context->renderer->shader->posTex->render(matrix, *this->vao, this->tex->tex());
 }
 
 
@@ -80,7 +80,7 @@ protected:
 	
 public:
 	void render(const Matr4r& matrix, const VertexArray& vao) const override{
-		morda::inst().renderer->shader->posTex->render(matrix, vao, *this->tex_v);
+		morda::inst().context->renderer->shader->posTex->render(matrix, vao, *this->tex_v);
 	}
 };
 	
@@ -98,7 +98,7 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(gui& ctx, const papki::file& fi){
+	static std::shared_ptr<ResRasterImage> load(context& ctx, const papki::file& fi){
 		return std::make_shared<ResRasterImage>(loadTexture(*ctx.renderer, fi));
 	}
 };
@@ -154,7 +154,7 @@ public:
 //		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::Parameters svgParams;
-		svgParams.dpi = morda::gui::inst().units.dpi();
+		svgParams.dpi = morda::gui::inst().context->units.dots_per_inch;
 		svgParams.widthRequest = width;
 		svgParams.heightRequest = height;
 		auto svg = svgren::render(*this->dom, svgParams);
@@ -164,7 +164,7 @@ public:
 		
 		auto img = std::make_shared<SvgTexture>(
 				this->sharedFromThis(this),
-				morda::inst().renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
+				morda::inst().context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;
@@ -180,7 +180,7 @@ public:
 };
 }
 
-std::shared_ptr<ResImage> ResImage::load(gui& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
@@ -191,7 +191,7 @@ std::shared_ptr<ResImage> ResImage::load(gui& ctx, const puu::forest& desc, cons
 	return ResAtlasImage::load(ctx, desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(gui& ctx, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return ResSvgImage::load(fi);
 	}else{

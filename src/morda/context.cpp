@@ -33,23 +33,39 @@ using namespace morda;
 gui::T_Instance gui::instance;
 
 
-gui::gui(
-		std::shared_ptr<morda::Renderer> r,
-		real dotsPerInch,
-		real dotsPerDp,
-		std::function<void(std::function<void()>&&)>&& postToUiThreadFunction
+context::context(
+		std::shared_ptr<morda::Renderer>&& r,
+		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
+		real dots_per_inch,
+		real dots_per_dp
 	) :
 		renderer(std::move(r)),
-		resMan(*this),
-		postToUiThread_v(std::move(postToUiThreadFunction)),
-		units(dotsPerInch, dotsPerDp)
+		run_from_ui_thread(std::move(run_from_ui_thread_function)),
+		loader(*this),
+		units(dots_per_inch, dots_per_dp)
 {
 	if(!this->renderer){
-		throw std::invalid_argument("gui::gui(): passed in renderer pointer is null");
+		throw std::invalid_argument("context::context(): passed in renderer pointer is null");
 	}
-	if(!this->postToUiThread_v){
-		throw std::invalid_argument("gui::gui(): no post to UI thread function provided");
+	if(!this->run_from_ui_thread){
+		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
+}
+
+gui::gui(
+		std::shared_ptr<morda::Renderer>&& r,
+		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
+		real dots_per_inch,
+		real dots_per_dp
+	) :
+		context(std::make_shared<morda::context>(
+				std::move(r),
+				std::move(run_from_ui_thread_function),
+				dots_per_inch,
+				dots_per_dp
+			))
+{
+	ASSERT(this->context)
 }
 
 
@@ -93,7 +109,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 //			TRACE(<< "s = " << s << std::endl)
 			fi.setPath(s);
 //			TRACE(<< "fi.path() = " << fi.path() << std::endl)
-			this->resMan.mountResPack(fi);
+			this->context->loader.mountResPack(fi);
 		}catch(std::runtime_error&){
 //			TRACE(<< "could not mount " << s << std::endl)
 			continue;
@@ -108,35 +124,35 @@ void gui::initStandardWidgets(papki::File& fi) {
 
 	// add standard widgets to inflater
 
-	this->inflater.register_widget<Text>("Text");
-	this->inflater.register_widget<Color>("Color");
-	this->inflater.register_widget<Gradient>("Gradient");
-	this->inflater.register_widget<Image>("Image");
-	this->inflater.register_widget<VScrollBar>("VScrollBar");
-	this->inflater.register_widget<HScrollBar>("HScrollBar");
-	this->inflater.register_widget<Window>("Window");
-	this->inflater.register_widget<NinePatch>("NinePatch");
-	this->inflater.register_widget<NinePatchPushButton>("NinePatchPushButton");
-	this->inflater.register_widget<CheckBox>("CheckBox");
-	this->inflater.register_widget<TreeView>("TreeView");
-	this->inflater.register_widget<DropDownSelector>("DropDownSelector");
-	this->inflater.register_widget<RadioButton>("RadioButton");
-	this->inflater.register_widget<ChoiceGroup>("ChoiceGroup");
-	this->inflater.register_widget<MouseCursor>("MouseCursor");
-	this->inflater.register_widget<CollapseArea>("CollapseArea");
-	this->inflater.register_widget<ImageToggle>("ImageToggle");
-	this->inflater.register_widget<ImagePushButton>("ImagePushButton");
-	this->inflater.register_widget<Tabs>("Tabs");
-	this->inflater.register_widget<Tab>("Tab");
-	this->inflater.register_widget<TextInputLine>("TextInputLine");
+	this->context->inflater.register_widget<Text>("Text");
+	this->context->inflater.register_widget<Color>("Color");
+	this->context->inflater.register_widget<Gradient>("Gradient");
+	this->context->inflater.register_widget<Image>("Image");
+	this->context->inflater.register_widget<VScrollBar>("VScrollBar");
+	this->context->inflater.register_widget<HScrollBar>("HScrollBar");
+	this->context->inflater.register_widget<Window>("Window");
+	this->context->inflater.register_widget<NinePatch>("NinePatch");
+	this->context->inflater.register_widget<NinePatchPushButton>("NinePatchPushButton");
+	this->context->inflater.register_widget<CheckBox>("CheckBox");
+	this->context->inflater.register_widget<TreeView>("TreeView");
+	this->context->inflater.register_widget<DropDownSelector>("DropDownSelector");
+	this->context->inflater.register_widget<RadioButton>("RadioButton");
+	this->context->inflater.register_widget<ChoiceGroup>("ChoiceGroup");
+	this->context->inflater.register_widget<MouseCursor>("MouseCursor");
+	this->context->inflater.register_widget<CollapseArea>("CollapseArea");
+	this->context->inflater.register_widget<ImageToggle>("ImageToggle");
+	this->context->inflater.register_widget<ImagePushButton>("ImagePushButton");
+	this->context->inflater.register_widget<Tabs>("Tabs");
+	this->context->inflater.register_widget<Tab>("Tab");
+	this->context->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
-		auto t = morda::gui::inst().resMan.load<res_puu>("morda_gui_defs");
+		auto t = morda::gui::inst().context->loader.load<res_puu>("morda_gui_defs");
 
-		this->inflater.inflate(t->forest());
+		this->context->inflater.inflate(t->forest());
 
 	}catch(resource_loader::Exc&){
-		//ignore
+		// ignore
 		TRACE(<< "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}
 }
@@ -259,8 +275,6 @@ void gui::onCharacterInput(const UnicodeProvider& unicode, key key){
 	}
 }
 
-void gui::postToUiThread(std::function<void()>&& f) {
-	ASSERT(this->postToUiThread_v)
-
-	this->postToUiThread_v(std::move(f));
+void gui::postToUiThread(std::function<void()>&& f){
+	this->context->run_from_ui_thread(std::move(f));
 }

@@ -540,11 +540,11 @@ application::application(std::string&& name, const window_params& requestedWindo
 #else
 #	error "Unknown graphics API"
 #endif
-				getDotsPerInch(getImpl(windowPimpl).display),
-				::getDotsPerPt(getImpl(windowPimpl).display),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
-				}
+				},
+				getDotsPerInch(getImpl(windowPimpl).display),
+				::getDotsPerPt(getImpl(windowPimpl).display)
 			),
 		storage_dir(initializeStorageDir(this->name))
 {

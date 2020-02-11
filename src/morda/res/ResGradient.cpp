@@ -47,7 +47,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 		indices.push_back(std::uint16_t(i));
 	}
 	
-	auto& r = *morda::inst().renderer;
+	auto& r = *morda::inst().context->renderer;
 	this->vao = r.factory->createVertexArray(
 			{
 				r.factory->createVertexBuffer(utki::wrapBuf(vertices)),
@@ -60,7 +60,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 
 
 
-std::shared_ptr<ResGradient> ResGradient::load(gui& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResGradient> ResGradient::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,std::uint32_t>> stops;
@@ -89,6 +89,6 @@ std::shared_ptr<ResGradient> ResGradient::load(gui& ctx, const puu::forest& desc
 
 
 void ResGradient::render(const morda::Matr4r& m) const {
-	morda::inst().renderer->shader->posClr->render(m, *this->vao);
+	morda::inst().context->renderer->shader->posClr->render(m, *this->vao);
 }
 

@@ -15,14 +15,14 @@ namespace morda{
 
 
 /**
- * @brief Inflater of GUI from STOB description.
- * This class is used to inflate GUI widget hierarchies from STOB descriptions.
- * The GUI can be described in STOB with the following basic rules:
+ * @brief Inflater of GUI from puu description.
+ * This class is used to inflate GUI widget hierarchies from puu descriptions.
+ * The GUI can be described in puu with the following basic rules:
  * A widget name should start with capital letter. A widget property should start
  * with small letter. Specific widgets define more detailed rules of their description.
  */
 class inflater{
-	friend class gui;
+	friend class context;
 
 	inflater();
 

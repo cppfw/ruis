@@ -45,7 +45,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 			);
 		matr.scale(Vec2r(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
-		auto& r = *morda::inst().renderer;
+		auto& r = *morda::inst().context->renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, 0xff804040);
 	}
 	
@@ -67,9 +67,9 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(Vec2r(cursorWidth_c * morda::inst().units.dotsPerDp(), this->rect().d.y));
+		matr.scale(Vec2r(cursorWidth_c * morda::inst().context->units.dots_per_dp, this->rect().d.y));
 
-		auto& r = *morda::inst().renderer;
+		auto& r = *morda::inst().context->renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 	}
 }
@@ -102,7 +102,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * morda::inst().units.dotsPerDp();
+		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * morda::inst().context->units.dots_per_dp;
 	}else{
 		ret.x = quotum.x;
 	}
@@ -151,13 +151,13 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerDp()){
-		this->cursorPos = this->rect().d.x - cursorWidth_c * morda::inst().units.dotsPerDp();
+	if(this->cursorPos > this->rect().d.x - cursorWidth_c * morda::inst().context->units.dots_per_dp){
+		this->cursorPos = this->rect().d.x - cursorWidth_c * morda::inst().context->units.dots_per_dp;
 		
-		this->xOffset = this->cursorPos;//start from rightmost cursor position
+		this->xOffset = this->cursorPos; // start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
 		
-		//calculate advance backwards
+		// calculate advance backwards
 		for(auto i = this->getText().rbegin() + (this->getText().size() - this->cursorIndex);
 				this->xOffset > 0;
 				++i

@@ -17,6 +17,8 @@ class context : public std::enable_shared_from_this<context>{
 public:
 	const std::shared_ptr<Renderer> renderer;
 
+	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
+
 	morda::Updater updater; // TODO: inject as dependency
 
 	/**
@@ -32,15 +34,15 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
+	 * @param run_from_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_dp - desired dots per density pixel.
-	 * @param post_to_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 */
 	context(
-			std::shared_ptr<morda::Renderer> r,
+			std::shared_ptr<morda::Renderer>&& r,
+			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 			real dots_per_inch,
-			real dots_per_dp,
-			std::function<void(std::function<void()>&&)>&& post_to_ui_thread_function
+			real dots_per_dp
 		);
 	
 	context(const context&) = delete;
@@ -113,41 +115,26 @@ class gui : public utki::intrusive_singleton<gui>{
 	friend class widget;
 
 public:
-	const std::shared_ptr<Renderer> renderer;
+	const std::shared_ptr<morda::context> context;
 
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
-	 * @param dotsPerInch - DPI of your display.
-	 * @param dotsPerDp - desired dots per density pixel.
-	 * @param postToUiThreadFunction - function to use when posting an action to UI thread is needed.
+	 * @param post_to_ui_thread_function - function to use when posting an action to UI thread is needed.
+	 * @param dots_per_inch - DPI of your display.
+	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	gui(
-			std::shared_ptr<morda::Renderer> r,
-			real dotsPerInch,
-			real dotsPerDp,
-			std::function<void(std::function<void()>&&)>&& postToUiThreadFunction);
+			std::shared_ptr<morda::Renderer>&& r,
+			std::function<void(std::function<void()>&&)>&& post_to_ui_thread_function,
+			real dots_per_inch,
+			real dots_per_dp
+		);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
 
 	virtual ~gui()noexcept{}
-
-
-private:
-	Updater updater; // TODO: inject as dependency
-public:
-
-	/**
-	 * @brief Instantiation of the resource manager.
-	 */
-	resource_loader resMan;
-
-	/**
-	 * @brief Instantiation of the GUI inflater.
-	 */
-	morda::inflater inflater;
-
 
 private:
 	//NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
@@ -197,11 +184,9 @@ public:
 	 * @return number of milliseconds to sleep before next call.
 	 */
 	std::uint32_t update(){
-		return this->updater.update();
+		return this->context->updater.update();
 	}
 
-private:
-	std::function<void(std::function<void()>&&)> postToUiThread_v;
 public:
 	/**
 	 * @brief Execute code on UI thread.
@@ -211,12 +196,6 @@ public:
 	 * @param f - function to execute on UI thread.
 	 */
 	void postToUiThread(std::function<void()>&& f);
-
-	//TODO: remove deprecated function
-	void postToUiThread_ts(std::function<void()>&& f){
-		TRACE(<< "postToUiThread_ts(): DEPRECATED! use postToUiThread() instead" << std::endl)
-		this->postToUiThread(std::move(f));
-	}
 
 	/**
 	 * @brief Feed in the mouse move event to GUI.
@@ -275,75 +254,6 @@ public:
 	 * @param key - key code associated with character input, can be UNKNOWN.
 	 */
 	void onCharacterInput(const UnicodeProvider& unicode, key key);
-
-
-	/**
-	 * @brief Information about screen units.
-	 * This class holds information about screen units and performs conversion
-	 * from one unit to another.
-	 * In morda, length can be expressed in pixels, millimeters or points.
-	 * Points is a convenience unit which is different depending on the screen dimensions
-	 * and density. Point is never less than one pixel.
-	 * For normal desktop displays like HP or Full HD point is equal to one pixel.
-	 * For higher density desktop displays point is more than one pixel depending on density.
-	 * For mobile platforms the point is also 1 or more pixels depending on display density and physical size.
-	 */
-	class Units{
-		real dotsPerInch_v;
-		real dotsPerDp_v;
-	public:
-		/**
-		 * @brief Constructor.
-		 * @param dotsPerInch - dots per inch.
-		 * @param dotsPerDp - dots per density pixel.
-		 */
-		Units(real dotsPerInch, real dotsPerDp) :
-				dotsPerInch_v(dotsPerInch),
-				dotsPerDp_v(dotsPerDp)
-		{}
-
-		/**
-		 * @brief Get dots (pixels) per inch.
-		 * @return Dots per inch.
-		 */
-		real dpi()const noexcept{
-			return this->dotsPerInch_v;
-		}
-
-		/**
-		 * @brief Get dots (pixels) per centimeter.
-		 * @return Dots per centimeter.
-		 */
-		real dotsPerCm()const noexcept{
-			return this->dpi() / 2.54f;
-		}
-
-		/**
-		 * @brief Get dots (pixels) per point.
-		 * @return Dots per point.
-		 */
-		real dotsPerDp()const noexcept{
-			return this->dotsPerDp_v;
-		}
-
-		/**
-		 * @brief Convert millimeters to pixels (dots).
-		 * @param mm - value in millimeters.
-		 * @return Value in pixels.
-		 */
-		real mmToPx(real mm)const noexcept{
-			return std::round(mm * this->dotsPerCm() / 10.0f);
-		}
-
-		/**
-		 * @brief Convert points to pixels.
-		 * @param dp - value in density pixels.
-		 * @return  Value in pixels.
-		 */
-		real dpToPx(real dp)const noexcept{
-			return std::round(dp * this->dotsPerDp());
-		}
-	} units;
 };
 
 

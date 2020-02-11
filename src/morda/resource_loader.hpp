@@ -9,19 +9,20 @@
 #include "exception.hpp"
 
 
+
 namespace morda{
 
 
 
 class Resource;
-class gui;
+class context;
 
 
 /**
- * @brief Resource manager.
+ * @brief Resource loader.
  * This class manages application recources loading from puu resource description scripts.
  *
- * Format of resource description scripts is simple. It uses STOB markup.
+ * Format of resource description scripts is simple. It uses puu markup.
  * Each resource is a root-level puu node, the value is a name of the resource, by that name
  * the application will load that resource.The children of resource name are the properties of the resource.
  * Each resource type defines their own properties.
@@ -34,7 +35,7 @@ class gui;
  * include{some_other.res}
  *
  * // Example of resource declaration
- * img_may_image_resource //resource name
+ * img_may_image_resource // resource name
  * {
  *     // image resource has only one attribute 'file' which tells from
  *     // from which file to load the image
@@ -44,7 +45,7 @@ class gui;
  * @endcode
  */
 class resource_loader{
-	friend class gui;
+	friend class context;
 	friend class Resource;
 
 	std::map<const std::string, std::weak_ptr<Resource>> resMap;
@@ -85,8 +86,8 @@ class resource_loader{
 	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
 
 private:
-	gui& ctx;
-	resource_loader(gui& ctx) :
+	context& ctx;
+	resource_loader(context& ctx) :
 			ctx(ctx)
 	{}
 
@@ -120,7 +121,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = morda::gui::inst().resMan().load<morda::ResImage>("img_my_image_name");
+	 * auto image = morda::gui::inst().context->loader().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param resName - name of the resource as it appears in resource description.

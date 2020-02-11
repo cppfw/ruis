@@ -21,6 +21,6 @@ void Color::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = *morda::inst().renderer;
+	auto& r = *morda::inst().context->renderer;
 	r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 }

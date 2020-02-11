@@ -53,7 +53,7 @@ void container::inflate_push_back(const puu::forest& desc){
 		if(is_leaf_property(i->value)){
 			continue;
 		}
-		this->push_back(morda::inst().inflater.inflate(i, i + 1));
+		this->push_back(morda::inst().context->inflater.inflate(i, i + 1));
 	}
 }
 

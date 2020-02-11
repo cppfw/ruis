@@ -42,9 +42,9 @@ morda::Sidesr morda::parse_sides(const puu::forest& desc){
 real morda::parse_dimension_value(const puu::leaf& l){
 	// check if millimeters
 	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
-		return gui::inst().units.mmToPx(l.to_float());
+		return gui::inst().context->units.mm_to_px(l.to_float());
 	}else if(l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'd'){ //check if in density pixels
-		return gui::inst().units.dpToPx(l.to_float());
+		return gui::inst().context->units.dp_to_px(l.to_float());
 	}
 
 	if(l.empty()){
@@ -99,8 +99,8 @@ std::shared_ptr<Texture2D> morda::loadTexture(Renderer& r, const papki::file& fi
 
 
 void morda::applySimpleAlphaBlending(){
-	morda::inst().renderer->setBlendEnabled(true);
-	morda::inst().renderer->setBlendFunc(
+	morda::inst().context->renderer->setBlendEnabled(true);
+	morda::inst().context->renderer->setBlendFunc(
 			Renderer::BlendFactor_e::SRC_ALPHA,
 			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
 			Renderer::BlendFactor_e::ONE,
