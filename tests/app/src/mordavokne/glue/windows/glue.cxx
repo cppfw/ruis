@@ -642,14 +642,14 @@ application::application(std::string&& name, const window_params& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGL2Renderer>(),
-				getDotsPerInch(getImpl(this->windowPimpl).hdc),
-				getDotsPerPt(getImpl(this->windowPimpl).hdc),
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
 					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){
 						throw morda::exception("PostMessage(): failed");
 					}
-				}
+				},
+				getDotsPerInch(getImpl(this->windowPimpl).hdc),
+				getDotsPerPt(getImpl(this->windowPimpl).hdc)
 			),
 		storage_dir(initializeStorageDir(this->name)),
 		curWinRect(0, 0, -1, -1)

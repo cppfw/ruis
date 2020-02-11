@@ -338,8 +338,6 @@ application::App(std::string&& name, const window_params& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
-				getDotsPerInch(),
-				getDotsPerDp(),
 				[this](std::function<void()>&& a){
 					auto p = reinterpret_cast<NSInteger>(new std::function<void()>(std::move(a)));
 
@@ -347,7 +345,9 @@ application::App(std::string&& name, const window_params& wp) :
 						std::unique_ptr<std::function<void()>> m(reinterpret_cast<std::function<void()>*>(p));
 						(*m)();
 					});
-				}
+				},
+				getDotsPerInch(),
+				getDotsPerDp()
 			),
 		storage_dir("") //TODO: initialize to proper value
 {

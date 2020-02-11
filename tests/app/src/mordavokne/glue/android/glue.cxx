@@ -1010,6 +1010,9 @@ mordavokne::application::application(std::string&& name, const window_params& re
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
+				[this](std::function<void()>&& a){
+					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
+				},
 				[]() -> float{
 					ASSERT(javaFunctionsWrapper)
 
@@ -1019,10 +1022,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 					auto res = getImpl(this->windowPimpl).getWindowSize();
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
-				}(),
-				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
-				}
+				}()
 			),
 		storage_dir(initializeStorageDir(this->name))
 {
