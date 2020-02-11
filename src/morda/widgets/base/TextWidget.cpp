@@ -4,6 +4,9 @@
 
 #include "../../util/util.hpp"
 
+//TODO: remove
+#include "../../gui.hpp"
+
 using namespace morda;
 
 void TextWidget::setFont(std::shared_ptr<ResFont> font) {

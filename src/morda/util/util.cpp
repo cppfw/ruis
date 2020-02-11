@@ -7,6 +7,9 @@
 
 #include "RasterImage.hpp"
 
+//TODO: remove
+#include "../gui.hpp"
+
 using namespace morda;
 
 

@@ -3,6 +3,8 @@
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
 
+//TODO: remove
+#include "../../src/morda/gui.hpp"
 
 int main(int argc, char** argv){
 	// test that whole definition chain is substituted

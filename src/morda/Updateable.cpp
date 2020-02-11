@@ -4,6 +4,8 @@
 
 #include <chrono>
 
+// TODO: removeee
+#include "gui.hpp"
 
 using namespace morda;
 

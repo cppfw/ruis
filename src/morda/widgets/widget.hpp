@@ -22,13 +22,9 @@
 
 #include "../exception.hpp"
 
-
 namespace morda{
 
-
-
 class container;
-
 
 /**
  * @brief Basic widget class.

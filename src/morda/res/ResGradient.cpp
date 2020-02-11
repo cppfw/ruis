@@ -5,6 +5,8 @@
 #include "../util/util.hpp"
 #include "../context.hpp"
 
+//TODO: remove
+#include "../gui.hpp"
 
 
 using namespace morda;

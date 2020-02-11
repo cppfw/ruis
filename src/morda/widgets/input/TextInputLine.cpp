@@ -4,6 +4,8 @@
 #include "../../util/key.hpp"
 #include "../../util/util.hpp"
 
+//TODO: remove
+#include "../../gui.hpp"
 
 
 #if M_OS == M_OS_WINDOWS

@@ -10,6 +10,9 @@
 
 #include "../context.hpp"
 
+//TODO: remove
+#include "../gui.hpp"
+
 namespace morda{
 
 /**

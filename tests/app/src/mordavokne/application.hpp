@@ -12,7 +12,7 @@
 
 #include <r4/vector2.hpp>
 
-#include <morda/context.hpp>
+#include <morda/gui.hpp>
 
 #include <morda/util/key.hpp>
 
