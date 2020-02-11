@@ -69,7 +69,7 @@ public:
 	 * @param dpi - dots per inch.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual Vec2r dims(real dpi = morda::context::inst().units.dpi())const noexcept = 0;
+	virtual Vec2r dims(real dpi = morda::gui::inst().units.dpi())const noexcept = 0;
 	
 	/**
 	 * @brief Get raster texture of given dimensions.
@@ -79,7 +79,7 @@ public:
 	 */
 	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDims = 0)const = 0;
 private:
-	static std::shared_ptr<ResImage> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResImage> load(gui& ctx, const puu::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -88,7 +88,7 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static std::shared_ptr<ResImage> load(context& ctx, const papki::file& fi);
+	static std::shared_ptr<ResImage> load(gui& ctx, const papki::file& fi);
 };
 
 
@@ -120,7 +120,7 @@ public:
 	void render(const Matr4r& matrix, const VertexArray& vao) const override;
 	
 private:
-	static std::shared_ptr<ResAtlasImage> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResAtlasImage> load(gui& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 

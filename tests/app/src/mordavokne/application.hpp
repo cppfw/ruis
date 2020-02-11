@@ -80,7 +80,7 @@ private:
 	void swapFrameBuffers();
 
 public:
-	morda::context gui;
+	morda::gui gui;
 
 public:
 
@@ -188,11 +188,11 @@ private:
 
 	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	//as much as possible.
-	void handleCharacterInput(const morda::context::UnicodeProvider& unicodeResolver, morda::key key){
+	void handleCharacterInput(const morda::gui::UnicodeProvider& unicodeResolver, morda::key key){
 		this->gui.onCharacterInput(unicodeResolver, key);
 	}
 
-	friend void handleCharacterInput(application& app, const morda::context::UnicodeProvider& unicodeResolver, morda::key key);
+	friend void handleCharacterInput(application& app, const morda::gui::UnicodeProvider& unicodeResolver, morda::key key);
 
 	void handleKeyEvent(bool isDown, morda::key keyCode){
 		this->gui.onKeyEvent(isDown, keyCode);

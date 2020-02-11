@@ -41,7 +41,7 @@ public:
 			morda::widget(desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::context::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::gui::inst().resMan.load<morda::ResTexture>("tex_sample");
 	}
 
 	std::uint32_t timer = 0;
@@ -125,7 +125,7 @@ public:
 
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
-//		morda::SimpleTexturingShader &s = morda::context::inst().shaders.simpleTexturing;
+//		morda::SimpleTexturingShader &s = morda::gui::inst().shaders.simpleTexturing;
 //		morda::Matr4r m(matrix);
 //		m.translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
@@ -196,7 +196,7 @@ public:
 
 		this->cubeVAO = morda::inst().renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
 
-		this->tex = morda::context::inst().resMan.load<morda::ResTexture>("tex_sample");
+		this->tex = morda::gui::inst().resMan.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
 
 
@@ -452,18 +452,18 @@ public:
 		}
 
 		{
-			auto widget = morda::context::inst().inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+			auto widget = morda::gui::inst().inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
 			if(!n->children.empty()){
-				auto w = morda::context::inst().inflater.inflate(DPlusMinus);
+				auto w = morda::gui::inst().inflater.inflate(DPlusMinus);
 
 				auto plusminus = w->try_get_widget_as<morda::Image>("plusminus");
 				ASSERT(plusminus)
 				plusminus->setImage(
 						isCollapsed ?
-								morda::context::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
-								morda::context::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
+								morda::gui::inst().resMan.load<morda::ResImage>("morda_img_treeview_plus") :
+								morda::gui::inst().resMan.load<morda::ResImage>("morda_img_treeview_minus")
 					);
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");
@@ -496,7 +496,7 @@ public:
 		}
 
 		{
-			auto v = morda::context::inst().inflater.inflate(
+			auto v = morda::gui::inst().inflater.inflate(
 					R"qwertyuiop(
 							Pile{
 								Color{
@@ -550,7 +550,7 @@ public:
 		}
 
 		{
-			auto b = morda::context::inst().inflater.inflate_as<morda::PushButton>(
+			auto b = morda::gui::inst().inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
 							PushButton{
 								Color{
@@ -595,18 +595,18 @@ public:
 	Application() :
 			mordavokne::App("morda-tests", GetWindowParams())
 	{
-		morda::context::inst().initStandardWidgets(*this->getResFile("../../res/morda_res/"));
+		morda::gui::inst().initStandardWidgets(*this->getResFile("../../res/morda_res/"));
 
-		morda::context::inst().resMan.mountResPack(*this->getResFile("res/"));
+		morda::gui::inst().resMan.mountResPack(*this->getResFile("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		morda::context::inst().inflater.register_widget<SimpleWidget>("U_SimpleWidget");
-		morda::context::inst().inflater.register_widget<CubeWidget>("CubeWidget");
+		morda::gui::inst().inflater.register_widget<SimpleWidget>("U_SimpleWidget");
+		morda::gui::inst().inflater.register_widget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::context::inst().inflater.inflate(
+		std::shared_ptr<morda::Widget> c = morda::gui::inst().inflater.inflate(
 				*this->getResFile("res/test.gui")
 			);
-		morda::context::inst().setRootWidget(c);
+		morda::gui::inst().setRootWidget(c);
 
 		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
@@ -618,7 +618,7 @@ public:
 		};
 
 //		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
-//		std::shared_ptr<morda::Widget> c = morda::context::inst().inflater().Inflate(zf);
+//		std::shared_ptr<morda::Widget> c = morda::gui::inst().inflater().Inflate(zf);
 
 		ASSERT(c->try_get_widget_as<morda::PushButton>("show_VK_button"))
 		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("show_VK_button"))->clicked = [this](morda::PushButton&){
@@ -626,7 +626,7 @@ public:
 		};
 
 		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [](morda::PushButton&){
-			morda::context::inst().postToUiThread(
+			morda::gui::inst().postToUiThread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
 					}

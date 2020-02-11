@@ -14,7 +14,7 @@ namespace morda{
 
 
 class Resource;
-class context;
+class gui;
 
 
 /**
@@ -44,7 +44,7 @@ class context;
  * @endcode
  */
 class resource_loader{
-	friend class context;
+	friend class gui;
 	friend class Resource;
 
 	std::map<const std::string, std::weak_ptr<Resource>> resMap;
@@ -85,8 +85,8 @@ class resource_loader{
 	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
 
 private:
-	context& ctx;
-	resource_loader(context& ctx) :
+	gui& ctx;
+	resource_loader(gui& ctx) :
 			ctx(ctx)
 	{}
 
@@ -120,7 +120,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = morda::context::inst().resMan().load<morda::ResImage>("img_my_image_name");
+	 * auto image = morda::gui::inst().resMan().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param resName - name of the resource as it appears in resource description.

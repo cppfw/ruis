@@ -53,7 +53,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> load(context& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<ResFont> load(gui& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 

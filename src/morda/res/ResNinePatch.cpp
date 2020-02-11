@@ -59,7 +59,7 @@ public:
 }
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::load(context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResNinePatch> ResNinePatch::load(gui& ctx, const puu::forest& desc, const papki::file& fi){
 	Sidesr borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){

@@ -181,7 +181,7 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	
 	this->pendingAddition = true;
 	
-	context::inst().updater.toAdd.push_front(this->sharedFromThis(this));
+	gui::inst().updater.toAdd.push_front(this->sharedFromThis(this));
 }
 
 
@@ -193,7 +193,7 @@ void Updateable::stopUpdating()noexcept{
 		this->queue->erase(this->iter);
 		this->queue = 0;
 	}else if(this->pendingAddition){
-		context::inst().updater.removeFromToAdd(this);
+		gui::inst().updater.removeFromToAdd(this);
 	}
 
 	this->isUpdating_v = false;

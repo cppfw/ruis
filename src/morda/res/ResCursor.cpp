@@ -13,7 +13,7 @@ ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
 {}
 
 
-std::shared_ptr<ResCursor> ResCursor::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResCursor> ResCursor::load(gui& ctx, const puu::forest& desc, const papki::file& fi) {
 	std::shared_ptr<ResImage> image;
 	Vec2r hotspot;
 	bool hotspot_set = false;

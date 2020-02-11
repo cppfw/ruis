@@ -22,7 +22,7 @@ namespace morda{
  * with small letter. Specific widgets define more detailed rules of their description.
  */
 class inflater{
-	friend class context;
+	friend class gui;
 
 	inflater();
 

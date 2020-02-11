@@ -41,7 +41,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<res_puu> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_puu> load(gui& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

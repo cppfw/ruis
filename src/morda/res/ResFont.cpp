@@ -20,7 +20,7 @@ ResFont::ResFont(const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 
 
 
-std::shared_ptr<ResFont> ResFont::load(context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResFont> ResFont::load(gui& ctx, const puu::forest& desc, const papki::file& fi){
 	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
 

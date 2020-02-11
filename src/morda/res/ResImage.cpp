@@ -37,7 +37,7 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(gui& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<ResTexture> tex;
 	Rectr rect(-1);
 
@@ -98,7 +98,7 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(context& ctx, const papki::file& fi){
+	static std::shared_ptr<ResRasterImage> load(gui& ctx, const papki::file& fi){
 		return std::make_shared<ResRasterImage>(loadTexture(*ctx.renderer, fi));
 	}
 };
@@ -151,10 +151,10 @@ public:
 		ASSERT(this->dom)
 //		TRACE(<< "width = " << this->dom->width << std::endl)
 //		TRACE(<< "height = " << this->dom->height << std::endl)
-//		TRACE(<< "dpi = " << morda::context::inst().units.dpi() << std::endl)
+//		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::Parameters svgParams;
-		svgParams.dpi = morda::context::inst().units.dpi();
+		svgParams.dpi = morda::gui::inst().units.dpi();
 		svgParams.widthRequest = width;
 		svgParams.heightRequest = height;
 		auto svg = svgren::render(*this->dom, svgParams);
@@ -180,7 +180,7 @@ public:
 };
 }
 
-std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(gui& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
@@ -191,7 +191,7 @@ std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, 
 	return ResAtlasImage::load(ctx, desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(context& ctx, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(gui& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return ResSvgImage::load(fi);
 	}else{

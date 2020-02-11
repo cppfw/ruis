@@ -68,7 +68,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<ImageMatrix>> cache;
 	
-	static std::shared_ptr<ResNinePatch> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResNinePatch> load(gui& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

@@ -122,7 +122,7 @@ NinePatch::NinePatch(const puu::forest& desc) :
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->setNinePatch(morda::context::inst().resMan.load<ResNinePatch>(get_property_value(*i).to_string()));
+			this->setNinePatch(morda::gui::inst().resMan.load<ResNinePatch>(get_property_value(*i).to_string()));
 		}
 	}
 

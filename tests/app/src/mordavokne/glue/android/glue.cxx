@@ -489,7 +489,7 @@ std::unique_ptr<AndroidConfiguration> curConfig;
 
 
 
-class KeyEventToUnicodeResolver : public morda::context::UnicodeProvider{
+class KeyEventToUnicodeResolver : public morda::gui::UnicodeProvider{
 public:
 	int32_t kc;//key code
 	int32_t ms;//meta state
@@ -911,7 +911,7 @@ morda::key getKeyFromKeyEvent(AInputEvent& event)noexcept{
 
 
 
-struct UnicodeProvider : public morda::context::UnicodeProvider{
+struct UnicodeProvider : public morda::gui::UnicodeProvider{
 	std::u32string chars;
 
 	std::u32string get()const override{

@@ -64,7 +64,7 @@ public:
 	void render(const morda::Matr4r& m)const;
 	
 private:
-	static std::shared_ptr<ResGradient> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResGradient> load(gui& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

@@ -30,10 +30,10 @@
 using namespace morda;
 
 
-context::T_Instance context::instance;
+gui::T_Instance gui::instance;
 
 
-context::context(
+gui::gui(
 		std::shared_ptr<morda::Renderer> r,
 		real dotsPerInch,
 		real dotsPerDp,
@@ -45,17 +45,17 @@ context::context(
 		units(dotsPerInch, dotsPerDp)
 {
 	if(!this->renderer){
-		throw std::invalid_argument("context::context(): passed in renderer pointer is null");
+		throw std::invalid_argument("gui::gui(): passed in renderer pointer is null");
 	}
 	if(!this->postToUiThread_v){
-		throw std::invalid_argument("context::context(): no post to UI thread function provided");
+		throw std::invalid_argument("gui::gui(): no post to UI thread function provided");
 	}
 }
 
 
 
 
-void context::initStandardWidgets(papki::File& fi) {
+void gui::initStandardWidgets(papki::File& fi) {
 
 	//mount default resource pack
 
@@ -103,7 +103,7 @@ void context::initStandardWidgets(papki::File& fi) {
 	}
 
 	if(!mounted){
-		throw morda::Exc("context::initStandardWidgets(): could not mount default resource pack");
+		throw morda::Exc("gui::initStandardWidgets(): could not mount default resource pack");
 	}
 
 	// add standard widgets to inflater
@@ -131,17 +131,17 @@ void context::initStandardWidgets(papki::File& fi) {
 	this->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
-		auto t = morda::context::inst().resMan.load<res_puu>("morda_gui_defs");
+		auto t = morda::gui::inst().resMan.load<res_puu>("morda_gui_defs");
 
 		this->inflater.inflate(t->forest());
 
 	}catch(resource_loader::Exc&){
 		//ignore
-		TRACE(<< "context::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
+		TRACE(<< "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}
 }
 
-void context::setViewportSize(const morda::Vec2r& size){
+void gui::setViewportSize(const morda::Vec2r& size){
 	this->viewportSize = size;
 
 	if(!this->rootWidget){
@@ -153,16 +153,16 @@ void context::setViewportSize(const morda::Vec2r& size){
 
 
 
-void context::setRootWidget(const std::shared_ptr<morda::Widget> w){
+void gui::setRootWidget(const std::shared_ptr<morda::Widget> w){
 	this->rootWidget = std::move(w);
 
 	this->rootWidget->move_to(morda::Vec2r(0));
 	this->rootWidget->resize(this->viewportSize);
 }
 
-void context::render(const Matr4r& matrix)const{
+void gui::render(const Matr4r& matrix)const{
 	if(!this->rootWidget){
-		TRACE(<< "context::render(): root widget is not set" << std::endl)
+		TRACE(<< "gui::render(): root widget is not set" << std::endl)
 		return;
 	}
 
@@ -187,7 +187,7 @@ void context::render(const Matr4r& matrix)const{
 
 
 
-void context::onMouseMove(const Vec2r& pos, unsigned id){
+void gui::onMouseMove(const Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -200,7 +200,7 @@ void context::onMouseMove(const Vec2r& pos, unsigned id){
 
 
 
-void context::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
+void gui::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -213,7 +213,7 @@ void context::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button,
 
 
 
-void context::onMouseHover(bool isHovered, unsigned pointerID){
+void gui::onMouseHover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -221,7 +221,7 @@ void context::onMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->set_hovered(isHovered, pointerID);
 }
 
-void context::onKeyEvent(bool isDown, key keyCode){
+void gui::onKeyEvent(bool isDown, key keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->focusedWidget.lock()){
@@ -236,7 +236,7 @@ void context::onKeyEvent(bool isDown, key keyCode){
 }
 
 
-void context::setFocusedWidget(const std::shared_ptr<Widget> w){
+void gui::setFocusedWidget(const std::shared_ptr<Widget> w){
 	if(auto prev = this->focusedWidget.lock()){
 		prev->isFocused_v = false;
 		prev->on_focus_changed();
@@ -250,7 +250,7 @@ void context::setFocusedWidget(const std::shared_ptr<Widget> w){
 	}
 }
 
-void context::onCharacterInput(const UnicodeProvider& unicode, key key){
+void gui::onCharacterInput(const UnicodeProvider& unicode, key key){
 	if(auto w = this->focusedWidget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
@@ -259,7 +259,7 @@ void context::onCharacterInput(const UnicodeProvider& unicode, key key){
 	}
 }
 
-void context::postToUiThread(std::function<void()>&& f) {
+void gui::postToUiThread(std::function<void()>&& f) {
 	ASSERT(this->postToUiThread_v)
 
 	this->postToUiThread_v(std::move(f));

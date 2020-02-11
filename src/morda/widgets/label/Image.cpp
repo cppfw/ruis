@@ -19,7 +19,7 @@ Image::Image(const puu::forest& desc) :
 		}
 
 		if(p.value == "image"){
-			this->img = context::inst().resMan.load<ResImage>(get_property_value(p).to_string());
+			this->img = gui::inst().resMan.load<ResImage>(get_property_value(p).to_string());
 			this->resize(this->img->dims());
 		}else if(p.value == "keepAspectRatio"){
 			this->keepAspectRatio = get_property_value(p).to_bool();
@@ -82,7 +82,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 		return Vec2r(0);
 	}
 	
-	Vec2r imgDim = this->img->dims(morda::context::inst().units.dpi());
+	Vec2r imgDim = this->img->dims(morda::gui::inst().units.dpi());
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	

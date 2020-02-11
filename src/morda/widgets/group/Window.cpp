@@ -402,7 +402,7 @@ void morda::Window::setBorders(Sidesr borders) {
 
 bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(isDown && !this->isTopmost()){
-		morda::context::inst().postToUiThread(
+		morda::gui::inst().postToUiThread(
 				[this](){
 					this->makeTopmost();
 					this->focus();

@@ -851,7 +851,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 
 
 
-class KeyEventUnicodeProvider : public morda::context::UnicodeProvider{
+class KeyEventUnicodeProvider : public morda::gui::UnicodeProvider{
 	XIC& xic;
 	XEvent& event;
 public:

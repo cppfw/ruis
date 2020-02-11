@@ -60,7 +60,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 
 
 
-std::shared_ptr<ResGradient> ResGradient::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResGradient> ResGradient::load(gui& ctx, const puu::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,std::uint32_t>> stops;

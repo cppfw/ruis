@@ -17,7 +17,7 @@ MouseCursor::MouseCursor(const puu::forest& desc) :
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(morda::context::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
+			this->setCursor(morda::gui::inst().resMan.load<ResCursor>(get_property_value(p).to_string()));
 		}
 	}
 }
