@@ -817,6 +817,7 @@ application::application(std::string&& name, const window_params& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGL2Renderer>(),
+				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(*this));
 

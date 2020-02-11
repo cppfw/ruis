@@ -145,7 +145,7 @@ std::uint32_t updater::update(){
 		uncorrectedDt -= correction;
 		
 		if(0 < uncorrectedDt && uncorrectedDt < 5){
-			uncorrectedDt = 5;//wait for 5ms at least, if not 0.
+			uncorrectedDt = 5; // wait for 5 ms at least, if not 0.
 		}
 		
 		return uncorrectedDt;

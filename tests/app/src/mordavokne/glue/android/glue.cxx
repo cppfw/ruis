@@ -1010,6 +1010,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
+				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
 				},

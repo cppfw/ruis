@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include <list>
+#include <deque>
 
 #include <utki/shared.hpp>
 
@@ -18,7 +18,7 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
 
-	class UpdateQueue : public std::list<T_Pair>{
+	class UpdateQueue : public std::deque<T_Pair>{
 	public:
 		UpdateQueue::iterator insertPair(const T_Pair& p);
 
@@ -35,7 +35,7 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	std::uint32_t lastUpdatedTimestamp = 0;
 
-	typedef std::list<std::shared_ptr<morda::Updateable> > T_ToAddList;
+	typedef std::deque<std::shared_ptr<morda::Updateable> > T_ToAddList;
 	T_ToAddList toAdd;
 
 	void addPending();
@@ -49,7 +49,7 @@ public:
 
 	void removeFromToAdd(Updateable* u);
 
-	//returns dt to wait before next update
+	// returns dt to wait before next update
 	std::uint32_t update();
 };
 
