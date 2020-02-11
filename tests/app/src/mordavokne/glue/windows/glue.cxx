@@ -642,7 +642,7 @@ application::application(std::string&& name, const window_params& wp) :
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGL2Renderer>(),
-				std::make_shared<morda::update>(),
+				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
 					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){

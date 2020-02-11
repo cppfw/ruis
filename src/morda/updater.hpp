@@ -2,7 +2,6 @@
 
 #include <memory>
 
-// TODO: replace list with deque
 #include <list>
 
 namespace morda{

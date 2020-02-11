@@ -66,7 +66,7 @@ public:
 			return false;
 		}
 
-		if(this->isUpdating()){
+		if(this->is_updating()){
 			morda::inst().context->updater->stop(*this);
 		}else{
 			morda::inst().context->updater->start(

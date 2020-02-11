@@ -24,13 +24,13 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
         return;
     }
 
-    if(uu->isUpdating()){
+    if(uu->is_updating()){
 		throw utki::invalid_state("updater::start(): updateable is already being updated");
 	}
 	
 	uu->dt = dt_ms;
 	uu->startedAt = get_ticks();
-	uu->isUpdating_v = true;
+	uu->is_updating_v = true;
 	
 	uu->pendingAddition = true;
 	
@@ -45,12 +45,12 @@ void updater::stop(updateable& u)noexcept{
 		this->removeFromToAdd(&u);
 	}
 
-	u.isUpdating_v = false;
+	u.is_updating_v = false;
 }
 
 void updater::removeFromToAdd(updateable* u){
 	ASSERT(u->pendingAddition)
-	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
+	for(auto i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
 		if((*i).operator->() == u){
 			ASSERT((*i)->pendingAddition)
 			u->pendingAddition = false;
@@ -117,7 +117,7 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 	u->update(this->lastUpdatedTimestamp - u->startedAt);
 	
 	//if not stopped during update, add it back
-	if(u->isUpdating()){
+	if(u->is_updating()){
 		u->startedAt = this->lastUpdatedTimestamp;
 		u->pendingAddition = true;
 		this->toAdd.push_back(u);

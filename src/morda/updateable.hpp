@@ -20,15 +20,15 @@ class updateable : virtual public utki::shared{
 	friend class updater;
 
 private:
-	std::uint16_t dt;
+	uint16_t dt;
 
-	std::uint32_t startedAt; // timestamp when update timer started.
+	uint32_t startedAt; // timestamp when update timer started.
 
-	std::uint32_t endAt()const noexcept{
-		return this->startedAt + std::uint32_t(this->dt);
+	uint32_t endAt()const noexcept{
+		return this->startedAt + uint32_t(this->dt);
 	}
 
-	bool isUpdating_v = false;
+	bool is_updating_v = false;
 
 	// pointer to the queue the updateable is inserted into
 	updater::UpdateQueue* queue = nullptr;
@@ -39,30 +39,20 @@ private:
 
 public:
 	/**
-	 * @brief Basic update-related Exception.
-	 */
-	class Exc : public morda::Exc{
-	public:
-		Exc(const std::string& message) :
-				morda::Exc(message)
-		{}
-	};
-
-	/**
 	 * @brief Check if the object is currently subscribed for updates.
 	 * @return true if object is subscribed for updates.
 	 * @return false otherwise.
 	 */
-	bool isUpdating()const noexcept{
-		return this->isUpdating_v;
+	bool is_updating()const noexcept{
+		return this->is_updating_v;
 	}
 
 	/**
 	 * @brief A method to perform an update.
 	 * Override this method to perform an update.
-	 * @param dtMs - actual time elapsed since the previous update.
+	 * @param dt_ms - actual time elapsed since the previous update.
 	 */
-	virtual void update(std::uint32_t dtMs) = 0;
+	virtual void update(uint32_t dt_ms) = 0;
 };
 
 }
