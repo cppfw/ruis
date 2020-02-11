@@ -31,7 +31,7 @@ protected:
 	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
 
 public:
-	ScrollArea(const puu::forest& desc);
+	ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	ScrollArea(const ScrollArea&) = delete;
 	ScrollArea& operator=(const ScrollArea&) = delete;

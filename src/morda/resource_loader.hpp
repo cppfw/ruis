@@ -95,6 +95,7 @@ public:
 	/**
 	 * @brief Basic recource related exception.
 	 */
+	//TODO: remove?
 	class Exc : public morda::Exc{
 	public:
 		Exc(const std::string& message) :

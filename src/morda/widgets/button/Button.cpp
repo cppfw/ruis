@@ -7,8 +7,8 @@
 
 using namespace morda;
 
-Button::Button(const puu::forest& desc) :
-		widget(desc)
+Button::Button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

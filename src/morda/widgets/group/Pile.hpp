@@ -21,7 +21,7 @@ public:
 	 * @brief Constructor.
 	 * @param desc - description of the widget.
 	 */
-	Pile(const puu::forest& desc);
+	Pile(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;

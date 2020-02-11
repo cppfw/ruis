@@ -8,10 +8,10 @@ void ImagePushButton::onPressedChanged() {
 }
 
 
-ImagePushButton::ImagePushButton(const puu::forest& desc) :
-		widget(desc),
-		Button(desc),
-		PushButton(desc),
-		ImageButton(desc)
+ImagePushButton::ImagePushButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, desc),
+		PushButton(c, desc),
+		ImageButton(c, desc)
 {}
 

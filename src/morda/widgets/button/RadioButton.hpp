@@ -17,7 +17,7 @@ class RadioButton :
 {
 	std::shared_ptr<Widget> checkWidget;
 public:
-	RadioButton(const puu::forest& desc);
+	RadioButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 	RadioButton(const RadioButton&) = delete;
 	RadioButton& operator=(const RadioButton&) = delete;

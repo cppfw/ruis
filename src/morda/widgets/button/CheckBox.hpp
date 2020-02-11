@@ -18,7 +18,7 @@ class CheckBox :
 {
 	std::shared_ptr<Widget> checkWidget;
 public:
-	CheckBox(const puu::forest& desc);
+	CheckBox(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 	CheckBox(const CheckBox&) = delete;
 	CheckBox& operator=(const CheckBox&) = delete;

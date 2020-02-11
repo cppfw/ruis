@@ -168,9 +168,10 @@ protected:
 public:
 	/**
 	 * @brief Constructor.
+	 * @param c - context to which this widget belongs.
 	 * @param desc - description of the widget.
 	 */
-	container(const puu::forest& desc);
+	container(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	void render(const matrix4& matrix)const override;
 

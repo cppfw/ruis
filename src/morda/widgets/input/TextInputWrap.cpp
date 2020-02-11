@@ -5,10 +5,10 @@
 using namespace morda;
 
 
-TextInputWrap::TextInputWrap(const puu::forest& desc) :
-		widget(desc),
-		TextWidget(desc),
-		List(puu::forest(), true)
+TextInputWrap::TextInputWrap(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		TextWidget(c, desc),
+		List(c, puu::forest(), true)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

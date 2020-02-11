@@ -13,7 +13,7 @@ class Overlay : public Pile{
 	std::shared_ptr<Widget> overlayLayer;
 	std::shared_ptr<Container> overlayContainer;
 public:
-	Overlay(const puu::forest& desc);
+	Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	Overlay(const Overlay&) = delete;
 	Overlay& operator=(const Overlay&) = delete;

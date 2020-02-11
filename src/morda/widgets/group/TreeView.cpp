@@ -8,11 +8,11 @@ using namespace morda;
 
 
 
-TreeView::TreeView(const puu::forest& desc) :
-		widget(desc),
-		ScrollArea(puu::forest())
+TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		ScrollArea(nullptr, puu::forest())
 {
-	this->list = std::make_shared<VList>(puu::forest());
+	this->list = std::make_shared<VList>(this->context, puu::forest());
 	this->push_back(this->list);
 
 	auto& lp = this->get_layout_params(*this->list);

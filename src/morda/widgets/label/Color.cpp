@@ -10,9 +10,9 @@
 using namespace morda;
 
 
-Color::Color(const puu::forest& desc) :
-		widget(desc),
-		ColorWidget(desc)
+Color::Color(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		ColorWidget(c, desc)
 {}
 
 

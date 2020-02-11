@@ -22,12 +22,12 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 
 
-RadioButton::RadioButton(const puu::forest& desc) :
-		widget(desc),
-		Button(desc),
-		ToggleButton(desc),
-		ChoiceButton(desc),
-		Pile(D_Layout)
+RadioButton::RadioButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, desc),
+		ToggleButton(c, desc),
+		ChoiceButton(c, desc),
+		Pile(c, D_Layout)
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)

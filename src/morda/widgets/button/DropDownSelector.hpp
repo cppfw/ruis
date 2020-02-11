@@ -76,7 +76,7 @@ public:
 	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
 
 public:
-	DropDownSelector(const puu::forest& desc);
+	DropDownSelector(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 
 	DropDownSelector(const DropDownSelector&) = delete;
 	DropDownSelector& operator=(const DropDownSelector&) = delete;

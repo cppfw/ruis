@@ -20,7 +20,6 @@ class NinePatchButton :
 	std::shared_ptr<const ResNinePatch> pressedNinePatch_v;
 	
 public:
-
 	NinePatchButton(const NinePatchButton&) = delete;
 	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
@@ -37,7 +36,7 @@ public:
 	}
 	
 protected:
-	NinePatchButton(const puu::forest& desc);
+	NinePatchButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 	void onPressedChanged()override;
 };

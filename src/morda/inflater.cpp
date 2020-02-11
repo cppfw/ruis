@@ -24,7 +24,9 @@ using namespace morda;
 
 
 
-inflater::inflater(){
+inflater::inflater(morda::context& context):
+		context(context)
+{
 	this->register_widget<Widget>("Widget");
 	this->register_widget<Container>("Container");
 	this->register_widget<SizeContainer>("SizeContainer");
@@ -250,7 +252,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 		);
 	
 	try{
-		return fac(widget_desc);
+		return fac(this->context.shared_from_this(), widget_desc);
 	}catch(...){
 		TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
 		throw;

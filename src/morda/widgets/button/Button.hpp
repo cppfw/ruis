@@ -25,7 +25,7 @@ protected:
 	 */
 	virtual void onPressedChanged();
 public:
-	Button(const puu::forest& desc);
+	Button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	/**
 	 * @brief Check if button is currently pressed.

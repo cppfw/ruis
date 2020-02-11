@@ -13,7 +13,9 @@
 using namespace morda;
 
 
-widget::widget(const puu::forest& desc){
+widget::widget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		context(c)
+{
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;

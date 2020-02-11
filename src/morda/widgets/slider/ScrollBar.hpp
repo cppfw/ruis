@@ -33,7 +33,7 @@ class ScrollBar :
 	float clickPoint;
 
 protected:
-	ScrollBar(const puu::forest& desc, bool vertical);
+	ScrollBar(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical);
 
 	void onFractionChange() override;
 
@@ -51,9 +51,9 @@ private:
 
 class VScrollBar : public ScrollBar{
 public:
-	VScrollBar(const puu::forest& desc) :
-			widget(desc),
-			ScrollBar(desc, true)
+	VScrollBar(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+			widget(c, desc),
+			ScrollBar(c, desc, true)
 	{}
 
 	VScrollBar(const VScrollBar&) = delete;
@@ -63,9 +63,9 @@ public:
 
 class HScrollBar : public ScrollBar{
 public:
-	HScrollBar(const puu::forest& desc) :
-			widget(desc),
-			ScrollBar(desc, false)
+	HScrollBar(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+			widget(c, desc),
+			ScrollBar(c, desc, false)
 	{}
 
 	HScrollBar(const HScrollBar&) = delete;

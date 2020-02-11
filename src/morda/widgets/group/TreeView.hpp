@@ -18,7 +18,7 @@ class TreeView :
 {
 	std::shared_ptr<List> list;
 public:
-	TreeView(const puu::forest& desc);
+	TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	TreeView(const TreeView&) = delete;
 	TreeView& operator=(const TreeView&) = delete;

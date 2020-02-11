@@ -14,6 +14,7 @@ context::context(
 		updater(std::move(u)),
 		run_from_ui_thread(std::move(run_from_ui_thread_function)),
 		loader(*this),
+		inflater(*this),
 		units(dots_per_inch, dots_per_dp)
 {
 	if(!this->renderer){

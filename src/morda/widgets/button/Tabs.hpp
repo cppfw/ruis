@@ -11,7 +11,7 @@ class Tabs :
 	std::shared_ptr<const ResImage::QuadTexture> fillerTexture;
 
 public:
-	Tabs(const puu::forest& desc);
+	Tabs(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 
 	Tabs(const Tabs&) = delete;
 	Tabs& operator=(const Tabs&) = delete;

@@ -59,7 +59,7 @@ class Window :
 	void updateTopmost();
 
 public:
-	Window(const puu::forest& desc);
+	Window(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;

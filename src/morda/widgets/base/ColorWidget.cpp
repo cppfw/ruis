@@ -5,8 +5,8 @@
 using namespace morda;
 
 
-ColorWidget::ColorWidget(const puu::forest& desc) :
-		widget(desc)
+ColorWidget::ColorWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

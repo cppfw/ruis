@@ -50,9 +50,9 @@ const auto layout_c = puu::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-CollapseArea::CollapseArea(const puu::forest& desc) :
-		widget(desc),
-		Column(layout_c)
+CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Column(nullptr, layout_c)
 {
 	this->contentArea = this->try_get_widget_as<Pile>("content");
 	ASSERT(this->contentArea)

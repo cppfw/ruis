@@ -55,7 +55,7 @@ public:
 	std::function<void(TextWidget& w)> textChanged;
 
 protected:
-	TextWidget(const puu::forest& desc);
+	TextWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 
 private:
 
@@ -68,7 +68,7 @@ class SingleLineTextWidget : public TextWidget{
 protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
-	SingleLineTextWidget(const puu::forest& desc);
+	SingleLineTextWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 
 	const Rectr& textBoundingBox()const{
 		return this->bb;

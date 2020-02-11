@@ -158,9 +158,9 @@ void morda::Window::setBackground(std::shared_ptr<Widget> w) {
 
 
 
-morda::Window::Window(const puu::forest& desc) :
-		widget(desc),
-		Pile(windowDesc_c)
+morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Pile(nullptr, windowDesc_c)
 {
 	this->setupWidgets();
 

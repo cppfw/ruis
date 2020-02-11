@@ -37,8 +37,8 @@ class SimpleWidget : virtual public morda::Widget, public morda::updateable, pub
 	std::shared_ptr<morda::ResTexture> tex;
 
 public:
-	SimpleWidget(const puu::forest& desc) :
-			morda::widget(desc)
+	SimpleWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+			morda::widget(c, desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = morda::gui::inst().context->loader.load<morda::ResTexture>("tex_sample");
@@ -144,8 +144,8 @@ class CubeWidget : public morda::Widget, public morda::updateable{
 public:
 	std::shared_ptr<morda::VertexArray> cubeVAO;
 
-	CubeWidget(const puu::forest& desc) :
-			morda::widget(desc)
+	CubeWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+			morda::widget(c, desc)
 	{
 		std::array<morda::Vec3r, 36> cubePos = {{
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
@@ -244,9 +244,12 @@ public:
 class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
 	puu::forest root;
 
+	std::shared_ptr<morda::context> context;
 public:
 
-	TreeViewItemsProvider(){
+	TreeViewItemsProvider(const std::shared_ptr<morda::context>& c) :
+			context(c)
+	{
 		this->root = puu::read(R"qwertyuiop(
 				root1{
 					subroot1{
@@ -444,7 +447,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = std::make_shared<morda::Row>(puu::forest());
+		auto ret = std::make_shared<morda::Row>(this->context, puu::forest());
 
 		ASSERT(isLastItemInParent.size() == path.size())
 
@@ -809,11 +812,11 @@ public:
 			};
 		}
 
-		//TreeView
+		// TreeView
 		{
 			auto treeview = c->try_get_widget_as<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
-			auto provider = std::make_shared<TreeViewItemsProvider>();
+			auto provider = std::make_shared<TreeViewItemsProvider>(c->context);
 			treeview->setItemsProvider(provider);
 			auto tv = utki::makeWeak(treeview);
 

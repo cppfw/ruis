@@ -2,9 +2,9 @@
 
 using namespace morda;
 
-SizeContainer::SizeContainer(const puu::forest& desc) :
-		widget(desc),
-		container(desc)
+SizeContainer::SizeContainer(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		container(nullptr, desc)
 {}
 
 void SizeContainer::lay_out(){

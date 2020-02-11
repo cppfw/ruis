@@ -9,9 +9,9 @@ using namespace morda;
 
 
 
-ScrollArea::ScrollArea(const puu::forest& desc) :
-		widget(desc),
-		container(desc)
+ScrollArea::ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		container(nullptr, desc)
 {}
 
 

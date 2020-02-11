@@ -28,9 +28,9 @@ const real cursorWidth_c = real(1.0);
 
 
 
-TextInputLine::TextInputLine(const puu::forest& desc) :
-		widget(desc),
-		SingleLineTextWidget(desc)
+TextInputLine::TextInputLine(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		SingleLineTextWidget(c, desc)
 {
 	this->set_clip(true);
 }
@@ -38,7 +38,7 @@ TextInputLine::TextInputLine(const puu::forest& desc) :
 
 
 void TextInputLine::render(const morda::Matr4r& matrix) const{
-	//render selection
+	// render selection
 	if(this->cursorIndex != this->selectionStartIndex){
 		morda::Matr4r matr(matrix);
 		matr.translate(

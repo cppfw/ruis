@@ -27,10 +27,10 @@ LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 
 
 
-LinearContainer::LinearContainer(const puu::forest& desc, bool vertical) :
-		widget(desc),
-		container(desc),
-		OrientedWidget(puu::forest(), vertical)
+LinearContainer::LinearContainer(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical) :
+		widget(c, desc),
+		container(c, desc),
+		OrientedWidget(c, puu::forest(), vertical)
 {}
 
 

@@ -17,10 +17,10 @@ void ImageButton::onPressedChanged() {
 	this->Button::onPressedChanged();
 }
 
-ImageButton::ImageButton(const puu::forest& desc) :
-		widget(desc),
-		Button(desc),
-		Image(desc)
+ImageButton::ImageButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, desc),
+		Image(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

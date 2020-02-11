@@ -11,7 +11,7 @@ class NinePatchPushButton :
 		public NinePatchButton
 {
 public:
-	NinePatchPushButton(const puu::forest& desc);
+	NinePatchPushButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 protected:
 	void onPressedChanged() override;

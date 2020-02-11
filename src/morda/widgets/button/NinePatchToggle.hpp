@@ -10,7 +10,7 @@ class NinePatchToggle :
 		public NinePatchButton
 {
 public:
-	NinePatchToggle(const puu::forest& desc);
+	NinePatchToggle(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 protected:
 	void onPressedChanged() override;

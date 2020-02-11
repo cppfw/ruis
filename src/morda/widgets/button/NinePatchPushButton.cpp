@@ -4,11 +4,11 @@
 
 using namespace morda;
 
-NinePatchPushButton::NinePatchPushButton(const puu::forest& desc) :
-		widget(desc),
-		Button(desc),
-		PushButton(desc),
-		NinePatchButton(desc)
+NinePatchPushButton::NinePatchPushButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, desc),
+		PushButton(c, desc),
+		NinePatchButton(c, desc)
 {
 	if(!this->unpressedNinePatch()){
 		this->setUnpressedNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>("morda_npt_button_normal"));

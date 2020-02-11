@@ -12,7 +12,7 @@ class CollapseArea :
 	std::shared_ptr<Pile> contentArea;
 	std::shared_ptr<Pile> title_v;
 public:
-	CollapseArea(const puu::forest& desc);
+	CollapseArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	Pile& content()noexcept{
 		ASSERT(this->contentArea)

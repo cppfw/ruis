@@ -201,10 +201,10 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 
 
-DropDownSelector::DropDownSelector(const puu::forest& desc) :
-		widget(desc),
-		Button(selectorLayout_c),
-		NinePatchPushButton(selectorLayout_c),
+DropDownSelector::DropDownSelector(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, selectorLayout_c),
+		NinePatchPushButton(c, selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
 {
 	this->pressedChanged = [this](Button& b){

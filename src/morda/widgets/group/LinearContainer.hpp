@@ -21,7 +21,7 @@ class LinearContainer :
 	LinearContainer& operator=(const LinearContainer&) = delete;
 
 public:
-	LinearContainer(const puu::forest& desc, bool vertical);
+	LinearContainer(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical);
 
 	void lay_out() override;
 

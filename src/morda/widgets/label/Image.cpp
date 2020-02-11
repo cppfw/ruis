@@ -9,9 +9,9 @@ using namespace morda;
 
 
 
-Image::Image(const puu::forest& desc) :
-		widget(desc),
-		BlendingWidget(desc)
+Image::Image(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		BlendingWidget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

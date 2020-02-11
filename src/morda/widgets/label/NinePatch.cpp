@@ -77,10 +77,10 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 }
 
 
-NinePatch::NinePatch(const puu::forest& desc) :
-		widget(desc),
-		BlendingWidget(desc),
-		Column(ninePatchLayout_c)
+NinePatch::NinePatch(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		BlendingWidget(c, desc),
+		Column(c, ninePatchLayout_c)
 {
 	this->imageMatrix_v[0][0] = this->try_get_widget_as<Image>("morda_lt");
 	this->imageMatrix_v[0][1] = this->try_get_widget_as<Image>("morda_t");

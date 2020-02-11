@@ -26,16 +26,16 @@ const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
 
 }
 
-Overlay::Overlay(const puu::forest& desc) :
-		widget(desc),
-		Pile(desc)
+Overlay::Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Pile(nullptr, desc)
 {
 	this->on_children_changed();
 }
 
 void Overlay::on_children_changed(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = std::make_shared<Pile>(ContextMenuLayout_c);
+		this->overlayLayer = std::make_shared<Pile>(this->context, ContextMenuLayout_c);
 		this->push_back(this->overlayLayer);
 
 		this->overlayContainer = this->overlayLayer->try_get_widget_as<Container>("morda_overlay_container");

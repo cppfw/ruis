@@ -10,9 +10,9 @@ void NinePatchToggle::onPressedChanged() {
 }
 
 
-NinePatchToggle::NinePatchToggle(const puu::forest& desc) :
-		widget(desc),
-		Button(desc),
-		ToggleButton(desc),
-		NinePatchButton(desc)
+NinePatchToggle::NinePatchToggle(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc),
+		Button(c, desc),
+		ToggleButton(c, desc),
+		NinePatchButton(c, desc)
 {}

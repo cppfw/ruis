@@ -43,10 +43,10 @@ public:
 
 
 
-List::List(const puu::forest& desc, bool vertical):
-		widget(desc),
-		container(puu::forest()),
-		OrientedWidget(puu::forest(), vertical)
+List::List(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical):
+		widget(c, desc),
+		container(c, puu::forest()),
+		OrientedWidget(c, puu::forest(), vertical)
 {
 	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
 

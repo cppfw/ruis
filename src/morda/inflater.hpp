@@ -24,10 +24,21 @@ namespace morda{
 class inflater{
 	friend class context;
 
-	inflater();
+	morda::context& context;
+
+	inflater(morda::context& context);
 
 private:
-	std::map<std::string, std::function<std::shared_ptr<morda::widget>(const puu::forest&)> > factories;
+	std::map<
+			std::string,
+			std::function<
+					std::shared_ptr<morda::widget>(
+							const std::shared_ptr<morda::context>&,
+							const puu::forest&
+						)
+				>
+		>
+	factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 
@@ -43,8 +54,8 @@ public:
 	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](const puu::forest& desc) -> std::shared_ptr<morda::widget> {
-					return std::make_shared<T>(desc);
+				[](const std::shared_ptr<morda::context>& c, const puu::forest& desc) -> std::shared_ptr<morda::widget> {
+					return std::make_shared<T>(c, desc);
 				}
 			);
 	}

@@ -8,8 +8,8 @@
 using namespace morda;
 
 
-MouseCursor::MouseCursor(const puu::forest& desc) :
-		widget(desc)
+MouseCursor::MouseCursor(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

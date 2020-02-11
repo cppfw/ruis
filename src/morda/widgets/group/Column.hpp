@@ -10,9 +10,9 @@ namespace morda{
  */
 class Column : public LinearContainer{
 public:
-	Column(const puu::forest& desc) :
-			widget(desc),
-			LinearContainer(desc, true)
+	Column(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc),
+			LinearContainer(nullptr, desc, true)
 	{}
 
 	Column(const Column&) = delete;

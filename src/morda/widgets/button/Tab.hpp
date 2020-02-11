@@ -12,7 +12,7 @@ class Tab :
 	bool maskOverlaps(Vec2r pos);
 	
 public:
-	Tab(const puu::forest& desc);
+	Tab(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
 	
 	Tab(const Tab&) = delete;
 	Tab& operator=(const Tab&) = delete;

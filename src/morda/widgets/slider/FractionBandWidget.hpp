@@ -8,9 +8,9 @@ class FractionBandWidget : public FractionWidget
 {
 	float curBandSizeFraction = 0; //Current bar size factor from 0 to 1
 protected:
-	FractionBandWidget(const puu::forest& desc) :
-			widget(desc),
-			FractionWidget(desc)
+	FractionBandWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+			widget(c, desc),
+			FractionWidget(c, desc)
 	{}
 
 	virtual void onBandSizeChanged();

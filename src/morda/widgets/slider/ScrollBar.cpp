@@ -50,12 +50,12 @@ const auto DDescription = puu::read(R"qwertyuiop(
 
 
 
-ScrollBar::ScrollBar(const puu::forest& desc, bool vertical) :
-		widget(desc),
-		FractionBandWidget(puu::forest()),
-		OrientedWidget(puu::forest(), vertical),
-		Pile(DDescription),
-		handle(*this->try_get_widget("morda_handle"))
+ScrollBar::ScrollBar(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical) :
+		widget(c, desc),
+		FractionBandWidget(c, puu::forest()),
+		OrientedWidget(c, puu::forest(), vertical),
+		Pile(c, DDescription),
+		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
 {
 	auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");
 	ASSERT(np)

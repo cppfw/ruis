@@ -4,8 +4,8 @@
 using namespace morda;
 
 
-MouseProxy::MouseProxy(const puu::forest& desc) :
-		widget(desc)
+MouseProxy::MouseProxy(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
+		widget(c, desc)
 {}
 
 

@@ -13,8 +13,8 @@ using namespace morda;
 
 
 
-container::container(const puu::forest& desc) :
-		widget(desc)
+container::container(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc)
 {
 	this->inflate_push_back(desc);
 }
