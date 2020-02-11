@@ -294,7 +294,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	gui::inst().setFocusedWidget(this->sharedFromThis(this));
+	gui::inst().context->set_focused_widget(this->sharedFromThis(this));
 }
 
 
@@ -306,9 +306,9 @@ void widget::unfocus()noexcept{
 		return;
 	}
 
-	ASSERT(gui::inst().focusedWidget.lock() && gui::inst().focusedWidget.lock().operator->() == this)
+	ASSERT(gui::inst().context->focused_widget.lock() && gui::inst().context->focused_widget.lock().get() == this)
 
-	gui::inst().setFocusedWidget(nullptr);
+	gui::inst().context->set_focused_widget(nullptr);
 }
 
 

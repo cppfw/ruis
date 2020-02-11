@@ -23,3 +23,17 @@ context::context(
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
 }
+
+void context::set_focused_widget(std::shared_ptr<widget> w){
+	if(auto prev = this->focused_widget.lock()){
+		prev->isFocused_v = false;
+		prev->on_focus_changed();
+	}
+
+	this->focused_widget = w;
+
+	if(w){
+		w->isFocused_v = true;
+		w->on_focus_changed();
+	}
+}

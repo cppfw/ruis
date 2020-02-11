@@ -27,7 +27,7 @@ class inflater{
 	inflater();
 
 private:
-	std::map<std::string, std::function<std::shared_ptr<morda::Widget>(const puu::forest&)> > factories;
+	std::map<std::string, std::function<std::shared_ptr<morda::widget>(const puu::forest&)> > factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 

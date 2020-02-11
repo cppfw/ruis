@@ -12,6 +12,13 @@
 namespace morda{
 
 class context : public std::enable_shared_from_this<context>{
+	friend class widget;
+	friend class gui;
+
+	std::weak_ptr<widget> focused_widget;
+
+	void set_focused_widget(std::shared_ptr<widget> w);
+
 public:
 	const std::shared_ptr<Renderer> renderer;
 

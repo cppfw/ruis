@@ -39,12 +39,7 @@ public:
 	virtual ~gui()noexcept{}
 
 private:
-	//NOTE: this should go after resMan as it may hold references to some resources, so it should be destroyed first
 	std::shared_ptr<morda::widget> rootWidget;
-
-	std::weak_ptr<widget> focusedWidget;
-
-	void setFocusedWidget(const std::shared_ptr<widget> w);
 
 public:
 	/**
@@ -153,9 +148,9 @@ public:
 	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial key press.
 	 * UnicodeProvider may provide empty string.
 	 * @param unicode - unicode string provider.
-	 * @param key - key code associated with character input, can be UNKNOWN.
+	 * @param key - key code associated with character input, can be unknown.
 	 */
-	void onCharacterInput(const UnicodeProvider& unicode, key key);
+	void onCharacterInput(const UnicodeProvider& unicode, morda::key key);
 };
 
 

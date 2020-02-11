@@ -43,6 +43,7 @@ class container;
  */
 class widget : virtual public utki::shared{
 	friend class container;
+	friend class context;
 	friend class gui;
 public:
 	/**

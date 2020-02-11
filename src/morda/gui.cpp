@@ -164,7 +164,7 @@ void gui::render(const Matr4r& matrix)const{
 
 	morda::Matr4r m(matrix);
 
-	//direct y axis down
+	// direct y-axis down
 	m.scale(1, -1);
 
 	m.translate(-1, -1);
@@ -220,7 +220,7 @@ void gui::onMouseHover(bool isHovered, unsigned pointerID){
 void gui::onKeyEvent(bool isDown, key keyCode){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
-	if(auto w = this->focusedWidget.lock()){
+	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
 		w->onKeyInternal(isDown, keyCode);
 	}else{
@@ -232,22 +232,8 @@ void gui::onKeyEvent(bool isDown, key keyCode){
 }
 
 
-void gui::setFocusedWidget(const std::shared_ptr<Widget> w){
-	if(auto prev = this->focusedWidget.lock()){
-		prev->isFocused_v = false;
-		prev->on_focus_changed();
-	}
-
-	this->focusedWidget = w;
-
-	if(w){
-		w->isFocused_v = true;
-		w->on_focus_changed();
-	}
-}
-
 void gui::onCharacterInput(const UnicodeProvider& unicode, key key){
-	if(auto w = this->focusedWidget.lock()){
+	if(auto w = this->context->focused_widget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
 			c->onCharacterInput(unicode.get(), key);
