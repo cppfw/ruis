@@ -1,4 +1,4 @@
-#include "Updateable.hpp"
+#include "updateable.hpp"
 
 #include "context.hpp"
 
@@ -49,11 +49,11 @@ void updater::addPending(){
 		p.second = this->toAdd.front();
 		
 		if(p.first < this->lastUpdatedTimestamp){
-//			TRACE(<< "Updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
+//			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
 			this->toAdd.front()->queue = this->inactiveQueue;
 			this->toAdd.front()->iter = this->inactiveQueue->insertPair(p);
 		}else{
-//			TRACE(<< "Updateable::Updater::AddPending(): inserted to active queue" << std::endl)
+//			TRACE(<< "updateable::Updater::AddPending(): inserted to active queue" << std::endl)
 			this->toAdd.front()->queue = this->activeQueue;
 			this->toAdd.front()->iter = this->activeQueue->insertPair(p);
 		}
@@ -66,7 +66,7 @@ void updater::addPending(){
 
 
 
-void updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
+void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -90,7 +90,7 @@ void updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 std::uint32_t updater::update(){
 	std::uint32_t curTime = getTicks();
 	
-//	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
+//	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
 	this->addPending();//add pending before updating this->lastUpdatedTimestamp
 	
@@ -98,7 +98,7 @@ std::uint32_t updater::update(){
 	if(curTime < this->lastUpdatedTimestamp){
 		this->lastUpdatedTimestamp = curTime;
 		
-//		TRACE(<< "Updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
+//		TRACE(<< "updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
 		
 		//if time has warped, then all Updateables from active queue have expired.
 		while(this->activeQueue->size() != 0){
@@ -111,7 +111,7 @@ std::uint32_t updater::update(){
 	}
 	ASSERT(this->lastUpdatedTimestamp == curTime)
 	
-//	TRACE(<< "Updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
+//	TRACE(<< "updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
 	
 	while(this->activeQueue->size() != 0){
 		if(this->activeQueue->front().first > curTime){
@@ -154,7 +154,7 @@ std::uint32_t updater::update(){
 
 
 
-void updater::removeFromToAdd(Updateable* u){
+void updater::removeFromToAdd(updateable* u){
 	ASSERT(u->pendingAddition)
 	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
 		if((*i).operator->() == u){
@@ -166,13 +166,13 @@ void updater::removeFromToAdd(Updateable* u){
 	}
 }
 
-void Updateable::startUpdating(std::uint16_t dtMs){
+void updateable::startUpdating(std::uint16_t dtMs){
 //	ASSERT(App::inst().thisIsUIThread())
 
-//	TRACE(<< "Updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
+//	TRACE(<< "updateable::StartUpdating(): this->IsUpdating() = " << this->IsUpdating() << std::endl)
 	
 	if(this->isUpdating()){
-		throw Exc("Updateable::StartUpdating(): Already updating");
+		throw Exc("updateable::StartUpdating(): Already updating");
 	}
 	
 	this->dt = dtMs;
@@ -184,7 +184,7 @@ void Updateable::startUpdating(std::uint16_t dtMs){
 	gui::inst().context->updater->toAdd.push_front(this->sharedFromThis(this));
 }
 
-void Updateable::stopUpdating()noexcept{
+void updateable::stopUpdating()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 	
 	if(this->queue){

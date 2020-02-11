@@ -1,65 +1,21 @@
 #pragma once
 
 #include <cstdint>
-#include <deque>
 
 #include <utki/shared.hpp>
 
 #include "exception.hpp"
 
-
+#include "updater.hpp"
 
 namespace morda{
-
-class Updateable;
-
-class updater : public std::enable_shared_from_this<updater>{
-	friend class morda::Updateable;
-
-	typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
-
-	class UpdateQueue : public std::deque<T_Pair>{
-	public:
-		UpdateQueue::iterator insertPair(const T_Pair& p);
-
-		std::shared_ptr<morda::Updateable> popFront(){
-			auto ret = this->front().second.lock();
-			this->pop_front();
-			return ret;
-		}
-	};
-
-	UpdateQueue q1, q2;
-
-	UpdateQueue *activeQueue, *inactiveQueue;
-
-	std::uint32_t lastUpdatedTimestamp = 0;
-
-	typedef std::deque<std::shared_ptr<morda::Updateable> > T_ToAddList;
-	T_ToAddList toAdd;
-
-	void addPending();
-
-	void updateUpdateable(const std::shared_ptr<morda::Updateable>& u);
-public:
-	updater() :
-			activeQueue(&q1),
-			inactiveQueue(&q2)
-	{}
-
-	void removeFromToAdd(Updateable* u);
-
-	// returns dt to wait before next update
-	std::uint32_t update();
-};
-
 
 /**
  * @brief Base class for periodic updating.
  * A subclass of this class can subscribe for periodic updates to be performed from UI thread.
  * For example every 30 milliseconds it will call the update() method.
  */
-class Updateable : virtual public utki::shared{
+class updateable : virtual public utki::shared{
 	friend class gui;
 	friend class updater;
 

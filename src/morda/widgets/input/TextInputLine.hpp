@@ -3,7 +3,7 @@
 #include "../widget.hpp"
 #include "../base/TextWidget.hpp"
 
-#include "../../Updateable.hpp"
+#include "../../updateable.hpp"
 #include "../CharInputWidget.hpp"
 
 
@@ -14,7 +14,7 @@ namespace morda{
  */
 class TextInputLine :
 		public SingleLineTextWidget,
-		private Updateable,
+		private updateable,
 		public CharInputWidget
 {
 	size_t firstVisibleCharIndex = 0;

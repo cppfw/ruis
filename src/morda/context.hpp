@@ -4,7 +4,7 @@
 
 #include "util/mouse_button.hpp"
 
-#include "Updateable.hpp"
+#include "updateable.hpp"
 
 #include "inflater.hpp"
 #include "resource_loader.hpp"

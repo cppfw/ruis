@@ -33,7 +33,7 @@
 
 
 
-class SimpleWidget : virtual public morda::Widget, public morda::Updateable, public morda::CharInputWidget{
+class SimpleWidget : virtual public morda::Widget, public morda::updateable, public morda::CharInputWidget{
 	std::shared_ptr<morda::ResTexture> tex;
 
 public:
@@ -134,7 +134,7 @@ public:
 
 
 
-class CubeWidget : public morda::Widget, public morda::Updateable{
+class CubeWidget : public morda::Widget, public morda::updateable{
 	std::shared_ptr<morda::ResTexture> tex;
 
 	morda::Quatr rot = morda::Quatr().identity();

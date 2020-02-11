@@ -3,7 +3,7 @@
 #include <utki/singleton.hpp>
 
 #include "context.hpp"
-#include "Updateable.hpp"
+#include "updateable.hpp"
 
 namespace morda{
 
@@ -11,7 +11,7 @@ class gui : public utki::intrusive_singleton<gui>{
 	friend T_Singleton;
 	static T_Instance instance;
 
-	friend class Updateable;
+	friend class updateable;
 	friend class widget;
 
 public:
