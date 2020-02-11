@@ -11,6 +11,47 @@
 
 namespace morda{
 
+class Updateable;
+
+class Updater{
+	friend class morda::Updateable;
+
+	typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
+
+	class UpdateQueue : public std::list<T_Pair>{
+	public:
+		UpdateQueue::iterator insertPair(const T_Pair& p);
+
+		std::shared_ptr<morda::Updateable> popFront(){
+			auto ret = this->front().second.lock();
+			this->pop_front();
+			return ret;
+		}
+	};
+
+	UpdateQueue q1, q2;
+
+	UpdateQueue *activeQueue, *inactiveQueue;
+
+	std::uint32_t lastUpdatedTimestamp = 0;
+
+	typedef std::list<std::shared_ptr<morda::Updateable> > T_ToAddList;
+	T_ToAddList toAdd;
+
+	void addPending();
+
+	void updateUpdateable(const std::shared_ptr<morda::Updateable>& u);
+public:
+	Updater() :
+			activeQueue(&q1),
+			inactiveQueue(&q2)
+	{}
+
+	void removeFromToAdd(Updateable* u);
+
+	//returns dt to wait before next update
+	std::uint32_t update();
+};
 
 
 /**
@@ -20,52 +61,12 @@ namespace morda{
  */
 class Updateable : virtual public utki::shared{
 	friend class gui;
-
-private:
-	class Updater{
-		friend class morda::Updateable;
-
-		typedef std::pair<std::uint32_t, std::weak_ptr<morda::Updateable>> T_Pair;
-
-		class UpdateQueue : public std::list<T_Pair>{
-		public:
-			UpdateQueue::iterator insertPair(const T_Pair& p);
-
-			std::shared_ptr<morda::Updateable> popFront(){
-				auto ret = this->front().second.lock();
-				this->pop_front();
-				return ret;
-			}
-		};
-
-		UpdateQueue q1, q2;
-
-		UpdateQueue *activeQueue, *inactiveQueue;
-
-		std::uint32_t lastUpdatedTimestamp = 0;
-
-		typedef std::list<std::shared_ptr<morda::Updateable> > T_ToAddList;
-		T_ToAddList toAdd;
-
-		void addPending();
-
-		void updateUpdateable(const std::shared_ptr<morda::Updateable>& u);
-	public:
-		Updater() :
-				activeQueue(&q1),
-				inactiveQueue(&q2)
-		{}
-
-		void removeFromToAdd(Updateable* u);
-
-		//returns dt to wait before next update
-		std::uint32_t update();
-	};
+	friend class Updater;
 
 private:
 	std::uint16_t dt;
 
-	std::uint32_t startedAt; //timestamp when update timer started.
+	std::uint32_t startedAt; // timestamp when update timer started.
 
 	std::uint32_t endAt()const noexcept{
 		return this->startedAt + std::uint32_t(this->dt);
@@ -73,10 +74,10 @@ private:
 
 	bool isUpdating_v = false;
 
-	//pointer to the queue the updateable is inserted into
+	// pointer to the queue the updateable is inserted into
 	Updater::UpdateQueue* queue = nullptr;
 
-	Updater::UpdateQueue::iterator iter; //iterator into the queue.
+	Updater::UpdateQueue::iterator iter; // iterator into the queue.
 
 	bool pendingAddition = false;
 

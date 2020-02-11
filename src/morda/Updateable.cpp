@@ -20,7 +20,7 @@ std::uint32_t getTicks(){
 }
 
 
-Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::insertPair(const T_Pair& p){
+Updater::UpdateQueue::iterator Updater::UpdateQueue::insertPair(const T_Pair& p){
 	if(this->size() == 0 || this->back().first <= p.first){
 		this->push_back(p);
 		return --(this->end());
@@ -39,7 +39,7 @@ Updateable::Updater::UpdateQueue::iterator Updateable::Updater::UpdateQueue::ins
 
 
 
-void Updateable::Updater::addPending(){
+void Updater::addPending(){
 	while(this->toAdd.size() != 0){
 		T_Pair p;
 		
@@ -64,7 +64,7 @@ void Updateable::Updater::addPending(){
 
 
 
-void Updateable::Updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
+void Updater::updateUpdateable(const std::shared_ptr<morda::Updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -85,7 +85,7 @@ void Updateable::Updater::updateUpdateable(const std::shared_ptr<morda::Updateab
 
 
 
-std::uint32_t Updateable::Updater::update(){
+std::uint32_t Updater::update(){
 	std::uint32_t curTime = getTicks();
 	
 //	TRACE(<< "Updateable::Updater::Update(): invoked" << std::endl)
@@ -152,7 +152,7 @@ std::uint32_t Updateable::Updater::update(){
 
 
 
-void Updateable::Updater::removeFromToAdd(Updateable* u){
+void Updater::removeFromToAdd(Updateable* u){
 	ASSERT(u->pendingAddition)
 	for(T_ToAddList::iterator i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
 		if((*i).operator->() == u){
