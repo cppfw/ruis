@@ -189,7 +189,6 @@ public:
 	 * @brief Get layout parameters of the widget.
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
 	 * @return Layout parameters of the widget.
-	 * @throw morda::Exc if the widget is not added to any container.
 	 */
 	layout_params& get_layout_params();
 
@@ -202,7 +201,6 @@ public:
 	 * @brief Get layout parameters of the widget.
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
 	 * @return Layout parameters of the widget.
-	 * @throw morda::Exc if the widget is not added to any container.
 	 */
 	const layout_params& get_layout_params()const;
 
@@ -394,7 +392,7 @@ public:
 
 	/**
 	 * @brief Try get widget by id.
-	 * Get widget by ID from the widget hierarchy. Since simple Widget cannot have children,
+	 * Get widget by ID from the widget hierarchy. Since simple widget cannot have children,
 	 * this implementation just checks if id of this widget is the looked up id and if so it returns
 	 * pointer to this widget or nullptr otherwise.
 	 * @param id - id of the widget to search for.
@@ -484,9 +482,10 @@ public:
 public:
 	/**
 	 * @brief Constructor.
+	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(const puu::forest& desc);
+	widget(/* std::shared_ptr<context> c, */ const puu::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

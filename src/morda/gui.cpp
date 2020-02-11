@@ -25,14 +25,13 @@
 #include "widgets/group/Window.hpp"
 #include "widgets/group/CollapseArea.hpp"
 
-
 using namespace morda;
 
 gui::T_Instance gui::instance;
 
 gui::gui(
-		std::shared_ptr<morda::Renderer>&& r,
-        std::shared_ptr<morda::updater>&& u,
+		std::shared_ptr<morda::Renderer> r,
+        std::shared_ptr<morda::updater> u,
 		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 		real dots_per_inch,
 		real dots_per_dp
@@ -47,9 +46,6 @@ gui::gui(
 {
 	ASSERT(this->context)
 }
-
-
-
 
 void gui::initStandardWidgets(papki::File& fi) {
 
@@ -147,8 +143,6 @@ void gui::setViewportSize(const morda::Vec2r& size){
 	this->rootWidget->resize(this->viewportSize);
 }
 
-
-
 void gui::setRootWidget(const std::shared_ptr<morda::Widget> w){
 	this->rootWidget = std::move(w);
 
@@ -181,8 +175,6 @@ void gui::render(const Matr4r& matrix)const{
 	this->rootWidget->renderInternal(m);
 }
 
-
-
 void gui::onMouseMove(const Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
@@ -194,8 +186,6 @@ void gui::onMouseMove(const Vec2r& pos, unsigned id){
 	}
 }
 
-
-
 void gui::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
@@ -206,8 +196,6 @@ void gui::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, uns
 		this->rootWidget->on_mouse_button(isDown, pos, button, pointerID);
 	}
 }
-
-
 
 void gui::onMouseHover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
@@ -230,7 +218,6 @@ void gui::onKeyEvent(bool isDown, key keyCode){
 		}
 	}
 }
-
 
 void gui::onCharacterInput(const UnicodeProvider& unicode, key key){
 	if(auto w = this->context->focused_widget.lock()){
