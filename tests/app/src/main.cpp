@@ -33,12 +33,17 @@
 
 
 
-class SimpleWidget : virtual public morda::Widget, public morda::updateable, public morda::CharInputWidget{
+class SimpleWidget :
+		virtual public morda::widget,
+		public morda::updateable,
+		public morda::CharInputWidget
+{
 	std::shared_ptr<morda::ResTexture> tex;
 
 public:
 	SimpleWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
-			morda::widget(std::move(c), desc)
+			morda::widget(std::move(c), desc),
+			morda::CharInputWidget(this->context)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");

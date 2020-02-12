@@ -21,7 +21,7 @@ using namespace morda;
 
 
 namespace{
-const std::uint32_t cursorBlinkPeriod_c = 500; //milliseconds
+const std::uint32_t cursorBlinkPeriod_c = 500; // milliseconds
 
 const real cursorWidth_c = real(1.0);
 }
@@ -30,7 +30,8 @@ const real cursorWidth_c = real(1.0);
 
 TextInputLine::TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		SingleLineTextWidget(this->context, desc)
+		SingleLineTextWidget(this->context, desc),
+		CharInputWidget(this->context)
 {
 	this->set_clip(true);
 }

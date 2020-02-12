@@ -15,8 +15,8 @@ namespace morda{
 class CharInputWidget : virtual public widget{
 
 protected:
-	CharInputWidget() :
-			widget(puu::forest())
+	CharInputWidget(std::shared_ptr<morda::context> c) :
+			widget(std::move(c), puu::forest())
 	{}
 
 public:
