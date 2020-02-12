@@ -102,8 +102,8 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 }
 
 
-TexFont::TexFont(const std::shared_ptr<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		Font(c),
+TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+		Font(std::move(c)),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {

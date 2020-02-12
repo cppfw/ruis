@@ -10,9 +10,9 @@ namespace morda{
  */
 class KeyProxy : public Pile{
 public:
-	KeyProxy(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-			widget(c, desc),
-			Pile(c, desc)
+	KeyProxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc),
+			Pile(this->context, desc)
 	{}
 	
 	KeyProxy(const KeyProxy&) = delete;

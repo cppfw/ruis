@@ -7,9 +7,9 @@
 
 using namespace morda;
 
-Tabs::Tabs(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		ChoiceGroup(c, desc)
+Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		ChoiceGroup(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

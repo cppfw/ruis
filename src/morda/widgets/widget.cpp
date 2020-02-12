@@ -13,8 +13,8 @@
 using namespace morda;
 
 
-widget::widget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		context(c)
+widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		context(std::move(c))
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

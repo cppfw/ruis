@@ -58,12 +58,12 @@ void Tab::onPressedChanged() {
 }
 
 
-Tab::Tab(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		Button(c, desc),
-		ToggleButton(c, desc),
-		ChoiceButton(c, desc),
-		NinePatchToggle(c, desc)
+Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Button(this->context, desc),
+		ToggleButton(this->context, desc),
+		ChoiceButton(this->context, desc),
+		NinePatchToggle(this->context, desc)
 {
 	if(!this->pressedNinePatch()){
 		this->setPressedNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_tab_active"));

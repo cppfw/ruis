@@ -30,8 +30,8 @@ protected:
 	
 	real ascender_v;
 	
-	Font(const std::shared_ptr<morda::context>& context) :
-			context(context)
+	Font(std::shared_ptr<morda::context> context) :
+			context(std::move(context))
 	{}
 	
 	Font(const Font&) = delete;

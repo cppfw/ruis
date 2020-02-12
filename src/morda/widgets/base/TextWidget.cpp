@@ -22,9 +22,9 @@ void TextWidget::setFont(std::shared_ptr<ResFont> font) {
 }
 
 
-TextWidget::TextWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		ColorWidget(c, desc)
+TextWidget::TextWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		ColorWidget(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -44,9 +44,9 @@ TextWidget::TextWidget(const std::shared_ptr<morda::context>& c, const puu::fore
 
 
 
-SingleLineTextWidget::SingleLineTextWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		TextWidget(c, desc)
+SingleLineTextWidget::SingleLineTextWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		TextWidget(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

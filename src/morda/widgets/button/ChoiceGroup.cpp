@@ -5,9 +5,9 @@ using namespace morda;
 
 
 
-ChoiceGroup::ChoiceGroup(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		Pile(c, desc)
+ChoiceGroup::ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Pile(this->context, desc)
 {}
 
 bool ChoiceGroup::isWidgetActive(const Widget& w) const noexcept{

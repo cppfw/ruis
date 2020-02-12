@@ -28,9 +28,9 @@ const real cursorWidth_c = real(1.0);
 
 
 
-TextInputLine::TextInputLine(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		SingleLineTextWidget(c, desc)
+TextInputLine::TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		SingleLineTextWidget(this->context, desc)
 {
 	this->set_clip(true);
 }

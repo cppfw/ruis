@@ -43,7 +43,7 @@ public:
 	NinePatch(const NinePatch&) = delete;
 	NinePatch& operator=(const NinePatch&) = delete;
 
-	NinePatch(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
 

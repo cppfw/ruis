@@ -6,11 +6,11 @@ namespace morda{
 
 class FractionBandWidget : public FractionWidget
 {
-	float curBandSizeFraction = 0; //Current bar size factor from 0 to 1
+	float curBandSizeFraction = 0; // Current bar size factor from 0 to 1
 protected:
-	FractionBandWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-			widget(c, desc),
-			FractionWidget(c, desc)
+	FractionBandWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc),
+			FractionWidget(this->context, desc)
 	{}
 
 	virtual void onBandSizeChanged();

@@ -10,9 +10,9 @@ namespace morda{
  */
 class Row : public LinearContainer{
 public:
-	Row(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-			widget(c, desc),
-			LinearContainer(c, desc, false)
+	Row(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc),
+			LinearContainer(this->context, desc, false)
 	{}
 
 	Row(const Row&) = delete;

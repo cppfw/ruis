@@ -489,7 +489,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

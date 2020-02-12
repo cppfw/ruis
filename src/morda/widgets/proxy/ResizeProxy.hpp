@@ -11,8 +11,8 @@ namespace morda{
  */
 class ResizeProxy : virtual public Widget{
 public:
-	ResizeProxy(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-			widget(c, desc)
+	ResizeProxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc)
 	{}
 
 	ResizeProxy(const ResizeProxy&) = delete;

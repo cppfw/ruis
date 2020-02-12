@@ -12,6 +12,6 @@ protected:
 	void onPressedChanged() override;
 
 public:
-	ImagePushButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	ImagePushButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
 };
 }

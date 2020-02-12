@@ -11,7 +11,7 @@ namespace morda{
  */
 class MouseProxy : virtual public Widget{
 public:
-	MouseProxy(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	MouseProxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	MouseProxy(const MouseProxy&) = delete;
 	MouseProxy& operator=(const MouseProxy&) = delete;

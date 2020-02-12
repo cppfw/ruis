@@ -3,8 +3,8 @@
 using namespace morda;
 
 
-OrientedWidget::OrientedWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical) :
-		widget(c, desc),
+OrientedWidget::OrientedWidget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+		widget(std::move(c), desc),
 		isVertical_v(vertical)
 {}
 

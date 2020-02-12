@@ -33,7 +33,7 @@ private:
 			std::string,
 			std::function<
 					std::shared_ptr<morda::widget>(
-							const std::shared_ptr<morda::context>&,
+							std::shared_ptr<morda::context>,
 							const puu::forest&
 						)
 				>
@@ -54,8 +54,8 @@ public:
 	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](const std::shared_ptr<morda::context>& c, const puu::forest& desc) -> std::shared_ptr<morda::widget> {
-					return std::make_shared<T>(c, desc);
+				[](std::shared_ptr<morda::context> c, const puu::forest& desc) -> std::shared_ptr<morda::widget> {
+					return std::make_shared<T>(std::move(c), desc);
 				}
 			);
 	}

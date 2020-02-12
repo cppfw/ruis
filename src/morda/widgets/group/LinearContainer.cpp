@@ -29,10 +29,10 @@ std::unique_ptr<widget::layout_params> LinearContainer::create_layout_params(con
 	return utki::make_unique<LayoutParams>(desc, this->context->units);
 }
 
-LinearContainer::LinearContainer(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical) :
-		widget(c, desc),
-		container(c, desc),
-		OrientedWidget(c, puu::forest(), vertical)
+LinearContainer::LinearContainer(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+		widget(std::move(c), desc),
+		container(this->context, desc),
+		OrientedWidget(this->context, puu::forest(), vertical)
 {}
 
 

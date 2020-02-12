@@ -18,7 +18,7 @@ class Text : public SingleLineTextWidget{
 
 
 public:
-	Text(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	Text(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
 	~Text()noexcept{}

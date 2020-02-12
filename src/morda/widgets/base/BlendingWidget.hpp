@@ -43,7 +43,7 @@ private:
 	};
 
 protected:
-	BlendingWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	BlendingWidget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
 	BlendingWidget(const BlendingWidget&) = delete;

@@ -15,7 +15,7 @@ class ColorWidget : public virtual Widget{
 	std::uint32_t color_v = 0xffffffff;
 
 protected:
-	ColorWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	ColorWidget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
 	ColorWidget(const ColorWidget&) = delete;

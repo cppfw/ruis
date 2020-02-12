@@ -10,9 +10,9 @@ using namespace morda;
 
 
 
-Text::Text(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		SingleLineTextWidget(c, desc)
+Text::Text(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		SingleLineTextWidget(this->context, desc)
 {}
 
 

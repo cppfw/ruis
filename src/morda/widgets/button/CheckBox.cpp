@@ -20,11 +20,11 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 
 
-CheckBox::CheckBox(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		Button(c, desc),
-		ToggleButton(c, desc),
-		NinePatch(c, D_Layout)
+CheckBox::CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Button(this->context, desc),
+		ToggleButton(this->context, desc),
+		NinePatch(this->context, D_Layout)
 {
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->isPressed());

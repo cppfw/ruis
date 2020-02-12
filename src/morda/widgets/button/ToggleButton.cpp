@@ -5,9 +5,9 @@
 using namespace morda;
 
 
-ToggleButton::ToggleButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		Button(c, desc)
+ToggleButton::ToggleButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Button(this->context, desc)
 {
 }
 

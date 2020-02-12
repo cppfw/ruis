@@ -40,8 +40,8 @@ Renderer::BlendFactor_e blendFactorFromString(const std::string& s){
 }
 
 
-BlendingWidget::BlendingWidget(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc)
+BlendingWidget::BlendingWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

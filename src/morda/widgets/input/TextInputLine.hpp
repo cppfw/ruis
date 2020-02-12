@@ -39,7 +39,7 @@ public:
 	TextInputLine(const TextInputLine&) = delete;
 	TextInputLine& operator=(const TextInputLine&) = delete;
 
-	TextInputLine(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	virtual ~TextInputLine()noexcept{}
 

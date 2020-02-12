@@ -21,7 +21,7 @@ class MouseCursor : virtual public Widget{
 
 	Vec2r cursorPos;
 public:
-	MouseCursor(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	MouseCursor(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	MouseCursor(const MouseCursor&) = delete;
 	MouseCursor& operator=(const MouseCursor&) = delete;

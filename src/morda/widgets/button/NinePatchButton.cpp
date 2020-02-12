@@ -8,10 +8,10 @@
 using namespace morda;
 
 
-NinePatchButton::NinePatchButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
-		widget(c, desc),
-		Button(c, desc),
-		NinePatch(c, desc)
+NinePatchButton::NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Button(this->context, desc),
+		NinePatch(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

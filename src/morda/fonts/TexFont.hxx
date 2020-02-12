@@ -78,7 +78,7 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	TexFont(const std::shared_ptr<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real charAdvance(char32_t c) const override;
 	

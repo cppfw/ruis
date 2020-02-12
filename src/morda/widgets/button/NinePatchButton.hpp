@@ -36,7 +36,7 @@ public:
 	}
 	
 protected:
-	NinePatchButton(const std::shared_ptr<morda::context>& c, const puu::forest& desc);
+	NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	void onPressedChanged()override;
 };
