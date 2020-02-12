@@ -3,7 +3,7 @@
 #include <papki/fs_file.hpp>
 
 #include <morda/util/util.hpp>
-#include <morda/context.hpp>
+#include <morda/gui.hpp>
 
 #include <mordaren/OpenGL2Renderer.hpp>
 
@@ -128,7 +128,7 @@ void macosx_HandleKeyEvent(bool isDown, morda::key keyCode){
 	handleKeyEvent(mordavokne::application::inst(), isDown, keyCode);
 }
 
-class MacosxUnicodeProvider : public morda::context::UnicodeProvider{
+class MacosxUnicodeProvider : public morda::gui::UnicodeProvider{
 	const NSString* nsStr;
 public:
 	MacosxUnicodeProvider(const NSString* nsStr = nullptr) :
