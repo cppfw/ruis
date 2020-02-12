@@ -1,8 +1,9 @@
 #include "../../application.hpp"
 
-#include <papki/FSFile.hpp>
+#include <papki/fs_file.hpp>
 
 #include <morda/util/util.hpp>
+#include <morda/context.hpp>
 
 #include <mordaren/OpenGL2Renderer.hpp>
 
