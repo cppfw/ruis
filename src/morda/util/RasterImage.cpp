@@ -1,9 +1,3 @@
-/**
- * @file Image class
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
-
 #include <cstring>
 #include <algorithm>
 
@@ -11,9 +5,9 @@
 
 #include <png.h>
 
-//JPEG lib does not have 'extern "C"{}' :-(, so we put it outside of their .h
-//or will have linking problems otherwise because
-//of "_" symbol in front of C-function names
+// JPEG lib does not have 'extern "C"{}' :-(, so we put it outside of their .h
+// or will have linking problems otherwise because
+// of "_" symbol in front of C-function names
 extern "C"{
 #include <jpeglib.h>
 }

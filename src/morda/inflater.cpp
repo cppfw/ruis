@@ -81,13 +81,7 @@ void substitute_vars(puu::forest& to, const std::function<const puu::forest*(con
 	}
 
 	for(auto i = to.begin(); i != to.end();){
-		if(i->value == "@" || i->value == "$"){ //TODO: @ is deprecated, remove check for @.
-
-			//TODO: deprecated, remove.
-			if(i->value == "@"){
-				TRACE_ALWAYS(<< "DEPRACATED: use $ instead of @" << std::endl)
-			}
-
+		if(i->value == "$"){
 			if(i->children.empty()){
 				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
 			}
