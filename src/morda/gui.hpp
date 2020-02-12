@@ -1,16 +1,11 @@
 #pragma once
 
-#include <utki/singleton.hpp>
-
 #include "context.hpp"
 #include "updateable.hpp"
 
 namespace morda{
 
-class gui : public utki::intrusive_singleton<gui>{
-	friend T_Singleton;
-	static T_Instance instance;
-
+class gui{
 	friend class updateable;
 	friend class widget;
 
@@ -152,10 +147,5 @@ public:
 	 */
 	void onCharacterInput(const UnicodeProvider& unicode, morda::key key);
 };
-
-
-inline gui& inst(){
-	return morda::gui::inst();
-}
 
 }

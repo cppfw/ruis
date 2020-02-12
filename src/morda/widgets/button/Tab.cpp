@@ -66,10 +66,10 @@ Tab::Tab(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
 		NinePatchToggle(c, desc)
 {
 	if(!this->pressedNinePatch()){
-		this->setPressedNinePatch(morda::inst().context->loader.load<ResNinePatch>("morda_npt_tab_active"));
+		this->setPressedNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_tab_active"));
 	}
 	if(!this->unpressedNinePatch()){
-		this->setUnpressedNinePatch(morda::inst().context->loader.load<ResNinePatch>("morda_npt_tab_inactive"));
+		this->setUnpressedNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_tab_inactive"));
 	}
 
 	// initialize nine-patch

@@ -29,9 +29,10 @@ class res_puu : public Resource{
 public:
 	/**
 	 * @brief Create puu resource.
+	 * @param c - context.
 	 * @param s - puu forest to initialize the resource with.
 	 */
-	res_puu(puu::forest&& s);
+	res_puu(std::shared_ptr<morda::context> c, puu::forest&& s);
 	
 	res_puu(const res_puu&) = delete;
 	res_puu& operator=(const res_puu&) = delete;
@@ -41,7 +42,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<res_puu> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_puu> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

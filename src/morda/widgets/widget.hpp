@@ -19,6 +19,7 @@
 
 #include "../util/key.hpp"
 #include "../util/mouse_button.hpp"
+#include "../util/units.hpp"
 
 #include "../exception.hpp"
 
@@ -98,7 +99,7 @@ public:
 		vector2& dim = dims;
 
 	public:
-		layout_params(const puu::forest& desc);
+		layout_params(const puu::forest& desc, const morda::units& units);
 
 		virtual ~layout_params()noexcept{}
 	};

@@ -23,14 +23,14 @@ Tabs::Tabs(const std::shared_ptr<morda::context>& c, const puu::forest& desc) :
 				}
 
 				if(p.value == "filler"){
-					this->setFiller(morda::inst().context->loader.load<ResImage>(get_property_value(pp).to_string()));
+					this->setFiller(this->context->loader.load<ResImage>(get_property_value(pp).to_string()));
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->setFiller(morda::inst().context->loader.load<ResImage>("morda_img_tabs_filler"));
+		this->setFiller(this->context->loader.load<ResImage>("morda_img_tabs_filler"));
 	}
 }
 
@@ -130,14 +130,14 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		this->render_child(matrix, *ab);
 	}
 
-	//render filler
+	// render filler
 	if(this->children().size() != 0){
 		real ce = this->children().back()->rect().right();
 		real l = this->rect().d.x - ce;
 		if(l > 0){
 			Matr4r m(matrix);
-			m.translate(ce, this->rect().d.y - this->fillerTexture->dims().y);
-			m.scale(l, this->fillerTexture->dims().y);
+			m.translate(ce, this->rect().d.y - this->fillerTexture->dims.y);
+			m.scale(l, this->fillerTexture->dims.y);
 			this->fillerTexture->render(m);
 		}
 	}

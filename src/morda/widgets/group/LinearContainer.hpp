@@ -36,7 +36,7 @@ public:
 		 * @brief Constructor.
 		 * @param desc - description of the layout parameters.
 		 */
-		layout_params(const puu::forest& desc);
+		layout_params(const puu::forest& desc, const morda::units& units);
 
 		/**
 		 * @brief Weight of the widget.
@@ -49,9 +49,7 @@ public:
 	// TODO: deprecated, remove.
 	typedef layout_params LayoutParams;
 private:
-	std::unique_ptr<Widget::LayoutParams> create_layout_params(const puu::forest& desc)const override{
-		return utki::make_unique<LayoutParams>(desc);
-	}
+	std::unique_ptr<Widget::LayoutParams> create_layout_params(const puu::forest& desc)const override;
 };
 
 

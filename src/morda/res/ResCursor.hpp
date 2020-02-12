@@ -25,7 +25,7 @@ class ResCursor : public Resource{
 	Vec2r hotspot_v;
 	
 public:
-	ResCursor(ResImage& image, const Vec2r& hotspot);
+	ResCursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot);
 	
 	ResCursor(const ResCursor&) = delete;
 	ResCursor& operator=(const ResCursor&) = delete;
@@ -41,7 +41,7 @@ public:
 private:
 	friend class resource_loader;
 	
-	static std::shared_ptr<ResCursor> load(context& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<ResCursor> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 }

@@ -63,7 +63,7 @@ BlendingWidget::BlendingWidget(const std::shared_ptr<morda::context>& c, const p
 }
 
 void BlendingWidget::applyBlending() const{
-	auto& r = *morda::inst().context->renderer;
+	auto& r = *this->context->renderer;
 	r.setBlendEnabled(this->isBlendingEnabled());
 	if(this->isBlendingEnabled()){
 		r.setBlendFunc(this->blend_v.src, this->blend_v.dst, this->blend_v.srcAlpha, this->blend_v.dstAlpha);

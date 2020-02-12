@@ -25,9 +25,9 @@ NinePatchButton::NinePatchButton(const std::shared_ptr<morda::context>& c, const
 				}
 
 				if(pp.value == "unpressed"){
-					this->setUnpressedNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>(get_property_value(pp).to_string()));
+					this->setUnpressedNinePatch(this->context->loader.load<ResNinePatch>(get_property_value(pp).to_string()));
 				}else if(pp.value == "pressed"){
-					this->setPressedNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>(get_property_value(pp).to_string()));
+					this->setPressedNinePatch(this->context->loader.load<ResNinePatch>(get_property_value(pp).to_string()));
 				}
 			}
 		}

@@ -18,11 +18,11 @@ Color::Color(const std::shared_ptr<morda::context>& c, const puu::forest& desc) 
 
 
 void Color::render(const morda::Matr4r& matrix)const{
-	applySimpleAlphaBlending();
+	auto& r = *this->context->renderer;
+	applySimpleAlphaBlending(r);
 	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = *morda::inst().context->renderer;
 	r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 }

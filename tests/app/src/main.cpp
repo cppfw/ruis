@@ -41,7 +41,7 @@ public:
 			morda::widget(c, desc)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = morda::gui::inst().context->loader.load<morda::ResTexture>("tex_sample");
+		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
 	}
 
 	std::uint32_t timer = 0;
@@ -67,9 +67,9 @@ public:
 		}
 
 		if(this->is_updating()){
-			morda::inst().context->updater->stop(*this);
+			this->context->updater->stop(*this);
 		}else{
-			morda::inst().context->updater->start(
+			this->context->updater->start(
 					std::dynamic_pointer_cast<morda::updateable>(this->shared_from_this()),
 					30
 				);
@@ -120,7 +120,7 @@ public:
 			morda::Matr4r matr(matrix);
 			matr.scale(this->rect().d);
 
-			auto& r = *morda::inst().context->renderer;
+			auto& r = *this->context->renderer;
 			r.shader->posTex->render(matr, *r.posTexQuad01VAO, this->tex->tex());
 		}
 
@@ -167,7 +167,7 @@ public:
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, -1, 1)
 		}};
 
-		auto posVBO = morda::inst().context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubePos));
+		auto posVBO = this->context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubePos));
 
 		std::array<r4::vec2f, 36> cubeTex = {{
 			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
@@ -189,17 +189,17 @@ public:
 			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
 		}};
 
-		auto texVBO = morda::inst().context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubeTex));
+		auto texVBO = this->context->renderer->factory->createVertexBuffer(utki::wrapBuf(cubeTex));
 
 		std::array<std::uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
-		auto cubeIndices = morda::inst().context->renderer->factory->createIndexBuffer(utki::wrapBuf(indices));
+		auto cubeIndices = this->context->renderer->factory->createIndexBuffer(utki::wrapBuf(indices));
 
-		this->cubeVAO = morda::inst().context->renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
+		this->cubeVAO = this->context->renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
 
-		this->tex = morda::gui::inst().context->loader.load<morda::ResTexture>("tex_sample");
+		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
 	}
 
@@ -233,7 +233,7 @@ public:
 
 //		glEnable(GL_CULL_FACE);
 
-		morda::inst().context->renderer->shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
+		this->context->renderer->shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
 	}
@@ -456,18 +456,18 @@ public:
 		}
 
 		{
-			auto widget = morda::gui::inst().context->inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+			auto widget = this->context->inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
 			if(!n->children.empty()){
-				auto w = morda::gui::inst().context->inflater.inflate(DPlusMinus);
+				auto w = this->context->inflater.inflate(DPlusMinus);
 
 				auto plusminus = w->try_get_widget_as<morda::Image>("plusminus");
 				ASSERT(plusminus)
 				plusminus->setImage(
 						isCollapsed ?
-								morda::gui::inst().context->loader.load<morda::ResImage>("morda_img_treeview_plus") :
-								morda::gui::inst().context->loader.load<morda::ResImage>("morda_img_treeview_minus")
+								this->context->loader.load<morda::ResImage>("morda_img_treeview_plus") :
+								this->context->loader.load<morda::ResImage>("morda_img_treeview_minus")
 					);
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");
@@ -500,7 +500,7 @@ public:
 		}
 
 		{
-			auto v = morda::gui::inst().context->inflater.inflate(
+			auto v = this->context->inflater.inflate(
 					R"qwertyuiop(
 							Pile{
 								Color{
@@ -554,7 +554,7 @@ public:
 		}
 
 		{
-			auto b = morda::gui::inst().context->inflater.inflate_as<morda::PushButton>(
+			auto b = this->context->inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
 							PushButton{
 								Color{
@@ -599,18 +599,18 @@ public:
 	Application() :
 			mordavokne::App("morda-tests", GetWindowParams())
 	{
-		morda::gui::inst().initStandardWidgets(*this->getResFile("../../res/morda_res/"));
+		this->gui.initStandardWidgets(*this->getResFile("../../res/morda_res/"));
 
-		morda::gui::inst().context->loader.mountResPack(*this->getResFile("res/"));
+		this->gui.context->loader.mountResPack(*this->getResFile("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		morda::gui::inst().context->inflater.register_widget<SimpleWidget>("U_SimpleWidget");
-		morda::gui::inst().context->inflater.register_widget<CubeWidget>("CubeWidget");
+		this->gui.context->inflater.register_widget<SimpleWidget>("U_SimpleWidget");
+		this->gui.context->inflater.register_widget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = morda::gui::inst().context->inflater.inflate(
+		std::shared_ptr<morda::Widget> c = this->gui.context->inflater.inflate(
 				*this->getResFile("res/test.gui")
 			);
-		morda::gui::inst().setRootWidget(c);
+		this->gui.setRootWidget(c);
 
 		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
@@ -629,15 +629,15 @@ public:
 			this->show_virtual_keyboard();
 		};
 
-		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [](morda::PushButton&){
-			morda::gui::inst().postToUiThread(
+		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
+			this->gui.context->run_from_ui_thread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
 					}
 				);
 		};
 
-		morda::inst().context->updater->start(
+		this->gui.context->updater->start(
 				std::dynamic_pointer_cast<CubeWidget>(c->try_get_widget("cube_widget")),
 				0
 			);

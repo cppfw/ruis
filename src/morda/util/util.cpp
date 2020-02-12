@@ -42,12 +42,12 @@ morda::Sidesr morda::parse_sides(const puu::forest& desc){
 	return Sidesr(p.x, p.y, d.x, d.y);
 }
 
-real morda::parse_dimension_value(const puu::leaf& l){
+real morda::parse_dimension_value(const puu::leaf& l, const morda::units& units){
 	// check if millimeters
 	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
-		return gui::inst().context->units.mm_to_px(l.to_float());
+		return units.mm_to_px(l.to_float());
 	}else if(l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'd'){ //check if in density pixels
-		return gui::inst().context->units.dp_to_px(l.to_float());
+		return units.dp_to_px(l.to_float());
 	}
 
 	if(l.empty()){
@@ -58,7 +58,7 @@ real morda::parse_dimension_value(const puu::leaf& l){
 }
 
 
-real morda::parse_layout_dimension_value(const puu::leaf& l){
+real morda::parse_layout_dimension_value(const puu::leaf& l, const morda::units& units){
 	if(l == "min"){
 		return widget::layout_params::min;
 	}else if(l == "fill"){
@@ -66,7 +66,7 @@ real morda::parse_layout_dimension_value(const puu::leaf& l){
 	}else if(l == "max"){
 		return widget::layout_params::max;
 	}
-	return parse_dimension_value(l);
+	return parse_dimension_value(l, units);
 }
 
 
@@ -101,9 +101,9 @@ std::shared_ptr<Texture2D> morda::loadTexture(Renderer& r, const papki::file& fi
 }
 
 
-void morda::applySimpleAlphaBlending(){
-	morda::inst().context->renderer->setBlendEnabled(true);
-	morda::inst().context->renderer->setBlendFunc(
+void morda::applySimpleAlphaBlending(Renderer& r){
+	r.setBlendEnabled(true);
+	r.setBlendFunc(
 			Renderer::BlendFactor_e::SRC_ALPHA,
 			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
 			Renderer::BlendFactor_e::ONE,

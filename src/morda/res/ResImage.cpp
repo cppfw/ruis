@@ -17,8 +17,14 @@
 
 using namespace morda;
 
-ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect) :
-		ResImage::QuadTexture(rect.d.abs()),
+ResImage::ResImage(std::shared_ptr<morda::context> c) :
+		Resource(std::move(c))
+{}
+
+
+ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex, const Rectr& rect) :
+		ResImage(std::move(c)),
+		ResImage::QuadTexture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
 {
 //	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
@@ -29,15 +35,16 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex, const Rectr& rect)
 	ASSERT(false)
 }
 
-ResAtlasImage::ResAtlasImage(std::shared_ptr<ResTexture> tex) :
-		ResImage::QuadTexture(tex->tex().dims()),
+ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex) :
+		ResImage(std::move(c)),
+		ResImage::QuadTexture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
-		vao(morda::inst().context->renderer->posTexQuad01VAO)
+		vao(this->context->renderer->posTexQuad01VAO)
 {}
 
 
 
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<ResAtlasImage> ResAtlasImage::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<ResTexture> tex;
 	Rectr rect(-1);
 
@@ -54,15 +61,15 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(context& ctx, const puu::fore
 	}
 	
 	if(rect.p.x >= 0){
-		return std::make_shared<ResAtlasImage>(tex, rect);
+		return std::make_shared<ResAtlasImage>(ctx.shared_from_this(), tex, rect);
 	}else{
-		return std::make_shared<ResAtlasImage>(tex);
+		return std::make_shared<ResAtlasImage>(ctx.shared_from_this(), tex);
 	}
 }
 
 
 void ResAtlasImage::render(const Matr4r& matrix, const VertexArray& vao) const {
-	morda::inst().context->renderer->shader->posTex->render(matrix, *this->vao, this->tex->tex());
+	this->context->renderer->shader->posTex->render(matrix, *this->vao, this->tex->tex());
 }
 
 
@@ -73,21 +80,22 @@ class TexQuadTexture : public ResImage::QuadTexture{
 protected:
 	std::shared_ptr<Texture2D> tex_v;
 	
-	TexQuadTexture(std::shared_ptr<Texture2D> tex) :
-			ResImage::QuadTexture(tex->dims()),
+	TexQuadTexture(std::shared_ptr<Renderer> r, std::shared_ptr<Texture2D> tex) :
+			ResImage::QuadTexture(std::move(r), tex->dims()),
 			tex_v(std::move(tex))
 	{}
 	
 public:
 	void render(const Matr4r& matrix, const VertexArray& vao) const override{
-		morda::inst().context->renderer->shader->posTex->render(matrix, vao, *this->tex_v);
+		this->renderer->shader->posTex->render(matrix, vao, *this->tex_v);
 	}
 };
 	
 class ResRasterImage : public ResImage, public TexQuadTexture{
 public:
-	ResRasterImage(std::shared_ptr<Texture2D> tex) :
-			TexQuadTexture(std::move(tex))
+	ResRasterImage(std::shared_ptr<morda::context> c, std::shared_ptr<Texture2D> tex) :
+			ResImage(std::move(c)),
+			TexQuadTexture(this->context->renderer, std::move(tex))
 	{}
 	
 	std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim) const override{
@@ -98,15 +106,16 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(context& ctx, const papki::file& fi){
-		return std::make_shared<ResRasterImage>(loadTexture(*ctx.renderer, fi));
+	static std::shared_ptr<ResRasterImage> load(morda::context& ctx, const papki::file& fi){
+		return std::make_shared<ResRasterImage>(ctx.shared_from_this(), loadTexture(*ctx.renderer, fi));
 	}
 };
 
 class ResSvgImage : public ResImage{
 	std::unique_ptr<svgdom::SvgElement> dom;
 public:
-	ResSvgImage(decltype(dom) dom) :
+	ResSvgImage(std::shared_ptr<morda::context> c, decltype(dom) dom) :
+			ResImage(std::move(c)),
 			dom(std::move(dom))
 	{}
 	
@@ -118,8 +127,8 @@ public:
 	class SvgTexture : public TexQuadTexture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgTexture(std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D> tex) :
-				TexQuadTexture(std::move(tex)),
+		SvgTexture(std::shared_ptr<Renderer> r, std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D> tex) :
+				TexQuadTexture(std::move(r), std::move(tex)),
 				parent(parent)
 		{}
 
@@ -154,7 +163,7 @@ public:
 //		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::Parameters svgParams;
-		svgParams.dpi = morda::gui::inst().context->units.dots_per_inch;
+		svgParams.dpi = this->context->units.dots_per_inch;
 		svgParams.widthRequest = width;
 		svgParams.heightRequest = height;
 		auto svg = svgren::render(*this->dom, svgParams);
@@ -163,8 +172,9 @@ public:
 		ASSERT_INFO(svg.width * svg.height == svg.pixels.size(), "imWidth = " << svg.width << " imHeight = " << svg.height << " pixels.size() = " << svg.pixels.size())
 		
 		auto img = std::make_shared<SvgTexture>(
+				this->context->renderer,
 				this->sharedFromThis(this),
-				morda::inst().context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
+				this->context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;
@@ -174,13 +184,13 @@ public:
 	
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
 	
-	static std::shared_ptr<ResSvgImage> load(const papki::file& fi){
-		return std::make_shared<ResSvgImage>(svgdom::load(fi));
+	static std::shared_ptr<ResSvgImage> load(morda::context& ctx, const papki::file& fi){
+		return std::make_shared<ResSvgImage>(ctx.shared_from_this(), svgdom::load(fi));
 	}	
 };
 }
 
-std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
@@ -191,9 +201,9 @@ std::shared_ptr<ResImage> ResImage::load(context& ctx, const puu::forest& desc, 
 	return ResAtlasImage::load(ctx, desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(context& ctx, const papki::file& fi) {
+std::shared_ptr<ResImage> ResImage::load(morda::context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
-		return ResSvgImage::load(fi);
+		return ResSvgImage::load(ctx, fi);
 	}else{
 		return ResRasterImage::load(ctx, fi);
 	}

@@ -34,9 +34,9 @@ ImageButton::ImageButton(const std::shared_ptr<morda::context>& c, const puu::fo
 				}
 
 				if(pp.value == "pressed"){
-					this->pressedImage_v = morda::inst().context->loader.load<ResImage>(get_property_value(pp).to_string());
+					this->pressedImage_v = this->context->loader.load<ResImage>(get_property_value(pp).to_string());
 				}else if(pp.value == "unpressed"){
-					this->unpressedImage_v = morda::inst().context->loader.load<ResImage>(get_property_value(pp).to_string());
+					this->unpressedImage_v = this->context->loader.load<ResImage>(get_property_value(pp).to_string());
 				}
 				this->updateImage();
 			}

@@ -17,7 +17,7 @@ MouseCursor::MouseCursor(const std::shared_ptr<morda::context>& c, const puu::fo
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(morda::gui::inst().context->loader.load<ResCursor>(get_property_value(p).to_string()));
+			this->setCursor(this->context->loader.load<ResCursor>(get_property_value(p).to_string()));
 		}
 	}
 }
@@ -50,12 +50,12 @@ void MouseCursor::render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
-	matr.scale(this->quadTex->dims());
+	matr.scale(this->quadTex->dims);
 	
 //	TRACE(<< "MouseCursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
 	//TODO:
 //	s.setMatrix(matr);
-	this->quadTex->render(matr, *morda::inst().context->renderer->posTexQuad01VAO);
+	this->quadTex->render(matr, *this->context->renderer->posTexQuad01VAO);
 }
 

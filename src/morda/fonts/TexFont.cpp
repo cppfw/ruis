@@ -83,16 +83,16 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	g.topLeft = verts[0];
 	g.bottomRight = verts[2];
 
-	auto& r = *morda::inst().context->renderer;
+	auto& r = *this->context->renderer;
 	g.vao = r.factory->createVertexArray(
 			{
 				r.factory->createVertexBuffer(utki::wrapBuf(verts)),
-				morda::inst().context->renderer->quad01VBO
+				this->context->renderer->quad01VBO
 			},
-			morda::inst().context->renderer->quadIndices,
+			this->context->renderer->quadIndices,
 			VertexArray::Mode_e::TRIANGLE_FAN
 		);
-	g.tex = morda::inst().context->renderer->factory->createTexture2D(
+	g.tex = this->context->renderer->factory->createTexture2D(
 			morda::numChannelsToTexType(im.numChannels()),
 			im.dim(),
 			im.buf()
@@ -102,7 +102,8 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 }
 
 
-TexFont::TexFont(const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+TexFont::TexFont(const std::shared_ptr<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+		Font(c),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {
@@ -167,7 +168,7 @@ real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, 
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
 		ASSERT(g.vao)
-		morda::inst().context->renderer->shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
+		this->context->renderer->shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
 	}
 
 	return g.advance;
@@ -251,7 +252,7 @@ real TexFont::renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color,
 		return 0;
 	}
 	
-	applySimpleAlphaBlending();
+	applySimpleAlphaBlending(*this->context->renderer);
 
 	real ret = 0;
 

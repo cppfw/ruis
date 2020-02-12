@@ -106,13 +106,13 @@ NinePatch::NinePatch(const std::shared_ptr<morda::context>& c, const puu::forest
 		if(p.value == "left"){
 			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
 			// so, use parse_dimension_value().
-			this->borders.left() = parse_dimension_value(get_property_value(p));
+			this->borders.left() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "right"){
-			this->borders.right() = parse_dimension_value(get_property_value(p));
+			this->borders.right() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "top"){
-			this->borders.top() = parse_dimension_value(get_property_value(p));
+			this->borders.top() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "bottom"){
-			this->borders.bottom() = parse_dimension_value(get_property_value(p));
+			this->borders.bottom() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "centerVisible"){
 			this->setCenterVisible(get_property_value(p).to_bool());
 		}
@@ -122,7 +122,7 @@ NinePatch::NinePatch(const std::shared_ptr<morda::context>& c, const puu::forest
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->setNinePatch(morda::gui::inst().context->loader.load<ResNinePatch>(get_property_value(*i).to_string()));
+			this->setNinePatch(this->context->loader.load<ResNinePatch>(get_property_value(*i).to_string()));
 		}
 	}
 

@@ -27,8 +27,6 @@
 
 using namespace morda;
 
-gui::T_Instance gui::instance;
-
 gui::gui(
 		std::shared_ptr<morda::Renderer> r,
         std::shared_ptr<morda::updater> u,
@@ -123,7 +121,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<TextInputLine>("TextInputLine");
 
 	try{
-		auto t = morda::gui::inst().context->loader.load<res_puu>("morda_gui_defs");
+		auto t = this->context->loader.load<res_puu>("morda_gui_defs");
 
 		this->context->inflater.inflate(t->forest());
 

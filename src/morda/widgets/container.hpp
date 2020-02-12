@@ -79,9 +79,7 @@ protected:
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
-	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::forest& desc)const{
-		return utki::make_unique<Widget::LayoutParams>(desc);
-	}
+	virtual std::unique_ptr<LayoutParams> create_layout_params(const puu::forest& desc)const;
 
 	/**
 	 * @brief Calculate basic dimensions of widget.

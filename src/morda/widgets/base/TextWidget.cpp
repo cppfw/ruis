@@ -32,13 +32,13 @@ TextWidget::TextWidget(const std::shared_ptr<morda::context>& c, const puu::fore
 		}
 
 		if(p.value == "font"){
-			this->font_v = gui::inst().context->loader.load<morda::ResFont>(get_property_value(p).to_string().c_str());
+			this->font_v = this->context->loader.load<morda::ResFont>(get_property_value(p).to_string().c_str());
 		}
 	}
 
 	// load default font if needed
 	if(!this->font_v){
-		this->font_v = morda::gui::inst().context->loader.load<ResFont>("morda_fnt_normal");
+		this->font_v = this->context->loader.load<ResFont>("morda_fnt_normal");
 	}
 }
 

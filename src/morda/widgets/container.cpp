@@ -50,12 +50,16 @@ const widget::layout_params& container::get_layout_params(const widget& w)const{
 	return *w.layoutParams;
 }
 
+std::unique_ptr<widget::layout_params> container::create_layout_params(const puu::forest& desc)const{
+	return utki::make_unique<widget::layout_params>(desc, this->context->units);
+}
+
 void container::inflate_push_back(const puu::forest& desc){
 	for(auto i = desc.begin(); i != desc.end(); ++i){
 		if(is_leaf_property(i->value)){
 			continue;
 		}
-		this->push_back(morda::inst().context->inflater.inflate(i, i + 1));
+		this->push_back(this->context->inflater.inflate(i, i + 1));
 	}
 }
 

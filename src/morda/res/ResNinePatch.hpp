@@ -38,7 +38,8 @@ public:
 	ResNinePatch(const ResNinePatch&) = delete;
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
 	
-	ResNinePatch(std::shared_ptr<const ResImage> image, Sidesr borders) :
+	ResNinePatch(std::shared_ptr<morda::context> c, std::shared_ptr<const ResImage> image, Sidesr borders) :
+			Resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
 	{}
@@ -68,7 +69,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<ImageMatrix>> cache;
 	
-	static std::shared_ptr<ResNinePatch> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResNinePatch> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

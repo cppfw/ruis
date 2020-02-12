@@ -24,7 +24,8 @@ public:
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		auto i = std::next(this->widgets.begin(), index);
-		return morda::gui::inst().context->inflater.inflate(i, i + 1);
+		ASSERT(this->get_list())
+		return this->get_list()->context->inflater.inflate(i, i + 1);
 	}
 
 
@@ -409,19 +410,19 @@ morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
 	return ret;
 }
 
-void List::ItemsProvider::notifyDataSetChanged() {
-	if (!this->list) {
+void List::ItemsProvider::notifyDataSetChanged(){
+	if(!this->get_list()){
 		return;
 	}
 
-	gui::inst().postToUiThread(
+	this->get_list()->context->run_from_ui_thread(
 		[this](){
 			this->list->handleDataSetChanged();
 		}
 	);
 }
 
-void List::handleDataSetChanged() {
+void List::handleDataSetChanged(){
 	this->numTailItems = 0; //means that it needs to be recomputed
 
 	this->clear();
@@ -429,7 +430,7 @@ void List::handleDataSetChanged() {
 
 	this->updateChildrenList();
 
-	if (this->dataSetChanged) {
+	if(this->dataSetChanged){
 		this->dataSetChanged(*this);
 	}
 }

@@ -10,12 +10,16 @@
 
 #include "../config.hpp"
 
+#include "../context.hpp"
+
 namespace morda{
 
 /**
  * @brief Basic class representing a font.
  */
 class Font{
+public:
+	const std::shared_ptr<morda::context> context;
 protected:
 	/**
 	 * @brief Distance between lines of text.
@@ -26,7 +30,9 @@ protected:
 	
 	real ascender_v;
 	
-	Font(){}
+	Font(const std::shared_ptr<morda::context>& context) :
+			context(context)
+	{}
 	
 	Font(const Font&) = delete;
 	Font& operator=(const Font&) = delete;

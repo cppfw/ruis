@@ -1,6 +1,7 @@
 #include "LinearContainer.hpp"
 
 #include "../../util/util.hpp"
+#include "../../context.hpp"
 
 #include <cmath>
 
@@ -10,8 +11,8 @@ using namespace morda;
 
 
 
-LinearContainer::layout_params::layout_params(const puu::forest& desc) :
-		Container::layout_params(desc)
+LinearContainer::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
+		Container::layout_params(desc, units)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -24,8 +25,9 @@ LinearContainer::layout_params::layout_params(const puu::forest& desc) :
 	}
 }
 
-
-
+std::unique_ptr<widget::layout_params> LinearContainer::create_layout_params(const puu::forest& desc)const{
+	return utki::make_unique<LayoutParams>(desc, this->context->units);
+}
 
 LinearContainer::LinearContainer(const std::shared_ptr<morda::context>& c, const puu::forest& desc, bool vertical) :
 		widget(c, desc),

@@ -34,7 +34,8 @@ public:
 	 * @brief Create texture.
 	 * @param texture - texture object to initialize this resource with.
 	 */
-	ResTexture(decltype(tex_v) texture) :
+	ResTexture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
+			Resource(std::move(c)),
 			tex_v(std::move(texture))
 	{
 		ASSERT(this->tex_v)
@@ -51,7 +52,7 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResTexture> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 

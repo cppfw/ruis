@@ -19,14 +19,14 @@ Gradient::Gradient(const std::shared_ptr<morda::context>& c, const puu::forest& 
 		}
 
 		if(p.value == "gradient"){
-			this->gradient = morda::inst().context->loader.load<ResGradient>(get_property_value(p).to_string());
+			this->gradient = this->context->loader.load<ResGradient>(get_property_value(p).to_string());
 		}
 	}
 }
 
 
 void Gradient::render(const Matr4r& matrix)const{
-	applySimpleAlphaBlending();
+	applySimpleAlphaBlending(*this->context->renderer);
 	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);

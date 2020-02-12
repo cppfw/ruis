@@ -46,6 +46,15 @@ public:
 		ItemsProvider(){}
 	public:
 		/**
+		 * @brief Get parent list widget.
+		 * @return List widget which owns the provider, in case the provider is set to some list widget.
+		 * @return nullptr in case the provider is not set to any list widget.
+		 */
+		List* get_list()noexcept{
+			return this->list;
+		}
+
+		/**
 		 * @brief Get total number of items in the list.
 		 * @return Number of items in the list.
 		 */

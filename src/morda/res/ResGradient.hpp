@@ -39,7 +39,7 @@ namespace morda{
  */
 class ResGradient : public Resource{
 	friend class resource_loader;
-	
+
 	std::shared_ptr<VertexArray> vao;
 	
 public:
@@ -48,10 +48,11 @@ public:
 	 * A gradient stop is a pair of values. First one is a floating point value
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
+	 * @param c - context.
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	ResGradient(const std::vector<std::tuple<real, std::uint32_t>>& stops, bool vertical);
+	ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, std::uint32_t>>& stops, bool vertical);
 	
 	ResGradient(const ResGradient&) = delete;
 	ResGradient& operator=(const ResGradient&) = delete;
@@ -64,7 +65,7 @@ public:
 	void render(const morda::Matr4r& m)const;
 	
 private:
-	static std::shared_ptr<ResGradient> load(context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<ResGradient> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

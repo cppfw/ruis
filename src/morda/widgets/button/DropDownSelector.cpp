@@ -103,7 +103,8 @@ public:
 
 	std::shared_ptr<Widget> getWidget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
-		return morda::gui::inst().context->inflater.inflate(i, i + 1);
+		ASSERT(this->dropDownSelector())
+		return this->dropDownSelector()->context->inflater.inflate(i, i + 1);
 	}
 
 
@@ -129,7 +130,7 @@ void DropDownSelector::showDropdownMenu() {
 		throw Exc("DropDownSelector: no Overlay parent found");
 	}
 
-	auto np = morda::gui::inst().context->inflater.inflate(contextMenuLayout_c);
+	auto np = this->context->inflater.inflate(contextMenuLayout_c);
 	ASSERT(np)
 
 	auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
@@ -179,7 +180,7 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 	if(this->hoveredIndex < 0){
 		if(!isFirstOne){
-			morda::gui::inst().postToUiThread([oc](){
+			this->context->run_from_ui_thread([oc](){
 				oc->hideContextMenu();
 			});
 		}
@@ -189,7 +190,7 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 //	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): selection set" << std::endl)
 
-	morda::gui::inst().postToUiThread([dds, oc](){
+	this->context->run_from_ui_thread([dds, oc](){
 //		TRACE(<< "DropDownSelector::mouseButtonUpHandler(): hiding context menu" << std::endl)
 		oc->hideContextMenu();
 		if(dds->selectionChanged){
@@ -269,7 +270,7 @@ void DropDownSelector::setSelection(size_t i){
 }
 
 std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
-	auto wd = std::dynamic_pointer_cast<Pile>(morda::gui::inst().context->inflater.inflate(itemLayout_c));
+	auto wd = std::dynamic_pointer_cast<Pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");

@@ -25,13 +25,13 @@ widget::widget(const std::shared_ptr<morda::context>& c, const puu::forest& desc
 			if(p.value == "layout"){
 				this->layout_desc = p.children;
 			}else if(p.value == "x"){
-				this->rectangle.p.x = parse_dimension_value(get_property_value(p));
+				this->rectangle.p.x = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "y"){
-				this->rectangle.p.y = parse_dimension_value(get_property_value(p));
+				this->rectangle.p.y = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "dx"){
-				this->rectangle.d.x = parse_dimension_value(get_property_value(p));
+				this->rectangle.d.x = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "dy"){
-				this->rectangle.d.y = parse_dimension_value(get_property_value(p));
+				this->rectangle.d.y = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "id"){
 				this->id = get_property_value(p).to_string();
 			}else if(p.value == "name"){ //TODO: remove deprecated stuff.
@@ -53,7 +53,7 @@ widget::widget(const std::shared_ptr<morda::context>& c, const puu::forest& desc
 	}
 }
 
-widget::layout_params::layout_params(const puu::forest& desc){
+widget::layout_params::layout_params(const puu::forest& desc, const morda::units& units){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -61,9 +61,9 @@ widget::layout_params::layout_params(const puu::forest& desc){
 
 		try{
 			if(p.value == "dx"){
-				this->dims.x = parse_layout_dimension_value(get_property_value(p));
+				this->dims.x = parse_layout_dimension_value(get_property_value(p), units);
 			}else if(p.value == "dy"){
-				this->dims.y = parse_layout_dimension_value(get_property_value(p));
+				this->dims.y = parse_layout_dimension_value(get_property_value(p), units);
 			}
 		}catch(std::invalid_argument&){
 			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
@@ -148,12 +148,14 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 		return;
 	}
 
+	auto& r = *this->context->renderer;
+
 	if(this->cache){
 		if(this->cacheDirty){
-			bool scissorTestWasEnabled = morda::inst().context->renderer->isScissorEnabled();
-			morda::inst().context->renderer->setScissorEnabled(false);
+			bool scissorTestWasEnabled = r.isScissorEnabled();
+			r.setScissorEnabled(false);
 
-			//check if can re-use old texture
+			// check if can re-use old texture
 			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
 				this->cacheTex = this->render_to_texture();
 			}else{
@@ -161,12 +163,12 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
-			morda::inst().context->renderer->setScissorEnabled(scissorTestWasEnabled);
+			r.setScissorEnabled(scissorTestWasEnabled);
 			this->cacheDirty = false;
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		applySimpleAlphaBlending();
+		applySimpleAlphaBlending(*this->context->renderer);
 
 		this->renderFromCache(matrix);
 	}else{
@@ -177,7 +179,6 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			r4::recti scissor = this->compute_viewport_rect(matrix);
 
 			r4::recti oldScissor;
-			auto& r = *morda::inst().context->renderer;
 			bool scissorTestWasEnabled = r.isScissorEnabled();
 			if(scissorTestWasEnabled){
 				oldScissor = r.getScissorRect();
@@ -218,7 +219,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 }
 
 std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> reuse)const{
-	auto& r = *morda::inst().context->renderer;
+	auto& r = *this->context->renderer;
 
 	std::shared_ptr<Texture2D> tex;
 
@@ -262,7 +263,7 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = *morda::inst().context->renderer;
+	auto& r = *this->context->renderer;
 	ASSERT(this->cacheTex)
 	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
 }
@@ -296,7 +297,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	gui::inst().context->set_focused_widget(this->sharedFromThis(this));
+	this->context->set_focused_widget(this->sharedFromThis(this));
 }
 
 
@@ -308,16 +309,16 @@ void widget::unfocus()noexcept{
 		return;
 	}
 
-	ASSERT(gui::inst().context->focused_widget.lock() && gui::inst().context->focused_widget.lock().get() == this)
+	ASSERT(this->context->focused_widget.lock() && this->context->focused_widget.lock().get() == this)
 
-	gui::inst().context->set_focused_widget(nullptr);
+	this->context->set_focused_widget(nullptr);
 }
 
 
 
 r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
 	r4::recti ret(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(morda::inst().context->renderer->getViewport().d.to<real>()).rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->getViewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y -= ret.d.y;

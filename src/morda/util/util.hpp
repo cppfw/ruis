@@ -15,6 +15,8 @@
 #include "../render/Texture2D.hpp"
 #include "../render/RenderFactory.hpp"
 
+#include "units.hpp"
+
 namespace morda{
 
 
@@ -57,17 +59,19 @@ morda::Sidesr parse_sides(const puu::forest& desc);
  * Parses value of 'pos' or 'dim' property from puu leaf.
  * In case the value is given in millimeters or points it will do the conversion.
  * @param l - puu leaf holding the value.
+ * @param units - information about units. Can be obtained from context.
  * @return Parsed value in pixels.
  */
-real parse_dimension_value(const puu::leaf& l);
+real parse_dimension_value(const puu::leaf& l, const morda::units& units);
 
 /**
  * @brief Parse layout dimension value.
  * Parses value of dimension value of layout parameters from puu.
  * @param l - puu leaf holding the value.
+ * @param units - information about units. Can be obtained from context.
  * @return Parsed value.
  */
-real parse_layout_dimension_value(const puu::leaf& l);
+real parse_layout_dimension_value(const puu::leaf& l, const morda::units& units);
 
 
 
@@ -89,7 +93,7 @@ std::shared_ptr<Texture2D> loadTexture(Renderer& r, const papki::file& fi);
  * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
  * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
  */
-void applySimpleAlphaBlending();
+void applySimpleAlphaBlending(Renderer& r);
 
 
 morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);

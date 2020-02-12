@@ -39,7 +39,7 @@ class ResFont : public morda::Resource{
 	std::unique_ptr<morda::Font> f;
 
 public:
-	ResFont(const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	ResFont(std::shared_ptr<morda::context> context, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	~ResFont()noexcept{}
 
@@ -53,7 +53,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> load(context& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<ResFont> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 

@@ -7,13 +7,14 @@
 
 using namespace morda;
 
-ResCursor::ResCursor(ResImage& image, const Vec2r& hotspot) :
+ResCursor::ResCursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot) :
+		Resource(std::move(c)),
 		image_v(std::dynamic_pointer_cast<ResImage>(image.shared_from_this())),
 		hotspot_v(hotspot)
 {}
 
 
-std::shared_ptr<ResCursor> ResCursor::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResCursor> ResCursor::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	std::shared_ptr<ResImage> image;
 	Vec2r hotspot;
 	bool hotspot_set = false;
@@ -35,5 +36,5 @@ std::shared_ptr<ResCursor> ResCursor::load(context& ctx, const puu::forest& desc
 		throw resource_loader::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return std::make_shared<ResCursor>(*image, hotspot);
+	return std::make_shared<ResCursor>(ctx.shared_from_this(), *image, hotspot);
 }

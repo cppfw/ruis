@@ -73,11 +73,12 @@ class TexFont : public Font{
 public:
 	/**
 	 * @brief Constructor.
+	 * @param c - context to which this font belongs.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	TexFont(const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	TexFont(const std::shared_ptr<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real charAdvance(char32_t c) const override;
 	

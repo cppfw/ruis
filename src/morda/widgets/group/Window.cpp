@@ -184,15 +184,15 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 				}else if(pp.value == "titleColorNonTopmost"){
 					this->titleBgColorNonTopmost = get_property_value(pp).to_uint32();
 				}else if(pp.value == "background"){
-					this->setBackground(morda::inst().context->inflater.inflate(pp.children));
+					this->setBackground(this->context->inflater.inflate(pp.children));
 				}else if(pp.value == "left"){
-					borders.left() = parse_dimension_value(get_property_value(pp));
+					borders.left() = parse_dimension_value(get_property_value(pp), this->context->units);
 				}else if(pp.value == "top"){
-					borders.top() = parse_dimension_value(get_property_value(pp));
+					borders.top() = parse_dimension_value(get_property_value(pp), this->context->units);
 				}else if(pp.value == "right"){
-					borders.right() = parse_dimension_value(get_property_value(pp));
+					borders.right() = parse_dimension_value(get_property_value(pp), this->context->units);
 				}else if(pp.value == "bottom"){
-					borders.bottom() = parse_dimension_value(get_property_value(pp));
+					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context->units);
 				}
 			}
 		}
@@ -404,7 +404,7 @@ void morda::Window::setBorders(Sidesr borders) {
 
 bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
 	if(isDown && !this->isTopmost()){
-		morda::gui::inst().postToUiThread(
+		this->context->run_from_ui_thread(
 				[this](){
 					this->makeTopmost();
 					this->focus();

@@ -13,7 +13,9 @@ using namespace morda;
 
 
 
-ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical){
+ResGradient::ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
+		Resource(std::move(c))
+{
 	std::vector<r4::vec2f> vertices;
 //	std::vector<std::uint32_t> colors;
 	std::vector<r4::vec4f> colors;
@@ -49,7 +51,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 		indices.push_back(std::uint16_t(i));
 	}
 	
-	auto& r = *morda::inst().context->renderer;
+	auto& r = *this->context->renderer;
 	this->vao = r.factory->createVertexArray(
 			{
 				r.factory->createVertexBuffer(utki::wrapBuf(vertices)),
@@ -62,7 +64,7 @@ ResGradient::ResGradient(const std::vector<std::tuple<real,std::uint32_t> >& sto
 
 
 
-std::shared_ptr<ResGradient> ResGradient::load(context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<ResGradient> ResGradient::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,std::uint32_t>> stops;
@@ -86,11 +88,11 @@ std::shared_ptr<ResGradient> ResGradient::load(context& ctx, const puu::forest& 
 		}
 	}
 	
-	return std::make_shared<ResGradient>(stops, vertical);
+	return std::make_shared<ResGradient>(ctx.shared_from_this(), stops, vertical);
 }
 
 
 void ResGradient::render(const morda::Matr4r& m) const {
-	morda::inst().context->renderer->shader->posClr->render(m, *this->vao);
+	this->context->renderer->shader->posClr->render(m, *this->vao);
 }
 

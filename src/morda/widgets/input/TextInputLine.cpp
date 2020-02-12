@@ -47,7 +47,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 			);
 		matr.scale(Vec2r(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
-		auto& r = *morda::inst().context->renderer;
+		auto& r = *this->context->renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, 0xff804040);
 	}
 	
@@ -69,9 +69,9 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::Matr4r matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(Vec2r(cursorWidth_c * morda::inst().context->units.dots_per_dp, this->rect().d.y));
+		matr.scale(Vec2r(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
 
-		auto& r = *morda::inst().context->renderer;
+		auto& r = *this->context->renderer;
 		r.shader->colorPos->render(matr, *r.posQuad01VAO, this->color());
 	}
 }
@@ -104,7 +104,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * morda::inst().context->units.dots_per_dp;
+		ret.x = this->SingleLineTextWidget::measure(Vec2r(-1)).x + cursorWidth_c * this->context->units.dots_per_dp;
 	}else{
 		ret.x = quotum.x;
 	}
@@ -153,8 +153,8 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x - cursorWidth_c * morda::inst().context->units.dots_per_dp){
-		this->cursorPos = this->rect().d.x - cursorWidth_c * morda::inst().context->units.dots_per_dp;
+	if(this->cursorPos > this->rect().d.x - cursorWidth_c * this->context->units.dots_per_dp){
+		this->cursorPos = this->rect().d.x - cursorWidth_c * this->context->units.dots_per_dp;
 		
 		this->xOffset = this->cursorPos; // start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -236,7 +236,7 @@ void TextInputLine::on_focus_changed(){
 		this->shiftPressed = false;
 		this->startCursorBlinking();
 	}else{
-		morda::inst().context->updater->stop(*this);
+		this->context->updater->stop(*this);
 	}
 }
 
@@ -247,9 +247,9 @@ void TextInputLine::on_resize(){
 
 
 void TextInputLine::startCursorBlinking(){
-	morda::inst().context->updater->stop(*this);
+	this->context->updater->stop(*this);
 	this->cursorBlinkVisible = true;
-	morda::inst().context->updater->start(
+	this->context->updater->start(
 			std::dynamic_pointer_cast<updateable>(this->shared_from_this()),
 			cursorBlinkPeriod_c
 		);

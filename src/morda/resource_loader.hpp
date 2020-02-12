@@ -122,7 +122,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = morda::gui::inst().context->loader().load<morda::ResImage>("img_my_image_name");
+	 * auto image = this->context->loader().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param resName - name of the resource as it appears in resource description.
@@ -145,8 +145,16 @@ private:
 class Resource : virtual public utki::shared{
 	friend class resource_loader;
 protected:
-	//this can only be used as a base class
-	Resource() = default;
+	const std::shared_ptr<morda::context> context;
+
+	// this can only be used as a base class
+	Resource(std::shared_ptr<morda::context> c) :
+			context(std::move(c))
+	{
+		if(!this->context){
+			throw std::invalid_argument("ResImage::ResImage(): passed in context is null");
+		}
+	}
 public:
 	virtual ~Resource()noexcept{}
 };
