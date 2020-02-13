@@ -127,7 +127,7 @@ void DropDownSelector::showDropdownMenu() {
 
 	auto overlay = this->find_ancestor<Overlay>();
 	if(!overlay){
-		throw Exc("DropDownSelector: no Overlay parent found");
+		throw utki::invalid_state("DropDownSelector: no overlay parent found");
 	}
 
 	auto np = this->context->inflater.inflate(contextMenuLayout_c);
@@ -170,7 +170,7 @@ bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, Mou
 void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 	auto oc = this->find_ancestor<Overlay>();
 	if(!oc){
-		throw Exc("No Overlay found in ancestors of DropDownSelector");
+		throw utki::invalid_state("No overlay found in ancestors of DropDownSelector");
 	}
 
 	auto dds = this->sharedFromThis(this);
@@ -231,7 +231,7 @@ DropDownSelector::DropDownSelector(std::shared_ptr<morda::context> c, const puu:
 
 void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(provider && provider->dd){
-		throw Exc("DropDownSelector::setItemsProvider(): given provider is already set to some DropDownSelector");
+		throw utki::invalid_state("DropDownSelector::setItemsProvider(): given provider is already set to some DropDownSelector");
 	}
 
 	if(this->provider){

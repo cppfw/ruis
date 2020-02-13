@@ -75,7 +75,7 @@ void List::lay_out() {
 
 void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(provider && provider->list){
-		throw Exc("given provider is already set to some List");
+		throw utki::invalid_state("given provider is already set to some List");
 	}
 
 	if(this->provider){

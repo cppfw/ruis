@@ -1,6 +1,5 @@
 #include "ResTexture.hpp"
 
-#include "../exception.hpp"
 #include "../util/RasterImage.hpp"
 #include "../util/util.hpp"
 #include "../context.hpp"

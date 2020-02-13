@@ -7,7 +7,7 @@ namespace{
 std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** argv){
 	void* libHandle = dlopen(nullptr, RTLD_NOW);
 	if(!libHandle){
-		throw morda::exception("dlopen(): failed");
+		throw std::runtime_error("dlopen(): failed");
 	}
 
 	utki::ScopeExit scopeExit([libHandle](){
@@ -26,7 +26,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 	}
 
 	if(!factory){
-		throw morda::exception("dlsym(): mordavokne::create_application() function not found!");
+		throw std::runtime_error("dlsym(): mordavokne::create_application() function not found!");
 	}
 
 	return factory(argc, argv);

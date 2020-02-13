@@ -93,7 +93,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	}
 
 	if(!mounted){
-		throw morda::Exc("gui::initStandardWidgets(): could not mount default resource pack");
+		throw std::runtime_error("gui::initStandardWidgets(): could not mount default resource pack");
 	}
 
 	// add standard widgets to inflater
@@ -125,8 +125,8 @@ void gui::initStandardWidgets(papki::File& fi) {
 
 		this->context->inflater.inflate(t->forest());
 
-	}catch(resource_loader::Exc&){
-		// ignore
+	}catch(std::exception&){
+		//TODO: do not ignore?
 		TRACE(<< "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
 	}
 }

@@ -9,9 +9,9 @@
 
 using namespace morda;
 
-void TextWidget::setFont(std::shared_ptr<ResFont> font) {
-	if (!font) {
-		throw morda::Exc("TextWidget::SetFont(): passed argument is null");
+void TextWidget::setFont(std::shared_ptr<ResFont> font){
+	if(!font){
+		throw std::invalid_argument("TextWidget::SetFont(): passed argument is null");
 	}
 
 	this->font_v = std::move(font);

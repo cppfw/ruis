@@ -1,6 +1,5 @@
 #include "container.hpp"
 
-#include "../exception.hpp"
 #include "../context.hpp"
 
 #include "../util/util.hpp"
@@ -221,7 +220,7 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 	}
 
 	if(this->isBlocked){
-		throw morda::exception("container::insert(): children list is locked");
+		throw utki::invalid_state("container::insert(): children list is locked");
 	}
 
 	if(before != this->children().end() && (*before)->parent() != this){
@@ -256,7 +255,7 @@ std::shared_ptr<Widget> container::remove(Widget& w){
 
 container::list::const_iterator container::erase(list::const_iterator child){
 	if(this->isBlocked){
-		throw morda::exception("container::erase(): children list is locked");
+		throw utki::invalid_state("container::erase(): children list is locked");
 	}
 
 	if(child == this->children().end()){
@@ -333,7 +332,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 
 container::list::const_iterator container::change_child_z_position(list::const_iterator child, list::const_iterator before) {
 	if(this->isBlocked){
-		throw morda::exception("container::change_child_z_position(): children list is locked");
+		throw utki::invalid_state("container::change_child_z_position(): children list is locked");
 	}
 
 	if(child == this->children().end()){

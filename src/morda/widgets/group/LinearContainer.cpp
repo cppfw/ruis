@@ -166,7 +166,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			netWeight += lp.weight;
 
 			if(lp.dim[longIndex] == LayoutParams::max_c || lp.dim[longIndex] == LayoutParams::fill_c){
-				throw LayoutExc("LinearContainer::onMeasure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
+				throw std::logic_error("LinearContainer::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
 			}
 
 			Vec2r d;

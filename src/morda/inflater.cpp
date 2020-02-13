@@ -83,15 +83,15 @@ void substitute_vars(puu::forest& to, const std::function<const puu::forest*(con
 	for(auto i = to.begin(); i != to.end();){
 		if(i->value == "$"){
 			if(i->children.empty()){
-				throw Exc("malformed GUI definition: error: reference to a variable holds no variable name");
+				throw std::invalid_argument("malformed GUI definition: error: reference to a variable holds no variable name");
 			}
 
 			if(i->children.size() != 1){
-				throw Exc("malformed GUI definition: reference to variable holds more than one variable name");
+				throw std::invalid_argument("malformed GUI definition: reference to variable holds more than one variable name");
 			}
 
 			if(!i->children.front().children.empty()){
-				throw Exc("malformed GUI definition: variable name has children");
+				throw std::invalid_argument("malformed GUI definition: variable name has children");
 			}
 
 			if(auto var = findVar(i->children.front().value.to_string())){
@@ -337,7 +337,7 @@ void inflater::push_templates(const puu::forest& chain){
 			);
 
 		if(!res.second){
-			throw Exc("inflater::PushTemplates(): template name is already defined in given templates chain, error.");
+			throw std::invalid_argument("inflater::PushTemplates(): template name is already defined in given templates chain, error.");
 		}
 	}
 

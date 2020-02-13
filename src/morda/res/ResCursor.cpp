@@ -29,11 +29,11 @@ std::shared_ptr<ResCursor> ResCursor::load(morda::context& ctx, const puu::fores
 	}
 
 	if(!image){
-		throw resource_loader::Exc("ResCursor::load(): resource description does not contain 'image' property");
+		throw std::logic_error("ResCursor::load(): resource description does not contain 'image' property");
 	}
 	
 	if(!hotspot_set){
-		throw resource_loader::Exc("ResCursor::load(): resource description does not contain 'hotspot' property");
+		throw std::logic_error("ResCursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
 	return std::make_shared<ResCursor>(ctx.shared_from_this(), *image, hotspot);

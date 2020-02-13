@@ -3,8 +3,6 @@
 #include <map>
 #include <memory>
 
-#include "exception.hpp"
-
 #include "widgets/widget.hpp"
 
 #include "util/util.hpp"

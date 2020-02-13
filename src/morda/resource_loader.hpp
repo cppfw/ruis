@@ -6,8 +6,6 @@
 #include <papki/file.hpp>
 #include <puu/tree.hpp>
 
-#include "exception.hpp"
-
 
 
 namespace morda{
@@ -96,12 +94,12 @@ public:
 	 * @brief Basic recource related exception.
 	 */
 	//TODO: remove?
-	class Exc : public morda::Exc{
-	public:
-		Exc(const std::string& message) :
-				morda::Exc(message)
-		{}
-	};
+	// class Exc : public morda::Exc{
+	// public:
+	// 	Exc(const std::string& message) :
+	// 			morda::Exc(message)
+	// 	{}
+	// };
 
 	/**
 	 * @brief Mount a resource pack.
@@ -186,10 +184,6 @@ template <class T> std::shared_ptr<T> resource_loader::load(const char* resName)
 	ASSERT(ret.rp.fi)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
-
-	if(ret.e.children.empty()){
-		throw Exc("resource_loader::Load(): resource description is empty");
-	}
 
 	auto resource = T::load(this->ctx, ret.e.children, *ret.rp.fi);
 

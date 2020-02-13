@@ -1,9 +1,6 @@
 #include "RenderFactory.hpp"
-#include "../exception.hpp"
 
 using namespace morda;
-
-
 
 std::shared_ptr<Texture2D> RenderFactory::createTexture2D(r4::vec2ui dim, const utki::Buf<std::uint32_t>& data) {
 	return this->createTexture2D(

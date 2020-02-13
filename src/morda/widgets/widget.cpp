@@ -106,7 +106,7 @@ void widget::resize(const morda::Vec2r& newDims){
 
 std::shared_ptr<Widget> widget::remove_from_parent(){
 	if(!this->parent_v){
-		throw morda::exception("widget::RemoveFromParent(): widget is not added to the parent");
+		throw utki::invalid_state("widget::remove_from_parent(): widget is not added to the parent");
 	}
 	auto ret = this->sharedFromThis(this);
 	this->parent_v->erase(this->parent_v->find(this));
@@ -117,7 +117,7 @@ std::shared_ptr<Widget> widget::remove_from_parent(){
 
 std::shared_ptr<Widget> widget::replace_by(std::shared_ptr<Widget> w) {
 	if(!this->parent()){
-		throw morda::Exc("this widget is not added to any parent");
+		throw utki::invalid_state("this widget is not added to any parent");
 	}
 
 	this->parent()->insert(w, this->parent()->find(this));
@@ -351,7 +351,7 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor) {
 
 widget::LayoutParams& widget::get_layout_params() {
 	if(!this->parent()){
-		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->get_layout_params(*this);
@@ -360,7 +360,7 @@ widget::LayoutParams& widget::get_layout_params() {
 
 const widget::LayoutParams& widget::get_layout_params()const {
 	if(!this->parent()){
-		throw morda::Exc("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->get_layout_params(*this);

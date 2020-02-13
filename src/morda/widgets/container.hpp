@@ -5,7 +5,6 @@
 
 #include <utki/Unique.hpp>
 
-#include "../exception.hpp"
 #include "../util/util.hpp"
 #include "widget.hpp"
 
@@ -122,12 +121,9 @@ protected:
 	}
 
 public:
-	struct layout_exception : public exception{
-		layout_exception(const std::string& message) : exception(message){}
-	};
-
-	// TODO: deprecated, remove.
-	typedef layout_exception LayoutExc;
+	// struct layout_exception : public std::runtime_error{
+	// 	layout_exception(const std::string& message) : std::runtime_error(message){}
+	// };
 
 	/**
 	 * @brief Get layout parameters of child widget.

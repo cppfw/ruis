@@ -1,7 +1,5 @@
 #include "ResFont.hpp"
 
-#include "../exception.hpp"
-
 #include "../context.hpp"
 
 #include "../util/util.hpp"

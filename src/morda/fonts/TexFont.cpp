@@ -47,7 +47,7 @@ TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
 TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
 		if(c == unknownChar_c){
-			throw morda::Exc("TexFont::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
+			throw std::runtime_error("TexFont::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
 		}
 		TRACE(<< "TexFont::loadGlyph(" << std::hex << std::uint32_t(c) << "): failed to load glyph" << std::endl)
 		return this->unknownGlyph;

@@ -1,5 +1,3 @@
-#include "../../exception.hpp"
-
 #include "Tab.hpp"
 #include "Tabs.hpp"
 #include "../../util/util.hpp"
@@ -56,14 +54,14 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 
 		auto tab = dynamic_cast<const Tab*>(c.get());
 		if(!tab){
-			throw morda::Exc("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
+			throw utki::invalid_state("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
 		}
 
 		morda::Vec2r d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dim[j] == LayoutParams::max_c || lp.dim[j] == LayoutParams::fill_c){
-				throw LayoutExc("'max' or 'fill' encountered in layout parameters for Tabs container");
+				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for Tabs container");
 			}else if(lp.dim[j] == LayoutParams::min_c){
 				d[j] = -1;
 			}else{
@@ -105,7 +103,7 @@ void Tabs::lay_out() {
 
 		auto tab = dynamic_cast<Tab*>(c.get());
 		if(!tab){
-			throw morda::Exc("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
+			throw utki::invalid_state("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
 		}
 
 		auto borders = tab->getActualBorders();

@@ -21,8 +21,6 @@
 #include "../util/mouse_button.hpp"
 #include "../util/units.hpp"
 
-#include "../exception.hpp"
-
 namespace morda{
 
 class context;

@@ -69,7 +69,7 @@ resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
-	throw resource_loader::Exc(ss.str());
+	throw utki::invalid_state(ss.str());
 }
 
 

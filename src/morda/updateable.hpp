@@ -4,8 +4,6 @@
 
 #include <utki/shared.hpp>
 
-#include "exception.hpp"
-
 #include "updater.hpp"
 
 namespace morda{
