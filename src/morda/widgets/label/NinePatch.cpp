@@ -15,16 +15,16 @@ namespace{
 const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 		@row{
 			layout{dx{fill}}
-			@Image{
+			@image{
 				id{morda_lt}
 			}
 
-			@Image{
+			@image{
 				layout{dx{0}weight{1}}
 				id{morda_t}
 			}
 
-			@Image{
+			@image{
 				id{morda_rt}
 			}
 		}
@@ -35,7 +35,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 				weight{1}
 			}
 
-			@Image{
+			@image{
 				id{morda_l}
 				layout{dy{fill}}
 			}
@@ -47,12 +47,12 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 					dy{max}
 				}
 
-				@Image{
+				@image{
 					id{morda_m}
 					layout{dx{fill}dy{fill}}
 				}
 			}
-			@Image{
+			@image{
 				id{morda_r}
 				layout{dy{fill}}
 			}
@@ -60,16 +60,16 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 
 		@row{
 			layout{dx{fill}}
-			@Image{
+			@image{
 				id{morda_lb}
 			}
 
-			@Image{
+			@image{
 				layout{dx{0}weight{1}}
 				id{morda_b}
 			}
 
-			@Image{
+			@image{
 				id{morda_rb}
 			}
 		}

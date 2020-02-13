@@ -291,7 +291,7 @@ public:
 
 	const char* DPlusMinus = R"qwertyuiop(
 			@pile{
-				@Image{
+				@image{
 					id{plusminus}
 				}
 				@mouse_proxy{
@@ -306,7 +306,7 @@ public:
 	const char* DLine = R"qwertyuiop(
 			@pile{
 				layout{dx{5mm} dy{fill}}
-				@Color{
+				@color{
 					layout{dx{1pt}dy{fill}}
 					color{${morda_color_highlight}}
 				}
@@ -318,7 +318,7 @@ public:
 				layout{dx{5mm} dy{max}}
 				@column{
 					layout{dx{max}dy{max}}
-					@Color{
+					@color{
 						layout{dx{1pt}dy{0}weight{1}}
 						color{${morda_color_highlight}}
 					}
@@ -327,7 +327,7 @@ public:
 				@row{
 					layout{dx{max}dy{max}}
 					@widget{layout{dx{0}dy{max}weight{1}}}
-					@Color{
+					@color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
 					}
@@ -338,14 +338,14 @@ public:
 	const char* DLineMiddle = R"qwertyuiop(
 			@pile{
 				layout{dx{5mm} dy{max}}
-				@Color{
+				@color{
 					layout{dx{1pt}dy{max}}
 					color{${morda_color_highlight}}
 				}
 				@row{
 					layout{dx{max}dy{max}}
 					@widget{layout{dx{0}dy{max}weight{1}}}
-					@Color{
+					@color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
 					}
@@ -508,13 +508,13 @@ public:
 			auto v = this->context->inflater.inflate(
 					R"qwertyuiop(
 							@pile{
-								@Color{
+								@color{
 									id{selection}
 									layout{dx{max}dy{max}}
 									color{${morda_color_highlight}}
 									visible{false}
 								}
-								@Text{
+								@text{
 									id{value}
 								}
 								@mouse_proxy{
@@ -562,7 +562,7 @@ public:
 			auto b = this->context->inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
 							@PushButton{
-								@Color{
+								@color{
 									color{0xff0000ff}
 									layout{dx{2mm}dy{0.5mm}}
 								}

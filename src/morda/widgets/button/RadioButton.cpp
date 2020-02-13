@@ -10,10 +10,10 @@ using namespace morda;
 namespace{
 
 const auto D_Layout = puu::read(R"qwertyuiop(
-		@Image{
+		@image{
 			image{morda_img_radiobutton_bg}
 		}
-		@Image{
+		@image{
 			image{morda_img_radiobutton_tick}
 		}
 	)qwertyuiop");

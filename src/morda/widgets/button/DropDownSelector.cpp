@@ -33,12 +33,12 @@ const auto selectorLayout_c = puu::read(R"qwertyuiop(
 			layout{dx{min}dy{max} weight{1}}
 		}
 		@widget{layout{dx{3dp}}}
-		@Image{
+		@image{
 			image{morda_img_divider_vert}
 			layout{dy{fill}}
 		}
 		@widget{layout{dx{3dp}}}
-		@Image{
+		@image{
 			image{morda_img_dropdown_arrow}
 		}
 	}
@@ -55,7 +55,7 @@ const auto itemLayout_c = puu::read(R"qwertyuiop(
 					dx{fill} dy{fill}
 				}
 			}
-			@Color{
+			@color{
 				id{morda_dropdown_color}
 				color{${morda_color_highlight}}
 				visible{false}
@@ -71,7 +71,7 @@ const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
 			@widget{
 				id{minSizeSpacer}
 			}
-			@NinePatch{
+			@nine_patch{
 				layout{
 					dx{max}
 				}

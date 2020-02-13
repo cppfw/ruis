@@ -1,8 +1,8 @@
 defs{
 	trololo{"saf"}
 
-	@Text{
-		@Text{
+	@text{
+		@text{
 //			text{"trololo"}
 
 //			color{0xff0000ff}
@@ -38,7 +38,7 @@ defs{
 	}
 
 
-	@Window{
+	@window{
 		x{0} y{0}
 		dx{300} dy{200}
 
@@ -70,36 +70,36 @@ defs{
 					top{5dp}
 					bottom{5dp}
 
-					@CheckBox{
+					@check_box{
 						pressed{true}
 					}
 				}
 
-				@Text{
+				@text{
 					text{"some checkbox"}
 				}
 			}
 
-			@DropDownSelector{
+			@drop_down_selector{
 				layout{
 					dx{max}
 				}
 
 				id{dropdownselector}
 
-				@Text{text{item0}}
-				@Text{text{item1}}
-				@Text{text{item2}}
-				@Text{text{item3}}
-				@Text{text{item4}}
-				@Text{text{item5}}
-				@Text{text{item6}}
-				@Text{text{item7}}
-				@Text{text{item8}}
-				@Text{text{item9}}
-				@Text{text{item10}}
+				@text{text{item0}}
+				@text{text{item1}}
+				@text{text{item2}}
+				@text{text{item3}}
+				@text{text{item4}}
+				@text{text{item5}}
+				@text{text{item6}}
+				@text{text{item7}}
+				@text{text{item8}}
+				@text{text{item9}}
+				@text{text{item10}}
 			}
-			@Text{
+			@text{
 				id{dropdownselector_selection}
 				text{unknown}
 			}
@@ -107,20 +107,20 @@ defs{
 				@PushButton{
 					id{showhide_mousecursor_button}
 
-					@Text{
+					@text{
 						text{"show/hide mouse"}
 					}
 				}
 				@PushButton{
 					id{fullscreen_button}
 
-					@Text{
+					@text{
 						text{"toggle fullscreen"}
 					}
 				}
 			}
 
-			@ChoiceGroup{
+			@choice_group{
 				layout{dx{max}}
 
 				defs{
@@ -131,10 +131,10 @@ defs{
 								right{5dp}
 								top{5dp}
 								bottom{5dp}
-								@RadioButton
+								@radio_button
 							}
 
-							@Text{
+							@text{
 								text{"radio button"}
 							}
 						}
@@ -152,7 +152,7 @@ defs{
 	}
 
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{300} y{10}
 
@@ -179,7 +179,7 @@ defs{
 					dx{max} dy{min}
 				}
 
-				@Text{
+				@text{
 					id {label1}
 					text {trololo}
 					padding {10 20 30 40}
@@ -191,7 +191,7 @@ defs{
 
 				}
 
-				@Text{
+				@text{
 					id {label2}
 					text {"blah bla"}
 					padding {0}
@@ -217,7 +217,7 @@ defs{
 					}
 
 
-					@Text{
+					@text{
 						text {"Show VK"}
 						color{0xffccfbff}
 					}
@@ -226,7 +226,7 @@ defs{
 
 			@pile{
 				layout{dx{fill} dy{50dp}}
-				@Color{
+				@color{
 					layout{dx{fill}dy{fill}}
 					color{0xff808080}
 				}
@@ -248,41 +248,41 @@ defs{
 					}
 					id{horizontal_list}
 
-					@Text{
+					@text{
 						text{item1|}
 						layout{dy{max}}
 					}
-					@Text{
+					@text{
 						text{item2|}
 					}
-					@Text{
+					@text{
 						text{item3|}
 					}
-					@Text{
+					@text{
 						text{item4|}
 					}
-					@Text{
+					@text{
 						text{item5|}
 					}
-					@Text{
+					@text{
 						text{item6|}
 					}
-					@Text{
+					@text{
 						text{item7|}
 					}
-					@Text{
+					@text{
 						text{item8|}
 					}
-					@Text{
+					@text{
 						text{item9|}
 					}
-					@Text{
+					@text{
 						text{item10|}
 					}
-					@Text{
+					@text{
 						text{item11|}
 					}
-					@Text{
+					@text{
 						text{item12|}
 					}
 				}
@@ -294,7 +294,7 @@ defs{
 				}
 			}
 
-			@HScrollBar{
+			@horizontal_scroll_bar{
 				id{horizontal_list_slider}
 
 				layout{
@@ -305,7 +305,7 @@ defs{
 		}//~Column
 	}//~Window
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{300} y{250}
 
@@ -334,7 +334,7 @@ defs{
 						dx{0} dy{max}
 						weight{1}
 					}
-					@TreeView{
+					@tree_view{
 						id{treeview_widget}
 						clip{true}
 						layout{
@@ -350,7 +350,7 @@ defs{
 				}
 
 
-				@VScrollBar{
+				@vertical_scroll_bar{
 
 					id{treeview_vertical_slider}
 
@@ -360,7 +360,7 @@ defs{
 				}
 			}
 
-			@HScrollBar{
+			@horizontal_scroll_bar{
 				id{treeview_horizontal_slider}
 
 				layout{
@@ -371,24 +371,24 @@ defs{
 			@row{
 				layout{dx{max}}
 
-				@Text{
+				@text{
 					text{Insert:}
 				}
 				@PushButton{
 					id{insert_before}
-					@Text{
+					@text{
 						text{"before"}
 					}
 				}
 				@PushButton{
 					id{insert_after}
-					@Text{
+					@text{
 						text{"after"}
 					}
 				}
 				@PushButton{
 					id{insert_child}
-					@Text{
+					@text{
 						text{"child"}
 					}
 				}
@@ -396,7 +396,7 @@ defs{
 		}
 	}//~Window
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{0} y{250}
 
@@ -411,7 +411,7 @@ defs{
 				dx{max} dy{max}
 			}
 
-			@Image{
+			@image{
 //				image{img_lattice}
 				image{img_camera}
 
@@ -422,14 +422,14 @@ defs{
 				}
 			}
 
-			@HScrollBar{
+			@horizontal_scroll_bar{
 				layout{
 					dx{50} dy{40} //TODO: min min
 					weight{1}
 				}
 			}
 
-			@VScrollBar{
+			@vertical_scroll_bar{
 				id {"vertical slider"}
 
 				layout{
@@ -439,14 +439,14 @@ defs{
 		}
 	}
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{10} y{500}
 
 		title{"Spinning cube"}
 
 /*
-		@Image{
+		@image{
 			layout{
 				dx{max} dy{max}
 			}
@@ -463,13 +463,13 @@ defs{
 		}
 	}
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{310} y{500}
 
 		title{"TextInput"}
 
-		/*@Color{
+		/*@color{
 			color{ ${morda_color_bg} }
 
 			layout{
@@ -480,37 +480,37 @@ defs{
 		@column{
 			layout{dx{max}dy{max}}
 
-			@Tabs{
+			@tabs{
 				layout{dx{max}}
 
-				@Tab{
+				@tab{
 					id{tab1}
-					@Text{text{tab1}}
+					@text{text{tab1}}
 				}
-				@Tab{
-					@Text{text{tab2}}
+				@tab{
+					@text{text{tab2}}
 				}
-				@Tab{
-					@Text{text{"tab 3"}}
+				@tab{
+					@text{text{"tab 3"}}
 				}
-				@Tab{
-					@Text{text{"tab four"}}
+				@tab{
+					@text{text{"tab four"}}
 				}
 			}
 
-			@NinePatch{
+			@nine_patch{
 				layout{dx{max}}
 
 				image{morda_npt_frame}
 
-				@CollapseArea{
+				@collapse_area{
 					layout{dx{max}}
 					title{Text{text{Hi!}}}
 					@column{
-						@Text{text{Hello!}}
+						@text{text{Hello!}}
 						@row{
-							@PushButton{@Text{text{button!!!}}}
-							@ImagePushButton{
+							@PushButton{@text{text{button!!!}}}
+							@image_push_button{
 								id{image_push_button}
 								layout{
 									dx{50dp} dy{50dp}
@@ -527,7 +527,7 @@ defs{
 
 			@widget{layout{dy{5dp}}}
 
-			@TextInputLine{
+			@text_input_line{
 				id{text_input}
 
 				text{"Hello Wrodl!!!"}
@@ -538,21 +538,21 @@ defs{
 					dx{max} dy{min}
 				}
 			}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
-			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@text{text{button!!!}}}
 
 		}
 	}
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{620} y{500}
 
@@ -584,7 +584,7 @@ defs{
 							dx{max} dy{max}
 						}
 
-						@Image{
+						@image{
 							image{img_sample}
 //							image{img_camera}
 
@@ -593,15 +593,15 @@ defs{
 							}
 						}
 
-						@CollapseArea{
+						@collapse_area{
 							x{20} y{450}
 							title{
-								@Text{
+								@text{
 									text{"Collapsable stuff"}
 								}
 							}
 
-							@Text{
+							@text{
 								text{"I'm collapsable!!!"}
 							}
 						}
@@ -610,7 +610,7 @@ defs{
 							id{push_button_in_scroll_container}
 							x{10mm} y{20mm}
 
-							@Text{
+							@text{
 								x{0} y{0}
 								dx{100mm} dy{10mm}
 								text{"Hello World!!!"}
@@ -625,7 +625,7 @@ defs{
 					}
 				}
 
-				@VScrollBar{
+				@vertical_scroll_bar{
 
 					id{scroll_area_vertical_slider}
 
@@ -635,7 +635,7 @@ defs{
 				}
 			}
 
-			@HScrollBar{
+			@horizontal_scroll_bar{
 				id{scroll_area_horizontal_slider}
 
 				layout{
@@ -646,7 +646,7 @@ defs{
 	}
 
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{620} y{250}
 
@@ -655,7 +655,7 @@ defs{
 		title{"none"}
 
 
-		@Gradient{
+		@gradient{
 			layout{dx{max}dy{max}}
 			gradient{grd_sample}
 		}
@@ -665,13 +665,13 @@ defs{
 
 			@PushButton{
 				x{10} y{20}
-				@Text{text{"Hello world!"}}
+				@text{text{"Hello world!"}}
 			}
 		}
 
 	}
 
-	@Window{
+	@window{
 		dx{300} dy{200}
 		x{620} y{0}
 
@@ -699,131 +699,131 @@ defs{
 						dx{max} dy{max}
 					}
 
-					@Text{
+					@text{
 						text{item0}
 					}
 
-					@Text{
+					@text{
 						text{item_1_iequwgfiew}
 					}
 
-					@Text{
+					@text{
 						text{item_2_werf}
 					}
 
 					@PushButton{
-						@Text{
+						@text{
 							text {"item3"}
 							color{0xff0000ff}
 						}
 					//	text{item_3}
 					}
 
-					@Text{
+					@text{
 						text{item_4}
 					}
 
-					@Text{
+					@text{
 						text{item_5}
 					}
 
-					@Text{
+					@text{
 						text{item_6}
 					}
 
-					@Text{
+					@text{
 						text{item_7}
 					}
 
-					@Text{
+					@text{
 						text{item_8}
 					}
 
-					@Text{
+					@text{
 						text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
 					}
 
-					@Text{
+					@text{
 						text{item_10}
 					}
 
-					@Text{
+					@text{
 						text{item_4}
 					}
 
-					@Text{
+					@text{
 						text{item_5}
 					}
 
-					@Text{
+					@text{
 						text{item_6}
 					}
 
-					@Text{
+					@text{
 						text{item_7}
 					}
 
-					@Text{
+					@text{
 						text{item_8}
 					}
 
-					@Text{
+					@text{
 						text{item_4}
 					}
 
-					@Text{
+					@text{
 						text{item_5}
 					}
 
-					@Text{
+					@text{
 						text{item_6}
 					}
 
-					@Text{
+					@text{
 						text{item_7}
 					}
 
-					@Text{
+					@text{
 						text{item_8}
 					}
 
-					@Text{
+					@text{
 						text{item_4}
 					}
 
-					@Text{
+					@text{
 						text{item_5}
 					}
 
-					@Text{
+					@text{
 						text{item_6}
 					}
 
-					@Text{
+					@text{
 						text{item_7}
 					}
 
-					@Text{
+					@text{
 						text{item_8}
 					}
 
-					@Text{
+					@text{
 						text{item_4}
 					}
 
-					@Text{
+					@text{
 						text{item_5}
 					}
 
-					@Text{
+					@text{
 						text{item_6}
 					}
 
-					@Text{
+					@text{
 						text{item_7}
 					}
 
-					@Text{
+					@text{
 						text{item_8}
 					}
 
@@ -836,7 +836,7 @@ defs{
 				}
 			}
 
-			@VScrollBar{
+			@vertical_scroll_bar{
 				id{vertical_list_slider}
 				layout{
 					dy{max}
@@ -849,7 +849,7 @@ defs{
 }//~Overlay
 
 
-@MouseCursor{
+@mouse_cursor{
 	layout{
 		dx{fill} dy{fill}
 	}

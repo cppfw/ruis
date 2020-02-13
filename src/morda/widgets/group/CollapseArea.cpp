@@ -10,7 +10,7 @@ namespace{
 const auto layout_c = puu::read(R"qwertyuiop(
 	@pile{
 		layout{dx{max}}
-		@Color{
+		@color{
 			layout{dx{fill}dy{fill}}
 			color{${morda_color_mg}}
 		}
@@ -28,7 +28,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 
 			@row{
 				layout{dx{max}}
-				@ImageToggle{
+				@image_toggle{
 					id{switch}
 					look{
 						unpressed{morda_img_dropdown_arrow}

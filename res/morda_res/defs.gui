@@ -6,7 +6,7 @@ defs{
 	morda_color_fg{0xff505050}
 
 	@TextInputLine_{
-		@TextInputLine
+		@text_input_line
 	}
 }
 
@@ -20,14 +20,14 @@ defs{
 
 //	morda_color_highlight{0xff329ce1}
 
-	@Text{
-		@Text{
+	@text{
+		@text{
 			color{ ${morda_color_text} }
 		}
 	}
 
-	@TextInputLine{ text
-		@NinePatch{
+	@text_input_line{ text
+		@nine_patch{
 			image{morda_npt_textfield_background}
 			@TextInputLine_{
 				layout{dx{fill}dy{max}}
@@ -148,9 +148,9 @@ defs{
 		}
 	}
 
-	@Window{
+	@window{
 		look
-		@Window{
+		@window{
 			look{
 				titleColorTopmost{ ${morda_color_bg_window_title} }
 				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
@@ -167,13 +167,13 @@ defs{
 	}
 
 	@PushButton{
-		@NinePatchPushButton{
+		@nine_patch_push_button{
 			${children}
 		}
 	}
 
 	@WindowBackground{
-		@NinePatch{
+		@nine_patch{
 			layout{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}
@@ -186,7 +186,7 @@ defs{
 	}
 
 	@WindowEmptyBackground{
-		@NinePatch{
+		@nine_patch{
 			layout{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}

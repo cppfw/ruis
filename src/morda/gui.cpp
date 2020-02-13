@@ -98,27 +98,27 @@ void gui::initStandardWidgets(papki::File& fi) {
 
 	// add standard widgets to inflater
 
-	this->context->inflater.register_widget<Text>("Text");
-	this->context->inflater.register_widget<Color>("Color");
-	this->context->inflater.register_widget<Gradient>("Gradient");
-	this->context->inflater.register_widget<Image>("Image");
-	this->context->inflater.register_widget<VScrollBar>("VScrollBar");
-	this->context->inflater.register_widget<HScrollBar>("HScrollBar");
-	this->context->inflater.register_widget<Window>("Window");
-	this->context->inflater.register_widget<NinePatch>("NinePatch");
-	this->context->inflater.register_widget<NinePatchPushButton>("NinePatchPushButton");
-	this->context->inflater.register_widget<CheckBox>("CheckBox");
-	this->context->inflater.register_widget<TreeView>("TreeView");
-	this->context->inflater.register_widget<DropDownSelector>("DropDownSelector");
-	this->context->inflater.register_widget<RadioButton>("RadioButton");
-	this->context->inflater.register_widget<ChoiceGroup>("ChoiceGroup");
-	this->context->inflater.register_widget<MouseCursor>("MouseCursor");
-	this->context->inflater.register_widget<CollapseArea>("CollapseArea");
-	this->context->inflater.register_widget<ImageToggle>("ImageToggle");
-	this->context->inflater.register_widget<ImagePushButton>("ImagePushButton");
-	this->context->inflater.register_widget<Tabs>("Tabs");
-	this->context->inflater.register_widget<Tab>("Tab");
-	this->context->inflater.register_widget<TextInputLine>("TextInputLine");
+	this->context->inflater.register_widget<Text>("text");
+	this->context->inflater.register_widget<Color>("color");
+	this->context->inflater.register_widget<Gradient>("gradient");
+	this->context->inflater.register_widget<Image>("image");
+	this->context->inflater.register_widget<VScrollBar>("vertical_scroll_bar");
+	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
+	this->context->inflater.register_widget<Window>("window");
+	this->context->inflater.register_widget<NinePatch>("nine_patch");
+	this->context->inflater.register_widget<NinePatchPushButton>("nine_patch_push_button");
+	this->context->inflater.register_widget<CheckBox>("check_box");
+	this->context->inflater.register_widget<TreeView>("tree_view");
+	this->context->inflater.register_widget<DropDownSelector>("drop_down_selector");
+	this->context->inflater.register_widget<RadioButton>("radio_button");
+	this->context->inflater.register_widget<ChoiceGroup>("choice_group");
+	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
+	this->context->inflater.register_widget<CollapseArea>("collapse_area");
+	this->context->inflater.register_widget<ImageToggle>("image_toggle");
+	this->context->inflater.register_widget<ImagePushButton>("image_push_button");
+	this->context->inflater.register_widget<Tabs>("tabs");
+	this->context->inflater.register_widget<Tab>("tab");
+	this->context->inflater.register_widget<TextInputLine>("text_input_line");
 
 	try{
 		auto t = this->context->loader.load<res_puu>("morda_gui_defs");

@@ -17,7 +17,7 @@ using namespace morda;
 namespace{
 
 const auto DDescription = puu::read(R"qwertyuiop(
-		@NinePatch{
+		@nine_patch{
 			id{morda_slider_bg}
 			layout{
 				dx{max} dy{max}
@@ -29,7 +29,7 @@ const auto DDescription = puu::read(R"qwertyuiop(
 			}
 			@pile{
 				id{morda_handle}
-				@NinePatch{
+				@nine_patch{
 					id{morda_handle_image}
 
 					layout{

@@ -71,7 +71,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 							}
 						}
 
-						@Color{
+						@color{
 							id{morda_window_title_bg}
 							layout{
 								dx{max} dy{max}
@@ -93,7 +93,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 									weight{1}
 								}
 
-								@Text{
+								@text{
 									id{morda_title}
 								}
 							}
