@@ -1,8 +1,8 @@
 defs{
 	trololo{"saf"}
 
-	Text{
-		Text{
+	@Text{
+		@Text{
 //			text{"trololo"}
 
 //			color{0xff0000ff}
@@ -24,21 +24,21 @@ defs{
 	clr{0xff0000ff}
 }
 
-KeyProxy{
+@KeyProxy{
 
-Overlay{
+@Overlay{
 	id {overlay}
 	layout{
 		dx{max} dy{max}
 	}
 
-Container{
+@Container{
 	layout{
 		dx{max} dy{max}
 	}
 
 
-	Window{
+	@Window{
 		x{0} y{0}
 		dx{300} dy{200}
 
@@ -56,95 +56,95 @@ Container{
 			}
 		}
 
-		Column{
+		@Column{
 			layout{
 //				dx{max} dy{max}
 				${lllayout}
 			}
 
 
-			Right{
-				Margins{
+			@Right{
+				@Margins{
 					left{5dp}
 					right{5dp}
 					top{5dp}
 					bottom{5dp}
 
-					CheckBox{
+					@CheckBox{
 						pressed{true}
 					}
 				}
 
-				Text{
+				@Text{
 					text{"some checkbox"}
 				}
 			}
 
-			DropDownSelector{
+			@DropDownSelector{
 				layout{
 					dx{max}
 				}
 
 				id{dropdownselector}
 
-				Text{text{item0}}
-				Text{text{item1}}
-				Text{text{item2}}
-				Text{text{item3}}
-				Text{text{item4}}
-				Text{text{item5}}
-				Text{text{item6}}
-				Text{text{item7}}
-				Text{text{item8}}
-				Text{text{item9}}
-				Text{text{item10}}
+				@Text{text{item0}}
+				@Text{text{item1}}
+				@Text{text{item2}}
+				@Text{text{item3}}
+				@Text{text{item4}}
+				@Text{text{item5}}
+				@Text{text{item6}}
+				@Text{text{item7}}
+				@Text{text{item8}}
+				@Text{text{item9}}
+				@Text{text{item10}}
 			}
-			Text{
+			@Text{
 				id{dropdownselector_selection}
 				text{unknown}
 			}
-			Left{
-				PushButton{
+			@Left{
+				@PushButton{
 					id{showhide_mousecursor_button}
 
-					Text{
+					@Text{
 						text{"show/hide mouse"}
 					}
 				}
-				PushButton{
+				@PushButton{
 					id{fullscreen_button}
 
-					Text{
+					@Text{
 						text{"toggle fullscreen"}
 					}
 				}
 			}
 
-			ChoiceGroup{
+			@ChoiceGroup{
 				layout{dx{max}}
 
 				defs{
-					RadBtn{
-						Row{
-							Margins{
+					@RadBtn{
+						@Row{
+							@Margins{
 								left{5dp}
 								right{5dp}
 								top{5dp}
 								bottom{5dp}
-								RadioButton
+								@RadioButton
 							}
 
-							Text{
+							@Text{
 								text{"radio button"}
 							}
 						}
 					}
 				}
 
-				Column{
-					RadBtn
-					RadBtn
-					RadBtn
+				@Column{
+					@RadBtn
+					@RadBtn
+					@RadBtn
 				}
 			}
 		}
@@ -152,22 +152,22 @@ Container{
 	}
 
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{300} y{10}
 
 		title{"HorizontalLayout"}
 
 		look{
-			background{WindowEmptyBackground}
+			background{@WindowEmptyBackground}
 		}
 
-		Column{
+		@Column{
 			layout{
 				dx{fill} dy{fill}
 			}
 
-			Row{
+			@Row{
 				x{50} y{100}
 				dx{220} dy{100}
 
@@ -179,7 +179,7 @@ Container{
 					dx{max} dy{min}
 				}
 
-				Text{
+				@Text{
 					id {label1}
 					text {trololo}
 					padding {10 20 30 40}
@@ -191,7 +191,7 @@ Container{
 
 				}
 
-				Text{
+				@Text{
 					id {label2}
 					text {"blah bla"}
 					padding {0}
@@ -203,7 +203,7 @@ Container{
 
 				}
 
-				PushButton{
+				@PushButton{
 					id {show_VK_button}
 					x{50} y{80}
 					dx{10} dy{30}
@@ -217,76 +217,76 @@ Container{
 					}
 
 
-					Text{
+					@Text{
 						text {"Show VK"}
 						color{0xffccfbff}
 					}
 				}
 			}
 
-			Pile{
+			@Pile{
 				layout{dx{fill} dy{50dp}}
-				Color{
+				@Color{
 					layout{dx{fill}dy{fill}}
 					color{0xff808080}
 				}
-				MouseProxy{
+				@MouseProxy{
 					layout{dx{fill} dy{fill}}
 					id{horizontal_list_mouseproxy}
 				}
 			}
-			Pile{
+			@Pile{
 				layout{
 					dx{fill}
 					dy{0}
 					weight{1}
 				}
-				HList{
+				@HList{
 					layout{
 						dx{fill}
 						dy{fill}
 					}
 					id{horizontal_list}
 
-					Text{
+					@Text{
 						text{item1|}
 						layout{dy{max}}
 					}
-					Text{
+					@Text{
 						text{item2|}
 					}
-					Text{
+					@Text{
 						text{item3|}
 					}
-					Text{
+					@Text{
 						text{item4|}
 					}
-					Text{
+					@Text{
 						text{item5|}
 					}
-					Text{
+					@Text{
 						text{item6|}
 					}
-					Text{
+					@Text{
 						text{item7|}
 					}
-					Text{
+					@Text{
 						text{item8|}
 					}
-					Text{
+					@Text{
 						text{item9|}
 					}
-					Text{
+					@Text{
 						text{item10|}
 					}
-					Text{
+					@Text{
 						text{item11|}
 					}
-					Text{
+					@Text{
 						text{item12|}
 					}
 				}
-				ResizeProxy{
+				@ResizeProxy{
 					layout{
 						dx{fill} dy{fill}
 					}
@@ -294,7 +294,7 @@ Container{
 				}
 			}
 
-			HScrollBar{
+			@HScrollBar{
 				id{horizontal_list_slider}
 
 				layout{
@@ -305,7 +305,7 @@ Container{
 		}//~Column
 	}//~Window
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{300} y{250}
 
@@ -314,34 +314,34 @@ Container{
 		title{"TreeView"}
 
 		look{
-			background{WindowEmptyBackground}
+			background{@WindowEmptyBackground}
 		}
 
 
-		Column{
+		@Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			Row{
+			@Row{
 				layout{
 					dx{max} dy{0}
 					weight{1}
 				}
 
-				Pile{
+				@Pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
 					}
-					TreeView{
+					@TreeView{
 						id{treeview_widget}
 						clip{true}
 						layout{
 							dx{fill} dy{fill}
 						}
 					}
-					ResizeProxy{
+					@ResizeProxy{
 						layout{
 							dx{fill} dy{fill}
 						}
@@ -350,7 +350,7 @@ Container{
 				}
 
 
-				VScrollBar{
+				@VScrollBar{
 
 					id{treeview_vertical_slider}
 
@@ -360,7 +360,7 @@ Container{
 				}
 			}
 
-			HScrollBar{
+			@HScrollBar{
 				id{treeview_horizontal_slider}
 
 				layout{
@@ -368,27 +368,27 @@ Container{
 				}
 			}
 
-			Row{
+			@Row{
 				layout{dx{max}}
 
-				Text{
+				@Text{
 					text{Insert:}
 				}
-				PushButton{
+				@PushButton{
 					id{insert_before}
-					Text{
+					@Text{
 						text{"before"}
 					}
 				}
-				PushButton{
+				@PushButton{
 					id{insert_after}
-					Text{
+					@Text{
 						text{"after"}
 					}
 				}
-				PushButton{
+				@PushButton{
 					id{insert_child}
-					Text{
+					@Text{
 						text{"child"}
 					}
 				}
@@ -396,14 +396,14 @@ Container{
 		}
 	}//~Window
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{0} y{250}
 
 		title{"Sliders"}
 
 
-		Row{
+		@Row{
 
 			id{horizontal_container}
 
@@ -411,7 +411,7 @@ Container{
 				dx{max} dy{max}
 			}
 
-			Image{
+			@Image{
 //				image{img_lattice}
 				image{img_camera}
 
@@ -422,14 +422,14 @@ Container{
 				}
 			}
 
-			HScrollBar{
+			@HScrollBar{
 				layout{
 					dx{50} dy{40} //TODO: min min
 					weight{1}
 				}
 			}
 
-			VScrollBar{
+			@VScrollBar{
 				id {"vertical slider"}
 
 				layout{
@@ -439,14 +439,14 @@ Container{
 		}
 	}
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{10} y{500}
 
 		title{"Spinning cube"}
 
 /*
-		Image{
+		@Image{
 			layout{
 				dx{max} dy{max}
 			}
@@ -455,7 +455,7 @@ Container{
 		}
 */
 
-		CubeWidget{
+		@CubeWidget{
 			id{cube_widget}
 			layout{
 				dx{max} dy{max}
@@ -463,13 +463,13 @@ Container{
 		}
 	}
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{310} y{500}
 
 		title{"TextInput"}
 
-		/*Color{
+		/*@Color{
 			color{ ${morda_color_bg} }
 
 			layout{
@@ -477,40 +477,40 @@ Container{
 			}
 		}*/
 
-		Column{
+		@Column{
 			layout{dx{max}dy{max}}
 
-			Tabs{
+			@Tabs{
 				layout{dx{max}}
 
-				Tab{
+				@Tab{
 					id{tab1}
-					Text{text{tab1}}
+					@Text{text{tab1}}
 				}
-				Tab{
-					Text{text{tab2}}
+				@Tab{
+					@Text{text{tab2}}
 				}
-				Tab{
-					Text{text{"tab 3"}}
+				@Tab{
+					@Text{text{"tab 3"}}
 				}
-				Tab{
-					Text{text{"tab four"}}
+				@Tab{
+					@Text{text{"tab four"}}
 				}
 			}
 
-			NinePatch{
+			@NinePatch{
 				layout{dx{max}}
 
 				image{morda_npt_frame}
 
-				CollapseArea{
+				@CollapseArea{
 					layout{dx{max}}
 					title{Text{text{Hi!}}}
-					Column{
-						Text{text{Hello!}}
-						Row{
-							PushButton{Text{text{button!!!}}}
-							ImagePushButton{
+					@Column{
+						@Text{text{Hello!}}
+						@Row{
+							@PushButton{@Text{text{button!!!}}}
+							@ImagePushButton{
 								id{image_push_button}
 								layout{
 									dx{50dp} dy{50dp}
@@ -525,9 +525,9 @@ Container{
 				}
 			}
 
-			Widget{layout{dy{5dp}}}
+			@Widget{layout{dy{5dp}}}
 
-			TextInputLine{
+			@TextInputLine{
 				id{text_input}
 
 				text{"Hello Wrodl!!!"}
@@ -538,44 +538,44 @@ Container{
 					dx{max} dy{min}
 				}
 			}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
-			PushButton{layout{dy{0}weight{1}}Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
+			@PushButton{layout{dy{0}weight{1}}@Text{text{button!!!}}}
 
 		}
 	}
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{620} y{500}
 
 		title{"ScrollArea"}
 
 
-		Column{
+		@Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			Row{
+			@Row{
 				layout{
 					dx{max} dy{0}
 					weight{1}
 				}
 
-				Pile{
+				@Pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
 					}
-					ScrollArea{
+					@ScrollArea{
 						id{scroll_area}
 
 						clip{true}
@@ -584,7 +584,7 @@ Container{
 							dx{max} dy{max}
 						}
 
-						Image{
+						@Image{
 							image{img_sample}
 //							image{img_camera}
 
@@ -593,31 +593,31 @@ Container{
 							}
 						}
 
-						CollapseArea{
+						@CollapseArea{
 							x{20} y{450}
 							title{
-								Text{
+								@Text{
 									text{"Collapsable stuff"}
 								}
 							}
 
-							Text{
+							@Text{
 								text{"I'm collapsable!!!"}
 							}
 						}
 
-						PushButton{
+						@PushButton{
 							id{push_button_in_scroll_container}
 							x{10mm} y{20mm}
 
-							Text{
+							@Text{
 								x{0} y{0}
 								dx{100mm} dy{10mm}
 								text{"Hello World!!!"}
 							}
 						}
 					}
-					ResizeProxy{
+					@ResizeProxy{
 						layout{
 							dx{max} dy{max}
 						}
@@ -625,7 +625,7 @@ Container{
 					}
 				}
 
-				VScrollBar{
+				@VScrollBar{
 
 					id{scroll_area_vertical_slider}
 
@@ -635,7 +635,7 @@ Container{
 				}
 			}
 
-			HScrollBar{
+			@HScrollBar{
 				id{scroll_area_horizontal_slider}
 
 				layout{
@@ -646,7 +646,7 @@ Container{
 	}
 
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{620} y{250}
 
@@ -655,180 +655,180 @@ Container{
 		title{"none"}
 
 
-		Gradient{
+		@Gradient{
 			layout{dx{max}dy{max}}
 			gradient{grd_sample}
 		}
 
-		SizeContainer{
+		@SizeContainer{
 			layout{dx{fill}dy{fill}}
 
-			PushButton{
+			@PushButton{
 				x{10} y{20}
-				Text{text{"Hello world!"}}
+				@Text{text{"Hello world!"}}
 			}
 		}
 
 	}
 
-	Window{
+	@Window{
 		dx{300} dy{200}
 		x{620} y{0}
 
 		title{"VerticalList"}
 
-		Row{
+		@Row{
 			layout{
 				dx{max} dy{max}
 			}
 
-			MouseProxy{
+			@MouseProxy{
 				layout{dx{50dp} dy{fill}}
 				id{list_mouseproxy}
 			}
 
 
-			Pile{
+			@Pile{
 				layout{
 					dx{0} dy{max}
 					weight{1}
 				}
-				VList{
+				@VList{
 					id{vertical_list}
 					layout{
 						dx{max} dy{max}
 					}
 
-					Text{
+					@Text{
 						text{item0}
 					}
 
-					Text{
+					@Text{
 						text{item_1_iequwgfiew}
 					}
 
-					Text{
+					@Text{
 						text{item_2_werf}
 					}
 
-					PushButton{
-						Text{
+					@PushButton{
+						@Text{
 							text {"item3"}
 							color{0xff0000ff}
 						}
 					//	text{item_3}
 					}
 
-					Text{
+					@Text{
 						text{item_4}
 					}
 
-					Text{
+					@Text{
 						text{item_5}
 					}
 
-					Text{
+					@Text{
 						text{item_6}
 					}
 
-					Text{
+					@Text{
 						text{item_7}
 					}
 
-					Text{
+					@Text{
 						text{item_8}
 					}
 
-					Text{
+					@Text{
 						text{item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg}
 					}
 
-					Text{
+					@Text{
 						text{item_10}
 					}
 
-					Text{
+					@Text{
 						text{item_4}
 					}
 
-					Text{
+					@Text{
 						text{item_5}
 					}
 
-					Text{
+					@Text{
 						text{item_6}
 					}
 
-					Text{
+					@Text{
 						text{item_7}
 					}
 
-					Text{
+					@Text{
 						text{item_8}
 					}
 
-					Text{
+					@Text{
 						text{item_4}
 					}
 
-					Text{
+					@Text{
 						text{item_5}
 					}
 
-					Text{
+					@Text{
 						text{item_6}
 					}
 
-					Text{
+					@Text{
 						text{item_7}
 					}
 
-					Text{
+					@Text{
 						text{item_8}
 					}
 
-					Text{
+					@Text{
 						text{item_4}
 					}
 
-					Text{
+					@Text{
 						text{item_5}
 					}
 
-					Text{
+					@Text{
 						text{item_6}
 					}
 
-					Text{
+					@Text{
 						text{item_7}
 					}
 
-					Text{
+					@Text{
 						text{item_8}
 					}
 
-					Text{
+					@Text{
 						text{item_4}
 					}
 
-					Text{
+					@Text{
 						text{item_5}
 					}
 
-					Text{
+					@Text{
 						text{item_6}
 					}
 
-					Text{
+					@Text{
 						text{item_7}
 					}
 
-					Text{
+					@Text{
 						text{item_8}
 					}
 
 				}
-				ResizeProxy{
+				@ResizeProxy{
 					layout{
 						dx{max} dy{max}
 					}
@@ -836,7 +836,7 @@ Container{
 				}
 			}
 
-			VScrollBar{
+			@VScrollBar{
 				id{vertical_list_slider}
 				layout{
 					dy{max}
@@ -849,7 +849,7 @@ Container{
 }//~Overlay
 
 
-MouseCursor{
+@MouseCursor{
 	layout{
 		dx{fill} dy{fill}
 	}

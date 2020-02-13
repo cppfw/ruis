@@ -10,7 +10,7 @@ using namespace morda;
 namespace{
 
 const auto D_Layout = puu::read(R"qwertyuiop(
-		Image{
+		@Image{
 			id{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
 		}

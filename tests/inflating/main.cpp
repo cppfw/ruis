@@ -11,12 +11,12 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			Container{
+			@Container{
 				defs{
 					dims{dx{max} dy{123}}
 
-					Cont{
-						Container{
+					@Cont{
+						@Container{
 							layout{
 								dx{fill} dy{456}
 							}
@@ -24,13 +24,13 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{
+				@Cont{
 					layout{
 						${dims}
 					}
 				}
 
-				Cont{}
+				@Cont{}
 			}
 		)qwertyuiop"));
 
@@ -47,10 +47,10 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			Container{
+			@Container{
 				defs{
-					Cont{
-						Container{
+					@Cont{
+						@Container{
 							x{10} y{12}
 							layout{
 								dx{fill} dy{456}
@@ -59,7 +59,7 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{
+				@Cont{
 					x{23}
 					dx{45}
 					layout{
@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{}
+				@Cont{}
 			}
 		)qwertyuiop"));
 
@@ -87,11 +87,11 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			Container{
+			@Container{
 				defs{
-					Cont{
+					@Cont{
 						x y layout
-						Container{
+						@Container{
 							x{${x}} y{${x}}
 							layout{
 								dx{fill} dy{max}
@@ -101,7 +101,7 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{
+				@Cont{
 					x{23}
 					dx{45}
 					layout{
@@ -109,7 +109,7 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{}
+				@Cont{}
 			}
 		)qwertyuiop"));
 
@@ -130,8 +130,8 @@ int main(int argc, char** argv){
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
-				Cont{ x y layout dx
-					Container{
+				@Cont{ x y layout dx
+					@Container{
 						x{${x}} y{${y}}
 						dy{${dx}}
 						layout{
@@ -141,16 +141,16 @@ int main(int argc, char** argv){
 					}
 				}
 			}
-			Container{
+			@Container{
 				defs{
-					Cont{ x y
-						Cont{
+					@Cont{ x y
+						@Cont{
 							y{67}
 						}
 					}
 				}
 
-				Cont{
+				@Cont{
 					x{23} y{106}
 					dx{45}
 					layout{
@@ -158,7 +158,7 @@ int main(int argc, char** argv){
 					}
 				}
 
-				Cont{}
+				@Cont{}
 			}
 		)qwertyuiop"));
 
@@ -180,12 +180,12 @@ int main(int argc, char** argv){
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
-				Container_{Container}
+				@Container_{@Container}
 			}
 			defs{
-				Container{ x y layout dx
-					Pile{
-						Container_{
+				@Container{ x y layout dx
+					@Pile{
+						@Container_{
 							x{${x}} y{${y}}
 							dy{${dx}}
 							layout{
@@ -194,16 +194,16 @@ int main(int argc, char** argv){
 							}
 							${children}
 						}
-						Container_{}
+						@Container_{}
 					}
 				}
 
-				Tmpl{
-					Container
+				@Tmpl{
+					@Container
 				}
 			}
-			Container{
-				Tmpl
+			@Container{
+				@Tmpl
 			}
 		)qwertyuiop"));
 
@@ -218,17 +218,17 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			Container{
+			@Container{
 				defs{
-					Tmpl1{Pile}
+					@Tmpl1{@Pile}
 				}
 				defs{
-					Tmpl{
-						Tmpl1
+					@Tmpl{
+						@Tmpl1
 					}
 				}
 
-				Tmpl
+				@Tmpl
 			}
 		)qwertyuiop"));
 
@@ -249,7 +249,7 @@ int main(int argc, char** argv){
 			defs{
 				test_var{42}
 			}
-			Widget{
+			@Widget{
 				defs{
 					test_var{666}
 				}

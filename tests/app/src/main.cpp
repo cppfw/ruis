@@ -290,11 +290,11 @@ public:
 	}
 
 	const char* DPlusMinus = R"qwertyuiop(
-			Pile{
-				Image{
+			@Pile{
+				@Image{
 					id{plusminus}
 				}
-				MouseProxy{
+				@MouseProxy{
 					layout{
 						dx{fill} dy{fill}
 					}
@@ -304,9 +304,9 @@ public:
 		)qwertyuiop";
 
 	const char* DLine = R"qwertyuiop(
-			Pile{
+			@Pile{
 				layout{dx{5mm} dy{fill}}
-				Color{
+				@Color{
 					layout{dx{1pt}dy{fill}}
 					color{${morda_color_highlight}}
 				}
@@ -314,20 +314,20 @@ public:
 		)qwertyuiop";
 
 	const char* DLineEnd = R"qwertyuiop(
-			Pile{
+			@Pile{
 				layout{dx{5mm} dy{max}}
-				Column{
+				@Column{
 					layout{dx{max}dy{max}}
-					Color{
+					@Color{
 						layout{dx{1pt}dy{0}weight{1}}
 						color{${morda_color_highlight}}
 					}
-					Widget{layout{dx{max}dy{0}weight{1}}}
+					@Widget{layout{dx{max}dy{0}weight{1}}}
 				}
-				Row{
+				@Row{
 					layout{dx{max}dy{max}}
-					Widget{layout{dx{0}dy{max}weight{1}}}
-					Color{
+					@Widget{layout{dx{0}dy{max}weight{1}}}
+					@Color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
 					}
@@ -336,16 +336,16 @@ public:
 		)qwertyuiop";
 
 	const char* DLineMiddle = R"qwertyuiop(
-			Pile{
+			@Pile{
 				layout{dx{5mm} dy{max}}
-				Color{
+				@Color{
 					layout{dx{1pt}dy{max}}
 					color{${morda_color_highlight}}
 				}
-				Row{
+				@Row{
 					layout{dx{max}dy{max}}
-					Widget{layout{dx{0}dy{max}weight{1}}}
-					Color{
+					@Widget{layout{dx{0}dy{max}weight{1}}}
+					@Color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
 					}
@@ -354,7 +354,7 @@ public:
 		)qwertyuiop";
 
 	const char* DEmpty = R"qwertyuiop(
-			Widget{layout{dx{5mm}dy{0}}}
+			@Widget{layout{dx{5mm}dy{0}}}
 		)qwertyuiop";
 
 private:
@@ -507,17 +507,17 @@ public:
 		{
 			auto v = this->context->inflater.inflate(
 					R"qwertyuiop(
-							Pile{
-								Color{
+							@Pile{
+								@Color{
 									id{selection}
 									layout{dx{max}dy{max}}
 									color{${morda_color_highlight}}
 									visible{false}
 								}
-								Text{
+								@Text{
 									id{value}
 								}
-								MouseProxy{
+								@MouseProxy{
 									id{mouse_proxy}
 									layout{dx{max}dy{max}}
 								}
@@ -561,8 +561,8 @@ public:
 		{
 			auto b = this->context->inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
-							PushButton{
-								Color{
+							@PushButton{
+								@Color{
 									color{0xff0000ff}
 									layout{dx{2mm}dy{0.5mm}}
 								}

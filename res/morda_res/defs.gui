@@ -5,8 +5,8 @@ defs{
 	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
 
-	TextInputLine_{
-		TextInputLine
+	@TextInputLine_{
+		@TextInputLine
 	}
 }
 
@@ -20,54 +20,54 @@ defs{
 
 //	morda_color_highlight{0xff329ce1}
 
-	Text{
-		Text{
+	@Text{
+		@Text{
 			color{ ${morda_color_text} }
 		}
 	}
 
-	TextInputLine{ text
-		NinePatch{
+	@TextInputLine{ text
+		@NinePatch{
 			image{morda_npt_textfield_background}
-			TextInputLine_{
+			@TextInputLine_{
 				layout{dx{fill}dy{max}}
 				text{${text}}
 			}
 		}
 	}
 
-	Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
-		Row{
-			Widget{
+	@Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
+		@Row{
+			@Widget{
 				layout{
 					dx{${left}}
 					weight{${weightLeft}}
 				}
 			}
-			Column{
+			@Column{
 				layout{
 					weight{1} dy{max}
 				}
-				Widget{
+				@Widget{
 					layout{
 						dy{${top}}
 						weight{${weightTop}}
 					}
 				}
-				Pile{
+				@Pile{
 					layout{
 						weight{1} dx{max}
 					}
 					${children}
 				}
-				Widget{
+				@Widget{
 					layout{
 						dy{${bottom}}
 						weight{${weightBottom}}
 					}
 				}
 			}
-			Widget{
+			@Widget{
 				layout{
 					dx{${right}}
 					weight{${weightRight}}
@@ -76,8 +76,8 @@ defs{
 		}
 	}
 
-	Left{ layout
-		Row{
+	@Left{ layout
+		@Row{
 			layout{
 				${layout}
 				dx{max}
@@ -85,7 +85,7 @@ defs{
 
 			${children}
 
-			Widget{
+			@Widget{
 				layout{
 					dx{0}
 					weight{1}
@@ -94,14 +94,14 @@ defs{
 		}
 	}
 
-	Right{ layout
-		Row{
+	@Right{ layout
+		@Row{
 			layout{
 				${layout}
 				dx{max}
 			}
 
-			Widget{
+			@Widget{
 				layout{
 					dx{0}
 					weight{1}
@@ -112,8 +112,8 @@ defs{
 		}
 	}
 
-	Top{ layout
-		Column{
+	@Top{ layout
+		@Column{
 			layout{
 				${layout}
 				dy{max}
@@ -121,7 +121,7 @@ defs{
 
 			${children}
 
-			Widget{
+			@Widget{
 				layout{
 					dy{0}
 					weight{1}
@@ -130,14 +130,14 @@ defs{
 		}
 	}
 
-	Bottom{ layout
-		Column{
+	@Bottom{ layout
+		@Column{
 			layout{
 				${layout}
 				dy{max}
 			}
 
-			Widget{
+			@Widget{
 				layout{
 					dy{0}
 					weight{1}
@@ -148,13 +148,13 @@ defs{
 		}
 	}
 
-	Window{
+	@Window{
 		look
-		Window{
+		@Window{
 			look{
 				titleColorTopmost{ ${morda_color_bg_window_title} }
 				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
-				background{WindowBackground}
+				background{@WindowBackground}
 				left{${morda_window_border_size}}
 				top{${morda_window_border_size}}
 				right{${morda_window_border_size}}
@@ -166,14 +166,14 @@ defs{
 		}
 	}
 
-	PushButton{
-		NinePatchPushButton{
+	@PushButton{
+		@NinePatchPushButton{
 			${children}
 		}
 	}
 
-	WindowBackground{
-		NinePatch{
+	@WindowBackground{
+		@NinePatch{
 			layout{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}
@@ -185,8 +185,8 @@ defs{
 		}
 	}
 
-	WindowEmptyBackground{
-		NinePatch{
+	@WindowEmptyBackground{
+		@NinePatch{
 			layout{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}
@@ -201,8 +201,8 @@ defs{
 }
 
 defs{
-	Margin{ value
-		Margins{
+	@Margin{ value
+		@Margins{
 			left{${value}}
 			top{${value}}
 			right{${value}}

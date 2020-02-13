@@ -27,8 +27,8 @@ using namespace morda;
 inflater::inflater(morda::context& context):
 		context(context)
 {
-	this->register_widget<Widget>("Widget");
-	this->register_widget<Container>("Container");
+	this->register_widget<widget>("Widget");
+	this->register_widget<container>("Container");
 	this->register_widget<SizeContainer>("SizeContainer");
 	this->register_widget<Row>("Row");
 	this->register_widget<Column>("Column");
@@ -207,16 +207,18 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	}
 
 	ASSERT_INFO(!is_leaf_property(i->value), "i->value = " << i->value.to_string())
+	ASSERT(!i->value.empty())
+	ASSERT(i->value.to_string()[0] == '@')
 
 	std::string widget_name;
 	puu::forest widget_desc;
 
 	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
-	if(auto tmpl = this->find_template(i->value.to_string())){
-		widget_name = tmpl->templ.value.to_string();
+	if(auto tmpl = this->find_template(i->value.to_string().substr(1))){
+		widget_name = tmpl->templ.value.to_string().substr(1);
 		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::forest(i->children));
 	}else{
-		widget_name = i->value.to_string();
+		widget_name = i->value.to_string().substr(1);
 		widget_desc = i->children;
 	}
 
@@ -257,13 +259,13 @@ inflater::widget_template inflater::parse_template(const puu::forest& templ){
 	widget_template ret;
 
 	for(auto& n : templ){
-		//template definition
+		// template definition
 		if(!ret.templ.value.empty()){
 			break;
 		}
 
 		if(is_leaf_property(n.value)){
-			//possibly variable name
+			// possibly variable name
 			if(!n.children.empty()){
 				throw std::invalid_argument("inflater::parse_template(): template argument name has children");
 			}
@@ -290,7 +292,9 @@ inflater::widget_template inflater::parse_template(const puu::forest& templ){
 		}
 	}
 
-	if(auto tmpl = this->find_template(ret.templ.value.to_string())){
+	ASSERT(ret.templ.value.to_string()[0] == '@')
+
+	if(auto tmpl = this->find_template(ret.templ.value.to_string().substr(1))){
 		ret.templ.value = tmpl->templ.value;
 		ret.templ.children = apply_gui_template(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
 
@@ -325,8 +329,11 @@ void inflater::push_templates(const puu::forest& chain){
 		}
 //		TRACE(<< "pushing template = " << c->value() << std::endl)
 
+		ASSERT(!c.value.empty())
+		ASSERT(c.value.to_string()[0] == '@')
+
 		auto res = m.insert(
-				std::make_pair(c.value.to_string(), parse_template(c.children))
+				std::make_pair(c.value.to_string().substr(1), parse_template(c.children))
 			);
 
 		if(!res.second){

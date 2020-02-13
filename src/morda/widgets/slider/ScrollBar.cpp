@@ -17,26 +17,26 @@ using namespace morda;
 namespace{
 
 const auto DDescription = puu::read(R"qwertyuiop(
-		NinePatch{
+		@NinePatch{
 			id{morda_slider_bg}
 			layout{
 				dx{max} dy{max}
 			}
 		}
-		Container{
+		@Container{
 			layout{
 				dx{max} dy{max}
 			}
-			Pile{
+			@Pile{
 				id{morda_handle}
-				NinePatch{
+				@NinePatch{
 					id{morda_handle_image}
 
 					layout{
 						dx{max} dy{max}
 					}
 				}
-				MouseProxy{
+				@MouseProxy{
 					id{morda_handle_proxy}
 					layout{
 						dx{fill} dy{fill}

@@ -14,76 +14,76 @@ using namespace morda;
 namespace{
 
 const auto windowDesc_c = puu::read(R"qwertyuiop(
-		Column{
+		@Column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			Row{
+			@Row{
 				layout{dx{fill}}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_lt_proxy}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_t_proxy}
 					layout{
 						dx{0} dy{fill} weight{1}
 					}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_rt_proxy}
 				}
 			}
 
-			Row{
+			@Row{
 				layout{
 					weight{1}
 					dx{max}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_l_proxy}
 					layout{dy{fill}}
 				}
 
-				//middle
-				Column{
+				// middle
+				@Column{
 					layout{
 						weight{1}
 						dy{max}
 					}
 
-					//caption
-					Pile{
+					// caption
+					@Pile{
 						layout{
 							dx{max}
 						}
 
 						clip{true}
 
-						MouseProxy{
+						@MouseProxy{
 							id{morda_caption_proxy}
 							layout{
 								dx{max} dy{max}
 							}
 						}
 
-						Color{
+						@Color{
 							id{morda_window_title_bg}
 							layout{
 								dx{max} dy{max}
 							}
 						}
 
-						Row{
+						@Row{
 							layout{
 								dx{max} dy{max}
 							}
 
-							Margins{
+							@Margins{
 								left{3dp}
 								top{2dp}
 								bottom{2dp}
@@ -93,14 +93,14 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 									weight{1}
 								}
 
-								Text{
+								@Text{
 									id{morda_title}
 								}
 							}
 						}
 					}
 
-					Pile{
+					@Pile{
 						id{morda_content}
 						clip{true}
 						layout{
@@ -110,21 +110,21 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 					}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_r_proxy}
 					layout{dy{fill}}
 				}
 			}
 
-			Row{
+			@Row{
 				layout{
 					dx{fill}
 				}
-				MouseProxy{
+				@MouseProxy{
 					id{morda_lb_proxy}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_b_proxy}
 					layout{
 						dy{fill}
@@ -133,7 +133,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 					}
 				}
 
-				MouseProxy{
+				@MouseProxy{
 					id{morda_rb_proxy}
 				}
 			}

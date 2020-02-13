@@ -13,9 +13,9 @@ bool PushButton::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButt
 	}
 
 	if(isDown){
-		//NOTE: sometimes pos is outside of the widget. For example, when mouse is captured by this widget and
-		//some other mouse button is clicked, and then the left one is clicked outside of widget,
-		//then the event about left button down will still be delivered to this widget because it has captured the mouse.
+		// NOTE: sometimes pos is outside of the widget. For example, when mouse is captured by this widget and
+		//       some other mouse button is clicked, and then the left one is clicked outside of widget,
+		//       then the event about left button down will still be delivered to this widget because it has captured the mouse.
 		if(this->overlaps(pos)){
 			this->setPressed(true);
 		}

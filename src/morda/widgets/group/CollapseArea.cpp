@@ -8,13 +8,13 @@ using namespace morda;
 
 namespace{
 const auto layout_c = puu::read(R"qwertyuiop(
-	Pile{
+	@Pile{
 		layout{dx{max}}
-		Color{
+		@Color{
 			layout{dx{fill}dy{fill}}
 			color{${morda_color_mg}}
 		}
-		Margins{
+		@Margins{
 			layout{dx{max}dy{max}}
 
 			defs{
@@ -26,25 +26,25 @@ const auto layout_c = puu::read(R"qwertyuiop(
 			right{${marHor}}
 			bottom{${marVer}}
 
-			Row{
+			@Row{
 				layout{dx{max}}
-				ImageToggle{
+				@ImageToggle{
 					id{switch}
 					look{
 						unpressed{morda_img_dropdown_arrow}
 						pressed{morda_img_dropright_arrow}
 					}
 				}
-				Widget{
+				@Widget{
 					layout{dx{${marHor}}}
 				}
-				Pile{
+				@Pile{
 					id{title}
 				}
 			}
 		}
 	}
-	Pile{
+	@Pile{
 		id{content}
 	}
 )qwertyuiop");
