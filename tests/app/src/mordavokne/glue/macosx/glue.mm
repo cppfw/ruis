@@ -625,7 +625,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	this->applicationObjectId = [NSApplication sharedApplication];
 
 	if(!this->applicationObjectId){
-		throw morda::Exc("morda::application::ApplicationObject::ApplicationObject(): failed to create application object");
+		throw std::runtime_error("morda::application::ApplicationObject::ApplicationObject(): failed to create application object");
 	}
 
 	utki::ScopeExit scopeExitApplication([this](){
@@ -640,7 +640,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	];
 
 	if(!this->windowObjectId){
-		throw morda::Exc("morda::application::WindowObject::WindowObject(): failed to create Window object");
+		throw std::runtime_error("morda::application::WindowObject::WindowObject(): failed to create Window object");
 	}
 
 	utki::ScopeExit scopeExitWindow([this](){
