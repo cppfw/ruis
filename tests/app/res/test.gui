@@ -24,15 +24,15 @@ defs{
 	clr{0xff0000ff}
 }
 
-@KeyProxy{
+@key_proxy{
 
-@Overlay{
+@overlay{
 	id {overlay}
 	layout{
 		dx{max} dy{max}
 	}
 
-@Container{
+@container{
 	layout{
 		dx{max} dy{max}
 	}
@@ -56,7 +56,7 @@ defs{
 			}
 		}
 
-		@Column{
+		@column{
 			layout{
 //				dx{max} dy{max}
 				${lllayout}
@@ -125,7 +125,7 @@ defs{
 
 				defs{
 					@RadBtn{
-						@Row{
+						@row{
 							@Margins{
 								left{5dp}
 								right{5dp}
@@ -141,7 +141,7 @@ defs{
 					}
 				}
 
-				@Column{
+				@column{
 					@RadBtn
 					@RadBtn
 					@RadBtn
@@ -162,12 +162,12 @@ defs{
 			background{@WindowEmptyBackground}
 		}
 
-		@Column{
+		@column{
 			layout{
 				dx{fill} dy{fill}
 			}
 
-			@Row{
+			@row{
 				x{50} y{100}
 				dx{220} dy{100}
 
@@ -224,24 +224,24 @@ defs{
 				}
 			}
 
-			@Pile{
+			@pile{
 				layout{dx{fill} dy{50dp}}
 				@Color{
 					layout{dx{fill}dy{fill}}
 					color{0xff808080}
 				}
-				@MouseProxy{
+				@mouse_proxy{
 					layout{dx{fill} dy{fill}}
 					id{horizontal_list_mouseproxy}
 				}
 			}
-			@Pile{
+			@pile{
 				layout{
 					dx{fill}
 					dy{0}
 					weight{1}
 				}
-				@HList{
+				@horizontal_list{
 					layout{
 						dx{fill}
 						dy{fill}
@@ -286,7 +286,7 @@ defs{
 						text{item12|}
 					}
 				}
-				@ResizeProxy{
+				@resize_proxy{
 					layout{
 						dx{fill} dy{fill}
 					}
@@ -318,18 +318,18 @@ defs{
 		}
 
 
-		@Column{
+		@column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			@Row{
+			@row{
 				layout{
 					dx{max} dy{0}
 					weight{1}
 				}
 
-				@Pile{
+				@pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
@@ -341,7 +341,7 @@ defs{
 							dx{fill} dy{fill}
 						}
 					}
-					@ResizeProxy{
+					@resize_proxy{
 						layout{
 							dx{fill} dy{fill}
 						}
@@ -368,7 +368,7 @@ defs{
 				}
 			}
 
-			@Row{
+			@row{
 				layout{dx{max}}
 
 				@Text{
@@ -403,7 +403,7 @@ defs{
 		title{"Sliders"}
 
 
-		@Row{
+		@row{
 
 			id{horizontal_container}
 
@@ -477,7 +477,7 @@ defs{
 			}
 		}*/
 
-		@Column{
+		@column{
 			layout{dx{max}dy{max}}
 
 			@Tabs{
@@ -506,9 +506,9 @@ defs{
 				@CollapseArea{
 					layout{dx{max}}
 					title{Text{text{Hi!}}}
-					@Column{
+					@column{
 						@Text{text{Hello!}}
-						@Row{
+						@row{
 							@PushButton{@Text{text{button!!!}}}
 							@ImagePushButton{
 								id{image_push_button}
@@ -525,7 +525,7 @@ defs{
 				}
 			}
 
-			@Widget{layout{dy{5dp}}}
+			@widget{layout{dy{5dp}}}
 
 			@TextInputLine{
 				id{text_input}
@@ -559,23 +559,23 @@ defs{
 		title{"ScrollArea"}
 
 
-		@Column{
+		@column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			@Row{
+			@row{
 				layout{
 					dx{max} dy{0}
 					weight{1}
 				}
 
-				@Pile{
+				@pile{
 					layout{
 						dx{0} dy{max}
 						weight{1}
 					}
-					@ScrollArea{
+					@scroll_area{
 						id{scroll_area}
 
 						clip{true}
@@ -617,7 +617,7 @@ defs{
 							}
 						}
 					}
-					@ResizeProxy{
+					@resize_proxy{
 						layout{
 							dx{max} dy{max}
 						}
@@ -660,7 +660,7 @@ defs{
 			gradient{grd_sample}
 		}
 
-		@SizeContainer{
+		@size_container{
 			layout{dx{fill}dy{fill}}
 
 			@PushButton{
@@ -677,23 +677,23 @@ defs{
 
 		title{"VerticalList"}
 
-		@Row{
+		@row{
 			layout{
 				dx{max} dy{max}
 			}
 
-			@MouseProxy{
+			@mouse_proxy{
 				layout{dx{50dp} dy{fill}}
 				id{list_mouseproxy}
 			}
 
 
-			@Pile{
+			@pile{
 				layout{
 					dx{0} dy{max}
 					weight{1}
 				}
-				@VList{
+				@vertical_list{
 					id{vertical_list}
 					layout{
 						dx{max} dy{max}
@@ -828,7 +828,7 @@ defs{
 					}
 
 				}
-				@ResizeProxy{
+				@resize_proxy{
 					layout{
 						dx{max} dy{max}
 					}

@@ -26,18 +26,18 @@ namespace{
 const auto selectorLayout_c = puu::read(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
-	@Row{
+	@row{
 		layout{dx{max}}
-		@Pile{
+		@pile{
 			id{morda_dropdown_selection}
 			layout{dx{min}dy{max} weight{1}}
 		}
-		@Widget{layout{dx{3dp}}}
+		@widget{layout{dx{3dp}}}
 		@Image{
 			image{morda_img_divider_vert}
 			layout{dy{fill}}
 		}
-		@Widget{layout{dx{3dp}}}
+		@widget{layout{dx{3dp}}}
 		@Image{
 			image{morda_img_dropdown_arrow}
 		}
@@ -45,11 +45,11 @@ const auto selectorLayout_c = puu::read(R"qwertyuiop(
 )qwertyuiop");
 
 const auto itemLayout_c = puu::read(R"qwertyuiop(
-		@Pile{
+		@pile{
 			layout{
 				dx{max}
 			}
-			@MouseProxy{
+			@mouse_proxy{
 				id{morda_dropdown_mouseproxy}
 				layout{
 					dx{fill} dy{fill}
@@ -67,8 +67,8 @@ const auto itemLayout_c = puu::read(R"qwertyuiop(
 	)qwertyuiop");
 
 const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
-		@Pile{
-			@Widget{
+		@pile{
+			@widget{
 				id{minSizeSpacer}
 			}
 			@NinePatch{
@@ -76,14 +76,14 @@ const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
 					dx{max}
 				}
 				image{morda_npt_contextmenu_bg}
-				@Column{
+				@column{
 					layout{
 						dx{max}
 					}
 					id{morda_contextmenu_content}
 				}
 			}
-			@MouseProxy{
+			@mouse_proxy{
 				layout{
 					dx{fill} dy{fill}
 				}

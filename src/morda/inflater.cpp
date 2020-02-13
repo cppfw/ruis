@@ -27,19 +27,19 @@ using namespace morda;
 inflater::inflater(morda::context& context):
 		context(context)
 {
-	this->register_widget<widget>("Widget");
-	this->register_widget<container>("Container");
-	this->register_widget<SizeContainer>("SizeContainer");
-	this->register_widget<Row>("Row");
-	this->register_widget<Column>("Column");
-	this->register_widget<Pile>("Pile");
-	this->register_widget<MouseProxy>("MouseProxy");
-	this->register_widget<ScrollArea>("ScrollArea");
-	this->register_widget<KeyProxy>("KeyProxy");
-	this->register_widget<Overlay>("Overlay");
-	this->register_widget<ResizeProxy>("ResizeProxy");
-	this->register_widget<HList>("HList");
-	this->register_widget<VList>("VList");
+	this->register_widget<widget>("widget");
+	this->register_widget<container>("container");
+	this->register_widget<SizeContainer>("size_container");
+	this->register_widget<Row>("row");
+	this->register_widget<Column>("column");
+	this->register_widget<Pile>("pile");
+	this->register_widget<MouseProxy>("mouse_proxy");
+	this->register_widget<ScrollArea>("scroll_area");
+	this->register_widget<KeyProxy>("key_proxy");
+	this->register_widget<Overlay>("overlay");
+	this->register_widget<ResizeProxy>("resize_proxy");
+	this->register_widget<HList>("horizontal_list");
+	this->register_widget<VList>("vertical_list");
 }
 
 

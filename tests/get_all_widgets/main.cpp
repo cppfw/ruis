@@ -8,36 +8,36 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			@Container{
-				@Column{
+			@container{
+				@column{
 					id{1}
 				}
 
-				@Column{
+				@column{
 					id{2}
 
-					@Column{
+					@column{
 						id{3}
 					}
-					@Row{
+					@row{
 						id{4}
 
-						@Pile{
+						@pile{
 							id{8}
 
-							@Column{
+							@column{
 								id{9}
 							}
 						}
 					}
 				}
 
-				@Pile{
+				@pile{
 					id{5}
 
-					@Column{
+					@column{
 						id{6}
-						@Row{
+						@row{
 							id{7}
 						}
 					}

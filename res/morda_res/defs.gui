@@ -37,37 +37,37 @@ defs{
 	}
 
 	@Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
-		@Row{
-			@Widget{
+		@row{
+			@widget{
 				layout{
 					dx{${left}}
 					weight{${weightLeft}}
 				}
 			}
-			@Column{
+			@column{
 				layout{
 					weight{1} dy{max}
 				}
-				@Widget{
+				@widget{
 					layout{
 						dy{${top}}
 						weight{${weightTop}}
 					}
 				}
-				@Pile{
+				@pile{
 					layout{
 						weight{1} dx{max}
 					}
 					${children}
 				}
-				@Widget{
+				@widget{
 					layout{
 						dy{${bottom}}
 						weight{${weightBottom}}
 					}
 				}
 			}
-			@Widget{
+			@widget{
 				layout{
 					dx{${right}}
 					weight{${weightRight}}
@@ -77,7 +77,7 @@ defs{
 	}
 
 	@Left{ layout
-		@Row{
+		@row{
 			layout{
 				${layout}
 				dx{max}
@@ -85,7 +85,7 @@ defs{
 
 			${children}
 
-			@Widget{
+			@widget{
 				layout{
 					dx{0}
 					weight{1}
@@ -95,13 +95,13 @@ defs{
 	}
 
 	@Right{ layout
-		@Row{
+		@row{
 			layout{
 				${layout}
 				dx{max}
 			}
 
-			@Widget{
+			@widget{
 				layout{
 					dx{0}
 					weight{1}
@@ -113,7 +113,7 @@ defs{
 	}
 
 	@Top{ layout
-		@Column{
+		@column{
 			layout{
 				${layout}
 				dy{max}
@@ -121,7 +121,7 @@ defs{
 
 			${children}
 
-			@Widget{
+			@widget{
 				layout{
 					dy{0}
 					weight{1}
@@ -131,13 +131,13 @@ defs{
 	}
 
 	@Bottom{ layout
-		@Column{
+		@column{
 			layout{
 				${layout}
 				dy{max}
 			}
 
-			@Widget{
+			@widget{
 				layout{
 					dy{0}
 					weight{1}

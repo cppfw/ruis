@@ -14,57 +14,57 @@ using namespace morda;
 namespace{
 
 const auto windowDesc_c = puu::read(R"qwertyuiop(
-		@Column{
+		@column{
 			layout{
 				dx{max} dy{max}
 			}
 
-			@Row{
+			@row{
 				layout{dx{fill}}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_lt_proxy}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_t_proxy}
 					layout{
 						dx{0} dy{fill} weight{1}
 					}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_rt_proxy}
 				}
 			}
 
-			@Row{
+			@row{
 				layout{
 					weight{1}
 					dx{max}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_l_proxy}
 					layout{dy{fill}}
 				}
 
 				// middle
-				@Column{
+				@column{
 					layout{
 						weight{1}
 						dy{max}
 					}
 
 					// caption
-					@Pile{
+					@pile{
 						layout{
 							dx{max}
 						}
 
 						clip{true}
 
-						@MouseProxy{
+						@mouse_proxy{
 							id{morda_caption_proxy}
 							layout{
 								dx{max} dy{max}
@@ -78,7 +78,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 							}
 						}
 
-						@Row{
+						@row{
 							layout{
 								dx{max} dy{max}
 							}
@@ -100,7 +100,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 						}
 					}
 
-					@Pile{
+					@pile{
 						id{morda_content}
 						clip{true}
 						layout{
@@ -110,21 +110,21 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 					}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_r_proxy}
 					layout{dy{fill}}
 				}
 			}
 
-			@Row{
+			@row{
 				layout{
 					dx{fill}
 				}
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_lb_proxy}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_b_proxy}
 					layout{
 						dy{fill}
@@ -133,7 +133,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 					}
 				}
 
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_rb_proxy}
 				}
 			}

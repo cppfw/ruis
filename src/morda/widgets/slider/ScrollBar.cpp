@@ -23,11 +23,11 @@ const auto DDescription = puu::read(R"qwertyuiop(
 				dx{max} dy{max}
 			}
 		}
-		@Container{
+		@container{
 			layout{
 				dx{max} dy{max}
 			}
-			@Pile{
+			@pile{
 				id{morda_handle}
 				@NinePatch{
 					id{morda_handle_image}
@@ -36,7 +36,7 @@ const auto DDescription = puu::read(R"qwertyuiop(
 						dx{max} dy{max}
 					}
 				}
-				@MouseProxy{
+				@mouse_proxy{
 					id{morda_handle_proxy}
 					layout{
 						dx{fill} dy{fill}

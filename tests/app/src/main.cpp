@@ -290,11 +290,11 @@ public:
 	}
 
 	const char* DPlusMinus = R"qwertyuiop(
-			@Pile{
+			@pile{
 				@Image{
 					id{plusminus}
 				}
-				@MouseProxy{
+				@mouse_proxy{
 					layout{
 						dx{fill} dy{fill}
 					}
@@ -304,7 +304,7 @@ public:
 		)qwertyuiop";
 
 	const char* DLine = R"qwertyuiop(
-			@Pile{
+			@pile{
 				layout{dx{5mm} dy{fill}}
 				@Color{
 					layout{dx{1pt}dy{fill}}
@@ -314,19 +314,19 @@ public:
 		)qwertyuiop";
 
 	const char* DLineEnd = R"qwertyuiop(
-			@Pile{
+			@pile{
 				layout{dx{5mm} dy{max}}
-				@Column{
+				@column{
 					layout{dx{max}dy{max}}
 					@Color{
 						layout{dx{1pt}dy{0}weight{1}}
 						color{${morda_color_highlight}}
 					}
-					@Widget{layout{dx{max}dy{0}weight{1}}}
+					@widget{layout{dx{max}dy{0}weight{1}}}
 				}
-				@Row{
+				@row{
 					layout{dx{max}dy{max}}
-					@Widget{layout{dx{0}dy{max}weight{1}}}
+					@widget{layout{dx{0}dy{max}weight{1}}}
 					@Color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
@@ -336,15 +336,15 @@ public:
 		)qwertyuiop";
 
 	const char* DLineMiddle = R"qwertyuiop(
-			@Pile{
+			@pile{
 				layout{dx{5mm} dy{max}}
 				@Color{
 					layout{dx{1pt}dy{max}}
 					color{${morda_color_highlight}}
 				}
-				@Row{
+				@row{
 					layout{dx{max}dy{max}}
-					@Widget{layout{dx{0}dy{max}weight{1}}}
+					@widget{layout{dx{0}dy{max}weight{1}}}
 					@Color{
 						layout{dx{0}dy{1pt}weight{1}}
 						color{${morda_color_highlight}}
@@ -354,7 +354,7 @@ public:
 		)qwertyuiop";
 
 	const char* DEmpty = R"qwertyuiop(
-			@Widget{layout{dx{5mm}dy{0}}}
+			@widget{layout{dx{5mm}dy{0}}}
 		)qwertyuiop";
 
 private:
@@ -507,7 +507,7 @@ public:
 		{
 			auto v = this->context->inflater.inflate(
 					R"qwertyuiop(
-							@Pile{
+							@pile{
 								@Color{
 									id{selection}
 									layout{dx{max}dy{max}}
@@ -517,7 +517,7 @@ public:
 								@Text{
 									id{value}
 								}
-								@MouseProxy{
+								@mouse_proxy{
 									id{mouse_proxy}
 									layout{dx{max}dy{max}}
 								}

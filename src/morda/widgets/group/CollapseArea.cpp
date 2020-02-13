@@ -8,7 +8,7 @@ using namespace morda;
 
 namespace{
 const auto layout_c = puu::read(R"qwertyuiop(
-	@Pile{
+	@pile{
 		layout{dx{max}}
 		@Color{
 			layout{dx{fill}dy{fill}}
@@ -26,7 +26,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 			right{${marHor}}
 			bottom{${marVer}}
 
-			@Row{
+			@row{
 				layout{dx{max}}
 				@ImageToggle{
 					id{switch}
@@ -35,16 +35,16 @@ const auto layout_c = puu::read(R"qwertyuiop(
 						pressed{morda_img_dropright_arrow}
 					}
 				}
-				@Widget{
+				@widget{
 					layout{dx{${marHor}}}
 				}
-				@Pile{
+				@pile{
 					id{title}
 				}
 			}
 		}
 	}
-	@Pile{
+	@pile{
 		id{content}
 	}
 )qwertyuiop");

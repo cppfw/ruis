@@ -10,13 +10,13 @@ const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
 	layout{
 		dx{fill} dy{fill}
 	}
-	@MouseProxy{
+	@mouse_proxy{
 		id{morda_overlay_mouseproxy}
 		layout{
 			dx{fill} dy{fill}
 		}
 	}
-	@Container{
+	@container{
 		id{morda_overlay_container}
 		layout{
 			dx{fill} dy{fill}

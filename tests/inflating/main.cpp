@@ -11,12 +11,12 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			@Container{
+			@container{
 				defs{
 					dims{dx{max} dy{123}}
 
 					@Cont{
-						@Container{
+						@container{
 							layout{
 								dx{fill} dy{456}
 							}
@@ -47,10 +47,10 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			@Container{
+			@container{
 				defs{
 					@Cont{
-						@Container{
+						@container{
 							x{10} y{12}
 							layout{
 								dx{fill} dy{456}
@@ -87,11 +87,11 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			@Container{
+			@container{
 				defs{
 					@Cont{
 						x y layout
-						@Container{
+						@container{
 							x{${x}} y{${x}}
 							layout{
 								dx{fill} dy{max}
@@ -131,7 +131,7 @@ int main(int argc, char** argv){
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				@Cont{ x y layout dx
-					@Container{
+					@container{
 						x{${x}} y{${y}}
 						dy{${dx}}
 						layout{
@@ -141,7 +141,7 @@ int main(int argc, char** argv){
 					}
 				}
 			}
-			@Container{
+			@container{
 				defs{
 					@Cont{ x y
 						@Cont{
@@ -180,11 +180,11 @@ int main(int argc, char** argv){
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
-				@Container_{@Container}
+				@Container_{@container}
 			}
 			defs{
-				@Container{ x y layout dx
-					@Pile{
+				@container{ x y layout dx
+					@pile{
 						@Container_{
 							x{${x}} y{${y}}
 							dy{${dx}}
@@ -199,10 +199,10 @@ int main(int argc, char** argv){
 				}
 
 				@Tmpl{
-					@Container
+					@container
 				}
 			}
-			@Container{
+			@container{
 				@Tmpl
 			}
 		)qwertyuiop"));
@@ -218,9 +218,9 @@ int main(int argc, char** argv){
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
-			@Container{
+			@container{
 				defs{
-					@Tmpl1{@Pile}
+					@Tmpl1{@pile}
 				}
 				defs{
 					@Tmpl{
@@ -249,7 +249,7 @@ int main(int argc, char** argv){
 			defs{
 				test_var{42}
 			}
-			@Widget{
+			@widget{
 				defs{
 					test_var{666}
 				}

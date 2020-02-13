@@ -13,7 +13,7 @@ using namespace morda;
 
 namespace{
 const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
-		@Row{
+		@row{
 			layout{dx{fill}}
 			@Image{
 				id{morda_lt}
@@ -29,7 +29,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 			}
 		}
 
-		@Row{
+		@row{
 			layout{
 				dx{max}
 				weight{1}
@@ -40,7 +40,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 				layout{dy{fill}}
 			}
 
-			@Pile{
+			@pile{
 				id{morda_content}
 				layout{
 					weight{1}
@@ -58,7 +58,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 			}
 		}
 
-		@Row{
+		@row{
 			layout{dx{fill}}
 			@Image{
 				id{morda_lb}
