@@ -665,14 +665,14 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 		NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:&*attributes.begin()];
 		if(pixelFormat == nil){
-			throw morda::Exc("morda::application::OpenGLContext::OpenGLContext(): failed to create pixel format");
+			throw std::runtime_error("morda::application::OpenGLContext::OpenGLContext(): failed to create pixel format");
 		}
 
 		this->openglContextId = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
 		[pixelFormat release];
 
 		if(!this->openglContextId){
-			throw morda::Exc("morda::application::OpenGLContext::OpenGLContext(): failed to create OpenGL context");
+			throw std::runtime_error("morda::application::OpenGLContext::OpenGLContext(): failed to create OpenGL context");
 		}
 	}
 
@@ -684,7 +684,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	[this->openglContextId makeCurrentContext];
 
 	if(glewInit() != GLEW_OK){
-		throw morda::Exc("GLEW initialization failed");
+		throw std::runtime_error("GLEW initialization failed");
 	}
 
 	scopeExitOpenGLContext.reset();
