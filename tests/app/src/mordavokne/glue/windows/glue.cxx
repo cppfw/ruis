@@ -646,7 +646,7 @@ application::application(std::string&& name, const window_params& wp) :
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
 					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){
-						throw morda::exception("PostMessage(): failed");
+						throw std::runtime_error("PostMessage(): failed");
 					}
 				},
 				getDotsPerInch(getImpl(this->windowPimpl).hdc),
@@ -883,7 +883,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		wc.lpszClassName = this->windowClassName.c_str();// Set the window class Name
 
 		if (!RegisterClass(&wc)){
-			throw morda::exception("Failed to register window class");
+			throw std::runtime_error("Failed to register window class");
 		}
 	}
 
@@ -910,7 +910,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		);
 
 	if (!this->hwnd){
-		throw morda::exception("Failed to create a window");
+		throw std::runtime_error("Failed to create a window");
 	}
 
 	utki::ScopeExit scopeExitHwnd([this](){
@@ -923,7 +923,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 	this->hdc = GetDC(this->hwnd);
 	if (!this->hdc){
-		throw morda::exception("Failed to create a OpenGL device context");
+		throw std::runtime_error("Failed to create a OpenGL device context");
 	}
 
 	utki::ScopeExit scopeExitHdc([this](){
@@ -956,19 +956,19 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 		int pixelFormat = ChoosePixelFormat(this->hdc, &pfd);
 		if (!pixelFormat){
-			throw morda::exception("Could not find suitable pixel format");
+			throw std::runtime_error("Could not find suitable pixel format");
 		}
 
 		//	TRACE_AND_LOG(<< "application::DeviceContextWrapper::DeviceContextWrapper(): pixel format chosen" << std::endl)
 
 		if (!SetPixelFormat(this->hdc, pixelFormat, &pfd)){
-			throw morda::exception("Could not sent pixel format");
+			throw std::runtime_error("Could not sent pixel format");
 		}
 	}
 
 	this->hrc = wglCreateContext(hdc);
 	if (!this->hrc) {
-		throw morda::exception("Failed to create OpenGL rendering context");
+		throw std::runtime_error("Failed to create OpenGL rendering context");
 	}
 
 	utki::ScopeExit scopeExitHrc([this](){
@@ -983,11 +983,11 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	//	TRACE_AND_LOG(<< "application::GLContextWrapper::GLContextWrapper(): GL rendering context created" << std::endl)
 
 	if (!wglMakeCurrent(hdc, this->hrc)) {
-		throw morda::exception("Failed to activate OpenGL rendering context");
+		throw std::runtime_error("Failed to activate OpenGL rendering context");
 	}
 
 	if(glewInit() != GLEW_OK){
-		throw morda::exception("GLEW initialization failed");
+		throw std::runtime_error("GLEW initialization failed");
 	}
 
 	scopeExitHrc.reset();
