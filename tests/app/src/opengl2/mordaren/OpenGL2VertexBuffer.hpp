@@ -15,13 +15,13 @@ public:
 	const GLint numComponents;
 	const GLenum type;
 	
-	OpenGL2VertexBuffer(const utki::Buf<r4::vec4f> vertices);
+	OpenGL2VertexBuffer(const utki::span<r4::vec4f> vertices);
 	
-	OpenGL2VertexBuffer(const utki::Buf<r4::vec3f> vertices);
+	OpenGL2VertexBuffer(const utki::span<r4::vec3f> vertices);
 	
-	OpenGL2VertexBuffer(const utki::Buf<r4::vec2f> vertices);
+	OpenGL2VertexBuffer(const utki::span<r4::vec2f> vertices);
 	
-	OpenGL2VertexBuffer(const utki::Buf<float> vertices);
+	OpenGL2VertexBuffer(const utki::span<float> vertices);
 	
 	OpenGL2VertexBuffer(const OpenGL2VertexBuffer&) = delete;
 	OpenGL2VertexBuffer& operator=(const OpenGL2VertexBuffer&) = delete;

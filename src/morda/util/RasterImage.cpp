@@ -604,7 +604,7 @@ void Image::loadTGA(File& fi){
 	// Read in the length in bytes from the header to the pixel data
 	std::uint8_t length = 0;//The length in bytes to the pixels
 	{
-		utki::Buf<std::uint8_t> bufWrapper(&length, sizeof(length));
+		utki::span<std::uint8_t> bufWrapper(&length, sizeof(length));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 
@@ -615,7 +615,7 @@ void Image::loadTGA(File& fi){
 	// Read in the imageType (RLE, RGB, etc...)
 	std::uint8_t imageType = 0;//The image type (RLE, RGB, Alpha...)
 	{
-		utki::Buf<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
+		utki::span<std::uint8_t> bufWrapper(&imageType, sizeof(imageType));
 		ASSERT_EXEC(fi.Read(bufWrapper) == bufWrapper.SizeInBytes())
 	}
 

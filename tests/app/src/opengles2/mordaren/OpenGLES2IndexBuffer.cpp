@@ -12,7 +12,7 @@
 
 using namespace mordaren;
 
-OpenGLES2IndexBuffer::OpenGLES2IndexBuffer(const utki::Buf<std::uint16_t> indices) :
+OpenGLES2IndexBuffer::OpenGLES2IndexBuffer(const utki::span<std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
 		elementsCount(GLsizei(indices.size()))
 {	

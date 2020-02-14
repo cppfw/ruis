@@ -54,10 +54,10 @@ ResGradient::ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tup
 	auto& r = *this->context->renderer;
 	this->vao = r.factory->createVertexArray(
 			{
-				r.factory->createVertexBuffer(utki::wrapBuf(vertices)),
-				r.factory->createVertexBuffer(utki::wrapBuf(colors))
+				r.factory->createVertexBuffer(utki::make_span(vertices)),
+				r.factory->createVertexBuffer(utki::make_span(colors))
 			},
-			r.factory->createIndexBuffer(utki::wrapBuf(indices)),
+			r.factory->createIndexBuffer(utki::make_span(indices)),
 			VertexArray::Mode_e::TRIANGLE_STRIP
 		);
 }

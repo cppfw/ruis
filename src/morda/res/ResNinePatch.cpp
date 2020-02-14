@@ -37,7 +37,7 @@ public:
 		texCoords[3] = rect.rightBottom().compDiv(this->tex->dims);
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
 		auto& r = *this->context->renderer;
-		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::wrapBuf(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
+		this->vao = r.factory->createVertexArray({r.quad01VBO, r.factory->createVertexBuffer(utki::make_span(texCoords))}, r.quadIndices, VertexArray::Mode_e::TRIANGLE_FAN);
 	}
 	
 	ResSubImage(const ResSubImage& orig) = delete;
