@@ -83,7 +83,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 								dx{max} dy{max}
 							}
 
-							@Margins{
+							@margins{
 								left{3dp}
 								top{2dp}
 								bottom{2dp}

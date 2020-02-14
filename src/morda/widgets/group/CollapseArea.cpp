@@ -14,7 +14,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 			layout{dx{fill}dy{fill}}
 			color{${morda_color_mg}}
 		}
-		@Margins{
+		@margins{
 			layout{dx{max}dy{max}}
 
 			defs{

@@ -561,7 +561,7 @@ public:
 		{
 			auto b = this->context->inflater.inflate_as<morda::PushButton>(
 					R"qwertyuiop(
-							@PushButton{
+							@push_button{
 								@color{
 									color{0xff0000ff}
 									layout{dx{2mm}dy{0.5mm}}

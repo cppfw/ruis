@@ -36,7 +36,7 @@ defs{
 		}
 	}
 
-	@Margins{ left top right bottom weightLeft weightRight weightTop weightBottom
+	@margins{ left top right bottom weightLeft weightRight weightTop weightBottom
 		@row{
 			@widget{
 				layout{
@@ -76,7 +76,7 @@ defs{
 		}
 	}
 
-	@Left{ layout
+	@left{ layout
 		@row{
 			layout{
 				${layout}
@@ -94,7 +94,7 @@ defs{
 		}
 	}
 
-	@Right{ layout
+	@right{ layout
 		@row{
 			layout{
 				${layout}
@@ -112,7 +112,7 @@ defs{
 		}
 	}
 
-	@Top{ layout
+	@top{ layout
 		@column{
 			layout{
 				${layout}
@@ -130,7 +130,7 @@ defs{
 		}
 	}
 
-	@Bottom{ layout
+	@bottom{ layout
 		@column{
 			layout{
 				${layout}
@@ -154,7 +154,7 @@ defs{
 			look{
 				titleColorTopmost{ ${morda_color_bg_window_title} }
 				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
-				background{@WindowBackground}
+				background{@window_background}
 				left{${morda_window_border_size}}
 				top{${morda_window_border_size}}
 				right{${morda_window_border_size}}
@@ -166,13 +166,13 @@ defs{
 		}
 	}
 
-	@PushButton{
+	@push_button{
 		@nine_patch_push_button{
 			${children}
 		}
 	}
 
-	@WindowBackground{
+	@window_background{
 		@nine_patch{
 			layout{dx{fill} dy{fill}}
 
@@ -185,7 +185,7 @@ defs{
 		}
 	}
 
-	@WindowEmptyBackground{
+	@window_empty_background{
 		@nine_patch{
 			layout{dx{fill} dy{fill}}
 
@@ -201,8 +201,8 @@ defs{
 }
 
 defs{
-	@Margin{ value
-		@Margins{
+	@margin{ value
+		@margins{
 			left{${value}}
 			top{${value}}
 			right{${value}}
