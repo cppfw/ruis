@@ -86,7 +86,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	auto& r = *this->context->renderer;
 	g.vao = r.factory->createVertexArray(
 			{
-				r.factory->createVertexBuffer(utki::wrapBuf(verts)),
+				r.factory->createVertexBuffer(utki::make_span(verts)),
 				this->context->renderer->quad01VBO
 			},
 			this->context->renderer->quadIndices,

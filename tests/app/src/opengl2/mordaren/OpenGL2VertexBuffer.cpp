@@ -17,7 +17,7 @@ void OpenGL2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 }
 
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec4f> vertices) :
+OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::span<r4::vec4f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
@@ -25,7 +25,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec4f> vertices) :
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec3f> vertices) :
+OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::span<r4::vec3f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
@@ -33,7 +33,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec3f> vertices) :
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec2f> vertices) :
+OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::span<r4::vec2f> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)
@@ -41,7 +41,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<r4::vec2f> vertices) :
 	this->init(vertices.sizeInBytes(), &*vertices.begin());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::Buf<float> vertices) :
+OpenGL2VertexBuffer::OpenGL2VertexBuffer(const utki::span<float> vertices) :
 		morda::VertexBuffer(vertices.size()),
 		numComponents(1),
 		type(GL_FLOAT)

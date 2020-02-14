@@ -870,13 +870,13 @@ public:
 
 		std::array<char, 32> staticBuf;
 		std::vector<char> arr;
-		auto buf = utki::wrapBuf(staticBuf);
+		auto buf = utki::make_span(staticBuf);
 
 		int size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		if(status == XBufferOverflow){
 			//allocate enough memory
 			arr.resize(size + 1);
-			buf = utki::wrapBuf(arr);
+			buf = utki::make_span(arr);
 			size = Xutf8LookupString(this->xic, &this->event.xkey, buf.begin(), buf.size() - 1, NULL, &status);
 		}
 		ASSERT(size >= 0)

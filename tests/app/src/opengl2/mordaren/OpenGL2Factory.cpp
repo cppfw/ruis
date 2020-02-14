@@ -29,7 +29,7 @@ OpenGL2Factory::~OpenGL2Factory()noexcept{
 
 
 
-std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::Buf<std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::span<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
 	ASSERT(data.size() % dim.x == 0)
@@ -89,19 +89,19 @@ std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<r4::vec4f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::span<r4::vec4f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<r4::vec3f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::span<r4::vec3f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<r4::vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::span<r4::vec2f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::Buf<float> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(const utki::span<float> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
@@ -109,7 +109,7 @@ std::shared_ptr<morda::VertexArray> OpenGL2Factory::createVertexArray(std::vecto
 	return std::make_shared<OpenGL2VertexArray>(std::move(buffers), std::move(indices), mode);
 }
 
-std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(const utki::Buf<std::uint16_t> indices) {
+std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(const utki::span<std::uint16_t> indices) {
 	return std::make_shared<OpenGL2IndexBuffer>(indices);
 }
 

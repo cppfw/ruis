@@ -174,7 +174,7 @@ public:
 		auto img = std::make_shared<SvgTexture>(
 				this->context->renderer,
 				this->sharedFromThis(this),
-				this->context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::wrapBuf(svg.pixels))
+				this->context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;

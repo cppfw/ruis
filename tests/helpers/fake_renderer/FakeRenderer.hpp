@@ -8,7 +8,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(const utki::Buf<std::uint16_t> indices) override{
+	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(const utki::span<std::uint16_t> indices) override{
 		return nullptr;
 	}
 
@@ -16,7 +16,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::Buf<std::uint8_t>& data) override{
+	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::span<std::uint8_t>& data) override{
 		return nullptr;
 	}
 
@@ -29,18 +29,18 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<float> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<float> vertices) override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec2f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<r4::vec2f> vertices) override{
 		return nullptr;
 	}
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec3f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<r4::vec3f> vertices) override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::Buf<r4::vec4f> vertices) override{
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<r4::vec4f> vertices) override{
 		return nullptr;
 	}
 
