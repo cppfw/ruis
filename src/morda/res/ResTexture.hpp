@@ -32,6 +32,7 @@ class ResTexture : public morda::Resource{
 public:
 	/**
 	 * @brief Create texture.
+	 * @param c - context.
 	 * @param texture - texture object to initialize this resource with.
 	 */
 	ResTexture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :

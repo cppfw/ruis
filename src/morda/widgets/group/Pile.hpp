@@ -19,6 +19,7 @@ public:
 
 	/**
 	 * @brief Constructor.
+	 * @param c - context.
 	 * @param desc - description of the widget.
 	 */
 	Pile(std::shared_ptr<morda::context> c, const puu::forest& desc);

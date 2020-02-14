@@ -81,6 +81,7 @@ bool is_leaf_property(const puu::leaf& l);
 
 /**
  * @brief Load texture from file.
+ * @param r - renderer.
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */

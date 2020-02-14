@@ -35,6 +35,7 @@ public:
 		/**
 		 * @brief Constructor.
 		 * @param desc - description of the layout parameters.
+		 * @param units - screen units information.
 		 */
 		layout_params(const puu::forest& desc, const morda::units& units);
 
