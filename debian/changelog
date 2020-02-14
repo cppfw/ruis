@@ -1,3 +1,9 @@
+libmorda (0.5.104) unstable; urgency=medium
+
+  * some renamings
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 14 Feb 2020 23:37:42 +0200
+
 libmorda (0.5.103) unstable; urgency=medium
 
   * @ and context
