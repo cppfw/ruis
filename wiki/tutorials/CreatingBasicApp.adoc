@@ -71,7 +71,7 @@ Let's describe our GUI using the GUI script. Create a file named _main.gui._ in 
 ....
 
 
-Now we need to "inflate" the GUI from sript in the code and set it to application:
+Now we need to "inflate" the GUI from script in the code and set it to application:
 [source,c++]
 ....
 class Application : public mordavokne::App{
