@@ -21,17 +21,17 @@ Then we define our Application class as forllows
 class Application : public mordavokne::App{
 public:
 	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
 	{
-		//Here we will do all the initializations of our app, like loading the UI etc.
+		// Here we will do all the initializations of our app, like loading the UI etc.
 	}
 };
 ....
 
-And then we define the _morda::createApp()_ function
+And then we define the `mordavokne::create_application()` function
 [source,c++]
 ....
-std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv){
+std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
 	return utki::makeUnique<Application>();
 }
 ....
@@ -44,26 +44,26 @@ Now, lets add some UI. We want to use standard *morda* widgets, so, let's initia
 class Application : public mordavokne::App{
 public:
 	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
 	{
-		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
+		this->gui.initStandardWidgets(*this->get_res_file());
 	}
 };
 ....
 
 Let's describe our GUI using the GUI script. Create a file named _main.gui._ in the _res/_ directory of your project with following contents
 ....
-Pile{// frame layout places widgets in the center one on top of another
-	Column{ //vertical area layout places widgets one below each other
-		PushButton{
-			id{hw_button} //we can find this button by ID from code
-			TextLabel{
+@pile{// frame layout places widgets in the center one on top of another
+	@column{ // vertical area layout places widgets one below each other
+		@push_button{
+			id{hw_button} // we can find this button by ID from code
+			@text{
 				text{"Hello world!!!"}
 			}
 		}
 
-		TextLabel{
-			id{info_text} //we can find this label by ID from code
+		@text{
+			id{info_text} // we can find this label by ID from code
 			text{Information}
 		}
 	}
@@ -79,15 +79,15 @@ public:
 	Application() :
 			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
 	{
-		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
+		this->gui.initStandardWidgets(*this->get_res_file());
 
-		//Inflate widgets hierarchy from GUI description script
-		auto c = morda::Morda::inst().inflater.inflate(
+		// Inflate widgets hierarchy from GUI description script
+		auto c = this->gui.context->inflater.inflate(
 				*this->createResourceFileInterface("res/main.gui.")
 			);
 
-		//set the widgets hierarchy to the application
-		morda::Morda::inst().setRootWidget(c);
+		// set the widgets hierarchy to the application
+		this->gui.setRootWidget(c);
 	}
 };
 ....
@@ -99,35 +99,35 @@ Let's add some action on the button press
 #include <mordavokne/App.hpp>
 #include <mordavokne/AppFactory.hpp>
 
-#include <morda/widgets/label/TextLabel.hpp>
+#include <morda/widgets/label/Text.hpp>
 #include <morda/widgets/button/Button.hpp>
 
 
 class Application : public mordavokne::App{
 public:
 	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
+			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
 	{
-		morda::Morda::inst().initStandardWidgets(*this->createResourceFileInterface());
+		this->gui.initStandardWidgets(*this->get_res_file());
 
-		//Inflate widgets hierarchy from GUI description script
-		auto c = morda::Morda::inst().inflater.inflate(
-				*this->createResourceFileInterface("res/main.gui.")
+		// Inflate widgets hierarchy from GUI description script
+		auto c = this->gui.context->inflater.inflate(
+				*this->get_res_file("res/main.gui")
 			);
 
-		//set the widgets hierarchy to the application
-		morda::Morda::inst().setRootWidget(c);
+		// set the widgets hierarchy to the application
+		this->gui.setRootWidget(c);
 
-		auto textLabel = c->try_get_widget_as<morda::TextLabel>("info_text");
+		auto textLabel = c->try_get_widget_as<morda::Text>("info_text");
 		ASSERT(textLabel)
 
 		auto button = c->try_get_widget_as<morda::PushButton>("hw_button");
 
-		auto textLabelWeak = utki::makeWeak(textLabel);//make a weak pointer to the TextLabel widget.
+		auto textLabelWeak = utki::make_weak(textLabel); // make a weak pointer to the TextLabel widget.
 
 		bool even = true;
 
-		//connect some action on button click
+		// connect some action on button click
 		button->clicked = [textLabelWeak, even](morda::PushButton&) mutable {
 			if(auto tl = textLabelWeak.lock()){
 				even = !even;
@@ -143,7 +143,7 @@ public:
 
 
 
-std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv){
+std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
 	return utki::makeUnique<Application>();
 }
 ....
