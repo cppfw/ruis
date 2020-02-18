@@ -115,13 +115,13 @@ private:
 	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
 public:
-	const morda::Vec2r& window_dimensions()const noexcept{
+	const morda::Vec2r& window_dims()const noexcept{
 		return this->curWinRect.d;
 	}
 
 	// TODO: deprecated, remove.
 	const morda::Vec2r& winDim()const noexcept{
-		return this->window_dimensions();
+		return this->window_dims();
 	}
 
 private:
