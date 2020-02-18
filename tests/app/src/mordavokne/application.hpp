@@ -129,20 +129,15 @@ private:
 	friend void updateWindowRect(application& app, const morda::Rectr& rect);
 
 	//pos is in usual window coordinates, y goes down.
-	morda::Vec2r nativeWindowToRootCoordinates(const r4::vec2f& pos)const noexcept{
-		return pos;
-	}
-
-	//pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const r4::vec2f& pos, unsigned id){
-		this->gui.send_mouse_move(this->nativeWindowToRootCoordinates(pos), id);
+		this->gui.send_mouse_move(pos, id);
 	}
 
 	friend void handleMouseMove(application& app, const r4::vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id){
-		this->gui.send_mouse_button(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
+		this->gui.send_mouse_button(isDown, pos, button, id);
 	}
 
 	friend void handleMouseButton(application& app, bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id);
