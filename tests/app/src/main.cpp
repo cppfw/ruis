@@ -594,26 +594,26 @@ public:
 
 
 
-class Application : public mordavokne::App{
-	static mordavokne::App::WindowParams GetWindowParams()noexcept{
-		mordavokne::App::WindowParams wp(r4::vec2ui(1024, 800));
+class Application : public mordavokne::application{
+	static mordavokne::window_params GetWindowParams()noexcept{
+		mordavokne::window_params wp(r4::vec2ui(1024, 800));
 
 		return wp;
 	}
 public:
 	Application() :
-			mordavokne::App("morda-tests", GetWindowParams())
+			mordavokne::application("morda-tests", GetWindowParams())
 	{
-		this->gui.initStandardWidgets(*this->getResFile("../../res/morda_res/"));
+		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		this->gui.context->loader.mountResPack(*this->getResFile("res/"));
+		this->gui.context->loader.mountResPack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
 		this->gui.context->inflater.register_widget<SimpleWidget>("U_SimpleWidget");
 		this->gui.context->inflater.register_widget<CubeWidget>("CubeWidget");
 
-		std::shared_ptr<morda::Widget> c = this->gui.context->inflater.inflate(
-				*this->getResFile("res/test.gui")
+		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
+				*this->get_res_file("res/test.gui")
 			);
 		this->gui.set_root(c);
 
@@ -895,30 +895,30 @@ public:
 		}
 
 
-		//fullscreen
+		// fullscreen
 		{
 			auto b = c->try_get_widget_as<morda::PushButton>("fullscreen_button");
 			b->clicked = [this](morda::PushButton&) {
-				this->setFullscreen(!this->isFullscreen());
+				this->set_fullscreen(!this->is_fullscreen());
 			};
 		}
 		{
 			auto b = c->try_get_widget_as<morda::PushButton>("image_push_button");
 			ASSERT(b)
 			b->clicked = [this](morda::PushButton&) {
-				this->setFullscreen(true);
+				this->set_fullscreen(true);
 			};
 		}
 
 
-		//mouse cursor
+		// mouse cursor
 		{
 			auto b = c->try_get_widget_as<morda::PushButton>("showhide_mousecursor_button");
 			bool visible = true;
-			this->setMouseCursorVisible(visible);
-			b->clicked = [visible](morda::PushButton&) mutable{
+			this->set_mouse_cursor_visible(visible);
+			b->clicked = [visible, this](morda::PushButton&) mutable{
 				visible = !visible;
-				mordavokne::App::inst().setMouseCursorVisible(visible);
+				this->set_mouse_cursor_visible(visible);
 			};
 		}
 
@@ -942,6 +942,6 @@ public:
 
 
 
-std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
+std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
 	return utki::makeUnique<Application>();
 }

@@ -68,9 +68,6 @@ class application :
 public:
 	const std::string name;
 
-	// TODO: deprecated, remove.
-	typedef window_params WindowParams;
-
 private:
 	std::unique_ptr<utki::Unique> windowPimpl;
 
@@ -92,10 +89,6 @@ public:
 	 * @return Instance of the file interface into the resources storage.
 	 */
 	std::unique_ptr<papki::File> get_res_file(const std::string& path = std::string())const;
-
-	std::unique_ptr<papki::File> getResFile(const std::string& path = std::string())const{
-		return this->get_res_file(path);
-	}
 
 public:
 	/**
@@ -216,34 +209,17 @@ public:
 		return this->isFullscreen_v;
 	}
 
-	// TODO: deprecated, remove.
-	bool isFullscreen()const noexcept {
-		return this->is_fullscreen();
-	}
-
 	/**
 	 * @brief Set/unset fullscreen mode.
 	 * @param enable - whether to enable or to disable fullscreen mode.
 	 */
 	void set_fullscreen(bool enable);
 
-	// TODO: deprecated, remove.
-	void setFullscreen(bool enable){
-		this->set_fullscreen(enable);
-	}
-
-
 	/**
 	 * @brief Show/hide mouse cursor.
 	 * @param visible - whether to show (true) or hide (false) mouse cursor.
 	 */
 	void set_mouse_cursor_visible(bool visible);
-
-	// TODO: deprecated, remove.
-	void setMouseCursorVisible(bool visible){
-		this->set_mouse_cursor_visible(visible);
-	}
-
 
 	/**
 	 * @brief Get dots per density pixel (dp) for given display parameters.
@@ -254,20 +230,11 @@ public:
 	 * @return Size of one display density pixel in pixels.
 	 */
 	static morda::real get_pixels_per_dp(r4::vec2ui screen_size_pixels, r4::vec2ui screen_size_mm);
-
-	// TODO: deprecated, remove.
-	static morda::real findDotsPerDp(r4::vec2ui resolution, r4::vec2ui screenSizeMm){
-		return get_pixels_per_dp(resolution, screenSizeMm);
-	}
 };
 
 inline application& inst(){
-
 	return application::inst();
 }
-
-// TODO: deprecaed, remove.
-typedef application App;
 
 /**
  * @brief Create application instance.
@@ -281,14 +248,5 @@ __declspec(dllexport)
 #endif
 
 std::unique_ptr<application> create_application(int argc, const char** argv);
-
-
-//TODO: deprecated, remove createApp() function.
-#if M_OS == M_OS_WINDOWS
-__declspec(dllexport)
-#endif
-std::unique_ptr<application> createApp(int argc, const char** argv);
-
-
 
 }
