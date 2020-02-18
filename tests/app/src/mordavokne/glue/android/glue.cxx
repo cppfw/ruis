@@ -911,7 +911,7 @@ morda::key getKeyFromKeyEvent(AInputEvent& event)noexcept{
 
 
 
-struct UnicodeProvider : public morda::gui::UnicodeProvider{
+struct UnicodeProvider : public morda::gui::unicode_provider{
 	std::u32string chars;
 
 	std::u32string get()const override{
@@ -919,17 +919,10 @@ struct UnicodeProvider : public morda::gui::UnicodeProvider{
 	}
 };
 
-
-
-}//~namespace
-
-
-
+}
 
 
 namespace{
-
-
 
 JNIEXPORT void JNICALL Java_io_github_igagis_mordavokne_MordaVOkneActivity_handleCharacterStringInput(
 		JNIEnv *env,
