@@ -41,7 +41,7 @@ public:
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void setRootWidget(const std::shared_ptr<morda::widget> w);
+	void set_root(std::shared_ptr<morda::widget> w);
 
 private:
 	Vec2r viewportSize;
@@ -51,7 +51,7 @@ public:
 	 * Set the dimensions of the rectangular area where GUI will be rendered.
 	 * @param size - dimensions of the viewport, in pixels.
 	 */
-	void setViewportSize(const morda::Vec2r& size);
+	void set_viewport(const morda::Vec2r& size);
 
 	/**
 	 * @brief Render GUI.
@@ -79,53 +79,43 @@ public:
 		return this->context->updater->update();
 	}
 
-public:
-	/**
-	 * @brief Execute code on UI thread.
-	 * This function should be thread-safe.
-	 * This function should post a message/event to programs main loop event queue.
-	 * When the event is handled it should execute the specified function.
-	 * @param f - function to execute on UI thread.
-	 */
-	void postToUiThread(std::function<void()>&& f);
-
 	/**
 	 * @brief Feed in the mouse move event to GUI.
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void onMouseMove(const Vec2r& pos, unsigned id);
+	void send_mouse_move(const Vec2r& pos, unsigned id);
 
 	/**
 	 * @brief Feed in the mouse button event to GUI.
-	 * @param isDown - is mouse button pressed (true) or released (false).
+	 * @param is_down - is mouse button pressed (true) or released (false).
 	 * @param pos - position of the mouse pointer at the moment the button was pressed or released.
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned id);
+	void send_mouse_button(bool is_down, const Vec2r& pos, mouse_button button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.
 	 * Call this function when the mouse pointer enters or leaves the GUI viewport.
-	 * @param isHovered - whether the mouse pointer entered (true) the GUI area or left (false).
+	 * @param is_hovered - whether the mouse pointer entered (true) the GUI area or left (false).
 	 * @param id - mouse pointer ID.
 	 */
-	void onMouseHover(bool isHovered, unsigned id);
+	void send_mouse_hover(bool is_hovered, unsigned id);
 
 	/**
 	 * @brief Feed in the key event to GUI.
 	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
-	 * @param isDown - is the key pressed (true) or released (false).
-	 * @param keyCode - code of the key.
+	 * @param is_down - is the key pressed (true) or released (false).
+	 * @param key_code - code of the key.
 	 */
-	void onKeyEvent(bool isDown, key keyCode);
+	void send_key(bool is_down, key key_code);
 
 	/**
 	 * @brief Unicode input provider.
 	 * Override this class to pass in the character input information when user makes character input.
 	 */
-	struct UnicodeProvider{
+	struct unicode_provider{
 		/**
 		 * @brief Get unicode string.
 		 * Override this function to return entered text.
@@ -133,7 +123,7 @@ public:
 		 */
 		virtual std::u32string get()const = 0;
 
-		virtual ~UnicodeProvider()noexcept{}
+		virtual ~unicode_provider()noexcept{}
 	};
 
 	/**
@@ -143,9 +133,9 @@ public:
 	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial key press.
 	 * UnicodeProvider may provide empty string.
 	 * @param unicode - unicode string provider.
-	 * @param key - key code associated with character input, can be unknown.
+	 * @param key_code - key code associated with character input, can be unknown.
 	 */
-	void onCharacterInput(const UnicodeProvider& unicode, morda::key key);
+	void send_character_input(const unicode_provider& unicode, morda::key key_code);
 };
 
 }

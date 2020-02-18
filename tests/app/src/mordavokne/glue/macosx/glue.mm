@@ -128,7 +128,7 @@ void macosx_HandleKeyEvent(bool isDown, morda::key keyCode){
 	handleKeyEvent(mordavokne::application::inst(), isDown, keyCode);
 }
 
-class MacosxUnicodeProvider : public morda::gui::UnicodeProvider{
+class MacosxUnicodeProvider : public morda::gui::unicode_provider{
 	const NSString* nsStr;
 public:
 	MacosxUnicodeProvider(const NSString* nsStr = nullptr) :

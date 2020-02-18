@@ -87,7 +87,7 @@ public:
 			);
 
 		// set the widgets hierarchy to the application
-		this->gui.setRootWidget(c);
+		this->gui.set_root(c);
 	}
 };
 ....
@@ -116,7 +116,7 @@ public:
 			);
 
 		// set the widgets hierarchy to the application
-		this->gui.setRootWidget(c);
+		this->gui.set_root(c);
 
 		auto textLabel = c->try_get_widget_as<morda::Text>("info_text");
 		ASSERT(textLabel)

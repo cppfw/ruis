@@ -131,7 +131,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	}
 }
 
-void gui::setViewportSize(const morda::Vec2r& size){
+void gui::set_viewport(const morda::Vec2r& size){
 	this->viewportSize = size;
 
 	if(!this->rootWidget){
@@ -141,7 +141,7 @@ void gui::setViewportSize(const morda::Vec2r& size){
 	this->rootWidget->resize(this->viewportSize);
 }
 
-void gui::setRootWidget(const std::shared_ptr<morda::Widget> w){
+void gui::set_root(std::shared_ptr<morda::Widget> w){
 	this->rootWidget = std::move(w);
 
 	this->rootWidget->move_to(morda::Vec2r(0));
@@ -173,7 +173,7 @@ void gui::render(const Matr4r& matrix)const{
 	this->rootWidget->renderInternal(m);
 }
 
-void gui::onMouseMove(const Vec2r& pos, unsigned id){
+void gui::send_mouse_move(const Vec2r& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -184,18 +184,18 @@ void gui::onMouseMove(const Vec2r& pos, unsigned id){
 	}
 }
 
-void gui::onMouseButton(bool isDown, const Vec2r& pos, MouseButton_e button, unsigned pointerID){
+void gui::send_mouse_button(bool is_down, const Vec2r& pos, mouse_button button, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
 
 	if(this->rootWidget->is_interactive()){
-		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), pointerID);
-		this->rootWidget->on_mouse_button(isDown, pos, button, pointerID);
+		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), id);
+		this->rootWidget->on_mouse_button(is_down, pos, button, id);
 	}
 }
 
-void gui::onMouseHover(bool isHovered, unsigned pointerID){
+void gui::send_mouse_hover(bool isHovered, unsigned pointerID){
 	if(!this->rootWidget){
 		return;
 	}
@@ -203,29 +203,25 @@ void gui::onMouseHover(bool isHovered, unsigned pointerID){
 	this->rootWidget->set_hovered(isHovered, pointerID);
 }
 
-void gui::onKeyEvent(bool isDown, key keyCode){
+void gui::send_key(bool is_down, key key_code){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
 	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->onKeyInternal(isDown, keyCode);
+		w->onKeyInternal(is_down, key_code);
 	}else{
 //		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
 		if(this->rootWidget){
-			this->rootWidget->onKeyInternal(isDown, keyCode);
+			this->rootWidget->onKeyInternal(is_down, key_code);
 		}
 	}
 }
 
-void gui::onCharacterInput(const UnicodeProvider& unicode, key key){
+void gui::send_character_input(const unicode_provider& unicode, key key_code){
 	if(auto w = this->context->focused_widget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
 		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-			c->onCharacterInput(unicode.get(), key);
+			c->onCharacterInput(unicode.get(), key_code);
 		}
 	}
-}
-
-void gui::postToUiThread(std::function<void()>&& f){
-	this->context->run_from_ui_thread(std::move(f));
 }

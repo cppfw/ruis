@@ -140,20 +140,20 @@ private:
 
 	//pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const r4::vec2f& pos, unsigned id){
-		this->gui.onMouseMove(this->nativeWindowToRootCoordinates(pos), id);
+		this->gui.send_mouse_move(this->nativeWindowToRootCoordinates(pos), id);
 	}
 
 	friend void handleMouseMove(application& app, const r4::vec2f& pos, unsigned id);
 
 	//pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::MouseButton_e button, unsigned id){
-		this->gui.onMouseButton(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
+	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id){
+		this->gui.send_mouse_button(isDown, this->nativeWindowToRootCoordinates(pos), button, id);
 	}
 
-	friend void handleMouseButton(application& app, bool isDown, const r4::vec2f& pos, morda::MouseButton_e button, unsigned id);
+	friend void handleMouseButton(application& app, bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id);
 
-	void handleMouseHover(bool isHovered, unsigned pointerID){
-		this->gui.onMouseHover(isHovered, pointerID);
+	void handleMouseHover(bool is_hovered, unsigned id){
+		this->gui.send_mouse_hover(is_hovered, id);
 	}
 
 	friend void handleMouseHover(application& app, bool isHovered, unsigned pointerID);
@@ -186,16 +186,16 @@ public:
 
 private:
 
-	//The idea with UnicodeResolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
-	//as much as possible.
-	void handleCharacterInput(const morda::gui::UnicodeProvider& unicodeResolver, morda::key key){
-		this->gui.onCharacterInput(unicodeResolver, key);
+	// The idea with unicode_resolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
+	// as much as possible.
+	void handleCharacterInput(const morda::gui::unicode_provider& unicode_resolver, morda::key key_code){
+		this->gui.send_character_input(unicode_resolver, key_code);
 	}
 
-	friend void handleCharacterInput(application& app, const morda::gui::UnicodeProvider& unicodeResolver, morda::key key);
+	friend void handleCharacterInput(application& app, const morda::gui::unicode_provider& unicode_resolver, morda::key key_code);
 
-	void handleKeyEvent(bool isDown, morda::key keyCode){
-		this->gui.onKeyEvent(isDown, keyCode);
+	void handleKeyEvent(bool is_down, morda::key key_code){
+		this->gui.send_key(is_down, key_code);
 	}
 
 	friend void handleKeyEvent(application& app, bool isDown, morda::key keyCode);

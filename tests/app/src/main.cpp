@@ -615,7 +615,7 @@ public:
 		std::shared_ptr<morda::Widget> c = this->gui.context->inflater.inflate(
 				*this->getResFile("res/test.gui")
 			);
-		this->gui.setRootWidget(c);
+		this->gui.set_root(c);
 
 		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){

@@ -24,8 +24,8 @@ void handleMouseHover(application& app, bool isHovered, unsigned pointerID){
 	app.handleMouseHover(isHovered, pointerID);
 }
 
-void handleCharacterInput(application& app, const morda::gui::UnicodeProvider& unicodeResolver, morda::key key){
-	app.handleCharacterInput(unicodeResolver, key);
+void handleCharacterInput(application& app, const morda::gui::unicode_provider& unicode_resolver, morda::key key_code){
+	app.handleCharacterInput(unicode_resolver, key_code);
 }
 
 void handleKeyEvent(application& app, bool isDown, morda::key keyCode){

@@ -489,7 +489,7 @@ std::unique_ptr<AndroidConfiguration> curConfig;
 
 
 
-class KeyEventToUnicodeResolver : public morda::gui::UnicodeProvider{
+class KeyEventToUnicodeResolver : public morda::gui::unicode_provider{
 public:
 	int32_t kc;//key code
 	int32_t ms;//meta state

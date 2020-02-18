@@ -42,7 +42,7 @@ void application::updateWindowRect(const morda::Rectr& rect){
 			int(this->curWinRect.d.y)
 		));
 
-	this->gui.setViewportSize(this->curWinRect.d);
+	this->gui.set_viewport(this->curWinRect.d);
 
 }
 
