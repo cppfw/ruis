@@ -119,11 +119,6 @@ public:
 		return this->curWinRect.d;
 	}
 
-	// TODO: deprecated, remove.
-	const morda::Vec2r& winDim()const noexcept{
-		return this->window_dims();
-	}
-
 private:
 	void render();
 
