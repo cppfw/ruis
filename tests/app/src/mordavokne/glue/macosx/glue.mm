@@ -95,7 +95,7 @@ void mouseButton(NSEvent* e, bool isDown, morda::MouseButton_e button){
 	handleMouseButton(
 			mordavokne::application::inst(),
 			isDown,
-			morda::Vec2r(pos.x, mordavokne::application::inst().window_dimensions().y - pos.y),
+			morda::Vec2r(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
 			button,
 			0
 		);
@@ -105,7 +105,7 @@ void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
 	handleMouseMove(
 			mordavokne::application::inst(),
-			morda::Vec2r(pos.x, mordavokne::application::inst().window_dimensions().y - pos.y),
+			morda::Vec2r(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
 			id
 		);
 }

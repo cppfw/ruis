@@ -1115,7 +1115,7 @@ void handleInputEvents(){
 						handleMouseButton(
 								app,
 								true,
-								AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
+								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
 								morda::MouseButton_e::LEFT,
 								pointerId
 						);
@@ -1141,7 +1141,7 @@ void handleInputEvents(){
 						handleMouseButton(
 								app,
 								false,
-								AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
+								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
 								morda::MouseButton_e::LEFT,
 								pointerId
 						);
@@ -1171,7 +1171,7 @@ void handleInputEvents(){
 
 							handleMouseMove(
 									app,
-									AndroidWinCoordsToMordaWinRectCoords(app.window_dimensions(), p),
+									AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
 									pointerId
 							);
 						}
@@ -1433,7 +1433,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
 
-	//save window dimensions
+	// save window dimensions
 	curWinDim.x = float(ANativeWindow_getWidth(window));
 	curWinDim.y = float(ANativeWindow_getHeight(window));
 
