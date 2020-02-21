@@ -36,13 +36,13 @@ class updater : public std::enable_shared_from_this<updater>{
 	void addPending();
 
 	void updateUpdateable(const std::shared_ptr<updateable>& u);
+
+	void removeFromToAdd(updateable* u);
 public:
 	updater() :
 			activeQueue(&q1),
 			inactiveQueue(&q2)
 	{}
-
-	void removeFromToAdd(updateable* u);
 
 	// returns dt to wait before next update
 	std::uint32_t update();
