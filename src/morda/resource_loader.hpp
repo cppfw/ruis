@@ -118,7 +118,7 @@ public:
 	template <class T> std::shared_ptr<T> load(const char* name);
 
 	template <class T> std::shared_ptr<T> load(const std::string& name){
-		return this->load<T>(resName.c_str());
+		return this->load<T>(name.c_str());
 	}
 
 private:
