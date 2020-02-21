@@ -112,12 +112,12 @@ public:
 	 * auto image = this->context->loader().load<morda::ResImage>("img_my_image_name");
 	 * @endcode
 	 *
-	 * @param resName - name of the resource as it appears in resource description.
+	 * @param name - name of the resource as it appears in resource description.
 	 * @return Loaded resource.
 	 */
-	template <class T> std::shared_ptr<T> load(const char* resName);
+	template <class T> std::shared_ptr<T> load(const char* name);
 
-	template <class T> std::shared_ptr<T> load(const std::string& resName){
+	template <class T> std::shared_ptr<T> load(const std::string& name){
 		return this->load<T>(resName.c_str());
 	}
 
