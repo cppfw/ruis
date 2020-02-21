@@ -9,9 +9,9 @@
 namespace morda{
 
 /**
- * @brief Resource holding a puu forest.
+ * @brief resource holding a puu forest.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * @param file - file to read the puu from.
  * 
@@ -22,7 +22,7 @@ namespace morda{
  * }
  * @endcode
  */
-class res_puu : public Resource{
+class res_puu : public resource{
 	friend class resource_loader;
 	
 	puu::forest s;

@@ -8,7 +8,7 @@
 using namespace morda;
 
 ResCursor::ResCursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot) :
-		Resource(std::move(c)),
+		resource(std::move(c)),
 		image_v(std::dynamic_pointer_cast<ResImage>(image.shared_from_this())),
 		hotspot_v(hotspot)
 {}

@@ -14,7 +14,7 @@ using namespace morda;
 
 
 ResGradient::ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
-		Resource(std::move(c))
+		resource(std::move(c))
 {
 	std::vector<r4::vec2f> vertices;
 //	std::vector<std::uint32_t> colors;

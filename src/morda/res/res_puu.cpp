@@ -6,7 +6,7 @@
 using namespace morda;
 
 res_puu::res_puu(std::shared_ptr<morda::context> c, puu::forest&& forest) :
-		Resource(std::move(c)),
+		resource(std::move(c)),
 		s(std::move(forest))
 {}
 

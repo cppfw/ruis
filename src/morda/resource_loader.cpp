@@ -18,7 +18,7 @@ const char* includeSubdirs_c = "includeSubdirs";
 
 
 
-void resource_loader::mountResPack(const papki::file& fi){
+void resource_loader::mount_res_pack(const papki::file& fi){
 	ASSERT(!fi.is_open())
 	
 	std::string dir = fi.dir();
@@ -34,14 +34,14 @@ void resource_loader::mountResPack(const papki::file& fi){
 	for(auto& p : script){
 		if(p.value == include_c){
 			fi.set_path(dir + get_property_value(p).to_string());
-			this->mountResPack(fi);
+			this->mount_res_pack(fi);
 			// TODO: remove "include" tree from the forest?
 		}else if(p.value == includeSubdirs_c){
 			fi.set_path(fi.dir());
 			for(auto& f : fi.list_dir()){
 				if(papki::is_dir(f)){
 					fi.set_path(dir + f);
-					this->mountResPack(fi);
+					this->mount_res_pack(fi);
 				}
 			}
 			// TODO: remove "includeSubdirs" tree from the forest?
@@ -74,14 +74,14 @@ resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std
 
 
 
-void resource_loader::addResource(const std::shared_ptr<Resource>& res, const std::string& name){
+void resource_loader::addResource(const std::shared_ptr<resource>& res, const std::string& name){
 	ASSERT(res)
 
 	ASSERT(this->resMap.find(name) == this->resMap.end())
 	
 	//add the resource to the resources map of ResMan
 	this->resMap.insert(
-			std::make_pair(name, std::weak_ptr<Resource>(res))
+			std::make_pair(name, std::weak_ptr<resource>(res))
 		);
 	
 //#ifdef DEBUG

@@ -18,7 +18,7 @@ namespace morda{
 /**
  * @brief %Font resource.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * @param file - file to load the font from, TrueType ttf file.
  * @param chars - list of all chars for which the glyphs should be created.
@@ -33,7 +33,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResFont : public morda::Resource{
+class ResFont : public morda::resource{
 	friend class morda::resource_loader;
 
 	std::unique_ptr<morda::Font> f;

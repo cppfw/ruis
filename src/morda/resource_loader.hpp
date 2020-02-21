@@ -12,7 +12,7 @@ namespace morda{
 
 
 
-class Resource;
+class resource;
 class context;
 
 
@@ -44,9 +44,9 @@ class context;
  */
 class resource_loader{
 	friend class context;
-	friend class Resource;
+	friend class resource;
 
-	std::map<const std::string, std::weak_ptr<Resource>> resMap;
+	std::map<const std::string, std::weak_ptr<resource>> resMap;
 
 	class ResPackEntry{
 	public:
@@ -81,7 +81,7 @@ class resource_loader{
 	template <class T> std::shared_ptr<T> findResourceInResMap(const char* resName);
 
 	// Add resource to resources map
-	void addResource(const std::shared_ptr<Resource>& res, const std::string& name);
+	void addResource(const std::shared_ptr<resource>& res, const std::string& name);
 
 private:
 	context& ctx;
@@ -91,17 +91,6 @@ private:
 
 public:
 	/**
-	 * @brief Basic recource related exception.
-	 */
-	//TODO: remove?
-	// class Exc : public morda::Exc{
-	// public:
-	// 	Exc(const std::string& message) :
-	// 			morda::Exc(message)
-	// 	{}
-	// };
-
-	/**
 	 * @brief Mount a resource pack.
 	 * This function adds a resource pack to the list of known resource packs.
 	 * It loads the resource description and uses it when searching for resource
@@ -110,7 +99,7 @@ public:
 	 *             If file interface points to a directory instead of a file then
 	 *             resource description filename is assumed to be "main.res.stob".
 	 */
-	void mountResPack(const papki::File& fi);
+	void mount_res_pack(const papki::file& fi);
 
 	/**
 	 * @brief Load a resource.
@@ -140,13 +129,13 @@ private:
 /**
  * @brief Base class for all resources.
  */
-class Resource : virtual public utki::shared{
+class resource : virtual public utki::shared{
 	friend class resource_loader;
 protected:
 	const std::shared_ptr<morda::context> context;
 
 	// this can only be used as a base class
-	Resource(std::shared_ptr<morda::context> c) :
+	resource(std::shared_ptr<morda::context> c) :
 			context(std::move(c))
 	{
 		if(!this->context){
@@ -154,7 +143,7 @@ protected:
 		}
 	}
 public:
-	virtual ~Resource()noexcept{}
+	virtual ~resource()noexcept{}
 };
 
 

@@ -13,7 +13,7 @@ namespace morda{
  * @brief Nine-patch resource.
  * Nine-patch is a stretchable image with defined unstretchable borders.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * @param file - name of the image file, can be raster image or SVG.
  * 
@@ -27,7 +27,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResNinePatch : public Resource{
+class ResNinePatch : public resource{
 	friend class resource_loader;
 	
 	const std::shared_ptr<const ResImage> image;
@@ -39,7 +39,7 @@ public:
 	ResNinePatch& operator=(const ResNinePatch&) = delete;
 	
 	ResNinePatch(std::shared_ptr<morda::context> c, std::shared_ptr<const ResImage> image, Sidesr borders) :
-			Resource(std::move(c)),
+			resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
 	{}

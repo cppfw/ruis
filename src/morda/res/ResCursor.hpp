@@ -20,7 +20,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResCursor : public Resource{
+class ResCursor : public resource{
 	std::shared_ptr<const ResImage> image_v;
 	Vec2r hotspot_v;
 	

@@ -606,7 +606,7 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		this->gui.context->loader.mountResPack(*this->get_res_file("res/"));
+		this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
 		this->gui.context->inflater.register_widget<SimpleWidget>("U_SimpleWidget");

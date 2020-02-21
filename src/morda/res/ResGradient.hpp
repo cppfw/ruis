@@ -17,7 +17,7 @@ namespace morda{
 /**
  * @brief Gradient resource.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * %List of stops.
  * 
@@ -37,7 +37,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResGradient : public Resource{
+class ResGradient : public resource{
 	friend class resource_loader;
 
 	std::shared_ptr<VertexArray> vao;

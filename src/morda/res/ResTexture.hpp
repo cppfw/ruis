@@ -14,7 +14,7 @@ namespace morda{
 /**
  * @brief Texture resource.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * @param file - name of the image file, can be raster image.
  * 
@@ -25,7 +25,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResTexture : public morda::Resource{
+class ResTexture : public morda::resource{
 	friend class morda::resource_loader;
 
 	std::shared_ptr<Texture2D> tex_v;
@@ -36,7 +36,7 @@ public:
 	 * @param texture - texture object to initialize this resource with.
 	 */
 	ResTexture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
-			Resource(std::move(c)),
+			resource(std::move(c)),
 			tex_v(std::move(texture))
 	{
 		ASSERT(this->tex_v)

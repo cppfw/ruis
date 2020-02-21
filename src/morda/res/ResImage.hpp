@@ -18,7 +18,7 @@ namespace morda{
 /**
  * @brief Base image resource class.
  * 
- * %Resource description:
+ * %resource description:
  * 
  * @param file - name of the file to read the image from, can be raster image or SVG.
  * 
@@ -29,7 +29,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResImage : public Resource{
+class ResImage : public resource{
 	friend class resource_loader;
 	
 protected:

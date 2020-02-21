@@ -13,7 +13,7 @@ using namespace morda;
 
 
 ResFont::ResFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		Resource(std::move(c)),
+		resource(std::move(c)),
 		f(utki::make_unique<TexFont>(this->context, fi, fontSize, maxCached))
 {}
 

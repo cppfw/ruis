@@ -18,7 +18,7 @@
 using namespace morda;
 
 ResImage::ResImage(std::shared_ptr<morda::context> c) :
-		Resource(std::move(c))
+		resource(std::move(c))
 {}
 
 
