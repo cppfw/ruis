@@ -64,7 +64,14 @@ void Image::render(const morda::Matr4r& matrix) const{
 			for(; dst != texCoords.end(); ++src, ++dst){
 				*dst = src->compMul(scale);
 			}
-			this->vao = r.factory->createVertexArray({r.quad_01_vbo, r.factory->createVertexBuffer(utki::make_span(texCoords))}, r.quad_indices, VertexArray::Mode_e::TRIANGLE_FAN);
+			this->vao = r.factory->create_vertex_array(
+					{
+						r.quad_01_vbo,
+						r.factory->create_vertex_buffer(utki::make_span(texCoords))
+					},
+					r.quad_indices,
+					VertexArray::Mode_e::TRIANGLE_FAN
+				);
 		}else{
 			this->vao = this->context->renderer->pos_tex_quad_01_vao;
 		}

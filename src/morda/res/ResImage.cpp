@@ -69,7 +69,7 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(morda::context& ctx, const pu
 
 
 void ResAtlasImage::render(const Matr4r& matrix, const VertexArray& vao) const {
-	this->context->renderer->shader->posTex->render(matrix, *this->vao, this->tex->tex());
+	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
 }
 
 
@@ -87,7 +87,7 @@ protected:
 	
 public:
 	void render(const Matr4r& matrix, const VertexArray& vao) const override{
-		this->renderer->shader->posTex->render(matrix, vao, *this->tex_v);
+		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_v);
 	}
 };
 	
@@ -174,7 +174,7 @@ public:
 		auto img = std::make_shared<SvgTexture>(
 				this->context->renderer,
 				this->sharedFromThis(this),
-				this->context->renderer->factory->createTexture2D(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
+				this->context->renderer->factory->create_texture_2d(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;

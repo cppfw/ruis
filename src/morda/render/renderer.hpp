@@ -1,14 +1,14 @@
 #pragma once
 
-#include "RenderFactory.hpp"
+#include "render_factory.hpp"
 
 namespace morda{
 
 class renderer : virtual public utki::shared{
 public:
-	const std::unique_ptr<RenderFactory> factory;
+	const std::unique_ptr<render_factory> factory;
 	
-	const std::unique_ptr<RenderFactory::Shaders> shader;
+	const std::unique_ptr<render_factory::shaders> shader;
 	
 public:
 	const std::shared_ptr<VertexBuffer> quad_01_vbo;
@@ -24,7 +24,7 @@ protected:
 		r4::mat4f initial_matrix = r4::mat4f().identity();
 	};
 	
-	renderer(std::unique_ptr<RenderFactory> factory, const params& params);
+	renderer(std::unique_ptr<render_factory> factory, const params& params);
 	
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;

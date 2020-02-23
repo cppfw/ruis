@@ -52,12 +52,12 @@ ResGradient::ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tup
 	}
 	
 	auto& r = *this->context->renderer;
-	this->vao = r.factory->createVertexArray(
+	this->vao = r.factory->create_vertex_array(
 			{
-				r.factory->createVertexBuffer(utki::make_span(vertices)),
-				r.factory->createVertexBuffer(utki::make_span(colors))
+				r.factory->create_vertex_buffer(utki::make_span(vertices)),
+				r.factory->create_vertex_buffer(utki::make_span(colors))
 			},
-			r.factory->createIndexBuffer(utki::make_span(indices)),
+			r.factory->create_index_buffer(utki::make_span(indices)),
 			VertexArray::Mode_e::TRIANGLE_STRIP
 		);
 }
@@ -93,6 +93,6 @@ std::shared_ptr<ResGradient> ResGradient::load(morda::context& ctx, const puu::f
 
 
 void ResGradient::render(const morda::Matr4r& m) const {
-	this->context->renderer->shader->posClr->render(m, *this->vao);
+	this->context->renderer->shader->pos_clr->render(m, *this->vao);
 }
 

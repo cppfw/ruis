@@ -84,15 +84,15 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	g.bottomRight = verts[2];
 
 	auto& r = *this->context->renderer;
-	g.vao = r.factory->createVertexArray(
+	g.vao = r.factory->create_vertex_array(
 			{
-				r.factory->createVertexBuffer(utki::make_span(verts)),
+				r.factory->create_vertex_buffer(utki::make_span(verts)),
 				this->context->renderer->quad_01_vbo
 			},
 			this->context->renderer->quad_indices,
 			VertexArray::Mode_e::TRIANGLE_FAN
 		);
-	g.tex = this->context->renderer->factory->createTexture2D(
+	g.tex = this->context->renderer->factory->create_texture_2d(
 			morda::numChannelsToTexType(im.numChannels()),
 			im.dim(),
 			im.buf()
@@ -168,7 +168,7 @@ real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, 
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
 		ASSERT(g.vao)
-		this->context->renderer->shader->colorPosTex->render(matrix, *g.vao, color, *g.tex);
+		this->context->renderer->shader->color_pos_tex->render(matrix, *g.vao, color, *g.tex);
 	}
 
 	return g.advance;

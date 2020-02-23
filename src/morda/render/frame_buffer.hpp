@@ -10,7 +10,7 @@ protected:
 	const std::shared_ptr<Texture2D> color;
 public:
 	frame_buffer(std::shared_ptr<Texture2D> color) :
-			color(color)
+			color(std::move(color))
 	{}
 	
 	frame_buffer(const frame_buffer&) = delete;

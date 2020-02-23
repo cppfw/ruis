@@ -37,14 +37,14 @@ OpenGLES2Factory::~OpenGLES2Factory()noexcept{
 
 
 
-std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Texture2D::TexType_e type, r4::vec2ui dim, const utki::span<std::uint8_t>& data){
+std::shared_ptr<morda::Texture2D> OpenGLES2Factory::create_texture_2d(morda::Texture2D::TexType_e type, r4::vec2ui dims, const utki::span<uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
-	ASSERT(data.size() % dim.x == 0)
+	ASSERT(data.size() % dims.x == 0)
 
-	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dim.x == dim.y)
+	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dims.x == dims.y)
 	
-	auto ret = std::make_shared<OpenGLES2Texture2D>(dim.to<float>());
+	auto ret = std::make_shared<OpenGLES2Texture2D>(dims.to<float>());
 	
 	//TODO: save previous bind and restore it after?
 	ret->bind(0);
@@ -67,25 +67,25 @@ std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Textu
 			break;
 	}
 
-	//we will be passing pixels to OpenGL which are 1-byte aligned.
+	// we will be passing pixels to OpenGL which are 1-byte aligned.
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	assertOpenGLNoError();
 
 	glTexImage2D(
 			GL_TEXTURE_2D,
-			0,//0th level, no mipmaps
-			internalFormat, //internal format
-			dim.x,
-			dim.y,
-			0,//border, should be 0!
-			internalFormat, //format of the texel data
+			0, // 0th level, no mipmaps
+			internalFormat, // internal format
+			dims.x,
+			dims.y,
+			0, // border, should be 0!
+			internalFormat, // format of the texel data
 			GL_UNSIGNED_BYTE,
 			data.size() == 0 ? nullptr : &*data.begin()
 		);
 	assertOpenGLNoError();
 
-	//NOTE: on OpenGL ES 2 it is necessary to set the filter parameters
-	//      for every texture!!! Otherwise it may not work!
+	// NOTE: on OpenGL ES 2 it is necessary to set the filter parameters
+	//       for every texture!!! Otherwise it may not work!
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	assertOpenGLNoError();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -97,41 +97,46 @@ std::shared_ptr<morda::Texture2D> OpenGLES2Factory::createTexture2D(morda::Textu
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::span<r4::vec4f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec4f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::span<r4::vec3f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec3f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::span<r4::vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec2f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::createVertexBuffer(const utki::span<float> vertices){
+std::shared_ptr<morda::VertexBuffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<float> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGLES2Factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode){
+std::shared_ptr<morda::VertexArray> OpenGLES2Factory::create_vertex_array(
+		std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers,
+		std::shared_ptr<morda::IndexBuffer> indices,
+		morda::VertexArray::Mode_e mode
+	)
+{
 	return std::make_shared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), mode);
 }
 
-std::shared_ptr<morda::IndexBuffer> OpenGLES2Factory::createIndexBuffer(const utki::span<std::uint16_t> indices){
+std::shared_ptr<morda::IndexBuffer> OpenGLES2Factory::create_index_buffer(const utki::span<uint16_t> indices){
 	return std::make_shared<OpenGLES2IndexBuffer>(indices);
 }
 
-std::unique_ptr<morda::RenderFactory::Shaders> OpenGLES2Factory::createShaders(){
-	auto ret = utki::makeUnique<morda::RenderFactory::Shaders>();
-	ret->posTex = utki::makeUnique<OpenGLES2ShaderPosTex>();
-	ret->colorPos = utki::makeUnique<OpenGLES2ShaderColor>();
-	ret->posClr = utki::makeUnique<OpenGLES2ShaderPosClr>();
-	ret->colorPosTex = utki::makeUnique<OpenGLES2ShaderColorPosTex>();
-	ret->colorPosLum = utki::makeUnique<OpenGLES2ShaderColorPosLum>();
+std::unique_ptr<morda::render_factory::shaders> OpenGLES2Factory::create_shaders(){
+	auto ret = std::make_unique<morda::render_factory::shaders>();
+	ret->pos_tex = std::make_unique<OpenGLES2ShaderPosTex>();
+	ret->color_pos = std::make_unique<OpenGLES2ShaderColor>();
+	ret->pos_clr = std::make_unique<OpenGLES2ShaderPosClr>();
+	ret->color_pos_tex = std::make_unique<OpenGLES2ShaderColorPosTex>();
+	ret->color_pos_lum = std::make_unique<OpenGLES2ShaderColorPosLum>();
 	return ret;
 }
 
-std::shared_ptr<morda::frame_buffer> OpenGLES2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color){
+std::shared_ptr<morda::frame_buffer> OpenGLES2Factory::create_framebuffer(std::shared_ptr<morda::Texture2D> color){
 	return std::make_shared<OpenGLES2FrameBuffer>(std::move(color));
 }
 

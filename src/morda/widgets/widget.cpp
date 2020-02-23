@@ -227,7 +227,7 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 	if(reuse && reuse->dims() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
-		tex = r.factory->createTexture2D(
+		tex = r.factory->create_texture_2d(
 				morda::Texture2D::TexType_e::RGBA,
 				this->rect().d.to<unsigned>(),
 				nullptr
@@ -236,7 +236,7 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 
 	ASSERT(tex)
 
-	r.set_framebuffer(r.factory->createFramebuffer(tex));
+	r.set_framebuffer(r.factory->create_framebuffer(tex));
 
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
@@ -266,7 +266,7 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 
 	auto& r = *this->context->renderer;
 	ASSERT(this->cacheTex)
-	r.shader->posTex->render(matr, *r.pos_tex_quad_01_vao, *this->cacheTex);
+	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cacheTex);
 }
 
 void widget::clearCache(){

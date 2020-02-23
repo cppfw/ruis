@@ -6,11 +6,9 @@ ifneq ($(raspberrypi),true)
 
 this_name := tests
 
-
 this_srcs += $(call prorab-src-dir,src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 this_srcs += src/main.cpp
-
 
 this_cxxflags += -Wall
 this_cxxflags += -Wno-comment #no warnings on nested comments
@@ -19,13 +17,12 @@ this_cxxflags += -Wno-format-security #no warnings about format
 this_cxxflags += -DDEBUG
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -g
-this_cxxflags += -O3
-this_cxxflags += -std=c++11
-
-
+this_cxxflags += -std=c++14
 
 ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
+else
+    this_cxxflags += -O3
 endif
 
 this_cxxflags += -I$(d)../../src

@@ -93,7 +93,7 @@ std::shared_ptr<Texture2D> morda::loadTexture(renderer& r, const papki::file& fi
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 
-	return r.factory->createTexture2D(
+	return r.factory->create_texture_2d(
 			numChannelsToTexType(image.numChannels()),
 			image.dim(),
 			image.buf()

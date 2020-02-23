@@ -10,7 +10,7 @@
 
 namespace morda{
 
-class ShaderColorTexture : public utki::Unique{
+class ShaderColorTexture{
 public:
 	ShaderColorTexture(){}
 	

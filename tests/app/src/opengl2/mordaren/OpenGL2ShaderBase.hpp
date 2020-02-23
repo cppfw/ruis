@@ -40,7 +40,7 @@ struct ProgramWrapper{
 
 
 
-class OpenGL2ShaderBase {
+class OpenGL2ShaderBase{
 	ProgramWrapper program;
 	
 	const GLint matrixUniform;

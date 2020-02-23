@@ -13,7 +13,7 @@
 
 #include "../render/renderer.hpp"
 #include "../render/Texture2D.hpp"
-#include "../render/RenderFactory.hpp"
+#include "../render/render_factory.hpp"
 
 #include "units.hpp"
 

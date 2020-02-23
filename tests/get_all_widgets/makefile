@@ -1,22 +1,17 @@
 include prorab.mk
 
-
 this_name := tests
-
 
 this_srcs += $(call prorab-src-dir,.)
 
-
 this_cxxflags += -Wall
-this_cxxflags += -Wno-comment #no warnings on nested comments
-this_cxxflags += -Wno-format #no warnings about format
-this_cxxflags += -Wno-format-security #no warnings about format
+this_cxxflags += -Wno-comment # no warnings on nested comments
+this_cxxflags += -Wno-format # no warnings about format
+this_cxxflags += -Wno-format-security # no warnings about format
 this_cxxflags += -DDEBUG
-this_cxxflags += -fstrict-aliasing #strict aliasing!!!
+this_cxxflags += -fstrict-aliasing
 this_cxxflags += -g
-this_cxxflags += -std=c++11
-
-
+this_cxxflags += -std=c++14
 
 ifeq ($(debug), true)
     this_cxxflags += -DDEBUG
@@ -36,9 +31,8 @@ ifeq ($(ogles2), true)
     endif
 endif
 
-
 ifeq ($(os),windows)
-    this_ldlibs += -lmingw32 #these should go first, otherwise linker will complain about undefined reference to WinMain
+    this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs +=  -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype

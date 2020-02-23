@@ -8,7 +8,7 @@
 
 namespace morda{
 
-class ShaderColor : public utki::Unique{
+class ShaderColor{
 public:
 	ShaderColor(){}
 	

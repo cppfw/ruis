@@ -126,7 +126,7 @@ public:
 			matr.scale(this->rect().d);
 
 			auto& r = *this->context->renderer;
-			r.shader->posTex->render(matr, *r.pos_tex_quad_01_vao, this->tex->tex());
+			r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, this->tex->tex());
 		}
 
 //		this->fnt->Fnt().RenderTex(s , matrix);
@@ -172,7 +172,7 @@ public:
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, -1, 1)
 		}};
 
-		auto posVBO = this->context->renderer->factory->createVertexBuffer(utki::make_span(cubePos));
+		auto posVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubePos));
 
 		std::array<r4::vec2f, 36> cubeTex = {{
 			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
@@ -194,15 +194,15 @@ public:
 			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
 		}};
 
-		auto texVBO = this->context->renderer->factory->createVertexBuffer(utki::make_span(cubeTex));
+		auto texVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubeTex));
 
 		std::array<std::uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
-		auto cubeIndices = this->context->renderer->factory->createIndexBuffer(utki::make_span(indices));
+		auto cubeIndices = this->context->renderer->factory->create_index_buffer(utki::make_span(indices));
 
-		this->cubeVAO = this->context->renderer->factory->createVertexArray({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
+		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::VertexArray::Mode_e::TRIANGLES);
 
 		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();
@@ -238,7 +238,7 @@ public:
 
 //		glEnable(GL_CULL_FACE);
 
-		this->context->renderer->shader->posTex->render(m, *this->cubeVAO, this->tex->tex());
+		this->context->renderer->shader->pos_tex->render(m, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
 	}
