@@ -29,7 +29,7 @@ public:
 
 	std::unique_ptr<Shaders> createShaders() override;
 	
-	std::shared_ptr<morda::FrameBuffer> createFramebuffer(std::shared_ptr<morda::Texture2D> color) override;
+	std::shared_ptr<morda::frame_buffer> createFramebuffer(std::shared_ptr<morda::Texture2D> color) override;
 };
 
 }

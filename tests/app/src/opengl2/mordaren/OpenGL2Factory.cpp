@@ -123,7 +123,7 @@ std::unique_ptr<morda::RenderFactory::Shaders> OpenGL2Factory::createShaders() {
 	return ret;
 }
 
-std::shared_ptr<morda::FrameBuffer> OpenGL2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
+std::shared_ptr<morda::frame_buffer> OpenGL2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
 	return std::make_shared<OpenGL2FrameBuffer>(std::move(color));
 }
 

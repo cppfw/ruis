@@ -30,7 +30,7 @@ protected:
 	renderer& operator=(const renderer&) = delete;
 	
 private:
-	std::shared_ptr<FrameBuffer> curFB;
+	std::shared_ptr<frame_buffer> curFB;
 public:
 	const unsigned max_texture_size;
 	
@@ -44,7 +44,7 @@ public:
 	 * @brief Set current framebuffer.
 	 * @param fb - framebuffer to set as the current one. If 'nullptr' then screen buffer is set as current frame buffer.
 	 */
-	void set_framebuffer(std::shared_ptr<FrameBuffer> fb);
+	void set_framebuffer(std::shared_ptr<frame_buffer> fb);
 	
 	virtual void clear_framebuffer() = 0;
 	
@@ -89,7 +89,7 @@ public:
 	virtual void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha) = 0;
 	
 protected:
-	virtual void set_framebuffer_internal(FrameBuffer* fb) = 0;
+	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
 };
 
 }

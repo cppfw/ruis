@@ -34,7 +34,7 @@ OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
 	this->defaultFramebuffer = GLuint(oldFb);
 }
 
-void OpenGL2Renderer::set_framebuffer_internal(morda::FrameBuffer* fb) {
+void OpenGL2Renderer::set_framebuffer_internal(morda::frame_buffer* fb) {
 	if(!fb){
 		glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebuffer);
 		assertOpenGLNoError();

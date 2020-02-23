@@ -1,13 +1,13 @@
 #pragma once
 
-#include <morda/render/FrameBuffer.hpp>
+#include <morda/render/frame_buffer.hpp>
 #include <morda/render/Texture2D.hpp>
 
 #include <GL/glew.h>
 
 namespace mordaren{
 
-class OpenGL2FrameBuffer : public morda::FrameBuffer{
+class OpenGL2FrameBuffer : public morda::frame_buffer{
 public:
 	GLuint fbo;
 	

@@ -16,7 +16,7 @@ public:
 	OpenGL2Renderer(const OpenGL2Renderer& orig) = delete;
 	OpenGL2Renderer& operator=(const OpenGL2Renderer& orig) = delete;
 	
-	void set_framebuffer_internal(morda::FrameBuffer* fb)override;
+	void set_framebuffer_internal(morda::frame_buffer* fb)override;
 
 	void clear_framebuffer()override;
 	

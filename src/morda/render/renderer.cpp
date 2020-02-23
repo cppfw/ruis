@@ -19,7 +19,7 @@ renderer::renderer(std::unique_ptr<RenderFactory> factory, const renderer::param
 
 
 
-void renderer::set_framebuffer(std::shared_ptr<FrameBuffer> fb) {
+void renderer::set_framebuffer(std::shared_ptr<frame_buffer> fb){
 	this->set_framebuffer_internal(fb.get());
 	this->curFB = std::move(fb);
 }

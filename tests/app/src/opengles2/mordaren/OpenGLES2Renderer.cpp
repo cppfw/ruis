@@ -32,7 +32,7 @@ OpenGLES2Renderer::OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory) 
 			)
 {}
 
-void OpenGLES2Renderer::set_framebuffer_internal(morda::FrameBuffer* fb){
+void OpenGLES2Renderer::set_framebuffer_internal(morda::frame_buffer* fb){
 	if(!this->defaultFramebufferInitialized){
 		// On some platforms the default framebuffer is not 0, so because of this
 		// check if default framebuffer value is saved or not every time some

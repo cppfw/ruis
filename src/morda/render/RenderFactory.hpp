@@ -18,7 +18,7 @@
 #include "ShaderColor.hpp"
 #include "Shader.hpp"
 #include "ShaderColorTexture.hpp"
-#include "FrameBuffer.hpp"
+#include "frame_buffer.hpp"
 
 namespace morda{
 
@@ -59,7 +59,7 @@ public:
 	
 	virtual std::unique_ptr<Shaders> createShaders() = 0;
 	
-	virtual std::shared_ptr<FrameBuffer> createFramebuffer(std::shared_ptr<Texture2D> color) = 0;
+	virtual std::shared_ptr<frame_buffer> createFramebuffer(std::shared_ptr<Texture2D> color) = 0;
 };
 
 }

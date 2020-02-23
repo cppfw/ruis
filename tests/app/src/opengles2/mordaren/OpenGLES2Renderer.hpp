@@ -17,7 +17,7 @@ public:
 	OpenGLES2Renderer(const OpenGLES2Renderer& orig) = delete;
 	OpenGLES2Renderer& operator=(const OpenGLES2Renderer& orig) = delete;
 	
-	void set_framebuffer_internal(morda::FrameBuffer* fb)override;
+	void set_framebuffer_internal(morda::frame_buffer* fb)override;
 
 	void clear_framebuffer()override;
 	

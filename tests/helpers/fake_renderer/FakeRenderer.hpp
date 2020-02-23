@@ -4,7 +4,7 @@
 
 class FakeFactory : public morda::RenderFactory{
 public:
-	std::shared_ptr<morda::FrameBuffer> createFramebuffer(std::shared_ptr<morda::Texture2D> color) override{
+	std::shared_ptr<morda::frame_buffer> createFramebuffer(std::shared_ptr<morda::Texture2D> color) override{
 		return nullptr;
 	}
 
@@ -64,7 +64,7 @@ public:
 	}
 	void set_blend_enabled(bool enable) override{}
 	void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha) override{}
-	void set_framebuffer_internal(morda::FrameBuffer* fb) override{}
+	void set_framebuffer_internal(morda::frame_buffer* fb) override{}
 	void set_scissor_enabled(bool enabled) override{}
 	void set_scissor(r4::recti r) override{}
 	void set_viewport(r4::recti r) override{}

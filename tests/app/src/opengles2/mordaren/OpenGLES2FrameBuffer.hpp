@@ -2,7 +2,7 @@
 
 #include <utki/config.hpp>
 
-#include <morda/render/FrameBuffer.hpp>
+#include <morda/render/frame_buffer.hpp>
 #include <morda/render/Texture2D.hpp>
 
 #if M_OS_NAME == M_OS_NAME_IOS
@@ -13,7 +13,7 @@
 
 namespace mordaren{
 
-class OpenGLES2FrameBuffer : public morda::FrameBuffer{
+class OpenGLES2FrameBuffer : public morda::frame_buffer{
 public:
 	GLuint fbo;
 	
