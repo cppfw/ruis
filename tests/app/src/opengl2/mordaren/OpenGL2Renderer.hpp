@@ -16,25 +16,25 @@ public:
 	OpenGL2Renderer(const OpenGL2Renderer& orig) = delete;
 	OpenGL2Renderer& operator=(const OpenGL2Renderer& orig) = delete;
 	
-	void setFramebufferInternal(morda::FrameBuffer* fb) override;
+	void set_framebuffer_internal(morda::FrameBuffer* fb)override;
 
-	void clearFramebuffer()override;
+	void clear_framebuffer()override;
 	
-	bool isScissorEnabled() const override;
+	bool is_scissor_enabled()const override;
 	
-	void setScissorEnabled(bool enabled) override;
+	void set_scissor_enabled(bool enabled)override;
 	
-	r4::recti getScissorRect() const override;
+	r4::recti get_scissor()const override;
 	
-	void setScissorRect(r4::recti r) override;
+	void set_scissor(r4::recti r)override;
 
-	r4::recti getViewport()const override;
+	r4::recti get_viewport()const override;
 	
-	void setViewport(r4::recti r) override;
+	void set_viewport(r4::recti r)override;
 	
-	void setBlendEnabled(bool enable) override;
+	void set_blend_enabled(bool enable)override;
 
-	void setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) override;
+	void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha)override;
 
 };
 

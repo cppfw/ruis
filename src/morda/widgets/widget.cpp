@@ -153,8 +153,8 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 
 	if(this->cache){
 		if(this->cacheDirty){
-			bool scissorTestWasEnabled = r.isScissorEnabled();
-			r.setScissorEnabled(false);
+			bool scissorTestWasEnabled = r.is_scissor_enabled();
+			r.set_scissor_enabled(false);
 
 			// check if can re-use old texture
 			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
@@ -164,7 +164,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
 			}
 
-			r.setScissorEnabled(scissorTestWasEnabled);
+			r.set_scissor_enabled(scissorTestWasEnabled);
 			this->cacheDirty = false;
 		}
 
@@ -180,22 +180,22 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 			r4::recti scissor = this->compute_viewport_rect(matrix);
 
 			r4::recti oldScissor;
-			bool scissorTestWasEnabled = r.isScissorEnabled();
+			bool scissorTestWasEnabled = r.is_scissor_enabled();
 			if(scissorTestWasEnabled){
-				oldScissor = r.getScissorRect();
+				oldScissor = r.get_scissor();
 				scissor.intersect(oldScissor);
 			}else{
-				r.setScissorEnabled(true);
+				r.set_scissor_enabled(true);
 			}
 
-			r.setScissorRect(scissor);
+			r.set_scissor(scissor);
 
 			this->render(matrix);
 
 			if(scissorTestWasEnabled){
-				r.setScissorRect(oldScissor);
+				r.set_scissor(oldScissor);
 			}else{
-				r.setScissorEnabled(false);
+				r.set_scissor_enabled(false);
 			}
 		}else{
 			this->render(matrix);
@@ -236,26 +236,26 @@ std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> 
 
 	ASSERT(tex)
 
-	r.setFramebuffer(r.factory->createFramebuffer(tex));
+	r.set_framebuffer(r.factory->createFramebuffer(tex));
 
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
-	auto oldViewport = r.getViewport();
+	auto oldViewport = r.get_viewport();
 	utki::ScopeExit scopeExit([&oldViewport, &r](){
-		r.setViewport(oldViewport);
+		r.set_viewport(oldViewport);
 	});
 
-	r.setViewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
+	r.set_viewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
 
-	r.clearFramebuffer();
+	r.clear_framebuffer();
 
-	Matr4r matrix = r.initialMatrix;
+	Matr4r matrix = r.initial_matrix;
 	matrix.translate(-1, 1);
 	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
 
 	this->render(matrix);
 
-	r.setFramebuffer(nullptr);
+	r.set_framebuffer(nullptr);
 
 	return tex;
 }
@@ -266,7 +266,7 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 
 	auto& r = *this->context->renderer;
 	ASSERT(this->cacheTex)
-	r.shader->posTex->render(matr, *r.posTexQuad01VAO, *this->cacheTex);
+	r.shader->posTex->render(matr, *r.pos_tex_quad_01_vao, *this->cacheTex);
 }
 
 void widget::clearCache(){
@@ -319,7 +319,7 @@ void widget::unfocus()noexcept{
 
 r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
 	r4::recti ret(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->getViewport().d.to<real>()).rounded().to<int>(),
+			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y -= ret.d.y;

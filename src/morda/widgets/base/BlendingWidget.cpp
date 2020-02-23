@@ -12,28 +12,28 @@ using namespace morda;
 
 
 namespace{
-const std::map<std::string, renderer::BlendFactor_e> blendFactorNames_c = {
-	{"zero", renderer::BlendFactor_e::ZERO},
-	{"one", renderer::BlendFactor_e::ONE},
-	{"srcColor", renderer::BlendFactor_e::SRC_COLOR},
-	{"oneMinusSrcColor", renderer::BlendFactor_e::ONE_MINUS_SRC_COLOR},
-	{"dstColor", renderer::BlendFactor_e::DST_COLOR},
-	{"oneMinusDstColor", renderer::BlendFactor_e::ONE_MINUS_DST_COLOR},
-	{"srcAlpha", renderer::BlendFactor_e::SRC_ALPHA},
-	{"oneMinusSrcAlpha", renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA},
-	{"dstAlpha", renderer::BlendFactor_e::DST_ALPHA},
-	{"oneMinusDstAlpha", renderer::BlendFactor_e::ONE_MINUS_DST_ALPHA},
-	{"constantColor", renderer::BlendFactor_e::CONSTANT_COLOR},
-	{"oneMinusConstantColor", renderer::BlendFactor_e::ONE_MINUS_CONSTANT_COLOR},
-	{"constantAlpha", renderer::BlendFactor_e::CONSTANT_ALPHA},
-	{"oneMinusConstantAlpha", renderer::BlendFactor_e::ONE_MINUS_CONSTANT_ALPHA},
-	{"srcAlphaSaturate", renderer::BlendFactor_e::SRC_ALPHA_SATURATE}
+const std::map<std::string, renderer::blend_factor> blendFactorNames_c = {
+	{"zero", renderer::blend_factor::zero},
+	{"one", renderer::blend_factor::one},
+	{"srcColor", renderer::blend_factor::src_color},
+	{"oneMinusSrcColor", renderer::blend_factor::one_minus_src_color},
+	{"dstColor", renderer::blend_factor::dst_color},
+	{"oneMinusDstColor", renderer::blend_factor::one_minus_dst_color},
+	{"srcAlpha", renderer::blend_factor::src_alpha},
+	{"oneMinusSrcAlpha", renderer::blend_factor::one_minus_src_alpha},
+	{"dstAlpha", renderer::blend_factor::dst_alpha},
+	{"oneMinusDstAlpha", renderer::blend_factor::one_minus_dst_alpha},
+	{"constantColor", renderer::blend_factor::constant_color},
+	{"oneMinusConstantColor", renderer::blend_factor::one_minus_constant_color},
+	{"constantAlpha", renderer::blend_factor::constant_alpha},
+	{"oneMinusConstantAlpha", renderer::blend_factor::one_minus_constant_alpha},
+	{"srcAlphaSaturate", renderer::blend_factor::src_alpha_saturate}
 };
 
-renderer::BlendFactor_e blendFactorFromString(const std::string& s){
+renderer::blend_factor blendFactorFromString(const std::string& s){
 	auto i = blendFactorNames_c.find(s);
 	if(i == blendFactorNames_c.end()){
-		return renderer::BlendFactor_e::ONE;
+		return renderer::blend_factor::one;
 	}
 	return i->second;
 }
@@ -55,18 +55,18 @@ BlendingWidget::BlendingWidget(std::shared_ptr<morda::context> c, const puu::for
 		}else if(p.value == "blendDst"){
 			this->blend_v.dst = blendFactorFromString(get_property_value(p).to_string());
 		}else if(p.value == "blendSrcAlpha"){
-			this->blend_v.srcAlpha = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.src_alpha = blendFactorFromString(get_property_value(p).to_string());
 		}else if(p.value == "blendDstAlpha"){
-			this->blend_v.dstAlpha = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.dst_alpha = blendFactorFromString(get_property_value(p).to_string());
 		}
 	}
 }
 
 void BlendingWidget::applyBlending() const{
 	auto& r = *this->context->renderer;
-	r.setBlendEnabled(this->isBlendingEnabled());
+	r.set_blend_enabled(this->isBlendingEnabled());
 	if(this->isBlendingEnabled()){
-		r.setBlendFunc(this->blend_v.src, this->blend_v.dst, this->blend_v.srcAlpha, this->blend_v.dstAlpha);
+		r.set_blend_func(this->blend_v.src, this->blend_v.dst, this->blend_v.src_alpha, this->blend_v.dst_alpha);
 	}
 }
 

@@ -25,21 +25,21 @@ public:
 	 * @brief Structure holding blending settings.
 	 */
 	struct BlendingParams{
-		morda::renderer::BlendFactor_e src;
-		morda::renderer::BlendFactor_e dst;
-		morda::renderer::BlendFactor_e srcAlpha;
-		morda::renderer::BlendFactor_e dstAlpha;
+		morda::renderer::blend_factor src;
+		morda::renderer::blend_factor dst;
+		morda::renderer::blend_factor src_alpha;
+		morda::renderer::blend_factor dst_alpha;
 
 		bool operator==(const BlendingParams& b){
-			return this->src == b.src && this->dst == b.dst && this->srcAlpha == b.srcAlpha && this->dstAlpha == b.dstAlpha;
+			return this->src == b.src && this->dst == b.dst && this->src_alpha == b.src_alpha && this->dst_alpha == b.dst_alpha;
 		}
 	};
 private:
 	BlendingParams blend_v = {
-		morda::renderer::BlendFactor_e::SRC_ALPHA,
-		morda::renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
-		morda::renderer::BlendFactor_e::ONE,
-		morda::renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+		morda::renderer::blend_factor::src_alpha,
+		morda::renderer::blend_factor::one_minus_src_alpha,
+		morda::renderer::blend_factor::one,
+		morda::renderer::blend_factor::one_minus_src_alpha
 	};
 
 protected:

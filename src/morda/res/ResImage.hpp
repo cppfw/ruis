@@ -56,7 +56,7 @@ public:
 		const Vec2r dims;
 		
 		void render(const Matr4r& matrix)const{
-			this->render(matrix, *this->renderer->posTexQuad01VAO);
+			this->render(matrix, *this->renderer->pos_tex_quad_01_vao);
 		}
 
 		/**

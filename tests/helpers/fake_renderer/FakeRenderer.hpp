@@ -49,23 +49,23 @@ public:
 class FakeRenderer : public morda::renderer{
 public:
 	FakeRenderer() :
-			morda::renderer(utki::makeUnique<FakeFactory>(), Params())
+			morda::renderer(utki::makeUnique<FakeFactory>(), params())
 	{}
 
-	void clearFramebuffer() override{}
-	r4::recti getScissorRect() const override{
+	void clear_framebuffer() override{}
+	r4::recti get_scissor() const override{
 		return r4::recti(0);
 	}
-	r4::recti getViewport() const override{
+	r4::recti get_viewport() const override{
 		return r4::recti(0);
 	}
-	bool isScissorEnabled() const override{
+	bool is_scissor_enabled() const override{
 		return false;
 	}
-	void setBlendEnabled(bool enable) override{}
-	void setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) override{}
-	void setFramebufferInternal(morda::FrameBuffer* fb) override{}
-	void setScissorEnabled(bool enabled) override{}
-	void setScissorRect(r4::recti r) override{}
-	void setViewport(r4::recti r) override{}
+	void set_blend_enabled(bool enable) override{}
+	void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha) override{}
+	void set_framebuffer_internal(morda::FrameBuffer* fb) override{}
+	void set_scissor_enabled(bool enabled) override{}
+	void set_scissor(r4::recti r) override{}
+	void set_viewport(r4::recti r) override{}
 };

@@ -39,7 +39,7 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<
 		ResImage(std::move(c)),
 		ResImage::QuadTexture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
-		vao(this->context->renderer->posTexQuad01VAO)
+		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
 

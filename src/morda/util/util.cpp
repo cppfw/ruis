@@ -102,12 +102,12 @@ std::shared_ptr<Texture2D> morda::loadTexture(renderer& r, const papki::file& fi
 
 
 void morda::applySimpleAlphaBlending(renderer& r){
-	r.setBlendEnabled(true);
-	r.setBlendFunc(
-			renderer::BlendFactor_e::SRC_ALPHA,
-			renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
-			renderer::BlendFactor_e::ONE,
-			renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+	r.set_blend_enabled(true);
+	r.set_blend_func(
+			renderer::blend_factor::src_alpha,
+			renderer::blend_factor::one_minus_src_alpha,
+			renderer::blend_factor::one,
+			renderer::blend_factor::one_minus_src_alpha
 		);
 }
 

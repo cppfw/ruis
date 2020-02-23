@@ -126,7 +126,7 @@ public:
 			matr.scale(this->rect().d);
 
 			auto& r = *this->context->renderer;
-			r.shader->posTex->render(matr, *r.posTexQuad01VAO, this->tex->tex());
+			r.shader->posTex->render(matr, *r.pos_tex_quad_01_vao, this->tex->tex());
 		}
 
 //		this->fnt->Fnt().RenderTex(s , matrix);

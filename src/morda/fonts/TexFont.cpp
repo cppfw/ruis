@@ -87,9 +87,9 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	g.vao = r.factory->createVertexArray(
 			{
 				r.factory->createVertexBuffer(utki::make_span(verts)),
-				this->context->renderer->quad01VBO
+				this->context->renderer->quad_01_vbo
 			},
-			this->context->renderer->quadIndices,
+			this->context->renderer->quad_indices,
 			VertexArray::Mode_e::TRIANGLE_FAN
 		);
 	g.tex = this->context->renderer->factory->createTexture2D(
