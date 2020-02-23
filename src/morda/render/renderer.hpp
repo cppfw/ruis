@@ -4,7 +4,7 @@
 
 namespace morda{
 
-class Renderer : virtual public utki::shared{
+class renderer : virtual public utki::shared{
 public:
 	const std::unique_ptr<RenderFactory> factory;
 	
@@ -24,10 +24,10 @@ protected:
 		r4::mat4f initialMatrix = r4::mat4f().identity();
 	};
 	
-	Renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
+	renderer(std::unique_ptr<RenderFactory> factory, const Params& params);
 	
-	Renderer(const Renderer&) = delete;
-	Renderer& operator=(const Renderer&) = delete;
+	renderer(const renderer&) = delete;
+	renderer& operator=(const renderer&) = delete;
 	
 private:
 	std::shared_ptr<FrameBuffer> curFB;

@@ -11,7 +11,7 @@
 
 #include "../config.hpp"
 
-#include "../render/Renderer.hpp"
+#include "../render/renderer.hpp"
 #include "../render/Texture2D.hpp"
 #include "../render/RenderFactory.hpp"
 
@@ -85,7 +85,7 @@ bool is_leaf_property(const puu::leaf& l);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-std::shared_ptr<Texture2D> loadTexture(Renderer& r, const papki::file& fi);
+std::shared_ptr<Texture2D> loadTexture(renderer& r, const papki::file& fi);
 
 
 /**
@@ -94,7 +94,7 @@ std::shared_ptr<Texture2D> loadTexture(Renderer& r, const papki::file& fi);
  * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
  * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
  */
-void applySimpleAlphaBlending(Renderer& r);
+void applySimpleAlphaBlending(renderer& r);
 
 
 morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);

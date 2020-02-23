@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/render/Renderer.hpp"
+#include "../../../src/morda/render/renderer.hpp"
 
 class FakeFactory : public morda::RenderFactory{
 public:
@@ -46,10 +46,10 @@ public:
 
 };
 
-class FakeRenderer : public morda::Renderer{
+class FakeRenderer : public morda::renderer{
 public:
 	FakeRenderer() :
-			morda::Renderer(utki::makeUnique<FakeFactory>(), Params())
+			morda::renderer(utki::makeUnique<FakeFactory>(), Params())
 	{}
 
 	void clearFramebuffer() override{}

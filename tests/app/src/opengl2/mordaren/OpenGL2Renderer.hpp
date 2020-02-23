@@ -2,13 +2,13 @@
 
 #include <GL/glew.h>
 
-#include <morda/render/Renderer.hpp>
+#include <morda/render/renderer.hpp>
 
 #include "OpenGL2Factory.hpp"
 
 namespace mordaren{
 
-class OpenGL2Renderer : public morda::Renderer{
+class OpenGL2Renderer : public morda::renderer{
 	GLuint defaultFramebuffer;
 public:
 	OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory = utki::makeUnique<OpenGL2Factory>());

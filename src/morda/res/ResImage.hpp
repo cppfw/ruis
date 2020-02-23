@@ -46,9 +46,9 @@ public:
 	 */
 	class QuadTexture : virtual public utki::shared{
 	protected:
-		const std::shared_ptr<Renderer> renderer;
+		const std::shared_ptr<morda::renderer> renderer;
 
-		QuadTexture(std::shared_ptr<Renderer> r, Vec2r dims) :
+		QuadTexture(std::shared_ptr<morda::renderer> r, Vec2r dims) :
 				renderer(std::move(r)),
 				dims(dims)
 		{}

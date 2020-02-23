@@ -16,7 +16,7 @@ unsigned getMaxTextureSize(){
 }
 
 OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
-		morda::Renderer(
+		morda::renderer(
 				std::move(factory),
 				[](){
 					Params p;
@@ -25,9 +25,9 @@ OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
 				}()
 			)
 {
-	//On some platforms the default framebuffer is not 0, so because of this
-	//check if default framebuffer value is saved or not everytime some
-	//framebuffer is going to be bound and save the value if needed.
+	// On some platforms the default framebuffer is not 0, so because of this
+	// check if default framebuffer value is saved or not everytime some
+	// framebuffer is going to be bound and save the value if needed.
 	GLint oldFb;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFb);
 	TRACE(<< "oldFb = " << oldFb << std::endl)

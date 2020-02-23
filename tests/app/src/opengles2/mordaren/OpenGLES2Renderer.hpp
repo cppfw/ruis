@@ -2,15 +2,15 @@
 
 #include <utki/config.hpp>
 
-#include <morda/render/Renderer.hpp>
+#include <morda/render/renderer.hpp>
 
 #include "OpenGLES2Factory.hpp"
 
 namespace mordaren{
 
-class OpenGLES2Renderer : public morda::Renderer{
+class OpenGLES2Renderer : public morda::renderer{
 	bool defaultFramebufferInitialized = false;
-	std::uint32_t defaultFramebuffer; //NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
+	std::uint32_t defaultFramebuffer; // NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
 public:
 	OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory = utki::makeUnique<OpenGLES2Factory>());
 	

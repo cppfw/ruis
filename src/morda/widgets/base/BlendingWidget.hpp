@@ -2,7 +2,7 @@
 
 #include "../widget.hpp"
 
-#include "../../render/Renderer.hpp"
+#include "../../render/renderer.hpp"
 
 namespace morda{
 
@@ -25,10 +25,10 @@ public:
 	 * @brief Structure holding blending settings.
 	 */
 	struct BlendingParams{
-		Renderer::BlendFactor_e src;
-		Renderer::BlendFactor_e dst;
-		Renderer::BlendFactor_e srcAlpha;
-		Renderer::BlendFactor_e dstAlpha;
+		morda::renderer::BlendFactor_e src;
+		morda::renderer::BlendFactor_e dst;
+		morda::renderer::BlendFactor_e srcAlpha;
+		morda::renderer::BlendFactor_e dstAlpha;
 
 		bool operator==(const BlendingParams& b){
 			return this->src == b.src && this->dst == b.dst && this->srcAlpha == b.srcAlpha && this->dstAlpha == b.dstAlpha;
@@ -36,10 +36,10 @@ public:
 	};
 private:
 	BlendingParams blend_v = {
-		Renderer::BlendFactor_e::SRC_ALPHA,
-		Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
-		Renderer::BlendFactor_e::ONE,
-		Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+		morda::renderer::BlendFactor_e::SRC_ALPHA,
+		morda::renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
+		morda::renderer::BlendFactor_e::ONE,
+		morda::renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
 	};
 
 protected:

@@ -21,7 +21,7 @@ public:
 	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	gui(
-			std::shared_ptr<morda::Renderer> r,
+			std::shared_ptr<morda::renderer> r,
             std::shared_ptr<morda::updater> u,
 			std::function<void(std::function<void()>&&)>&& post_to_ui_thread_function,
 			real dots_per_inch,

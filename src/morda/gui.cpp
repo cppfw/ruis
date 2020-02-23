@@ -28,7 +28,7 @@
 using namespace morda;
 
 gui::gui(
-		std::shared_ptr<morda::Renderer> r,
+		std::shared_ptr<morda::renderer> r,
         std::shared_ptr<morda::updater> u,
 		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 		real dots_per_inch,

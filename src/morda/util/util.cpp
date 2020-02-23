@@ -89,7 +89,7 @@ morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
 	}
 }
 
-std::shared_ptr<Texture2D> morda::loadTexture(Renderer& r, const papki::file& fi){
+std::shared_ptr<Texture2D> morda::loadTexture(renderer& r, const papki::file& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 
@@ -101,13 +101,13 @@ std::shared_ptr<Texture2D> morda::loadTexture(Renderer& r, const papki::file& fi
 }
 
 
-void morda::applySimpleAlphaBlending(Renderer& r){
+void morda::applySimpleAlphaBlending(renderer& r){
 	r.setBlendEnabled(true);
 	r.setBlendFunc(
-			Renderer::BlendFactor_e::SRC_ALPHA,
-			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
-			Renderer::BlendFactor_e::ONE,
-			Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
+			renderer::BlendFactor_e::SRC_ALPHA,
+			renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA,
+			renderer::BlendFactor_e::ONE,
+			renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA
 		);
 }
 

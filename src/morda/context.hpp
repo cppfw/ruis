@@ -1,6 +1,6 @@
 #pragma once
 
-#include "render/Renderer.hpp"
+#include "render/renderer.hpp"
 
 #include "util/mouse_button.hpp"
 
@@ -21,7 +21,7 @@ class context : public std::enable_shared_from_this<context>{
 	void set_focused_widget(std::shared_ptr<widget> w);
 
 public:
-	const std::shared_ptr<Renderer> renderer;
+	const std::shared_ptr<morda::renderer> renderer;
 
 	const std::shared_ptr<morda::updater> updater;
 
@@ -46,7 +46,7 @@ public:
 	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	context(
-			std::shared_ptr<morda::Renderer> r,
+			std::shared_ptr<morda::renderer> r,
 			std::shared_ptr<morda::updater> u,
 			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 			real dots_per_inch,

@@ -12,28 +12,28 @@ using namespace morda;
 
 
 namespace{
-const std::map<std::string, Renderer::BlendFactor_e> blendFactorNames_c = {
-	{"zero", Renderer::BlendFactor_e::ZERO},
-	{"one", Renderer::BlendFactor_e::ONE},
-	{"srcColor", Renderer::BlendFactor_e::SRC_COLOR},
-	{"oneMinusSrcColor", Renderer::BlendFactor_e::ONE_MINUS_SRC_COLOR},
-	{"dstColor", Renderer::BlendFactor_e::DST_COLOR},
-	{"oneMinusDstColor", Renderer::BlendFactor_e::ONE_MINUS_DST_COLOR},
-	{"srcAlpha", Renderer::BlendFactor_e::SRC_ALPHA},
-	{"oneMinusSrcAlpha", Renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA},
-	{"dstAlpha", Renderer::BlendFactor_e::DST_ALPHA},
-	{"oneMinusDstAlpha", Renderer::BlendFactor_e::ONE_MINUS_DST_ALPHA},
-	{"constantColor", Renderer::BlendFactor_e::CONSTANT_COLOR},
-	{"oneMinusConstantColor", Renderer::BlendFactor_e::ONE_MINUS_CONSTANT_COLOR},
-	{"constantAlpha", Renderer::BlendFactor_e::CONSTANT_ALPHA},
-	{"oneMinusConstantAlpha", Renderer::BlendFactor_e::ONE_MINUS_CONSTANT_ALPHA},
-	{"srcAlphaSaturate", Renderer::BlendFactor_e::SRC_ALPHA_SATURATE}
+const std::map<std::string, renderer::BlendFactor_e> blendFactorNames_c = {
+	{"zero", renderer::BlendFactor_e::ZERO},
+	{"one", renderer::BlendFactor_e::ONE},
+	{"srcColor", renderer::BlendFactor_e::SRC_COLOR},
+	{"oneMinusSrcColor", renderer::BlendFactor_e::ONE_MINUS_SRC_COLOR},
+	{"dstColor", renderer::BlendFactor_e::DST_COLOR},
+	{"oneMinusDstColor", renderer::BlendFactor_e::ONE_MINUS_DST_COLOR},
+	{"srcAlpha", renderer::BlendFactor_e::SRC_ALPHA},
+	{"oneMinusSrcAlpha", renderer::BlendFactor_e::ONE_MINUS_SRC_ALPHA},
+	{"dstAlpha", renderer::BlendFactor_e::DST_ALPHA},
+	{"oneMinusDstAlpha", renderer::BlendFactor_e::ONE_MINUS_DST_ALPHA},
+	{"constantColor", renderer::BlendFactor_e::CONSTANT_COLOR},
+	{"oneMinusConstantColor", renderer::BlendFactor_e::ONE_MINUS_CONSTANT_COLOR},
+	{"constantAlpha", renderer::BlendFactor_e::CONSTANT_ALPHA},
+	{"oneMinusConstantAlpha", renderer::BlendFactor_e::ONE_MINUS_CONSTANT_ALPHA},
+	{"srcAlphaSaturate", renderer::BlendFactor_e::SRC_ALPHA_SATURATE}
 };
 
-Renderer::BlendFactor_e blendFactorFromString(const std::string& s){
+renderer::BlendFactor_e blendFactorFromString(const std::string& s){
 	auto i = blendFactorNames_c.find(s);
 	if(i == blendFactorNames_c.end()){
-		return Renderer::BlendFactor_e::ONE;
+		return renderer::BlendFactor_e::ONE;
 	}
 	return i->second;
 }
