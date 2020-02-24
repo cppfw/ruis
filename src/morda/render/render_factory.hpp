@@ -10,7 +10,7 @@
 
 #include "texture_2d.hpp"
 
-#include "VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
 
@@ -33,18 +33,18 @@ public:
 	
 	std::shared_ptr<texture_2d> create_texture_2d(r4::vec2ui dims, const utki::span<uint32_t> data);
 	
-	virtual std::shared_ptr<VertexBuffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices) = 0;
 	
-	virtual std::shared_ptr<VertexBuffer> create_vertex_buffer(const utki::span<r4::vec3f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec3f> vertices) = 0;
 	
-	virtual std::shared_ptr<VertexBuffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices) = 0;
 	
-	virtual std::shared_ptr<VertexBuffer> create_vertex_buffer(const utki::span<float> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<float> vertices) = 0;
 	
 	virtual std::shared_ptr<IndexBuffer> create_index_buffer(const utki::span<uint16_t> indices) = 0;
 	
 	virtual std::shared_ptr<VertexArray> create_vertex_array(
-			std::vector< std::shared_ptr<morda::VertexBuffer> >&& buffers,
+			std::vector< std::shared_ptr<morda::vertex_buffer> >&& buffers,
 			std::shared_ptr<morda::IndexBuffer> indices,
 			VertexArray::Mode_e mode
 		) = 0;

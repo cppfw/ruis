@@ -11,7 +11,7 @@ public:
 	const std::unique_ptr<render_factory::shaders> shader;
 	
 public:
-	const std::shared_ptr<VertexBuffer> quad_01_vbo;
+	const std::shared_ptr<vertex_buffer> quad_01_vbo;
 	const std::shared_ptr<IndexBuffer> quad_indices;
 
 	const std::shared_ptr<VertexArray> pos_quad_01_vao;

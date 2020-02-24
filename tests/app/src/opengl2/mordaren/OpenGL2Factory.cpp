@@ -89,24 +89,24 @@ std::shared_ptr<morda::texture_2d> OpenGL2Factory::create_texture_2d(morda::text
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec4f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec4f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec3f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec3f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec2f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGL2Factory::create_vertex_buffer(const utki::span<r4::vec2f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::create_vertex_buffer(const utki::span<float> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGL2Factory::create_vertex_buffer(const utki::span<float> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexArray> OpenGL2Factory::create_vertex_array(
-		std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers,
+		std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 		std::shared_ptr<morda::IndexBuffer> indices,
 		morda::VertexArray::Mode_e mode
 	)

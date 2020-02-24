@@ -18,7 +18,7 @@ void OpenGLES2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 
 
 OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec4f> vertices) :
-		morda::VertexBuffer(vertices.size()),
+		morda::vertex_buffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
 {
@@ -26,7 +26,7 @@ OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec4f> vertice
 }
 
 OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec3f> vertices) :
-		morda::VertexBuffer(vertices.size()),
+		morda::vertex_buffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
 {
@@ -34,7 +34,7 @@ OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec3f> vertice
 }
 
 OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec2f> vertices) :
-		morda::VertexBuffer(vertices.size()),
+		morda::vertex_buffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)
 {
@@ -42,7 +42,7 @@ OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec2f> vertice
 }
 
 OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<float> vertices) :
-		morda::VertexBuffer(vertices.size()),
+		morda::vertex_buffer(vertices.size()),
 		numComponents(1),
 		type(GL_FLOAT)
 {

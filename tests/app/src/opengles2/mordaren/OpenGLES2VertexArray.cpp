@@ -6,7 +6,7 @@
 
 using namespace mordaren;
 
-OpenGLES2VertexArray::OpenGLES2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
+OpenGLES2VertexArray::OpenGLES2VertexArray(std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
 		morda::VertexArray(std::move(buffers), std::move(indices), mode)
 {
 

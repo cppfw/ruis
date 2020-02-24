@@ -5,7 +5,7 @@
 #include <r4/vector2.hpp>
 
 #include "texture_2d.hpp"
-#include "VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
 

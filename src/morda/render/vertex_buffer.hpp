@@ -4,11 +4,11 @@
 
 namespace morda{
 	
-class VertexBuffer : virtual public utki::shared{
+class vertex_buffer : virtual public utki::shared{
 public:
 	const size_t size;
 	
-	VertexBuffer(size_t size) :
+	vertex_buffer(size_t size) :
 			size(size)
 	{}
 };

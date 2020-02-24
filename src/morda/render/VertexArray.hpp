@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "IndexBuffer.hpp"
 
 #include <utki/shared.hpp>
@@ -11,7 +11,7 @@ namespace morda{
 
 class VertexArray : virtual public utki::shared{
 public:
-	const std::vector<std::shared_ptr<VertexBuffer>> buffers;
+	const std::vector<std::shared_ptr<vertex_buffer>> buffers;
 	
 	const std::shared_ptr<IndexBuffer> indices;
 	

@@ -23,7 +23,7 @@ public:
 	}
 
 	std::shared_ptr<morda::VertexArray> create_vertex_array(
-			std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers,
+			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 			std::shared_ptr<morda::IndexBuffer> indices,
 			morda::VertexArray::Mode_e mode
 		)override
@@ -31,18 +31,18 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> create_vertex_buffer(const utki::span<float> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<float> vertices)override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices)override{
 		return nullptr;
 	}
-	std::shared_ptr<morda::VertexBuffer> create_vertex_buffer(const utki::span<r4::vec3f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<r4::vec3f> vertices)override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexBuffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices)override{
 		return nullptr;
 	}
 
