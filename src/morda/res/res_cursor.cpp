@@ -1,4 +1,4 @@
-#include "ResCursor.hpp"
+#include "res_cursor.hpp"
 
 #include "../context.hpp"
 
@@ -7,14 +7,14 @@
 
 using namespace morda;
 
-ResCursor::ResCursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot) :
+res_cursor::res_cursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot) :
 		resource(std::move(c)),
 		image_v(std::dynamic_pointer_cast<ResImage>(image.shared_from_this())),
 		hotspot_v(hotspot)
 {}
 
 
-std::shared_ptr<ResCursor> ResCursor::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<res_cursor> res_cursor::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	std::shared_ptr<ResImage> image;
 	Vec2r hotspot;
 	bool hotspot_set = false;
@@ -29,12 +29,12 @@ std::shared_ptr<ResCursor> ResCursor::load(morda::context& ctx, const puu::fores
 	}
 
 	if(!image){
-		throw std::logic_error("ResCursor::load(): resource description does not contain 'image' property");
+		throw std::logic_error("res_cursor::load(): resource description does not contain 'image' property");
 	}
 	
 	if(!hotspot_set){
-		throw std::logic_error("ResCursor::load(): resource description does not contain 'hotspot' property");
+		throw std::logic_error("res_cursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return std::make_shared<ResCursor>(ctx.shared_from_this(), *image, hotspot);
+	return std::make_shared<res_cursor>(ctx.shared_from_this(), *image, hotspot);
 }

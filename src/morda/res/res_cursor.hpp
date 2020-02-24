@@ -2,8 +2,6 @@
 
 #include "ResImage.hpp"
 
-
-
 namespace morda{
 
 /**
@@ -20,15 +18,15 @@ namespace morda{
  * }
  * @endcode
  */
-class ResCursor : public resource{
+class res_cursor : public resource{
 	std::shared_ptr<const ResImage> image_v;
 	Vec2r hotspot_v;
 	
 public:
-	ResCursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot);
+	res_cursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot);
 	
-	ResCursor(const ResCursor&) = delete;
-	ResCursor& operator=(const ResCursor&) = delete;
+	res_cursor(const res_cursor&) = delete;
+	res_cursor& operator=(const res_cursor&) = delete;
 	
 	const ResImage& image()const noexcept{
 		ASSERT(this->image_v)
@@ -41,7 +39,7 @@ public:
 private:
 	friend class resource_loader;
 	
-	static std::shared_ptr<ResCursor> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<res_cursor> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 }
