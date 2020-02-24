@@ -4,11 +4,7 @@
 
 #include "../../context.hpp"
 
-//TODO: remove
-#include "../../gui.hpp"
-
 using namespace morda;
-
 
 Gradient::Gradient(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
@@ -19,11 +15,10 @@ Gradient::Gradient(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		}
 
 		if(p.value == "gradient"){
-			this->gradient = this->context->loader.load<ResGradient>(get_property_value(p).to_string());
+			this->gradient = this->context->loader.load<res_gradient>(get_property_value(p).to_string());
 		}
 	}
 }
-
 
 void Gradient::render(const Matr4r& matrix)const{
 	applySimpleAlphaBlending(*this->context->renderer);
