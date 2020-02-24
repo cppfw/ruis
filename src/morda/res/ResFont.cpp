@@ -4,9 +4,11 @@
 
 #include "../util/util.hpp"
 
-#include "../fonts/TexFont.hxx"
+#include "../fonts/texture_font.hxx"
 
 #include <unikod/utf8.hpp>
+
+#include <memory>
 
 using namespace morda;
 
@@ -14,7 +16,7 @@ using namespace morda;
 
 ResFont::ResFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		resource(std::move(c)),
-		f(utki::make_unique<TexFont>(this->context, fi, fontSize, maxCached))
+		f(std::make_unique<texture_font>(this->context, fi, fontSize, maxCached))
 {}
 
 

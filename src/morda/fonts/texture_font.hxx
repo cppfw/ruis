@@ -11,7 +11,6 @@
 #include <r4/vector2.hpp>
 #include <r4/rectangle.hpp>
 
-#include <utki/Exc.hpp>
 #include <papki/file.hpp>
 
 #include "../config.hpp"
@@ -30,7 +29,7 @@ namespace morda{
  * Then, for rendering strings of text it renders
  * row of quads with texture coordinates corresponding to string characters on the texture.
  */
-class TexFont : public font{
+class texture_font : public font{
 	mutable std::list<char32_t> lastUsedOrder;
 	
 	struct Glyph{
@@ -57,7 +56,7 @@ class TexFont : public font{
 		~FreeTypeLibWrapper()noexcept;
 	} freetype;
 
-//	TRACE(<< "TexFont::Load(): FreeType library inited" << std::endl)
+//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
 
 	struct FreeTypeFaceWrapper{
 		FT_Face f;
@@ -78,7 +77,7 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real get_advance(char32_t c)const override;
 	

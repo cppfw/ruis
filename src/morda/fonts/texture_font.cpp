@@ -6,7 +6,7 @@
 #include "../util/RasterImage.hpp"
 #include "../util/util.hpp"
 
-#include "TexFont.hxx"
+#include "texture_font.hxx"
 #include "../context.hpp"
 
 using namespace morda;
@@ -15,33 +15,33 @@ namespace{
 constexpr const char32_t unknownChar_c = 0xfffd;
 }
 
-TexFont::FreeTypeLibWrapper::FreeTypeLibWrapper() {
+texture_font::FreeTypeLibWrapper::FreeTypeLibWrapper() {
 	if (FT_Init_FreeType(&this->lib)) {
-		throw utki::Exc("FreeTypeLibWrapper::FreeTypeLibWrapper(): unable to init freetype library");
+		throw std::runtime_error("FreeTypeLibWrapper::FreeTypeLibWrapper(): unable to init freetype library");
 	}
 }
 
-TexFont::FreeTypeLibWrapper::~FreeTypeLibWrapper()noexcept{
+texture_font::FreeTypeLibWrapper::~FreeTypeLibWrapper()noexcept{
 	FT_Done_FreeType(this->lib);
 }
 
-TexFont::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi) {
+texture_font::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi) {
 	this->fontFile = fi.loadWholeFileIntoMemory();
 	if (FT_New_Memory_Face(lib, & * this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->f) != 0) {
-		throw utki::Exc("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
+		throw std::runtime_error("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
 	}
 }
 
-TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
+texture_font::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
 	FT_Done_Face(this->f);
 }
 
-TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
+texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
 		if(c == unknownChar_c){
-			throw std::runtime_error("TexFont::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
+			throw std::runtime_error("texture_font::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
 		}
-		TRACE(<< "TexFont::loadGlyph(" << std::hex << std::uint32_t(c) << "): failed to load glyph" << std::endl)
+		TRACE(<< "texture_font::loadGlyph(" << std::hex << std::uint32_t(c) << "): failed to load glyph" << std::endl)
 		return this->unknownGlyph;
 	}
 	
@@ -91,12 +91,12 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 }
 
 
-TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+texture_font::texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		font(std::move(c)),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {
-//	TRACE(<< "TexFont::Load(): enter" << std::endl)
+//	TRACE(<< "texture_font::Load(): enter" << std::endl)
 
 	// set character size in pixels
 	{
@@ -107,13 +107,13 @@ TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsig
 			);
 
 		if(error != 0){
-			throw utki::Exc("TexFont::TexFont(): unable to set char size");
+			throw std::runtime_error("texture_font::texture_font(): unable to set char size");
 		}
 	}
 	
 	this->unknownGlyph = this->loadGlyph(unknownChar_c);
 
-//	TRACE(<< "TexFont::Load(): entering for loop" << std::endl)
+//	TRACE(<< "texture_font::Load(): entering for loop" << std::endl)
 	
 	using std::ceil;
 	
@@ -121,11 +121,11 @@ TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsig
 	this->descender = -ceil((this->face.f->size->metrics.descender) / 64.0f);
 	this->ascender = ceil((this->face.f->size->metrics.ascender) / 64.0f);
 
-//	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
+//	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
 
 
-const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
+const texture_font::Glyph& texture_font::getGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);
 	if(i == this->glyphs.end()){
 		auto r = this->glyphs.insert(std::make_pair(c, this->loadGlyph(c)));
@@ -138,7 +138,7 @@ const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 			this->glyphs.erase(this->lastUsedOrder.back());
 			this->lastUsedOrder.pop_back();
 		}
-//		TRACE(<< "TexFont::getGlyph(): glyph loaded: " << c << std::endl)
+//		TRACE(<< "texture_font::getGlyph(): glyph loaded: " << c << std::endl)
 	}else{
 		Glyph& g = i->second;
 		this->lastUsedOrder.splice(this->lastUsedOrder.begin(), this->lastUsedOrder, g.lastUsedIter);
@@ -151,7 +151,7 @@ const TexFont::Glyph& TexFont::getGlyph(char32_t c)const{
 
 
 
-real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const{
+real texture_font::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const{
 	const Glyph& g = this->getGlyph(ch);
 	
 	// texture can be null for glyph of empty characters, like space, tab etc...
@@ -165,7 +165,7 @@ real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, 
 
 
 
-real TexFont::get_advance_internal(const std::u32string& str)const{
+real texture_font::get_advance_internal(const std::u32string& str)const{
 	real ret = 0;
 
 	auto s = str.begin();
@@ -184,7 +184,7 @@ real TexFont::get_advance_internal(const std::u32string& str)const{
 
 
 
-morda::Rectr TexFont::get_bounding_box_internal(const std::u32string& str)const{
+morda::Rectr texture_font::get_bounding_box_internal(const std::u32string& str)const{
 	morda::Rectr ret;
 
 	if(str.size() == 0){
@@ -230,13 +230,13 @@ morda::Rectr TexFont::get_bounding_box_internal(const std::u32string& str)const{
 
 	ASSERT(ret.d.x >= 0)
 	ASSERT(ret.d.y >= 0)
-//	TRACE(<< "TexFont::stringBoundingBoxInternal(): ret = " << ret << std::endl)
+//	TRACE(<< "texture_font::stringBoundingBoxInternal(): ret = " << ret << std::endl)
 	return ret;
 }
 
 
 
-real TexFont::render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
+real texture_font::render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
 		return 0;
 	}
@@ -265,7 +265,7 @@ real TexFont::render_internal(const morda::Matr4r& matrix, r4::vec4f color, cons
 
 
 
-real TexFont::get_advance(char32_t c)const{
+real texture_font::get_advance(char32_t c)const{
 	auto& g = this->getGlyph(c);
 	return g.advance;
 }
