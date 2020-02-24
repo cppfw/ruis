@@ -15,7 +15,7 @@
 #include "IndexBuffer.hpp"
 
 #include "ShaderTexture.hpp"
-#include "ShaderColor.hpp"
+#include "coloring_shader.hpp"
 #include "shader.hpp"
 #include "ShaderColorTexture.hpp"
 #include "frame_buffer.hpp"
@@ -51,8 +51,8 @@ public:
 	
 	struct shaders{
 		std::unique_ptr<ShaderTexture> pos_tex;
-		std::unique_ptr<ShaderColor> color_pos;
-		std::unique_ptr<ShaderColor> color_pos_lum;
+		std::unique_ptr<coloring_shader> color_pos;
+		std::unique_ptr<coloring_shader> color_pos_lum;
 		std::unique_ptr<shader> pos_clr;
 		std::unique_ptr<ShaderColorTexture> color_pos_tex;
 	};

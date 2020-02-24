@@ -8,14 +8,14 @@
 
 namespace morda{
 
-class ShaderColor{
+class coloring_shader{
 public:
-	ShaderColor(){}
+	coloring_shader(){}
 	
-	ShaderColor(const ShaderColor&) = delete;
-	ShaderColor& operator=(const ShaderColor&) = delete;
+	coloring_shader(const coloring_shader&) = delete;
+	coloring_shader& operator=(const coloring_shader&) = delete;
 	
-	virtual ~ShaderColor()noexcept{}
+	virtual ~coloring_shader()noexcept{}
 	
 	virtual void render(const r4::mat4f &m, const VertexArray& va, r4::vec4f color)const = 0;
 

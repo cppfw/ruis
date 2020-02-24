@@ -1,12 +1,12 @@
 #pragma once
 
-#include <morda/render/ShaderColor.hpp>
+#include <morda/render/coloring_shader.hpp>
 #include "OpenGL2ShaderBase.hpp"
 
 namespace mordaren{	
 
 class OpenGL2ShaderColor :
-		public morda::ShaderColor,
+		public morda::coloring_shader,
 		public OpenGL2ShaderBase
 {
 	GLint colorUniform;

@@ -11,8 +11,6 @@ public:
 	VertexBuffer(size_t size) :
 			size(size)
 	{}
-
-	
 };
 
 }

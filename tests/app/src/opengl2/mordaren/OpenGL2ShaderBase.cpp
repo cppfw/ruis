@@ -17,17 +17,17 @@ const OpenGL2ShaderBase* OpenGL2ShaderBase::boundShader = nullptr;
 
 
 GLenum OpenGL2ShaderBase::modeMap[] = {
-	GL_TRIANGLES,			//TRIANGLES
-	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
-	GL_LINE_LOOP,			//LINE_LOOP
-	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
+	GL_TRIANGLES,			// TRIANGLES
+	GL_TRIANGLE_FAN,		// TRIANGLE_FAN
+	GL_LINE_LOOP,			// LINE_LOOP
+	GL_TRIANGLE_STRIP		// TRIANGLE_STRIP
 };
 
 
 
 
 namespace{
-//return true if not compiled
+// return true if not compiled
 bool checkForCompileErrors(GLuint shader) {
 	GLint value = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &value);
