@@ -16,7 +16,7 @@
 
 #include "ShaderTexture.hpp"
 #include "ShaderColor.hpp"
-#include "Shader.hpp"
+#include "shader.hpp"
 #include "ShaderColorTexture.hpp"
 #include "frame_buffer.hpp"
 
@@ -53,7 +53,7 @@ public:
 		std::unique_ptr<ShaderTexture> pos_tex;
 		std::unique_ptr<ShaderColor> color_pos;
 		std::unique_ptr<ShaderColor> color_pos_lum;
-		std::unique_ptr<Shader> pos_clr;
+		std::unique_ptr<shader> pos_clr;
 		std::unique_ptr<ShaderColorTexture> color_pos_tex;
 	};
 	

@@ -2,17 +2,15 @@
 
 #include <r4/matrix4.hpp>
 
-#include <utki/Unique.hpp>
-
 #include "VertexArray.hpp"
 
 namespace morda{
 
-class Shader{
+class shader{
 public:
-	Shader(){}
+	shader(){}
 	
-	virtual ~Shader()noexcept{}
+	virtual ~shader()noexcept{}
 	
 	virtual void render(const r4::mat4f& m, const VertexArray& va)const = 0;
 };

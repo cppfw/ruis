@@ -44,7 +44,7 @@ struct ProgramWrapper{
 
 
 
-class OpenGLES2ShaderBase {
+class OpenGLES2ShaderBase{
 	ProgramWrapper program;
 	
 	const GLint matrixUniform;
