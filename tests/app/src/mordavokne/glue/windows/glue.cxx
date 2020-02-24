@@ -29,7 +29,7 @@ struct WindowWrapper : public utki::Unique{
 
 	bool isHovered = false; // for tracking when mouse enters or leaves window.
 
-	utki::flags<morda::MouseButton_e> mouseButtonState;
+	utki::flags<morda::mouse_button> mouseButtonState;
 
 	bool mouseCursorIsCurrentlyVisible = true;
 
@@ -409,7 +409,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 							mordavokne::inst(),
 							false,
 							morda::Vec2r(1000000, 1000000), // outside of the window
-							morda::MouseButton_e(i),
+							morda::mouse_button(i),
 							0
 						);
 				}
@@ -419,12 +419,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_LBUTTONDOWN:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.set(morda::MouseButton_e::LEFT);
+			ww.mouseButtonState.set(morda::mouse_button::left);
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::LEFT,
+					morda::mouse_button::left,
 					0
 				);
 			return 0;
@@ -432,12 +432,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_LBUTTONUP:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.clear(morda::MouseButton_e::LEFT);
+			ww.mouseButtonState.clear(morda::mouse_button::left);
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::LEFT,
+					morda::mouse_button::left,
 					0
 				);
 			return 0;
@@ -445,12 +445,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_MBUTTONDOWN:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.set(morda::MouseButton_e::MIDDLE);
+			ww.mouseButtonState.set(morda::mouse_button::middle);
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::MIDDLE,
+					morda::mouse_button::middle,
 					0
 				);
 			return 0;
@@ -458,12 +458,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_MBUTTONUP:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.clear(morda::MouseButton_e::MIDDLE);
+			ww.mouseButtonState.clear(morda::mouse_button::middle);
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::MIDDLE,
+					morda::mouse_button::middle,
 					0
 				);
 			return 0;
@@ -471,12 +471,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_RBUTTONDOWN:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.set(morda::MouseButton_e::RIGHT);
+			ww.mouseButtonState.set(morda::mouse_button::right);
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::RIGHT,
+					morda::mouse_button::right,
 					0
 				);
 			return 0;
@@ -484,12 +484,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_RBUTTONUP:
 		{
 			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
-			ww.mouseButtonState.clear(morda::MouseButton_e::RIGHT);
+			ww.mouseButtonState.clear(morda::mouse_button::right);
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
 					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
-					morda::MouseButton_e::RIGHT,
+					morda::mouse_button::right,
 					0
 				);
 			return 0;
@@ -498,12 +498,12 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			{
 				unsigned short int times = HIWORD(wParam);
 				times /= 120;
-				morda::MouseButton_e button;
+				morda::mouse_button button;
 				if(times >= 0){
-					button = morda::MouseButton_e::WHEEL_UP;
+					button = morda::mouse_button::wheel_up;
 				}else{
 					times = -times;
-					button = morda::MouseButton_e::WHEEL_DOWN;
+					button = morda::mouse_button::wheel_down;
 				}
 
 				POINT pos;

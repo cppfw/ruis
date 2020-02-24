@@ -1116,7 +1116,7 @@ void handleInputEvents(){
 								app,
 								true,
 								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
-								morda::MouseButton_e::LEFT,
+								morda::mouse_button::left,
 								pointerId
 						);
 					}
@@ -1142,7 +1142,7 @@ void handleInputEvents(){
 								app,
 								false,
 								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
-								morda::MouseButton_e::LEFT,
+								morda::mouse_button::left,
 								pointerId
 						);
 					}

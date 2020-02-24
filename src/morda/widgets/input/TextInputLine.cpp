@@ -77,8 +77,8 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
-	if(button != MouseButton_e::LEFT){
+bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+	if(button != mouse_button::left){
 		return false;
 	}
 

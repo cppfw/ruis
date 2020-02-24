@@ -44,7 +44,7 @@ void Overlay::on_children_changed(){
 		auto mp = this->overlayLayer->try_get_widget_as<MouseProxy>("morda_overlay_mouseproxy");
 		ASSERT(mp)
 
-		mp->mouseButton = [this](Widget& w, bool isDown, const Vec2r& pos, MouseButton_e button, unsigned id) -> bool{
+		mp->mouseButton = [this](Widget& w, bool isDown, const Vec2r& pos, mouse_button button, unsigned id) -> bool{
 			this->hideContextMenu();
 			return false;
 		};

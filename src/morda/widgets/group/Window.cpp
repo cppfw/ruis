@@ -216,8 +216,8 @@ void morda::Window::setupWidgets(){
 	ASSERT(this->titleBg);
 
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
-		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
-			if(button != MouseButton_e::LEFT){
+		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+			if(button != mouse_button::left){
 				return false;
 			}
 
@@ -402,7 +402,7 @@ void morda::Window::setBorders(Sidesr borders) {
 }
 
 
-bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerId){
+bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 	if(isDown && !this->isTopmost()){
 		this->context->run_from_ui_thread(
 				[this](){

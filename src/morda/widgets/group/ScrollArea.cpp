@@ -16,7 +16,7 @@ ScrollArea::ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& des
 
 
 
-bool ScrollArea::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID) {
+bool ScrollArea::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) {
 	Vec2r d = -this->curScrollPos;
 	return this->Container::on_mouse_button(isDown, pos - d, button, pointerID);
 }

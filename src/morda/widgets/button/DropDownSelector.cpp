@@ -148,7 +148,7 @@ void DropDownSelector::showDropdownMenu() {
 	this->hoveredIndex = -1;
 
 	np->getByNameAs<MouseProxy>("contextMenuMouseProxy").mouseButton
-			= [this](Widget& w, bool isDown, const Vec2r pos, MouseButton_e button, unsigned id) -> bool{
+			= [this](Widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
 				if(!isDown){
 					this->mouseButtonUpHandler(false);
 				}
@@ -159,7 +159,7 @@ void DropDownSelector::showDropdownMenu() {
 	overlay->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
-bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
+bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 	if(!isDown){
 		this->mouseButtonUpHandler(true);
 	}

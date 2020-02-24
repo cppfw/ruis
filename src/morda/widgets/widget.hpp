@@ -562,12 +562,12 @@ public:
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
-	virtual bool on_mouse_button(bool is_down, const morda::Vec2r& pos, MouseButton_e button, unsigned pointer_id){
+	virtual bool on_mouse_button(bool is_down, const morda::Vec2r& pos, mouse_button button, unsigned pointer_id){
 		return this->onMouseButton(is_down, pos, button, pointer_id); //TODO: deprecated, remove. Should return false.
 	}
 
 	//TODO: deprecated, remove.
-	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, MouseButton_e button, unsigned pointerID){
+	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 		return false;
 	}
 

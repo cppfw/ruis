@@ -89,7 +89,7 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
 namespace{
 
 
-void mouseButton(NSEvent* e, bool isDown, morda::MouseButton_e button){
+void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	NSPoint winPos = [e locationInWindow];
 	auto pos = morda::Vec2r(winPos.x, winPos.y).rounded();
 	handleMouseButton(
@@ -448,44 +448,44 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 
 -(void)mouseDown: (NSEvent*)e{
 //	TRACE(<< "left down!!!!!" << std::endl)
-	mouseButton(e, true, morda::MouseButton_e::LEFT);
+	mouseButton(e, true, morda::mouse_button::left);
 }
 
 -(void)mouseUp: (NSEvent*)e{
 //	TRACE(<< "left up!!!!!" << std::endl)
-	mouseButton(e, false, morda::MouseButton_e::LEFT);
+	mouseButton(e, false, morda::mouse_button::left);
 }
 
 -(void)rightMouseDown: (NSEvent*)e{
 //	TRACE(<< "right down!!!!!" << std::endl)
-	mouseButton(e, true, morda::MouseButton_e::RIGHT);
+	mouseButton(e, true, morda::mouse_button::right);
 }
 
 -(void)rightMouseUp: (NSEvent*)e{
 //	TRACE(<< "right up!!!!!" << std::endl)
-	mouseButton(e, false, morda::MouseButton_e::RIGHT);
+	mouseButton(e, false, morda::mouse_button::right);
 }
 
 -(void)otherMouseDown: (NSEvent*)e{
 //	TRACE(<< "middle down!!!!!" << std::endl)
-	mouseButton(e, true, morda::MouseButton_e::MIDDLE);
+	mouseButton(e, true, morda::mouse_button::middle);
 }
 
 -(void)otherMouseUp: (NSEvent*)e{
 //	TRACE(<< "middle up!!!!!" << std::endl)
-	mouseButton(e, false, morda::MouseButton_e::MIDDLE);
+	mouseButton(e, false, morda::mouse_button::middle);
 }
 
 -(void)scrollWheel: (NSEvent*)e{
 //	TRACE(<< "mouse wheel!!!!!" << std::endl)
 
 	if([e hasPreciseScrollingDeltas] == NO){
-		morda::MouseButton_e button;
+		morda::mouse_button button;
 //		TRACE(<< "dy = " << float(dy) << std::endl)
 		if([e scrollingDeltaY] < 0){
-			button = morda::MouseButton_e::WHEEL_DOWN;
+			button = morda::mouse_button::wheel_down;
 		}else{
-			button = morda::MouseButton_e::WHEEL_UP;
+			button = morda::mouse_button::wheel_up;
 		}
 //		TRACE(<< "button = " << unsigned(button) << std::endl)
 

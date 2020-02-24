@@ -64,7 +64,7 @@ public:
 		}
 	}
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId) override{
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -476,8 +476,8 @@ public:
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId) -> bool{
-					if(button != morda::MouseButton_e::LEFT){
+				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::Widget& widget, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) -> bool{
+					if(button != morda::mouse_button::left){
 						return false;
 					}
 					if(!isDown){
@@ -536,8 +536,8 @@ public:
 
 				auto mp = v->try_get_widget_as<morda::MouseProxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouseButton = [this, path](morda::Widget&, bool isDown, const morda::Vec2r&, morda::MouseButton_e button, unsigned pointerId) -> bool{
-					if(!isDown || button != morda::MouseButton_e::LEFT){
+				mp->mouseButton = [this, path](morda::Widget&, bool isDown, const morda::Vec2r&, morda::mouse_button button, unsigned pointerId) -> bool{
+					if(!isDown || button != morda::mouse_button::left){
 						return false;
 					}
 
@@ -730,8 +730,8 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
-				if(button == morda::MouseButton_e::LEFT){
+			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
 					return true;
@@ -791,8 +791,8 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned id){
-				if(button == morda::MouseButton_e::LEFT){
+			mouseProxy->mouseButton = [state](morda::Widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
 					return true;

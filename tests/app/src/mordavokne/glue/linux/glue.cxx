@@ -573,19 +573,19 @@ public:
 	}
 };
 
-morda::MouseButton_e buttonNumberToEnum(int number){
+morda::mouse_button buttonNumberToEnum(int number){
 	switch(number){
 		case 1:
-			return morda::MouseButton_e::LEFT;
+			return morda::mouse_button::left;
 		default:
 		case 2:
-			return morda::MouseButton_e::MIDDLE;
+			return morda::mouse_button::middle;
 		case 3:
-			return morda::MouseButton_e::RIGHT;
+			return morda::mouse_button::right;
 		case 4:
-			return morda::MouseButton_e::WHEEL_UP;
+			return morda::mouse_button::wheel_up;
 		case 5:
-			return morda::MouseButton_e::WHEEL_DOWN;
+			return morda::mouse_button::wheel_down;
 	}
 }
 
