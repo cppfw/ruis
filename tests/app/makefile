@@ -11,11 +11,11 @@ this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 this_srcs += src/main.cpp
 
 this_cxxflags += -Wall
-this_cxxflags += -Wno-comment #no warnings on nested comments
-this_cxxflags += -Wno-format #no warnings about format
-this_cxxflags += -Wno-format-security #no warnings about format
+this_cxxflags += -Wno-comment # no warnings on nested comments
+this_cxxflags += -Wno-format # no warnings about format
+this_cxxflags += -Wno-format-security # no warnings about format
 this_cxxflags += -DDEBUG
-this_cxxflags += -fstrict-aliasing #strict aliasing!!!
+this_cxxflags += -fstrict-aliasing
 this_cxxflags += -g
 this_cxxflags += -std=c++14
 
@@ -26,7 +26,7 @@ else
 endif
 
 this_cxxflags += -I$(d)../../src
-this_objcflags += -I$(d)../../src -I$(d)src/opengl2
+this_objcflags += -I$(d)../../src -I$(d)src/opengl2 -std=c++14
 
 ifeq ($(ogles2), true)
     this_srcs += $(call prorab-src-dir,src/opengles2)
