@@ -317,7 +317,7 @@ void widget::unfocus()noexcept{
 
 
 
-r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
+r4::recti widget::compute_viewport_rect(const Matr4r& matrix)const noexcept{
 	r4::recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
@@ -327,7 +327,7 @@ r4::recti widget::compute_viewport_rect(const Matr4r& matrix) const noexcept{
 }
 
 
-Vec2r widget::measure(const morda::Vec2r& quotum) const{
+Vec2r widget::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){
@@ -338,7 +338,7 @@ Vec2r widget::measure(const morda::Vec2r& quotum) const{
 }
 
 
-vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor) {
+vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 	if(ancestor == this || !this->parent()){
 		return pos;
 	}

@@ -110,9 +110,13 @@ Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	return d;
 }
 
-void ScrollArea::arrangeWidgets() {
+void ScrollArea::arrangeWidgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params(**i);
+		// NOTE: const_cast() to force calling of constant version of get_layout_params() because
+		//       non-constant version of it invalidates layout.
+		auto& lp = const_cast<
+				std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type
+			>(this)->get_layout_params(**i);
 
 		auto d = this->dimForWidget(**i, lp);
 
@@ -125,7 +129,7 @@ void ScrollArea::lay_out(){
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 
-	//distance of content's bottom right corner from bottom right corner of the ScrollArea
+	// distance of content's bottom right corner from bottom right corner of the ScrollArea
 	Vec2r br = this->curScrollPos - this->effectiveDim;
 
 	if(br.x > 0){
