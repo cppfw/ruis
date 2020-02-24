@@ -17,7 +17,7 @@
 #include "ShaderTexture.hpp"
 #include "coloring_shader.hpp"
 #include "shader.hpp"
-#include "ShaderColorTexture.hpp"
+#include "coloring_texturing_shader.hpp"
 #include "frame_buffer.hpp"
 
 namespace morda{
@@ -54,7 +54,7 @@ public:
 		std::unique_ptr<coloring_shader> color_pos;
 		std::unique_ptr<coloring_shader> color_pos_lum;
 		std::unique_ptr<shader> pos_clr;
-		std::unique_ptr<ShaderColorTexture> color_pos_tex;
+		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
 	};
 	
 	virtual std::unique_ptr<shaders> create_shaders() = 0;

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <morda/render/ShaderColorTexture.hpp>
+#include <morda/render/coloring_texturing_shader.hpp>
 
 #include "OpenGLES2ShaderBase.hpp"
 
 namespace mordaren{	
 
 class OpenGLES2ShaderColorPosTex :
-		public morda::ShaderColorTexture,
+		public morda::coloring_texturing_shader,
 		public OpenGLES2ShaderBase
 {
 	GLint colorUniform;

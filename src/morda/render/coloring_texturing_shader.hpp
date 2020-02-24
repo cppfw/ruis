@@ -10,14 +10,14 @@
 
 namespace morda{
 
-class ShaderColorTexture{
+class coloring_texturing_shader{
 public:
-	ShaderColorTexture(){}
+	coloring_texturing_shader(){}
 	
-	ShaderColorTexture(const ShaderColorTexture&) = delete;
-	ShaderColorTexture& operator=(const ShaderColorTexture&) = delete;
+	coloring_texturing_shader(const coloring_texturing_shader&) = delete;
+	coloring_texturing_shader& operator=(const coloring_texturing_shader&) = delete;
 	
-	virtual ~ShaderColorTexture()noexcept{}
+	virtual ~coloring_texturing_shader()noexcept{}
 	
 	virtual void render(const r4::mat4f &m, const morda::VertexArray& va, r4::vec4f color, const morda::Texture2D& tex)const = 0;
 };
