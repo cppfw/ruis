@@ -85,20 +85,20 @@ std::shared_ptr<res_ninepatch> res_ninepatch::load(morda::context& ctx, const pu
 	return std::make_shared<res_ninepatch>(ctx.shared_from_this(), image, borders);
 }
 
-res_ninepatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul) :
+res_ninepatch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul) :
 		images_v(l),
 		parent(parent),
 		mul(mul)
 {}
 
-res_ninepatch::ImageMatrix::~ImageMatrix()noexcept{
+res_ninepatch::image_matrix::~image_matrix()noexcept{
 	if(auto p = this->parent.lock()){		
 		p->cache.erase(this->mul);
 	}
 }
 
 
-std::shared_ptr<res_ninepatch::ImageMatrix> res_ninepatch::get(Sidesr borders) const {
+std::shared_ptr<res_ninepatch::image_matrix> res_ninepatch::get(Sidesr borders) const {
 	real mul = 1;
 	{
 		auto req = borders.begin();
@@ -141,7 +141,7 @@ std::shared_ptr<res_ninepatch::ImageMatrix> res_ninepatch::get(Sidesr borders) c
 	
 //	TRACE(<< "scaledBorders = " << std::setprecision(10) << scaledBorders << std::endl)
 	
-	auto ret = std::make_shared<ImageMatrix>(
+	auto ret = std::make_shared<image_matrix>(
 			std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
 				{{
 					std::make_shared<ResSubImage>(this->context, quadTex, Rectr(

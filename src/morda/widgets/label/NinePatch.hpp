@@ -31,7 +31,7 @@ class NinePatch :
 {
 	std::shared_ptr<const res_ninepatch> image;
 
-	std::shared_ptr<res_ninepatch::ImageMatrix> scaledImage;
+	std::shared_ptr<res_ninepatch::image_matrix> scaledImage;
 
 	Sidesr borders = Sidesr(layout_params::min);
 
