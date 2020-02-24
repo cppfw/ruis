@@ -14,7 +14,7 @@
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
 
-#include "ShaderTexture.hpp"
+#include "texturing_shader.hpp"
 #include "coloring_shader.hpp"
 #include "shader.hpp"
 #include "coloring_texturing_shader.hpp"
@@ -50,7 +50,7 @@ public:
 		) = 0;
 	
 	struct shaders{
-		std::unique_ptr<ShaderTexture> pos_tex;
+		std::unique_ptr<texturing_shader> pos_tex;
 		std::unique_ptr<coloring_shader> color_pos;
 		std::unique_ptr<coloring_shader> color_pos_lum;
 		std::unique_ptr<shader> pos_clr;
