@@ -9,19 +9,10 @@
 #include "TexFont.hxx"
 #include "../context.hpp"
 
-//TODO: remove
-#include "../gui.hpp"
-
-
-
 using namespace morda;
 
-
-
 namespace{
-
 constexpr const char32_t unknownChar_c = 0xfffd;
-
 }
 
 TexFont::FreeTypeLibWrapper::FreeTypeLibWrapper() {
