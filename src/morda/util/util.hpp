@@ -1,7 +1,5 @@
 #pragma once
 
-#include <tuple>
-
 #include <utki/config.hpp>
 
 #include <r4/vector2.hpp>
@@ -85,7 +83,7 @@ bool is_leaf_property(const puu::leaf& l);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-std::shared_ptr<texture_2d> loadTexture(renderer& r, const papki::file& fi);
+std::shared_ptr<texture_2d> load_texture(renderer& r, const papki::file& fi);
 
 
 /**

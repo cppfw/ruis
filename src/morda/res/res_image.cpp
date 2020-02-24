@@ -103,7 +103,7 @@ public:
 	}
 	
 	static std::shared_ptr<res_raster_image> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<res_raster_image>(ctx.shared_from_this(), loadTexture(*ctx.renderer, fi));
+		return std::make_shared<res_raster_image>(ctx.shared_from_this(), load_texture(*ctx.renderer, fi));
 	}
 };
 

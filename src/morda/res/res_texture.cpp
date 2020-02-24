@@ -16,5 +16,5 @@ std::shared_ptr<res_texture> res_texture::load(morda::context& ctx, const puu::f
 		}
 	}
 
-	return std::make_shared<res_texture>(ctx.shared_from_this(), loadTexture(*ctx.renderer, fi));
+	return std::make_shared<res_texture>(ctx.shared_from_this(), load_texture(*ctx.renderer, fi));
 }

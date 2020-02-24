@@ -7,9 +7,6 @@
 
 #include "RasterImage.hpp"
 
-//TODO: remove
-#include "../gui.hpp"
-
 using namespace morda;
 
 
@@ -89,7 +86,7 @@ morda::texture_2d::type morda::numChannelsToTexType(unsigned numChannels){
 	}
 }
 
-std::shared_ptr<texture_2d> morda::loadTexture(renderer& r, const papki::file& fi){
+std::shared_ptr<texture_2d> morda::load_texture(renderer& r, const papki::file& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 
