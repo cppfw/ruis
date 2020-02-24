@@ -31,7 +31,7 @@ const real cursorWidth_c = real(1.0);
 TextInputLine::TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		SingleLineTextWidget(this->context, desc),
-		CharInputWidget(this->context)
+		character_input_widget(this->context)
 {
 	this->set_clip(true);
 }
@@ -272,7 +272,7 @@ bool TextInputLine::on_key(bool isDown, key keyCode){
 	return false;
 }
 
-void TextInputLine::onCharacterInput(const std::u32string& unicode, key keycode){
+void TextInputLine::on_character_input(const std::u32string& unicode, key keycode){
 	switch(keycode){
 		case key::enter:
 			break;

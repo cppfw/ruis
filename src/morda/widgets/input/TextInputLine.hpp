@@ -4,7 +4,7 @@
 #include "../base/TextWidget.hpp"
 
 #include "../../updateable.hpp"
-#include "../CharInputWidget.hpp"
+#include "../character_input_widget.hpp"
 
 
 namespace morda{
@@ -14,7 +14,7 @@ namespace morda{
  */
 class TextInputLine :
 		public SingleLineTextWidget,
-		public CharInputWidget,
+		public character_input_widget,
 		private updateable
 {
 	size_t firstVisibleCharIndex = 0;
@@ -59,7 +59,7 @@ public:
 
 	void update(std::uint32_t dt)override;
 
-	void onCharacterInput(const std::u32string& unicode, key keycode)override;
+	void on_character_input(const std::u32string& unicode, key keycode)override;
 
 	void setCursorIndex(size_t index, bool selection = false);
 

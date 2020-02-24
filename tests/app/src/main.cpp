@@ -15,7 +15,7 @@
 
 #include "../../../src/morda/res/res_texture.hpp"
 
-#include "../../../src/morda/widgets/CharInputWidget.hpp"
+#include "../../../src/morda/widgets/character_input_widget.hpp"
 #include "../../../src/morda/widgets/group/ScrollArea.hpp"
 #include "../../../src/morda/widgets/group/Row.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
@@ -35,14 +35,14 @@
 class SimpleWidget :
 		virtual public morda::widget,
 		public morda::updateable,
-		public morda::CharInputWidget
+		public morda::character_input_widget
 {
 	std::shared_ptr<morda::res_texture> tex;
 
 public:
 	SimpleWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			morda::widget(std::move(c), desc),
-			morda::CharInputWidget(this->context)
+			morda::character_input_widget(this->context)
 	{
 //		TRACE(<< "loading texture" << std::endl)
 		this->tex = this->context->loader.load<morda::res_texture>("tex_sample");
@@ -111,7 +111,7 @@ public:
 		return false;
 	}
 
-	void onCharacterInput(const std::u32string& unicode, morda::key key) override{
+	void on_character_input(const std::u32string& unicode, morda::key key)override{
 		if(unicode.size() == 0){
 			return;
 		}

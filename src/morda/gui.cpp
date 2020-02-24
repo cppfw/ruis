@@ -220,8 +220,8 @@ void gui::send_key(bool is_down, key key_code){
 void gui::send_character_input(const unicode_provider& unicode, key key_code){
 	if(auto w = this->context->focused_widget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-		if(auto c = dynamic_cast<CharInputWidget*>(w.operator->())){
-			c->onCharacterInput(unicode.get(), key_code);
+		if(auto c = dynamic_cast<character_input_widget*>(w.get())){
+			c->on_character_input(unicode.get(), key_code);
 		}
 	}
 }
