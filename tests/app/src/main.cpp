@@ -14,7 +14,6 @@
 #include "../../../src/morda/widgets/label/Text.hpp"
 
 #include "../../../src/morda/res/ResTexture.hpp"
-#include "../../../src/morda/res/ResFont.hpp"
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/group/ScrollArea.hpp"

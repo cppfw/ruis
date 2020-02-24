@@ -3,7 +3,7 @@
 #include "../widget.hpp"
 #include "ColorWidget.hpp"
 
-#include "../../res/ResFont.hpp"
+#include "../../res/res_font.hpp"
 
 #include <r4/rectangle.hpp>
 
@@ -17,7 +17,7 @@ namespace morda{
  */
 //TODO: should not be color widget
 class TextWidget : public ColorWidget{
-	std::shared_ptr<ResFont> font_v;
+	std::shared_ptr<res_font> font_v;
 
 protected:
 	std::vector<std::u32string> lines;
@@ -26,7 +26,7 @@ public:
 	TextWidget(const TextWidget&) = delete;
 	TextWidget& operator=(const TextWidget&) = delete;
 
-	void setFont(std::shared_ptr<ResFont> font);
+	void setFont(std::shared_ptr<res_font> font);
 
 	const morda::font& font()const{
 		return this->font_v->font();

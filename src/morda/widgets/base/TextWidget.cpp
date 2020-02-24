@@ -9,7 +9,7 @@
 
 using namespace morda;
 
-void TextWidget::setFont(std::shared_ptr<ResFont> font){
+void TextWidget::setFont(std::shared_ptr<res_font> font){
 	if(!font){
 		throw std::invalid_argument("TextWidget::SetFont(): passed argument is null");
 	}
@@ -32,13 +32,13 @@ TextWidget::TextWidget(std::shared_ptr<morda::context> c, const puu::forest& des
 		}
 
 		if(p.value == "font"){
-			this->font_v = this->context->loader.load<morda::ResFont>(get_property_value(p).to_string().c_str());
+			this->font_v = this->context->loader.load<morda::res_font>(get_property_value(p).to_string().c_str());
 		}
 	}
 
 	// load default font if needed
 	if(!this->font_v){
-		this->font_v = this->context->loader.load<ResFont>("morda_fnt_normal");
+		this->font_v = this->context->loader.load<res_font>("morda_fnt_normal");
 	}
 }
 

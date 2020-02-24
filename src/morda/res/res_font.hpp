@@ -10,10 +10,7 @@
 
 #include "../util/util.hpp"
 
-
 namespace morda{
-
-
 
 /**
  * @brief %Font resource.
@@ -33,15 +30,15 @@ namespace morda{
  * }
  * @endcode
  */
-class ResFont : public morda::resource{
+class res_font : public morda::resource{
 	friend class morda::resource_loader;
 
 	std::unique_ptr<morda::font> f;
 
 public:
-	ResFont(std::shared_ptr<morda::context> context, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	res_font(std::shared_ptr<morda::context> context, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
-	~ResFont()noexcept{}
+	~res_font()noexcept{}
 
 	/**
 	 * @brief Get font object held by this resource.
@@ -53,7 +50,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<ResFont> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<res_font> load(morda::context& ctx, const puu::forest& desc, const papki::file &fi);
 };
 
 

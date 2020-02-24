@@ -2,7 +2,7 @@
 
 
 #include "../widget.hpp"
-#include "../../res/ResFont.hpp"
+#include "../../res/res_font.hpp"
 #include "../base/TextWidget.hpp"
 
 
