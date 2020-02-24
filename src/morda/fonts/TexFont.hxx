@@ -19,7 +19,7 @@
 #include "../render/texture_2d.hpp"
 #include "../render/vertex_array.hpp"
 
-#include "Font.hpp"
+#include "font.hpp"
 
 
 namespace morda{
@@ -30,7 +30,7 @@ namespace morda{
  * Then, for rendering strings of text it renders
  * row of quads with texture coordinates corresponding to string characters on the texture.
  */
-class TexFont : public Font{
+class TexFont : public font{
 	mutable std::list<char32_t> lastUsedOrder;
 	
 	struct Glyph{
@@ -80,14 +80,14 @@ public:
 	 */
 	TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
-	real charAdvance(char32_t c) const override;
+	real get_advance(char32_t c)const override;
 	
 protected:
-	real renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const override;
+	real render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const override;
 
-	real stringAdvanceInternal(const std::u32string& str)const override;
+	real get_advance_internal(const std::u32string& str)const override;
 
-	morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const override;
+	morda::Rectr get_bounding_box_internal(const std::u32string& str)const override;
 	
 private:	
 	real renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const;

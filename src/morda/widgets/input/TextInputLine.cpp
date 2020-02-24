@@ -57,10 +57,10 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 		
 		using std::round;
 		
-		matr.translate(-this->textBoundingBox().p.x + this->xOffset, round((this->font().height() + this->font().ascender() - this->font().descender()) / 2));
+		matr.translate(-this->textBoundingBox().p.x + this->xOffset, round((this->font().get_height() + this->font().get_ascender() - this->font().get_descender()) / 2));
 		
 		ASSERT(this->firstVisibleCharIndex <= this->getText().size())
-		this->font().renderString(
+		this->font().render(
 				matr,
 				morda::colorToVec4f(this->color()),
 				this->getText().substr(this->firstVisibleCharIndex, this->getText().size() - this->firstVisibleCharIndex)
@@ -111,7 +111,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	}
 	
 	if(quotum.y < 0){
-		ret.y = this->font().height();
+		ret.y = this->font().get_height();
 	}else{
 		ret.y = quotum.y;
 	}
@@ -148,7 +148,7 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	
 	ASSERT(this->firstVisibleCharIndex <= this->getText().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = this->font().stringAdvance(
+	this->cursorPos = this->font().get_advance(
 			std::u32string(this->getText(), this->firstVisibleCharIndex, this->cursorIndex - this->firstVisibleCharIndex)
 		) + this->xOffset;
 	
@@ -167,7 +167,7 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 			)
 		{
 			ASSERT(i != this->getText().rend())
-			this->xOffset -= this->font().charAdvance(*i);
+			this->xOffset -= this->font().get_advance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
 		}
@@ -192,7 +192,7 @@ real TextInputLine::indexToPos(size_t index){
 			++i, --index
 		)
 	{
-		ret += this->font().charAdvance(*i);
+		ret += this->font().get_advance(*i);
 		if(ret >= this->rect().d.x){
 			ret = this->rect().d.x;
 			break;
@@ -208,7 +208,7 @@ size_t TextInputLine::posToIndex(real pos){
 	real p = this->xOffset;
 	
 	for(auto i = this->getText().begin() + this->firstVisibleCharIndex; i != this->getText().end(); ++i){
-		real w = this->font().charAdvance(*i);
+		real w = this->font().get_advance(*i);
 		
 		if(pos < p + w){
 			if(pos < p + w / 2){

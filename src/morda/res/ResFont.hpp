@@ -6,7 +6,7 @@
 
 #include "../resource_loader.hpp"
 
-#include "../fonts/Font.hpp"
+#include "../fonts/font.hpp"
 
 #include "../util/util.hpp"
 
@@ -36,7 +36,7 @@ namespace morda{
 class ResFont : public morda::resource{
 	friend class morda::resource_loader;
 
-	std::unique_ptr<morda::Font> f;
+	std::unique_ptr<morda::font> f;
 
 public:
 	ResFont(std::shared_ptr<morda::context> context, const papki::file& fi, unsigned fontSize, unsigned maxCached);
@@ -47,7 +47,7 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	const morda::Font& font()noexcept{
+	const morda::font& font()noexcept{
 		ASSERT(this->f)
 		return *this->f;
 	}

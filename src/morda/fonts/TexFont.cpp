@@ -35,6 +35,7 @@ TexFont::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::
 TexFont::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
 	FT_Done_Face(this->f);
 }
+
 TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
 		if(c == unknownChar_c){
@@ -52,8 +53,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	g.advance = real(m->horiAdvance) / (64.0f);
 	
 	if(!slot->bitmap.buffer){
-		//empty glyph (space, tab, etc...)
-		
+		// empty glyph (space, tab, etc...)
 		return g;
 	}
 	
@@ -62,8 +62,6 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 	RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
 	im.blit(0, 0, glyphim, 1, 0);
 	im.clear(0, std::uint8_t(0xff));
-	
-	
 	
 	std::array<r4::vec2f, 4> verts;
 	verts[0] = (morda::Vec2r(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
@@ -94,7 +92,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 
 
 TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		Font(std::move(c)),
+		font(std::move(c)),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {
@@ -119,9 +117,9 @@ TexFont::TexFont(std::shared_ptr<morda::context> c, const papki::file& fi, unsig
 	
 	using std::ceil;
 	
-	this->height_v = ceil((this->face.f->size->metrics.height) / 64.0f);
-	this->descender_v = -ceil((this->face.f->size->metrics.descender) / 64.0f);
-	this->ascender_v = ceil((this->face.f->size->metrics.ascender) / 64.0f);
+	this->height = ceil((this->face.f->size->metrics.height) / 64.0f);
+	this->descender = -ceil((this->face.f->size->metrics.descender) / 64.0f);
+	this->ascender = ceil((this->face.f->size->metrics.ascender) / 64.0f);
 
 //	TRACE(<< "TexFont::TexFont(): height_v = " << this->height_v << std::endl)
 }
@@ -167,7 +165,7 @@ real TexFont::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, 
 
 
 
-real TexFont::stringAdvanceInternal(const std::u32string& str)const{
+real TexFont::get_advance_internal(const std::u32string& str)const{
 	real ret = 0;
 
 	auto s = str.begin();
@@ -186,7 +184,7 @@ real TexFont::stringAdvanceInternal(const std::u32string& str)const{
 
 
 
-morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
+morda::Rectr TexFont::get_bounding_box_internal(const std::u32string& str)const{
 	morda::Rectr ret;
 
 	if(str.size() == 0){
@@ -238,7 +236,7 @@ morda::Rectr TexFont::stringBoundingBoxInternal(const std::u32string& str)const{
 
 
 
-real TexFont::renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
+real TexFont::render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
 		return 0;
 	}
@@ -267,7 +265,7 @@ real TexFont::renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color,
 
 
 
-real TexFont::charAdvance(char32_t c) const{
+real TexFont::get_advance(char32_t c)const{
 	auto& g = this->getGlyph(c);
 	return g.advance;
 }

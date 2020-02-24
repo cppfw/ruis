@@ -28,7 +28,7 @@ public:
 
 	void setFont(std::shared_ptr<ResFont> font);
 
-	const morda::Font& font()const{
+	const morda::font& font()const{
 		return this->font_v->font();
 	}
 
@@ -75,7 +75,7 @@ protected:
 	}
 
 	void recomputeBoundingBox(){
-		this->bb = this->font().stringBoundingBox(this->getText());
+		this->bb = this->font().get_bounding_box(this->getText());
 	}
 public:
 	void onFontChanged()override{

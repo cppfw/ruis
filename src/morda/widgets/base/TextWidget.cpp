@@ -62,7 +62,7 @@ SingleLineTextWidget::SingleLineTextWidget(std::shared_ptr<morda::context> c, co
 
 
 Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret(this->bb.d.x, this->font().height());
+	Vec2r ret(this->bb.d.x, this->font().get_height());
 
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){

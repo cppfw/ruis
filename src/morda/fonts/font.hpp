@@ -17,25 +17,25 @@ namespace morda{
 /**
  * @brief Basic class representing a font.
  */
-class Font{
+class font{
 public:
 	const std::shared_ptr<morda::context> context;
 protected:
 	/**
 	 * @brief Distance between lines of text.
 	 */
-	real height_v;
+	real height;
 	
-	real descender_v;
+	real descender;
 	
-	real ascender_v;
+	real ascender;
 	
-	Font(std::shared_ptr<morda::context> context) :
+	font(std::shared_ptr<morda::context> context) :
 			context(std::move(context))
 	{}
 	
-	Font(const Font&) = delete;
-	Font& operator=(const Font&) = delete;
+	font(const font&) = delete;
+	font& operator=(const font&) = delete;
 	
 	/**
 	 * @brief Render string of text.
@@ -44,23 +44,23 @@ protected:
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real renderStringInternal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const = 0;
+	virtual real render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
 	 * @param str - string of text to get advance for.
 	 * @return Advance of the text string.
 	 */
-	virtual real stringAdvanceInternal(const std::u32string& str)const = 0;
+	virtual real get_advance_internal(const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	virtual morda::Rectr stringBoundingBoxInternal(const std::u32string& str)const = 0;
+	virtual morda::Rectr get_bounding_box_internal(const std::u32string& str)const = 0;
 public:
-	virtual ~Font()noexcept{}
+	virtual ~font()noexcept{}
 	
 	/**
 	 * @brief Render string of text.
@@ -69,19 +69,8 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
-		return this->renderStringInternal(matrix, color, unikod::toUtf32(str));
-	}
-	
-	/**
-	 * @brief Render string of text.
-	 * @param matrix - transformation matrix to use when rendering.
-	 * @param color - text color.
-	 * @param str - string of text to render.
-	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
-	 */
-	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
-		return this->renderStringInternal(matrix, color, str);
+	real render(const morda::Matr4r& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
+		return this->render_internal(matrix, color, unikod::toUtf32(str));
 	}
 	
 	/**
@@ -91,8 +80,8 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const char* str)const{
-		return this->renderString(matrix, color, unikod::Utf8Iterator(str));
+	real render(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
+		return this->render_internal(matrix, color, str);
 	}
 	
 	/**
@@ -102,27 +91,19 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real renderString(const morda::Matr4r& matrix, r4::vec4f color, const std::string& str)const{
-		return this->renderString(matrix, color, str.c_str());
-	}
-	
-	
-	/**
-	 * @brief Get string advance.
-	 * @param str - string to get advance for.
-	 * @return Advance of the string of text.
-	 */
-	real stringAdvance(unikod::Utf8Iterator str)const{
-		return this->stringAdvanceInternal(unikod::toUtf32(str));
+	real render(const morda::Matr4r& matrix, r4::vec4f color, const char* str)const{
+		return this->render(matrix, color, unikod::Utf8Iterator(str));
 	}
 	
 	/**
-	 * @brief Get string advance.
-	 * @param str - string to get advance for.
-	 * @return Advance of the string of text.
+	 * @brief Render string of text.
+	 * @param matrix - transformation matrix to use when rendering.
+	 * @param color - text color.
+	 * @param str - string of text to render.
+	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real stringAdvance(const std::u32string& str)const{
-		return this->stringAdvanceInternal(str);
+	real render(const morda::Matr4r& matrix, r4::vec4f color, const std::string& str)const{
+		return this->render(matrix, color, str.c_str());
 	}
 	
 	/**
@@ -130,8 +111,8 @@ public:
 	 * @param str - string to get advance for.
 	 * @return Advance of the string of text.
 	 */
-	real stringAdvance(const char* str)const{
-		return this->stringAdvance(unikod::Utf8Iterator(str));
+	real get_advance(unikod::Utf8Iterator str)const{
+		return this->get_advance_internal(unikod::toUtf32(str));
 	}
 	
 	/**
@@ -139,8 +120,26 @@ public:
 	 * @param str - string to get advance for.
 	 * @return Advance of the string of text.
 	 */
-	real stringAdvance(const std::string& str)const{
-		return this->stringAdvance(str.c_str());
+	real get_advance(const std::u32string& str)const{
+		return this->get_advance_internal(str);
+	}
+	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
+	real get_advance(const char* str)const{
+		return this->get_advance(unikod::Utf8Iterator(str));
+	}
+	
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @return Advance of the string of text.
+	 */
+	real get_advance(const std::string& str)const{
+		return this->get_advance(str.c_str());
 	}
 	
 	
@@ -149,7 +148,7 @@ public:
 	 * @param c - character to get advance for.
 	 * @return Advance of the character.
 	 */
-	virtual real charAdvance(char32_t c)const = 0;
+	virtual real get_advance(char32_t c)const = 0;
 	
 	
 	/**
@@ -157,8 +156,8 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr stringBoundingBox(unikod::Utf8Iterator str)const{
-		return this->stringBoundingBoxInternal(unikod::toUtf32(str));
+	morda::Rectr get_bounding_box(unikod::Utf8Iterator str)const{
+		return this->get_bounding_box_internal(unikod::toUtf32(str));
 	}
 	
 	/**
@@ -166,8 +165,8 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr stringBoundingBox(const std::u32string& str)const{
-		return this->stringBoundingBoxInternal(str);
+	morda::Rectr get_bounding_box(const std::u32string& str)const{
+		return this->get_bounding_box_internal(str);
 	}
 	
 	/**
@@ -175,8 +174,8 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr stringBoundingBox(const char* str)const{
-		return this->stringBoundingBox(unikod::Utf8Iterator(str));
+	morda::Rectr get_bounding_box(const char* str)const{
+		return this->get_bounding_box(unikod::Utf8Iterator(str));
 	}
 	
 	/**
@@ -184,8 +183,8 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr stringBoundingBox(const std::string& str)const{
-		return this->stringBoundingBox(str.c_str());
+	morda::Rectr get_bounding_box(const std::string& str)const{
+		return this->get_bounding_box(str.c_str());
 	}
 	
 	/**
@@ -193,16 +192,16 @@ public:
 	 * Height of the font is the distance normally used between lines of text.
 	 * @return Height of the font.
 	 */
-	real height()const noexcept{
-		return this->height_v;
+	real get_height()const noexcept{
+		return this->height;
 	}
 	
-	real descender()const noexcept{
-		return this->descender_v;
+	real get_descender()const noexcept{
+		return this->descender;
 	}
 	
-	real ascender()const noexcept{
-		return this->ascender_v;
+	real get_ascender()const noexcept{
+		return this->ascender;
 	}
 };
 
