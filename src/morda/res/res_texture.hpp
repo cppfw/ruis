@@ -10,7 +10,6 @@
 
 namespace morda{
 
-
 /**
  * @brief Texture resource.
  * 
@@ -25,7 +24,7 @@ namespace morda{
  * }
  * @endcode
  */
-class ResTexture : public morda::resource{
+class res_texture : public morda::resource{
 	friend class morda::resource_loader;
 
 	std::shared_ptr<texture_2d> tex_v;
@@ -35,14 +34,14 @@ public:
 	 * @param c - context.
 	 * @param texture - texture object to initialize this resource with.
 	 */
-	ResTexture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
+	res_texture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
 			resource(std::move(c)),
 			tex_v(std::move(texture))
 	{
 		ASSERT(this->tex_v)
 	}
 
-	~ResTexture()noexcept{}
+	~res_texture()noexcept{}
 
 	/**
 	 * @brief Get texture object held by this resource.
@@ -53,7 +52,7 @@ public:
 	}
 
 private:
-	static std::shared_ptr<ResTexture> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_texture> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 

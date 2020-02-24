@@ -4,7 +4,7 @@
 
 #include <r4/rectangle.hpp>
 
-#include "ResTexture.hpp"
+#include "res_texture.hpp"
 
 #include "../resource_loader.hpp"
 
@@ -106,13 +106,13 @@ public:
 class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
 	friend class ResImage;
 	
-	std::shared_ptr<ResTexture> tex;
+	std::shared_ptr<res_texture> tex;
 	
 	std::shared_ptr<vertex_array> vao;
 	
 public:
-	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex, const Rectr& rect);
-	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex);
+	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect);
+	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex);
 	
 	ResAtlasImage(const ResAtlasImage& orig) = delete;
 	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;

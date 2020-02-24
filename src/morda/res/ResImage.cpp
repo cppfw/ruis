@@ -22,7 +22,7 @@ ResImage::ResImage(std::shared_ptr<morda::context> c) :
 {}
 
 
-ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex, const Rectr& rect) :
+ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect) :
 		ResImage(std::move(c)),
 		ResImage::QuadTexture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
@@ -35,7 +35,7 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<
 	ASSERT(false)
 }
 
-ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex) :
+ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex) :
 		ResImage(std::move(c)),
 		ResImage::QuadTexture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
@@ -45,12 +45,12 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<
 
 
 std::shared_ptr<ResAtlasImage> ResAtlasImage::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
-	std::shared_ptr<ResTexture> tex;
+	std::shared_ptr<res_texture> tex;
 	Rectr rect(-1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx.loader.load<ResTexture>(get_property_value(p).to_string());
+			tex = ctx.loader.load<res_texture>(get_property_value(p).to_string());
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}

@@ -13,7 +13,7 @@
 #include "../../../src/morda/widgets/button/PushButton.hpp"
 #include "../../../src/morda/widgets/label/Text.hpp"
 
-#include "../../../src/morda/res/ResTexture.hpp"
+#include "../../../src/morda/res/res_texture.hpp"
 
 #include "../../../src/morda/widgets/CharInputWidget.hpp"
 #include "../../../src/morda/widgets/group/ScrollArea.hpp"
@@ -37,7 +37,7 @@ class SimpleWidget :
 		public morda::updateable,
 		public morda::CharInputWidget
 {
-	std::shared_ptr<morda::ResTexture> tex;
+	std::shared_ptr<morda::res_texture> tex;
 
 public:
 	SimpleWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -45,7 +45,7 @@ public:
 			morda::CharInputWidget(this->context)
 	{
 //		TRACE(<< "loading texture" << std::endl)
-		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
+		this->tex = this->context->loader.load<morda::res_texture>("tex_sample");
 	}
 
 	std::uint32_t timer = 0;
@@ -142,7 +142,7 @@ public:
 
 
 class CubeWidget : public morda::Widget, public morda::updateable{
-	std::shared_ptr<morda::ResTexture> tex;
+	std::shared_ptr<morda::res_texture> tex;
 
 	morda::Quatr rot = morda::Quatr().identity();
 public:
@@ -203,7 +203,7 @@ public:
 
 		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles);
 
-		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
+		this->tex = this->context->loader.load<morda::res_texture>("tex_sample");
 		this->rot.identity();
 	}
 
