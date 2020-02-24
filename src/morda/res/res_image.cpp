@@ -2,14 +2,14 @@
 
 #include <svgren/render.hpp>
 
-//Some bad stuff defines OVERFLOW macro and there is an enum value with same name in svgdom/dom.h.
+// Some bad stuff defines OVERFLOW macro and there is an enum value with same name in svgdom/dom.h.
 #ifdef OVERFLOW
 #	undef OVERFLOW
 #endif
 
 #include <svgdom/dom.hpp>
 
-#include "ResImage.hpp"
+#include "res_image.hpp"
 
 #include "../context.hpp"
 
@@ -17,14 +17,13 @@
 
 using namespace morda;
 
-ResImage::ResImage(std::shared_ptr<morda::context> c) :
+res_image::res_image(std::shared_ptr<morda::context> c) :
 		resource(std::move(c))
 {}
 
-
-ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect) :
-		ResImage(std::move(c)),
-		ResImage::QuadTexture(this->context->renderer, rect.d.abs()),
+res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect) :
+		res_image(std::move(c)),
+		res_image::texture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
 {
 //	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
@@ -35,16 +34,14 @@ ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<
 	ASSERT(false)
 }
 
-ResAtlasImage::ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex) :
-		ResImage(std::move(c)),
-		ResImage::QuadTexture(this->context->renderer, tex->tex().dims()),
+res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex) :
+		res_image(std::move(c)),
+		res_image::texture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
 		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
-
-
-std::shared_ptr<ResAtlasImage> ResAtlasImage::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<res_atlas_image> res_atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<res_texture> tex;
 	Rectr rect(-1);
 
@@ -57,65 +54,64 @@ std::shared_ptr<ResAtlasImage> ResAtlasImage::load(morda::context& ctx, const pu
 	}
 
 	if(!tex){
-		throw std::runtime_error("ResAtlasImage::load(): could not load texture");
+		throw std::runtime_error("res_atlas_image::load(): could not load texture");
 	}
 	
 	if(rect.p.x >= 0){
-		return std::make_shared<ResAtlasImage>(ctx.shared_from_this(), tex, rect);
+		return std::make_shared<res_atlas_image>(ctx.shared_from_this(), tex, rect);
 	}else{
-		return std::make_shared<ResAtlasImage>(ctx.shared_from_this(), tex);
+		return std::make_shared<res_atlas_image>(ctx.shared_from_this(), tex);
 	}
 }
 
-
-void ResAtlasImage::render(const Matr4r& matrix, const vertex_array& vao) const {
+void res_atlas_image::render(const Matr4r& matrix, const vertex_array& vao)const{
 	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
 }
 
-
-
 namespace{
-
-class TexQuadTexture : public ResImage::QuadTexture{
+class fixed_texture : public res_image::texture{
 protected:
 	std::shared_ptr<texture_2d> tex_v;
 	
-	TexQuadTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<texture_2d> tex) :
-			ResImage::QuadTexture(std::move(r), tex->dims()),
+	fixed_texture(std::shared_ptr<morda::renderer> r, std::shared_ptr<texture_2d> tex) :
+			res_image::texture(std::move(r), tex->dims()),
 			tex_v(std::move(tex))
 	{}
 	
 public:
-	void render(const Matr4r& matrix, const vertex_array& vao) const override{
+	void render(const Matr4r& matrix, const vertex_array& vao)const override{
 		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_v);
 	}
 };
 	
-class ResRasterImage : public ResImage, public TexQuadTexture{
+class res_raster_image :
+		public res_image,
+		public fixed_texture
+{
 public:
-	ResRasterImage(std::shared_ptr<morda::context> c, std::shared_ptr<texture_2d> tex) :
-			ResImage(std::move(c)),
-			TexQuadTexture(this->context->renderer, std::move(tex))
+	res_raster_image(std::shared_ptr<morda::context> c, std::shared_ptr<texture_2d> tex) :
+			res_image(std::move(c)),
+			fixed_texture(this->context->renderer, std::move(tex))
 	{}
 	
-	std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim) const override{
+	std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
-	Vec2r dims(real dpi) const noexcept override{
+	Vec2r dims(real dpi)const noexcept override{
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<ResRasterImage> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<ResRasterImage>(ctx.shared_from_this(), loadTexture(*ctx.renderer, fi));
+	static std::shared_ptr<res_raster_image> load(morda::context& ctx, const papki::file& fi){
+		return std::make_shared<res_raster_image>(ctx.shared_from_this(), loadTexture(*ctx.renderer, fi));
 	}
 };
 
-class ResSvgImage : public ResImage{
+class res_svg_image : public res_image{
 	std::unique_ptr<svgdom::SvgElement> dom;
 public:
-	ResSvgImage(std::shared_ptr<morda::context> c, decltype(dom) dom) :
-			ResImage(std::move(c)),
+	res_svg_image(std::shared_ptr<morda::context> c, decltype(dom) dom) :
+			res_image(std::move(c)),
 			dom(std::move(dom))
 	{}
 	
@@ -124,15 +120,15 @@ public:
 		return Vec2r(wh[0], wh[1]);
 	}
 	
-	class SvgTexture : public TexQuadTexture{
-		std::weak_ptr<const ResSvgImage> parent;
+	class svg_texture : public fixed_texture{
+		std::weak_ptr<const res_svg_image> parent;
 	public:
-		SvgTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<texture_2d> tex) :
-				TexQuadTexture(std::move(r), std::move(tex)),
+		svg_texture(std::shared_ptr<morda::renderer> r, std::shared_ptr<const res_svg_image> parent, std::shared_ptr<texture_2d> tex) :
+				fixed_texture(std::move(r), std::move(tex)),
 				parent(parent)
 		{}
 
-		~SvgTexture()noexcept{
+		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
 				r4::vec2ui d = this->tex_v->dims().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x, d.y));
@@ -140,7 +136,7 @@ public:
 		}
 	};
 	
-	std::shared_ptr<const QuadTexture> get(Vec2r forDim)const override{
+	std::shared_ptr<const texture> get(Vec2r forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
 		unsigned width = unsigned(forDim.x);
 //		TRACE(<< "imWidth = " << imWidth << std::endl)
@@ -171,7 +167,7 @@ public:
 		ASSERT(svg.height != 0)
 		ASSERT_INFO(svg.width * svg.height == svg.pixels.size(), "imWidth = " << svg.width << " imHeight = " << svg.height << " pixels.size() = " << svg.pixels.size())
 		
-		auto img = std::make_shared<SvgTexture>(
+		auto img = std::make_shared<svg_texture>(
 				this->context->renderer,
 				this->sharedFromThis(this),
 				this->context->renderer->factory->create_texture_2d(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
@@ -182,29 +178,29 @@ public:
 		return img;
 	}
 	
-	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<QuadTexture>> cache;
+	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<texture>> cache;
 	
-	static std::shared_ptr<ResSvgImage> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<ResSvgImage>(ctx.shared_from_this(), svgdom::load(fi));
+	static std::shared_ptr<res_svg_image> load(morda::context& ctx, const papki::file& fi){
+		return std::make_shared<res_svg_image>(ctx.shared_from_this(), svgdom::load(fi));
 	}	
 };
 }
 
-std::shared_ptr<ResImage> ResImage::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<res_image> res_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
-			return ResImage::load(ctx, fi);
+			return res_image::load(ctx, fi);
 		}
 	}
 
-	return ResAtlasImage::load(ctx, desc, fi);
+	return res_atlas_image::load(ctx, desc, fi);
 }
 
-std::shared_ptr<ResImage> ResImage::load(morda::context& ctx, const papki::file& fi) {
+std::shared_ptr<res_image> res_image::load(morda::context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
-		return ResSvgImage::load(ctx, fi);
+		return res_svg_image::load(ctx, fi);
 	}else{
-		return ResRasterImage::load(ctx, fi);
+		return res_raster_image::load(ctx, fi);
 	}
 }

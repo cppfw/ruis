@@ -470,8 +470,8 @@ public:
 				ASSERT(plusminus)
 				plusminus->setImage(
 						isCollapsed ?
-								this->context->loader.load<morda::ResImage>("morda_img_treeview_plus") :
-								this->context->loader.load<morda::ResImage>("morda_img_treeview_minus")
+								this->context->loader.load<morda::res_image>("morda_img_treeview_plus") :
+								this->context->loader.load<morda::res_image>("morda_img_treeview_minus")
 					);
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");

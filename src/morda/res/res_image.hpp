@@ -10,9 +10,6 @@
 
 #include "../context.hpp"
 
-//TODO: remove
-#include "../gui.hpp"
-
 namespace morda{
 
 /**
@@ -29,32 +26,34 @@ namespace morda{
  * }
  * @endcode
  */
-class ResImage : public resource{
+class res_image : public resource{
 	friend class resource_loader;
 	
 protected:
-	ResImage(std::shared_ptr<morda::context> c);
+	res_image(std::shared_ptr<morda::context> c);
 	
 public:
-	ResImage(const ResImage& orig) = delete;
-	ResImage& operator=(const ResImage& orig) = delete;
+	res_image(const res_image& orig) = delete;
+	res_image& operator=(const res_image& orig) = delete;
 	
 	/**
 	 * @brief Texture created from the image resource.
 	 * The texture which was created from an image resource.
 	 * This texture is to be used on a quad to render the image.
 	 */
-	class QuadTexture : virtual public utki::shared{
+	class texture{
 	protected:
 		const std::shared_ptr<morda::renderer> renderer;
 
-		QuadTexture(std::shared_ptr<morda::renderer> r, Vec2r dims) :
+		texture(std::shared_ptr<morda::renderer> r, Vec2r dims) :
 				renderer(std::move(r)),
 				dims(dims)
 		{}
 	public:
 		const Vec2r dims;
 		
+		virtual ~texture()noexcept{}
+
 		void render(const Matr4r& matrix)const{
 			this->render(matrix, *this->renderer->pos_tex_quad_01_vao);
 		}
@@ -84,9 +83,9 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual std::shared_ptr<const QuadTexture> get(Vec2r forDims = 0)const = 0;
+	virtual std::shared_ptr<const texture> get(Vec2r forDims = 0)const = 0;
 private:
-	static std::shared_ptr<ResImage> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -96,39 +95,39 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static std::shared_ptr<ResImage> load(morda::context& ctx, const papki::file& fi);
+	static std::shared_ptr<res_image> load(morda::context& ctx, const papki::file& fi);
 };
 
 
 /**
  * @brief Undocumented.
  */
-class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
-	friend class ResImage;
+class res_atlas_image : public res_image, public res_image::texture{
+	friend class res_image;
 	
 	std::shared_ptr<res_texture> tex;
 	
 	std::shared_ptr<vertex_array> vao;
 	
 public:
-	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect);
-	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex);
+	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect);
+	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex);
 	
-	ResAtlasImage(const ResAtlasImage& orig) = delete;
-	ResAtlasImage& operator=(const ResAtlasImage& orig) = delete;
+	res_atlas_image(const res_atlas_image& orig) = delete;
+	res_atlas_image& operator=(const res_atlas_image& orig) = delete;
 	
 	Vec2r dims(real dpi) const noexcept override{
-		return this->ResImage::QuadTexture::dims;
+		return this->res_image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{
-		return this->sharedFromThis(this);
+	virtual std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
+		return std::dynamic_pointer_cast<const res_image::texture>(this->shared_from_this());
 	}
 	
 	void render(const Matr4r& matrix, const vertex_array& vao) const override;
 	
 private:
-	static std::shared_ptr<ResAtlasImage> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_atlas_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 

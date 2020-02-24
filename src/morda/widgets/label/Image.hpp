@@ -4,7 +4,7 @@
 
 #include "../base/BlendingWidget.hpp"
 
-#include "../../res/ResImage.hpp"
+#include "../../res/res_image.hpp"
 
 
 namespace morda{
@@ -26,9 +26,9 @@ class Image :
 	Image(const Image&);
 	Image& operator=(const Image&);
 
-	std::shared_ptr<const morda::ResImage> img;
+	std::shared_ptr<const morda::res_image> img;
 
-	mutable std::shared_ptr<const morda::ResImage::QuadTexture> scaledImage;
+	mutable std::shared_ptr<const morda::res_image::texture> scaledImage;
 
 	bool keepAspectRatio = false;
 
@@ -45,7 +45,7 @@ public:
 
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 
-	void setImage(const std::shared_ptr<const ResImage>& image);
+	void setImage(const std::shared_ptr<const res_image>& image);
 
 	void on_resize() override;
 

@@ -19,7 +19,7 @@ Image::Image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		}
 
 		if(p.value == "image"){
-			this->img = this->context->loader.load<ResImage>(get_property_value(p).to_string());
+			this->img = this->context->loader.load<res_image>(get_property_value(p).to_string());
 			this->resize(this->img->dims());
 		}else if(p.value == "keepAspectRatio"){
 			this->keepAspectRatio = get_property_value(p).to_bool();
@@ -142,7 +142,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 
 
 
-void Image::setImage(const std::shared_ptr<const ResImage>& image) {
+void Image::setImage(const std::shared_ptr<const res_image>& image) {
 	if(this->img && image && this->img->dims() == image->dims()){
 	}else{
 		this->invalidate_layout();

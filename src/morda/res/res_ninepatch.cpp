@@ -13,20 +13,20 @@ using namespace morda;
 namespace{
 
 class ResSubImage :
-		public ResImage,
-		public ResImage::QuadTexture
+		public res_image,
+		public res_image::texture
 {
-	friend class ResImage;
+	friend class res_image;
 	
-	std::shared_ptr<const ResImage::QuadTexture> tex;
+	std::shared_ptr<const res_image::texture> tex;
 	
 	std::shared_ptr<vertex_array> vao;
 	
 public:
 	// rect is a rectangle on the texture, Y axis down.
 	ResSubImage(std::shared_ptr<morda::context> c, decltype(tex) tex, const Rectr& rect) :
-			ResImage(c),
-			ResImage::QuadTexture(c->renderer, rect.d),
+			res_image(c),
+			res_image::texture(c->renderer, rect.d),
 			tex(std::move(tex))
 	{
 		std::array<Vec2r, 4> texCoords;
@@ -51,10 +51,10 @@ public:
 	ResSubImage& operator=(const ResSubImage& orig) = delete;
 	
 	Vec2r dims(real dpi) const noexcept override{
-		return this->ResImage::QuadTexture::dims;
+		return this->res_image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const ResImage::QuadTexture> get(Vec2r forDim)const override{
+	virtual std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -80,12 +80,12 @@ std::shared_ptr<res_ninepatch> res_ninepatch::load(morda::context& ctx, const pu
 		throw std::runtime_error("res_ninepatch::load(): could not read borders");
 	}
 
-	auto image = ResImage::load(ctx, fi);
+	auto image = res_image::load(ctx, fi);
 	
 	return std::make_shared<res_ninepatch>(ctx.shared_from_this(), image, borders);
 }
 
-res_ninepatch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul) :
+res_ninepatch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul) :
 		images_v(l),
 		parent(parent),
 		mul(mul)
@@ -142,7 +142,7 @@ std::shared_ptr<res_ninepatch::image_matrix> res_ninepatch::get(Sidesr borders) 
 //	TRACE(<< "scaledBorders = " << std::setprecision(10) << scaledBorders << std::endl)
 	
 	auto ret = std::make_shared<image_matrix>(
-			std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>({{
+			std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>({{
 				{{
 					std::make_shared<ResSubImage>(this->context, quadTex, Rectr(
 							0,

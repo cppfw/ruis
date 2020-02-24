@@ -4,10 +4,9 @@
 
 #include "../resource_loader.hpp"
 
-#include "ResImage.hpp"
+#include "res_image.hpp"
 
 namespace morda{
-
 
 /**
  * @brief Nine-patch resource.
@@ -30,7 +29,7 @@ namespace morda{
 class res_ninepatch : public resource{
 	friend class resource_loader;
 	
-	const std::shared_ptr<const ResImage> image;
+	const std::shared_ptr<const res_image> image;
 	
 	Sidesr borders_v;
 	
@@ -38,7 +37,7 @@ public:
 	res_ninepatch(const res_ninepatch&) = delete;
 	res_ninepatch& operator=(const res_ninepatch&) = delete;
 	
-	res_ninepatch(std::shared_ptr<morda::context> c, std::shared_ptr<const ResImage> image, Sidesr borders) :
+	res_ninepatch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, Sidesr borders) :
 			resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
@@ -46,7 +45,7 @@ public:
 	
 	
 	class image_matrix{
-		const std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3> images_v;
+		const std::array<std::array<std::shared_ptr<const res_image>, 3>, 3> images_v;
 		
 		std::weak_ptr<const res_ninepatch> parent;
 	
@@ -56,7 +55,7 @@ public:
 			return this->images_v;
 		}
 		
-		image_matrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul);
+		image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul);
 		
 		~image_matrix()noexcept;
 	};

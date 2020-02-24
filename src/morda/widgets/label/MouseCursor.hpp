@@ -17,7 +17,7 @@ namespace morda{
 class MouseCursor : virtual public Widget{
 	std::shared_ptr<const res_cursor> cursor;
 
-	std::shared_ptr<const ResImage::QuadTexture> quadTex;
+	std::shared_ptr<const res_image::texture> quadTex;
 
 	Vec2r cursorPos;
 public:

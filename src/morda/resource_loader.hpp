@@ -109,7 +109,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = this->context->loader().load<morda::ResImage>("img_my_image_name");
+	 * auto image = this->context->loader().load<morda::res_image>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param name - name of the resource as it appears in resource description.
@@ -139,7 +139,7 @@ protected:
 			context(std::move(c))
 	{
 		if(!this->context){
-			throw std::invalid_argument("ResImage::ResImage(): passed in context is null");
+			throw std::invalid_argument("res_image::res_image(): passed in context is null");
 		}
 	}
 public:

@@ -25,7 +25,7 @@ namespace morda{
  * @param image - reference to a nine-patch resource.
  */
 class NinePatch :
-		public virtual Widget,
+		public virtual widget,
 		public BlendingWidget,
 		private Column
 {

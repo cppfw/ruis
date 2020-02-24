@@ -21,18 +21,18 @@ Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 				}
 
 				if(p.value == "filler"){
-					this->setFiller(this->context->loader.load<ResImage>(get_property_value(pp).to_string()));
+					this->setFiller(this->context->loader.load<res_image>(get_property_value(pp).to_string()));
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->setFiller(this->context->loader.load<ResImage>("morda_img_tabs_filler"));
+		this->setFiller(this->context->loader.load<res_image>("morda_img_tabs_filler"));
 	}
 }
 
-void Tabs::setFiller(std::shared_ptr<ResImage> filler) {
+void Tabs::setFiller(std::shared_ptr<res_image> filler) {
 	this->filler = std::move(filler);
 	this->fillerTexture = this->filler->get();
 }

@@ -4,15 +4,15 @@
 
 #include "../label/Image.hpp"
 
-#include "../../res/ResImage.hpp"
+#include "../../res/res_image.hpp"
 
 namespace morda{
 class ImageButton :
 		virtual public Button,
 		public Image
 {
-	std::shared_ptr<const ResImage> unpressedImage_v;
-	std::shared_ptr<const ResImage> pressedImage_v;
+	std::shared_ptr<const res_image> unpressedImage_v;
+	std::shared_ptr<const res_image> pressedImage_v;
 	
 protected:
 	void onPressedChanged() override;
@@ -22,13 +22,13 @@ protected:
 	void updateImage();
 	
 public:
-	void setPressedImage(std::shared_ptr<const ResImage> image);
+	void setPressedImage(std::shared_ptr<const res_image> image);
 	
 	const decltype(pressedImage_v)& pressedImage()const{
 		return this->pressedImage_v;
 	}
 	
-	void setUnpressedImage(std::shared_ptr<const ResImage> image);
+	void setUnpressedImage(std::shared_ptr<const res_image> image);
 	
 	const decltype(unpressedImage_v)& unpressedImage()const{
 		return this->unpressedImage_v;

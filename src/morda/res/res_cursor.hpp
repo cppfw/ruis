@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ResImage.hpp"
+#include "res_image.hpp"
 
 namespace morda{
 
@@ -19,16 +19,16 @@ namespace morda{
  * @endcode
  */
 class res_cursor : public resource{
-	std::shared_ptr<const ResImage> image_v;
+	std::shared_ptr<const res_image> image_v;
 	Vec2r hotspot_v;
 	
 public:
-	res_cursor(std::shared_ptr<morda::context> c, ResImage& image, const Vec2r& hotspot);
+	res_cursor(std::shared_ptr<morda::context> c, res_image& image, const Vec2r& hotspot);
 	
 	res_cursor(const res_cursor&) = delete;
 	res_cursor& operator=(const res_cursor&) = delete;
 	
-	const ResImage& image()const noexcept{
+	const res_image& image()const noexcept{
 		ASSERT(this->image_v)
 		return *this->image_v;
 	}

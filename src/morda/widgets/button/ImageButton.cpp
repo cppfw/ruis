@@ -34,9 +34,9 @@ ImageButton::ImageButton(std::shared_ptr<morda::context> c, const puu::forest& d
 				}
 
 				if(pp.value == "pressed"){
-					this->pressedImage_v = this->context->loader.load<ResImage>(get_property_value(pp).to_string());
+					this->pressedImage_v = this->context->loader.load<res_image>(get_property_value(pp).to_string());
 				}else if(pp.value == "unpressed"){
-					this->unpressedImage_v = this->context->loader.load<ResImage>(get_property_value(pp).to_string());
+					this->unpressedImage_v = this->context->loader.load<res_image>(get_property_value(pp).to_string());
 				}
 				this->updateImage();
 			}
@@ -44,12 +44,12 @@ ImageButton::ImageButton(std::shared_ptr<morda::context> c, const puu::forest& d
 	}
 }
 
-void ImageButton::setPressedImage(std::shared_ptr<const ResImage> image) {
+void ImageButton::setPressedImage(std::shared_ptr<const res_image> image) {
 	this->pressedImage_v = std::move(image);
 	this->updateImage();
 }
 
-void ImageButton::setUnpressedImage(std::shared_ptr<const ResImage> image) {
+void ImageButton::setUnpressedImage(std::shared_ptr<const res_image> image) {
 	this->unpressedImage_v = std::move(image);
 	this->updateImage();
 }

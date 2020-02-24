@@ -7,8 +7,8 @@ class Tabs :
 		virtual public Widget,
 		private ChoiceGroup
 {
-	std::shared_ptr<ResImage> filler;
-	std::shared_ptr<const ResImage::QuadTexture> fillerTexture;
+	std::shared_ptr<res_image> filler;
+	std::shared_ptr<const res_image::texture> fillerTexture;
 
 public:
 	Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc);
@@ -16,7 +16,7 @@ public:
 	Tabs(const Tabs&) = delete;
 	Tabs& operator=(const Tabs&) = delete;
 
-	void setFiller(std::shared_ptr<ResImage> filler);
+	void setFiller(std::shared_ptr<res_image> filler);
 
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
 
