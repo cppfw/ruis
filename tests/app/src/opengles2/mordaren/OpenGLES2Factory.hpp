@@ -26,7 +26,7 @@ public:
 	std::shared_ptr<morda::vertex_array> create_vertex_array(
 			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 			std::shared_ptr<morda::index_buffer> indices,
-			morda::vertex_array::Mode_e mode
+			morda::vertex_array::mode rendering_mode
 		)override;
 
 	std::unique_ptr<shaders> create_shaders()override;

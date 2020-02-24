@@ -166,7 +166,7 @@ void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va
 
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
-	glDrawElements(modeToGLMode(va.mode), ivbo.elementsCount, ivbo.elementType, nullptr);
+	glDrawElements(modeToGLMode(va.rendering_mode), ivbo.elementsCount, ivbo.elementType, nullptr);
 	assertOpenGLNoError();
 }
 

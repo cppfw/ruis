@@ -58,7 +58,7 @@ ResGradient::ResGradient(std::shared_ptr<morda::context> c, std::vector<std::tup
 				r.factory->create_vertex_buffer(utki::make_span(colors))
 			},
 			r.factory->create_index_buffer(utki::make_span(indices)),
-			vertex_array::Mode_e::TRIANGLE_STRIP
+			vertex_array::mode::triangle_strip
 		);
 }
 

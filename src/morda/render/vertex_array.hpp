@@ -3,13 +3,12 @@
 #include "vertex_buffer.hpp"
 #include "index_buffer.hpp"
 
-#include <utki/shared.hpp>
-
 #include <vector>
+#include <memory>
 
 namespace morda{
 
-class vertex_array : virtual public utki::shared{
+class vertex_array{
 public:
 	const std::vector<std::shared_ptr<vertex_buffer>> buffers;
 	
@@ -19,20 +18,20 @@ public:
 	 * @brief Vertex data rendering mode.
 	 * Enumeration defining how to interpret vertex data when rendering.
 	 */
-	enum class Mode_e{
+	enum class mode{
 		//NOTE: do not change order!!!
 		
-		TRIANGLES,
-		TRIANGLE_FAN,
-		LINE_LOOP,
-		TRIANGLE_STRIP,
+		triangles,
+		triangle_fan,
+		line_loop,
+		triangle_strip,
 		
 		ENUM_SIZE
 	};
 	
-	const Mode_e mode;
+	const mode rendering_mode;
 	
-	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, Mode_e mode);
+	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, mode rendering_mode);
 
 };
 

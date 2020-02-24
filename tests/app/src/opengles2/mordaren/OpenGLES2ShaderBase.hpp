@@ -88,7 +88,7 @@ protected:
 	
 	static GLenum modeMap[];
 	
-	static GLenum modeToGLMode(morda::vertex_array::Mode_e mode){
+	static GLenum modeToGLMode(morda::vertex_array::mode mode){
 		return modeMap[unsigned(mode)];
 	}
 	

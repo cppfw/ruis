@@ -4,10 +4,10 @@
 
 using namespace morda;
 
-vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, Mode_e mode) :
+vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, mode rendering_mode) :
 		buffers(buffers),
 		indices(std::move(indices)),
-		mode(mode)
+		rendering_mode(rendering_mode)
 {
 	if(this->buffers.empty()){
 		throw std::invalid_argument("no vertex buffers passed to vertex array");

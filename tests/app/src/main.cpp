@@ -202,7 +202,7 @@ public:
 
 		auto cubeIndices = this->context->renderer->factory->create_index_buffer(utki::make_span(indices));
 
-		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::Mode_e::TRIANGLES);
+		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles);
 
 		this->tex = this->context->loader.load<morda::ResTexture>("tex_sample");
 		this->rot.identity();

@@ -4,9 +4,7 @@
 
 #include <r4/vector2.hpp>
 
-#include <utki/shared.hpp>
-#include <utki/Unique.hpp>
-#include <utki/Buf.hpp>
+#include <utki/span.hpp>
 
 #include "texture_2d.hpp"
 
@@ -46,7 +44,7 @@ public:
 	virtual std::shared_ptr<vertex_array> create_vertex_array(
 			std::vector< std::shared_ptr<morda::vertex_buffer> >&& buffers,
 			std::shared_ptr<morda::index_buffer> indices,
-			vertex_array::Mode_e mode
+			vertex_array::mode rendering_mode
 		) = 0;
 	
 	struct shaders{

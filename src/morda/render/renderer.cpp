@@ -10,8 +10,8 @@ renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::para
 			r4::vec2f(0, 0), r4::vec2f(0, 1), r4::vec2f(1, 1), r4::vec2f(1, 0)
 		}})))),
 		quad_indices(this->factory->create_index_buffer(utki::make_span(std::array<std::uint16_t, 4>({{0, 1, 2, 3}})))),
-		pos_quad_01_vao(this->factory->create_vertex_array({this->quad_01_vbo}, this->quad_indices, vertex_array::Mode_e::TRIANGLE_FAN)),
-		pos_tex_quad_01_vao(this->factory->create_vertex_array({this->quad_01_vbo, this->quad_01_vbo}, this->quad_indices, vertex_array::Mode_e::TRIANGLE_FAN)),
+		pos_quad_01_vao(this->factory->create_vertex_array({this->quad_01_vbo}, this->quad_indices, vertex_array::mode::triangle_fan)),
+		pos_tex_quad_01_vao(this->factory->create_vertex_array({this->quad_01_vbo, this->quad_01_vbo}, this->quad_indices, vertex_array::mode::triangle_fan)),
 		max_texture_size(params.max_texture_size),
 		initial_matrix(params.initial_matrix)
 {

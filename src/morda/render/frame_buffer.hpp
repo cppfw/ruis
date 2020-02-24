@@ -4,8 +4,7 @@
 
 namespace morda{
 
-
-class frame_buffer : public std::enable_shared_from_this<frame_buffer>{
+class frame_buffer{
 protected:
 	const std::shared_ptr<texture_2d> color;
 public:
@@ -20,6 +19,5 @@ public:
 private:
 
 };
-
 
 }

@@ -1,12 +1,6 @@
 #pragma once
 
-#include <utki/Buf.hpp>
-#include <utki/Unique.hpp>
-#include <r4/vector2.hpp>
-
 #include "texture_2d.hpp"
-#include "vertex_buffer.hpp"
-#include "index_buffer.hpp"
 #include "vertex_array.hpp"
 
 namespace morda{

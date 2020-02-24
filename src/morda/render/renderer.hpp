@@ -4,7 +4,7 @@
 
 namespace morda{
 
-class renderer : virtual public utki::shared{
+class renderer{
 public:
 	const std::unique_ptr<render_factory> factory;
 	
@@ -28,6 +28,8 @@ protected:
 	
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
+	
+	virtual ~renderer()noexcept{}
 	
 private:
 	std::shared_ptr<frame_buffer> curFB;

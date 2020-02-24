@@ -43,7 +43,7 @@ public:
 					r.factory->create_vertex_buffer(utki::make_span(texCoords))
 				},
 				r.quad_indices,
-				vertex_array::Mode_e::TRIANGLE_FAN
+				vertex_array::mode::triangle_fan
 			);
 	}
 	

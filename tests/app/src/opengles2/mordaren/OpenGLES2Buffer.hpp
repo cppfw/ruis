@@ -11,7 +11,7 @@
 
 namespace mordaren{
 
-class OpenGLES2Buffer {
+class OpenGLES2Buffer{
 public:
 	const GLuint buffer;
 

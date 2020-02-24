@@ -1,7 +1,5 @@
 #pragma once
 
-#include <utki/Unique.hpp>
-
 #include <r4/matrix4.hpp>
 
 #include "vertex_array.hpp"

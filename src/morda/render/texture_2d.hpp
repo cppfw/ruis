@@ -2,12 +2,10 @@
 
 #include "../config.hpp"
 
-#include <utki/shared.hpp>
-
 namespace morda{
 	
 
-class texture_2d : virtual public utki::shared{
+class texture_2d{
 	Vec2r dims_v;
 	
 public:

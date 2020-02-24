@@ -1,6 +1,5 @@
 #include <utki/config.hpp>
 #include <utki/debug.hpp>
-#include <utki/Exc.hpp>
 
 #include <vector>
 
@@ -159,13 +158,13 @@ GLint OpenGLES2ShaderBase::getUniform(const char* n) {
 void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va)const{
 	ASSERT(this->isBound())
 	
-	ASSERT(dynamic_cast<const OpenGLES2IndexBuffer*>(va.indices.operator ->()))
+	ASSERT(dynamic_cast<const OpenGLES2IndexBuffer*>(va.indices.get()))
 	auto& ivbo = static_cast<const OpenGLES2IndexBuffer&>(*va.indices);
 	
 	this->setMatrix(m);
 	
 	for(unsigned i = 0; i != va.buffers.size(); ++i){
-		ASSERT(dynamic_cast<OpenGLES2VertexBuffer*>(va.buffers[i].operator->()))
+		ASSERT(dynamic_cast<OpenGLES2VertexBuffer*>(va.buffers[i].get()))
 		auto& vbo = static_cast<OpenGLES2VertexBuffer&>(*va.buffers[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
 		assertOpenGLNoError();
@@ -180,7 +179,7 @@ void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& 
 	}
 	
 	{
-		ASSERT(dynamic_cast<OpenGLES2IndexBuffer*>(va.indices.operator->()))
+		ASSERT(dynamic_cast<OpenGLES2IndexBuffer*>(va.indices.get()))
 		auto& ivbo = static_cast<OpenGLES2IndexBuffer&>(*va.indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo.buffer);
 		assertOpenGLNoError();
@@ -189,7 +188,7 @@ void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& 
 
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
-	glDrawElements(modeToGLMode(va.mode), ivbo.elementsCount, ivbo.elementType, nullptr);
+	glDrawElements(modeToGLMode(va.rendering_mode), ivbo.elementsCount, ivbo.elementType, nullptr);
 	assertOpenGLNoError();
 }
 

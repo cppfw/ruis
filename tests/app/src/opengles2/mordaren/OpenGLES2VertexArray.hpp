@@ -15,7 +15,7 @@ namespace mordaren{
 
 class OpenGLES2VertexArray : public morda::vertex_array{
 public:	
-	OpenGLES2VertexArray(std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers, std::shared_ptr<morda::index_buffer> indices, Mode_e mode);
+	OpenGLES2VertexArray(std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers, std::shared_ptr<morda::index_buffer> indices, mode rendering_mode);
 	
 	OpenGLES2VertexArray(const OpenGLES2VertexArray&) = delete;
 	OpenGLES2VertexArray& operator=(const OpenGLES2VertexArray&) = delete;
