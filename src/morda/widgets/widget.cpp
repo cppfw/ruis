@@ -219,16 +219,16 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 #endif
 }
 
-std::shared_ptr<Texture2D> widget::render_to_texture(std::shared_ptr<Texture2D> reuse)const{
+std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
 	auto& r = *this->context->renderer;
 
-	std::shared_ptr<Texture2D> tex;
+	std::shared_ptr<texture_2d> tex;
 
 	if(reuse && reuse->dims() == this->rect().d){
 		tex = std::move(reuse);
 	}else{
 		tex = r.factory->create_texture_2d(
-				morda::Texture2D::TexType_e::RGBA,
+				morda::texture_2d::type::rgba,
 				this->rect().d.to<unsigned>(),
 				nullptr
 			);

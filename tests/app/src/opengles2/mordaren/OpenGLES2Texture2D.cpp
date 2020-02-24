@@ -4,8 +4,8 @@
 
 using namespace mordaren;
 
-OpenGLES2Texture2D::OpenGLES2Texture2D(r4::vec2f dim) :
-		morda::Texture2D(dim)
+OpenGLES2Texture2D::OpenGLES2Texture2D(r4::vec2f dims) :
+		morda::texture_2d(dims)
 {
 	glGenTextures(1, &this->tex);
 	assertOpenGLNoError();

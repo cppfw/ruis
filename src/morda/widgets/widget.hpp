@@ -15,7 +15,7 @@
 
 #include "../config.hpp"
 
-#include "../render/Texture2D.hpp"
+#include "../render/texture_2d.hpp"
 
 #include "../util/key.hpp"
 #include "../util/mouse_button.hpp"
@@ -140,7 +140,7 @@ public:
 private:
 	bool cache = false;
 	mutable bool cacheDirty = true;
-	mutable std::shared_ptr<Texture2D> cacheTex;
+	mutable std::shared_ptr<texture_2d> cacheTex;
 
 	void renderFromCache(const r4::mat4f& matrix)const;
 
@@ -171,10 +171,10 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	std::shared_ptr<Texture2D> render_to_texture(std::shared_ptr<Texture2D> reuse = nullptr)const;
+	std::shared_ptr<texture_2d> render_to_texture(std::shared_ptr<texture_2d> reuse = nullptr)const;
 
 	//TODO: deprecated, remove.
-	std::shared_ptr<Texture2D> renderToTexture(std::shared_ptr<Texture2D> reuse = nullptr)const{
+	std::shared_ptr<texture_2d> renderToTexture(std::shared_ptr<texture_2d> reuse = nullptr)const{
 		return this->render_to_texture(std::move(reuse));
 	}
 

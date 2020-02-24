@@ -29,12 +29,12 @@ OpenGL2Factory::~OpenGL2Factory()noexcept{
 
 
 
-std::shared_ptr<morda::Texture2D> OpenGL2Factory::create_texture_2d(morda::Texture2D::TexType_e type, r4::vec2ui dims, const utki::span<uint8_t> data){
+std::shared_ptr<morda::texture_2d> OpenGL2Factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
-	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
+	ASSERT(data.size() % morda::texture_2d::bytes_per_pixel(type) == 0)
 	ASSERT(data.size() % dims.x == 0)
 
-	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dims.x == dims.y)
+	ASSERT(data.size() == 0 || data.size() / morda::texture_2d::bytes_per_pixel(type) / dims.x == dims.y)
 	
 	auto ret = std::make_shared<OpenGL2Texture2D>(dims.to<float>());
 	
@@ -45,16 +45,16 @@ std::shared_ptr<morda::Texture2D> OpenGL2Factory::create_texture_2d(morda::Textu
 	switch(type){
 		default:
 			ASSERT(false)
-		case decltype(type)::GREY:
+		case decltype(type)::grey:
 			internalFormat = GL_LUMINANCE;
 			break;
-		case decltype(type)::GREYA:
+		case decltype(type)::grey_alpha:
 			internalFormat = GL_LUMINANCE_ALPHA;
 			break;
-		case decltype(type)::RGB:
+		case decltype(type)::rgb:
 			internalFormat = GL_RGB;
 			break;
-		case decltype(type)::RGBA:
+		case decltype(type)::rgba:
 			internalFormat = GL_RGBA;
 			break;
 	}
@@ -128,7 +128,7 @@ std::unique_ptr<morda::render_factory::shaders> OpenGL2Factory::create_shaders()
 	return ret;
 }
 
-std::shared_ptr<morda::frame_buffer> OpenGL2Factory::create_framebuffer(std::shared_ptr<morda::Texture2D> color){
+std::shared_ptr<morda::frame_buffer> OpenGL2Factory::create_framebuffer(std::shared_ptr<morda::texture_2d> color){
 	return std::make_shared<OpenGL2FrameBuffer>(std::move(color));
 }
 

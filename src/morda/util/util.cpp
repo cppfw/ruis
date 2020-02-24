@@ -70,26 +70,26 @@ real morda::parse_layout_dimension_value(const puu::leaf& l, const morda::units&
 }
 
 
-morda::Texture2D::TexType_e morda::numChannelsToTexType(unsigned numChannels){
+morda::texture_2d::type morda::numChannelsToTexType(unsigned numChannels){
 	switch(numChannels){
 		default:
 			ASSERT(false)
 		case 1:
-			return morda::Texture2D::TexType_e::GREY;
+			return morda::texture_2d::type::grey;
 			break;
 		case 2:
-			return morda::Texture2D::TexType_e::GREYA;
+			return morda::texture_2d::type::grey_alpha;
 			break;
 		case 3:
-			return morda::Texture2D::TexType_e::RGB;
+			return morda::texture_2d::type::rgb;
 			break;
 		case 4:
-			return morda::Texture2D::TexType_e::RGBA;
+			return morda::texture_2d::type::rgba;
 			break;
 	}
 }
 
-std::shared_ptr<Texture2D> morda::loadTexture(renderer& r, const papki::file& fi){
+std::shared_ptr<texture_2d> morda::loadTexture(renderer& r, const papki::file& fi){
 	RasterImage image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 

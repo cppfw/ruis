@@ -7,7 +7,7 @@
 
 using namespace mordaren;
 
-OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) :
+OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::texture_2d> color) :
 		morda::frame_buffer(std::move(color))
 {
 	glGenFramebuffers(1, &this->fbo);
@@ -25,7 +25,7 @@ OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex.tex, 0);
 	assertOpenGLNoError();
 	
-	//Check for completeness
+	// check for completeness
 #ifdef DEBUG
 	{
 		GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);

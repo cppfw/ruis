@@ -6,7 +6,7 @@
 
 class FakeFactory : public morda::render_factory{
 public:
-	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::Texture2D> color)override{
+	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override{
 		return nullptr;
 	}
 
@@ -18,7 +18,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::Texture2D> create_texture_2d(morda::Texture2D::TexType_e type, r4::vec2ui dims, const utki::span<uint8_t> data)override{
+	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data)override{
 		return nullptr;
 	}
 

@@ -78,9 +78,9 @@ namespace{
 
 class TexQuadTexture : public ResImage::QuadTexture{
 protected:
-	std::shared_ptr<Texture2D> tex_v;
+	std::shared_ptr<texture_2d> tex_v;
 	
-	TexQuadTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<Texture2D> tex) :
+	TexQuadTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<texture_2d> tex) :
 			ResImage::QuadTexture(std::move(r), tex->dims()),
 			tex_v(std::move(tex))
 	{}
@@ -93,7 +93,7 @@ public:
 	
 class ResRasterImage : public ResImage, public TexQuadTexture{
 public:
-	ResRasterImage(std::shared_ptr<morda::context> c, std::shared_ptr<Texture2D> tex) :
+	ResRasterImage(std::shared_ptr<morda::context> c, std::shared_ptr<texture_2d> tex) :
 			ResImage(std::move(c)),
 			TexQuadTexture(this->context->renderer, std::move(tex))
 	{}
@@ -127,7 +127,7 @@ public:
 	class SvgTexture : public TexQuadTexture{
 		std::weak_ptr<const ResSvgImage> parent;
 	public:
-		SvgTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<Texture2D> tex) :
+		SvgTexture(std::shared_ptr<morda::renderer> r, std::shared_ptr<const ResSvgImage> parent, std::shared_ptr<texture_2d> tex) :
 				TexQuadTexture(std::move(r), std::move(tex)),
 				parent(parent)
 		{}

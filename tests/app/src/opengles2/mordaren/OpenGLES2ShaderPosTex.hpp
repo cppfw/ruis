@@ -14,7 +14,7 @@ class OpenGLES2ShaderPosTex :
 public:
 	OpenGLES2ShaderPosTex();
 	
-	void render(const r4::mat4f& m, const morda::VertexArray& va, const morda::Texture2D& tex)const override;
+	void render(const r4::mat4f& m, const morda::VertexArray& va, const morda::texture_2d& tex)const override;
 };
 
 }

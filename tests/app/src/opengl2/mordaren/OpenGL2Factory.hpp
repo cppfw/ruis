@@ -13,7 +13,7 @@ public:
 	
 	virtual ~OpenGL2Factory()noexcept;
 
-	std::shared_ptr<morda::Texture2D> create_texture_2d(morda::Texture2D::TexType_e type, r4::vec2ui dims, const utki::span<uint8_t> data)override;
+	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data)override;
 
 	std::shared_ptr<morda::VertexBuffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices)override;
 	
@@ -29,7 +29,7 @@ public:
 
 	std::unique_ptr<shaders> create_shaders()override;
 	
-	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::Texture2D> color)override;
+	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override;
 };
 
 }

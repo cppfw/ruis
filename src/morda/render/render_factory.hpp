@@ -8,7 +8,7 @@
 #include <utki/Unique.hpp>
 #include <utki/Buf.hpp>
 
-#include "Texture2D.hpp"
+#include "texture_2d.hpp"
 
 #include "VertexBuffer.hpp"
 #include "VertexArray.hpp"
@@ -29,9 +29,9 @@ protected:
 public:
 	virtual ~render_factory()noexcept{}	
 	
-	virtual std::shared_ptr<Texture2D> create_texture_2d(Texture2D::TexType_e type, r4::vec2ui dims, const utki::span<uint8_t> data) = 0;
+	virtual std::shared_ptr<texture_2d> create_texture_2d(texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data) = 0;
 	
-	std::shared_ptr<Texture2D> create_texture_2d(r4::vec2ui dims, const utki::span<uint32_t> data);
+	std::shared_ptr<texture_2d> create_texture_2d(r4::vec2ui dims, const utki::span<uint32_t> data);
 	
 	virtual std::shared_ptr<VertexBuffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices) = 0;
 	
@@ -59,7 +59,7 @@ public:
 	
 	virtual std::unique_ptr<shaders> create_shaders() = 0;
 	
-	virtual std::shared_ptr<frame_buffer> create_framebuffer(std::shared_ptr<Texture2D> color) = 0;
+	virtual std::shared_ptr<frame_buffer> create_framebuffer(std::shared_ptr<texture_2d> color) = 0;
 };
 
 }

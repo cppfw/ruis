@@ -12,7 +12,7 @@
 #include "../config.hpp"
 
 #include "../render/renderer.hpp"
-#include "../render/Texture2D.hpp"
+#include "../render/texture_2d.hpp"
 #include "../render/render_factory.hpp"
 
 #include "units.hpp"
@@ -85,7 +85,7 @@ bool is_leaf_property(const puu::leaf& l);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-std::shared_ptr<Texture2D> loadTexture(renderer& r, const papki::file& fi);
+std::shared_ptr<texture_2d> loadTexture(renderer& r, const papki::file& fi);
 
 
 /**
@@ -97,7 +97,7 @@ std::shared_ptr<Texture2D> loadTexture(renderer& r, const papki::file& fi);
 void applySimpleAlphaBlending(renderer& r);
 
 
-morda::Texture2D::TexType_e numChannelsToTexType(unsigned numChannels);
+morda::texture_2d::type numChannelsToTexType(unsigned numChannels);
 
 r4::vec4f colorToVec4f(std::uint32_t color);
 

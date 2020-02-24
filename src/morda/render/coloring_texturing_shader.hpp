@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Texture2D.hpp"
+#include "texture_2d.hpp"
 #include "VertexArray.hpp"
 
 #include <utki/Unique.hpp>
@@ -19,7 +19,7 @@ public:
 	
 	virtual ~coloring_texturing_shader()noexcept{}
 	
-	virtual void render(const r4::mat4f &m, const morda::VertexArray& va, r4::vec4f color, const morda::Texture2D& tex)const = 0;
+	virtual void render(const r4::mat4f &m, const morda::VertexArray& va, r4::vec4f color, const morda::texture_2d& tex)const = 0;
 };
 
 }
