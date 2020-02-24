@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
+vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, Mode_e mode) :
 		buffers(buffers),
 		indices(std::move(indices)),
 		mode(mode)

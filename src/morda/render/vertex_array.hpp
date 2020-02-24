@@ -1,7 +1,7 @@
 #pragma once
 
 #include "vertex_buffer.hpp"
-#include "IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 #include <utki/shared.hpp>
 
@@ -13,7 +13,7 @@ class vertex_array : virtual public utki::shared{
 public:
 	const std::vector<std::shared_ptr<vertex_buffer>> buffers;
 	
-	const std::shared_ptr<IndexBuffer> indices;
+	const std::shared_ptr<index_buffer> indices;
 	
 	/**
 	 * @brief Vertex data rendering mode.
@@ -32,7 +32,7 @@ public:
 	
 	const Mode_e mode;
 	
-	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
+	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, Mode_e mode);
 
 };
 

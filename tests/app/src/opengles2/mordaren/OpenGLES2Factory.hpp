@@ -21,11 +21,11 @@ public:
 	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices)override;
 	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(const utki::span<float> vertices)override;
 
-	std::shared_ptr<morda::IndexBuffer> create_index_buffer(const utki::span<uint16_t> indices)override;
+	std::shared_ptr<morda::index_buffer> create_index_buffer(const utki::span<uint16_t> indices)override;
 	
 	std::shared_ptr<morda::vertex_array> create_vertex_array(
 			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
-			std::shared_ptr<morda::IndexBuffer> indices,
+			std::shared_ptr<morda::index_buffer> indices,
 			morda::vertex_array::Mode_e mode
 		)override;
 

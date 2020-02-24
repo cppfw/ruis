@@ -107,14 +107,14 @@ std::shared_ptr<morda::vertex_buffer> OpenGL2Factory::create_vertex_buffer(const
 
 std::shared_ptr<morda::vertex_array> OpenGL2Factory::create_vertex_array(
 		std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
-		std::shared_ptr<morda::IndexBuffer> indices,
+		std::shared_ptr<morda::index_buffer> indices,
 		morda::vertex_array::Mode_e mode
 	)
 {
 	return std::make_shared<OpenGL2VertexArray>(std::move(buffers), std::move(indices), mode);
 }
 
-std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::create_index_buffer(const utki::span<uint16_t> indices){
+std::shared_ptr<morda::index_buffer> OpenGL2Factory::create_index_buffer(const utki::span<uint16_t> indices){
 	return std::make_shared<OpenGL2IndexBuffer>(indices);
 }
 

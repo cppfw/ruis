@@ -6,7 +6,7 @@
 
 namespace morda{
 	
-class IndexBuffer : virtual public utki::shared{
+class index_buffer : virtual public utki::shared{
 
 };
 	

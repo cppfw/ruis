@@ -12,7 +12,7 @@
 
 #include "vertex_buffer.hpp"
 #include "vertex_array.hpp"
-#include "IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 #include "texturing_shader.hpp"
 #include "coloring_shader.hpp"
@@ -41,11 +41,11 @@ public:
 	
 	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<float> vertices) = 0;
 	
-	virtual std::shared_ptr<IndexBuffer> create_index_buffer(const utki::span<uint16_t> indices) = 0;
+	virtual std::shared_ptr<index_buffer> create_index_buffer(const utki::span<uint16_t> indices) = 0;
 	
 	virtual std::shared_ptr<vertex_array> create_vertex_array(
 			std::vector< std::shared_ptr<morda::vertex_buffer> >&& buffers,
-			std::shared_ptr<morda::IndexBuffer> indices,
+			std::shared_ptr<morda::index_buffer> indices,
 			vertex_array::Mode_e mode
 		) = 0;
 	

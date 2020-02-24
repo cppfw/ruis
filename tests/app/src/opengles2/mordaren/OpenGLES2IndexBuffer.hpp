@@ -2,13 +2,13 @@
 
 #include <utki/Buf.hpp>
 
-#include <morda/render/IndexBuffer.hpp>
+#include <morda/render/index_buffer.hpp>
 
 #include "OpenGLES2Buffer.hpp"
 
 namespace mordaren{
 
-class OpenGLES2IndexBuffer : public morda::IndexBuffer, public OpenGLES2Buffer{
+class OpenGLES2IndexBuffer : public morda::index_buffer, public OpenGLES2Buffer{
 public:
 	const GLenum elementType;
 	const GLsizei elementsCount;

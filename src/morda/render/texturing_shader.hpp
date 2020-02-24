@@ -6,7 +6,7 @@
 
 #include "texture_2d.hpp"
 #include "vertex_buffer.hpp"
-#include "IndexBuffer.hpp"
+#include "index_buffer.hpp"
 #include "vertex_array.hpp"
 
 namespace morda{
