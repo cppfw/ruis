@@ -67,7 +67,7 @@ real morda::parse_layout_dimension_value(const puu::leaf& l, const morda::units&
 }
 
 
-morda::texture_2d::type morda::numChannelsToTexType(unsigned numChannels){
+morda::texture_2d::type morda::num_channels_to_texture_type(unsigned numChannels){
 	switch(numChannels){
 		default:
 			ASSERT(false)
@@ -91,14 +91,14 @@ std::shared_ptr<texture_2d> morda::load_texture(renderer& r, const papki::file& 
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 
 	return r.factory->create_texture_2d(
-			numChannelsToTexType(image.numChannels()),
+			num_channels_to_texture_type(image.numChannels()),
 			image.dim(),
 			image.buf()
 		);
 }
 
 
-void morda::applySimpleAlphaBlending(renderer& r){
+void morda::set_simple_alpha_blending(renderer& r){
 	r.set_blend_enabled(true);
 	r.set_blend_func(
 			renderer::blend_factor::src_alpha,

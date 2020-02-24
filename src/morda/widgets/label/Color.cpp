@@ -19,7 +19,7 @@ Color::Color(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 void Color::render(const morda::Matr4r& matrix)const{
 	auto& r = *this->context->renderer;
-	applySimpleAlphaBlending(r);
+	set_simple_alpha_blending(r);
 	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);

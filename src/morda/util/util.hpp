@@ -17,7 +17,6 @@
 
 namespace morda{
 
-
 morda::Vec2r parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
 
 /**
@@ -32,8 +31,8 @@ inline morda::Vec2r parse_vec2(const puu::forest& desc){
 }
 
 /**
- * @brief Parse chain of 4 STOB nodes as Rectr.
- * @param desc - chain of at least four nodes holding Rectr values.
+ * @brief Parse chain of 4 puu nodes as rectangle.
+ * @param desc - chain of at least four nodes holding rectangle values.
  *               If there are less than 4 nodes in the chain then the rest of
  *               rectangle components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
@@ -41,10 +40,9 @@ inline morda::Vec2r parse_vec2(const puu::forest& desc){
  */
 morda::Rectr parse_rect(const puu::forest& desc);
 
-
 /**
- * @brief Parse chain of 4 STOB nodes as Siders.
- * @param desc - chain of at least four nodes holding Siders values.
+ * @brief Parse chain of 4 puu nodes as sides.
+ * @param desc - chain of at least four nodes holding sides values.
  *               If there are less than 4 nodes in the chain then the rest of
  *               Sidesr components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting Sidesr will be filled with zeros.
@@ -54,7 +52,7 @@ morda::Sidesr parse_sides(const puu::forest& desc);
 
 /**
  * @brief Parse dimension value.
- * Parses value of 'pos' or 'dim' property from puu leaf.
+ * Parses value of dimension property from puu leaf.
  * In case the value is given in millimeters or points it will do the conversion.
  * @param l - puu leaf holding the value.
  * @param units - information about units. Can be obtained from context.
@@ -71,8 +69,6 @@ real parse_dimension_value(const puu::leaf& l, const morda::units& units);
  */
 real parse_layout_dimension_value(const puu::leaf& l, const morda::units& units);
 
-
-
 bool is_property(const puu::tree& t);
 
 bool is_leaf_property(const puu::leaf& l);
@@ -85,17 +81,15 @@ bool is_leaf_property(const puu::leaf& l);
  */
 std::shared_ptr<texture_2d> load_texture(renderer& r, const papki::file& fi);
 
-
 /**
- * @brief Enable simple alpha blending to rendering context.
- * Enables simple alpha blending on the rendering context.
+ * @brief Set simple alpha blending to rendering context.
+ * Enables and set simple alpha blending on the rendering context.
  * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
  * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
  */
-void applySimpleAlphaBlending(renderer& r);
+void set_simple_alpha_blending(renderer& r);
 
-
-morda::texture_2d::type numChannelsToTexType(unsigned numChannels);
+morda::texture_2d::type num_channels_to_texture_type(unsigned numChannels);
 
 r4::vec4f colorToVec4f(std::uint32_t color);
 

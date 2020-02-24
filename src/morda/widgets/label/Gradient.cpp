@@ -21,7 +21,7 @@ Gradient::Gradient(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 }
 
 void Gradient::render(const Matr4r& matrix)const{
-	applySimpleAlphaBlending(*this->context->renderer);
+	set_simple_alpha_blending(*this->context->renderer);
 	
 	morda::Matr4r matr(matrix);
 	matr.scale(this->rect().d);

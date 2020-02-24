@@ -82,7 +82,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 			vertex_array::mode::triangle_fan
 		);
 	g.tex = this->context->renderer->factory->create_texture_2d(
-			morda::numChannelsToTexType(im.numChannels()),
+			morda::num_channels_to_texture_type(im.numChannels()),
 			im.dim(),
 			im.buf()
 		);
@@ -241,7 +241,7 @@ real texture_font::render_internal(const morda::Matr4r& matrix, r4::vec4f color,
 		return 0;
 	}
 	
-	applySimpleAlphaBlending(*this->context->renderer);
+	set_simple_alpha_blending(*this->context->renderer);
 
 	real ret = 0;
 

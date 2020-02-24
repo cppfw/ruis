@@ -169,7 +169,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		applySimpleAlphaBlending(*this->context->renderer);
+		set_simple_alpha_blending(*this->context->renderer);
 
 		this->renderFromCache(matrix);
 	}else{
