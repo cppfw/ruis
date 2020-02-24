@@ -29,7 +29,7 @@ CheckBox::CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->isPressed());
 
-	this->setNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_checkbox_bg"));
+	this->setNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_checkbox_bg"));
 }
 
 

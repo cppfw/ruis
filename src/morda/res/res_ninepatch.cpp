@@ -1,4 +1,4 @@
-#include "ResNinePatch.hpp"
+#include "res_ninepatch.hpp"
 
 #include <iomanip>
 
@@ -67,7 +67,7 @@ public:
 }
 
 
-std::shared_ptr<ResNinePatch> ResNinePatch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<res_ninepatch> res_ninepatch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	Sidesr borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){
@@ -77,28 +77,28 @@ std::shared_ptr<ResNinePatch> ResNinePatch::load(morda::context& ctx, const puu:
 		}
 	}
 	if(borders.left() < 0){
-		throw std::runtime_error("ResNinePatch::load(): could not read borders");
+		throw std::runtime_error("res_ninepatch::load(): could not read borders");
 	}
 
 	auto image = ResImage::load(ctx, fi);
 	
-	return std::make_shared<ResNinePatch>(ctx.shared_from_this(), image, borders);
+	return std::make_shared<res_ninepatch>(ctx.shared_from_this(), image, borders);
 }
 
-ResNinePatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const ResNinePatch> parent, real mul) :
+res_ninepatch::ImageMatrix::ImageMatrix(std::array<std::array<std::shared_ptr<const ResImage>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul) :
 		images_v(l),
 		parent(parent),
 		mul(mul)
 {}
 
-ResNinePatch::ImageMatrix::~ImageMatrix()noexcept{
+res_ninepatch::ImageMatrix::~ImageMatrix()noexcept{
 	if(auto p = this->parent.lock()){		
 		p->cache.erase(this->mul);
 	}
 }
 
 
-std::shared_ptr<ResNinePatch::ImageMatrix> ResNinePatch::get(Sidesr borders) const {
+std::shared_ptr<res_ninepatch::ImageMatrix> res_ninepatch::get(Sidesr borders) const {
 	real mul = 1;
 	{
 		auto req = borders.begin();

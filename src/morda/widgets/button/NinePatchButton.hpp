@@ -16,20 +16,20 @@ class NinePatchButton :
 		virtual public Button,
 		public NinePatch
 {
-	std::shared_ptr<const ResNinePatch> unpressedNinePatch_v;
-	std::shared_ptr<const ResNinePatch> pressedNinePatch_v;
+	std::shared_ptr<const res_ninepatch> unpressedNinePatch_v;
+	std::shared_ptr<const res_ninepatch> pressedNinePatch_v;
 	
 public:
 	NinePatchButton(const NinePatchButton&) = delete;
 	NinePatchButton& operator=(const NinePatchButton&) = delete;
 	
-	void setUnpressedNinePatch(std::shared_ptr<const ResNinePatch> np);
+	void setUnpressedNinePatch(std::shared_ptr<const res_ninepatch> np);
 	
 	const decltype(unpressedNinePatch_v)& unpressedNinePatch()const noexcept{
 		return this->unpressedNinePatch_v;
 	}
 	
-	void setPressedNinePatch(std::shared_ptr<const ResNinePatch> np);
+	void setPressedNinePatch(std::shared_ptr<const res_ninepatch> np);
 	
 	const decltype(pressedNinePatch_v)& pressedNinePatch()const noexcept{
 		return this->pressedNinePatch_v;

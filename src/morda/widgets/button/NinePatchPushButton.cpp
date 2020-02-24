@@ -11,11 +11,11 @@ NinePatchPushButton::NinePatchPushButton(std::shared_ptr<morda::context> c, cons
 		NinePatchButton(this->context, desc)
 {
 	if(!this->unpressedNinePatch()){
-		this->setUnpressedNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_button_normal"));
+		this->setUnpressedNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_button_normal"));
 	}
 	
 	if(!this->pressedNinePatch()){
-		this->setPressedNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_button_pressed"));
+		this->setPressedNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_button_pressed"));
 	}
 	
 	this->onPressedChanged();

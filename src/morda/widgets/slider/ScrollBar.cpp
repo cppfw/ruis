@@ -72,20 +72,20 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		}
 
 		if(p.value == "background"){
-			np->setNinePatch(this->context->loader.load<ResNinePatch>(get_property_value(p).to_string()));
+			np->setNinePatch(this->context->loader.load<res_ninepatch>(get_property_value(p).to_string()));
 			background_set = true;
 		}else if(p.value == "handleNinePatch"){
-			hi->setNinePatch(this->context->loader.load<ResNinePatch>(get_property_value(p).to_string()));
+			hi->setNinePatch(this->context->loader.load<res_ninepatch>(get_property_value(p).to_string()));
 			handle_set = true;
 		}
 	}
 
 	if(!background_set){
-		np->setNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_slider_bg"));
+		np->setNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_slider_bg"));
 	}
 
 	if(!handle_set){
-		hi->setNinePatch(this->context->loader.load<ResNinePatch>("morda_npt_slider_handle"));
+		hi->setNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_slider_handle"));
 	}
 
 	auto hp = this->try_get_widget_as<MouseProxy>("morda_handle_proxy");

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../res/ResNinePatch.hpp"
+#include "../../res/res_ninepatch.hpp"
 
 #include "../group/Pile.hpp"
 #include "../group/Column.hpp"
@@ -29,9 +29,9 @@ class NinePatch :
 		public BlendingWidget,
 		private Column
 {
-	std::shared_ptr<const ResNinePatch> image;
+	std::shared_ptr<const res_ninepatch> image;
 
-	std::shared_ptr<ResNinePatch::ImageMatrix> scaledImage;
+	std::shared_ptr<res_ninepatch::ImageMatrix> scaledImage;
 
 	Sidesr borders = Sidesr(layout_params::min);
 
@@ -45,7 +45,7 @@ public:
 
 	NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	void setNinePatch(std::shared_ptr<const ResNinePatch> np);
+	void setNinePatch(std::shared_ptr<const res_ninepatch> np);
 
 	/**
 	 * @brief Get content container.
