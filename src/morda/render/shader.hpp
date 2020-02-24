@@ -2,7 +2,7 @@
 
 #include <r4/matrix4.hpp>
 
-#include "VertexArray.hpp"
+#include "vertex_array.hpp"
 
 namespace morda{
 
@@ -12,7 +12,7 @@ public:
 	
 	virtual ~shader()noexcept{}
 	
-	virtual void render(const r4::mat4f& m, const VertexArray& va)const = 0;
+	virtual void render(const r4::mat4f& m, const vertex_array& va)const = 0;
 };
 
 }

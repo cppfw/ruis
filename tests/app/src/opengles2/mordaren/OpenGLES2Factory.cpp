@@ -113,10 +113,10 @@ std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(con
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGLES2Factory::create_vertex_array(
+std::shared_ptr<morda::vertex_array> OpenGLES2Factory::create_vertex_array(
 		std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 		std::shared_ptr<morda::IndexBuffer> indices,
-		morda::VertexArray::Mode_e mode
+		morda::vertex_array::Mode_e mode
 	)
 {
 	return std::make_shared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), mode);

@@ -64,7 +64,7 @@ public:
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const Matr4r& matrix, const VertexArray& vao)const = 0;
+		virtual void render(const Matr4r& matrix, const vertex_array& vao)const = 0;
 	};
 
 	/**
@@ -108,7 +108,7 @@ class ResAtlasImage : public ResImage, public ResImage::QuadTexture{
 	
 	std::shared_ptr<ResTexture> tex;
 	
-	std::shared_ptr<VertexArray> vao;
+	std::shared_ptr<vertex_array> vao;
 	
 public:
 	ResAtlasImage(std::shared_ptr<morda::context> c, std::shared_ptr<ResTexture> tex, const Rectr& rect);
@@ -125,7 +125,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, const VertexArray& vao) const override;
+	void render(const Matr4r& matrix, const vertex_array& vao) const override;
 	
 private:
 	static std::shared_ptr<ResAtlasImage> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);

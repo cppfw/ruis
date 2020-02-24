@@ -9,7 +9,7 @@
 
 namespace morda{
 
-class VertexArray : virtual public utki::shared{
+class vertex_array : virtual public utki::shared{
 public:
 	const std::vector<std::shared_ptr<vertex_buffer>> buffers;
 	
@@ -32,7 +32,7 @@ public:
 	
 	const Mode_e mode;
 	
-	VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
+	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
 
 };
 

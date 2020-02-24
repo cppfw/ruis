@@ -4,7 +4,7 @@
 
 #include <r4/matrix4.hpp>
 
-#include "VertexArray.hpp"
+#include "vertex_array.hpp"
 
 namespace morda{
 
@@ -17,9 +17,9 @@ public:
 	
 	virtual ~coloring_shader()noexcept{}
 	
-	virtual void render(const r4::mat4f &m, const VertexArray& va, r4::vec4f color)const = 0;
+	virtual void render(const r4::mat4f &m, const vertex_array& va, r4::vec4f color)const = 0;
 
-	void render(const r4::mat4f &m, const VertexArray& va, std::uint32_t color)const{
+	void render(const r4::mat4f &m, const vertex_array& va, std::uint32_t color)const{
 		this->render(
 				m,
 				va,

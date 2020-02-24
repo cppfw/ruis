@@ -48,7 +48,7 @@ OpenGLES2ShaderColorPosTex::OpenGLES2ShaderColorPosTex() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGLES2ShaderColorPosTex::render(const r4::mat4f& m, const morda::VertexArray& va, r4::vec4f color, const morda::texture_2d& tex)const {
+void OpenGLES2ShaderColorPosTex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const {
 	ASSERT(dynamic_cast<const OpenGLES2Texture2D*>(&tex))
 	static_cast<const OpenGLES2Texture2D&>(tex).bind(0);
 	this->bind();

@@ -23,10 +23,10 @@ public:
 
 	std::shared_ptr<morda::IndexBuffer> create_index_buffer(const utki::span<uint16_t> indices)override;
 	
-	std::shared_ptr<morda::VertexArray> create_vertex_array(
+	std::shared_ptr<morda::vertex_array> create_vertex_array(
 			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 			std::shared_ptr<morda::IndexBuffer> indices,
-			morda::VertexArray::Mode_e mode
+			morda::vertex_array::Mode_e mode
 		)override;
 
 	std::unique_ptr<shaders> create_shaders()override;

@@ -22,10 +22,10 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::VertexArray> create_vertex_array(
+	std::shared_ptr<morda::vertex_array> create_vertex_array(
 			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
 			std::shared_ptr<morda::IndexBuffer> indices,
-			morda::VertexArray::Mode_e mode
+			morda::vertex_array::Mode_e mode
 		)override
 	{
 		return nullptr;

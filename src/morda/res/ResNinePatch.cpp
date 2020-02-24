@@ -20,7 +20,7 @@ class ResSubImage :
 	
 	std::shared_ptr<const ResImage::QuadTexture> tex;
 	
-	std::shared_ptr<VertexArray> vao;
+	std::shared_ptr<vertex_array> vao;
 	
 public:
 	// rect is a rectangle on the texture, Y axis down.
@@ -43,7 +43,7 @@ public:
 					r.factory->create_vertex_buffer(utki::make_span(texCoords))
 				},
 				r.quad_indices,
-				VertexArray::Mode_e::TRIANGLE_FAN
+				vertex_array::Mode_e::TRIANGLE_FAN
 			);
 	}
 	
@@ -58,7 +58,7 @@ public:
 		return this->sharedFromThis(this);
 	}
 	
-	void render(const Matr4r& matrix, const VertexArray& vao) const override{
+	void render(const Matr4r& matrix, const vertex_array& vao) const override{
 		ASSERT(this->tex)
 		this->tex->render(matrix, *this->vao);
 	}

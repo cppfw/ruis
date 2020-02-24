@@ -11,7 +11,7 @@
 #include "texture_2d.hpp"
 
 #include "vertex_buffer.hpp"
-#include "VertexArray.hpp"
+#include "vertex_array.hpp"
 #include "IndexBuffer.hpp"
 
 #include "texturing_shader.hpp"
@@ -43,10 +43,10 @@ public:
 	
 	virtual std::shared_ptr<IndexBuffer> create_index_buffer(const utki::span<uint16_t> indices) = 0;
 	
-	virtual std::shared_ptr<VertexArray> create_vertex_array(
+	virtual std::shared_ptr<vertex_array> create_vertex_array(
 			std::vector< std::shared_ptr<morda::vertex_buffer> >&& buffers,
 			std::shared_ptr<morda::IndexBuffer> indices,
-			VertexArray::Mode_e mode
+			vertex_array::Mode_e mode
 		) = 0;
 	
 	struct shaders{

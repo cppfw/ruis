@@ -156,7 +156,7 @@ GLint OpenGLES2ShaderBase::getUniform(const char* n) {
 	return ret;
 }
 
-void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::VertexArray& va)const{
+void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va)const{
 	ASSERT(this->isBound())
 	
 	ASSERT(dynamic_cast<const OpenGLES2IndexBuffer*>(va.indices.operator ->()))

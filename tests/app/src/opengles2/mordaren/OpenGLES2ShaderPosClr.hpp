@@ -17,7 +17,7 @@ public:
 	OpenGLES2ShaderPosClr& operator=(const OpenGLES2ShaderPosClr&) = delete;
 	
 
-	void render(const r4::mat4f& m, const morda::VertexArray& va) const override;
+	void render(const r4::mat4f& m, const morda::vertex_array& va) const override;
 };
 
 }

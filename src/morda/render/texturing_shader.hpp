@@ -7,7 +7,7 @@
 #include "texture_2d.hpp"
 #include "vertex_buffer.hpp"
 #include "IndexBuffer.hpp"
-#include "VertexArray.hpp"
+#include "vertex_array.hpp"
 
 namespace morda{
 
@@ -21,7 +21,7 @@ public:
 	
 	virtual ~texturing_shader()noexcept{}
 	
-	virtual void render(const r4::mat4f &m, const morda::VertexArray& va, const texture_2d& tex)const = 0;
+	virtual void render(const r4::mat4f &m, const morda::vertex_array& va, const texture_2d& tex)const = 0;
 private:
 
 };

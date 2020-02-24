@@ -2,7 +2,7 @@
 
 #include <utki/config.hpp>
 
-#include <morda/render/VertexArray.hpp>
+#include <morda/render/vertex_array.hpp>
 
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
@@ -13,7 +13,7 @@
 
 namespace mordaren{
 
-class OpenGLES2VertexArray : public morda::VertexArray{
+class OpenGLES2VertexArray : public morda::vertex_array{
 public:	
 	OpenGLES2VertexArray(std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
 	

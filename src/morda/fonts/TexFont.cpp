@@ -90,7 +90,7 @@ TexFont::Glyph TexFont::loadGlyph(char32_t c) const{
 				this->context->renderer->quad_01_vbo
 			},
 			this->context->renderer->quad_indices,
-			VertexArray::Mode_e::TRIANGLE_FAN
+			vertex_array::Mode_e::TRIANGLE_FAN
 		);
 	g.tex = this->context->renderer->factory->create_texture_2d(
 			morda::numChannelsToTexType(im.numChannels()),

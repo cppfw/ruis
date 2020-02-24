@@ -70,7 +70,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 						r.factory->create_vertex_buffer(utki::make_span(texCoords))
 					},
 					r.quad_indices,
-					VertexArray::Mode_e::TRIANGLE_FAN
+					vertex_array::Mode_e::TRIANGLE_FAN
 				);
 		}else{
 			this->vao = this->context->renderer->pos_tex_quad_01_vao;

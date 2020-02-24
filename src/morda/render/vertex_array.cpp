@@ -1,10 +1,10 @@
-#include "VertexArray.hpp"
+#include "vertex_array.hpp"
 
 #include <utki/debug.hpp>
 
 using namespace morda;
 
-VertexArray::VertexArray(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
+vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
 		buffers(buffers),
 		indices(std::move(indices)),
 		mode(mode)

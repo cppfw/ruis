@@ -7,7 +7,7 @@
 #include "../resource_loader.hpp"
 #include "../config.hpp"
 
-#include "../render/VertexArray.hpp"
+#include "../render/vertex_array.hpp"
 
 #include "../util/util.hpp"
 
@@ -40,7 +40,7 @@ namespace morda{
 class ResGradient : public resource{
 	friend class resource_loader;
 
-	std::shared_ptr<VertexArray> vao;
+	std::shared_ptr<vertex_array> vao;
 	
 public:
 	/**

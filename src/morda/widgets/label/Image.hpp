@@ -34,7 +34,7 @@ class Image :
 
 	r4::vec2b repeat_v = r4::vec2b(false);
 	
-	mutable std::shared_ptr<VertexArray> vao;
+	mutable std::shared_ptr<vertex_array> vao;
 
 public:
 	Image(std::shared_ptr<morda::context> c, const puu::forest& desc);

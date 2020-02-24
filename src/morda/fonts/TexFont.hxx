@@ -17,7 +17,7 @@
 #include "../config.hpp"
 
 #include "../render/texture_2d.hpp"
-#include "../render/VertexArray.hpp"
+#include "../render/vertex_array.hpp"
 
 #include "Font.hpp"
 
@@ -37,7 +37,7 @@ class TexFont : public Font{
 		morda::Vec2r topLeft;
 		morda::Vec2r bottomRight;
 		
-		std::shared_ptr<VertexArray> vao;
+		std::shared_ptr<vertex_array> vao;
 		std::shared_ptr<texture_2d> tex;
 		
 		real advance;

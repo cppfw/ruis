@@ -14,9 +14,9 @@ public:
 	const std::shared_ptr<vertex_buffer> quad_01_vbo;
 	const std::shared_ptr<IndexBuffer> quad_indices;
 
-	const std::shared_ptr<VertexArray> pos_quad_01_vao;
+	const std::shared_ptr<vertex_array> pos_quad_01_vao;
 	
-	const std::shared_ptr<VertexArray> pos_tex_quad_01_vao;
+	const std::shared_ptr<vertex_array> pos_tex_quad_01_vao;
 	
 protected:
 	struct params{

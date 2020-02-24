@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include <morda/render/VertexArray.hpp>
+#include <morda/render/vertex_array.hpp>
 
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
@@ -88,11 +88,11 @@ protected:
 	
 	static GLenum modeMap[];
 	
-	static GLenum modeToGLMode(morda::VertexArray::Mode_e mode){
+	static GLenum modeToGLMode(morda::vertex_array::Mode_e mode){
 		return modeMap[unsigned(mode)];
 	}
 	
-	void render(const r4::mat4f& m, const morda::VertexArray& va)const;
+	void render(const r4::mat4f& m, const morda::vertex_array& va)const;
 };
 
 }
