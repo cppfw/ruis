@@ -1,11 +1,10 @@
-#include "ColorWidget.hpp"
+#include "color_widget.hpp"
 
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-
-ColorWidget::ColorWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+color_widget::color_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

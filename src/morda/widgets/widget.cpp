@@ -87,14 +87,14 @@ std::shared_ptr<Widget> widget::try_get_widget(const std::string& id)noexcept{
 void widget::resize(const morda::Vec2r& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
-			this->clearCache();
+			this->clear_cache();
 			this->relayoutNeeded = false;
 			this->lay_out();
 		}
 		return;
 	}
 
-	this->clearCache();
+	this->clear_cache();
 	this->rectangle.d = newDims;
 	utki::clampBottom(this->rectangle.d.x, real(0.0f));
 	utki::clampBottom(this->rectangle.d.y, real(0.0f));
@@ -269,10 +269,10 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cacheTex);
 }
 
-void widget::clearCache(){
+void widget::clear_cache(){
 	this->cacheDirty = true;
 	if(this->parent_v){
-		this->parent_v->clearCache();
+		this->parent_v->clear_cache();
 	}
 }
 

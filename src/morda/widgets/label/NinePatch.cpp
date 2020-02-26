@@ -129,7 +129,7 @@ NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	this->content_v->inflate_push_back(desc);
 }
 
-void NinePatch::render(const morda::Matr4r& matrix) const {
+void NinePatch::render(const morda::Matr4r& matrix)const{
 	this->Column::render(matrix);
 }
 
@@ -140,12 +140,12 @@ void NinePatch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
 
 	this->applyImages();
 
-	this->clearCache();
+	this->clear_cache();
 }
 
 
 
-Sidesr NinePatch::getActualBorders() const noexcept{
+Sidesr NinePatch::getActualBorders()const noexcept{
 	Sidesr ret;
 
 	for(auto i = 0; i != ret.size(); ++i){

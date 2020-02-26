@@ -36,6 +36,6 @@ CheckBox::CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 void CheckBox::onPressedChanged(){
 	this->checkWidget->set_visible(this->isPressed());
-	this->clearCache();
+	this->clear_cache();
 	this->ToggleButton::onPressedChanged();
 }

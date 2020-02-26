@@ -39,5 +39,5 @@ RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& d
 void RadioButton::onPressedChanged(){
 	this->ChoiceButton::onPressedChanged();
 	this->checkWidget->set_visible(this->isPressed());
-	this->clearCache();
+	this->clear_cache();
 }

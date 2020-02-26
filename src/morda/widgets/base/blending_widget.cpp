@@ -10,19 +10,19 @@ namespace{
 const std::map<std::string, renderer::blend_factor> blendFactorNames_c = {
 	{"zero", renderer::blend_factor::zero},
 	{"one", renderer::blend_factor::one},
-	{"srcColor", renderer::blend_factor::src_color},
-	{"oneMinusSrcColor", renderer::blend_factor::one_minus_src_color},
-	{"dstColor", renderer::blend_factor::dst_color},
-	{"oneMinusDstColor", renderer::blend_factor::one_minus_dst_color},
-	{"srcAlpha", renderer::blend_factor::src_alpha},
-	{"oneMinusSrcAlpha", renderer::blend_factor::one_minus_src_alpha},
-	{"dstAlpha", renderer::blend_factor::dst_alpha},
-	{"oneMinusDstAlpha", renderer::blend_factor::one_minus_dst_alpha},
-	{"constantColor", renderer::blend_factor::constant_color},
-	{"oneMinusConstantColor", renderer::blend_factor::one_minus_constant_color},
-	{"constantAlpha", renderer::blend_factor::constant_alpha},
-	{"oneMinusConstantAlpha", renderer::blend_factor::one_minus_constant_alpha},
-	{"srcAlphaSaturate", renderer::blend_factor::src_alpha_saturate}
+	{"src_color", renderer::blend_factor::src_color},
+	{"one_minus_src_color", renderer::blend_factor::one_minus_src_color},
+	{"dst_color", renderer::blend_factor::dst_color},
+	{"one_minus_dst_color", renderer::blend_factor::one_minus_dst_color},
+	{"src_alpha", renderer::blend_factor::src_alpha},
+	{"one_minus_src_alpha", renderer::blend_factor::one_minus_src_alpha},
+	{"dst_alpha", renderer::blend_factor::dst_alpha},
+	{"one_minus_dst_alpha", renderer::blend_factor::one_minus_dst_alpha},
+	{"constant_color", renderer::blend_factor::constant_color},
+	{"one_minus_constant_color", renderer::blend_factor::one_minus_constant_color},
+	{"constant_alpha", renderer::blend_factor::constant_alpha},
+	{"one_minus_constant_alpha", renderer::blend_factor::one_minus_constant_alpha},
+	{"src_alpha_saturate", renderer::blend_factor::src_alpha_saturate}
 };
 
 renderer::blend_factor blendFactorFromString(const std::string& s){
@@ -45,13 +45,13 @@ blending_widget::blending_widget(std::shared_ptr<morda::context> c, const puu::f
 
 		if(p.value == "blend"){
 			this->isBlendingEnabled_v = get_property_value(p).to_bool();
-		}else if(p.value == "blendSrc"){
+		}else if(p.value == "blend_src"){
 			this->blend_v.src = blendFactorFromString(get_property_value(p).to_string());
-		}else if(p.value == "blendDst"){
+		}else if(p.value == "blend_dst"){
 			this->blend_v.dst = blendFactorFromString(get_property_value(p).to_string());
-		}else if(p.value == "blendSrcAlpha"){
+		}else if(p.value == "blend_src_alpha"){
 			this->blend_v.src_alpha = blendFactorFromString(get_property_value(p).to_string());
-		}else if(p.value == "blendDstAlpha"){
+		}else if(p.value == "blend_dst_alpha"){
 			this->blend_v.dst_alpha = blendFactorFromString(get_property_value(p).to_string());
 		}
 	}

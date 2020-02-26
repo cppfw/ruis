@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../base/ColorWidget.hpp"
+#include "../base/color_widget.hpp"
 
 
 namespace morda{
@@ -11,7 +11,7 @@ namespace morda{
  * This is a widget which can display a rectangle of a single color.
  * From GUI script it can be instantiated as "Color".
  */
-class Color : public ColorWidget{
+class Color : public color_widget{
 public:
 	Color(std::shared_ptr<morda::context> c, const puu::forest& desc);
 

@@ -145,7 +145,7 @@ private:
 	void renderFromCache(const r4::mat4f& matrix)const;
 
 protected:
-	void clearCache();
+	void clear_cache();
 
 public:
 	/**

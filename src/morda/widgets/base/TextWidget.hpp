@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "ColorWidget.hpp"
+#include "color_widget.hpp"
 
 #include "../../res/res_font.hpp"
 
@@ -16,7 +16,7 @@ namespace morda{
  * @brief Abstract widget displaying a text.
  */
 //TODO: should not be color widget
-class TextWidget : public ColorWidget{
+class TextWidget : public color_widget{
 	std::shared_ptr<res_font> font_v;
 
 protected:

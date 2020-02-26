@@ -464,14 +464,14 @@ bool Window::isTopmost()const noexcept{
 	return this->parent()->children().back().get() == this;
 }
 
-void Window::updateTopmost() {
-	this->titleBg->setColor(
+void Window::updateTopmost(){
+	this->titleBg->set_color(
 			this->isTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost
 		);
 }
 
 
-void Window::lay_out() {
+void Window::lay_out(){
 	this->updateTopmost();
 	this->Pile::lay_out();
 }

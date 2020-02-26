@@ -2,39 +2,35 @@
 
 #include "../widget.hpp"
 
-
 namespace morda{
-
 
 /**
  * @brief Basic widget which has a color setting.
  *
  * @param color - color value.
  */
-class ColorWidget : public virtual Widget{
+class color_widget : public virtual widget{
 	std::uint32_t color_v = 0xffffffff;
 
 protected:
-	ColorWidget(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	color_widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
-	ColorWidget(const ColorWidget&) = delete;
-	ColorWidget& operator=(const ColorWidget&) = delete;
+	color_widget(const color_widget&) = delete;
+	color_widget& operator=(const color_widget&) = delete;
 
-
-	void setColor(std::uint32_t color){
+	void set_color(std::uint32_t color){
 		if(this->color_v == color){
 			return;
 		}
 
 		this->color_v = color;
-		this->clearCache();
+		this->clear_cache();
 	}
 
 	std::uint32_t color()const noexcept{
 		return this->color_v;
 	}
 };
-
 
 }

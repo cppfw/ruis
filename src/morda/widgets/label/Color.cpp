@@ -12,7 +12,7 @@ using namespace morda;
 
 Color::Color(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		ColorWidget(this->context, desc)
+		color_widget(this->context, desc)
 {}
 
 
