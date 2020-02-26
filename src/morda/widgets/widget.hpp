@@ -59,26 +59,17 @@ public:
 		 */
 		constexpr static const real min = real(-1);
 
-		//TODO: deprecated, remove.
-		constexpr static const real min_c = min;
-
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
 		 * The widget will be given at least minimal space it needs to properly draw.
 		 */
 		constexpr static const real max = real(-2);
 
-		//TODO: deprecated, remove.
-		constexpr static const real max_c = max;
-
 		/**
 		 * @brief Requests widget to be same size as its parent.
 		 * Minimal size of the widget is assumed to be 0.
 		 */
 		constexpr static const real fill = real(-3);
-
-		//TODO: deprecated, remove.
-		constexpr static const real fill_c = fill;
 
 		/**
 		 * @param dims - desired dimensions within the layout. Each component can be a non-negative value in pixels or [min, max, fill].
@@ -91,10 +82,7 @@ public:
 		 * @brief desired dimensions.
 		 * Components should hold non-negative value in pixels or [min, max, fill].
 		 */
-		vector2 dims = vector2(layout_params::min_c);
-
-		//TODO: deprecated, remove.
-		vector2& dim = dims;
+		vector2 dims = vector2(layout_params::min);
 
 	public:
 		layout_params(const puu::forest& desc, const morda::units& units);

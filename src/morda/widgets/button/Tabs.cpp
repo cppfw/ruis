@@ -60,12 +60,12 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 		morda::Vec2r d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dim[j] == LayoutParams::max_c || lp.dim[j] == LayoutParams::fill_c){
+			if(lp.dims[j] == LayoutParams::max || lp.dims[j] == LayoutParams::fill){
 				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for Tabs container");
-			}else if(lp.dim[j] == LayoutParams::min_c){
+			}else if(lp.dims[j] == LayoutParams::min){
 				d[j] = -1;
 			}else{
-				d[j] = lp.dim[j];
+				d[j] = lp.dims[j];
 			}
 		}
 

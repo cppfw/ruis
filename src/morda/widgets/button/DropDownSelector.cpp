@@ -129,7 +129,7 @@ void DropDownSelector::showDropdownMenu() {
 	auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
 
 	auto& lp = minSizeSpacer->get_layout_params();
-	lp.dim.x = this->rect().d.x;
+	lp.dims.x = this->rect().d.x;
 
 	auto va = np->try_get_widget_as<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)

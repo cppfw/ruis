@@ -77,9 +77,9 @@ CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest&
 		ASSERT(sw)
 		sw->pressedChanged = [this](Button& tb){
 			if(tb.isPressed()){
-				this->contentArea->get_layout_params().dim.y = 0;
+				this->contentArea->get_layout_params().dims.y = 0;
 			}else{
-				this->contentArea->get_layout_params().dim.y = Widget::LayoutParams::min_c;
+				this->contentArea->get_layout_params().dims.y = Widget::LayoutParams::min;
 			}
 		};
 	}

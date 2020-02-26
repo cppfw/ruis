@@ -311,12 +311,12 @@ std::shared_ptr<Widget> container::try_get_widget(const std::string& id)noexcept
 vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dim[i] == LayoutParams::max_c || lp.dim[i] == LayoutParams::fill_c){
+		if(lp.dims[i] == LayoutParams::max || lp.dims[i] == LayoutParams::fill){
 			d[i] = this->rect().d[i];
-		}else if(lp.dim[i] == LayoutParams::min_c){
+		}else if(lp.dims[i] == LayoutParams::min){
 			d[i] = -1; // will be updated below
 		}else{
-			d[i] = lp.dim[i];
+			d[i] = lp.dims[i];
 		}
 	}
 	if(d.x < 0 || d.y < 0){

@@ -39,8 +39,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		auto lp = c->children().front()->get_layout_params();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_ALWAYS(lp.dim[1] == 123)
+		ASSERT_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max)
+		ASSERT_ALWAYS(lp.dims[1] == 123)
 	}
 
 	// test template properties overriding
@@ -79,8 +79,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 12)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
 		auto lp = c->children().front()->get_layout_params();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::min_c, "lp.dim[1] = " << lp.dim[1])
+		ASSERT_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max)
+		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::Widget::LayoutParams::min, "lp.dim[1] = " << lp.dims[1])
 	}
 
 	// test template arguments
@@ -121,8 +121,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
 		auto lp = c->children().front()->get_layout_params();
-		ASSERT_INFO_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max_c, "lp.dims[0] = " << lp.dims[0])
-		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::Widget::LayoutParams::max_c, "lp.dims[1] = " << lp.dims[1])
+		ASSERT_INFO_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max, "lp.dims[0] = " << lp.dims[0])
+		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::Widget::LayoutParams::max, "lp.dims[1] = " << lp.dims[1])
 	}
 
 	// test two levels of templates
@@ -171,8 +171,8 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 0)
 		ASSERT_ALWAYS(c->children().front()->rect().d.y == 45)
 		auto lp = c->children().front()->get_layout_params();
-		ASSERT_ALWAYS(lp.dim[0] == morda::Widget::LayoutParams::max_c)
-		ASSERT_INFO_ALWAYS(lp.dim[1] == morda::Widget::LayoutParams::max_c, "lp.dim[1] = " << lp.dim[1])
+		ASSERT_ALWAYS(lp.dims[0] == morda::Widget::LayoutParams::max)
+		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::Widget::LayoutParams::max, "lp.dim[1] = " << lp.dims[1])
 	}
 
 	// test template which nests same named widget on 2nd level

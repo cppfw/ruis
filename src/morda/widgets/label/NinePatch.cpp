@@ -180,27 +180,27 @@ void NinePatch::applyImages(){
 		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->get_layout_params();
 
-		if(this->borders.left() == LayoutParams::min_c){
-			if(layoutParams.dim.x != minBorders.left()){
+		if(this->borders.left() == LayoutParams::min){
+			if(layoutParams.dims.x != minBorders.left()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
-				lp.dim.x = minBorders.left();
+				lp.dims.x = minBorders.left();
 			}
 		}else{
-			if(layoutParams.dim.x != this->borders.left()){
+			if(layoutParams.dims.x != this->borders.left()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
-				lp.dim.x = this->borders.left();
+				lp.dims.x = this->borders.left();
 			}
 		}
 
-		if(this->borders.top() == LayoutParams::min_c){
-			if(layoutParams.dim.y != minBorders.top()){
+		if(this->borders.top() == LayoutParams::min){
+			if(layoutParams.dims.y != minBorders.top()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
-				lp.dim.y = minBorders.top();
+				lp.dims.y = minBorders.top();
 			}
 		}else{
-			if(layoutParams.dim.y != this->borders.top()){
+			if(layoutParams.dims.y != this->borders.top()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
-				lp.dim.y = this->borders.top();
+				lp.dims.y = this->borders.top();
 			}
 		}
 //			TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
@@ -209,27 +209,27 @@ void NinePatch::applyImages(){
 		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->get_layout_params();
 
-		if(this->borders.right() == LayoutParams::min_c){
-			if(layoutParams.dim.x != minBorders.right()){
+		if(this->borders.right() == LayoutParams::min){
+			if(layoutParams.dims.x != minBorders.right()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
-				lp.dim.x = minBorders.right();
+				lp.dims.x = minBorders.right();
 			}
 		}else{
-			if(layoutParams.dim.x != this->borders.right()){
+			if(layoutParams.dims.x != this->borders.right()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
-				lp.dim.x = this->borders.right();
+				lp.dims.x = this->borders.right();
 			}
 		}
 
-		if(this->borders.bottom() == LayoutParams::min_c){
-			if(layoutParams.dim.y != minBorders.bottom()){
+		if(this->borders.bottom() == LayoutParams::min){
+			if(layoutParams.dims.y != minBorders.bottom()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
-				lp.dim.y = minBorders.bottom();
+				lp.dims.y = minBorders.bottom();
 			}
 		}else{
-			if(layoutParams.dim.y != this->borders.bottom()){
+			if(layoutParams.dims.y != this->borders.bottom()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
-				lp.dim.y = this->borders.bottom();
+				lp.dims.y = this->borders.bottom();
 			}
 		}
 //			TRACE(<< "lp.dim = " << lp.dim << std::endl)

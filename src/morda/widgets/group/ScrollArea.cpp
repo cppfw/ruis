@@ -87,19 +87,19 @@ void ScrollArea::updateScrollFactor(){
 Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dim[i] == LayoutParams::fill_c){
+		if(lp.dims[i] == LayoutParams::fill){
 			d[i] = this->rect().d[i];
-		}else if(lp.dim[i] == LayoutParams::min_c || lp.dim[i] == LayoutParams::max_c){
+		}else if(lp.dims[i] == LayoutParams::min || lp.dims[i] == LayoutParams::max){
 			d[i] = -1; // will be updated below
 		}else{
-			d[i] = lp.dim[i];
+			d[i] = lp.dims[i];
 		}
 	}
 	if(d.x < 0 || d.y < 0){
 		Vec2r md = w.measure(d);
 		for(unsigned i = 0; i != md.size(); ++i){
 			if(d[i] < 0){
-				if(lp.dim[i] == LayoutParams::max_c && md[i] < this->rect().d[i]){
+				if(lp.dims[i] == LayoutParams::max && md[i] < this->rect().d[i]){
 					d[i] = this->rect().d[i];
 				}else{
 					d[i] = md[i];

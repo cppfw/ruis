@@ -17,8 +17,8 @@ TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 	auto& lp = this->get_layout_params(*this->list);
 
-	lp.dim.y = Widget::LayoutParams::max_c;
-	lp.dim.x = Widget::LayoutParams::min_c;
+	lp.dims.y = Widget::LayoutParams::max;
+	lp.dims.x = Widget::LayoutParams::min;
 
 	this->list->dataSetChanged = [this](List&){
 		if(this->viewChanged){

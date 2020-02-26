@@ -55,8 +55,8 @@ void LinearContainer::lay_out(){
 
 			netWeight += lp.weight;
 
-			ASSERT(lp.dim[longIndex] != LayoutParams::max_c)
-			ASSERT(lp.dim[longIndex] != LayoutParams::fill_c)
+			ASSERT(lp.dims[longIndex] != LayoutParams::max)
+			ASSERT(lp.dims[longIndex] != LayoutParams::fill)
 
 			Vec2r d = this->dimForWidget(**i, lp);
 			info->measuredDim = d;
@@ -94,13 +94,13 @@ void LinearContainer::lay_out(){
 					}
 				}
 
-				if(lp.dim[transIndex] == LayoutParams::max_c || lp.dim[transIndex] == LayoutParams::fill_c){
+				if(lp.dims[transIndex] == LayoutParams::max || lp.dims[transIndex] == LayoutParams::fill){
 					d[transIndex] = this->rect().d[transIndex];
 				}else{
-					if(lp.dim[transIndex] == LayoutParams::min_c){
+					if(lp.dims[transIndex] == LayoutParams::min){
 						d[transIndex] = -1;
 					}else{
-						d[transIndex] = lp.dim[transIndex];
+						d[transIndex] = lp.dims[transIndex];
 					}
 					if(d.x < 0 || d.y < 0){
 						Vec2r md = (*i)->measure(d);
@@ -155,35 +155,35 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 
 			netWeight += lp.weight;
 
-			if(lp.dim[longIndex] == LayoutParams::max_c || lp.dim[longIndex] == LayoutParams::fill_c){
+			if(lp.dims[longIndex] == LayoutParams::max || lp.dims[longIndex] == LayoutParams::fill){
 				throw std::logic_error("LinearContainer::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
 			}
 
 			Vec2r d;
-			if(lp.dim[transIndex] == LayoutParams::max_c){
+			if(lp.dims[transIndex] == LayoutParams::max){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = -1;
 				}
-			}else if(lp.dim[transIndex] == LayoutParams::min_c){
+			}else if(lp.dims[transIndex] == LayoutParams::min){
 				d[transIndex] = -1;
-			}else if(lp.dim[transIndex] == LayoutParams::fill_c){
+			}else if(lp.dims[transIndex] == LayoutParams::fill){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = 0;
 				}
 			}else{
-				d[transIndex] = lp.dim[transIndex];
+				d[transIndex] = lp.dims[transIndex];
 			}
 
-			ASSERT(lp.dim[longIndex] != LayoutParams::max_c)
-			ASSERT(lp.dim[longIndex] != LayoutParams::fill_c)
-			if(lp.dim[longIndex] == LayoutParams::min_c){
+			ASSERT(lp.dims[longIndex] != LayoutParams::max)
+			ASSERT(lp.dims[longIndex] != LayoutParams::fill)
+			if(lp.dims[longIndex] == LayoutParams::min){
 				d[longIndex] = -1;
 			}else{
-				d[longIndex] = lp.dim[longIndex];
+				d[longIndex] = lp.dims[longIndex];
 			}
 
 			d = (*i)->measure(d);
@@ -249,22 +249,22 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 				}
 			}
 
-			if(lp.dim[transIndex] == LayoutParams::max_c){
+			if(lp.dims[transIndex] == LayoutParams::max){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = -1;
 				}
-			}else if(lp.dim[transIndex] == LayoutParams::min_c){
+			}else if(lp.dims[transIndex] == LayoutParams::min){
 				d[transIndex] = -1;
-			}else if(lp.dim[transIndex] == LayoutParams::fill_c){
+			}else if(lp.dims[transIndex] == LayoutParams::fill){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
 				}else{
 					d[transIndex] = 0;
 				}
 			}else{
-				d[transIndex] = lp.dim[transIndex];
+				d[transIndex] = lp.dims[transIndex];
 			}
 
 			d = (*i)->measure(d);
