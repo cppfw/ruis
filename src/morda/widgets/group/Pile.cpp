@@ -15,9 +15,9 @@ Pile::Pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 void Pile::lay_out() {
 //	TRACE(<< "Pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
+		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
 
-		(*i)->resize(this->dimForWidget(**i, lp));
+		(*i)->resize(this->dims_for_widget(**i, lp));
 
 		(*i)->move_to(((this->rect().d - (*i)->rect().d) / 2).round());
 	}
@@ -32,20 +32,20 @@ morda::Vec2r Pile::measure(const morda::Vec2r& quotum)const{
 	}
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(**i);
+		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
 
 		morda::Vec2r d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dims[j] == LayoutParams::max){
+			if(lp.dims[j] == layout_params::max){
 				if(quotum[j] >= 0){
 					d[j] = quotum[j];
 				}else{
 					d[j] = -1;
 				}
-			}else if(lp.dims[j] == LayoutParams::min){
+			}else if(lp.dims[j] == layout_params::min){
 				d[j] = -1;
-			}else if(lp.dims[j] == LayoutParams::fill){
+			}else if(lp.dims[j] == layout_params::fill){
 				if(quotum[j] >= 0){
 					d[j] = quotum[j];
 				}else{

@@ -180,7 +180,7 @@ void NinePatch::applyImages(){
 		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->get_layout_params();
 
-		if(this->borders.left() == LayoutParams::min){
+		if(this->borders.left() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.left()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dims.x = minBorders.left();
@@ -192,7 +192,7 @@ void NinePatch::applyImages(){
 			}
 		}
 
-		if(this->borders.top() == LayoutParams::min){
+		if(this->borders.top() == layout_params::min){
 			if(layoutParams.dims.y != minBorders.top()){
 				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
 				lp.dims.y = minBorders.top();
@@ -209,7 +209,7 @@ void NinePatch::applyImages(){
 		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
 		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->get_layout_params();
 
-		if(this->borders.right() == LayoutParams::min){
+		if(this->borders.right() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.right()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dims.x = minBorders.right();
@@ -221,7 +221,7 @@ void NinePatch::applyImages(){
 			}
 		}
 
-		if(this->borders.bottom() == LayoutParams::min){
+		if(this->borders.bottom() == layout_params::min){
 			if(layoutParams.dims.y != minBorders.bottom()){
 				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
 				lp.dims.y = minBorders.bottom();

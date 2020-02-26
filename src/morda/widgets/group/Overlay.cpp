@@ -66,7 +66,7 @@ void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
 
 	auto& lp = this->overlay().get_layout_params(*w);
 
-	Vec2r dim = this->dimForWidget(*w, lp);
+	Vec2r dim = this->dims_for_widget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
 		utki::clampTop(dim[i], this->overlay().rect().d[i]);

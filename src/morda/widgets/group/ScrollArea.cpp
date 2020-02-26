@@ -84,12 +84,12 @@ void ScrollArea::updateScrollFactor(){
 	}
 }
 
-Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
+Vec2r ScrollArea::dimForWidget(const widget& w, const layout_params& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dims[i] == LayoutParams::fill){
+		if(lp.dims[i] == layout_params::fill){
 			d[i] = this->rect().d[i];
-		}else if(lp.dims[i] == LayoutParams::min || lp.dims[i] == LayoutParams::max){
+		}else if(lp.dims[i] == layout_params::min || lp.dims[i] == layout_params::max){
 			d[i] = -1; // will be updated below
 		}else{
 			d[i] = lp.dims[i];
@@ -99,7 +99,7 @@ Vec2r ScrollArea::dimForWidget(const Widget& w, const LayoutParams& lp)const{
 		Vec2r md = w.measure(d);
 		for(unsigned i = 0; i != md.size(); ++i){
 			if(d[i] < 0){
-				if(lp.dims[i] == LayoutParams::max && md[i] < this->rect().d[i]){
+				if(lp.dims[i] == layout_params::max && md[i] < this->rect().d[i]){
 					d[i] = this->rect().d[i];
 				}else{
 					d[i] = md[i];
@@ -159,7 +159,7 @@ void ScrollArea::updateEffectiveDim(){
 	morda::Vec2r minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->getLayoutParamsAs<LayoutParams>(**i);
+		auto& lp = this->get_layout_params_as<layout_params>(**i);
 
 		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
 

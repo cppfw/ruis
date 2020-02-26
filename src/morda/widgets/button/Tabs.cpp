@@ -50,7 +50,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(*c);
+		auto& lp = this->get_layout_params_as<container::layout_params>(*c);
 
 		auto tab = dynamic_cast<const Tab*>(c.get());
 		if(!tab){
@@ -60,9 +60,9 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 		morda::Vec2r d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dims[j] == LayoutParams::max || lp.dims[j] == LayoutParams::fill){
+			if(lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill){
 				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for Tabs container");
-			}else if(lp.dims[j] == LayoutParams::min){
+			}else if(lp.dims[j] == layout_params::min){
 				d[j] = -1;
 			}else{
 				d[j] = lp.dims[j];
@@ -96,9 +96,9 @@ void Tabs::lay_out() {
 
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->getLayoutParamsAs<Container::LayoutParams>(*c);
+		auto& lp = this->get_layout_params_as<Container::layout_params>(*c);
 
-		auto dim = this->dimForWidget(*c, lp);
+		auto dim = this->dims_for_widget(*c, lp);
 		c->resize(dim);
 
 		auto tab = dynamic_cast<Tab*>(c.get());

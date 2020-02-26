@@ -311,9 +311,9 @@ std::shared_ptr<Widget> container::try_get_widget(const std::string& id)noexcept
 vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dims[i] == LayoutParams::max || lp.dims[i] == LayoutParams::fill){
+		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
 			d[i] = this->rect().d[i];
-		}else if(lp.dims[i] == LayoutParams::min){
+		}else if(lp.dims[i] == layout_params::min){
 			d[i] = -1; // will be updated below
 		}else{
 			d[i] = lp.dims[i];

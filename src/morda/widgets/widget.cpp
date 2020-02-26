@@ -349,7 +349,7 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 }
 
 
-widget::LayoutParams& widget::get_layout_params() {
+widget::layout_params& widget::get_layout_params() {
 	if(!this->parent()){
 		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
@@ -358,7 +358,7 @@ widget::LayoutParams& widget::get_layout_params() {
 }
 
 
-const widget::LayoutParams& widget::get_layout_params()const {
+const widget::layout_params& widget::get_layout_params()const {
 	if(!this->parent()){
 		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}

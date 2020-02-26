@@ -30,7 +30,7 @@ class container;
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "Widget".
  * It can have the following parameters:
- * @param layout - layout parameters description. See widget::LayoutParams for details.
+ * @param layout - layout parameters description. See widget::layout_params for details.
  * @param x - horizontal position within parent widget.
  * @param y - vertical position within parent widget.
  * @param dx - width of the widget.
@@ -90,9 +90,6 @@ public:
 		virtual ~layout_params()noexcept{}
 	};
 
-	//TODO: deprecated, remove.
-	typedef layout_params LayoutParams;
-
 private:
 	container* parent_v = nullptr;
 
@@ -147,11 +144,6 @@ public:
 		this->cache = enabled;
 	}
 
-	//TODO: deprecated, remove.
-	void setCache(bool enabled)noexcept{
-		this->set_cache(enabled);
-	}
-
 	/**
 	 * @brief Render this widget to texture.
 	 * @param reuse - try to re-use the existing texture to avoid new texture allocation.
@@ -161,17 +153,12 @@ public:
 	 */
 	std::shared_ptr<texture_2d> render_to_texture(std::shared_ptr<texture_2d> reuse = nullptr)const;
 
-	//TODO: deprecated, remove.
-	std::shared_ptr<texture_2d> renderToTexture(std::shared_ptr<texture_2d> reuse = nullptr)const{
-		return this->render_to_texture(std::move(reuse));
-	}
-
 private:
 	bool relayoutNeeded = true;
 
 	puu::forest layout_desc;
 
-	mutable std::unique_ptr<LayoutParams> layoutParams;
+	mutable std::unique_ptr<layout_params> layoutParams;
 public:
 	std::string id;
 
@@ -182,22 +169,12 @@ public:
 	 */
 	layout_params& get_layout_params();
 
-	// TODO: deprecated, remove.
-	layout_params& getLayoutParams(){
-		return this->get_layout_params();
-	}
-
 	/**
 	 * @brief Get layout parameters of the widget.
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
 	 * @return Layout parameters of the widget.
 	 */
 	const layout_params& get_layout_params()const;
-
-	//TODO: deprecated, remove.
-	const layout_params& getLayoutParams()const{
-		return this->get_layout_params();
-	}
 
 	/**
 	 * @brief Request re-layout.

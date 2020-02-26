@@ -28,7 +28,7 @@ class ScrollArea : public Container{
 	Vec2r curScrollFactor;
 
 protected:
-	Vec2r dimForWidget(const Widget& w, const LayoutParams& lp)const;
+	Vec2r dimForWidget(const widget& w, const layout_params& lp)const;
 
 public:
 	ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& desc);

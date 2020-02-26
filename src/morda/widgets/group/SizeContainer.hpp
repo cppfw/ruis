@@ -4,7 +4,7 @@
 
 namespace morda{
 
-class SizeContainer : public Container{
+class SizeContainer : public container{
 public:
 	SizeContainer(std::shared_ptr<morda::context> c, const puu::forest& desc);
 

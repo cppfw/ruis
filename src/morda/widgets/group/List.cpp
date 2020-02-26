@@ -142,9 +142,9 @@ void List::setScrollPosAsFactor(real factor){
 
 // TODO: refactor
 bool List::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, list::const_iterator& insertBefore){
-	auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
+	auto& lp = this->get_layout_params_as<layout_params>(*w);
 
-	Vec2r dim = this->dimForWidget(*w, lp);
+	Vec2r dim = this->dims_for_widget(*w, lp);
 
 	w->resize(dim);
 
@@ -281,9 +281,9 @@ void List::updateTailItemsInfo(){
 		auto w = this->provider->getWidget(i - 1);
 		ASSERT(w)
 
-		auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
+		auto& lp = this->get_layout_params_as<layout_params>(*w);
 
-		Vec2r d = this->dimForWidget(*w, lp);
+		Vec2r d = this->dims_for_widget(*w, lp);
 
 		dim -= d[longIndex];
 	}
@@ -330,9 +330,9 @@ void List::scrollBy(real delta) {
 				)
 			for(; this->posIndex < this->firstTailItemIndex;){
 				auto w = this->provider->getWidget(this->posIndex);
-				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
-				Vec2r d = this->dimForWidget(*w, lp);
-				this->push_back(w); //this is just optimization, to avoid creating same widget twice
+				auto& lp = this->get_layout_params_as<layout_params>(*w);
+				Vec2r d = this->dims_for_widget(*w, lp);
+				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->posOffset = delta;
 					break;
@@ -354,9 +354,9 @@ void List::scrollBy(real delta) {
 				ASSERT(this->addedIndex == this->posIndex)
 				--this->posIndex;
 				auto w = this->provider->getWidget(this->posIndex);
-				auto& lp = this->getLayoutParamsAs<LayoutParams>(*w);
-				Vec2r d = this->dimForWidget(*w, lp);
-				this->insert(w, this->children().begin()); //this is just optimization, to avoid creating same widget twice
+				auto& lp = this->get_layout_params_as<layout_params>(*w);
+				Vec2r d = this->dims_for_widget(*w, lp);
+				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
 				--this->addedIndex;
 				if(d[longIndex] > delta){
 					this->posOffset = d[longIndex] - delta;
