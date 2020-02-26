@@ -22,7 +22,7 @@ namespace morda{
 class ScrollBar :
 		public FractionBandWidget,
 		protected OrientedWidget,
-		private Pile //users do not need to know that it is a container
+		private Pile // users do not need to know that it is a container
 {
 	ScrollBar(const ScrollBar&) = delete;
 	ScrollBar& operator=(const ScrollBar&) = delete;
@@ -35,16 +35,16 @@ class ScrollBar :
 protected:
 	ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
 
-	void onFractionChange() override;
+	void on_fraction_change()override;
 
-	void onBandSizeChanged() override;
+	void onBandSizeChanged()override;
 
 public:
 
 	virtual ~ScrollBar()noexcept{}
 
 private:
-	void lay_out() override;
+	void lay_out()override;
 };
 
 

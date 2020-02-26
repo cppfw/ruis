@@ -668,17 +668,17 @@ public:
 				auto visibleArea = sc->visibleAreaFraction();
 
 				if(auto v = vs.lock()){
-					v->setFraction(sc->scrollFactor().y);
+					v->set_fraction(sc->scrollFactor().y);
 					v->setBandSizeFraction(visibleArea.y);
 				}
 				if(auto h = hs.lock()){
-					h->setFraction(sc->scrollFactor().x);
+					h->set_fraction(sc->scrollFactor().x);
 					h->setBandSizeFraction(visibleArea.x);
 				}
 			};
 			resizeProxy->resized(resizeProxy->rect().d);
 
-			vertSlider->fractionChange = [sa](morda::FractionWidget& slider){
+			vertSlider->fraction_change = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->scrollFactor();
 					sf.y = slider.fraction();
@@ -686,7 +686,7 @@ public:
 				}
 			};
 
-			horiSlider->fractionChange = [sa](morda::FractionWidget& slider){
+			horiSlider->fraction_change = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->scrollFactor();
 					sf.x = slider.fraction();
@@ -695,7 +695,7 @@ public:
 			};
 		}
 
-		//VerticalList
+		// VerticalList
 		{
 			auto verticalList = c->try_get_widget_as<morda::VList>("vertical_list");
 			auto vl = utki::makeWeak(verticalList);
@@ -703,7 +703,7 @@ public:
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("vertical_list_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
-			verticalSlider->fractionChange = [vl](morda::FractionWidget& slider){
+			verticalSlider->fraction_change = [vl](morda::fraction_widget& slider){
 				if(auto l = vl.lock()){
 					l->setScrollPosAsFactor(slider.fraction());
 				}
@@ -718,7 +718,7 @@ public:
 					return;
 				}
 				if(auto s = vs.lock()){
-					s->setFraction(l->scrollFactor());
+					s->set_fraction(l->scrollFactor());
 				}
 			};
 
@@ -745,7 +745,7 @@ public:
 					if(auto l = vl.lock()){
 						l->scrollBy(dp.y);
 						if(auto s = vs.lock()){
-							s->setFraction(l->scrollFactor());
+							s->set_fraction(l->scrollFactor());
 						}
 					}
 					return true;
@@ -759,11 +759,11 @@ public:
 			auto horizontalList = c->try_get_widget_as<morda::List>("horizontal_list");
 			auto hl = utki::makeWeak(horizontalList);
 
-			auto horizontalSlider = c->try_get_widget_as<morda::FractionWidget>("horizontal_list_slider");
+			auto horizontalSlider = c->try_get_widget_as<morda::fraction_widget>("horizontal_list_slider");
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 
-			horizontalSlider->fractionChange = [hl](morda::FractionWidget& slider){
+			horizontalSlider->fraction_change = [hl](morda::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
 					l->setScrollPosAsFactor(slider.fraction());
@@ -779,7 +779,7 @@ public:
 					return;
 				}
 				if(auto s = hs.lock()){
-					s->setFraction(l->scrollFactor());
+					s->set_fraction(l->scrollFactor());
 				}
 			};
 
@@ -806,7 +806,7 @@ public:
 					if(auto l = hl.lock()){
 						l->scrollBy(dp.x);
 						if(auto s = hs.lock()){
-							s->setFraction(l->scrollFactor());
+							s->set_fraction(l->scrollFactor());
 						}
 					}
 					return true;
@@ -826,7 +826,7 @@ public:
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("treeview_vertical_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
-			verticalSlider->fractionChange = [tv](morda::FractionWidget& slider){
+			verticalSlider->fraction_change = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->setVerticalScrollPosAsFactor(slider.fraction());
 				}
@@ -836,7 +836,7 @@ public:
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 
-			horizontalSlider->fractionChange = [tv](morda::FractionWidget& slider){
+			horizontalSlider->fraction_change = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->setHorizontalScrollPosAsFactor(slider.fraction());
 				}
@@ -852,10 +852,10 @@ public:
 					return;
 				}
 				if(auto h = hs.lock()){
-					h->setFraction(t->scrollFactor().x);
+					h->set_fraction(t->scrollFactor().x);
 				}
 				if(auto v = vs.lock()){
-					v->setFraction(t->scrollFactor().y);
+					v->set_fraction(t->scrollFactor().y);
 				}
 			};
 

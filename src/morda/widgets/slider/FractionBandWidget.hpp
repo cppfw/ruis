@@ -1,16 +1,15 @@
 #pragma once
 
-#include "../base/FractionWidget.hpp"
+#include "../base/fraction_widget.hpp"
 
 namespace morda{
 
-class FractionBandWidget : public FractionWidget
-{
+class FractionBandWidget : public fraction_widget{
 	float curBandSizeFraction = 0; // Current bar size factor from 0 to 1
 protected:
 	FractionBandWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			FractionWidget(this->context, desc)
+			fraction_widget(this->context, desc)
 	{}
 
 	virtual void onBandSizeChanged();

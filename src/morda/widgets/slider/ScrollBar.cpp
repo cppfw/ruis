@@ -8,11 +8,7 @@
 
 #include "../label/NinePatch.hpp"
 
-
-
 using namespace morda;
-
-
 
 namespace{
 
@@ -47,8 +43,6 @@ const auto DDescription = puu::read(R"qwertyuiop(
 	)qwertyuiop");
 
 }
-
-
 
 ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
@@ -136,23 +130,19 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		ASSERT(maxPos >= 0)
 
 		if(maxPos > 0){
-			//update factor
-			this->setFraction(newPos / maxPos);
+			// update factor
+			this->set_fraction(newPos / maxPos);
 		}
 
 		return true;
 	};
 }
 
-
-
-void ScrollBar::onFractionChange() {
+void ScrollBar::on_fraction_change() {
 	this->lay_out();
 
-	this->FractionWidget::onFractionChange();
+	this->fraction_widget::on_fraction_change();
 }
-
-
 
 void ScrollBar::lay_out(){
 	this->Pile::lay_out();
@@ -164,13 +154,13 @@ void ScrollBar::lay_out(){
 
 	newSize[longIndex] = ::round(newSize[longIndex] * this->bandSizeFraction());
 
-	auto minHandleSize =  this->handle.measure(Vec2r(-1));
+	auto minHandleSize = this->handle.measure(Vec2r(-1));
 
 	utki::clampBottom(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex]));
 
 	this->handle.resize(newSize);
 
-	//move
+	// move scroll handle
 	{
 		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		morda::Vec2r newPos(0);
@@ -186,7 +176,6 @@ void ScrollBar::lay_out(){
 		this->handle.move_to(newPos);
 	}
 }
-
 
 void ScrollBar::onBandSizeChanged(){
 	this->lay_out();
