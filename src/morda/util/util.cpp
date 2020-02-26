@@ -5,7 +5,7 @@
 
 #include "../context.hpp"
 
-#include "RasterImage.hpp"
+#include "raster_image.hpp"
 
 using namespace morda;
 
@@ -87,13 +87,13 @@ morda::texture_2d::type morda::num_channels_to_texture_type(unsigned numChannels
 }
 
 std::shared_ptr<texture_2d> morda::load_texture(renderer& r, const papki::file& fi){
-	RasterImage image(fi);
+	raster_image image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 
 	return r.factory->create_texture_2d(
-			num_channels_to_texture_type(image.numChannels()),
-			image.dim(),
-			image.buf()
+			num_channels_to_texture_type(image.num_channels()),
+			image.dims(),
+			image.pixels()
 		);
 }
 

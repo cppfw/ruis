@@ -10,33 +10,33 @@ extern "C"{
 #include <jpeglib.h>
 }
 
-#include "RasterImage.hpp"
+#include "raster_image.hpp"
 
 using namespace morda;
 
-void RasterImage::init(r4::vec2ui dimensions, ColorDepth_e typeOfImage){
+void raster_image::init(r4::vec2ui dimensions, color_depth typeOfImage){
 	this->reset();
-	this->dim_v = dimensions;
+	this->dims_v = dimensions;
 	this->colorDepth_v = typeOfImage;
-	this->buf_v.resize(this->dim().x * this->dim().y * this->numChannels());
+	this->buf_v.resize(this->dims().x * this->dims().y * this->num_channels());
 }
 
-RasterImage::RasterImage(r4::vec2ui dimensions, ColorDepth_e typeOfImage, const std::uint8_t* srcBuf){
+raster_image::raster_image(r4::vec2ui dimensions, color_depth typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_v.begin(), srcBuf, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
-RasterImage::RasterImage(r4::vec2ui pos, r4::vec2ui dimensions, const RasterImage& src){
-	if(src.dim().x == 0 || src.dim().y == 0){
+raster_image::raster_image(r4::vec2ui pos, r4::vec2ui dimensions, const raster_image& src){
+	if(src.dims().x == 0 || src.dims().y == 0){
 		throw std::invalid_argument("Image::Image(): source image has zero dimensions");
 	}
 
-	if( src.dim().x <= pos.x || src.dim().y <= pos.y || src.dim().x < (pos.x + dimensions.x) || src.dim().y < (pos.y + dimensions.y) ){
+	if( src.dims().x <= pos.x || src.dims().y <= pos.y || src.dims().x < (pos.x + dimensions.x) || src.dims().y < (pos.y + dimensions.y) ){
 		throw std::invalid_argument("Image::Image(): incorrect dimensions of given images");
 	}
 
-	this->init(dimensions, src.colorDepth());
+	this->init(dimensions, src.depth());
 
 	// copy image data
 	throw std::runtime_error("Image::Image(unsigned x, unsigned y, unsigned width, unsigned height, const Image& src): is not implemented");
@@ -45,67 +45,67 @@ RasterImage::RasterImage(r4::vec2ui pos, r4::vec2ui dimensions, const RasterImag
 }
 
 // fills image buffer with zeroes
-void RasterImage::clear(std::uint8_t val){
+void raster_image::clear(std::uint8_t val){
 	if (this->buf_v.size() == 0) {
 		return;
 	}
 	memset(&*this->buf_v.begin(), val, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
-void RasterImage::clear(unsigned chan, std::uint8_t val){
-	for(unsigned i = 0; i < this->dim().x * this->dim().y; ++i){
-		this->buf_v[i * this->numChannels() + chan] = val;
+void raster_image::clear(unsigned chan, std::uint8_t val){
+	for(unsigned i = 0; i < this->dims().x * this->dims().y; ++i){
+		this->buf_v[i * this->num_channels() + chan] = val;
 	}
 }
 
-void RasterImage::reset(){
-	this->dim_v.set(0);
-	this->colorDepth_v = ColorDepth_e::UNKNOWN;
+void raster_image::reset(){
+	this->dims_v.set(0);
+	this->colorDepth_v = color_depth::unknown;
 	this->buf_v.clear();
 }
 
-void RasterImage::flipVertical(){
+void raster_image::flip_vertical(){
 	if(!this->buf_v.size()){
 		// nothing to flip
 		return;
 	}
 
-	unsigned stride = this->numChannels() * this->dim().x; // stride
+	unsigned stride = this->num_channels() * this->dims().x; // stride
 	std::vector<std::uint8_t> line(stride);
 
 	//TODO: use iterators
-	for(unsigned i = 0; i < this->dim().y / 2; ++i){
+	for(unsigned i = 0; i < this->dims().y / 2; ++i){
 		memcpy(&*line.begin(), &*this->buf_v.begin() + stride * i, stride); // move line to temp
-		memcpy(&*this->buf_v.begin() + stride * i, &*this->buf_v.begin() + stride * (this->dim().y - i - 1), stride); // move bottom line to top
-		memcpy(&*this->buf_v.begin() + stride * (this->dim().y - i - 1), &*line.begin(), stride);
+		memcpy(&*this->buf_v.begin() + stride * i, &*this->buf_v.begin() + stride * (this->dims().y - i - 1), stride); // move bottom line to top
+		memcpy(&*this->buf_v.begin() + stride * (this->dims().y - i - 1), &*line.begin(), stride);
 	}
 }
 
 
 
-void RasterImage::blit(unsigned x, unsigned y, const RasterImage& src){
+void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 	ASSERT(this->buf_v.size() != 0)
-	if(this->colorDepth() != src.colorDepth()){
+	if(this->depth() != src.depth()){
 		throw std::invalid_argument("Image::Blit(): bits per pixel values do not match");
 	}
 
-	unsigned blitAreaW = std::min(src.dim().x, this->dim().x - x);
-	unsigned blitAreaH = std::min(src.dim().y, this->dim().y - y);
+	unsigned blitAreaW = std::min(src.dims().x, this->dims().x - x);
+	unsigned blitAreaH = std::min(src.dims().y, this->dims().y - y);
 
 	//TODO: implement blitting for all image types
-	switch(this->colorDepth()){
-		case ColorDepth_e::GREY:
+	switch(this->depth()){
+		case color_depth::grey:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
+					this->pix_chan(i + x, j + y, 0) = src.pix_chan(i, j, 0);
 				}
 			}
 			break;
-		case ColorDepth_e::GREYA:
+		case color_depth::grey_alpha:
 			for(unsigned j = 0; j < blitAreaH; ++j){
 				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->pixChan(i + x, j + y, 0) = src.pixChan(i, j, 0);
-					this->pixChan(i + x, j + y, 1) = src.pixChan(i, j, 1);
+					this->pix_chan(i + x, j + y, 0) = src.pix_chan(i, j, 0);
+					this->pix_chan(i + x, j + y, 1) = src.pix_chan(i, j, 1);
 				}
 			}
 			break;
@@ -117,22 +117,22 @@ void RasterImage::blit(unsigned x, unsigned y, const RasterImage& src){
 
 
 
-void RasterImage::blit(unsigned x, unsigned y, const RasterImage& src, unsigned dstChan, unsigned srcChan){
+void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_v.size())
-	if(dstChan >= this->numChannels()){
+	if(dstChan >= this->num_channels()){
 		throw std::invalid_argument("Image::Blit(): destination channel index is greater than number of channels in the image");
 	}
 
-	if(srcChan >= src.numChannels()){
+	if(srcChan >= src.num_channels()){
 		throw std::invalid_argument("Image::Blit(): source channel index is greater than number of channels in the image");
 	}
 
-	unsigned blitAreaW = std::min(src.dim().x, this->dim().x - x);
-	unsigned blitAreaH = std::min(src.dim().y, this->dim().y - y);
+	unsigned blitAreaW = std::min(src.dims().x, this->dims().x - x);
+	unsigned blitAreaH = std::min(src.dims().y, this->dims().y - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
-			this->pixChan(i + x, j + y, dstChan) = src.pixChan(i, j, srcChan);
+			this->pix_chan(i + x, j + y, dstChan) = src.pix_chan(i, j, srcChan);
 		}
 	}
 }
@@ -155,7 +155,7 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 }
 
 // read PNG file
-void RasterImage::loadPNG(const papki::file& fi){
+void raster_image::load_png(const papki::file& fi){
 	ASSERT(!fi.is_open())
 
 	if(this->buf_v.size() > 0){
@@ -211,7 +211,7 @@ void RasterImage::loadPNG(const papki::file& fi){
 	if(bitDepth == 16){
 		png_set_strip_16(pngPtr);
 	}
-	// convert paletted PNG to RGB image
+	// convert paletted PNG to rgb image
 	if(colorType == PNG_COLOR_TYPE_PALETTE){
 		png_set_palette_to_rgb(pngPtr);
 	}
@@ -240,19 +240,19 @@ void RasterImage::loadPNG(const papki::file& fi){
 	ASSERT(bitDepth == 8)
 
 	// set image type
-	RasterImage::ColorDepth_e imageType;
+	raster_image::color_depth imageType;
 	switch(colorType){
 		case PNG_COLOR_TYPE_GRAY:
-			imageType = RasterImage::ColorDepth_e::GREY;
+			imageType = raster_image::color_depth::grey;
 			break;
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			imageType = RasterImage::ColorDepth_e::GREYA;
+			imageType = raster_image::color_depth::grey_alpha;
 			break;
 		case PNG_COLOR_TYPE_RGB:
-			imageType = RasterImage::ColorDepth_e::RGB;
+			imageType = raster_image::color_depth::rgb;
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			imageType = RasterImage::ColorDepth_e::RGBA;
+			imageType = raster_image::color_depth::rgba;
 			break;
 		default:
 			throw std::runtime_error("Image::LoadPNG(): unknown colorType");
@@ -267,7 +267,7 @@ void RasterImage::loadPNG(const papki::file& fi){
 	png_size_t bytesPerRow = png_get_rowbytes(pngPtr, infoPtr); // get bytes per row
 
 	// check that our expectations are correct
-	if(bytesPerRow != this->dim().x * this->numChannels()){
+	if(bytesPerRow != this->dims().x * this->num_channels()){
 		throw std::runtime_error("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
@@ -275,11 +275,11 @@ void RasterImage::loadPNG(const papki::file& fi){
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->dim().y && this->buf_v.size())
-		std::vector<png_bytep> rows(this->dim().y);
+		ASSERT(this->dims().y && this->buf_v.size())
+		std::vector<png_bytep> rows(this->dims().y);
 		// initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
-		for(unsigned i = 0; i < this->dim().y; ++i){
+		for(unsigned i = 0; i < this->dims().y; ++i){
 			rows[i] = &*this->buf_v.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
@@ -367,7 +367,7 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 }
 
 // read JPEG function
-void RasterImage::loadJPG(const papki::File& fi){
+void raster_image::load_jpg(const papki::file& fi){
 	ASSERT(!fi.isOpened())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
@@ -440,19 +440,19 @@ void RasterImage::loadJPG(const papki::File& fi){
 
 	jpeg_start_decompress(&cinfo); // start decompression
 
-	RasterImage::ColorDepth_e imageType;
+	raster_image::color_depth imageType;
 	switch(cinfo.output_components){
 		case 1:
-			imageType = RasterImage::ColorDepth_e::GREY;
+			imageType = raster_image::color_depth::grey;
 			break;
 		case 2:
-			imageType = RasterImage::ColorDepth_e::GREYA;
+			imageType = raster_image::color_depth::grey_alpha;
 			break;
 		case 3:
-			imageType = RasterImage::ColorDepth_e::RGB;
+			imageType = raster_image::color_depth::rgb;
 			break;
 		case 4:
-			imageType = RasterImage::ColorDepth_e::RGBA;
+			imageType = raster_image::color_depth::rgba;
 			break;
 		default:
 			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")
@@ -463,7 +463,7 @@ void RasterImage::loadJPG(const papki::File& fi){
 	this->init(r4::vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	// calculate the size of a row in bytes
-	int bytesRow = this->dim().x * this->numChannels();
+	int bytesRow = this->dims().x * this->num_channels();
 
 	// Allocate memory for one row. It is an array of rows which
 	// contains only one row. JPOOL_IMAGE means that the memory is allocated
@@ -477,7 +477,7 @@ void RasterImage::loadJPG(const papki::File& fi){
 	memset(*buffer, 0, sizeof(JSAMPLE) * bytesRow);
 
 	int y = 0;
-	while(cinfo.output_scanline < this->dim().y){
+	while(cinfo.output_scanline < this->dims().y){
 		// read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		// copy the data to an image
@@ -489,15 +489,15 @@ void RasterImage::loadJPG(const papki::File& fi){
 	jpeg_destroy_decompress(&cinfo); // clean decompression object
 }
 
-void RasterImage::load(const papki::File& fi){
+void raster_image::load(const papki::file& fi){
 	std::string ext = fi.ext();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)
-		this->loadPNG(fi);
+		this->load_png(fi);
 	}else if(ext == "jpg"){
 //		TRACE(<< "Image::Load(): loading JPG image" << std::endl)
-		this->loadJPG(fi);
+		this->load_jpg(fi);
 	}else{
 		throw std::invalid_argument("Image::Load(): unknown image format");
 	}

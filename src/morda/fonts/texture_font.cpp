@@ -3,7 +3,7 @@
 
 #include <utki/debug.hpp>
 
-#include "../util/RasterImage.hpp"
+#include "../util/raster_image.hpp"
 #include "../util/util.hpp"
 
 #include "texture_font.hxx"
@@ -57,9 +57,9 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 		return g;
 	}
 	
-	RasterImage glyphim(r4::vec2ui(slot->bitmap.width, slot->bitmap.rows), RasterImage::ColorDepth_e::GREY, slot->bitmap.buffer);
+	raster_image glyphim(r4::vec2ui(slot->bitmap.width, slot->bitmap.rows), raster_image::color_depth::grey, slot->bitmap.buffer);
 
-	RasterImage im(glyphim.dim(), RasterImage::ColorDepth_e::GREYA);
+	raster_image im(glyphim.dims(), raster_image::color_depth::grey_alpha);
 	im.blit(0, 0, glyphim, 1, 0);
 	im.clear(0, std::uint8_t(0xff));
 	
@@ -82,9 +82,9 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 			vertex_array::mode::triangle_fan
 		);
 	g.tex = this->context->renderer->factory->create_texture_2d(
-			morda::num_channels_to_texture_type(im.numChannels()),
-			im.dim(),
-			im.buf()
+			morda::num_channels_to_texture_type(im.num_channels()),
+			im.dims(),
+			im.pixels()
 		);
 	
 	return g;

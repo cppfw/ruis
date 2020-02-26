@@ -1,6 +1,6 @@
 #include "res_texture.hpp"
 
-#include "../util/RasterImage.hpp"
+#include "../util/raster_image.hpp"
 #include "../util/util.hpp"
 #include "../context.hpp"
 

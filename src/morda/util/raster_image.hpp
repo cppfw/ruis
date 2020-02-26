@@ -11,22 +11,22 @@ namespace morda{
 /**
  * @brief Utility class for loading and manipulating raster images.
  */
-class RasterImage final{
+class raster_image final{
 public:
 	/**
 	 * @brief Image color depth.
 	 */
-	enum class ColorDepth_e{
-		UNKNOWN = 0,
-		GREY  = 1, //1 channel. Only Grey channel
-		GREYA = 2, //2 channels. Grey with Alpha channel
-		RGB   = 3, //3 channels. Red Green Blue channels
-		RGBA  = 4  //4 channels. RGBA format (4 channels)
+	enum class color_depth{
+		unknown = 0,
+		grey = 1, // 1 channel. Only Grey channel
+		grey_alpha = 2, // 2 channels. Grey with Alpha channel
+		rgb = 3, // 3 channels. Red Green Blue channels
+		rgba = 4  // 4 channels. RGBA format (4 channels)
 	};
 
 private:
-	ColorDepth_e colorDepth_v;
-	r4::vec2ui dim_v = r4::vec2ui(0);
+	color_depth colorDepth_v;
+	r4::vec2ui dims_v = r4::vec2ui(0);
 	std::vector<std::uint8_t> buf_v;//image pixels data
 
 public:
@@ -34,11 +34,11 @@ public:
 	 * @brief Default constructor.
 	 * Creates uninitialized Image object.
 	 */
-	RasterImage() :
-			colorDepth_v(ColorDepth_e::UNKNOWN)
+	raster_image() :
+			colorDepth_v(color_depth::unknown)
 	{}
 
-	RasterImage(const RasterImage& im) = default;
+	raster_image(const raster_image& im) = default;
 
 	/**
 	 * @brief Constructor.
@@ -46,7 +46,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	RasterImage(r4::vec2ui dimensions, ColorDepth_e colorDepth){
+	raster_image(r4::vec2ui dimensions, color_depth colorDepth){
 		this->init(dimensions, colorDepth);
 	}
 
@@ -57,7 +57,7 @@ public:
 	 * @param colorDepth - color depth.
 	 * @param srcBuf - pointer to memory buffer to take image data from.
 	 */
-	RasterImage(r4::vec2ui dimensions, ColorDepth_e colorDepth, const std::uint8_t* srcBuf);
+	raster_image(r4::vec2ui dimensions, color_depth colorDepth, const std::uint8_t* srcBuf);
 
 	/**
 	 * @brief Constructor.
@@ -66,14 +66,14 @@ public:
 	 * @param dimensions - dimensions of the area to copy.
 	 * @param src - source image to copy area from.
 	 */
-	RasterImage(r4::vec2ui pos, r4::vec2ui dimensions, const RasterImage& src);
+	raster_image(r4::vec2ui pos, r4::vec2ui dimensions, const raster_image& src);
 
 	/**
 	 * @brief Constructor.
 	 * Creates an image by loading it from file. Supported file types are PNG and JPG.
 	 * @param f - file to load image from.
 	 */
-	RasterImage(const papki::File& f){
+	raster_image(const papki::File& f){
 		this->load(f);
 	}
 
@@ -81,23 +81,23 @@ public:
 	 * @brief Get image dimensions.
 	 * @return Image dimensions.
 	 */
-	const r4::vec2ui& dim()const noexcept{
-		return this->dim_v;
+	const r4::vec2ui& dims()const noexcept{
+		return this->dims_v;
 	}
 
 	/**
 	 * @brief Get color depth.
 	 * @return Bits per pixel.
 	 */
-	unsigned bitsPerPixel()const{
-		return this->numChannels() * 8;
+	unsigned bits_per_pixel()const{
+		return this->num_channels() * 8;
 	}
 
 	/**
 	 * @brief Get color depth.
 	 * @return Number of color channels.
 	 */
-	unsigned numChannels()const{
+	unsigned num_channels()const{
 		return unsigned(this->colorDepth_v);
 	}
 
@@ -105,7 +105,7 @@ public:
 	 * @brief Get color depth.
 	 * @return Color depth type.
 	 */
-	ColorDepth_e colorDepth()const{
+	color_depth depth()const{
 		return this->colorDepth_v;
 	}
 
@@ -113,7 +113,7 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::span<std::uint8_t> buf(){
+	utki::span<std::uint8_t> pixels(){
 		return utki::make_span(this->buf_v);
 	}
 
@@ -121,7 +121,7 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	const utki::span<std::uint8_t> buf()const{
+	const utki::span<std::uint8_t> pixels()const{
 		return utki::make_span(this->buf_v);
 	}
 
@@ -132,7 +132,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	void init(r4::vec2ui dimensions, ColorDepth_e colorDepth);
+	void init(r4::vec2ui dimensions, color_depth colorDepth);
 
 
 	/**
@@ -157,7 +157,7 @@ public:
 	/**
 	 * @brief Flip image vertically.
 	 */
-	void flipVertical();
+	void flip_vertical();
 
 	/**
 	 * @brief Blit another image to this image.
@@ -166,8 +166,7 @@ public:
 	 * @param y - destination Y location.
 	 * @param src - image to copy to this image.
 	 */
-	void blit(unsigned x, unsigned y, const RasterImage& src);
-
+	void blit(unsigned x, unsigned y, const raster_image& src);
 
 	/**
 	 * @brief Blit another image to this image for desired color channels only.
@@ -179,7 +178,7 @@ public:
 	 * @param dstChan - index of destination color channel.
 	 * @param srcChan - index of source color channel.
 	 */
-	void blit(unsigned x, unsigned y, const RasterImage& src, unsigned dstChan, unsigned srcChan);
+	void blit(unsigned x, unsigned y, const raster_image& src, unsigned dstChan, unsigned srcChan);
 
 	/**
 	 * @brief Get reference to specific channel for given pixel.
@@ -188,8 +187,8 @@ public:
 	 * @param chan - channel index to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	const std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan)const{
-		auto i = (y * this->dim().x + x) * this->numChannels() + chan;
+	const std::uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan)const{
+		auto i = (y * this->dims().x + x) * this->num_channels() + chan;
 		ASSERT(i < this->buf_v.size())
 		return this->buf_v[i];
 	}
@@ -201,8 +200,8 @@ public:
 	 * @param chan - channel number to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	std::uint8_t& pixChan(unsigned x, unsigned y, unsigned chan){
-		auto i = (y * this->dim().x + x) * this->numChannels() + chan;
+	std::uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan){
+		auto i = (y * this->dims().x + x) * this->num_channels() + chan;
 		ASSERT(i < this->buf_v.size())
 		return this->buf_v[i];
 	}
@@ -211,22 +210,20 @@ public:
 	 * @brief Load image from PNG file.
 	 * @param f - PNG file.
 	 */
-	void loadPNG(const papki::File& f);//Load image from PNG-file
+	void load_png(const papki::file& f);
 
 	/**
 	 * @brief Load image from JPG file.
 	 * @param f - JPG file.
 	 */
-	void loadJPG(const papki::File& f);//Load image from JPG-file
-
-//	void loadTGA(papki::File& f);//Load image from TGA-file
+	void load_jpg(const papki::file& f);
 
 	/**
 	 * @brief Load image from file.
 	 * It will try to determine the file type from file name.
 	 * @param f - file to load image from.
 	 */
-	void load(const papki::File& f);
+	void load(const papki::file& f);
 };
 
 
