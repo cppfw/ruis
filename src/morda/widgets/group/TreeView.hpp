@@ -13,7 +13,7 @@
 namespace morda{
 
 class TreeView :
-		virtual public Widget,
+		virtual public widget,
 		private ScrollArea
 {
 	std::shared_ptr<List> list;
@@ -31,9 +31,9 @@ public:
 		friend class TreeView;
 		friend std::shared_ptr<List::ItemsProvider> std::static_pointer_cast<List::ItemsProvider>(const std::shared_ptr<ItemsProvider>&)noexcept;
 
-		void recycle(size_t index, std::shared_ptr<Widget> w)override;
+		void recycle(size_t index, std::shared_ptr<widget> w)override;
 
-		std::shared_ptr<Widget> getWidget(size_t index)override;
+		std::shared_ptr<widget> getWidget(size_t index)override;
 
 		size_t count()const noexcept override;
 

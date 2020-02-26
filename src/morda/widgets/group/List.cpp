@@ -14,7 +14,7 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<Widget> getWidget(size_t index)override{
+	std::shared_ptr<widget> getWidget(size_t index)override{
 //		TRACE(<< "StaticProvider::getWidget(): index = " << index << std::endl)
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_list())
@@ -22,7 +22,7 @@ public:
 	}
 
 
-	void recycle(size_t index, std::shared_ptr<Widget> w)override{
+	void recycle(size_t index, std::shared_ptr<widget> w)override{
 //		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 

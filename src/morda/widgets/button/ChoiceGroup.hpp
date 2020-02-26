@@ -23,7 +23,7 @@ public:
 	ChoiceGroup(const ChoiceGroup&) = delete;
 	ChoiceGroup& operator=(const ChoiceGroup&) = delete;
 	
-	bool isWidgetActive(const Widget& w)const noexcept;
+	bool isWidgetActive(const widget& w)const noexcept;
 	
 	const decltype(activeChoiceButton_v)& getActiveButton()const noexcept{
 		return this->activeChoiceButton_v;

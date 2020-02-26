@@ -44,7 +44,7 @@ public:
 	void render(const morda::Matr4r& matrix) const override;
 
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override{
-		return this->Widget::measure(quotum);
+		return this->widget::measure(quotum);
 	}
 
 	void lay_out()override;

@@ -28,7 +28,7 @@ class container;
 
 /**
  * @brief Basic widget class.
- * From GUI script it can be instantiated as "Widget".
+ * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
  * @param layout - layout parameters description. See widget::layout_params for details.
  * @param x - horizontal position within parent widget.
@@ -420,11 +420,6 @@ public:
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
 	virtual bool on_mouse_button(bool is_down, const morda::Vec2r& pos, mouse_button button, unsigned pointer_id){
-		return this->onMouseButton(is_down, pos, button, pointer_id); //TODO: deprecated, remove. Should return false.
-	}
-
-	//TODO: deprecated, remove.
-	virtual bool onMouseButton(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 		return false;
 	}
 
@@ -437,11 +432,6 @@ public:
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
 	virtual bool on_mouse_move(const morda::Vec2r& pos, unsigned pointer_id){
-		return this->onMouseMove(pos, pointer_id); //TODO: deprecated, remove. Should return false.
-	}
-
-	//TODO: deprecated, remove.
-	virtual bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID){
 		return false;
 	}
 
@@ -486,11 +476,6 @@ public:
 	 */
 	void set_visible(bool visible);
 
-	//TODO: deprecated, remove.
-	void setVisible(bool visible){
-		this->set_visible(visible);
-	}
-
 	/**
 	 * @brief Check if widget is visible.
 	 * @return true if the widget is visible.
@@ -498,11 +483,6 @@ public:
 	 */
 	bool is_visible()const noexcept{
 		return this->isVisible_v;
-	}
-
-	//TODO: deprecated, remove.
-	bool isVisible()const noexcept{
-		return this->is_visible();
 	}
 
 	/**
@@ -551,7 +531,7 @@ public:
 	 * @return pointer to the found ancestor widget.
 	 * @return false if no ancestor which satisfies the conditions was found.
 	 */
-	template <class T> T* find_ancestor(const char* id = nullptr); //defined in container.hpp
+	template <class T> T* find_ancestor(const char* id = nullptr); // defined in container.hpp
 
 	/**
 	 * @brief Calculate position in ancestor coordinates.
@@ -563,11 +543,7 @@ public:
 	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
 };
 
-//TODO: deprecated, remove.
-typedef widget Widget;
-
 }
 
-
-//Widget depends on Container, so need to define it also in all cases when widget is used.
+// widget depends on container, so need to define it also in all cases when widget is used.
 #include "container.hpp"

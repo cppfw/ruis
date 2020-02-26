@@ -94,14 +94,14 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<Widget> getWidget(size_t index)override{
+	std::shared_ptr<widget> getWidget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->dropDownSelector())
 		return this->dropDownSelector()->context->inflater.inflate(i, i + 1);
 	}
 
 
-	void recycle(size_t index, std::shared_ptr<Widget> w)override{
+	void recycle(size_t index, std::shared_ptr<widget> w)override{
 //		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
 	}
 
@@ -141,7 +141,7 @@ void DropDownSelector::showDropdownMenu() {
 	this->hoveredIndex = -1;
 
 	np->get_widget_as<MouseProxy>("contextMenuMouseProxy").mouseButton
-			= [this](Widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
+			= [this](widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
 				if(!isDown){
 					this->mouseButtonUpHandler(false);
 				}
@@ -262,7 +262,7 @@ void DropDownSelector::setSelection(size_t i){
 	this->handleDataSetChanged();
 }
 
-std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, size_t index) {
+std::shared_ptr<widget> DropDownSelector::wrapItem(std::shared_ptr<widget>&& w, size_t index) {
 	auto wd = std::dynamic_pointer_cast<Pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
@@ -275,7 +275,7 @@ std::shared_ptr<Widget> DropDownSelector::wrapItem(std::shared_ptr<Widget>&& w, 
 
 	wd->push_back(w);
 
-	mp->hoverChanged = [this, clWeak, index](Widget& w, unsigned id){
+	mp->hoverChanged = [this, clWeak, index](widget& w, unsigned id){
 		if(auto c = clWeak.lock()){
 			c->set_visible(w.is_hovered());
 		}

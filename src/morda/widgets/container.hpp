@@ -30,8 +30,8 @@ namespace morda{
 class container : virtual public widget{
 
 public:
-	typedef std::vector<std::shared_ptr<Widget>> list;
-	typedef std::vector<std::shared_ptr<const Widget>> const_list;
+	typedef std::vector<std::shared_ptr<widget>> list;
+	typedef std::vector<std::shared_ptr<const widget>> const_list;
 private:
 	static_assert(sizeof(list) == sizeof(const_list), "sizeof(list) differs from sizeof(const_list)");
 	static_assert(sizeof(list::value_type) == sizeof(const_list::value_type), "sizeof(list::value_type) differs from sizeof(const_list::value_type)");
@@ -49,7 +49,7 @@ private:
 	} children_v;
 
 	// Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
-	std::map<unsigned, std::pair<std::weak_ptr<Widget>, unsigned>> mouseCaptureMap;
+	std::map<unsigned, std::pair<std::weak_ptr<widget>, unsigned>> mouseCaptureMap;
 
 private:
 	// flag indicating that modifications to children list are blocked
@@ -73,7 +73,7 @@ private:
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.
-	 * Other widgets which subclass Container and need additional parameters for laying out children widgets should extend the Widget::layout_params class
+	 * Other widgets which subclass Container and need additional parameters for laying out children widgets should extend the widget::layout_params class
 	 * and override this method to construct the correct layout_params instance.
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
@@ -170,7 +170,7 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::const_iterator insert(std::shared_ptr<Widget> w, list::const_iterator before);
+	list::const_iterator insert(std::shared_ptr<widget> w, list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
@@ -178,7 +178,7 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::const_iterator push_back(std::shared_ptr<Widget> w){
+	list::const_iterator push_back(std::shared_ptr<widget> w){
 		return this->insert(std::move(w), this->children().end());
 	}
 
@@ -196,7 +196,7 @@ public:
 	 * @return Removed widget.
 	 * @throw morda::Exc if iterator does not point to child widget of this container.
 	 */
-	std::shared_ptr<Widget> remove(list::const_iterator iter);
+	std::shared_ptr<widget> remove(list::const_iterator iter);
 
 	//TODO: depreacted, remove.
 	/**
@@ -205,7 +205,7 @@ public:
 	 * @return Removed widget.
 	 * @throw morda::Exc if given widget is not a child widget of this container.
 	 */
-	std::shared_ptr<Widget> remove(Widget& w);
+	std::shared_ptr<widget> remove(widget& w);
 
 	/**
 	 * @brief Remove child from container.
@@ -228,7 +228,7 @@ public:
 	 * @return pointer to widget with given id if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<Widget> try_get_widget(const std::string& id)noexcept override;
+	std::shared_ptr<widget> try_get_widget(const std::string& id)noexcept override;
 
 	/**
 	 * @brief Get list of child widgets.
@@ -254,7 +254,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	list::const_iterator find(const Widget* w);
+	list::const_iterator find(const widget* w);
 
 	/**
 	 * @brief Find widget in the list of container's children.
@@ -262,7 +262,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	const_list::const_iterator find(const Widget* w)const;
+	const_list::const_iterator find(const widget* w)const;
 
 	/**
 	 * @brief Recursively find all widgets of given type.

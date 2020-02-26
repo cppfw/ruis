@@ -8,7 +8,7 @@ namespace morda{
 
 //TODO: remove?
 class TextInputWrap :
-		public virtual Widget,
+		public virtual widget,
 		public text_widget,
 		private List
 {

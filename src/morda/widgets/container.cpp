@@ -62,7 +62,7 @@ void container::inflate_push_back(const puu::forest& desc){
 	}
 }
 
-void container::render_child(const Matr4r& matrix, const Widget& c) const {
+void container::render_child(const Matr4r& matrix, const widget& c) const {
 	if(!c.is_visible()){
 		return;
 	}
@@ -132,7 +132,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 
 			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<Widget>(c), 1)));
+				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<widget>(c), 1)));
 			}
 
 			return true;
@@ -179,7 +179,7 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 		}
 	}
 
-	return this->Widget::on_mouse_move(pos, pointerID);
+	return this->widget::on_mouse_move(pos, pointerID);
 }
 
 void container::on_hover_changed(unsigned pointerID){
@@ -204,7 +204,7 @@ void container::lay_out(){
 	}
 }
 
-container::list::const_iterator container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
+container::list::const_iterator container::insert(std::shared_ptr<widget> w, list::const_iterator before){
 	if(!w){
 		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
 	}
@@ -278,14 +278,14 @@ void container::clear() {
 
 
 
-std::shared_ptr<Widget> container::try_get_widget(const std::string& id)noexcept{
-	if(auto r = this->Widget::try_get_widget(id)){
+std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept{
+	if(auto r = this->widget::try_get_widget(id)){
 		return r;
 	}
 
 	//first check direct children, because the closer to the tree root higher the priority is
 	for(auto& w : this->children()){
-		if(auto r = w->Widget::try_get_widget(id)){
+		if(auto r = w->widget::try_get_widget(id)){
 			return r;
 		}
 	}
@@ -364,7 +364,7 @@ container::list::const_iterator container::change_child_z_position(list::const_i
 	return ret;
 }
 
-container::list::const_iterator container::find(const Widget* w){
+container::list::const_iterator container::find(const widget* w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),

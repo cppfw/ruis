@@ -141,7 +141,7 @@ void gui::set_viewport(const morda::Vec2r& size){
 	this->rootWidget->resize(this->viewportSize);
 }
 
-void gui::set_root(std::shared_ptr<morda::Widget> w){
+void gui::set_root(std::shared_ptr<morda::widget> w){
 	this->rootWidget = std::move(w);
 
 	this->rootWidget->move_to(morda::Vec2r(0));

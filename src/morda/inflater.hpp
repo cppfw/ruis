@@ -117,7 +117,7 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return reference to the inflated widget.
 	 */
-	std::shared_ptr<morda::Widget> inflate(const papki::File& fi);
+	std::shared_ptr<morda::widget> inflate(const papki::File& fi);
 
 private:
 	struct widget_template{

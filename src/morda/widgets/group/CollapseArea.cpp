@@ -79,7 +79,7 @@ CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest&
 			if(tb.isPressed()){
 				this->contentArea->get_layout_params().dims.y = 0;
 			}else{
-				this->contentArea->get_layout_params().dims.y = Widget::layout_params::min;
+				this->contentArea->get_layout_params().dims.y = widget::layout_params::min;
 			}
 		};
 	}

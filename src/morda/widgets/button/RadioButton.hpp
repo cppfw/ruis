@@ -15,7 +15,7 @@ class RadioButton :
 		public ChoiceButton,
 		private Pile
 {
-	std::shared_ptr<Widget> checkWidget;
+	std::shared_ptr<widget> checkWidget;
 public:
 	RadioButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	

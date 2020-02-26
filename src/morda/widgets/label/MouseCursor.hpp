@@ -14,7 +14,7 @@ namespace morda{
  *
  * @param cursor - reference to cursor resource.
  */
-class MouseCursor : virtual public Widget{
+class MouseCursor : virtual public widget{
 	std::shared_ptr<const res_cursor> cursor;
 
 	std::shared_ptr<const res_image::texture> quadTex;

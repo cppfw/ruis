@@ -4,7 +4,7 @@
 
 namespace morda{
 class Tabs :
-		virtual public Widget,
+		virtual public widget,
 		private ChoiceGroup
 {
 	std::shared_ptr<res_image> filler;

@@ -63,16 +63,16 @@ public:
 		/**
 		 * @brief Get widget for item.
 		 * @param index - index of item to get widget for.
-		 * @return Widget for the requested item.
+		 * @return widget for the requested item.
 		 */
-		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<widget> getWidget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle widget of item.
 		 * @param index - index of item to recycle widget of.
 		 * @param w - widget to recycle.
 		 */
-		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
+		virtual void recycle(size_t index, std::shared_ptr<widget> w){}
 
 		void notifyDataSetChanged();
 	};
@@ -121,7 +121,7 @@ private:
 
 	void updateChildrenList();
 
-	bool arrangeWidget(std::shared_ptr<Widget>& w, real& pos, bool add, size_t index, list::const_iterator& insertBefore); // returns true if it was the last visible widget
+	bool arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool add, size_t index, list::const_iterator& insertBefore); // returns true if it was the last visible widget
 
 	void updateTailItemsInfo();
 

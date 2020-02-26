@@ -143,7 +143,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 }
 
 
-void morda::Window::setBackground(std::shared_ptr<Widget> w) {
+void morda::Window::setBackground(std::shared_ptr<widget> w) {
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if(this->children().size() == 2){
 		this->remove(this->children().begin());
@@ -216,7 +216,7 @@ void morda::Window::setupWidgets(){
 	ASSERT(this->titleBg);
 
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){
-		return decltype(MouseProxy::mouseButton)([this, &flag](Widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+		return decltype(MouseProxy::mouseButton)([this, &flag](widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 			if(button != mouse_button::left){
 				return false;
 			}
@@ -237,7 +237,7 @@ void morda::Window::setupWidgets(){
 
 		caption->mouseButton = getButtonFunc(this->captionCaptured);
 
-		caption->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		caption->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->captionCaptured){
 				this->move_by(pos - this->capturePoint);
 				return true;
@@ -250,7 +250,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_lt_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftTopResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
@@ -267,7 +267,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_lb_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftBottomResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
@@ -284,7 +284,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_rt_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightTopResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
@@ -301,7 +301,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_rb_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightBottomResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
@@ -317,7 +317,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_l_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->leftResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
@@ -333,7 +333,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_r_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->rightResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
@@ -348,7 +348,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_t_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->topResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
@@ -364,7 +364,7 @@ void morda::Window::setupWidgets(){
 		auto w = this->try_get_widget_as<MouseProxy>("morda_b_proxy");
 		ASSERT(w)
 		w->mouseButton = getButtonFunc(this->bottomResizeCaptured);
-		w->mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		w->mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::Vec2r d = pos - this->capturePoint;
 				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));

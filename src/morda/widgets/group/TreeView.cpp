@@ -17,8 +17,8 @@ TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 	auto& lp = this->get_layout_params(*this->list);
 
-	lp.dims.y = Widget::layout_params::max;
-	lp.dims.x = Widget::layout_params::min;
+	lp.dims.y = widget::layout_params::max;
+	lp.dims.x = widget::layout_params::min;
 
 	this->list->dataSetChanged = [this](List&){
 		if(this->viewChanged){
@@ -57,7 +57,7 @@ size_t TreeView::ItemsProvider::count()const noexcept{
 }
 
 
-std::shared_ptr<Widget> TreeView::ItemsProvider::getWidget(size_t index){
+std::shared_ptr<widget> TreeView::ItemsProvider::getWidget(size_t index){
 	auto& i = this->iter_for(index);
 
 	return this->getWidget(i.index(), i->value.subtree_size == 0);

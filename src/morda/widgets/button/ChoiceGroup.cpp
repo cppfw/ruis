@@ -10,8 +10,8 @@ ChoiceGroup::ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& d
 		Pile(this->context, desc)
 {}
 
-bool ChoiceGroup::isWidgetActive(const Widget& w) const noexcept{
-	Widget* aw = this->activeChoiceButton_v.get();
+bool ChoiceGroup::isWidgetActive(const widget& w) const noexcept{
+	widget* aw = this->activeChoiceButton_v.get();
 	return aw == &w;
 }
 

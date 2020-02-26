@@ -153,6 +153,6 @@ void Image::setImage(const std::shared_ptr<const res_image>& image) {
 }
 
 void Image::on_resize() {
-	this->Widget::on_resize();
+	this->widget::on_resize();
 	this->scaledImage.reset();
 }

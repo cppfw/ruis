@@ -27,7 +27,7 @@ class ScrollBar :
 	ScrollBar(const ScrollBar&) = delete;
 	ScrollBar& operator=(const ScrollBar&) = delete;
 
-	Widget& handle;
+	widget& handle;
 
 	bool isGrabbed = false;
 	float clickPoint;

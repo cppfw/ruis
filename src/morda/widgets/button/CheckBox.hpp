@@ -16,7 +16,7 @@ class CheckBox :
 		public ToggleButton,
 		private NinePatch
 {
-	std::shared_ptr<Widget> checkWidget;
+	std::shared_ptr<widget> checkWidget;
 public:
 	CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	

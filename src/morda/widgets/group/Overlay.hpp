@@ -10,7 +10,7 @@ namespace morda{
  * From GUI scripts it can be instantiated as "Overlay".
  */
 class Overlay : public Pile{
-	std::shared_ptr<Widget> overlayLayer;
+	std::shared_ptr<widget> overlayLayer;
 	std::shared_ptr<Container> overlayContainer;
 public:
 	Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
@@ -33,7 +33,7 @@ public:
 	 * @param menu - context menu widget.
 	 * @param anchor - anchor point, position of top left corner of the context menu within the overlay container.
 	 */
-	void showContextMenu(std::shared_ptr<Widget> menu, Vec2r anchor);
+	void showContextMenu(std::shared_ptr<widget> menu, Vec2r anchor);
 	
 	/**
 	 * @brief Hide context menu.

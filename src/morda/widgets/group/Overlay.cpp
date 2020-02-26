@@ -44,7 +44,7 @@ void Overlay::on_children_changed(){
 		auto mp = this->overlayLayer->try_get_widget_as<MouseProxy>("morda_overlay_mouseproxy");
 		ASSERT(mp)
 
-		mp->mouseButton = [this](Widget& w, bool isDown, const Vec2r& pos, mouse_button button, unsigned id) -> bool{
+		mp->mouseButton = [this](widget& w, bool isDown, const Vec2r& pos, mouse_button button, unsigned id) -> bool{
 			this->hideContextMenu();
 			return false;
 		};
@@ -61,7 +61,7 @@ void Overlay::on_children_changed(){
 
 
 
-void Overlay::showContextMenu(std::shared_ptr<Widget> w, Vec2r anchor){
+void Overlay::showContextMenu(std::shared_ptr<widget> w, Vec2r anchor){
 	this->overlay().push_back(w);
 
 	auto& lp = this->overlay().get_layout_params(*w);

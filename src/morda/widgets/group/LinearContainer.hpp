@@ -47,7 +47,7 @@ public:
 	// TODO: deprecated, remove.
 	typedef layout_params layout_params;
 private:
-	std::unique_ptr<Widget::layout_params> create_layout_params(const puu::forest& desc)const override;
+	std::unique_ptr<widget::layout_params> create_layout_params(const puu::forest& desc)const override;
 };
 
 

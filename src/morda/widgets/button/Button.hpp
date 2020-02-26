@@ -14,7 +14,7 @@ namespace morda{
  * @brief Basic button widget class.
  * Button has two states: normal and pressed.
  */
-class Button : public virtual Widget{
+class Button : public virtual widget{
 	bool isPressed_v = false;
 	bool isPressedChangedNotified = true;
 

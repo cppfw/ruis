@@ -20,7 +20,7 @@ namespace morda{
  * @param look - style settings.
  */
 class Window :
-		virtual public Widget,
+		virtual public widget,
 		private Pile
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
@@ -33,14 +33,14 @@ class Window :
 
 	std::shared_ptr<Pile> contentArea;
 
-	std::shared_ptr<Widget> ltBorder;
-	std::shared_ptr<Widget> rtBorder;
-	std::shared_ptr<Widget> tBorder;
-	std::shared_ptr<Widget> lBorder;
-	std::shared_ptr<Widget> rBorder;
-	std::shared_ptr<Widget> bBorder;
-	std::shared_ptr<Widget> lbBorder;
-	std::shared_ptr<Widget> rbBorder;
+	std::shared_ptr<widget> ltBorder;
+	std::shared_ptr<widget> rtBorder;
+	std::shared_ptr<widget> tBorder;
+	std::shared_ptr<widget> lBorder;
+	std::shared_ptr<widget> rBorder;
+	std::shared_ptr<widget> bBorder;
+	std::shared_ptr<widget> lbBorder;
+	std::shared_ptr<widget> rbBorder;
 
 	bool captionCaptured = false;
 	bool leftTopResizeCaptured = false;
@@ -91,7 +91,7 @@ public:
 
 	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void setBackground(std::shared_ptr<Widget> w);
+	void setBackground(std::shared_ptr<widget> w);
 
 	void lay_out() override;
 

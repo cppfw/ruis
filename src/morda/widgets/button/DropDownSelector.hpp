@@ -12,7 +12,7 @@ namespace morda{
  * If any child widgets are specified then those will be used as items to select from.
  */
 class DropDownSelector :
-		virtual public Widget,
+		virtual public widget,
 		private NinePatchPushButton
 {
 	Pile& selectionContainer;
@@ -50,7 +50,7 @@ public:
 		 * @param index - index of the item to provide widget for.
 		 * @return Widget for requested item.
 		 */
-		virtual std::shared_ptr<Widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<widget> getWidget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle item widget.
@@ -58,7 +58,7 @@ public:
 		 * @param index - index of item to recycle widget for.
 		 * @param w - item widget to recycle.
 		 */
-		virtual void recycle(size_t index, std::shared_ptr<Widget> w){}
+		virtual void recycle(size_t index, std::shared_ptr<widget> w){}
 
 		/**
 		 * @brief Notify about change of items model.
@@ -100,7 +100,7 @@ public:
 private:
 	void handleDataSetChanged();
 
-	std::shared_ptr<Widget> wrapItem(std::shared_ptr<Widget>&& w, size_t index);
+	std::shared_ptr<widget> wrapItem(std::shared_ptr<widget>&& w, size_t index);
 
 	void showDropdownMenu();
 

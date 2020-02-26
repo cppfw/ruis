@@ -9,7 +9,7 @@ namespace morda{
  * @brief Widget for intercepting resize events.
  * From GUI script it can be instantiated as "ResizeProxy".
  */
-class ResizeProxy : virtual public Widget{
+class ResizeProxy : virtual public widget{
 public:
 	ResizeProxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc)

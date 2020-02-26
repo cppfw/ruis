@@ -6,7 +6,7 @@
 
 namespace morda{
 class CollapseArea :
-		virtual public Widget,
+		virtual public widget,
 		private Column
 {
 	std::shared_ptr<Pile> contentArea;

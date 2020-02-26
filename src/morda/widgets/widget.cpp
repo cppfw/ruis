@@ -75,7 +75,7 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 
 
 
-std::shared_ptr<Widget> widget::try_get_widget(const std::string& id)noexcept{
+std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
 		return this->sharedFromThis(this);
 	}
@@ -104,7 +104,7 @@ void widget::resize(const morda::Vec2r& newDims){
 
 
 
-std::shared_ptr<Widget> widget::remove_from_parent(){
+std::shared_ptr<widget> widget::remove_from_parent(){
 	if(!this->parent_v){
 		throw utki::invalid_state("widget::remove_from_parent(): widget is not added to the parent");
 	}
@@ -115,7 +115,7 @@ std::shared_ptr<Widget> widget::remove_from_parent(){
 
 
 
-std::shared_ptr<Widget> widget::replace_by(std::shared_ptr<Widget> w) {
+std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 	if(!this->parent()){
 		throw utki::invalid_state("this widget is not added to any parent");
 	}
@@ -366,11 +366,11 @@ const widget::layout_params& widget::get_layout_params()const {
 	return this->parent()->get_layout_params(*this);
 }
 
-Widget& widget::get_widget(const std::string& id) {
+widget& widget::get_widget(const std::string& id) {
 	auto w = this->try_get_widget(id);
 	if(!w){
 		std::stringstream ss;
-		ss << "Widget '" << id << "' not found in '" << this->id << "'";
+		ss << "widget '" << id << "' not found in '" << this->id << "'";
 		throw utki::not_found(ss.str());
 	}
 	return *w;
