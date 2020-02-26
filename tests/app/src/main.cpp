@@ -27,7 +27,6 @@
 #include "../../../src/morda/widgets/label/Color.hpp"
 #include "../../../src/morda/widgets/label/Image.hpp"
 
-#include "../../../src/morda/util/ZipFile.hpp"
 #include "../../../src/morda/widgets/button/DropDownSelector.hpp"
 
 
