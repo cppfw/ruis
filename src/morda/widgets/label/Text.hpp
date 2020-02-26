@@ -3,7 +3,7 @@
 
 #include "../widget.hpp"
 #include "../../res/res_font.hpp"
-#include "../base/TextWidget.hpp"
+#include "../base/text_widget.hpp"
 
 
 
@@ -14,7 +14,7 @@ namespace morda{
  * This widget shows text.
  * From GUI script it can be instantiated as "Text".
  */
-class Text : public SingleLineTextWidget{
+class Text : public single_line_text_widget{
 
 
 public:

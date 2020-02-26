@@ -526,7 +526,7 @@ public:
 			{
 				auto value = v->try_get_widget_as<morda::Text>("value");
 				ASSERT(value)
-				value->setText(n->value.to_string());
+				value->set_text(n->value.to_string());
 			}
 			{
 				auto colorLabel = v->try_get_widget_as<morda::Color>("selection");
@@ -754,7 +754,7 @@ public:
 			};
 		}
 
-		//HorizontalList
+		// HorizontalList
 		{
 			auto horizontalList = c->try_get_widget_as<morda::List>("horizontal_list");
 			auto hl = utki::makeWeak(horizontalList);
@@ -920,18 +920,18 @@ public:
 			};
 		}
 
-		//dropdown
+		// dropdown
 		{
 			auto dds = c->try_get_widget_as<morda::DropDownSelector>("dropdownselector");
 			auto ddst = c->try_get_widget_as<morda::Text>("dropdownselector_selection");
-			auto ddstw = utki::makeWeak(ddst);
+			auto ddstw = utki::make_weak(ddst);
 
 			dds->selectionChanged = [ddstw](morda::DropDownSelector& dds){
 				if(auto t = ddstw.lock()){
 					std::stringstream ss;
 					ss << "index_" << dds.selectedItem();
 
-					t->setText(ss.str());
+					t->set_text(ss.str());
 				}
 			};
 		}

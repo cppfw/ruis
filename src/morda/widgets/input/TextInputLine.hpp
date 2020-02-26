@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "../base/TextWidget.hpp"
+#include "../base/text_widget.hpp"
 
 #include "../../updateable.hpp"
 #include "../character_input_widget.hpp"
@@ -13,7 +13,7 @@ namespace morda{
  * @brief TODO:.
  */
 class TextInputLine :
-		public SingleLineTextWidget,
+		public single_line_text_widget,
 		public character_input_widget,
 		private updateable
 {

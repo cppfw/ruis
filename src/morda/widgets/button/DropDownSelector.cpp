@@ -12,14 +12,7 @@
 #include "../label/Color.hpp"
 #include "../label/NinePatch.hpp"
 
-#include "../base/TextWidget.hpp"
-
-
-
-
 using namespace morda;
-
-
 
 namespace{
 

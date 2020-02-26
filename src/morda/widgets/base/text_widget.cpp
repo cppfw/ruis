@@ -1,28 +1,24 @@
-#include "TextWidget.hpp"
+#include "text_widget.hpp"
 
 #include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
-//TODO: remove
-#include "../../gui.hpp"
-
 using namespace morda;
 
-void TextWidget::setFont(std::shared_ptr<res_font> font){
+void text_widget::set_font(std::shared_ptr<res_font> font){
 	if(!font){
-		throw std::invalid_argument("TextWidget::SetFont(): passed argument is null");
+		throw std::invalid_argument("text_widget::SetFont(): passed argument is null");
 	}
 
 	this->font_v = std::move(font);
 
 	this->invalidate_layout();
 
-	this->onFontChanged();
+	this->on_font_changed();
 }
 
-
-TextWidget::TextWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		color_widget(this->context, desc)
 {
@@ -42,11 +38,9 @@ TextWidget::TextWidget(std::shared_ptr<morda::context> c, const puu::forest& des
 	}
 }
 
-
-
-SingleLineTextWidget::SingleLineTextWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		TextWidget(this->context, desc)
+		text_widget(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -54,14 +48,12 @@ SingleLineTextWidget::SingleLineTextWidget(std::shared_ptr<morda::context> c, co
 		}
 
 		if(p.value == "text"){
-			this->setText(unikod::toUtf32(get_property_value(p).to_string()));
+			this->set_text(unikod::toUtf32(get_property_value(p).to_string()));
 		}
 	}
 }
 
-
-
-Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
+Vec2r single_line_text_widget::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret(this->bb.d.x, this->font().get_height());
 
 	for(unsigned i = 0; i != ret.size(); ++i){
@@ -73,19 +65,19 @@ Vec2r SingleLineTextWidget::measure(const morda::Vec2r& quotum)const noexcept{
 	return ret;
 }
 
-void SingleLineTextWidget::onTextChanged() {
-	this->recomputeBoundingBox();
-	this->TextWidget::onTextChanged();
+void single_line_text_widget::on_text_changed(){
+	this->recompute_bounding_box();
+	this->text_widget::on_text_changed();
 }
 
-void TextWidget::setText(std::u32string&& text) {
+void text_widget::set_text(std::u32string&& text){
 	this->lines.clear();
 	this->lines.emplace_back(std::move(text));
 	this->invalidate_layout();
-	this->onTextChanged();
+	this->on_text_changed();
 }
 
-std::u32string TextWidget::getText() const {
+std::u32string text_widget::get_text()const{
 	std::u32string ret;
 
 	for(auto& l : this->lines){

@@ -2,13 +2,14 @@
 
 #include "../widget.hpp"
 #include "../group/List.hpp"
-#include "../base/TextWidget.hpp"
+#include "../base/text_widget.hpp"
 
 namespace morda{
 
+//TODO: remove?
 class TextInputWrap :
 		public virtual Widget,
-		public TextWidget,
+		public text_widget,
 		private List
 {
 public:
