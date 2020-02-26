@@ -198,21 +198,6 @@ public:
 		return this->relayoutNeeded;
 	}
 
-	//TODO: deprecated, remove.
-	bool needsRelayout()const noexcept{
-		return this->is_layout_invalid();
-	}
-
-	/**
-	 * @brief Get name of the widget.
-	 * @return Name of the widget.
-	 */
-	//TODO: remove deprecated code
-	const std::string& name()const noexcept{
-		TRACE(<< "DEPRECATED!!! name is deprecated, use id" << std::endl)
-		return this->id;
-	}
-
 	/**
 	 * @brief Get widget's parent container.
 	 * @return Widget's parent container.
@@ -238,11 +223,6 @@ public:
 	 */
 	std::shared_ptr<widget> remove_from_parent();
 
-	//TODO: deprecated, remove.
-	std::shared_ptr<widget> removeFromParent(){
-		return this->remove_from_parent();
-	}
-
 	/**
 	 * @brief Replace this widget by another widget.
 	 * Replaces this widget in its parent by the given widget.
@@ -260,11 +240,6 @@ public:
 		return this->hovered.size() != 0;
 	}
 
-	//TODO: deprecated, remove.
-	bool isHovered()const noexcept{
-		return this->is_hovered();
-	}
-
 	/**
 	 * @brief Check if widget is hovered by given pointer.
 	 * @param pointer_id - pointer id to check against.
@@ -273,11 +248,6 @@ public:
 	 */
 	bool is_hovered(unsigned pointer_id)const noexcept{
 		return this->hovered.find(pointer_id) != this->hovered.end();
-	}
-
-	//TODO: deprecated, remove.
-	bool isHovered(unsigned pointerID)const noexcept{
-		return this->is_hovered(pointerID);
 	}
 
 private:
@@ -310,22 +280,12 @@ public:
 		this->rectangle.p = new_pos;
 	}
 
-	//TODO: deprecated, remove.
-	void moveTo(const morda::Vec2r& newPos)noexcept{
-		this->move_to(newPos);
-	}
-
 	/**
 	 * @brief Shift widget within its parent.
 	 * @param delta - vector to shift the widget by.
 	 */
 	void move_by(const vector2& delta)noexcept{
 		this->rectangle.p += delta;
-	}
-
-	//TODO: deprecated, remove.
-	void moveBy(const morda::Vec2r& delta)noexcept{
-		this->move_by(delta);
 	}
 
 	/**
@@ -342,11 +302,6 @@ public:
 		this->resize(this->rect().d + delta);
 	}
 
-	//TODO: deprecated, remove.
-	void resizeBy(const morda::Vec2r& delta){
-		this->resize_by(delta);
-	}
-
 	/**
 	 * @brief Try get widget by id.
 	 * Get widget by ID from the widget hierarchy. Since simple widget cannot have children,
@@ -357,18 +312,6 @@ public:
 	 * @return nullptr if there is no widget with given id found.
 	 */
 	virtual std::shared_ptr<widget> try_get_widget(const std::string& id)noexcept;
-
-	//TODO: remove deprecated code
-	std::shared_ptr<widget> findById(const std::string& id)noexcept{
-		TRACE(<< "DEPRECATED!!! findById() is deprecated, use try_get_widget()" << std::endl)
-		return this->try_get_widget(id);
-	}
-
-	//TODO: remove deprecated code
-	std::shared_ptr<widget> findByName(const std::string& name)noexcept{
-		TRACE(<< "DEPRECATED!!! findByName() is deprecated, use try_get_widget()" << std::endl)
-		return this->try_get_widget(name);
-	}
 
 	/**
 	 * @brief Try get widget by id.
@@ -381,18 +324,6 @@ public:
 		return std::dynamic_pointer_cast<T>(this->try_get_widget(id));
 	}
 
-	//TODO: remove deprecated code
-	template <typename T> std::shared_ptr<T> findByIdAs(const std::string& id)noexcept{
-		TRACE(<< "DEPRECATED!!! findByIdAs() is deprecated, use try_get_widget_as()" << std::endl)
-		return this->try_get_widget_as<T>(id);
-	}
-
-	//TODO: remove deprecated code
-	template <typename T> std::shared_ptr<T> findByNameAs(const std::string& name)noexcept{
-		TRACE(<< "DEPRECATED!!! findByNameAs() is deprecated, use try_get_widget_as()" << std::endl)
-		return this->try_get_widget_as<T>(name);
-	}
-
 	/**
 	 * @brief Get widget.
 	 * @param id - id of the widget to get.
@@ -400,18 +331,6 @@ public:
 	 * @throw utki::not_found - if no widget with given id has been found.
 	 */
 	widget& get_widget(const std::string& id);
-
-	//TODO: remove deprecated code
-	widget& getById(const std::string& id){
-		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
-		return this->get_widget(id);
-	}
-
-	//TODO: remove deprecated code
-	widget& getByName(const std::string& name){
-		TRACE(<< "DEPRECATED!!! getByName() is deprecated, use get_widget()" << std::endl)
-		return this->get_widget(name);
-	}
 
 	/**
 	 * @brief Get widget of specific type by its id.
@@ -422,18 +341,6 @@ public:
 	 */
 	template <typename T> T& get_widget_as(const std::string& id){
 		return dynamic_cast<T&>(this->get_widget(id));
-	}
-
-	//TODO: remove deprecated code
-	template <typename T> T& getByIdAs(const std::string& id){
-	TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use get_widget_as()" << std::endl)
-		return this->get_widget_as<T>(id);
-	}
-
-	//TODO: remove deprecated code
-	template <typename T> T& getByNameAs(const std::string& name){
-		TRACE(<< "DEPRECATED!!! getByNameAs() is deprecated, use get_widget_as()" << std::endl)
-		return this->get_widget_as<T>(name);
 	}
 
 public:

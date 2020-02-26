@@ -149,19 +149,19 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 
-	//call children in reverse order
+	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
 		if(!c->is_interactive()){
-			ASSERT_INFO(!c->is_hovered(), "c->name() = " << c->name())
+			ASSERT_INFO(!c->is_hovered(), "c->name() = " << c->id)
 			continue;
 		}
 
 		bool consumed = c->on_mouse_move(pos - c->rect().p, pointerID);
 
-		//set hovered goes after move notification because position of widget could change
-		//during handling the notification, so need to check after that for hovering
+		// set hovered goes after move notification because position of widget could change
+		// during handling the notification, so need to check after that for hovering
 		if(!c->rect().overlaps(pos)){
 			c->set_hovered(false, pointerID);
 			continue;
@@ -169,8 +169,8 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 
 		c->set_hovered(true, pointerID);
 
-		if(consumed){//consumed mouse move event
-			//un-hover rest of the children
+		if(consumed){ // consumed mouse move event
+			// un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
 				auto& c = *i;
 				c->set_hovered(false, pointerID);
@@ -182,21 +182,17 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 	return this->Widget::on_mouse_move(pos, pointerID);
 }
 
-
-
 void container::on_hover_changed(unsigned pointerID){
 	if(this->is_hovered(pointerID)){
 		return;
 	}
 
-	//un-hover all the children if container became un-hovered
+	// un-hover all the children if container became un-hovered
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 	for(auto& w : this->children()){
 		w->set_hovered(false, pointerID);
 	}
 }
-
-
 
 void container::lay_out(){
 //	TRACE(<< "container::lay_out(): invoked" << std::endl)
@@ -207,8 +203,6 @@ void container::lay_out(){
 		}
 	}
 }
-
-
 
 container::list::const_iterator container::insert(std::shared_ptr<Widget> w, list::const_iterator before){
 	if(!w){
@@ -227,7 +221,7 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
 	}
 
-	Widget& ww = *w;
+	widget& ww = *w;
 
 	auto ret = this->children_v.variable.emplace(before, std::move(w));
 
@@ -240,12 +234,11 @@ container::list::const_iterator container::insert(std::shared_ptr<Widget> w, lis
 	return ret;
 }
 
-std::shared_ptr<Widget> container::remove(list::const_iterator iter){
+std::shared_ptr<widget> container::remove(list::const_iterator iter){
 	return this->remove(**iter);
 }
 
-
-std::shared_ptr<Widget> container::remove(Widget& w){
+std::shared_ptr<widget> container::remove(widget& w){
 	auto ret = w.sharedFromThis(&w);
 
 	this->erase(this->find(&w));

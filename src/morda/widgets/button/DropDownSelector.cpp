@@ -140,7 +140,7 @@ void DropDownSelector::showDropdownMenu() {
 
 	this->hoveredIndex = -1;
 
-	np->getByNameAs<MouseProxy>("contextMenuMouseProxy").mouseButton
+	np->get_widget_as<MouseProxy>("contextMenuMouseProxy").mouseButton
 			= [this](Widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
 				if(!isDown){
 					this->mouseButtonUpHandler(false);
