@@ -18,14 +18,14 @@ ScrollArea::ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& des
 
 bool ScrollArea::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) {
 	Vec2r d = -this->curScrollPos;
-	return this->Container::on_mouse_button(isDown, pos - d, button, pointerID);
+	return this->container::on_mouse_button(isDown, pos - d, button, pointerID);
 }
 
 
 
 bool ScrollArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 	Vec2r d = -this->curScrollPos;
-	return this->Container::on_mouse_move(pos - d, pointerID);
+	return this->container::on_mouse_move(pos - d, pointerID);
 }
 
 
@@ -36,7 +36,7 @@ void ScrollArea::render(const morda::Matr4r& matrix) const {
 	Matr4r matr(matrix);
 	matr.translate(d);
 
-	this->Container::render(matr);
+	this->container::render(matr);
 }
 
 void ScrollArea::clampScrollPos() {
@@ -150,7 +150,7 @@ void ScrollArea::lay_out(){
 }
 
 void ScrollArea::on_children_changed(){
-	this->Container::on_children_changed();
+	this->container::on_children_changed();
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 }

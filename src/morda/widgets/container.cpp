@@ -234,18 +234,6 @@ container::list::const_iterator container::insert(std::shared_ptr<widget> w, lis
 	return ret;
 }
 
-std::shared_ptr<widget> container::remove(list::const_iterator iter){
-	return this->remove(**iter);
-}
-
-std::shared_ptr<widget> container::remove(widget& w){
-	auto ret = w.sharedFromThis(&w);
-
-	this->erase(this->find(&w));
-
-	return ret;
-}
-
 container::list::const_iterator container::erase(list::const_iterator child){
 	if(this->isBlocked){
 		throw utki::invalid_state("container::erase(): children list is locked");

@@ -50,7 +50,7 @@ int main(int argc, char** argv){
 		}};
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 3)
 

@@ -35,7 +35,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		auto lp = c->children().front()->get_layout_params();
@@ -72,7 +72,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
@@ -114,7 +114,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
@@ -163,7 +163,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 0)
@@ -211,7 +211,7 @@ int main(int argc, char** argv){
 		auto c = std::dynamic_pointer_cast<morda::Pile>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
-		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Container>(c->children().front()))
+		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::container>(c->children().front()))
 	}
 
 	// test two defs blocks in widget
@@ -233,7 +233,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Container>(w);
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 1)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Pile>(c->children().front()))

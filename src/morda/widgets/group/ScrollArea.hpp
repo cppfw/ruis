@@ -12,12 +12,12 @@ namespace morda{
  * @brief Scroll area container widget.
  * Scroll area is a container which can add an offset to its children widget positions.
  * From GUI scripts it can be instantiated as "ScrollArea".
- * Note, that Scrollarea has same layout parameters as simple Container and those work similarly,
+ * Note, that Scrollarea has same layout parameters as simple container and those work similarly,
  * except 'max' value. If layout dimension is specified as 'max' then child widget will be stretched to the
  * parent (ScrollArea) size in case child's minimal size is less than ScrollArea size, otherwise child will be assigned
  * its minimal size.
  */
-class ScrollArea : public Container{
+class ScrollArea : public container{
 	//offset from top left corner
 	Vec2r curScrollPos = Vec2r(0);
 

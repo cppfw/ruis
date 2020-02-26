@@ -456,7 +456,7 @@ public:
 	/**
 	 * @brief Called when parent of this widget changes.
 	 * Called when parent of the widget changes. This happens when widget is
-	 * added to or removed from a Container.
+	 * added to or removed from a container.
 	 */
 	virtual void on_parent_changed(){}
 

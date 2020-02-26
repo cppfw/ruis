@@ -5,7 +5,7 @@
 namespace morda{
 
 /**
- * @brief Container to be used for intercepting keyboard key events.
+ * @brief container to be used for intercepting keyboard key events.
  * From GUI scripts it can be instantiated as "KeyProxy".
  */
 class KeyProxy : public Pile{

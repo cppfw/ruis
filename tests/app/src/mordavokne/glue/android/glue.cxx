@@ -1158,7 +1158,7 @@ void handleInputEvents(){
 								continue;
 							}
 
-							// notify root Container only if there was actual movement
+							// notify root container only if there was actual movement
 							morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 							if(pointers[pointerId] == p){
 								// pointer position did not change

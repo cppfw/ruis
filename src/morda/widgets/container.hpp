@@ -8,14 +8,12 @@
 #include "../util/util.hpp"
 #include "widget.hpp"
 
-
 namespace morda{
-
 
 /**
  * @brief Container widget.
  * A widget which can contain children widgets.
- * From GUI script it can be instantiated as 'Container' and can  have child widgets specified. For example:
+ * From GUI script it can be instantiated as 'container' and can have child widgets specified. For example:
  * @code
  * @container{
  *     @text{
@@ -73,7 +71,7 @@ private:
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.
-	 * Other widgets which subclass Container and need additional parameters for laying out children widgets should extend the widget::layout_params class
+	 * Other widgets which subclass container and need additional parameters for laying out children widgets should extend the widget::layout_params class
 	 * and override this method to construct the correct layout_params instance.
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
@@ -189,24 +187,6 @@ public:
 	 */
 	void inflate_push_back(const puu::forest& desc);
 
-	//TODO: depreacted, remove.
-	/**
-	 * @brief Remove child widget.
-	 * @param iter - iterator of the widget to remove.
-	 * @return Removed widget.
-	 * @throw morda::Exc if iterator does not point to child widget of this container.
-	 */
-	std::shared_ptr<widget> remove(list::const_iterator iter);
-
-	//TODO: depreacted, remove.
-	/**
-	 * @brief Remove child widget.
-	 * @param w - child widget to remove.
-	 * @return Removed widget.
-	 * @throw morda::Exc if given widget is not a child widget of this container.
-	 */
-	std::shared_ptr<widget> remove(widget& w);
-
 	/**
 	 * @brief Remove child from container.
 	 * This function invalidates iterators which were obtained before calling to it.
@@ -214,6 +194,16 @@ public:
 	 * @return iterator pointing to the next child after removed one.
 	 */
 	list::const_iterator erase(list::const_iterator child);
+
+	/**
+	 * @brief Remove child from container.
+	 * This function invalidates iterators which were obtained before calling to it.
+	 * @param child - reverse iterator of the child to remove.
+	 * @return reverse iterator pointing to the previous child after removed one.
+	 */
+	list::const_reverse_iterator erase(list::const_reverse_iterator child){
+		return list::const_reverse_iterator(this->erase(--child.base())); // the base iterator points to the next element to the one the reverse iterator points, so use decrement
+	}
 
 	/**
 	 * @brief Remove all child widgets.
@@ -299,9 +289,6 @@ public:
 	}
 };
 
-
-
-
 template <class T> T* widget::find_ancestor(const char* id){
 	if(!this->parent()){
 		return nullptr;
@@ -317,8 +304,5 @@ template <class T> T* widget::find_ancestor(const char* id){
 
 	return this->parent()->find_ancestor<T>();
 }
-
-//TODO: deprecated, remove.
-typedef container Container;
 
 }

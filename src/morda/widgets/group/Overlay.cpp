@@ -38,7 +38,7 @@ void Overlay::on_children_changed(){
 		this->overlayLayer = std::make_shared<Pile>(this->context, ContextMenuLayout_c);
 		this->push_back(this->overlayLayer);
 
-		this->overlayContainer = this->overlayLayer->try_get_widget_as<Container>("morda_overlay_container");
+		this->overlayContainer = this->overlayLayer->try_get_widget_as<container>("morda_overlay_container");
 		ASSERT(this->overlayContainer)
 
 		auto mp = this->overlayLayer->try_get_widget_as<MouseProxy>("morda_overlay_mouseproxy");
@@ -87,5 +87,5 @@ void Overlay::hideContextMenu(){
 	}
 	ASSERT(this->overlayContainer->children().size() > 0)
 
-	this->overlayContainer->remove(*this->overlayContainer->children().back());
+	this->overlayContainer->erase(this->overlayContainer->children().rbegin());
 }

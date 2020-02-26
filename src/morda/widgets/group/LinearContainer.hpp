@@ -11,7 +11,7 @@ namespace morda{
  * Linear container lays out its child widgets in a row from left to right or in a column from top to bottom.
  */
 class LinearContainer :
-		public Container,
+		public container,
 		protected oriented_widget
 {
 	LinearContainer(const LinearContainer&) = delete;

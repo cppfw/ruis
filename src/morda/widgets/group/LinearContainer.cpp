@@ -8,7 +8,7 @@
 using namespace morda;
 
 LinearContainer::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
-		Container::layout_params(desc, units)
+		container::layout_params(desc, units)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

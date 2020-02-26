@@ -11,7 +11,7 @@ namespace morda{
  */
 class Overlay : public Pile{
 	std::shared_ptr<widget> overlayLayer;
-	std::shared_ptr<Container> overlayContainer;
+	std::shared_ptr<container> overlayContainer;
 public:
 	Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
@@ -20,11 +20,11 @@ public:
 	
 	/**
 	 * @brief get topmost container.
-	 * This gets the simple Container object which resides on top of all normal children of this Overlay container.
+	 * This gets the simple container object which resides on top of all normal children of this Overlay container.
 	 * By adding child widget to this topmost container those widgets will be on top of everything.
 	 * @return Overlay container.
 	 */
-	Container& overlay(){
+	container& overlay(){
 		return *this->overlayContainer;
 	}
 	

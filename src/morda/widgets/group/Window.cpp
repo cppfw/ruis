@@ -146,7 +146,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 void morda::Window::setBackground(std::shared_ptr<widget> w) {
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if(this->children().size() == 2){
-		this->remove(this->children().begin());
+		this->erase(this->children().begin());
 	}
 
 	ASSERT(this->children().size() == 1)
@@ -412,7 +412,7 @@ bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 			);
 	}
 
-	this->Container::on_mouse_button(isDown, pos, button, pointerId);
+	this->container::on_mouse_button(isDown, pos, button, pointerId);
 
 	return true;
 }
@@ -420,7 +420,7 @@ bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 
 
 bool morda::Window::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
-	this->Container::on_mouse_move(pos, pointerId);
+	this->container::on_mouse_move(pos, pointerId);
 	return true;
 }
 
@@ -442,7 +442,7 @@ void Window::makeTopmost(){
 		return;//already topmost
 	}
 
-	Container* p = this->parent();
+	container* p = this->parent();
 
 	p->change_child_z_position(p->find(this), p->children().end());
 
