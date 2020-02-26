@@ -9,33 +9,33 @@ namespace morda{
 /**
  * @brief Basic widget which allows configuring alpha blending when rendering.
  * @param blend - enable (true) or disable (false) alpha blending.
- * @param blendSrc - source RGB components blend factor.
- * @param blendDst - destination RGB components blend factor.
- * @param blendSrcAlpha - source alpha component blend factor.
- * @param blendDstAlpha - destination alpha component blend factor.
+ * @param blend_src - source RGB components blend factor.
+ * @param blend_dst - destination RGB components blend factor.
+ * @param blend_src_alpha - source alpha component blend factor.
+ * @param blend_dst_alpha - destination alpha component blend factor.
  *
- * List of possible blend factor values: zero, one, srcColor, oneMinusSrcColor, dstColor, oneMinusDstColor, srcAlpha,
- * oneMinusSrcAlpha, dstAlpha, oneMinusDstAlpha, constantColor, oneMinusConstantColor, constantAlpha, oneMinusConstantAlpha,
- * srcAlphaSaturate.
+ * List of possible blend factor values: zero, one, src_color, one_minus_src_color, dst_color, one_minus_dst_color, src_alpha,
+ * one_minus_src_alpha, dst_alpha, one_minus_dst_alpha, constant_color, one_minus_constant_color, constant_alpha, one_minus_constant_alpha,
+ * src_alpha_saturate.
  */
-class BlendingWidget : public virtual widget{
+class blending_widget : public virtual widget{
 	bool isBlendingEnabled_v = true;
 public:
 	/**
-	 * @brief Structure holding blending settings.
+	 * @brief Structure holding blending parameters.
 	 */
-	struct BlendingParams{
+	struct blending_params{
 		morda::renderer::blend_factor src;
 		morda::renderer::blend_factor dst;
 		morda::renderer::blend_factor src_alpha;
 		morda::renderer::blend_factor dst_alpha;
 
-		bool operator==(const BlendingParams& b){
+		bool operator==(const blending_params& b){
 			return this->src == b.src && this->dst == b.dst && this->src_alpha == b.src_alpha && this->dst_alpha == b.dst_alpha;
 		}
 	};
 private:
-	BlendingParams blend_v = {
+	blending_params blend_v = {
 		morda::renderer::blend_factor::src_alpha,
 		morda::renderer::blend_factor::one_minus_src_alpha,
 		morda::renderer::blend_factor::one,
@@ -43,39 +43,40 @@ private:
 	};
 
 protected:
-	BlendingWidget(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	blending_widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
-	BlendingWidget(const BlendingWidget&) = delete;
-	BlendingWidget& operator=(const BlendingWidget&) = delete;
+	blending_widget(const blending_widget&) = delete;
+	blending_widget& operator=(const blending_widget&) = delete;
 
 	/**
 	 * @brief Set blending to rendering context.
 	 */
-	void applyBlending() const;
+	void set_blending_to_renderer()const;
 
 	/**
 	 * @brief Enable/disable blending for this widget.
 	 */
-	void setBlendingEnabled(bool enable);
+	void set_blending_enabled(bool enable);
 
 	/**
 	 * @brief Check if blending is enabled for this widget.
 	 */
-	bool isBlendingEnabled()const noexcept{
+	bool is_blending_enabled()const noexcept{
 		return this->isBlendingEnabled_v;
 	}
 
 	/**
 	 * @brief Set blending parameters for this widget.
+	 * @param params - blending parameters to take into use.
 	 */
-	void setBlendingParams(const BlendingParams& blend);
+	void set_blending_params(const blending_params& params);
 
 	/**
 	 * @brief Get blending parameters of this widget.
 	 * @return Blending parameters of this widget.
 	 */
-	const BlendingParams& blendingParams()const noexcept{
+	const blending_params& get_blending_params()const noexcept{
 		return this->blend_v;
 	}
 
@@ -83,7 +84,7 @@ public:
 	 * @brief Invoked when blending parameters are changed.
 	 * Also invoked if blending enabled/disabled status has changed.
 	 */
-	virtual void onBlendingChanged(){}
+	virtual void on_blending_changed(){}
 };
 
 }

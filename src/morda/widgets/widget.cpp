@@ -34,7 +34,7 @@ widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 				this->rectangle.d.y = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "id"){
 				this->id = get_property_value(p).to_string();
-				TRACE(<< "inflating '" << this->id << "'" << std::endl)
+				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			}else if(p.value == "name"){ //TODO: remove deprecated stuff.
 				this->id = get_property_value(p).to_string();
 				TRACE_ALWAYS(<< "DEPRECATED!!! the 'name' attribute is deprecated (used by '" << this->id << "'), use 'id' instead" << std::endl)

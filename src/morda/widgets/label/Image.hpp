@@ -2,7 +2,7 @@
 
 #include "../widget.hpp"
 
-#include "../base/BlendingWidget.hpp"
+#include "../base/blending_widget.hpp"
 
 #include "../../res/res_image.hpp"
 
@@ -20,8 +20,8 @@ namespace morda{
  * @param repeatY - replicate image vertically if size of the widget is bigger than size of the image resource.
  */
 class Image :
-		public virtual Widget,
-		public BlendingWidget
+		public virtual widget,
+		public blending_widget
 {
 	Image(const Image&);
 	Image& operator=(const Image&);

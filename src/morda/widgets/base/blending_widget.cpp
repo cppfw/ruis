@@ -1,15 +1,10 @@
-#include "BlendingWidget.hpp"
+#include "blending_widget.hpp"
 
 #include "../../util/util.hpp"
 
 #include "../../context.hpp"
 
-//TODO: remove
-#include "../../gui.hpp"
-
 using namespace morda;
-
-
 
 namespace{
 const std::map<std::string, renderer::blend_factor> blendFactorNames_c = {
@@ -40,7 +35,7 @@ renderer::blend_factor blendFactorFromString(const std::string& s){
 }
 
 
-BlendingWidget::BlendingWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+blending_widget::blending_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -62,26 +57,26 @@ BlendingWidget::BlendingWidget(std::shared_ptr<morda::context> c, const puu::for
 	}
 }
 
-void BlendingWidget::applyBlending() const{
+void blending_widget::set_blending_to_renderer()const{
 	auto& r = *this->context->renderer;
-	r.set_blend_enabled(this->isBlendingEnabled());
-	if(this->isBlendingEnabled()){
+	r.set_blend_enabled(this->is_blending_enabled());
+	if(this->is_blending_enabled()){
 		r.set_blend_func(this->blend_v.src, this->blend_v.dst, this->blend_v.src_alpha, this->blend_v.dst_alpha);
 	}
 }
 
-void BlendingWidget::setBlendingEnabled(bool enable){
+void blending_widget::set_blending_enabled(bool enable){
 	if(this->isBlendingEnabled_v == enable){
 		return;
 	}
 	this->isBlendingEnabled_v = enable;
-	this->onBlendingChanged();
+	this->on_blending_changed();
 }
 
-void BlendingWidget::setBlendingParams(const BlendingParams& blend){
-	if(this->blend_v == blend){
+void blending_widget::set_blending_params(const blending_params& params){
+	if(this->blend_v == params){
 		return;
 	}
-	this->blend_v = blend;
-	this->onBlendingChanged();
+	this->blend_v = params;
+	this->on_blending_changed();
 }

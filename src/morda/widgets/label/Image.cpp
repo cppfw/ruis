@@ -11,7 +11,7 @@ using namespace morda;
 
 Image::Image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		BlendingWidget(this->context, desc)
+		blending_widget(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -42,7 +42,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 		return;
 	}
 
-	this->applyBlending();
+	this->set_blending_to_renderer();
 	
 	auto& r = *this->context->renderer;
 	

@@ -79,7 +79,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 
 NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		BlendingWidget(this->context, desc),
+		blending_widget(this->context, desc),
 		Column(this->context, ninePatchLayout_c)
 {
 	this->imageMatrix_v[0][0] = this->try_get_widget_as<Image>("morda_lt");
@@ -94,7 +94,7 @@ NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	this->imageMatrix_v[2][1] = this->try_get_widget_as<Image>("morda_b");
 	this->imageMatrix_v[2][2] = this->try_get_widget_as<Image>("morda_rb");
 
-	this->onBlendingChanged();
+	this->on_blending_changed();
 
 	this->content_v = this->try_get_widget_as<Pile>("morda_content");
 
@@ -250,10 +250,10 @@ void NinePatch::setCenterVisible(bool visible){
 	this->imageMatrix_v[1][1]->set_visible(visible);
 }
 
-void NinePatch::onBlendingChanged(){
+void NinePatch::on_blending_changed(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix_v[i][j]->setBlendingParams(this->blendingParams());
+			this->imageMatrix_v[i][j]->set_blending_params(this->get_blending_params());
 		}
 	}
 }

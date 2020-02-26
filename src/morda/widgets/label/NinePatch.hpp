@@ -7,7 +7,7 @@
 
 #include "Image.hpp"
 
-#include "../base/BlendingWidget.hpp"
+#include "../base/blending_widget.hpp"
 
 
 namespace morda{
@@ -26,7 +26,7 @@ namespace morda{
  */
 class NinePatch :
 		public virtual widget,
-		public BlendingWidget,
+		public blending_widget,
 		private Column
 {
 	std::shared_ptr<const res_ninepatch> image;
@@ -84,7 +84,7 @@ public:
 
 	Sidesr getActualBorders()const noexcept;
 
-	void onBlendingChanged() override;
+	void on_blending_changed()override;
 
 
 private:
