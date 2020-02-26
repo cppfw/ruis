@@ -381,11 +381,6 @@ public:
 	 * @return false to allow the event to be propagated further.
 	 */
 	virtual bool on_key(bool is_down, morda::key key_code){
-		return this->onKey(is_down, key_code); //TODO: deprecated, remove. Should just return false.
-	}
-
-	//TODO: deprecated, remove.
-	virtual bool onKey(bool isDown, morda::key keyCode){
 		return false;
 	}
 
