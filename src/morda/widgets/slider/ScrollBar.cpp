@@ -47,7 +47,7 @@ const auto DDescription = puu::read(R"qwertyuiop(
 ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		FractionBandWidget(this->context, puu::forest()),
-		OrientedWidget(this->context, puu::forest(), vertical),
+		oriented_widget(this->context, puu::forest(), vertical),
 		Pile(this->context, DDescription),
 		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
 {
@@ -92,7 +92,7 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 			ASSERT(!this->isGrabbed)
 			this->isGrabbed = true;
 
-			unsigned longIndex = this->getLongIndex();
+			unsigned longIndex = this->get_long_index();
 			this->clickPoint = pos[longIndex];
 
 			return true;
@@ -111,7 +111,7 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 			return false;
 		}
 
-		unsigned longIndex = this->getLongIndex();
+		unsigned longIndex = this->get_long_index();
 
 		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
 		utki::clampBottom(maxPos, 0.0f);
@@ -147,8 +147,8 @@ void ScrollBar::on_fraction_change() {
 void ScrollBar::lay_out(){
 	this->Pile::lay_out();
 
-	unsigned longIndex = this->getLongIndex();
-	unsigned transIndex = this->getTransIndex();
+	unsigned longIndex = this->get_long_index();
+	unsigned transIndex = this->get_trans_index();
 
 	morda::Vec2r newSize(this->rect().d);
 

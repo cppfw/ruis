@@ -3,7 +3,7 @@
 #include "../widget.hpp"
 #include "../container.hpp"
 
-#include "../base/OrientedWidget.hpp"
+#include "../base/oriented_widget.hpp"
 
 namespace morda{
 
@@ -16,7 +16,7 @@ class List :
 		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public widget,
 		private container,
-		protected OrientedWidget
+		protected oriented_widget
 {
 	// index of the first item added to container as child
 	size_t addedIndex = size_t(-1);

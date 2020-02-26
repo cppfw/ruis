@@ -6,7 +6,7 @@
 
 #include "../group/Pile.hpp"
 
-#include "../base/OrientedWidget.hpp"
+#include "../base/oriented_widget.hpp"
 
 #include "FractionBandWidget.hpp"
 
@@ -21,7 +21,7 @@ namespace morda{
 
 class ScrollBar :
 		public FractionBandWidget,
-		protected OrientedWidget,
+		protected oriented_widget,
 		private Pile // users do not need to know that it is a container
 {
 	ScrollBar(const ScrollBar&) = delete;

@@ -2,12 +2,9 @@
 
 #include "../container.hpp"
 
-#include "../base/OrientedWidget.hpp"
-
+#include "../base/oriented_widget.hpp"
 
 namespace morda{
-
-
 
 /**
  * @brief Linear container widget.
@@ -15,7 +12,7 @@ namespace morda{
  */
 class LinearContainer :
 		public Container,
-		protected OrientedWidget
+		protected oriented_widget
 {
 	LinearContainer(const LinearContainer&) = delete;
 	LinearContainer& operator=(const LinearContainer&) = delete;

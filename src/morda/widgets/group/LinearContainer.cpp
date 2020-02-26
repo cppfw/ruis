@@ -5,11 +5,7 @@
 
 #include <cmath>
 
-
-
 using namespace morda;
-
-
 
 LinearContainer::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
 		Container::layout_params(desc, units)
@@ -32,10 +28,8 @@ std::unique_ptr<widget::layout_params> LinearContainer::create_layout_params(con
 LinearContainer::LinearContainer(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		container(this->context, desc),
-		OrientedWidget(this->context, puu::forest(), vertical)
+		oriented_widget(this->context, puu::forest(), vertical)
 {}
-
-
 
 namespace{
 class Info{
@@ -44,15 +38,13 @@ public:
 };
 }
 
-
-
 void LinearContainer::lay_out(){
-	unsigned longIndex = this->getLongIndex();
-	unsigned transIndex = this->getTransIndex();
+	unsigned longIndex = this->get_long_index();
+	unsigned transIndex = this->get_trans_index();
 
 	std::vector<Info> infoArray(this->children().size());
 
-	//Calculate rigid size, net weight and store weights
+	// calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real netWeight = 0;
 
@@ -73,7 +65,7 @@ void LinearContainer::lay_out(){
 		}
 	}
 
-	//arrange widgets
+	// arrange widgets
 	{
 		real flexible = this->rect().d[longIndex] - rigid;
 
@@ -145,15 +137,13 @@ void LinearContainer::lay_out(){
 	}
 }
 
-
-
 morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
-	unsigned longIndex = this->getLongIndex();
-	unsigned transIndex = this->getTransIndex();
+	unsigned longIndex = this->get_long_index();
+	unsigned transIndex = this->get_trans_index();
 
 	std::vector<Info> infoArray(this->children().size());
 
-	//calculate rigid length
+	// calculate rigid length
 	real rigidLength = 0;
 	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
 	real netWeight = 0;
@@ -287,5 +277,3 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 	ret[transIndex] = height;
 	return ret;
 }
-
-

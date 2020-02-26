@@ -2,14 +2,7 @@
 
 #include "../../context.hpp"
 
-//TODO: remove
-#include "../../gui.hpp"
-
-
 using namespace morda;
-
-
-
 
 namespace{
 
@@ -41,13 +34,10 @@ public:
 
 }
 
-
-
-
 List::List(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical):
 		widget(std::move(c), desc),
 		container(this->context, puu::forest()),
-		OrientedWidget(this->context, puu::forest(), vertical)
+		oriented_widget(this->context, puu::forest(), vertical)
 {
 	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
 
@@ -62,16 +52,13 @@ List::List(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vert
 	this->setItemsProvider(std::move(pr));
 }
 
-
-
-void List::lay_out() {
+void List::lay_out(){
 //	TRACE(<< "List::lay_out(): invoked" << std::endl)
 
 	this->numTailItems = 0;//means that it needs to be recomputed
 
 	this->updateChildrenList();
 }
-
 
 void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	if(provider && provider->list){
@@ -87,8 +74,6 @@ void List::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
 	}
 	this->handleDataSetChanged();
 }
-
-
 
 real List::scrollFactor()const noexcept{
 	if(!this->provider || this->provider->count() == 0){
@@ -111,7 +96,7 @@ real List::scrollFactor()const noexcept{
 		return 0;
 	}
 
-	real d = this->rect().d[this->getLongIndex()];
+	real d = this->rect().d[this->get_long_index()];
 
 	ASSERT(this->numTailItems != 0)
 	d = (d + this->firstTailItemOffset) / this->numTailItems;
@@ -122,7 +107,6 @@ real List::scrollFactor()const noexcept{
 
 	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d + this->firstTailItemOffset);
 }
-
 
 void List::setScrollPosAsFactor(real factor){
 	if(!this->provider || this->provider->count() == 0){
@@ -141,7 +125,7 @@ void List::setScrollPosAsFactor(real factor){
 		real intFactor = real(this->posIndex) / real(this->provider->count() - this->numTailItems);
 
 		if(this->children().size() != 0){
-			real d = this->rect().d[this->getLongIndex()];
+			real d = this->rect().d[this->get_long_index()];
 			d = (d + this->firstTailItemOffset) / this->numTailItems;
 
 			this->posOffset = ::round(d * (factor - intFactor) * real(this->provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
@@ -164,8 +148,8 @@ bool List::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size
 
 	w->resize(dim);
 
-	unsigned longIndex = this->getLongIndex();
-	unsigned transIndex = this->getTransIndex();
+	unsigned longIndex = this->get_long_index();
+	unsigned transIndex = this->get_trans_index();
 
 	{
 		Vec2r to;
@@ -277,9 +261,6 @@ void List::updateChildrenList(){
 	}
 }
 
-
-
-
 void List::updateTailItemsInfo(){
 	this->numTailItems = 0;
 
@@ -287,7 +268,7 @@ void List::updateTailItemsInfo(){
 		return;
 	}
 
-	unsigned longIndex = this->getLongIndex();
+	unsigned longIndex = this->get_long_index();
 
 	real dim = this->rect().d[longIndex];
 
@@ -321,7 +302,7 @@ void List::scrollBy(real delta) {
 		return;
 	}
 
-	unsigned longIndex = this->getLongIndex();
+	unsigned longIndex = this->get_long_index();
 //	unsigned transIndex;
 
 //	TRACE(<< "delta = " << delta << std::endl)
@@ -389,9 +370,9 @@ void List::scrollBy(real delta) {
 	this->updateChildrenList();
 }
 
-morda::Vec2r List::measure(const morda::Vec2r& quotum) const {
-	unsigned longIndex = this->getLongIndex();
-	unsigned transIndex = this->getTransIndex();
+morda::Vec2r List::measure(const morda::Vec2r& quotum)const{
+	unsigned longIndex = this->get_long_index();
+	unsigned transIndex = this->get_trans_index();
 
 	Vec2r ret(quotum);
 
@@ -423,7 +404,7 @@ void List::ItemsProvider::notifyDataSetChanged(){
 }
 
 void List::handleDataSetChanged(){
-	this->numTailItems = 0; //means that it needs to be recomputed
+	this->numTailItems = 0; // 0 means that it needs to be recomputed
 
 	this->clear();
 	this->addedIndex = size_t(-1);
