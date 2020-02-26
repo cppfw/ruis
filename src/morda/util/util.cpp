@@ -97,7 +97,6 @@ std::shared_ptr<texture_2d> morda::load_texture(renderer& r, const papki::file& 
 		);
 }
 
-
 void morda::set_simple_alpha_blending(renderer& r){
 	r.set_blend_enabled(true);
 	r.set_blend_func(

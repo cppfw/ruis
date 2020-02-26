@@ -1,16 +1,12 @@
 #pragma once
 
-#include <utki/exception.hpp>
 #include <utki/span.hpp>
 
 #include <papki/file.hpp>
 
 #include <r4/vector2.hpp>
 
-
-
 namespace morda{
-
 
 /**
  * @brief Utility class for loading and manipulating raster images.
@@ -26,16 +22,6 @@ public:
 		GREYA = 2, //2 channels. Grey with Alpha channel
 		RGB   = 3, //3 channels. Red Green Blue channels
 		RGBA  = 4  //4 channels. RGBA format (4 channels)
-	};
-
-	/**
-	 * @brief Basic image exception.
-	 */
-	class exception : public utki::exception{
-	public:
-		exception(const std::string& message) :
-				utki::exception(message)
-		{}
 	};
 
 private:
