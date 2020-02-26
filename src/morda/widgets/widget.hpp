@@ -183,21 +183,11 @@ public:
 	 */
 	void invalidate_layout()noexcept;
 
-	//TODO: deprecated, remove.
-	void setRelayoutNeeded()noexcept{
-		this->invalidate_layout();
-	}
-
 	/**
 	 * @brief Perform layout of the widget.
 	 * Override this method to arrange widgets contents if needed.
 	 */
-	virtual void lay_out(){
-		this->layOut(); // TODO: deprecated, remove.
-	}
-
-	//TODO: deprecated, remove.
-	virtual void layOut(){}
+	virtual void lay_out(){}
 
 	/**
 	 * @brief Check if this widget's contents need to be layed out.
