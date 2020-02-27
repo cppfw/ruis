@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../label/NinePatch.hpp"
+#include "../label/nine_patch.hpp"
 #include "choice_button.hpp"
 #include "nine_patch_toggle.hpp"
 

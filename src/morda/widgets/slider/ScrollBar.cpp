@@ -6,7 +6,7 @@
 
 #include "../proxy/MouseProxy.hpp"
 
-#include "../label/NinePatch.hpp"
+#include "../label/nine_patch.hpp"
 
 using namespace morda;
 
@@ -51,10 +51,10 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		pile(this->context, DDescription),
 		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
 {
-	auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");
+	auto np = this->try_get_widget_as<nine_patch>("morda_slider_bg");
 	ASSERT(np)
 
-	auto hi = this->try_get_widget_as<NinePatch>("morda_handle_image");
+	auto hi = this->try_get_widget_as<nine_patch>("morda_handle_image");
 	ASSERT(hi)
 
 	bool background_set = false;

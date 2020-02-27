@@ -1,7 +1,7 @@
 #pragma once
 
 #include "push_button.hpp"
-#include "../label/NinePatch.hpp"
+#include "../label/nine_patch.hpp"
 
 namespace morda{
 
@@ -10,11 +10,11 @@ namespace morda{
  * Implementation of a push button as a nine patch which can have children.
  * In GUI scripts can be instantiated as "SimpleButton". Only available after
  * initializing standard morda widgets.
- * Since the button is a NinePatch it can have children.
+ * Since the button is a nine_patch it can have children.
  */
 class nine_patch_button :
 		virtual public button,
-		public NinePatch
+		public nine_patch
 {
 	std::shared_ptr<const res_ninepatch> unpressedNinePatch_v;
 	std::shared_ptr<const res_ninepatch> pressedNinePatch_v;

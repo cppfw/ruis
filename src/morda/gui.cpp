@@ -105,7 +105,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<VScrollBar>("vertical_scroll_bar");
 	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
 	this->context->inflater.register_widget<window>("window");
-	this->context->inflater.register_widget<NinePatch>("nine_patch");
+	this->context->inflater.register_widget<nine_patch>("nine_patch");
 	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 	this->context->inflater.register_widget<check_box>("check_box");
 	this->context->inflater.register_widget<tree_view>("tree_view");

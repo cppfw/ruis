@@ -1,7 +1,7 @@
 #pragma once
 
 #include "toggle_button.hpp"
-#include "../label/NinePatch.hpp"
+#include "../label/nine_patch.hpp"
 
 namespace morda{
 
@@ -13,7 +13,7 @@ namespace morda{
  */
 class check_box :
 		public toggle_button,
-		private NinePatch
+		private nine_patch
 {
 	std::shared_ptr<widget> checkWidget;
 public:

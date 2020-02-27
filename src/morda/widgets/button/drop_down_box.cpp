@@ -10,7 +10,6 @@
 
 #include "../label/Text.hpp"
 #include "../label/color.hpp"
-#include "../label/NinePatch.hpp"
 
 using namespace morda;
 

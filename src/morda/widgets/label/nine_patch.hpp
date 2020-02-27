@@ -9,13 +9,12 @@
 
 #include "../base/blending_widget.hpp"
 
-
 namespace morda{
 
 /**
  * @brief Nine patch widget.
  * Nine patch widget displays a nine-patch and can hold child widgets in its central area.
- * From GUI script it can be instantiated as "NinePatch".
+ * From GUI script it can be instantiated as "nine_patch".
  *
  * @param left - width of left border, in length units.
  * @param right - width of right border, in length units.
@@ -24,7 +23,7 @@ namespace morda{
  * @param centerVisible - whether the central part of nine-patch image is visible (true) or not (false).
  * @param image - reference to a nine-patch resource.
  */
-class NinePatch :
+class nine_patch :
 		public virtual widget,
 		public blending_widget,
 		private column
@@ -40,10 +39,10 @@ class NinePatch :
 	std::shared_ptr<pile> content_v;
 
 public:
-	NinePatch(const NinePatch&) = delete;
-	NinePatch& operator=(const NinePatch&) = delete;
+	nine_patch(const nine_patch&) = delete;
+	nine_patch& operator=(const nine_patch&) = delete;
 
-	NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	void setNinePatch(std::shared_ptr<const res_ninepatch> np);
 

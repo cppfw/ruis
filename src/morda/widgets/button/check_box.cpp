@@ -19,7 +19,7 @@ check_box::check_box(std::shared_ptr<morda::context> c, const puu::forest& desc)
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),
-		NinePatch(this->context, D_Layout)
+		nine_patch(this->context, D_Layout)
 {
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->is_pressed());

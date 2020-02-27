@@ -5,7 +5,7 @@
 #include "../../util/util.hpp"
 #include "../proxy/ResizeProxy.hpp"
 
-#include "NinePatch.hpp"
+#include "nine_patch.hpp"
 
 
 using namespace morda;
@@ -77,7 +77,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 }
 
 
-NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c)
@@ -129,12 +129,12 @@ NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	this->content_v->inflate_push_back(desc);
 }
 
-void NinePatch::render(const morda::Matr4r& matrix)const{
+void nine_patch::render(const morda::Matr4r& matrix)const{
 	this->column::render(matrix);
 }
 
 
-void NinePatch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
+void nine_patch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
 	this->res = std::move(np);
 	this->scaledImage.reset();
 
@@ -145,7 +145,7 @@ void NinePatch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
 
 
 
-Sidesr NinePatch::getActualBorders()const noexcept{
+Sidesr nine_patch::getActualBorders()const noexcept{
 	Sidesr ret;
 
 	for(auto i = 0; i != ret.size(); ++i){
@@ -163,7 +163,7 @@ Sidesr NinePatch::getActualBorders()const noexcept{
 
 
 
-void NinePatch::applyImages(){
+void nine_patch::applyImages(){
 	if(!this->res){
 		for(auto& i : this->imageMatrix_v){
 			for(auto& j : i){
@@ -245,12 +245,12 @@ void NinePatch::applyImages(){
 	}
 }
 
-void NinePatch::setCenterVisible(bool visible){
+void nine_patch::setCenterVisible(bool visible){
 	ASSERT(this->imageMatrix_v[1][1])
 	this->imageMatrix_v[1][1]->set_visible(visible);
 }
 
-void NinePatch::on_blending_changed(){
+void nine_patch::on_blending_changed(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
 			this->imageMatrix_v[i][j]->set_blending_params(this->get_blending_params());
