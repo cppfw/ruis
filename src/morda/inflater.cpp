@@ -6,7 +6,7 @@
 #include "widgets/group/row.hpp"
 #include "widgets/group/pile.hpp"
 #include "widgets/group/scroll_area.hpp"
-#include "widgets/group/SizeContainer.hpp"
+#include "widgets/group/size_container.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/list.hpp"
 
@@ -26,7 +26,7 @@ inflater::inflater(morda::context& context):
 	//TODO: move adding standard widgets to gui() constructor
 	this->register_widget<widget>("widget");
 	this->register_widget<container>("container");
-	this->register_widget<SizeContainer>("size_container");
+	this->register_widget<size_container>("size_container"); //TODO: rename?
 	this->register_widget<row>("row");
 	this->register_widget<column>("column");
 	this->register_widget<pile>("pile");
