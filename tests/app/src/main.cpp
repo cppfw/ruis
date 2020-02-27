@@ -25,7 +25,7 @@
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/color.hpp"
-#include "../../../src/morda/widgets/label/Image.hpp"
+#include "../../../src/morda/widgets/label/image.hpp"
 
 #include "../../../src/morda/widgets/button/drop_down_box.hpp"
 
@@ -465,9 +465,9 @@ public:
 			if(!n->children.empty()){
 				auto w = this->context->inflater.inflate(DPlusMinus);
 
-				auto plusminus = w->try_get_widget_as<morda::Image>("plusminus");
+				auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
 				ASSERT(plusminus)
-				plusminus->setImage(
+				plusminus->set_image(
 						isCollapsed ?
 								this->context->loader.load<morda::res_image>("morda_img_treeview_plus") :
 								this->context->loader.load<morda::res_image>("morda_img_treeview_minus")

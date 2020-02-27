@@ -2,14 +2,14 @@
 
 #include "button.hpp"
 
-#include "../label/Image.hpp"
+#include "../label/image.hpp"
 
 #include "../../res/res_image.hpp"
 
 namespace morda{
 class image_button :
 		virtual public button,
-		public Image
+		public image
 {
 	std::shared_ptr<const res_image> unpressedImage_v;
 	std::shared_ptr<const res_image> pressedImage_v;

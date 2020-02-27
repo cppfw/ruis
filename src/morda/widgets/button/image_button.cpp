@@ -6,9 +6,9 @@ using namespace morda;
 
 void image_button::update_image(){
 	if(this->is_pressed()){
-		this->setImage(this->pressedImage_v);
+		this->set_image(this->pressedImage_v);
 	}else{
-		this->setImage(this->unpressedImage_v);
+		this->set_image(this->unpressedImage_v);
 	}
 }
 
@@ -20,7 +20,7 @@ void image_button::on_pressed_changed(){
 image_button::image_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
-		Image(this->context, desc)
+		image(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

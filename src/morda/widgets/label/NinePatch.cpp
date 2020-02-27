@@ -82,17 +82,17 @@ NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc)
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c)
 {
-	this->imageMatrix_v[0][0] = this->try_get_widget_as<Image>("morda_lt");
-	this->imageMatrix_v[0][1] = this->try_get_widget_as<Image>("morda_t");
-	this->imageMatrix_v[0][2] = this->try_get_widget_as<Image>("morda_rt");
+	this->imageMatrix_v[0][0] = this->try_get_widget_as<image>("morda_lt");
+	this->imageMatrix_v[0][1] = this->try_get_widget_as<image>("morda_t");
+	this->imageMatrix_v[0][2] = this->try_get_widget_as<image>("morda_rt");
 
-	this->imageMatrix_v[1][0] = this->try_get_widget_as<Image>("morda_l");
-	this->imageMatrix_v[1][1] = this->try_get_widget_as<Image>("morda_m");
-	this->imageMatrix_v[1][2] = this->try_get_widget_as<Image>("morda_r");
+	this->imageMatrix_v[1][0] = this->try_get_widget_as<image>("morda_l");
+	this->imageMatrix_v[1][1] = this->try_get_widget_as<image>("morda_m");
+	this->imageMatrix_v[1][2] = this->try_get_widget_as<image>("morda_r");
 
-	this->imageMatrix_v[2][0] = this->try_get_widget_as<Image>("morda_lb");
-	this->imageMatrix_v[2][1] = this->try_get_widget_as<Image>("morda_b");
-	this->imageMatrix_v[2][2] = this->try_get_widget_as<Image>("morda_rb");
+	this->imageMatrix_v[2][0] = this->try_get_widget_as<image>("morda_lb");
+	this->imageMatrix_v[2][1] = this->try_get_widget_as<image>("morda_b");
+	this->imageMatrix_v[2][2] = this->try_get_widget_as<image>("morda_rb");
 
 	this->on_blending_changed();
 
@@ -135,7 +135,7 @@ void NinePatch::render(const morda::Matr4r& matrix)const{
 
 
 void NinePatch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
-	this->image = std::move(np);
+	this->res = std::move(np);
 	this->scaledImage.reset();
 
 	this->applyImages();
@@ -151,10 +151,10 @@ Sidesr NinePatch::getActualBorders()const noexcept{
 	for(auto i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){
 			ret[i] = this->borders[i];
-		}else if(!this->image){
+		}else if(!this->res){
 			ret[i] = 0;
 		}else{
-			ret[i] = this->image->borders()[i];
+			ret[i] = this->res->borders()[i];
 		}
 	}
 
@@ -164,16 +164,16 @@ Sidesr NinePatch::getActualBorders()const noexcept{
 
 
 void NinePatch::applyImages(){
-	if(!this->image){
+	if(!this->res){
 		for(auto& i : this->imageMatrix_v){
 			for(auto& j : i){
-				j->setImage(nullptr);
+				j->set_image(nullptr);
 			}
 		}
 		return;
 	}
 
-	auto& minBorders = this->image->borders();
+	auto& minBorders = this->res->borders();
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
@@ -236,11 +236,11 @@ void NinePatch::applyImages(){
 	}
 //		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->scaledImage = this->image->get(this->borders);
+	this->scaledImage = this->res->get(this->borders);
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix_v[i][j]->setImage(this->scaledImage->images()[i][j]);
+			this->imageMatrix_v[i][j]->set_image(this->scaledImage->images()[i][j]);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-#include "Image.hpp"
+#include "image.hpp"
 
 #include "../../context.hpp"
 
@@ -9,7 +9,7 @@ using namespace morda;
 
 
 
-Image::Image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		blending_widget(this->context, desc)
 {
@@ -37,7 +37,7 @@ const std::array<r4::vec2f, 4> quadFanTexCoords = {{
 }};
 }
 
-void Image::render(const morda::Matr4r& matrix) const{
+void image::render(const morda::Matr4r& matrix) const{
 	if(!this->img){
 		return;
 	}
@@ -84,7 +84,7 @@ void Image::render(const morda::Matr4r& matrix) const{
 	this->scaledImage->render(matr, *this->vao);
 }
 
-morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 	if(!this->img){
 		return Vec2r(0);
 	}
@@ -122,8 +122,8 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 	}else if(quotum.y >= 0){
 		ASSERT(quotum.x >= 0)
 		ASSERT(quotum.y >= 0)
-		//This case is possible when Image layout parameters are, for example 'dx{max} dy{fill}', so the
-		//minimum x size will be determined to keep aspect ratio, but later, the x size of the Image widget can be
+		//This case is possible when image layout parameters are, for example 'dx{max} dy{fill}', so the
+		//minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
 		//set to fill all the allowed space, in this case the measure() method will be called with
 		//both quotum components to be positive numbers.
 		return quotum;
@@ -142,7 +142,7 @@ morda::Vec2r Image::measure(const morda::Vec2r& quotum)const{
 
 
 
-void Image::setImage(const std::shared_ptr<const res_image>& image) {
+void image::set_image(const std::shared_ptr<const res_image>& image) {
 	if(this->img && image && this->img->dims() == image->dims()){
 	}else{
 		this->invalidate_layout();
@@ -152,7 +152,7 @@ void Image::setImage(const std::shared_ptr<const res_image>& image) {
 	this->scaledImage.reset();
 }
 
-void Image::on_resize() {
+void image::on_resize() {
 	this->widget::on_resize();
 	this->scaledImage.reset();
 }

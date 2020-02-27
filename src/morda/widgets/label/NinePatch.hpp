@@ -5,7 +5,7 @@
 #include "../group/pile.hpp"
 #include "../group/column.hpp"
 
-#include "Image.hpp"
+#include "image.hpp"
 
 #include "../base/blending_widget.hpp"
 
@@ -29,13 +29,13 @@ class NinePatch :
 		public blending_widget,
 		private column
 {
-	std::shared_ptr<const res_ninepatch> image;
+	std::shared_ptr<const res_ninepatch> res;
 
 	std::shared_ptr<res_ninepatch::image_matrix> scaledImage;
 
 	Sidesr borders = Sidesr(layout_params::min);
 
-	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix_v;
+	std::array<std::array<std::shared_ptr<image>, 3>, 3> imageMatrix_v;
 
 	std::shared_ptr<pile> content_v;
 
