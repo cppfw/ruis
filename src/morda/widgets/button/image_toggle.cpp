@@ -1,13 +1,11 @@
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-#include "ImageToggle.hpp"
-
+#include "image_toggle.hpp"
 
 using namespace morda;
 
-
-ImageToggle::ImageToggle(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image_toggle::image_toggle(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
