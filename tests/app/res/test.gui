@@ -80,7 +80,7 @@ defs{
 				}
 			}
 
-			@drop_down_selector{
+			@drop_down_box{
 				layout{
 					dx{max}
 				}

@@ -1,4 +1,4 @@
-#include "DropDownSelector.hpp"
+#include "drop_down_box.hpp"
 
 #include "../../context.hpp"
 
@@ -85,8 +85,7 @@ const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-
-class StaticProvider : public DropDownSelector::ItemsProvider{
+class static_provider : public drop_down_box::provider{
 	std::vector<puu::tree> widgets;
 public:
 
@@ -94,17 +93,15 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<widget> getWidget(size_t index)override{
+	std::shared_ptr<widget> get_widget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
-		ASSERT(this->dropDownSelector())
-		return this->dropDownSelector()->context->inflater.inflate(i, i + 1);
+		ASSERT(this->get_drop_down_box())
+		return this->get_drop_down_box()->context->inflater.inflate(i, i + 1);
 	}
-
 
 	void recycle(size_t index, std::shared_ptr<widget> w)override{
-//		TRACE(<< "StaticProvider::recycle(): index = " << index << std::endl)
+//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
-
 
 	void add(puu::tree&& w){
 		this->widgets.emplace_back(std::move(w));
@@ -113,14 +110,14 @@ public:
 
 }
 
-void DropDownSelector::showDropdownMenu() {
-	if(!this->provider){
+void drop_down_box::showDropdownMenu(){
+	if(!this->item_provider){
 		return;
 	}
 
 	auto overlay = this->find_ancestor<Overlay>();
 	if(!overlay){
-		throw utki::invalid_state("DropDownSelector: no overlay parent found");
+		throw utki::invalid_state("drop_down_box: no overlay parent found");
 	}
 
 	auto np = this->context->inflater.inflate(contextMenuLayout_c);
@@ -134,8 +131,8 @@ void DropDownSelector::showDropdownMenu() {
 	auto va = np->try_get_widget_as<morda::Column>("morda_contextmenu_content");
 	ASSERT(va)
 
-	for(size_t i = 0; i != this->provider->count(); ++i){
-		va->push_back(this->wrapItem(this->provider->getWidget(i), i));
+	for(size_t i = 0; i != this->item_provider->count(); ++i){
+		va->push_back(this->wrapItem(this->item_provider->get_widget(i), i));
 	}
 
 	this->hoveredIndex = -1;
@@ -152,7 +149,7 @@ void DropDownSelector::showDropdownMenu() {
 	overlay->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
 }
 
-bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
+bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 	if(!isDown){
 		this->mouseButtonUpHandler(true);
 	}
@@ -160,16 +157,16 @@ bool DropDownSelector::on_mouse_button(bool isDown, const morda::Vec2r& pos, mou
 	return this->NinePatchPushButton::on_mouse_button(isDown, pos, button, pointerID);
 }
 
-void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
+void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 	auto oc = this->find_ancestor<Overlay>();
 	if(!oc){
-		throw utki::invalid_state("No overlay found in ancestors of DropDownSelector");
+		throw utki::invalid_state("No overlay found in ancestors of drop_down_box");
 	}
 
 	auto dds = this->sharedFromThis(this);
 
-//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): this->hoveredIndex = " << this->hoveredIndex << std::endl)
-//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
+//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): this->hoveredIndex = " << this->hoveredIndex << std::endl)
+//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
 
 	if(this->hoveredIndex < 0){
 		if(!isFirstOne){
@@ -179,23 +176,21 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 		}
 		return;
 	}
-	this->setSelection(this->hoveredIndex);
+	this->set_selection(this->hoveredIndex);
 
-//	TRACE(<< "DropDownSelector::mouseButtonUpHandler(): selection set" << std::endl)
+//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): selection set" << std::endl)
 
 	this->context->run_from_ui_thread([dds, oc](){
-//		TRACE(<< "DropDownSelector::mouseButtonUpHandler(): hiding context menu" << std::endl)
+//		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
 		oc->hideContextMenu();
-		if(dds->selectionChanged){
-//			TRACE(<< "DropDownSelector::mouseButtonUpHandler(): calling selection handler" << std::endl)
-			dds->selectionChanged(*dds);
+		if(dds->selection_changed){
+//			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
+			dds->selection_changed(*dds);
 		}
 	});
 }
 
-
-
-DropDownSelector::DropDownSelector(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, selectorLayout_c),
 		NinePatchPushButton(this->context, selectorLayout_c),
@@ -209,7 +204,7 @@ DropDownSelector::DropDownSelector(std::shared_ptr<morda::context> c, const puu:
 		this->showDropdownMenu();
 	};
 
-	std::shared_ptr<StaticProvider> pr = std::make_shared<StaticProvider>();
+	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 
 	for(const auto& p : desc){
 		if(is_property(p)){
@@ -219,50 +214,50 @@ DropDownSelector::DropDownSelector(std::shared_ptr<morda::context> c, const puu:
 		pr->add(puu::tree(p));
 	}
 
-	this->setItemsProvider(std::move(pr));
+	this->set_provider(std::move(pr));
 }
 
-void DropDownSelector::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
-	if(provider && provider->dd){
-		throw utki::invalid_state("DropDownSelector::setItemsProvider(): given provider is already set to some DropDownSelector");
+void drop_down_box::set_provider(std::shared_ptr<provider> item_provider){
+	if(item_provider && item_provider->dd){
+		throw utki::invalid_state("drop_down_box::setItemsProvider(): given provider is already set to some drop_down_box");
 	}
 
-	if(this->provider){
-		this->provider->dd = nullptr;
+	if(this->item_provider){
+		this->item_provider->dd = nullptr;
 	}
-	this->provider = std::move(provider);
-	if(this->provider){
-		this->provider->dd = this;
+	this->item_provider = std::move(item_provider);
+	if(this->item_provider){
+		this->item_provider->dd = this;
 	}
 	this->handleDataSetChanged();
 }
 
-void DropDownSelector::ItemsProvider::notifyDataSetChanged(){
+void drop_down_box::provider::notify_data_set_changed(){
 	if(this->dd){
 		this->dd->handleDataSetChanged();
 	}
 }
 
-void DropDownSelector::handleDataSetChanged(){
+void drop_down_box::handleDataSetChanged(){
 	this->selectionContainer.clear();
 
-	if(!this->provider){
+	if(!this->item_provider){
 		return;
 	}
-	if(this->selectedItem_v >= this->provider->count()){
+	if(this->selectedItem_v >= this->item_provider->count()){
 		return;
 	}
 
-	this->selectionContainer.push_back(this->provider->getWidget(this->selectedItem_v));
+	this->selectionContainer.push_back(this->item_provider->get_widget(this->selectedItem_v));
 }
 
-void DropDownSelector::setSelection(size_t i){
+void drop_down_box::set_selection(size_t i){
 	this->selectedItem_v = i;
 
 	this->handleDataSetChanged();
 }
 
-std::shared_ptr<widget> DropDownSelector::wrapItem(std::shared_ptr<widget>&& w, size_t index) {
+std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, size_t index){
 	auto wd = std::dynamic_pointer_cast<Pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 

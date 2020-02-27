@@ -27,7 +27,7 @@
 #include "../../../src/morda/widgets/label/Color.hpp"
 #include "../../../src/morda/widgets/label/Image.hpp"
 
-#include "../../../src/morda/widgets/button/DropDownSelector.hpp"
+#include "../../../src/morda/widgets/button/drop_down_box.hpp"
 
 
 
@@ -922,14 +922,14 @@ public:
 
 		// dropdown
 		{
-			auto dds = c->try_get_widget_as<morda::DropDownSelector>("dropdownselector");
+			auto dds = c->try_get_widget_as<morda::drop_down_box>("dropdownselector");
 			auto ddst = c->try_get_widget_as<morda::Text>("dropdownselector_selection");
 			auto ddstw = utki::make_weak(ddst);
 
-			dds->selectionChanged = [ddstw](morda::DropDownSelector& dds){
+			dds->selection_changed = [ddstw](morda::drop_down_box& dds){
 				if(auto t = ddstw.lock()){
 					std::stringstream ss;
-					ss << "index_" << dds.selectedItem();
+					ss << "index_" << dds.get_selection();
 
 					t->set_text(ss.str());
 				}

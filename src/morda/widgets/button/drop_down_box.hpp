@@ -6,12 +6,12 @@
 namespace morda{
 
 /**
- * @brief Dropdown selector.
+ * @brief Drop down box.
  * This widget allows selection of an item from a list of items.
- * From GUI script it can be instantiated as "DropDownSelector".
+ * From GUI script it can be instantiated as "drop_down_box".
  * If any child widgets are specified then those will be used as items to select from.
  */
-class DropDownSelector :
+class drop_down_box :
 		virtual public widget,
 		private NinePatchPushButton
 {
@@ -19,21 +19,21 @@ class DropDownSelector :
 public:
 	/**
 	 * @brief Item provider class.
-	 * User should subclass this class to provide items to a dropdown selector.
+	 * User should subclass this class to provide items to a drop down box.
 	 */
-	class ItemsProvider : virtual public utki::shared{
-		friend class DropDownSelector;
+	class provider : virtual public utki::shared{
+		friend class drop_down_box;
 
-		DropDownSelector* dd = nullptr;
+		drop_down_box* dd = nullptr;
 	protected:
-		ItemsProvider(){}
+		provider(){}
 	public:
 		/**
-		 * @brief Get Dropdown selector widget to which this provider is set.
-		 * @return pointer to a DropdownSelector widget.
-		 * @return nullptr if this provider is not set to any DropdownSelector.
+		 * @brief Get drop down box widget to which this provider is set.
+		 * @return pointer to a drop down box widget.
+		 * @return nullptr if this provider is not set to any drop down box.
 		 */
-		DropDownSelector* dropDownSelector(){
+		drop_down_box* get_drop_down_box(){
 			return this->dd;
 		}
 
@@ -50,7 +50,7 @@ public:
 		 * @param index - index of the item to provide widget for.
 		 * @return Widget for requested item.
 		 */
-		virtual std::shared_ptr<widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<widget> get_widget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle item widget.
@@ -63,39 +63,39 @@ public:
 		/**
 		 * @brief Notify about change of items model.
 		 */
-		void notifyDataSetChanged();
+		void notify_data_set_changed();
 	};
 
 private:
-	std::shared_ptr<ItemsProvider> provider;
+	std::shared_ptr<provider> item_provider;
 
 	std::size_t selectedItem_v = 0;
 
 	int hoveredIndex = -1;
 public:
-	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
+	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
 public:
-	DropDownSelector(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	DropDownSelector(const DropDownSelector&) = delete;
-	DropDownSelector& operator=(const DropDownSelector&) = delete;
+	drop_down_box(const drop_down_box&) = delete;
+	drop_down_box& operator=(const drop_down_box&) = delete;
 
 	/**
 	 * @brief Set currently selected item.
 	 * @param i - index of the item to set as currently selected.
 	 */
-	void setSelection(size_t i);
+	void set_selection(size_t i);
 
 	/**
 	 * @brief Get index of the selected item.
 	 * @return Index of the selected item.
 	 */
-	std::size_t selectedItem()const noexcept{
+	std::size_t get_selection()const noexcept{
 		return this->selectedItem_v;
 	}
 
-	std::function<void(DropDownSelector& dds)> selectionChanged;
+	std::function<void(drop_down_box& dds)> selection_changed;
 
 private:
 	void handleDataSetChanged();

@@ -12,7 +12,7 @@
 #include "widgets/button/ImagePushButton.hpp"
 #include "widgets/button/Tab.hpp"
 #include "widgets/button/Tabs.hpp"
-#include "widgets/button/DropDownSelector.hpp"
+#include "widgets/button/drop_down_box.hpp"
 
 #include "widgets/label/Color.hpp"
 #include "widgets/label/Text.hpp"
@@ -109,7 +109,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<NinePatchPushButton>("nine_patch_push_button");
 	this->context->inflater.register_widget<check_box>("check_box");
 	this->context->inflater.register_widget<TreeView>("tree_view");
-	this->context->inflater.register_widget<DropDownSelector>("drop_down_selector");
+	this->context->inflater.register_widget<drop_down_box>("drop_down_box");
 	this->context->inflater.register_widget<RadioButton>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");
 	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
