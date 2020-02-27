@@ -1,10 +1,10 @@
-#include "TextInputWrap.hpp"
+#include "text_input_wrap.hpp"
 
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-TextInputWrap::TextInputWrap(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text_input_wrap::text_input_wrap(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		text_widget(this->context, desc),
 		list_widget(this->context, puu::forest(), true)

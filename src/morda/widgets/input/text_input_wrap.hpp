@@ -7,16 +7,16 @@
 namespace morda{
 
 //TODO: remove?
-class TextInputWrap :
+class text_input_wrap :
 		public virtual widget,
 		public text_widget,
 		private list_widget
 {
 public:
-	TextInputWrap(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	text_input_wrap(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	TextInputWrap(const TextInputWrap&) = delete;
-	TextInputWrap& operator=(const TextInputWrap&) = delete;
+	text_input_wrap(const text_input_wrap&) = delete;
+	text_input_wrap& operator=(const text_input_wrap&) = delete;
 
 private:
 
