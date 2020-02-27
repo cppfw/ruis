@@ -3,7 +3,8 @@
 #include "choice_group.hpp"
 
 namespace morda{
-class Tabs :
+
+class tab_group :
 		virtual public widget,
 		private choice_group
 {
@@ -11,12 +12,12 @@ class Tabs :
 	std::shared_ptr<const res_image::texture> fillerTexture;
 
 public:
-	Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	tab_group(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	Tabs(const Tabs&) = delete;
-	Tabs& operator=(const Tabs&) = delete;
+	tab_group(const tab_group&) = delete;
+	tab_group& operator=(const tab_group&) = delete;
 
-	void setFiller(std::shared_ptr<res_image> filler);
+	void set_filler(std::shared_ptr<res_image> filler);
 
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
 
@@ -24,4 +25,5 @@ public:
 
 	void render(const morda::Matr4r& matrix) const override;
 };
+
 }

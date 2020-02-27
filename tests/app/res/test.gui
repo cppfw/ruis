@@ -480,7 +480,7 @@ defs{
 		@column{
 			layout{dx{max}dy{max}}
 
-			@tabs{
+			@tab_group{
 				layout{dx{max}}
 
 				@tab{

@@ -1,10 +1,10 @@
 #include "tab.hpp"
-#include "Tabs.hpp"
+#include "tab_group.hpp"
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tab_group::tab_group(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		choice_group(this->context, desc)
 {
@@ -20,23 +20,23 @@ Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 				}
 
 				if(p.value == "filler"){
-					this->setFiller(this->context->loader.load<res_image>(get_property_value(pp).to_string()));
+					this->set_filler(this->context->loader.load<res_image>(get_property_value(pp).to_string()));
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->setFiller(this->context->loader.load<res_image>("morda_img_tabs_filler"));
+		this->set_filler(this->context->loader.load<res_image>("morda_img_tabs_filler"));
 	}
 }
 
-void Tabs::setFiller(std::shared_ptr<res_image> filler){
+void tab_group::set_filler(std::shared_ptr<res_image> filler){
 	this->filler = std::move(filler);
 	this->fillerTexture = this->filler->get();
 }
 
-morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r tab_group::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
@@ -52,14 +52,14 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
 
 		auto t = dynamic_cast<const morda::tab*>(c.get());
 		if(!t){
-			throw utki::invalid_state("Non-tab widget added to Tabs, only tab widgets are allowed to be added to Tabs");
+			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
 		morda::Vec2r d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill){
-				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for Tabs container");
+				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for tab_group container");
 			}else if(lp.dims[j] == layout_params::min){
 				d[j] = -1;
 			}else{
@@ -87,7 +87,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
 	return ret;
 }
 
-void Tabs::lay_out(){
+void tab_group::lay_out(){
 	real pos = 0;
 
 	Sidesr prevBorders = 0;
@@ -101,7 +101,7 @@ void Tabs::lay_out(){
 
 		auto t = dynamic_cast<morda::tab*>(c.get());
 		if(!t){
-			throw utki::invalid_state("Non-tab widget added to Tabs, only tab widgets are allowed to be added to Tabs");
+			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
 		auto borders = t->getActualBorders();
@@ -114,7 +114,7 @@ void Tabs::lay_out(){
 	}
 }
 
-void Tabs::render(const morda::Matr4r& matrix)const{
+void tab_group::render(const morda::Matr4r& matrix)const{
 	for(auto& w: this->children()){
 		if(!this->is_active(*w)){
 			this->render_child(matrix, *w);
