@@ -2,12 +2,11 @@
 #include "Tabs.hpp"
 #include "../../util/util.hpp"
 
-
 using namespace morda;
 
 Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		ChoiceGroup(this->context, desc)
+		choice_group(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -32,13 +31,12 @@ Tabs::Tabs(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	}
 }
 
-void Tabs::setFiller(std::shared_ptr<res_image> filler) {
+void Tabs::setFiller(std::shared_ptr<res_image> filler){
 	this->filler = std::move(filler);
 	this->fillerTexture = this->filler->get();
 }
 
-
-morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
+morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
@@ -89,7 +87,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum) const {
 	return ret;
 }
 
-void Tabs::lay_out() {
+void Tabs::lay_out(){
 	real pos = 0;
 
 	Sidesr prevBorders = 0;
@@ -116,7 +114,7 @@ void Tabs::lay_out() {
 	}
 }
 
-void Tabs::render(const morda::Matr4r& matrix) const {
+void Tabs::render(const morda::Matr4r& matrix)const{
 	for(auto& w: this->children()){
 		if(!this->isWidgetActive(*w)){
 			this->render_child(matrix, *w);
@@ -140,4 +138,3 @@ void Tabs::render(const morda::Matr4r& matrix) const {
 		}
 	}
 }
-

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ChoiceGroup.hpp"
+#include "choice_group.hpp"
 
 namespace morda{
 class Tabs :
 		virtual public widget,
-		private ChoiceGroup
+		private choice_group
 {
 	std::shared_ptr<res_image> filler;
 	std::shared_ptr<const res_image::texture> fillerTexture;

@@ -10,18 +10,18 @@ namespace morda{
  * @brief Choice group container.
  * This is a container which is used to group several choice buttons to the same
  * choice group.
- * In the GUI script can be instantiated as "ChoiceGroup". Only available after
+ * In the GUI script can be instantiated as "choice_group". Only available after
  * initializing standard morda widgets.
  */
-class ChoiceGroup : public Pile{
+class choice_group : public Pile{
 	friend class choice_button;
 	
 	std::shared_ptr<choice_button> activeChoiceButton_v;
 public:
-	ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	choice_group(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	ChoiceGroup(const ChoiceGroup&) = delete;
-	ChoiceGroup& operator=(const ChoiceGroup&) = delete;
+	choice_group(const choice_group&) = delete;
+	choice_group& operator=(const choice_group&) = delete;
 	
 	bool isWidgetActive(const widget& w)const noexcept;
 	

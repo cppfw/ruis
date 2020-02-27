@@ -1,5 +1,5 @@
 #include "RadioButton.hpp"
-#include "ChoiceGroup.hpp"
+#include "choice_group.hpp"
 
 #include "../../context.hpp"
 

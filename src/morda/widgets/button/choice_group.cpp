@@ -1,18 +1,18 @@
-#include "ChoiceGroup.hpp"
+#include "choice_group.hpp"
 
 using namespace morda;
 
-ChoiceGroup::ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+choice_group::choice_group(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		Pile(this->context, desc)
 {}
 
-bool ChoiceGroup::isWidgetActive(const widget& w) const noexcept{
+bool choice_group::isWidgetActive(const widget& w) const noexcept{
 	widget* aw = this->activeChoiceButton_v.get();
 	return aw == &w;
 }
 
-void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<choice_button>& cb){
+void choice_group::setActiveChoiceButton(const std::shared_ptr<choice_button>& cb){
 	if(cb == this->activeChoiceButton_v){
 		return;
 	}

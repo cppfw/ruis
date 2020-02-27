@@ -1,6 +1,6 @@
 #include "choice_button.hpp"
 
-#include "ChoiceGroup.hpp"
+#include "choice_group.hpp"
 
 using namespace morda;
 
@@ -11,7 +11,7 @@ choice_button::choice_button(std::shared_ptr<morda::context> c, const puu::fores
 {}
 
 void choice_button::on_pressed_changed(){
-	auto cg = this->find_ancestor<ChoiceGroup>();
+	auto cg = this->find_ancestor<choice_group>();
 	if(!cg){
 		this->ToggleButton::on_pressed_changed();
 		return;
