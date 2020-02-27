@@ -10,15 +10,15 @@ namespace morda{
  * @brief Linear container widget.
  * Linear container lays out its child widgets in a row from left to right or in a column from top to bottom.
  */
-class LinearContainer :
+class linear_container :
 		public container,
 		protected oriented_widget
 {
-	LinearContainer(const LinearContainer&) = delete;
-	LinearContainer& operator=(const LinearContainer&) = delete;
+	linear_container(const linear_container&) = delete;
+	linear_container& operator=(const linear_container&) = delete;
 
 public:
-	LinearContainer(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	linear_container(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
 
 	void lay_out() override;
 
@@ -44,8 +44,6 @@ public:
 		real weight = 0;
 	};
 
-	// TODO: deprecated, remove.
-	typedef layout_params layout_params;
 private:
 	std::unique_ptr<widget::layout_params> create_layout_params(const puu::forest& desc)const override;
 };

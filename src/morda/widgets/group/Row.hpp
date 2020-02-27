@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LinearContainer.hpp"
+#include "linear_container.hpp"
 
 namespace morda{
 
@@ -8,11 +8,11 @@ namespace morda{
  * @brief Horizontal container widget.
  * Row is a horizontal variant of linear container. From GUI scripts it can be instantiated as "Row".
  */
-class Row : public LinearContainer{
+class Row : public linear_container{
 public:
 	Row(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			LinearContainer(this->context, desc, false)
+			linear_container(this->context, desc, false)
 	{}
 
 	Row(const Row&) = delete;

@@ -1,4 +1,4 @@
-#include "LinearContainer.hpp"
+#include "linear_container.hpp"
 
 #include "../../util/util.hpp"
 #include "../../context.hpp"
@@ -7,7 +7,7 @@
 
 using namespace morda;
 
-LinearContainer::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
+linear_container::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
 		container::layout_params(desc, units)
 {
 	for(const auto& p : desc){
@@ -21,11 +21,11 @@ LinearContainer::layout_params::layout_params(const puu::forest& desc, const mor
 	}
 }
 
-std::unique_ptr<widget::layout_params> LinearContainer::create_layout_params(const puu::forest& desc)const{
+std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const puu::forest& desc)const{
 	return utki::make_unique<layout_params>(desc, this->context->units);
 }
 
-LinearContainer::LinearContainer(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+linear_container::linear_container(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		container(this->context, desc),
 		oriented_widget(this->context, puu::forest(), vertical)
@@ -38,7 +38,7 @@ public:
 };
 }
 
-void LinearContainer::lay_out(){
+void linear_container::lay_out(){
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
 
@@ -137,7 +137,7 @@ void LinearContainer::lay_out(){
 	}
 }
 
-morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
 
@@ -156,7 +156,7 @@ morda::Vec2r LinearContainer::measure(const morda::Vec2r& quotum)const{
 			netWeight += lp.weight;
 
 			if(lp.dims[longIndex] == layout_params::max || lp.dims[longIndex] == layout_params::fill){
-				throw std::logic_error("LinearContainer::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
+				throw std::logic_error("linear_container::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
 			}
 
 			Vec2r d;
