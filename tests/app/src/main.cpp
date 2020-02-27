@@ -24,7 +24,7 @@
 #include "../../../src/morda/widgets/group/tree_view.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
-#include "../../../src/morda/widgets/label/Color.hpp"
+#include "../../../src/morda/widgets/label/color.hpp"
 #include "../../../src/morda/widgets/label/Image.hpp"
 
 #include "../../../src/morda/widgets/button/drop_down_box.hpp"
@@ -529,7 +529,7 @@ public:
 				value->set_text(n->value.to_string());
 			}
 			{
-				auto colorLabel = v->try_get_widget_as<morda::Color>("selection");
+				auto colorLabel = v->try_get_widget_as<morda::color>("selection");
 
 				colorLabel->set_visible(this->selectedItem == path);
 

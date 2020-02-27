@@ -204,7 +204,7 @@ void morda::window::setupWidgets(){
 	this->title = this->try_get_widget_as<Text>("morda_title");
 	ASSERT(this->title)
 
-	this->titleBg = this->try_get_widget_as<Color>("morda_window_title_bg");
+	this->titleBg = this->try_get_widget_as<color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 
 	std::function<decltype(MouseProxy::mouseButton)(bool&)> getButtonFunc = [this](bool& flag){

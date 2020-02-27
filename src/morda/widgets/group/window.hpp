@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../label/Text.hpp"
-#include "../label/Color.hpp"
+#include "../label/color.hpp"
 
 #include "pile.hpp"
 
@@ -25,7 +25,7 @@ class window :
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 
-	std::shared_ptr<Color> titleBg;
+	std::shared_ptr<color> titleBg;
 	std::uint32_t titleBgColorTopmost = 0xffff0000;
 	std::uint32_t titleBgColorNonTopmost = 0xff808080;
 

@@ -9,7 +9,7 @@
 #include "../button/button.hpp"
 
 #include "../label/Text.hpp"
-#include "../label/Color.hpp"
+#include "../label/color.hpp"
 #include "../label/NinePatch.hpp"
 
 using namespace morda;
@@ -264,7 +264,7 @@ std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, siz
 	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd->try_get_widget_as<Color>("morda_dropdown_color");
+	auto cl = wd->try_get_widget_as<color>("morda_dropdown_color");
 	ASSERT(cl)
 	auto clWeak = utki::makeWeak(cl);
 

@@ -28,7 +28,7 @@ public:
 		this->clear_cache();
 	}
 
-	std::uint32_t color()const noexcept{
+	std::uint32_t get_color()const noexcept{
 		return this->color_v;
 	}
 };

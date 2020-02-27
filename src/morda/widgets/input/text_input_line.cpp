@@ -50,7 +50,7 @@ void text_input_line::render(const morda::Matr4r& matrix) const{
 		ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
 		this->font().render(
 				matr,
-				morda::colorToVec4f(this->color()),
+				morda::colorToVec4f(this->get_color()),
 				this->get_text().substr(this->firstVisibleCharIndex, this->get_text().size() - this->firstVisibleCharIndex)
 			);
 	}
@@ -61,7 +61,7 @@ void text_input_line::render(const morda::Matr4r& matrix) const{
 		matr.scale(Vec2r(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
 
 		auto& r = *this->context->renderer;
-		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->color());
+		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_color());
 	}
 }
 
