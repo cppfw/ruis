@@ -1,11 +1,8 @@
-#include "CheckBox.hpp"
+#include "check_box.hpp"
 
 #include "../../context.hpp"
 
-
 using namespace morda;
-
-
 
 namespace{
 
@@ -18,9 +15,7 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 }
 
-
-
-CheckBox::CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+check_box::check_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
@@ -32,9 +27,7 @@ CheckBox::CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	this->setNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_checkbox_bg"));
 }
 
-
-
-void CheckBox::on_pressed_changed(){
+void check_box::on_pressed_changed(){
 	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
 	this->ToggleButton::on_pressed_changed();

@@ -3,7 +3,6 @@
 #include "ToggleButton.hpp"
 #include "../label/NinePatch.hpp"
 
-
 namespace morda{
 
 /**
@@ -12,16 +11,16 @@ namespace morda{
  * In GUI script can be instantiated as 'Checkbox'. Only available after initializing
  * standard morda widgets.
  */
-class CheckBox :
+class check_box :
 		public ToggleButton,
 		private NinePatch
 {
 	std::shared_ptr<widget> checkWidget;
 public:
-	CheckBox(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	check_box(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	CheckBox(const CheckBox&) = delete;
-	CheckBox& operator=(const CheckBox&) = delete;
+	check_box(const check_box&) = delete;
+	check_box& operator=(const check_box&) = delete;
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override{
 		return this->ToggleButton::on_mouse_button(isDown, pos, button, pointerId);
