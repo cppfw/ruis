@@ -3,13 +3,10 @@
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
-#include "../proxy/ResizeProxy.hpp"
 
 #include "nine_patch.hpp"
 
-
 using namespace morda;
-
 
 namespace{
 const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
@@ -75,7 +72,6 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 }
-
 
 nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),

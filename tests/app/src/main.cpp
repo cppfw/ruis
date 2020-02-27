@@ -22,13 +22,11 @@
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
 #include "../../../src/morda/widgets/group/tree_view.hpp"
-#include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
+#include "../../../src/morda/widgets/proxy/resize_proxy.hpp"
 #include "../../../src/morda/widgets/label/color.hpp"
 #include "../../../src/morda/widgets/label/image.hpp"
 
 #include "../../../src/morda/widgets/button/drop_down_box.hpp"
-
-
 
 class SimpleWidget :
 		virtual public morda::widget,
@@ -655,7 +653,7 @@ public:
 			auto horiSlider = c->try_get_widget_as<morda::ScrollBar>("scroll_area_horizontal_slider");
 			auto hs = utki::makeWeak(horiSlider);
 
-			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("scroll_area_resize_proxy");
+			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("scroll_area_resize_proxy");
 			auto rp = utki::makeWeak(resizeProxy);
 
 			resizeProxy->resize_handler = [vs, hs, sa](const morda::Vec2r& newSize){
@@ -708,7 +706,7 @@ public:
 				}
 			};
 
-			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("vertical_list_resize_proxy");
+			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("vertical_list_resize_proxy");
 			ASSERT(resizeProxy)
 
 			resizeProxy->resize_handler = [vs, vl](const morda::Vec2r& newSize){
@@ -769,7 +767,7 @@ public:
 				}
 			};
 
-			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("horizontal_list_resize_proxy");
+			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("horizontal_list_resize_proxy");
 			ASSERT(resizeProxy)
 
 			resizeProxy->resize_handler = [hs, hl](const morda::Vec2r& newSize){
@@ -841,7 +839,7 @@ public:
 				}
 			};
 
-			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("treeview_resize_proxy");
+			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("treeview_resize_proxy");
 			ASSERT(resizeProxy)
 			auto rp = utki::makeWeak(resizeProxy);
 
