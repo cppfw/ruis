@@ -1,10 +1,10 @@
-#include "TreeView.hpp"
+#include "tree_view.hpp"
 
 #include "../../context.hpp"
 
 using namespace morda;
 
-TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		scroll_area(nullptr, puu::forest())
 {
@@ -23,13 +23,13 @@ TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	};
 }
 
-void TreeView::set_provider(std::shared_ptr<ItemsProvider> item_provider){
+void tree_view::set_provider(std::shared_ptr<provider> item_provider){
 	this->item_list->set_provider(
 			std::static_pointer_cast<list_widget::provider>(item_provider)
 		);
 }
 
-void TreeView::ItemsProvider::notifyDataSetChanged(){
+void tree_view::provider::notify_data_set_changed(){
 	this->visible_tree.children.clear();
 	this->visible_tree.value.subtree_size = 0;
 	this->iter_index = 0;
@@ -37,7 +37,7 @@ void TreeView::ItemsProvider::notifyDataSetChanged(){
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-size_t TreeView::ItemsProvider::count()const noexcept{
+size_t tree_view::provider::count()const noexcept{
 	if(this->visible_tree.value.subtree_size == 0){
 		ASSERT(this->visible_tree.children.empty())
 		auto size = this->count(std::vector<size_t>());
@@ -51,19 +51,19 @@ size_t TreeView::ItemsProvider::count()const noexcept{
 	return this->visible_tree.value.subtree_size;
 }
 
-std::shared_ptr<widget> TreeView::ItemsProvider::get_widget(size_t index){
+std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 	auto& i = this->iter_for(index);
 
-	return this->getWidget(i.index(), i->value.subtree_size == 0);
+	return this->get_widget(i.index(), i->value.subtree_size == 0);
 }
 
-void TreeView::ItemsProvider::recycle(size_t index, std::shared_ptr<widget> w){
+void tree_view::provider::recycle(size_t index, std::shared_ptr<widget> w){
 	auto& i = this->iter_for(index);
 
 	this->recycle(i.index(), std::move(w));
 }
 
-const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for(size_t index)const{
+const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t index)const{
 	if(index != this->iter_index){
 		if(index > this->iter_index){
 			this->iter = std::next(this->iter, index - this->iter_index);
@@ -77,7 +77,7 @@ const decltype(TreeView::ItemsProvider::iter)& TreeView::ItemsProvider::iter_for
 	return this->iter;
 }
 
-void TreeView::ItemsProvider::remove_children(decltype(iter) from){
+void tree_view::provider::remove_children(decltype(iter) from){
 	auto num_to_remove = from->value.subtree_size;
 	auto index = from.index();
 
@@ -93,7 +93,7 @@ void TreeView::ItemsProvider::remove_children(decltype(iter) from){
 	ASSERT(p->value.subtree_size == 0)
 }
 
-void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index){
+void tree_view::provider::collapse(const std::vector<size_t>& index){
 	ASSERT(this->traversal().is_valid(index))
 
 	auto i = this->traversal().make_iterator(index);
@@ -123,7 +123,7 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index){
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children){
+void tree_view::provider::set_children(decltype(iter) i, size_t num_children){
 	auto index = i.index();
 	ASSERT(this->traversal().is_valid(index));
 
@@ -143,9 +143,9 @@ void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children
 	i->value.subtree_size = num_children;
 }
 
-void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index){
+void tree_view::provider::uncollapse(const std::vector<size_t>& index){
 	auto num_children = this->count(index);
-//	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
+//	TRACE(<< "tree_view::provider::uncollapse(): s = " << s << std::endl)
 	if(num_children == 0){
 		return;
 	}
@@ -168,7 +168,7 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index){
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index){
+void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}
@@ -235,7 +235,7 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index){
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index){
+void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}

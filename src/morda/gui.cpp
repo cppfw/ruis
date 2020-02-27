@@ -21,7 +21,7 @@
 
 #include "widgets/input/TextInputLine.hpp"
 
-#include "widgets/group/TreeView.hpp"
+#include "widgets/group/tree_view.hpp"
 #include "widgets/group/Window.hpp"
 #include "widgets/group/collapse_area.hpp"
 
@@ -108,7 +108,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<NinePatch>("nine_patch");
 	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 	this->context->inflater.register_widget<check_box>("check_box");
-	this->context->inflater.register_widget<TreeView>("tree_view");
+	this->context->inflater.register_widget<tree_view>("tree_view");
 	this->context->inflater.register_widget<drop_down_box>("drop_down_box");
 	this->context->inflater.register_widget<radio_button>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");

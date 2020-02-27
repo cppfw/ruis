@@ -21,7 +21,7 @@
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
-#include "../../../src/morda/widgets/group/TreeView.hpp"
+#include "../../../src/morda/widgets/group/tree_view.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/Color.hpp"
@@ -244,7 +244,7 @@ public:
 
 
 
-class TreeViewItemsProvider : public morda::TreeView::ItemsProvider{
+class TreeViewItemsProvider : public morda::tree_view::provider{
 	puu::forest root;
 
 	std::shared_ptr<morda::context> context;
@@ -387,7 +387,7 @@ public:
 
 		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back()), puu::leaf(this->generateNewItemvalue()));
 
-		this->notifyItemAdded(this->selectedItem);
+		this->notify_item_added(this->selectedItem);
 		++this->selectedItem.back();
 	}
 
@@ -411,7 +411,7 @@ public:
 		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back() + 1), puu::leaf(this->generateNewItemvalue()));
 
 		++this->selectedItem.back();
-		this->notifyItemAdded(this->selectedItem);
+		this->notify_item_added(this->selectedItem);
 		--this->selectedItem.back();
 	}
 
@@ -429,11 +429,11 @@ public:
 		list->push_back(puu::leaf(this->generateNewItemvalue()));
 
 		this->selectedItem.push_back(list->size() - 1);
-		this->notifyItemAdded(this->selectedItem);
+		this->notify_item_added(this->selectedItem);
 		this->selectedItem.pop_back();
 	}
 
-	std::shared_ptr<morda::widget> getWidget(const std::vector<size_t>& path, bool isCollapsed)override{
+	std::shared_ptr<morda::widget> get_widget(const std::vector<size_t>& path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 
 		auto list = &this->root;
@@ -546,7 +546,7 @@ public:
 						TRACE(<< k << ", ")
 					}
 					TRACE(<< std::endl)
-					this->notifyItemChanged();
+					this->notify_item_changed();
 					//TODO:
 
 					return true;
@@ -570,7 +570,7 @@ public:
 			b->clicked = [this, path, parent_list](morda::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(std::next(parent_list->begin(), path.back()));
-				this->notifyItemRemoved(path);
+				this->notify_item_removed(path);
 			};
 			ret->push_back(b);
 		}
@@ -815,9 +815,9 @@ public:
 			};
 		}
 
-		// TreeView
+		// tree_view
 		{
-			auto treeview = c->try_get_widget_as<morda::TreeView>("treeview_widget");
+			auto treeview = c->try_get_widget_as<morda::tree_view>("treeview_widget");
 			ASSERT(treeview)
 			auto provider = std::make_shared<TreeViewItemsProvider>(c->context);
 			treeview->set_provider(provider);
@@ -828,7 +828,7 @@ public:
 
 			verticalSlider->fraction_change = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
-					t->setVerticalScrollPosAsFactor(slider.fraction());
+					t->set_vertical_scroll_factor(slider.fraction());
 				}
 			};
 
@@ -838,7 +838,7 @@ public:
 
 			horizontalSlider->fraction_change = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
-					t->setHorizontalScrollPosAsFactor(slider.fraction());
+					t->set_horizontal_scroll_factor(slider.fraction());
 				}
 			};
 
@@ -852,14 +852,14 @@ public:
 					return;
 				}
 				if(auto h = hs.lock()){
-					h->set_fraction(t->scrollFactor().x);
+					h->set_fraction(t->get_scroll_factor().x);
 				}
 				if(auto v = vs.lock()){
-					v->set_fraction(t->scrollFactor().y);
+					v->set_fraction(t->get_scroll_factor().y);
 				}
 			};
 
-			treeview->viewChanged = [rp](morda::TreeView&){
+			treeview->viewChanged = [rp](morda::tree_view&){
 				if(auto r = rp.lock()){
 					if(r->resized){
 						r->resized(morda::Vec2r());
