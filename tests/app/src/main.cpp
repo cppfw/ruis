@@ -17,7 +17,7 @@
 
 #include "../../../src/morda/widgets/character_input_widget.hpp"
 #include "../../../src/morda/widgets/group/ScrollArea.hpp"
-#include "../../../src/morda/widgets/group/Row.hpp"
+#include "../../../src/morda/widgets/group/row.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
@@ -450,7 +450,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = std::make_shared<morda::Row>(this->context, puu::forest());
+		auto ret = std::make_shared<morda::row>(this->context, puu::forest());
 
 		ASSERT(isLastItemInParent.size() == path.size())
 
