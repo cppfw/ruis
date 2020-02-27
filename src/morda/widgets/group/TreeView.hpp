@@ -7,13 +7,13 @@
 #include "../widget.hpp"
 #include "list.hpp"
 
-#include "ScrollArea.hpp"
+#include "scroll_area.hpp"
 
 namespace morda{
 
 class TreeView :
 		virtual public widget,
-		private ScrollArea
+		private scroll_area
 {
 	std::shared_ptr<list_widget> item_list;
 public:
@@ -106,11 +106,11 @@ public:
 	}
 
 	void setHorizontalScrollPosAsFactor(real factor){
-		this->setScrollPosAsFactor(Vec2r(factor, 0));
+		this->set_scroll_factor(Vec2r(factor, 0));
 	}
 
 	Vec2r scrollFactor()const{
-		return Vec2r(this->ScrollArea::scrollFactor().x, this->item_list->get_scroll_factor());
+		return Vec2r(this->scroll_area::get_scroll_factor().x, this->item_list->get_scroll_factor());
 	}
 };
 

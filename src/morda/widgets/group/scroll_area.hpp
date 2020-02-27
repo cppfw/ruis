@@ -4,20 +4,18 @@
 
 #include <functional>
 
-
 namespace morda{
-
 
 /**
  * @brief Scroll area container widget.
  * Scroll area is a container which can add an offset to its children widget positions.
- * From GUI scripts it can be instantiated as "ScrollArea".
+ * From GUI scripts it can be instantiated as "scroll_area".
  * Note, that Scrollarea has same layout parameters as simple container and those work similarly,
  * except 'max' value. If layout dimension is specified as 'max' then child widget will be stretched to the
- * parent (ScrollArea) size in case child's minimal size is less than ScrollArea size, otherwise child will be assigned
+ * parent (scroll_area) size in case child's minimal size is less than scroll_area size, otherwise child will be assigned
  * its minimal size.
  */
-class ScrollArea : public container{
+class scroll_area : public container{
 	//offset from top left corner
 	Vec2r curScrollPos = Vec2r(0);
 
@@ -28,13 +26,13 @@ class ScrollArea : public container{
 	Vec2r curScrollFactor;
 
 protected:
-	Vec2r dimForWidget(const widget& w, const layout_params& lp)const;
+	Vec2r dims_for_widget(const widget& w, const layout_params& lp)const;
 
 public:
-	ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	scroll_area(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	ScrollArea(const ScrollArea&) = delete;
-	ScrollArea& operator=(const ScrollArea&) = delete;
+	scroll_area(const scroll_area&) = delete;
+	scroll_area& operator=(const scroll_area&) = delete;
 
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID)override;
@@ -55,7 +53,7 @@ public:
 	 * @brief Get current scroll position.
 	 * @return Current scrolling position in pixels.
 	 */
-	const Vec2r& scrollPos()const{
+	const Vec2r& get_scroll_pos()const{
 		return this->curScrollPos;
 	}
 
@@ -63,23 +61,23 @@ public:
 	 * @brief Set scroll position.
 	 * @param newScrollPos - new scroll position.
 	 */
-	void setScrollPos(const Vec2r& newScrollPos);
+	void set_scroll_pos(const Vec2r& newScrollPos);
 
 	/**
 	 * @brief Set scroll position as factor.
 	 * @param factor - factor with components from range [0:1].
 	 */
-	void setScrollPosAsFactor(const Vec2r& factor);
+	void set_scroll_factor(const Vec2r& factor);
 
 	/**
 	 * @brief Get current scroll position as factor.
 	 * @return Current scroll position as factor with components from range [0:1].
 	 */
-	const Vec2r& scrollFactor()const{
+	const Vec2r& get_scroll_factor()const{
 		return this->curScrollFactor;
 	}
 
-	Vec2r visibleAreaFraction()const noexcept;
+	Vec2r get_visible_area_fraction()const noexcept;
 
 private:
 	void updateEffectiveDim();
@@ -90,7 +88,5 @@ private:
 
 	void arrangeWidgets();
 };
-
-
 
 }

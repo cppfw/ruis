@@ -6,7 +6,7 @@ using namespace morda;
 
 TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		ScrollArea(nullptr, puu::forest())
+		scroll_area(nullptr, puu::forest())
 {
 	this->item_list = std::make_shared<morda::list>(this->context, puu::forest());
 	this->push_back(this->item_list);
@@ -37,7 +37,6 @@ void TreeView::ItemsProvider::notifyDataSetChanged(){
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-
 size_t TreeView::ItemsProvider::count()const noexcept{
 	if(this->visible_tree.value.subtree_size == 0){
 		ASSERT(this->visible_tree.children.empty())
@@ -51,7 +50,6 @@ size_t TreeView::ItemsProvider::count()const noexcept{
 	}
 	return this->visible_tree.value.subtree_size;
 }
-
 
 std::shared_ptr<widget> TreeView::ItemsProvider::get_widget(size_t index){
 	auto& i = this->iter_for(index);
@@ -95,7 +93,7 @@ void TreeView::ItemsProvider::remove_children(decltype(iter) from){
 	ASSERT(p->value.subtree_size == 0)
 }
 
-void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
+void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index){
 	ASSERT(this->traversal().is_valid(index))
 
 	auto i = this->traversal().make_iterator(index);
@@ -145,7 +143,7 @@ void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children
 	i->value.subtree_size = num_children;
 }
 
-void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
+void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index){
 	auto num_children = this->count(index);
 //	TRACE(<< "TreeView::ItemsProvider::uncollapse(): s = " << s << std::endl)
 	if(num_children == 0){
@@ -170,7 +168,7 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
 	this->list_widget::provider::notify_data_set_changed();
 }
 
-void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) {
+void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index){
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}

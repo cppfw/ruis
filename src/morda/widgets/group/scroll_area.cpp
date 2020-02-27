@@ -1,36 +1,27 @@
-#include "ScrollArea.hpp"
+#include "scroll_area.hpp"
 
 #include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
-
 using namespace morda;
 
-
-
-ScrollArea::ScrollArea(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+scroll_area::scroll_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		container(nullptr, desc)
 {}
 
-
-
-bool ScrollArea::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) {
+bool scroll_area::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 	Vec2r d = -this->curScrollPos;
 	return this->container::on_mouse_button(isDown, pos - d, button, pointerID);
 }
 
-
-
-bool ScrollArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
+bool scroll_area::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID){
 	Vec2r d = -this->curScrollPos;
 	return this->container::on_mouse_move(pos - d, pointerID);
 }
 
-
-
-void ScrollArea::render(const morda::Matr4r& matrix) const {
+void scroll_area::render(const morda::Matr4r& matrix)const{
 	Vec2r d = -this->curScrollPos;
 
 	Matr4r matr(matrix);
@@ -39,7 +30,7 @@ void ScrollArea::render(const morda::Matr4r& matrix) const {
 	this->container::render(matr);
 }
 
-void ScrollArea::clampScrollPos() {
+void scroll_area::clampScrollPos(){
 	if(this->effectiveDim.x < 0){
 		this->curScrollPos.x = 0;
 	}
@@ -49,26 +40,21 @@ void ScrollArea::clampScrollPos() {
 	}
 }
 
-
-
-void ScrollArea::setScrollPos(const Vec2r& newScrollPos) {
+void scroll_area::set_scroll_pos(const Vec2r& newScrollPos){
 	this->curScrollPos = newScrollPos.rounded();
 
 	this->clampScrollPos();
 	this->updateScrollFactor();
 }
 
-
-
-void ScrollArea::setScrollPosAsFactor(const Vec2r& factor){
+void scroll_area::set_scroll_factor(const Vec2r& factor){
 	Vec2r newScrollPos = this->effectiveDim.compMul(factor);
 
-	this->setScrollPos(newScrollPos);
+	this->set_scroll_pos(newScrollPos);
 }
 
-
-void ScrollArea::updateScrollFactor(){
-	//at this point effective dimension should be updated
+void scroll_area::updateScrollFactor(){
+	// at this point effective dimension should be updated
 	Vec2r factor = this->curScrollPos.compDiv(this->effectiveDim);
 
 	if(this->curScrollFactor == factor){
@@ -84,7 +70,7 @@ void ScrollArea::updateScrollFactor(){
 	}
 }
 
-Vec2r ScrollArea::dimForWidget(const widget& w, const layout_params& lp)const{
+Vec2r scroll_area::dims_for_widget(const widget& w, const layout_params& lp)const{
 	Vec2r d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::fill){
@@ -110,7 +96,7 @@ Vec2r ScrollArea::dimForWidget(const widget& w, const layout_params& lp)const{
 	return d;
 }
 
-void ScrollArea::arrangeWidgets(){
+void scroll_area::arrangeWidgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		// NOTE: const_cast() to force calling of constant version of get_layout_params() because
 		//       non-constant version of it invalidates layout.
@@ -118,18 +104,17 @@ void ScrollArea::arrangeWidgets(){
 				std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type
 			>(this)->get_layout_params(**i);
 
-		auto d = this->dimForWidget(**i, lp);
+		auto d = this->dims_for_widget(**i, lp);
 
 		(*i)->resize(d);
 	}
 }
 
-
-void ScrollArea::lay_out(){
+void scroll_area::lay_out(){
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 
-	// distance of content's bottom right corner from bottom right corner of the ScrollArea
+	// distance of content's bottom right corner from bottom right corner of the scroll_area
 	Vec2r br = this->curScrollPos - this->effectiveDim;
 
 	if(br.x > 0){
@@ -149,19 +134,19 @@ void ScrollArea::lay_out(){
 	}
 }
 
-void ScrollArea::on_children_changed(){
+void scroll_area::on_children_changed(){
 	this->container::on_children_changed();
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 }
 
-void ScrollArea::updateEffectiveDim(){
+void scroll_area::updateEffectiveDim(){
 	morda::Vec2r minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as<layout_params>(**i);
 
-		morda::Vec2r d = this->dimForWidget(**i, lp) + (*i)->rect().p;
+		morda::Vec2r d = this->dims_for_widget(**i, lp) + (*i)->rect().p;
 
 		utki::clampBottom(minDim.x, d.x);
 		utki::clampBottom(minDim.y, d.y);
@@ -171,7 +156,7 @@ void ScrollArea::updateEffectiveDim(){
 	this->updateScrollFactor();
 }
 
-Vec2r ScrollArea::visibleAreaFraction() const noexcept{
+Vec2r scroll_area::get_visible_area_fraction()const noexcept{
 	auto ret = this->rect().d.compDiv(this->rect().d + this->effectiveDim);
 
 	for(unsigned i = 0; i != ret.size(); ++i){

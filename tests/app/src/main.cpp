@@ -16,7 +16,7 @@
 #include "../../../src/morda/res/res_texture.hpp"
 
 #include "../../../src/morda/widgets/character_input_widget.hpp"
-#include "../../../src/morda/widgets/group/ScrollArea.hpp"
+#include "../../../src/morda/widgets/group/scroll_area.hpp"
 #include "../../../src/morda/widgets/group/row.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
@@ -645,9 +645,9 @@ public:
 				0
 			);
 
-		// ScrollArea
+		// scroll_area
 		{
-			auto scrollArea = c->try_get_widget_as<morda::ScrollArea>("scroll_area");
+			auto scrollArea = c->try_get_widget_as<morda::scroll_area>("scroll_area");
 			auto sa = utki::makeWeak(scrollArea);
 
 			auto vertSlider = c->try_get_widget_as<morda::ScrollBar>("scroll_area_vertical_slider");
@@ -665,14 +665,14 @@ public:
 					return;
 				}
 
-				auto visibleArea = sc->visibleAreaFraction();
+				auto visibleArea = sc->get_visible_area_fraction();
 
 				if(auto v = vs.lock()){
-					v->set_fraction(sc->scrollFactor().y);
+					v->set_fraction(sc->get_scroll_factor().y);
 					v->setBandSizeFraction(visibleArea.y);
 				}
 				if(auto h = hs.lock()){
-					h->set_fraction(sc->scrollFactor().x);
+					h->set_fraction(sc->get_scroll_factor().x);
 					h->setBandSizeFraction(visibleArea.x);
 				}
 			};
@@ -680,17 +680,17 @@ public:
 
 			vertSlider->fraction_change = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
-					auto sf = s->scrollFactor();
+					auto sf = s->get_scroll_factor();
 					sf.y = slider.fraction();
-					s->setScrollPosAsFactor(sf);
+					s->set_scroll_factor(sf);
 				}
 			};
 
 			horiSlider->fraction_change = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
-					auto sf = s->scrollFactor();
+					auto sf = s->get_scroll_factor();
 					sf.x = slider.fraction();
-					s->setScrollPosAsFactor(sf);
+					s->set_scroll_factor(sf);
 				}
 			};
 		}
