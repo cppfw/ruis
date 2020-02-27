@@ -697,7 +697,7 @@ public:
 			auto verticalList = c->try_get_widget_as<morda::list>("list");
 			auto vl = utki::makeWeak(verticalList);
 
-			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("vertical_list_slider");
+			auto verticalSlider = c->try_get_widget_as<morda::vertical_scroll_bar>("vertical_list_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
 			verticalSlider->fraction_change_handler = [vl](morda::fraction_widget& slider){
@@ -820,7 +820,7 @@ public:
 			treeview->set_provider(provider);
 			auto tv = utki::makeWeak(treeview);
 
-			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("treeview_vertical_slider");
+			auto verticalSlider = c->try_get_widget_as<morda::vertical_scroll_bar>("treeview_vertical_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
 			verticalSlider->fraction_change_handler = [tv](morda::fraction_widget& slider){
@@ -829,7 +829,7 @@ public:
 				}
 			};
 
-			auto horizontalSlider = c->try_get_widget_as<morda::HScrollBar>("treeview_horizontal_slider");
+			auto horizontalSlider = c->try_get_widget_as<morda::horizontal_scroll_bar>("treeview_horizontal_slider");
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 

@@ -45,26 +45,26 @@ private:
 	void lay_out()override;
 };
 
-class VScrollBar : public scroll_bar{
+class vertical_scroll_bar : public scroll_bar{
 public:
-	VScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	vertical_scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
 			scroll_bar(this->context, desc, true)
 	{}
 
-	VScrollBar(const VScrollBar&) = delete;
-	VScrollBar& operator=(const VScrollBar&) = delete;
+	vertical_scroll_bar(const vertical_scroll_bar&) = delete;
+	vertical_scroll_bar& operator=(const vertical_scroll_bar&) = delete;
 };
 
-class HScrollBar : public scroll_bar{
+class horizontal_scroll_bar : public scroll_bar{
 public:
-	HScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	horizontal_scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
 			scroll_bar(this->context, desc, false)
 	{}
 
-	HScrollBar(const HScrollBar&) = delete;
-	HScrollBar& operator=(const HScrollBar&) = delete;
+	horizontal_scroll_bar(const horizontal_scroll_bar&) = delete;
+	horizontal_scroll_bar& operator=(const horizontal_scroll_bar&) = delete;
 };
 
 }

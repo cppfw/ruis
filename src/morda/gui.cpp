@@ -102,8 +102,8 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<color>("color");
 	this->context->inflater.register_widget<gradient>("gradient");
 	this->context->inflater.register_widget<image>("image");
-	this->context->inflater.register_widget<VScrollBar>("vertical_scroll_bar");
-	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
+	this->context->inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
+	this->context->inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
 	this->context->inflater.register_widget<window>("window");
 	this->context->inflater.register_widget<nine_patch>("nine_patch");
 	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
