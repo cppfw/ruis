@@ -1,12 +1,8 @@
-#include "TextInputLine.hpp"
+#include "text_input_line.hpp"
 
 #include "../../context.hpp"
 #include "../../util/key.hpp"
 #include "../../util/util.hpp"
-
-//TODO: remove
-#include "../../gui.hpp"
-
 
 #if M_OS == M_OS_WINDOWS
 #	ifdef DELETE
@@ -14,11 +10,7 @@
 #	endif
 #endif
 
-
-
 using namespace morda;
-
-
 
 namespace{
 const std::uint32_t cursorBlinkPeriod_c = 500; // milliseconds
@@ -26,9 +18,7 @@ const std::uint32_t cursorBlinkPeriod_c = 500; // milliseconds
 const real cursorWidth_c = real(1.0);
 }
 
-
-
-TextInputLine::TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text_input_line::text_input_line(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		single_line_text_widget(this->context, desc),
 		character_input_widget(this->context)
@@ -36,9 +26,7 @@ TextInputLine::TextInputLine(std::shared_ptr<morda::context> c, const puu::fores
 	this->set_clip(true);
 }
 
-
-
-void TextInputLine::render(const morda::Matr4r& matrix) const{
+void text_input_line::render(const morda::Matr4r& matrix) const{
 	// render selection
 	if(this->cursorIndex != this->selectionStartIndex){
 		morda::Matr4r matr(matrix);
@@ -77,7 +65,7 @@ void TextInputLine::render(const morda::Matr4r& matrix) const{
 	}
 }
 
-bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool text_input_line::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 	if(button != mouse_button::left){
 		return false;
 	}
@@ -85,23 +73,23 @@ bool TextInputLine::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 	this->leftMouseButtonDown = isDown;
 	
 	if(isDown){
-		this->setCursorIndex(this->posToIndex(pos.x));
+		this->set_cursor_index(this->posToIndex(pos.x));
 	}
 	
 	return true;
 }
 
-bool TextInputLine::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
+bool text_input_line::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
 	
-	this->setCursorIndex(this->posToIndex(pos.x), true);
+	this->set_cursor_index(this->posToIndex(pos.x), true);
 	return true;
 }
 
 
-Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
+Vec2r text_input_line::measure(const morda::Vec2r& quotum)const noexcept{
 	Vec2r ret;
 	
 	if(quotum.x < 0){
@@ -119,7 +107,7 @@ Vec2r TextInputLine::measure(const morda::Vec2r& quotum)const noexcept{
 	return ret;
 }
 
-void TextInputLine::setCursorIndex(size_t index, bool selection){
+void text_input_line::set_cursor_index(size_t index, bool selection){
 	this->cursorIndex = index;
 	
 	utki::clampTop(this->cursorIndex, this->get_text().size());
@@ -174,7 +162,7 @@ void TextInputLine::setCursorIndex(size_t index, bool selection){
 	}
 }
 
-real TextInputLine::indexToPos(size_t index){
+real text_input_line::indexToPos(size_t index){
 	ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
 	
 	if(index <= this->firstVisibleCharIndex){
@@ -200,7 +188,7 @@ real TextInputLine::indexToPos(size_t index){
 	return ret;
 }
 
-size_t TextInputLine::posToIndex(real pos){
+size_t text_input_line::posToIndex(real pos){
 	size_t index = this->firstVisibleCharIndex;
 	real p = this->xOffset;
 	
@@ -224,11 +212,11 @@ size_t TextInputLine::posToIndex(real pos){
 }
 
 
-void TextInputLine::update(std::uint32_t dt){
+void text_input_line::update(std::uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
-void TextInputLine::on_focus_changed(){
+void text_input_line::on_focus_changed(){
 	if(this->is_focused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;
@@ -238,13 +226,13 @@ void TextInputLine::on_focus_changed(){
 	}
 }
 
-void TextInputLine::on_resize(){
-//	TRACE(<< "TextInputLine::on_resize(): size = " << this->rect().d << std::endl)
+void text_input_line::on_resize(){
+//	TRACE(<< "text_input_line::on_resize(): size = " << this->rect().d << std::endl)
 	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 }
 
 
-void TextInputLine::startCursorBlinking(){
+void text_input_line::startCursorBlinking(){
 	this->context->updater->stop(*this);
 	this->cursorBlinkVisible = true;
 	this->context->updater->start(
@@ -253,7 +241,7 @@ void TextInputLine::startCursorBlinking(){
 		);
 }
 
-bool TextInputLine::on_key(bool isDown, key keyCode){
+bool text_input_line::on_key(bool isDown, key keyCode){
 	switch(keyCode){
 		case key::left_control:
 		case key::right_control:
@@ -269,7 +257,7 @@ bool TextInputLine::on_key(bool isDown, key keyCode){
 	return false;
 }
 
-void TextInputLine::on_character_input(const std::u32string& unicode, key keycode){
+void text_input_line::on_character_input(const std::u32string& unicode, key keycode){
 	switch(keycode){
 		case key::enter:
 			break;
@@ -292,7 +280,7 @@ void TextInputLine::on_character_input(const std::u32string& unicode, key keycod
 				}else{
 					newIndex = this->cursorIndex + 1;
 				}
-				this->setCursorIndex(newIndex, this->shiftPressed);
+				this->set_cursor_index(newIndex, this->shiftPressed);
 			}
 			break;
 		case key::left:
@@ -317,31 +305,31 @@ void TextInputLine::on_character_input(const std::u32string& unicode, key keycod
 				}else{
 					newIndex = this->cursorIndex - 1;
 				}
-				this->setCursorIndex(newIndex, this->shiftPressed);
+				this->set_cursor_index(newIndex, this->shiftPressed);
 			}
 			break;
 		case key::end:
-			this->setCursorIndex(this->get_text().size(), this->shiftPressed);
+			this->set_cursor_index(this->get_text().size(), this->shiftPressed);
 			break;
 		case key::home:
-			this->setCursorIndex(0, this->shiftPressed);
+			this->set_cursor_index(0, this->shiftPressed);
 			break;
 		case key::backspace:
 			if(this->thereIsSelection()){
-				this->setCursorIndex(this->deleteSelection());
+				this->set_cursor_index(this->deleteSelection());
 			}else{
 				if(this->cursorIndex != 0){
 					auto t = this->get_text();
 					this->clear();
 					t.erase(t.begin() + (this->cursorIndex - 1));
 					this->set_text(std::move(t));
-					this->setCursorIndex(this->cursorIndex - 1);
+					this->set_cursor_index(this->cursorIndex - 1);
 				}
 			}
 			break;
 		case key::deletion:
 			if(this->thereIsSelection()){
-				this->setCursorIndex(this->deleteSelection());
+				this->set_cursor_index(this->deleteSelection());
 			}else{
 				if(this->cursorIndex < this->get_text().size()){
 					auto t = this->get_text();
@@ -358,7 +346,7 @@ void TextInputLine::on_character_input(const std::u32string& unicode, key keycod
 		case key::a:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
-				this->setCursorIndex(this->get_text().size(), true);
+				this->set_cursor_index(this->get_text().size(), true);
 				break;
 			}
 			// fall through
@@ -373,18 +361,15 @@ void TextInputLine::on_character_input(const std::u32string& unicode, key keycod
 				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
 				this->set_text(std::move(t));
 				
-				this->setCursorIndex(this->cursorIndex + unicode.size());
+				this->set_cursor_index(this->cursorIndex + unicode.size());
 			}
 			
 			break;
-		
 	}
 	
 }
 
-
-
-size_t TextInputLine::deleteSelection(){
+size_t text_input_line::deleteSelection(){
 	ASSERT(this->cursorIndex != this->selectionStartIndex)
 	
 	size_t start, end;

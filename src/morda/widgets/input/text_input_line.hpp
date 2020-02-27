@@ -6,13 +6,12 @@
 #include "../../updateable.hpp"
 #include "../character_input_widget.hpp"
 
-
 namespace morda{
 
 /**
  * @brief TODO:.
  */
-class TextInputLine :
+class text_input_line :
 		public single_line_text_widget,
 		public character_input_widget,
 		private updateable
@@ -36,12 +35,12 @@ class TextInputLine :
 	bool leftMouseButtonDown = false;
 
 public:
-	TextInputLine(const TextInputLine&) = delete;
-	TextInputLine& operator=(const TextInputLine&) = delete;
+	text_input_line(const text_input_line&) = delete;
+	text_input_line& operator=(const text_input_line&) = delete;
 
-	TextInputLine(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	text_input_line(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	virtual ~TextInputLine()noexcept{}
+	virtual ~text_input_line()noexcept{}
 
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
@@ -61,7 +60,7 @@ public:
 
 	void on_character_input(const std::u32string& unicode, key keycode)override;
 
-	void setCursorIndex(size_t index, bool selection = false);
+	void set_cursor_index(size_t index, bool selection = false);
 
 private:
 	void updateCursorPosBasedOnIndex();

@@ -19,7 +19,7 @@
 #include "widgets/label/Gradient.hpp"
 #include "widgets/label/MouseCursor.hpp"
 
-#include "widgets/input/TextInputLine.hpp"
+#include "widgets/input/text_input_line.hpp"
 
 #include "widgets/group/tree_view.hpp"
 #include "widgets/group/window.hpp"
@@ -118,7 +118,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<image_push_button>("image_push_button");
 	this->context->inflater.register_widget<tab_group>("tab_group");
 	this->context->inflater.register_widget<tab>("tab");
-	this->context->inflater.register_widget<TextInputLine>("text_input_line");
+	this->context->inflater.register_widget<text_input_line>("text_input_line");
 
 	try{
 		auto t = this->context->loader.load<res_puu>("morda_gui_defs");
