@@ -1,7 +1,7 @@
 #include "../../context.hpp"
 
 #include "../../util/util.hpp"
-#include "CollapseArea.hpp"
+#include "collapse_area.hpp"
 #include "../button/toggle_button.hpp"
 
 using namespace morda;
@@ -50,7 +50,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		Column(nullptr, layout_c)
 {

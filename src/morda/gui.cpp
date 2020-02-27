@@ -23,7 +23,7 @@
 
 #include "widgets/group/TreeView.hpp"
 #include "widgets/group/Window.hpp"
-#include "widgets/group/CollapseArea.hpp"
+#include "widgets/group/collapse_area.hpp"
 
 using namespace morda;
 
@@ -113,7 +113,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<radio_button>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");
 	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
-	this->context->inflater.register_widget<CollapseArea>("collapse_area");
+	this->context->inflater.register_widget<collapse_area>("collapse_area");
 	this->context->inflater.register_widget<image_toggle>("image_toggle");
 	this->context->inflater.register_widget<image_push_button>("image_push_button");
 	this->context->inflater.register_widget<tab_group>("tab_group");
