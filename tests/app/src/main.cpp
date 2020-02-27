@@ -10,7 +10,7 @@
 #include "../../../src/morda/widgets/container.hpp"
 #include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
 
-#include "../../../src/morda/widgets/button/PushButton.hpp"
+#include "../../../src/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/widgets/label/Text.hpp"
 
 #include "../../../src/morda/res/res_texture.hpp"
@@ -557,7 +557,7 @@ public:
 		}
 
 		{
-			auto b = this->context->inflater.inflate_as<morda::PushButton>(
+			auto b = this->context->inflater.inflate_as<morda::push_button>(
 					R"qwertyuiop(
 							@push_button{
 								@color{
@@ -567,7 +567,7 @@ public:
 							}
 						)qwertyuiop"
 				);
-			b->clicked = [this, path, parent_list](morda::PushButton& button){
+			b->clicked = [this, path, parent_list](morda::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(std::next(parent_list->begin(), path.back()));
 				this->notifyItemRemoved(path);
@@ -627,12 +627,12 @@ public:
 //		morda::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<morda::widget> c = morda::gui::inst().inflater().Inflate(zf);
 
-		ASSERT(c->try_get_widget_as<morda::PushButton>("show_VK_button"))
-		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("show_VK_button"))->clicked = [this](morda::PushButton&){
+		ASSERT(c->try_get_widget_as<morda::push_button>("show_VK_button"))
+		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("show_VK_button"))->clicked = [this](morda::push_button&){
 			this->show_virtual_keyboard();
 		};
 
-		std::dynamic_pointer_cast<morda::PushButton>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [this](morda::PushButton&){
+		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [this](morda::push_button&){
 			this->gui.context->run_from_ui_thread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
@@ -868,24 +868,24 @@ public:
 			};
 
 
-			auto insertBeforeButton = c->try_get_widget_as<morda::PushButton>("insert_before");
-			auto insertAfterButton = c->try_get_widget_as<morda::PushButton>("insert_after");
-			auto insertChild = c->try_get_widget_as<morda::PushButton>("insert_child");
+			auto insertBeforeButton = c->try_get_widget_as<morda::push_button>("insert_before");
+			auto insertAfterButton = c->try_get_widget_as<morda::push_button>("insert_after");
+			auto insertChild = c->try_get_widget_as<morda::push_button>("insert_child");
 
 			auto prvdr = utki::makeWeak(provider);
-			insertBeforeButton->clicked = [prvdr](morda::PushButton& b){
+			insertBeforeButton->clicked = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertBefore();
 				}
 			};
 
-			insertAfterButton->clicked = [prvdr](morda::PushButton& b){
+			insertAfterButton->clicked = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertAfter();
 				}
 			};
 
-			insertChild->clicked = [prvdr](morda::PushButton& b){
+			insertChild->clicked = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertChild();
 				}
@@ -895,15 +895,15 @@ public:
 
 		// fullscreen
 		{
-			auto b = c->try_get_widget_as<morda::PushButton>("fullscreen_button");
-			b->clicked = [this](morda::PushButton&) {
+			auto b = c->try_get_widget_as<morda::push_button>("fullscreen_button");
+			b->clicked = [this](morda::push_button&) {
 				this->set_fullscreen(!this->is_fullscreen());
 			};
 		}
 		{
-			auto b = c->try_get_widget_as<morda::PushButton>("image_push_button");
+			auto b = c->try_get_widget_as<morda::push_button>("image_push_button");
 			ASSERT(b)
-			b->clicked = [this](morda::PushButton&) {
+			b->clicked = [this](morda::push_button&) {
 				this->set_fullscreen(true);
 			};
 		}
@@ -911,10 +911,10 @@ public:
 
 		// mouse cursor
 		{
-			auto b = c->try_get_widget_as<morda::PushButton>("showhide_mousecursor_button");
+			auto b = c->try_get_widget_as<morda::push_button>("showhide_mousecursor_button");
 			bool visible = true;
 			this->set_mouse_cursor_visible(visible);
-			b->clicked = [visible, this](morda::PushButton&) mutable{
+			b->clicked = [visible, this](morda::push_button&) mutable{
 				visible = !visible;
 				this->set_mouse_cursor_visible(visible);
 			};

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "image_button.hpp"
-#include "PushButton.hpp"
+#include "push_button.hpp"
 
 namespace morda{
 class image_push_button :
-		public PushButton,
+		public push_button,
 		public image_button
 {
 protected:

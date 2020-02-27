@@ -7,7 +7,7 @@ using namespace morda;
 nine_patch_push_button::nine_patch_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
-		PushButton(this->context, desc),
+		push_button(this->context, desc),
 		nine_patch_button(this->context, desc)
 {
 	if(!this->get_unpressed_nine_patch()){
@@ -23,5 +23,5 @@ nine_patch_push_button::nine_patch_push_button(std::shared_ptr<morda::context> c
 
 void nine_patch_push_button::on_pressed_changed(){
 	this->nine_patch_button::on_pressed_changed();
-	this->PushButton::on_pressed_changed();
+	this->push_button::on_pressed_changed();
 }

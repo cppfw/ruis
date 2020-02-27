@@ -1,10 +1,8 @@
-#include "PushButton.hpp"
-
+#include "push_button.hpp"
 
 using namespace morda;
 
-
-bool PushButton::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool push_button::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 	//TODO: multi-touch support
 
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
@@ -29,9 +27,7 @@ bool PushButton::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_but
 	return true;
 }
 
-
-
-void PushButton::on_hover_changed(unsigned pointerId){
+void push_button::on_hover_changed(unsigned pointerId){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 
 	//TODO: check if was hovered by the same pointer
@@ -43,18 +39,18 @@ void PushButton::on_hover_changed(unsigned pointerId){
 	}
 }
 
-void PushButton::on_pressed_changed(){
+void push_button::on_pressed_changed(){
 	this->button::on_pressed_changed();
 
 	if(this->currentlyPressed && this->is_hovered()){
 		ASSERT(!this->is_pressed())
-		this->onClicked();
+		this->on_clicked();
 	}
 
 	this->currentlyPressed = this->is_pressed();
 }
 
-void PushButton::onClicked(){
+void push_button::on_clicked(){
 	if (this->clicked){
 		this->clicked(*this);
 	}

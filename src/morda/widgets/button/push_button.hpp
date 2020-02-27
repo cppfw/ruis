@@ -9,7 +9,7 @@ namespace morda{
  * Push button is a button which can be clicked.
  * Clicked means that the button was pressed and then released.
  */
-class PushButton : virtual public button{
+class push_button : virtual public button{
 	bool currentlyPressed = false;
 
 protected:
@@ -19,15 +19,15 @@ protected:
 	 * @brief Invoked when the button is clicked.
 	 * Default implementation emits 'clicked' signal.
 	 */
-	virtual void onClicked();
+	virtual void on_clicked();
 	
 	
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) override;
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
 	
 	void on_hover_changed(unsigned pointerID) override;
 	
 public:
-	PushButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
 			button(nullptr, desc)
 	{}
@@ -36,7 +36,7 @@ public:
 	 * @brief Clicked signal.
 	 * Emitted when the button is clicked.
 	 */
-	std::function<void(PushButton&)> clicked;
+	std::function<void(push_button&)> clicked;
 };
 
 }
