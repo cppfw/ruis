@@ -146,7 +146,7 @@ void drop_down_box::showDropdownMenu(){
 				return true;
 			};
 
-	o->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), o) + Vec2r(0, this->rect().d.y));
+	o->show_context_menu(np, this->pos_in_ancestor(Vec2r(0), o) + Vec2r(0, this->rect().d.y));
 }
 
 bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
@@ -171,7 +171,7 @@ void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 	if(this->hoveredIndex < 0){
 		if(!isFirstOne){
 			this->context->run_from_ui_thread([oc](){
-				oc->hideContextMenu();
+				oc->hide_context_menu();
 			});
 		}
 		return;
@@ -182,7 +182,7 @@ void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 
 	this->context->run_from_ui_thread([dds, oc](){
 //		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
-		oc->hideContextMenu();
+		oc->hide_context_menu();
 		if(dds->selection_changed){
 //			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
 			dds->selection_changed(*dds);

@@ -45,7 +45,7 @@ void overlay::on_children_changed(){
 		ASSERT(mp)
 
 		mp->mouseButton = [this](widget& w, bool isDown, const Vec2r& pos, mouse_button button, unsigned id) -> bool{
-			this->hideContextMenu();
+			this->hide_context_menu();
 			return false;
 		};
 	}
@@ -61,7 +61,7 @@ void overlay::on_children_changed(){
 
 
 
-void overlay::showContextMenu(std::shared_ptr<widget> w, Vec2r anchor){
+void overlay::show_context_menu(std::shared_ptr<widget> w, Vec2r anchor){
 	this->top_layer().push_back(w);
 
 	auto& lp = this->top_layer().get_layout_params(*w);
@@ -81,7 +81,7 @@ void overlay::showContextMenu(std::shared_ptr<widget> w, Vec2r anchor){
 	w->move_to(anchor);
 }
 
-void overlay::hideContextMenu(){
+void overlay::hide_context_menu(){
 	if(this->overlayContainer->children().size() == 0){
 		return;
 	}
