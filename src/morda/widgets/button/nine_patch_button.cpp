@@ -23,9 +23,9 @@ nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const pu
 				}
 
 				if(pp.value == "unpressed"){
-					this->set_unpressed_nine_patch(this->context->loader.load<res_ninepatch>(get_property_value(pp).to_string()));
+					this->set_unpressed_nine_patch(this->context->loader.load<res_nine_patch>(get_property_value(pp).to_string()));
 				}else if(pp.value == "pressed"){
-					this->set_pressed_nine_patch(this->context->loader.load<res_ninepatch>(get_property_value(pp).to_string()));
+					this->set_pressed_nine_patch(this->context->loader.load<res_nine_patch>(get_property_value(pp).to_string()));
 				}
 			}
 		}
@@ -38,10 +38,10 @@ void nine_patch_button::on_pressed_changed(){
 	this->button::on_pressed_changed();
 }
 
-void nine_patch_button::set_pressed_nine_patch(std::shared_ptr<const res_ninepatch> np){
+void nine_patch_button::set_pressed_nine_patch(std::shared_ptr<const res_nine_patch> np){
 	this->pressedNinePatch_v = std::move(np);
 }
 
-void nine_patch_button::set_unpressed_nine_patch(std::shared_ptr<const res_ninepatch> np){
+void nine_patch_button::set_unpressed_nine_patch(std::shared_ptr<const res_nine_patch> np){
 	this->unpressedNinePatch_v = std::move(np);
 }

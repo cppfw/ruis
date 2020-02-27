@@ -26,7 +26,7 @@ namespace morda{
  * }
  * @endcode
  */
-class res_ninepatch : public resource{
+class res_nine_patch : public resource{
 	friend class resource_loader;
 	
 	const std::shared_ptr<const res_image> image;
@@ -34,10 +34,10 @@ class res_ninepatch : public resource{
 	Sidesr borders_v;
 	
 public:
-	res_ninepatch(const res_ninepatch&) = delete;
-	res_ninepatch& operator=(const res_ninepatch&) = delete;
+	res_nine_patch(const res_nine_patch&) = delete;
+	res_nine_patch& operator=(const res_nine_patch&) = delete;
 	
-	res_ninepatch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, Sidesr borders) :
+	res_nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, Sidesr borders) :
 			resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
@@ -47,7 +47,7 @@ public:
 	class image_matrix{
 		const std::array<std::array<std::shared_ptr<const res_image>, 3>, 3> images_v;
 		
-		std::weak_ptr<const res_ninepatch> parent;
+		std::weak_ptr<const res_nine_patch> parent;
 	
 		real mul;//for erasing from the cache
 	public:
@@ -55,7 +55,7 @@ public:
 			return this->images_v;
 		}
 		
-		image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_ninepatch> parent, real mul);
+		image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_nine_patch> parent, real mul);
 		
 		~image_matrix()noexcept;
 	};
@@ -68,7 +68,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 	
-	static std::shared_ptr<res_ninepatch> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<res_nine_patch> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 };
 
 }

@@ -63,10 +63,10 @@ tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		nine_patch_toggle(this->context, desc)
 {
 	if(!this->get_pressed_nine_patch()){
-		this->set_pressed_nine_patch(this->context->loader.load<res_ninepatch>("morda_npt_tab_active"));
+		this->set_pressed_nine_patch(this->context->loader.load<res_nine_patch>("morda_npt_tab_active"));
 	}
 	if(!this->get_unpressed_nine_patch()){
-		this->set_unpressed_nine_patch(this->context->loader.load<res_ninepatch>("morda_npt_tab_inactive"));
+		this->set_unpressed_nine_patch(this->context->loader.load<res_nine_patch>("morda_npt_tab_inactive"));
 	}
 
 	// initialize nine-patch

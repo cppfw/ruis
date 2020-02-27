@@ -122,7 +122,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->setNinePatch(this->context->loader.load<res_ninepatch>(get_property_value(*i).to_string()));
+			this->setNinePatch(this->context->loader.load<res_nine_patch>(get_property_value(*i).to_string()));
 		}
 	}
 
@@ -134,7 +134,7 @@ void nine_patch::render(const morda::Matr4r& matrix)const{
 }
 
 
-void nine_patch::setNinePatch(std::shared_ptr<const res_ninepatch> np){
+void nine_patch::setNinePatch(std::shared_ptr<const res_nine_patch> np){
 	this->res = std::move(np);
 	this->scaledImage.reset();
 

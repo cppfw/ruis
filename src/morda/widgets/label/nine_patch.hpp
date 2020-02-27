@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../res/res_ninepatch.hpp"
+#include "../../res/res_nine_patch.hpp"
 
 #include "../group/pile.hpp"
 #include "../group/column.hpp"
@@ -28,9 +28,9 @@ class nine_patch :
 		public blending_widget,
 		private column
 {
-	std::shared_ptr<const res_ninepatch> res;
+	std::shared_ptr<const res_nine_patch> res;
 
-	std::shared_ptr<res_ninepatch::image_matrix> scaledImage;
+	std::shared_ptr<res_nine_patch::image_matrix> scaledImage;
 
 	Sidesr borders = Sidesr(layout_params::min);
 
@@ -44,7 +44,7 @@ public:
 
 	nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	void setNinePatch(std::shared_ptr<const res_ninepatch> np);
+	void setNinePatch(std::shared_ptr<const res_nine_patch> np);
 
 	/**
 	 * @brief Get content container.
