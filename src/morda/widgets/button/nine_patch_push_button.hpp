@@ -3,15 +3,14 @@
 #include "PushButton.hpp"
 #include "nine_patch_button.hpp"
 
-
 namespace morda{
 
-class NinePatchPushButton :
+class nine_patch_push_button :
 		public PushButton,
 		public nine_patch_button
 {
 public:
-	NinePatchPushButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 protected:
 	void on_pressed_changed()override;
@@ -25,4 +24,5 @@ protected:
 	}
 
 };
+
 }

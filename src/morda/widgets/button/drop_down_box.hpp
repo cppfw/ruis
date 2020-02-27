@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "NinePatchPushButton.hpp"
+#include "nine_patch_push_button.hpp"
 
 namespace morda{
 
@@ -13,7 +13,7 @@ namespace morda{
  */
 class drop_down_box :
 		virtual public widget,
-		private NinePatchPushButton
+		private nine_patch_push_button
 {
 	Pile& selectionContainer;
 public:

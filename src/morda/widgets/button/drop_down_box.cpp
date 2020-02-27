@@ -154,7 +154,7 @@ bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 		this->mouseButtonUpHandler(true);
 	}
 
-	return this->NinePatchPushButton::on_mouse_button(isDown, pos, button, pointerID);
+	return this->nine_patch_push_button::on_mouse_button(isDown, pos, button, pointerID);
 }
 
 void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
@@ -193,7 +193,7 @@ void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, selectorLayout_c),
-		NinePatchPushButton(this->context, selectorLayout_c),
+		nine_patch_push_button(this->context, selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
 {
 	this->pressed_changed = [this](button& b){

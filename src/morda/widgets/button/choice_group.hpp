@@ -23,9 +23,9 @@ public:
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;
 	
-	bool isWidgetActive(const widget& w)const noexcept;
+	bool is_active(const widget& w)const noexcept;
 	
-	const decltype(activeChoiceButton_v)& getActiveButton()const noexcept{
+	const decltype(activeChoiceButton_v)& get_active()const noexcept{
 		return this->activeChoiceButton_v;
 	}
 	

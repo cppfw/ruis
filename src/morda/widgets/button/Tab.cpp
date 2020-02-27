@@ -62,11 +62,11 @@ Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		choice_button(this->context, desc),
 		NinePatchToggle(this->context, desc)
 {
-	if(!this->pressedNinePatch()){
-		this->setPressedNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_tab_active"));
+	if(!this->get_pressed_nine_patch()){
+		this->set_pressed_nine_patch(this->context->loader.load<res_ninepatch>("morda_npt_tab_active"));
 	}
-	if(!this->unpressedNinePatch()){
-		this->setUnpressedNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_tab_inactive"));
+	if(!this->get_unpressed_nine_patch()){
+		this->set_unpressed_nine_patch(this->context->loader.load<res_ninepatch>("morda_npt_tab_inactive"));
 	}
 
 	// initialize nine-patch

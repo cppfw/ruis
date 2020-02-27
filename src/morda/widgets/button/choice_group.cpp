@@ -7,7 +7,7 @@ choice_group::choice_group(std::shared_ptr<morda::context> c, const puu::forest&
 		Pile(this->context, desc)
 {}
 
-bool choice_group::isWidgetActive(const widget& w) const noexcept{
+bool choice_group::is_active(const widget& w)const noexcept{
 	widget* aw = this->activeChoiceButton_v.get();
 	return aw == &w;
 }

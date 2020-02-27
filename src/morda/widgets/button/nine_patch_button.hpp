@@ -23,15 +23,15 @@ public:
 	nine_patch_button(const nine_patch_button&) = delete;
 	nine_patch_button& operator=(const nine_patch_button&) = delete;
 	
-	void setUnpressedNinePatch(std::shared_ptr<const res_ninepatch> np);
+	void set_unpressed_nine_patch(std::shared_ptr<const res_ninepatch> np);
 	
-	const decltype(unpressedNinePatch_v)& unpressedNinePatch()const noexcept{
+	const decltype(unpressedNinePatch_v)& get_unpressed_nine_patch()const noexcept{
 		return this->unpressedNinePatch_v;
 	}
 	
-	void setPressedNinePatch(std::shared_ptr<const res_ninepatch> np);
+	void set_pressed_nine_patch(std::shared_ptr<const res_ninepatch> np);
 	
-	const decltype(pressedNinePatch_v)& pressedNinePatch()const noexcept{
+	const decltype(pressedNinePatch_v)& get_pressed_nine_patch()const noexcept{
 		return this->pressedNinePatch_v;
 	}
 	

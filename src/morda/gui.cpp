@@ -4,7 +4,7 @@
 
 #include "widgets/slider/ScrollBar.hpp"
 
-#include "widgets/button/NinePatchPushButton.hpp"
+#include "widgets/button/nine_patch_push_button.hpp"
 #include "widgets/button/check_box.hpp"
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/choice_group.hpp"
@@ -106,7 +106,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
 	this->context->inflater.register_widget<Window>("window");
 	this->context->inflater.register_widget<NinePatch>("nine_patch");
-	this->context->inflater.register_widget<NinePatchPushButton>("nine_patch_push_button");
+	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 	this->context->inflater.register_widget<check_box>("check_box");
 	this->context->inflater.register_widget<TreeView>("tree_view");
 	this->context->inflater.register_widget<drop_down_box>("drop_down_box");
