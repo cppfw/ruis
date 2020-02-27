@@ -2,7 +2,7 @@
 
 #include "../../util/util.hpp"
 #include "CollapseArea.hpp"
-#include "../button/ToggleButton.hpp"
+#include "../button/toggle_button.hpp"
 
 using namespace morda;
 
@@ -73,7 +73,7 @@ CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest&
 	this->contentArea->inflate_push_back(desc);
 
 	{
-		auto sw = this->try_get_widget_as<ToggleButton>("switch");
+		auto sw = this->try_get_widget_as<toggle_button>("switch");
 		ASSERT(sw)
 		sw->pressed_changed = [this](button& tb){
 			auto& lp = this->contentArea->get_layout_params();

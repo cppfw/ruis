@@ -1,7 +1,7 @@
 #pragma once
 
 #include "button.hpp"
-#include "ToggleButton.hpp"
+#include "toggle_button.hpp"
 
 namespace morda{
 
@@ -13,8 +13,7 @@ namespace morda{
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class choice_button : virtual public ToggleButton{
-	friend class ChoiceGroup;
+class choice_button : virtual public toggle_button{
 	
 protected:
 	void on_pressed_changed()override;

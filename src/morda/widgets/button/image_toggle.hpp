@@ -1,11 +1,12 @@
 #pragma once
 
-#include "ToggleButton.hpp"
+#include "toggle_button.hpp"
 #include "image_button.hpp"
 
 namespace morda{
+
 class image_toggle :
-		public ToggleButton,
+		public toggle_button,
 		public image_button
 {
 public:
@@ -14,4 +15,5 @@ public:
 	image_toggle(const image_toggle&) = delete;
 	image_toggle& operator=(const image_toggle&) = delete;
 };
+
 }

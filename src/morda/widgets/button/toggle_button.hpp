@@ -11,12 +11,12 @@ namespace morda{
  * In GUI script it has the 'checked{true/false}' attribute which can set initial
  * checked state of the widget.
  */
-class ToggleButton : virtual public button{
+class toggle_button : virtual public button{
 protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) override;
 	
 public:
-	ToggleButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	toggle_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	/**
 	 * @brief Change checked state to opposite.

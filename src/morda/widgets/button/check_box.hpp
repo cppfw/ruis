@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ToggleButton.hpp"
+#include "toggle_button.hpp"
 #include "../label/NinePatch.hpp"
 
 namespace morda{
@@ -12,7 +12,7 @@ namespace morda{
  * standard morda widgets.
  */
 class check_box :
-		public ToggleButton,
+		public toggle_button,
 		private NinePatch
 {
 	std::shared_ptr<widget> checkWidget;
@@ -23,11 +23,11 @@ public:
 	check_box& operator=(const check_box&) = delete;
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override{
-		return this->ToggleButton::on_mouse_button(isDown, pos, button, pointerId);
+		return this->toggle_button::on_mouse_button(isDown, pos, button, pointerId);
 	}
 
 	void on_hover_changed(unsigned pointerID)override{
-		this->ToggleButton::on_hover_changed(pointerID);
+		this->toggle_button::on_hover_changed(pointerID);
 	}
 
 	void on_pressed_changed()override;

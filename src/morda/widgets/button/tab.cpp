@@ -58,7 +58,7 @@ void tab::on_pressed_changed() {
 tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
-		ToggleButton(this->context, desc),
+		toggle_button(this->context, desc),
 		choice_button(this->context, desc),
 		nine_patch_toggle(this->context, desc)
 {
