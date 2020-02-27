@@ -71,7 +71,7 @@ morda::Vec2r tab_group::measure(const morda::Vec2r& quotum)const{
 
 		length += d.x;
 
-		auto borders = t->getActualBorders();
+		auto borders = t->get_actual_borders();
 		length -= std::min(prevBorders.right(), borders.left());
 		prevBorders = borders;
 
@@ -104,7 +104,7 @@ void tab_group::lay_out(){
 			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
-		auto borders = t->getActualBorders();
+		auto borders = t->get_actual_borders();
 
 		pos -= std::min(prevBorders.right(), borders.left());
 		c->move_to(Vec2r(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));

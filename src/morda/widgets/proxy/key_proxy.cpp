@@ -1,10 +1,8 @@
-#include "KeyProxy.hpp"
-
+#include "key_proxy.hpp"
 
 using namespace morda;
 
-
-bool KeyProxy::on_key(bool isDown, morda::key keyCode) {
+bool key_proxy::on_key(bool isDown, morda::key keyCode){
 	if (this->key) {
 		return this->key(isDown, keyCode);
 	}

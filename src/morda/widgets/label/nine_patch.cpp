@@ -114,7 +114,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 		}else if(p.value == "bottom"){
 			this->borders.bottom() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "centerVisible"){
-			this->setCenterVisible(get_property_value(p).to_bool());
+			this->set_center_visible(get_property_value(p).to_bool());
 		}
 	}
 
@@ -122,7 +122,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->setNinePatch(this->context->loader.load<res_nine_patch>(get_property_value(*i).to_string()));
+			this->set_nine_patch(this->context->loader.load<res_nine_patch>(get_property_value(*i).to_string()));
 		}
 	}
 
@@ -133,8 +133,7 @@ void nine_patch::render(const morda::Matr4r& matrix)const{
 	this->column::render(matrix);
 }
 
-
-void nine_patch::setNinePatch(std::shared_ptr<const res_nine_patch> np){
+void nine_patch::set_nine_patch(std::shared_ptr<const res_nine_patch> np){
 	this->res = std::move(np);
 	this->scaledImage.reset();
 
@@ -143,9 +142,7 @@ void nine_patch::setNinePatch(std::shared_ptr<const res_nine_patch> np){
 	this->clear_cache();
 }
 
-
-
-Sidesr nine_patch::getActualBorders()const noexcept{
+Sidesr nine_patch::get_actual_borders()const noexcept{
 	Sidesr ret;
 
 	for(auto i = 0; i != ret.size(); ++i){
@@ -160,8 +157,6 @@ Sidesr nine_patch::getActualBorders()const noexcept{
 
 	return ret;
 }
-
-
 
 void nine_patch::applyImages(){
 	if(!this->res){
@@ -245,7 +240,7 @@ void nine_patch::applyImages(){
 	}
 }
 
-void nine_patch::setCenterVisible(bool visible){
+void nine_patch::set_center_visible(bool visible){
 	ASSERT(this->imageMatrix_v[1][1])
 	this->imageMatrix_v[1][1]->set_visible(visible);
 }

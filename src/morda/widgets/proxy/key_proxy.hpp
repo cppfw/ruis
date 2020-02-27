@@ -6,17 +6,17 @@ namespace morda{
 
 /**
  * @brief container to be used for intercepting keyboard key events.
- * From GUI scripts it can be instantiated as "KeyProxy".
+ * From GUI scripts it can be instantiated as "key_proxy".
  */
-class KeyProxy : public pile{
+class key_proxy : public pile{
 public:
-	KeyProxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	key_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
 			pile(this->context, desc)
 	{}
 	
-	KeyProxy(const KeyProxy&) = delete;
-	KeyProxy& operator=(const KeyProxy&) = delete;
+	key_proxy(const key_proxy&) = delete;
+	key_proxy& operator=(const key_proxy&) = delete;
 	
 	/**
 	 * @brief Keyboard key signal.

@@ -8,7 +8,7 @@
 
 #include "../../../src/morda/widgets/widget.hpp"
 #include "../../../src/morda/widgets/container.hpp"
-#include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
+#include "../../../src/morda/widgets/proxy/key_proxy.hpp"
 
 #include "../../../src/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/widgets/label/text.hpp"
@@ -615,7 +615,7 @@ public:
 			);
 		this->gui.set_root(c);
 
-		std::dynamic_pointer_cast<morda::KeyProxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::key_proxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
 				if(keyCode == morda::key::escape){
 					this->quit();

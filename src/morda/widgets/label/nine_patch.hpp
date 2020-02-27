@@ -44,7 +44,7 @@ public:
 
 	nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	void setNinePatch(std::shared_ptr<const res_nine_patch> np);
+	void set_nine_patch(std::shared_ptr<const res_nine_patch> np);
 
 	/**
 	 * @brief Get content container.
@@ -60,14 +60,14 @@ public:
 	 * @brief Show/hide central part of nine-patch.
 	 * @param visible - show (true) or hide (false) central part of the nine-patch.
 	 */
-	void setCenterVisible(bool visible);
+	void set_center_visible(bool visible);
 
 	/**
 	 * @brief Set border settings.
 	 * Border values are in pixels or min_c.
 	 * @param borders - border values to set.
 	 */
-	void setBorders(Sidesr borders){
+	void set_borders(Sidesr borders){
 		this->borders = borders;
 		this->applyImages();
 	}
@@ -77,11 +77,11 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @return Current borders.
 	 */
-	decltype(borders) getBorders()const noexcept{
+	decltype(borders) get_borders()const noexcept{
 		return this->borders;
 	}
 
-	Sidesr getActualBorders()const noexcept;
+	Sidesr get_actual_borders()const noexcept;
 
 	void on_blending_changed()override;
 

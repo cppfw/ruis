@@ -4,7 +4,7 @@
 using namespace morda;
 
 bool tab::maskOverlaps(Vec2r pos) {
-	auto borders = this->getActualBorders();
+	auto borders = this->get_actual_borders();
 
 	if(pos.x < borders.left()){
 		if(pos.y != 0 && this->rect().d.y != 0){
