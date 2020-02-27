@@ -11,7 +11,7 @@
 #include "../../../src/morda/widgets/proxy/KeyProxy.hpp"
 
 #include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/Text.hpp"
+#include "../../../src/morda/widgets/label/text.hpp"
 
 #include "../../../src/morda/res/res_texture.hpp"
 
@@ -524,7 +524,7 @@ public:
 				);
 
 			{
-				auto value = v->try_get_widget_as<morda::Text>("value");
+				auto value = v->try_get_widget_as<morda::text>("value");
 				ASSERT(value)
 				value->set_text(n->value.to_string());
 			}
@@ -923,7 +923,7 @@ public:
 		// dropdown
 		{
 			auto dds = c->try_get_widget_as<morda::drop_down_box>("dropdownselector");
-			auto ddst = c->try_get_widget_as<morda::Text>("dropdownselector_selection");
+			auto ddst = c->try_get_widget_as<morda::text>("dropdownselector_selection");
 			auto ddstw = utki::make_weak(ddst);
 
 			dds->selection_changed = [ddstw](morda::drop_down_box& dds){

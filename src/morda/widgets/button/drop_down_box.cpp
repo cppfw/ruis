@@ -8,7 +8,7 @@
 
 #include "../button/button.hpp"
 
-#include "../label/Text.hpp"
+#include "../label/text.hpp"
 #include "../label/color.hpp"
 
 using namespace morda;

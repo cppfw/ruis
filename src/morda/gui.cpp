@@ -15,7 +15,7 @@
 #include "widgets/button/drop_down_box.hpp"
 
 #include "widgets/label/color.hpp"
-#include "widgets/label/Text.hpp"
+#include "widgets/label/text.hpp"
 #include "widgets/label/gradient.hpp"
 #include "widgets/label/mouse_cursor.hpp"
 
@@ -98,7 +98,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 
 	// add standard widgets to inflater
 
-	this->context->inflater.register_widget<Text>("text");
+	this->context->inflater.register_widget<text>("text");
 	this->context->inflater.register_widget<color>("color");
 	this->context->inflater.register_widget<gradient>("gradient");
 	this->context->inflater.register_widget<image>("image");

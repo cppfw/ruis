@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../label/Text.hpp"
+#include "../label/text.hpp"
 #include "../label/color.hpp"
 
 #include "pile.hpp"
@@ -29,7 +29,7 @@ class window :
 	std::uint32_t titleBgColorTopmost = 0xffff0000;
 	std::uint32_t titleBgColorNonTopmost = 0xff808080;
 
-	std::shared_ptr<Text> title;
+	std::shared_ptr<text> title;
 
 	std::shared_ptr<pile> contentArea;
 

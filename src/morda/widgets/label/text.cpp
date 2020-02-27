@@ -1,16 +1,16 @@
-#include "Text.hpp"
+#include "text.hpp"
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-Text::Text(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text::text(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		single_line_text_widget(this->context, desc)
 {}
 
-void Text::render(const morda::Matr4r& matrix)const{
+void text::render(const morda::Matr4r& matrix)const{
 	morda::Matr4r matr(matrix);
 	
 	using std::round;

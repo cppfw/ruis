@@ -201,7 +201,7 @@ void morda::window::setupWidgets(){
 	this->contentArea = this->try_get_widget_as<pile>("morda_content");
 	ASSERT(this->contentArea)
 
-	this->title = this->try_get_widget_as<Text>("morda_title");
+	this->title = this->try_get_widget_as<text>("morda_title");
 	ASSERT(this->title)
 
 	this->titleBg = this->try_get_widget_as<color>("morda_window_title_bg");
