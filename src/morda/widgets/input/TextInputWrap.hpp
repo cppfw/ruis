@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "../group/List.hpp"
+#include "../group/list.hpp"
 #include "../base/text_widget.hpp"
 
 namespace morda{
@@ -10,7 +10,7 @@ namespace morda{
 class TextInputWrap :
 		public virtual widget,
 		public text_widget,
-		private List
+		private list_widget
 {
 public:
 	TextInputWrap(std::shared_ptr<morda::context> c, const puu::forest& desc);

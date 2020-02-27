@@ -20,7 +20,7 @@
 #include "../../../src/morda/widgets/group/Row.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
-#include "../../../src/morda/widgets/group/List.hpp"
+#include "../../../src/morda/widgets/group/list.hpp"
 #include "../../../src/morda/widgets/group/TreeView.hpp"
 #include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
@@ -697,7 +697,7 @@ public:
 
 		// VerticalList
 		{
-			auto verticalList = c->try_get_widget_as<morda::VList>("vertical_list");
+			auto verticalList = c->try_get_widget_as<morda::list>("list");
 			auto vl = utki::makeWeak(verticalList);
 
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("vertical_list_slider");
@@ -705,7 +705,7 @@ public:
 
 			verticalSlider->fraction_change = [vl](morda::fraction_widget& slider){
 				if(auto l = vl.lock()){
-					l->setScrollPosAsFactor(slider.fraction());
+					l->set_scroll_factor(slider.fraction());
 				}
 			};
 
@@ -718,7 +718,7 @@ public:
 					return;
 				}
 				if(auto s = vs.lock()){
-					s->set_fraction(l->scrollFactor());
+					s->set_fraction(l->get_scroll_factor());
 				}
 			};
 
@@ -743,9 +743,9 @@ public:
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
 					if(auto l = vl.lock()){
-						l->scrollBy(dp.y);
+						l->scroll_by(dp.y);
 						if(auto s = vs.lock()){
-							s->set_fraction(l->scrollFactor());
+							s->set_fraction(l->get_scroll_factor());
 						}
 					}
 					return true;
@@ -756,7 +756,7 @@ public:
 
 		// HorizontalList
 		{
-			auto horizontalList = c->try_get_widget_as<morda::List>("horizontal_list");
+			auto horizontalList = c->try_get_widget_as<morda::list_widget>("pan_list");
 			auto hl = utki::makeWeak(horizontalList);
 
 			auto horizontalSlider = c->try_get_widget_as<morda::fraction_widget>("horizontal_list_slider");
@@ -766,7 +766,7 @@ public:
 			horizontalSlider->fraction_change = [hl](morda::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
-					l->setScrollPosAsFactor(slider.fraction());
+					l->set_scroll_factor(slider.fraction());
 				}
 			};
 
@@ -779,7 +779,7 @@ public:
 					return;
 				}
 				if(auto s = hs.lock()){
-					s->set_fraction(l->scrollFactor());
+					s->set_fraction(l->get_scroll_factor());
 				}
 			};
 
@@ -804,9 +804,9 @@ public:
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
 					if(auto l = hl.lock()){
-						l->scrollBy(dp.x);
+						l->scroll_by(dp.x);
 						if(auto s = hs.lock()){
-							s->set_fraction(l->scrollFactor());
+							s->set_fraction(l->get_scroll_factor());
 						}
 					}
 					return true;
@@ -820,7 +820,7 @@ public:
 			auto treeview = c->try_get_widget_as<morda::TreeView>("treeview_widget");
 			ASSERT(treeview)
 			auto provider = std::make_shared<TreeViewItemsProvider>(c->context);
-			treeview->setItemsProvider(provider);
+			treeview->set_provider(provider);
 			auto tv = utki::makeWeak(treeview);
 
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("treeview_vertical_slider");

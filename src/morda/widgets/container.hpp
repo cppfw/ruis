@@ -28,17 +28,17 @@ namespace morda{
 class container : virtual public widget{
 
 public:
-	typedef std::vector<std::shared_ptr<widget>> list;
-	typedef std::vector<std::shared_ptr<const widget>> const_list;
+	typedef std::vector<std::shared_ptr<widget>> widget_list;
+	typedef std::vector<std::shared_ptr<const widget>> const_widget_list;
 private:
-	static_assert(sizeof(list) == sizeof(const_list), "sizeof(list) differs from sizeof(const_list)");
-	static_assert(sizeof(list::value_type) == sizeof(const_list::value_type), "sizeof(list::value_type) differs from sizeof(const_list::value_type)");
+	static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
+	static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
 
 	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
 	//       but we rely on compiler implementing it the right way.
 	union children_union{
-		list variable;
-		const_list constant; // this member never becomes active one, but we will read it when we need constant list of children
+		widget_list variable;
+		const_widget_list constant; // this member never becomes active one, but we will read it when we need constant list of children
 
 		children_union() :
 				variable() // this sets the 'variable' member of the union as an active one
@@ -159,7 +159,7 @@ public:
 	 * @param before - iterator into the children list before which to insert the child.
 	 * @return new child iterator.
 	 */
-	list::const_iterator change_child_z_position(list::const_iterator child, list::const_iterator before);
+	widget_list::const_iterator change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the container.
@@ -168,7 +168,7 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::const_iterator insert(std::shared_ptr<widget> w, list::const_iterator before);
+	widget_list::const_iterator insert(std::shared_ptr<widget> w, widget_list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
@@ -176,7 +176,7 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	list::const_iterator push_back(std::shared_ptr<widget> w){
+	widget_list::const_iterator push_back(std::shared_ptr<widget> w){
 		return this->insert(std::move(w), this->children().end());
 	}
 
@@ -193,7 +193,7 @@ public:
 	 * @param child - iterator of the child to remove.
 	 * @return iterator pointing to the next child after removed one.
 	 */
-	list::const_iterator erase(list::const_iterator child);
+	widget_list::const_iterator erase(widget_list::const_iterator child);
 
 	/**
 	 * @brief Remove child from container.
@@ -201,8 +201,8 @@ public:
 	 * @param child - reverse iterator of the child to remove.
 	 * @return reverse iterator pointing to the previous child after removed one.
 	 */
-	list::const_reverse_iterator erase(list::const_reverse_iterator child){
-		return list::const_reverse_iterator(this->erase(--child.base())); // the base iterator points to the next element to the one the reverse iterator points, so use decrement
+	widget_list::const_reverse_iterator erase(widget_list::const_reverse_iterator child){
+		return widget_list::const_reverse_iterator(this->erase(--child.base())); // the base iterator points to the next element to the one the reverse iterator points, so use decrement
 	}
 
 	/**
@@ -224,7 +224,7 @@ public:
 	 * @brief Get list of child widgets.
 	 * @return List of child widgets.
 	 */
-	const list& children()noexcept{
+	const widget_list& children()noexcept{
 		return this->children_v.variable;
 	}
 
@@ -232,9 +232,9 @@ public:
 	 * @brief Get constant list of child widgets.
 	 * @return Constant list of child widgets.
 	 */
-	const const_list& children()const noexcept{
-		// TRACE(<< "sizeof(list::value_type) = " << sizeof(list::value_type) << std::endl)
-		// TRACE(<< "sizeof(const_list::value_type) = " << sizeof(const_list::value_type) << std::endl)
+	const const_widget_list& children()const noexcept{
+		// TRACE(<< "sizeof(widget_list::value_type) = " << sizeof(widget_list::value_type) << std::endl)
+		// TRACE(<< "sizeof(const_widget_list::value_type) = " << sizeof(const_widget_list::value_type) << std::endl)
 		return this->children_v.constant;
 	}
 
@@ -244,7 +244,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	list::const_iterator find(const widget* w);
+	widget_list::const_iterator find(const widget* w);
 
 	/**
 	 * @brief Find widget in the list of container's children.
@@ -252,7 +252,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	const_list::const_iterator find(const widget* w)const;
+	const_widget_list::const_iterator find(const widget* w)const;
 
 	/**
 	 * @brief Recursively find all widgets of given type.

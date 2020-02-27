@@ -2,34 +2,30 @@
 
 #include "../../context.hpp"
 
-
-
 using namespace morda;
-
-
 
 TreeView::TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		ScrollArea(nullptr, puu::forest())
 {
-	this->list = std::make_shared<VList>(this->context, puu::forest());
-	this->push_back(this->list);
+	this->item_list = std::make_shared<morda::list>(this->context, puu::forest());
+	this->push_back(this->item_list);
 
-	auto& lp = this->get_layout_params(*this->list);
+	auto& lp = this->get_layout_params(*this->item_list);
 
 	lp.dims.y = widget::layout_params::max;
 	lp.dims.x = widget::layout_params::min;
 
-	this->list->dataSetChanged = [this](List&){
+	this->item_list->data_set_changed = [this](list_widget&){
 		if(this->viewChanged){
 			this->viewChanged(*this);
 		}
 	};
 }
 
-void TreeView::setItemsProvider(std::shared_ptr<ItemsProvider> provider){
-	this->list->setItemsProvider(
-			std::static_pointer_cast<List::ItemsProvider>(provider)
+void TreeView::set_provider(std::shared_ptr<ItemsProvider> item_provider){
+	this->item_list->set_provider(
+			std::static_pointer_cast<list_widget::provider>(item_provider)
 		);
 }
 
@@ -38,7 +34,7 @@ void TreeView::ItemsProvider::notifyDataSetChanged(){
 	this->visible_tree.value.subtree_size = 0;
 	this->iter_index = 0;
 	this->iter = this->traversal().begin();
-	this->List::ItemsProvider::notifyDataSetChanged();
+	this->list_widget::provider::notify_data_set_changed();
 }
 
 
@@ -57,7 +53,7 @@ size_t TreeView::ItemsProvider::count()const noexcept{
 }
 
 
-std::shared_ptr<widget> TreeView::ItemsProvider::getWidget(size_t index){
+std::shared_ptr<widget> TreeView::ItemsProvider::get_widget(size_t index){
 	auto& i = this->iter_for(index);
 
 	return this->getWidget(i.index(), i->value.subtree_size == 0);
@@ -126,7 +122,7 @@ void TreeView::ItemsProvider::collapse(const std::vector<size_t>& index) {
 	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->List::ItemsProvider::notifyDataSetChanged();
+	this->list_widget::provider::notify_data_set_changed();
 }
 
 void TreeView::ItemsProvider::set_children(decltype(iter) i, size_t num_children){
@@ -171,7 +167,7 @@ void TreeView::ItemsProvider::uncollapse(const std::vector<size_t>& index) {
 
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->List::ItemsProvider::notifyDataSetChanged();
+	this->list_widget::provider::notify_data_set_changed();
 }
 
 void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) {
@@ -192,7 +188,7 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) 
 
 	if(parent_list->empty()){
 		// item was added to a collapsed subtree
-		this->List::ItemsProvider::notifyDataSetChanged();
+		this->list_widget::provider::notify_data_set_changed();
 		return;
 	}
 
@@ -238,7 +234,7 @@ void TreeView::ItemsProvider::notifyItemAdded(const std::vector<size_t>& index) 
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
 
-	this->List::ItemsProvider::notifyDataSetChanged();
+	this->list_widget::provider::notify_data_set_changed();
 }
 
 void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index){
@@ -248,7 +244,7 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 
 	if(!this->traversal().is_valid(index)){
 		// the removed item was probably in collapsed part of the tree
-		this->List::ItemsProvider::notifyDataSetChanged();
+		this->list_widget::provider::notify_data_set_changed();
 		return;
 	}
 
@@ -321,5 +317,5 @@ void TreeView::ItemsProvider::notifyItemRemoved(const std::vector<size_t>& index
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
 
-	this->List::ItemsProvider::notifyDataSetChanged();
+	this->list_widget::provider::notify_data_set_changed();
 }

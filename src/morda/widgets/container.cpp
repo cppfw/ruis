@@ -4,13 +4,7 @@
 
 #include "../util/util.hpp"
 
-//TODO: remove
-#include "../gui.hpp"
-
-
 using namespace morda;
-
-
 
 container::container(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
@@ -204,7 +198,7 @@ void container::lay_out(){
 	}
 }
 
-container::list::const_iterator container::insert(std::shared_ptr<widget> w, list::const_iterator before){
+container::widget_list::const_iterator container::insert(std::shared_ptr<widget> w, widget_list::const_iterator before){
 	if(!w){
 		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
 	}
@@ -234,7 +228,7 @@ container::list::const_iterator container::insert(std::shared_ptr<widget> w, lis
 	return ret;
 }
 
-container::list::const_iterator container::erase(list::const_iterator child){
+container::widget_list::const_iterator container::erase(widget_list::const_iterator child){
 	if(this->isBlocked){
 		throw utki::invalid_state("container::erase(): children list is locked");
 	}
@@ -311,7 +305,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 	return d;
 }
 
-container::list::const_iterator container::change_child_z_position(list::const_iterator child, list::const_iterator before) {
+container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before) {
 	if(this->isBlocked){
 		throw utki::invalid_state("container::change_child_z_position(): children list is locked");
 	}
@@ -352,7 +346,7 @@ container::list::const_iterator container::change_child_z_position(list::const_i
 	return ret;
 }
 
-container::list::const_iterator container::find(const widget* w){
+container::widget_list::const_iterator container::find(const widget* w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),

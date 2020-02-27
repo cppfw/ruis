@@ -241,12 +241,12 @@ defs{
 					dy{0}
 					weight{1}
 				}
-				@horizontal_list{
+				@pan_list{
 					layout{
 						dx{fill}
 						dy{fill}
 					}
-					id{horizontal_list}
+					id{pan_list}
 
 					@text{
 						text{item1|}
@@ -693,8 +693,8 @@ defs{
 					dx{0} dy{max}
 					weight{1}
 				}
-				@vertical_list{
-					id{vertical_list}
+				@list{
+					id{list}
 					layout{
 						dx{max} dy{max}
 					}

@@ -5,10 +5,9 @@
 #include <utki/tree.hpp>
 
 #include "../widget.hpp"
-#include "List.hpp"
+#include "list.hpp"
 
 #include "ScrollArea.hpp"
-
 
 namespace morda{
 
@@ -16,24 +15,23 @@ class TreeView :
 		virtual public widget,
 		private ScrollArea
 {
-	std::shared_ptr<List> list;
+	std::shared_ptr<list_widget> item_list;
 public:
 	TreeView(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	TreeView(const TreeView&) = delete;
 	TreeView& operator=(const TreeView&) = delete;
 
-
 	class ItemsProvider :
 			public virtual utki::shared,
-			private List::ItemsProvider
+			private list_widget::provider
 	{
 		friend class TreeView;
-		friend std::shared_ptr<List::ItemsProvider> std::static_pointer_cast<List::ItemsProvider>(const std::shared_ptr<ItemsProvider>&)noexcept;
+		friend std::shared_ptr<list_widget::provider> std::static_pointer_cast<list_widget::provider>(const std::shared_ptr<ItemsProvider>&)noexcept;
 
 		void recycle(size_t index, std::shared_ptr<widget> w)override;
 
-		std::shared_ptr<widget> getWidget(size_t index)override;
+		std::shared_ptr<widget> get_widget(size_t index)override;
 
 		size_t count()const noexcept override;
 
@@ -74,7 +72,7 @@ public:
 		void notifyDataSetChanged();
 
 		void notifyItemChanged(){
-			this->List::ItemsProvider::notifyDataSetChanged();
+			this->list_widget::provider::notify_data_set_changed();
 		}
 
 		/**
@@ -101,10 +99,10 @@ public:
 	 */
 	std::function<void(TreeView&)> viewChanged;
 
-	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
+	void set_provider(std::shared_ptr<ItemsProvider> provider = nullptr);
 
 	void setVerticalScrollPosAsFactor(real factor){
-		this->list->setScrollPosAsFactor(factor);
+		this->item_list->set_scroll_factor(factor);
 	}
 
 	void setHorizontalScrollPosAsFactor(real factor){
@@ -112,7 +110,7 @@ public:
 	}
 
 	Vec2r scrollFactor()const{
-		return Vec2r(this->ScrollArea::scrollFactor().x, this->list->scrollFactor());
+		return Vec2r(this->ScrollArea::scrollFactor().x, this->item_list->get_scroll_factor());
 	}
 };
 

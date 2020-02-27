@@ -8,7 +8,7 @@
 #include "widgets/group/ScrollArea.hpp"
 #include "widgets/group/SizeContainer.hpp"
 #include "widgets/group/Overlay.hpp"
-#include "widgets/group/List.hpp"
+#include "widgets/group/list.hpp"
 
 #include "widgets/proxy/KeyProxy.hpp"
 #include "widgets/proxy/MouseProxy.hpp"
@@ -27,6 +27,7 @@ using namespace morda;
 inflater::inflater(morda::context& context):
 		context(context)
 {
+	//TODO: move adding standard widgets to gui() constructor
 	this->register_widget<widget>("widget");
 	this->register_widget<container>("container");
 	this->register_widget<SizeContainer>("size_container");
@@ -38,8 +39,8 @@ inflater::inflater(morda::context& context):
 	this->register_widget<KeyProxy>("key_proxy");
 	this->register_widget<Overlay>("overlay");
 	this->register_widget<ResizeProxy>("resize_proxy");
-	this->register_widget<HList>("horizontal_list");
-	this->register_widget<VList>("vertical_list");
+	this->register_widget<pan_list>("pan_list");
+	this->register_widget<list>("list");
 }
 
 

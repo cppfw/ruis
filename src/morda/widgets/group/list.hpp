@@ -11,7 +11,7 @@ namespace morda{
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
  */
-class List :
+class list_widget :
 		// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public widget,
@@ -29,29 +29,29 @@ class List :
 	real firstTailItemOffset = real(0);
 
 protected:
-	List(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	list_widget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
 public:
-	List(const List&) = delete;
-	List& operator=(const List&) = delete;
+	list_widget(const list_widget&) = delete;
+	list_widget& operator=(const list_widget&) = delete;
 
 	/**
-	 * @brief List items provider.
+	 * @brief list items provider.
 	 * User should subclass this class to provide items to the list.
 	 */
-	class ItemsProvider : virtual public utki::shared{
-		friend class List;
+	class provider : virtual public utki::shared{
+		friend class list_widget;
 
-		List* list = nullptr;
+		list_widget* parent_list = nullptr;
 	protected:
-		ItemsProvider(){}
+		provider(){}
 	public:
 		/**
 		 * @brief Get parent list widget.
-		 * @return List widget which owns the provider, in case the provider is set to some list widget.
+		 * @return list widget which owns the provider, in case the provider is set to some list widget.
 		 * @return nullptr in case the provider is not set to any list widget.
 		 */
-		List* get_list()noexcept{
-			return this->list;
+		list_widget* get_list()noexcept{
+			return this->parent_list;
 		}
 
 		/**
@@ -65,7 +65,7 @@ public:
 		 * @param index - index of item to get widget for.
 		 * @return widget for the requested item.
 		 */
-		virtual std::shared_ptr<widget> getWidget(size_t index) = 0;
+		virtual std::shared_ptr<widget> get_widget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle widget of item.
@@ -74,89 +74,80 @@ public:
 		 */
 		virtual void recycle(size_t index, std::shared_ptr<widget> w){}
 
-		void notifyDataSetChanged();
+		void notify_data_set_changed();
 	};
 
-	void setItemsProvider(std::shared_ptr<ItemsProvider> provider = nullptr);
-
+	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
 	void lay_out()override;
 
 	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
 
 	/**
-	 * @brief Get number of items currently visible.
-	 * @return Number of items which are currently visible, i.e. are not completely out of List's boundaries.
-	 */
-	size_t visibleCount()const{
-		return this->children().size();
-	}
-
-	/**
 	 * @brief Set scroll position as factor from [0:1].
 	 * @param factor - factor of the scroll position to set.
 	 */
-	void setScrollPosAsFactor(real factor);
+	void set_scroll_factor(real factor);
 
 	/**
 	 * @brief Get scroll factor.
 	 * @return Current scroll position as factor from [0:1].
 	 */
-	real scrollFactor()const noexcept;
+	real get_scroll_factor()const noexcept;
 
 	/**
 	 * @brief Scroll the list by given number of pixels.
 	 * @param delta - number of pixels to scroll, can be positive or negative.
 	 */
-	void scrollBy(real delta);
+	void scroll_by(real delta);
 
 	/**
 	 * @brief Data set changed signal.
 	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
 	 */
-	std::function<void(List&)> dataSetChanged;
+	std::function<void(list_widget&)> data_set_changed;
 
 private:
-	std::shared_ptr<ItemsProvider> provider;
+	std::shared_ptr<provider> item_provider;
 
 	void updateChildrenList();
 
-	bool arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool add, size_t index, list::const_iterator& insertBefore); // returns true if it was the last visible widget
+	bool arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool add, size_t index, widget_list::const_iterator& insertBefore); // returns true if it was the last visible widget
 
 	void updateTailItemsInfo();
 
 	void handleDataSetChanged();
 };
 
-
 /**
  * @brief Horizontal list widget.
- * From GUI script it can be instantiated as "HList".
+ * Panorama list widget.
+ * From GUI script it can be instantiated as "pan_list".
  */
-class HList : public List{
+class pan_list : public list_widget{
 public:
-	HList(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	pan_list(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			List(this->context, desc, false)
+			list_widget(this->context, desc, false)
 	{}
 
-	HList(const HList&) = delete;
-	HList& operator=(const HList&) = delete;
+	pan_list(const pan_list&) = delete;
+	pan_list& operator=(const pan_list&) = delete;
 };
 
 /**
  * @brief Vertical list widget.
- * From GUI script it can be instantiated as "VList".
+ * From GUI script it can be instantiated as "list".
  */
-class VList : public List{
+class list : public list_widget{
 public:
-	VList(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	list(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			List(this->context, desc, true)
+			list_widget(this->context, desc, true)
 	{}
 
-	VList(const VList&) = delete;
-	VList& operator=(const VList&) = delete;
+	list(const list&) = delete;
+	list& operator=(const list&) = delete;
 };
 
 }
