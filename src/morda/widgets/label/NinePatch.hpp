@@ -3,7 +3,7 @@
 #include "../../res/res_ninepatch.hpp"
 
 #include "../group/Pile.hpp"
-#include "../group/Column.hpp"
+#include "../group/column.hpp"
 
 #include "Image.hpp"
 
@@ -27,7 +27,7 @@ namespace morda{
 class NinePatch :
 		public virtual widget,
 		public blending_widget,
-		private Column
+		private column
 {
 	std::shared_ptr<const res_ninepatch> image;
 

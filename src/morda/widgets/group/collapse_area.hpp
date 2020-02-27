@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "../group/Column.hpp"
+#include "../group/column.hpp"
 #include "../group/Pile.hpp"
 
 namespace morda{
 
 class collapse_area :
 		virtual public widget,
-		private Column
+		private column
 {
 	std::shared_ptr<Pile> contentArea;
 	std::shared_ptr<Pile> title_v;

@@ -1,5 +1,5 @@
 #include "../../src/morda/gui.hpp"
-#include "../../src/morda/widgets/group/Column.hpp"
+#include "../../src/morda/widgets/group/column.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
 
@@ -54,7 +54,7 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 3)
 
-		auto aaas = c->get_all_widgets<morda::Column>();
+		auto aaas = c->get_all_widgets<morda::column>();
 		ASSERT_ALWAYS(aaas.size() != 0)
 		for(auto& id : expected_ids){
 			ASSERT_INFO_ALWAYS(

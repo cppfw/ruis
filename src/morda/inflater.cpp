@@ -2,7 +2,7 @@
 
 #include "widgets/container.hpp"
 
-#include "widgets/group/Column.hpp"
+#include "widgets/group/column.hpp"
 #include "widgets/group/Row.hpp"
 #include "widgets/group/Pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
@@ -31,7 +31,7 @@ inflater::inflater(morda::context& context):
 	this->register_widget<container>("container");
 	this->register_widget<SizeContainer>("size_container");
 	this->register_widget<Row>("row");
-	this->register_widget<Column>("column");
+	this->register_widget<column>("column");
 	this->register_widget<Pile>("pile");
 	this->register_widget<MouseProxy>("mouse_proxy");
 	this->register_widget<ScrollArea>("scroll_area");

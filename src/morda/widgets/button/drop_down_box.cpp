@@ -128,7 +128,7 @@ void drop_down_box::showDropdownMenu(){
 	auto& lp = minSizeSpacer->get_layout_params();
 	lp.dims.x = this->rect().d.x;
 
-	auto va = np->try_get_widget_as<morda::Column>("morda_contextmenu_content");
+	auto va = np->try_get_widget_as<morda::column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->item_provider->count(); ++i){
