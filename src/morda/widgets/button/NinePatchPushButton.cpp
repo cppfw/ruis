@@ -8,7 +8,7 @@ NinePatchPushButton::NinePatchPushButton(std::shared_ptr<morda::context> c, cons
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		PushButton(this->context, desc),
-		NinePatchButton(this->context, desc)
+		nine_patch_button(this->context, desc)
 {
 	if(!this->unpressedNinePatch()){
 		this->setUnpressedNinePatch(this->context->loader.load<res_ninepatch>("morda_npt_button_normal"));
@@ -22,6 +22,6 @@ NinePatchPushButton::NinePatchPushButton(std::shared_ptr<morda::context> c, cons
 }
 
 void NinePatchPushButton::on_pressed_changed(){
-	this->NinePatchButton::on_pressed_changed();
+	this->nine_patch_button::on_pressed_changed();
 	this->PushButton::on_pressed_changed();
 }

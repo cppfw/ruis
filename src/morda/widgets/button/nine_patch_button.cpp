@@ -1,4 +1,4 @@
-#include "NinePatchButton.hpp"
+#include "nine_patch_button.hpp"
 
 #include "../../context.hpp"
 
@@ -8,7 +8,7 @@
 using namespace morda;
 
 
-NinePatchButton::NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		NinePatch(this->context, desc)
@@ -35,15 +35,15 @@ NinePatchButton::NinePatchButton(std::shared_ptr<morda::context> c, const puu::f
 	this->on_pressed_changed();
 }
 
-void NinePatchButton::on_pressed_changed(){
+void nine_patch_button::on_pressed_changed(){
 	this->setNinePatch(this->is_pressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
 	this->button::on_pressed_changed();
 }
 
-void NinePatchButton::setPressedNinePatch(std::shared_ptr<const res_ninepatch> np) {
+void nine_patch_button::setPressedNinePatch(std::shared_ptr<const res_ninepatch> np) {
 	this->pressedNinePatch_v = std::move(np);
 }
 
-void NinePatchButton::setUnpressedNinePatch(std::shared_ptr<const res_ninepatch> np) {
+void nine_patch_button::setUnpressedNinePatch(std::shared_ptr<const res_ninepatch> np) {
 	this->unpressedNinePatch_v = std::move(np);
 }

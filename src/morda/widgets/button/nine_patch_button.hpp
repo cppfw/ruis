@@ -12,7 +12,7 @@ namespace morda{
  * initializing standard morda widgets.
  * Since the button is a NinePatch it can have children.
  */
-class NinePatchButton :
+class nine_patch_button :
 		virtual public button,
 		public NinePatch
 {
@@ -20,8 +20,8 @@ class NinePatchButton :
 	std::shared_ptr<const res_ninepatch> pressedNinePatch_v;
 	
 public:
-	NinePatchButton(const NinePatchButton&) = delete;
-	NinePatchButton& operator=(const NinePatchButton&) = delete;
+	nine_patch_button(const nine_patch_button&) = delete;
+	nine_patch_button& operator=(const nine_patch_button&) = delete;
 	
 	void setUnpressedNinePatch(std::shared_ptr<const res_ninepatch> np);
 	
@@ -36,7 +36,7 @@ public:
 	}
 	
 protected:
-	NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	void on_pressed_changed()override;
 };

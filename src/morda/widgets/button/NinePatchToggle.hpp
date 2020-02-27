@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ToggleButton.hpp"
-#include "NinePatchButton.hpp"
-
+#include "nine_patch_button.hpp"
 
 namespace morda{
+
 class NinePatchToggle :
 		virtual public ToggleButton,
-		public NinePatchButton
+		public nine_patch_button
 {
 public:
 	NinePatchToggle(std::shared_ptr<morda::context> c, const puu::forest& desc);
@@ -18,6 +18,6 @@ protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID)override{
 		return this->ToggleButton::on_mouse_button(isDown, pos, button, pointerID);
 	}
-
 };
+
 }

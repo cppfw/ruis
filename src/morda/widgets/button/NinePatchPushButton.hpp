@@ -1,14 +1,14 @@
 #pragma once
 
 #include "PushButton.hpp"
-#include "NinePatchButton.hpp"
+#include "nine_patch_button.hpp"
 
 
 namespace morda{
 
 class NinePatchPushButton :
 		public PushButton,
-		public NinePatchButton
+		public nine_patch_button
 {
 public:
 	NinePatchPushButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
