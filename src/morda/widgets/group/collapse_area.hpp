@@ -2,7 +2,7 @@
 
 #include "../widget.hpp"
 #include "../group/column.hpp"
-#include "../group/Pile.hpp"
+#include "../group/pile.hpp"
 
 namespace morda{
 
@@ -10,17 +10,17 @@ class collapse_area :
 		virtual public widget,
 		private column
 {
-	std::shared_ptr<Pile> contentArea;
-	std::shared_ptr<Pile> title_v;
+	std::shared_ptr<pile> contentArea;
+	std::shared_ptr<pile> title_v;
 public:
 	collapse_area(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	Pile& content()noexcept{
+	pile& content()noexcept{
 		ASSERT(this->contentArea)
 		return *this->contentArea;
 	}
 
-	Pile& title()noexcept{
+	pile& title()noexcept{
 		ASSERT(this->title_v)
 		return *this->title_v;
 	}

@@ -459,7 +459,7 @@ public:
 		}
 
 		{
-			auto widget = this->context->inflater.inflate_as<morda::Pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+			auto widget = this->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
 			ASSERT(widget)
 
 			if(!n->children.empty()){

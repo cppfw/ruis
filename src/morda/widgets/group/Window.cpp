@@ -160,7 +160,7 @@ void morda::Window::setBackground(std::shared_ptr<widget> w) {
 
 morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Pile(nullptr, windowDesc_c)
+		pile(nullptr, windowDesc_c)
 {
 	this->setupWidgets();
 
@@ -206,7 +206,7 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 }
 
 void morda::Window::setupWidgets(){
-	this->contentArea = this->try_get_widget_as<Pile>("morda_content");
+	this->contentArea = this->try_get_widget_as<pile>("morda_content");
 	ASSERT(this->contentArea)
 
 	this->title = this->try_get_widget_as<Text>("morda_title");
@@ -473,5 +473,5 @@ void Window::updateTopmost(){
 
 void Window::lay_out(){
 	this->updateTopmost();
-	this->Pile::lay_out();
+	this->pile::lay_out();
 }

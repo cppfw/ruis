@@ -1,9 +1,8 @@
 #include "../../src/morda/context.hpp"
-#include "../../src/morda/widgets/group/Pile.hpp"
+#include "../../src/morda/widgets/group/pile.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
 
-//TODO: remove
 #include "../../src/morda/gui.hpp"
 
 int main(int argc, char** argv){
@@ -208,7 +207,7 @@ int main(int argc, char** argv){
 		)qwertyuiop"));
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::Pile>(w);
+		auto c = std::dynamic_pointer_cast<morda::pile>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 2)
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::container>(c->children().front()))
@@ -236,7 +235,7 @@ int main(int argc, char** argv){
 		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		ASSERT_ALWAYS(c)
 		ASSERT_ALWAYS(c->children().size() == 1)
-		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::Pile>(c->children().front()))
+		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::pile>(c->children().front()))
 	}
 
 	// test variables overriding

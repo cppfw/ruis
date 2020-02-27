@@ -4,7 +4,7 @@
 
 #include "widgets/group/column.hpp"
 #include "widgets/group/Row.hpp"
-#include "widgets/group/Pile.hpp"
+#include "widgets/group/pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
 #include "widgets/group/SizeContainer.hpp"
 #include "widgets/group/overlay.hpp"
@@ -18,11 +18,7 @@
 
 #include "util/util.hpp"
 
-
-
 using namespace morda;
-
-
 
 inflater::inflater(morda::context& context):
 		context(context)
@@ -33,7 +29,7 @@ inflater::inflater(morda::context& context):
 	this->register_widget<SizeContainer>("size_container");
 	this->register_widget<Row>("row");
 	this->register_widget<column>("column");
-	this->register_widget<Pile>("pile");
+	this->register_widget<pile>("pile");
 	this->register_widget<MouseProxy>("mouse_proxy");
 	this->register_widget<ScrollArea>("scroll_area");
 	this->register_widget<KeyProxy>("key_proxy");
@@ -42,8 +38,6 @@ inflater::inflater(morda::context& context):
 	this->register_widget<pan_list>("pan_list");
 	this->register_widget<list>("list");
 }
-
-
 
 void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_type::second_type&& factory){
 	auto ret = this->factories.insert(std::make_pair(
@@ -55,8 +49,6 @@ void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_
 	}
 }
 
-
-
 bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	if(this->factories.erase(widgetName) == 0){
 		return false;
@@ -64,12 +56,9 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	return true;
 }
 
-
-
 std::shared_ptr<morda::widget> inflater::inflate(const papki::File& fi) {
 	return this->inflate(puu::read(fi));
 }
-
 
 namespace{
 const char* defs_c = "defs";
@@ -179,11 +168,9 @@ const decltype(inflater::factories)::value_type::second_type& inflater::find_fac
 	return i->second;
 }
 
-
 std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(puu::read(str));
 }
-
 
 std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
 
@@ -315,8 +302,6 @@ void inflater::pop_defs() {
 	this->pop_templates();
 }
 
-
-
 void inflater::push_templates(const puu::forest& chain){
 	decltype(this->templates)::value_type m;
 
@@ -355,14 +340,10 @@ void inflater::push_templates(const puu::forest& chain){
 //#endif
 }
 
-
-
 void inflater::pop_templates(){
 	ASSERT(this->templates.size() != 0)
 	this->templates.pop_back();
 }
-
-
 
 const inflater::widget_template* inflater::find_template(const std::string& name)const{
 	for(auto i = this->templates.rbegin(); i != this->templates.rend(); ++i){
@@ -375,8 +356,6 @@ const inflater::widget_template* inflater::find_template(const std::string& name
 	return nullptr;
 }
 
-
-
 const puu::forest* inflater::find_variable(const std::string& name)const{
 	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
 		auto r = i->find(name);
@@ -388,13 +367,10 @@ const puu::forest* inflater::find_variable(const std::string& name)const{
 	return nullptr;
 }
 
-
-
 void inflater::pop_variables(){
 	ASSERT(this->variables.size() != 0)
 	this->variables.pop_back();
 }
-
 
 void inflater::push_variables(const puu::forest& trees){
 	decltype(this->variables)::value_type m;

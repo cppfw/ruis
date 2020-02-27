@@ -1,19 +1,16 @@
-#include "Pile.hpp"
+#include "pile.hpp"
 
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-
-Pile::Pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+pile::pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		container(nullptr, desc)
 {}
 
-
-
-void Pile::lay_out() {
-//	TRACE(<< "Pile::lay_out(): invoked" << std::endl)
+void pile::lay_out(){
+//	TRACE(<< "pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
 
@@ -23,9 +20,7 @@ void Pile::lay_out() {
 	}
 }
 
-
-
-morda::Vec2r Pile::measure(const morda::Vec2r& quotum)const{
+morda::Vec2r pile::measure(const morda::Vec2r& quotum)const{
 	Vec2r ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
@@ -67,4 +62,3 @@ morda::Vec2r Pile::measure(const morda::Vec2r& quotum)const{
 
 	return ret;
 }
-

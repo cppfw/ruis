@@ -194,7 +194,7 @@ drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::fores
 		widget(std::move(c), desc),
 		button(this->context, selectorLayout_c),
 		nine_patch_push_button(this->context, selectorLayout_c),
-		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
+		selectionContainer(*this->try_get_widget_as<pile>("morda_dropdown_selection"))
 {
 	this->pressed_changed = [this](button& b){
 		if(!b.is_pressed()){
@@ -258,7 +258,7 @@ void drop_down_box::set_selection(size_t i){
 }
 
 std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, size_t index){
-	auto wd = std::dynamic_pointer_cast<Pile>(this->context->inflater.inflate(itemLayout_c));
+	auto wd = std::dynamic_pointer_cast<pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");

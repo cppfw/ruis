@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Pile.hpp"
+#include "pile.hpp"
 
 namespace morda{
 
@@ -9,7 +9,7 @@ namespace morda{
  * Overlay container is used for displaying topmost widgets like context menus, hint popups etc.
  * From GUI scripts it can be instantiated as "overlay".
  */
-class overlay : public Pile{
+class overlay : public pile{
 	std::shared_ptr<widget> overlayLayer;
 	std::shared_ptr<container> overlayContainer;
 public:

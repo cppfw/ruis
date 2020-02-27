@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../group/Pile.hpp"
+#include "../group/pile.hpp"
 
 #include "choice_button.hpp"
 
@@ -13,7 +13,7 @@ namespace morda{
  * In the GUI script can be instantiated as "choice_group". Only available after
  * initializing standard morda widgets.
  */
-class choice_group : public Pile{
+class choice_group : public pile{
 	friend class choice_button;
 	
 	std::shared_ptr<choice_button> activeChoiceButton_v;

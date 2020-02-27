@@ -96,7 +96,7 @@ NinePatch::NinePatch(std::shared_ptr<morda::context> c, const puu::forest& desc)
 
 	this->on_blending_changed();
 
-	this->content_v = this->try_get_widget_as<Pile>("morda_content");
+	this->content_v = this->try_get_widget_as<pile>("morda_content");
 
 	for(const auto& p : desc){
 		if(!is_property(p)){

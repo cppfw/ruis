@@ -54,10 +54,10 @@ collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::fores
 		widget(std::move(c), desc),
 		column(nullptr, layout_c)
 {
-	this->contentArea = this->try_get_widget_as<Pile>("content");
+	this->contentArea = this->try_get_widget_as<pile>("content");
 	ASSERT(this->contentArea)
 
-	this->title_v = this->try_get_widget_as<Pile>("title");
+	this->title_v = this->try_get_widget_as<pile>("title");
 	ASSERT(this->title_v)
 
 	for(const auto& p : desc){

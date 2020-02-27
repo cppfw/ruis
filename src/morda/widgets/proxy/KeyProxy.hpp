@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../group/Pile.hpp"
+#include "../group/pile.hpp"
 
 namespace morda{
 
@@ -8,11 +8,11 @@ namespace morda{
  * @brief container to be used for intercepting keyboard key events.
  * From GUI scripts it can be instantiated as "KeyProxy".
  */
-class KeyProxy : public Pile{
+class KeyProxy : public pile{
 public:
 	KeyProxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			Pile(this->context, desc)
+			pile(this->context, desc)
 	{}
 	
 	KeyProxy(const KeyProxy&) = delete;

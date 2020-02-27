@@ -3,7 +3,7 @@
 #include "../label/Text.hpp"
 #include "../label/Color.hpp"
 
-#include "Pile.hpp"
+#include "pile.hpp"
 
 #include "../proxy/MouseProxy.hpp"
 
@@ -12,7 +12,7 @@ namespace morda{
 
 /**
  * @brief Window widget.
- * Window has borders, caption bar and can contain child widgets laid out as in Pile container.
+ * Window has borders, caption bar and can contain child widgets laid out as in pile container.
  * Window can be resized by dragging one of the borders or corners of the window.
  * Window can be moved by dragging caption bar.
  * From GUI script it can be instantiated as "Window".
@@ -21,7 +21,7 @@ namespace morda{
  */
 class Window :
 		virtual public widget,
-		private Pile
+		private pile
 {
 	morda::Vec2r emptyMinDim;//minimal dimension of empty window
 
@@ -31,7 +31,7 @@ class Window :
 
 	std::shared_ptr<Text> title;
 
-	std::shared_ptr<Pile> contentArea;
+	std::shared_ptr<pile> contentArea;
 
 	std::shared_ptr<widget> ltBorder;
 	std::shared_ptr<widget> rtBorder;
@@ -71,7 +71,7 @@ public:
 	 * This is where child widgets are stored.
 	 * @return Window content area.
 	 */
-	Pile& content(){
+	pile& content(){
 		return *this->contentArea;
 	}
 

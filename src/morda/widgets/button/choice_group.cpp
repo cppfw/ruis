@@ -4,7 +4,7 @@ using namespace morda;
 
 choice_group::choice_group(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Pile(this->context, desc)
+		pile(this->context, desc)
 {}
 
 bool choice_group::is_active(const widget& w)const noexcept{

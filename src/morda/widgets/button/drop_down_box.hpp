@@ -15,7 +15,7 @@ class drop_down_box :
 		virtual public widget,
 		private nine_patch_push_button
 {
-	Pile& selectionContainer;
+	pile& selectionContainer;
 public:
 	/**
 	 * @brief Item provider class.

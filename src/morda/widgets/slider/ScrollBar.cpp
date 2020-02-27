@@ -48,7 +48,7 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		widget(std::move(c), desc),
 		FractionBandWidget(this->context, puu::forest()),
 		oriented_widget(this->context, puu::forest(), vertical),
-		Pile(this->context, DDescription),
+		pile(this->context, DDescription),
 		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
 {
 	auto np = this->try_get_widget_as<NinePatch>("morda_slider_bg");
@@ -145,7 +145,7 @@ void ScrollBar::on_fraction_change() {
 }
 
 void ScrollBar::lay_out(){
-	this->Pile::lay_out();
+	this->pile::lay_out();
 
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();

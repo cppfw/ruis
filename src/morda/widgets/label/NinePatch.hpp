@@ -2,7 +2,7 @@
 
 #include "../../res/res_ninepatch.hpp"
 
-#include "../group/Pile.hpp"
+#include "../group/pile.hpp"
 #include "../group/column.hpp"
 
 #include "Image.hpp"
@@ -37,7 +37,7 @@ class NinePatch :
 
 	std::array<std::array<std::shared_ptr<Image>, 3>, 3> imageMatrix_v;
 
-	std::shared_ptr<Pile> content_v;
+	std::shared_ptr<pile> content_v;
 
 public:
 	NinePatch(const NinePatch&) = delete;
@@ -51,7 +51,7 @@ public:
 	 * @brief Get content container.
 	 * @return The content container. This is where the child widgets are stored.
 	 */
-	Pile& content(){
+	pile& content(){
 		return *this->content_v;
 	}
 

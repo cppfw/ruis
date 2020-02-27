@@ -4,25 +4,23 @@
 
 #include "../widget.hpp"
 
-#include "../group/Pile.hpp"
+#include "../group/pile.hpp"
 
 #include "../base/oriented_widget.hpp"
 
 #include "FractionBandWidget.hpp"
 
-//disable stupid warnings
+// disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC
 #	pragma warning(disable : 4250)
 #endif
 
-
 namespace morda{
-
 
 class ScrollBar :
 		public FractionBandWidget,
 		protected oriented_widget,
-		private Pile // users do not need to know that it is a container
+		private pile // users do not need to know that it is a container
 {
 	ScrollBar(const ScrollBar&) = delete;
 	ScrollBar& operator=(const ScrollBar&) = delete;
@@ -47,8 +45,6 @@ private:
 	void lay_out()override;
 };
 
-
-
 class VScrollBar : public ScrollBar{
 public:
 	VScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -59,7 +55,6 @@ public:
 	VScrollBar(const VScrollBar&) = delete;
 	VScrollBar& operator=(const VScrollBar&) = delete;
 };
-
 
 class HScrollBar : public ScrollBar{
 public:

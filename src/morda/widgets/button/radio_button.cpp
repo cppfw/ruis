@@ -23,7 +23,7 @@ radio_button::radio_button(std::shared_ptr<morda::context> c, const puu::forest&
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		choice_button(this->context, desc),
-		Pile(this->context, D_Layout)
+		pile(this->context, D_Layout)
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)
