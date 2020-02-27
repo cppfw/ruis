@@ -17,13 +17,13 @@
 
 namespace morda{
 
-class ScrollBar :
+class scroll_bar :
 		public fraction_band_widget,
 		protected oriented_widget,
 		private pile // users do not need to know that it is a container
 {
-	ScrollBar(const ScrollBar&) = delete;
-	ScrollBar& operator=(const ScrollBar&) = delete;
+	scroll_bar(const scroll_bar&) = delete;
+	scroll_bar& operator=(const scroll_bar&) = delete;
 
 	widget& handle;
 
@@ -31,7 +31,7 @@ class ScrollBar :
 	float clickPoint;
 
 protected:
-	ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
 
 	void on_fraction_change()override;
 
@@ -39,28 +39,28 @@ protected:
 
 public:
 
-	virtual ~ScrollBar()noexcept{}
+	virtual ~scroll_bar()noexcept{}
 
 private:
 	void lay_out()override;
 };
 
-class VScrollBar : public ScrollBar{
+class VScrollBar : public scroll_bar{
 public:
 	VScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			ScrollBar(this->context, desc, true)
+			scroll_bar(this->context, desc, true)
 	{}
 
 	VScrollBar(const VScrollBar&) = delete;
 	VScrollBar& operator=(const VScrollBar&) = delete;
 };
 
-class HScrollBar : public ScrollBar{
+class HScrollBar : public scroll_bar{
 public:
 	HScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			ScrollBar(this->context, desc, false)
+			scroll_bar(this->context, desc, false)
 	{}
 
 	HScrollBar(const HScrollBar&) = delete;

@@ -2,7 +2,7 @@
 
 #include "res/res_puu.hpp"
 
-#include "widgets/slider/ScrollBar.hpp"
+#include "widgets/slider/scroll_bar.hpp"
 
 #include "widgets/button/nine_patch_push_button.hpp"
 #include "widgets/button/check_box.hpp"

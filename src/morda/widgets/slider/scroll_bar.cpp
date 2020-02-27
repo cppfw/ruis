@@ -1,4 +1,4 @@
-#include "ScrollBar.hpp"
+#include "scroll_bar.hpp"
 
 #include "../../context.hpp"
 
@@ -44,7 +44,7 @@ const auto DDescription = puu::read(R"qwertyuiop(
 
 }
 
-ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		fraction_band_widget(this->context, puu::forest()),
 		oriented_widget(this->context, puu::forest(), vertical),
@@ -138,13 +138,13 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 	};
 }
 
-void ScrollBar::on_fraction_change() {
+void scroll_bar::on_fraction_change() {
 	this->lay_out();
 
 	this->fraction_widget::on_fraction_change();
 }
 
-void ScrollBar::lay_out(){
+void scroll_bar::lay_out(){
 	this->pile::lay_out();
 
 	unsigned longIndex = this->get_long_index();
@@ -177,7 +177,7 @@ void ScrollBar::lay_out(){
 	}
 }
 
-void ScrollBar::on_band_changed(){
+void scroll_bar::on_band_changed(){
 	this->lay_out();
 
 	this->fraction_band_widget::on_band_changed();

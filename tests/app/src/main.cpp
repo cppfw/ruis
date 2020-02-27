@@ -19,7 +19,7 @@
 #include "../../../src/morda/widgets/group/scroll_area.hpp"
 #include "../../../src/morda/widgets/group/row.hpp"
 #include "../../../src/morda/widgets/proxy/mouse_proxy.hpp"
-#include "../../../src/morda/widgets/slider/ScrollBar.hpp"
+#include "../../../src/morda/widgets/slider/scroll_bar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
 #include "../../../src/morda/widgets/group/tree_view.hpp"
 #include "../../../src/morda/widgets/proxy/resize_proxy.hpp"
@@ -647,10 +647,10 @@ public:
 			auto scrollArea = c->try_get_widget_as<morda::scroll_area>("scroll_area");
 			auto sa = utki::makeWeak(scrollArea);
 
-			auto vertSlider = c->try_get_widget_as<morda::ScrollBar>("scroll_area_vertical_slider");
+			auto vertSlider = c->try_get_widget_as<morda::scroll_bar>("scroll_area_vertical_slider");
 			auto vs = utki::makeWeak(vertSlider);
 
-			auto horiSlider = c->try_get_widget_as<morda::ScrollBar>("scroll_area_horizontal_slider");
+			auto horiSlider = c->try_get_widget_as<morda::scroll_bar>("scroll_area_horizontal_slider");
 			auto hs = utki::makeWeak(horiSlider);
 
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("scroll_area_resize_proxy");
