@@ -9,18 +9,18 @@ namespace morda{
 /**
  * @brief Gradient widget.
  * This is a widget which can display a rectangle with gradient.
- * From GUI script it can be instantiated as "Gradient".
+ * From GUI script it can be instantiated as "gradient".
  *
  * @param gradient - gradient resource name.
  */
-class Gradient : public widget{
-	std::shared_ptr<res_gradient> gradient;
+class gradient : public widget{
+	std::shared_ptr<res_gradient> res;
 
 public:
-	Gradient(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	gradient(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	Gradient(const Gradient&) = delete;
-	Gradient& operator=(const Gradient&) = delete;
+	gradient(const gradient&) = delete;
+	gradient& operator=(const gradient&) = delete;
 
 	void render(const morda::Matr4r& matrix)const override;
 };

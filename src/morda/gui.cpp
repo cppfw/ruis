@@ -16,7 +16,7 @@
 
 #include "widgets/label/color.hpp"
 #include "widgets/label/Text.hpp"
-#include "widgets/label/Gradient.hpp"
+#include "widgets/label/gradient.hpp"
 #include "widgets/label/MouseCursor.hpp"
 
 #include "widgets/input/text_input_line.hpp"
@@ -100,7 +100,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 
 	this->context->inflater.register_widget<Text>("text");
 	this->context->inflater.register_widget<color>("color");
-	this->context->inflater.register_widget<Gradient>("gradient");
+	this->context->inflater.register_widget<gradient>("gradient");
 	this->context->inflater.register_widget<Image>("image");
 	this->context->inflater.register_widget<VScrollBar>("vertical_scroll_bar");
 	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
