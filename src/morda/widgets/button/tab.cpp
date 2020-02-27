@@ -1,9 +1,9 @@
-#include "Tab.hpp"
+#include "tab.hpp"
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-bool Tab::maskOverlaps(Vec2r pos) {
+bool tab::maskOverlaps(Vec2r pos) {
 	auto borders = this->getActualBorders();
 
 	if(pos.x < borders.left()){
@@ -18,7 +18,7 @@ bool Tab::maskOverlaps(Vec2r pos) {
 			ASSERT(prevIter != this->parent()->children().end())
 			--prevIter;
 
-			if(auto pt = dynamic_cast<Tab*>(prevIter->get())){ // previous tab
+			if(auto pt = dynamic_cast<tab*>(prevIter->get())){ // previous tab
 				if(pt->is_pressed()){
 					if(pt->maskOverlaps(pos + this->rect().p - pt->rect().p)){
 						return false;
@@ -40,7 +40,7 @@ bool Tab::maskOverlaps(Vec2r pos) {
 	return true;
 }
 
-bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 	if(isDown){
 		if(!maskOverlaps(pos)){
 			return false;
@@ -50,12 +50,12 @@ bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button but
 	return this->choice_button::on_mouse_button(isDown, pos, button, pointerId);
 }
 
-void Tab::on_pressed_changed() {
+void tab::on_pressed_changed() {
 	this->choice_button::on_pressed_changed();
 	this->nine_patch_toggle::on_pressed_changed();
 }
 
-Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),

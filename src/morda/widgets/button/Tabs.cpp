@@ -1,4 +1,4 @@
-#include "Tab.hpp"
+#include "tab.hpp"
 #include "Tabs.hpp"
 #include "../../util/util.hpp"
 
@@ -50,9 +50,9 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
 		ASSERT(c)
 		auto& lp = this->get_layout_params_as<container::layout_params>(*c);
 
-		auto tab = dynamic_cast<const Tab*>(c.get());
-		if(!tab){
-			throw utki::invalid_state("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
+		auto t = dynamic_cast<const morda::tab*>(c.get());
+		if(!t){
+			throw utki::invalid_state("Non-tab widget added to Tabs, only tab widgets are allowed to be added to Tabs");
 		}
 
 		morda::Vec2r d;
@@ -71,7 +71,7 @@ morda::Vec2r Tabs::measure(const morda::Vec2r& quotum)const{
 
 		length += d.x;
 
-		auto borders = tab->getActualBorders();
+		auto borders = t->getActualBorders();
 		length -= std::min(prevBorders.right(), borders.left());
 		prevBorders = borders;
 
@@ -99,12 +99,12 @@ void Tabs::lay_out(){
 		auto dim = this->dims_for_widget(*c, lp);
 		c->resize(dim);
 
-		auto tab = dynamic_cast<Tab*>(c.get());
-		if(!tab){
-			throw utki::invalid_state("Non-Tab widget added to Tabs, only Tab widgets are allowed to be added to Tabs");
+		auto t = dynamic_cast<morda::tab*>(c.get());
+		if(!t){
+			throw utki::invalid_state("Non-tab widget added to Tabs, only tab widgets are allowed to be added to Tabs");
 		}
 
-		auto borders = tab->getActualBorders();
+		auto borders = t->getActualBorders();
 
 		pos -= std::min(prevBorders.right(), borders.left());
 		c->move_to(Vec2r(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));

@@ -5,17 +5,18 @@
 #include "nine_patch_toggle.hpp"
 
 namespace morda{
-class Tab :
+
+class tab :
 		public choice_button,
 		public nine_patch_toggle
 {
 	bool maskOverlaps(Vec2r pos);
 	
 public:
-	Tab(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	tab(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	Tab(const Tab&) = delete;
-	Tab& operator=(const Tab&) = delete;
+	tab(const tab&) = delete;
+	tab& operator=(const tab&) = delete;
 	
 protected:	
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
@@ -24,4 +25,5 @@ protected:
 	
 	void on_pressed_changed()override;
 };
+
 }
