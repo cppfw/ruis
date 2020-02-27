@@ -5,7 +5,7 @@
 
 #include "pile.hpp"
 
-#include "../proxy/MouseProxy.hpp"
+#include "../proxy/mouse_proxy.hpp"
 
 namespace morda{
 

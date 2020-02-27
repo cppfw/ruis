@@ -51,7 +51,7 @@ void push_button::on_pressed_changed(){
 }
 
 void push_button::on_clicked(){
-	if (this->clicked){
-		this->clicked(*this);
+	if (this->click_handler){
+		this->click_handler(*this);
 	}
 }

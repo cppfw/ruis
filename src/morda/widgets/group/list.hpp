@@ -105,7 +105,7 @@ public:
 	 * @brief Data set changed signal.
 	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
 	 */
-	std::function<void(list_widget&)> data_set_changed;
+	std::function<void(list_widget&)> data_set_change_handler;
 
 private:
 	std::shared_ptr<provider> item_provider;

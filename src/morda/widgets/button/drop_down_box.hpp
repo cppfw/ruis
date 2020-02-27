@@ -95,7 +95,7 @@ public:
 		return this->selectedItem_v;
 	}
 
-	std::function<void(drop_down_box& dds)> selection_changed;
+	std::function<void(drop_down_box& dds)> selection_handler;
 
 private:
 	void handleDataSetChanged();

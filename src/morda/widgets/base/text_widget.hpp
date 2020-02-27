@@ -47,12 +47,12 @@ public:
 	virtual void on_font_changed(){}
 
 	virtual void on_text_changed(){
-		if (this->text_changed) {
-			this->text_changed(*this);
+		if (this->text_change_handler) {
+			this->text_change_handler(*this);
 		}
 	}
 
-	std::function<void(text_widget& w)> text_changed;
+	std::function<void(text_widget& w)> text_change_handler;
 
 protected:
 	text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc);

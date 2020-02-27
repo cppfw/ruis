@@ -15,7 +15,7 @@ protected:
 	virtual void onBandSizeChanged();
 
 public:
-	std::function<void(FractionBandWidget& s)> bandSizeChanged;
+	std::function<void(FractionBandWidget& s)> band_change_handler;
 
 	void setBandSizeFraction(real fraction);
 

@@ -16,9 +16,9 @@ tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	lp.dims.y = widget::layout_params::max;
 	lp.dims.x = widget::layout_params::min;
 
-	this->item_list->data_set_changed = [this](list_widget&){
-		if(this->viewChanged){
-			this->viewChanged(*this);
+	this->item_list->data_set_change_handler = [this](list_widget&){
+		if(this->view_change_handler){
+			this->view_change_handler(*this);
 		}
 	};
 }

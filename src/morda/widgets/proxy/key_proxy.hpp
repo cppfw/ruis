@@ -22,7 +22,7 @@ public:
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.
 	 */
-	std::function<bool(bool isDown, morda::key keyCode)> key;
+	std::function<bool(bool isDown, morda::key keyCode)> key_handler;
 	
 	virtual bool on_key(bool isDown, morda::key keyCode)override;
 };

@@ -12,7 +12,7 @@ protected:
 
 	virtual void on_fraction_change();
 public:
-	std::function<void(fraction_widget&)> fraction_change;
+	std::function<void(fraction_widget&)> fraction_change_handler;
 
 	real fraction()const noexcept{
 		return this->fraction_v;

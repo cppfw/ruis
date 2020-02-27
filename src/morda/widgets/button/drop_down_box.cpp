@@ -4,7 +4,7 @@
 
 #include "../group/overlay.hpp"
 
-#include "../proxy/MouseProxy.hpp"
+#include "../proxy/mouse_proxy.hpp"
 
 #include "../button/button.hpp"
 
@@ -136,7 +136,7 @@ void drop_down_box::showDropdownMenu(){
 
 	this->hoveredIndex = -1;
 
-	np->get_widget_as<MouseProxy>("contextMenuMouseProxy").mouseButton
+	np->get_widget_as<mouse_proxy>("contextMenuMouseProxy").mouse_button_handler
 			= [this](widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
 				if(!isDown){
 					this->mouseButtonUpHandler(false);
@@ -182,9 +182,9 @@ void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 	this->context->run_from_ui_thread([dds, oc](){
 //		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
 		oc->hide_context_menu();
-		if(dds->selection_changed){
+		if(dds->selection_handler){
 //			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
-			dds->selection_changed(*dds);
+			dds->selection_handler(*dds);
 		}
 	});
 }
@@ -195,7 +195,7 @@ drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::fores
 		nine_patch_push_button(this->context, selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<pile>("morda_dropdown_selection"))
 {
-	this->pressed_changed = [this](button& b){
+	this->press_handler = [this](button& b){
 		if(!b.is_pressed()){
 			return;
 		}
@@ -260,7 +260,7 @@ std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, siz
 	auto wd = std::dynamic_pointer_cast<pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 
-	auto mp = wd->try_get_widget_as<MouseProxy>("morda_dropdown_mouseproxy");
+	auto mp = wd->try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
 
 	auto cl = wd->try_get_widget_as<color>("morda_dropdown_color");
@@ -269,7 +269,7 @@ std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, siz
 
 	wd->push_back(w);
 
-	mp->hoverChanged = [this, clWeak, index](widget& w, unsigned id){
+	mp->hover_changed_handler = [this, clWeak, index](widget& w, unsigned id){
 		if(auto c = clWeak.lock()){
 			c->set_visible(w.is_hovered());
 		}

@@ -39,7 +39,7 @@ void button::on_pressed_changed(){
 	}
 	this->isPressedChangedNotified = true;
 	
-	if (this->pressed_changed) {
-		this->pressed_changed(*this);
+	if(this->press_handler){
+		this->press_handler(*this);
 	}
 }

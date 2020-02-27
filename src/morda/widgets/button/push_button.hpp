@@ -36,7 +36,7 @@ public:
 	 * @brief Clicked signal.
 	 * Emitted when the button is clicked.
 	 */
-	std::function<void(push_button&)> clicked;
+	std::function<void(push_button&)> click_handler;
 };
 
 }

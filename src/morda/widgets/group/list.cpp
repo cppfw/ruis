@@ -408,7 +408,7 @@ void list_widget::handleDataSetChanged(){
 
 	this->updateChildrenList();
 
-	if(this->data_set_changed){
-		this->data_set_changed(*this);
+	if(this->data_set_change_handler){
+		this->data_set_change_handler(*this);
 	}
 }

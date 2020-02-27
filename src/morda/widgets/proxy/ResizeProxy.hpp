@@ -24,7 +24,7 @@ public:
 	 * @brief Resize event signal.
 	 * Emitted when this widget is resized.
 	 */
-	std::function<void(const Vec2r&)> resized;
+	std::function<void(const Vec2r&)> resize_handler;
 };
 
 }

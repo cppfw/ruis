@@ -1,17 +1,11 @@
 #include "ResizeProxy.hpp"
 
-
 using namespace morda;
 
-
-
-
-void ResizeProxy::on_resize() {
+void ResizeProxy::on_resize(){
 	this->widget::on_resize();
 
-	if (this->resized) {
-		this->resized(this->rect().d);
+	if(this->resize_handler){
+		this->resize_handler(this->rect().d);
 	}
 }
-
-

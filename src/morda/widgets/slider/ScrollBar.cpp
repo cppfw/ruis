@@ -4,7 +4,7 @@
 
 #include "../../util/util.hpp"
 
-#include "../proxy/MouseProxy.hpp"
+#include "../proxy/mouse_proxy.hpp"
 
 #include "../label/nine_patch.hpp"
 
@@ -82,8 +82,8 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		hi->set_nine_patch(this->context->loader.load<res_nine_patch>("morda_npt_slider_handle"));
 	}
 
-	auto hp = this->try_get_widget_as<MouseProxy>("morda_handle_proxy");
-	hp->mouseButton = [this](widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) -> bool{
+	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");
+	hp->mouse_button_handler = [this](widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) -> bool{
 		if(button != mouse_button::left){
 			return false;
 		}
@@ -106,7 +106,7 @@ ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc,
 		}
 	};
 
-	hp->mouseMove = [this](morda::widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
+	hp->mouse_move_handler = [this](morda::widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
 		if(!this->isGrabbed){
 			return false;
 		}

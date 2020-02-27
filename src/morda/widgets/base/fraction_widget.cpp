@@ -23,7 +23,7 @@ void fraction_widget::set_fraction(float newFraction){
 }
 
 void fraction_widget::on_fraction_change(){
-	if(this->fraction_change){
-		this->fraction_change(*this);
+	if(this->fraction_change_handler){
+		this->fraction_change_handler(*this);
 	}
 }

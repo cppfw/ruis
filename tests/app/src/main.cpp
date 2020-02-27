@@ -18,11 +18,10 @@
 #include "../../../src/morda/widgets/character_input_widget.hpp"
 #include "../../../src/morda/widgets/group/scroll_area.hpp"
 #include "../../../src/morda/widgets/group/row.hpp"
-#include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
+#include "../../../src/morda/widgets/proxy/mouse_proxy.hpp"
 #include "../../../src/morda/widgets/slider/ScrollBar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
 #include "../../../src/morda/widgets/group/tree_view.hpp"
-#include "../../../src/morda/widgets/proxy/MouseProxy.hpp"
 #include "../../../src/morda/widgets/proxy/ResizeProxy.hpp"
 #include "../../../src/morda/widgets/label/color.hpp"
 #include "../../../src/morda/widgets/label/image.hpp"
@@ -473,9 +472,9 @@ public:
 								this->context->loader.load<morda::res_image>("morda_img_treeview_minus")
 					);
 
-				auto plusminusMouseProxy = w->try_get_widget_as<morda::MouseProxy>("plusminus_mouseproxy");
+				auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouseButton = [this, path, isCollapsed](morda::widget& widget, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) -> bool{
+				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](morda::widget& widget, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) -> bool{
 					if(button != morda::mouse_button::left){
 						return false;
 					}
@@ -533,9 +532,9 @@ public:
 
 				colorLabel->set_visible(this->selectedItem == path);
 
-				auto mp = v->try_get_widget_as<morda::MouseProxy>("mouse_proxy");
+				auto mp = v->try_get_widget_as<morda::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouseButton = [this, path](morda::widget&, bool isDown, const morda::Vec2r&, morda::mouse_button button, unsigned pointerId) -> bool{
+				mp->mouse_button_handler = [this, path](morda::widget&, bool isDown, const morda::Vec2r&, morda::mouse_button button, unsigned pointerId) -> bool{
 					if(!isDown || button != morda::mouse_button::left){
 						return false;
 					}
@@ -567,7 +566,7 @@ public:
 							}
 						)qwertyuiop"
 				);
-			b->clicked = [this, path, parent_list](morda::push_button& button){
+			b->click_handler = [this, path, parent_list](morda::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(std::next(parent_list->begin(), path.back()));
 				this->notify_item_removed(path);
@@ -615,7 +614,7 @@ public:
 			);
 		this->gui.set_root(c);
 
-		std::dynamic_pointer_cast<morda::key_proxy>(c)->key = [this](bool isDown, morda::key keyCode) -> bool{
+		std::dynamic_pointer_cast<morda::key_proxy>(c)->key_handler = [this](bool isDown, morda::key keyCode) -> bool{
 			if(isDown){
 				if(keyCode == morda::key::escape){
 					this->quit();
@@ -628,11 +627,11 @@ public:
 //		std::shared_ptr<morda::widget> c = morda::gui::inst().inflater().Inflate(zf);
 
 		ASSERT(c->try_get_widget_as<morda::push_button>("show_VK_button"))
-		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("show_VK_button"))->clicked = [this](morda::push_button&){
+		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("show_VK_button"))->click_handler = [this](morda::push_button&){
 			this->show_virtual_keyboard();
 		};
 
-		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("push_button_in_scroll_container"))->clicked = [this](morda::push_button&){
+		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("push_button_in_scroll_container"))->click_handler = [this](morda::push_button&){
 			this->gui.context->run_from_ui_thread(
 					[](){
 						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
@@ -659,7 +658,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("scroll_area_resize_proxy");
 			auto rp = utki::makeWeak(resizeProxy);
 
-			resizeProxy->resized = [vs, hs, sa](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, hs, sa](const morda::Vec2r& newSize){
 				auto sc = sa.lock();
 				if(!sc){
 					return;
@@ -676,9 +675,9 @@ public:
 					h->setBandSizeFraction(visibleArea.x);
 				}
 			};
-			resizeProxy->resized(resizeProxy->rect().d);
+			resizeProxy->resize_handler(resizeProxy->rect().d);
 
-			vertSlider->fraction_change = [sa](morda::fraction_widget& slider){
+			vertSlider->fraction_change_handler = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
 					sf.y = slider.fraction();
@@ -686,7 +685,7 @@ public:
 				}
 			};
 
-			horiSlider->fraction_change = [sa](morda::fraction_widget& slider){
+			horiSlider->fraction_change_handler = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
 					sf.x = slider.fraction();
@@ -703,7 +702,7 @@ public:
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("vertical_list_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
-			verticalSlider->fraction_change = [vl](morda::fraction_widget& slider){
+			verticalSlider->fraction_change_handler = [vl](morda::fraction_widget& slider){
 				if(auto l = vl.lock()){
 					l->set_scroll_factor(slider.fraction());
 				}
@@ -712,7 +711,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("vertical_list_resize_proxy");
 			ASSERT(resizeProxy)
 
-			resizeProxy->resized = [vs, vl](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, vl](const morda::Vec2r& newSize){
 				auto l = vl.lock();
 				if(!l){
 					return;
@@ -722,14 +721,14 @@ public:
 				}
 			};
 
-			auto mouseProxy = c->try_get_widget_as<morda::MouseProxy>("list_mouseproxy");
+			auto mouseProxy = c->try_get_widget_as<morda::mouse_proxy>("list_mouseproxy");
 			struct State : public utki::shared{
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouseButton = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
 				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
@@ -738,7 +737,7 @@ public:
 				return false;
 			};
 
-			mouseProxy->mouseMove = [vs, vl, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouse_move_handler = [vs, vl, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
@@ -763,7 +762,7 @@ public:
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 
-			horizontalSlider->fraction_change = [hl](morda::fraction_widget& slider){
+			horizontalSlider->fraction_change_handler = [hl](morda::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
 					l->set_scroll_factor(slider.fraction());
@@ -773,7 +772,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::ResizeProxy>("horizontal_list_resize_proxy");
 			ASSERT(resizeProxy)
 
-			resizeProxy->resized = [hs, hl](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [hs, hl](const morda::Vec2r& newSize){
 				auto l = hl.lock();
 				if(!l){
 					return;
@@ -783,14 +782,14 @@ public:
 				}
 			};
 
-			auto mouseProxy = c->try_get_widget_as<morda::MouseProxy>("horizontal_list_mouseproxy");
+			auto mouseProxy = c->try_get_widget_as<morda::mouse_proxy>("horizontal_list_mouseproxy");
 			struct State : public utki::shared{
 				morda::Vec2r oldPos = 0;
 				bool isLeftButtonPressed;
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouseButton = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
 				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
@@ -799,7 +798,7 @@ public:
 				return false;
 			};
 
-			mouseProxy->mouseMove = [hl, hs, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouse_move_handler = [hl, hs, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
@@ -826,7 +825,7 @@ public:
 			auto verticalSlider = c->try_get_widget_as<morda::VScrollBar>("treeview_vertical_slider");
 			auto vs = utki::makeWeak(verticalSlider);
 
-			verticalSlider->fraction_change = [tv](morda::fraction_widget& slider){
+			verticalSlider->fraction_change_handler = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->set_vertical_scroll_factor(slider.fraction());
 				}
@@ -836,7 +835,7 @@ public:
 			ASSERT(horizontalSlider)
 			auto hs = utki::makeWeak(horizontalSlider);
 
-			horizontalSlider->fraction_change = [tv](morda::fraction_widget& slider){
+			horizontalSlider->fraction_change_handler = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->set_horizontal_scroll_factor(slider.fraction());
 				}
@@ -846,7 +845,7 @@ public:
 			ASSERT(resizeProxy)
 			auto rp = utki::makeWeak(resizeProxy);
 
-			resizeProxy->resized = [vs, hs, tv](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, hs, tv](const morda::Vec2r& newSize){
 				auto t = tv.lock();
 				if(!t){
 					return;
@@ -859,10 +858,10 @@ public:
 				}
 			};
 
-			treeview->viewChanged = [rp](morda::tree_view&){
+			treeview->view_change_handler = [rp](morda::tree_view&){
 				if(auto r = rp.lock()){
-					if(r->resized){
-						r->resized(morda::Vec2r());
+					if(r->resize_handler){
+						r->resize_handler(morda::Vec2r());
 					}
 				}
 			};
@@ -873,19 +872,19 @@ public:
 			auto insertChild = c->try_get_widget_as<morda::push_button>("insert_child");
 
 			auto prvdr = utki::makeWeak(provider);
-			insertBeforeButton->clicked = [prvdr](morda::push_button& b){
+			insertBeforeButton->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertBefore();
 				}
 			};
 
-			insertAfterButton->clicked = [prvdr](morda::push_button& b){
+			insertAfterButton->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertAfter();
 				}
 			};
 
-			insertChild->clicked = [prvdr](morda::push_button& b){
+			insertChild->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertChild();
 				}
@@ -896,14 +895,14 @@ public:
 		// fullscreen
 		{
 			auto b = c->try_get_widget_as<morda::push_button>("fullscreen_button");
-			b->clicked = [this](morda::push_button&) {
+			b->click_handler = [this](morda::push_button&) {
 				this->set_fullscreen(!this->is_fullscreen());
 			};
 		}
 		{
 			auto b = c->try_get_widget_as<morda::push_button>("image_push_button");
 			ASSERT(b)
-			b->clicked = [this](morda::push_button&) {
+			b->click_handler = [this](morda::push_button&) {
 				this->set_fullscreen(true);
 			};
 		}
@@ -914,7 +913,7 @@ public:
 			auto b = c->try_get_widget_as<morda::push_button>("showhide_mousecursor_button");
 			bool visible = true;
 			this->set_mouse_cursor_visible(visible);
-			b->clicked = [visible, this](morda::push_button&) mutable{
+			b->click_handler = [visible, this](morda::push_button&) mutable{
 				visible = !visible;
 				this->set_mouse_cursor_visible(visible);
 			};
@@ -926,7 +925,7 @@ public:
 			auto ddst = c->try_get_widget_as<morda::text>("dropdownselector_selection");
 			auto ddstw = utki::make_weak(ddst);
 
-			dds->selection_changed = [ddstw](morda::drop_down_box& dds){
+			dds->selection_handler = [ddstw](morda::drop_down_box& dds){
 				if(auto t = ddstw.lock()){
 					std::stringstream ss;
 					ss << "index_" << dds.get_selection();

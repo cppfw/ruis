@@ -75,7 +75,7 @@ collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::fores
 	{
 		auto sw = this->try_get_widget_as<toggle_button>("switch");
 		ASSERT(sw)
-		sw->pressed_changed = [this](button& tb){
+		sw->press_handler = [this](button& tb){
 			auto& lp = this->contentArea->get_layout_params();
 			if(tb.is_pressed()){
 				lp.dims.y = 0;
