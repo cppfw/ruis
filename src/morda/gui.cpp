@@ -17,7 +17,7 @@
 #include "widgets/label/color.hpp"
 #include "widgets/label/Text.hpp"
 #include "widgets/label/gradient.hpp"
-#include "widgets/label/MouseCursor.hpp"
+#include "widgets/label/mouse_cursor.hpp"
 
 #include "widgets/input/text_input_line.hpp"
 
@@ -112,7 +112,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<drop_down_box>("drop_down_box");
 	this->context->inflater.register_widget<radio_button>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");
-	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
+	this->context->inflater.register_widget<mouse_cursor>("mouse_cursor");
 	this->context->inflater.register_widget<collapse_area>("collapse_area");
 	this->context->inflater.register_widget<image_toggle>("image_toggle");
 	this->context->inflater.register_widget<image_push_button>("image_push_button");
