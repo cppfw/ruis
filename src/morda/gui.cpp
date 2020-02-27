@@ -22,7 +22,7 @@
 #include "widgets/input/TextInputLine.hpp"
 
 #include "widgets/group/tree_view.hpp"
-#include "widgets/group/Window.hpp"
+#include "widgets/group/window.hpp"
 #include "widgets/group/collapse_area.hpp"
 
 using namespace morda;
@@ -104,7 +104,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<Image>("image");
 	this->context->inflater.register_widget<VScrollBar>("vertical_scroll_bar");
 	this->context->inflater.register_widget<HScrollBar>("horizontal_scroll_bar");
-	this->context->inflater.register_widget<Window>("window");
+	this->context->inflater.register_widget<window>("window");
 	this->context->inflater.register_widget<NinePatch>("nine_patch");
 	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 	this->context->inflater.register_widget<check_box>("check_box");

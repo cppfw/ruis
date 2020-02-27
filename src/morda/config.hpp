@@ -11,8 +11,6 @@
 
 #include "util/sides.hpp"
 
-
-
 namespace morda{
 
 typedef float real;

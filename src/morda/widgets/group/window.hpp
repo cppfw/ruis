@@ -15,11 +15,11 @@ namespace morda{
  * Window has borders, caption bar and can contain child widgets laid out as in pile container.
  * Window can be resized by dragging one of the borders or corners of the window.
  * Window can be moved by dragging caption bar.
- * From GUI script it can be instantiated as "Window".
+ * From GUI script it can be instantiated as "window".
  * @param title - text of the window title.
  * @param look - style settings.
  */
-class Window :
+class window :
 		virtual public widget,
 		private pile
 {
@@ -59,12 +59,12 @@ class Window :
 	void updateTopmost();
 
 public:
-	Window(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	window(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	Window(const Window&) = delete;
-	Window& operator=(const Window&) = delete;
+	window(const window&) = delete;
+	window& operator=(const window&) = delete;
 
-	void setTitle(const std::string& str);
+	void set_title(const std::string& str);
 
 	/**
 	 * @brief Get window content area.
@@ -78,20 +78,20 @@ public:
 	/**
 	 * @brief Move the window to the Z order top within its parent.
 	 */
-	void makeTopmost();
+	void move_to_top();
 
 	/**
 	 * @brief Check if the widget is currently topmost within its parent.
 	 * @return true if the widget is topmost.
 	 * @return false otherwise.
 	 */
-	bool isTopmost()const noexcept;
+	bool is_topmost()const noexcept;
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
 
 	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
 
-	void setBackground(std::shared_ptr<widget> w);
+	void set_background(std::shared_ptr<widget> w);
 
 	void lay_out() override;
 
@@ -99,7 +99,7 @@ public:
 	 * @brief Set window borders.
 	 * @param borders - borders in pixels.
 	 */
-	void setBorders(Sidesr borders);
+	void set_borders(Sidesr borders);
 };
 
 }

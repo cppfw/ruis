@@ -1,15 +1,10 @@
-#include "Window.hpp"
+#include "window.hpp"
 
 #include "../../context.hpp"
 
 #include "../../util/util.hpp"
 
-//TODO: remove
-#include "../../gui.hpp"
-
-
 using namespace morda;
-
 
 namespace{
 
@@ -142,8 +137,7 @@ const auto windowDesc_c = puu::read(R"qwertyuiop(
 
 }
 
-
-void morda::Window::setBackground(std::shared_ptr<widget> w) {
+void morda::window::set_background(std::shared_ptr<widget> w){
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if(this->children().size() == 2){
 		this->erase(this->children().begin());
@@ -156,9 +150,7 @@ void morda::Window::setBackground(std::shared_ptr<widget> w) {
 	}
 }
 
-
-
-morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		pile(nullptr, windowDesc_c)
 {
@@ -172,7 +164,7 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 		}
 
 		if(p.value == "title"){
-			this->setTitle(get_property_value(p).to_string());
+			this->set_title(get_property_value(p).to_string());
 		}else if(p.value == "look"){
 			for(const auto& pp : p.children){
 				if(!is_property(pp)){
@@ -184,7 +176,7 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 				}else if(pp.value == "titleColorNonTopmost"){
 					this->titleBgColorNonTopmost = get_property_value(pp).to_uint32();
 				}else if(pp.value == "background"){
-					this->setBackground(this->context->inflater.inflate(pp.children));
+					this->set_background(this->context->inflater.inflate(pp.children));
 				}else if(pp.value == "left"){
 					borders.left() = parse_dimension_value(get_property_value(pp), this->context->units);
 				}else if(pp.value == "top"){
@@ -197,7 +189,7 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 			}
 		}
 	}
-	this->setBorders(borders);
+	this->set_borders(borders);
 
 	// this should go after initializing borders
 	this->emptyMinDim = this->measure(Vec2r(-1));
@@ -205,7 +197,7 @@ morda::Window::Window(std::shared_ptr<morda::context> c, const puu::forest& desc
 	this->contentArea->inflate_push_back(desc);
 }
 
-void morda::Window::setupWidgets(){
+void morda::window::setupWidgets(){
 	this->contentArea = this->try_get_widget_as<pile>("morda_content");
 	ASSERT(this->contentArea)
 
@@ -376,13 +368,11 @@ void morda::Window::setupWidgets(){
 	}
 }
 
-
-
-void morda::Window::setTitle(const std::string& str){
+void morda::window::set_title(const std::string& str){
 	this->title->set_text(unikod::toUtf32(str));
 }
 
-void morda::Window::setBorders(Sidesr borders) {
+void morda::window::set_borders(Sidesr borders) {
 	this->lBorder->get_layout_params().dims.x = borders.left();
 	this->tBorder->get_layout_params().dims.y = borders.top();
 	this->rBorder->get_layout_params().dims.x = borders.right();
@@ -401,12 +391,11 @@ void morda::Window::setBorders(Sidesr borders) {
 	this->rtBorder->get_layout_params().dims.y = borders.top();
 }
 
-
-bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
-	if(isDown && !this->isTopmost()){
+bool morda::window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+	if(isDown && !this->is_topmost()){
 		this->context->run_from_ui_thread(
 				[this](){
-					this->makeTopmost();
+					this->move_to_top();
 					this->focus();
 				}
 			);
@@ -417,15 +406,12 @@ bool morda::Window::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 	return true;
 }
 
-
-
-bool morda::Window::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
+bool morda::window::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
 	this->container::on_mouse_move(pos, pointerId);
 	return true;
 }
 
-
-void Window::makeTopmost(){
+void window::move_to_top(){
 	if(!this->parent()){
 		return;
 	}
@@ -448,13 +434,12 @@ void Window::makeTopmost(){
 
 	this->updateTopmost();
 
-	if(auto pt = dynamic_cast<Window*>(prevTopmost)){
+	if(auto pt = dynamic_cast<window*>(prevTopmost)){
 		pt->updateTopmost();
 	}
 }
 
-
-bool Window::isTopmost()const noexcept{
+bool window::is_topmost()const noexcept{
 	if(!this->parent()){
 		return false;
 	}
@@ -464,14 +449,13 @@ bool Window::isTopmost()const noexcept{
 	return this->parent()->children().back().get() == this;
 }
 
-void Window::updateTopmost(){
+void window::updateTopmost(){
 	this->titleBg->set_color(
-			this->isTopmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost
+			this->is_topmost() ? this->titleBgColorTopmost : this->titleBgColorNonTopmost
 		);
 }
 
-
-void Window::lay_out(){
+void window::lay_out(){
 	this->updateTopmost();
 	this->pile::lay_out();
 }
