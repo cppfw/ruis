@@ -6,7 +6,7 @@
 
 #include "widgets/button/nine_patch_push_button.hpp"
 #include "widgets/button/check_box.hpp"
-#include "widgets/button/RadioButton.hpp"
+#include "widgets/button/radio_button.hpp"
 #include "widgets/button/choice_group.hpp"
 #include "widgets/button/image_toggle.hpp"
 #include "widgets/button/image_push_button.hpp"
@@ -110,7 +110,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<check_box>("check_box");
 	this->context->inflater.register_widget<TreeView>("tree_view");
 	this->context->inflater.register_widget<drop_down_box>("drop_down_box");
-	this->context->inflater.register_widget<RadioButton>("radio_button");
+	this->context->inflater.register_widget<radio_button>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");
 	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
 	this->context->inflater.register_widget<CollapseArea>("collapse_area");

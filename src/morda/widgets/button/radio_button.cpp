@@ -1,4 +1,4 @@
-#include "RadioButton.hpp"
+#include "radio_button.hpp"
 #include "choice_group.hpp"
 
 #include "../../context.hpp"
@@ -18,7 +18,7 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 }
 
-RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+radio_button::radio_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
@@ -30,7 +30,7 @@ RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& d
 	this->checkWidget->set_visible(this->is_pressed());
 }
 
-void RadioButton::on_pressed_changed(){
+void radio_button::on_pressed_changed(){
 	this->choice_button::on_pressed_changed();
 	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
