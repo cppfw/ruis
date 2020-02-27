@@ -26,7 +26,7 @@ void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb)
 	this->activeChoiceButton_v = cb;
 	
 	if(oldactive){
-		oldactive->setPressed(false);
+		oldactive->set_pressed(false);
 	}
 }
 

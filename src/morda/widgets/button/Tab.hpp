@@ -18,10 +18,10 @@ public:
 	Tab& operator=(const Tab&) = delete;
 	
 protected:	
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) override;
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
 
-	void on_hover_changed(unsigned pointerID) override{}
+	void on_hover_changed(unsigned pointer_id)override{}
 	
-	void onPressedChanged() override;
+	void on_pressed_changed()override;
 };
 }

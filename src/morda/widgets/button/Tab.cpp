@@ -14,13 +14,13 @@ bool Tab::maskOverlaps(Vec2r pos) {
 			}
 		}
 
-		if(this->parent() && this->parent()->children().front().get() != this){ //if this is not the first widget in the parent
+		if(this->parent() && this->parent()->children().front().get() != this){ // if this is not the first widget in the parent
 			auto prevIter = this->parent()->find(this);
 			ASSERT(prevIter != this->parent()->children().end())
 			--prevIter;
 
-			if(auto pt = dynamic_cast<Tab*>(prevIter->get())){ //previous tab
-				if(pt->isPressed()){
+			if(auto pt = dynamic_cast<Tab*>(prevIter->get())){ // previous tab
+				if(pt->is_pressed()){
 					if(pt->maskOverlaps(pos + this->rect().p - pt->rect().p)){
 						return false;
 					}
@@ -52,15 +52,15 @@ bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button but
 	return this->ChoiceButton::on_mouse_button(isDown, pos, button, pointerId);
 }
 
-void Tab::onPressedChanged() {
-	this->ChoiceButton::onPressedChanged();
-	this->NinePatchToggle::onPressedChanged();
+void Tab::on_pressed_changed() {
+	this->ChoiceButton::on_pressed_changed();
+	this->NinePatchToggle::on_pressed_changed();
 }
 
 
 Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, desc),
+		button(this->context, desc),
 		ToggleButton(this->context, desc),
 		ChoiceButton(this->context, desc),
 		NinePatchToggle(this->context, desc)
@@ -73,5 +73,5 @@ Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	}
 
 	// initialize nine-patch
-	this->onPressedChanged();
+	this->on_pressed_changed();
 }

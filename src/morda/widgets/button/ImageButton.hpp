@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Button.hpp"
+#include "button.hpp"
 
 #include "../label/Image.hpp"
 
@@ -8,14 +8,14 @@
 
 namespace morda{
 class ImageButton :
-		virtual public Button,
+		virtual public button,
 		public Image
 {
 	std::shared_ptr<const res_image> unpressedImage_v;
 	std::shared_ptr<const res_image> pressedImage_v;
 	
 protected:
-	void onPressedChanged() override;
+	void on_pressed_changed()override;
 
 	ImageButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	

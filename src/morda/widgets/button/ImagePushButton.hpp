@@ -9,7 +9,7 @@ class ImagePushButton :
 		public ImageButton
 {
 protected:
-	void onPressedChanged() override;
+	void on_pressed_changed()override;
 
 public:
 	ImagePushButton(std::shared_ptr<morda::context> c, const puu::forest& desc);

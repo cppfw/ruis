@@ -1,4 +1,4 @@
-#include "Button.hpp"
+#include "button.hpp"
 
 #include "../../context.hpp"
 
@@ -7,7 +7,7 @@
 
 using namespace morda;
 
-Button::Button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+button::button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -22,24 +22,24 @@ Button::Button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 }
 
 
-void Button::setPressed(bool pressed) {
+void button::set_pressed(bool pressed){
 	if(this->isPressed_v == pressed){
 		return;
 	}
 	this->isPressed_v = pressed;
 	this->isPressedChangedNotified = false;
-	this->onPressedChanged();
+	this->on_pressed_changed();
 }
 
 
 
-void Button::onPressedChanged() {
+void button::on_pressed_changed(){
 	if(this->isPressedChangedNotified){
 		return;
 	}
 	this->isPressedChangedNotified = true;
 	
-	if (this->pressedChanged) {
-		this->pressedChanged(*this);
+	if (this->pressed_changed) {
+		this->pressed_changed(*this);
 	}
 }

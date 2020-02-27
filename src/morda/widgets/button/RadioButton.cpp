@@ -24,20 +24,20 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, desc),
+		button(this->context, desc),
 		ToggleButton(this->context, desc),
 		ChoiceButton(this->context, desc),
 		Pile(this->context, D_Layout)
 {
 	this->checkWidget = *this->children().rbegin();
 	ASSERT(this->checkWidget)
-	this->checkWidget->set_visible(this->isPressed());
+	this->checkWidget->set_visible(this->is_pressed());
 }
 
 
 
-void RadioButton::onPressedChanged(){
-	this->ChoiceButton::onPressedChanged();
-	this->checkWidget->set_visible(this->isPressed());
+void RadioButton::on_pressed_changed(){
+	this->ChoiceButton::on_pressed_changed();
+	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
 }

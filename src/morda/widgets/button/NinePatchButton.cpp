@@ -10,7 +10,7 @@ using namespace morda;
 
 NinePatchButton::NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, desc),
+		button(this->context, desc),
 		NinePatch(this->context, desc)
 {
 	for(const auto& p : desc){
@@ -32,12 +32,12 @@ NinePatchButton::NinePatchButton(std::shared_ptr<morda::context> c, const puu::f
 			}
 		}
 	}
-	this->onPressedChanged();
+	this->on_pressed_changed();
 }
 
-void NinePatchButton::onPressedChanged(){
-	this->setNinePatch(this->isPressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
-	this->Button::onPressedChanged();
+void NinePatchButton::on_pressed_changed(){
+	this->setNinePatch(this->is_pressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
+	this->button::on_pressed_changed();
 }
 
 void NinePatchButton::setPressedNinePatch(std::shared_ptr<const res_ninepatch> np) {

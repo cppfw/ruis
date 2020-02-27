@@ -5,21 +5,21 @@
 using namespace morda;
 
 void ImageButton::updateImage() {
-	if(this->isPressed()){
+	if(this->is_pressed()){
 		this->setImage(this->pressedImage_v);
 	}else{
 		this->setImage(this->unpressedImage_v);
 	}
 }
 
-void ImageButton::onPressedChanged() {
+void ImageButton::on_pressed_changed(){
 	this->updateImage();
-	this->Button::onPressedChanged();
+	this->button::on_pressed_changed();
 }
 
 ImageButton::ImageButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, desc),
+		button(this->context, desc),
 		Image(this->context, desc)
 {
 	for(const auto& p : desc){

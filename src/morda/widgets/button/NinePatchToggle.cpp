@@ -4,15 +4,15 @@
 using namespace morda;
 
 
-void NinePatchToggle::onPressedChanged() {
-	this->NinePatchButton::onPressedChanged();
-	this->ToggleButton::onPressedChanged();
+void NinePatchToggle::on_pressed_changed(){
+	this->NinePatchButton::on_pressed_changed();
+	this->ToggleButton::on_pressed_changed();
 }
 
 
 NinePatchToggle::NinePatchToggle(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, desc),
+		button(this->context, desc),
 		ToggleButton(this->context, desc),
 		NinePatchButton(this->context, desc)
 {}

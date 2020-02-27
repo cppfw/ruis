@@ -75,11 +75,12 @@ CollapseArea::CollapseArea(std::shared_ptr<morda::context> c, const puu::forest&
 	{
 		auto sw = this->try_get_widget_as<ToggleButton>("switch");
 		ASSERT(sw)
-		sw->pressedChanged = [this](Button& tb){
-			if(tb.isPressed()){
-				this->contentArea->get_layout_params().dims.y = 0;
+		sw->pressed_changed = [this](button& tb){
+			auto& lp = this->contentArea->get_layout_params();
+			if(tb.is_pressed()){
+				lp.dims.y = 0;
 			}else{
-				this->contentArea->get_layout_params().dims.y = widget::layout_params::min;
+				lp.dims.y = widget::layout_params::min;
 			}
 		};
 	}

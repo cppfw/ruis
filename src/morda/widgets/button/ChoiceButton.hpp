@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Button.hpp"
+#include "button.hpp"
 #include "ToggleButton.hpp"
 
 namespace morda{
@@ -17,9 +17,9 @@ class ChoiceButton : virtual public ToggleButton{
 	friend class ChoiceGroup;
 	
 protected:
-	void onPressedChanged() override;
+	void on_pressed_changed()override;
 	
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) override;
+	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID)override;
 
 public:
 	ChoiceButton(std::shared_ptr<morda::context> c, const puu::forest& desc);

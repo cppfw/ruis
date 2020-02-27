@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Button.hpp"
+#include "button.hpp"
 
 
 namespace morda{
@@ -11,7 +11,7 @@ namespace morda{
  * In GUI script it has the 'checked{true/false}' attribute which can set initial
  * checked state of the widget.
  */
-class ToggleButton : virtual public Button{
+class ToggleButton : virtual public button{
 protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID) override;
 	
@@ -22,7 +22,7 @@ public:
 	 * @brief Change checked state to opposite.
 	 */
 	void toggle(){
-		this->setPressed(!this->isPressed());
+		this->set_pressed(!this->is_pressed());
 	}
 };
 

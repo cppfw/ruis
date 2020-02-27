@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Button.hpp"
+#include "button.hpp"
 
 namespace morda{
 
@@ -9,11 +9,11 @@ namespace morda{
  * Push button is a button which can be clicked.
  * Clicked means that the button was pressed and then released.
  */
-class PushButton : virtual public Button{
+class PushButton : virtual public button{
 	bool currentlyPressed = false;
 
 protected:
-	void onPressedChanged()override;
+	void on_pressed_changed()override;
 	
 	/**
 	 * @brief Invoked when the button is clicked.
@@ -29,7 +29,7 @@ protected:
 public:
 	PushButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			widget(std::move(c), desc),
-			Button(nullptr, desc)
+			button(nullptr, desc)
 	{}
 	
 	/**

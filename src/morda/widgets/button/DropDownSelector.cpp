@@ -6,7 +6,7 @@
 
 #include "../proxy/MouseProxy.hpp"
 
-#include "../button/Button.hpp"
+#include "../button/button.hpp"
 
 #include "../label/Text.hpp"
 #include "../label/Color.hpp"
@@ -197,12 +197,12 @@ void DropDownSelector::mouseButtonUpHandler(bool isFirstOne) {
 
 DropDownSelector::DropDownSelector(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		Button(this->context, selectorLayout_c),
+		button(this->context, selectorLayout_c),
 		NinePatchPushButton(this->context, selectorLayout_c),
 		selectionContainer(*this->try_get_widget_as<Pile>("morda_dropdown_selection"))
 {
-	this->pressedChanged = [this](Button& b){
-		if(!b.isPressed()){
+	this->pressed_changed = [this](button& b){
+		if(!b.is_pressed()){
 			return;
 		}
 

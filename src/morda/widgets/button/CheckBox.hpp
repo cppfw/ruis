@@ -31,7 +31,7 @@ public:
 		this->ToggleButton::on_hover_changed(pointerID);
 	}
 
-	void onPressedChanged()override;
+	void on_pressed_changed()override;
 
 private:
 

@@ -13,7 +13,7 @@ namespace morda{
  * Since the button is a NinePatch it can have children.
  */
 class NinePatchButton :
-		virtual public Button,
+		virtual public button,
 		public NinePatch
 {
 	std::shared_ptr<const res_ninepatch> unpressedNinePatch_v;
@@ -38,7 +38,7 @@ public:
 protected:
 	NinePatchButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	void onPressedChanged()override;
+	void on_pressed_changed()override;
 };
 
 }
