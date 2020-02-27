@@ -1,10 +1,10 @@
-#include "ImageButton.hpp"
+#include "image_button.hpp"
 
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-void ImageButton::updateImage() {
+void image_button::update_image(){
 	if(this->is_pressed()){
 		this->setImage(this->pressedImage_v);
 	}else{
@@ -12,12 +12,12 @@ void ImageButton::updateImage() {
 	}
 }
 
-void ImageButton::on_pressed_changed(){
-	this->updateImage();
+void image_button::on_pressed_changed(){
+	this->update_image();
 	this->button::on_pressed_changed();
 }
 
-ImageButton::ImageButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image_button::image_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		Image(this->context, desc)
@@ -38,20 +38,18 @@ ImageButton::ImageButton(std::shared_ptr<morda::context> c, const puu::forest& d
 				}else if(pp.value == "unpressed"){
 					this->unpressedImage_v = this->context->loader.load<res_image>(get_property_value(pp).to_string());
 				}
-				this->updateImage();
+				this->update_image();
 			}
 		}
 	}
 }
 
-void ImageButton::setPressedImage(std::shared_ptr<const res_image> image) {
+void image_button::set_pressed_image(std::shared_ptr<const res_image> image){
 	this->pressedImage_v = std::move(image);
-	this->updateImage();
+	this->update_image();
 }
 
-void ImageButton::setUnpressedImage(std::shared_ptr<const res_image> image) {
+void image_button::set_unpressed_image(std::shared_ptr<const res_image> image){
 	this->unpressedImage_v = std::move(image);
-	this->updateImage();
+	this->update_image();
 }
-
-

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "ToggleButton.hpp"
-#include "ImageButton.hpp"
+#include "image_button.hpp"
 
 namespace morda{
 class ImageToggle :
 		public ToggleButton,
-		public ImageButton
+		public image_button
 {
 public:
 	ImageToggle(std::shared_ptr<morda::context> c, const puu::forest& desc);

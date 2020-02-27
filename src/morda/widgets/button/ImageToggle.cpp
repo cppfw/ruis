@@ -11,5 +11,5 @@ ImageToggle::ImageToggle(std::shared_ptr<morda::context> c, const puu::forest& d
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
-		ImageButton(this->context, desc)
+		image_button(this->context, desc)
 {}

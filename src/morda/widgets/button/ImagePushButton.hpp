@@ -1,12 +1,12 @@
 #pragma once
 
-#include "ImageButton.hpp"
+#include "image_button.hpp"
 #include "PushButton.hpp"
 
 namespace morda{
 class ImagePushButton :
 		public PushButton,
-		public ImageButton
+		public image_button
 {
 protected:
 	void on_pressed_changed()override;
