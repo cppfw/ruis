@@ -1,12 +1,12 @@
 #pragma once
 
 #include "../label/NinePatch.hpp"
-#include "ChoiceButton.hpp"
+#include "choice_button.hpp"
 #include "NinePatchToggle.hpp"
 
 namespace morda{
 class Tab :
-		public ChoiceButton,
+		public choice_button,
 		public NinePatchToggle
 {
 	bool maskOverlaps(Vec2r pos);

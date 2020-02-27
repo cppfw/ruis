@@ -1,20 +1,16 @@
-#include "ChoiceButton.hpp"
+#include "choice_button.hpp"
 
 #include "ChoiceGroup.hpp"
 
 using namespace morda;
 
-
-
-ChoiceButton::ChoiceButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+choice_button::choice_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc)
-{
-}
+{}
 
-
-void ChoiceButton::on_pressed_changed(){
+void choice_button::on_pressed_changed(){
 	auto cg = this->find_ancestor<ChoiceGroup>();
 	if(!cg){
 		this->ToggleButton::on_pressed_changed();
@@ -28,7 +24,7 @@ void ChoiceButton::on_pressed_changed(){
 	}
 }
 
-bool ChoiceButton::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
+bool choice_button::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
 	if(this->is_pressed()){
 		return true;
 	}

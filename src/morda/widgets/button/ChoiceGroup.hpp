@@ -2,7 +2,7 @@
 
 #include "../group/Pile.hpp"
 
-#include "ChoiceButton.hpp"
+#include "choice_button.hpp"
 
 namespace morda{
 
@@ -14,9 +14,9 @@ namespace morda{
  * initializing standard morda widgets.
  */
 class ChoiceGroup : public Pile{
-	friend class ChoiceButton;
+	friend class choice_button;
 	
-	std::shared_ptr<ChoiceButton> activeChoiceButton_v;
+	std::shared_ptr<choice_button> activeChoiceButton_v;
 public:
 	ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
@@ -30,7 +30,7 @@ public:
 	}
 	
 private:
-	void setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& rb);
+	void setActiveChoiceButton(const std::shared_ptr<choice_button>& rb);
 };
 
 }

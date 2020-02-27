@@ -1,7 +1,6 @@
 #include "Tab.hpp"
 #include "../../util/util.hpp"
 
-
 using namespace morda;
 
 bool Tab::maskOverlaps(Vec2r pos) {
@@ -41,28 +40,26 @@ bool Tab::maskOverlaps(Vec2r pos) {
 	return true;
 }
 
-
-bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) {
+bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
 	if(isDown){
 		if(!maskOverlaps(pos)){
 			return false;
 		}
 	}
 
-	return this->ChoiceButton::on_mouse_button(isDown, pos, button, pointerId);
+	return this->choice_button::on_mouse_button(isDown, pos, button, pointerId);
 }
 
 void Tab::on_pressed_changed() {
-	this->ChoiceButton::on_pressed_changed();
+	this->choice_button::on_pressed_changed();
 	this->NinePatchToggle::on_pressed_changed();
 }
-
 
 Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
-		ChoiceButton(this->context, desc),
+		choice_button(this->context, desc),
 		NinePatchToggle(this->context, desc)
 {
 	if(!this->pressedNinePatch()){

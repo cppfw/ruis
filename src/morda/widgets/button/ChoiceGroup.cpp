@@ -1,9 +1,6 @@
 #include "ChoiceGroup.hpp"
 
-
 using namespace morda;
-
-
 
 ChoiceGroup::ChoiceGroup(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
@@ -15,8 +12,7 @@ bool ChoiceGroup::isWidgetActive(const widget& w) const noexcept{
 	return aw == &w;
 }
 
-
-void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb) {
+void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<choice_button>& cb){
 	if(cb == this->activeChoiceButton_v){
 		return;
 	}
@@ -29,4 +25,3 @@ void ChoiceGroup::setActiveChoiceButton(const std::shared_ptr<ChoiceButton>& cb)
 		oldactive->set_pressed(false);
 	}
 }
-

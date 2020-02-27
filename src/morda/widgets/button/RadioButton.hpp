@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ChoiceButton.hpp"
+#include "choice_button.hpp"
 #include "../group/Pile.hpp"
 
 namespace morda{
@@ -12,7 +12,7 @@ namespace morda{
  * "RadioButton". Only available after initializing standard morda widgets.
  */
 class RadioButton :
-		public ChoiceButton,
+		public choice_button,
 		private Pile
 {
 	std::shared_ptr<widget> checkWidget;
@@ -23,12 +23,11 @@ public:
 	RadioButton& operator=(const RadioButton&) = delete;
 	
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override{
-		return this->ChoiceButton::on_mouse_button(isDown, pos, button, pointerId);
+		return this->choice_button::on_mouse_button(isDown, pos, button, pointerId);
 	}
-	
 
 	void on_hover_changed(unsigned pointerID)override{
-		this->ChoiceButton::on_hover_changed(pointerID);
+		this->choice_button::on_hover_changed(pointerID);
 	}
 	
 	void on_pressed_changed()override;

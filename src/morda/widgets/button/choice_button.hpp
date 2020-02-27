@@ -13,7 +13,7 @@ namespace morda{
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class ChoiceButton : virtual public ToggleButton{
+class choice_button : virtual public ToggleButton{
 	friend class ChoiceGroup;
 	
 protected:
@@ -22,10 +22,10 @@ protected:
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID)override;
 
 public:
-	ChoiceButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	choice_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	ChoiceButton(const ChoiceButton&) = delete;
-	ChoiceButton& operator=(const ChoiceButton&) = delete;
+	choice_button(const choice_button&) = delete;
+	choice_button& operator=(const choice_button&) = delete;
 };
 
 }

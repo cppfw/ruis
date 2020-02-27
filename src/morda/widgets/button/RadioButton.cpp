@@ -5,8 +5,6 @@
 
 using namespace morda;
 
-
-
 namespace{
 
 const auto D_Layout = puu::read(R"qwertyuiop(
@@ -20,13 +18,11 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 }
 
-
-
 RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
-		ChoiceButton(this->context, desc),
+		choice_button(this->context, desc),
 		Pile(this->context, D_Layout)
 {
 	this->checkWidget = *this->children().rbegin();
@@ -34,10 +30,8 @@ RadioButton::RadioButton(std::shared_ptr<morda::context> c, const puu::forest& d
 	this->checkWidget->set_visible(this->is_pressed());
 }
 
-
-
 void RadioButton::on_pressed_changed(){
-	this->ChoiceButton::on_pressed_changed();
+	this->choice_button::on_pressed_changed();
 	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
 }
