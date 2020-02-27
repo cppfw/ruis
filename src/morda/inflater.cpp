@@ -7,7 +7,7 @@
 #include "widgets/group/Pile.hpp"
 #include "widgets/group/ScrollArea.hpp"
 #include "widgets/group/SizeContainer.hpp"
-#include "widgets/group/Overlay.hpp"
+#include "widgets/group/overlay.hpp"
 #include "widgets/group/list.hpp"
 
 #include "widgets/proxy/KeyProxy.hpp"
@@ -37,7 +37,7 @@ inflater::inflater(morda::context& context):
 	this->register_widget<MouseProxy>("mouse_proxy");
 	this->register_widget<ScrollArea>("scroll_area");
 	this->register_widget<KeyProxy>("key_proxy");
-	this->register_widget<Overlay>("overlay");
+	this->register_widget<overlay>("overlay");
 	this->register_widget<ResizeProxy>("resize_proxy");
 	this->register_widget<pan_list>("pan_list");
 	this->register_widget<list>("list");

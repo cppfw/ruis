@@ -2,7 +2,7 @@
 
 #include "../../context.hpp"
 
-#include "../group/Overlay.hpp"
+#include "../group/overlay.hpp"
 
 #include "../proxy/MouseProxy.hpp"
 
@@ -115,8 +115,8 @@ void drop_down_box::showDropdownMenu(){
 		return;
 	}
 
-	auto overlay = this->find_ancestor<Overlay>();
-	if(!overlay){
+	auto o = this->find_ancestor<overlay>();
+	if(!o){
 		throw utki::invalid_state("drop_down_box: no overlay parent found");
 	}
 
@@ -146,7 +146,7 @@ void drop_down_box::showDropdownMenu(){
 				return true;
 			};
 
-	overlay->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), overlay) + Vec2r(0, this->rect().d.y));
+	o->showContextMenu(np, this->pos_in_ancestor(Vec2r(0), o) + Vec2r(0, this->rect().d.y));
 }
 
 bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
@@ -158,7 +158,7 @@ bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_
 }
 
 void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
-	auto oc = this->find_ancestor<Overlay>();
+	auto oc = this->find_ancestor<overlay>();
 	if(!oc){
 		throw utki::invalid_state("No overlay found in ancestors of drop_down_box");
 	}

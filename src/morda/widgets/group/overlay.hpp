@@ -7,24 +7,24 @@ namespace morda{
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  * Overlay container is used for displaying topmost widgets like context menus, hint popups etc.
- * From GUI scripts it can be instantiated as "Overlay".
+ * From GUI scripts it can be instantiated as "overlay".
  */
-class Overlay : public Pile{
+class overlay : public Pile{
 	std::shared_ptr<widget> overlayLayer;
 	std::shared_ptr<container> overlayContainer;
 public:
-	Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	Overlay(const Overlay&) = delete;
-	Overlay& operator=(const Overlay&) = delete;
+	overlay(const overlay&) = delete;
+	overlay& operator=(const overlay&) = delete;
 	
 	/**
 	 * @brief get topmost container.
-	 * This gets the simple container object which resides on top of all normal children of this Overlay container.
+	 * This gets the simple container object which resides on top of all normal children of this overlay container.
 	 * By adding child widget to this topmost container those widgets will be on top of everything.
-	 * @return Overlay container.
+	 * @return overlay container.
 	 */
-	container& overlay(){
+	container& top_layer(){
 		return *this->overlayContainer;
 	}
 	

@@ -1,4 +1,4 @@
-#include "Overlay.hpp"
+#include "overlay.hpp"
 #include "../proxy/MouseProxy.hpp"
 
 
@@ -26,14 +26,14 @@ const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
 
 }
 
-Overlay::Overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+overlay::overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		Pile(nullptr, desc)
 {
 	this->on_children_changed();
 }
 
-void Overlay::on_children_changed(){
+void overlay::on_children_changed(){
 	if(!this->overlayLayer || !this->overlayLayer->parent()){
 		this->overlayLayer = std::make_shared<Pile>(this->context, ContextMenuLayout_c);
 		this->push_back(this->overlayLayer);
@@ -61,27 +61,27 @@ void Overlay::on_children_changed(){
 
 
 
-void Overlay::showContextMenu(std::shared_ptr<widget> w, Vec2r anchor){
-	this->overlay().push_back(w);
+void overlay::showContextMenu(std::shared_ptr<widget> w, Vec2r anchor){
+	this->top_layer().push_back(w);
 
-	auto& lp = this->overlay().get_layout_params(*w);
+	auto& lp = this->top_layer().get_layout_params(*w);
 
 	Vec2r dim = this->dims_for_widget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampTop(dim[i], this->overlay().rect().d[i]);
+		utki::clampTop(dim[i], this->top_layer().rect().d[i]);
 	}
 
 	w->resize(dim);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampRange(anchor[i], 0.0f, this->overlay().rect().d[i] - w->rect().d[i]);
+		utki::clampRange(anchor[i], 0.0f, this->top_layer().rect().d[i] - w->rect().d[i]);
 	}
 
 	w->move_to(anchor);
 }
 
-void Overlay::hideContextMenu(){
+void overlay::hideContextMenu(){
 	if(this->overlayContainer->children().size() == 0){
 		return;
 	}
