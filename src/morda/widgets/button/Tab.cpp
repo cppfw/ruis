@@ -52,7 +52,7 @@ bool Tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button but
 
 void Tab::on_pressed_changed() {
 	this->choice_button::on_pressed_changed();
-	this->NinePatchToggle::on_pressed_changed();
+	this->nine_patch_toggle::on_pressed_changed();
 }
 
 Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -60,7 +60,7 @@ Tab::Tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		button(this->context, desc),
 		ToggleButton(this->context, desc),
 		choice_button(this->context, desc),
-		NinePatchToggle(this->context, desc)
+		nine_patch_toggle(this->context, desc)
 {
 	if(!this->get_pressed_nine_patch()){
 		this->set_pressed_nine_patch(this->context->loader.load<res_ninepatch>("morda_npt_tab_active"));

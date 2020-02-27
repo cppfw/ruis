@@ -5,12 +5,12 @@
 
 namespace morda{
 
-class NinePatchToggle :
+class nine_patch_toggle :
 		virtual public ToggleButton,
 		public nine_patch_button
 {
 public:
-	NinePatchToggle(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch_toggle(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 protected:
 	void on_pressed_changed()override;

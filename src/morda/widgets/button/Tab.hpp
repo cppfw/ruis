@@ -2,12 +2,12 @@
 
 #include "../label/NinePatch.hpp"
 #include "choice_button.hpp"
-#include "NinePatchToggle.hpp"
+#include "nine_patch_toggle.hpp"
 
 namespace morda{
 class Tab :
 		public choice_button,
-		public NinePatchToggle
+		public nine_patch_toggle
 {
 	bool maskOverlaps(Vec2r pos);
 	
