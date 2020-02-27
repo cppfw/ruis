@@ -4,7 +4,7 @@
 #include "PushButton.hpp"
 
 namespace morda{
-class ImagePushButton :
+class image_push_button :
 		public PushButton,
 		public image_button
 {
@@ -12,6 +12,6 @@ protected:
 	void on_pressed_changed()override;
 
 public:
-	ImagePushButton(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	image_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 };
 }

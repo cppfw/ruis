@@ -9,7 +9,7 @@
 #include "widgets/button/RadioButton.hpp"
 #include "widgets/button/choice_group.hpp"
 #include "widgets/button/ImageToggle.hpp"
-#include "widgets/button/ImagePushButton.hpp"
+#include "widgets/button/image_push_button.hpp"
 #include "widgets/button/Tab.hpp"
 #include "widgets/button/Tabs.hpp"
 #include "widgets/button/drop_down_box.hpp"
@@ -115,7 +115,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<MouseCursor>("mouse_cursor");
 	this->context->inflater.register_widget<CollapseArea>("collapse_area");
 	this->context->inflater.register_widget<ImageToggle>("image_toggle");
-	this->context->inflater.register_widget<ImagePushButton>("image_push_button");
+	this->context->inflater.register_widget<image_push_button>("image_push_button");
 	this->context->inflater.register_widget<Tabs>("tabs");
 	this->context->inflater.register_widget<Tab>("tab");
 	this->context->inflater.register_widget<TextInputLine>("text_input_line");
