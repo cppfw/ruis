@@ -17,7 +17,7 @@ public:
 	resize_proxy(const resize_proxy&) = delete;
 	resize_proxy& operator=(const resize_proxy&) = delete;
 
-	void on_resize() override;
+	void on_resize()override;
 
 	/**
 	 * @brief Resize event signal.

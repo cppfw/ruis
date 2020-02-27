@@ -666,11 +666,11 @@ public:
 
 				if(auto v = vs.lock()){
 					v->set_fraction(sc->get_scroll_factor().y);
-					v->setBandSizeFraction(visibleArea.y);
+					v->set_band_fraction(visibleArea.y);
 				}
 				if(auto h = hs.lock()){
 					h->set_fraction(sc->get_scroll_factor().x);
-					h->setBandSizeFraction(visibleArea.x);
+					h->set_band_fraction(visibleArea.x);
 				}
 			};
 			resizeProxy->resize_handler(resizeProxy->rect().d);

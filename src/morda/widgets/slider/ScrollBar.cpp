@@ -46,7 +46,7 @@ const auto DDescription = puu::read(R"qwertyuiop(
 
 ScrollBar::ScrollBar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
-		FractionBandWidget(this->context, puu::forest()),
+		fraction_band_widget(this->context, puu::forest()),
 		oriented_widget(this->context, puu::forest(), vertical),
 		pile(this->context, DDescription),
 		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
@@ -152,7 +152,7 @@ void ScrollBar::lay_out(){
 
 	morda::Vec2r newSize(this->rect().d);
 
-	newSize[longIndex] = ::round(newSize[longIndex] * this->bandSizeFraction());
+	newSize[longIndex] = ::round(newSize[longIndex] * this->get_band_fraction());
 
 	auto minHandleSize = this->handle.measure(Vec2r(-1));
 
@@ -177,8 +177,8 @@ void ScrollBar::lay_out(){
 	}
 }
 
-void ScrollBar::onBandSizeChanged(){
+void ScrollBar::on_band_changed(){
 	this->lay_out();
 
-	this->FractionBandWidget::onBandSizeChanged();
+	this->fraction_band_widget::on_band_changed();
 }

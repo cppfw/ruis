@@ -8,7 +8,7 @@
 
 #include "../base/oriented_widget.hpp"
 
-#include "FractionBandWidget.hpp"
+#include "fraction_band_widget.hpp"
 
 // disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC
@@ -18,7 +18,7 @@
 namespace morda{
 
 class ScrollBar :
-		public FractionBandWidget,
+		public fraction_band_widget,
 		protected oriented_widget,
 		private pile // users do not need to know that it is a container
 {
@@ -35,7 +35,7 @@ protected:
 
 	void on_fraction_change()override;
 
-	void onBandSizeChanged()override;
+	void on_band_changed()override;
 
 public:
 
