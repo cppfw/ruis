@@ -10,12 +10,7 @@ void OpenGLES2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 	
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	assertOpenGLNoError();
-	
-	//TODO: remove this
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	assertOpenGLNoError();
 }
-
 
 OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec4f> vertices) :
 		morda::vertex_buffer(vertices.size()),

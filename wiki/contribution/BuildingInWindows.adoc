@@ -6,6 +6,6 @@
 After cloning *morda* repository just use the MSVS solution from _msvs_solution_ directory.
 
 
-== Cygwin
+== msys2
 
 TODO:
