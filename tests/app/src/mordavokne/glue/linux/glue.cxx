@@ -30,13 +30,10 @@
 #	error "Unknown graphics API"
 #endif
 
-
 #include "../friendAccessors.cxx"
 #include "../unixCommon.cxx"
 
-
 using namespace mordavokne;
-
 
 namespace{
 struct WindowWrapper : public utki::Unique{
@@ -110,7 +107,6 @@ struct WindowWrapper : public utki::Unique{
 
 			visualAttribs.push_back(None);
 
-
 			int fbcount;
 			GLXFBConfig* fbc = glXChooseFBConfig(this->display, DefaultScreen(this->display), &*visualAttribs.begin(), &fbcount);
 			if(!fbc){
@@ -157,10 +153,10 @@ struct WindowWrapper : public utki::Unique{
 
 		EGLConfig eglConfig;
 		{
-			//TODO: allow stencil and depth configuration etc. via window_params
-			//Here specify the attributes of the desired configuration.
-			//Below, we select an EGLConfig with at least 8 bits per color
-			//component compatible with on-screen windows
+			// TODO: allow stencil and depth configuration etc. via window_params
+			// Here specify the attributes of the desired configuration.
+			// Below, we select an EGLConfig with at least 8 bits per color
+			// component compatible with on-screen windows.
 			const EGLint attribs[] = {
 					EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
 					EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
@@ -172,9 +168,9 @@ struct WindowWrapper : public utki::Unique{
 					EGL_NONE
 			};
 
-			//Here, the application chooses the configuration it desires. In this
-			//sample, we have a very simplified selection process, where we pick
-			//the first EGLConfig that matches our criteria
+			// Here, the application chooses the configuration it desires. In this
+			// sample, we have a very simplified selection process, where we pick
+			// the first EGLConfig that matches our criteria.
 			EGLint numConfigs;
 			eglChooseConfig(this->eglDisplay, attribs, &eglConfig, 1, &numConfigs);
 			if(numConfigs <= 0){
@@ -188,7 +184,6 @@ struct WindowWrapper : public utki::Unique{
 #else
 #	error "Unknown graphics API"
 #endif
-
 
 		XVisualInfo *vi;
 #ifdef M_RENDER_OPENGL2
@@ -355,14 +350,14 @@ struct WindowWrapper : public utki::Unique{
 			this->rpiDispmanElement = vc_dispmanx_element_add(
 					this->rpiDispmanUpdate,
 					this->rpiDispmanDisplay,
-					0, //layer
+					0, // layer
 					&dst_rect,
-					0, //src
+					0, // src
 					&src_rect,
 					DISPMANX_PROTECTION_NONE,
-					0, //alpha
-					0, //clamp
-					DISPMANX_NO_ROTATE //transform
+					0, // alpha
+					0, // clamp
+					DISPMANX_NO_ROTATE // transform
 				);
 
 			this->rpiNativeWindow.element = this->rpiDispmanElement;
@@ -391,7 +386,7 @@ struct WindowWrapper : public utki::Unique{
 
 		{
 			EGLint contextAttrs[] = {
-				EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed at least on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+				EGL_CONTEXT_CLIENT_VERSION, 2, // this is needed at least on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
 				EGL_NONE
 			};
 
@@ -455,7 +450,6 @@ struct WindowWrapper : public utki::Unique{
 			XDestroyIC(this->inputContext);
 		});
 
-
 		scopeExitInputContext.reset();
 		scopeExitInputMethod.reset();
 		scopeExitEmptyCursor.reset();
@@ -508,8 +502,6 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
 
 }
 
-
-
 namespace{
 morda::real getDotsPerInch(Display* display){
 	int scrNum = 0;
@@ -526,8 +518,7 @@ morda::real getDotsPerPt(Display* display){
 
 	return application::get_pixels_per_dp(resolution, screenSizeMm);
 }
-}//~namespace
-
+}
 
 application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
@@ -553,7 +544,6 @@ application::application(std::string&& name, const window_params& requestedWindo
 	this->set_fullscreen(true);
 #endif
 }
-
 
 namespace{
 
@@ -589,8 +579,6 @@ morda::mouse_button buttonNumberToEnum(int number){
 	}
 }
 
-
-
 const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown,
 	morda::key::unknown,
@@ -601,76 +589,74 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
-	morda::key::escape,//9
-	morda::key::one,//10
-	morda::key::two,//11
-	morda::key::three,//12
-	morda::key::four,//13
-	morda::key::five,//14
-	morda::key::six,//15
-	morda::key::seven,//16
-	morda::key::eight,//17
-	morda::key::nine,//18
-	morda::key::zero,//19
-	morda::key::minus,//20
-	morda::key::equals,//21
-	morda::key::backspace,//22
-	morda::key::tabulator,//23
-	morda::key::q,//24
-	morda::key::w,//25
-	morda::key::e,//26
-	morda::key::r,//27
-	morda::key::t,//28
-	morda::key::y,//29
-	morda::key::u,//30
-	morda::key::i,//31
-	morda::key::o,//32
-	morda::key::p,//33
-	morda::key::left_square_bracket,//34
-	morda::key::right_square_bracket,//35
-	morda::key::enter,//36
-	morda::key::left_control,//37
-	morda::key::a,//38
-	morda::key::s,//39
-	morda::key::d,//40
-	morda::key::f,//41
-	morda::key::g,//42
-	morda::key::h,//43
-	morda::key::j,//44
-	morda::key::k,//45
-	morda::key::l,//46
-	morda::key::semicolon,//47
-	morda::key::apostrophe,//48
-	morda::key::grave,//49
-	morda::key::left_shift,//50
-	morda::key::backslash,//51
-	morda::key::z,//52
-	morda::key::x,//53
-	morda::key::c,//54
-	morda::key::v,//55
-	morda::key::b,//56
-	morda::key::n,//57
-	morda::key::m,//58
-	morda::key::comma,//59
-	morda::key::period,//60
-	morda::key::slash,//61
-	morda::key::right_shift,//62
+	morda::key::escape, // 9
+	morda::key::one, // 10
+	morda::key::two, // 11
+	morda::key::three, // 12
+	morda::key::four, // 13
+	morda::key::five, // 14
+	morda::key::six, // 15
+	morda::key::seven, // 16
+	morda::key::eight, // 17
+	morda::key::nine, // 18
+	morda::key::zero, // 19
+	morda::key::minus, // 20
+	morda::key::equals, // 21
+	morda::key::backspace, // 22
+	morda::key::tabulator, // 23
+	morda::key::q, // 24
+	morda::key::w, // 25
+	morda::key::e, // 26
+	morda::key::r, // 27
+	morda::key::t, // 28
+	morda::key::y, // 29
+	morda::key::u, // 30
+	morda::key::i, // 31
+	morda::key::o, // 32
+	morda::key::p, // 33
+	morda::key::left_square_bracket, // 34
+	morda::key::right_square_bracket, // 35
+	morda::key::enter, // 36
+	morda::key::left_control, // 37
+	morda::key::a, // 38
+	morda::key::s, // 39
+	morda::key::d, // 40
+	morda::key::f, // 41
+	morda::key::g, // 42
+	morda::key::h, // 43
+	morda::key::j, // 44
+	morda::key::k, // 45
+	morda::key::l, // 46
+	morda::key::semicolon, // 47
+	morda::key::apostrophe, // 48
+	morda::key::grave, // 49
+	morda::key::left_shift, // 50
+	morda::key::backslash, // 51
+	morda::key::z, // 52
+	morda::key::x, // 53
+	morda::key::c, // 54
+	morda::key::v, // 55
+	morda::key::b, // 56
+	morda::key::n, // 57
+	morda::key::m, // 58
+	morda::key::comma, // 59
+	morda::key::period, // 60
+	morda::key::slash, // 61
+	morda::key::right_shift, // 62
 	morda::key::unknown,
-	morda::key::left_alt,//64
-	morda::key::space,//65
-	morda::key::capslock,//66
-	morda::key::f1,//67
-	morda::key::f2,//68
-	morda::key::f3,//69
-	morda::key::f4,//70
-	morda::key::f5,//71
-	morda::key::f6,//72
-	morda::key::f7,//73
-	morda::key::f8,//74
-	morda::key::f9,//75
-	morda::key::f10,//76
-	morda::key::unknown,
-	morda::key::unknown,
+	morda::key::left_alt, // 64
+	morda::key::space, // 65
+	morda::key::capslock, // 66
+	morda::key::f1, // 67
+	morda::key::f2, // 68
+	morda::key::f3, // 69
+	morda::key::f4, // 70
+	morda::key::f5, // 71
+	morda::key::f6, // 72
+	morda::key::f7, // 73
+	morda::key::f8, // 74
+	morda::key::f9, // 75
+	morda::key::f10, // 76
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
@@ -687,8 +673,10 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
-	morda::key::f11,//95
-	morda::key::f12,//96
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::f11, // 95
+	morda::key::f12, // 96
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
@@ -697,37 +685,37 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
-	morda::key::right_control,//105
+	morda::key::right_control, // 105
 	morda::key::unknown,
-	morda::key::print_screen,//107
-	morda::key::right_alt,//108
+	morda::key::print_screen, // 107
+	morda::key::right_alt, // 108
 	morda::key::unknown,
-	morda::key::home,//110
-	morda::key::up,//111
-	morda::key::page_up,//112
-	morda::key::left,//113
-	morda::key::right,//114
-	morda::key::end,//115
-	morda::key::down,//116
-	morda::key::page_down,//117
-	morda::key::insert,//118
-	morda::key::deletion,//119
-	morda::key::unknown,
-	morda::key::unknown,
+	morda::key::home, // 110
+	morda::key::up, // 111
+	morda::key::page_up, // 112
+	morda::key::left, // 113
+	morda::key::right, // 114
+	morda::key::end, // 115
+	morda::key::down, // 116
+	morda::key::page_down, // 117
+	morda::key::insert, // 118
+	morda::key::deletion, // 119
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
-	morda::key::pause,//127
+	morda::key::unknown,
+	morda::key::unknown,
+	morda::key::pause, // 127
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
-	morda::key::command,//133
+	morda::key::command, // 133
 	morda::key::unknown,
-	morda::key::menu,//135
+	morda::key::menu, // 135
 	morda::key::unknown,
 	morda::key::unknown,
 	morda::key::unknown,
@@ -850,8 +838,6 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown
 }};
 
-
-
 class KeyEventUnicodeProvider : public morda::gui::unicode_provider{
 	XIC& xic;
 	XEvent& event;
@@ -908,16 +894,11 @@ public:
 
 }
 
-
 void application::quit()noexcept{
 	auto& ww = getImpl(this->windowPimpl);
 
 	ww.quitFlag = true;
 }
-
-
-
-
 
 int main(int argc, const char** argv){
 	std::unique_ptr<mordavokne::application> app = createAppUnix(argc, argv);
@@ -925,8 +906,6 @@ int main(int argc, const char** argv){
 	ASSERT(app)
 
 	auto& ww = getImpl(getWindowPimpl(*app));
-
-
 
 	XEvent_waitable xew(ww.display);
 
@@ -991,7 +970,7 @@ int main(int argc, const char** argv){
 									&& nev.xkey.keycode == event.xkey.keycode
 								)
 							{
-								// Key wasn't actually released
+								// key wasn't actually released
 								handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
 
 								XNextEvent(ww.display, &nev); // remove the key down event from queue
@@ -1063,8 +1042,6 @@ int main(int argc, const char** argv){
 	return 0;
 }
 
-
-
 void application::set_fullscreen(bool enable){
 #ifdef M_RASPBERRYPI
 	if(this->is_fullscreen()){
@@ -1101,8 +1078,6 @@ void application::set_fullscreen(bool enable){
 	this->isFullscreen_v = enable;
 }
 
-
-
 void application::set_mouse_cursor_visible(bool visible){
 	auto& ww = getImpl(this->windowPimpl);
 
@@ -1112,8 +1087,6 @@ void application::set_mouse_cursor_visible(bool visible){
 		XDefineCursor(ww.display, ww.window, ww.emptyCursor);
 	}
 }
-
-
 
 void application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
