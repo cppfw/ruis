@@ -5,18 +5,12 @@
 
 #include "util/util.hpp"
 
-
-
 using namespace morda;
-
-
 
 namespace{
 const char* include_c = "include";
-const char* includeSubdirs_c = "includeSubdirs";
+const char* includeSubdirs_c = "include_subdirs";
 }
-
-
 
 void resource_loader::mount_res_pack(const papki::file& fi){
 	ASSERT(!fi.is_open())
@@ -44,7 +38,7 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 					this->mount_res_pack(fi);
 				}
 			}
-			// TODO: remove "includeSubdirs" tree from the forest?
+			// TODO: remove "include_subdirs" tree from the forest?
 		}
 	}
 	
@@ -56,8 +50,6 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 	ASSERT(this->resPacks.back().fi)
 	ASSERT(!this->resPacks.back().script.empty())
 }
-
-
 
 resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std::string& resName){
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
@@ -71,8 +63,6 @@ resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std
 	ss << "resource name not found in mounted resource packs: " << resName;
 	throw utki::invalid_state(ss.str());
 }
-
-
 
 void resource_loader::addResource(const std::shared_ptr<resource>& res, const std::string& name){
 	ASSERT(res)

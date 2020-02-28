@@ -14,19 +14,9 @@
 #include "OpenGL2ShaderColorPosTex.hpp"
 #include "OpenGL2FrameBuffer.hpp"
 
+OpenGL2Factory::OpenGL2Factory(){}
 
-
-
-OpenGL2Factory::OpenGL2Factory(){
-	//TODO:
-}
-
-
-OpenGL2Factory::~OpenGL2Factory()noexcept{
-	//TODO:
-}
-
-
+OpenGL2Factory::~OpenGL2Factory()noexcept{}
 
 std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::span<std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing

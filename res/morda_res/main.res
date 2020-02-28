@@ -1,6 +1,6 @@
 include{ui.res}
 //include{fonts/font.res}
-includeSubdirs
+include_subdirs
 
 morda_gui_defs{
 	file{defs.gui}

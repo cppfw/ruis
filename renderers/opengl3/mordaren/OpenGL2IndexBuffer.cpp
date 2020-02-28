@@ -13,8 +13,4 @@ OpenGL2IndexBuffer::OpenGL2IndexBuffer(const utki::span<std::uint16_t> indices) 
 	
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.sizeInBytes(), &*indices.begin(), GL_STATIC_DRAW);
 	assertOpenGLNoError();
-	
-	//TODO: remove this
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	assertOpenGLNoError();
 }
