@@ -378,7 +378,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			}
 			handleMouseMove(
 					mordavokne::inst(),
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					0
 				);
 			return 0;
@@ -408,7 +408,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 					handleMouseButton(
 							mordavokne::inst(),
 							false,
-							morda::Vec2r(1000000, 1000000), // outside of the window
+							morda::vector2(1000000, 1000000), // outside of the window
 							morda::mouse_button(i),
 							0
 						);
@@ -423,7 +423,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::left,
 					0
 				);
@@ -436,7 +436,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::left,
 					0
 				);
@@ -449,7 +449,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::middle,
 					0
 				);
@@ -462,7 +462,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::middle,
 					0
 				);
@@ -475,7 +475,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					true,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::right,
 					0
 				);
@@ -488,7 +488,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			handleMouseButton(
 					mordavokne::inst(),
 					false,
-					morda::Vec2r(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
+					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					morda::mouse_button::right,
 					0
 				);
@@ -520,14 +520,14 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 					handleMouseButton(
 							mordavokne::inst(),
 							true,
-							morda::Vec2r(float(pos.x), float(pos.y)),
+							morda::vector2(float(pos.x), float(pos.y)),
 							button,
 							0
 						);
 					handleMouseButton(
 							mordavokne::inst(),
 							false,
-							morda::Vec2r(float(pos.x), float(pos.y)),
+							morda::vector2(float(pos.x), float(pos.y)),
 							button,
 							0
 						);

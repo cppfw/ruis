@@ -33,8 +33,8 @@ class texture_font : public font{
 	mutable std::list<char32_t> lastUsedOrder;
 	
 	struct Glyph{
-		morda::Vec2r topLeft;
-		morda::Vec2r bottomRight;
+		morda::vector2 topLeft;
+		morda::vector2 bottomRight;
 		
 		std::shared_ptr<vertex_array> vao;
 		std::shared_ptr<texture_2d> tex;

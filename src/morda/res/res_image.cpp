@@ -26,10 +26,10 @@ res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_
 		res_image::texture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
 {
-//	this->texCoords[3] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[2] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[1] = Vec2r(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[0] = Vec2r(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[2] = vector2(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[1] = vector2(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+//	this->texCoords[0] = vector2(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
 	//TODO:
 	ASSERT(false)
 }
@@ -94,11 +94,11 @@ public:
 			fixed_texture(this->context->renderer, std::move(tex))
 	{}
 	
-	std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
+	std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
-	Vec2r dims(real dpi)const noexcept override{
+	vector2 dims(real dpi)const noexcept override{
 		return this->tex_v->dims();
 	}
 	
@@ -115,9 +115,9 @@ public:
 			dom(std::move(dom))
 	{}
 	
-	Vec2r dims(real dpi)const noexcept override{
+	vector2 dims(real dpi)const noexcept override{
 		auto wh = this->dom->getDimensions(dpi);
-		return Vec2r(wh[0], wh[1]);
+		return vector2(wh[0], wh[1]);
 	}
 	
 	class svg_texture : public fixed_texture{
@@ -136,7 +136,7 @@ public:
 		}
 	};
 	
-	std::shared_ptr<const texture> get(Vec2r forDim)const override{
+	std::shared_ptr<const texture> get(vector2 forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
 		unsigned width = unsigned(forDim.x);
 //		TRACE(<< "imWidth = " << imWidth << std::endl)

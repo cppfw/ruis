@@ -91,21 +91,21 @@ namespace{
 
 void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	NSPoint winPos = [e locationInWindow];
-	auto pos = morda::Vec2r(winPos.x, winPos.y).rounded();
+	auto pos = morda::vector2(winPos.x, winPos.y).rounded();
 	handleMouseButton(
 			mordavokne::application::inst(),
 			isDown,
-			morda::Vec2r(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
+			morda::vector2(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
 			button,
 			0
 		);
 }
 
-void macosx_HandleMouseMove(const morda::Vec2r& pos, unsigned id){
+void macosx_HandleMouseMove(const morda::vector2& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
 	handleMouseMove(
 			mordavokne::application::inst(),
-			morda::Vec2r(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
+			morda::vector2(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
 			id
 		);
 }
@@ -501,7 +501,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
 	macosx_HandleMouseMove(
-			morda::Vec2r(pos.x, pos.y).rounded(),
+			morda::vector2(pos.x, pos.y).rounded(),
 			0
 		);
 }

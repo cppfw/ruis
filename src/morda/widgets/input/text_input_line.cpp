@@ -34,7 +34,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
 			);
-		matr.scale(Vec2r(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
+		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
 
 		auto& r = *this->context->renderer;
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, 0xff804040);
@@ -58,14 +58,14 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::matrix4 matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(Vec2r(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
+		matr.scale(vector2(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
 
 		auto& r = *this->context->renderer;
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_color());
 	}
 }
 
-bool text_input_line::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool text_input_line::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
 	if(button != mouse_button::left){
 		return false;
 	}
@@ -79,7 +79,7 @@ bool text_input_line::on_mouse_button(bool isDown, const morda::Vec2r& pos, mous
 	return true;
 }
 
-bool text_input_line::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId){
+bool text_input_line::on_mouse_move(const morda::vector2& pos, unsigned pointerId){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
@@ -89,11 +89,11 @@ bool text_input_line::on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)
 }
 
 
-Vec2r text_input_line::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret;
+vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
+	vector2 ret;
 	
 	if(quotum.x < 0){
-		ret.x = this->single_line_text_widget::measure(Vec2r(-1)).x + cursorWidth_c * this->context->units.dots_per_dp;
+		ret.x = this->single_line_text_widget::measure(vector2(-1)).x + cursorWidth_c * this->context->units.dots_per_dp;
 	}else{
 		ret.x = quotum.x;
 	}

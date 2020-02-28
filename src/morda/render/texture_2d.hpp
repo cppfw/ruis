@@ -6,10 +6,10 @@ namespace morda{
 	
 
 class texture_2d{
-	Vec2r dims_v;
+	vector2 dims_v;
 	
 public:
-	texture_2d(Vec2r dims) :
+	texture_2d(vector2 dims) :
 			dims_v(dims)
 	{}
 	

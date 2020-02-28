@@ -65,7 +65,7 @@ class single_line_text_widget : public text_widget{
 	mutable morda::rectangle bb;
 
 protected:
-	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
+	vector2 measure(const morda::vector2& quotum)const noexcept override;
 
 	single_line_text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 

@@ -32,7 +32,7 @@ class nine_patch :
 
 	std::shared_ptr<res_nine_patch::image_matrix> scaledImage;
 
-	Sidesr borders = Sidesr(layout_params::min);
+	sides<real> borders = sides<real>(layout_params::min);
 
 	std::array<std::array<std::shared_ptr<image>, 3>, 3> imageMatrix_v;
 
@@ -67,7 +67,7 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @param borders - border values to set.
 	 */
-	void set_borders(Sidesr borders){
+	void set_borders(sides<real> borders){
 		this->borders = borders;
 		this->applyImages();
 	}
@@ -81,7 +81,7 @@ public:
 		return this->borders;
 	}
 
-	Sidesr get_actual_borders()const noexcept;
+	sides<real> get_actual_borders()const noexcept;
 
 	void on_blending_changed()override;
 

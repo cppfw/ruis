@@ -19,7 +19,7 @@ public:
 
 	void set_filler(std::shared_ptr<res_image> filler);
 
-	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
+	morda::vector2 measure(const morda::vector2& quotum) const override;
 
 	void lay_out() override;
 

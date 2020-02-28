@@ -81,17 +81,17 @@ void image::render(const morda::matrix4& matrix) const{
 	this->scaledImage->render(matr, *this->vao);
 }
 
-morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
+morda::vector2 image::measure(const morda::vector2& quotum)const{
 	if(!this->img){
-		return Vec2r(0);
+		return vector2(0);
 	}
 	
-	Vec2r imgDim = this->img->dims(this->context->units.dots_per_inch);
+	vector2 imgDim = this->img->dims(this->context->units.dots_per_inch);
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	
 	if(!this->keep_aspect_ratio){
-		Vec2r ret = imgDim;
+		vector2 ret = imgDim;
 		
 		for(unsigned i = 0; i != ret.size(); ++i){
 			if(quotum[i] >= 0){
@@ -112,7 +112,7 @@ morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 	}else if(quotum.x < 0){
 		ASSERT(quotum.y >= 0)
 		
-		Vec2r ret;
+		vector2 ret;
 		ret.y = quotum.y;
 		ret.x = ratio * quotum.y;
 		return ret;
@@ -130,7 +130,7 @@ morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 		
 		ASSERT(ratio > 0)
 		
-		Vec2r ret;
+		vector2 ret;
 		ret.x = quotum.x;
 		ret.y = quotum.x / ratio;
 		return ret;

@@ -22,7 +22,7 @@ public:
 
 	void lay_out() override;
 
-	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
+	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	/**
 	 * @brief Layout parameters for LinearArea container.

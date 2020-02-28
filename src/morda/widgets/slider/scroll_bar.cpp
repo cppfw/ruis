@@ -83,7 +83,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 	}
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");
-	hp->mouse_button_handler = [this](widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId) -> bool{
+	hp->mouse_button_handler = [this](widget& widget, bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId) -> bool{
 		if(button != mouse_button::left){
 			return false;
 		}
@@ -106,7 +106,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 		}
 	};
 
-	hp->mouse_move_handler = [this](morda::widget& widget, const morda::Vec2r& pos, unsigned pointerId) -> bool{
+	hp->mouse_move_handler = [this](morda::widget& widget, const morda::vector2& pos, unsigned pointerId) -> bool{
 		if(!this->isGrabbed){
 			return false;
 		}
@@ -122,7 +122,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 
 		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
 
-		morda::Vec2r newPosition(0);
+		morda::vector2 newPosition(0);
 		newPosition[longIndex] = newPos;
 
 		this->handle.move_to(newPosition);
@@ -150,11 +150,11 @@ void scroll_bar::lay_out(){
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
 
-	morda::Vec2r newSize(this->rect().d);
+	morda::vector2 newSize(this->rect().d);
 
 	newSize[longIndex] = ::round(newSize[longIndex] * this->get_band_fraction());
 
-	auto minHandleSize = this->handle.measure(Vec2r(-1));
+	auto minHandleSize = this->handle.measure(vector2(-1));
 
 	utki::clampBottom(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex]));
 
@@ -163,7 +163,7 @@ void scroll_bar::lay_out(){
 	// move scroll handle
 	{
 		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
-		morda::Vec2r newPos(0);
+		morda::vector2 newPos(0);
 		if(effectiveLength > 0){
 			newPos[longIndex] = ::round(effectiveLength * this->fraction());
 			ASSERT_INFO(

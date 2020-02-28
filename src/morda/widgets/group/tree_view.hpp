@@ -106,11 +106,11 @@ public:
 	}
 
 	void set_horizontal_scroll_factor(real factor){
-		this->set_scroll_factor(Vec2r(factor, 0));
+		this->set_scroll_factor(vector2(factor, 0));
 	}
 
-	Vec2r get_scroll_factor()const{
-		return Vec2r(this->scroll_area::get_scroll_factor().x, this->item_list->get_scroll_factor());
+	vector2 get_scroll_factor()const{
+		return vector2(this->scroll_area::get_scroll_factor().x, this->item_list->get_scroll_factor());
 	}
 };
 

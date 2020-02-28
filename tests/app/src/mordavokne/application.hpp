@@ -102,7 +102,7 @@ private:
 	morda::rectangle curWinRect = morda::rectangle(0, 0, 0, 0);
 
 public:
-	const morda::Vec2r& window_dims()const noexcept{
+	const morda::vector2& window_dims()const noexcept{
 		return this->curWinRect.d;
 	}
 

@@ -17,16 +17,16 @@ namespace morda{
  */
 class scroll_area : public container{
 	//offset from top left corner
-	Vec2r curScrollPos = Vec2r(0);
+	vector2 curScrollPos = vector2(0);
 
 	//cached effectiveDim
-	Vec2r effectiveDim;
+	vector2 effectiveDim;
 
 	//cached scroll factor
-	Vec2r curScrollFactor;
+	vector2 curScrollFactor;
 
 protected:
-	Vec2r dims_for_widget(const widget& w, const layout_params& lp)const;
+	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
 
 public:
 	scroll_area(std::shared_ptr<morda::context> c, const puu::forest& desc);
@@ -35,13 +35,13 @@ public:
 	scroll_area& operator=(const scroll_area&) = delete;
 
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID)override;
 
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID)override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerID)override;
 
 	void render(const morda::matrix4& matrix) const override;
 
-	morda::Vec2r measure(const morda::Vec2r& quotum) const override{
+	morda::vector2 measure(const morda::vector2& quotum) const override{
 		return this->widget::measure(quotum);
 	}
 
@@ -53,7 +53,7 @@ public:
 	 * @brief Get current scroll position.
 	 * @return Current scrolling position in pixels.
 	 */
-	const Vec2r& get_scroll_pos()const{
+	const vector2& get_scroll_pos()const{
 		return this->curScrollPos;
 	}
 
@@ -61,23 +61,23 @@ public:
 	 * @brief Set scroll position.
 	 * @param newScrollPos - new scroll position.
 	 */
-	void set_scroll_pos(const Vec2r& newScrollPos);
+	void set_scroll_pos(const vector2& newScrollPos);
 
 	/**
 	 * @brief Set scroll position as factor.
 	 * @param factor - factor with components from range [0:1].
 	 */
-	void set_scroll_factor(const Vec2r& factor);
+	void set_scroll_factor(const vector2& factor);
 
 	/**
 	 * @brief Get current scroll position as factor.
 	 * @return Current scroll position as factor with components from range [0:1].
 	 */
-	const Vec2r& get_scroll_factor()const{
+	const vector2& get_scroll_factor()const{
 		return this->curScrollFactor;
 	}
 
-	Vec2r get_visible_area_fraction()const noexcept;
+	vector2 get_visible_area_fraction()const noexcept;
 
 private:
 	void updateEffectiveDim();

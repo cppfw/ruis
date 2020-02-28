@@ -53,8 +53,8 @@ single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context>
 	}
 }
 
-Vec2r single_line_text_widget::measure(const morda::Vec2r& quotum)const noexcept{
-	Vec2r ret(this->bb.d.x, this->font().get_height());
+vector2 single_line_text_widget::measure(const morda::vector2& quotum)const noexcept{
+	vector2 ret(this->bb.d.x, this->font().get_height());
 
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){

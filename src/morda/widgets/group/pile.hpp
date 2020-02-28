@@ -22,7 +22,7 @@ public:
 	pile(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 public:
-	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
+	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	void lay_out() override;
 };

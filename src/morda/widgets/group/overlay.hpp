@@ -33,7 +33,7 @@ public:
 	 * @param menu - context menu widget.
 	 * @param anchor - anchor point, position of top left corner of the context menu within the overlay container.
 	 */
-	void show_context_menu(std::shared_ptr<widget> menu, Vec2r anchor);
+	void show_context_menu(std::shared_ptr<widget> menu, vector2 anchor);
 	
 	/**
 	 * @brief Hide context menu.

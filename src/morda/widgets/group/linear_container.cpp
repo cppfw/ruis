@@ -34,7 +34,7 @@ linear_container::linear_container(std::shared_ptr<morda::context> c, const puu:
 namespace{
 class Info{
 public:
-	Vec2r measuredDim;
+	vector2 measuredDim;
 };
 }
 
@@ -58,7 +58,7 @@ void linear_container::lay_out(){
 			ASSERT(lp.dims[longIndex] != layout_params::max)
 			ASSERT(lp.dims[longIndex] != layout_params::fill)
 
-			Vec2r d = this->dims_for_widget(**i, lp);
+			vector2 d = this->dims_for_widget(**i, lp);
 			info->measuredDim = d;
 
 			rigid += d[longIndex];
@@ -79,7 +79,7 @@ void linear_container::lay_out(){
 
 			if(lp.weight != 0){
 				ASSERT(lp.weight > 0)
-				Vec2r d;
+				vector2 d;
 				d[longIndex] = info->measuredDim[longIndex];
 				if(flexible > 0){
 					ASSERT(netWeight > 0)
@@ -103,7 +103,7 @@ void linear_container::lay_out(){
 						d[transIndex] = lp.dims[transIndex];
 					}
 					if(d.x < 0 || d.y < 0){
-						Vec2r md = (*i)->measure(d);
+						vector2 md = (*i)->measure(d);
 						for(unsigned i = 0; i != md.size(); ++i){
 							if(d[i] < 0){
 								d[i] = md[i];
@@ -116,7 +116,7 @@ void linear_container::lay_out(){
 				(*i)->resize(info->measuredDim);
 			}
 
-			Vec2r newPos;
+			vector2 newPos;
 
 			newPos[longIndex] = pos;
 
@@ -128,7 +128,7 @@ void linear_container::lay_out(){
 		}
 
 		if(remainder > 0){
-			Vec2r d;
+			vector2 d;
 			d[transIndex] = 0;
 			d[longIndex] = std::round(remainder);
 			this->children().back()->resize_by(d);
@@ -137,7 +137,7 @@ void linear_container::lay_out(){
 	}
 }
 
-morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
+morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
 
@@ -159,7 +159,7 @@ morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
 				throw std::logic_error("linear_container::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
 			}
 
-			Vec2r d;
+			vector2 d;
 			if(lp.dims[transIndex] == layout_params::max){
 				if(quotum[transIndex] >= 0){
 					d[transIndex] = quotum[transIndex];
@@ -199,7 +199,7 @@ morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
 		}
 	}
 
-	Vec2r ret;
+	vector2 ret;
 
 	real flexLen;
 
@@ -226,7 +226,7 @@ morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
 
 			ASSERT(netWeight > 0)
 
-			Vec2r d;
+			vector2 d;
 			d[longIndex] = info->measuredDim[longIndex];
 
 			if(flexLen > 0){
@@ -241,7 +241,7 @@ morda::Vec2r linear_container::measure(const morda::Vec2r& quotum)const{
 				}
 				if((*i).get() == lastChild){
 					if(remainder > 0){
-						Vec2r correction;
+						vector2 correction;
 						correction[transIndex] = 0;
 						correction[longIndex] = std::round(remainder);
 						d += correction;

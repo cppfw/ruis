@@ -60,7 +60,7 @@ public:
 		}
 	}
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) override{
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerId) override{
 		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
 		if(!isDown){
 			return false;
@@ -147,7 +147,7 @@ public:
 	CubeWidget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			morda::widget(std::move(c), desc)
 	{
-		std::array<morda::Vec3r, 36> cubePos = {{
+		std::array<morda::vector3, 36> cubePos = {{
 			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
 			r4::vec3f(1, -1, 1), r4::vec3f(1, 1, 1), r4::vec3f(-1, 1, 1),
 
@@ -472,7 +472,7 @@ public:
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](morda::widget& widget, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned pointerId) -> bool{
+				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](morda::widget& widget, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerId) -> bool{
 					if(button != morda::mouse_button::left){
 						return false;
 					}
@@ -532,7 +532,7 @@ public:
 
 				auto mp = v->try_get_widget_as<morda::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouse_button_handler = [this, path](morda::widget&, bool isDown, const morda::Vec2r&, morda::mouse_button button, unsigned pointerId) -> bool{
+				mp->mouse_button_handler = [this, path](morda::widget&, bool isDown, const morda::vector2&, morda::mouse_button button, unsigned pointerId) -> bool{
 					if(!isDown || button != morda::mouse_button::left){
 						return false;
 					}
@@ -656,7 +656,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("scroll_area_resize_proxy");
 			auto rp = utki::makeWeak(resizeProxy);
 
-			resizeProxy->resize_handler = [vs, hs, sa](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, hs, sa](const morda::vector2& newSize){
 				auto sc = sa.lock();
 				if(!sc){
 					return;
@@ -709,7 +709,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("vertical_list_resize_proxy");
 			ASSERT(resizeProxy)
 
-			resizeProxy->resize_handler = [vs, vl](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, vl](const morda::vector2& newSize){
 				auto l = vl.lock();
 				if(!l){
 					return;
@@ -721,12 +721,12 @@ public:
 
 			auto mouseProxy = c->try_get_widget_as<morda::mouse_proxy>("list_mouseproxy");
 			struct State : public utki::shared{
-				morda::Vec2r oldPos = 0;
+				morda::vector2 oldPos = 0;
 				bool isLeftButtonPressed;
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned id){
 				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
@@ -735,7 +735,7 @@ public:
 				return false;
 			};
 
-			mouseProxy->mouse_move_handler = [vs, vl, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouse_move_handler = [vs, vl, state](morda::widget& w, const morda::vector2& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
@@ -770,7 +770,7 @@ public:
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("horizontal_list_resize_proxy");
 			ASSERT(resizeProxy)
 
-			resizeProxy->resize_handler = [hs, hl](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [hs, hl](const morda::vector2& newSize){
 				auto l = hl.lock();
 				if(!l){
 					return;
@@ -782,12 +782,12 @@ public:
 
 			auto mouseProxy = c->try_get_widget_as<morda::mouse_proxy>("horizontal_list_mouseproxy");
 			struct State : public utki::shared{
-				morda::Vec2r oldPos = 0;
+				morda::vector2 oldPos = 0;
 				bool isLeftButtonPressed;
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::Vec2r& pos, morda::mouse_button button, unsigned id){
+			mouseProxy->mouse_button_handler = [state](morda::widget& w, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned id){
 				if(button == morda::mouse_button::left){
 					state->isLeftButtonPressed = isDown;
 					state->oldPos = pos;
@@ -796,7 +796,7 @@ public:
 				return false;
 			};
 
-			mouseProxy->mouse_move_handler = [hl, hs, state](morda::widget& w, const morda::Vec2r& pos, unsigned id){
+			mouseProxy->mouse_move_handler = [hl, hs, state](morda::widget& w, const morda::vector2& pos, unsigned id){
 				if(state->isLeftButtonPressed){
 					auto dp = state->oldPos - pos;
 					state->oldPos = pos;
@@ -843,7 +843,7 @@ public:
 			ASSERT(resizeProxy)
 			auto rp = utki::makeWeak(resizeProxy);
 
-			resizeProxy->resize_handler = [vs, hs, tv](const morda::Vec2r& newSize){
+			resizeProxy->resize_handler = [vs, hs, tv](const morda::vector2& newSize){
 				auto t = tv.lock();
 				if(!t){
 					return;
@@ -859,7 +859,7 @@ public:
 			treeview->view_change_handler = [rp](morda::tree_view&){
 				if(auto r = rp.lock()){
 					if(r->resize_handler){
-						r->resize_handler(morda::Vec2r());
+						r->resize_handler(morda::vector2());
 					}
 				}
 			};

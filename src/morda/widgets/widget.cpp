@@ -81,7 +81,7 @@ std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 
 
 
-void widget::resize(const morda::Vec2r& newDims){
+void widget::resize(const morda::vector2& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
 			this->clear_cache();
@@ -248,7 +248,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 
 	matrix4 matrix = r.initial_matrix;
 	matrix.translate(-1, 1);
-	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
+	matrix.scale(vector2(2.0f, -2.0f).compDivBy(this->rect().d));
 
 	this->render(matrix);
 
@@ -316,7 +316,7 @@ void widget::unfocus()noexcept{
 
 r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	r4::recti ret(
-			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
+			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y -= ret.d.y;
@@ -324,8 +324,8 @@ r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 }
 
 
-Vec2r widget::measure(const morda::Vec2r& quotum)const{
-	Vec2r ret(quotum);
+vector2 widget::measure(const morda::vector2& quotum)const{
+	vector2 ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(ret[i] < 0){
 			ret[i] = 0;

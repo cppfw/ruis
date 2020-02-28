@@ -20,8 +20,8 @@ void pile::lay_out(){
 	}
 }
 
-morda::Vec2r pile::measure(const morda::Vec2r& quotum)const{
-	Vec2r ret(quotum);
+morda::vector2 pile::measure(const morda::vector2& quotum)const{
+	vector2 ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
 	}
@@ -29,7 +29,7 @@ morda::Vec2r pile::measure(const morda::Vec2r& quotum)const{
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
 
-		morda::Vec2r d;
+		morda::vector2 d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dims[j] == layout_params::max){

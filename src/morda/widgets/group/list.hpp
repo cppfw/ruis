@@ -81,7 +81,7 @@ public:
 
 	void lay_out()override;
 
-	morda::Vec2r measure(const morda::Vec2r& quotum) const override;
+	morda::vector2 measure(const morda::vector2& quotum) const override;
 
 	/**
 	 * @brief Set scroll position as factor from [0:1].

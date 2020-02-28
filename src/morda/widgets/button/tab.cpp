@@ -3,7 +3,7 @@
 
 using namespace morda;
 
-bool tab::maskOverlaps(Vec2r pos) {
+bool tab::maskOverlaps(vector2 pos) {
 	auto borders = this->get_actual_borders();
 
 	if(pos.x < borders.left()){
@@ -40,7 +40,7 @@ bool tab::maskOverlaps(Vec2r pos) {
 	return true;
 }
 
-bool tab::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool tab::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
 	if(isDown){
 		if(!maskOverlaps(pos)){
 			return false;

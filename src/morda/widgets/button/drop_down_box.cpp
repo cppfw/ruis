@@ -137,7 +137,7 @@ void drop_down_box::showDropdownMenu(){
 	this->hoveredIndex = -1;
 
 	np->get_widget_as<mouse_proxy>("contextMenuMouseProxy").mouse_button_handler
-			= [this](widget& w, bool isDown, const Vec2r pos, mouse_button button, unsigned id) -> bool{
+			= [this](widget& w, bool isDown, const vector2 pos, mouse_button button, unsigned id) -> bool{
 				if(!isDown){
 					this->mouseButtonUpHandler(false);
 				}
@@ -145,10 +145,10 @@ void drop_down_box::showDropdownMenu(){
 				return true;
 			};
 
-	o->show_context_menu(np, this->pos_in_ancestor(Vec2r(0), o) + Vec2r(0, this->rect().d.y));
+	o->show_context_menu(np, this->pos_in_ancestor(vector2(0), o) + vector2(0, this->rect().d.y));
 }
 
-bool drop_down_box::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerID){
+bool drop_down_box::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID){
 	if(!isDown){
 		this->mouseButtonUpHandler(true);
 	}

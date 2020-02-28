@@ -1008,7 +1008,7 @@ int main(int argc, const char** argv){
 					handleMouseButton(
 							*app,
 							true,
-							morda::Vec2r(event.xbutton.x, event.xbutton.y),
+							morda::vector2(event.xbutton.x, event.xbutton.y),
 							buttonNumberToEnum(event.xbutton.button),
 							0
 						);
@@ -1018,7 +1018,7 @@ int main(int argc, const char** argv){
 					handleMouseButton(
 							*app,
 							false,
-							morda::Vec2r(event.xbutton.x, event.xbutton.y),
+							morda::vector2(event.xbutton.x, event.xbutton.y),
 							buttonNumberToEnum(event.xbutton.button),
 							0
 						);
@@ -1027,7 +1027,7 @@ int main(int argc, const char** argv){
 //						TRACE(<< "MotionNotify X event got" << std::endl)
 					handleMouseMove(
 							*app,
-							morda::Vec2r(event.xmotion.x, event.xmotion.y),
+							morda::vector2(event.xmotion.x, event.xmotion.y),
 							0
 						);
 					break;

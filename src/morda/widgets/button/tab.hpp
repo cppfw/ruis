@@ -10,7 +10,7 @@ class tab :
 		public choice_button,
 		public nine_patch_toggle
 {
-	bool maskOverlaps(Vec2r pos);
+	bool maskOverlaps(vector2 pos);
 	
 public:
 	tab(std::shared_ptr<morda::context> c, const puu::forest& desc);
@@ -19,7 +19,7 @@ public:
 	tab& operator=(const tab&) = delete;
 	
 protected:	
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
 
 	void on_hover_changed(unsigned pointer_id)override{}
 	

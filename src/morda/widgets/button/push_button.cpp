@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-bool push_button::on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId){
+bool push_button::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
 	//TODO: multi-touch support
 
 //	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)

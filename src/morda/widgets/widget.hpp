@@ -419,7 +419,7 @@ public:
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
-	virtual bool on_mouse_button(bool is_down, const morda::Vec2r& pos, mouse_button button, unsigned pointer_id){
+	virtual bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
 		return false;
 	}
 
@@ -431,7 +431,7 @@ public:
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
-	virtual bool on_mouse_move(const morda::Vec2r& pos, unsigned pointer_id){
+	virtual bool on_mouse_move(const morda::vector2& pos, unsigned pointer_id){
 		return false;
 	}
 
@@ -521,8 +521,8 @@ public:
 	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
 	 */
-	bool overlaps(const morda::Vec2r& pos)const noexcept{
-		return morda::rectangle(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
+	bool overlaps(const morda::vector2& pos)const noexcept{
+		return morda::rectangle(morda::vector2(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**

@@ -27,7 +27,7 @@ public:
 			res_image::texture(c->renderer, rect.d),
 			tex(std::move(tex))
 	{
-		std::array<Vec2r, 4> texCoords;
+		std::array<vector2, 4> texCoords;
 		
 		texCoords[0] = rect.p.compDiv(this->tex->dims);
 		texCoords[1] = rect.leftTop().compDiv(this->tex->dims);
@@ -48,11 +48,11 @@ public:
 	ResSubImage(const ResSubImage& orig) = delete;
 	ResSubImage& operator=(const ResSubImage& orig) = delete;
 	
-	Vec2r dims(real dpi) const noexcept override{
+	vector2 dims(real dpi) const noexcept override{
 		return this->res_image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
+	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -65,7 +65,7 @@ public:
 }
 
 std::shared_ptr<res_nine_patch> res_nine_patch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
-	Sidesr borders(-1);
+	sides<real> borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){
 			borders = parse_sides(p.children);
@@ -94,7 +94,7 @@ res_nine_patch::image_matrix::~image_matrix()noexcept{
 	}
 }
 
-std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(Sidesr borders) const {
+std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(sides<real> borders) const {
 	real mul = 1;
 	{
 		auto req = borders.begin();
@@ -124,12 +124,12 @@ std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(Sidesr borders
 	auto quadTex = this->image->get((this->image->dims() * mul).round());
 //	TRACE(<< "quadTex->dim() = " << quadTex->dim() << std::endl)
 	
-	Vec2r actMul = quadTex->dims.compDiv(this->image->dims());
+	vector2 actMul = quadTex->dims.compDiv(this->image->dims());
 
 	
 //	TRACE(<< "actMul = " << std::setprecision(10) << actMul << std::endl)
 	
-	Sidesr scaledBorders(this->borders_v);
+	sides<real> scaledBorders(this->borders_v);
 	scaledBorders.left() *= actMul.x;
 	scaledBorders.right() *= actMul.x;
 	scaledBorders.top() *= actMul.y;

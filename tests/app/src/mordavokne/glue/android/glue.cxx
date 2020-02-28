@@ -435,7 +435,7 @@ public:
 
 
 
-morda::Vec2r curWinDim(0, 0);
+morda::vector2 curWinDim(0, 0);
 
 AInputQueue* curInputQueue = 0;
 
@@ -454,12 +454,12 @@ struct AppInfo{
 
 
 //array of current pointer positions, needed to detect which pointers have actually moved.
-std::array<morda::Vec2r, 10> pointers;
+std::array<morda::vector2, 10> pointers;
 
 
 
-inline morda::Vec2r AndroidWinCoordsToMordaWinRectCoords(const morda::Vec2r& winDim, const morda::Vec2r& p){
-	morda::Vec2r ret(
+inline morda::vector2 AndroidWinCoordsToMordaWinRectCoords(const morda::vector2& winDim, const morda::vector2& p){
+	morda::vector2 ret(
 			p.x,
 			p.y - (curWinDim.y - winDim.y)
 		);
@@ -1021,7 +1021,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 		storage_dir(initializeStorageDir(this->name))
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();
-	this->updateWindowRect(morda::rectangle(morda::Vec2r(0), winSize.to<morda::real>()));
+	this->updateWindowRect(morda::rectangle(morda::vector2(0), winSize.to<morda::real>()));
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
@@ -1109,7 +1109,7 @@ void handleInputEvents(){
 
 //								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
 
-						morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
 
 						handleMouseButton(
@@ -1135,7 +1135,7 @@ void handleInputEvents(){
 
 //								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
 
-						morda::Vec2r p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
+						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
 
 						handleMouseButton(
@@ -1159,7 +1159,7 @@ void handleInputEvents(){
 							}
 
 							// notify root container only if there was actual movement
-							morda::Vec2r p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
+							morda::vector2 p(AMotionEvent_getX(event, pointerNum), AMotionEvent_getY(event, pointerNum));
 							if(pointers[pointerId] == p){
 								// pointer position did not change
 								continue;

@@ -36,15 +36,15 @@ void tab_group::set_filler(std::shared_ptr<res_image> filler){
 	this->fillerTexture = this->filler->get();
 }
 
-morda::Vec2r tab_group::measure(const morda::Vec2r& quotum)const{
-	Vec2r ret(quotum);
+morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
+	vector2 ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampBottom(ret[i], real(0));
 	}
 
 	real length = 0;
 
-	Sidesr prevBorders = real(0);
+	sides<real> prevBorders = real(0);
 
 	for(auto& c : this->children()){
 		ASSERT(c)
@@ -55,7 +55,7 @@ morda::Vec2r tab_group::measure(const morda::Vec2r& quotum)const{
 			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
-		morda::Vec2r d;
+		morda::vector2 d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill){
@@ -90,7 +90,7 @@ morda::Vec2r tab_group::measure(const morda::Vec2r& quotum)const{
 void tab_group::lay_out(){
 	real pos = 0;
 
-	Sidesr prevBorders = 0;
+	sides<real> prevBorders = 0;
 
 	for(auto& c : this->children()){
 		ASSERT(c)
@@ -107,7 +107,7 @@ void tab_group::lay_out(){
 		auto borders = t->get_actual_borders();
 
 		pos -= std::min(prevBorders.right(), borders.left());
-		c->move_to(Vec2r(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));
+		c->move_to(vector2(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));
 		pos += dim.x;
 
 		prevBorders = borders;

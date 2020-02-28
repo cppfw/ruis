@@ -44,14 +44,14 @@ public:
 	void set_root(std::shared_ptr<morda::widget> w);
 
 private:
-	Vec2r viewportSize;
+	vector2 viewportSize;
 public:
 	/**
 	 * @brief Set viewport size for GUI.
 	 * Set the dimensions of the rectangular area where GUI will be rendered.
 	 * @param size - dimensions of the viewport, in pixels.
 	 */
-	void set_viewport(const morda::Vec2r& size);
+	void set_viewport(const morda::vector2& size);
 
 	/**
 	 * @brief Render GUI.
@@ -84,7 +84,7 @@ public:
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_move(const Vec2r& pos, unsigned id);
+	void send_mouse_move(const vector2& pos, unsigned id);
 
 	/**
 	 * @brief Feed in the mouse button event to GUI.
@@ -93,7 +93,7 @@ public:
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_button(bool is_down, const Vec2r& pos, mouse_button button, unsigned id);
+	void send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.

@@ -22,7 +22,7 @@ protected:
 	virtual void on_clicked();
 	
 	
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
 	
 	void on_hover_changed(unsigned pointerID) override;
 	

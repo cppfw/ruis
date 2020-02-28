@@ -42,7 +42,7 @@ public:
 
 	void render(const morda::matrix4& matrix)const override;
 
-	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
+	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	void set_image(const std::shared_ptr<const res_image>& image);
 

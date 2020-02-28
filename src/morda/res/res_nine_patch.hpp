@@ -31,13 +31,13 @@ class res_nine_patch : public resource{
 	
 	const std::shared_ptr<const res_image> image;
 	
-	Sidesr borders_v;
+	sides<real> borders_v;
 	
 public:
 	res_nine_patch(const res_nine_patch&) = delete;
 	res_nine_patch& operator=(const res_nine_patch&) = delete;
 	
-	res_nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, Sidesr borders) :
+	res_nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, sides<real> borders) :
 			resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
@@ -60,7 +60,7 @@ public:
 		~image_matrix()noexcept;
 	};
 	
-	std::shared_ptr<image_matrix> get(Sidesr borders)const;
+	std::shared_ptr<image_matrix> get(sides<real> borders)const;
 	
 	const decltype(borders_v)& borders()const noexcept{
 		return this->borders_v;

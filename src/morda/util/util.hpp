@@ -17,16 +17,16 @@
 
 namespace morda{
 
-morda::Vec2r parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
+morda::vector2 parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
 
 /**
- * @brief Parse 2 values from puu as Vec2r.
- * @param desc - forest of at least two trees holding Vec2r values.
+ * @brief Parse 2 values from puu as vector2.
+ * @param desc - forest of at least two trees holding vector2 values.
  *                If there are less than 2 trees in the forest then the rest of
  *                vector components will be filled with latest parsed value.
- * @return parsed Vec2r.
+ * @return parsed vector2.
  */
-inline morda::Vec2r parse_vec2(const puu::forest& desc){
+inline morda::vector2 parse_vec2(const puu::forest& desc){
     return parse_vec2(desc.begin(), desc.end());
 }
 
@@ -44,11 +44,11 @@ morda::rectangle parse_rect(const puu::forest& desc);
  * @brief Parse chain of 4 puu nodes as sides.
  * @param desc - chain of at least four nodes holding sides values.
  *               If there are less than 4 nodes in the chain then the rest of
- *               Sidesr components will be filled with latest parsed value.
- *               If zero pointer is passed the resulting Sidesr will be filled with zeros.
- * @return parsed Sidesr.
+ *               sides<real> components will be filled with latest parsed value.
+ *               If zero pointer is passed the resulting sides<real> will be filled with zeros.
+ * @return parsed sides<real>.
  */
-morda::Sidesr parse_sides(const puu::forest& desc);
+morda::sides<real> parse_sides(const puu::forest& desc);
 
 /**
  * @brief Parse dimension value.

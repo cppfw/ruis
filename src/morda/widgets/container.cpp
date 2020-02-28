@@ -284,7 +284,7 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept
 
 
 vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
-	Vec2r d;
+	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
 			d[i] = this->rect().d[i];
@@ -295,7 +295,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 		}
 	}
 	if(d.x < 0 || d.y < 0){
-		Vec2r md = w.measure(d);
+		vector2 md = w.measure(d);
 		for(unsigned i = 0; i != md.size(); ++i){
 			if(d[i] < 0){
 				d[i] = md[i];

@@ -142,7 +142,7 @@ void list_widget::set_scroll_factor(real factor){
 bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
 	auto& lp = this->get_layout_params_as<layout_params>(*w);
 
-	Vec2r dim = this->dims_for_widget(*w, lp);
+	vector2 dim = this->dims_for_widget(*w, lp);
 
 	w->resize(dim);
 
@@ -150,7 +150,7 @@ bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool adde
 	unsigned transIndex = this->get_trans_index();
 
 	{
-		Vec2r to;
+		vector2 to;
 		to[longIndex] = pos;
 		to[transIndex] = 0;
 		w->move_to(to);
@@ -281,7 +281,7 @@ void list_widget::updateTailItemsInfo(){
 
 		auto& lp = this->get_layout_params_as<layout_params>(*w);
 
-		Vec2r d = this->dims_for_widget(*w, lp);
+		vector2 d = this->dims_for_widget(*w, lp);
 
 		dim -= d[longIndex];
 	}
@@ -328,7 +328,7 @@ void list_widget::scroll_by(real delta) {
 			for(; this->posIndex < this->firstTailItemIndex;){
 				auto w = this->item_provider->get_widget(this->posIndex);
 				auto& lp = this->get_layout_params_as<layout_params>(*w);
-				Vec2r d = this->dims_for_widget(*w, lp);
+				vector2 d = this->dims_for_widget(*w, lp);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->posOffset = delta;
@@ -352,7 +352,7 @@ void list_widget::scroll_by(real delta) {
 				--this->posIndex;
 				auto w = this->item_provider->get_widget(this->posIndex);
 				auto& lp = this->get_layout_params_as<layout_params>(*w);
-				Vec2r d = this->dims_for_widget(*w, lp);
+				vector2 d = this->dims_for_widget(*w, lp);
 				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
 				--this->addedIndex;
 				if(d[longIndex] > delta){
@@ -367,11 +367,11 @@ void list_widget::scroll_by(real delta) {
 	this->updateChildrenList();
 }
 
-morda::Vec2r list_widget::measure(const morda::Vec2r& quotum)const{
+morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
 
-	Vec2r ret(quotum);
+	vector2 ret(quotum);
 
 	utki::clampBottom(ret[longIndex], real(0));
 

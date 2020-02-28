@@ -42,13 +42,13 @@ public:
 
 	virtual ~text_input_line()noexcept{}
 
-	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
+	vector2 measure(const morda::vector2& quotum)const noexcept override;
 
 	void render(const morda::matrix4& matrix) const override;
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
 
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerId)override;
 
 	void on_focus_changed()override;
 

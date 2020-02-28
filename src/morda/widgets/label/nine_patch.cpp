@@ -138,8 +138,8 @@ void nine_patch::set_nine_patch(std::shared_ptr<const res_nine_patch> np){
 	this->clear_cache();
 }
 
-Sidesr nine_patch::get_actual_borders()const noexcept{
-	Sidesr ret;
+sides<real> nine_patch::get_actual_borders()const noexcept{
+	sides<real> ret;
 
 	for(auto i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){

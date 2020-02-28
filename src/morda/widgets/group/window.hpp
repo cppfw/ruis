@@ -23,7 +23,7 @@ class window :
 		virtual public widget,
 		private pile
 {
-	morda::Vec2r emptyMinDim;//minimal dimension of empty window
+	morda::vector2 emptyMinDim;//minimal dimension of empty window
 
 	std::shared_ptr<color> titleBg;
 	std::uint32_t titleBgColorTopmost = 0xffff0000;
@@ -52,7 +52,7 @@ class window :
 	bool topResizeCaptured = false;
 	bool bottomResizeCaptured = false;
 
-	morda::Vec2r capturePoint;
+	morda::vector2 capturePoint;
 
 	void setupWidgets();
 
@@ -87,9 +87,9 @@ public:
 	 */
 	bool is_topmost()const noexcept;
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
 
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerId)override;
 
 	void set_background(std::shared_ptr<widget> w);
 
@@ -99,7 +99,7 @@ public:
 	 * @brief Set window borders.
 	 * @param borders - borders in pixels.
 	 */
-	void set_borders(Sidesr borders);
+	void set_borders(sides<real> borders);
 };
 
 }

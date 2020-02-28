@@ -20,10 +20,10 @@ namespace morda{
  */
 class res_cursor : public resource{
 	std::shared_ptr<const res_image> image_v;
-	Vec2r hotspot_v;
+	vector2 hotspot_v;
 	
 public:
-	res_cursor(std::shared_ptr<morda::context> c, res_image& image, const Vec2r& hotspot);
+	res_cursor(std::shared_ptr<morda::context> c, res_image& image, const vector2& hotspot);
 	
 	res_cursor(const res_cursor&) = delete;
 	res_cursor& operator=(const res_cursor&) = delete;
@@ -33,7 +33,7 @@ public:
 		return *this->image_v;
 	}
 	
-	const Vec2r& hotspot()const noexcept{
+	const vector2& hotspot()const noexcept{
 		return this->hotspot_v;
 	}
 private:

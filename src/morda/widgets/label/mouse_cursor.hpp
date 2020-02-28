@@ -18,7 +18,7 @@ class mouse_cursor : virtual public widget{
 
 	std::shared_ptr<const res_image::texture> quadTex;
 
-	Vec2r cursorPos;
+	vector2 cursorPos;
 public:
 	mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
@@ -27,7 +27,7 @@ public:
 
 	void setCursor(std::shared_ptr<const res_cursor> cursor);
 
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerID) override;
 
 	void render(const morda::matrix4& matrix) const override;
 };

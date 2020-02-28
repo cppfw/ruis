@@ -19,17 +19,17 @@ public:
 	 * @brief Mouse button event signal.
 	 * Emitted when mouse button event reaches this widget.
 	 */
-	std::function<bool (widget& widget, bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)> mouse_button_handler;
+	std::function<bool (widget& widget, bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)> mouse_button_handler;
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
 
 	/**
 	 * @brief Mouse move event signal.
 	 * Emitted when mouse move event reaches this widget.
 	 */
-	std::function<bool (widget& widget, const morda::Vec2r& pos, unsigned pointerId)> mouse_move_handler;
+	std::function<bool (widget& widget, const morda::vector2& pos, unsigned pointerId)> mouse_move_handler;
 
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerId)override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerId)override;
 
 	/**
 	 * @brief Hover changed event signal.

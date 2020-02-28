@@ -131,7 +131,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	}
 }
 
-void gui::set_viewport(const morda::Vec2r& size){
+void gui::set_viewport(const morda::vector2& size){
 	this->viewportSize = size;
 
 	if(!this->rootWidget){
@@ -144,7 +144,7 @@ void gui::set_viewport(const morda::Vec2r& size){
 void gui::set_root(std::shared_ptr<morda::widget> w){
 	this->rootWidget = std::move(w);
 
-	this->rootWidget->move_to(morda::Vec2r(0));
+	this->rootWidget->move_to(morda::vector2(0));
 	this->rootWidget->resize(this->viewportSize);
 }
 
@@ -160,7 +160,7 @@ void gui::render(const matrix4& matrix)const{
 	m.scale(1, -1);
 
 	m.translate(-1, -1);
-	m.scale(Vec2r(2).compDivBy(this->viewportSize));
+	m.scale(vector2(2).compDivBy(this->viewportSize));
 
 	ASSERT(this->rootWidget)
 
@@ -173,7 +173,7 @@ void gui::render(const matrix4& matrix)const{
 	this->rootWidget->renderInternal(m);
 }
 
-void gui::send_mouse_move(const Vec2r& pos, unsigned id){
+void gui::send_mouse_move(const vector2& pos, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}
@@ -184,7 +184,7 @@ void gui::send_mouse_move(const Vec2r& pos, unsigned id){
 	}
 }
 
-void gui::send_mouse_button(bool is_down, const Vec2r& pos, mouse_button button, unsigned id){
+void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id){
 	if(!this->rootWidget){
 		return;
 	}

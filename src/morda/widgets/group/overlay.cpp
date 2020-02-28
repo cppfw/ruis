@@ -43,7 +43,7 @@ void overlay::on_children_changed(){
 		auto mp = this->overlayLayer->try_get_widget_as<mouse_proxy>("morda_overlay_mouseproxy");
 		ASSERT(mp)
 
-		mp->mouse_button_handler = [this](widget& w, bool isDown, const Vec2r& pos, mouse_button button, unsigned id) -> bool{
+		mp->mouse_button_handler = [this](widget& w, bool isDown, const vector2& pos, mouse_button button, unsigned id) -> bool{
 			this->hide_context_menu();
 			return false;
 		};
@@ -58,12 +58,12 @@ void overlay::on_children_changed(){
 	}
 }
 
-void overlay::show_context_menu(std::shared_ptr<widget> w, Vec2r anchor){
+void overlay::show_context_menu(std::shared_ptr<widget> w, vector2 anchor){
 	this->top_layer().push_back(w);
 
 	auto& lp = this->top_layer().get_layout_params(*w);
 
-	Vec2r dim = this->dims_for_widget(*w, lp);
+	vector2 dim = this->dims_for_widget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
 		utki::clampTop(dim[i], this->top_layer().rect().d[i]);

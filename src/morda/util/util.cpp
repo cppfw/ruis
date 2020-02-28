@@ -10,8 +10,8 @@
 using namespace morda;
 
 
-morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end){
-	morda::Vec2r ret;
+morda::vector2 morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end){
+	morda::vector2 ret;
 
 	unsigned n = 0;
 	real v = 0;
@@ -28,15 +28,15 @@ morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::c
 }
 
 morda::rectangle morda::parse_rect(const puu::forest& desc){
-	Vec2r p = parse_vec2(desc.begin(), desc.end());
-	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	vector2 p = parse_vec2(desc.begin(), desc.end());
+	vector2 d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
 	return rectangle(p, d);
 }
 
-morda::Sidesr morda::parse_sides(const puu::forest& desc){
-	Vec2r p = parse_vec2(desc.begin(), desc.end());
-	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
-	return Sidesr(p.x, p.y, d.x, d.y);
+morda::sides<real> morda::parse_sides(const puu::forest& desc){
+	vector2 p = parse_vec2(desc.begin(), desc.end());
+	vector2 d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	return sides<real>(p.x, p.y, d.x, d.y);
 }
 
 real morda::parse_dimension_value(const puu::leaf& l, const morda::units& units){

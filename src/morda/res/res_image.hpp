@@ -45,12 +45,12 @@ public:
 	protected:
 		const std::shared_ptr<morda::renderer> renderer;
 
-		texture(std::shared_ptr<morda::renderer> r, Vec2r dims) :
+		texture(std::shared_ptr<morda::renderer> r, vector2 dims) :
 				renderer(std::move(r)),
 				dims(dims)
 		{}
 	public:
-		const Vec2r dims;
+		const vector2 dims;
 		
 		virtual ~texture()noexcept{}
 
@@ -71,9 +71,9 @@ public:
 	 * @param dpi - dots per inch.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual Vec2r dims(real dpi)const noexcept = 0;
+	virtual vector2 dims(real dpi)const noexcept = 0;
 	
-	Vec2r dims()const noexcept{
+	vector2 dims()const noexcept{
 		return this->dims(this->context->units.dots_per_inch);
 	}
 
@@ -83,7 +83,7 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual std::shared_ptr<const texture> get(Vec2r forDims = 0)const = 0;
+	virtual std::shared_ptr<const texture> get(vector2 forDims = 0)const = 0;
 private:
 	static std::shared_ptr<res_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
 	
@@ -116,11 +116,11 @@ public:
 	res_atlas_image(const res_atlas_image& orig) = delete;
 	res_atlas_image& operator=(const res_atlas_image& orig) = delete;
 	
-	Vec2r dims(real dpi) const noexcept override{
+	vector2 dims(real dpi) const noexcept override{
 		return this->res_image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res_image::texture> get(Vec2r forDim)const override{
+	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
 		return std::dynamic_pointer_cast<const res_image::texture>(this->shared_from_this());
 	}
 	
