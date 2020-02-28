@@ -195,7 +195,7 @@ defs{
 			top{${morda_window_border_size}}
 			right{${morda_window_border_size}}
 			bottom{${morda_window_border_size}}
-			centerVisible{false}
+			center_visible{false}
 		}
 	}
 }

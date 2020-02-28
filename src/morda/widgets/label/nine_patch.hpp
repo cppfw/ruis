@@ -20,7 +20,7 @@ namespace morda{
  * @param right - width of right border, in length units.
  * @param top - height of top border, in length units.
  * @param bottom - height of bottom border, in length units.
- * @param centerVisible - whether the central part of nine-patch image is visible (true) or not (false).
+ * @param center_visible - whether the central part of nine-patch image is visible (true) or not (false).
  * @param image - reference to a nine-patch resource.
  */
 class nine_patch :

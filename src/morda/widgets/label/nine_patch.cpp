@@ -109,7 +109,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 			this->borders.top() = parse_dimension_value(get_property_value(p), this->context->units);
 		}else if(p.value == "bottom"){
 			this->borders.bottom() = parse_dimension_value(get_property_value(p), this->context->units);
-		}else if(p.value == "centerVisible"){
+		}else if(p.value == "center_visible"){
 			this->set_center_visible(get_property_value(p).to_bool());
 		}
 	}

@@ -68,7 +68,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 		if(p.value == "background"){
 			np->set_nine_patch(this->context->loader.load<res_nine_patch>(get_property_value(p).to_string()));
 			background_set = true;
-		}else if(p.value == "handleNinePatch"){
+		}else if(p.value == "nine_patch_of_handle"){
 			hi->set_nine_patch(this->context->loader.load<res_nine_patch>(get_property_value(p).to_string()));
 			handle_set = true;
 		}
