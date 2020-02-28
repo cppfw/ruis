@@ -160,7 +160,7 @@ void gui::render(const matrix4& matrix)const{
 	m.scale(1, -1);
 
 	m.translate(-1, -1);
-	m.scale(vector2(2).compDivBy(this->viewportSize));
+	m.scale(vector2(2).comp_divide(this->viewportSize));
 
 	ASSERT(this->rootWidget)
 

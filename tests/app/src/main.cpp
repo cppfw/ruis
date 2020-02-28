@@ -209,7 +209,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::quaternion().initRot(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::quaternion().rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;

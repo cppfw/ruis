@@ -51,7 +51,7 @@ void image::render(const morda::matrix4& matrix) const{
 			ASSERT(quadFanTexCoords.size() == texCoords.size())
 			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();
-			auto scale = this->rect().d.compDiv(this->img->dims());
+			auto scale = this->rect().d.comp_divided(this->img->dims());
 			if(!this->repeat_v.x){
 				scale.x = 1;
 			}
@@ -59,7 +59,7 @@ void image::render(const morda::matrix4& matrix) const{
 				scale.y = 1;
 			}
 			for(; dst != texCoords.end(); ++src, ++dst){
-				*dst = src->compMul(scale);
+				*dst = src->comp_multiplied(scale);
 			}
 			this->vao = r.factory->create_vertex_array(
 					{
@@ -88,7 +88,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 	
 	vector2 imgDim = this->img->dims(this->context->units.dots_per_inch);
 	
-	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
+	ASSERT_INFO(imgDim.is_positive_or_zero(), "imgDim = " << imgDim)
 	
 	if(!this->keep_aspect_ratio){
 		vector2 ret = imgDim;

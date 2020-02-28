@@ -48,14 +48,14 @@ void scroll_area::set_scroll_pos(const vector2& newScrollPos){
 }
 
 void scroll_area::set_scroll_factor(const vector2& factor){
-	vector2 newScrollPos = this->effectiveDim.compMul(factor);
+	vector2 newScrollPos = this->effectiveDim.comp_multiplied(factor);
 
 	this->set_scroll_pos(newScrollPos);
 }
 
 void scroll_area::updateScrollFactor(){
 	// at this point effective dimension should be updated
-	vector2 factor = this->curScrollPos.compDiv(this->effectiveDim);
+	vector2 factor = this->curScrollPos.comp_divided(this->effectiveDim);
 
 	if(this->curScrollFactor == factor){
 		return;
@@ -157,7 +157,7 @@ void scroll_area::updateEffectiveDim(){
 }
 
 vector2 scroll_area::get_visible_area_fraction()const noexcept{
-	auto ret = this->rect().d.compDiv(this->rect().d + this->effectiveDim);
+	auto ret = this->rect().d.comp_divided(this->rect().d + this->effectiveDim);
 
 	for(unsigned i = 0; i != ret.size(); ++i){
 		utki::clampTop(ret[i], real(1));

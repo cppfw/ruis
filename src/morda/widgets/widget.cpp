@@ -125,7 +125,7 @@ void widget::invalidate_layout()noexcept{
 }
 
 void widget::renderInternal(const morda::matrix4& matrix)const{
-	if(!this->rect().d.isPositive()){
+	if(!this->rect().d.is_positive()){
 		return;
 	}
 
@@ -231,7 +231,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 
 	matrix4 matrix = r.initial_matrix;
 	matrix.translate(-1, 1);
-	matrix.scale(vector2(2.0f, -2.0f).compDivBy(this->rect().d));
+	matrix.scale(vector2(2.0f, -2.0f).comp_divide(this->rect().d));
 
 	this->render(matrix);
 
@@ -292,7 +292,7 @@ void widget::unfocus()noexcept{
 
 r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	r4::recti ret(
-			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
+			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y -= ret.d.y;

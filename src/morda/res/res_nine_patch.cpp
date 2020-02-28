@@ -29,10 +29,10 @@ public:
 	{
 		std::array<vector2, 4> texCoords;
 		
-		texCoords[0] = rect.p.compDiv(this->tex->dims);
-		texCoords[1] = rect.leftTop().compDiv(this->tex->dims);
-		texCoords[2] = rect.rightTop().compDiv(this->tex->dims);
-		texCoords[3] = rect.rightBottom().compDiv(this->tex->dims);
+		texCoords[0] = rect.p.comp_divided(this->tex->dims);
+		texCoords[1] = rect.left_top().comp_divided(this->tex->dims);
+		texCoords[2] = rect.right_top().comp_divided(this->tex->dims);
+		texCoords[3] = rect.right_bottom().comp_divided(this->tex->dims);
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
 		auto& r = *this->context->renderer;
 		this->vao = r.factory->create_vertex_array(
@@ -124,8 +124,7 @@ std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(sides<real> bo
 	auto quadTex = this->image->get((this->image->dims() * mul).round());
 //	TRACE(<< "quadTex->dim() = " << quadTex->dim() << std::endl)
 	
-	vector2 actMul = quadTex->dims.compDiv(this->image->dims());
-
+	vector2 actMul = quadTex->dims.comp_divided(this->image->dims());
 	
 //	TRACE(<< "actMul = " << std::setprecision(10) << actMul << std::endl)
 	
