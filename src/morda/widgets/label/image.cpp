@@ -4,10 +4,7 @@
 
 #include "../../util/util.hpp"
 
-
 using namespace morda;
-
-
 
 image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
@@ -21,11 +18,11 @@ image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		if(p.value == "image"){
 			this->img = this->context->loader.load<res_image>(get_property_value(p).to_string());
 			this->resize(this->img->dims());
-		}else if(p.value == "keepAspectRatio"){
-			this->keepAspectRatio = get_property_value(p).to_bool();
-		}else if(p.value == "repeatX"){
+		}else if(p.value == "keep_aspect_ratio"){
+			this->keep_aspect_ratio = get_property_value(p).to_bool();
+		}else if(p.value == "repeat_x"){
 			this->repeat_v.x = get_property_value(p).to_bool();
-		}else if(p.value == "repeatY"){
+		}else if(p.value == "repeat_y"){
 			this->repeat_v.y = get_property_value(p).to_bool();
 		}
 	}
@@ -93,7 +90,7 @@ morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 	
 	ASSERT_INFO(imgDim.isPositiveOrZero(), "imgDim = " << imgDim)
 	
-	if(!keepAspectRatio){
+	if(!this->keep_aspect_ratio){
 		Vec2r ret = imgDim;
 		
 		for(unsigned i = 0; i != ret.size(); ++i){
@@ -122,10 +119,10 @@ morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 	}else if(quotum.y >= 0){
 		ASSERT(quotum.x >= 0)
 		ASSERT(quotum.y >= 0)
-		//This case is possible when image layout parameters are, for example 'dx{max} dy{fill}', so the
-		//minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
-		//set to fill all the allowed space, in this case the measure() method will be called with
-		//both quotum components to be positive numbers.
+		// This case is possible when image layout parameters are, for example 'dx{max} dy{fill}', so the
+		// minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
+		// set to fill all the allowed space, in this case the measure() method will be called with
+		// both quotum components to be positive numbers.
 		return quotum;
 	}else{
 		ASSERT(quotum.x >= 0)
@@ -139,8 +136,6 @@ morda::Vec2r image::measure(const morda::Vec2r& quotum)const{
 		return ret;
 	}
 }
-
-
 
 void image::set_image(const std::shared_ptr<const res_image>& image) {
 	if(this->img && image && this->img->dims() == image->dims()){

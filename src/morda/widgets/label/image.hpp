@@ -14,9 +14,9 @@ namespace morda{
  * From GUI script it can be instantiated as "image".
  *
  * @param image - image resource.
- * @param keepAspectRatio - try to keep aspect ratio of the image when scaling.
- * @param repeatX - replicate image horizontally if size of the widget is bigger than size of the image resource.
- * @param repeatY - replicate image vertically if size of the widget is bigger than size of the image resource.
+ * @param keep_aspect_ratio - try to keep aspect ratio of the image when scaling.
+ * @param repeat_x - replicate image horizontally if size of the widget is bigger than size of the image resource.
+ * @param repeat_y - replicate image vertically if size of the widget is bigger than size of the image resource.
  */
 class image :
 		public virtual widget,
@@ -29,7 +29,7 @@ class image :
 
 	mutable std::shared_ptr<const morda::res_image::texture> scaledImage;
 
-	bool keepAspectRatio = false;
+	bool keep_aspect_ratio = false;
 
 	r4::vec2b repeat_v = r4::vec2b(false);
 	
@@ -57,8 +57,8 @@ public:
 		this->scaledImage.reset();
 	}
 
-	void set_keep_aspect_ratio(bool keepAspectRatio){
-		this->keepAspectRatio = keepAspectRatio;
+	void set_keep_aspect_ratio(bool keep_aspect_ratio){
+		this->keep_aspect_ratio = keep_aspect_ratio;
 		this->invalidate_layout();
 	}
 private:

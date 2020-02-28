@@ -415,7 +415,7 @@ defs{
 //				image{img_lattice}
 				image{img_camera}
 
-				keepAspectRatio{true}
+				keep_aspect_ratio{true}
 
 				layout{
 					dx{min} dy{max}
@@ -451,7 +451,7 @@ defs{
 				dx{max} dy{max}
 			}
 			image{img_lattice}
-			repeatX{true} repeatY{true}
+			repeat_x{true} repeat_y{true}
 		}
 */
 
