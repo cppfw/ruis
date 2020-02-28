@@ -2,7 +2,6 @@
 
 using namespace morda;
 
-
 oriented_widget::oriented_widget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		is_vertical_v(vertical)

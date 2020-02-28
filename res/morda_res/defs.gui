@@ -152,8 +152,8 @@ defs{
 		look
 		@window{
 			look{
-				titleColorTopmost{ ${morda_color_bg_window_title} }
-				titleColorNonTopmost{ ${morda_color_bg_window_title_nontopmost} }
+				title_color_active{ ${morda_color_bg_window_title} }
+				title_color_inactive{ ${morda_color_bg_window_title_nontopmost} }
 				background{@window_background}
 				left{${morda_window_border_size}}
 				top{${morda_window_border_size}}

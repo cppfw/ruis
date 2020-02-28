@@ -1,6 +1,5 @@
 #include "fraction_widget.hpp"
 
-
 using namespace morda;
 
 void fraction_widget::set_fraction(float newFraction){

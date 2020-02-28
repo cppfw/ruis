@@ -171,9 +171,9 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 					continue;
 				}
 
-				if(pp.value == "titleColorTopmost"){
+				if(pp.value == "title_color_active"){
 					this->titleBgColorTopmost = get_property_value(pp).to_uint32();
-				}else if(pp.value == "titleColorNonTopmost"){
+				}else if(pp.value == "title_color_inactive"){
 					this->titleBgColorNonTopmost = get_property_value(pp).to_uint32();
 				}else if(pp.value == "background"){
 					this->set_background(this->context->inflater.inflate(pp.children));
