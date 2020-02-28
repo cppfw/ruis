@@ -34,7 +34,7 @@ add_library( # Specifies the name of the library.
 
 
 
-include_directories( build/ndkLibs/include/ ../../src/ ../../tests/app/src/opengles2/)
+include_directories( build/ndkLibs/include/ ../../src/ ../../tests/app/src/opengles2/ ../../tests/app/src/)
 
 target_link_libraries(
         mordavokneapp
