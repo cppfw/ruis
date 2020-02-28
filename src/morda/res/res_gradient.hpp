@@ -61,7 +61,7 @@ public:
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
 	 * @param m - transformation matrix.
 	 */
-	void render(const morda::Matr4r& m)const;
+	void render(const morda::matrix4& m)const;
 	
 private:
 	static std::shared_ptr<res_gradient> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);

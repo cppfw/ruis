@@ -99,7 +99,7 @@ private:
 
 	bool isEnabled_v = true;
 
-	morda::Rectr rectangle = Rectr(0);
+	morda::rectangle rectangle = morda::rectangle(0);
 
 	//clip widgets contents by widget's border if set to true
 	bool clip_v = false;
@@ -360,10 +360,10 @@ public:
 	 * implementation does nothing.
 	 * @param matrix - transformation matrix to use when rendering.
 	 */
-	virtual void render(const morda::Matr4r& matrix)const{}
+	virtual void render(const morda::matrix4& matrix)const{}
 
 private:
-	void renderInternal(const morda::Matr4r& matrix)const;
+	void renderInternal(const morda::matrix4& matrix)const;
 
 private:
 	void onKeyInternal(bool isDown, key keyCode);
@@ -522,7 +522,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool overlaps(const morda::Vec2r& pos)const noexcept{
-		return morda::Rectr(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
+		return morda::rectangle(morda::Vec2r(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**

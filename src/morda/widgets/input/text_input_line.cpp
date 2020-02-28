@@ -26,10 +26,10 @@ text_input_line::text_input_line(std::shared_ptr<morda::context> c, const puu::f
 	this->set_clip(true);
 }
 
-void text_input_line::render(const morda::Matr4r& matrix) const{
+void text_input_line::render(const morda::matrix4& matrix) const{
 	// render selection
 	if(this->cursorIndex != this->selectionStartIndex){
-		morda::Matr4r matr(matrix);
+		morda::matrix4 matr(matrix);
 		matr.translate(
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
@@ -41,7 +41,7 @@ void text_input_line::render(const morda::Matr4r& matrix) const{
 	}
 	
 	{
-		morda::Matr4r matr(matrix);
+		morda::matrix4 matr(matrix);
 		
 		using std::round;
 		
@@ -56,7 +56,7 @@ void text_input_line::render(const morda::Matr4r& matrix) const{
 	}
 	
 	if(this->is_focused() && this->cursorBlinkVisible){
-		morda::Matr4r matr(matrix);
+		morda::matrix4 matr(matrix);
 		matr.translate(this->cursorPos, 0);
 		matr.scale(Vec2r(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
 

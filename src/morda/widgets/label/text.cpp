@@ -10,8 +10,8 @@ text::text(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		single_line_text_widget(this->context, desc)
 {}
 
-void text::render(const morda::Matr4r& matrix)const{
-	morda::Matr4r matr(matrix);
+void text::render(const morda::matrix4& matrix)const{
+	morda::matrix4 matr(matrix);
 	
 	using std::round;
 	

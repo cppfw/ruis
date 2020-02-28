@@ -54,7 +54,7 @@ public:
 		
 		virtual ~texture()noexcept{}
 
-		void render(const Matr4r& matrix)const{
+		void render(const matrix4& matrix)const{
 			this->render(matrix, *this->renderer->pos_tex_quad_01_vao);
 		}
 
@@ -63,7 +63,7 @@ public:
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const Matr4r& matrix, const vertex_array& vao)const = 0;
+		virtual void render(const matrix4& matrix, const vertex_array& vao)const = 0;
 	};
 
 	/**
@@ -110,7 +110,7 @@ class res_atlas_image : public res_image, public res_image::texture{
 	std::shared_ptr<vertex_array> vao;
 	
 public:
-	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect);
+	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const rectangle& rect);
 	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex);
 	
 	res_atlas_image(const res_atlas_image& orig) = delete;
@@ -124,7 +124,7 @@ public:
 		return std::dynamic_pointer_cast<const res_image::texture>(this->shared_from_this());
 	}
 	
-	void render(const Matr4r& matrix, const vertex_array& vao) const override;
+	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	
 private:
 	static std::shared_ptr<res_atlas_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);

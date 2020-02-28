@@ -27,10 +27,10 @@ morda::Vec2r morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::c
 	return ret;
 }
 
-morda::Rectr morda::parse_rect(const puu::forest& desc){
+morda::rectangle morda::parse_rect(const puu::forest& desc){
 	Vec2r p = parse_vec2(desc.begin(), desc.end());
 	Vec2r d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
-	return Rectr(p, d);
+	return rectangle(p, d);
 }
 
 morda::Sidesr morda::parse_sides(const puu::forest& desc){

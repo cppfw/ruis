@@ -40,7 +40,7 @@ public:
 public:
 	virtual ~image()noexcept{}
 
-	void render(const morda::Matr4r& matrix)const override;
+	void render(const morda::matrix4& matrix)const override;
 
 	morda::Vec2r measure(const morda::Vec2r& quotum)const override;
 

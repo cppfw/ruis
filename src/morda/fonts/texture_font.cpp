@@ -151,7 +151,7 @@ const texture_font::Glyph& texture_font::getGlyph(char32_t c)const{
 
 
 
-real texture_font::renderGlyphInternal(const morda::Matr4r& matrix, r4::vec4f color, char32_t ch)const{
+real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vec4f color, char32_t ch)const{
 	const Glyph& g = this->getGlyph(ch);
 	
 	// texture can be null for glyph of empty characters, like space, tab etc...
@@ -184,8 +184,8 @@ real texture_font::get_advance_internal(const std::u32string& str)const{
 
 
 
-morda::Rectr texture_font::get_bounding_box_internal(const std::u32string& str)const{
-	morda::Rectr ret;
+morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str)const{
+	morda::rectangle ret;
 
 	if(str.size() == 0){
 		ret.p.set(0);
@@ -236,7 +236,7 @@ morda::Rectr texture_font::get_bounding_box_internal(const std::u32string& str)c
 
 
 
-real texture_font::render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
+real texture_font::render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
 		return 0;
 	}
@@ -245,7 +245,7 @@ real texture_font::render_internal(const morda::Matr4r& matrix, r4::vec4f color,
 
 	real ret = 0;
 
-	morda::Matr4r matr(matrix);
+	morda::matrix4 matr(matrix);
 
 	auto s = str.begin();
 

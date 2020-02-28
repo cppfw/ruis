@@ -99,7 +99,7 @@ public:
 
 private:
 	// this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
-	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
+	morda::rectangle curWinRect = morda::rectangle(0, 0, 0, 0);
 
 public:
 	const morda::Vec2r& window_dims()const noexcept{
@@ -111,9 +111,9 @@ private:
 
 	friend void render(application& app);
 
-	void updateWindowRect(const morda::Rectr& rect);
+	void updateWindowRect(const morda::rectangle& rect);
 
-	friend void updateWindowRect(application& app, const morda::Rectr& rect);
+	friend void updateWindowRect(application& app, const morda::rectangle& rect);
 
 	// pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const r4::vec2f& pos, unsigned id){

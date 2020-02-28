@@ -44,7 +44,7 @@ public:
 
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
-	void render(const morda::Matr4r& matrix) const override;
+	void render(const morda::matrix4& matrix) const override;
 
 	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, mouse_button button, unsigned pointerId)override;
 

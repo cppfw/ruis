@@ -62,14 +62,14 @@ private:
 };
 
 class single_line_text_widget : public text_widget{
-	mutable Rectr bb;
+	mutable morda::rectangle bb;
 
 protected:
 	Vec2r measure(const morda::Vec2r& quotum)const noexcept override;
 
 	single_line_text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	const Rectr& get_bounding_box()const{
+	const morda::rectangle& get_bounding_box()const{
 		return this->bb;
 	}
 

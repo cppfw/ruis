@@ -54,7 +54,7 @@ public:
 		return *this->content_v;
 	}
 
-	void render(const morda::Matr4r& matrix) const override;
+	void render(const morda::matrix4& matrix) const override;
 
 	/**
 	 * @brief Show/hide central part of nine-patch.

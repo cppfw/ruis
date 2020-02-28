@@ -36,9 +36,9 @@ inline morda::Vec2r parse_vec2(const puu::forest& desc){
  *               If there are less than 4 nodes in the chain then the rest of
  *               rectangle components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
- * @return parsed Rectr.
+ * @return parsed rectangle.
  */
-morda::Rectr parse_rect(const puu::forest& desc);
+morda::rectangle parse_rect(const puu::forest& desc);
 
 /**
  * @brief Parse chain of 4 puu nodes as sides.

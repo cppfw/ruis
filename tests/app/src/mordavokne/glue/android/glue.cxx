@@ -1021,7 +1021,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 		storage_dir(initializeStorageDir(this->name))
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();
-	this->updateWindowRect(morda::Rectr(morda::Vec2r(0), winSize.to<morda::real>()));
+	this->updateWindowRect(morda::rectangle(morda::Vec2r(0), winSize.to<morda::real>()));
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
@@ -1555,7 +1555,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 
 	updateWindowRect(
 			app,
-			morda::Rectr(
+			morda::rectangle(
 					float(rect->left),
 					curWinDim.y - float(rect->bottom),
 					float(rect->right - rect->left),

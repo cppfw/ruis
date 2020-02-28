@@ -29,7 +29,7 @@ public:
 
 	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) override;
 
-	void render(const morda::Matr4r& matrix) const override;
+	void render(const morda::matrix4& matrix) const override;
 };
 
 }

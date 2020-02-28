@@ -114,7 +114,7 @@ void tab_group::lay_out(){
 	}
 }
 
-void tab_group::render(const morda::Matr4r& matrix)const{
+void tab_group::render(const morda::matrix4& matrix)const{
 	for(auto& w: this->children()){
 		if(!this->is_active(*w)){
 			this->render_child(matrix, *w);
@@ -131,7 +131,7 @@ void tab_group::render(const morda::Matr4r& matrix)const{
 		real ce = this->children().back()->rect().right();
 		real l = this->rect().d.x - ce;
 		if(l > 0){
-			Matr4r m(matrix);
+			matrix4 m(matrix);
 			m.translate(ce, this->rect().d.y - this->fillerTexture->dims.y);
 			m.scale(l, this->fillerTexture->dims.y);
 			this->fillerTexture->render(m);

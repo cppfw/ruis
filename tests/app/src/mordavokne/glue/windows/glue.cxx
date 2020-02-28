@@ -567,7 +567,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 		case WM_SIZE:
 			// resize GL, LoWord=Width, HiWord=Height
-			updateWindowRect(mordavokne::inst(), morda::Rectr(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
+			updateWindowRect(mordavokne::inst(), morda::rectangle(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
 			return 0;
 
 		case WM_USER:
@@ -656,7 +656,7 @@ application::application(std::string&& name, const window_params& wp) :
 		curWinRect(0, 0, -1, -1)
 {
 	this->updateWindowRect(
-			morda::Rectr(
+			morda::rectangle(
 					0,
 					0,
 					float(wp.dim.x),

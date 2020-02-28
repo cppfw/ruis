@@ -18,7 +18,7 @@ public:
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;
 
-	void render(const morda::Matr4r& matrix)const override;
+	void render(const morda::matrix4& matrix)const override;
 };
 
 

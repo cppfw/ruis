@@ -27,7 +27,7 @@ void application::render(){
 
 
 
-void application::updateWindowRect(const morda::Rectr& rect){
+void application::updateWindowRect(const morda::rectangle& rect){
 	if(this->curWinRect == rect){
 		return;
 	}

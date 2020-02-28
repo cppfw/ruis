@@ -21,7 +21,7 @@ res_image::res_image(std::shared_ptr<morda::context> c) :
 		resource(std::move(c))
 {}
 
-res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const Rectr& rect) :
+res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const rectangle& rect) :
 		res_image(std::move(c)),
 		res_image::texture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
@@ -43,7 +43,7 @@ res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_
 
 std::shared_ptr<res_atlas_image> res_atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<res_texture> tex;
-	Rectr rect(-1);
+	rectangle rect(-1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
@@ -64,7 +64,7 @@ std::shared_ptr<res_atlas_image> res_atlas_image::load(morda::context& ctx, cons
 	}
 }
 
-void res_atlas_image::render(const Matr4r& matrix, const vertex_array& vao)const{
+void res_atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
 	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
 }
 
@@ -79,7 +79,7 @@ protected:
 	{}
 	
 public:
-	void render(const Matr4r& matrix, const vertex_array& vao)const override{
+	void render(const matrix4& matrix, const vertex_array& vao)const override{
 		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_v);
 	}
 };

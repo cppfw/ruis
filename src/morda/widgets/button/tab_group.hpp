@@ -23,7 +23,7 @@ public:
 
 	void lay_out() override;
 
-	void render(const morda::Matr4r& matrix) const override;
+	void render(const morda::matrix4& matrix) const override;
 };
 
 }

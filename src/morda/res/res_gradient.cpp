@@ -86,7 +86,7 @@ std::shared_ptr<res_gradient> res_gradient::load(morda::context& ctx, const puu:
 }
 
 
-void res_gradient::render(const morda::Matr4r& m) const {
+void res_gradient::render(const morda::matrix4& m) const {
 	this->context->renderer->shader->pos_clr->render(m, *this->vao);
 }
 

@@ -22,7 +22,7 @@ public:
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 
-	void render(const morda::Matr4r& matrix)const override;
+	void render(const morda::matrix4& matrix)const override;
 };
 
 }

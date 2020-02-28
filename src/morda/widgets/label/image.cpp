@@ -34,7 +34,7 @@ const std::array<r4::vec2f, 4> quadFanTexCoords = {{
 }};
 }
 
-void image::render(const morda::Matr4r& matrix) const{
+void image::render(const morda::matrix4& matrix) const{
 	if(!this->img){
 		return;
 	}
@@ -75,7 +75,7 @@ void image::render(const morda::Matr4r& matrix) const{
 	}
 	ASSERT(this->scaledImage)
 
-	morda::Matr4r matr(matrix);
+	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	this->scaledImage->render(matr, *this->vao);

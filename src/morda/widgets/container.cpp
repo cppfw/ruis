@@ -56,19 +56,19 @@ void container::inflate_push_back(const puu::forest& desc){
 	}
 }
 
-void container::render_child(const Matr4r& matrix, const widget& c) const {
+void container::render_child(const matrix4& matrix, const widget& c) const {
 	if(!c.is_visible()){
 		return;
 	}
 
-	morda::Matr4r matr(matrix);
+	morda::matrix4 matr(matrix);
 	matr.translate(c.rect().p);
 
 	c.renderInternal(matr);
 }
 
 
-void container::render(const morda::Matr4r& matrix)const{
+void container::render(const morda::matrix4& matrix)const{
 	for(auto& w: this->children()){
 		this->render_child(matrix, *w);
 	}

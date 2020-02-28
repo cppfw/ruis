@@ -148,13 +148,13 @@ void gui::set_root(std::shared_ptr<morda::widget> w){
 	this->rootWidget->resize(this->viewportSize);
 }
 
-void gui::render(const Matr4r& matrix)const{
+void gui::render(const matrix4& matrix)const{
 	if(!this->rootWidget){
 		TRACE(<< "gui::render(): root widget is not set" << std::endl)
 		return;
 	}
 
-	morda::Matr4r m(matrix);
+	morda::matrix4 m(matrix);
 
 	// direct y-axis down
 	m.scale(1, -1);

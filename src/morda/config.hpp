@@ -18,19 +18,10 @@ typedef float real;
 typedef r4::matrix4<real> matrix4;
 static_assert(sizeof(matrix4) == sizeof(real) * 4 * 4, "size mismatch");
 
-//TODO: deprecated, remove.
-typedef matrix4 Matr4r;
-
 typedef r4::quaternion<real> quaternion;
 static_assert(sizeof(quaternion) == sizeof(real) * 4, "size mismatch");
 
-//TODO: deprecated, remove.
-typedef quaternion Quatr;
-
 typedef r4::rectangle<real> rectangle;
-
-//TODO: deprecated, remove.
-typedef rectangle Rectr;
 
 typedef r4::vector2<real> vector2;
 static_assert(sizeof(vector2) == sizeof(real) * 2, "size mismatch");

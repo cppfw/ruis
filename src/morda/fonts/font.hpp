@@ -44,7 +44,7 @@ protected:
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real render_internal(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const = 0;
+	virtual real render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -58,7 +58,7 @@ protected:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	virtual morda::Rectr get_bounding_box_internal(const std::u32string& str)const = 0;
+	virtual morda::rectangle get_bounding_box_internal(const std::u32string& str)const = 0;
 public:
 	virtual ~font()noexcept{}
 	
@@ -69,7 +69,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::Matr4r& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
+	real render(const morda::matrix4& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
 		return this->render_internal(matrix, color, unikod::toUtf32(str));
 	}
 	
@@ -80,7 +80,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::Matr4r& matrix, r4::vec4f color, const std::u32string& str)const{
+	real render(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const{
 		return this->render_internal(matrix, color, str);
 	}
 	
@@ -91,7 +91,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::Matr4r& matrix, r4::vec4f color, const char* str)const{
+	real render(const morda::matrix4& matrix, r4::vec4f color, const char* str)const{
 		return this->render(matrix, color, unikod::Utf8Iterator(str));
 	}
 	
@@ -102,7 +102,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::Matr4r& matrix, r4::vec4f color, const std::string& str)const{
+	real render(const morda::matrix4& matrix, r4::vec4f color, const std::string& str)const{
 		return this->render(matrix, color, str.c_str());
 	}
 	
@@ -156,7 +156,7 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr get_bounding_box(unikod::Utf8Iterator str)const{
+	morda::rectangle get_bounding_box(unikod::Utf8Iterator str)const{
 		return this->get_bounding_box_internal(unikod::toUtf32(str));
 	}
 	
@@ -165,7 +165,7 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr get_bounding_box(const std::u32string& str)const{
+	morda::rectangle get_bounding_box(const std::u32string& str)const{
 		return this->get_bounding_box_internal(str);
 	}
 	
@@ -174,7 +174,7 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr get_bounding_box(const char* str)const{
+	morda::rectangle get_bounding_box(const char* str)const{
 		return this->get_bounding_box(unikod::Utf8Iterator(str));
 	}
 	
@@ -183,7 +183,7 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::Rectr get_bounding_box(const std::string& str)const{
+	morda::rectangle get_bounding_box(const std::string& str)const{
 		return this->get_bounding_box(str.c_str());
 	}
 	

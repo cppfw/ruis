@@ -35,7 +35,7 @@ bool mouse_cursor::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 	return false;
 }
 
-void mouse_cursor::render(const morda::Matr4r& matrix) const {
+void mouse_cursor::render(const morda::matrix4& matrix) const {
 	if(!this->cursor){
 		return;
 	}
@@ -45,7 +45,7 @@ void mouse_cursor::render(const morda::Matr4r& matrix) const {
 	
 	ASSERT(this->quadTex)
 	
-	Matr4r matr(matrix);
+	matrix4 matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
 	matr.scale(this->quadTex->dims);

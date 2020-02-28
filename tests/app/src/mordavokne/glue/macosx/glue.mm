@@ -156,7 +156,7 @@ void macosx_HandleCharacterInput(const void* nsstring, morda::key key){
 	handleCharacterInput(mordavokne::application::inst(), MacosxUnicodeProvider(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
-void macosx_UpdateWindowRect(const morda::Rectr& r){
+void macosx_UpdateWindowRect(const morda::rectangle& r){
 	auto& ww = getImpl(getWindowPimpl(mordavokne::application::inst()));
 	[ww.openglContextId update];//after resizing window we need to update OpenGL context
 	updateWindowRect(mordavokne::application::inst(), r);
@@ -595,7 +595,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	NSWindow* nsw = [n object];
 	NSRect frame = [nsw frame];
 	NSRect rect = [nsw contentRectForFrameRect:frame];
-	macosx_UpdateWindowRect(morda::Rectr(0, 0, rect.size.width, rect.size.height));
+	macosx_UpdateWindowRect(morda::rectangle(0, 0, rect.size.width, rect.size.height));
 }
 
 -(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
@@ -843,7 +843,7 @@ application::application(std::string&& name, const window_params& wp) :
 {
 	TRACE(<< "application::application(): enter" << std::endl)
 	this->updateWindowRect(
-			morda::Rectr(
+			morda::rectangle(
 					0,
 					0,
 					float(wp.dim.x),

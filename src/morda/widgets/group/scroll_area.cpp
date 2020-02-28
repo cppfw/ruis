@@ -21,10 +21,10 @@ bool scroll_area::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID){
 	return this->container::on_mouse_move(pos - d, pointerID);
 }
 
-void scroll_area::render(const morda::Matr4r& matrix)const{
+void scroll_area::render(const morda::matrix4& matrix)const{
 	Vec2r d = -this->curScrollPos;
 
-	Matr4r matr(matrix);
+	matrix4 matr(matrix);
 	matr.translate(d);
 
 	this->container::render(matr);

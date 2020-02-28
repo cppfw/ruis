@@ -8,7 +8,7 @@ void render(application& app){
 	app.render();
 }
 
-void updateWindowRect(application& app, const morda::Rectr& rect){
+void updateWindowRect(application& app, const morda::rectangle& rect){
 	app.updateWindowRect(rect);
 }
 

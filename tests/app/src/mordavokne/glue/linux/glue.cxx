@@ -966,7 +966,7 @@ int main(int argc, const char** argv){
 					break;
 				case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-					updateWindowRect(*app, morda::Rectr(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+					updateWindowRect(*app, morda::rectangle(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
 					break;
 				case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)

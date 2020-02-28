@@ -115,9 +115,9 @@ public:
 		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
 	}
 
-	void render(const morda::Matr4r& matrix)const override{
+	void render(const morda::matrix4& matrix)const override{
 		{
-			morda::Matr4r matr(matrix);
+			morda::matrix4 matr(matrix);
 			matr.scale(this->rect().d);
 
 			auto& r = *this->context->renderer;
@@ -129,7 +129,7 @@ public:
 //		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable(GL_BLEND);
 //		morda::SimpleTexturingShader &s = morda::gui::inst().shaders.simpleTexturing;
-//		morda::Matr4r m(matrix);
+//		morda::matrix4 m(matrix);
 //		m.translate(200, 200);
 //		this->fnt->Fnt().RenderString(s, m, "Hello World!");
 	}
@@ -140,7 +140,7 @@ public:
 class CubeWidget : public morda::widget, public morda::updateable{
 	std::shared_ptr<morda::res_texture> tex;
 
-	morda::Quatr rot = morda::Quatr().identity();
+	morda::quaternion rot = morda::quaternion().identity();
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 
@@ -209,7 +209,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::Quatr().initRot(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::quaternion().initRot(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;
@@ -217,16 +217,16 @@ public:
 		}
 	}
 
-	void render(const morda::Matr4r& matrix)const override{
+	void render(const morda::matrix4& matrix)const override{
 		this->widget::render(matrix);
 
-		morda::Matr4r matr(matrix);
+		morda::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.scale(1, -1);
 		matr.translate(1, -1);
 		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
 
-		morda::Matr4r m(matr);
+		morda::matrix4 m(matr);
 		m.translate(0, 0, -4);
 
 		m.rotate(this->rot);

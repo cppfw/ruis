@@ -125,7 +125,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 	this->content_v->inflate_push_back(desc);
 }
 
-void nine_patch::render(const morda::Matr4r& matrix)const{
+void nine_patch::render(const morda::matrix4& matrix)const{
 	this->column::render(matrix);
 }
 

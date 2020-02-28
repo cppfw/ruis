@@ -141,7 +141,7 @@ void widget::invalidate_layout()noexcept{
 
 
 
-void widget::renderInternal(const morda::Matr4r& matrix)const{
+void widget::renderInternal(const morda::matrix4& matrix)const{
 	if(!this->rect().d.isPositive()){
 		return;
 	}
@@ -203,7 +203,7 @@ void widget::renderInternal(const morda::Matr4r& matrix)const{
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
 	morda::ColorPosShader& s = App::inst().shaders.colorPosShader;
 	s.Bind();
-	morda::Matr4r matr(matrix);
+	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 	s.SetMatrix(matr);
 
@@ -246,7 +246,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 
 	r.clear_framebuffer();
 
-	Matr4r matrix = r.initial_matrix;
+	matrix4 matrix = r.initial_matrix;
 	matrix.translate(-1, 1);
 	matrix.scale(Vec2r(2.0f, -2.0f).compDivBy(this->rect().d));
 
@@ -258,7 +258,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 }
 
 void widget::renderFromCache(const r4::mat4f& matrix) const {
-	morda::Matr4r matr(matrix);
+	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	auto& r = *this->context->renderer;
@@ -314,7 +314,7 @@ void widget::unfocus()noexcept{
 
 
 
-r4::recti widget::compute_viewport_rect(const Matr4r& matrix)const noexcept{
+r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	r4::recti ret(
 			((matrix * Vec2r(0, 0) + Vec2r(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
 			this->rect().d.to<int>()
