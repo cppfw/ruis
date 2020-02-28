@@ -52,8 +52,8 @@ class resource_loader{
 	public:
 		ResPackEntry() = default;
 
-		//For MSVC compiler, it does not generate move constructor automatically
-		//TODO: check if this is still needed.
+		// For MSVC compiler, it does not generate move constructor automatically
+		// TODO: check if this is still needed.
 		ResPackEntry(ResPackEntry&& r){
 			this->fi = std::move(r.fi);
 			this->script = std::move(r.script);

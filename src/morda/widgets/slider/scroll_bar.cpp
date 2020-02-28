@@ -49,7 +49,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 		fraction_band_widget(this->context, puu::forest()),
 		oriented_widget(this->context, puu::forest(), vertical),
 		pile(this->context, DDescription),
-		handle(*this->try_get_widget("morda_handle")) //TODO: use non-try version
+		handle(this->get_widget("morda_handle"))
 {
 	auto np = this->try_get_widget_as<nine_patch>("morda_slider_bg");
 	ASSERT(np)

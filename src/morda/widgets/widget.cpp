@@ -6,12 +6,7 @@
 
 #include "container.hpp"
 
-//TODO: remove
-#include "../gui.hpp"
-
-
 using namespace morda;
-
 
 widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		context(std::move(c))
@@ -70,16 +65,12 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 	}
 }
 
-
-
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
 		return this->sharedFromThis(this);
 	}
 	return nullptr;
 }
-
-
 
 void widget::resize(const morda::vector2& newDims){
 	if(this->rectangle.d == newDims){
@@ -99,8 +90,6 @@ void widget::resize(const morda::vector2& newDims){
 	this->on_resize(); // call virtual method
 }
 
-
-
 std::shared_ptr<widget> widget::remove_from_parent(){
 	if(!this->parent_v){
 		throw utki::invalid_state("widget::remove_from_parent(): widget is not added to the parent");
@@ -109,8 +98,6 @@ std::shared_ptr<widget> widget::remove_from_parent(){
 	this->parent_v->erase(this->parent_v->find(this));
 	return ret;
 }
-
-
 
 std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 	if(!this->parent()){
@@ -126,8 +113,6 @@ std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 	return this->remove_from_parent();
 }
 
-
-
 void widget::invalidate_layout()noexcept{
 	if(this->relayoutNeeded){
 		return;
@@ -138,8 +123,6 @@ void widget::invalidate_layout()noexcept{
 	}
 	this->cacheTex.reset();
 }
-
-
 
 void widget::renderInternal(const morda::matrix4& matrix)const{
 	if(!this->rect().d.isPositive()){
@@ -273,7 +256,6 @@ void widget::clear_cache(){
 	}
 }
 
-
 void widget::onKeyInternal(bool isDown, key keyCode){
 	if(this->is_interactive()){
 		if(this->on_key(isDown, keyCode)){
@@ -286,8 +268,6 @@ void widget::onKeyInternal(bool isDown, key keyCode){
 	}
 }
 
-
-
 void widget::focus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
 
@@ -297,8 +277,6 @@ void widget::focus()noexcept{
 
 	this->context->set_focused_widget(this->sharedFromThis(this));
 }
-
-
 
 void widget::unfocus()noexcept{
 //	ASSERT(App::inst().thisIsUIThread())
@@ -312,8 +290,6 @@ void widget::unfocus()noexcept{
 	this->context->set_focused_widget(nullptr);
 }
 
-
-
 r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	r4::recti ret(
 			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).compMulBy(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
@@ -322,7 +298,6 @@ r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	ret.p.y -= ret.d.y;
 	return ret;
 }
-
 
 vector2 widget::measure(const morda::vector2& quotum)const{
 	vector2 ret(quotum);
@@ -334,7 +309,6 @@ vector2 widget::measure(const morda::vector2& quotum)const{
 	return ret;
 }
 
-
 vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 	if(ancestor == this || !this->parent()){
 		return pos;
@@ -345,8 +319,7 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-
-widget::layout_params& widget::get_layout_params() {
+widget::layout_params& widget::get_layout_params(){
 	if(!this->parent()){
 		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
@@ -354,8 +327,7 @@ widget::layout_params& widget::get_layout_params() {
 	return this->parent()->get_layout_params(*this);
 }
 
-
-const widget::layout_params& widget::get_layout_params()const {
+const widget::layout_params& widget::get_layout_params()const{
 	if(!this->parent()){
 		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
@@ -363,7 +335,7 @@ const widget::layout_params& widget::get_layout_params()const {
 	return this->parent()->get_layout_params(*this);
 }
 
-widget& widget::get_widget(const std::string& id) {
+widget& widget::get_widget(const std::string& id){
 	auto w = this->try_get_widget(id);
 	if(!w){
 		std::stringstream ss;
@@ -373,7 +345,7 @@ widget& widget::get_widget(const std::string& id) {
 	return *w;
 }
 
-void widget::set_enabled(bool enable) {
+void widget::set_enabled(bool enable){
 //	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
 	if(this->isEnabled_v == enable){
 		return;
@@ -389,14 +361,14 @@ void widget::set_enabled(bool enable) {
 	this->on_enabled_changed();
 }
 
-void widget::set_visible(bool visible) {
+void widget::set_visible(bool visible){
 	this->isVisible_v = visible;
 	if (!this->isVisible_v) {
 		this->set_unhovered();
 	}
 }
 
-void widget::set_unhovered() {
+void widget::set_unhovered(){
 	auto hoverSet = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for(auto h : hoverSet){
@@ -404,8 +376,7 @@ void widget::set_unhovered() {
 	}
 }
 
-
-void widget::set_hovered(bool isHovered, unsigned pointerID) {
+void widget::set_hovered(bool isHovered, unsigned pointerID){
 	if(isHovered == this->is_hovered(pointerID)){
 		return;
 	}

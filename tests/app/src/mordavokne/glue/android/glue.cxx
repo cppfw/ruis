@@ -643,117 +643,117 @@ public:
 
 //TODO: this mapping is not final
 const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
-	morda::key::unknown, //AKEYCODE_UNKNOWN
-	morda::key::left, //AKEYCODE_SOFT_LEFT
-	morda::key::right, //AKEYCODE_SOFT_RIGHT
-	morda::key::home, //AKEYCODE_HOME
-	morda::key::escape, //AKEYCODE_BACK
-	morda::key::f11, //AKEYCODE_CALL
-	morda::key::f12, //AKEYCODE_ENDCALL
-	morda::key::zero, //AKEYCODE_0
-	morda::key::one, //AKEYCODE_1
-	morda::key::two, //AKEYCODE_2
-	morda::key::three, //AKEYCODE_3
-	morda::key::four, //AKEYCODE_4
-	morda::key::five, //AKEYCODE_5
-	morda::key::six, //AKEYCODE_6
-	morda::key::seven, //AKEYCODE_7
-	morda::key::eight, //AKEYCODE_8
-	morda::key::nine, //AKEYCODE_9
-	morda::key::unknown, //AKEYCODE_STAR
-	morda::key::unknown, //AKEYCODE_POUND
-	morda::key::up, //AKEYCODE_DPAD_UP
-	morda::key::down, //AKEYCODE_DPAD_DOWN
-	morda::key::left, //AKEYCODE_DPAD_LEFT
-	morda::key::right, //AKEYCODE_DPAD_RIGHT
-	morda::key::enter, //AKEYCODE_DPAD_CENTER
-	morda::key::page_up, //AKEYCODE_VOLUME_UP
-	morda::key::page_down, //AKEYCODE_VOLUME_DOWN
-	morda::key::f10, //AKEYCODE_POWER
-	morda::key::f9, //AKEYCODE_CAMERA
-	morda::key::backspace, //AKEYCODE_CLEAR
-	morda::key::a, //AKEYCODE_A
-	morda::key::b, //AKEYCODE_B
-	morda::key::c, //AKEYCODE_C
-	morda::key::d, //AKEYCODE_D
-	morda::key::e, //AKEYCODE_E
-	morda::key::f, //AKEYCODE_F
-	morda::key::g, //AKEYCODE_G
-	morda::key::h, //AKEYCODE_H
-	morda::key::i, //AKEYCODE_I
-	morda::key::g, //AKEYCODE_J
-	morda::key::k, //AKEYCODE_K
-	morda::key::l, //AKEYCODE_L
-	morda::key::m, //AKEYCODE_M
-	morda::key::n, //AKEYCODE_N
-	morda::key::o, //AKEYCODE_O
-	morda::key::p, //AKEYCODE_P
-	morda::key::q, //AKEYCODE_Q
-	morda::key::r, //AKEYCODE_R
-	morda::key::s, //AKEYCODE_S
-	morda::key::t, //AKEYCODE_T
-	morda::key::u, //AKEYCODE_U
-	morda::key::v, //AKEYCODE_V
-	morda::key::w, //AKEYCODE_W
-	morda::key::x, //AKEYCODE_X
-	morda::key::y, //AKEYCODE_Y
-	morda::key::z, //AKEYCODE_Z
-	morda::key::v, //AKEYCODE_COMMA
-	morda::key::b, //AKEYCODE_PERIOD
-	morda::key::n, //AKEYCODE_ALT_LEFT
-	morda::key::m, //AKEYCODE_ALT_RIGHT
-	morda::key::left_shift, //AKEYCODE_SHIFT_LEFT
-	morda::key::right_shift, //AKEYCODE_SHIFT_RIGHT
-	morda::key::tabulator, //AKEYCODE_TAB
-	morda::key::space, //AKEYCODE_SPACE
-	morda::key::left_control, //AKEYCODE_SYM
-	morda::key::f8, //AKEYCODE_EXPLORER
-	morda::key::f7, //AKEYCODE_ENVELOPE
-	morda::key::enter, //AKEYCODE_ENTER
-	morda::key::deletion, //AKEYCODE_DEL
-	morda::key::f6, //AKEYCODE_GRAVE
-	morda::key::minus, //AKEYCODE_MINUS
-	morda::key::equals, //AKEYCODE_EQUALS
-	morda::key::left_square_bracket, //AKEYCODE_LEFT_BRACKET
-	morda::key::right_square_bracket, //AKEYCODE_RIGHT_BRACKET
-	morda::key::backslash, //AKEYCODE_BACKSLASH
-	morda::key::semicolon, //AKEYCODE_SEMICOLON
-	morda::key::apostrophe, //AKEYCODE_APOSTROPHE
-	morda::key::slash, //AKEYCODE_SLASH
-	morda::key::grave, //AKEYCODE_AT
-	morda::key::f5, //AKEYCODE_NUM
-	morda::key::f4, //AKEYCODE_HEADSETHOOK
-	morda::key::f3, //AKEYCODE_FOCUS (camera focus)
-	morda::key::f2, //AKEYCODE_PLUS
-	morda::key::f1, //AKEYCODE_MENU
-	morda::key::end, //AKEYCODE_NOTIFICATION
-	morda::key::right_control, //AKEYCODE_SEARCH
-	morda::key::unknown, //AKEYCODE_MEDIA_PLAY_PAUSE
-	morda::key::unknown, //AKEYCODE_MEDIA_STOP
-	morda::key::unknown, //AKEYCODE_MEDIA_NEXT
-	morda::key::unknown, //AKEYCODE_MEDIA_PREVIOUS
-	morda::key::unknown, //AKEYCODE_MEDIA_REWIND
-	morda::key::unknown, //AKEYCODE_MEDIA_FAST_FORWARD
-	morda::key::unknown, //AKEYCODE_MUTE
-	morda::key::page_up, //AKEYCODE_PAGE_UP
-	morda::key::page_down, //AKEYCODE_PAGE_DOWN
-	morda::key::unknown, //AKEYCODE_PICTSYMBOLS
-	morda::key::capslock, //AKEYCODE_SWITCH_CHARSET
-	morda::key::unknown, //AKEYCODE_BUTTON_A
-	morda::key::unknown, //AKEYCODE_BUTTON_B
-	morda::key::unknown, //AKEYCODE_BUTTON_C
-	morda::key::unknown, //AKEYCODE_BUTTON_X
-	morda::key::unknown, //AKEYCODE_BUTTON_Y
-	morda::key::unknown, //AKEYCODE_BUTTON_Z
-	morda::key::unknown, //AKEYCODE_BUTTON_L1
-	morda::key::unknown, //AKEYCODE_BUTTON_R1
-	morda::key::unknown, //AKEYCODE_BUTTON_L2
-	morda::key::unknown, //AKEYCODE_BUTTON_R2
-	morda::key::unknown, //AKEYCODE_BUTTON_THUMBL
-	morda::key::unknown, //AKEYCODE_BUTTON_THUMBR
-	morda::key::unknown, //AKEYCODE_BUTTON_START
-	morda::key::unknown, //AKEYCODE_BUTTON_SELECT
-	morda::key::unknown, //AKEYCODE_BUTTON_MODE
+	morda::key::unknown, // AKEYCODE_UNKNOWN
+	morda::key::left, // AKEYCODE_SOFT_LEFT
+	morda::key::right, // AKEYCODE_SOFT_RIGHT
+	morda::key::home, // AKEYCODE_HOME
+	morda::key::escape, // AKEYCODE_BACK
+	morda::key::f11, // AKEYCODE_CALL
+	morda::key::f12, // AKEYCODE_ENDCALL
+	morda::key::zero, // AKEYCODE_0
+	morda::key::one, // AKEYCODE_1
+	morda::key::two, // AKEYCODE_2
+	morda::key::three, // AKEYCODE_3
+	morda::key::four, // AKEYCODE_4
+	morda::key::five, // AKEYCODE_5
+	morda::key::six, // AKEYCODE_6
+	morda::key::seven, // AKEYCODE_7
+	morda::key::eight, // AKEYCODE_8
+	morda::key::nine, // AKEYCODE_9
+	morda::key::unknown, // AKEYCODE_STAR
+	morda::key::unknown, // AKEYCODE_POUND
+	morda::key::up, // AKEYCODE_DPAD_UP
+	morda::key::down, // AKEYCODE_DPAD_DOWN
+	morda::key::left, // AKEYCODE_DPAD_LEFT
+	morda::key::right, // AKEYCODE_DPAD_RIGHT
+	morda::key::enter, // AKEYCODE_DPAD_CENTER
+	morda::key::page_up, // AKEYCODE_VOLUME_UP
+	morda::key::page_down, // AKEYCODE_VOLUME_DOWN
+	morda::key::f10, // AKEYCODE_POWER
+	morda::key::f9, // AKEYCODE_CAMERA
+	morda::key::backspace, // AKEYCODE_CLEAR
+	morda::key::a, // AKEYCODE_A
+	morda::key::b, // AKEYCODE_B
+	morda::key::c, // AKEYCODE_C
+	morda::key::d, // AKEYCODE_D
+	morda::key::e, // AKEYCODE_E
+	morda::key::f, // AKEYCODE_F
+	morda::key::g, // AKEYCODE_G
+	morda::key::h, // AKEYCODE_H
+	morda::key::i, // AKEYCODE_I
+	morda::key::g, // AKEYCODE_J
+	morda::key::k, // AKEYCODE_K
+	morda::key::l, // AKEYCODE_L
+	morda::key::m, // AKEYCODE_M
+	morda::key::n, // AKEYCODE_N
+	morda::key::o, // AKEYCODE_O
+	morda::key::p, // AKEYCODE_P
+	morda::key::q, // AKEYCODE_Q
+	morda::key::r, // AKEYCODE_R
+	morda::key::s, // AKEYCODE_S
+	morda::key::t, // AKEYCODE_T
+	morda::key::u, // AKEYCODE_U
+	morda::key::v, // AKEYCODE_V
+	morda::key::w, // AKEYCODE_W
+	morda::key::x, // AKEYCODE_X
+	morda::key::y, // AKEYCODE_Y
+	morda::key::z, // AKEYCODE_Z
+	morda::key::v, // AKEYCODE_COMMA
+	morda::key::b, // AKEYCODE_PERIOD
+	morda::key::n, // AKEYCODE_ALT_LEFT
+	morda::key::m, // AKEYCODE_ALT_RIGHT
+	morda::key::left_shift, // AKEYCODE_SHIFT_LEFT
+	morda::key::right_shift, // AKEYCODE_SHIFT_RIGHT
+	morda::key::tabulator, // AKEYCODE_TAB
+	morda::key::space, // AKEYCODE_SPACE
+	morda::key::left_control, // AKEYCODE_SYM
+	morda::key::f8, // AKEYCODE_EXPLORER
+	morda::key::f7, // AKEYCODE_ENVELOPE
+	morda::key::enter, // AKEYCODE_ENTER
+	morda::key::deletion, // AKEYCODE_DEL
+	morda::key::f6, // AKEYCODE_GRAVE
+	morda::key::minus, // AKEYCODE_MINUS
+	morda::key::equals, // AKEYCODE_EQUALS
+	morda::key::left_square_bracket, // AKEYCODE_LEFT_BRACKET
+	morda::key::right_square_bracket, // AKEYCODE_RIGHT_BRACKET
+	morda::key::backslash, // AKEYCODE_BACKSLASH
+	morda::key::semicolon, // AKEYCODE_SEMICOLON
+	morda::key::apostrophe, // AKEYCODE_APOSTROPHE
+	morda::key::slash, // AKEYCODE_SLASH
+	morda::key::grave, // AKEYCODE_AT
+	morda::key::f5, // AKEYCODE_NUM
+	morda::key::f4, // AKEYCODE_HEADSETHOOK
+	morda::key::f3, // AKEYCODE_FOCUS (camera focus)
+	morda::key::f2, // AKEYCODE_PLUS
+	morda::key::f1, // AKEYCODE_MENU
+	morda::key::end, // AKEYCODE_NOTIFICATION
+	morda::key::right_control, // AKEYCODE_SEARCH
+	morda::key::unknown, // AKEYCODE_MEDIA_PLAY_PAUSE
+	morda::key::unknown, // AKEYCODE_MEDIA_STOP
+	morda::key::unknown, // AKEYCODE_MEDIA_NEXT
+	morda::key::unknown, // AKEYCODE_MEDIA_PREVIOUS
+	morda::key::unknown, // AKEYCODE_MEDIA_REWIND
+	morda::key::unknown, // AKEYCODE_MEDIA_FAST_FORWARD
+	morda::key::unknown, // AKEYCODE_MUTE
+	morda::key::page_up, // AKEYCODE_PAGE_UP
+	morda::key::page_down, // AKEYCODE_PAGE_DOWN
+	morda::key::unknown, // AKEYCODE_PICTSYMBOLS
+	morda::key::capslock, // AKEYCODE_SWITCH_CHARSET
+	morda::key::unknown, // AKEYCODE_BUTTON_A
+	morda::key::unknown, // AKEYCODE_BUTTON_B
+	morda::key::unknown, // AKEYCODE_BUTTON_C
+	morda::key::unknown, // AKEYCODE_BUTTON_X
+	morda::key::unknown, // AKEYCODE_BUTTON_Y
+	morda::key::unknown, // AKEYCODE_BUTTON_Z
+	morda::key::unknown, // AKEYCODE_BUTTON_L1
+	morda::key::unknown, // AKEYCODE_BUTTON_R1
+	morda::key::unknown, // AKEYCODE_BUTTON_L2
+	morda::key::unknown, // AKEYCODE_BUTTON_R2
+	morda::key::unknown, // AKEYCODE_BUTTON_THUMBL
+	morda::key::unknown, // AKEYCODE_BUTTON_THUMBR
+	morda::key::unknown, // AKEYCODE_BUTTON_START
+	morda::key::unknown, // AKEYCODE_BUTTON_SELECT
+	morda::key::unknown, // AKEYCODE_BUTTON_MODE
 	morda::key::unknown, //
 	morda::key::unknown, //
 	morda::key::unknown, //
@@ -901,15 +901,11 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
 	morda::key::unknown  //
 };
 
-
-
 morda::key getKeyFromKeyEvent(AInputEvent& event)noexcept{
 	size_t kc = size_t(AKeyEvent_getKeyCode(&event));
 	ASSERT(kc < keyCodeMap.size())
 	return keyCodeMap[kc];
 }
-
-
 
 struct UnicodeProvider : public morda::gui::unicode_provider{
 	std::u32string chars;
@@ -920,7 +916,6 @@ struct UnicodeProvider : public morda::gui::unicode_provider{
 };
 
 }
-
 
 namespace{
 
@@ -959,11 +954,7 @@ JNIEXPORT void JNICALL Java_io_github_igagis_mordavokne_MordaVOkneActivity_handl
 	mordavokne::handleCharacterInput(mordavokne::inst(), resolver, morda::key::unknown);
 }
 
-
-
-}//~namespace
-
-
+}
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved){
 	TRACE(<< "JNI_OnLoad(): invoked" << std::endl)
@@ -1028,13 +1019,13 @@ std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::st
 	return utki::make_unique<asset_file>(appInfo.assetManager, path);
 }
 
-void mordavokne::application::swapFrameBuffers() {
+void mordavokne::application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 	ww.swapBuffers();
 }
 
-void mordavokne::application::set_mouse_cursor_visible(bool visible) {
-	//do nothing
+void mordavokne::application::set_mouse_cursor_visible(bool visible){
+	// do nothing
 }
 
 void mordavokne::application::set_fullscreen(bool enable) {
@@ -1052,26 +1043,22 @@ void mordavokne::application::quit()noexcept{
 }
 
 void mordavokne::application::show_virtual_keyboard()noexcept{
-	//NOTE:
-	//ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
-	//did not work for some reason.
+	// NOTE:
+	// ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+	// did not work for some reason.
 
 	ASSERT(javaFunctionsWrapper)
 	javaFunctionsWrapper->show_virtual_keyboard();
 }
 
-
-
 void mordavokne::application::hide_virtual_keyboard()noexcept{
-	//NOTE:
-	//ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
-	//did not work for some reason
+	// NOTE:
+	// ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+	// did not work for some reason
 
 	ASSERT(javaFunctionsWrapper)
 	javaFunctionsWrapper->hide_virtual_keyboard();
 }
-
-
 
 namespace{
 void handleInputEvents(){
@@ -1248,13 +1235,9 @@ void OnDestroy(ANativeActivity* activity){
 	javaFunctionsWrapper.reset();
 }
 
-
-
 void OnStart(ANativeActivity* activity){
 	TRACE(<< "OnStart(): invoked" << std::endl)
 }
-
-
 
 void OnResume(ANativeActivity* activity){
 	TRACE(<< "OnResume(): invoked" << std::endl)
@@ -1263,24 +1246,18 @@ void OnResume(ANativeActivity* activity){
 void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
 	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
 
-	//Do nothing, we don't use this mechanism of saving state.
+	// Do nothing, we don't use this mechanism of saving state.
 
 	return nullptr;
 }
-
-
 
 void OnPause(ANativeActivity* activity){
 	TRACE(<< "OnPause(): invoked" << std::endl)
 }
 
-
-
 void OnStop(ANativeActivity* activity){
 	TRACE(<< "OnStop(): invoked" << std::endl)
 }
-
-
 
 void OnConfigurationChanged(ANativeActivity* activity){
 	TRACE(<< "OnConfigurationChanged(): invoked" << std::endl)
@@ -1295,7 +1272,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 		curConfig = std::move(config);
 	}
 
-	//if orientation has changed
+	// if orientation has changed
 	if(diff & ACONFIGURATION_ORIENTATION){
 		int32_t orientation = AConfiguration_getOrientation(curConfig->ac);
 		switch(orientation){
@@ -1304,7 +1281,7 @@ void OnConfigurationChanged(ANativeActivity* activity){
 				std::swap(curWinDim.x, curWinDim.y);
 				break;
 			case ACONFIGURATION_ORIENTATION_SQUARE:
-				//do nothing
+				// do nothing
 				break;
 			case ACONFIGURATION_ORIENTATION_ANY:
 				ASSERT(false)
@@ -1315,21 +1292,15 @@ void OnConfigurationChanged(ANativeActivity* activity){
 	}
 }
 
-
-
 void OnLowMemory(ANativeActivity* activity){
 	TRACE(<< "OnLowMemory(): invoked" << std::endl)
 	//TODO:
 //    static_cast<morda::application*>(activity->instance)->OnLowMemory();
 }
 
-
-
 void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
 	TRACE(<< "OnWindowFocusChanged(): invoked" << std::endl)
 }
-
-
 
 int OnUpdateTimerExpired(int fd, int events, void* data){
 //	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
@@ -1352,8 +1323,6 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 	return 1; // 1 means do not remove descriptor from looper
 }
 
-
-
 int OnQueueHasMessages(int fd, int events, void* data){
 	auto& ww = getImpl(getWindowPimpl(application::inst()));
 
@@ -1363,8 +1332,6 @@ int OnQueueHasMessages(int fd, int events, void* data){
 
 	return 1; // 1 means do not remove descriptor from looper
 }
-
-
 
 void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
@@ -1392,7 +1359,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
 
-		// Add timer descriptor to looper, this is needed for Updatable to work
+		// add timer descriptor to looper, this is needed for updatable to work
 		if(ALooper_addFd(
 				looper,
 				fdFlag.GetFD(),
@@ -1405,7 +1372,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 			throw std::runtime_error("failed to add timer descriptor to looper");
 		}
 
-		// Add UI message queue descriptor to looper
+		// add UI message queue descriptor to looper
 		if(ALooper_addFd(
 				looper,
 				getImpl(getWindowPimpl(*app)).uiQueue.get_handle(),
@@ -1418,7 +1385,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 			throw std::runtime_error("failed to add UI message queue descriptor to looper");
 		}
 
-		fdFlag.Set(); // this is to call the Update() for the first time if there were any Updateables started during creating application object
+		fdFlag.Set(); // this is to call the Update() for the first time if there were any updateables started during creating application object
 	}catch(std::exception& e){
 		TRACE(<< "std::exception uncaught while creating application instance: " << e.what() << std::endl)
 		throw;
@@ -1427,8 +1394,6 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		throw;
 	}
 }
-
-
 
 void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
@@ -1440,17 +1405,11 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowResized(): curWinDim = " << curWinDim << std::endl)
 }
 
-
-
-
-
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
 
 	render(getApp(activity));
 }
-
-
 
 // This function is called right before destroying Window object, according to documentation:
 // https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
@@ -1476,8 +1435,6 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	// delete configuration object
 	curConfig.reset();
 }
-
-
 
 int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 //	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
@@ -1505,8 +1462,6 @@ int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
 	return 1; // we don't want to remove input queue descriptor from looper
 }
 
-
-
 void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 	TRACE(<< "OnInputQueueCreated(): invoked" << std::endl)
 	ASSERT(queue);
@@ -1523,8 +1478,6 @@ void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
 		);
 }
 
-
-
 void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 	TRACE(<< "OnInputQueueDestroyed(): invoked" << std::endl)
 	ASSERT(queue)
@@ -1535,8 +1488,6 @@ void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
 
 	curInputQueue = 0;
 }
-
-
 
 // called when, for example, on-screen keyboard has been shown
 void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
@@ -1567,8 +1518,6 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 	render(app);
 }
 }
-
-
 
 void ANativeActivity_onCreate(
 		ANativeActivity* activity,

@@ -67,21 +67,18 @@ void container::render_child(const matrix4& matrix, const widget& c) const {
 	c.renderInternal(matr);
 }
 
-
 void container::render(const morda::matrix4& matrix)const{
 	for(auto& w: this->children()){
 		this->render_child(matrix, *w);
 	}
 }
 
-
-
 bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button button, unsigned pointerId){
 //	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 
 	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
 
-	//check if mouse captured
+	// check if mouse captured
 	{
 		auto i = this->mouseCaptureMap.find(pointerId);
 		if(i != this->mouseCaptureMap.end()){
@@ -100,14 +97,14 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 					if(n == 0){
 						this->mouseCaptureMap.erase(i);
 					}
-					return true;//doesn't matter what to return
+					return true; // doesn't matter what to return
 				}
 			}
 			this->mouseCaptureMap.erase(i);
 		}
 	}
 
-	//call children in reverse order
+	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
 
@@ -119,13 +116,13 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 			continue;
 		}
 
-		//Sometimes mouse click event comes without prior mouse move,
-		//but, since we get mouse click, then the widget was hovered before the click.
+		// Sometimes mouse click event comes without prior mouse move,
+		// but, since we get mouse click, then the widget was hovered before the click.
 		c->set_hovered(true, pointerId);
 		if(c->on_mouse_button(isDown, pos - c->rect().p, button, pointerId)){
 			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
 
-			if(isDown){//in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
+			if(isDown){ // in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
 				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<widget>(c), 1)));
 			}
 
@@ -135,8 +132,6 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 
 	return this->widget::on_mouse_button(isDown, pos, button, pointerId);
 }
-
-
 
 bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 //	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
@@ -254,25 +249,23 @@ container::widget_list::const_iterator container::erase(widget_list::const_itera
 	return ret;
 }
 
-void container::clear() {
+void container::clear(){
 	for(auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)){}
 }
-
-
 
 std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept{
 	if(auto r = this->widget::try_get_widget(id)){
 		return r;
 	}
 
-	//first check direct children, because the closer to the tree root higher the priority is
+	// first check direct children, because the closer to the tree root higher the priority is
 	for(auto& w : this->children()){
 		if(auto r = w->widget::try_get_widget(id)){
 			return r;
 		}
 	}
 
-	//then check deeper by tree
+	// then check deeper by tree
 	for(auto& w : this->children()){
 		if(auto r = w->try_get_widget(id)){
 			return r;
@@ -280,8 +273,6 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept
 	}
 	return nullptr;
 }
-
-
 
 vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
 	vector2 d;
@@ -305,7 +296,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 	return d;
 }
 
-container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before) {
+container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
 	if(this->isBlocked){
 		throw utki::invalid_state("container::change_child_z_position(): children list is locked");
 	}
