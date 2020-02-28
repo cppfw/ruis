@@ -25,7 +25,7 @@ else
     this_cxxflags += -O3
 endif
 
-this_cxxflags += -I$(d)../../src
+this_cxxflags += -I$(d)../../src -I$(d)src
 this_objcflags += -I$(d)../../src -I$(d)src/opengl2 -std=c++14
 
 ifeq ($(ogles2), true)

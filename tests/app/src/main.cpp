@@ -2,7 +2,7 @@
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
 
-#include "mordavokne/AppFactory.hpp"
+#include <mordavokne/application.hpp>
 
 #include "../../../src/morda/config.hpp"
 
@@ -589,14 +589,14 @@ public:
 
 
 
-class Application : public mordavokne::application{
+class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
 		mordavokne::window_params wp(r4::vec2ui(1024, 800));
 
 		return wp;
 	}
 public:
-	Application() :
+	application() :
 			mordavokne::application("morda-tests", GetWindowParams())
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
@@ -938,5 +938,5 @@ public:
 
 
 std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
-	return utki::makeUnique<Application>();
+	return std::make_unique<::application>();
 }

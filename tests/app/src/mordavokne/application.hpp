@@ -58,10 +58,7 @@ struct window_params{
  * When instance of this class is created it also creates a window and
  * initializes rendering API (e.g. OpenGL or OpenGL ES).
  */
-class application :
-		public utki::intrusive_singleton<application>,
-		public utki::Unique
-{
+class application : public utki::intrusive_singleton<application>{
 	friend T_Singleton;
 	static T_Instance instance;
 
@@ -100,11 +97,8 @@ public:
 	 */
 	const std::string storage_dir;
 
-	// TODO: deprecated, remove.
-	const std::string& storageDir = storage_dir;
-
 private:
-	//this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
+	// this is a viewport rectangle in coordinates that are as follows: x grows right, y grows up.
 	morda::Rectr curWinRect = morda::Rectr(0, 0, 0, 0);
 
 public:
@@ -121,14 +115,14 @@ private:
 
 	friend void updateWindowRect(application& app, const morda::Rectr& rect);
 
-	//pos is in usual window coordinates, y goes down.
+	// pos is in usual window coordinates, y goes down.
 	void handleMouseMove(const r4::vec2f& pos, unsigned id){
 		this->gui.send_mouse_move(pos, id);
 	}
 
 	friend void handleMouseMove(application& app, const r4::vec2f& pos, unsigned id);
 
-	//pos is in usual window coordinates, y goes down.
+	// pos is in usual window coordinates, y goes down.
 	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id){
 		this->gui.send_mouse_button(isDown, pos, button, id);
 	}

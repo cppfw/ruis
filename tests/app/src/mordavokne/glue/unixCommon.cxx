@@ -18,13 +18,6 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 			dlsym(libHandle, "_ZN10mordavokne18create_applicationEiPPKc")
 		);
 
-	// TODO: deprecated, remove createApp() function search
-	if(!factory){
-		factory = reinterpret_cast<decltype(mordavokne::create_application)*>(
-			dlsym(libHandle, "_ZN10mordavokne9createAppEiPPKc")
-		);
-	}
-
 	if(!factory){
 		throw std::runtime_error("dlsym(): mordavokne::create_application() function not found!");
 	}
