@@ -16,26 +16,17 @@
 #include "OpenGLES2ShaderColorPosLum.hpp"
 #include "OpenGLES2FrameBuffer.hpp"
 
-
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
 #else
 #	include <GLES2/gl2.h>
 #endif
 
-
 using namespace mordaren;
 
-OpenGLES2Factory::OpenGLES2Factory(){
-	//TODO:
-}
+OpenGLES2Factory::OpenGLES2Factory(){}
 
-
-OpenGLES2Factory::~OpenGLES2Factory()noexcept{
-	//TODO:
-}
-
-
+OpenGLES2Factory::~OpenGLES2Factory()noexcept{}
 
 std::shared_ptr<morda::texture_2d> OpenGLES2Factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
@@ -67,7 +58,7 @@ std::shared_ptr<morda::texture_2d> OpenGLES2Factory::create_texture_2d(morda::te
 			break;
 	}
 
-	// we will be passing pixels to OpenGL which are 1-byte aligned.
+	// we will be passing pixels to OpenGL which are 1-byte aligned
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	assertOpenGLNoError();
 
@@ -139,4 +130,3 @@ std::unique_ptr<morda::render_factory::shaders> OpenGLES2Factory::create_shaders
 std::shared_ptr<morda::frame_buffer> OpenGLES2Factory::create_framebuffer(std::shared_ptr<morda::texture_2d> color){
 	return std::make_shared<OpenGLES2FrameBuffer>(std::move(color));
 }
-

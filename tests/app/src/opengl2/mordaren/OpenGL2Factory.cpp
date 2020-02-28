@@ -18,16 +18,9 @@
 
 using namespace mordaren;
 
-OpenGL2Factory::OpenGL2Factory(){
-	//TODO:
-}
+OpenGL2Factory::OpenGL2Factory(){}
 
-
-OpenGL2Factory::~OpenGL2Factory()noexcept{
-	//TODO:
-}
-
-
+OpenGL2Factory::~OpenGL2Factory()noexcept{}
 
 std::shared_ptr<morda::texture_2d> OpenGL2Factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
@@ -131,4 +124,3 @@ std::unique_ptr<morda::render_factory::shaders> OpenGL2Factory::create_shaders()
 std::shared_ptr<morda::frame_buffer> OpenGL2Factory::create_framebuffer(std::shared_ptr<morda::texture_2d> color){
 	return std::make_shared<OpenGL2FrameBuffer>(std::move(color));
 }
-

@@ -10,10 +10,6 @@ void OpenGL2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 	
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	assertOpenGLNoError();
-	
-	//TODO: remove this
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	assertOpenGLNoError();
 }
 
 
