@@ -4,24 +4,23 @@ Install *morda* on your system.
 
 This sample uses link:https://github.com/igagis/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your system too.
 
-Entry point of the *mordavokne* application is a method called _mordavokne::createApp()_, and not a traditional _main()_.
-Morda defines _main()_ internally, so the user should not define _main()_.
+Entry point of the *mordavokne* application is a method called `mordavokne::create_application()`, and not a traditional `main()`.
+*mordavokne* defines `main()` internally, so the user should not define `main()`.
 
-User should derive their _Application_ class from _mordavokne::App_, which will be a singleton class. Then, return an instance of that class from _mordavokne::createApp()_. To do that, in `main.cpp` include necessary morda files:
+User should derive their `application` class from `mordavokne::application`, which will be a singleton class. Then, return an instance of that class from `mordavokne::create_application()`. To do that, in `main.cpp` include necessary morda files:
 
 [source,c++]
 ....
-#include <mordavokne/App.hpp>
-#include <mordavokne/AppFactory.hpp>
+#include <mordavokne/application.hpp>
 ....
 
-Then we define our Application class as forllows
+Then we define our application class as forllows
 [source,c++]
 ....
-class Application : public mordavokne::App{
+class application : public mordavokne::application{
 public:
-	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
+	application() :
+			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
 	{
 		// Here we will do all the initializations of our app, like loading the UI etc.
 	}
@@ -31,8 +30,8 @@ public:
 And then we define the `mordavokne::create_application()` function
 [source,c++]
 ....
-std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
-	return utki::makeUnique<Application>();
+std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
+	return std::make_unique<::application>(); // note, that we use global namespace
 }
 ....
 
@@ -41,19 +40,20 @@ So, now we can build and run the project, but it will display just an empty wind
 Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
 [source,c++]
 ....
-class Application : public mordavokne::App{
+class application : public mordavokne::application{
 public:
-	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
+	application() :
+			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
 	{
+		// mordavokne::application has the 'gui' member variable which is an instance of morda::gui
 		this->gui.initStandardWidgets(*this->get_res_file());
 	}
 };
 ....
 
-Let's describe our GUI using the GUI script. Create a file named _main.gui._ in the _res/_ directory of your project with following contents
+Let's describe our GUI using the GUI script. Create a file named `main.gui` in the `res/` directory of your project with following contents
 ....
-@pile{// frame layout places widgets in the center one on top of another
+@pile{ // frame layout places widgets in the center one on top of another
 	@column{ // vertical area layout places widgets one below each other
 		@push_button{
 			id{hw_button} // we can find this button by ID from code
@@ -74,16 +74,16 @@ Let's describe our GUI using the GUI script. Create a file named _main.gui._ in 
 Now we need to "inflate" the GUI from script in the code and set it to application:
 [source,c++]
 ....
-class Application : public mordavokne::App{
+class application : public mordavokne::application{
 public:
-	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(kolme::Vec2ui(800, 600)))
+	application() :
+			mordavokne::application(mordavokne::window_params(r4::Vec2ui(800, 600)))
 	{
 		this->gui.initStandardWidgets(*this->get_res_file());
 
 		// Inflate widgets hierarchy from GUI description script
 		auto c = this->gui.context->inflater.inflate(
-				*this->createResourceFileInterface("res/main.gui.")
+				*this->get_res_file("res/main.gui.")
 			);
 
 		// set the widgets hierarchy to the application
@@ -96,17 +96,16 @@ After running the app we will see a button and a text label below it. But pressi
 Let's add some action on the button press
 [source,c++]
 ....
-#include <mordavokne/App.hpp>
-#include <mordavokne/AppFactory.hpp>
+#include <mordavokne/application.hpp>
 
-#include <morda/widgets/label/Text.hpp>
-#include <morda/widgets/button/Button.hpp>
+#include <morda/widgets/label/text.hpp>
+#include <morda/widgets/button/button.hpp>
 
 
-class Application : public mordavokne::App{
+class application : public mordavokne::application{
 public:
-	Application() :
-			mordavokne::App(mordavokne::App::WindowParams(r4::vec2ui(800, 600)))
+	application() :
+			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
 	{
 		this->gui.initStandardWidgets(*this->get_res_file());
 
@@ -118,23 +117,23 @@ public:
 		// set the widgets hierarchy to the application
 		this->gui.set_root(c);
 
-		auto textLabel = c->try_get_widget_as<morda::Text>("info_text");
+		auto textLabel = c->try_get_widget_as<morda::text>("info_text");
 		ASSERT(textLabel)
 
-		auto button = c->try_get_widget_as<morda::PushButton>("hw_button");
+		auto button = c->try_get_widget_as<morda::push_button>("hw_button");
 
 		auto textLabelWeak = utki::make_weak(textLabel); // make a weak pointer to the TextLabel widget.
 
 		bool even = true;
 
 		// connect some action on button click
-		button->clicked = [textLabelWeak, even](morda::PushButton&) mutable {
+		button->click_handler = [textLabelWeak, even](morda::push_button&) mutable {
 			if(auto tl = textLabelWeak.lock()){
 				even = !even;
 				if(even){
-					tl->setText("even");
+					tl->set_text("even");
 				}else{
-					tl->setText("odd");
+					tl->set_text("odd");
 				}
 			}
 		};
@@ -143,8 +142,8 @@ public:
 
 
 
-std::unique_ptr<mordavokne::App> mordavokne::create_application(int argc, const char** argv){
-	return utki::makeUnique<Application>();
+std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
+	return std::make_unique<::application>();
 }
 ....
 Now we can run the app and press the button and see that it will do something :).
