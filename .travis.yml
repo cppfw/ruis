@@ -80,7 +80,6 @@ before_install:
     fi;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "macosx" ]; then
-    brew unlink python@2 &&
     brew install prorab prorab-extra libutki libpapki libunikod puu libsvgren z glew freetype r4 libnitki libpng;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then

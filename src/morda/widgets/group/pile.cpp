@@ -6,7 +6,7 @@ using namespace morda;
 
 pile::pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		container(nullptr, desc)
+		container(this->context, desc)
 {}
 
 void pile::lay_out(){

@@ -27,7 +27,7 @@ const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
 
 overlay::overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		pile(nullptr, desc)
+		pile(this->context, desc)
 {
 	this->on_children_changed();
 }

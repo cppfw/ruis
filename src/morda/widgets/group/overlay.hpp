@@ -40,7 +40,7 @@ public:
 	 */
 	void hide_context_menu();
 	
-	void on_children_changed() override;
+	void on_children_changed()override;
 
 private:
 
