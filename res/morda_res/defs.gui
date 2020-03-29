@@ -5,7 +5,7 @@ defs{
 	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
 
-	@TextInputLine_{
+	@text_input_line_{
 		@text_input_line
 	}
 }
@@ -29,19 +29,19 @@ defs{
 	@text_input_line{ text
 		@nine_patch{
 			image{morda_npt_textfield_background}
-			@TextInputLine_{
+			@text_input_line_{
 				layout{dx{fill}dy{max}}
 				text{${text}}
 			}
 		}
 	}
 
-	@margins{ left top right bottom weightLeft weightRight weightTop weightBottom
+	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
 		@row{
 			@widget{
 				layout{
 					dx{${left}}
-					weight{${weightLeft}}
+					weight{${weight_left}}
 				}
 			}
 			@column{
@@ -51,7 +51,7 @@ defs{
 				@widget{
 					layout{
 						dy{${top}}
-						weight{${weightTop}}
+						weight{${weight_top}}
 					}
 				}
 				@pile{
@@ -63,14 +63,14 @@ defs{
 				@widget{
 					layout{
 						dy{${bottom}}
-						weight{${weightBottom}}
+						weight{${weight_bottom}}
 					}
 				}
 			}
 			@widget{
 				layout{
 					dx{${right}}
-					weight{${weightRight}}
+					weight{${weight_right}}
 				}
 			}
 		}
