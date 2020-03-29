@@ -51,18 +51,18 @@ private:
 
 private:
 	// flag indicating that modifications to children list are blocked
-	bool isBlocked = false;
+	bool is_blocked = false;
 
-	class BlockedFlagGuard{
+	class blocked_flag_guard{
 		bool& blocked;
 	public:
-		BlockedFlagGuard(bool& blocked) :
+		blocked_flag_guard(bool& blocked) :
 				blocked(blocked)
 		{
 			this->blocked = true;
 		}
 
-		~BlockedFlagGuard()noexcept{
+		~blocked_flag_guard()noexcept{
 			this->blocked = false;
 		}
 	};
@@ -140,9 +140,9 @@ public:
 
 	void render(const matrix4& matrix)const override;
 
-	bool on_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) override;
+	bool on_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id)override;
 
-	bool on_mouse_move(const vector2& pos, unsigned pointer_id) override;
+	bool on_mouse_move(const vector2& pos, unsigned pointer_id)override;
 
 	void on_hover_changed(unsigned pointer_id)override;
 

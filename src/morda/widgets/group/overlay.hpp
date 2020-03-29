@@ -20,7 +20,7 @@ public:
 	
 	/**
 	 * @brief get topmost container.
-	 * This gets the simple container object which resides on top of all normal children of this overlay container.
+	 * This function returns the simple container object which resides on top of all normal children of this overlay container.
 	 * By adding child widget to this topmost container those widgets will be on top of everything.
 	 * @return overlay container.
 	 */

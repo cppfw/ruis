@@ -12,7 +12,7 @@ public:
 	size_container& operator=(const size_container&) = delete;
 
 
-	void lay_out() override;
+	void lay_out()override;
 
 private:
 

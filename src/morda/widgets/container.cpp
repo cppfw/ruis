@@ -76,7 +76,7 @@ void container::render(const morda::matrix4& matrix)const{
 bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button button, unsigned pointerId){
 //	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 
-	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
+	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
 	{
@@ -88,7 +88,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 					w->on_mouse_button(isDown, pos - w->rect().p, button, pointerId);
 
 					unsigned& n = i->second.second;
-					//TODO: why is this counter needed?
+					// TODO: why is this counter needed?
 					if(isDown){
 						++n;
 					}else{
@@ -136,7 +136,7 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 //	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
 
-	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
+	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
@@ -177,7 +177,7 @@ void container::on_hover_changed(unsigned pointerID){
 	}
 
 	// un-hover all the children if container became un-hovered
-	BlockedFlagGuard blockedFlagGuard(this->isBlocked);
+	blocked_flag_guard blocked_guard(this->is_blocked);
 	for(auto& w : this->children()){
 		w->set_hovered(false, pointerID);
 	}
@@ -202,7 +202,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
 
-	if(this->isBlocked){
+	if(this->is_blocked){
 		throw utki::invalid_state("container::insert(): children list is locked");
 	}
 
@@ -224,7 +224,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 }
 
 container::widget_list::const_iterator container::erase(widget_list::const_iterator child){
-	if(this->isBlocked){
+	if(this->is_blocked){
 		throw utki::invalid_state("container::erase(): children list is locked");
 	}
 
@@ -297,7 +297,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 }
 
 container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
-	if(this->isBlocked){
+	if(this->is_blocked){
 		throw utki::invalid_state("container::change_child_z_position(): children list is locked");
 	}
 
