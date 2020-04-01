@@ -109,7 +109,7 @@ public:
 
 }
 
-void drop_down_box::showDropdownMenu(){
+void drop_down_box::show_drop_down_menu(){
 	if(!this->item_provider){
 		return;
 	}
@@ -122,24 +122,27 @@ void drop_down_box::showDropdownMenu(){
 	auto np = this->context->inflater.inflate(contextMenuLayout_c);
 	ASSERT(np)
 
-	auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
+	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
+	{
+		auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
 
-	auto& lp = minSizeSpacer->get_layout_params();
-	lp.dims.x = this->rect().d.x;
+		auto& lp = minSizeSpacer->get_layout_params();
+		lp.dims.x = this->rect().d.x;
+	}
 
 	auto va = np->try_get_widget_as<morda::column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->item_provider->count(); ++i){
-		va->push_back(this->wrapItem(this->item_provider->get_widget(i), i));
+		va->push_back(this->wrap_item(this->item_provider->get_widget(i), i));
 	}
 
 	this->hoveredIndex = -1;
 
 	np->get_widget_as<mouse_proxy>("contextMenuMouseProxy").mouse_button_handler
-			= [this](widget& w, bool isDown, const vector2 pos, mouse_button button, unsigned id) -> bool{
-				if(!isDown){
-					this->mouseButtonUpHandler(false);
+			= [this](widget& w, bool is_down, const vector2 pos, mouse_button button, unsigned id) -> bool{
+				if(!is_down){
+					this->mouse_button_up_handler(false);
 				}
 
 				return true;
@@ -150,13 +153,13 @@ void drop_down_box::showDropdownMenu(){
 
 bool drop_down_box::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
 	if(!is_down){
-		this->mouseButtonUpHandler(true);
+		this->mouse_button_up_handler(true);
 	}
 
 	return this->nine_patch_push_button::on_mouse_button(is_down, pos, button, pointer_id);
 }
 
-void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
+void drop_down_box::mouse_button_up_handler(bool is_first_button_up_event){
 	auto oc = this->find_ancestor<overlay>();
 	if(!oc){
 		throw utki::invalid_state("No overlay found in ancestors of drop_down_box");
@@ -168,7 +171,7 @@ void drop_down_box::mouseButtonUpHandler(bool isFirstOne){
 //	TRACE(<< "drop_down_box::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
 
 	if(this->hoveredIndex < 0){
-		if(!isFirstOne){
+		if(!is_first_button_up_event){
 			this->context->run_from_ui_thread([oc](){
 				oc->hide_context_menu();
 			});
@@ -200,7 +203,7 @@ drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::fores
 			return;
 		}
 
-		this->showDropdownMenu();
+		this->show_drop_down_menu();
 	};
 
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
@@ -228,16 +231,16 @@ void drop_down_box::set_provider(std::shared_ptr<provider> item_provider){
 	if(this->item_provider){
 		this->item_provider->dd = this;
 	}
-	this->handleDataSetChanged();
+	this->handle_data_set_changed();
 }
 
 void drop_down_box::provider::notify_data_set_changed(){
 	if(this->dd){
-		this->dd->handleDataSetChanged();
+		this->dd->handle_data_set_changed();
 	}
 }
 
-void drop_down_box::handleDataSetChanged(){
+void drop_down_box::handle_data_set_changed(){
 	this->selectionContainer.clear();
 
 	if(!this->item_provider){
@@ -253,10 +256,10 @@ void drop_down_box::handleDataSetChanged(){
 void drop_down_box::set_selection(size_t i){
 	this->selectedItem_v = i;
 
-	this->handleDataSetChanged();
+	this->handle_data_set_changed();
 }
 
-std::shared_ptr<widget> drop_down_box::wrapItem(std::shared_ptr<widget>&& w, size_t index){
+std::shared_ptr<widget> drop_down_box::wrap_item(std::shared_ptr<widget>&& w, size_t index){
 	auto wd = std::dynamic_pointer_cast<pile>(this->context->inflater.inflate(itemLayout_c));
 	ASSERT(wd)
 

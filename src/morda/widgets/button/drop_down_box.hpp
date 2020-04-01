@@ -98,13 +98,13 @@ public:
 	std::function<void(drop_down_box& dds)> selection_handler;
 
 private:
-	void handleDataSetChanged();
+	void handle_data_set_changed();
 
-	std::shared_ptr<widget> wrapItem(std::shared_ptr<widget>&& w, size_t index);
+	std::shared_ptr<widget> wrap_item(std::shared_ptr<widget>&& w, size_t index);
 
-	void showDropdownMenu();
+	void show_drop_down_menu();
 
-	void mouseButtonUpHandler(bool isFirstOne);
+	void mouse_button_up_handler(bool is_first_button_up_event);
 
 	bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
 };
