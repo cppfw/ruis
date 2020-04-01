@@ -148,12 +148,12 @@ void drop_down_box::showDropdownMenu(){
 	o->show_context_menu(np, this->pos_in_ancestor(vector2(0), o) + vector2(0, this->rect().d.y));
 }
 
-bool drop_down_box::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID){
-	if(!isDown){
+bool drop_down_box::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
+	if(!is_down){
 		this->mouseButtonUpHandler(true);
 	}
 
-	return this->nine_patch_push_button::on_mouse_button(isDown, pos, button, pointerID);
+	return this->nine_patch_push_button::on_mouse_button(is_down, pos, button, pointer_id);
 }
 
 void drop_down_box::mouseButtonUpHandler(bool isFirstOne){

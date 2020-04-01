@@ -106,7 +106,7 @@ private:
 
 	void mouseButtonUpHandler(bool isFirstOne);
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID)override;
+	bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
 };
 
 }
