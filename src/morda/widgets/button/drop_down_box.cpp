@@ -15,7 +15,7 @@ using namespace morda;
 
 namespace{
 
-const auto selectorLayout_c = puu::read(R"qwertyuiop(
+const auto drop_down_box_layout = puu::read(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
 	@row{
@@ -114,8 +114,8 @@ void drop_down_box::show_drop_down_menu(){
 		return;
 	}
 
-	auto o = this->find_ancestor<overlay>();
-	if(!o){
+	auto olay = this->find_ancestor<overlay>();
+	if(!olay){
 		throw utki::invalid_state("drop_down_box: no overlay parent found");
 	}
 
@@ -148,7 +148,7 @@ void drop_down_box::show_drop_down_menu(){
 				return true;
 			};
 
-	o->show_context_menu(np, this->pos_in_ancestor(vector2(0), o) + vector2(0, this->rect().d.y));
+	olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
 }
 
 bool drop_down_box::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
@@ -194,8 +194,8 @@ void drop_down_box::mouse_button_up_handler(bool is_first_button_up_event){
 
 drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		button(this->context, selectorLayout_c),
-		nine_patch_push_button(this->context, selectorLayout_c),
+		button(this->context, drop_down_box_layout),
+		nine_patch_push_button(this->context, drop_down_box_layout),
 		selectionContainer(*this->try_get_widget_as<pile>("morda_dropdown_selection"))
 {
 	this->press_handler = [this](button& b){
@@ -250,7 +250,7 @@ void drop_down_box::handle_data_set_changed(){
 		return;
 	}
 
-	this->selectionContainer.push_back(this->item_provider->get_widget(this->selectedItem_v));
+	this->selectionContainer.push_back(this->item_provider->get_widget(this->get_selection()));
 }
 
 void drop_down_box::set_selection(size_t i){

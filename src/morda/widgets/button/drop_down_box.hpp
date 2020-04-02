@@ -13,7 +13,7 @@ namespace morda{
  */
 class drop_down_box :
 		virtual public widget,
-		private nine_patch_push_button
+		private nine_patch_push_button // TODO: virtual inherit from button
 {
 	pile& selectionContainer;
 public:
