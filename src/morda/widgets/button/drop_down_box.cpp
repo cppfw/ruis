@@ -2,87 +2,9 @@
 
 #include "../../context.hpp"
 
-#include "../group/overlay.hpp"
-
-#include "../proxy/mouse_proxy.hpp"
-
-#include "../button/button.hpp"
-
-#include "../label/text.hpp"
-#include "../label/color.hpp"
-
 using namespace morda;
 
 namespace{
-
-const auto drop_down_box_layout = puu::read(R"qwertyuiop(
-	layout{dx{max} dy{max}}
-
-	@row{
-		layout{dx{max}}
-		@pile{
-			id{morda_dropdown_selection}
-			layout{dx{min}dy{max} weight{1}}
-		}
-		@widget{layout{dx{3dp}}}
-		@image{
-			image{morda_img_divider_vert}
-			layout{dy{fill}}
-		}
-		@widget{layout{dx{3dp}}}
-		@image{
-			image{morda_img_dropdown_arrow}
-		}
-	}
-)qwertyuiop");
-
-const auto itemLayout_c = puu::read(R"qwertyuiop(
-		@pile{
-			layout{
-				dx{max}
-			}
-			@mouse_proxy{
-				id{morda_dropdown_mouseproxy}
-				layout{
-					dx{fill} dy{fill}
-				}
-			}
-			@color{
-				id{morda_dropdown_color}
-				color{${morda_color_highlight}}
-				visible{false}
-				layout{
-					dx{fill} dy{fill}
-				}
-			}
-		}
-	)qwertyuiop");
-
-const auto contextMenuLayout_c = puu::read(R"qwertyuiop(
-		@pile{
-			@widget{
-				id{minSizeSpacer}
-			}
-			@nine_patch{
-				layout{
-					dx{max}
-				}
-				image{morda_npt_contextmenu_bg}
-				@column{
-					layout{
-						dx{max}
-					}
-					id{morda_contextmenu_content}
-				}
-			}
-			@mouse_proxy{
-				layout{
-					dx{fill} dy{fill}
-				}
-				id{contextMenuMouseProxy}
-			}
-		}
-	)qwertyuiop");
 
 class static_provider : public drop_down_box::provider{
 	std::vector<puu::tree> widgets;
@@ -109,103 +31,10 @@ public:
 
 }
 
-void drop_down_box::show_drop_down_menu(){
-	if(!this->item_provider){
-		return;
-	}
-
-	auto olay = this->find_ancestor<overlay>();
-	if(!olay){
-		throw utki::invalid_state("drop_down_box: no overlay parent found");
-	}
-
-	auto np = this->context->inflater.inflate(contextMenuLayout_c);
-	ASSERT(np)
-
-	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
-	{
-		auto minSizeSpacer = np->try_get_widget("minSizeSpacer");
-
-		auto& lp = minSizeSpacer->get_layout_params();
-		lp.dims.x = this->rect().d.x;
-	}
-
-	auto va = np->try_get_widget_as<morda::column>("morda_contextmenu_content");
-	ASSERT(va)
-
-	for(size_t i = 0; i != this->item_provider->count(); ++i){
-		va->push_back(this->wrap_item(this->item_provider->get_widget(i), i));
-	}
-
-	this->hoveredIndex = -1;
-
-	np->get_widget_as<mouse_proxy>("contextMenuMouseProxy").mouse_button_handler
-			= [this](widget& w, bool is_down, const vector2 pos, mouse_button button, unsigned id) -> bool{
-				if(!is_down){
-					this->mouse_button_up_handler(false);
-				}
-
-				return true;
-			};
-
-	olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
-}
-
-bool drop_down_box::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
-	if(!is_down){
-		this->mouse_button_up_handler(true);
-	}
-
-	return this->nine_patch_push_button::on_mouse_button(is_down, pos, button, pointer_id);
-}
-
-void drop_down_box::mouse_button_up_handler(bool is_first_button_up_event){
-	auto oc = this->find_ancestor<overlay>();
-	if(!oc){
-		throw utki::invalid_state("No overlay found in ancestors of drop_down_box");
-	}
-
-	auto dds = this->sharedFromThis(this);
-
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): this->hoveredIndex = " << this->hoveredIndex << std::endl)
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
-
-	if(this->hoveredIndex < 0){
-		if(!is_first_button_up_event){
-			this->context->run_from_ui_thread([oc](){
-				oc->hide_context_menu();
-			});
-		}
-		return;
-	}
-	this->set_selection(this->hoveredIndex);
-
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): selection set" << std::endl)
-
-	this->context->run_from_ui_thread([dds, oc](){
-//		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
-		oc->hide_context_menu();
-		if(dds->selection_handler){
-//			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
-			dds->selection_handler(*dds);
-		}
-	});
-}
-
-drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc, pile& selection_container) :
 		widget(std::move(c), desc),
-		button(this->context, drop_down_box_layout),
-		nine_patch_push_button(this->context, drop_down_box_layout),
-		selectionContainer(*this->try_get_widget_as<pile>("morda_dropdown_selection"))
+		selection_container(selection_container)
 {
-	this->press_handler = [this](button& b){
-		if(!b.is_pressed()){
-			return;
-		}
-
-		this->show_drop_down_menu();
-	};
-
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 
 	for(const auto& p : desc){
@@ -241,49 +70,21 @@ void drop_down_box::provider::notify_data_set_changed(){
 }
 
 void drop_down_box::handle_data_set_changed(){
-	this->selectionContainer.clear();
+	this->selection_container.clear();
 
 	if(!this->item_provider){
 		return;
 	}
-	if(this->selectedItem_v >= this->item_provider->count()){
+
+	if(this->get_selection() >= this->item_provider->count()){
 		return;
 	}
 
-	this->selectionContainer.push_back(this->item_provider->get_widget(this->get_selection()));
+	this->selection_container.push_back(this->item_provider->get_widget(this->get_selection()));
 }
 
 void drop_down_box::set_selection(size_t i){
-	this->selectedItem_v = i;
+	this->selected_index = i;
 
 	this->handle_data_set_changed();
-}
-
-std::shared_ptr<widget> drop_down_box::wrap_item(std::shared_ptr<widget>&& w, size_t index){
-	auto wd = std::dynamic_pointer_cast<pile>(this->context->inflater.inflate(itemLayout_c));
-	ASSERT(wd)
-
-	auto mp = wd->try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
-	ASSERT(mp)
-
-	auto cl = wd->try_get_widget_as<color>("morda_dropdown_color");
-	ASSERT(cl)
-	auto clWeak = utki::makeWeak(cl);
-
-	wd->push_back(w);
-
-	mp->hover_changed_handler = [this, clWeak, index](widget& w, unsigned id){
-		if(auto c = clWeak.lock()){
-			c->set_visible(w.is_hovered());
-		}
-		if(w.is_hovered()){
-			this->hoveredIndex = int(index);
-		}else{
-			if(this->hoveredIndex > 0 && decltype(index)(this->hoveredIndex) == index){
-				this->hoveredIndex = -1;
-			}
-		}
-	};
-
-	return wd;
 }

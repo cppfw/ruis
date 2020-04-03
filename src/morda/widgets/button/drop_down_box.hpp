@@ -1,21 +1,17 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "nine_patch_push_button.hpp"
+#include "../group/pile.hpp"
 
 namespace morda{
 
 /**
- * @brief Drop down box.
- * This widget allows selection of an item from a list of items.
- * From GUI script it can be instantiated as "drop_down_box".
- * If any child widgets are specified then those will be used as items to select from.
+ * @brief Drop down box base class.
+ * This is a base class for drop down box widgets.
+ * Drop down box widget allows selection of an item from list of items.
  */
-class drop_down_box :
-		virtual public widget,
-		private nine_patch_push_button // TODO: virtual inherit from button
-{
-	pile& selectionContainer;
+class drop_down_box : virtual public widget{
+	pile& selection_container;
 public:
 	/**
 	 * @brief Item provider class.
@@ -69,18 +65,20 @@ public:
 private:
 	std::shared_ptr<provider> item_provider;
 
-	std::size_t selectedItem_v = 0;
-
-	int hoveredIndex = -1;
+	std::size_t selected_index = 0;
 public:
 	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
-public:
-	drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	provider* get_provider(){
+		return this->item_provider.get();
+	}
+protected:
+	drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc, pile& selection_container);
 
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;
 
+public:
 	/**
 	 * @brief Set currently selected item.
 	 * @param i - index of the item to set as currently selected.
@@ -92,21 +90,13 @@ public:
 	 * @return Index of the selected item.
 	 */
 	std::size_t get_selection()const noexcept{
-		return this->selectedItem_v;
+		return this->selected_index;
 	}
 
 	std::function<void(drop_down_box& dds)> selection_handler;
 
 private:
 	void handle_data_set_changed();
-
-	std::shared_ptr<widget> wrap_item(std::shared_ptr<widget>&& w, size_t index);
-
-	void show_drop_down_menu();
-
-	void mouse_button_up_handler(bool is_first_button_up_event);
-
-	bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
 };
 
 }
