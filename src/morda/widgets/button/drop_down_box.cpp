@@ -5,7 +5,6 @@
 using namespace morda;
 
 namespace{
-
 class static_provider : public drop_down_box::provider{
 	std::vector<puu::tree> widgets;
 public:
@@ -28,7 +27,6 @@ public:
 		this->widgets.emplace_back(std::move(w));
 	}
 };
-
 }
 
 drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc, pile& selection_container) :

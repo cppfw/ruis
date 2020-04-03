@@ -6,6 +6,7 @@
 namespace morda{
 
 class click_drop_down_box :
+		virtual public widget,
 		private nine_patch_push_button,
 		public drop_down_box
 {
