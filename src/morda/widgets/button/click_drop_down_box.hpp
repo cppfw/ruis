@@ -16,6 +16,7 @@ public:
 	click_drop_down_box& operator=(const click_drop_down_box&) = delete;
 
 private:
+	// index of the hovered item in the drop down menu
 	int hovered_index = -1;
 
 	bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
