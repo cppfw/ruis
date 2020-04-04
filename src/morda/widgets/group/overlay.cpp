@@ -36,7 +36,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back());
 
-	mp.mouse_button_handler = [this](widget& w, bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
+	mp.mouse_button_handler = [](widget& w, bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
 		ASSERT(w.parent())
 		auto wsp = utki::make_shared_from_this(*w.parent());
 		w.context->run_from_ui_thread([wsp](){
