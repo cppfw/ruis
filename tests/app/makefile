@@ -6,7 +6,9 @@ ifneq ($(raspberrypi),true)
 
 this_name := tests
 
-this_srcs += $(call prorab-src-dir,src/mordavokne)
+this_out_dir := build
+
+this_srcs += $(call prorab-src-dir, src/mordavokne)
 this_srcs := $(filter-out %glue.cpp, $(this_srcs))
 this_srcs += src/main.cpp
 
@@ -62,8 +64,8 @@ else ifeq ($(os),macosx)
     define this_rules
         $(this_mm_obj): $(d)src/mordavokne/glue/macosx/glue.mm
 		@echo Compiling $$<...
-		$(prorab_echo)mkdir -p $$(dir $$@)
-		$(prorab_echo)$(CC) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
+		$(a)mkdir -p $$(dir $$@)
+		$(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
     endef
     $(eval $(this_rules))
 else ifeq ($(os),linux)
@@ -73,11 +75,9 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += $(d)../../src/build/libmorda$(soext)
-
+this_ldlibs += $(d)../../src/build/libmorda$(dot_so)
 
 this_ldlibs += -lnitki -lopros -lpuu -lpapki -lunikod -lstdc++ -lm
-
 
 ifeq ($(ogles2), true)
     this_ldlibs += `pkg-config --libs egl glesv2`
@@ -100,8 +100,6 @@ ifeq ($(os), macosx)
     $(prorab_this_name): $(this_mm_obj)
 endif
 
-
-
 define this_rules
 run:: $(prorab_this_name)
 	@echo running $$^...
@@ -109,24 +107,21 @@ run:: $(prorab_this_name)
 endef
 $(eval $(this_rules))
 
-
 # add dependency on libmorda
 ifeq ($(os),windows)
-    $(d)libmorda$(soext): $(abspath $(d)../../src/build/libmorda$(soext))
+    $(d)libmorda$(dot_so): $(abspath $(d)../../src/build/libmorda$(dot_so))
 	@cp $< $@
 
-    $(prorab_this_name): $(d)libmorda$(soext)
+    $(prorab_this_name): $(d)libmorda$(dot_so)
 
     define this_rules
         clean::
-		@rm -f $(d)libmorda$(soext)
+		@rm -f $(d)libmorda$(dot_so)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/build/libmorda$(soext))
+    $(prorab_this_name): $(abspath $(d)../../src/build/libmorda$(dot_so))
 endif
-
-
 
 $(eval $(call prorab-try-include, ../../src/makefile))
 
