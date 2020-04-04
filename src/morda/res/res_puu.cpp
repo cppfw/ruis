@@ -17,5 +17,5 @@ std::shared_ptr<res_puu> res_puu::load(morda::context& ctx, const puu::forest& d
 		}
 	}
 
-	return std::make_shared<res_puu>(ctx.shared_from_this(), puu::read(fi));
+	return std::make_shared<res_puu>(utki::make_shared_from_this(ctx), puu::read(fi));
 }

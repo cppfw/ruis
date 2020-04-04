@@ -120,9 +120,7 @@ public:
 		return this->res_image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
-		return std::dynamic_pointer_cast<const res_image::texture>(this->shared_from_this());
-	}
+	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override;
 	
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	

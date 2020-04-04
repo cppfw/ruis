@@ -9,7 +9,7 @@ using namespace morda;
 
 res_cursor::res_cursor(std::shared_ptr<morda::context> c, res_image& image, const vector2& hotspot) :
 		resource(std::move(c)),
-		image_v(std::dynamic_pointer_cast<res_image>(image.shared_from_this())),
+		image_v(utki::make_shared_from_this(image)),
 		hotspot_v(hotspot)
 {}
 
@@ -36,5 +36,5 @@ std::shared_ptr<res_cursor> res_cursor::load(morda::context& ctx, const puu::for
 		throw std::logic_error("res_cursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return std::make_shared<res_cursor>(ctx.shared_from_this(), *image, hotspot);
+	return std::make_shared<res_cursor>(utki::make_shared_from_this(ctx), *image, hotspot);
 }

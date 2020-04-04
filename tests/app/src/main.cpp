@@ -70,7 +70,7 @@ public:
 			this->context->updater->stop(*this);
 		}else{
 			this->context->updater->start(
-					std::dynamic_pointer_cast<morda::updateable>(this->shared_from_this()),
+					utki::make_shared_from_this(*this),
 					30
 				);
 		}

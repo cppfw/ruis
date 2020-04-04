@@ -236,7 +236,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 		);
 	
 	try{
-		return fac(this->context.shared_from_this(), widget_desc);
+		return fac(utki::make_shared_from_this(this->context), widget_desc);
 	}catch(...){
 		TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
 		throw;

@@ -58,14 +58,18 @@ std::shared_ptr<res_atlas_image> res_atlas_image::load(morda::context& ctx, cons
 	}
 	
 	if(rect.p.x >= 0){
-		return std::make_shared<res_atlas_image>(ctx.shared_from_this(), tex, rect);
+		return std::make_shared<res_atlas_image>(utki::make_shared_from_this(ctx), tex, rect);
 	}else{
-		return std::make_shared<res_atlas_image>(ctx.shared_from_this(), tex);
+		return std::make_shared<res_atlas_image>(utki::make_shared_from_this(ctx), tex);
 	}
 }
 
 void res_atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
 	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
+}
+
+std::shared_ptr<const res_image::texture> res_atlas_image::get(vector2 forDim)const{
+	return utki::make_shared_from_this(*this);
 }
 
 namespace{
@@ -103,7 +107,7 @@ public:
 	}
 	
 	static std::shared_ptr<res_raster_image> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<res_raster_image>(ctx.shared_from_this(), load_texture(*ctx.renderer, fi));
+		return std::make_shared<res_raster_image>(utki::make_shared_from_this(ctx), load_texture(*ctx.renderer, fi));
 	}
 };
 
@@ -181,7 +185,7 @@ public:
 	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<texture>> cache;
 	
 	static std::shared_ptr<res_svg_image> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<res_svg_image>(ctx.shared_from_this(), svgdom::load(fi));
+		return std::make_shared<res_svg_image>(utki::make_shared_from_this(ctx), svgdom::load(fi));
 	}	
 };
 }

@@ -82,7 +82,7 @@ std::shared_ptr<res_gradient> res_gradient::load(morda::context& ctx, const puu:
 		}
 	}
 	
-	return std::make_shared<res_gradient>(ctx.shared_from_this(), stops, vertical);
+	return std::make_shared<res_gradient>(utki::make_shared_from_this(ctx), stops, vertical);
 }
 
 

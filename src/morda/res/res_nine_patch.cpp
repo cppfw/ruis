@@ -79,7 +79,7 @@ std::shared_ptr<res_nine_patch> res_nine_patch::load(morda::context& ctx, const 
 
 	auto image = res_image::load(ctx, fi);
 	
-	return std::make_shared<res_nine_patch>(ctx.shared_from_this(), image, borders);
+	return std::make_shared<res_nine_patch>(utki::make_shared_from_this(ctx), image, borders);
 }
 
 res_nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_nine_patch> parent, real mul) :

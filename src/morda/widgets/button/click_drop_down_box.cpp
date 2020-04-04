@@ -145,37 +145,30 @@ void click_drop_down_box::show_drop_down_menu(){
 				return true;
 			};
 
-	olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
+	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
 }
 
 void click_drop_down_box::mouse_button_up_handler(bool is_first_button_up_event){
-	auto olay = this->find_ancestor<overlay>();
-	if(!olay){
-		throw utki::invalid_state("No overlay found in ancestors of drop_down_box");
+	auto ddm = this->current_drop_down_menu.lock();
+	if(!ddm){
+		return;
 	}
-
-	auto ddb = std::dynamic_pointer_cast<drop_down_box>(this->shared_from_this());
-
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): this->hoveredIndex = " << this->hoveredIndex << std::endl)
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): isFirstOne = " << isFirstOne << std::endl)
 
 	if(this->hovered_index < 0){
 		if(!is_first_button_up_event){
-			this->context->run_from_ui_thread([olay](){
-				olay->close_all_context_menus(); // TODO: close only relevant context menu
+			this->context->run_from_ui_thread([ddm](){
+				ddm->remove_from_parent(); // close drop down menu
 			});
 		}
 		return;
 	}
 	this->set_selection(this->hovered_index);
 
-//	TRACE(<< "drop_down_box::mouseButtonUpHandler(): selection set" << std::endl)
+	auto ddb = utki::make_shared_from_this(*this);
 
-	this->context->run_from_ui_thread([ddb, olay](){
-//		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
-		olay->close_all_context_menus(); // TODO: close only relevant context menu
+	this->context->run_from_ui_thread([ddb, ddm](){
+		ddm->remove_from_parent(); // close drop down menu
 		if(ddb->selection_handler){
-//			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
 			ddb->selection_handler(*ddb);
 		}
 	});
@@ -190,18 +183,18 @@ std::shared_ptr<widget> click_drop_down_box::wrap_item(std::shared_ptr<widget>&&
 
 	auto cl = wd->try_get_widget_as<color>("morda_dropdown_color");
 	ASSERT(cl)
-	auto clWeak = utki::make_weak(cl);
+	auto cl_weak = utki::make_weak(cl);
 
 	wd->push_back(w);
 
-	mp->hover_changed_handler = [this, clWeak, index](widget& w, unsigned id){
-		if(auto c = clWeak.lock()){
+	mp->hover_changed_handler = [this, cl_weak, index](widget& w, unsigned id){
+		if(auto c = cl_weak.lock()){
 			c->set_visible(w.is_hovered());
 		}
 		if(w.is_hovered()){
 			this->hovered_index = int(index);
 		}else{
-			if(this->hovered_index > 0 && decltype(index)(this->hovered_index) == index){
+			if(this->hovered_index >= 0 && decltype(index)(this->hovered_index) == index){
 				this->hovered_index = -1;
 			}
 		}

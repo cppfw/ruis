@@ -37,8 +37,9 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back());
 
 	mp.mouse_button_handler = [this](widget& w, bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
-		auto wsp = std::dynamic_pointer_cast<widget>(w.parent()->shared_from_this());
-		w.context->run_from_ui_thread([this, wsp](){
+		ASSERT(w.parent())
+		auto wsp = utki::make_shared_from_this(*w.parent());
+		w.context->run_from_ui_thread([wsp](){
 			wsp->remove_from_parent();
 		});
 		return false;
@@ -62,7 +63,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	w->move_to(anchor);
 
-	auto sp = std::dynamic_pointer_cast<container>(this->shared_from_this());
+	auto sp = utki::make_shared_from_this(*this);
 	ASSERT(sp)
 	this->context->run_from_ui_thread([this, c, sp](){
 		sp->push_back(c);

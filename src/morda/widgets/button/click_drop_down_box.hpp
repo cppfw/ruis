@@ -10,6 +10,7 @@ class click_drop_down_box :
 		private nine_patch_push_button,
 		public drop_down_box
 {
+	std::weak_ptr<widget> current_drop_down_menu;
 public:
 	click_drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc);
 

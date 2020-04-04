@@ -236,7 +236,7 @@ void text_input_line::startCursorBlinking(){
 	this->context->updater->stop(*this);
 	this->cursorBlinkVisible = true;
 	this->context->updater->start(
-			std::dynamic_pointer_cast<updateable>(this->shared_from_this()),
+			utki::make_shared_from_this(*static_cast<updateable*>(this)),
 			cursorBlinkPeriod_c
 		);
 }

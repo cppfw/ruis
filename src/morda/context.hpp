@@ -12,7 +12,7 @@
 
 namespace morda{
 
-class context : public std::enable_shared_from_this<context>{
+class context : public utki::shared{
 	friend class widget;
 	friend class gui;
 
