@@ -65,7 +65,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	auto sp = utki::make_shared_from_this(*this);
 	ASSERT(sp)
-	this->context->run_from_ui_thread([this, c, sp](){
+	this->context->run_from_ui_thread([c, sp](){
 		sp->push_back(c);
 	});
 
