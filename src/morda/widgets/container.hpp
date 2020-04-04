@@ -188,6 +188,16 @@ public:
 	void inflate_push_back(const puu::forest& desc);
 
 	/**
+	 * @brief Remove last child.
+	 */
+	void pop_back(){
+		if(this->children().empty()){
+			return;
+		}
+		this->erase(--this->children().end());
+	}
+
+	/**
 	 * @brief Remove child from container.
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param child - iterator of the child to remove.

@@ -1,88 +1,78 @@
 #include "overlay.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
+#include "../../context.hpp"
+#include "size_container.hpp"
+
 using namespace morda;
 
 namespace{
-
-const auto ContextMenuLayout_c = puu::read(R"qwertyuiop(
-	layout{
-		dx{fill} dy{fill}
-	}
-	@mouse_proxy{
-		id{morda_overlay_mouseproxy}
-		layout{
-			dx{fill} dy{fill}
-		}
-	}
-	@container{
-		id{morda_overlay_container}
-		layout{
-			dx{fill} dy{fill}
-		}
-	}
-)qwertyuiop");
-
+class context_menu_wrapper : public size_container{
+public:
+	context_menu_wrapper(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+			widget(std::move(c), desc),
+			size_container(this->context, desc)
+	{}
+};
 }
 
 overlay::overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		pile(this->context, desc)
-{
-	this->on_children_changed();
-}
+{}
 
-void overlay::on_children_changed(){
-	if(!this->overlayLayer || !this->overlayLayer->parent()){
-		this->overlayLayer = std::make_shared<pile>(this->context, ContextMenuLayout_c);
-		this->push_back(this->overlayLayer);
+std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, vector2 anchor){
+	auto c = std::make_shared<context_menu_wrapper>(this->context, puu::read(R"qwertyuiop(
+		layout{
+			dx{fill} dy{fill}
+		}
+		@mouse_proxy{
+			layout{
+				dx{fill} dy{fill}
+			}
+			x{0} y{0}
+		}
+	)qwertyuiop"));
 
-		this->overlayContainer = this->overlayLayer->try_get_widget_as<container>("morda_overlay_container");
-		ASSERT(this->overlayContainer)
+	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back());
 
-		auto mp = this->overlayLayer->try_get_widget_as<mouse_proxy>("morda_overlay_mouseproxy");
-		ASSERT(mp)
+	mp.mouse_button_handler = [this](widget& w, bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
+		auto wsp = std::dynamic_pointer_cast<widget>(w.parent()->shared_from_this());
+		w.context->run_from_ui_thread([this, wsp](){
+			wsp->remove_from_parent();
+		});
+		return false;
+	};
 
-		mp->mouse_button_handler = [this](widget& w, bool isDown, const vector2& pos, mouse_button button, unsigned id) -> bool{
-			this->hide_context_menu();
-			return false;
-		};
-	}
+	c->push_back(w);
 
-	ASSERT(this->overlayLayer)
-	ASSERT(this->children().size() >= 1)
-
-	if(this->children().back() != this->overlayLayer){
-		auto w = this->overlayLayer->remove_from_parent();
-		this->push_back(w);
-	}
-}
-
-void overlay::show_context_menu(std::shared_ptr<widget> w, vector2 anchor){
-	this->top_layer().push_back(w);
-
-	auto& lp = this->top_layer().get_layout_params(*w);
+	auto& lp = c->get_layout_params(*w);
 
 	vector2 dim = this->dims_for_widget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampTop(dim[i], this->top_layer().rect().d[i]);
+		utki::clampTop(dim[i], this->rect().d[i]);
 	}
 
 	w->resize(dim);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampRange(anchor[i], 0.0f, this->top_layer().rect().d[i] - w->rect().d[i]);
+		utki::clampRange(anchor[i], 0.0f, this->rect().d[i] - w->rect().d[i]);
 	}
 
 	w->move_to(anchor);
+
+	auto sp = std::dynamic_pointer_cast<container>(this->shared_from_this());
+	ASSERT(sp)
+	this->context->run_from_ui_thread([this, c, sp](){
+		sp->push_back(c);
+	});
+
+	return c;
 }
 
-void overlay::hide_context_menu(){
-	if(this->overlayContainer->children().size() == 0){
-		return;
+void overlay::close_all_context_menus(){
+	while(dynamic_cast<context_menu_wrapper*>(this->children().back().get())){
+		this->pop_back();
 	}
-	ASSERT(this->overlayContainer->children().size() > 0)
-
-	this->overlayContainer->erase(this->overlayContainer->children().rbegin());
 }

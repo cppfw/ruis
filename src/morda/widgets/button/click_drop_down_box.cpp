@@ -162,7 +162,7 @@ void click_drop_down_box::mouse_button_up_handler(bool is_first_button_up_event)
 	if(this->hovered_index < 0){
 		if(!is_first_button_up_event){
 			this->context->run_from_ui_thread([olay](){
-				olay->hide_context_menu();
+				olay->close_all_context_menus(); // TODO: close only relevant context menu
 			});
 		}
 		return;
@@ -173,7 +173,7 @@ void click_drop_down_box::mouse_button_up_handler(bool is_first_button_up_event)
 
 	this->context->run_from_ui_thread([ddb, olay](){
 //		TRACE(<< "drop_down_box::mouseButtonUpHandler(): hiding context menu" << std::endl)
-		olay->hide_context_menu();
+		olay->close_all_context_menus(); // TODO: close only relevant context menu
 		if(ddb->selection_handler){
 //			TRACE(<< "drop_down_box::mouseButtonUpHandler(): calling selection handler" << std::endl)
 			ddb->selection_handler(*ddb);
