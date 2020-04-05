@@ -4,29 +4,29 @@
 
 #include <mordavokne/application.hpp>
 
-#include "../../../src/morda/config.hpp"
+#include "../../../src/morda/morda/config.hpp"
 
-#include "../../../src/morda/widgets/widget.hpp"
-#include "../../../src/morda/widgets/container.hpp"
-#include "../../../src/morda/widgets/proxy/key_proxy.hpp"
+#include "../../../src/morda/morda/widgets/widget.hpp"
+#include "../../../src/morda/morda/widgets/container.hpp"
+#include "../../../src/morda/morda/widgets/proxy/key_proxy.hpp"
 
-#include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/text.hpp"
+#include "../../../src/morda/morda/widgets/button/push_button.hpp"
+#include "../../../src/morda/morda/widgets/label/text.hpp"
 
-#include "../../../src/morda/res/res_texture.hpp"
+#include "../../../src/morda/morda/res/res_texture.hpp"
 
-#include "../../../src/morda/widgets/character_input_widget.hpp"
-#include "../../../src/morda/widgets/group/scroll_area.hpp"
-#include "../../../src/morda/widgets/group/row.hpp"
-#include "../../../src/morda/widgets/proxy/mouse_proxy.hpp"
-#include "../../../src/morda/widgets/slider/scroll_bar.hpp"
-#include "../../../src/morda/widgets/group/list.hpp"
-#include "../../../src/morda/widgets/group/tree_view.hpp"
-#include "../../../src/morda/widgets/proxy/resize_proxy.hpp"
-#include "../../../src/morda/widgets/label/color.hpp"
-#include "../../../src/morda/widgets/label/image.hpp"
+#include "../../../src/morda/morda/widgets/character_input_widget.hpp"
+#include "../../../src/morda/morda/widgets/group/scroll_area.hpp"
+#include "../../../src/morda/morda/widgets/group/row.hpp"
+#include "../../../src/morda/morda/widgets/proxy/mouse_proxy.hpp"
+#include "../../../src/morda/morda/widgets/slider/scroll_bar.hpp"
+#include "../../../src/morda/morda/widgets/group/list.hpp"
+#include "../../../src/morda/morda/widgets/group/tree_view.hpp"
+#include "../../../src/morda/morda/widgets/proxy/resize_proxy.hpp"
+#include "../../../src/morda/morda/widgets/label/color.hpp"
+#include "../../../src/morda/morda/widgets/label/image.hpp"
 
-#include "../../../src/morda/widgets/button/drop_down_box.hpp"
+#include "../../../src/morda/morda/widgets/button/drop_down_box.hpp"
 
 class SimpleWidget :
 		virtual public morda::widget,

@@ -1,6 +1,6 @@
 include prorab.mk
 
-this_soname := $(shell cat $(prorab_this_dir)../src/soname.txt)
+this_soname := $(shell cat $(prorab_this_dir)../src/morda/soname.txt)
 
 #install default resource pack
 define this_rules

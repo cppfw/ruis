@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../../../src/morda/render/renderer.hpp"
+#include "../../../src/morda/morda/render/renderer.hpp"
 
 class FakeFactory : public morda::render_factory{
 public:

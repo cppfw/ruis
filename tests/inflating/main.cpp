@@ -1,9 +1,9 @@
-#include "../../src/morda/context.hpp"
-#include "../../src/morda/widgets/group/pile.hpp"
+#include "../../src/morda/morda/context.hpp"
+#include "../../src/morda/morda/widgets/group/pile.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
 
-#include "../../src/morda/gui.hpp"
+#include "../../src/morda/morda/gui.hpp"
 
 int main(int argc, char** argv){
 	// test that whole definition chain is substituted

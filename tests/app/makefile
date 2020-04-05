@@ -27,8 +27,8 @@ else
     this_cxxflags += -O3
 endif
 
-this_cxxflags += -I$(d)../../src -I$(d)src
-this_objcflags += -I$(d)../../src -I$(d)src/opengl2 -std=c++14
+this_cxxflags += -I$(d)../../src/morda -I$(d)src
+this_objcflags += -I$(d)../../src/morda -I$(d)src/opengl2 -std=c++14
 
 ifeq ($(ogles2), true)
     this_srcs += $(call prorab-src-dir,src/opengles2)

@@ -1,5 +1,5 @@
-#include "../../src/morda/gui.hpp"
-#include "../../src/morda/widgets/group/column.hpp"
+#include "../../src/morda/morda/gui.hpp"
+#include "../../src/morda/morda/widgets/group/column.hpp"
 
 #include "../helpers/fake_renderer/FakeRenderer.hpp"
 
