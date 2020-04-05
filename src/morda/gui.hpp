@@ -34,7 +34,7 @@ public:
 	virtual ~gui()noexcept{}
 
 private:
-	std::shared_ptr<morda::widget> rootWidget;
+	std::shared_ptr<morda::widget> root_widget;
 
 public:
 	/**
@@ -43,6 +43,14 @@ public:
 	 */
 	void set_root(std::shared_ptr<morda::widget> w);
 
+	/**
+	 * @brief Get current root widget.
+	 * @return pointer to the currently set root widget.
+	 * @return nullptr if there is no root widget set.
+	 */
+	morda::widget* get_root()noexcept{
+		return this->root_widget.get();
+	}
 private:
 	vector2 viewportSize;
 public:

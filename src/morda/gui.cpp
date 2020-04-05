@@ -134,22 +134,22 @@ void gui::initStandardWidgets(papki::File& fi) {
 void gui::set_viewport(const morda::vector2& size){
 	this->viewportSize = size;
 
-	if(!this->rootWidget){
+	if(!this->root_widget){
 		return;
 	}
 
-	this->rootWidget->resize(this->viewportSize);
+	this->root_widget->resize(this->viewportSize);
 }
 
 void gui::set_root(std::shared_ptr<morda::widget> w){
-	this->rootWidget = std::move(w);
+	this->root_widget = std::move(w);
 
-	this->rootWidget->move_to(morda::vector2(0));
-	this->rootWidget->resize(this->viewportSize);
+	this->root_widget->move_to(morda::vector2(0));
+	this->root_widget->resize(this->viewportSize);
 }
 
 void gui::render(const matrix4& matrix)const{
-	if(!this->rootWidget){
+	if(!this->root_widget){
 		TRACE(<< "gui::render(): root widget is not set" << std::endl)
 		return;
 	}
@@ -162,45 +162,45 @@ void gui::render(const matrix4& matrix)const{
 	m.translate(-1, -1);
 	m.scale(vector2(2).comp_divide(this->viewportSize));
 
-	ASSERT(this->rootWidget)
+	ASSERT(this->root_widget)
 
-	if(this->rootWidget->is_layout_invalid()){
+	if(this->root_widget->is_layout_invalid()){
 		TRACE(<< "root widget re-layout needed!" << std::endl)
-		this->rootWidget->relayoutNeeded = false;
-		this->rootWidget->lay_out();
+		this->root_widget->relayoutNeeded = false;
+		this->root_widget->lay_out();
 	}
 
-	this->rootWidget->renderInternal(m);
+	this->root_widget->renderInternal(m);
 }
 
 void gui::send_mouse_move(const vector2& pos, unsigned id){
-	if(!this->rootWidget){
+	if(!this->root_widget){
 		return;
 	}
 
-	if(this->rootWidget->is_interactive()){
-		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), id);
-		this->rootWidget->on_mouse_move(pos, id);
+	if(this->root_widget->is_interactive()){
+		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
+		this->root_widget->on_mouse_move(pos, id);
 	}
 }
 
 void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id){
-	if(!this->rootWidget){
+	if(!this->root_widget){
 		return;
 	}
 
-	if(this->rootWidget->is_interactive()){
-		this->rootWidget->set_hovered(this->rootWidget->rect().overlaps(pos), id);
-		this->rootWidget->on_mouse_button(is_down, pos, button, id);
+	if(this->root_widget->is_interactive()){
+		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
+		this->root_widget->on_mouse_button(is_down, pos, button, id);
 	}
 }
 
 void gui::send_mouse_hover(bool isHovered, unsigned pointerID){
-	if(!this->rootWidget){
+	if(!this->root_widget){
 		return;
 	}
 
-	this->rootWidget->set_hovered(isHovered, pointerID);
+	this->root_widget->set_hovered(isHovered, pointerID);
 }
 
 void gui::send_key(bool is_down, key key_code){
@@ -211,8 +211,8 @@ void gui::send_key(bool is_down, key key_code){
 		w->onKeyInternal(is_down, key_code);
 	}else{
 //		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
-		if(this->rootWidget){
-			this->rootWidget->onKeyInternal(is_down, key_code);
+		if(this->root_widget){
+			this->root_widget->onKeyInternal(is_down, key_code);
 		}
 	}
 }
