@@ -21,8 +21,8 @@ else
     this_cxxflags += -O3
 endif
 
-this_cxxflags += -I$(d)../../src
-this_objcflags += -I$(d)../../src
+this_cxxflags += -I$(d)../../src/morda
+this_objcflags += -I$(d)../../src/morda
 
 ifeq ($(ogles2), true)
     this_cxxflags += -DM_RENDER_OPENGLES2
@@ -56,7 +56,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += $(d)../../src/build/libmorda$(dot_so)
+this_ldlibs += $(d)../../src/morda/build/libmorda$(dot_so)
 
 this_ldlibs += -lnitki -lopros -lpuu -lpapki -lstdc++ -lm
 
@@ -70,14 +70,14 @@ this_test := $(word $(words $(this_dirs)),$(this_dirs))
 define this_rules
 test:: $(prorab_this_name)
 	@myci-running-test.sh $(this_test)
-	@(cd $(d); LD_LIBRARY_PATH=../../src/build $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src/morda/build $$^)
 	@myci-passed.sh
 endef
 $(eval $(this_rules))
 
 # add dependency on libmorda
 ifeq ($(os),windows)
-    $(d)libmorda$(dot_so): $(abspath $(d)../../src/build/libmorda$(dot_so))
+    $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
 	@cp $< $@
 
     $(prorab_this_name): $(d)libmorda$(dot_so)
@@ -88,7 +88,7 @@ ifeq ($(os),windows)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/build/libmorda$(dot_so))
+    $(prorab_this_name): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
 endif
 
-$(eval $(call prorab-try-include, ../../src/makefile))
+$(eval $(call prorab-include, ../../src/morda/makefile))

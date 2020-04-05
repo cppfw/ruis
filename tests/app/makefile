@@ -75,7 +75,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += $(d)../../src/build/libmorda$(dot_so)
+this_ldlibs += $(d)../../src/morda/build/libmorda$(dot_so)
 
 this_ldlibs += -lnitki -lopros -lpuu -lpapki -lunikod -lstdc++ -lm
 
@@ -103,13 +103,13 @@ endif
 define this_rules
 run:: $(prorab_this_name)
 	@echo running $$^...
-	@(cd $(d); LD_LIBRARY_PATH=../../src/build $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src/morda/build $$^)
 endef
 $(eval $(this_rules))
 
 # add dependency on libmorda
 ifeq ($(os),windows)
-    $(d)libmorda$(dot_so): $(abspath $(d)../../src/build/libmorda$(dot_so))
+    $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
 	@cp $< $@
 
     $(prorab_this_name): $(d)libmorda$(dot_so)
@@ -120,9 +120,9 @@ ifeq ($(os),windows)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/build/libmorda$(dot_so))
+    $(prorab_this_name): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
 endif
 
-$(eval $(call prorab-try-include, ../../src/makefile))
+$(eval $(call prorab-include, ../../src/morda/makefile))
 
 endif
