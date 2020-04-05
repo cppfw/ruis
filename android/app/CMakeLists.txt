@@ -32,9 +32,7 @@ add_library( # Specifies the name of the library.
              # Provides a relative path to your source file(s).
              ${srcs} )
 
-
-
-include_directories( build/ndkLibs/include/ ../../src/ ../../tests/app/src/opengles2/ ../../tests/app/src/)
+include_directories( build/ndkLibs/include/ ../../src/morda/ ../../tests/app/src/opengles2/ ../../tests/app/src/)
 
 target_link_libraries(
         mordavokneapp
