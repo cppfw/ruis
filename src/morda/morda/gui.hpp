@@ -15,7 +15,7 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
-     * @param u - updater to use along with this gui.
+	 * @param u - updater to use along with this gui.
 	 * @param post_to_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_dp - desired dots per density pixel.
