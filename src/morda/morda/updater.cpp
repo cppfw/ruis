@@ -3,20 +3,11 @@
 #include <chrono>
 
 #include <utki/exception.hpp>
+#include <utki/time.hpp>
 
 #include "updateable.hpp"
 
 using namespace morda;
-
-namespace{
-std::uint32_t get_ticks(){
-	return std::uint32_t(
-			std::chrono::duration_cast<std::chrono::milliseconds>(
-					std::chrono::high_resolution_clock::now().time_since_epoch()
-				).count()
-		);
-}
-}
 
 void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
     auto uu = u.lock();
@@ -29,7 +20,7 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
 	}
 	
 	uu->dt = dt_ms;
-	uu->startedAt = get_ticks();
+	uu->startedAt = utki::get_ticks_ms();
 	uu->is_updating_v = true;
 	
 	uu->pendingAddition = true;
@@ -127,7 +118,7 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 
 
 std::uint32_t updater::update(){
-	std::uint32_t curTime = get_ticks();
+	std::uint32_t curTime = utki::get_ticks_ms();
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
@@ -176,7 +167,7 @@ std::uint32_t updater::update(){
 	
 	std::uint32_t uncorrectedDt = closestTime - curTime;
 	
-	std::uint32_t correction = get_ticks() - curTime;
+	std::uint32_t correction = utki::get_ticks_ms() - curTime;
 	
 	if(correction >= uncorrectedDt){
 		return 0;
