@@ -36,5 +36,5 @@ include_directories( build/ndkLibs/include/ ../../src/morda/ ../../tests/app/src
 
 target_link_libraries(
         mordavokneapp
-        morda android log EGL png jpeg puu papki svgren svgdom z freetype mikroxml unikod nitki GLESv2 cairo pixman
+        morda android log EGL png jpeg puu papki svgren svgdom z freetype mikroxml unikod nitki utki GLESv2 cairo pixman
     )
