@@ -2,6 +2,8 @@
 
 #include <papki/fs_file.hpp>
 
+#include <utki/destructable.hpp>
+
 #include <morda/util/util.hpp>
 #include <morda/gui.hpp>
 
@@ -63,7 +65,7 @@ using namespace mordavokne;
 @end
 
 namespace{
-struct WindowWrapper : public utki::Unique{
+struct WindowWrapper : public utki::destructable{
 	NSApplication* applicationObjectId;
 	CocoaWindow* windowObjectId;
 	NSOpenGLContext* openglContextId;
@@ -77,7 +79,7 @@ struct WindowWrapper : public utki::Unique{
 	~WindowWrapper()noexcept;
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }

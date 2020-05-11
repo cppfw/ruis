@@ -2,9 +2,9 @@
 #include <morda/context.hpp>
 
 #include <utki/windows.hpp>
-#include <utki/Unique.hpp>
+#include <utki/destructable.hpp>
 
-#include <papki/FSFile.hpp>
+#include <papki/fs_file.hpp>
 
 #include <windowsx.h>
 #include <Shlobj.h>
@@ -19,7 +19,7 @@ using namespace mordavokne;
 
 
 namespace{
-struct WindowWrapper : public utki::Unique{
+struct WindowWrapper : public utki::destructable{
 	std::string windowClassName;
 	HWND hwnd;
 	HDC hdc;
@@ -38,7 +38,7 @@ struct WindowWrapper : public utki::Unique{
 	~WindowWrapper()noexcept;
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }

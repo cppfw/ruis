@@ -9,6 +9,7 @@
 
 #include <unikod/utf8.hpp>
 #include <nitki/queue.hpp>
+#include <utki/destructable.hpp>
 
 #include <sys/eventfd.h>
 
@@ -34,7 +35,7 @@ mordavokne::application& getApp(ANativeActivity* activity){
 ANativeWindow* androidWindow = 0;
 
 
-class JavaFunctionsWrapper : public utki::Unique{
+class JavaFunctionsWrapper : public utki::destructable{
 	JNIEnv *env;
 	jclass clazz;
 	jobject obj;
@@ -150,7 +151,7 @@ public:
 
 std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
 
-struct WindowWrapper : public utki::Unique{
+struct WindowWrapper : public utki::destructable{
 	EGLDisplay display;
 	EGLSurface surface;
 	EGLContext context;
@@ -259,7 +260,7 @@ struct WindowWrapper : public utki::Unique{
 	}
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }
