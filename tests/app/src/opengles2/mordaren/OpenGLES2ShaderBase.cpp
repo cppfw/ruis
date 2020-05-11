@@ -75,17 +75,14 @@ bool checkForLinkErrors(GLuint program){
 	}
 	return false;
 }
-
 }
-
-
 
 ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
 	assertOpenGLNoError();
 
 	if (this->s == 0) {
-		throw utki::Exc("glCreateShader() failed");
+		throw std::runtime_error("glCreateShader() failed");
 	}
 
 	const char* c = code;
@@ -98,10 +95,9 @@ ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 		TRACE( << "Error while compiling:\n" << c << std::endl)
 		glDeleteShader(this->s);
 		assertOpenGLNoError();
-		throw utki::Exc("Error compiling shader");
+		throw std::logic_error("Error compiling shader");
 	}
 }
-
 
 ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
@@ -133,12 +129,9 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 		TRACE( << "Error while linking shader program" << vertexShaderCode << std::endl << fragmentShaderCode << std::endl)
 		glDeleteProgram(this->p);
 		assertOpenGLNoError();
-		throw utki::Exc("Error linking shader program");
+		throw std::logic_error("Error linking shader program");
 	}
 }
-
-
-
 
 OpenGLES2ShaderBase::OpenGLES2ShaderBase(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		program(vertexShaderCode, fragmentShaderCode),
@@ -150,7 +143,7 @@ GLint OpenGLES2ShaderBase::getUniform(const char* n) {
 	GLint ret = glGetUniformLocation(this->program.p, n);
 	assertOpenGLNoError();
 	if(ret < 0){
-		throw utki::Exc("No uniform found in the shader program");
+		throw std::logic_error("No uniform found in the shader program");
 	}
 	return ret;
 }

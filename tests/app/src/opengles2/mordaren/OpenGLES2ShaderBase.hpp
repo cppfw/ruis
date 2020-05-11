@@ -2,8 +2,7 @@
 
 #include <utki/config.hpp>
 #include <utki/debug.hpp>
-#include <utki/Exc.hpp>
-#include <utki/Buf.hpp>
+#include <utki/span.hpp>
 
 #include <r4/matrix4.hpp>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utki/Buf.hpp>
+#include <utki/span.hpp>
 
 #include <morda/render/index_buffer.hpp>
 
