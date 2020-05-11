@@ -17,7 +17,6 @@
 
 using namespace mordavokne;
 
-
 namespace{
 struct WindowWrapper : public utki::destructable{
 	std::string windowClassName;
@@ -42,11 +41,9 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }
-
 }
 
 namespace{
-
 const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
 	morda::key::unknown, // Undefined
 	morda::key::unknown, // VK_LBUTTON
@@ -324,8 +321,6 @@ public:
 }
 
 namespace{
-
-
 LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 	switch (msg){
 		case WM_ACTIVATE:
@@ -538,7 +533,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		case WM_KEYDOWN:
 		{
 			morda::key key = keyCodeMap[std::uint8_t(wParam)];
-			if ((lParam & 0x40000000) == 0){// ignore auto-repeated keypress event
+			if ((lParam & 0x40000000) == 0){ // ignore auto-repeated keypress event
 				handleKeyEvent(mordavokne::inst(), true, key);
 			}
 			handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(), key);
@@ -583,27 +578,25 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
-
-}// ~namespace
-
+}
 
 namespace{
-
 morda::real getDotsPerInch(HDC dc){
 	morda::real value = (morda::real(GetDeviceCaps(dc, HORZRES)) * 10.0f / morda::real(GetDeviceCaps(dc, HORZSIZE))
 		+ morda::real(GetDeviceCaps(dc, VERTRES)) * 10.0f / morda::real(GetDeviceCaps(dc, VERTSIZE))) / 2.0f;
 	value *= 2.54f;
 	return value;
 }
+}
 
+namespace{
 morda::real getDotsPerPt(HDC dc){
 	r4::vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
 	r4::vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
 
 	return mordavokne::application::get_pixels_per_dp(resolution, screenSizeMm);
 }
-
-}// ~namespace
+}
 
 namespace{
 std::string initializeStorageDir(const std::string& appName){
@@ -612,7 +605,7 @@ std::string initializeStorageDir(const std::string& appName){
 		throw utki::exception("failed to get user's profile directory.");
 	}
 
-	path[sizeof(path) - 1] = '\0';// null-terminate the string just in case
+	path[sizeof(path) - 1] = '\0'; // null-terminate the string just in case
 
 	std::string homeDirStr(path, strlen(path));
 
@@ -628,7 +621,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 	homeDirStr.append(1, '.').append(appName).append(1, '/');
 
-	papki::FSFile dir(homeDirStr);
+	papki::fs_file dir(homeDirStr);
 	if(!dir.exists()){
 		dir.make_dir();
 	}
@@ -732,8 +725,6 @@ void winmain(int argc, const char** argv){
 
 }
 
-
-
 int WINAPI WinMain(
 		HINSTANCE hInstance, // Instance
 		HINSTANCE hPrevInstance, // Previous Instance
@@ -745,7 +736,6 @@ int WINAPI WinMain(
 
 	return 0;
 }
-
 
 void application::set_fullscreen(bool enable) {
 	if (enable == this->is_fullscreen()) {
@@ -821,7 +811,6 @@ void application::set_fullscreen(bool enable) {
 	this->isFullscreen_v = enable;
 }
 
-
 void application::set_mouse_cursor_visible(bool visible){
 	auto& ww = getImpl(this->windowPimpl);
 
@@ -838,13 +827,10 @@ void application::set_mouse_cursor_visible(bool visible){
 	}
 }
 
-
 void application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 	SwapBuffers(ww.hdc);
 }
-
-
 
 namespace{
 WindowWrapper::WindowWrapper(const window_params& wp){
@@ -854,16 +840,16 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		WNDCLASS wc;
 		memset(&wc, 0, sizeof(wc));
 
-		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;// Redraw on resize, own DC for window
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; // redraw on resize, own DC for window
 		wc.lpfnWndProc = (WNDPROC)wndProc;
-		wc.cbClsExtra = 0;// no extra window data
-		wc.cbWndExtra = 0;// no extra window data
-		wc.hInstance = GetModuleHandle(NULL);// instance handle
+		wc.cbClsExtra = 0; // no extra window data
+		wc.cbWndExtra = 0; // no extra window data
+		wc.hInstance = GetModuleHandle(NULL); // instance handle
 		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wc.hbrBackground = NULL;// no background required for OpenGL
-		wc.lpszMenuName = NULL;// we don't want a menu
-		wc.lpszClassName = this->windowClassName.c_str();// Set the window class Name
+		wc.hbrBackground = NULL; // no background required for OpenGL
+		wc.lpszMenuName = NULL; // we don't want a menu
+		wc.lpszClassName = this->windowClassName.c_str(); // set the window class Name
 
 		if (!RegisterClass(&wc)){
 			throw std::runtime_error("Failed to register window class");
@@ -875,7 +861,6 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 			ASSERT_INFO(false, "Failed to unregister window class")
 		}
 	});
-
 
 	this->hwnd = CreateWindowEx(
 			WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, // extended style
