@@ -167,7 +167,7 @@ deploy:
     condition: $TRAVIS_JOB_NAME = android
 - provider: script
   skip_cleanup: true
-  script: myci-deploy-homebrew.sh -t igagis/tap homebrew/libmorda.rb.in
+  script: myci-deploy-homebrew.sh -t igagis/tap
   on:
     tags: true
     condition: $TRAVIS_JOB_NAME = macosx

@@ -28,7 +28,7 @@ OpenGLES2Factory::OpenGLES2Factory(){}
 
 OpenGLES2Factory::~OpenGLES2Factory()noexcept{}
 
-std::shared_ptr<morda::texture_2d> OpenGLES2Factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data){
+std::shared_ptr<morda::texture_2d> OpenGLES2Factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::texture_2d::bytes_per_pixel(type) == 0)
 	ASSERT(data.size() % dims.x == 0)
@@ -88,19 +88,19 @@ std::shared_ptr<morda::texture_2d> OpenGLES2Factory::create_texture_2d(morda::te
 	return ret;
 }
 
-std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec4f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(utki::span<const r4::vec4f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec3f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(utki::span<const r4::vec3f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<r4::vec2f> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(utki::span<const r4::vec2f> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(const utki::span<float> vertices){
+std::shared_ptr<morda::vertex_buffer> OpenGLES2Factory::create_vertex_buffer(utki::span<const float> vertices){
 	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
 }
 
@@ -113,7 +113,7 @@ std::shared_ptr<morda::vertex_array> OpenGLES2Factory::create_vertex_array(
 	return std::make_shared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), rendering_mode);
 }
 
-std::shared_ptr<morda::index_buffer> OpenGLES2Factory::create_index_buffer(const utki::span<uint16_t> indices){
+std::shared_ptr<morda::index_buffer> OpenGLES2Factory::create_index_buffer(utki::span<const uint16_t> indices){
 	return std::make_shared<OpenGLES2IndexBuffer>(indices);
 }
 

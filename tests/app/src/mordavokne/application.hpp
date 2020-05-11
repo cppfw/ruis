@@ -4,9 +4,8 @@
 
 #include <utki/config.hpp>
 #include <utki/singleton.hpp>
-#include <utki/Buf.hpp>
-#include <utki/Unique.hpp>
 #include <utki/flags.hpp>
+#include <utki/destructable.hpp>
 
 #include <papki/file.hpp>
 
@@ -66,7 +65,7 @@ public:
 	const std::string name;
 
 private:
-	std::unique_ptr<utki::Unique> windowPimpl;
+	std::unique_ptr<utki::destructable> windowPimpl;
 
 	friend const decltype(windowPimpl)& getWindowPimpl(application& app);
 

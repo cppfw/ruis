@@ -36,7 +36,7 @@
 using namespace mordavokne;
 
 namespace{
-struct WindowWrapper : public utki::Unique{
+struct WindowWrapper : public utki::destructable{
 	Display* display;
 	Colormap colorMap;
 	::Window window;
@@ -495,7 +495,7 @@ struct WindowWrapper : public utki::Unique{
 	}
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::Unique>& pimpl){
+WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }
@@ -522,7 +522,7 @@ morda::real getDotsPerPt(Display* display){
 
 application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
+		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
 #ifdef M_RENDER_OPENGL2
 				std::make_shared<mordaren::OpenGL2Renderer>(),

@@ -14,15 +14,15 @@ public:
 	
 	virtual ~OpenGL2Factory()noexcept;
 
-	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, const utki::span<std::uint8_t>& data) override;
+	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, utki::span<const std::uint8_t>& data) override;
 
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<kolme::Vec4f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(utki::span<const kolme::Vec4f> vertices) override;
 	
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<kolme::Vec3f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(utki::span<const kolme::Vec3f> vertices) override;
 	
-	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(const utki::span<kolme::Vec2f> vertices) override;
+	std::shared_ptr<morda::VertexBuffer> createVertexBuffer(utki::span<const kolme::Vec2f> vertices) override;
 
-	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(const utki::span<std::uint16_t> indices) override;
+	std::shared_ptr<morda::IndexBuffer> createIndexBuffer(utki::span<const std::uint16_t> indices) override;
 	
 	std::shared_ptr<morda::VertexArray> createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) override;
 

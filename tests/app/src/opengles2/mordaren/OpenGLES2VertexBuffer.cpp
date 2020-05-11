@@ -12,34 +12,34 @@ void OpenGLES2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 	assertOpenGLNoError();
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec4f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(utki::span<const r4::vec4f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
 {
-	this->init(vertices.sizeInBytes(), &*vertices.begin());
+	this->init(vertices.size_bytes(), &*vertices.begin());
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec3f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(utki::span<const r4::vec3f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
 {
-	this->init(vertices.sizeInBytes(), &*vertices.begin());
+	this->init(vertices.size_bytes(), &*vertices.begin());
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<r4::vec2f> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(utki::span<const r4::vec2f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)
 {
-	this->init(vertices.sizeInBytes(), &*vertices.begin());
+	this->init(vertices.size_bytes(), &*vertices.begin());
 }
 
-OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(const utki::span<float> vertices) :
+OpenGLES2VertexBuffer::OpenGLES2VertexBuffer(utki::span<const float> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(1),
 		type(GL_FLOAT)
 {
-	this->init(vertices.sizeInBytes(), &*vertices.begin());
+	this->init(vertices.size_bytes(), &*vertices.begin());
 }

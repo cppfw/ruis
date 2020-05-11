@@ -27,19 +27,19 @@ protected:
 public:
 	virtual ~render_factory()noexcept{}	
 	
-	virtual std::shared_ptr<texture_2d> create_texture_2d(texture_2d::type type, r4::vec2ui dims, const utki::span<uint8_t> data) = 0;
+	virtual std::shared_ptr<texture_2d> create_texture_2d(texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data) = 0;
 	
-	std::shared_ptr<texture_2d> create_texture_2d(r4::vec2ui dims, const utki::span<uint32_t> data);
+	std::shared_ptr<texture_2d> create_texture_2d(r4::vec2ui dims, utki::span<const uint32_t> data);
 	
-	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec4f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(utki::span<const r4::vec4f> vertices) = 0;
 	
-	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec3f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(utki::span<const r4::vec3f> vertices) = 0;
 	
-	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<r4::vec2f> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(utki::span<const r4::vec2f> vertices) = 0;
 	
-	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(const utki::span<float> vertices) = 0;
+	virtual std::shared_ptr<vertex_buffer> create_vertex_buffer(utki::span<const float> vertices) = 0;
 	
-	virtual std::shared_ptr<index_buffer> create_index_buffer(const utki::span<uint16_t> indices) = 0;
+	virtual std::shared_ptr<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
 	
 	virtual std::shared_ptr<vertex_array> create_vertex_array(
 			std::vector< std::shared_ptr<morda::vertex_buffer> >&& buffers,

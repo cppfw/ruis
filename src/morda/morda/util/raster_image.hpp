@@ -121,7 +121,7 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	const utki::span<std::uint8_t> pixels()const{
+	utki::span<const std::uint8_t> pixels()const{
 		return utki::make_span(this->buf_v);
 	}
 

@@ -2,8 +2,6 @@
 
 #include <utki/config.hpp>
 #include <utki/debug.hpp>
-#include <utki/exception.hpp>
-#include <utki/Buf.hpp>
 
 #include <r4/matrix4.hpp>
 
@@ -25,8 +23,6 @@ struct ShaderWrapper{
 	}
 };
 
-
-
 struct ProgramWrapper{
 	ShaderWrapper vertexShader;
 	ShaderWrapper fragmentShader;
@@ -37,8 +33,6 @@ struct ProgramWrapper{
 		glDeleteProgram(this->p);
 	}
 };
-
-
 
 class OpenGL2ShaderBase{
 	ProgramWrapper program;

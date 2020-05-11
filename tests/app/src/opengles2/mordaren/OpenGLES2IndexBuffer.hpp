@@ -13,7 +13,7 @@ public:
 	const GLenum elementType;
 	const GLsizei elementsCount;
 	
-	OpenGLES2IndexBuffer(const utki::span<std::uint16_t> indices);
+	OpenGLES2IndexBuffer(utki::span<const std::uint16_t> indices);
 	
 	OpenGLES2IndexBuffer(const OpenGLES2IndexBuffer&) = delete;
 	OpenGLES2IndexBuffer& operator=(const OpenGLES2IndexBuffer&) = delete;
