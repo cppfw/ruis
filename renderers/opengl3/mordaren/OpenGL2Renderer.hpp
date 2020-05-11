@@ -9,7 +9,7 @@
 class OpenGL2Renderer : public morda::Renderer{
 	GLuint defaultFramebuffer;
 public:
-	OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory = utki::makeUnique<OpenGL2Factory>());
+	OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory = std::make_unique<OpenGL2Factory>());
 	
 	OpenGL2Renderer(const OpenGL2Renderer& orig) = delete;
 	OpenGL2Renderer& operator=(const OpenGL2Renderer& orig) = delete;

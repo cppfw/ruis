@@ -992,7 +992,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 mordavokne::application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(utki::makeUnique<WindowWrapper>(requestedWindowParams)),
+		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
 				std::make_shared<morda::updater>(),
@@ -1552,5 +1552,5 @@ void ANativeActivity_onCreate(
 	appInfo.externalDataPath = activity->externalDataPath;
 	appInfo.assetManager = activity->assetManager;
 
-	javaFunctionsWrapper = utki::makeUnique<JavaFunctionsWrapper>(activity);
+	javaFunctionsWrapper = std::make_unique<JavaFunctionsWrapper>(activity);
 }

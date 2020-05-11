@@ -99,11 +99,11 @@ std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(utki::span
 }
 
 std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
-	auto ret = utki::makeUnique<morda::Factory::Shaders>();
-	ret->posTex = utki::makeUnique<OpenGL2ShaderPosTex>();
-	ret->colorPos = utki::makeUnique<OpenGL2ShaderColorPos>();
-	ret->posClr = utki::makeUnique<OpenGL2ShaderPosClr>();
-	ret->colorPosTex = utki::makeUnique<OpenGL2ShaderColorPosTex>();
+	auto ret = std::make_unique<morda::Factory::Shaders>();
+	ret->posTex = std::make_unique<OpenGL2ShaderPosTex>();
+	ret->colorPos = std::make_unique<OpenGL2ShaderColorPos>();
+	ret->posClr = std::make_unique<OpenGL2ShaderPosClr>();
+	ret->colorPosTex = std::make_unique<OpenGL2ShaderColorPosTex>();
 	return ret;
 }
 

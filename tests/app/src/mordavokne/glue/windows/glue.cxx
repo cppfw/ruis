@@ -639,7 +639,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
-		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
+		windowPimpl(std::make_unique<WindowWrapper>(wp)),
 		gui(
 				std::make_shared<mordaren::OpenGL2Renderer>(),
 				std::make_shared<morda::updater>(),
