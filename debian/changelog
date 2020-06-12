@@ -1,3 +1,9 @@
+libmorda (0.5.106) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Jun 2020 21:30:00 +0300
+
 libmorda (0.5.105) unstable; urgency=medium
 
   * renamings
