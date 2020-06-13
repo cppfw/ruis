@@ -1,3 +1,9 @@
+libmorda (0.5.111) unstable; urgency=medium
+
+  * fixing android and cocoapods headers packing
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Jun 2020 02:41:26 +0300
+
 libmorda (0.5.110) unstable; urgency=medium
 
   * test release
