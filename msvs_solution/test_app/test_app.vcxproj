@@ -156,7 +156,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,7 +171,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,7 +186,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -201,7 +201,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -218,7 +218,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -237,7 +237,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -256,7 +256,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -275,7 +275,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\app\src\opengl2;$(ProjectDir)..\..\tests\app\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -286,9 +286,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\app\src\mordavokne\**\*.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\**\*.cpp" />
     <ClCompile Include="..\..\tests\app\src\main.cpp" />
+    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\application.cpp" />
+    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\glue\glue.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2Buffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2Factory.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2Renderer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderBase.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderColor.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderColorPosLum.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2ShaderTexture.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2Texture2D.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2VertexArray.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
