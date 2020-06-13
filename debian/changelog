@@ -1,3 +1,9 @@
+libmorda (0.5.108) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Jun 2020 23:49:35 +0300
+
 libmorda (0.5.107) unstable; urgency=medium
 
   * nuget token fix
