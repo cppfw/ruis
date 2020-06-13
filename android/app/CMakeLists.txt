@@ -10,16 +10,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
-file(GLOB_RECURSE srcs "../../tests/app/*.cpp")
-
-# Exclude OpenGL2 directory from sources
-set (EXCLUDE_DIR "../../tests/app/src/opengl2")
-foreach (TMP_PATH ${srcs})
-    string (FIND ${TMP_PATH} ${EXCLUDE_DIR} EXCLUDE_DIR_FOUND)
-    if (NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
-        list (REMOVE_ITEM srcs ${TMP_PATH})
-    endif ()
-endforeach(TMP_PATH)
+file(GLOB_RECURSE srcs "../../tests/app/src/*.cpp")
 
 link_directories( build/ndkLibs/${ANDROID_ABI}/ ../morda/build/intermediates/cmake/debug/obj/${ANDROID_ABI} )
 
