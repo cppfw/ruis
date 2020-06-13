@@ -30,8 +30,6 @@ ifneq ($(raspberrypi),true)
     this_ldflags += -L$(d)../../src/morda/build
     this_ldflags += -L$(d)../harness/mordavokne/build
 
-    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lm
-
     ifeq ($(os),windows)
         this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
         this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
@@ -47,6 +45,8 @@ ifneq ($(raspberrypi),true)
         this_ldlibs += -lstdc++
         this_ldflags += -rdynamic
     endif
+
+    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lm
 
     ifeq ($(ogles2), true)
         this_ldflags += -L$(d)../harness/opengles2/build
