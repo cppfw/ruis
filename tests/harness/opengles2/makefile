@@ -1,5 +1,7 @@
 include prorab.mk
 
+ifeq ($(os),linux)
+
 this_name := morda-opengles2-ren
 
 this_soname := 0
@@ -44,3 +46,5 @@ $(eval $(prorab-build-lib))
 $(prorab_this_name): $(abspath $(d)../../../src/morda/build/libmorda$(dot_so))
 
 $(eval $(call prorab-include, ../../../src/morda/makefile))
+
+endif # build only under linux
