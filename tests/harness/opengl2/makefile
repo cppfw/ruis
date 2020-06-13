@@ -23,17 +23,17 @@ this_srcs += $(call prorab-src-dir, .)
 
 this_cxxflags += -I$(d)../../../src/morda
 
-this_ldlibs += -lmorda -lstdc++
+this_ldlibs += -lmorda
 this_ldflags += -L$(d)../../../src/morda/build
 
 ifeq ($(os), linux)
     this_cxxflags += -fPIC
-    this_ldlibs +=
+    this_ldlibs += -lstdc++
 else ifeq ($(os), macosx)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
 else ifeq ($(os),windows)
-    this_ldlibs += -lglew32
+    this_ldlibs += -lglew32 -lstdc++
 endif
 
 this_no_install := true

@@ -30,20 +30,21 @@ ifneq ($(raspberrypi),true)
     this_ldflags += -L$(d)../../src/morda/build
     this_ldflags += -L$(d)../harness/mordavokne/build
 
-    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lstdc++ -lm
+    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lm
 
     ifeq ($(os),windows)
         this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
         this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
-
-    else ifeq ($(os),macosx)
-        this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
         this_ldlibs += -lstdc++
+    else ifeq ($(os),macosx)
+        this_ldlibs += -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+        this_ldlibs += -lc++
+        this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 
         this_ldflags += -rdynamic
     else ifeq ($(os),linux)
         this_cxxflags += -fPIC
-        # this_ldlibs += -pthread -lX11 -ldl
+        this_ldlibs += -lstdc++
         this_ldflags += -rdynamic
     endif
 
@@ -58,7 +59,6 @@ ifneq ($(raspberrypi),true)
         else
             this_ldlibs += -lGL -lGLEW
         endif
-
     endif
 
     this_no_install := true

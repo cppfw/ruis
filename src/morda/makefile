@@ -30,10 +30,10 @@ endif
 ifeq ($(os), linux)
     this_cxxflags += -fPIC # generate position independent code
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz
+    this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz -lstdc++
 else ifeq ($(os), windows)
     this_cxxflags += `pkg-config --cflags freetype2`
-    this_ldlibs += `pkg-config --libs freetype2` -lz
+    this_ldlibs += `pkg-config --libs freetype2` -lz -lstdc++
 else ifeq ($(os), macosx)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
     this_cxxflags += -I/usr/local/include/freetype2 #TODO: isn't there pkg-config on macosx?
@@ -41,6 +41,6 @@ else ifeq ($(os), macosx)
     this_ldlibs += -lfreetype
 endif
 
-this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lunikod -lutki -lpng -ljpeg -lstdc++ -lm
+this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lunikod -lutki -lpng -ljpeg -lm
 
 $(eval $(prorab-build-lib))

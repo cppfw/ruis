@@ -22,21 +22,20 @@ endif
 this_srcs += $(call prorab-src-dir, .)
 
 this_cxxflags += -I$(d)../../../src/morda
-this_objcflags += -I$(d)../../src/morda -I$(d)../harness/opengl2 -std=c++14
+this_objcflags += -I$(d)../../../src/morda -I$(d)../opengl2 -std=c++14
 
-this_ldlibs += -lmorda -lnitki -lopros -lstdc++
+this_ldlibs += -lmorda -lnitki -lopros
 this_ldflags += -L$(d)../../../src/morda/build
 
 ifeq ($(os),windows)
     this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
-
+    this_ldlibs += -lstdc++
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    # TODO: remove?
-    # this_ldlibs += -lc++
-    # this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
+    this_ldlibs += -lc++
+    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 
     this_ldflags += -rdynamic
 
@@ -51,7 +50,7 @@ $(.RECIPEPREFIX)$(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) 
     $(eval $(this_rules))
 else ifeq ($(os),linux)
     this_cxxflags += -fPIC
-    this_ldlibs += -pthread -lX11 -ldl
+    this_ldlibs += -pthread -lX11 -ldl -lstdc++
     this_ldflags += -rdynamic
 endif
 
@@ -76,6 +75,12 @@ endif
 this_no_install := true
 
 $(eval $(prorab-build-lib))
+
+ifeq ($(os),macosx)
+    $(prorab_this_static_lib): $(this_mm_obj)
+
+    $(prorab_this_name): $(this_mm_obj)
+endif
 
 # add dependency on libs
 $(prorab_this_name): $(abspath $(d)../../../src/morda/build/libmorda$(dot_so))
