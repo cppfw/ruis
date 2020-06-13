@@ -10,7 +10,11 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
-file(GLOB_RECURSE srcs "../../tests/app/src/*.cpp")
+file(GLOB_RECURSE srcs
+        "../../tests/app/src/*.cpp"
+        "../../tests/harness/mordavokne/*.cpp"
+        "../../tests/harness/opengles2/*.cpp"
+)
 
 link_directories( build/ndkLibs/${ANDROID_ABI}/ ../morda/build/intermediates/cmake/debug/obj/${ANDROID_ABI} )
 
@@ -23,9 +27,15 @@ add_library( # Specifies the name of the library.
              # Provides a relative path to your source file(s).
              ${srcs} )
 
-include_directories( build/ndkLibs/include/ ../../src/morda/ ../../tests/app/src/opengles2/ ../../tests/app/src/)
+include_directories(
+        build/ndkLibs/include/
+        ../../src/morda/
+        ../../tests/harness/mordavokne/
+        ../../tests/harness/opengles2/
+        ../../tests/app/src/
+)
 
 target_link_libraries(
         mordavokneapp
-        morda android log EGL png jpeg puu papki svgren svgdom z freetype mikroxml unikod nitki utki GLESv2 cairo pixman
+        morda android log EGL png jpeg puu papki svgren svgdom cssdom z freetype mikroxml unikod nitki utki GLESv2 cairo pixman
     )
