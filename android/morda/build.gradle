@@ -100,7 +100,7 @@ task copyNdkLibsToAAR(type: Zip) {
 
     from zipTree("build/outputs/aar/" + aarName + "-release.aar")
     exclude('**/*.so') //do not include shared libraries into final AAR
-    from("../../src") {
+    from("../../src/morda") {
         include('**/*.hpp')
         include('**/*.h')
         into('ndkLibs/include')
