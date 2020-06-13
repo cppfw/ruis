@@ -45,9 +45,9 @@ ifneq ($(raspberrypi),true)
 
         define this_rules
             $(this_mm_obj): $(d)mordavokne/glue/macosx/glue.mm
-            @echo Compiling $$<...
-            $(a)mkdir -p $$(dir $$@)
-            $(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
+$(.RECIPEPREFIX)@echo Compiling $$<...
+$(.RECIPEPREFIX)$(a)mkdir -p $$(dir $$@)
+$(.RECIPEPREFIX)$(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
         endef
         $(eval $(this_rules))
     else ifeq ($(os),linux)
