@@ -24,7 +24,7 @@ this_srcs += $(call prorab-src-dir, .)
 this_cxxflags += -I$(d)../../../src/morda
 this_objcflags += -I$(d)../../../src/morda -I$(d)../opengl2 -std=c++14
 
-this_ldlibs += -lmorda -lnitki -lopros
+this_ldlibs += -lmorda -lnitki -lopros -lpapki
 this_ldflags += -L$(d)../../../src/morda/build
 
 ifeq ($(os),windows)

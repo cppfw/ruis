@@ -75,20 +75,25 @@ $(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/build:../harness/m
     # add dependency on libmordavokne
     $(prorab_this_name): $(abspath $(d)../harness/mordavokne/build/libmordavokne$(dot_so))
 
-    # add dependency on libmorda
+    # add dependency on libmorda, libmordavokne
     ifeq ($(os),windows)
-        $(prorab_this_name): $(d)libmorda$(dot_so)
+        $(prorab_this_name): $(d)libmorda$(dot_so) $(d)libmordavokne$(dot_so)
 
         define this_rules
             $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
-$(.RECIPEPREFIX)$(a)cp $< $@
+$(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
+$(.RECIPEPREFIX)$(a)cp $$< $$@
+
+            $(d)libmordavokne$(dot_so): $(abspath $(d)../harness/mordavokne/build/libmordavokne$(dot_so))
+$(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
+$(.RECIPEPREFIX)$(a)cp $$< $$@
 
             clean::
 $(.RECIPEPREFIX)$(a)rm -f $(d)libmorda$(dot_so)
         endef
         $(eval $(this_rules))
     else
-        $(prorab_this_name): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
+        $(prorab_this_name): $(abspath $(d)../../src/morda/build/libmorda$(dot_so)) $(abspath $(d)../harness/mordavokne/build/libmordavokne$(dot_so))
     endif
 
     $(eval $(call prorab-include, ../../src/morda/makefile))
