@@ -38,18 +38,9 @@ ifneq ($(raspberrypi),true)
 
     else ifeq ($(os),macosx)
         this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+        this_ldlibs += -lstdc++
 
         this_ldflags += -rdynamic
-
-        this_mm_obj := $(d)$(prorab_obj_dir)objcpp/mordavokne/glue/macosx/glue.mm.o
-
-        define this_rules
-            $(this_mm_obj): $(d)mordavokne/glue/macosx/glue.mm
-$(.RECIPEPREFIX)@echo Compiling $$<...
-$(.RECIPEPREFIX)$(a)mkdir -p $$(dir $$@)
-$(.RECIPEPREFIX)$(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) $$<
-        endef
-        $(eval $(this_rules))
     else ifeq ($(os),linux)
         this_cxxflags += -fPIC
         # this_ldlibs += -pthread -lX11 -ldl
