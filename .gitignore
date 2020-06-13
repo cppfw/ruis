@@ -1,16 +1,1 @@
-debian/
-
-*.[aod]
-*.so
-*.so.*
-*.dylib
-
-doc/
-
-nbproject/
-
-pkg-config/
-
-ios/
-
-msvs_solution/
+**/build/
