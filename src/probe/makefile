@@ -5,7 +5,7 @@ this_name := morda-probe
 this_out_dir := build
 
 # use same so-name as morda library
-this_soname := $(shell cat $(d)../morda/soname.txt)
+this_soname := $(shell cat $(d)../soname.txt)
 
 this_srcs += $(call prorab-src-dir, morda)
 
