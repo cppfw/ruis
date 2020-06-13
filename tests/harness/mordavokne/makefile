@@ -58,8 +58,9 @@ endif
 ifeq ($(ogles2), true)
     this_cxxflags += -DMORDAVOKNE_RENDER_OPENGLES2
     this_cxxflags += -I$(d)../opengles2
-    this_ldflags += -L$(d)../harness/opengles2/build
+    this_ldflags += -L$(d)../opengles2/build
     this_ldlibs += -lmorda-opengles2-ren
+    this_ldlibs += `pkg-config --libs egl`
 
     ifeq ($(raspberrypi),true)
         this_cxxflags += -I/opt/vc/include
@@ -68,7 +69,7 @@ ifeq ($(ogles2), true)
 else
     this_cxxflags += -DMORDAVOKNE_RENDER_OPENGL2
     this_cxxflags += -I$(d)../opengl2
-    this_ldflags += -L$(d)../harness/opengl2/build
+    this_ldflags += -L$(d)../opengl2/build
     this_ldlibs += -lmorda-opengl2-ren
 endif
 

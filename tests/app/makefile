@@ -28,11 +28,9 @@ ifneq ($(raspberrypi),true)
     this_cxxflags += -I$(d)../../src/morda -I$(d)../harness/mordavokne
 
     this_ldflags += -L$(d)../../src/morda/build
-    # this_ldlibs += $(d)../../src/morda/build/libmorda$(dot_so)
-    this_ldlibs += $(d)../harness/mordavokne/build/libmordavokne$(dot_so)
+    this_ldflags += -L$(d)../harness/mordavokne/build
 
-    # this_ldlibs +=
-    this_ldlibs += -lmorda -lpapki -lpuu -lunikod -lstdc++ -lm
+    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lstdc++ -lm
 
     ifeq ($(os),windows)
         this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
@@ -59,8 +57,11 @@ ifneq ($(raspberrypi),true)
     endif
 
     ifeq ($(ogles2), true)
-        this_ldlibs += `pkg-config --libs egl glesv2`
+        this_ldflags += -L$(d)../harness/opengles2/build
+        this_ldlibs += -lmorda-opengles2-ren
     else
+        this_ldflags += -L$(d)../harness/opengl2/build
+        this_ldlibs += -lmorda-opengl2-ren
         ifeq ($(os), macosx)
         else ifeq ($(os), windows)
         else
@@ -76,7 +77,7 @@ ifneq ($(raspberrypi),true)
     define this_rules
         run:: $(prorab_this_name)
 $(.RECIPEPREFIX)@echo running $$^...
-$(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/build:../harness/mordavokne/build $$^)
+$(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/build:../harness/mordavokne/build:../harness/opengl2/build:../harness/opengles2/build $$^)
     endef
     $(eval $(this_rules))
 

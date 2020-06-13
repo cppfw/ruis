@@ -24,6 +24,7 @@ this_srcs += $(call prorab-src-dir, .)
 this_cxxflags += -I$(d)../../../src/morda
 
 this_ldlibs += -lmorda -lstdc++
+this_ldlibs += `pkg-config --libs glesv2`
 this_ldflags += -L$(d)../../../src/morda/build
 
 ifeq ($(os), linux)
