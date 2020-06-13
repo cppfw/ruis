@@ -1,7 +1,7 @@
 #include "../../src/morda/morda/gui.hpp"
 #include "../../src/morda/morda/widgets/group/column.hpp"
 
-#include "../helpers/fake_renderer/FakeRenderer.hpp"
+#include "../harness/fake_renderer/fake_renderer.hpp"
 
 int main(int argc, char** argv){
 	// test the get_all_widgets() function

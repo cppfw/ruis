@@ -1,7 +1,7 @@
 #include "../../src/morda/morda/context.hpp"
 #include "../../src/morda/morda/widgets/group/pile.hpp"
 
-#include "../helpers/fake_renderer/FakeRenderer.hpp"
+#include "../harness/fake_renderer/fake_renderer.hpp"
 
 #include "../../src/morda/morda/gui.hpp"
 

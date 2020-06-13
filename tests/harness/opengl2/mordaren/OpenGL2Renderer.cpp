@@ -54,11 +54,8 @@ void OpenGL2Renderer::clear_framebuffer() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	assertOpenGLNoError();
 	
-#if M_OS_NAME == M_OS_NAME_IOS || defined(M_RENDER_OPENGLES2)
-	glClearDepthf(0);
-#else
 	glClearDepth(0);
-#endif
+
 	glClear(GL_DEPTH_BUFFER_BIT);
 	assertOpenGLNoError();
 	

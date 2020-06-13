@@ -32,5 +32,5 @@ include_directories(
 
 target_link_libraries(
         morda
-        android log png jpeg puu papki svgren svgdom z freetype mikroxml unikod utki cairo pixman
+        android log png jpeg puu papki svgren svgdom cssdom z freetype mikroxml unikod utki cairo pixman
     )

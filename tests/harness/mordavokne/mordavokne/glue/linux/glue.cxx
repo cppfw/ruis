@@ -12,13 +12,13 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 #	include <GL/glew.h>
 #	include <GL/glx.h>
 
 #	include <mordaren/OpenGL2Renderer.hpp>
 
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 #	include <EGL/egl.h>
 #	ifdef M_RASPBERRYPI
 #		include <bcm_host.h>
@@ -40,9 +40,9 @@ struct WindowWrapper : public utki::destructable{
 	Display* display;
 	Colormap colorMap;
 	::Window window;
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 	GLXContext glContext;
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 #	ifdef M_RASPBERRYPI
 	EGL_DISPMANX_WINDOW_T rpiNativeWindow;
 	DISPMANX_DISPLAY_HANDLE_T rpiDispmanDisplay;
@@ -72,7 +72,7 @@ struct WindowWrapper : public utki::destructable{
 			XCloseDisplay(this->display);
 		});
 
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 		{
 			int glxVerMajor, glxVerMinor;
 			if(!glXQueryVersion(this->display, &glxVerMajor, &glxVerMinor)){
@@ -136,7 +136,7 @@ struct WindowWrapper : public utki::destructable{
 			}
 			bestFbc = fbc[ bestFbcIdx ];
 		}
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 		if(this->eglDisplay == EGL_NO_DISPLAY){
 			throw std::runtime_error("eglGetDisplay(): failed, no matching display connection found");
@@ -186,12 +186,12 @@ struct WindowWrapper : public utki::destructable{
 #endif
 
 		XVisualInfo *vi;
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 		vi = glXGetVisualFromFBConfig(this->display, bestFbc);
 		if (!vi) {
 			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 #	ifdef M_RASPBERRYPI
 		{
 			int numVisuals;
@@ -297,7 +297,7 @@ struct WindowWrapper : public utki::destructable{
 
 		XFlush(this->display);
 
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 		this->glContext = glXCreateContext(this->display, vi, 0, GL_TRUE);
 		if(this->glContext == NULL){
 			throw std::runtime_error("glXCreateContext() failed");
@@ -314,7 +314,7 @@ struct WindowWrapper : public utki::destructable{
 		if(glewInit() != GLEW_OK){
 			throw std::runtime_error("GLEW initialization failed");
 		}
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 
 #	ifdef M_RASPBERRYPI
 		{
@@ -456,9 +456,9 @@ struct WindowWrapper : public utki::destructable{
 		scopeExitWindow.reset();
 		scopeExitColorMap.reset();
 		scopeExitDisplay.reset();
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 		scopeExitGLContext.reset();
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		scopeExitEGLDisplay.reset();
 		scopeExitEGLSurface.reset();
 		scopeExitEGLContext.reset();
@@ -473,10 +473,10 @@ struct WindowWrapper : public utki::destructable{
 		XCloseIM(this->inputMethod);
 		XFreeCursor(this->display, this->emptyCursor);
 
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 		glXMakeCurrent(this->display, None, NULL);
 		glXDestroyContext(this->display, this->glContext);
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 		eglDestroyContext(this->eglDisplay, this->eglContext);
 		eglDestroySurface(this->eglDisplay, this->eglSurface);
@@ -487,7 +487,7 @@ struct WindowWrapper : public utki::destructable{
 		XDestroyWindow(this->display, this->window);
 		XFreeColormap(this->display, this->colorMap);
 
-#ifdef M_RENDER_OPENGLES2
+#ifdef MORDAVOKNE_RENDER_OPENGLES2
 		eglTerminate(this->eglDisplay);
 #endif
 
@@ -524,9 +524,9 @@ application::application(std::string&& name, const window_params& requestedWindo
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<mordaren::OpenGL2Renderer>(),
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 				std::make_shared<mordaren::OpenGLES2Renderer>(),
 #else
 #	error "Unknown graphics API"
@@ -1091,9 +1091,9 @@ void application::set_mouse_cursor_visible(bool visible){
 void application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 
-#ifdef M_RENDER_OPENGL2
+#ifdef MORDAVOKNE_RENDER_OPENGL2
 	glXSwapBuffers(ww.display, ww.window);
-#elif defined(M_RENDER_OPENGLES2)
+#elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 	eglSwapBuffers(ww.eglDisplay, ww.eglSurface);
 #else
 #	error "Unknown graphics API"
