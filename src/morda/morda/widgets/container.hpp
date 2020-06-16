@@ -41,7 +41,9 @@ private:
 		children_union() :
 				variable() // this sets the 'variable' member of the union as an active one
 		{}
-		~children_union(){}
+		~children_union(){
+			this->variable.~widget_list();
+		}
 	} children_v;
 
 	// Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
