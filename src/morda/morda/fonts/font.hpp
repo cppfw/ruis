@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <unikod/utf8.hpp>
+#include <utki/utf8.hpp>
 
 #include <r4/matrix4.hpp>
 #include <r4/rectangle.hpp>
@@ -68,8 +68,8 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vec4f color, unikod::Utf8Iterator str)const{
-		return this->render_internal(matrix, color, unikod::toUtf32(str));
+	real render(const morda::matrix4& matrix, r4::vec4f color, utki::utf8_iterator str)const{
+		return this->render_internal(matrix, color, utki::to_utf32(str));
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public:
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
 	real render(const morda::matrix4& matrix, r4::vec4f color, const char* str)const{
-		return this->render(matrix, color, unikod::Utf8Iterator(str));
+		return this->render(matrix, color, utki::utf8_iterator(str));
 	}
 	
 	/**
