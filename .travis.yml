@@ -57,8 +57,9 @@ env:
   - MYCI_GIT_USERNAME=igagis
   - PACKAGE_NAME=morda
   matrix:
-  - OS_REL=xenial OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
+  # - OS_REL=xenial OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=bionic OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
+  - OS_REL=eoan OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=stretch OS=debian DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=buster OS=debian DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=buster OS=debian DOCKER_IMAGE=i386/$OS:$OS_REL PACKAGE_TYPE=deb
@@ -129,7 +130,7 @@ script:
     myci-create-zip-package.sh -f res/morda_res///res -h src/morda -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
-    (cd android && ./gradlew build) &&
+    (cd android && ./gradlew copy_aar) &&
     myci-apply-version.sh -v $PACKAGE_VERSION android/*.pom.in &&
     myci-apply-version.sh -v $PACKAGE_VERSION android/*.aar.in --filename-only;
   fi
