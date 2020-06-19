@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.ydq.android.gradle.native-aar.export' // must go after android gradle plugin
+apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after android gradle plugin
 
 android {
     compileSdkVersion 28
@@ -18,21 +20,22 @@ android {
         }
     }
 
-    // This is needed to make the default dependency configuration to be 'debug' for the test app which references
-    // this module as in-project dependency. Because app searches for library to link against in debug directory.
-    defaultPublishConfig "debug"
+    nativeBundleExport {
+        headerDir = "${project.projectDir}/../../src/"
+        bundleStatic = true
+        includeHeaderFilter.add("**/*.hpp")
+    }
 
     buildTypes {
-        debug {
+        release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        release{}
+        debug {}
     }
 
     // Encapsulates your external native build configurations.
     externalNativeBuild {
-
         // Encapsulates your CMake build configurations.
         cmake {
             // Provides a relative path to your CMake build script.
@@ -58,62 +61,21 @@ dependencies {
 }
 
 
-//===================================
-//=== Extract NDK files from AARs ===
-
-// This is needed to be able to write "configurations.implementation.each" below.
-configurations.implementation.setCanBeResolved(true)
-
-task extractNDKLibs {
-    doLast {
-        configurations.implementation.each {
-            def file = it.absoluteFile
-            copy {
-                from zipTree(file)
-                into "build/"
-                include "ndkLibs/**/*"
-            }
-        }
-    }
-}
-
-tasks.whenTaskAdded { task ->
-    logger.info('task added')
-    if (task.name.startsWith('externalNativeBuild')) {
-        task.dependsOn extractNDKLibs
-    }
-}
-
-
-
-//=================================
-//=== pack library files to aar ===
-//This stuff re-packs the release AAR file adding headers and static libs to there, but removing all shared (.so) libs, as we don't need them. The resulting AAR is put to the project root directory and can be uploaded to Maven along with POM file (you need to write one by hand).
-
+// copy and rename release AAR to unified name
 def aarName = name
 
-task copyNdkLibsToAAR(type: Zip) {
-    baseName = aarName
-    version = "\$(version)"
-    extension = 'aar.in'
-    destinationDir = file('..') //put resulting AAR file to upper level directory
+task copy_aar(type: Zip) {
+    archiveFileName = aarName + "-\$(version).aar.in"
+    destinationDirectory = file("../")
 
-    from zipTree("build/outputs/aar/" + aarName + "-release.aar")
-    exclude('**/*.so') //do not include shared libraries into final AAR
-    from("../../src/morda") {
-        include('**/*.hpp')
-        include('**/*.h')
-        into('ndkLibs/include')
-    }
+    from zipTree("build/outputs/aar/" + aarName + "-static-release.aar")
+
+    // pack morda resource files to AAR
     from("../../res/morda_res"){
         into('assets/morda_res')
-    }
-    from("build/intermediates/cmake/debug/obj"){
-        include('**/*.a')
-        into('ndkLibs')
     }
 }
 
 afterEvaluate {
-    bundleReleaseAar.finalizedBy copyNdkLibsToAAR
+    copy_aar.dependsOn(assembleRelease)
 }

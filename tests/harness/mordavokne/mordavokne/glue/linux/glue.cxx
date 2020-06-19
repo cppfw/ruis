@@ -7,7 +7,7 @@
 #include <papki/fs_file.hpp>
 #include <nitki/queue.hpp>
 
-#include <unikod/utf8.hpp>
+#include <utki/utf8.hpp>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -879,7 +879,7 @@ public:
 				if(size == 0){
 					return std::u32string();
 				}
-				return unikod::toUtf32(&*buf.begin());
+				return utki::to_utf32(&*buf.begin());
 			default:
 			case XBufferOverflow:
 				ASSERT(false)

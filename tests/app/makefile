@@ -46,7 +46,7 @@ ifneq ($(raspberrypi),true)
         this_ldflags += -rdynamic
     endif
 
-    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lunikod -lm
+    this_ldlibs += -lmordavokne -lmorda -lpapki -lpuu -lutki -lm
 
     ifeq ($(ogles2), true)
         this_ldflags += -L$(d)../harness/opengles2/build

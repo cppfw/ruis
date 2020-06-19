@@ -110,8 +110,8 @@ public:
 	 * @param str - string to get advance for.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(unikod::Utf8Iterator str)const{
-		return this->get_advance_internal(unikod::toUtf32(str));
+	real get_advance(utki::utf8_iterator str)const{
+		return this->get_advance_internal(utki::to_utf32(str));
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public:
 	 * @return Advance of the string of text.
 	 */
 	real get_advance(const char* str)const{
-		return this->get_advance(unikod::Utf8Iterator(str));
+		return this->get_advance(utki::utf8_iterator(str));
 	}
 	
 	/**
@@ -155,8 +155,8 @@ public:
 	 * @param str - string of text to get the bounding box for.
 	 * @return Bounding box of the text string.
 	 */
-	morda::rectangle get_bounding_box(unikod::Utf8Iterator str)const{
-		return this->get_bounding_box_internal(unikod::toUtf32(str));
+	morda::rectangle get_bounding_box(utki::utf8_iterator str)const{
+		return this->get_bounding_box_internal(utki::to_utf32(str));
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public:
 	 * @return Bounding box of the text string.
 	 */
 	morda::rectangle get_bounding_box(const char* str)const{
-		return this->get_bounding_box(unikod::Utf8Iterator(str));
+		return this->get_bounding_box(utki::utf8_iterator(str));
 	}
 	
 	/**

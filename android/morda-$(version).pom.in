@@ -10,14 +10,14 @@
 	  <dependency>
 		  <groupId>io.github.igagis</groupId>
 		  <artifactId>utki</artifactId>
-		  <version>[1.1.7,)</version>
+		  <version>[1.1.93,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
 	  <dependency>
 		  <groupId>io.github.igagis</groupId>
 		  <artifactId>papki</artifactId>
-		  <version>[1.0.34,)</version>
+		  <version>[1.0.82,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>

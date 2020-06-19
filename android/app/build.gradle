@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after android gradle plugin
 
 android {
     compileSdkVersion 28
@@ -21,11 +22,11 @@ android {
     }
 
     buildTypes {
-        debug {
+        release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        release {}
+        debug {}
     }
 
     // Encapsulates your external native build configurations.
@@ -57,7 +58,6 @@ dependencies {
     implementation 'io.github.igagis:freetype:+'
     implementation project(path: ':morda', configuration: 'default')
 }
-
 
 task copyResToAssets {
     doLast {

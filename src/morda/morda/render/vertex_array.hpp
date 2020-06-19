@@ -19,7 +19,7 @@ public:
 	 * Enumeration defining how to interpret vertex data when rendering.
 	 */
 	enum class mode{
-		//NOTE: do not change order!!!
+		// NOTE: do not change order!!!
 		
 		triangles,
 		triangle_fan,

@@ -41,6 +41,6 @@ else ifeq ($(os), macosx)
     this_ldlibs += -lfreetype
 endif
 
-this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lunikod -lutki -lpng -ljpeg -lm
+this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
 
 $(eval $(prorab-build-lib))

@@ -12,6 +12,4 @@ OpenGLES2VertexArray::OpenGLES2VertexArray(
 		mode rendering_mode
 	) :
 		morda::vertex_array(std::move(buffers), std::move(indices), rendering_mode)
-{
-
-}
+{}

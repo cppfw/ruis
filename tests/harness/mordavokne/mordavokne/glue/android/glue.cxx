@@ -7,7 +7,7 @@
 #include <android/asset_manager.h>
 #include <android/window.h>
 
-#include <unikod/utf8.hpp>
+#include <utki/utf8.hpp>
 #include <nitki/queue.hpp>
 #include <utki/destructable.hpp>
 
@@ -926,7 +926,7 @@ JNIEXPORT void JNICALL Java_io_github_igagis_mordavokne_MordaVOkneActivity_handl
 
 	std::vector<char32_t> utf32;
 
-	for(unikod::Utf8Iterator i(utf8Chars); !i.isEnd(); ++i){
+	for(utki::utf8_iterator i(utf8Chars); !i.is_end(); ++i){
 		utf32.push_back(i.character());
 	}
 

@@ -369,7 +369,7 @@ void morda::window::setupWidgets(){
 }
 
 void morda::window::set_title(const std::string& str){
-	this->title->set_text(unikod::toUtf32(str));
+	this->title->set_text(utki::to_utf32(str));
 }
 
 void morda::window::set_borders(sides<real> borders) {

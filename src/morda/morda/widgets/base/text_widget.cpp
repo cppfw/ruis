@@ -48,7 +48,7 @@ single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context>
 		}
 
 		if(p.value == "text"){
-			this->set_text(unikod::toUtf32(get_property_value(p).to_string()));
+			this->set_text(utki::to_utf32(get_property_value(p).to_string()));
 		}
 	}
 }

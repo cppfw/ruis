@@ -33,7 +33,7 @@ public:
 	}
 
 	void set_text(const std::string& text){
-		this->set_text(unikod::toUtf32(text));
+		this->set_text(utki::to_utf32(text));
 	}
 
 	void set_text(std::u32string&& text);

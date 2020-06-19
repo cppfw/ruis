@@ -9,7 +9,6 @@ class Libmorda < Formula
   depends_on "myci" => :build
   depends_on "libutki"
   depends_on "libpapki"
-  depends_on "libunikod"
   depends_on "puu"
   depends_on "libpng"
   depends_on "jpeg"

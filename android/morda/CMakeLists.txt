@@ -12,25 +12,22 @@ cmake_minimum_required(VERSION 3.4.1)
 
 file(GLOB_RECURSE srcs "../../src/morda/morda/*.cpp")
 
-link_directories( build/ndkLibs/${ANDROID_ABI}/ )
+set(name morda)
 
-add_library( # Specifies the name of the library.
-             morda
+include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
 
-             # Sets the library as a shared library.
-             STATIC
+add_library(
+        # Specifies the name of the library.
+        ${name}
 
-             # Provides a relative path to your source file(s).
-             ${srcs} )
+        # Sets the library as a shared library.
+        STATIC
 
-include_directories(
-        build/ndkLibs/include/
-        build/ndkLibs/include/freetype
-        build/ndkLibs/include/png
-        build/ndkLibs/include/jpeg
+        # Provides a relative path to your source file(s).
+        ${srcs}
     )
 
 target_link_libraries(
         morda
-        android log png jpeg puu papki svgren svgdom cssdom z freetype mikroxml unikod utki cairo pixman
+        android log z ${ANDROID_GRADLE_NATIVE_MODULES}
     )

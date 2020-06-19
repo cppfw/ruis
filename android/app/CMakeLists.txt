@@ -16,26 +16,30 @@ file(GLOB_RECURSE srcs
         "../../tests/harness/opengles2/*.cpp"
 )
 
-link_directories( build/ndkLibs/${ANDROID_ABI}/ ../morda/build/intermediates/cmake/debug/obj/${ANDROID_ABI} )
+include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
 
-add_library( # Specifies the name of the library.
-             mordavokneapp # this has to be 'mordavokneapp' so that MordaVOkneActivity loads that named .so
+link_directories( ../morda/build/intermediates/cmake/release/obj/${ANDROID_ABI} )
 
-             # Sets the library as a shared library.
-             SHARED
+add_library(
+        # Specifies the name of the library.
+        mordavokneapp # this has to be 'mordavokneapp' so that MordaVOkneActivity loads that named .so
 
-             # Provides a relative path to your source file(s).
-             ${srcs} )
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        ${srcs}
+    )
 
 include_directories(
-        build/ndkLibs/include/
         ../../src/morda/
         ../../tests/harness/mordavokne/
         ../../tests/harness/opengles2/
-        ../../tests/app/src/
-)
+    )
+
+message(LINK = ${ANDROID_GRADLE_NATIVE_MODULES})
 
 target_link_libraries(
         mordavokneapp
-        morda android log EGL png jpeg puu papki svgren svgdom cssdom z freetype mikroxml unikod nitki utki GLESv2 cairo pixman
+        morda android log EGL z GLESv2 ${ANDROID_GRADLE_NATIVE_MODULES}
     )
