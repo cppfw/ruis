@@ -1,4 +1,4 @@
-#include "OpenGL2Renderer.hpp"
+#include "renderer.hpp"
 
 #include "frame_buffer.hpp"
 
@@ -13,7 +13,7 @@ unsigned getMaxTextureSize(){
 }
 }
 
-OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<render_factory> factory) :
+renderer::renderer(std::unique_ptr<render_factory> factory) :
 		morda::Renderer(std::move(factory), getMaxTextureSize())
 {
 	//On some platforms the default framebuffer is not 0, so because of this
@@ -25,7 +25,7 @@ OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<render_factory> factory) :
 	this->defaultFramebuffer = GLuint(oldFb);
 }
 
-void OpenGL2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
+void renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
 	if(!fb){
 		glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebuffer);
 		assertOpenGLNoError();
@@ -39,7 +39,7 @@ void OpenGL2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
 	assertOpenGLNoError();
 }
 
-void OpenGL2Renderer::clearFramebuffer() {
+void renderer::clearFramebuffer() {
 	glClearColor(0, 0, 0, 1);
 	assertOpenGLNoError();
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -58,11 +58,11 @@ void OpenGL2Renderer::clearFramebuffer() {
 	assertOpenGLNoError();
 }
 
-bool OpenGL2Renderer::isScissorEnabled() const {
+bool renderer::isScissorEnabled() const {
 	return glIsEnabled(GL_SCISSOR_TEST) ? true : false; //?true:false is to avoid warning under MSVC
 }
 
-void OpenGL2Renderer::setScissorEnabled(bool enabled) {
+void renderer::setScissorEnabled(bool enabled) {
 	if(enabled){
 		glEnable(GL_SCISSOR_TEST);
 	}else{
@@ -70,18 +70,18 @@ void OpenGL2Renderer::setScissorEnabled(bool enabled) {
 	}
 }
 
-kolme::Recti OpenGL2Renderer::getScissorRect() const {
+kolme::Recti renderer::getScissorRect() const {
 	GLint osb[4];
 	glGetIntegerv(GL_SCISSOR_BOX, osb);
 	return kolme::Recti(osb[0], osb[1], osb[2], osb[3]);
 }
 
-void OpenGL2Renderer::setScissorRect(kolme::Recti r) {
+void renderer::setScissorRect(kolme::Recti r) {
 	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
 	assertOpenGLNoError();
 }
 
-kolme::Recti OpenGL2Renderer::getViewport()const {
+kolme::Recti renderer::getViewport()const {
 	GLint vp[4];
 
 	glGetIntegerv(GL_VIEWPORT, vp);
@@ -89,12 +89,12 @@ kolme::Recti OpenGL2Renderer::getViewport()const {
 	return kolme::Recti(vp[0], vp[1], vp[2], vp[3]);
 }
 
-void OpenGL2Renderer::setViewport(kolme::Recti r) {
+void renderer::setViewport(kolme::Recti r) {
 	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
 	assertOpenGLNoError();
 }
 
-void OpenGL2Renderer::setBlendEnabled(bool enable) {
+void renderer::setBlendEnabled(bool enable) {
 	if(enable){
 		glEnable(GL_BLEND);
 	}else{
@@ -124,7 +124,7 @@ GLenum blendFunc[] = {
 
 }
 
-void OpenGL2Renderer::setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) {
+void renderer::setBlendFunc(BlendFactor_e srcClr, BlendFactor_e dstClr, BlendFactor_e srcAlpha, BlendFactor_e dstAlpha) {
 	glBlendFuncSeparate(
 			blendFunc[unsigned(srcClr)],
 			blendFunc[unsigned(dstClr)],

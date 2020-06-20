@@ -525,7 +525,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-				std::make_shared<morda::render_opengl2::OpenGL2Renderer>(),
+				std::make_shared<morda::render_opengl2::renderer>(),
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 				std::make_shared<morda::OpenGLES2Renderer>(),
 #else

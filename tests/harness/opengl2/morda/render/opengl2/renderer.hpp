@@ -10,13 +10,13 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2Renderer : public morda::renderer{
+class renderer : public morda::renderer{
 	GLuint defaultFramebuffer;
 public:
-	OpenGL2Renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
+	renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
 	
-	OpenGL2Renderer(const OpenGL2Renderer& orig) = delete;
-	OpenGL2Renderer& operator=(const OpenGL2Renderer& orig) = delete;
+	renderer(const renderer& orig) = delete;
+	renderer& operator=(const renderer& orig) = delete;
 	
 	void set_framebuffer_internal(morda::frame_buffer* fb)override;
 

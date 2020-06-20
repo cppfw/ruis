@@ -9,7 +9,7 @@
 #include <windowsx.h>
 #include <Shlobj.h>
 
-#include <morda/OpenGL2Renderer.hpp>
+#include <morda/renderer.hpp>
 
 #include "../../application.hpp"
 
@@ -634,7 +634,7 @@ application::application(std::string&& name, const window_params& wp) :
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(wp)),
 		gui(
-				std::make_shared<morda::OpenGL2Renderer>(),
+				std::make_shared<morda::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
