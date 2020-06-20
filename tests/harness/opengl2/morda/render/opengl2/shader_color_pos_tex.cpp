@@ -4,7 +4,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2ShaderColorPosTex::OpenGL2ShaderColorPosTex() :
+shader_color_pos_tex::shader_color_pos_tex() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -48,7 +48,7 @@ OpenGL2ShaderColorPosTex::OpenGL2ShaderColorPosTex() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPosTex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const{
+void shader_color_pos_tex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const{
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	
