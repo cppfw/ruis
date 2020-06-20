@@ -4,9 +4,9 @@
 
 #include <morda/render/IndexBuffer.hpp>
 
-#include "OpenGL2Buffer.hpp"
+#include "opengl_buffer.hpp"
 
-class OpenGL2IndexBuffer : public morda::IndexBuffer, public OpenGL2Buffer{
+class OpenGL2IndexBuffer : public morda::IndexBuffer, public opengl_buffer{
 public:
 	const GLenum elementType;
 	const GLsizei elementsCount;

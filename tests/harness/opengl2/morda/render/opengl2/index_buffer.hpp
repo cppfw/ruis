@@ -10,7 +10,7 @@ namespace morda{ namespace render_opengl2{
 
 class OpenGL2IndexBuffer :
 		public morda::index_buffer,
-		public OpenGL2Buffer
+		public opengl_buffer
 {
 public:
 	const GLenum elementType;

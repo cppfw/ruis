@@ -10,7 +10,7 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2VertexBuffer : public morda::vertex_buffer, public OpenGL2Buffer{
+class OpenGL2VertexBuffer : public morda::vertex_buffer, public opengl_buffer{
 public:
 	const GLint numComponents;
 	const GLenum type;

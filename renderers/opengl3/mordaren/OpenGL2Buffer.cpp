@@ -1,4 +1,4 @@
-#include "OpenGL2Buffer.hpp"
+#include "opengl_buffer.hpp"
 
 #include "OpenGL2_util.hpp"
 
@@ -11,13 +11,13 @@ inline GLuint createGLBuffer(){
 }
 }
 
-OpenGL2Buffer::OpenGL2Buffer() :
+opengl_buffer::opengl_buffer() :
 		buffer(createGLBuffer())
 {
 }
 
 
-OpenGL2Buffer::~OpenGL2Buffer()noexcept{
+opengl_buffer::~opengl_buffer()noexcept{
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	assertOpenGLNoError();
 	glDeleteBuffers(1, &this->buffer);

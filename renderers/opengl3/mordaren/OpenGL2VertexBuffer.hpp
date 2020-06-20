@@ -6,9 +6,9 @@
 
 #include <morda/render/VertexBuffer.hpp>
 
-#include "OpenGL2Buffer.hpp"
+#include "opengl_buffer.hpp"
 
-class OpenGL2VertexBuffer : public morda::VertexBuffer, public OpenGL2Buffer{
+class OpenGL2VertexBuffer : public morda::VertexBuffer, public opengl_buffer{
 public:
 	const GLint numComponents;
 	const GLenum type;
