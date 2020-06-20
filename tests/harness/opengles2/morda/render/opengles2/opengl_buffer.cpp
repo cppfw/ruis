@@ -1,6 +1,6 @@
 #include "opengl_buffer.hpp"
 
-#include "OpenGLES2_util.hpp"
+#include "util.hpp"
 
 using namespace morda::render_opengles2;
 

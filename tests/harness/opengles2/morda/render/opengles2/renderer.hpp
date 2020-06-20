@@ -8,14 +8,14 @@
 
 namespace morda{ namespace render_opengles2{
 
-class OpenGLES2Renderer : public morda::renderer{
+class renderer : public morda::renderer{
 	bool defaultFramebufferInitialized = false;
 	std::uint32_t defaultFramebuffer; // NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
 public:
-	OpenGLES2Renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
+	renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
 	
-	OpenGLES2Renderer(const OpenGLES2Renderer& orig) = delete;
-	OpenGLES2Renderer& operator=(const OpenGLES2Renderer& orig) = delete;
+	renderer(const renderer& orig) = delete;
+	renderer& operator=(const renderer& orig) = delete;
 	
 	void set_framebuffer_internal(morda::frame_buffer* fb)override;
 

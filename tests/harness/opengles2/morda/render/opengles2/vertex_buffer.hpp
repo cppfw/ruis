@@ -10,21 +10,21 @@
 
 namespace morda{ namespace render_opengles2{
 
-class OpenGLES2VertexBuffer : public morda::vertex_buffer, public opengl_buffer{
+class vertex_buffer : public morda::vertex_buffer, public opengl_buffer{
 public:
 	const GLint numComponents;
 	const GLenum type;
 	
-	OpenGLES2VertexBuffer(utki::span<const r4::vec4f> vertices);
+	vertex_buffer(utki::span<const r4::vec4f> vertices);
 	
-	OpenGLES2VertexBuffer(utki::span<const r4::vec3f> vertices);
+	vertex_buffer(utki::span<const r4::vec3f> vertices);
 	
-	OpenGLES2VertexBuffer(utki::span<const r4::vec2f> vertices);
+	vertex_buffer(utki::span<const r4::vec2f> vertices);
 	
-	OpenGLES2VertexBuffer(utki::span<const float> vertices);
+	vertex_buffer(utki::span<const float> vertices);
 	
-	OpenGLES2VertexBuffer(const OpenGLES2VertexBuffer&) = delete;
-	OpenGLES2VertexBuffer& operator=(const OpenGLES2VertexBuffer&) = delete;
+	vertex_buffer(const vertex_buffer&) = delete;
+	vertex_buffer& operator=(const vertex_buffer&) = delete;
 
 private:
 	void init(GLsizeiptr size, const GLvoid* data);

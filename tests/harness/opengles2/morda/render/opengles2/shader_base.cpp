@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include "OpenGLES2ShaderBase.hpp"
-#include "OpenGLES2_util.hpp"
-#include "OpenGLES2VertexArray.hpp"
-#include "OpenGLES2IndexBuffer.hpp"
-#include "OpenGLES2VertexBuffer.hpp"
+#include "shader_base.hpp"
+#include "util.hpp"
+#include "vertex_array.hpp"
+#include "index_buffer.hpp"
+#include "vertex_buffer.hpp"
 
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
@@ -17,9 +17,9 @@
 
 using namespace morda::render_opengles2;
 
-const OpenGLES2ShaderBase* OpenGLES2ShaderBase::boundShader = nullptr;
+const shader_base* shader_base::boundShader = nullptr;
 
-GLenum OpenGLES2ShaderBase::modeMap[] = {
+GLenum shader_base::modeMap[] = {
 	GL_TRIANGLES,			// TRIANGLES
 	GL_TRIANGLE_FAN,		// TRIANGLE_FAN
 	GL_LINE_LOOP,			// LINE_LOOP
@@ -72,7 +72,7 @@ bool checkForLinkErrors(GLuint program){
 }
 }
 
-ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
+shader_wrapper::shader_wrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
 	assertOpenGLNoError();
 
@@ -94,7 +94,7 @@ ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 	}
 }
 
-ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
+program_wrapper::program_wrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
 		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
 {
@@ -128,13 +128,13 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 	}
 }
 
-OpenGLES2ShaderBase::OpenGLES2ShaderBase(const char* vertexShaderCode, const char* fragmentShaderCode) :
+shader_base::shader_base(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		program(vertexShaderCode, fragmentShaderCode),
 		matrixUniform(this->getUniform("matrix"))
 {
 }
 
-GLint OpenGLES2ShaderBase::getUniform(const char* n) {
+GLint shader_base::getUniform(const char* n) {
 	GLint ret = glGetUniformLocation(this->program.p, n);
 	assertOpenGLNoError();
 	if(ret < 0){
@@ -143,17 +143,17 @@ GLint OpenGLES2ShaderBase::getUniform(const char* n) {
 	return ret;
 }
 
-void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va)const{
+void shader_base::render(const r4::mat4f& m, const morda::vertex_array& va)const{
 	ASSERT(this->isBound())
 	
-	ASSERT(dynamic_cast<const OpenGLES2IndexBuffer*>(va.indices.get()))
-	auto& ivbo = static_cast<const OpenGLES2IndexBuffer&>(*va.indices);
+	ASSERT(dynamic_cast<const index_buffer*>(va.indices.get()))
+	auto& ivbo = static_cast<const index_buffer&>(*va.indices);
 	
 	this->setMatrix(m);
 	
 	for(unsigned i = 0; i != va.buffers.size(); ++i){
-		ASSERT(dynamic_cast<OpenGLES2VertexBuffer*>(va.buffers[i].get()))
-		auto& vbo = static_cast<OpenGLES2VertexBuffer&>(*va.buffers[i]);
+		ASSERT(dynamic_cast<vertex_buffer*>(va.buffers[i].get()))
+		auto& vbo = static_cast<vertex_buffer&>(*va.buffers[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
 		assertOpenGLNoError();
 		
@@ -167,8 +167,8 @@ void OpenGLES2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& 
 	}
 	
 	{
-		ASSERT(dynamic_cast<OpenGLES2IndexBuffer*>(va.indices.get()))
-		auto& ivbo = static_cast<OpenGLES2IndexBuffer&>(*va.indices);
+		ASSERT(dynamic_cast<index_buffer*>(va.indices.get()))
+		auto& ivbo = static_cast<index_buffer&>(*va.indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo.buffer);
 		assertOpenGLNoError();
 	}

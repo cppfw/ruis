@@ -2,19 +2,19 @@
 
 #include "render_factory.hpp"
 
-#include "OpenGLES2VertexBuffer.hpp"
-#include "OpenGLES2VertexArray.hpp"
+#include "vertex_buffer.hpp"
+#include "vertex_array.hpp"
 
-#include "OpenGLES2_util.hpp"
-#include "OpenGLES2IndexBuffer.hpp"
+#include "util.hpp"
+#include "index_buffer.hpp"
 
-#include "OpenGLES2Texture2D.hpp"
-#include "OpenGLES2ShaderPosTex.hpp"
-#include "OpenGLES2ShaderColor.hpp"
-#include "OpenGLES2ShaderPosClr.hpp"
-#include "OpenGLES2ShaderColorPosTex.hpp"
-#include "OpenGLES2ShaderColorPosLum.hpp"
-#include "OpenGLES2FrameBuffer.hpp"
+#include "texture_2d.hpp"
+#include "shader_pos_tex.hpp"
+#include "shader_color.hpp"
+#include "shader_pos_clr.hpp"
+#include "shader_color_pos_tex.hpp"
+#include "shader_color_pos_lum.hpp"
+#include "frame_buffer.hpp"
 
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
@@ -35,7 +35,7 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 
 	ASSERT(data.size() == 0 || data.size() / morda::texture_2d::bytes_per_pixel(type) / dims.x == dims.y)
 	
-	auto ret = std::make_shared<OpenGLES2Texture2D>(dims.to<float>());
+	auto ret = std::make_shared<texture_2d>(dims.to<float>());
 	
 	//TODO: save previous bind and restore it after?
 	ret->bind(0);
@@ -89,19 +89,19 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec4f> vertices){
-	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec3f> vertices){
-	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec2f> vertices){
-	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const float> vertices){
-	return std::make_shared<OpenGLES2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_array> render_factory::create_vertex_array(
@@ -110,23 +110,23 @@ std::shared_ptr<morda::vertex_array> render_factory::create_vertex_array(
 		morda::vertex_array::mode rendering_mode
 	)
 {
-	return std::make_shared<OpenGLES2VertexArray>(std::move(buffers), std::move(indices), rendering_mode);
+	return std::make_shared<vertex_array>(std::move(buffers), std::move(indices), rendering_mode);
 }
 
 std::shared_ptr<morda::index_buffer> render_factory::create_index_buffer(utki::span<const uint16_t> indices){
-	return std::make_shared<OpenGLES2IndexBuffer>(indices);
+	return std::make_shared<index_buffer>(indices);
 }
 
 std::unique_ptr<morda::render_factory::shaders> render_factory::create_shaders(){
 	auto ret = std::make_unique<morda::render_factory::shaders>();
-	ret->pos_tex = std::make_unique<OpenGLES2ShaderPosTex>();
-	ret->color_pos = std::make_unique<OpenGLES2ShaderColor>();
-	ret->pos_clr = std::make_unique<OpenGLES2ShaderPosClr>();
-	ret->color_pos_tex = std::make_unique<OpenGLES2ShaderColorPosTex>();
-	ret->color_pos_lum = std::make_unique<OpenGLES2ShaderColorPosLum>();
+	ret->pos_tex = std::make_unique<shader_pos_tex>();
+	ret->color_pos = std::make_unique<shader_color>();
+	ret->pos_clr = std::make_unique<shader_pos_clr>();
+	ret->color_pos_tex = std::make_unique<shader_color_pos_tex>();
+	ret->color_pos_lum = std::make_unique<shader_color_pos_lum>();
 	return ret;
 }
 
 std::shared_ptr<morda::frame_buffer> render_factory::create_framebuffer(std::shared_ptr<morda::texture_2d> color){
-	return std::make_shared<OpenGLES2FrameBuffer>(std::move(color));
+	return std::make_shared<frame_buffer>(std::move(color));
 }

@@ -67,7 +67,7 @@ bool checkForLinkErrors(GLuint program){
 
 
 
-ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
+shader_wrapper::shader_wrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
 
 	if (this->s == 0) {
@@ -86,7 +86,7 @@ ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 }
 
 
-ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
+program_wrapper::program_wrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
 		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
 {

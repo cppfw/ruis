@@ -1,8 +1,8 @@
 #include <utki/config.hpp>
 
-#include "OpenGLES2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
-#include "OpenGLES2_util.hpp"
+#include "util.hpp"
 
 #if M_OS_NAME == M_OS_NAME_IOS
 #	include <OpenGlES/ES2/glext.h>
@@ -12,7 +12,7 @@
 
 using namespace morda::render_opengles2;
 
-OpenGLES2IndexBuffer::OpenGLES2IndexBuffer(utki::span<const std::uint16_t> indices) :
+index_buffer::index_buffer(utki::span<const std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
 		elementsCount(GLsizei(indices.size()))
 {	

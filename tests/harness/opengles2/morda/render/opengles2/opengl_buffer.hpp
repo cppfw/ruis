@@ -8,7 +8,6 @@
 #	include <GLES2/gl2.h>
 #endif
 
-
 namespace morda{ namespace render_opengles2{
 
 class opengl_buffer{

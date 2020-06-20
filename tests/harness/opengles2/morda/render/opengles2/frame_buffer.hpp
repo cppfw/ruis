@@ -13,16 +13,16 @@
 
 namespace morda{ namespace render_opengles2{
 
-class OpenGLES2FrameBuffer : public morda::frame_buffer{
+class frame_buffer : public morda::frame_buffer{
 public:
 	GLuint fbo;
 	
-	OpenGLES2FrameBuffer(std::shared_ptr<morda::texture_2d> color);
+	frame_buffer(std::shared_ptr<morda::texture_2d> color);
 	
-	OpenGLES2FrameBuffer(const OpenGLES2FrameBuffer&) = delete;
-	OpenGLES2FrameBuffer& operator=(const OpenGLES2FrameBuffer&) = delete;
+	frame_buffer(const frame_buffer&) = delete;
+	frame_buffer& operator=(const frame_buffer&) = delete;
 	
-	~OpenGLES2FrameBuffer()noexcept;
+	~frame_buffer()noexcept;
 private:
 
 };

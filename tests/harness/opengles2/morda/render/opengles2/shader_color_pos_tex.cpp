@@ -1,11 +1,11 @@
-#include "OpenGLES2ShaderColorPosTex.hpp"
+#include "shader_color_pos_tex.hpp"
 
-#include "OpenGLES2Texture2D.hpp"
+#include "texture_2d.hpp"
 
 using namespace morda::render_opengles2;
 
-OpenGLES2ShaderColorPosTex::OpenGLES2ShaderColorPosTex() :
-		OpenGLES2ShaderBase(
+shader_color_pos_tex::shader_color_pos_tex() :
+		shader_base(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -48,12 +48,12 @@ OpenGLES2ShaderColorPosTex::OpenGLES2ShaderColorPosTex() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGLES2ShaderColorPosTex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const {
-	ASSERT(dynamic_cast<const OpenGLES2Texture2D*>(&tex))
-	static_cast<const OpenGLES2Texture2D&>(tex).bind(0);
+void shader_color_pos_tex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const {
+	ASSERT(dynamic_cast<const texture_2d*>(&tex))
+	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
 	
-	this->OpenGLES2ShaderBase::render(m, va);
+	this->shader_base::render(m, va);
 }

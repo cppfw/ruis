@@ -1,9 +1,9 @@
-#include "OpenGLES2ShaderColorPosLum.hpp"
+#include "shader_color_pos_lum.hpp"
 
 using namespace morda::render_opengles2;
 
-OpenGLES2ShaderColorPosLum::OpenGLES2ShaderColorPosLum() :
-		OpenGLES2ShaderBase(
+shader_color_pos_lum::shader_color_pos_lum() :
+		shader_base(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -43,10 +43,10 @@ OpenGLES2ShaderColorPosLum::OpenGLES2ShaderColorPosLum() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGLES2ShaderColorPosLum::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const {
+void shader_color_pos_lum::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const {
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
 	
-	this->OpenGLES2ShaderBase::render(m, va);
+	this->shader_base::render(m, va);
 }

@@ -1,20 +1,20 @@
 #pragma once
 
 #include <morda/render/coloring_shader.hpp>
-#include "OpenGLES2ShaderBase.hpp"
+#include "shader_base.hpp"
 
 namespace morda{ namespace render_opengles2{
 
-class OpenGLES2ShaderColorPosLum :
+class shader_color_pos_lum :
 		public morda::coloring_shader,
-		private OpenGLES2ShaderBase
+		private shader_base
 {
 	GLint colorUniform;
 public:
-	OpenGLES2ShaderColorPosLum();
+	shader_color_pos_lum();
 	
-	OpenGLES2ShaderColorPosLum(const OpenGLES2ShaderColorPosLum&) = delete;
-	OpenGLES2ShaderColorPosLum& operator=(const OpenGLES2ShaderColorPosLum&) = delete;
+	shader_color_pos_lum(const shader_color_pos_lum&) = delete;
+	shader_color_pos_lum& operator=(const shader_color_pos_lum&) = delete;
 	
 	using morda::coloring_shader::render;
 	

@@ -1,16 +1,16 @@
-#include "OpenGLES2ShaderPosTex.hpp"
+#include "shader_pos_tex.hpp"
 
-#include "OpenGLES2Texture2D.hpp"
-#include "OpenGLES2VertexBuffer.hpp"
-#include "OpenGLES2VertexArray.hpp"
-#include "OpenGLES2IndexBuffer.hpp"
+#include "texture_2d.hpp"
+#include "vertex_buffer.hpp"
+#include "vertex_array.hpp"
+#include "index_buffer.hpp"
 
-#include "OpenGLES2_util.hpp"
+#include "util.hpp"
 
 using namespace morda::render_opengles2;
 
-OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
-		OpenGLES2ShaderBase(
+shader_pos_tex::shader_pos_tex() :
+		shader_base(
 				R"qwertyuiop(
 						#ifndef GL_ES
 						#	define highp
@@ -51,10 +51,10 @@ OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
 	this->textureUniform = this->getUniform("texture0");
 }
 
-void OpenGLES2ShaderPosTex::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
-	ASSERT(dynamic_cast<const OpenGLES2Texture2D*>(&tex))
-	static_cast<const OpenGLES2Texture2D&>(tex).bind(0);
+void shader_pos_tex::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
+	ASSERT(dynamic_cast<const texture_2d*>(&tex))
+	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
-	this->OpenGLES2ShaderBase::render(m, va);
+	this->shader_base::render(m, va);
 }

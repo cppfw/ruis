@@ -24,7 +24,7 @@
 #		include <bcm_host.h>
 #	endif
 
-#	include <morda/render/opengles2/OpenGLES2Renderer.hpp>
+#	include <morda/render/opengles2/renderer.hpp>
 
 #else
 #	error "Unknown graphics API"
@@ -527,7 +527,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<morda::render_opengl2::renderer>(),
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
-				std::make_shared<morda::render_opengles2::OpenGLES2Renderer>(),
+				std::make_shared<morda::render_opengles2::renderer>(),
 #else
 #	error "Unknown graphics API"
 #endif

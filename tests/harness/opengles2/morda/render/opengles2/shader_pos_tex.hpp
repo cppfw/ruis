@@ -2,17 +2,17 @@
 
 #include <morda/render/texturing_shader.hpp>
 
-#include "OpenGLES2ShaderBase.hpp"
+#include "shader_base.hpp"
 
 namespace morda{ namespace render_opengles2{
 
-class OpenGLES2ShaderPosTex :
+class shader_pos_tex :
 		public morda::texturing_shader,
-		public OpenGLES2ShaderBase
+		public shader_base
 {
 	GLint textureUniform;
 public:
-	OpenGLES2ShaderPosTex();
+	shader_pos_tex();
 	
 	void render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const override;
 };

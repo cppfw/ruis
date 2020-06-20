@@ -15,7 +15,7 @@
 
 #include "../../application.hpp"
 
-#include <morda/OpenGLES2Renderer.hpp>
+#include <morda/renderer.hpp>
 
 #include <EGL/egl.h>
 
@@ -977,7 +977,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
-				std::make_shared<morda::OpenGLES2Renderer>(),
+				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
