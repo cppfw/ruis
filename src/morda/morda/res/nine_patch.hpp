@@ -4,9 +4,9 @@
 
 #include "../resource_loader.hpp"
 
-#include "res_image.hpp"
+#include "image.hpp"
 
-namespace morda{
+namespace morda{ namespace res{
 
 /**
  * @brief Nine-patch resource.
@@ -26,18 +26,18 @@ namespace morda{
  * }
  * @endcode
  */
-class res_nine_patch : public resource{
-	friend class resource_loader;
+class nine_patch : public resource{
+	friend class morda::resource_loader;
 	
-	const std::shared_ptr<const res_image> image;
+	const std::shared_ptr<const res::image> image;
 	
 	sides<real> borders_v;
 	
 public:
-	res_nine_patch(const res_nine_patch&) = delete;
-	res_nine_patch& operator=(const res_nine_patch&) = delete;
+	nine_patch(const nine_patch&) = delete;
+	nine_patch& operator=(const nine_patch&) = delete;
 	
-	res_nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res_image> image, sides<real> borders) :
+	nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res::image> image, sides<real> borders) :
 			resource(std::move(c)),
 			image(std::move(image)),
 			borders_v(borders)
@@ -45,9 +45,9 @@ public:
 	
 	
 	class image_matrix{
-		const std::array<std::array<std::shared_ptr<const res_image>, 3>, 3> images_v;
+		const std::array<std::array<std::shared_ptr<const res::image>, 3>, 3> images_v;
 		
-		std::weak_ptr<const res_nine_patch> parent;
+		std::weak_ptr<const nine_patch> parent;
 	
 		real mul;//for erasing from the cache
 	public:
@@ -55,7 +55,7 @@ public:
 			return this->images_v;
 		}
 		
-		image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_nine_patch> parent, real mul);
+		image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul);
 		
 		~image_matrix()noexcept;
 	};
@@ -68,7 +68,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 	
-	static std::shared_ptr<res_nine_patch> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<nine_patch> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
 };
 
-}
+}}

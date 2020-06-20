@@ -1,4 +1,4 @@
-#include "res_font.hpp"
+#include "font.hpp"
 
 #include "../context.hpp"
 
@@ -11,17 +11,14 @@
 #include <memory>
 
 using namespace morda;
+using namespace morda::res;
 
-
-
-res_font::res_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+res::font::font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		resource(std::move(c)),
 		f(std::make_unique<texture_font>(this->context, fi, fontSize, maxCached))
 {}
 
-
-
-std::shared_ptr<res_font> res_font::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<res::font> res::font::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
 
@@ -35,6 +32,6 @@ std::shared_ptr<res_font> res_font::load(morda::context& ctx, const puu::forest&
 		}
 	}
 
-	return std::make_shared<res_font>(utki::make_shared_from_this(ctx), fi, fontSize, maxCached);
+	return std::make_shared<font>(utki::make_shared_from_this(ctx), fi, fontSize, maxCached);
 }
 

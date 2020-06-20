@@ -20,18 +20,18 @@ tab_group::tab_group(std::shared_ptr<morda::context> c, const puu::forest& desc)
 				}
 
 				if(p.value == "filler"){
-					this->set_filler(this->context->loader.load<res_image>(get_property_value(pp).to_string()));
+					this->set_filler(this->context->loader.load<res::image>(get_property_value(pp).to_string()));
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->set_filler(this->context->loader.load<res_image>("morda_img_tabs_filler"));
+		this->set_filler(this->context->loader.load<res::image>("morda_img_tabs_filler"));
 	}
 }
 
-void tab_group::set_filler(std::shared_ptr<res_image> filler){
+void tab_group::set_filler(std::shared_ptr<res::image> filler){
 	this->filler = std::move(filler);
 	this->fillerTexture = this->filler->get();
 }

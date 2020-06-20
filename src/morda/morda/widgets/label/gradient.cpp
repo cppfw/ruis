@@ -15,7 +15,7 @@ gradient::gradient(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		}
 
 		if(p.value == "gradient"){
-			this->res = this->context->loader.load<res_gradient>(get_property_value(p).to_string());
+			this->res = this->context->loader.load<res::gradient>(get_property_value(p).to_string());
 		}
 	}
 }

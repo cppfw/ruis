@@ -2,7 +2,7 @@
 
 #include "../widget.hpp"
 
-#include "../../res/res_gradient.hpp"
+#include "../../res/gradient.hpp"
 
 namespace morda{
 
@@ -14,7 +14,7 @@ namespace morda{
  * @param gradient - gradient resource name.
  */
 class gradient : public widget{
-	std::shared_ptr<res_gradient> res;
+	std::shared_ptr<res::gradient> res;
 
 public:
 	gradient(std::shared_ptr<morda::context> c, const puu::forest& desc);

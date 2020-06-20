@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../widget.hpp"
-#include "../../res/res_font.hpp"
+#include "../../res/font.hpp"
 #include "../base/text_widget.hpp"
 
 namespace morda{

@@ -45,10 +45,10 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		
 		using std::round;
 		
-		matr.translate(-this->get_bounding_box().p.x + this->xOffset, round((this->font().get_height() + this->font().get_ascender() - this->font().get_descender()) / 2));
+		matr.translate(-this->get_bounding_box().p.x + this->xOffset, round((this->get_font().get_height() + this->get_font().get_ascender() - this->get_font().get_descender()) / 2));
 		
 		ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
-		this->font().render(
+		this->get_font().render(
 				matr,
 				morda::colorToVec4f(this->get_color()),
 				this->get_text().substr(this->firstVisibleCharIndex, this->get_text().size() - this->firstVisibleCharIndex)
@@ -99,7 +99,7 @@ vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 	}
 	
 	if(quotum.y < 0){
-		ret.y = this->font().get_height();
+		ret.y = this->get_font().get_height();
 	}else{
 		ret.y = quotum.y;
 	}
@@ -136,7 +136,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection){
 	
 	ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
 	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = this->font().get_advance(
+	this->cursorPos = this->get_font().get_advance(
 			std::u32string(this->get_text(), this->firstVisibleCharIndex, this->cursorIndex - this->firstVisibleCharIndex)
 		) + this->xOffset;
 	
@@ -155,7 +155,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection){
 			)
 		{
 			ASSERT(i != this->get_text().rend())
-			this->xOffset -= this->font().get_advance(*i);
+			this->xOffset -= this->get_font().get_advance(*i);
 			ASSERT(this->firstVisibleCharIndex > 0)
 			--this->firstVisibleCharIndex;
 		}
@@ -178,7 +178,7 @@ real text_input_line::indexToPos(size_t index){
 			++i, --index
 		)
 	{
-		ret += this->font().get_advance(*i);
+		ret += this->get_font().get_advance(*i);
 		if(ret >= this->rect().d.x){
 			ret = this->rect().d.x;
 			break;
@@ -193,7 +193,7 @@ size_t text_input_line::posToIndex(real pos){
 	real p = this->xOffset;
 	
 	for(auto i = this->get_text().begin() + this->firstVisibleCharIndex; i != this->get_text().end(); ++i){
-		real w = this->font().get_advance(*i);
+		real w = this->get_font().get_advance(*i);
 		
 		if(pos < p + w){
 			if(pos < p + w / 2){

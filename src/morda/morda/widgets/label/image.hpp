@@ -4,7 +4,7 @@
 
 #include "../base/blending_widget.hpp"
 
-#include "../../res/res_image.hpp"
+#include "../../res/image.hpp"
 
 namespace morda{
 
@@ -25,9 +25,9 @@ class image :
 	image(const image&);
 	image& operator=(const image&);
 
-	std::shared_ptr<const morda::res_image> img;
+	std::shared_ptr<const morda::res::image> img;
 
-	mutable std::shared_ptr<const morda::res_image::texture> scaledImage;
+	mutable std::shared_ptr<const morda::res::image::texture> scaledImage;
 
 	bool keep_aspect_ratio = false;
 
@@ -44,7 +44,7 @@ public:
 
 	morda::vector2 measure(const morda::vector2& quotum)const override;
 
-	void set_image(const std::shared_ptr<const res_image>& image);
+	void set_image(const std::shared_ptr<const res::image>& image);
 
 	void on_resize() override;
 

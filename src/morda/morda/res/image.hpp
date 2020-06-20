@@ -4,13 +4,13 @@
 
 #include <r4/rectangle.hpp>
 
-#include "res_texture.hpp"
+#include "texture.hpp"
 
 #include "../resource_loader.hpp"
 
 #include "../context.hpp"
 
-namespace morda{
+namespace morda{ namespace res{
 
 /**
  * @brief Base image resource class.
@@ -26,15 +26,15 @@ namespace morda{
  * }
  * @endcode
  */
-class res_image : public resource{
-	friend class resource_loader;
+class image : public resource{
+	friend class morda::resource_loader;
 	
 protected:
-	res_image(std::shared_ptr<morda::context> c);
+	image(std::shared_ptr<morda::context> c);
 	
 public:
-	res_image(const res_image& orig) = delete;
-	res_image& operator=(const res_image& orig) = delete;
+	image(const image& orig) = delete;
+	image& operator=(const image& orig) = delete;
 	
 	/**
 	 * @brief Texture created from the image resource.
@@ -85,7 +85,7 @@ public:
 	 */
 	virtual std::shared_ptr<const texture> get(vector2 forDims = 0)const = 0;
 private:
-	static std::shared_ptr<res_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<image> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -95,38 +95,36 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static std::shared_ptr<res_image> load(morda::context& ctx, const papki::file& fi);
+	static std::shared_ptr<image> load(morda::context& ctx, const papki::file& fi);
 };
-
 
 /**
  * @brief Undocumented.
  */
-class res_atlas_image : public res_image, public res_image::texture{
-	friend class res_image;
+class atlas_image : public image, public image::texture{
+	friend class image;
 	
-	std::shared_ptr<res_texture> tex;
+	std::shared_ptr<res::texture> tex;
 	
 	std::shared_ptr<vertex_array> vao;
 	
 public:
-	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const rectangle& rect);
-	res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex);
+	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect);
+	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex);
 	
-	res_atlas_image(const res_atlas_image& orig) = delete;
-	res_atlas_image& operator=(const res_atlas_image& orig) = delete;
+	atlas_image(const atlas_image& orig) = delete;
+	atlas_image& operator=(const atlas_image& orig) = delete;
 	
 	vector2 dims(real dpi) const noexcept override{
-		return this->res_image::texture::dims;
+		return this->image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override;
+	virtual std::shared_ptr<const image::texture> get(vector2 forDim)const override;
 	
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	
 private:
-	static std::shared_ptr<res_atlas_image> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<atlas_image> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
 };
 
-
-}
+}}

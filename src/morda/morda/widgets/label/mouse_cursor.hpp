@@ -2,7 +2,7 @@
 
 #include "../widget.hpp"
 
-#include "../../res/res_cursor.hpp"
+#include "../../res/cursor.hpp"
 
 namespace morda{
 
@@ -14,9 +14,9 @@ namespace morda{
  * @param cursor - reference to cursor resource.
  */
 class mouse_cursor : virtual public widget{
-	std::shared_ptr<const res_cursor> cursor;
+	std::shared_ptr<const res::cursor> cursor;
 
-	std::shared_ptr<const res_image::texture> quadTex;
+	std::shared_ptr<const res::image::texture> quadTex;
 
 	vector2 cursorPos;
 public:
@@ -25,7 +25,7 @@ public:
 	mouse_cursor(const mouse_cursor&) = delete;
 	mouse_cursor& operator=(const mouse_cursor&) = delete;
 
-	void setCursor(std::shared_ptr<const res_cursor> cursor);
+	void setCursor(std::shared_ptr<const res::cursor> cursor);
 
 	bool on_mouse_move(const morda::vector2& pos, unsigned pointerID) override;
 

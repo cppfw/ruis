@@ -11,7 +11,7 @@
 
 #include "../util/util.hpp"
 
-namespace morda{
+namespace morda{ namespace res{
 
 /**
  * @brief Gradient resource.
@@ -36,8 +36,8 @@ namespace morda{
  * }
  * @endcode
  */
-class res_gradient : public resource{
-	friend class resource_loader;
+class gradient : public resource{
+	friend class morda::resource_loader;
 
 	std::shared_ptr<vertex_array> vao;
 	
@@ -51,10 +51,10 @@ public:
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	res_gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, std::uint32_t>>& stops, bool vertical);
+	gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, std::uint32_t>>& stops, bool vertical);
 	
-	res_gradient(const res_gradient&) = delete;
-	res_gradient& operator=(const res_gradient&) = delete;
+	gradient(const gradient&) = delete;
+	gradient& operator=(const gradient&) = delete;
 	
 	/**
 	 * @brief render gradient.
@@ -64,7 +64,7 @@ public:
 	void render(const morda::matrix4& m)const;
 	
 private:
-	static std::shared_ptr<res_gradient> load(morda::context& ctx, const puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<gradient> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
 };
 
-}
+}}

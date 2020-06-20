@@ -15,12 +15,12 @@ mouse_cursor::mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest&
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(this->context->loader.load<res_cursor>(get_property_value(p).to_string()));
+			this->setCursor(this->context->loader.load<res::cursor>(get_property_value(p).to_string()));
 		}
 	}
 }
 
-void mouse_cursor::setCursor(std::shared_ptr<const res_cursor> cursor) {
+void mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
 	this->cursor = std::move(cursor);
 	this->quadTex.reset();
 	if(this->cursor){

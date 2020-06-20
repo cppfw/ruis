@@ -1,13 +1,13 @@
 #include <r4/vector4.hpp>
 
-#include "res_gradient.hpp"
+#include "gradient.hpp"
 
 #include "../util/util.hpp"
 #include "../context.hpp"
 
-using namespace morda;
+using namespace morda::res;
 
-res_gradient::res_gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
+gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
 		resource(std::move(c))
 {
 	std::vector<r4::vec2f> vertices;
@@ -58,7 +58,7 @@ res_gradient::res_gradient(std::shared_ptr<morda::context> c, std::vector<std::t
 
 
 
-std::shared_ptr<res_gradient> res_gradient::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<gradient> gradient::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,std::uint32_t>> stops;
@@ -82,11 +82,11 @@ std::shared_ptr<res_gradient> res_gradient::load(morda::context& ctx, const puu:
 		}
 	}
 	
-	return std::make_shared<res_gradient>(utki::make_shared_from_this(ctx), stops, vertical);
+	return std::make_shared<gradient>(utki::make_shared_from_this(ctx), stops, vertical);
 }
 
 
-void res_gradient::render(const morda::matrix4& m) const {
+void gradient::render(const morda::matrix4& m) const {
 	this->context->renderer->shader->pos_clr->render(m, *this->vao);
 }
 

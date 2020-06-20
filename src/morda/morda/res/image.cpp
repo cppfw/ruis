@@ -9,21 +9,22 @@
 
 #include <svgdom/dom.hpp>
 
-#include "res_image.hpp"
+#include "image.hpp"
 
 #include "../context.hpp"
 
 #include "../util/util.hpp"
 
 using namespace morda;
+using namespace morda::res;
 
-res_image::res_image(std::shared_ptr<morda::context> c) :
+image::image(std::shared_ptr<morda::context> c) :
 		resource(std::move(c))
 {}
 
-res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex, const rectangle& rect) :
-		res_image(std::move(c)),
-		res_image::texture(this->context->renderer, rect.d.abs()),
+atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect) :
+		image(std::move(c)),
+		image::texture(this->context->renderer, rect.d.abs()),
 		tex(std::move(tex))
 {
 //	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
@@ -34,51 +35,51 @@ res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_
 	ASSERT(false)
 }
 
-res_atlas_image::res_atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res_texture> tex) :
-		res_image(std::move(c)),
-		res_image::texture(this->context->renderer, tex->tex().dims()),
+atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex) :
+		image(std::move(c)),
+		image::texture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
 		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
-std::shared_ptr<res_atlas_image> res_atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
-	std::shared_ptr<res_texture> tex;
+std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+	std::shared_ptr<res::texture> tex;
 	rectangle rect(-1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx.loader.load<res_texture>(get_property_value(p).to_string());
+			tex = ctx.loader.load<res::texture>(get_property_value(p).to_string());
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
 	}
 
 	if(!tex){
-		throw std::runtime_error("res_atlas_image::load(): could not load texture");
+		throw std::runtime_error("atlas_image::load(): could not load texture");
 	}
 	
 	if(rect.p.x >= 0){
-		return std::make_shared<res_atlas_image>(utki::make_shared_from_this(ctx), tex, rect);
+		return std::make_shared<atlas_image>(utki::make_shared_from_this(ctx), tex, rect);
 	}else{
-		return std::make_shared<res_atlas_image>(utki::make_shared_from_this(ctx), tex);
+		return std::make_shared<atlas_image>(utki::make_shared_from_this(ctx), tex);
 	}
 }
 
-void res_atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
+void atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
 	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
 }
 
-std::shared_ptr<const res_image::texture> res_atlas_image::get(vector2 forDim)const{
+std::shared_ptr<const image::texture> atlas_image::get(vector2 forDim)const{
 	return utki::make_shared_from_this(*this);
 }
 
 namespace{
-class fixed_texture : public res_image::texture{
+class fixed_texture : public image::texture{
 protected:
 	std::shared_ptr<texture_2d> tex_v;
 	
 	fixed_texture(std::shared_ptr<morda::renderer> r, std::shared_ptr<texture_2d> tex) :
-			res_image::texture(std::move(r), tex->dims()),
+			image::texture(std::move(r), tex->dims()),
 			tex_v(std::move(tex))
 	{}
 	
@@ -89,16 +90,16 @@ public:
 };
 	
 class res_raster_image :
-		public res_image,
+		public image,
 		public fixed_texture
 {
 public:
 	res_raster_image(std::shared_ptr<morda::context> c, std::shared_ptr<texture_2d> tex) :
-			res_image(std::move(c)),
+			image(std::move(c)),
 			fixed_texture(this->context->renderer, std::move(tex))
 	{}
 	
-	std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
+	std::shared_ptr<const image::texture> get(vector2 forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -111,11 +112,11 @@ public:
 	}
 };
 
-class res_svg_image : public res_image{
+class res_svg_image : public image{
 	std::unique_ptr<svgdom::SvgElement> dom;
 public:
 	res_svg_image(std::shared_ptr<morda::context> c, decltype(dom) dom) :
-			res_image(std::move(c)),
+			image(std::move(c)),
 			dom(std::move(dom))
 	{}
 	
@@ -190,18 +191,18 @@ public:
 };
 }
 
-std::shared_ptr<res_image> res_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<image> image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.setPath(get_property_value(p).to_string());
-			return res_image::load(ctx, fi);
+			return image::load(ctx, fi);
 		}
 	}
 
-	return res_atlas_image::load(ctx, desc, fi);
+	return atlas_image::load(ctx, desc, fi);
 }
 
-std::shared_ptr<res_image> res_image::load(morda::context& ctx, const papki::file& fi) {
+std::shared_ptr<image> image::load(morda::context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return res_svg_image::load(ctx, fi);
 	}else{

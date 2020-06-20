@@ -1,30 +1,31 @@
-#include "res_nine_patch.hpp"
+#include "nine_patch.hpp"
 
 #include <iomanip>
 
 #include "../context.hpp"
-
+#include "../render/vertex_array.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
+using namespace morda::res;
 
 namespace{
 
 class ResSubImage :
-		public res_image,
-		public res_image::texture
+		public res::image,
+		public res::image::texture
 {
-	friend class res_image;
+	friend class res::image;
 	
-	std::shared_ptr<const res_image::texture> tex;
+	std::shared_ptr<const res::image::texture> tex;
 	
 	std::shared_ptr<vertex_array> vao;
 	
 public:
 	// rect is a rectangle on the texture, Y axis down.
 	ResSubImage(std::shared_ptr<morda::context> c, decltype(tex) tex, const rectangle& rect) :
-			res_image(c),
-			res_image::texture(c->renderer, rect.d),
+			res::image(c),
+			res::image::texture(c->renderer, rect.d),
 			tex(std::move(tex))
 	{
 		std::array<vector2, 4> texCoords;
@@ -49,10 +50,10 @@ public:
 	ResSubImage& operator=(const ResSubImage& orig) = delete;
 	
 	vector2 dims(real dpi) const noexcept override{
-		return this->res_image::texture::dims;
+		return this->res::image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res_image::texture> get(vector2 forDim)const override{
+	virtual std::shared_ptr<const res::image::texture> get(vector2 forDim)const override{
 		return this->sharedFromThis(this);
 	}
 	
@@ -64,7 +65,7 @@ public:
 
 }
 
-std::shared_ptr<res_nine_patch> res_nine_patch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	sides<real> borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){
@@ -74,27 +75,27 @@ std::shared_ptr<res_nine_patch> res_nine_patch::load(morda::context& ctx, const 
 		}
 	}
 	if(borders.left() < 0){
-		throw std::runtime_error("res_nine_patch::load(): could not read borders");
+		throw std::runtime_error("nine_patch::load(): could not read borders");
 	}
 
-	auto image = res_image::load(ctx, fi);
+	auto image = res::image::load(ctx, fi);
 	
-	return std::make_shared<res_nine_patch>(utki::make_shared_from_this(ctx), image, borders);
+	return std::make_shared<nine_patch>(utki::make_shared_from_this(ctx), image, borders);
 }
 
-res_nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>&& l, std::shared_ptr<const res_nine_patch> parent, real mul) :
+nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul) :
 		images_v(l),
 		parent(parent),
 		mul(mul)
 {}
 
-res_nine_patch::image_matrix::~image_matrix()noexcept{
+nine_patch::image_matrix::~image_matrix()noexcept{
 	if(auto p = this->parent.lock()){		
 		p->cache.erase(this->mul);
 	}
 }
 
-std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(sides<real> borders) const {
+std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) const {
 	real mul = 1;
 	{
 		auto req = borders.begin();
@@ -137,7 +138,7 @@ std::shared_ptr<res_nine_patch::image_matrix> res_nine_patch::get(sides<real> bo
 //	TRACE(<< "scaledBorders = " << std::setprecision(10) << scaledBorders << std::endl)
 	
 	auto ret = std::make_shared<image_matrix>(
-			std::array<std::array<std::shared_ptr<const res_image>, 3>, 3>({{
+			std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>({{
 				{{
 					std::make_shared<ResSubImage>(this->context, quadTex, rectangle(
 							0,

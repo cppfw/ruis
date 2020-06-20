@@ -1,6 +1,6 @@
 #include "gui.hpp"
 
-#include "res/res_puu.hpp"
+#include "res/puu.hpp"
 
 #include "widgets/slider/scroll_bar.hpp"
 
@@ -121,7 +121,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<text_input_line>("text_input_line");
 
 	try{
-		auto t = this->context->loader.load<res_puu>("morda_gui_defs");
+		auto t = this->context->loader.load<res::puu>("morda_gui_defs");
 
 		this->context->inflater.inflate(t->forest());
 
