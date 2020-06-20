@@ -8,7 +8,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2ShaderTexture::OpenGL2ShaderTexture() :
+shader_texture::shader_texture() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -51,7 +51,7 @@ OpenGL2ShaderTexture::OpenGL2ShaderTexture() :
 }
 
 
-void OpenGL2ShaderTexture::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
+void shader_texture::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
 	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
 	this->bind();
 	
