@@ -5,14 +5,14 @@
 #include "OpenGL2ShaderPosTex.hpp"
 
 
-class OpenGL2Factory : public morda::Factory{
+class render_factory : public morda::Factory{
 public:
-	OpenGL2Factory();
+	render_factory();
 	
-	OpenGL2Factory(const OpenGL2Factory&) = delete;
-	OpenGL2Factory& operator=(const OpenGL2Factory&) = delete;
+	render_factory(const render_factory&) = delete;
+	render_factory& operator=(const render_factory&) = delete;
 	
-	virtual ~OpenGL2Factory()noexcept;
+	virtual ~render_factory()noexcept;
 
 	std::shared_ptr<morda::Texture2D> createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, utki::span<const std::uint8_t>& data) override;
 

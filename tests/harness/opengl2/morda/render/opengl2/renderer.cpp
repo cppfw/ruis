@@ -15,7 +15,7 @@ unsigned getMaxTextureSize(){
 }
 }
 
-OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<OpenGL2Factory> factory) :
+OpenGL2Renderer::OpenGL2Renderer(std::unique_ptr<render_factory> factory) :
 		morda::renderer(
 				std::move(factory),
 				[](){

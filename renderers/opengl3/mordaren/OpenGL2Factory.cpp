@@ -1,4 +1,4 @@
-#include "OpenGL2Factory.hpp"
+#include "render_factory.hpp"
 
 #include "OpenGL2VertexBuffer.hpp"
 #include "OpenGL2VertexArray.hpp"
@@ -14,11 +14,11 @@
 #include "OpenGL2ShaderColorPosTex.hpp"
 #include "OpenGL2FrameBuffer.hpp"
 
-OpenGL2Factory::OpenGL2Factory(){}
+render_factory::render_factory(){}
 
-OpenGL2Factory::~OpenGL2Factory()noexcept{}
+render_factory::~render_factory()noexcept{}
 
-std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, utki::span<const std::uint8_t>& data) {
+std::shared_ptr<morda::Texture2D> render_factory::createTexture2D(morda::Texture2D::TexType_e type, kolme::Vec2ui dim, utki::span<const std::uint8_t>& data) {
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::Texture2D::bytesPerPixel(type) == 0)
 	ASSERT(data.size() % dim.x == 0)
@@ -78,27 +78,27 @@ std::shared_ptr<morda::Texture2D> OpenGL2Factory::createTexture2D(morda::Texture
 	return ret;
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(utki::span<const kolme::Vec4f> vertices){
+std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec4f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(utki::span<const kolme::Vec3f> vertices){
+std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec3f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexBuffer> OpenGL2Factory::createVertexBuffer(utki::span<const kolme::Vec2f> vertices){
+std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec2f> vertices){
 	return std::make_shared<OpenGL2VertexBuffer>(vertices);
 }
 
-std::shared_ptr<morda::VertexArray> OpenGL2Factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) {
+std::shared_ptr<morda::VertexArray> render_factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) {
 	return std::make_shared<OpenGL2VertexArray>(std::move(buffers), std::move(indices), mode);
 }
 
-std::shared_ptr<morda::IndexBuffer> OpenGL2Factory::createIndexBuffer(utki::span<const std::uint16_t> indices) {
+std::shared_ptr<morda::IndexBuffer> render_factory::createIndexBuffer(utki::span<const std::uint16_t> indices) {
 	return std::make_shared<OpenGL2IndexBuffer>(indices);
 }
 
-std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
+std::unique_ptr<morda::Factory::Shaders> render_factory::createShaders() {
 	auto ret = std::make_unique<morda::Factory::Shaders>();
 	ret->posTex = std::make_unique<OpenGL2ShaderPosTex>();
 	ret->colorPos = std::make_unique<OpenGL2ShaderColorPos>();
@@ -107,7 +107,7 @@ std::unique_ptr<morda::Factory::Shaders> OpenGL2Factory::createShaders() {
 	return ret;
 }
 
-std::shared_ptr<morda::FrameBuffer> OpenGL2Factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
+std::shared_ptr<morda::FrameBuffer> render_factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
 	return std::make_shared<OpenGL2FrameBuffer>(std::move(color));
 }
 

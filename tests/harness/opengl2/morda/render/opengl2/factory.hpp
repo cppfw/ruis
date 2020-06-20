@@ -4,14 +4,14 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2Factory : public morda::render_factory{
+class render_factory : public morda::render_factory{
 public:
-	OpenGL2Factory();
+	render_factory();
 	
-	OpenGL2Factory(const OpenGL2Factory&) = delete;
-	OpenGL2Factory& operator=(const OpenGL2Factory&) = delete;
+	render_factory(const render_factory&) = delete;
+	render_factory& operator=(const render_factory&) = delete;
 	
-	virtual ~OpenGL2Factory()noexcept;
+	virtual ~render_factory()noexcept;
 
 	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data)override;
 
