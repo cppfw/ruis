@@ -2,7 +2,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
+shader_pos_clr::shader_pos_clr() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -40,7 +40,7 @@ OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 {
 }
 
-void OpenGL2ShaderPosClr::render(const r4::mat4f& m, const morda::vertex_array& va) const {
+void shader_pos_clr::render(const r4::mat4f& m, const morda::vertex_array& va) const {
 	this->bind();
 	
 	this->OpenGL2ShaderBase::render(m, va);

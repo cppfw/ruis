@@ -6,15 +6,15 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2ShaderPosClr :
+class shader_pos_clr :
 		public morda::shader,
 		public OpenGL2ShaderBase
 {
 public:
-	OpenGL2ShaderPosClr();
+	shader_pos_clr();
 	
-	OpenGL2ShaderPosClr(const OpenGL2ShaderPosClr&) = delete;
-	OpenGL2ShaderPosClr& operator=(const OpenGL2ShaderPosClr&) = delete;
+	shader_pos_clr(const shader_pos_clr&) = delete;
+	shader_pos_clr& operator=(const shader_pos_clr&) = delete;
 	
 
 	void render(const r4::mat4f& m, const morda::vertex_array& va) const override;

@@ -115,7 +115,7 @@ std::unique_ptr<morda::render_factory::shaders> render_factory::create_shaders()
 	auto ret = std::make_unique<morda::render_factory::shaders>();
 	ret->pos_tex = std::make_unique<OpenGL2ShaderTexture>();
 	ret->color_pos = std::make_unique<shader_color>();
-	ret->pos_clr = std::make_unique<OpenGL2ShaderPosClr>();
+	ret->pos_clr = std::make_unique<shader_pos_clr>();
 	ret->color_pos_tex = std::make_unique<shader_color_pos_tex>();
 	ret->color_pos_lum = std::make_unique<shader_color_pos_lum>();
 	return ret;

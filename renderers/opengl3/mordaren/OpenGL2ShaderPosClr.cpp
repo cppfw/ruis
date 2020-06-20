@@ -1,8 +1,8 @@
-#include "OpenGL2ShaderPosClr.hpp"
+#include "shader_pos_clr.hpp"
 
 
 
-OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
+shader_pos_clr::shader_pos_clr() :
 		OpenGL2Shader(
 				R"qwertyuiop(
 						uniform mat4 matrix;
@@ -28,7 +28,7 @@ OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 {
 }
 
-void OpenGL2ShaderPosClr::render(const kolme::Matr4f& m, const morda::VertexArray& va) const {
+void shader_pos_clr::render(const kolme::Matr4f& m, const morda::VertexArray& va) const {
 	this->bind();
 	
 	this->OpenGL2Shader::render(m, va);
