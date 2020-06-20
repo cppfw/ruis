@@ -6,11 +6,11 @@
 
 #include <morda/render/vertex_buffer.hpp>
 
-#include "OpenGLES2Buffer.hpp"
+#include "opengl_buffer.hpp"
 
 namespace morda{
 
-class OpenGLES2VertexBuffer : public morda::vertex_buffer, public OpenGLES2Buffer{
+class OpenGLES2VertexBuffer : public morda::vertex_buffer, public opengl_buffer{
 public:
 	const GLint numComponents;
 	const GLenum type;

@@ -4,11 +4,11 @@
 
 #include <morda/render/index_buffer.hpp>
 
-#include "OpenGLES2Buffer.hpp"
+#include "opengl_buffer.hpp"
 
 namespace morda{
 
-class OpenGLES2IndexBuffer : public morda::index_buffer, public OpenGLES2Buffer{
+class OpenGLES2IndexBuffer : public morda::index_buffer, public opengl_buffer{
 public:
 	const GLenum elementType;
 	const GLsizei elementsCount;

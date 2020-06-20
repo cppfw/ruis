@@ -11,16 +11,16 @@
 
 namespace morda{
 
-class OpenGLES2Buffer{
+class opengl_buffer{
 public:
 	const GLuint buffer;
 
-	OpenGLES2Buffer();
+	opengl_buffer();
 	
-	OpenGLES2Buffer(const OpenGLES2Buffer&) = delete;
-	OpenGLES2Buffer& operator=(const OpenGLES2Buffer&) = delete;
+	opengl_buffer(const opengl_buffer&) = delete;
+	opengl_buffer& operator=(const opengl_buffer&) = delete;
 	
-	virtual ~OpenGLES2Buffer()noexcept;
+	virtual ~opengl_buffer()noexcept;
 	
 private:
 
