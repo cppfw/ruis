@@ -7,13 +7,13 @@
 
 #include <vector>
 
-#include "OpenGL2_util.hpp"
+#include "util.hpp"
 
 #include <morda/render/vertex_array.hpp>
 
 #include <GL/glew.h>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 struct ShaderWrapper{
 	GLuint s;
@@ -84,4 +84,4 @@ protected:
 	void render(const r4::mat4f& m, const morda::vertex_array& va)const;
 };
 
-}
+}}

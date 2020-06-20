@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2VertexArray : public morda::vertex_array{
 public:	
@@ -18,4 +18,4 @@ private:
 
 };
 
-}
+}}

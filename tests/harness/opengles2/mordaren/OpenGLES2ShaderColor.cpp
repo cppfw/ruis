@@ -1,6 +1,6 @@
 #include "OpenGLES2ShaderColor.hpp"
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2ShaderColor::OpenGLES2ShaderColor() :
 		OpenGLES2ShaderBase(

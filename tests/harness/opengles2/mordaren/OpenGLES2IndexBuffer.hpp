@@ -6,7 +6,7 @@
 
 #include "OpenGLES2Buffer.hpp"
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2IndexBuffer : public morda::index_buffer, public OpenGLES2Buffer{
 public:

@@ -3,7 +3,7 @@
 #include <morda/render/render_factory.hpp>
 
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2Factory : public morda::render_factory{
 public:

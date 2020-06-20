@@ -8,7 +8,7 @@
 
 #include "OpenGLES2Buffer.hpp"
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2VertexBuffer : public morda::vertex_buffer, public OpenGLES2Buffer{
 public:

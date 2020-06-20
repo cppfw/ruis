@@ -6,9 +6,9 @@
 
 #include <morda/render/renderer.hpp>
 
-#include "OpenGL2Factory.hpp"
+#include "factory.hpp"
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2Renderer : public morda::renderer{
 	GLuint defaultFramebuffer;
@@ -40,4 +40,4 @@ public:
 
 };
 
-}
+}}

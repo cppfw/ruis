@@ -5,7 +5,7 @@
 
 #include <GL/glew.h>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2FrameBuffer : public morda::frame_buffer{
 public:
@@ -21,4 +21,4 @@ private:
 
 };
 
-}
+}}

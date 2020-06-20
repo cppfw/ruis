@@ -16,7 +16,7 @@
 #endif
 
 
-using namespace mordaren;
+using namespace morda;
 
 const OpenGLES2ShaderBase* OpenGLES2ShaderBase::boundShader = nullptr;
 

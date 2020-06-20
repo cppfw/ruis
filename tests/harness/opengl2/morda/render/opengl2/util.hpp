@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 inline void assertOpenGLNoError(){
 #ifdef DEBUG
@@ -34,4 +34,4 @@ inline void assertOpenGLNoError(){
 #endif
 }
 
-}
+}}

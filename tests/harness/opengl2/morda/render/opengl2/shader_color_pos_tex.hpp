@@ -2,9 +2,9 @@
 
 #include <morda/render/coloring_texturing_shader.hpp>
 
-#include "OpenGL2ShaderBase.hpp"
+#include "shader_base.hpp"
 
-namespace mordaren{	
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2ShaderColorPosTex :
 		public morda::coloring_texturing_shader,
@@ -20,4 +20,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const override;
 };
 
-}
+}}

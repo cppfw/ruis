@@ -1,10 +1,10 @@
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
-#include "OpenGL2_util.hpp"
+#include "util.hpp"
 
 #include <GL/glew.h>
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 OpenGL2IndexBuffer::OpenGL2IndexBuffer(utki::span<const std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),

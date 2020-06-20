@@ -1,22 +1,22 @@
-#include "OpenGL2Factory.hpp"
+#include "factory.hpp"
 
-#include "OpenGL2VertexBuffer.hpp"
-#include "OpenGL2VertexArray.hpp"
+#include "vertex_buffer.hpp"
+#include "vertex_array.hpp"
 
-#include "OpenGL2_util.hpp"
-#include "OpenGL2IndexBuffer.hpp"
+#include "util.hpp"
+#include "index_buffer.hpp"
 
-#include "OpenGL2Texture2D.hpp"
-#include "OpenGL2ShaderTexture.hpp"
-#include "OpenGL2ShaderColor.hpp"
-#include "OpenGL2ShaderPosClr.hpp"
-#include "OpenGL2ShaderColorPosTex.hpp"
-#include "OpenGL2ShaderColorPosLum.hpp"
-#include "OpenGL2FrameBuffer.hpp"
+#include "texture_2d.hpp"
+#include "shader_texture.hpp"
+#include "shader_color.hpp"
+#include "shader_pos_clr.hpp"
+#include "shader_color_pos_tex.hpp"
+#include "shader_color_pos_lum.hpp"
+#include "frame_buffer.hpp"
 
 #include <GL/glew.h>
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 OpenGL2Factory::OpenGL2Factory(){}
 

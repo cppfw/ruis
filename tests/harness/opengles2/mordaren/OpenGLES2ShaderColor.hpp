@@ -4,7 +4,7 @@
 
 #include "OpenGLES2ShaderBase.hpp"
 
-namespace mordaren{	
+namespace morda{	
 
 class OpenGLES2ShaderColor :
 		public morda::coloring_shader,

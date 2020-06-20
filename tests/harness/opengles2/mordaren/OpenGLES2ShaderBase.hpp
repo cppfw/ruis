@@ -18,7 +18,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-namespace mordaren{
+namespace morda{
 
 struct ShaderWrapper{
 	GLuint s;

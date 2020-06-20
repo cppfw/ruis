@@ -2,9 +2,9 @@
 
 #include <morda/render/shader.hpp>
 
-#include "OpenGL2ShaderBase.hpp"
+#include "shader_base.hpp"
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2ShaderPosClr :
 		public morda::shader,
@@ -20,4 +20,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va) const override;
 };
 
-}
+}}

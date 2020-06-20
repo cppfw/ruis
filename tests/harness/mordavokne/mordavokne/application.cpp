@@ -3,18 +3,12 @@
 #include <utki/debug.hpp>
 #include <utki/config.hpp>
 
-#include <papki/FSFile.hpp>
-#include <papki/RootDirFile.hpp>
-
+#include <papki/fs_file.hpp>
+#include <papki/root_dir.hpp>
 
 using namespace mordavokne;
 
-
-
 application::T_Instance application::instance;
-
-
-
 
 void application::render(){
 	//TODO: render only if needed?
@@ -24,8 +18,6 @@ void application::render(){
 
 	this->swapFrameBuffers();
 }
-
-
 
 void application::updateWindowRect(const morda::rectangle& rect){
 	if(this->curWinRect == rect){
@@ -43,10 +35,7 @@ void application::updateWindowRect(const morda::rectangle& rect){
 		));
 
 	this->gui.set_viewport(this->curWinRect.d);
-
 }
-
-
 
 #if M_OS_NAME != M_OS_NAME_ANDROID && M_OS_NAME != M_OS_NAME_IOS
 std::unique_ptr<papki::file> application::get_res_file(const std::string& path)const{
@@ -55,27 +44,23 @@ std::unique_ptr<papki::file> application::get_res_file(const std::string& path)c
 
 void application::show_virtual_keyboard()noexcept{
 	TRACE(<< "application::ShowVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
+	// do nothing
 }
-
-
 
 void application::hide_virtual_keyboard()noexcept{
 	TRACE(<< "application::HideVirtualKeyboard(): invoked" << std::endl)
-	//do nothing
+	// do nothing
 }
 #endif
 
-
-
 morda::real application::get_pixels_per_dp(r4::vec2ui resolution, r4::vec2ui screenSizeMm){
 
-	//NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
-	//For high density displays it should be more than one pixel, depending on display ppi.
-	//For hand held devices the size of PT should be determined from physical screen size and pixel resolution.
+	// NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
+	// For high density displays it should be more than one pixel, depending on display ppi.
+	// For hand held devices the size of PT should be determined from physical screen size and pixel resolution.
 
 #if M_OS_NAME == M_OS_NAME_IOS
-	return morda::real(1);//TODO:
+	return morda::real(1); // TODO:
 #else
 	unsigned xIndex;
 	if(resolution.x > resolution.y){

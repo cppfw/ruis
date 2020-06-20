@@ -3,18 +3,17 @@
 
 #include <vector>
 
-#include "OpenGL2ShaderBase.hpp"
-#include "OpenGL2_util.hpp"
-#include "OpenGL2VertexArray.hpp"
-#include "OpenGL2IndexBuffer.hpp"
-#include "OpenGL2VertexBuffer.hpp"
+#include "shader_base.hpp"
+#include "util.hpp"
+#include "vertex_array.hpp"
+#include "index_buffer.hpp"
+#include "vertex_buffer.hpp"
 
 #include <GL/glew.h>
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 const OpenGL2ShaderBase* OpenGL2ShaderBase::boundShader = nullptr;
-
 
 GLenum OpenGL2ShaderBase::modeMap[] = {
 	GL_TRIANGLES,			// TRIANGLES
@@ -22,9 +21,6 @@ GLenum OpenGL2ShaderBase::modeMap[] = {
 	GL_LINE_LOOP,			// LINE_LOOP
 	GL_TRIANGLE_STRIP		// TRIANGLE_STRIP
 };
-
-
-
 
 namespace{
 // return true if not compiled
@@ -47,7 +43,7 @@ bool checkForCompileErrors(GLuint shader) {
 	return false;
 }
 
-//return true if not linked
+// return true if not linked
 bool checkForLinkErrors(GLuint program){
 	GLint value = 0;
 	glGetProgramiv(program, GL_LINK_STATUS, &value);

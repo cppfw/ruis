@@ -1,8 +1,8 @@
-#include "OpenGL2Texture2D.hpp"
+#include "texture_2d.hpp"
 
-#include "OpenGL2_util.hpp"
+#include "util.hpp"
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 OpenGL2Texture2D::OpenGL2Texture2D(r4::vec2f dims) :
 		morda::texture_2d(dims)

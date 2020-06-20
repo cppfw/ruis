@@ -4,9 +4,9 @@
 
 #include <morda/render/index_buffer.hpp>
 
-#include "OpenGL2Buffer.hpp"
+#include "buffer.hpp"
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2IndexBuffer :
 		public morda::index_buffer,
@@ -26,4 +26,4 @@ private:
 
 };
 
-}
+}}

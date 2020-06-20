@@ -2,7 +2,7 @@
 
 #include <morda/render/render_factory.hpp>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2Factory : public morda::render_factory{
 public:
@@ -32,4 +32,4 @@ public:
 	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override;
 };
 
-}
+}}

@@ -1,6 +1,6 @@
 #include "OpenGLES2ShaderPosClr.hpp"
 
-using namespace mordaren;
+using namespace morda;
 
 
 OpenGLES2ShaderPosClr::OpenGLES2ShaderPosClr() :

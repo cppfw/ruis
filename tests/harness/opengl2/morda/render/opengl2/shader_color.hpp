@@ -1,9 +1,10 @@
 #pragma once
 
 #include <morda/render/coloring_shader.hpp>
-#include "OpenGL2ShaderBase.hpp"
 
-namespace mordaren{	
+#include "shader_base.hpp"
+
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2ShaderColor :
 		public morda::coloring_shader,
@@ -20,4 +21,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const override;
 };
 
-}
+}}

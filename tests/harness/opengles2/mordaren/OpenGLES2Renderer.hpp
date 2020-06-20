@@ -6,7 +6,7 @@
 
 #include "OpenGLES2Factory.hpp"
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2Renderer : public morda::renderer{
 	bool defaultFramebufferInitialized = false;

@@ -11,7 +11,7 @@
 #endif
 
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2VertexArray : public morda::vertex_array{
 public:	

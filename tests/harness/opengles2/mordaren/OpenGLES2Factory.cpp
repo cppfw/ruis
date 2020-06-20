@@ -22,7 +22,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2Factory::OpenGLES2Factory(){}
 

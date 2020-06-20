@@ -1,10 +1,10 @@
-#include "OpenGL2_util.hpp"
-#include "OpenGL2Renderer.hpp"
-#include "OpenGL2FrameBuffer.hpp"
+#include "util.hpp"
+#include "renderer.hpp"
+#include "frame_buffer.hpp"
 
 #include <utki/config.hpp>
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 namespace{
 unsigned getMaxTextureSize(){

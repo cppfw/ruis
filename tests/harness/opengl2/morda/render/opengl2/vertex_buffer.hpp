@@ -6,9 +6,9 @@
 
 #include <morda/render/vertex_buffer.hpp>
 
-#include "OpenGL2Buffer.hpp"
+#include "buffer.hpp"
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2VertexBuffer : public morda::vertex_buffer, public OpenGL2Buffer{
 public:
@@ -30,5 +30,4 @@ private:
 	void init(GLsizeiptr size, const GLvoid* data);
 };
 
-
-}
+}}

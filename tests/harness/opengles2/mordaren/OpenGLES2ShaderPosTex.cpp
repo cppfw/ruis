@@ -7,7 +7,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
 		OpenGLES2ShaderBase(

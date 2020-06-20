@@ -10,7 +10,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-namespace mordaren{
+namespace morda{
 
 struct OpenGLES2Texture2D : public morda::texture_2d{
 	GLuint tex;

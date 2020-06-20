@@ -11,7 +11,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2FrameBuffer : public morda::frame_buffer{
 public:

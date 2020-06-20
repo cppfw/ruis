@@ -1,11 +1,14 @@
 #pragma once
 
 #include <morda/render/coloring_shader.hpp>
-#include "OpenGL2ShaderBase.hpp"
+
+#include "shader_base.hpp"
+
+namespace morda{ namespace render_opengl2{
 
 class OpenGL2ShaderColorPosLum :
 		public morda::coloring_shader,
-		private mordaren::OpenGL2ShaderBase
+		private morda::render_opengl2::OpenGL2ShaderBase
 {
 	GLint colorUniform;
 public:
@@ -19,3 +22,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const override;
 };
 
+}}

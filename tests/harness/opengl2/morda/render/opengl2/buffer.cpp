@@ -1,9 +1,8 @@
-#include "OpenGL2Buffer.hpp"
+#include "buffer.hpp"
 
-#include "OpenGL2_util.hpp"
+#include "util.hpp"
 
-using namespace mordaren;
-
+using namespace morda::render_opengl2;
 
 OpenGL2Buffer::OpenGL2Buffer() :
 		buffer([]() -> GLuint{
@@ -12,9 +11,7 @@ OpenGL2Buffer::OpenGL2Buffer() :
 				assertOpenGLNoError();
 				return ret;
 			}())
-{
-}
-
+{}
 
 OpenGL2Buffer::~OpenGL2Buffer()noexcept{
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

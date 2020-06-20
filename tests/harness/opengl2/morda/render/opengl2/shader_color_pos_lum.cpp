@@ -1,5 +1,6 @@
-#include "OpenGL2ShaderColorPosLum.hpp"
+#include "shader_color_pos_lum.hpp"
 
+using namespace morda::render_opengl2;
 
 OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
 		OpenGL2ShaderBase(

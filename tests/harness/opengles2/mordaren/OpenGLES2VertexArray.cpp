@@ -4,7 +4,7 @@
 #include "OpenGLES2VertexBuffer.hpp"
 #include "OpenGLES2IndexBuffer.hpp"
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2VertexArray::OpenGLES2VertexArray(
 		std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,

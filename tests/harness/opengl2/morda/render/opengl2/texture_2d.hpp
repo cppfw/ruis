@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 
-namespace mordaren{
+namespace morda{ namespace render_opengl2{
 
 struct OpenGL2Texture2D : public morda::texture_2d{
 	GLuint tex;
@@ -16,5 +16,4 @@ struct OpenGL2Texture2D : public morda::texture_2d{
 	void bind(unsigned unitNum)const;
 };
 
-
-}
+}}

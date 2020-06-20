@@ -10,7 +10,7 @@
 #endif
 
 
-namespace mordaren{
+namespace morda{
 
 inline void assertOpenGLNoError(){
 #ifdef DEBUG

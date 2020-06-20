@@ -16,7 +16,7 @@
 #	include <GL/glew.h>
 #	include <GL/glx.h>
 
-#	include <mordaren/OpenGL2Renderer.hpp>
+#	include <morda/render/opengl2/renderer.hpp>
 
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 #	include <EGL/egl.h>
@@ -24,7 +24,7 @@
 #		include <bcm_host.h>
 #	endif
 
-#	include <mordaren/OpenGLES2Renderer.hpp>
+#	include <morda/OpenGLES2Renderer.hpp>
 
 #else
 #	error "Unknown graphics API"
@@ -525,9 +525,9 @@ application::application(std::string&& name, const window_params& requestedWindo
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
 		gui(
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-				std::make_shared<mordaren::OpenGL2Renderer>(),
+				std::make_shared<morda::render_opengl2::OpenGL2Renderer>(),
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
-				std::make_shared<mordaren::OpenGLES2Renderer>(),
+				std::make_shared<morda::OpenGLES2Renderer>(),
 #else
 #	error "Unknown graphics API"
 #endif

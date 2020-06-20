@@ -11,7 +11,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2FrameBuffer::OpenGLES2FrameBuffer(std::shared_ptr<morda::texture_2d> color) :
 		morda::frame_buffer(std::move(color))

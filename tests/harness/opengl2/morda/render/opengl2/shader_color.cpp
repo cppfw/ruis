@@ -1,6 +1,6 @@
-#include "OpenGL2ShaderColor.hpp"
+#include "shader_color.hpp"
 
-using namespace mordaren;
+using namespace morda::render_opengl2;
 
 OpenGL2ShaderColor::OpenGL2ShaderColor() :
 		OpenGL2ShaderBase(

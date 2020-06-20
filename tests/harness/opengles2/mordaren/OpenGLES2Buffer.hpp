@@ -9,7 +9,7 @@
 #endif
 
 
-namespace mordaren{
+namespace morda{
 
 class OpenGLES2Buffer{
 public:

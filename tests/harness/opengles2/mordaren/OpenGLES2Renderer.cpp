@@ -10,7 +10,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-using namespace mordaren;
+using namespace morda;
 
 namespace{
 unsigned getMaxTextureSize(){

@@ -5,7 +5,7 @@
 
 class OpenGLES2ShaderColorPosLum :
 		public morda::coloring_shader,
-		private mordaren::OpenGLES2ShaderBase
+		private morda::OpenGLES2ShaderBase
 {
 	GLint colorUniform;
 public:

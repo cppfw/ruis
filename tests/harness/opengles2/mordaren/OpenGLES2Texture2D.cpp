@@ -2,7 +2,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-using namespace mordaren;
+using namespace morda;
 
 OpenGLES2Texture2D::OpenGLES2Texture2D(r4::vec2f dims) :
 		morda::texture_2d(dims)

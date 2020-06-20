@@ -1,7 +1,6 @@
-#include "OpenGL2ShaderPosClr.hpp"
+#include "shader_pos_clr.hpp"
 
-using namespace mordaren;
-
+using namespace morda::render_opengl2;
 
 OpenGL2ShaderPosClr::OpenGL2ShaderPosClr() :
 		OpenGL2ShaderBase(
