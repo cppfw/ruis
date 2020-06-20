@@ -2,7 +2,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
+shader_color_pos_lum::shader_color_pos_lum() :
 		OpenGL2ShaderBase(
 				R"qwertyuiop(
 						#ifndef GL_ES
@@ -43,7 +43,7 @@ OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void OpenGL2ShaderColorPosLum::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const{
+void shader_color_pos_lum::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const{
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

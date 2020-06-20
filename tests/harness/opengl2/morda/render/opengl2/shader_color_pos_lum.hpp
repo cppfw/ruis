@@ -6,16 +6,16 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2ShaderColorPosLum :
+class shader_color_pos_lum :
 		public morda::coloring_shader,
 		private morda::render_opengl2::OpenGL2ShaderBase
 {
 	GLint colorUniform;
 public:
-	OpenGL2ShaderColorPosLum();
+	shader_color_pos_lum();
 	
-	OpenGL2ShaderColorPosLum(const OpenGL2ShaderColorPosLum&) = delete;
-	OpenGL2ShaderColorPosLum& operator=(const OpenGL2ShaderColorPosLum&) = delete;
+	shader_color_pos_lum(const shader_color_pos_lum&) = delete;
+	shader_color_pos_lum& operator=(const shader_color_pos_lum&) = delete;
 	
 	using morda::coloring_shader::render;
 	
