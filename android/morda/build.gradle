@@ -21,7 +21,7 @@ android {
     }
 
     nativeBundleExport {
-        headerDir = "${project.projectDir}/../../src/"
+        headerDir = "${project.projectDir}/../../src/morda"
         bundleStatic = true
         includeHeaderFilter.add("**/*.hpp")
     }
