@@ -15,7 +15,7 @@
 
 #include "../../application.hpp"
 
-#include <morda/renderer.hpp>
+#include <morda/render/opengles2/renderer.hpp>
 
 #include <EGL/egl.h>
 

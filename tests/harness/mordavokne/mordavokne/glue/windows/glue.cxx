@@ -9,7 +9,7 @@
 #include <windowsx.h>
 #include <Shlobj.h>
 
-#include <morda/renderer.hpp>
+#include <morda/render/opengl2/renderer.hpp>
 
 #include "../../application.hpp"
 
