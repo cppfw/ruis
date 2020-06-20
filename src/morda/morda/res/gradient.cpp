@@ -4,10 +4,11 @@
 
 #include "../util/util.hpp"
 #include "../context.hpp"
+#include "../config.hpp"
 
 using namespace morda::res;
 
-gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
+morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
 		resource(std::move(c))
 {
 	std::vector<r4::vec2f> vertices;

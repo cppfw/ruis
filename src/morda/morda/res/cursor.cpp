@@ -7,7 +7,7 @@
 
 using namespace morda::res;
 
-cursor::cursor(std::shared_ptr<morda::context> c, res::image& image, const vector2& hotspot) :
+morda::res::cursor::cursor(std::shared_ptr<morda::context> c, morda::res::image& image, const vector2& hotspot) :
 		resource(std::move(c)),
 		image_v(utki::make_shared_from_this(image)),
 		hotspot_v(hotspot)

@@ -286,9 +286,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\app\src\**\*.cpp" />
-    <ClCompile Include="..\..\tests\harness\mordavokne\**\*.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\**\*.cpp" />
+    <ClCompile Include="..\..\tests\app\src\main.cpp" />
+    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\application.cpp" />
+    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\glue\glue.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\factory.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\frame_buffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\index_buffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\opengl_buffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\renderer.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_base.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_lum.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_tex.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_pos_clr.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_texture.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\texture_2d.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_array.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_buffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
