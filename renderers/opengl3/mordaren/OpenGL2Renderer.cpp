@@ -1,6 +1,6 @@
 #include "OpenGL2Renderer.hpp"
 
-#include "OpenGL2FrameBuffer.hpp"
+#include "frame_buffer.hpp"
 
 #include <utki/config.hpp>
 
@@ -32,8 +32,8 @@ void OpenGL2Renderer::setFramebufferInternal(morda::FrameBuffer* fb) {
 		return;
 	}
 	
-	ASSERT(dynamic_cast<OpenGL2FrameBuffer*>(fb))
-	auto& ogl2fb = static_cast<OpenGL2FrameBuffer&>(*fb);
+	ASSERT(dynamic_cast<frame_buffer*>(fb))
+	auto& ogl2fb = static_cast<frame_buffer&>(*fb);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, ogl2fb.fbo);
 	assertOpenGLNoError();

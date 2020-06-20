@@ -12,7 +12,7 @@
 #include "OpenGL2ShaderColorPos.hpp"
 #include "OpenGL2ShaderPosClr.hpp"
 #include "OpenGL2ShaderColorPosTex.hpp"
-#include "OpenGL2FrameBuffer.hpp"
+#include "frame_buffer.hpp"
 
 render_factory::render_factory(){}
 
@@ -108,6 +108,6 @@ std::unique_ptr<morda::Factory::Shaders> render_factory::createShaders() {
 }
 
 std::shared_ptr<morda::FrameBuffer> render_factory::createFramebuffer(std::shared_ptr<morda::Texture2D> color) {
-	return std::make_shared<OpenGL2FrameBuffer>(std::move(color));
+	return std::make_shared<frame_buffer>(std::move(color));
 }
 

@@ -41,8 +41,8 @@ void OpenGL2Renderer::set_framebuffer_internal(morda::frame_buffer* fb) {
 		return;
 	}
 	
-	ASSERT(dynamic_cast<OpenGL2FrameBuffer*>(fb))
-	auto& ogl2fb = static_cast<OpenGL2FrameBuffer&>(*fb);
+	ASSERT(dynamic_cast<frame_buffer*>(fb))
+	auto& ogl2fb = static_cast<frame_buffer&>(*fb);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, ogl2fb.fbo);
 	assertOpenGLNoError();

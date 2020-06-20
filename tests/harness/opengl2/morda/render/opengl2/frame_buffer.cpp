@@ -7,7 +7,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::texture_2d> color) :
+frame_buffer::frame_buffer(std::shared_ptr<morda::texture_2d> color) :
 		morda::frame_buffer(std::move(color))
 {
 	glGenFramebuffers(1, &this->fbo);
@@ -38,7 +38,7 @@ OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::texture_2d> color)
 	assertOpenGLNoError();
 }
 
-OpenGL2FrameBuffer::~OpenGL2FrameBuffer()noexcept{
+frame_buffer::~frame_buffer()noexcept{
 	glDeleteFramebuffers(1, &this->fbo);
 	assertOpenGLNoError();
 }

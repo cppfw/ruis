@@ -1,11 +1,11 @@
-#include "OpenGL2FrameBuffer.hpp"
+#include "frame_buffer.hpp"
 #include "OpenGL2Texture2D.hpp"
 
 #include "OpenGL2_util.hpp"
 
 #include <GL/glew.h>
 
-OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) :
+frame_buffer::frame_buffer(std::shared_ptr<morda::Texture2D> color) :
 		morda::FrameBuffer(std::move(color))
 {
 	glGenFramebuffers(1, &this->fbo);
@@ -37,7 +37,7 @@ OpenGL2FrameBuffer::OpenGL2FrameBuffer(std::shared_ptr<morda::Texture2D> color) 
 }
 
 
-OpenGL2FrameBuffer::~OpenGL2FrameBuffer()noexcept{
+frame_buffer::~frame_buffer()noexcept{
 	glDeleteFramebuffers(1, &this->fbo);
 	assertOpenGLNoError();
 }
