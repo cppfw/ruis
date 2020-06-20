@@ -1,3 +1,9 @@
+libmorda (0.5.113) unstable; urgency=medium
+
+  * macosx and msvs build fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 09:14:12 +0300
+
 libmorda (0.5.112) unstable; urgency=medium
 
   * use android native bundle plugin
