@@ -1,10 +1,10 @@
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 #include "OpenGL2_util.hpp"
 
 #include <GL/glew.h>
 
-OpenGL2IndexBuffer::OpenGL2IndexBuffer(utki::span<const std::uint16_t> indices) :
+index_buffer::index_buffer(utki::span<const std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
 		elementsCount(indices.size())
 {	

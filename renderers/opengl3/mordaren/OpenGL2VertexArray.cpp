@@ -2,7 +2,7 @@
 
 #include "OpenGL2_util.hpp"
 #include "OpenGL2VertexBuffer.hpp"
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 namespace{
 GLuint createGLVertexArray(){
@@ -36,8 +36,8 @@ OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::Vertex
 	}
 	
 	{
-		ASSERT(dynamic_cast<OpenGL2IndexBuffer*>(this->indices.operator->()))
-		auto& ivbo = static_cast<OpenGL2IndexBuffer&>(*this->indices);
+		ASSERT(dynamic_cast<index_buffer*>(this->indices.operator->()))
+		auto& ivbo = static_cast<index_buffer&>(*this->indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo.buffer);
 		assertOpenGLNoError();
 	}

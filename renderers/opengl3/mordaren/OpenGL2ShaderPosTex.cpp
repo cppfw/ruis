@@ -3,7 +3,7 @@
 #include "OpenGL2Texture2D.hpp"
 #include "OpenGL2VertexBuffer.hpp"
 #include "OpenGL2VertexArray.hpp"
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 #include "OpenGL2_util.hpp"
 

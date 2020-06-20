@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 
 #include "OpenGL2_util.hpp"
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 #include "OpenGL2Texture2D.hpp"
 #include "OpenGL2ShaderColorPos.hpp"
@@ -95,7 +95,7 @@ std::shared_ptr<morda::VertexArray> render_factory::createVertexArray(std::vecto
 }
 
 std::shared_ptr<morda::IndexBuffer> render_factory::createIndexBuffer(utki::span<const std::uint16_t> indices) {
-	return std::make_shared<OpenGL2IndexBuffer>(indices);
+	return std::make_shared<index_buffer>(indices);
 }
 
 std::unique_ptr<morda::Factory::Shaders> render_factory::createShaders() {

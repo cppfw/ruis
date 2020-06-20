@@ -6,7 +6,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2IndexBuffer::OpenGL2IndexBuffer(utki::span<const std::uint16_t> indices) :
+index_buffer::index_buffer(utki::span<const std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),
 		elementsCount(GLsizei(indices.size()))
 {	

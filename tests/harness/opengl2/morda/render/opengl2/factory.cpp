@@ -108,7 +108,7 @@ std::shared_ptr<morda::vertex_array> render_factory::create_vertex_array(
 }
 
 std::shared_ptr<morda::index_buffer> render_factory::create_index_buffer(utki::span<const uint16_t> indices){
-	return std::make_shared<OpenGL2IndexBuffer>(indices);
+	return std::make_shared<index_buffer>(indices);
 }
 
 std::unique_ptr<morda::render_factory::shaders> render_factory::create_shaders(){

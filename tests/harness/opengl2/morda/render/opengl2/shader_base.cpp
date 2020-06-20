@@ -132,8 +132,8 @@ GLint OpenGL2ShaderBase::getUniform(const char* n) {
 void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va)const{
 	ASSERT(this->isBound())
 	
-	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
-	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
+	ASSERT(dynamic_cast<const index_buffer*>(va.indices.operator ->()))
+	const index_buffer& ivbo = static_cast<const index_buffer&>(*va.indices);
 	
 	this->setMatrix(m);
 	
@@ -153,8 +153,8 @@ void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va
 	}
 	
 	{
-		ASSERT(dynamic_cast<OpenGL2IndexBuffer*>(va.indices.operator->()))
-		auto& ivbo = static_cast<OpenGL2IndexBuffer&>(*va.indices);
+		ASSERT(dynamic_cast<index_buffer*>(va.indices.operator->()))
+		auto& ivbo = static_cast<index_buffer&>(*va.indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo.buffer);
 		assertOpenGLNoError();
 	}

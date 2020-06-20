@@ -8,7 +8,7 @@
 #include "OpenGL2Shader.hpp"
 #include "OpenGL2_util.hpp"
 #include "OpenGL2VertexArray.hpp"
-#include "OpenGL2IndexBuffer.hpp"
+#include "index_buffer.hpp"
 
 
 const OpenGL2Shader* OpenGL2Shader::boundShader = nullptr;
@@ -137,8 +137,8 @@ void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)
 	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
 	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
 	
-	ASSERT(dynamic_cast<const OpenGL2IndexBuffer*>(va.indices.operator ->()))
-	const OpenGL2IndexBuffer& ivbo = static_cast<const OpenGL2IndexBuffer&>(*va.indices);
+	ASSERT(dynamic_cast<const index_buffer*>(va.indices.operator ->()))
+	const index_buffer& ivbo = static_cast<const index_buffer&>(*va.indices);
 	
 	this->setMatrix(m);
 	
