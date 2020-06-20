@@ -131,8 +131,8 @@ void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va
 	this->setMatrix(m);
 	
 	for(unsigned i = 0; i != va.buffers.size(); ++i){
-		ASSERT(dynamic_cast<OpenGL2VertexBuffer*>(va.buffers[i].operator->()))
-		auto& vbo = static_cast<OpenGL2VertexBuffer&>(*va.buffers[i]);
+		ASSERT(dynamic_cast<vertex_buffer*>(va.buffers[i].operator->()))
+		auto& vbo = static_cast<vertex_buffer&>(*va.buffers[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
 		assertOpenGLNoError();
 		

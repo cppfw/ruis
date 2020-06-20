@@ -1,6 +1,6 @@
 #include "render_factory.hpp"
 
-#include "OpenGL2VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "vertex_array.hpp"
 
 #include <GL/glew.h>
@@ -79,15 +79,15 @@ std::shared_ptr<morda::Texture2D> render_factory::createTexture2D(morda::Texture
 }
 
 std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec4f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec3f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::span<const kolme::Vec2f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::VertexArray> render_factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) {

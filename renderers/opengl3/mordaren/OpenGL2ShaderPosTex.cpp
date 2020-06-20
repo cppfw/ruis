@@ -1,7 +1,7 @@
 #include "OpenGL2ShaderPosTex.hpp"
 
 #include "texture_2d.hpp"
-#include "OpenGL2VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "vertex_array.hpp"
 #include "index_buffer.hpp"
 

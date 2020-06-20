@@ -83,19 +83,19 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec4f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec3f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec2f> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const float> vertices){
-	return std::make_shared<OpenGL2VertexBuffer>(vertices);
+	return std::make_shared<vertex_buffer>(vertices);
 }
 
 std::shared_ptr<morda::vertex_array> render_factory::create_vertex_array(

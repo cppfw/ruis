@@ -4,7 +4,7 @@
 
 using namespace morda::render_opengl2;
 
-void OpenGL2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
+void vertex_buffer::init(GLsizeiptr size, const GLvoid* data) {
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffer);
 	assertOpenGLNoError();
 	
@@ -13,7 +13,7 @@ void OpenGL2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 }
 
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec4f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vec4f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
@@ -21,7 +21,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec4f> vertices) :
 	this->init(vertices.size_bytes(), vertices.data());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec3f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vec3f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
@@ -29,7 +29,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec3f> vertices) :
 	this->init(vertices.size_bytes(), vertices.data());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec2f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vec2f> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)
@@ -37,7 +37,7 @@ OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const r4::vec2f> vertices) :
 	this->init(vertices.size_bytes(), vertices.data());
 }
 
-OpenGL2VertexBuffer::OpenGL2VertexBuffer(utki::span<const float> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const float> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(1),
 		type(GL_FLOAT)

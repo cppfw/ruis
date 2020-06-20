@@ -1,7 +1,7 @@
 #include "vertex_array.hpp"
 
 #include "OpenGL2_util.hpp"
-#include "OpenGL2VertexBuffer.hpp"
+#include "vertex_buffer.hpp"
 #include "index_buffer.hpp"
 
 namespace{
@@ -21,8 +21,8 @@ vertex_array::vertex_array(std::vector<std::shared_ptr<morda::VertexBuffer>>&& b
 	assertOpenGLNoError();
 	
 	for(unsigned i = 0; i != this->buffers.size(); ++i){
-		ASSERT(dynamic_cast<OpenGL2VertexBuffer*>(this->buffers[i].operator->()))
-		auto& vbo = static_cast<OpenGL2VertexBuffer&>(*this->buffers[i]);
+		ASSERT(dynamic_cast<vertex_buffer*>(this->buffers[i].operator->()))
+		auto& vbo = static_cast<vertex_buffer&>(*this->buffers[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo.buffer);
 		assertOpenGLNoError();
 		
