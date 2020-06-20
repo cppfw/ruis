@@ -19,8 +19,8 @@ frame_buffer::frame_buffer(std::shared_ptr<morda::texture_2d> color) :
 	glBindFramebuffer(GL_FRAMEBUFFER, this->fbo);
 	assertOpenGLNoError();
 	
-	ASSERT(dynamic_cast<OpenGL2Texture2D*>(this->color.operator->()))
-	auto& tex = static_cast<OpenGL2Texture2D&>(*this->color);
+	ASSERT(dynamic_cast<texture_2d*>(this->color.operator->()))
+	auto& tex = static_cast<texture_2d&>(*this->color);
 	
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex.tex, 0);
 	assertOpenGLNoError();

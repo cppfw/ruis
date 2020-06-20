@@ -4,7 +4,7 @@
 
 using namespace morda::render_opengl2;
 
-OpenGL2Texture2D::OpenGL2Texture2D(r4::vec2f dims) :
+texture_2d::texture_2d(r4::vec2f dims) :
 		morda::texture_2d(dims)
 {
 	glGenTextures(1, &this->tex);
@@ -13,11 +13,11 @@ OpenGL2Texture2D::OpenGL2Texture2D(r4::vec2f dims) :
 }
 
 
-OpenGL2Texture2D::~OpenGL2Texture2D()noexcept{
+texture_2d::~texture_2d()noexcept{
 	glDeleteTextures(1, &this->tex);
 }
 
-void OpenGL2Texture2D::bind(unsigned unitNum) const {
+void texture_2d::bind(unsigned unitNum) const {
 	glActiveTexture(GL_TEXTURE0 + unitNum);
 	assertOpenGLNoError();
 	glBindTexture(GL_TEXTURE_2D, this->tex);

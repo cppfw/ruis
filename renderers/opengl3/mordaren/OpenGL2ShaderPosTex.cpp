@@ -1,8 +1,8 @@
 #include "OpenGL2ShaderPosTex.hpp"
 
-#include "OpenGL2Texture2D.hpp"
+#include "texture_2d.hpp"
 #include "OpenGL2VertexBuffer.hpp"
-#include "OpenGL2VertexArray.hpp"
+#include "vertex_array.hpp"
 #include "index_buffer.hpp"
 
 #include "OpenGL2_util.hpp"
@@ -51,7 +51,7 @@ OpenGL2ShaderPosTex::OpenGL2ShaderPosTex() :
 
 
 void OpenGL2ShaderPosTex::render(const kolme::Matr4f& m, const morda::Texture2D& tex, const morda::VertexArray& va){
-	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
+	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
 	this->OpenGL2Shader::render(m, va);

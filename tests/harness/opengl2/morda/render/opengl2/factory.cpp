@@ -29,7 +29,7 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 
 	ASSERT(data.size() == 0 || data.size() / morda::texture_2d::bytes_per_pixel(type) / dims.x == dims.y)
 	
-	auto ret = std::make_shared<OpenGL2Texture2D>(dims.to<float>());
+	auto ret = std::make_shared<texture_2d>(dims.to<float>());
 	
 	//TODO: save previous bind and restore it after?
 	ret->bind(0);
@@ -104,7 +104,7 @@ std::shared_ptr<morda::vertex_array> render_factory::create_vertex_array(
 		morda::vertex_array::mode mode
 	)
 {
-	return std::make_shared<OpenGL2VertexArray>(std::move(buffers), std::move(indices), mode);
+	return std::make_shared<vertex_array>(std::move(buffers), std::move(indices), mode);
 }
 
 std::shared_ptr<morda::index_buffer> render_factory::create_index_buffer(utki::span<const uint16_t> indices){

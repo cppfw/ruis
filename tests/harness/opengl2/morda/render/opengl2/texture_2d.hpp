@@ -6,12 +6,12 @@
 
 namespace morda{ namespace render_opengl2{
 
-struct OpenGL2Texture2D : public morda::texture_2d{
+struct texture_2d : public morda::texture_2d{
 	GLuint tex;
 	
-	OpenGL2Texture2D(r4::vec2f dims);
+	texture_2d(r4::vec2f dims);
 	
-	~OpenGL2Texture2D()noexcept;
+	~texture_2d()noexcept;
 	
 	void bind(unsigned unitNum)const;
 };

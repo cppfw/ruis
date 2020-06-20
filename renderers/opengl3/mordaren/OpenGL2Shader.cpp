@@ -7,7 +7,7 @@
 
 #include "OpenGL2Shader.hpp"
 #include "OpenGL2_util.hpp"
-#include "OpenGL2VertexArray.hpp"
+#include "vertex_array.hpp"
 #include "index_buffer.hpp"
 
 
@@ -134,8 +134,8 @@ GLint OpenGL2Shader::getUniform(const char* n) {
 void OpenGL2Shader::render(const kolme::Matr4f& m, const morda::VertexArray& va)const{
 	ASSERT(this->isBound())
 	
-	ASSERT(dynamic_cast<const OpenGL2VertexArray*>(&va))
-	auto& vao = static_cast<const OpenGL2VertexArray&>(va);
+	ASSERT(dynamic_cast<const vertex_array*>(&va))
+	auto& vao = static_cast<const vertex_array&>(va);
 	
 	ASSERT(dynamic_cast<const index_buffer*>(va.indices.operator ->()))
 	const index_buffer& ivbo = static_cast<const index_buffer&>(*va.indices);

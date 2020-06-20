@@ -1,14 +1,14 @@
 #include "render_factory.hpp"
 
 #include "OpenGL2VertexBuffer.hpp"
-#include "OpenGL2VertexArray.hpp"
+#include "vertex_array.hpp"
 
 #include <GL/glew.h>
 
 #include "OpenGL2_util.hpp"
 #include "index_buffer.hpp"
 
-#include "OpenGL2Texture2D.hpp"
+#include "texture_2d.hpp"
 #include "OpenGL2ShaderColorPos.hpp"
 #include "shader_pos_clr.hpp"
 #include "shader_color_pos_tex.hpp"
@@ -25,7 +25,7 @@ std::shared_ptr<morda::Texture2D> render_factory::createTexture2D(morda::Texture
 
 	ASSERT(data.size() == 0 || data.size() / morda::Texture2D::bytesPerPixel(type) / dim.x == dim.y)
 	
-	auto ret = std::make_shared<OpenGL2Texture2D>(dim.to<float>());
+	auto ret = std::make_shared<texture_2d>(dim.to<float>());
 	
 	//TODO: save previous bind and restore it after?
 	ret->bind(0);
@@ -91,7 +91,7 @@ std::shared_ptr<morda::VertexBuffer> render_factory::createVertexBuffer(utki::sp
 }
 
 std::shared_ptr<morda::VertexArray> render_factory::createVertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, morda::VertexArray::Mode_e mode) {
-	return std::make_shared<OpenGL2VertexArray>(std::move(buffers), std::move(indices), mode);
+	return std::make_shared<vertex_array>(std::move(buffers), std::move(indices), mode);
 }
 
 std::shared_ptr<morda::IndexBuffer> render_factory::createIndexBuffer(utki::span<const std::uint16_t> indices) {

@@ -5,16 +5,16 @@
 #include <GL/glew.h>
 
 
-class OpenGL2VertexArray : public morda::VertexArray{
+class vertex_array : public morda::VertexArray{
 public:
 	const GLuint arr;
 	
-	OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
+	vertex_array(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode);
 	
-	OpenGL2VertexArray(const OpenGL2VertexArray&) = delete;
-	OpenGL2VertexArray& operator=(const OpenGL2VertexArray&) = delete;
+	vertex_array(const vertex_array&) = delete;
+	vertex_array& operator=(const vertex_array&) = delete;
 	
-	~OpenGL2VertexArray()noexcept;
+	~vertex_array()noexcept;
 	
 private:
 

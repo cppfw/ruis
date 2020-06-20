@@ -5,12 +5,12 @@
 #include <GL/glew.h>
 
 
-struct OpenGL2Texture2D : public morda::Texture2D{
+struct texture_2d : public morda::Texture2D{
 	GLuint tex;
 	
-	OpenGL2Texture2D(kolme::Vec2f dim);
+	texture_2d(kolme::Vec2f dim);
 	
-	~OpenGL2Texture2D()noexcept;
+	~texture_2d()noexcept;
 	
 	void bind(unsigned unitNum)const;
 };

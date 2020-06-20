@@ -1,6 +1,6 @@
 #include "shader_color_pos_tex.hpp"
 
-#include "OpenGL2Texture2D.hpp"
+#include "texture_2d.hpp"
 
 
 
@@ -49,7 +49,7 @@ shader_color_pos_tex::shader_color_pos_tex() :
 }
 
 void shader_color_pos_tex::render(const kolme::Matr4f& m, const morda::Texture2D& tex, kolme::Vec4f color, const morda::VertexArray& va) {
-	static_cast<const OpenGL2Texture2D&>(tex).bind(0);
+	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);

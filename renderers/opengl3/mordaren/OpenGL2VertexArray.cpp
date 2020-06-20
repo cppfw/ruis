@@ -1,4 +1,4 @@
-#include "OpenGL2VertexArray.hpp"
+#include "vertex_array.hpp"
 
 #include "OpenGL2_util.hpp"
 #include "OpenGL2VertexBuffer.hpp"
@@ -13,7 +13,7 @@ GLuint createGLVertexArray(){
 }
 }
 
-OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
+vertex_array::vertex_array(std::vector<std::shared_ptr<morda::VertexBuffer>>&& buffers, std::shared_ptr<morda::IndexBuffer> indices, Mode_e mode) :
 		morda::VertexArray(std::move(buffers), std::move(indices), mode),
 		arr(createGLVertexArray())
 {
@@ -52,7 +52,7 @@ OpenGL2VertexArray::OpenGL2VertexArray(std::vector<std::shared_ptr<morda::Vertex
 	assertOpenGLNoError();
 }
 
-OpenGL2VertexArray::~OpenGL2VertexArray()noexcept{
+vertex_array::~vertex_array()noexcept{
 	glBindVertexArray(0);
 	assertOpenGLNoError();
 	glDeleteVertexArrays(1, &this->arr);
