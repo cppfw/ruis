@@ -6,16 +6,16 @@
 
 namespace morda{ namespace render_opengl2{
 
-class OpenGL2ShaderColor :
+class coloring_shader :
 		public morda::coloring_shader,
 		public OpenGL2ShaderBase
 {
 	GLint colorUniform;
 public:
-	OpenGL2ShaderColor();
+	coloring_shader();
 	
-	OpenGL2ShaderColor(const OpenGL2ShaderColor&) = delete;
-	OpenGL2ShaderColor& operator=(const OpenGL2ShaderColor&) = delete;
+	coloring_shader(const coloring_shader&) = delete;
+	coloring_shader& operator=(const coloring_shader&) = delete;
 	
 
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const override;
