@@ -1,3 +1,9 @@
+libmorda (0.5.112) unstable; urgency=medium
+
+  * use android native bundle plugin
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 04:47:37 +0300
+
 libmorda (0.5.111) unstable; urgency=medium
 
   * fixing android and cocoapods headers packing
