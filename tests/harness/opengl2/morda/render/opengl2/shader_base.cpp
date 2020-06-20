@@ -63,9 +63,7 @@ bool checkForLinkErrors(GLuint program){
 
 }
 
-
-
-ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
+shader_wrapper::shader_wrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
 
 	if (this->s == 0) {
@@ -83,8 +81,7 @@ ShaderWrapper::ShaderWrapper(const char* code, GLenum type) {
 	}
 }
 
-
-ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
+program_wrapper::program_wrapper(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		vertexShader(vertexShaderCode, GL_VERTEX_SHADER),
 		fragmentShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
 {
@@ -112,14 +109,10 @@ ProgramWrapper::ProgramWrapper(const char* vertexShaderCode, const char* fragmen
 	}
 }
 
-
-
-
 OpenGL2ShaderBase::OpenGL2ShaderBase(const char* vertexShaderCode, const char* fragmentShaderCode) :
 		program(vertexShaderCode, fragmentShaderCode),
 		matrixUniform(this->getUniform("matrix"))
-{
-}
+{}
 
 GLint OpenGL2ShaderBase::getUniform(const char* n) {
 	GLint ret = glGetUniformLocation(this->program.p, n);
@@ -159,10 +152,8 @@ void OpenGL2ShaderBase::render(const r4::mat4f& m, const morda::vertex_array& va
 		assertOpenGLNoError();
 	}
 	
-
 //	TRACE(<< "ivbo.elementsCount = " << ivbo.elementsCount << " ivbo.elementType = " << ivbo.elementType << std::endl)
 	
 	glDrawElements(modeToGLMode(va.rendering_mode), ivbo.elementsCount, ivbo.elementType, nullptr);
 	assertOpenGLNoError();
 }
-

@@ -15,27 +15,27 @@
 
 namespace morda{ namespace render_opengl2{
 
-struct ShaderWrapper{
+struct shader_wrapper{
 	GLuint s;
-	ShaderWrapper(const char* code, GLenum type);
-	~ShaderWrapper()noexcept{
+	shader_wrapper(const char* code, GLenum type);
+	~shader_wrapper()noexcept{
 		glDeleteShader(this->s);
 	}
 };
 
-struct ProgramWrapper{
-	ShaderWrapper vertexShader;
-	ShaderWrapper fragmentShader;
+struct program_wrapper{
+	shader_wrapper vertexShader;
+	shader_wrapper fragmentShader;
 	GLuint p;
-	ProgramWrapper(const char* vertexShaderCode, const char* fragmentShaderCode);
+	program_wrapper(const char* vertexShaderCode, const char* fragmentShaderCode);
 
-	virtual ~ProgramWrapper()noexcept{
+	virtual ~program_wrapper()noexcept{
 		glDeleteProgram(this->p);
 	}
 };
 
 class OpenGL2ShaderBase{
-	ProgramWrapper program;
+	program_wrapper program;
 	
 	const GLint matrixUniform;
 	
