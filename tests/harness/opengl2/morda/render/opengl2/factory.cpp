@@ -114,7 +114,7 @@ std::shared_ptr<morda::index_buffer> render_factory::create_index_buffer(utki::s
 std::unique_ptr<morda::render_factory::shaders> render_factory::create_shaders(){
 	auto ret = std::make_unique<morda::render_factory::shaders>();
 	ret->pos_tex = std::make_unique<OpenGL2ShaderTexture>();
-	ret->color_pos = std::make_unique<coloring_shader>();
+	ret->color_pos = std::make_unique<OpenGL2ShaderColor>();
 	ret->pos_clr = std::make_unique<OpenGL2ShaderPosClr>();
 	ret->color_pos_tex = std::make_unique<OpenGL2ShaderColorPosTex>();
 	ret->color_pos_lum = std::make_unique<OpenGL2ShaderColorPosLum>();
