@@ -6,7 +6,7 @@
 
 #include <morda/render/vertex_buffer.hpp>
 
-#include "buffer.hpp"
+#include "opengl_buffer.hpp"
 
 namespace morda{ namespace render_opengl2{
 

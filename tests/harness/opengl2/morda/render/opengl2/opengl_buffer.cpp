@@ -1,4 +1,4 @@
-#include "buffer.hpp"
+#include "opengl_buffer.hpp"
 
 #include "util.hpp"
 
