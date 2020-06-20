@@ -9,7 +9,7 @@
 #endif
 
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class opengl_buffer{
 public:
@@ -26,4 +26,4 @@ private:
 
 };
 
-}
+}}

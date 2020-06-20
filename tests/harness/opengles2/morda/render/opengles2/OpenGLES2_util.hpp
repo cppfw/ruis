@@ -10,7 +10,7 @@
 #endif
 
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 inline void assertOpenGLNoError(){
 #ifdef DEBUG
@@ -40,4 +40,4 @@ inline void assertOpenGLNoError(){
 #endif
 }
 
-}
+}}

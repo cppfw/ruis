@@ -6,7 +6,7 @@
 
 #include "opengl_buffer.hpp"
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2IndexBuffer : public morda::index_buffer, public opengl_buffer{
 public:
@@ -23,4 +23,4 @@ private:
 
 };
 
-}
+}}

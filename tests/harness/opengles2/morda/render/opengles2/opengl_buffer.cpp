@@ -2,7 +2,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 namespace{
 inline GLuint createGLBuffer(){

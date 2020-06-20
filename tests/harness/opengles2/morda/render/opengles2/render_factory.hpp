@@ -3,16 +3,16 @@
 #include <morda/render/render_factory.hpp>
 
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
-class OpenGLES2Factory : public morda::render_factory{
+class render_factory : public morda::render_factory{
 public:
-	OpenGLES2Factory();
+	render_factory();
 	
-	OpenGLES2Factory(const OpenGLES2Factory&) = delete;
-	OpenGLES2Factory& operator=(const OpenGLES2Factory&) = delete;
+	render_factory(const render_factory&) = delete;
+	render_factory& operator=(const render_factory&) = delete;
 	
-	virtual ~OpenGLES2Factory()noexcept;
+	virtual ~render_factory()noexcept;
 
 	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data)override;
 
@@ -34,4 +34,4 @@ public:
 	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override;
 };
 
-}
+}}

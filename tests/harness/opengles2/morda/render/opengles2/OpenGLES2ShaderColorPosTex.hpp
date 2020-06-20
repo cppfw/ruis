@@ -4,7 +4,7 @@
 
 #include "OpenGLES2ShaderBase.hpp"
 
-namespace morda{	
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2ShaderColorPosTex :
 		public morda::coloring_texturing_shader,
@@ -20,4 +20,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const override;
 };
 
-}
+}}

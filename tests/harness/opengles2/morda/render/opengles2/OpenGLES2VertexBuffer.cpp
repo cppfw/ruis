@@ -2,7 +2,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 void OpenGLES2VertexBuffer::init(GLsizeiptr size, const GLvoid* data) {
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffer);

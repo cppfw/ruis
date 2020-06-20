@@ -15,21 +15,16 @@
 #	include <GLES2/gl2.h>
 #endif
 
-
-using namespace morda;
+using namespace morda::render_opengles2;
 
 const OpenGLES2ShaderBase* OpenGLES2ShaderBase::boundShader = nullptr;
 
-
 GLenum OpenGLES2ShaderBase::modeMap[] = {
-	GL_TRIANGLES,			//TRIANGLES
-	GL_TRIANGLE_FAN,		//TRIANGLE_FAN
-	GL_LINE_LOOP,			//LINE_LOOP
-	GL_TRIANGLE_STRIP		//TRIANGLE_STRIP
+	GL_TRIANGLES,			// TRIANGLES
+	GL_TRIANGLE_FAN,		// TRIANGLE_FAN
+	GL_LINE_LOOP,			// LINE_LOOP
+	GL_TRIANGLE_STRIP		// TRIANGLE_STRIP
 };
-
-
-
 
 namespace{
 //return true if not compiled

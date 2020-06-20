@@ -1,5 +1,6 @@
 #include "OpenGLES2ShaderColorPosLum.hpp"
 
+using namespace morda::render_opengles2;
 
 OpenGLES2ShaderColorPosLum::OpenGLES2ShaderColorPosLum() :
 		OpenGLES2ShaderBase(

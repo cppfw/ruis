@@ -1,7 +1,6 @@
 #include "OpenGLES2ShaderPosClr.hpp"
 
-using namespace morda;
-
+using namespace morda::render_opengles2;
 
 OpenGLES2ShaderPosClr::OpenGLES2ShaderPosClr() :
 		OpenGLES2ShaderBase(
@@ -38,12 +37,10 @@ OpenGLES2ShaderPosClr::OpenGLES2ShaderPosClr() :
 						}
 					)qwertyuiop"
 			)
-{
-}
+{}
 
 void OpenGLES2ShaderPosClr::render(const r4::mat4f& m, const morda::vertex_array& va) const {
 	this->bind();
 	
 	this->OpenGLES2ShaderBase::render(m, va);
 }
-

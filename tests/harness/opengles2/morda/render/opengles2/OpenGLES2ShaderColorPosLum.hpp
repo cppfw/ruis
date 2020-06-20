@@ -3,9 +3,11 @@
 #include <morda/render/coloring_shader.hpp>
 #include "OpenGLES2ShaderBase.hpp"
 
+namespace morda{ namespace render_opengles2{
+
 class OpenGLES2ShaderColorPosLum :
 		public morda::coloring_shader,
-		private morda::OpenGLES2ShaderBase
+		private OpenGLES2ShaderBase
 {
 	GLint colorUniform;
 public:
@@ -19,3 +21,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const override;
 };
 
+}}

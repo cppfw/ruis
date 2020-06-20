@@ -10,7 +10,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 OpenGLES2IndexBuffer::OpenGLES2IndexBuffer(utki::span<const std::uint16_t> indices) :
 		elementType(GL_UNSIGNED_SHORT),

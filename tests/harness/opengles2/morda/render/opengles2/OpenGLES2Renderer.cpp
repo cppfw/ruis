@@ -10,7 +10,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 namespace{
 unsigned getMaxTextureSize(){
@@ -21,7 +21,7 @@ unsigned getMaxTextureSize(){
 }
 }
 
-OpenGLES2Renderer::OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory) :
+OpenGLES2Renderer::OpenGLES2Renderer(std::unique_ptr<render_factory> factory) :
 		morda::renderer(
 				std::move(factory),
 				[](){

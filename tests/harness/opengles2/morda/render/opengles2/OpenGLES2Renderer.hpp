@@ -4,15 +4,15 @@
 
 #include <morda/render/renderer.hpp>
 
-#include "OpenGLES2Factory.hpp"
+#include "render_factory.hpp"
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2Renderer : public morda::renderer{
 	bool defaultFramebufferInitialized = false;
 	std::uint32_t defaultFramebuffer; // NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
 public:
-	OpenGLES2Renderer(std::unique_ptr<OpenGLES2Factory> factory = std::make_unique<OpenGLES2Factory>());
+	OpenGLES2Renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
 	
 	OpenGLES2Renderer(const OpenGLES2Renderer& orig) = delete;
 	OpenGLES2Renderer& operator=(const OpenGLES2Renderer& orig) = delete;
@@ -39,4 +39,4 @@ public:
 
 };
 
-}
+}}

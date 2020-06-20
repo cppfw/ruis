@@ -10,7 +10,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 struct OpenGLES2Texture2D : public morda::texture_2d{
 	GLuint tex;
@@ -22,5 +22,4 @@ struct OpenGLES2Texture2D : public morda::texture_2d{
 	void bind(unsigned unitNum)const;
 };
 
-
-}
+}}

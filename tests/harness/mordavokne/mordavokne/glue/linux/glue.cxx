@@ -527,7 +527,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<morda::render_opengl2::renderer>(),
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
-				std::make_shared<morda::OpenGLES2Renderer>(),
+				std::make_shared<morda::render_opengles2::OpenGLES2Renderer>(),
 #else
 #	error "Unknown graphics API"
 #endif

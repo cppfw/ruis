@@ -2,7 +2,7 @@
 
 #include "OpenGLES2Texture2D.hpp"
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 OpenGLES2ShaderColorPosTex::OpenGLES2ShaderColorPosTex() :
 		OpenGLES2ShaderBase(

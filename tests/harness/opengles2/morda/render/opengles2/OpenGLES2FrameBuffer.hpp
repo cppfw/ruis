@@ -11,7 +11,7 @@
 #	include <GLES2/gl2.h>
 #endif
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2FrameBuffer : public morda::frame_buffer{
 public:
@@ -27,4 +27,4 @@ private:
 
 };
 
-}
+}}

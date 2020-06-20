@@ -4,7 +4,7 @@
 
 #include "OpenGLES2ShaderBase.hpp"
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2ShaderPosClr :
 		public morda::shader,
@@ -20,4 +20,4 @@ public:
 	void render(const r4::mat4f& m, const morda::vertex_array& va) const override;
 };
 
-}
+}}

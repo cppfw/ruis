@@ -18,7 +18,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 struct ShaderWrapper{
 	GLuint s;
@@ -27,8 +27,6 @@ struct ShaderWrapper{
 		glDeleteShader(this->s);
 	}
 };
-
-
 
 struct ProgramWrapper{
 	ShaderWrapper vertexShader;
@@ -94,4 +92,4 @@ protected:
 	void render(const r4::mat4f& m, const morda::vertex_array& va)const;
 };
 
-}
+}}

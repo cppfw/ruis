@@ -8,7 +8,7 @@
 
 #include "opengl_buffer.hpp"
 
-namespace morda{
+namespace morda{ namespace render_opengles2{
 
 class OpenGLES2VertexBuffer : public morda::vertex_buffer, public opengl_buffer{
 public:
@@ -30,5 +30,4 @@ private:
 	void init(GLsizeiptr size, const GLvoid* data);
 };
 
-
-}
+}}

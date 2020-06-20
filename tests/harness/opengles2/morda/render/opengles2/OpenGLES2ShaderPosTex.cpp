@@ -7,7 +7,7 @@
 
 #include "OpenGLES2_util.hpp"
 
-using namespace morda;
+using namespace morda::render_opengles2;
 
 OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
 		OpenGLES2ShaderBase(
@@ -51,7 +51,6 @@ OpenGLES2ShaderPosTex::OpenGLES2ShaderPosTex() :
 	this->textureUniform = this->getUniform("texture0");
 }
 
-
 void OpenGLES2ShaderPosTex::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
 	ASSERT(dynamic_cast<const OpenGLES2Texture2D*>(&tex))
 	static_cast<const OpenGLES2Texture2D&>(tex).bind(0);
@@ -59,4 +58,3 @@ void OpenGLES2ShaderPosTex::render(const r4::mat4f& m, const morda::vertex_array
 	
 	this->OpenGLES2ShaderBase::render(m, va);
 }
-
