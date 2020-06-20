@@ -24,7 +24,7 @@
 #		include <bcm_host.h>
 #	endif
 
-#	include <morda/OpenGLES2Renderer.hpp>
+#	include <morda/render/opengles2/OpenGLES2Renderer.hpp>
 
 #else
 #	error "Unknown graphics API"
