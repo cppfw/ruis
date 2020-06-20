@@ -134,10 +134,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\renderers\opengl2\mordaren\**\*.cpp" />
+    <ClCompile Include="..\..\renderers\opengl2\morda\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\renderers\opengl2\mordaren\**\*.hpp" />
+    <ClInclude Include="..\..\renderers\opengl2\morda\**\*.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libmorda\libmorda.vcxproj">
