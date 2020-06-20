@@ -7,13 +7,11 @@
 #include <morda/util/util.hpp>
 #include <morda/gui.hpp>
 
-#include <mordaren/OpenGL2Renderer.hpp>
+#include <morda/render/opengl2/renderer.hpp>
 
 #import <Cocoa/Cocoa.h>
 
-
 using namespace mordavokne;
-
 
 #include "../unixCommon.cxx"
 #include "../friendAccessors.cxx"
