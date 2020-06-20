@@ -288,6 +288,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\tests\app\src\**\*.cpp" />
     <ClCompile Include="..\..\tests\harness\mordavokne\**\*.cpp" />
+    <ClCompile Include="..\..\tests\harness\opengl2\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
