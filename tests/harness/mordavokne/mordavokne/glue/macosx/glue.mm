@@ -81,14 +81,9 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
 }
-
 }
 
-
-
 namespace{
-
-
 void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	NSPoint winPos = [e locationInWindow];
 	auto pos = morda::vector2(winPos.x, winPos.y).rounded();
@@ -420,9 +415,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	morda::key::unknown,
 	morda::key::unknown //0xFF
 }};
-
 }
-
 
 @implementation CocoaView
 
@@ -553,8 +546,6 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 
 @end
 
-
-
 @implementation CocoaWindow
 
 -(id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation{
@@ -616,10 +607,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 
 @end
 
-
 namespace{
-
-
 WindowWrapper::WindowWrapper(const window_params& wp){
 	TRACE(<< "WindowWrapper::WindowWrapper(): enter" << std::endl)
 	this->applicationObjectId = [NSApplication sharedApplication];
@@ -693,25 +681,20 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 
 	TRACE(<< "WindowWrapper::WindowWrapper(): exit" << std::endl)
 }
+}
 
+namespace{
 WindowWrapper::~WindowWrapper()noexcept{
 	[this->openglContextId release];
 	[this->windowObjectId release];
 	[this->applicationObjectId release];
 }
-
 }
-
-
 
 void application::quit()noexcept{
 	auto& ww = getImpl(this->windowPimpl);
 	ww.quitFlag = true;
 }
-
-
-
-
 
 int main (int argc, const char** argv){
 	TRACE(<< "main(): enter" << std::endl)
@@ -779,9 +762,7 @@ int main (int argc, const char** argv){
 	return 0;
 }
 
-
 namespace{
-
 morda::real getDotsPerInch(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
@@ -795,7 +776,9 @@ morda::real getDotsPerInch(){
 	value *= 2.54f;
 	return value;
 }
+}
 
+namespace{
 morda::real getDotsPerPt(){
 	NSScreen *screen = [NSScreen mainScreen];
 	NSDictionary *description = [screen deviceDescription];
@@ -809,9 +792,7 @@ morda::real getDotsPerPt(){
 
 	return application::get_pixels_per_dp(resolution, screenSizeMm);
 }
-
 }
-
 
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
@@ -857,8 +838,6 @@ void application::swapFrameBuffers(){
 	[ww.openglContextId flushBuffer];
 }
 
-
-
 void application::set_fullscreen(bool enable){
 	if(enable == this->is_fullscreen()){
 		return;
@@ -867,7 +846,7 @@ void application::set_fullscreen(bool enable){
 	auto& ww = getImpl(this->windowPimpl);
 
 	if(enable){
-		//save old window size
+		// save old window size
 		NSRect rect = [ww.windowObjectId frame];
 		this->beforeFullScreenWindowRect.p.x = rect.origin.x;
 		this->beforeFullScreenWindowRect.p.y = rect.origin.y;
@@ -895,8 +874,6 @@ void application::set_fullscreen(bool enable){
 
 	this->isFullscreen_v = enable;
 }
-
-
 
 void application::set_mouse_cursor_visible(bool visible){
 	auto& ww = getImpl(this->windowPimpl);
