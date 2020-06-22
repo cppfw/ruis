@@ -55,6 +55,13 @@
             "command": "make run_busy",
             "problemMatcher": [],
             "dependsOn": "build"
+		},
+		{
+            "label": "run_book",
+            "type": "shell",
+            "command": "make run_book",
+            "problemMatcher": [],
+            "dependsOn": "build"
         },
         {
             "label": "test",

@@ -10,6 +10,7 @@ namespace morda{
 
 /**
  * @brief Busy spinner.
+ * @param active - whether the busy indicator is initially active or not, can be true/false.
  */
 class busy :
 		public image,

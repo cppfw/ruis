@@ -11,6 +11,22 @@ busy::busy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	if(!this->get_image()){
 		this->set_image(this->context->loader.load<res::image>("morda_img_busy"));
 	}
+
+	this->set_visible(false);
+
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		if(p.value == "active"){
+			if(get_property_value(p).to_bool()){
+				this->context->run_from_ui_thread([this](){
+					this->set_active(true);
+				});
+			}
+		}
+	}
 }
 
 void busy::render(const matrix4& matrix)const{

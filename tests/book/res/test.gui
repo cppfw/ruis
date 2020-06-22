@@ -10,9 +10,5 @@
 				text{"toggle busy spinner"}
 			}
 		}
-		@busy{
-			id{busy_spinner2}
-			active{true}
-		}
 	}
 }
