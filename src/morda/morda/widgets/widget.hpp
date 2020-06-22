@@ -462,7 +462,7 @@ public:
 
 	/**
 	 * @brief Measure how big a widget wants to be.
-	 * Given the given space determine what dimensions widget wants to have to properly draw.
+	 * Given the space quotum determine what dimensions widget wants to have to properly draw.
 	 * @param quotum - space available to widget. If value is negative then a minimum size needed for proper widget drawing is assumed.
 	 * @return Measured desired widget dimensions.
 	 */

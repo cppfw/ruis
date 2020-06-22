@@ -14,6 +14,7 @@
 #include "widgets/button/tab_group.hpp"
 #include "widgets/button/click_drop_down_box.hpp"
 
+#include "widgets/label/busy.hpp"
 #include "widgets/label/color.hpp"
 #include "widgets/label/text.hpp"
 #include "widgets/label/gradient.hpp"
@@ -119,6 +120,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	this->context->inflater.register_widget<tab_group>("tab_group");
 	this->context->inflater.register_widget<tab>("tab");
 	this->context->inflater.register_widget<text_input_line>("text_input_line");
+	this->context->inflater.register_widget<busy>("busy");
 
 	try{
 		auto t = this->context->loader.load<res::puu>("morda_gui_defs");

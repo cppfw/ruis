@@ -121,8 +121,9 @@ public:
 	{}
 	
 	vector2 dims(real dpi)const noexcept override{
-		auto wh = this->dom->getDimensions(dpi);
-		return vector2(wh[0], wh[1]);
+		auto wh = this->dom->get_dimensions(dpi);
+		using std::ceil;
+		return vector2(ceil(wh[0]), ceil(wh[1]));
 	}
 	
 	class svg_texture : public fixed_texture{

@@ -45,6 +45,9 @@ public:
 	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	void set_image(const std::shared_ptr<const res::image>& image);
+	const std::shared_ptr<const res::image>& get_image()const{
+		return this->img;
+	}
 
 	void on_resize() override;
 
