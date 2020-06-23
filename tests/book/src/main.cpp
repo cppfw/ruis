@@ -6,6 +6,9 @@
 
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/morda/widgets/label/busy.hpp"
+#include "../../../src/morda/morda/widgets/group/book.hpp"
+
+#include "main_page.hpp"
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
@@ -19,23 +22,16 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
+		this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
+
 		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
 				*this->get_res_file("res/test.gui")
 			);
 		this->gui.set_root(c);
 
-		auto spinner = utki::make_weak(
-				utki::make_shared_from_this(
-						c->get_widget_as<morda::busy>("busy_spinner")
-					)
-			);
-		auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
+		auto& b = c->get_widget_as<morda::book>("book");
 
-		button.click_handler = [spinner](morda::push_button& b){
-			if(auto s = spinner.lock()){
-				s->set_active(!s->is_visible());
-			}
-		};
+		b.push(std::make_shared<main_page>(this->gui.context));
 	}
 };
 

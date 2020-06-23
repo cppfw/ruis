@@ -1,12 +1,13 @@
 #pragma once
 
-#include <morda/widgets/group/pile.hpp>
+#include "pile.hpp"
 
 namespace morda{
 
 class book;
 
 class page : public virtual widget{
+	friend class book;
 protected:
 	page(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
@@ -25,8 +26,8 @@ private:
 };
 
 class book :
-		private pile,
-		public virtual widget
+		public virtual widget,
+		private pile
 {
 	friend class page;
 	

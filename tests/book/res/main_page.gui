@@ -1,0 +1,7 @@
+@push_button{
+	id{main_button}
+
+	@text{
+		text{Hello!}
+	}
+}

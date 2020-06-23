@@ -2,6 +2,7 @@
 
 #include "widgets/container.hpp"
 
+#include "widgets/group/book.hpp"
 #include "widgets/group/column.hpp"
 #include "widgets/group/row.hpp"
 #include "widgets/group/pile.hpp"
@@ -37,6 +38,7 @@ inflater::inflater(morda::context& context):
 	this->register_widget<resize_proxy>("resize_proxy");
 	this->register_widget<pan_list>("pan_list");
 	this->register_widget<list>("list");
+	this->register_widget<book>("book");
 }
 
 void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_type::second_type&& factory){

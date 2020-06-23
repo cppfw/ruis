@@ -7,10 +7,7 @@
 
 #include "util/util.hpp"
 
-
 namespace morda{
-
-
 
 /**
  * @brief Inflater of GUI from puu description.
@@ -82,7 +79,6 @@ public:
 	std::shared_ptr<widget> inflate(const puu::forest& gui_script){
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
-		
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -93,7 +89,6 @@ public:
 	template <typename T> std::shared_ptr<T> inflate_as(const puu::forest& gui_script){
 		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
 	}
-
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
@@ -147,7 +142,5 @@ private:
 	void push_defs(const puu::forest& chain);
 	void pop_defs();
 };
-
-
 
 }

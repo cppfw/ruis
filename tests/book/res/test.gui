@@ -1,14 +1,3 @@
-@pile{
-	@column{
-		@busy{
-			id{busy_spinner}
-		}
-		@push_button{
-			id{busy_toggle_button}
-
-			@text{
-				text{"toggle busy spinner"}
-			}
-		}
-	}
+@book{
+	id{book}
 }

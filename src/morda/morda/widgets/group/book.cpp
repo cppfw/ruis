@@ -1,6 +1,6 @@
 #include "book.hpp"
 
-#include <morda/context.hpp>
+#include "../../context.hpp"
 
 using namespace morda;
 
@@ -35,7 +35,7 @@ void book::push(std::shared_ptr<page> pg) {
 }
 
 void book::close(page& pg)noexcept{
-	ASSERT(&pg.parentPageStack() != this)
+	ASSERT(&pg.parent_book() != this)
 	
 	for(auto i = this->pages.begin(), e = this->pages.end(); i != e; ++i){
 		if((*i).operator->() == &pg){
@@ -81,12 +81,16 @@ book::~book()noexcept{
 	}
 }
 
-book& page::parent_book() {
+book& page::parent_book(){
 	if(!this->parent()){
 		throw std::logic_error("page: the page is not yet shown, i.e. not added to any book");
 	}
-	auto p = static_cast<book*>(this->parent());
-	ASSERT(dynamic_cast<book*>(this->parent()))
+	auto p = dynamic_cast<book*>(this->parent()); // TODO: why dynamic cast does not work?
+	p = static_cast<book*>(this->parent());
+	if(!p){
+		TRACE_ALWAYS(<< "parent id = " << this->parent()->id << std::endl)
+		throw std::logic_error("parent_book(): page parent container is not a book");
+	}
 	
 	return *p;
 }
