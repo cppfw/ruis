@@ -67,6 +67,26 @@ void book::tear_out(page& pg)noexcept{
 	}
 }
 
+void book::go_to(size_t page_number){
+	if(page_number >= this->pages.size()){
+		throw std::logic_error("book::go_to(): requested page number is out of scope");
+	}
+
+	if(this->pages.empty()){
+		return;
+	}
+
+	ASSERT(this->active_page_index < this->pages.size)
+
+	this->pages[this->active_page_index]->on_hide();
+
+	this->clear();
+
+	this->active_page_index = page_number;
+	this->push_back(this->pages[this->active_page_index]);
+	this->pages[this->active_page_index]->on_show();
+}
+
 book::~book()noexcept{
 	if(this->active_page_index >= this->pages.size()){
 		return;

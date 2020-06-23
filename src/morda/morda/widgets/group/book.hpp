@@ -43,6 +43,16 @@ public:
 	
 	void push(std::shared_ptr<page> page);
 	
+	size_t size()const{
+		return this->pages.size();
+	}
+
+	size_t get_active_page()const{
+		return this->active_page_index;
+	}
+
+	void go_to(size_t page_number);
+
 	~book()noexcept;
 
 private:
