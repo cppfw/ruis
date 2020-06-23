@@ -6,8 +6,6 @@
 #include "../../../src/morda/morda/render/renderer.hpp"
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 
-#include <GLES2/gl2.h>
-
 #include "cube_page.hpp"
 
 namespace{
@@ -107,12 +105,8 @@ public:
 		m.translate(0, 0, -4);
 		
 		m.rotate(this->rot);
-
-		glEnable(GL_CULL_FACE);
 		
 		this->context->renderer->shader->pos_tex->render(m, *this->cubeVAO, this->tex->tex());
-		
-		glDisable(GL_CULL_FACE);
 	}
 };
 }
