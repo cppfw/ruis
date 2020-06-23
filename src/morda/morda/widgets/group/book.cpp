@@ -32,13 +32,14 @@ void book::push(std::shared_ptr<page> pg){
 
 		b->active_page_index = b->pages.size();
 		b->pages.push_back(pg);
+		pg->parent_book = b.get();
 		b->push_back(pg);
 		pg->on_show();
 	});
 }
 
 void book::tear_out(page& pg)noexcept{
-	ASSERT(&pg.parent_book() == this)
+	ASSERT(&pg.get_parent_book() == this)
 	
 	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const decltype(this->pages)::value_type& v) -> bool {
 		return v.get() == &pg;
@@ -49,13 +50,14 @@ void book::tear_out(page& pg)noexcept{
 	bool is_active_page = std::distance(this->pages.begin(), i) == ssize_t(this->active_page_index);
 	
 	this->pages.erase(i);
+	pg.parent_book = nullptr;
 
 	if(this->active_page_index != 0){
 		--this->active_page_index;
 	}
 
 	if(is_active_page){
-		pg.on_tear_out();
+		pg.on_hide();
 		this->clear();
 		auto p = std::dynamic_pointer_cast<page>(this->pages[this->active_page_index]);
 		this->push_back(p);
@@ -66,22 +68,18 @@ void book::tear_out(page& pg)noexcept{
 }
 
 book::~book()noexcept{
-	for(auto& p : this->pages){
-		p->on_tear_out();
+	if(this->active_page_index >= this->pages.size()){
+		return;
 	}
+
+	this->pages[this->active_page_index]->on_hide();
 }
 
-book& page::parent_book(){
-	if(!this->parent()){
-		throw std::logic_error("page: the page is not yet shown, i.e. not added to any book");
+book& page::get_parent_book(){
+	if(!this->parent_book){
+		throw std::logic_error("page::get_parent_book(): page is not in a book");
 	}
-	auto p = dynamic_cast<book*>(this->parent());
-	if(!p){
-		TRACE(<< "parent id = " << this->parent()->id << std::endl)
-		throw std::logic_error("parent_book(): page parent container is not a book");
-	}
-	
-	return *p;
+	return *this->parent_book;
 }
 
 page::page(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -90,7 +88,6 @@ page::page(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 void page::tear_out()noexcept{
 	this->context->run_from_ui_thread([this](){
-		this->parent_book().tear_out(*this);
+		this->get_parent_book().tear_out(*this);
 	});
 }
-

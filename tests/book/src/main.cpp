@@ -66,7 +66,7 @@ public:
 						)qwertyuiop")
 				);
 			mp->get_widget_as<morda::push_button>("cube_button").click_handler = [mp](morda::push_button& b){
-				mp->parent_book().push(std::make_shared<cube_page>(mp->context));
+				mp->get_parent_book().push(std::make_shared<cube_page>(mp->context));
 			};
 			mp->get_widget_as<morda::push_button>("stuff_button").click_handler = [mp](morda::push_button& b){
 				auto pg = std::make_shared<pile_page>(mp->context, puu::read(R"qwertyuiop(
@@ -81,7 +81,7 @@ public:
 				pg->get_widget_as<morda::push_button>("back_button").click_handler = [mp, pg_ptr](morda::push_button& b){
 					pg_ptr->tear_out();
 				};
-				mp->parent_book().push(pg);
+				mp->get_parent_book().push(pg);
 			};
 			b.push(mp);
 		}

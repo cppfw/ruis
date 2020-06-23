@@ -13,12 +13,13 @@ protected:
 	
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
+
+	book* parent_book = nullptr;
 public:
-	book& parent_book();
+	book& get_parent_book();
 
 	virtual void on_show(){}
-	virtual void on_hide(){}
-	virtual void on_tear_out()noexcept{}
+	virtual void on_hide()noexcept{}
 	
 	void tear_out()noexcept;
 private:
@@ -27,7 +28,7 @@ private:
 
 class book :
 		public virtual widget,
-		public pile
+		private pile
 {
 	friend class page;
 	

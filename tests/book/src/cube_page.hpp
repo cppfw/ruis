@@ -17,7 +17,7 @@ public:
 	cube_page& operator=(const cube_page&) = delete;
 	
 	void on_show() override;
-	void on_hide() override;
+	void on_hide()noexcept override;
 	
 private:
 
