@@ -32,7 +32,6 @@ public:
 
 		auto& b = c->get_widget_as<morda::book>("book");
 
-
 		{
 			auto mp = std::make_shared<pile_page>(
 					this->gui.context,
@@ -70,11 +69,19 @@ public:
 				mp->parent_book().push(std::make_shared<cube_page>(mp->context));
 			};
 			mp->get_widget_as<morda::push_button>("stuff_button").click_handler = [mp](morda::push_button& b){
-				mp->parent_book().push(std::make_shared<pile_page>(mp->context, puu::read(R"qwertyuiop(
-					@text{
-						text{"Hello world!"}
+				auto pg = std::make_shared<pile_page>(mp->context, puu::read(R"qwertyuiop(
+					@push_button{
+						id{back_button}
+						@text{
+							text{"Go back"}
+						}
 					}
-				)qwertyuiop")));
+				)qwertyuiop"));
+				auto pg_ptr = pg.get();
+				pg->get_widget_as<morda::push_button>("back_button").click_handler = [mp, pg_ptr](morda::push_button& b){
+					pg_ptr->close();
+				};
+				mp->parent_book().push(pg);
 			};
 			b.push(mp);
 		}
