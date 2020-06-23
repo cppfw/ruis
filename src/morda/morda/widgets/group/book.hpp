@@ -44,10 +44,7 @@ public:
 	
 	~book()noexcept;
 
-	void render(const matrix4& matrix)const override;
-	
 private:
-
 	void tear_out(page& page)noexcept;
 };
 

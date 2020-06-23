@@ -20,15 +20,18 @@ void book::push(std::shared_ptr<page> pg){
 	auto b = utki::make_shared_from_this(*this);
 	
 	this->context->run_from_ui_thread([b, pg](){
-		if(b->children().size() != 0){
-			ASSERT(b->active_page_index < b->children().size())
-			auto p = dynamic_cast<page*>(b->children()[b->active_page_index].get());
+		if(!b->pages.empty()){
+			ASSERT(b->children().size() == 1)
+			ASSERT(b->active_page_index < b->pages.size())
+			auto p = dynamic_cast<page*>(b->pages[b->active_page_index].get());
 			if(p){
 				p->on_hide();
 			}
+			b->clear();
 		}
 
-		b->active_page_index = b->children().size();
+		b->active_page_index = b->pages.size();
+		b->pages.push_back(pg);
 		b->push_back(pg);
 		pg->on_show();
 	});
@@ -37,44 +40,35 @@ void book::push(std::shared_ptr<page> pg){
 void book::tear_out(page& pg)noexcept{
 	ASSERT(&pg.parent_book() == this)
 	
-	auto i = this->find(pg);
+	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const decltype(this->pages)::value_type& v) -> bool {
+		return v.get() == &pg;
+	});
 
-	ASSERT(i != this->children().end())
+	ASSERT(i != this->pages.end())
 
-	this->erase(i);
-
-	if(std::distance(this->children().begin(), i) == ssize_t(this->active_page_index)){
-		pg.on_tear_out();
-	}
+	bool is_active_page = std::distance(this->pages.begin(), i) == ssize_t(this->active_page_index);
+	
+	this->pages.erase(i);
 
 	if(this->active_page_index != 0){
 		--this->active_page_index;
 	}
 
-	ASSERT(this->active_page_index < this->children().size())
-
-	auto p = std::dynamic_pointer_cast<page>(this->children()[this->active_page_index]);
-	if(p){
-		p->on_show();
-	}
-}
-
-book::~book()noexcept{
-	for(auto& c : this->children()){
-		auto p = dynamic_cast<page*>(c.get());
+	if(is_active_page){
+		pg.on_tear_out();
+		this->clear();
+		auto p = std::dynamic_pointer_cast<page>(this->pages[this->active_page_index]);
+		this->push_back(p);
 		if(p){
-			p->on_tear_out();
+			p->on_show();
 		}
 	}
 }
 
-void book::render(const matrix4& matrix)const{
-	if(this->active_page_index >= this->children().size()){
-		return;
+book::~book()noexcept{
+	for(auto& p : this->pages){
+		p->on_tear_out();
 	}
-
-	auto& p = *this->children()[this->active_page_index];
-	this->render_child(matrix, p);
 }
 
 book& page::parent_book(){
