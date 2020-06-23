@@ -68,6 +68,15 @@ book::~book()noexcept{
 	}
 }
 
+void book::render(const matrix4& matrix)const{
+	if(this->active_page_index >= this->children().size()){
+		return;
+	}
+
+	auto& p = *this->children()[this->active_page_index];
+	this->render_child(matrix, p);
+}
+
 book& page::parent_book(){
 	if(!this->parent()){
 		throw std::logic_error("page: the page is not yet shown, i.e. not added to any book");
@@ -90,3 +99,4 @@ void page::close()noexcept{
 		this->parent_book().close(*this);
 	});
 }
+

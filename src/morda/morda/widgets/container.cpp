@@ -9,7 +9,7 @@ using namespace morda;
 container::container(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {
-	this->inflate_push_back(desc);
+	this->push_back_inflate(desc);
 }
 
 widget::layout_params& container::get_layout_params(widget& w){
@@ -47,7 +47,7 @@ std::unique_ptr<widget::layout_params> container::create_layout_params(const puu
 	return utki::make_unique<widget::layout_params>(desc, this->context->units);
 }
 
-void container::inflate_push_back(const puu::forest& desc){
+void container::push_back_inflate(const puu::forest& desc){
 	for(auto i = desc.begin(); i != desc.end(); ++i){
 		if(is_leaf_property(i->value)){
 			continue;

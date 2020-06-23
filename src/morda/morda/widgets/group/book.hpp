@@ -42,9 +42,8 @@ public:
 	
 	~book()noexcept;
 
-	// void render(const matrix4& matrix)const override{
-	// 	this->pile::render(matrix);
-	// }
+	void render(const matrix4& matrix)const override;
+	
 private:
 
 	void close(page& page)noexcept;

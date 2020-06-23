@@ -194,7 +194,7 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 	// this should go after initializing borders
 	this->emptyMinDim = this->measure(vector2(-1));
 
-	this->contentArea->inflate_push_back(desc);
+	this->contentArea->push_back_inflate(desc);
 }
 
 void morda::window::setupWidgets(){

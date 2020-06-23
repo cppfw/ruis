@@ -66,11 +66,11 @@ collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::fores
 		}
 
 		if(p.value == "title"){
-			this->title_v->inflate_push_back(p.children);
+			this->title_v->push_back_inflate(p.children);
 		}
 	}
 
-	this->contentArea->inflate_push_back(desc);
+	this->contentArea->push_back_inflate(desc);
 
 	{
 		auto sw = this->try_get_widget_as<toggle_button>("switch");

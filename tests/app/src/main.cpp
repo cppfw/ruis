@@ -452,7 +452,7 @@ public:
 		ASSERT(isLastItemInParent.size() == path.size())
 
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->inflate_push_back(isLastItemInParent[i] ? puu::read(DEmpty) : puu::read(DLine));
+			ret->push_back_inflate(isLastItemInParent[i] ? puu::read(DEmpty) : puu::read(DLine));
 		}
 
 		{

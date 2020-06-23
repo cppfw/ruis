@@ -185,7 +185,7 @@ public:
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param desc - GUI description of the widgets to add.
 	 */
-	void inflate_push_back(const puu::forest& desc);
+	void push_back_inflate(const puu::forest& desc);
 
 	/**
 	 * @brief Remove last child.
