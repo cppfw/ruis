@@ -27,7 +27,7 @@ private:
 
 class book :
 		public virtual widget,
-		private pile
+		public pile
 {
 	friend class page;
 	

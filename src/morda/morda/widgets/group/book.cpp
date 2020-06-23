@@ -85,8 +85,7 @@ book& page::parent_book(){
 	if(!this->parent()){
 		throw std::logic_error("page: the page is not yet shown, i.e. not added to any book");
 	}
-	auto p = dynamic_cast<book*>(this->parent()); // TODO: why dynamic cast does not work?
-	p = static_cast<book*>(this->parent());
+	auto p = dynamic_cast<book*>(this->parent());
 	if(!p){
 		TRACE_ALWAYS(<< "parent id = " << this->parent()->id << std::endl)
 		throw std::logic_error("parent_book(): page parent container is not a book");
