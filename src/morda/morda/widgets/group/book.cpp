@@ -9,7 +9,7 @@ book::book(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		pile(nullptr, puu::forest())
 {}
 
-void book::push(std::shared_ptr<page> pg) {
+void book::push(std::shared_ptr<page> pg){
 	if(!pg){
 		throw std::logic_error("book: tried to push nullptr");
 	}
@@ -17,67 +17,54 @@ void book::push(std::shared_ptr<page> pg) {
 	auto& lp = this->get_layout_params(*pg);
 	lp.dims.set(widget::layout_params::fill);
 	
-	auto ps = utki::make_shared_from_this(*this);
+	auto b = utki::make_shared_from_this(*this);
 	
-	this->context->run_from_ui_thread([ps, pg](){
-		if(ps->children().size() != 0){
-			ASSERT(ps->children().size() == 1)
-			auto p = std::dynamic_pointer_cast<morda::page>(ps->children().front());
-			ASSERT(p)
-			ps->erase(ps->children().begin());
-			p->on_hide();
-			ps->pages.push_back(p);
+	this->context->run_from_ui_thread([b, pg](){
+		if(b->children().size() != 0){
+			ASSERT(b->active_page_index < b->children().size())
+			auto p = dynamic_cast<page*>(b->children()[b->active_page_index].get());
+			if(p){
+				p->on_hide();
+			}
 		}
 
-		ps->push_back(pg);
+		b->active_page_index = b->children().size();
+		b->push_back(pg);
 		pg->on_show();
 	});
 }
 
 void book::close(page& pg)noexcept{
-	ASSERT(&pg.parent_book() != this)
+	ASSERT(&pg.parent_book() == this)
 	
-	for(auto i = this->pages.begin(), e = this->pages.end(); i != e; ++i){
-		if((*i).operator->() == &pg){
-			(*i)->on_close();
-			this->pages.erase(i);
-			return;
-		}
-	}
-	
-	if(this->children().size() == 0){
-		return;
-	}
-	
-	ASSERT(this->children().size() == 1)
-	auto p = std::dynamic_pointer_cast<morda::page>(this->children().front());
-	ASSERT(p)
-	ASSERT(p.operator->() == &pg)
+	auto i = this->find(pg);
 
-	this->erase(this->children().begin());
-	
-	p->on_close();
-	
-	if(this->pages.size() != 0){
-		this->push_back(this->pages.back());
-		this->pages.back()->on_show();
-		this->pages.pop_back();
+	ASSERT(i != this->children().end())
+
+	this->erase(i);
+
+	if(std::distance(this->children().begin(), i) == ssize_t(this->active_page_index)){
+		pg.on_close();
+	}
+
+	if(this->active_page_index != 0){
+		--this->active_page_index;
+	}
+
+	ASSERT(this->active_page_index < this->children().size())
+
+	auto p = std::dynamic_pointer_cast<page>(this->children()[this->active_page_index]);
+	if(p){
+		p->on_show();
 	}
 }
 
 book::~book()noexcept{
-	if(this->children().size() != 0){
-		ASSERT(this->children().size() == 1)
-		auto p = std::dynamic_pointer_cast<page>(this->children().front());
-		ASSERT(p)
-
-		this->erase(this->children().begin());
-
-		p->on_close();
-	}
-	
-	for(auto i = this->pages.rbegin(), e = this->pages.rend(); i != e; ++i){
-		(*i)->on_close();
+	for(auto& c : this->children()){
+		auto p = dynamic_cast<page*>(c.get());
+		if(p){
+			p->on_close();
+		}
 	}
 }
 
@@ -87,7 +74,7 @@ book& page::parent_book(){
 	}
 	auto p = dynamic_cast<book*>(this->parent());
 	if(!p){
-		TRACE_ALWAYS(<< "parent id = " << this->parent()->id << std::endl)
+		TRACE(<< "parent id = " << this->parent()->id << std::endl)
 		throw std::logic_error("parent_book(): page parent container is not a book");
 	}
 	
@@ -103,4 +90,3 @@ void page::close()noexcept{
 		this->parent_book().close(*this);
 	});
 }
-

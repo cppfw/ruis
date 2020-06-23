@@ -254,7 +254,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	widget_list::const_iterator find(const widget* w);
+	widget_list::const_iterator find(const widget& w);
 
 	/**
 	 * @brief Find widget in the list of container's children.
@@ -262,7 +262,7 @@ public:
 	 * @return iterator for child widget.
 	 * @return end iterator if given widget was not found from the list of container's children.
 	 */
-	const_widget_list::const_iterator find(const widget* w)const;
+	const_widget_list::const_iterator find(const widget& w)const;
 
 	/**
 	 * @brief Recursively find all widgets of given type.

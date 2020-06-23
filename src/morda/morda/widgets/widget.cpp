@@ -95,7 +95,7 @@ std::shared_ptr<widget> widget::remove_from_parent(){
 		throw utki::invalid_state("widget::remove_from_parent(): widget is not added to the parent");
 	}
 	auto ret = this->sharedFromThis(this);
-	this->parent_v->erase(this->parent_v->find(this));
+	this->parent_v->erase(this->parent_v->find(*this));
 	return ret;
 }
 
@@ -104,7 +104,7 @@ std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 		throw utki::invalid_state("this widget is not added to any parent");
 	}
 
-	this->parent()->insert(w, this->parent()->find(this));
+	this->parent()->insert(w, this->parent()->find(*this));
 
 	if(w && w->layout_desc.empty()){
 		w->layout_desc = std::move(this->layout_desc);

@@ -13,9 +13,9 @@ protected:
 	
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
-	
-	book& parent_book();
 public:
+	book& parent_book();
+
 	virtual void on_show(){}
 	virtual void on_hide(){}
 	virtual void on_close()noexcept{}
@@ -31,7 +31,7 @@ class book :
 {
 	friend class page;
 	
-	std::vector<std::shared_ptr<page>> pages;
+	size_t active_page_index = 0;
 public:
 	book(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
@@ -41,6 +41,10 @@ public:
 	void push(std::shared_ptr<page> page);
 	
 	~book()noexcept;
+
+	// void render(const matrix4& matrix)const override{
+	// 	this->pile::render(matrix);
+	// }
 private:
 
 	void close(page& page)noexcept;

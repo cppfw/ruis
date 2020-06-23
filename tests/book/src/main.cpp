@@ -8,7 +8,8 @@
 #include "../../../src/morda/morda/widgets/label/busy.hpp"
 #include "../../../src/morda/morda/widgets/group/book.hpp"
 
-#include "main_page.hpp"
+#include "pile_page.hpp"
+#include "cube_page.hpp"
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
@@ -31,7 +32,52 @@ public:
 
 		auto& b = c->get_widget_as<morda::book>("book");
 
-		b.push(std::make_shared<main_page>(this->gui.context));
+
+		{
+			auto mp = std::make_shared<pile_page>(
+					this->gui.context,
+					puu::read(R"qwertyuiop(
+							@column{
+								layout{dx{fill} dy{fill}}
+
+								@push_button{
+									id{cube_button}
+
+									layout{
+										dx{fill}
+									}
+
+									@text{
+										text{Cube!}
+									}
+								}
+
+								@push_button{
+									id{stuff_button}
+
+									layout{
+										dx{fill}
+									}
+
+									@text{
+										text{Stuff!}
+									}
+								}
+							}
+						)qwertyuiop")
+				);
+			mp->get_widget_as<morda::push_button>("cube_button").click_handler = [mp](morda::push_button& b){
+				mp->parent_book().push(std::make_shared<cube_page>(mp->context));
+			};
+			mp->get_widget_as<morda::push_button>("stuff_button").click_handler = [mp](morda::push_button& b){
+				mp->parent_book().push(std::make_shared<pile_page>(mp->context, puu::read(R"qwertyuiop(
+					@text{
+						text{"Hello world!"}
+					}
+				)qwertyuiop")));
+			};
+			b.push(mp);
+		}
 	}
 };
 

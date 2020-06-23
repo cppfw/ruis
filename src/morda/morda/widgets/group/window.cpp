@@ -430,7 +430,7 @@ void window::move_to_top(){
 
 	container* p = this->parent();
 
-	p->change_child_z_position(p->find(this), p->children().end());
+	p->change_child_z_position(p->find(*this), p->children().end());
 
 	this->updateTopmost();
 

@@ -1,6 +1,10 @@
 @push_button{
 	id{main_button}
 
+	layout{
+		dx{fill}
+	}
+
 	@text{
 		text{Hello!}
 	}

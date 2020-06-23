@@ -337,12 +337,22 @@ container::widget_list::const_iterator container::change_child_z_position(widget
 	return ret;
 }
 
-container::widget_list::const_iterator container::find(const widget* w){
+container::widget_list::const_iterator container::find(const widget& w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),
-			[w](const decltype(this->children_v.variable)::value_type& v) -> bool{
-				return v.get() == w;
+			[&w](const decltype(this->children_v.variable)::value_type& v) -> bool{
+				return v.get() == &w;
+			}
+		);
+}
+
+container::const_widget_list::const_iterator container::find(const widget& w)const{
+	return std::find_if(
+			this->children().begin(),
+			this->children().end(),
+			[&w](const decltype(this->children_v.constant)::value_type& v) -> bool{
+				return v.get() == &w;
 			}
 		);
 }
