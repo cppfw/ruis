@@ -47,7 +47,7 @@ void book::tear_out(page& pg)noexcept{
 
 	ASSERT(i != this->pages.end())
 
-	bool is_active_page = std::distance(this->pages.begin(), i) == ssize_t(this->active_page_index);
+	bool is_active_page = size_t(std::distance(this->pages.begin(), i)) == this->active_page_index;
 	
 	this->pages.erase(i);
 	pg.parent_book = nullptr;
