@@ -18,9 +18,9 @@ public:
 
 	virtual void on_show(){}
 	virtual void on_hide(){}
-	virtual void on_close()noexcept{}
+	virtual void on_tear_out()noexcept{}
 	
-	void close()noexcept;
+	void tear_out()noexcept;
 private:
 
 };
@@ -32,6 +32,8 @@ class book :
 	friend class page;
 	
 	size_t active_page_index = 0;
+
+	std::vector<std::shared_ptr<page>> pages;
 public:
 	book(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
@@ -46,7 +48,7 @@ public:
 	
 private:
 
-	void close(page& page)noexcept;
+	void tear_out(page& page)noexcept;
 };
 
 }

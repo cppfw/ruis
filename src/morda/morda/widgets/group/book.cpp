@@ -34,7 +34,7 @@ void book::push(std::shared_ptr<page> pg){
 	});
 }
 
-void book::close(page& pg)noexcept{
+void book::tear_out(page& pg)noexcept{
 	ASSERT(&pg.parent_book() == this)
 	
 	auto i = this->find(pg);
@@ -44,7 +44,7 @@ void book::close(page& pg)noexcept{
 	this->erase(i);
 
 	if(std::distance(this->children().begin(), i) == ssize_t(this->active_page_index)){
-		pg.on_close();
+		pg.on_tear_out();
 	}
 
 	if(this->active_page_index != 0){
@@ -63,7 +63,7 @@ book::~book()noexcept{
 	for(auto& c : this->children()){
 		auto p = dynamic_cast<page*>(c.get());
 		if(p){
-			p->on_close();
+			p->on_tear_out();
 		}
 	}
 }
@@ -94,9 +94,9 @@ page::page(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {}
 
-void page::close()noexcept{
+void page::tear_out()noexcept{
 	this->context->run_from_ui_thread([this](){
-		this->parent_book().close(*this);
+		this->parent_book().tear_out(*this);
 	});
 }
 

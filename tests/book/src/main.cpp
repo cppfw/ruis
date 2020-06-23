@@ -79,7 +79,7 @@ public:
 				)qwertyuiop"));
 				auto pg_ptr = pg.get();
 				pg->get_widget_as<morda::push_button>("back_button").click_handler = [mp, pg_ptr](morda::push_button& b){
-					pg_ptr->close();
+					pg_ptr->tear_out();
 				};
 				mp->parent_book().push(pg);
 			};
