@@ -76,7 +76,7 @@ void book::go_to(size_t page_number){
 		return;
 	}
 
-	ASSERT(this->active_page_index < this->pages.size)
+	ASSERT(this->active_page_index < this->pages.size())
 
 	this->pages[this->active_page_index]->on_hide();
 
