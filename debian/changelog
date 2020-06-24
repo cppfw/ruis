@@ -1,3 +1,9 @@
+libmorda (0.5.116) unstable; urgency=medium
+
+  * book and page widgets added
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 24 Jun 2020 03:03:16 +0300
+
 libmorda (0.5.115) unstable; urgency=medium
 
   * resources refactored
