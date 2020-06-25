@@ -58,7 +58,7 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	return true;
 }
 
-std::shared_ptr<morda::widget> inflater::inflate(const papki::File& fi) {
+std::shared_ptr<morda::widget> inflater::inflate(const papki::file& fi) {
 	return this->inflate(puu::read(fi));
 }
 

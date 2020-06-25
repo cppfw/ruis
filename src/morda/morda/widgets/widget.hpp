@@ -357,6 +357,12 @@ public:
 	 */
 	template <typename T> T& get_widget();
 
+	/**
+	 * @brief Recursively find all widgets of given type.
+	 * @return list of widgets found.
+	 */
+	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets();
+
 public:
 	/**
 	 * @brief Constructor.

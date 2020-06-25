@@ -265,32 +265,6 @@ public:
 	const_widget_list::const_iterator find(const widget& w)const;
 
 	/**
-	 * @brief Recursively find all widgets of given type.
-	 * @return list of widgets found.
-	 */
-	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets(){
-		std::vector<std::shared_ptr<T>> ret;
-
-		if(auto t = std::dynamic_pointer_cast<T>(utki::make_shared_from_this(*this))){
-			ret.emplace_back(t);
-		}
-
-		for(auto& child : this->children()){
-			if(auto c = std::dynamic_pointer_cast<container>(child)){
-				auto res = c->get_all_widgets<T>();
-				ret.insert(
-						ret.end(),
-						std::make_move_iterator(res.begin()),
-						std::make_move_iterator(res.end())
-					);
-			}else if(auto c = std::dynamic_pointer_cast<T>(child)){
-				ret.emplace_back(std::move(c));
-			}
-		}
-		return ret;
-	}
-
-	/**
 	 * @brief Called when children list changes.
 	 * This implementation requests re-layout.
      */
@@ -339,6 +313,27 @@ template <typename T> T& widget::get_widget(){
 	}
 
 	throw utki::not_found("widget::get_widget_as(): requested widget type is not found");
+}
+
+template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(){
+	std::vector<std::shared_ptr<T>> ret;
+
+	if(auto p = dynamic_cast<T*>(this)){
+		ret.emplace_back(utki::make_shared_from_this(*p));
+	}
+
+	if(auto cont = dynamic_cast<container*>(this)){
+		for(auto& c : cont->children()){
+			auto res = c->get_all_widgets<T>();
+			ret.insert(
+					ret.end(),
+					std::make_move_iterator(res.begin()),
+					std::make_move_iterator(res.end())
+				);
+		}
+	}
+	
+	return ret;
 }
 
 }

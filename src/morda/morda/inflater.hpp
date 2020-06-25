@@ -67,14 +67,14 @@ public:
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param begin - begin iterator into the GUI script.
 	 * @param end - begin iterator into the GUI script.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
 	std::shared_ptr<widget> inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
 	std::shared_ptr<widget> inflate(const puu::forest& gui_script){
 		return this->inflate(gui_script.begin(), gui_script.end());
@@ -84,7 +84,7 @@ public:
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the STOB chain is returned.
 	 * @param gui_script - gui script to inflate widget from.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
 	template <typename T> std::shared_ptr<T> inflate_as(const puu::forest& gui_script){
 		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
@@ -93,7 +93,7 @@ public:
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param str - string containing GUI description.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
 	std::shared_ptr<widget> inflate(const char* str);
 
@@ -101,7 +101,7 @@ public:
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the GUI script is returned.
 	 * @param str - string of the GUI script.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
 	template <typename T> std::shared_ptr<T> inflate_as(const char* str){
 		return std::dynamic_pointer_cast<T>(this->inflate(str));
@@ -110,9 +110,19 @@ public:
 	/**
 	 * @brief Inflate widget described in GUI script.
 	 * @param fi - file interface to get the GUI script.
-	 * @return reference to the inflated widget.
+	 * @return the inflated widget.
 	 */
-	std::shared_ptr<morda::widget> inflate(const papki::File& fi);
+	std::shared_ptr<morda::widget> inflate(const papki::file& fi);
+
+	/**
+	 * @brief Inflate widget and cast to specified type.
+	 * Only the first widget from the GUI script is returned.
+	 * @param fi - file interface to get the GUI script.
+	 * @return the inflated widget.
+	 */
+	template <typename T> std::shared_ptr<T> inflate_as(const papki::file& fi){
+		return std::dynamic_pointer_cast<T>(this->inflate(fi));
+	}
 
 private:
 	struct widget_template{

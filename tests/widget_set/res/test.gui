@@ -1,0 +1,36 @@
+@pile{
+	@column{
+		@column{
+			id{enable_group}
+
+			@push_button{
+				id{button1}
+				@text{
+					text{"Button 1"}
+				}
+			}
+			@push_button{
+				@text{
+					text{"Button 2"}
+				}
+			}
+			@pile{
+				@push_button{
+					@text{
+						text{"Button 3"}
+					}
+				}
+			}
+		}
+		@push_button{
+			id{busy_toggle_button}
+
+			@text{
+				text{"toggle busy spinner"}
+			}
+		}
+	}
+	@busy{
+		id{busy_spinner}
+	}
+}

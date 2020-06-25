@@ -45,10 +45,50 @@
 			"preLaunchTask": "build_debug"
 		},
 		{
+			"name": "(gdb) widget_set",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/widget_set/build/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/widget_set",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_debug"
+		},
+		{
+			"name": "(gdb) get_all_widgets",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/get_all_widgets/build/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/get_all_widgets",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_debug"
+		},
+		{
 			"name": "(gdb) inflating",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/inflating/tests",
+			"program": "${workspaceFolder}/tests/inflating/build/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/inflating",

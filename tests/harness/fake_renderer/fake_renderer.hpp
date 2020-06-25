@@ -4,6 +4,11 @@
 
 #include "../../../src/morda/morda/render/renderer.hpp"
 
+class fake_texture_2d : public morda::texture_2d{
+public:
+	fake_texture_2d() : morda::texture_2d(morda::vector2(13, 666)){}
+};
+
 class FakeFactory : public morda::render_factory{
 public:
 	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override{
@@ -19,7 +24,7 @@ public:
 	}
 
 	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data)override{
-		return nullptr;
+		return std::make_shared<fake_texture_2d>();
 	}
 
 	std::shared_ptr<morda::vertex_array> create_vertex_array(

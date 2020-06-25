@@ -50,11 +50,8 @@ int main(int argc, char** argv){
 		}};
 
 		ASSERT_ALWAYS(w)
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		ASSERT_ALWAYS(c)
-		ASSERT_ALWAYS(c->children().size() == 3)
 
-		auto aaas = c->get_all_widgets<morda::column>();
+		auto aaas = w->get_all_widgets<morda::column>();
 		ASSERT_ALWAYS(aaas.size() != 0)
 		for(auto& id : expected_ids){
 			ASSERT_INFO_ALWAYS(

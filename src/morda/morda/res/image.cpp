@@ -175,7 +175,7 @@ public:
 		
 		auto img = std::make_shared<svg_texture>(
 				this->context->renderer,
-				this->sharedFromThis(this),
+				utki::make_shared_from_this(*this),
 				this->context->renderer->factory->create_texture_2d(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
 			);
 

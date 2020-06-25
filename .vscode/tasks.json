@@ -57,6 +57,13 @@
             "dependsOn": "build"
 		},
 		{
+            "label": "run_widget_set_debug",
+            "type": "shell",
+            "command": "make run_widget_set debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
+		},
+		{
             "label": "run_book",
             "type": "shell",
             "command": "make run_book",
