@@ -315,4 +315,30 @@ template <class T> T* widget::find_ancestor(const char* id){
 	return this->parent()->find_ancestor<T>();
 }
 
+template <typename T> std::shared_ptr<T> widget::try_get_widget()noexcept{
+	auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from_this(*this));
+	if(p){
+		return p;
+	}
+
+	auto c = dynamic_cast<container*>(this);
+	if(c){
+		auto w = c->get_all_widgets<T>();
+		if(!w.empty()){
+			return w.front();
+		}
+	}
+
+	return nullptr;
+}
+
+template <typename T> T& widget::get_widget(){
+	auto p = this->try_get_widget<T>();
+	if(p){
+		return *p;
+	}
+
+	throw utki::not_found("widget::get_widget_as(): requested widget type is not found");
+}
+
 }

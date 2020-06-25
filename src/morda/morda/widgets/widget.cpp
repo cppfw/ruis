@@ -67,7 +67,7 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
-		return this->sharedFromThis(this);
+		return utki::make_shared_from_this(*this);
 	}
 	return nullptr;
 }

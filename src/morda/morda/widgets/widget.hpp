@@ -324,6 +324,15 @@ public:
 	}
 
 	/**
+	 * @brief Try get widget by class.
+	 * This function first checks if this widget can be dynamic_cast'ed to the requested class,
+	 * and if it can then it returns pointer to this widget. Then it checks if this widget is a container
+	 * and searches for requested widget class among the container's child widgets.
+	 * @return pointer to the first found widget which can be cast to the requested class.
+	 */
+	template <typename T> std::shared_ptr<T> try_get_widget()noexcept;
+
+	/**
 	 * @brief Get widget.
 	 * @param id - id of the widget to get.
 	 * @return reference to the widget.
@@ -341,6 +350,12 @@ public:
 	template <typename T> T& get_widget_as(const std::string& id){
 		return dynamic_cast<T&>(this->get_widget(id));
 	}
+
+	/**
+	 * @brief Get widget of specific type.
+	 * @return reference to the requested widget.
+	 */
+	template <typename T> T& get_widget();
 
 public:
 	/**

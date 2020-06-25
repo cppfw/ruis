@@ -815,10 +815,8 @@ public:
 
 		// text_input
 		{
-			auto l = c->try_get_widget("text_input");
-			ASSERT_ALWAYS(l)
-			auto line = l->try_get_widget_as<morda::text_input_line>("text_input_line");
-			ASSERT_ALWAYS(line)
+			auto& l = c->get_widget("text_input").get_widget<morda::text_input_line>();
+			ASSERT_ALWAYS(!l.get_text().empty())
 		}
 
 		// tree_view
