@@ -1,3 +1,9 @@
+libmorda (0.5.119) unstable; urgency=medium
+
+  * widget_set class added
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 26 Jun 2020 02:21:36 +0300
+
 libmorda (0.5.118) unstable; urgency=medium
 
   * add widget::get_widget<T>() template function
