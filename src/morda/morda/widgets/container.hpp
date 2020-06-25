@@ -271,7 +271,7 @@ public:
 	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets(){
 		std::vector<std::shared_ptr<T>> ret;
 
-		if(auto t = std::dynamic_pointer_cast<T>(this->sharedFromThis(this))){
+		if(auto t = std::dynamic_pointer_cast<T>(utki::make_shared_from_this(*this))){
 			ret.emplace_back(t);
 		}
 

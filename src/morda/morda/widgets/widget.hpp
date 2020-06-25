@@ -121,7 +121,6 @@ public:
 		this->clip_v = enable;
 	}
 
-
 private:
 	bool cache = false;
 	mutable bool cacheDirty = true;
