@@ -6,7 +6,9 @@ defs{
 	morda_color_fg{0xff505050}
 
 	@text_input_line_{
-		@text_input_line
+		@text_input_line{
+			id{text_input_line}
+		}
 	}
 }
 

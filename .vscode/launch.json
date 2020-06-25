@@ -8,11 +8,11 @@
 			"name": "(gdb) app",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/tests",
+			"program": "${workspaceFolder}/tests/app/build/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

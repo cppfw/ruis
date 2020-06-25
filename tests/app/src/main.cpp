@@ -25,6 +25,7 @@
 #include "../../../src/morda/morda/widgets/proxy/resize_proxy.hpp"
 #include "../../../src/morda/morda/widgets/label/color.hpp"
 #include "../../../src/morda/morda/widgets/label/image.hpp"
+#include "../../../src/morda/morda/widgets/input/text_input_line.hpp"
 
 #include "../../../src/morda/morda/widgets/button/drop_down_box.hpp"
 
@@ -810,6 +811,14 @@ public:
 				}
 				return false;
 			};
+		}
+
+		// text_input
+		{
+			auto l = c->try_get_widget("text_input");
+			ASSERT_ALWAYS(l)
+			auto line = l->try_get_widget_as<morda::text_input_line>("text_input_line");
+			ASSERT_ALWAYS(line)
 		}
 
 		// tree_view

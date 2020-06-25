@@ -46,9 +46,9 @@ gui::gui(
 	ASSERT(this->context)
 }
 
-void gui::initStandardWidgets(papki::File& fi) {
+void gui::initStandardWidgets(papki::file& fi) {
 
-	//mount default resource pack
+	// mount default resource pack
 
 	std::vector<std::string> paths;
 
@@ -82,7 +82,7 @@ void gui::initStandardWidgets(papki::File& fi) {
 	for(const auto& s : paths){
 		try{
 //			TRACE(<< "s = " << s << std::endl)
-			fi.setPath(s);
+			fi.set_path(s);
 //			TRACE(<< "fi.path() = " << fi.path() << std::endl)
 			this->context->loader.mount_res_pack(fi);
 		}catch(std::runtime_error&){
