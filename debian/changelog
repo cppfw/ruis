@@ -1,3 +1,9 @@
+libmorda (0.5.118) unstable; urgency=medium
+
+  * add widget::get_widget<T>() template function
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 25 Jun 2020 13:18:07 +0300
+
 libmorda (0.5.117) unstable; urgency=medium
 
   * msvs build fix
