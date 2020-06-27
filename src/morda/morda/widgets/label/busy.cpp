@@ -32,6 +32,7 @@ busy::busy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 void busy::render(const matrix4& matrix)const{
 	matrix4 matr(matrix);
 
+	matr.translate(this->rect().d / 2);
 	matr.rotate(this->angle);
 	matr.translate(-this->rect().d / 2);
 
