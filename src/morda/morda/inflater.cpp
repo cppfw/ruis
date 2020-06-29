@@ -174,6 +174,10 @@ std::shared_ptr<widget> inflater::inflate(const char* str){
 	return this->inflate(puu::read(str));
 }
 
+std::shared_ptr<widget> inflater::inflate(const std::string& str){
+	return this->inflate(str.c_str());
+}
+
 std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
 
 //	TODO:

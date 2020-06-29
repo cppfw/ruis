@@ -98,6 +98,13 @@ public:
 	std::shared_ptr<widget> inflate(const char* str);
 
 	/**
+	 * @brief Create widgets hierarchy from GUI script.
+	 * @param str - string containing GUI description.
+	 * @return the inflated widget.
+	 */
+	std::shared_ptr<widget> inflate(const std::string& str);
+
+	/**
 	 * @brief Inflate widget and cast to specified type.
 	 * Only the first widget from the GUI script is returned.
 	 * @param str - string of the GUI script.
