@@ -89,7 +89,7 @@ protected:
 	 */
 	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
 
-protected:
+public:
 
 	/**
 	 * @brief Get layout parameters of child widget.
@@ -104,11 +104,12 @@ protected:
 			p = dynamic_cast<const T*>(&this->get_layout_params(w));
 		}
 
-		ASSERT(p)
+		if(!p){
+			throw std::bad_cast();
+		}
 		return *p;
 	}
 
-public:
 	/**
 	 * @brief Get layout parameters of child widget.
 	 * @param w - widget to get layout parameters for.
