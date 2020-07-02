@@ -97,11 +97,30 @@ public:
 	 * @param w - widget to get layout parameters for.
 	 * @return Layout parameters of given child widget.
 	 */
-	template <class T> const T& get_layout_params_as(const widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->get_layout_params(w));
+	template <class T> const T& get_layout_params_as_const(const widget& w)const{
+		auto p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
 		if(!p){
 			w.layoutParams.reset();
-			p = dynamic_cast<const T*>(&this->get_layout_params(w));
+			p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
+		}
+
+		if(!p){
+			throw std::bad_cast();
+		}
+		return *p;
+	}
+
+	/**
+	 * @brief Get layout parameters of child widget.
+	 * Same as get_layout_params() but also tries to cast the layout_params object to specified class.
+	 * @param w - widget to get layout parameters for.
+	 * @return Layout parameters of given child widget.
+	 */
+	template <class T> T& get_layout_params_as(widget& w){
+		auto p = dynamic_cast<T*>(&this->get_layout_params(w));
+		if(!p){
+			w.layoutParams.reset();
+			p = dynamic_cast<T*>(&this->get_layout_params(w));
 		}
 
 		if(!p){
@@ -124,7 +143,7 @@ public:
 	 * @return Layout parameters of given child widget.
 	 * @throw std::invalid_argument - in case the given widget is not a child of this container.
 	 */
-	const layout_params& get_layout_params(const widget& w)const;
+	const layout_params& get_layout_params_const(const widget& w)const;
 
 	using widget::get_layout_params;
 

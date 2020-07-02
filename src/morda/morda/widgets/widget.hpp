@@ -173,7 +173,7 @@ public:
 	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
 	 * @return Layout parameters of the widget.
 	 */
-	const layout_params& get_layout_params()const;
+	const layout_params& get_layout_params_const()const;
 
 	/**
 	 * @brief Request re-layout.

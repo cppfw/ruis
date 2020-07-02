@@ -98,11 +98,7 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 
 void scroll_area::arrangeWidgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		// NOTE: const_cast() to force calling of constant version of get_layout_params() because
-		//       non-constant version of it invalidates layout.
-		auto& lp = const_cast<
-				std::add_pointer<std::add_const<std::remove_pointer<decltype(this)>::type>::type>::type
-			>(this)->get_layout_params(**i);
+		auto& lp = this->get_layout_params_const(**i);
 
 		auto d = this->dims_for_widget(**i, lp);
 
@@ -144,7 +140,7 @@ void scroll_area::updateEffectiveDim(){
 	morda::vector2 minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as<layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 		morda::vector2 d = this->dims_for_widget(**i, lp) + (*i)->rect().p;
 

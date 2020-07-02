@@ -21,7 +21,7 @@ widget::layout_params& container::get_layout_params(widget& w){
 							std::remove_pointer<decltype(this)>::type
 						>::type
 				>::type
-		>(this)->get_layout_params(w);
+		>(this)->get_layout_params_const(w);
 
 	return const_cast<
 			std::add_lvalue_reference<
@@ -31,7 +31,7 @@ widget::layout_params& container::get_layout_params(widget& w){
 				>::type>(lp);
 }
 
-const widget::layout_params& container::get_layout_params(const widget& w)const{
+const widget::layout_params& container::get_layout_params_const(const widget& w)const{
 	if(w.parent() && w.parent() != this){
 		throw std::invalid_argument("container::get_layout_params(): the given widget is not a child of this container");
 	}

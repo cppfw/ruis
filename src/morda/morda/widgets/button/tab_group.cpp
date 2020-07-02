@@ -48,7 +48,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->get_layout_params_as<container::layout_params>(*c);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
 
 		auto t = dynamic_cast<const morda::tab*>(c.get());
 		if(!t){
@@ -94,7 +94,7 @@ void tab_group::lay_out(){
 
 	for(auto& c : this->children()){
 		ASSERT(c)
-		auto& lp = this->get_layout_params_as<container::layout_params>(*c);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
 
 		auto dim = this->dims_for_widget(*c, lp);
 		c->resize(dim);

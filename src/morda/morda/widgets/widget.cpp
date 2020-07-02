@@ -321,18 +321,18 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 
 widget::layout_params& widget::get_layout_params(){
 	if(!this->parent()){
-		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw std::logic_error("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
 	return this->parent()->get_layout_params(*this);
 }
 
-const widget::layout_params& widget::get_layout_params()const{
+const widget::layout_params& widget::get_layout_params_const()const{
 	if(!this->parent()){
-		throw utki::invalid_state("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+		throw std::logic_error("widget::get_layout_params_const(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
 
-	return this->parent()->get_layout_params(*this);
+	return this->parent()->get_layout_params_const(*this);
 }
 
 widget& widget::get_widget(const std::string& id){
@@ -340,7 +340,10 @@ widget& widget::get_widget(const std::string& id){
 	if(!w){
 		std::stringstream ss;
 		ss << "widget '" << id << "' not found in '" << this->id << "'";
-		throw utki::not_found(ss.str());
+
+		// gui scripts are supposed to be static (not dynamically generated),
+		// so if there is no expected widget the gui script, then it is a logic error
+		throw std::logic_error(ss.str());
 	}
 	return *w;
 }

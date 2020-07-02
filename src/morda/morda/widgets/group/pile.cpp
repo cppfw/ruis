@@ -12,7 +12,7 @@ pile::pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 void pile::lay_out(){
 //	TRACE(<< "pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(**i);
 
 		(*i)->resize(this->dims_for_widget(**i, lp));
 
@@ -27,7 +27,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 	}
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as<container::layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(**i);
 
 		morda::vector2 d;
 

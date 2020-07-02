@@ -51,7 +51,7 @@ void linear_container::lay_out(){
 	{
 		auto info = infoArray.begin();
 		for(auto i = this->children().cbegin(); i != this->children().cend(); ++i, ++info){
-			auto& lp = this->get_layout_params_as<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 			netWeight += lp.weight;
 
@@ -75,7 +75,7 @@ void linear_container::lay_out(){
 
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 			if(lp.weight != 0){
 				ASSERT(lp.weight > 0)
@@ -151,7 +151,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 	{
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 			netWeight += lp.weight;
 
@@ -218,7 +218,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 		auto info = infoArray.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 			ASSERT(lp.weight >= 0)
 			if(lp.weight == 0){
 				continue;
