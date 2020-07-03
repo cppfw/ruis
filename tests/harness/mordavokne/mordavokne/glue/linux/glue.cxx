@@ -548,12 +548,13 @@ application::application(std::string&& name, const window_params& requestedWindo
 namespace{
 
 class XEvent_waitable : public opros::waitable{
+public:
 	int fd;
 
 	int get_handle() override{
 		return this->fd;
 	}
-public:
+
 	XEvent_waitable(Display* d){
 		this->fd = XConnectionNumber(d);
 	}
@@ -919,22 +920,27 @@ int main(int argc, const char** argv){
 	render(*app);
 
 	while(!ww.quitFlag){
-		wait_set.wait(app->gui.update());
+		xew.clear_read_flag(); // clear read flag because we have no 'read' function in XEvent_waitable which would do that for us
 
-		if(ww.ui_queue.flags().get(opros::ready::read)){
+		auto num_waitables_triggered = wait_set.wait(app->gui.update());
+		// TRACE(<< "num_waitables_triggered = " << num_waitables_triggered << std::endl)
+
+		bool ui_queue_ready_to_read = ww.ui_queue.flags().get(opros::ready::read);
+		if(ui_queue_ready_to_read){
 			while(auto m = ww.ui_queue.pop_front()){
 				m();
 			}
 			ASSERT(!ww.ui_queue.flags().get(opros::ready::read))
 		}
 
-		// NOTE: do not check canRead flag for X event, for some reason when waiting with 0 timeout it will never be set.
+		// NOTE: do not check 'read' flag for X event, for some reason when waiting with 0 timeout it will never be set.
 		//       Maybe some bug in XWindows, maybe something else.
-		xew.clear_read_flag();
+		bool x_event_arrived = false;
 		while(XPending(ww.display) > 0){
+			x_event_arrived = true;
 			XEvent event;
 			XNextEvent(ww.display, &event);
-//				TRACE(<< "X event got, type = " << (event.type) << std::endl)
+			// TRACE(<< "X event got, type = " << (event.type) << std::endl)
 			switch(event.type){
 				case Expose:
 //						TRACE(<< "Expose X event got" << std::endl)
@@ -1031,6 +1037,13 @@ int main(int argc, const char** argv){
 					// ignore
 					break;
 			}
+		}
+
+		// WORKAROUND: XEvent file descriptor becomes ready to read many times per second, even if
+		//             there are no events to handle returned by XPending(), so here we check if something
+		//             meaningful actuall happened and call render() only if it did
+		if(num_waitables_triggered != 0 && !x_event_arrived && !ui_queue_ready_to_read){
+			continue;
 		}
 
 		render(*app);
