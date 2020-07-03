@@ -168,37 +168,37 @@ void nine_patch::applyImages(){
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
-		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[0][0].get())->get_layout_params();
+		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = this->imageMatrix_v[0][0]->get_layout_params_const();
 
 		if(this->borders.left() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.left()){
-				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
+				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
 				lp.dims.x = minBorders.left();
 			}
 		}else{
 			if(layoutParams.dims.x != this->borders.left()){
-				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
+				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
 				lp.dims.x = this->borders.left();
 			}
 		}
 
 		if(this->borders.top() == layout_params::min){
 			if(layoutParams.dims.y != minBorders.top()){
-				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
+				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
 				lp.dims.y = minBorders.top();
 			}
 		}else{
 			if(layoutParams.dims.y != this->borders.top()){
-				auto& lp = this->imageMatrix_v[0][0].get()->get_layout_params();
+				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
 				lp.dims.y = this->borders.top();
 			}
 		}
 //			TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
 	}
 	{
-		//non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = utki::makePtrToConst(this->imageMatrix_v[2][2].get())->get_layout_params();
+		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
+		auto& layoutParams = this->imageMatrix_v[2][2]->get_layout_params_const();
 
 		if(this->borders.right() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.right()){

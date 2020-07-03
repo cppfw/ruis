@@ -10,7 +10,7 @@ size_container::size_container(std::shared_ptr<morda::context> c, const puu::for
 void size_container::lay_out(){
 	for(auto& w : this->children()){
 		if(w->is_layout_invalid()){
-			auto d = this->dims_for_widget(*w, this->get_layout_params(*w));
+			auto d = this->dims_for_widget(*w, this->get_layout_params_const(*w));
 			w->resize(d);
 		}
 	}

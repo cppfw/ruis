@@ -140,7 +140,7 @@ void list_widget::set_scroll_factor(real factor){
 
 // TODO: refactor
 bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
-	auto& lp = this->get_layout_params_as<layout_params>(*w);
+	auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 
 	vector2 dim = this->dims_for_widget(*w, lp);
 
@@ -279,7 +279,7 @@ void list_widget::updateTailItemsInfo(){
 		auto w = this->item_provider->get_widget(i - 1);
 		ASSERT(w)
 
-		auto& lp = this->get_layout_params_as<layout_params>(*w);
+		auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 
 		vector2 d = this->dims_for_widget(*w, lp);
 
@@ -327,7 +327,7 @@ void list_widget::scroll_by(real delta) {
 				)
 			for(; this->posIndex < this->firstTailItemIndex;){
 				auto w = this->item_provider->get_widget(this->posIndex);
-				auto& lp = this->get_layout_params_as<layout_params>(*w);
+				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 				vector2 d = this->dims_for_widget(*w, lp);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
@@ -351,7 +351,7 @@ void list_widget::scroll_by(real delta) {
 				ASSERT(this->addedIndex == this->posIndex)
 				--this->posIndex;
 				auto w = this->item_provider->get_widget(this->posIndex);
-				auto& lp = this->get_layout_params_as<layout_params>(*w);
+				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 				vector2 d = this->dims_for_widget(*w, lp);
 				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
 				--this->addedIndex;

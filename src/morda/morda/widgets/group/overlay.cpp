@@ -47,7 +47,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	c->push_back(w);
 
-	auto& lp = c->get_layout_params(*w);
+	auto& lp = c->get_layout_params_const(*w);
 
 	vector2 dim = this->dims_for_widget(*w, lp);
 
