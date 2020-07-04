@@ -144,8 +144,8 @@ void scroll_area::updateEffectiveDim(){
 
 		morda::vector2 d = this->dims_for_widget(**i, lp) + (*i)->rect().p;
 
-		utki::clampBottom(minDim.x, d.x);
-		utki::clampBottom(minDim.y, d.y);
+		minDim.x = std::max(minDim.x, d.x); // clamp bottom
+		minDim.y = std::max(minDim.y, d.y); // clamp bottom
 	}
 
 	this->effectiveDim = minDim - this->rect().d;
@@ -156,7 +156,7 @@ vector2 scroll_area::get_visible_area_fraction()const noexcept{
 	auto ret = this->rect().d.comp_divided(this->rect().d + this->effectiveDim);
 
 	for(unsigned i = 0; i != ret.size(); ++i){
-		utki::clampTop(ret[i], real(1));
+		ret[i] = std::min(ret[i], real(1)); // clamp top
 	}
 
 	return ret;

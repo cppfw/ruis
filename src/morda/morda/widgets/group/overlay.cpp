@@ -52,13 +52,14 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 	vector2 dim = this->dims_for_widget(*w, lp);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampTop(dim[i], this->rect().d[i]);
+		dim[i] = std::min(dim[i], this->rect().d[i]);
 	}
 
 	w->resize(dim);
 
 	for(unsigned i = 0; i != 2; ++i){
-		utki::clampRange(anchor[i], 0.0f, this->rect().d[i] - w->rect().d[i]);
+		anchor[i] = std::max(anchor[i], real(0)); // clamp bottom
+		anchor[i] = std::min(anchor[i], this->rect().d[i] - w->rect().d[i]); // clamp top
 	}
 
 	w->move_to(anchor);

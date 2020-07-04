@@ -332,7 +332,7 @@ template <typename T> T& widget::get_widget(){
 		return *p;
 	}
 
-	throw utki::not_found("widget::get_widget_as(): requested widget type is not found");
+	throw std::logic_error("widget::get_widget_as(): requested widget type is not found");
 }
 
 template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(){

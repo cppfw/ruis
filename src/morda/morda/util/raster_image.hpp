@@ -73,7 +73,7 @@ public:
 	 * Creates an image by loading it from file. Supported file types are PNG and JPG.
 	 * @param f - file to load image from.
 	 */
-	raster_image(const papki::File& f){
+	raster_image(const papki::file& f){
 		this->load(f);
 	}
 

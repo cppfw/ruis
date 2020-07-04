@@ -48,7 +48,7 @@ drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::fores
 
 void drop_down_box::set_provider(std::shared_ptr<provider> item_provider){
 	if(item_provider && item_provider->dd){
-		throw utki::invalid_state("drop_down_box::setItemsProvider(): given provider is already set to some drop_down_box");
+		throw std::logic_error("drop_down_box::setItemsProvider(): given provider is already set to some drop_down_box");
 	}
 
 	if(this->item_provider){

@@ -2,8 +2,9 @@
 
 using namespace morda;
 
-void fraction_widget::set_fraction(float newFraction){
-	real fraction = utki::clampedRange(newFraction, 0.0f, 1.0f);
+void fraction_widget::set_fraction(real fraction){
+	fraction = std::max(fraction, real(0)); // clamp bottom
+	fraction = std::min(fraction, real(1)); // clamp top
 
 	// in case of nan or inf
 	if(!(0 <= fraction && fraction <= 1)){

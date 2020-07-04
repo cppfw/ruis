@@ -193,7 +193,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 			if(lp.weight == 0){
 				if(quotum[transIndex] < 0){
-					utki::clampBottom(height, d[transIndex]);
+					height = std::max(height, d[transIndex]); // clamp bottom
 				}
 			}
 		}
@@ -269,7 +269,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 			d = (*i)->measure(d);
 			if(quotum[transIndex] < 0){
-				utki::clampBottom(height, d[transIndex]);
+				height = std::max(height, d[transIndex]); // clamp bottom
 			}
 		}
 	}

@@ -100,7 +100,7 @@ public:
 	{}
 	
 	std::shared_ptr<const image::texture> get(vector2 forDim)const override{
-		return this->sharedFromThis(this);
+		return utki::make_shared_from_this(*this);
 	}
 	
 	vector2 dims(real dpi)const noexcept override{
@@ -195,7 +195,7 @@ public:
 std::shared_ptr<image> image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
-			fi.setPath(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).to_string());
 			return image::load(ctx, fi);
 		}
 	}

@@ -140,7 +140,7 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigne
 // custom file read function for PNG
 namespace{
 void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t length){
-	papki::File* fi = reinterpret_cast<papki::File*>(png_get_io_ptr(pngPtr));
+	papki::file* fi = reinterpret_cast<papki::file*>(png_get_io_ptr(pngPtr));
 	ASSERT(fi)
 //	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << " length = " << length << std::endl)
 	try{
@@ -196,7 +196,7 @@ void raster_image::load_png(const papki::file& fi){
 	png_set_sig_bytes(pngPtr, PNGSIGSIZE); // we've already read PNGSIGSIZE bytes
 
 	// set custom "ReadFromFile" function
-	png_set_read_fn(pngPtr, const_cast<papki::File*>(&fi), PNG_CustomReadFunction);
+	png_set_read_fn(pngPtr, const_cast<papki::file*>(&fi), PNG_CustomReadFunction);
 
 	png_read_info(pngPtr, infoPtr); // read in all information about file
 
@@ -295,7 +295,7 @@ const size_t DJpegInputBufferSize = 4096;
 
 struct DataManagerJPEGSource{
 	jpeg_source_mgr pub;
-	papki::File *fi;
+	papki::file *fi;
 	JOCTET *buffer;
 	bool sof; // true if the file was just opened
 };
@@ -368,7 +368,7 @@ void JPEG_TermSource(j_decompress_ptr cinfo){}
 
 // read JPEG function
 void raster_image::load_jpg(const papki::file& fi){
-	ASSERT(!fi.isOpened())
+	ASSERT(!fi.is_open())
 
 //	TRACE(<< "Image::LoadJPG(): enter" << std::endl)
 	if(this->buf_v.size()){
@@ -431,7 +431,7 @@ void raster_image::load_jpg(const papki::file& fi){
 	src->pub.resync_to_restart = &jpeg_resync_to_restart; // use default func
 	src->pub.term_source = &JPEG_TermSource;
 	// set the fields of our structure
-	src->fi = const_cast<papki::File*>(&fi);
+	src->fi = const_cast<papki::file*>(&fi);
 	// set pointers to the buffers
 	src->pub.bytes_in_buffer = 0; // forces fill_input_buffer on first read
 	src->pub.next_input_byte = 0; // until buffer loaded
@@ -490,7 +490,7 @@ void raster_image::load_jpg(const papki::file& fi){
 }
 
 void raster_image::load(const papki::file& fi){
-	std::string ext = fi.ext();
+	std::string ext = fi.suffix();
 
 	if(ext == "png"){
 //		TRACE(<< "Image::Load(): loading PNG image" << std::endl)

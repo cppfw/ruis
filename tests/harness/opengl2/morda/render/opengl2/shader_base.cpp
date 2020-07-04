@@ -1,5 +1,4 @@
 #include <utki/debug.hpp>
-#include <utki/exception.hpp>
 
 #include <vector>
 
@@ -67,7 +66,7 @@ shader_wrapper::shader_wrapper(const char* code, GLenum type) {
 	this->s = glCreateShader(type);
 
 	if (this->s == 0) {
-		throw utki::exception("glCreateShader() failed");
+		throw std::runtime_error("glCreateShader() failed");
 	}
 
 	const char* c = code;
@@ -77,7 +76,7 @@ shader_wrapper::shader_wrapper(const char* code, GLenum type) {
 	if (checkForCompileErrors(this->s)) {
 		TRACE( << "Error while compiling:\n" << c << std::endl)
 		glDeleteShader(this->s);
-		throw utki::exception("Error compiling shader");
+		throw std::logic_error("compiling shader failed");
 	}
 }
 
@@ -105,7 +104,7 @@ program_wrapper::program_wrapper(const char* vertexShaderCode, const char* fragm
 	if (checkForLinkErrors(this->p)) {
 		TRACE( << "Error while linking shader program" << vertexShaderCode << std::endl << fragmentShaderCode << std::endl)
 		glDeleteProgram(this->p);
-		throw utki::exception("Error linking shader program");
+		throw std::logic_error("linking shader program failed");
 	}
 }
 
@@ -117,7 +116,7 @@ OpenGL2ShaderBase::OpenGL2ShaderBase(const char* vertexShaderCode, const char* f
 GLint OpenGL2ShaderBase::getUniform(const char* n) {
 	GLint ret = glGetUniformLocation(this->program.p, n);
 	if(ret < 0){
-		throw utki::exception("No uniform found in the shader program");
+		throw std::logic_error("no uniform found in the shader program");
 	}
 	return ret;
 }

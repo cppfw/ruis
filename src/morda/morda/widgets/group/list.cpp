@@ -60,7 +60,7 @@ void list_widget::lay_out(){
 
 void list_widget::set_provider(std::shared_ptr<provider> item_provider){
 	if(item_provider && item_provider->parent_list){
-		throw utki::invalid_state("given provider is already set to some list_widget");
+		throw std::logic_error("given provider is already set to some list_widget");
 	}
 
 	if(this->item_provider){
@@ -373,7 +373,7 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 
 	vector2 ret(quotum);
 
-	utki::clampBottom(ret[longIndex], real(0));
+	ret[longIndex] = std::max(ret[longIndex], real(0)); // clamp bottom
 
 	if(ret[transIndex] > 0){
 		return ret;
@@ -382,7 +382,7 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 	ret[transIndex] = 0;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		utki::clampBottom(ret[transIndex], (*i)->rect().d[transIndex]);
+		ret[transIndex] = std::max(ret[transIndex], (*i)->rect().d[transIndex]); // clamp bottom
 	}
 
 	return ret;

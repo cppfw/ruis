@@ -10,7 +10,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 		throw std::runtime_error("dlopen(): failed");
 	}
 
-	utki::ScopeExit scopeExit([libHandle](){
+	utki::scope_exit scopeExit([libHandle](){
 		dlclose(libHandle);
 	});
 
@@ -28,7 +28,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 std::string initializeStorageDir(const std::string& appName){
 	auto homeDir = getenv("HOME");
 	if(!homeDir){
-		throw utki::exception("failed to get user home directory. Is HOME environment variable set?");
+		throw std::runtime_error("failed to get user home directory. Is HOME environment variable set?");
 	}
 
 	std::string homeDirStr(homeDir);

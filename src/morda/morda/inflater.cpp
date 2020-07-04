@@ -47,7 +47,7 @@ void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_
 			std::move(factory)
 		));
 	if(!ret.second){
-		throw utki::invalid_state("Failed registering widget type, widget type with given name is already added");
+		throw std::logic_error("Failed registering widget type, widget type with given name is already added");
 	}
 }
 
@@ -164,7 +164,7 @@ const decltype(inflater::factories)::value_type::second_type& inflater::find_fac
 	if(i == this->factories.end()){
 		std::stringstream ss;
 		ss << "inflater::find_factory(): widget name '" << widgetName << "' not found";
-		throw utki::not_found(ss.str());
+		throw std::logic_error(ss.str());
 	}
 
 	return i->second;
@@ -182,7 +182,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 
 //	TODO:
 //	if(!App::inst().thisIsUIThread()){
-//		throw utki::invalid_state("inflate() called from non-UI thread");
+//		throw std::logic_error("inflate() called from non-UI thread");
 //	}
 
 	auto i = begin;
@@ -402,7 +402,7 @@ void inflater::push_variables(const puu::forest& trees){
 		{
 			std::stringstream ss;
 			ss << "inflater::push_variables(): failed to add variable '" << t.value.to_string() << "', variable with same name is already defined in this defs block";
-			throw utki::invalid_state(ss.str());
+			throw std::logic_error(ss.str());
 		}
 	}
 

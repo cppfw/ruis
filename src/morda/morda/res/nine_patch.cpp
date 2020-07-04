@@ -54,7 +54,7 @@ public:
 	}
 	
 	virtual std::shared_ptr<const res::image::texture> get(vector2 forDim)const override{
-		return this->sharedFromThis(this);
+		return utki::make_shared_from_this(*this);
 	}
 	
 	void render(const matrix4& matrix, const vertex_array& vao) const override{
@@ -200,7 +200,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 						) // right bottom
 				}}
 			}}),
-			this->sharedFromThis(this),
+			utki::make_shared_from_this(*this),
 			mul
 		);
 	

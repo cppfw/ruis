@@ -84,24 +84,24 @@ void widget::resize(const morda::vector2& newDims){
 
 	this->clear_cache();
 	this->rectangle.d = newDims;
-	utki::clampBottom(this->rectangle.d.x, real(0.0f));
-	utki::clampBottom(this->rectangle.d.y, real(0.0f));
+	this->rectangle.d.x = std::max(this->rectangle.d.x, real(0.0f)); // clamp bottom
+	this->rectangle.d.y = std::max(this->rectangle.d.y, real(0.0f)); // clamp bottom
 	this->relayoutNeeded = false;
 	this->on_resize(); // call virtual method
 }
 
 std::shared_ptr<widget> widget::remove_from_parent(){
 	if(!this->parent_v){
-		throw utki::invalid_state("widget::remove_from_parent(): widget is not added to the parent");
+		throw std::logic_error("widget::remove_from_parent(): widget is not added to the parent");
 	}
-	auto ret = this->sharedFromThis(this);
+	auto ret = utki::make_shared_from_this(*this);
 	this->parent_v->erase(this->parent_v->find(*this));
 	return ret;
 }
 
 std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 	if(!this->parent()){
-		throw utki::invalid_state("this widget is not added to any parent");
+		throw std::logic_error("this widget is not added to any parent");
 	}
 
 	this->parent()->insert(w, this->parent()->find(*this));
@@ -221,7 +221,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
 	auto oldViewport = r.get_viewport();
-	utki::ScopeExit scopeExit([&oldViewport, &r](){
+	utki::scope_exit scope_exit([&oldViewport, &r](){
 		r.set_viewport(oldViewport);
 	});
 
@@ -275,7 +275,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	this->context->set_focused_widget(this->sharedFromThis(this));
+	this->context->set_focused_widget(utki::make_shared_from_this(*this));
 }
 
 void widget::unfocus()noexcept{

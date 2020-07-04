@@ -856,7 +856,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		}
 	}
 
-	utki::ScopeExit scopeExitWindowClass([this](){
+	utki::scope_exit scopeExitWindowClass([this](){
 		if(!UnregisterClass(this->windowClassName.c_str(), GetModuleHandle(NULL))){
 			ASSERT_INFO(false, "Failed to unregister window class")
 		}
@@ -881,7 +881,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		throw std::runtime_error("Failed to create a window");
 	}
 
-	utki::ScopeExit scopeExitHwnd([this](){
+	utki::scope_exit scopeExitHwnd([this](){
 		if (!DestroyWindow(this->hwnd)){
 			ASSERT_INFO(false, "Failed to destroy window")
 		}
@@ -894,7 +894,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		throw std::runtime_error("Failed to create a OpenGL device context");
 	}
 
-	utki::ScopeExit scopeExitHdc([this](){
+	utki::scope_exit scopeExitHdc([this](){
 		if (!ReleaseDC(this->hwnd, this->hdc)){
 			ASSERT_INFO(false, "Failed to release device context")
 		}
@@ -939,7 +939,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		throw std::runtime_error("Failed to create OpenGL rendering context");
 	}
 
-	utki::ScopeExit scopeExitHrc([this](){
+	utki::scope_exit scopeExitHrc([this](){
 		if (!wglMakeCurrent(NULL, NULL)) {
 			ASSERT_INFO(false, "Deactivating OpenGL rendering context failed")
 		}

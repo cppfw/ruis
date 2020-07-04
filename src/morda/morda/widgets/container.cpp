@@ -203,7 +203,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 	}
 
 	if(this->is_blocked){
-		throw utki::invalid_state("container::insert(): children list is locked");
+		throw std::logic_error("container::insert(): children list is locked");
 	}
 
 	if(before != this->children().end() && (*before)->parent() != this){
@@ -225,7 +225,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 
 container::widget_list::const_iterator container::erase(widget_list::const_iterator child){
 	if(this->is_blocked){
-		throw utki::invalid_state("container::erase(): children list is locked");
+		throw std::logic_error("container::erase(): children list is locked");
 	}
 
 	if(child == this->children().end()){
@@ -298,7 +298,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 
 container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
 	if(this->is_blocked){
-		throw utki::invalid_state("container::change_child_z_position(): children list is locked");
+		throw std::logic_error("container::change_child_z_position(): children list is locked");
 	}
 
 	if(child == this->children().end()){

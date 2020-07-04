@@ -25,8 +25,8 @@ texture_font::FreeTypeLibWrapper::~FreeTypeLibWrapper()noexcept{
 	FT_Done_FreeType(this->lib);
 }
 
-texture_font::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::File& fi) {
-	this->fontFile = fi.loadWholeFileIntoMemory();
+texture_font::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::file& fi) {
+	this->fontFile = fi.load();
 	if (FT_New_Memory_Face(lib, & * this->fontFile.begin(), int(this->fontFile.size()), 0/* face_index */, &this->f) != 0) {
 		throw std::runtime_error("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
 	}

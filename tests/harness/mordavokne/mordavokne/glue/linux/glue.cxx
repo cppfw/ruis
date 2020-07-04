@@ -68,7 +68,7 @@ struct WindowWrapper : public utki::destructable{
 		if(!this->display){
 			throw std::runtime_error("XOpenDisplay() failed");
 		}
-		utki::ScopeExit scopeExitDisplay([this](){
+		utki::scope_exit scopeExitDisplay([this](){
 			XCloseDisplay(this->display);
 		});
 
@@ -112,7 +112,7 @@ struct WindowWrapper : public utki::destructable{
 			if(!fbc){
 				throw std::runtime_error("glXChooseFBConfig() returned empty list");
 			}
-			utki::ScopeExit scopeExitFbc([&fbc](){
+			utki::scope_exit scopeExitFbc([&fbc](){
 				XFree(fbc);
 			});
 
@@ -142,7 +142,7 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("eglGetDisplay(): failed, no matching display connection found");
 		}
 
-		utki::ScopeExit scopeExitEGLDisplay([this](){
+		utki::scope_exit scopeExitEGLDisplay([this](){
 			eglTerminate(this->eglDisplay);
 		});
 
@@ -232,7 +232,7 @@ struct WindowWrapper : public utki::destructable{
 #else
 #	error "Unknown graphics API"
 #endif
-		utki::ScopeExit scopeExitVisualInfo([vi](){
+		utki::scope_exit scopeExitVisualInfo([vi](){
 			XFree(vi);
 		});
 
@@ -243,7 +243,7 @@ struct WindowWrapper : public utki::destructable{
 				AllocNone
 			);
 		//TODO: check for error?
-		utki::ScopeExit scopeExitColorMap([this](){
+		utki::scope_exit scopeExitColorMap([this](){
 			XFreeColormap(this->display, this->colorMap);
 		});
 
@@ -284,7 +284,7 @@ struct WindowWrapper : public utki::destructable{
 		if(!this->window){
 			throw std::runtime_error("Failed to create window");
 		}
-		utki::ScopeExit scopeExitWindow([this](){
+		utki::scope_exit scopeExitWindow([this](){
 			XDestroyWindow(this->display, this->window);
 		});
 
@@ -302,7 +302,7 @@ struct WindowWrapper : public utki::destructable{
 		if(this->glContext == NULL){
 			throw std::runtime_error("glXCreateContext() failed");
 		}
-		utki::ScopeExit scopeExitGLContext([this](){
+		utki::scope_exit scopeExitGLContext([this](){
 			glXMakeCurrent(this->display, None, NULL);
 			glXDestroyContext(this->display, this->glContext);
 		});
@@ -380,7 +380,7 @@ struct WindowWrapper : public utki::destructable{
 		if(this->eglSurface == EGL_NO_SURFACE){
 			throw std::runtime_error("eglCreateWindowSurface() failed");
 		}
-		utki::ScopeExit scopeExitEGLSurface([this](){
+		utki::scope_exit scopeExitEGLSurface([this](){
 			eglDestroySurface(this->eglDisplay, this->eglSurface);
 		});
 
@@ -400,7 +400,7 @@ struct WindowWrapper : public utki::destructable{
 			eglDestroyContext(this->eglDisplay, this->eglContext);
 			throw std::runtime_error("eglMakeCurrent() failed");
 		}
-		utki::ScopeExit scopeExitEGLContext([this](){
+		utki::scope_exit scopeExitEGLContext([this](){
 			eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 			eglDestroyContext(this->eglDisplay, this->eglContext);
 		});
@@ -417,13 +417,13 @@ struct WindowWrapper : public utki::destructable{
 			if(blank == None){
 				throw std::runtime_error("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
 			}
-			utki::ScopeExit scopeExit([this, &blank](){
+			utki::scope_exit scopeExit([this, &blank](){
 				XFreePixmap(this->display, blank);
 			});
 
 			this->emptyCursor = XCreatePixmapCursor(this->display, blank, blank, &dummy, &dummy, 0, 0);
 		}
-		utki::ScopeExit scopeExitEmptyCursor([this](){
+		utki::scope_exit scopeExitEmptyCursor([this](){
 			XFreeCursor(this->display, this->emptyCursor);
 		});
 
@@ -431,7 +431,7 @@ struct WindowWrapper : public utki::destructable{
 		if(this->inputMethod == NULL){
 			throw std::runtime_error("XOpenIM() failed");
 		}
-		utki::ScopeExit scopeExitInputMethod([this](){
+		utki::scope_exit scopeExitInputMethod([this](){
 			XCloseIM(this->inputMethod);
 		});
 
@@ -445,7 +445,7 @@ struct WindowWrapper : public utki::destructable{
 		if(this->inputContext == NULL){
 			throw std::runtime_error("XCreateIC() failed");
 		}
-		utki::ScopeExit scopeExitInputContext([this](){
+		utki::scope_exit scopeExitInputContext([this](){
 			XUnsetICFocus(this->inputContext);
 			XDestroyIC(this->inputContext);
 		});
@@ -548,12 +548,13 @@ application::application(std::string&& name, const window_params& requestedWindo
 namespace{
 
 class XEvent_waitable : public opros::waitable{
+public:
 	int fd;
 
 	int get_handle() override{
 		return this->fd;
 	}
-public:
+
 	XEvent_waitable(Display* d){
 		this->fd = XConnectionNumber(d);
 	}
@@ -919,9 +920,13 @@ int main(int argc, const char** argv){
 	render(*app);
 
 	while(!ww.quitFlag){
-		wait_set.wait(app->gui.update());
+		xew.clear_read_flag(); // clear read flag because we have no 'read' function in XEvent_waitable which would do that for us
 
-		if(ww.ui_queue.flags().get(opros::ready::read)){
+		auto num_waitables_triggered = wait_set.wait(app->gui.update());
+		// TRACE(<< "num_waitables_triggered = " << num_waitables_triggered << std::endl)
+
+		bool ui_queue_ready_to_read = ww.ui_queue.flags().get(opros::ready::read);
+		if(ui_queue_ready_to_read){
 			while(auto m = ww.ui_queue.pop_front()){
 				TRACE(<< "loop message" << std::endl)
 				m();
@@ -929,13 +934,14 @@ int main(int argc, const char** argv){
 			ASSERT(!ww.ui_queue.flags().get(opros::ready::read))
 		}
 
-		// NOTE: do not check canRead flag for X event, for some reason when waiting with 0 timeout it will never be set.
+		// NOTE: do not check 'read' flag for X event, for some reason when waiting with 0 timeout it will never be set.
 		//       Maybe some bug in XWindows, maybe something else.
-		xew.clear_read_flag();
+		bool x_event_arrived = false;
 		while(XPending(ww.display) > 0){
+			x_event_arrived = true;
 			XEvent event;
 			XNextEvent(ww.display, &event);
-			TRACE(<< "X event got, type = " << (event.type) << std::endl)
+			// TRACE(<< "X event got, type = " << (event.type) << std::endl)
 			switch(event.type){
 				case Expose:
 //						TRACE(<< "Expose X event got" << std::endl)
@@ -1032,6 +1038,13 @@ int main(int argc, const char** argv){
 					// ignore
 					break;
 			}
+		}
+
+		// WORKAROUND: XEvent file descriptor becomes ready to read many times per second, even if
+		//             there are no events to handle returned by XPending(), so here we check if something
+		//             meaningful actuall happened and call render() only if it did
+		if(num_waitables_triggered != 0 && !x_event_arrived && !ui_queue_ready_to_read){
+			continue;
 		}
 
 		render(*app);

@@ -23,7 +23,7 @@ void pile::lay_out(){
 morda::vector2 pile::measure(const morda::vector2& quotum)const{
 	vector2 ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
-		utki::clampBottom(ret[i], real(0));
+		ret[i] = std::max(ret[i], real(0)); // clamp bottom
 	}
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
@@ -55,7 +55,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){
-				utki::clampBottom(ret[j], d[j]);
+				ret[j] = std::max(ret[j], d[j]); // clamp bottom
 			}
 		}
 	}

@@ -5,7 +5,6 @@
 #include <memory>
 
 #include <utki/shared.hpp>
-#include <utki/exception.hpp>
 
 #include <puu/tree.hpp>
 
@@ -336,7 +335,7 @@ public:
 	 * @brief Get widget.
 	 * @param id - id of the widget to get.
 	 * @return reference to the widget.
-	 * @throw utki::not_found - if no widget with given id has been found.
+	 * @throw std::logic_error - if no widget with given id has been found.
 	 */
 	widget& get_widget(const std::string& id);
 
@@ -344,7 +343,7 @@ public:
 	 * @brief Get widget of specific type by its id.
 	 * @param id - id of the widget to get.
 	 * @return reference to the requested widget.
-	 * @throw utki::not_found - if no widget with given id has been found.
+	 * @throw std::logic_error - if no widget with given id has been found.
 	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
 	template <typename T> T& get_widget_as(const std::string& id){

@@ -646,16 +646,16 @@ public:
 		// scroll_area
 		{
 			auto scrollArea = c->try_get_widget_as<morda::scroll_area>("scroll_area");
-			auto sa = utki::makeWeak(scrollArea);
+			auto sa = utki::make_weak(scrollArea);
 
 			auto vertSlider = c->try_get_widget_as<morda::scroll_bar>("scroll_area_vertical_slider");
-			auto vs = utki::makeWeak(vertSlider);
+			auto vs = utki::make_weak(vertSlider);
 
 			auto horiSlider = c->try_get_widget_as<morda::scroll_bar>("scroll_area_horizontal_slider");
-			auto hs = utki::makeWeak(horiSlider);
+			auto hs = utki::make_weak(horiSlider);
 
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("scroll_area_resize_proxy");
-			auto rp = utki::makeWeak(resizeProxy);
+			auto rp = utki::make_weak(resizeProxy);
 
 			resizeProxy->resize_handler = [vs, hs, sa](const morda::vector2& newSize){
 				auto sc = sa.lock();
@@ -696,10 +696,10 @@ public:
 		// VerticalList
 		{
 			auto verticalList = c->try_get_widget_as<morda::list>("list");
-			auto vl = utki::makeWeak(verticalList);
+			auto vl = utki::make_weak(verticalList);
 
 			auto verticalSlider = c->try_get_widget_as<morda::vertical_scroll_bar>("vertical_list_slider");
-			auto vs = utki::makeWeak(verticalSlider);
+			auto vs = utki::make_weak(verticalSlider);
 
 			verticalSlider->fraction_change_handler = [vl](morda::fraction_widget& slider){
 				if(auto l = vl.lock()){
@@ -755,11 +755,11 @@ public:
 		// HorizontalList
 		{
 			auto horizontalList = c->try_get_widget_as<morda::list_widget>("pan_list");
-			auto hl = utki::makeWeak(horizontalList);
+			auto hl = utki::make_weak(horizontalList);
 
 			auto horizontalSlider = c->try_get_widget_as<morda::fraction_widget>("horizontal_list_slider");
 			ASSERT(horizontalSlider)
-			auto hs = utki::makeWeak(horizontalSlider);
+			auto hs = utki::make_weak(horizontalSlider);
 
 			horizontalSlider->fraction_change_handler = [hl](morda::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
@@ -825,10 +825,10 @@ public:
 			ASSERT(treeview)
 			auto provider = std::make_shared<TreeViewItemsProvider>(c->context);
 			treeview->set_provider(provider);
-			auto tv = utki::makeWeak(treeview);
+			auto tv = utki::make_weak(treeview);
 
 			auto verticalSlider = c->try_get_widget_as<morda::vertical_scroll_bar>("treeview_vertical_slider");
-			auto vs = utki::makeWeak(verticalSlider);
+			auto vs = utki::make_weak(verticalSlider);
 
 			verticalSlider->fraction_change_handler = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
@@ -838,7 +838,7 @@ public:
 
 			auto horizontalSlider = c->try_get_widget_as<morda::horizontal_scroll_bar>("treeview_horizontal_slider");
 			ASSERT(horizontalSlider)
-			auto hs = utki::makeWeak(horizontalSlider);
+			auto hs = utki::make_weak(horizontalSlider);
 
 			horizontalSlider->fraction_change_handler = [tv](morda::fraction_widget& slider){
 				if(auto t = tv.lock()){
@@ -848,7 +848,7 @@ public:
 
 			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("treeview_resize_proxy");
 			ASSERT(resizeProxy)
-			auto rp = utki::makeWeak(resizeProxy);
+			auto rp = utki::make_weak(resizeProxy);
 
 			resizeProxy->resize_handler = [vs, hs, tv](const morda::vector2& newSize){
 				auto t = tv.lock();
@@ -876,7 +876,7 @@ public:
 			auto insertAfterButton = c->try_get_widget_as<morda::push_button>("insert_after");
 			auto insertChild = c->try_get_widget_as<morda::push_button>("insert_child");
 
-			auto prvdr = utki::makeWeak(provider);
+			auto prvdr = utki::make_weak(provider);
 			insertBeforeButton->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertBefore();

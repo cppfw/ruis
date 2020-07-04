@@ -61,7 +61,7 @@ resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std
 	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
-	throw utki::invalid_state(ss.str());
+	throw std::logic_error(ss.str());
 }
 
 void resource_loader::addResource(const std::shared_ptr<resource>& res, const std::string& name){

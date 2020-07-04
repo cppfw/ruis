@@ -18,6 +18,6 @@ public:
 		return this->fraction_v;
 	}
 
-	void set_fraction(float newFraction);
+	void set_fraction(real fraction);
 };
 }

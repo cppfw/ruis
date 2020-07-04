@@ -110,13 +110,13 @@ vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 void text_input_line::set_cursor_index(size_t index, bool selection){
 	this->cursorIndex = index;
 	
-	utki::clampTop(this->cursorIndex, this->get_text().size());
+	this->cursorIndex = std::min(this->cursorIndex, this->get_text().size()); // clamp top
 	
 	if(!selection){
 		this->selectionStartIndex = this->cursorIndex;
 	}
 	
-	utki::ScopeExit scopeExit([this](){
+	utki::scope_exit scopeExit([this](){
 		this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
 		
 		if(!this->is_focused()){
@@ -169,7 +169,7 @@ real text_input_line::indexToPos(size_t index){
 		return 0;
 	}
 	
-	utki::clampTop(index, this->get_text().size());
+	index = std::min(index, this->get_text().size()); // clamp top
 	
 	real ret = this->xOffset;
 	

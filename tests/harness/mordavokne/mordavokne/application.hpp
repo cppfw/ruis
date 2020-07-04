@@ -84,7 +84,7 @@ public:
 	 * @param path - file path to initialize the file interface with.
 	 * @return Instance of the file interface into the resources storage.
 	 */
-	std::unique_ptr<papki::File> get_res_file(const std::string& path = std::string())const;
+	std::unique_ptr<papki::file> get_res_file(const std::string& path = std::string())const;
 
 public:
 	/**

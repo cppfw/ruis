@@ -28,7 +28,7 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const puu::fores
 		}else if(p.value == "maxCached"){
 			maxCached = unsigned(get_property_value(p).to_uint32());
 		}else if(p.value == "file"){
-			fi.setPath(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).to_string());
 		}
 	}
 

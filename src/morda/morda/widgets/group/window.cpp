@@ -245,8 +245,8 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->leftTopResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				d.x = std::min(d.x, this->rect().d.x - this->emptyMinDim.x); // clamp top
+				d.y = std::min(d.y, this->rect().d.y - this->emptyMinDim.y); // clamp top
 				this->move_by(d);
 				this->resize_by(-d);
 			}
@@ -262,8 +262,8 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->leftBottomResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				d.x = std::min(d.x, this->rect().d.x - this->emptyMinDim.x); // clamp top
+				d.y = std::max(d.y, -(this->rect().d.y - this->emptyMinDim.y)); // clamp bottom
 				this->move_by(morda::vector2(d.x, 0));
 				this->resize_by(morda::vector2(-d.x, d.y));
 			}
@@ -279,8 +279,8 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->rightTopResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				d.x = std::max(d.x, -(this->rect().d.x - this->emptyMinDim.x)); // clamp bottom
+				d.y = std::min(d.y, this->rect().d.y - this->emptyMinDim.y); // clamp top
 				this->move_by(morda::vector2(0, d.y));
 				this->resize_by(morda::vector2(d.x, -d.y));
 			}
@@ -296,8 +296,8 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->rightBottomResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				d.x = std::max(d.x, -(this->rect().d.x - this->emptyMinDim.x)); // clamp bottom
+				d.y = std::max(d.y, -(this->rect().d.y - this->emptyMinDim.y)); // clamp bottom
 				this->resize_by(d);
 			}
 			return false;
@@ -312,7 +312,7 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->leftResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampTop(d.x, this->rect().d.x - this->emptyMinDim.x);
+				d.x = std::min(d.x, this->rect().d.x - this->emptyMinDim.x); // clamp top
 				this->move_by(morda::vector2(d.x, 0));
 				this->resize_by(morda::vector2(-d.x, 0));
 			}
@@ -328,7 +328,7 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->rightResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampBottom(d.x, -(this->rect().d.x - this->emptyMinDim.x));
+				d.x = std::max(d.x, -(this->rect().d.x - this->emptyMinDim.x)); // clamp bottom
 				this->resize_by(morda::vector2(d.x, 0));
 			}
 			return false;
@@ -343,7 +343,7 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->topResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampTop(d.y, this->rect().d.y - this->emptyMinDim.y);
+				d.y = std::min(d.y, this->rect().d.y - this->emptyMinDim.y); // clamp top
 				this->move_by(morda::vector2(0, d.y));
 				this->resize_by(morda::vector2(0, -d.y));
 			}
@@ -359,7 +359,7 @@ void morda::window::setupWidgets(){
 		w->mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 			if(this->bottomResizeCaptured){
 				morda::vector2 d = pos - this->capturePoint;
-				utki::clampBottom(d.y, -(this->rect().d.y - this->emptyMinDim.y));
+				d.y = std::max(d.y, -(this->rect().d.y - this->emptyMinDim.y)); // clamp bottom
 				this->resize_by(morda::vector2(0, d.y));
 			}
 			return false;

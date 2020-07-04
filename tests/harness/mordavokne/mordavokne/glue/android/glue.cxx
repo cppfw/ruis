@@ -104,7 +104,7 @@ public:
 		jobject res = this->env->CallObjectMethod(this->obj, this->listDirContentsMeth, p);
 		this->env->DeleteLocalRef(p);
 
-		utki::ScopeExit scopeExit([this, res](){
+		utki::scope_exit scopeExit([this, res](){
 			this->env->DeleteLocalRef(res);
 		});
 
@@ -131,14 +131,14 @@ public:
 
 	std::string getStorageDir(){
 		jobject res = this->env->CallObjectMethod(this->obj, this->getStorageDirMeth);
-		utki::ScopeExit resScopeExit([this, &res](){
+		utki::scope_exit resScopeExit([this, &res](){
 			this->env->DeleteLocalRef(res);
 		});
 
 		jstring str = static_cast<jstring>(res);
 
 		auto chars = env->GetStringUTFChars(str, nullptr);
-		utki::ScopeExit charsScopeExit([this, &chars, &str](){
+		utki::scope_exit charsScopeExit([this, &chars, &str](){
 			this->env->ReleaseStringUTFChars(str, chars);
 		});
 
@@ -161,7 +161,7 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("eglGetDisplay(): failed, no matching display connection found");
 		}
 
-		utki::ScopeExit eglDisplayScopeExit([this](){
+		utki::scope_exit eglDisplayScopeExit([this](){
 			eglTerminate(this->display);
 		});
 
@@ -210,7 +210,7 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("eglCreateWindowSurface() failed");
 		}
 
-		utki::ScopeExit eglSurfaceScopeExit([this](){
+		utki::scope_exit eglSurfaceScopeExit([this](){
 			eglDestroySurface(this->display, this->surface);
 		});
 
@@ -224,7 +224,7 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("eglCreateContext() failed");
 		}
 
-		utki::ScopeExit eglContextScopeExit([this](){
+		utki::scope_exit eglContextScopeExit([this](){
 			eglDestroyContext(this->display, this->context);
 		});
 
@@ -324,7 +324,7 @@ public:
 
 	virtual void rewind_internal()const override{
 		if(!this->is_open()){
-			throw utki::invalid_state("file is not opened, cannot rewind");
+			throw std::logic_error("file is not opened, cannot rewind");
 		}
 
 		ASSERT(this->handle)
@@ -359,7 +359,7 @@ public:
 
 	virtual std::vector<std::string> list_dir(size_t maxEntries = 0)const override{
 		if(!this->isDir()){
-			throw utki::invalid_state("asset_file::list_dir(): this is not a directory");
+			throw std::logic_error("asset_file::list_dir(): this is not a directory");
 		}
 
 		// Trim away trailing '/', as Android does not work with it.
@@ -378,7 +378,7 @@ public:
 
 	size_t seek(size_t numBytesToSeek, bool seekForward)const{
 		if(!this->is_open()){
-			throw utki::invalid_state("file is not opened, cannot seek");
+			throw std::logic_error("file is not opened, cannot seek");
 		}
 
 		ASSERT(this->handle)
@@ -913,7 +913,7 @@ JNIEXPORT void JNICALL Java_io_github_igagis_mordavokne_MordaVOkneActivity_handl
 
 	const char *utf8Chars = env->GetStringUTFChars(chars, 0);
 
-	utki::ScopeExit scopeExit([env, &chars, utf8Chars](){
+	utki::scope_exit scopeExit([env, &chars, utf8Chars](){
 		env->ReleaseStringUTFChars(chars, utf8Chars);
 	});
 

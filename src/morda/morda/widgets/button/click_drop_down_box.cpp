@@ -113,7 +113,7 @@ void click_drop_down_box::show_drop_down_menu(){
 
 	auto olay = this->find_ancestor<overlay>();
 	if(!olay){
-		throw utki::invalid_state("drop_down_box: no overlay parent found");
+		throw std::logic_error("drop_down_box: no overlay parent found");
 	}
 
 	auto np = this->context->inflater.inflate(drop_down_menu_layout);

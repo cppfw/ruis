@@ -39,7 +39,7 @@ void tab_group::set_filler(std::shared_ptr<res::image> filler){
 morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 	vector2 ret(quotum);
 	for(unsigned i = 0; i != ret.size(); ++i){
-		utki::clampBottom(ret[i], real(0));
+		ret[i] = std::max(ret[i], real(0)); // clamp bottom
 	}
 
 	real length = 0;
@@ -52,14 +52,14 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 
 		auto t = dynamic_cast<const morda::tab*>(c.get());
 		if(!t){
-			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
+			throw std::logic_error("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
 		morda::vector2 d;
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill){
-				throw utki::invalid_state("'max' or 'fill' encountered in layout parameters for tab_group container");
+				throw std::logic_error("'max' or 'fill' encountered in layout parameters for tab_group container");
 			}else if(lp.dims[j] == layout_params::min){
 				d[j] = -1;
 			}else{
@@ -76,7 +76,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 		prevBorders = borders;
 
 		if(quotum.y < 0){
-			utki::clampBottom(ret.y, d.y);
+			ret.y = std::max(ret.y, d.y); // clamp bottom
 		}
 	}
 
@@ -101,7 +101,7 @@ void tab_group::lay_out(){
 
 		auto t = dynamic_cast<morda::tab*>(c.get());
 		if(!t){
-			throw utki::invalid_state("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
+			throw std::logic_error("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
 
 		auto borders = t->get_actual_borders();

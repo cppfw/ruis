@@ -2,7 +2,6 @@
 
 #include <chrono>
 
-#include <utki/exception.hpp>
 #include <utki/time.hpp>
 
 #include "updateable.hpp"
@@ -16,7 +15,7 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
     }
 
     if(uu->is_updating()){
-		throw utki::invalid_state("updater::start(): updateable is already being updated");
+		throw std::logic_error("updater::start(): updateable is already being updated");
 	}
 	
 	uu->dt = dt_ms;
