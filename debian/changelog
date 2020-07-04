@@ -1,3 +1,9 @@
+libmorda (0.5.123) unstable; urgency=medium
+
+  * update to latest libs
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 04 Jul 2020 23:43:38 +0300
+
 libmorda (0.5.122) unstable; urgency=medium
 
   * test release
