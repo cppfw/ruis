@@ -616,7 +616,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		throw std::runtime_error("morda::application::ApplicationObject::ApplicationObject(): failed to create application object");
 	}
 
-	utki::ScopeExit scopeExitApplication([this](){
+	utki::scope_exit scopeExitApplication([this](){
 		[this->applicationObjectId release];
 	});
 
@@ -631,7 +631,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		throw std::runtime_error("morda::application::WindowObject::WindowObject(): failed to create Window object");
 	}
 
-	utki::ScopeExit scopeExitWindow([this](){
+	utki::scope_exit scopeExitWindow([this](){
 		[this->windowObjectId release];
 	});
 
@@ -664,7 +664,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 		}
 	}
 
-	utki::ScopeExit scopeExitOpenGLContext([this](){
+	utki::scope_exit scopeExitOpenGLContext([this](){
 		[this->openglContextId release];
 	});
 
