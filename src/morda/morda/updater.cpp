@@ -117,14 +117,14 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 
 
 
-std::uint32_t updater::update(){
+uint32_t updater::update(){
 	std::uint32_t curTime = utki::get_ticks_ms();
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
-	this->addPending();//add pending before updating this->lastUpdatedTimestamp
+	this->addPending(); // add pending before updating this->lastUpdatedTimestamp
 	
-	//check if there is a warp around
+	// check if there is a warp around
 	if(curTime < this->lastUpdatedTimestamp){
 		this->lastUpdatedTimestamp = curTime;
 		
@@ -150,7 +150,7 @@ std::uint32_t updater::update(){
 		this->updateUpdateable(this->activeQueue->popFront());
 	}
 	
-	this->addPending();//after updating need to add recurring Updateables if any
+	this->addPending(); // after updating need to add recurring Updateables if any
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	

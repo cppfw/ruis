@@ -45,7 +45,7 @@ public:
 	{}
 
 	// returns dt to wait before next update
-	std::uint32_t update();
+	uint32_t update();
 
 	/**
 	 * @brief Subscribe updateable for updates.

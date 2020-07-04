@@ -13,7 +13,7 @@
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
-		mordavokne::window_params wp(r4::vec2ui(1024, 800));
+		mordavokne::window_params wp(r4::vec2ui(640, 480));
 
 		return wp;
 	}

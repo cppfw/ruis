@@ -923,6 +923,7 @@ int main(int argc, const char** argv){
 
 		if(ww.ui_queue.flags().get(opros::ready::read)){
 			while(auto m = ww.ui_queue.pop_front()){
+				TRACE(<< "loop message" << std::endl)
 				m();
 			}
 			ASSERT(!ww.ui_queue.flags().get(opros::ready::read))
@@ -934,7 +935,7 @@ int main(int argc, const char** argv){
 		while(XPending(ww.display) > 0){
 			XEvent event;
 			XNextEvent(ww.display, &event);
-//				TRACE(<< "X event got, type = " << (event.type) << std::endl)
+			TRACE(<< "X event got, type = " << (event.type) << std::endl)
 			switch(event.type){
 				case Expose:
 //						TRACE(<< "Expose X event got" << std::endl)

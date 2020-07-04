@@ -69,6 +69,13 @@
             "command": "make run_book",
             "problemMatcher": [],
             "dependsOn": "build"
+		},
+		{
+            "label": "run_book_debug",
+            "type": "shell",
+            "command": "make run_book debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
         },
         {
             "label": "test",

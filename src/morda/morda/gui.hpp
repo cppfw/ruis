@@ -83,7 +83,7 @@ public:
 	 * Call this function from main loop of the program.
 	 * @return number of milliseconds to sleep before next call.
 	 */
-	std::uint32_t update(){
+	uint32_t update(){
 		return this->context->updater->update();
 	}
 
