@@ -602,7 +602,7 @@ namespace{
 std::string initializeStorageDir(const std::string& appName){
 	CHAR path[MAX_PATH];
 	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK) {
-		throw utki::exception("failed to get user's profile directory.");
+		throw std::runtime_error("failed to get user's profile directory.");
 	}
 
 	path[sizeof(path) - 1] = '\0'; // null-terminate the string just in case
@@ -737,18 +737,18 @@ int WINAPI WinMain(
 	return 0;
 }
 
-void application::set_fullscreen(bool enable) {
-	if (enable == this->is_fullscreen()) {
+void application::set_fullscreen(bool enable){
+	if(enable == this->is_fullscreen()){
 		return;
 	}
 
 	auto& ww = getImpl(this->windowPimpl);
 
-	if (enable) {
+	if(enable){
 		// save original window size
 		RECT rect;
-		if (GetWindowRect(ww.hwnd, &rect) == 0) {
-			throw utki::exception("Failed to get window rect");
+		if(GetWindowRect(ww.hwnd, &rect) == 0){
+			throw std::runtime_error("Failed to get window rect");
 		}
 		this->beforeFullScreenWindowRect.p.x = rect.left;
 		this->beforeFullScreenWindowRect.p.y = rect.top;
