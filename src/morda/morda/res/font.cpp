@@ -6,7 +6,7 @@
 
 #include "../fonts/texture_font.hxx"
 
-#include <utki/utf8.hpp>
+#include <utki/unicode.hpp>
 
 #include <memory>
 

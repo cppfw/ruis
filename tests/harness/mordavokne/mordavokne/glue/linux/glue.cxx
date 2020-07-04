@@ -7,7 +7,7 @@
 #include <papki/fs_file.hpp>
 #include <nitki/queue.hpp>
 
-#include <utki/utf8.hpp>
+#include <utki/unicode.hpp>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

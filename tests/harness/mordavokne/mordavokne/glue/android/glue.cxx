@@ -7,7 +7,7 @@
 #include <android/asset_manager.h>
 #include <android/window.h>
 
-#include <utki/utf8.hpp>
+#include <utki/unicode.hpp>
 #include <nitki/queue.hpp>
 #include <utki/destructable.hpp>
 

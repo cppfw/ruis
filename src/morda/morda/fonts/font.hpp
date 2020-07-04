@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <utki/utf8.hpp>
+#include <utki/unicode.hpp>
 
 #include <r4/matrix4.hpp>
 #include <r4/rectangle.hpp>
