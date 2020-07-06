@@ -113,7 +113,7 @@ public:
 };
 
 class res_svg_image : public image{
-	std::unique_ptr<svgdom::SvgElement> dom;
+	std::unique_ptr<svgdom::svg_element> dom;
 public:
 	res_svg_image(std::shared_ptr<morda::context> c, decltype(dom) dom) :
 			image(std::move(c)),
@@ -164,10 +164,10 @@ public:
 //		TRACE(<< "height = " << this->dom->height << std::endl)
 //		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
-		svgren::Parameters svgParams;
+		svgren::parameters svgParams;
 		svgParams.dpi = this->context->units.dots_per_inch;
-		svgParams.widthRequest = width;
-		svgParams.heightRequest = height;
+		svgParams.width_request = width;
+		svgParams.height_request = height;
 		auto svg = svgren::render(*this->dom, svgParams);
 		ASSERT(svg.width != 0)
 		ASSERT(svg.height != 0)
