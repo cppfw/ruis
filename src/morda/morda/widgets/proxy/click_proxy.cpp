@@ -20,16 +20,16 @@ bool click_proxy::on_mouse_button(bool is_down, const morda::vector2& pos, mouse
     if(is_down){
         this->is_pressed = true;
         if(this->press_handler){
-            ret = this->press_handler(*this, true);
+            ret = this->press_handler(true);
         }
     }else{
         if(this->is_pressed){
             this->is_pressed = false;
             if(this->press_handler){
-                ret = this->press_handler(*this, false);
+                ret = this->press_handler(false);
             }
             if(this->click_handler){
-                ret |= this->click_handler(*this);
+                ret |= this->click_handler();
             }
         }
     }
@@ -47,7 +47,7 @@ void click_proxy::on_hover_changed(unsigned pointer_id){
         if(this->is_pressed){
             this->is_pressed = false;
             if(this->press_handler){
-                this->press_handler(*this, false);
+                this->press_handler(false);
             }
         }
     }

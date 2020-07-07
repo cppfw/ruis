@@ -36,13 +36,13 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back());
 
-	mp.mouse_button_handler = [](mouse_proxy& w, bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
-		ASSERT(w.parent())
-		auto wsp = utki::make_shared_from_this(*w.parent());
-		w.context->run_from_ui_thread([wsp](){
-			wsp->remove_from_parent();
-		});
-		return false;
+	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id) -> bool{
+		if(auto c = cntr.lock()){
+			c->context->run_from_ui_thread([c](){
+				c->remove_from_parent();
+			});
+		}
+		return true;
 	};
 
 	c->push_back(w);
@@ -74,6 +74,8 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 }
 
 void overlay::close_all_context_menus(){
+	// TODO: rewrite using find all widgets of context_menu_wrapper type and then remove_from_parent for each of those
+	//       because we should not rely on that context menus are only at the tail of children list.
 	while(dynamic_cast<context_menu_wrapper*>(this->children().back().get())){
 		this->pop_back();
 	}
