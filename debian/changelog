@@ -1,3 +1,9 @@
+libmorda (0.5.128) unstable; urgency=medium
+
+  * add click_proxy
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Jul 2020 16:03:28 +0300
+
 libmorda (0.5.127) unstable; urgency=medium
 
   * update to latests libs
