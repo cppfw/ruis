@@ -21,7 +21,7 @@ bool mouse_proxy::on_mouse_move(const morda::vector2& pos, unsigned pointerId){
 }
 
 void mouse_proxy::on_hover_changed(unsigned pointer_id){
-	if(this->hover_changed_handler){
-		this->hover_changed_handler(this->is_hovered(pointer_id), pointer_id);
+	if(this->hover_change_handler){
+		this->hover_change_handler(this->is_hovered(pointer_id), pointer_id);
 	}
 }

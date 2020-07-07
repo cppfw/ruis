@@ -35,7 +35,7 @@ public:
 	 * @brief Hover changed event signal.
 	 * Emitted when hover changed event reaches this widget.
 	 */
-	std::function<void(bool is_hovered, unsigned pointer_id)> hover_changed_handler;
+	std::function<void(bool is_hovered, unsigned pointer_id)> hover_change_handler;
 
 	void on_hover_changed(unsigned pointer_id)override;
 };

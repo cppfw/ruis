@@ -187,7 +187,7 @@ std::shared_ptr<widget> click_drop_down_box::wrap_item(std::shared_ptr<widget>&&
 
 	wd->push_back(w);
 
-	mp->hover_changed_handler = [this, cl_weak, index](bool is_hovered, unsigned id){
+	mp->hover_change_handler = [this, cl_weak, index](bool is_hovered, unsigned id){
 		if(auto c = cl_weak.lock()){
 			c->set_visible(is_hovered);
 		}
