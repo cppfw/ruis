@@ -137,7 +137,7 @@ void click_drop_down_box::show_drop_down_menu(){
 	this->hovered_index = -1;
 
 	np->get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler
-			= [this](widget& w, bool is_down, const vector2 pos, mouse_button button, unsigned id) -> bool{
+			= [this](mouse_proxy& w, bool is_down, const vector2 pos, mouse_button button, unsigned id) -> bool{
 				if(!is_down){
 					this->mouse_button_up_handler(false);
 				}
@@ -187,7 +187,7 @@ std::shared_ptr<widget> click_drop_down_box::wrap_item(std::shared_ptr<widget>&&
 
 	wd->push_back(w);
 
-	mp->hover_changed_handler = [this, cl_weak, index](widget& w, unsigned id){
+	mp->hover_changed_handler = [this, cl_weak, index](mouse_proxy& w, unsigned id){
 		if(auto c = cl_weak.lock()){
 			c->set_visible(w.is_hovered());
 		}

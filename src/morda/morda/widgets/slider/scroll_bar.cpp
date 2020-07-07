@@ -83,7 +83,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 	}
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");
-	hp->mouse_button_handler = [this](widget& widget, bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId) -> bool{
+	hp->mouse_button_handler = [this](mouse_proxy& widget, bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId) -> bool{
 		if(button != mouse_button::left){
 			return false;
 		}
