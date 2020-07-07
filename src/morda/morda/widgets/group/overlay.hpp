@@ -10,9 +10,7 @@ namespace morda{
  * Essentially, the overlay is a simple pile container which keeps track of open overlay widgets.
  * From GUI scripts it can be instantiated as "overlay".
  */
-class overlay :
-		virtual public widget,
-		public pile
+class overlay : public pile
 {
 public:
 	overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
