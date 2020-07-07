@@ -23,6 +23,7 @@
 #include "../../../src/morda/morda/widgets/group/list.hpp"
 #include "../../../src/morda/morda/widgets/group/tree_view.hpp"
 #include "../../../src/morda/morda/widgets/proxy/resize_proxy.hpp"
+#include "../../../src/morda/morda/widgets/proxy/click_proxy.hpp"
 #include "../../../src/morda/morda/widgets/label/color.hpp"
 #include "../../../src/morda/morda/widgets/label/image.hpp"
 #include "../../../src/morda/morda/widgets/input/text_input_line.hpp"
@@ -638,10 +639,27 @@ public:
 				);
 		};
 
-		this->gui.context->updater->start(
-				std::dynamic_pointer_cast<CubeWidget>(c->try_get_widget("cube_widget")),
-				0
-			);
+		// cube click_proxy
+		{
+			auto cube = c->try_get_widget_as<CubeWidget>("cube_widget");
+			ASSERT(cube)
+
+			auto& cp = c->get_widget_as<morda::click_proxy>("cube_click_proxy");
+			auto& bg = c->get_widget_as<morda::color>("cube_bg_color");
+			cp.press_handler = [bg{utki::make_shared_from_this(bg)}](morda::widget& w, bool is_pressed) -> bool{
+				bg->set_color(is_pressed ? 0xff808080 : 0x80808080);
+				return true;
+			};
+			cp.press_handler(cp, false); // set initial color
+			cp.click_handler = [cube](morda::widget& w) -> bool{
+				if(cube->is_updating()){
+					w.context->updater->stop(*cube);
+				}else{
+					w.context->updater->start(cube, 0);
+				}
+				return true;
+			};
+		}
 
 		// scroll_area
 		{

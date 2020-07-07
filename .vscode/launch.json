@@ -12,7 +12,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

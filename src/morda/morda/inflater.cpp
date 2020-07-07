@@ -14,6 +14,7 @@
 #include "widgets/proxy/key_proxy.hpp"
 #include "widgets/proxy/mouse_proxy.hpp"
 #include "widgets/proxy/resize_proxy.hpp"
+#include "widgets/proxy/click_proxy.hpp"
 
 #include "context.hpp"
 
@@ -27,11 +28,12 @@ inflater::inflater(morda::context& context):
 	//TODO: move adding standard widgets to gui() constructor
 	this->register_widget<widget>("widget");
 	this->register_widget<container>("container");
-	this->register_widget<size_container>("size_container"); //TODO: rename?
+	this->register_widget<size_container>("size_container"); // TODO: rename?
 	this->register_widget<row>("row");
 	this->register_widget<column>("column");
 	this->register_widget<pile>("pile");
 	this->register_widget<mouse_proxy>("mouse_proxy");
+	this->register_widget<click_proxy>("click_proxy");
 	this->register_widget<scroll_area>("scroll_area");
 	this->register_widget<key_proxy>("key_proxy");
 	this->register_widget<overlay>("overlay");

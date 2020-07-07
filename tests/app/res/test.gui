@@ -455,6 +455,22 @@ defs{
 		}
 */
 
+		@color{
+			id {cube_bg_color}
+			layout{
+				dx {fill}
+				dy {fill}
+			}
+		}
+
+		@click_proxy{
+			id {cube_click_proxy}
+			layout{
+				dx {fill}
+				dy {fill}
+			}
+		}
+
 		@CubeWidget{
 			id{cube_widget}
 			layout{
