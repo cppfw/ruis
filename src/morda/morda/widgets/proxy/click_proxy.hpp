@@ -18,12 +18,12 @@ public:
     /**
      * @brief Handler for mouse press state changes.
      */
-    std::function<bool(widget& w, bool is_pressed)> press_handler;
+    std::function<bool(click_proxy& w, bool is_pressed)> press_handler;
     
     /**
      * @brief Handler for clicked event.
      */
-    std::function<bool(widget& w)> click_handler;
+    std::function<bool(click_proxy& w)> click_handler;
 };
 
 }
