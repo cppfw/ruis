@@ -86,10 +86,10 @@ bool container::on_mouse_button(const mouse_button_event& e){
 				if(w->is_interactive()){
 					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 					w->on_mouse_button(mouse_button_event{
-							.is_down = e.is_down,
-							.pos = e.pos - w->rect().p,
-							.button = e.button,
-							.pointer_id = e.pointer_id
+							e.is_down,
+							e.pos - w->rect().p,
+							e.button,
+							e.pointer_id
 						});
 
 					unsigned& n = i->second.second;
@@ -125,10 +125,10 @@ bool container::on_mouse_button(const mouse_button_event& e){
 		// but, since we get mouse click, then the widget was hovered before the click.
 		c->set_hovered(true, e.pointer_id);
 		if(c->on_mouse_button(mouse_button_event{
-				.is_down = e.is_down,
-				.pos = e.pos - c->rect().p,
-				.button = e.button,
-				.pointer_id = e.pointer_id
+				e.is_down,
+				e.pos - c->rect().p,
+				e.button,
+				e.pointer_id
 			}))
 		{
 			ASSERT(this->mouseCaptureMap.find(e.pointer_id) == this->mouseCaptureMap.end())
@@ -159,8 +159,8 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		}
 
 		bool consumed = c->on_mouse_move(mouse_move_event{
-				.pos = e.pos - c->rect().p,
-				.pointer_id = e.pointer_id
+				e.pos - c->rect().p,
+				e.pointer_id
 			});
 
 		// set hovered goes after move notification because position of widget could change
@@ -183,8 +183,8 @@ bool container::on_mouse_move(const mouse_move_event& e){
 	}
 
 	return this->widget::on_mouse_move(mouse_move_event{
-			.pos = e.pos,
-			.pointer_id = e.pointer_id
+			e.pos,
+			e.pointer_id
 		});
 }
 

@@ -14,18 +14,18 @@ scroll_area::scroll_area(std::shared_ptr<morda::context> c, const puu::forest& d
 bool scroll_area::on_mouse_button(const mouse_button_event& e){
 	vector2 d = -this->curScrollPos;
 	return this->container::on_mouse_button(mouse_button_event{
-			.is_down = e.is_down,
-			.pos = e.pos - d,
-			.button = e.button,
-			.pointer_id = e.pointer_id
+			e.is_down,
+			e.pos - d,
+			e.button,
+			e.pointer_id
 		});
 }
 
 bool scroll_area::on_mouse_move(const mouse_move_event& e){
 	vector2 d = -this->curScrollPos;
 	return this->container::on_mouse_move(mouse_move_event{
-			.pos = e.pos - d,
-			.pointer_id = e.pointer_id
+			e.pos - d,
+			e.pointer_id
 		});
 }
 
