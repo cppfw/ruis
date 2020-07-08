@@ -2,8 +2,7 @@ configurations {
 	UserPlatformToolset {
 		// Needed because autopackage lacks VS2015+ support
 		key = "PlatformToolset";
-		// choices: "v140,v141";
-		choices: "v141";
+		choices: "v140,v141";
 	};
 }
 
@@ -51,7 +50,7 @@ nuget{
  			#destination : ${d_bin}\morda_res;
 		};
 
-/*
+
 		[x86,v140,release] {
 			lib: ..\msvs_solution\v140_Release\libmorda.lib;
 			res: ..\res\morda_res\**\*;
@@ -71,7 +70,6 @@ nuget{
 			lib: ..\msvs_solution\x64\v140_Debug\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
-*/
 
 		[x86,v141,release] {
 			lib: ..\msvs_solution\v141_Release\libmorda.lib;
