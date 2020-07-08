@@ -2,9 +2,9 @@
 
 using namespace morda;
 
-void image_push_button::on_pressed_changed(){
-	this->image_button::on_pressed_changed();
-	this->push_button::on_pressed_changed();
+void image_push_button::on_press_change(){
+	this->image_button::on_press_change();
+	this->push_button::on_press_change();
 }
 
 image_push_button::image_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :

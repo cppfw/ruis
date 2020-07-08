@@ -13,7 +13,7 @@ class push_button : virtual public button{
 	bool currentlyPressed = false;
 
 protected:
-	void on_pressed_changed()override;
+	void on_press_change()override;
 	
 	/**
 	 * @brief Invoked when the button is clicked.
@@ -23,7 +23,7 @@ protected:
 	
 	bool on_mouse_button(const  mouse_button_event& event)override;
 	
-	void on_hover_changed(unsigned pointer_id)override;
+	void on_hover_change(unsigned pointer_id)override;
 	
 public:
 	push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :

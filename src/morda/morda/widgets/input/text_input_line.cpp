@@ -216,7 +216,7 @@ void text_input_line::update(std::uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
-void text_input_line::on_focus_changed(){
+void text_input_line::on_focus_change(){
 	if(this->is_focused()){
 		this->ctrlPressed = false;
 		this->shiftPressed = false;

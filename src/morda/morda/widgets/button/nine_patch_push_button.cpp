@@ -18,10 +18,10 @@ nine_patch_push_button::nine_patch_push_button(std::shared_ptr<morda::context> c
 		this->set_pressed_nine_patch(this->context->loader.load<res::nine_patch>("morda_npt_button_pressed"));
 	}
 	
-	this->on_pressed_changed();
+	this->on_press_change();
 }
 
-void nine_patch_push_button::on_pressed_changed(){
-	this->nine_patch_button::on_pressed_changed();
-	this->push_button::on_pressed_changed();
+void nine_patch_push_button::on_press_change(){
+	this->nine_patch_button::on_press_change();
+	this->push_button::on_press_change();
 }

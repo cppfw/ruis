@@ -2,9 +2,9 @@
 
 using namespace morda;
 
-void nine_patch_toggle::on_pressed_changed(){
-	this->nine_patch_button::on_pressed_changed();
-	this->toggle_button::on_pressed_changed();
+void nine_patch_toggle::on_press_change(){
+	this->nine_patch_button::on_press_change();
+	this->toggle_button::on_press_change();
 }
 
 nine_patch_toggle::nine_patch_toggle(std::shared_ptr<morda::context> c, const puu::forest& desc) :

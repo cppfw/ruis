@@ -10,14 +10,14 @@ choice_button::choice_button(std::shared_ptr<morda::context> c, const puu::fores
 		toggle_button(this->context, desc)
 {}
 
-void choice_button::on_pressed_changed(){
+void choice_button::on_press_change(){
 	auto cg = this->find_ancestor<choice_group>();
 	if(!cg){
-		this->toggle_button::on_pressed_changed();
+		this->toggle_button::on_press_change();
 		return;
 	}
 	
-	this->toggle_button::on_pressed_changed();
+	this->toggle_button::on_press_change();
 	
 	if(this->is_pressed()){
 		cg->setActiveChoiceButton(utki::make_shared_from_this(*this));

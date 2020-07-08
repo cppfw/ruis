@@ -50,7 +50,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event)override;
 
-	void on_focus_changed()override;
+	void on_focus_change()override;
 
 	bool on_key(bool isDown, key keyCode)override;
 

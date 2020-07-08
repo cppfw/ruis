@@ -13,7 +13,7 @@ public:
 	click_proxy& operator=(const click_proxy&) = delete;
 
     bool on_mouse_button(const mouse_button_event& event)override;
-    void on_hover_changed(unsigned pointer_id)override;
+    void on_hover_change(unsigned pointer_id)override;
 
     bool is_pressed()const noexcept{
         return this->is_pressed_;

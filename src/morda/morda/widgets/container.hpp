@@ -164,7 +164,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event)override;
 
-	void on_hover_changed(unsigned pointer_id)override;
+	void on_hover_change(unsigned pointer_id)override;
 
 	/**
 	 * @brief Layout child widgets.
@@ -288,7 +288,7 @@ public:
 	 * @brief Called when children list changes.
 	 * This implementation requests re-layout.
      */
-	virtual void on_children_changed(){
+	virtual void on_children_change(){
 		this->invalidate_layout();
 	}
 };

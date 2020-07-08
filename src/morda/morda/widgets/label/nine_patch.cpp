@@ -90,7 +90,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 	this->imageMatrix_v[2][1] = this->try_get_widget_as<image>("morda_b");
 	this->imageMatrix_v[2][2] = this->try_get_widget_as<image>("morda_rb");
 
-	this->on_blending_changed();
+	this->on_blending_change();
 
 	this->content_v = this->try_get_widget_as<pile>("morda_content");
 
@@ -241,7 +241,7 @@ void nine_patch::set_center_visible(bool visible){
 	this->imageMatrix_v[1][1]->set_visible(visible);
 }
 
-void nine_patch::on_blending_changed(){
+void nine_patch::on_blending_change(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
 			this->imageMatrix_v[i][j]->set_blending_params(this->get_blending_params());

@@ -426,7 +426,7 @@ public:
 	/**
 	 * @brief Called when keyboard input focus changes.
 	 */
-	virtual void on_focus_changed(){}
+	virtual void on_focus_change(){}
 
 	/**
 	 * @brief Handle mouse button event.
@@ -455,8 +455,8 @@ public:
 	 * Called by framework when mouse pointer enters or leaves the widget boundaries.
 	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 */
-	virtual void on_hover_changed(unsigned pointer_id){
-//		TRACE(<< "widget::on_hover_changed(): this->IsHovered() = " << this->IsHovered() << std::endl)
+	virtual void on_hover_change(unsigned pointer_id){
+//		TRACE(<< "widget::on_hover_change(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
 
 	/**
@@ -473,7 +473,7 @@ public:
 	 * Called when parent of the widget changes. This happens when widget is
 	 * added to or removed from a container.
 	 */
-	virtual void on_parent_changed(){}
+	virtual void on_parent_change(){}
 
 	/**
 	 * @brief Measure how big a widget wants to be.
@@ -518,7 +518,7 @@ public:
 	/**
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
-	virtual void on_enabled_changed(){}
+	virtual void on_enable_change(){}
 
 	/**
 	 * @brief Check if widget can receive user input.

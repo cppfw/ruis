@@ -16,7 +16,7 @@ namespace morda{
 class choice_button : virtual public toggle_button{
 	
 protected:
-	void on_pressed_changed()override;
+	void on_press_change()override;
 	
 	bool on_mouse_button(const mouse_button_event& event)override;
 

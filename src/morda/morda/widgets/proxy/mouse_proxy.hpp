@@ -37,7 +37,7 @@ public:
 	 */
 	std::function<void(mouse_proxy& w, unsigned pointer_id)> hover_change_handler;
 
-	void on_hover_changed(unsigned pointer_id)override;
+	void on_hover_change(unsigned pointer_id)override;
 };
 
 }

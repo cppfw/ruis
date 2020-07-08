@@ -188,7 +188,7 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		});
 }
 
-void container::on_hover_changed(unsigned pointerID){
+void container::on_hover_change(unsigned pointerID){
 	if(this->is_hovered(pointerID)){
 		return;
 	}
@@ -232,9 +232,9 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 	auto ret = this->children_v.variable.emplace(before, std::move(w));
 
 	ww.parent_v = this;
-	ww.on_parent_changed();
+	ww.on_parent_change();
 
-	this->on_children_changed();
+	this->on_children_change();
 
 	ASSERT(!ww.is_hovered())
 	return ret;
@@ -259,9 +259,9 @@ container::widget_list::const_iterator container::erase(widget_list::const_itera
 
 	w->parent_v = nullptr;
 	w->set_unhovered();
-	w->on_parent_changed();
+	w->on_parent_change();
 
-	this->on_children_changed();
+	this->on_children_change();
 
 	return ret;
 }
@@ -349,7 +349,7 @@ container::widget_list::const_iterator container::change_child_z_position(widget
 		--ret;
 	}
 
-	this->on_children_changed();
+	this->on_children_change();
 
 	return ret;
 }

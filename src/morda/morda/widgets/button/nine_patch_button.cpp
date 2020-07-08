@@ -30,12 +30,12 @@ nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const pu
 			}
 		}
 	}
-	this->on_pressed_changed();
+	this->on_press_change();
 }
 
-void nine_patch_button::on_pressed_changed(){
+void nine_patch_button::on_press_change(){
 	this->set_nine_patch(this->is_pressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
-	this->button::on_pressed_changed();
+	this->button::on_press_change();
 }
 
 void nine_patch_button::set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np){

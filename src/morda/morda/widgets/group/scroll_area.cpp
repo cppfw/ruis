@@ -138,8 +138,8 @@ void scroll_area::lay_out(){
 	}
 }
 
-void scroll_area::on_children_changed(){
-	this->container::on_children_changed();
+void scroll_area::on_children_change(){
+	this->container::on_children_change();
 	this->arrangeWidgets();
 	this->updateEffectiveDim();
 }

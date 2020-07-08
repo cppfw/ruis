@@ -27,8 +27,8 @@ check_box::check_box(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	this->set_nine_patch(this->context->loader.load<res::nine_patch>("morda_npt_checkbox_bg"));
 }
 
-void check_box::on_pressed_changed(){
+void check_box::on_press_change(){
 	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
-	this->toggle_button::on_pressed_changed();
+	this->toggle_button::on_press_change();
 }

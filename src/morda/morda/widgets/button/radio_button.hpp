@@ -26,11 +26,11 @@ public:
 		return this->choice_button::on_mouse_button(e);
 	}
 
-	void on_hover_changed(unsigned pointer_id)override{
-		this->choice_button::on_hover_changed(pointer_id);
+	void on_hover_change(unsigned pointer_id)override{
+		this->choice_button::on_hover_change(pointer_id);
 	}
 	
-	void on_pressed_changed()override;
+	void on_press_change()override;
 
 private:
 

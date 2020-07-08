@@ -70,7 +70,7 @@ void blending_widget::set_blending_enabled(bool enable){
 		return;
 	}
 	this->isBlendingEnabled_v = enable;
-	this->on_blending_changed();
+	this->on_blending_change();
 }
 
 void blending_widget::set_blending_params(const blending_params& params){
@@ -78,5 +78,5 @@ void blending_widget::set_blending_params(const blending_params& params){
 		return;
 	}
 	this->blend_v = params;
-	this->on_blending_changed();
+	this->on_blending_change();
 }

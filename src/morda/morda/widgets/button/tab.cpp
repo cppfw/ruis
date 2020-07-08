@@ -50,9 +50,9 @@ bool tab::on_mouse_button(const mouse_button_event& e){
 	return this->choice_button::on_mouse_button(e);
 }
 
-void tab::on_pressed_changed() {
-	this->choice_button::on_pressed_changed();
-	this->nine_patch_toggle::on_pressed_changed();
+void tab::on_press_change() {
+	this->choice_button::on_press_change();
+	this->nine_patch_toggle::on_press_change();
 }
 
 tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -70,5 +70,5 @@ tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 	}
 
 	// initialize nine-patch
-	this->on_pressed_changed();
+	this->on_press_change();
 }

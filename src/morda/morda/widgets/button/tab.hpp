@@ -21,9 +21,9 @@ public:
 protected:	
 	bool on_mouse_button(const mouse_button_event& event)override;
 
-	void on_hover_changed(unsigned pointer_id)override{}
+	void on_hover_change(unsigned pointer_id)override{}
 	
-	void on_pressed_changed()override;
+	void on_press_change()override;
 };
 
 }

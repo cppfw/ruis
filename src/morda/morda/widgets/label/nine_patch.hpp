@@ -83,7 +83,7 @@ public:
 
 	sides<real> get_actual_borders()const noexcept;
 
-	void on_blending_changed()override;
+	void on_blending_change()override;
 
 
 private:

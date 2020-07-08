@@ -28,12 +28,12 @@ void button::set_pressed(bool pressed){
 	}
 	this->isPressed_v = pressed;
 	this->isPressedChangedNotified = false;
-	this->on_pressed_changed();
+	this->on_press_change();
 }
 
 
 
-void button::on_pressed_changed(){
+void button::on_press_change(){
 	if(this->isPressedChangedNotified){
 		return;
 	}

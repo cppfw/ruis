@@ -12,9 +12,9 @@ void image_button::update_image(){
 	}
 }
 
-void image_button::on_pressed_changed(){
+void image_button::on_press_change(){
 	this->update_image();
-	this->button::on_pressed_changed();
+	this->button::on_press_change();
 }
 
 image_button::image_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :

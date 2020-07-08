@@ -361,7 +361,7 @@ void widget::set_enabled(bool enable){
 		this->set_unhovered();
 	}
 
-	this->on_enabled_changed();
+	this->on_enable_change();
 }
 
 void widget::set_visible(bool visible){
@@ -375,7 +375,7 @@ void widget::set_unhovered(){
 	auto hoverSet = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for(auto h : hoverSet){
-		this->on_hover_changed(h);
+		this->on_hover_change(h);
 	}
 }
 
@@ -393,5 +393,5 @@ void widget::set_hovered(bool isHovered, unsigned pointerID){
 		this->hovered.erase(pointerID);
 	}
 
-	this->on_hover_changed(pointerID);
+	this->on_hover_change(pointerID);
 }

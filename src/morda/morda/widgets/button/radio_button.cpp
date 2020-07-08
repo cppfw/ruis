@@ -30,8 +30,8 @@ radio_button::radio_button(std::shared_ptr<morda::context> c, const puu::forest&
 	this->checkWidget->set_visible(this->is_pressed());
 }
 
-void radio_button::on_pressed_changed(){
-	this->choice_button::on_pressed_changed();
+void radio_button::on_press_change(){
+	this->choice_button::on_press_change();
 	this->checkWidget->set_visible(this->is_pressed());
 	this->clear_cache();
 }

@@ -47,7 +47,7 @@ public:
 
 	void lay_out()override;
 
-	void on_children_changed()override;
+	void on_children_change()override;
 
 	/**
 	 * @brief Get current scroll position.

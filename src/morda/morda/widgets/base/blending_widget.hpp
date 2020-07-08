@@ -84,7 +84,7 @@ public:
 	 * @brief Invoked when blending parameters are changed.
 	 * Also invoked if blending enabled/disabled status has changed.
 	 */
-	virtual void on_blending_changed(){}
+	virtual void on_blending_change(){}
 };
 
 }

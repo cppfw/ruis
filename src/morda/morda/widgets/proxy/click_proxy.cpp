@@ -37,8 +37,8 @@ bool click_proxy::on_mouse_button(const mouse_button_event& e){
 	return ret;
 }
 
-void click_proxy::on_hover_changed(unsigned pointer_id){
-    // TRACE(<< "on_hover_changed(): hovered = " << this->is_hovered() << " pointer_id = " << pointer_id << std::endl)
+void click_proxy::on_hover_change(unsigned pointer_id){
+    // TRACE(<< "on_hover_change(): hovered = " << this->is_hovered() << " pointer_id = " << pointer_id << std::endl)
     if(pointer_id != 0){
         return;
     }

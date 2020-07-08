@@ -38,7 +38,7 @@ public:
 protected:
 	nine_patch_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	void on_pressed_changed()override;
+	void on_press_change()override;
 };
 
 }

@@ -15,7 +15,7 @@ void text_widget::set_font(std::shared_ptr<res::font> font){
 
 	this->invalidate_layout();
 
-	this->on_font_changed();
+	this->on_font_change();
 }
 
 text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -65,16 +65,16 @@ vector2 single_line_text_widget::measure(const morda::vector2& quotum)const noex
 	return ret;
 }
 
-void single_line_text_widget::on_text_changed(){
+void single_line_text_widget::on_text_change(){
 	this->recompute_bounding_box();
-	this->text_widget::on_text_changed();
+	this->text_widget::on_text_change();
 }
 
 void text_widget::set_text(std::u32string&& text){
 	this->lines.clear();
 	this->lines.emplace_back(std::move(text));
 	this->invalidate_layout();
-	this->on_text_changed();
+	this->on_text_change();
 }
 
 std::u32string text_widget::get_text()const{

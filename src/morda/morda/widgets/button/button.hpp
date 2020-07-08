@@ -23,7 +23,7 @@ protected:
 	 * @brief Called when button pressed state changes.
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
-	virtual void on_pressed_changed();
+	virtual void on_press_change();
 public:
 	button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 

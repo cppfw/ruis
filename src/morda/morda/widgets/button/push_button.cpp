@@ -26,7 +26,7 @@ bool push_button::on_mouse_button(const mouse_button_event& e){
 	return true;
 }
 
-void push_button::on_hover_changed(unsigned pointer_id){
+void push_button::on_hover_change(unsigned pointer_id){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 
 	//TODO: check if was hovered by the same pointer
@@ -38,8 +38,8 @@ void push_button::on_hover_changed(unsigned pointer_id){
 	}
 }
 
-void push_button::on_pressed_changed(){
-	this->button::on_pressed_changed();
+void push_button::on_press_change(){
+	this->button::on_press_change();
 
 	if(this->currentlyPressed && this->is_hovered()){
 		ASSERT(!this->is_pressed())

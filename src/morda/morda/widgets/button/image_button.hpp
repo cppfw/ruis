@@ -16,7 +16,7 @@ class image_button :
 	
 	void update_image();
 protected:
-	void on_pressed_changed()override;
+	void on_press_change()override;
 
 	image_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	

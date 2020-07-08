@@ -44,9 +44,9 @@ public:
 		this->set_text(std::u32string());
 	}
 
-	virtual void on_font_changed(){}
+	virtual void on_font_change(){}
 
-	virtual void on_text_changed(){
+	virtual void on_text_change(){
 		if (this->text_change_handler) {
 			this->text_change_handler(*this);
 		}
@@ -77,11 +77,11 @@ protected:
 		this->bb = this->get_font().get_bounding_box(this->get_text());
 	}
 public:
-	void on_font_changed()override{
+	void on_font_change()override{
 		this->recompute_bounding_box();
 	}
 
-	void on_text_changed()override;
+	void on_text_change()override;
 };
 
 }
