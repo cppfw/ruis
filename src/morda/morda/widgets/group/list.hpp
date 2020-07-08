@@ -74,7 +74,7 @@ public:
 		 */
 		virtual void recycle(size_t index, std::shared_ptr<widget> w){}
 
-		void notify_data_set_changed();
+		void notify_data_set_change();
 	};
 
 	void set_provider(std::shared_ptr<provider> item_provider = nullptr);

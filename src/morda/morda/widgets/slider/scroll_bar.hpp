@@ -35,7 +35,7 @@ protected:
 
 	void on_fraction_change()override;
 
-	void on_band_changed()override;
+	void on_band_change()override;
 
 public:
 

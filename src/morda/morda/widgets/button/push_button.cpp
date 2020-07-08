@@ -43,13 +43,13 @@ void push_button::on_press_change(){
 
 	if(this->currentlyPressed && this->is_hovered()){
 		ASSERT(!this->is_pressed())
-		this->on_clicked();
+		this->on_click();
 	}
 
 	this->currentlyPressed = this->is_pressed();
 }
 
-void push_button::on_clicked(){
+void push_button::on_click(){
 	if (this->click_handler){
 		this->click_handler(*this);
 	}

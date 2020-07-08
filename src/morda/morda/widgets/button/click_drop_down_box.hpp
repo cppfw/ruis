@@ -27,7 +27,7 @@ private:
 
 	void show_drop_down_menu();
 
-	void mouse_button_up_handler(bool is_first_button_up_event);
+	void handle_mouse_button_up(bool is_first_button_up_event);
 };
 
 }

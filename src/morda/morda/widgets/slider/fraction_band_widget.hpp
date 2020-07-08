@@ -12,7 +12,7 @@ protected:
 			fraction_widget(this->context, desc)
 	{}
 
-	virtual void on_band_changed();
+	virtual void on_band_change();
 
 public:
 	std::function<void(fraction_band_widget& s)> band_change_handler;

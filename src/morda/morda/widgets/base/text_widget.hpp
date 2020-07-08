@@ -47,7 +47,7 @@ public:
 	virtual void on_font_change(){}
 
 	virtual void on_text_change(){
-		if (this->text_change_handler) {
+		if(this->text_change_handler){
 			this->text_change_handler(*this);
 		}
 	}

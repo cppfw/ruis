@@ -34,7 +34,7 @@ void tree_view::provider::notify_data_set_changed(){
 	this->visible_tree.value.subtree_size = 0;
 	this->iter_index = 0;
 	this->iter = this->traversal().begin();
-	this->list_widget::provider::notify_data_set_changed();
+	this->list_widget::provider::notify_data_set_change();
 }
 
 size_t tree_view::provider::count()const noexcept{
@@ -120,7 +120,7 @@ void tree_view::provider::collapse(const std::vector<size_t>& index){
 	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->list_widget::provider::notify_data_set_changed();
+	this->list_widget::provider::notify_data_set_change();
 }
 
 void tree_view::provider::set_children(decltype(iter) i, size_t num_children){
@@ -165,7 +165,7 @@ void tree_view::provider::uncollapse(const std::vector<size_t>& index){
 
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->list_widget::provider::notify_data_set_changed();
+	this->list_widget::provider::notify_data_set_change();
 }
 
 void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
@@ -186,7 +186,7 @@ void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
 
 	if(parent_list->empty()){
 		// item was added to a collapsed subtree
-		this->list_widget::provider::notify_data_set_changed();
+		this->list_widget::provider::notify_data_set_change();
 		return;
 	}
 
@@ -232,7 +232,7 @@ void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
 
-	this->list_widget::provider::notify_data_set_changed();
+	this->list_widget::provider::notify_data_set_change();
 }
 
 void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
@@ -242,7 +242,7 @@ void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 
 	if(!this->traversal().is_valid(index)){
 		// the removed item was probably in collapsed part of the tree
-		this->list_widget::provider::notify_data_set_changed();
+		this->list_widget::provider::notify_data_set_change();
 		return;
 	}
 
@@ -315,5 +315,5 @@ void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
 
-	this->list_widget::provider::notify_data_set_changed();
+	this->list_widget::provider::notify_data_set_change();
 }

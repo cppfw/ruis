@@ -178,8 +178,8 @@ void scroll_bar::lay_out(){
 	}
 }
 
-void scroll_bar::on_band_changed(){
+void scroll_bar::on_band_change(){
 	this->lay_out();
 
-	this->fraction_band_widget::on_band_changed();
+	this->fraction_band_widget::on_band_change();
 }

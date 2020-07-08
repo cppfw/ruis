@@ -100,7 +100,7 @@ click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, cons
 
 bool click_drop_down_box::on_mouse_button(const mouse_button_event& e){
 	if(!e.is_down){
-		this->mouse_button_up_handler(true);
+		this->handle_mouse_button_up(true);
 	}
 
 	return this->nine_patch_push_button::on_mouse_button(e);
@@ -139,7 +139,7 @@ void click_drop_down_box::show_drop_down_menu(){
 	np->get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
 			[this](mouse_proxy&, const mouse_button_event& e) -> bool{
 				if(!e.is_down){
-					this->mouse_button_up_handler(false);
+					this->handle_mouse_button_up(false);
 				}
 
 				return true;
@@ -148,7 +148,7 @@ void click_drop_down_box::show_drop_down_menu(){
 	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
 }
 
-void click_drop_down_box::mouse_button_up_handler(bool is_first_button_up_event){
+void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 	auto ddm = this->current_drop_down_menu.lock();
 	if(!ddm){
 		return;

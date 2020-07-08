@@ -388,7 +388,7 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 	return ret;
 }
 
-void list_widget::provider::notify_data_set_changed(){
+void list_widget::provider::notify_data_set_change(){
 	if(!this->get_list()){
 		return;
 	}

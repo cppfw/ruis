@@ -19,7 +19,7 @@ protected:
 	 * @brief Invoked when the button is clicked.
 	 * Default implementation emits 'clicked' signal.
 	 */
-	virtual void on_clicked();
+	virtual void on_click();
 	
 	bool on_mouse_button(const  mouse_button_event& event)override;
 	

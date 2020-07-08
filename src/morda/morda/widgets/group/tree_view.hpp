@@ -72,7 +72,7 @@ public:
 		void notify_data_set_changed();
 
 		void notify_item_changed(){
-			this->list_widget::provider::notify_data_set_changed();
+			this->list_widget::provider::notify_data_set_change();
 		}
 
 		/**
