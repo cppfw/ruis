@@ -23,7 +23,7 @@ public:
 	 * @brief Resize event signal.
 	 * Emitted when this widget is resized.
 	 */
-	std::function<void(const vector2& new_size)> resize_handler;
+	std::function<void(resize_proxy& w)> resize_handler;
 };
 
 }

@@ -9,7 +9,6 @@
 
 namespace morda{
 
-
 /**
  * @brief Window widget.
  * Window has borders, caption bar and can contain child widgets laid out as in pile container.
@@ -23,7 +22,7 @@ class window :
 		virtual public widget,
 		private pile
 {
-	morda::vector2 emptyMinDim;//minimal dimension of empty window
+	morda::vector2 emptyMinDim; // minimal dimension of empty window
 
 	std::shared_ptr<color> titleBg;
 	std::uint32_t titleBgColorTopmost = 0xffff0000;

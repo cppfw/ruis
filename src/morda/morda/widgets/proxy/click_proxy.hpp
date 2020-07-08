@@ -5,7 +5,7 @@
 namespace morda{
 
 class click_proxy : virtual public widget{
-    bool is_pressed = false;
+    bool is_pressed_ = false;
 public:
     click_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
@@ -15,15 +15,19 @@ public:
     bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
     void on_hover_changed(unsigned pointer_id)override;
 
+    bool is_pressed()const noexcept{
+        return this->is_pressed_;
+    }
+
     /**
      * @brief Handler for mouse press state changes.
      */
-    std::function<bool(bool is_pressed)> press_handler;
+    std::function<bool(click_proxy& w)> press_change_handler;
     
     /**
      * @brief Handler for clicked event.
      */
-    std::function<bool()> click_handler;
+    std::function<bool(click_proxy& w)> click_handler;
 };
 
 }
