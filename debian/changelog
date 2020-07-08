@@ -1,3 +1,9 @@
+libmorda (0.5.129) unstable; urgency=medium
+
+  * mouse events refactored
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Jul 2020 17:34:21 +0300
+
 libmorda (0.5.128) unstable; urgency=medium
 
   * add click_proxy
