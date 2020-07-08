@@ -6,18 +6,18 @@ click_proxy::click_proxy(std::shared_ptr<morda::context> c, const puu::forest& d
         widget(std::move(c), desc)
 {}
 
-bool click_proxy::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
+bool click_proxy::on_mouse_button(const mouse_button_event& e){
     bool ret = false;
 
-    if(button != mouse_button::left){
+    if(e.button != mouse_button::left){
         return false;
     }
 
-    if(pointer_id != 0){
+    if(e.pointer_id != 0){
         return false;
     }
 
-    if(is_down){
+    if(e.is_down){
         this->is_pressed_ = true;
         if(this->press_change_handler){
             ret = this->press_change_handler(*this);

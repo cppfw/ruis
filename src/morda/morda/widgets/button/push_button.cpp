@@ -2,19 +2,18 @@
 
 using namespace morda;
 
-bool push_button::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
+bool push_button::on_mouse_button(const mouse_button_event& e){
 	//TODO: multi-touch support
 
-//	TRACE(<< "AbstractButton::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
-	if(button != mouse_button::left){
+	if(e.button != mouse_button::left){
 		return false;
 	}
 
-	if(isDown){
+	if(e.is_down){
 		// NOTE: sometimes pos is outside of the widget. For example, when mouse is captured by this widget and
 		//       some other mouse button is clicked, and then the left one is clicked outside of widget,
 		//       then the event about left button down will still be delivered to this widget because it has captured the mouse.
-		if(this->overlaps(pos)){
+		if(this->overlaps(e.pos)){
 			this->set_pressed(true);
 		}
 	}else{
@@ -27,12 +26,12 @@ bool push_button::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_
 	return true;
 }
 
-void push_button::on_hover_changed(unsigned pointerId){
+void push_button::on_hover_changed(unsigned pointer_id){
 //	TRACE(<< "AbstractButton::OnHoverChanged(): enter" << std::endl)
 
 	//TODO: check if was hovered by the same pointer
 
-	if(!this->is_hovered(pointerId)){
+	if(!this->is_hovered(pointer_id)){
 		if(this->is_pressed()){
 			this->set_pressed(false);
 		}

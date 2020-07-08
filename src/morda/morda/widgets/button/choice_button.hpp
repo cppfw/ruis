@@ -18,7 +18,7 @@ class choice_button : virtual public toggle_button{
 protected:
 	void on_pressed_changed()override;
 	
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID)override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 
 public:
 	choice_button(std::shared_ptr<morda::context> c, const puu::forest& desc);

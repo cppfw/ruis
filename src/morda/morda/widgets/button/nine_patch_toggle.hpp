@@ -15,8 +15,8 @@ public:
 protected:
 	void on_pressed_changed()override;
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID)override{
-		return this->toggle_button::on_mouse_button(isDown, pos, button, pointerID);
+	bool on_mouse_button(const mouse_button_event& e)override{
+		return this->toggle_button::on_mouse_button(e);
 	}
 };
 

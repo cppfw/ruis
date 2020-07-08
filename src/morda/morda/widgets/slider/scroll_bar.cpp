@@ -83,17 +83,17 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 	}
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");
-	hp->mouse_button_handler = [this](mouse_proxy&, bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId) -> bool{
-		if(button != mouse_button::left){
+	hp->mouse_button_handler = [this](mouse_proxy&, const mouse_button_event& e) -> bool{
+		if(e.button != mouse_button::left){
 			return false;
 		}
 
-		if(isDown){
+		if(e.is_down){
 			ASSERT(!this->isGrabbed)
 			this->isGrabbed = true;
 
 			unsigned longIndex = this->get_long_index();
-			this->clickPoint = pos[longIndex];
+			this->clickPoint = e.pos[longIndex];
 
 			return true;
 		}else{
@@ -106,7 +106,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 		}
 	};
 
-	hp->mouse_move_handler = [this](mouse_proxy&, const morda::vector2& pos, unsigned pointerId) -> bool {
+	hp->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) -> bool {
 		if(!this->isGrabbed){
 			return false;
 		}
@@ -117,7 +117,7 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 		maxPos = std::max(maxPos, 0.0f); // clamp bottom
 
 		float newPos = this->handle.rect().p[longIndex];
-		newPos += pos[longIndex] - this->clickPoint;
+		newPos += e.pos[longIndex] - this->clickPoint;
 		newPos = std::max(newPos, real(0)); // clamp bottom
 		newPos = std::min(newPos, maxPos); // clamp top
 

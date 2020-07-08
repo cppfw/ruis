@@ -17,7 +17,7 @@
 #include "../render/texture_2d.hpp"
 
 #include "../util/key.hpp"
-#include "../util/mouse_button.hpp"
+#include "../util/events.hpp"
 #include "../util/units.hpp"
 
 namespace morda{
@@ -431,26 +431,22 @@ public:
 	/**
 	 * @brief Handle mouse button event.
 	 * This function is called by framework when widget receives mouse button event.
-	 * @param is_down - was the button pressed (true) or released (false).
-	 * @param pos - position of the mouse cursor at the moment when the button event has occurred, in widget local coordinates.
-	 * @param button - mouse button.
-	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 * @param event - mouse button event information, like button, pointer position, etc.
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
-	virtual bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
+	virtual bool on_mouse_button(const mouse_button_event& event){
 		return false;
 	}
 
 	/**
 	 * @brief Handle mouse move event.
 	 * Called by framework when mouse pointer was moved within the widget.
-	 * @param pos - new position of the mouse cursor in widget local coordinates.
-	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 * @param event - mouse move event information, like new pointer position, pointer id.
 	 * @return true to consume the event and prevent its further propagation.
 	 * @return false to allow the event to be propagated to underlying widgets.
 	 */
-	virtual bool on_mouse_move(const morda::vector2& pos, unsigned pointer_id){
+	virtual bool on_mouse_move(const mouse_move_event& event){
 		return false;
 	}
 

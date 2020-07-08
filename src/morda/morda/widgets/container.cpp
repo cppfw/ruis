@@ -73,23 +73,28 @@ void container::render(const morda::matrix4& matrix)const{
 	}
 }
 
-bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button button, unsigned pointerId){
+bool container::on_mouse_button(const mouse_button_event& e){
 //	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
 	{
-		auto i = this->mouseCaptureMap.find(pointerId);
+		auto i = this->mouseCaptureMap.find(e.pointer_id);
 		if(i != this->mouseCaptureMap.end()){
 			if(auto w = i->second.first.lock()){
 				if(w->is_interactive()){
-					w->set_hovered(w->rect().overlaps(pos), pointerId);
-					w->on_mouse_button(isDown, pos - w->rect().p, button, pointerId);
+					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
+					w->on_mouse_button(mouse_button_event{
+							.is_down = e.is_down,
+							.pos = e.pos - w->rect().p,
+							.button = e.button,
+							.pointer_id = e.pointer_id
+						});
 
 					unsigned& n = i->second.second;
 					// TODO: why is this counter needed?
-					if(isDown){
+					if(e.is_down){
 						++n;
 					}else{
 						--n;
@@ -112,28 +117,34 @@ bool container::on_mouse_button(bool isDown, const vector2& pos, mouse_button bu
 			continue;
 		}
 
-		if(!c->rect().overlaps(pos)){
+		if(!c->rect().overlaps(e.pos)){
 			continue;
 		}
 
 		// Sometimes mouse click event comes without prior mouse move,
 		// but, since we get mouse click, then the widget was hovered before the click.
-		c->set_hovered(true, pointerId);
-		if(c->on_mouse_button(isDown, pos - c->rect().p, button, pointerId)){
-			ASSERT(this->mouseCaptureMap.find(pointerId) == this->mouseCaptureMap.end())
+		c->set_hovered(true, e.pointer_id);
+		if(c->on_mouse_button(mouse_button_event{
+				.is_down = e.is_down,
+				.pos = e.pos - c->rect().p,
+				.button = e.button,
+				.pointer_id = e.pointer_id
+			}))
+		{
+			ASSERT(this->mouseCaptureMap.find(e.pointer_id) == this->mouseCaptureMap.end())
 
-			if(isDown){ // in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(pointerId, std::make_pair(std::weak_ptr<widget>(c), 1)));
+			if(e.is_down){ // in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
+				this->mouseCaptureMap.insert(std::make_pair(e.pointer_id, std::make_pair(std::weak_ptr<widget>(c), 1)));
 			}
 
 			return true;
 		}
 	}
 
-	return this->widget::on_mouse_button(isDown, pos, button, pointerId);
+	return this->widget::on_mouse_button(e);
 }
 
-bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
+bool container::on_mouse_move(const mouse_move_event& e){
 //	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
@@ -147,28 +158,34 @@ bool container::on_mouse_move(const vector2& pos, unsigned pointerID){
 			continue;
 		}
 
-		bool consumed = c->on_mouse_move(pos - c->rect().p, pointerID);
+		bool consumed = c->on_mouse_move(mouse_move_event{
+				.pos = e.pos - c->rect().p,
+				.pointer_id = e.pointer_id
+			});
 
 		// set hovered goes after move notification because position of widget could change
 		// during handling the notification, so need to check after that for hovering
-		if(!c->rect().overlaps(pos)){
-			c->set_hovered(false, pointerID);
+		if(!c->rect().overlaps(e.pos)){
+			c->set_hovered(false, e.pointer_id);
 			continue;
 		}
 
-		c->set_hovered(true, pointerID);
+		c->set_hovered(true, e.pointer_id);
 
 		if(consumed){ // consumed mouse move event
 			// un-hover rest of the children
 			for(++i; i != this->children().rend(); ++i){
 				auto& c = *i;
-				c->set_hovered(false, pointerID);
+				c->set_hovered(false, e.pointer_id);
 			}
 			return true;
 		}
 	}
 
-	return this->widget::on_mouse_move(pos, pointerID);
+	return this->widget::on_mouse_move(mouse_move_event{
+			.pos = e.pos,
+			.pointer_id = e.pointer_id
+		});
 }
 
 void container::on_hover_changed(unsigned pointerID){

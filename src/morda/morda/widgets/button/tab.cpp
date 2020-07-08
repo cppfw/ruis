@@ -40,14 +40,14 @@ bool tab::maskOverlaps(vector2 pos) {
 	return true;
 }
 
-bool tab::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
-	if(isDown){
-		if(!maskOverlaps(pos)){
+bool tab::on_mouse_button(const mouse_button_event& e){
+	if(e.is_down){
+		if(!maskOverlaps(e.pos)){
 			return false;
 		}
 	}
 
-	return this->choice_button::on_mouse_button(isDown, pos, button, pointerId);
+	return this->choice_button::on_mouse_button(e);
 }
 
 void tab::on_pressed_changed() {

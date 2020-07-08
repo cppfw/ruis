@@ -2,7 +2,7 @@
 
 #include "render/renderer.hpp"
 
-#include "util/mouse_button.hpp"
+#include "util/events.hpp"
 
 #include "updateable.hpp"
 

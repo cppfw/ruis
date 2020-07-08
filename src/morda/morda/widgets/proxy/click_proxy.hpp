@@ -12,7 +12,7 @@ public:
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;
 
-    bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
+    bool on_mouse_button(const mouse_button_event& event)override;
     void on_hover_changed(unsigned pointer_id)override;
 
     bool is_pressed()const noexcept{

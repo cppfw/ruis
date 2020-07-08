@@ -62,9 +62,9 @@ public:
 		}
 	}
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerId) override{
-		TRACE(<< "OnMouseButton(): isDown = " << isDown << ", pos = " << pos << ", button = " << unsigned(button) << ", pointerId = " << pointerId << std::endl)
-		if(!isDown){
+	bool on_mouse_button(const morda::mouse_button_event& e)override{
+		TRACE(<< "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl)
+		if(!e.is_down){
 			return false;
 		}
 
@@ -474,18 +474,11 @@ public:
 
 				auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
 				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](
-						morda::mouse_proxy&,
-						bool isDown,
-						const morda::vector2& pos,
-						morda::mouse_button button,
-						unsigned pointerId
-					) -> bool
-				{
-					if(button != morda::mouse_button::left){
+				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
+					if(e.button != morda::mouse_button::left){
 						return false;
 					}
-					if(!isDown){
+					if(!e.is_down){
 						return false;
 					}
 
@@ -541,15 +534,8 @@ public:
 
 				auto mp = v->try_get_widget_as<morda::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouse_button_handler = [this, path](
-						morda::mouse_proxy&,
-						bool isDown,
-						const morda::vector2&,
-						morda::mouse_button button,
-						unsigned pointerId
-					) -> bool
-				{
-					if(!isDown || button != morda::mouse_button::left){
+				mp->mouse_button_handler = [this, path](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool{
+					if(!e.is_down || e.button != morda::mouse_button::left){
 						return false;
 					}
 
@@ -759,19 +745,19 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned id){
-				if(button == morda::mouse_button::left){
-					state->isLeftButtonPressed = isDown;
-					state->oldPos = pos;
+			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, const morda::mouse_button_event& e){
+				if(e.button == morda::mouse_button::left){
+					state->isLeftButtonPressed = e.is_down;
+					state->oldPos = e.pos;
 					return true;
 				}
 				return false;
 			};
 
-			mouseProxy->mouse_move_handler = [vs, vl, state](morda::mouse_proxy&, const morda::vector2& pos, unsigned id){
+			mouseProxy->mouse_move_handler = [vs, vl, state](morda::mouse_proxy&, const morda::mouse_move_event& e){
 				if(state->isLeftButtonPressed){
-					auto dp = state->oldPos - pos;
-					state->oldPos = pos;
+					auto dp = state->oldPos - e.pos;
+					state->oldPos = e.pos;
 					if(auto l = vl.lock()){
 						l->scroll_by(dp.y);
 						if(auto s = vs.lock()){
@@ -820,19 +806,19 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned id){
-				if(button == morda::mouse_button::left){
-					state->isLeftButtonPressed = isDown;
-					state->oldPos = pos;
+			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, const morda::mouse_button_event& e){
+				if(e.button == morda::mouse_button::left){
+					state->isLeftButtonPressed = e.is_down;
+					state->oldPos = e.pos;
 					return true;
 				}
 				return false;
 			};
 
-			mouseProxy->mouse_move_handler = [hl, hs, state](morda::mouse_proxy& w, const morda::vector2& pos, unsigned id) -> bool {
+			mouseProxy->mouse_move_handler = [hl, hs, state](morda::mouse_proxy& w, const morda::mouse_move_event& e) -> bool {
 				if(state->isLeftButtonPressed){
-					auto dp = state->oldPos - pos;
-					state->oldPos = pos;
+					auto dp = state->oldPos - e.pos;
+					state->oldPos = e.pos;
 					if(auto l = hl.lock()){
 						l->scroll_by(dp.x);
 						if(auto s = hs.lock()){

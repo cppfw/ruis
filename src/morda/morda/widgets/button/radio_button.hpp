@@ -22,12 +22,12 @@ public:
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;
 	
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override{
-		return this->choice_button::on_mouse_button(isDown, pos, button, pointerId);
+	bool on_mouse_button(const mouse_button_event& e)override{
+		return this->choice_button::on_mouse_button(e);
 	}
 
-	void on_hover_changed(unsigned pointerID)override{
-		this->choice_button::on_hover_changed(pointerID);
+	void on_hover_changed(unsigned pointer_id)override{
+		this->choice_button::on_hover_changed(pointer_id);
 	}
 	
 	void on_pressed_changed()override;

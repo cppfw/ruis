@@ -13,7 +13,7 @@ namespace morda{
  */
 class toggle_button : virtual public button{
 protected:
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID) override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 	
 public:
 	toggle_button(std::shared_ptr<morda::context> c, const puu::forest& desc);

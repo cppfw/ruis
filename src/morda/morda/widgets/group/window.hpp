@@ -86,9 +86,9 @@ public:
 	 */
 	bool is_topmost()const noexcept;
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 
-	bool on_mouse_move(const morda::vector2& pos, unsigned pointerId)override;
+	bool on_mouse_move(const mouse_move_event& event)override;
 
 	void set_background(std::shared_ptr<widget> w);
 

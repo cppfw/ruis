@@ -65,26 +65,26 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 	}
 }
 
-bool text_input_line::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId){
-	if(button != mouse_button::left){
+bool text_input_line::on_mouse_button(const mouse_button_event& e){
+	if(e.button != mouse_button::left){
 		return false;
 	}
 
-	this->leftMouseButtonDown = isDown;
+	this->leftMouseButtonDown = e.is_down;
 	
-	if(isDown){
-		this->set_cursor_index(this->posToIndex(pos.x));
+	if(e.is_down){
+		this->set_cursor_index(this->posToIndex(e.pos.x));
 	}
 	
 	return true;
 }
 
-bool text_input_line::on_mouse_move(const morda::vector2& pos, unsigned pointerId){
+bool text_input_line::on_mouse_move(const mouse_move_event& e){
 	if(!this->leftMouseButtonDown){
 		return false;
 	}
 	
-	this->set_cursor_index(this->posToIndex(pos.x), true);
+	this->set_cursor_index(this->posToIndex(e.pos.x), true);
 	return true;
 }
 

@@ -160,9 +160,9 @@ public:
 
 	void render(const matrix4& matrix)const override;
 
-	bool on_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned pointer_id)override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 
-	bool on_mouse_move(const vector2& pos, unsigned pointer_id)override;
+	bool on_mouse_move(const mouse_move_event& event)override;
 
 	void on_hover_changed(unsigned pointer_id)override;
 

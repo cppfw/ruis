@@ -98,12 +98,12 @@ click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, cons
 	};
 }
 
-bool click_drop_down_box::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
-	if(!is_down){
+bool click_drop_down_box::on_mouse_button(const mouse_button_event& e){
+	if(!e.is_down){
 		this->mouse_button_up_handler(true);
 	}
 
-	return this->nine_patch_push_button::on_mouse_button(is_down, pos, button, pointer_id);
+	return this->nine_patch_push_button::on_mouse_button(e);
 }
 
 void click_drop_down_box::show_drop_down_menu(){
@@ -137,8 +137,8 @@ void click_drop_down_box::show_drop_down_menu(){
 	this->hovered_index = -1;
 
 	np->get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
-			[this](mouse_proxy&, bool is_down, const vector2 pos, mouse_button button, unsigned id) -> bool{
-				if(!is_down){
+			[this](mouse_proxy&, const mouse_button_event& e) -> bool{
+				if(!e.is_down){
 					this->mouse_button_up_handler(false);
 				}
 

@@ -46,9 +46,9 @@ public:
 
 	void render(const morda::matrix4& matrix) const override;
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 
-	bool on_mouse_move(const morda::vector2& pos, unsigned pointerId)override;
+	bool on_mouse_move(const mouse_move_event& event)override;
 
 	void on_focus_changed()override;
 

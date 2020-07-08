@@ -19,7 +19,7 @@ public:
 	tab& operator=(const tab&) = delete;
 	
 protected:	
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerId)override;
+	bool on_mouse_button(const mouse_button_event& event)override;
 
 	void on_hover_changed(unsigned pointer_id)override{}
 	

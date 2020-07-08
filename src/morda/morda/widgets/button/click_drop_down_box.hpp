@@ -21,7 +21,7 @@ private:
 	// index of the hovered item in the drop down menu
 	int hovered_index = -1;
 
-	bool on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id)override;
+	bool on_mouse_button(const mouse_button_event& e)override;
 
 	std::shared_ptr<widget> wrap_item(std::shared_ptr<widget>&& w, size_t index);
 

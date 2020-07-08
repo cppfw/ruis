@@ -28,9 +28,9 @@ void mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
 	}
 }
 
-bool mouse_cursor::on_mouse_move(const morda::vector2& pos, unsigned pointerID) {
-	if(pointerID == 0){
-		this->cursorPos = pos;
+bool mouse_cursor::on_mouse_move(const mouse_move_event& e){
+	if(e.pointer_id == 0){
+		this->cursorPos = e.pos;
 	}
 	return false;
 }

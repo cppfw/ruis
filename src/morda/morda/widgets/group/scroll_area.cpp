@@ -11,14 +11,22 @@ scroll_area::scroll_area(std::shared_ptr<morda::context> c, const puu::forest& d
 		container(nullptr, desc)
 {}
 
-bool scroll_area::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID){
+bool scroll_area::on_mouse_button(const mouse_button_event& e){
 	vector2 d = -this->curScrollPos;
-	return this->container::on_mouse_button(isDown, pos - d, button, pointerID);
+	return this->container::on_mouse_button(mouse_button_event{
+			.is_down = e.is_down,
+			.pos = e.pos - d,
+			.button = e.button,
+			.pointer_id = e.pointer_id
+		});
 }
 
-bool scroll_area::on_mouse_move(const morda::vector2& pos, unsigned pointerID){
+bool scroll_area::on_mouse_move(const mouse_move_event& e){
 	vector2 d = -this->curScrollPos;
-	return this->container::on_mouse_move(pos - d, pointerID);
+	return this->container::on_mouse_move(mouse_move_event{
+			.pos = e.pos - d,
+			.pointer_id = e.pointer_id
+		});
 }
 
 void scroll_area::render(const morda::matrix4& matrix)const{

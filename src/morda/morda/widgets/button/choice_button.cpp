@@ -24,9 +24,9 @@ void choice_button::on_pressed_changed(){
 	}
 }
 
-bool choice_button::on_mouse_button(bool isDown, const morda::vector2& pos, mouse_button button, unsigned pointerID){
+bool choice_button::on_mouse_button(const mouse_button_event& e){
 	if(this->is_pressed()){
 		return true;
 	}
-	return this->toggle_button::on_mouse_button(isDown, pos, button, pointerID);
+	return this->toggle_button::on_mouse_button(e);
 }

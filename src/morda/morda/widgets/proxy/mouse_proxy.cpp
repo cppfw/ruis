@@ -6,16 +6,16 @@ mouse_proxy::mouse_proxy(std::shared_ptr<morda::context> c, const puu::forest& d
 		widget(std::move(c), desc)
 {}
 
-bool mouse_proxy::on_mouse_button(bool is_down, const morda::vector2& pos, mouse_button button, unsigned pointer_id){
+bool mouse_proxy::on_mouse_button(const mouse_button_event& e){
 	if(this->mouse_button_handler){
-		return this->mouse_button_handler(*this, is_down, pos, button, pointer_id);
+		return this->mouse_button_handler(*this, e);
 	}
 	return false;
 }
 
-bool mouse_proxy::on_mouse_move(const morda::vector2& pos, unsigned pointer_id){
+bool mouse_proxy::on_mouse_move(const mouse_move_event& e){
 	if(this->mouse_move_handler){
-		return this->mouse_move_handler(*this, pos, pointer_id);
+		return this->mouse_move_handler(*this, e);
 	}
 	return false;
 }
