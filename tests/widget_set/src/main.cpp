@@ -27,7 +27,7 @@ public:
 		this->gui.set_root(c);
 
 		auto spinner = utki::make_weak(
-				utki::make_shared_from_this(
+				utki::make_shared_from(
 						c->get_widget_as<morda::busy>("busy_spinner")
 					)
 			);

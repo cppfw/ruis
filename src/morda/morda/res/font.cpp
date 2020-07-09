@@ -32,6 +32,6 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const puu::fores
 		}
 	}
 
-	return std::make_shared<font>(utki::make_shared_from_this(ctx), fi, fontSize, maxCached);
+	return std::make_shared<font>(utki::make_shared_from(ctx), fi, fontSize, maxCached);
 }
 

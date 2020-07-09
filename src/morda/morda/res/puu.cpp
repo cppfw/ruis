@@ -17,5 +17,5 @@ std::shared_ptr<morda::res::puu> morda::res::puu::load(morda::context& ctx, cons
 		}
 	}
 
-	return std::make_shared<puu>(utki::make_shared_from_this(ctx), ::puu::read(fi));
+	return std::make_shared<puu>(utki::make_shared_from(ctx), ::puu::read(fi));
 }

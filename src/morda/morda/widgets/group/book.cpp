@@ -17,7 +17,7 @@ void book::push(std::shared_ptr<page> pg){
 	auto& lp = this->get_layout_params(*pg);
 	lp.dims.set(widget::layout_params::fill);
 	
-	auto b = utki::make_shared_from_this(*this);
+	auto b = utki::make_shared_from(*this);
 	
 	this->context->run_from_ui_thread([b, pg](){
 		if(!b->pages.empty()){

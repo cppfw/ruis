@@ -83,7 +83,7 @@ std::shared_ptr<gradient> gradient::load(morda::context& ctx, const puu::forest&
 		}
 	}
 	
-	return std::make_shared<gradient>(utki::make_shared_from_this(ctx), stops, vertical);
+	return std::make_shared<gradient>(utki::make_shared_from(ctx), stops, vertical);
 }
 
 

@@ -20,7 +20,7 @@ void choice_button::on_press_change(){
 	this->toggle_button::on_press_change();
 	
 	if(this->is_pressed()){
-		cg->setActiveChoiceButton(utki::make_shared_from_this(*this));
+		cg->setActiveChoiceButton(utki::make_shared_from(*this));
 	}
 }
 

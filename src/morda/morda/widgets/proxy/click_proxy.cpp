@@ -29,8 +29,10 @@ bool click_proxy::on_mouse_button(const mouse_button_event& e){
                 ret = this->press_change_handler(*this);
             }
             if(this->click_handler){
-                ret |= this->click_handler(*this);
+                this->click_handler(*this);
             }
+        }else{
+            ret = this->deferred_release_ret;
         }
     }
 
@@ -47,7 +49,7 @@ void click_proxy::on_hover_change(unsigned pointer_id){
         if(this->is_pressed()){
             this->is_pressed_ = false;
             if(this->press_change_handler){
-                this->press_change_handler(*this);
+                this->deferred_release_ret = this->press_change_handler(*this);
             }
         }
     }

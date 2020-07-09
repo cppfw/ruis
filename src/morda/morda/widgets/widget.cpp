@@ -67,7 +67,7 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	if(this->id == id){
-		return utki::make_shared_from_this(*this);
+		return utki::make_shared_from(*this);
 	}
 	return nullptr;
 }
@@ -94,7 +94,7 @@ std::shared_ptr<widget> widget::remove_from_parent(){
 	if(!this->parent_v){
 		throw std::logic_error("widget::remove_from_parent(): widget is not added to the parent");
 	}
-	auto ret = utki::make_shared_from_this(*this);
+	auto ret = utki::make_shared_from(*this);
 	this->parent_v->erase(this->parent_v->find(*this));
 	return ret;
 }
@@ -275,7 +275,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	this->context->set_focused_widget(utki::make_shared_from_this(*this));
+	this->context->set_focused_widget(utki::make_shared_from(*this));
 }
 
 void widget::unfocus()noexcept{

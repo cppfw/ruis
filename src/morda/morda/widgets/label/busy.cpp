@@ -42,7 +42,7 @@ void busy::render(const matrix4& matrix)const{
 void busy::set_active(bool active){
 	this->set_visible(active);
 	if(active){
-		this->context->updater->start(utki::make_shared_from_this(*this));
+		this->context->updater->start(utki::make_shared_from(*this));
 	}else{
 		this->context->updater->stop(*this);
 	}

@@ -14,5 +14,5 @@ std::shared_ptr<texture> texture::load(morda::context& ctx, const puu::forest& d
 		}
 	}
 
-	return std::make_shared<texture>(utki::make_shared_from_this(ctx), load_texture(*ctx.renderer, fi));
+	return std::make_shared<texture>(utki::make_shared_from(ctx), load_texture(*ctx.renderer, fi));
 }

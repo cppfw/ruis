@@ -164,7 +164,7 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 	}
 	this->set_selection(this->hovered_index);
 
-	auto ddb = utki::make_shared_from_this(*this);
+	auto ddb = utki::make_shared_from(*this);
 
 	this->context->run_from_ui_thread([ddb, ddm](){
 		ddm->remove_from_parent(); // close drop down menu

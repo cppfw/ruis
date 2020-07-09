@@ -6,6 +6,7 @@ namespace morda{
 
 class click_proxy : virtual public widget{
     bool is_pressed_ = false;
+    bool deferred_release_ret;
 public:
     click_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
@@ -27,7 +28,7 @@ public:
     /**
      * @brief Handler for clicked event.
      */
-    std::function<bool(click_proxy& w)> click_handler;
+    std::function<void(click_proxy& w)> click_handler;
 };
 
 }

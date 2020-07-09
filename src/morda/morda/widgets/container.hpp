@@ -310,7 +310,7 @@ template <class T> T* widget::find_ancestor(const char* id){
 }
 
 template <typename T> std::shared_ptr<T> widget::try_get_widget()noexcept{
-	auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from_this(*this));
+	auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this));
 	if(p){
 		return p;
 	}
@@ -339,7 +339,7 @@ template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(){
 	std::vector<std::shared_ptr<T>> ret;
 
 	if(auto p = dynamic_cast<T*>(this)){
-		ret.emplace_back(utki::make_shared_from_this(*p));
+		ret.emplace_back(utki::make_shared_from(*p));
 	}
 
 	if(auto cont = dynamic_cast<container*>(this)){

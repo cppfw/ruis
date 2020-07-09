@@ -72,7 +72,7 @@ public:
 			this->context->updater->stop(*this);
 		}else{
 			this->context->updater->start(
-					utki::make_shared_from_this(*this),
+					utki::make_shared_from(*this),
 					30
 				);
 		}
@@ -646,7 +646,7 @@ public:
 
 			auto& cp = c->get_widget_as<morda::click_proxy>("cube_click_proxy");
 			auto& bg = c->get_widget_as<morda::color>("cube_bg_color");
-			cp.press_change_handler = [bg{utki::make_shared_from_this(bg)}](morda::click_proxy& w) -> bool {
+			cp.press_change_handler = [bg{utki::make_shared_from(bg)}](morda::click_proxy& w) -> bool {
 				bg->set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
 				return true;
 			};

@@ -54,7 +54,7 @@ public:
 	}
 	
 	virtual std::shared_ptr<const res::image::texture> get(vector2 forDim)const override{
-		return utki::make_shared_from_this(*this);
+		return utki::make_shared_from(*this);
 	}
 	
 	void render(const matrix4& matrix, const vertex_array& vao) const override{
@@ -80,7 +80,7 @@ std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const puu::for
 
 	auto image = res::image::load(ctx, fi);
 	
-	return std::make_shared<nine_patch>(utki::make_shared_from_this(ctx), image, borders);
+	return std::make_shared<nine_patch>(utki::make_shared_from(ctx), image, borders);
 }
 
 nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul) :
@@ -200,7 +200,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 						) // right bottom
 				}}
 			}}),
-			utki::make_shared_from_this(*this),
+			utki::make_shared_from(*this),
 			mul
 		);
 	
