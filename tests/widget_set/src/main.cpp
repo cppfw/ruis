@@ -6,7 +6,7 @@
 
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/morda/widgets/label/busy.hpp"
-#include "../../../src/morda/morda/util/widget_set.hpp"
+#include "../../../src/morda/morda/util/weak_widget_set.hpp"
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
@@ -33,19 +33,23 @@ public:
 			);
 		auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
 
-		auto enable_widgets = std::make_shared<morda::widget_set>();
+		morda::weak_widget_set enable_widgets;
 
 		auto pbs = c->get_widget_as<morda::container>("enable_group").get_all_widgets<morda::push_button>();
 		TRACE(<< "pbs.size() = " << pbs.size() << std::endl)
 		for(auto& w : pbs){
 			TRACE(<< "adding..." << std::endl)
-			enable_widgets->add(w);
+			enable_widgets.add(w);
 		}
 
-		button.click_handler = [spinner, enable_widgets](morda::push_button& b){
+		button.click_handler = [
+				spinner,
+				enable_widgets{std::move(enable_widgets)}
+			](morda::push_button& b) mutable
+		{
 			if(auto s = spinner.lock()){
 				s->set_active(!s->is_visible());
-				enable_widgets->set_enabled(!s->is_visible());
+				enable_widgets.set_enabled(!s->is_visible());
 			}
 		};
 	}
