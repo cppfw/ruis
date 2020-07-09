@@ -1,3 +1,9 @@
+libmorda (0.5.132) unstable; urgency=medium
+
+  * update to latest libs
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Jul 2020 17:15:40 +0300
+
 libmorda (0.5.131) unstable; urgency=medium
 
   * widget_set -> weak_widget_set
