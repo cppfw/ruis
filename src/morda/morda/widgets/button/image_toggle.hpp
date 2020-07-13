@@ -6,7 +6,7 @@
 namespace morda{
 
 class image_toggle :
-		public toggle_button,
+		virtual public toggle_button,
 		public image_button
 {
 public:

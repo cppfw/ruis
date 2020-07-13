@@ -86,6 +86,7 @@ const auto drop_down_menu_layout = puu::read(R"qwertyuiop(
 click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, drop_down_box_layout),
+		push_button(this->context, drop_down_box_layout),
 		nine_patch_push_button(this->context, drop_down_box_layout),
 		drop_down_box(this->context, desc, this->get_widget_as<pile>("morda_dropdown_selection"))
 {

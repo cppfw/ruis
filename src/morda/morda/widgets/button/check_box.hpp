@@ -12,7 +12,7 @@ namespace morda{
  * standard morda widgets.
  */
 class check_box :
-		public toggle_button,
+		virtual public toggle_button,
 		private nine_patch
 {
 	std::shared_ptr<widget> checkWidget;

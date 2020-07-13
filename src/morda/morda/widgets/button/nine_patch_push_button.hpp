@@ -6,7 +6,7 @@
 namespace morda{
 
 class nine_patch_push_button :
-		public push_button,
+		virtual public push_button,
 		public nine_patch_button
 {
 public:

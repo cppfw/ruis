@@ -7,7 +7,7 @@
 namespace morda{
 
 class tab :
-		public choice_button,
+		virtual public choice_button,
 		public nine_patch_toggle
 {
 	bool maskOverlaps(vector2 pos);

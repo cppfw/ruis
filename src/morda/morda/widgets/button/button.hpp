@@ -4,11 +4,7 @@
 
 #include "../widget.hpp"
 
-
-
 namespace morda{
-
-
 
 /**
  * @brief Basic button widget class.
@@ -44,6 +40,5 @@ public:
 	 */
 	std::function<void(button&)> press_handler;
 };
-
 
 }

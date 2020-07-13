@@ -12,7 +12,7 @@ namespace morda{
  * "radio_button". Only available after initializing standard morda widgets.
  */
 class radio_button :
-		public choice_button,
+		virtual public choice_button,
 		private pile
 {
 	std::shared_ptr<widget> checkWidget;

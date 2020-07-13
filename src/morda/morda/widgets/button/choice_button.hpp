@@ -14,7 +14,6 @@ namespace morda{
  * of such button is a radio button.
  */
 class choice_button : virtual public toggle_button{
-	
 protected:
 	void on_press_change()override;
 	

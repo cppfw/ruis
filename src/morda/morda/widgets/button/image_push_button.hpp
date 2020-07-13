@@ -5,7 +5,7 @@
 
 namespace morda{
 class image_push_button :
-		public push_button,
+		virtual public push_button,
 		public image_button
 {
 protected:
