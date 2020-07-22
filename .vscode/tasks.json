@@ -80,7 +80,7 @@
         {
             "label": "test",
             "type": "shell",
-            "command": "make test",
+            "command": "make test autojobs=true",
             "problemMatcher": [],
             "dependsOn": "build"
         },

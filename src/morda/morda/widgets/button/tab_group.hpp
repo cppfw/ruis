@@ -2,6 +2,8 @@
 
 #include "choice_group.hpp"
 
+#include "../../res/image.hpp"
+
 namespace morda{
 
 class tab_group :
