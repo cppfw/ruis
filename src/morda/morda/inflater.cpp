@@ -1,21 +1,5 @@
 #include "inflater.hpp"
 
-#include "widgets/container.hpp"
-
-#include "widgets/group/book.hpp"
-#include "widgets/group/column.hpp"
-#include "widgets/group/row.hpp"
-#include "widgets/group/pile.hpp"
-#include "widgets/group/scroll_area.hpp"
-#include "widgets/group/size_container.hpp"
-#include "widgets/group/overlay.hpp"
-#include "widgets/group/list.hpp"
-
-#include "widgets/proxy/key_proxy.hpp"
-#include "widgets/proxy/mouse_proxy.hpp"
-#include "widgets/proxy/resize_proxy.hpp"
-#include "widgets/proxy/click_proxy.hpp"
-
 #include "context.hpp"
 
 #include "util/util.hpp"
@@ -24,24 +8,7 @@ using namespace morda;
 
 inflater::inflater(morda::context& context):
 		context(context)
-{
-	//TODO: move adding standard widgets to gui() constructor
-	this->register_widget<widget>("widget");
-	this->register_widget<container>("container");
-	this->register_widget<size_container>("size_container"); // TODO: rename?
-	this->register_widget<row>("row");
-	this->register_widget<column>("column");
-	this->register_widget<pile>("pile");
-	this->register_widget<mouse_proxy>("mouse_proxy");
-	this->register_widget<click_proxy>("click_proxy");
-	this->register_widget<scroll_area>("scroll_area");
-	this->register_widget<key_proxy>("key_proxy");
-	this->register_widget<overlay>("overlay");
-	this->register_widget<resize_proxy>("resize_proxy");
-	this->register_widget<pan_list>("pan_list");
-	this->register_widget<list>("list");
-	this->register_widget<book>("book");
-}
+{}
 
 void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_type::second_type&& factory){
 	auto ret = this->factories.insert(std::make_pair(

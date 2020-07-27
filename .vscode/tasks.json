@@ -36,7 +36,7 @@
         {
             "label": "test_debug",
             "type": "shell",
-            "command": "make test debug=true",
+            "command": "make test debug=true autojobs=true",
             "problemMatcher": [
                 "$gcc"
             ],

@@ -38,118 +38,6 @@ defs{
 		}
 	}
 
-	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
-		@row{
-			@widget{
-				layout{
-					dx{${left}}
-					weight{${weight_left}}
-				}
-			}
-			@column{
-				layout{
-					weight{1} dy{max}
-				}
-				@widget{
-					layout{
-						dy{${top}}
-						weight{${weight_top}}
-					}
-				}
-				@pile{
-					layout{
-						weight{1} dx{max}
-					}
-					${children}
-				}
-				@widget{
-					layout{
-						dy{${bottom}}
-						weight{${weight_bottom}}
-					}
-				}
-			}
-			@widget{
-				layout{
-					dx{${right}}
-					weight{${weight_right}}
-				}
-			}
-		}
-	}
-
-	@left{ layout
-		@row{
-			layout{
-				${layout}
-				dx{max}
-			}
-
-			${children}
-
-			@widget{
-				layout{
-					dx{0}
-					weight{1}
-				}
-			}
-		}
-	}
-
-	@right{ layout
-		@row{
-			layout{
-				${layout}
-				dx{max}
-			}
-
-			@widget{
-				layout{
-					dx{0}
-					weight{1}
-				}
-			}
-
-			${children}
-		}
-	}
-
-	@top{ layout
-		@column{
-			layout{
-				${layout}
-				dy{max}
-			}
-
-			${children}
-
-			@widget{
-				layout{
-					dy{0}
-					weight{1}
-				}
-			}
-		}
-	}
-
-	@bottom{ layout
-		@column{
-			layout{
-				${layout}
-				dy{max}
-			}
-
-			@widget{
-				layout{
-					dy{0}
-					weight{1}
-				}
-			}
-
-			${children}
-		}
-	}
-
 	@window{
 		look
 		@window{
@@ -204,17 +92,6 @@ defs{
 			right{${morda_window_border_size}}
 			bottom{${morda_window_border_size}}
 			center_visible{false}
-		}
-	}
-}
-
-defs{
-	@margin{ value
-		@margins{
-			left{${value}}
-			top{${value}}
-			right{${value}}
-			bottom{${value}}
 		}
 	}
 }

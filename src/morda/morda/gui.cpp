@@ -25,8 +25,146 @@
 #include "widgets/group/tree_view.hpp"
 #include "widgets/group/window.hpp"
 #include "widgets/group/collapse_area.hpp"
+#include "widgets/group/size_container.hpp"
+#include "widgets/group/row.hpp"
+#include "widgets/group/overlay.hpp"
+#include "widgets/group/book.hpp"
+
+#include "widgets/proxy/click_proxy.hpp"
+#include "widgets/proxy/key_proxy.hpp"
+#include "widgets/proxy/resize_proxy.hpp"
 
 using namespace morda;
+
+namespace{
+const auto default_defs = R"qwertyuiop(
+defs{
+	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
+		@row{
+			@widget{
+				layout{
+					dx{${left}}
+					weight{${weight_left}}
+				}
+			}
+			@column{
+				layout{
+					weight{1} dy{max}
+				}
+				@widget{
+					layout{
+						dy{${top}}
+						weight{${weight_top}}
+					}
+				}
+				@pile{
+					layout{
+						weight{1} dx{max}
+					}
+					${children}
+				}
+				@widget{
+					layout{
+						dy{${bottom}}
+						weight{${weight_bottom}}
+					}
+				}
+			}
+			@widget{
+				layout{
+					dx{${right}}
+					weight{${weight_right}}
+				}
+			}
+		}
+	}
+
+	@left{ layout
+		@row{
+			layout{
+				${layout}
+				dx{max}
+			}
+
+			${children}
+
+			@widget{
+				layout{
+					dx{0}
+					weight{1}
+				}
+			}
+		}
+	}
+
+	@right{ layout
+		@row{
+			layout{
+				${layout}
+				dx{max}
+			}
+
+			@widget{
+				layout{
+					dx{0}
+					weight{1}
+				}
+			}
+
+			${children}
+		}
+	}
+
+	@top{ layout
+		@column{
+			layout{
+				${layout}
+				dy{max}
+			}
+
+			${children}
+
+			@widget{
+				layout{
+					dy{0}
+					weight{1}
+				}
+			}
+		}
+	}
+
+	@bottom{ layout
+		@column{
+			layout{
+				${layout}
+				dy{max}
+			}
+
+			@widget{
+				layout{
+					dy{0}
+					weight{1}
+				}
+			}
+
+			${children}
+		}
+	}
+}
+
+defs{
+	@margin{ value
+		@margins{
+			left{${value}}
+			top{${value}}
+			right{${value}}
+			bottom{${value}}
+		}
+	}
+}
+
+)qwertyuiop";
+}
 
 gui::gui(
 		std::shared_ptr<morda::renderer> r,
@@ -44,6 +182,25 @@ gui::gui(
 			))
 {
 	ASSERT(this->context)
+
+	// register basic widgets
+	this->context->inflater.register_widget<widget>("widget");
+	this->context->inflater.register_widget<container>("container");
+	this->context->inflater.register_widget<size_container>("size_container"); // TODO: rename?
+	this->context->inflater.register_widget<row>("row");
+	this->context->inflater.register_widget<column>("column");
+	this->context->inflater.register_widget<pile>("pile");
+	this->context->inflater.register_widget<mouse_proxy>("mouse_proxy");
+	this->context->inflater.register_widget<click_proxy>("click_proxy");
+	this->context->inflater.register_widget<scroll_area>("scroll_area");
+	this->context->inflater.register_widget<key_proxy>("key_proxy");
+	this->context->inflater.register_widget<overlay>("overlay");
+	this->context->inflater.register_widget<resize_proxy>("resize_proxy");
+	this->context->inflater.register_widget<pan_list>("pan_list");
+	this->context->inflater.register_widget<list>("list");
+	this->context->inflater.register_widget<book>("book");
+
+	this->context->inflater.inflate(default_defs);
 }
 
 void gui::initStandardWidgets(papki::file& fi) {
