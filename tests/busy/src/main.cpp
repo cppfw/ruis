@@ -24,18 +24,32 @@ public:
 			);
 		this->gui.set_root(c);
 
-		auto spinner = utki::make_weak(
-				utki::make_shared_from(
-						c->get_widget_as<morda::busy>("busy_spinner")
-					)
-			);
-		auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
+		{
+			auto spinner = utki::make_weak(
+					utki::make_shared_from(
+							c->get_widget_as<morda::busy>("busy_spinner")
+						)
+				);
+			auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
 
-		button.click_handler = [spinner](morda::push_button& b){
-			if(auto s = spinner.lock()){
-				s->set_active(!s->is_visible());
-			}
-		};
+			button.click_handler = [spinner](morda::push_button& b){
+				if(auto s = spinner.lock()){
+					s->set_active(!s->is_visible());
+				}
+			};
+		}
+
+		c->get_widget_as<morda::busy>("busy_spinner2").set_active(true);
+
+		{
+			auto spinner = utki::make_weak_from(c->get_widget_as<morda::spinner>("refresh_spinner"));
+			auto& button = c->get_widget_as<morda::push_button>("refresh_toggle_button");
+			button.click_handler = [spinner](morda::push_button& b){
+				if(auto s = spinner.lock()){
+					s->set_active(!s->is_updating());
+				}
+			};
+		}
 	}
 };
 

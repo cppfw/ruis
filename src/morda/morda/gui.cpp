@@ -19,6 +19,7 @@
 #include "widgets/label/text.hpp"
 #include "widgets/label/gradient.hpp"
 #include "widgets/label/mouse_cursor.hpp"
+#include "widgets/label/spinner.hpp"
 
 #include "widgets/input/text_input_line.hpp"
 
@@ -199,6 +200,7 @@ gui::gui(
 	this->context->inflater.register_widget<pan_list>("pan_list");
 	this->context->inflater.register_widget<list>("list");
 	this->context->inflater.register_widget<book>("book");
+	this->context->inflater.register_widget<spinner>("spinner");
 
 	this->context->inflater.inflate(default_defs);
 }

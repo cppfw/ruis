@@ -38,6 +38,12 @@ defs{
 		}
 	}
 
+	@refresh{
+		@spinner{
+			image {morda_img_refresh}
+		}
+	}
+
 	@window{
 		look
 		@window{

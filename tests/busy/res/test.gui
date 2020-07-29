@@ -1,18 +1,25 @@
 @pile{
 	@column{
 		@busy{
-			id{busy_spinner}
+			id {busy_spinner}
+			visible {false}
 		}
 		@push_button{
-			id{busy_toggle_button}
+			id {busy_toggle_button}
 
 			@text{
-				text{"toggle busy spinner"}
+				text {"toggle busy spinner"}
 			}
 		}
 		@busy{
-			id{busy_spinner2}
-			active{true}
+			id {busy_spinner2}
+		}
+		@push_button{
+			id {refresh_toggle_button}
+
+			@refresh{
+				id {refresh_spinner}
+			}
 		}
 	}
 }

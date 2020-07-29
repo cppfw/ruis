@@ -20,6 +20,10 @@ morda_img_busy{
 	file{busy.svg}
 }
 
+morda_img_refresh{
+	file{refresh.svg}
+}
+
 morda_npt_slider_bg{
 	file{slider_bg.svg}
 	borders{8 8 8 9}
