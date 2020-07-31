@@ -19,8 +19,7 @@ void text_widget::set_font(std::shared_ptr<res::font> font){
 }
 
 text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
-		widget(std::move(c), desc),
-		color_widget(this->context, desc)
+		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

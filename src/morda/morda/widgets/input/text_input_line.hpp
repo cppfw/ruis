@@ -14,6 +14,7 @@ namespace morda{
 class text_input_line :
 		public single_line_text_widget,
 		public character_input_widget,
+		public color_widget,
 		private updateable
 {
 	size_t firstVisibleCharIndex = 0;
