@@ -164,21 +164,24 @@ void raster_image::load_png(const papki::file& fi){
 
 	papki::file::guard file_guard(fi);
 //	TRACE(<< "Image::LoadPNG(): file opened" << std::endl)
+	
+	const unsigned png_sig_size = 8; // the size of PNG signature (max 8 bytes)
 
-#define PNGSIGSIZE 8 // the size of PNG signature (max 8 bytes)
-	std::array<png_byte, PNGSIGSIZE> sig;
-	memset(&*sig.begin(), 0, sig.size() * sizeof(sig[0]));
+	{	
+		std::array<png_byte, png_sig_size> sig;
+		auto span = utki::make_span(sig);
 
-	{
-#ifdef DEBUG
-		auto ret = //TODO: we should not rely on that it will always read the requested number of bytes
-#endif
-		fi.read(utki::make_span(sig));
-		ASSERT(ret == sig.size() * sizeof(sig[0]))
-	}
+		memset(span.data(), 0, span.size_bytes());
+		
+		auto num_bytes_read = fi.read(span);
+		if(num_bytes_read != span.size_bytes()){
+			throw std::invalid_argument("raster_image::load_png(): could not read file signature");
+		}
 
-	if(png_sig_cmp(&*sig.begin(), 0, sig.size() * sizeof(sig[0])) != 0){ // if it is not a PNG-file
-		throw std::runtime_error("Image::LoadPNG(): not a PNG file");
+		// check that it is a PNG file
+		if(png_sig_cmp(span.data(), 0, span.size_bytes()) != 0){
+			throw std::invalid_argument("raster_image::load_png(): not a PNG file");
+		}
 	}
 
 //	TRACE(<< "Image::LoadPNG(): file is a PNG" << std::endl)
@@ -190,10 +193,10 @@ void raster_image::load_png(const papki::file& fi){
 		png_destroy_read_struct(&pngPtr, 0, 0); // free libpng memory
 	});
 
+	// NOTE: the memory freed by png_destroy_read_struct()
 	png_infop infoPtr = png_create_info_struct(pngPtr);
-	// TODO: destroy info struct? is the memory freed by png_destroy_read_struct() ?
-
-	png_set_sig_bytes(pngPtr, PNGSIGSIZE); // we've already read PNGSIGSIZE bytes
+	
+	png_set_sig_bytes(pngPtr, png_sig_size); // we've already read png_sig_size bytes
 
 	// set custom "ReadFromFile" function
 	png_set_read_fn(pngPtr, const_cast<papki::file*>(&fi), PNG_CustomReadFunction);

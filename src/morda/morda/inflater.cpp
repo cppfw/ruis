@@ -148,12 +148,6 @@ std::shared_ptr<widget> inflater::inflate(const std::string& str){
 }
 
 std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
-
-//	TODO:
-//	if(!App::inst().thisIsUIThread()){
-//		throw std::logic_error("inflate() called from non-UI thread");
-//	}
-
 	auto i = begin;
 
 	for(; i != end && is_leaf_property(i->value); ++i){

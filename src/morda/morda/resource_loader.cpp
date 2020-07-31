@@ -8,8 +8,8 @@
 using namespace morda;
 
 namespace{
-const char* include_c = "include";
-const char* includeSubdirs_c = "include_subdirs";
+const char* wording_include = "include";
+const char* wording_include_subdirs = "include_subdirs";
 }
 
 void resource_loader::mount_res_pack(const papki::file& fi){
@@ -26,11 +26,11 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 
 	// handle includes
 	for(auto& p : script){
-		if(p.value == include_c){
+		if(p.value == wording_include){
 			fi.set_path(dir + get_property_value(p).to_string());
 			this->mount_res_pack(fi);
 			// TODO: remove "include" tree from the forest?
-		}else if(p.value == includeSubdirs_c){
+		}else if(p.value == wording_include_subdirs){
 			fi.set_path(fi.dir());
 			for(auto& f : fi.list_dir()){
 				if(papki::is_dir(f)){

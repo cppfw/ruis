@@ -187,7 +187,7 @@ gui::gui(
 	// register basic widgets
 	this->context->inflater.register_widget<widget>("widget");
 	this->context->inflater.register_widget<container>("container");
-	this->context->inflater.register_widget<size_container>("size_container"); // TODO: rename?
+	this->context->inflater.register_widget<size_container>("size_container");
 	this->context->inflater.register_widget<row>("row");
 	this->context->inflater.register_widget<column>("column");
 	this->context->inflater.register_widget<pile>("pile");

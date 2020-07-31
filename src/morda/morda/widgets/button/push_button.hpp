@@ -12,6 +12,8 @@ namespace morda{
 class push_button : virtual public button{
 	bool currentlyPressed = false;
 
+	unsigned pointer_id;
+
 protected:
 	void on_press_change()override;
 	

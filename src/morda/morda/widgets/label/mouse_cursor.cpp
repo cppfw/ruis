@@ -35,7 +35,7 @@ bool mouse_cursor::on_mouse_move(const mouse_move_event& e){
 	return false;
 }
 
-void mouse_cursor::render(const morda::matrix4& matrix) const {
+void mouse_cursor::render(const morda::matrix4& matrix)const{
 	if(!this->cursor){
 		return;
 	}
@@ -52,7 +52,5 @@ void mouse_cursor::render(const morda::matrix4& matrix) const {
 	
 //	TRACE(<< "mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
-	//TODO:
-//	s.setMatrix(matr);
 	this->quadTex->render(matr, *this->context->renderer->pos_tex_quad_01_vao);
 }

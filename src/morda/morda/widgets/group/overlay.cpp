@@ -74,9 +74,8 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 }
 
 void overlay::close_all_context_menus(){
-	// TODO: rewrite using find all widgets of context_menu_wrapper type and then remove_from_parent for each of those
-	//       because we should not rely on that context menus are only at the tail of children list.
-	while(dynamic_cast<context_menu_wrapper*>(this->children().back().get())){
-		this->pop_back();
+	auto menus = this->get_all_widgets<context_menu_wrapper>();
+	for(auto& w : menus){
+		w->remove_from_parent();
 	}
 }

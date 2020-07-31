@@ -546,7 +546,6 @@ public:
 					}
 					TRACE(<< std::endl)
 					this->notify_item_changed();
-					//TODO:
 
 					return true;
 				};

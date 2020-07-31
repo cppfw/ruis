@@ -155,7 +155,8 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 {
 	this->setupWidgets();
 
-	sides<real> borders(0); // TODO: set some non-zero default value
+	const real default_border_size_px = 5;
+	sides<real> borders(default_border_size_px);
 
 	for(const auto& p : desc){
 		if(!is_property(p)){
