@@ -76,23 +76,29 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
 		blending_widget(this->context, desc),
-		column(this->context, ninePatchLayout_c)
+		column(this->context, ninePatchLayout_c),
+		img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix){
+			return {{
+				{
+					this->try_get_widget_as<image>("morda_lt"),
+					this->try_get_widget_as<image>("morda_t"),
+					this->try_get_widget_as<image>("morda_rt")
+				},
+				{
+					this->try_get_widget_as<image>("morda_l"),
+					this->try_get_widget_as<image>("morda_m"),
+					this->try_get_widget_as<image>("morda_r")
+				},
+				{
+					this->try_get_widget_as<image>("morda_lb"),
+					this->try_get_widget_as<image>("morda_b"),
+					this->try_get_widget_as<image>("morda_rb")
+				}
+			}};
+		}()),
+		inner_content(this->try_get_widget_as<pile>("morda_content"))
 {
-	this->img_widgets_matrix[0][0] = utki::make_shared_from(this->get_widget_as<image>("morda_lt"));
-	this->img_widgets_matrix[0][1] = utki::make_shared_from(this->get_widget_as<image>("morda_t"));
-	this->img_widgets_matrix[0][2] = utki::make_shared_from(this->get_widget_as<image>("morda_rt"));
-
-	this->img_widgets_matrix[1][0] = utki::make_shared_from(this->get_widget_as<image>("morda_l"));
-	this->img_widgets_matrix[1][1] = utki::make_shared_from(this->get_widget_as<image>("morda_m"));
-	this->img_widgets_matrix[1][2] = utki::make_shared_from(this->get_widget_as<image>("morda_r"));
-
-	this->img_widgets_matrix[2][0] = utki::make_shared_from(this->get_widget_as<image>("morda_lb"));
-	this->img_widgets_matrix[2][1] = utki::make_shared_from(this->get_widget_as<image>("morda_b"));
-	this->img_widgets_matrix[2][2] = utki::make_shared_from(this->get_widget_as<image>("morda_rb"));
-
 	this->on_blending_change();
-
-	this->inner_content = this->try_get_widget_as<pile>("morda_content");
 
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -121,6 +127,12 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 			this->set_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(*i).to_string()));
 		}
 	}
+	{
+		auto i = std::find(desc.begin(), desc.end(), "disabled_image");
+		if(i != desc.end()){
+			this->set_disabled_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(*i).to_string()));
+		}
+	}
 
 	this->inner_content->push_back_inflate(desc);
 }
@@ -131,31 +143,54 @@ void nine_patch::render(const morda::matrix4& matrix)const{
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np){
 	this->np_res = std::move(np);
-	this->texture.reset();
 
-	this->applyImages();
+	if(!this->is_enabled() && this->disabled_np_res){
+		return;
+	}
 
-	this->clear_cache();
+	this->update_images();
+}
+
+void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np){
+	this->disabled_np_res = std::move(np);
+
+	if(this->is_enabled()){
+		return;
+	}
+
+	this->update_images();
 }
 
 sides<real> nine_patch::get_actual_borders()const noexcept{
+	auto np = this->np_res.get();
+
+	if(!this->is_enabled() && this->disabled_np_res){
+		np = this->disabled_np_res.get();
+	}
+
 	sides<real> ret;
 
 	for(auto i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){
 			ret[i] = this->borders[i];
-		}else if(!this->np_res){
+		}else if(!np){
 			ret[i] = 0;
 		}else{
-			ret[i] = this->np_res->borders()[i];
+			ret[i] = np->borders()[i];
 		}
 	}
 
 	return ret;
 }
 
-void nine_patch::applyImages(){
-	if(!this->np_res){
+void nine_patch::apply_images(){
+	auto np = this->np_res.get();
+
+	if(!this->is_enabled() && this->disabled_np_res){
+		np = this->disabled_np_res.get();
+	}
+
+	if(!np){
 		for(auto& i : this->img_widgets_matrix){
 			for(auto& j : i){
 				j->set_image(nullptr);
@@ -164,7 +199,8 @@ void nine_patch::applyImages(){
 		return;
 	}
 
-	auto& minBorders = this->np_res->borders();
+	ASSERT(np)
+	auto& minBorders = np->borders();
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
@@ -227,11 +263,11 @@ void nine_patch::applyImages(){
 	}
 //		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->texture = this->np_res->get(this->borders);
+	this->img_res_matrix = np->get(this->borders);
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->img_widgets_matrix[i][j]->set_image(this->texture->images()[i][j]);
+			this->img_widgets_matrix[i][j]->set_image(this->img_res_matrix->images()[i][j]);
 		}
 	}
 }
@@ -247,4 +283,19 @@ void nine_patch::on_blending_change(){
 			this->img_widgets_matrix[i][j]->set_blending_params(this->get_blending_params());
 		}
 	}
+}
+
+void nine_patch::on_enable_change(){
+	if(!this->disabled_np_res){
+		// there is no disabled nine patch, so nothing changes
+		return;
+	}
+
+	this->update_images();
+}
+
+void nine_patch::update_images(){
+	this->img_res_matrix.reset();
+	this->apply_images();
+	this->clear_cache();
 }

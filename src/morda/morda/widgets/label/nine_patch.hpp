@@ -29,14 +29,15 @@ class nine_patch :
 		private column
 {
 	std::shared_ptr<const res::nine_patch> np_res;
+	std::shared_ptr<const res::nine_patch> disabled_np_res;
 
-	std::shared_ptr<res::nine_patch::image_matrix> texture;
+	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
 
 	sides<real> borders = sides<real>(layout_params::min);
 
-	std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
+	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
 
-	std::shared_ptr<pile> inner_content;
+	const std::shared_ptr<pile> inner_content;
 
 public:
 	nine_patch(const nine_patch&) = delete;
@@ -45,6 +46,8 @@ public:
 	nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
+
+	void set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	/**
 	 * @brief Get content container.
@@ -69,7 +72,8 @@ public:
 	 */
 	void set_borders(sides<real> borders){
 		this->borders = borders;
-		this->applyImages();
+		this->apply_images();
+		this->invalidate_layout();
 	}
 
 	/**
@@ -85,8 +89,11 @@ public:
 
 	void on_blending_change()override;
 
+	void on_enable_change()override;
+
 private:
-	void applyImages();
+	void apply_images();
+	void update_images();
 };
 
 }
