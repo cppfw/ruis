@@ -92,7 +92,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 
 	this->on_blending_change();
 
-	this->content_v = this->try_get_widget_as<pile>("morda_content");
+	this->inner_content = this->try_get_widget_as<pile>("morda_content");
 
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -122,7 +122,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 		}
 	}
 
-	this->content_v->push_back_inflate(desc);
+	this->inner_content->push_back_inflate(desc);
 }
 
 void nine_patch::render(const morda::matrix4& matrix)const{
@@ -130,7 +130,7 @@ void nine_patch::render(const morda::matrix4& matrix)const{
 }
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np){
-	this->res = std::move(np);
+	this->np_res = std::move(np);
 	this->texture.reset();
 
 	this->applyImages();
@@ -144,10 +144,10 @@ sides<real> nine_patch::get_actual_borders()const noexcept{
 	for(auto i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){
 			ret[i] = this->borders[i];
-		}else if(!this->res){
+		}else if(!this->np_res){
 			ret[i] = 0;
 		}else{
-			ret[i] = this->res->borders()[i];
+			ret[i] = this->np_res->borders()[i];
 		}
 	}
 
@@ -155,7 +155,7 @@ sides<real> nine_patch::get_actual_borders()const noexcept{
 }
 
 void nine_patch::applyImages(){
-	if(!this->res){
+	if(!this->np_res){
 		for(auto& i : this->img_matrix){
 			for(auto& j : i){
 				j->set_image(nullptr);
@@ -164,7 +164,7 @@ void nine_patch::applyImages(){
 		return;
 	}
 
-	auto& minBorders = this->res->borders();
+	auto& minBorders = this->np_res->borders();
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
@@ -227,7 +227,7 @@ void nine_patch::applyImages(){
 	}
 //		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->texture = this->res->get(this->borders);
+	this->texture = this->np_res->get(this->borders);
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){

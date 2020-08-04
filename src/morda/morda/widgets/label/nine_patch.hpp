@@ -28,7 +28,7 @@ class nine_patch :
 		public blending_widget,
 		private column
 {
-	std::shared_ptr<const res::nine_patch> res;
+	std::shared_ptr<const res::nine_patch> np_res;
 
 	std::shared_ptr<res::nine_patch::image_matrix> texture;
 
@@ -36,7 +36,7 @@ class nine_patch :
 
 	std::array<std::array<std::shared_ptr<image>, 3>, 3> img_matrix;
 
-	std::shared_ptr<pile> content_v;
+	std::shared_ptr<pile> inner_content;
 
 public:
 	nine_patch(const nine_patch&) = delete;
@@ -51,7 +51,7 @@ public:
 	 * @return The content container. This is where the child widgets are stored.
 	 */
 	pile& content(){
-		return *this->content_v;
+		return *this->inner_content;
 	}
 
 	void render(const morda::matrix4& matrix) const override;
