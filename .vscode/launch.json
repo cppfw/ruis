@@ -25,6 +25,26 @@
 			"preLaunchTask": "build_debug"
 		},
 		{
+			"name": "(gdb) busy",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/busy/build/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/busy",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_debug"
+		},
+		{
 			"name": "(gdb) book",
 			"type": "cppdbg",
 			"request": "launch",

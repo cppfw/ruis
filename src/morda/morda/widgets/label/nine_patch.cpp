@@ -286,6 +286,8 @@ void nine_patch::on_blending_change(){
 }
 
 void nine_patch::on_enable_change(){
+	this->container::on_enable_change();
+	
 	if(!this->disabled_np_res){
 		// there is no disabled nine patch, so nothing changes
 		return;

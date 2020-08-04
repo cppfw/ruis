@@ -22,11 +22,8 @@
 			}
 		}
 		@push_button{
-			enabled {false}
-
-			@refresh{
-				id {refresh_spinner}
-			}
+			id {refresh_disable_button}
+			@refresh
 		}
 	}
 }

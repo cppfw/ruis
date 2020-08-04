@@ -183,6 +183,9 @@ void image::on_enable_change(){
 		return;
 	}
 
+	this->texture.reset();
+	this->clear_cache();
+
 	if(this->img){
 		// if dimension of active image change then need to re-layout
 		if(this->disabled_img->dims() != this->img->dims()){
