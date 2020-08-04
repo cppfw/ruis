@@ -78,17 +78,17 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c)
 {
-	this->img_matrix[0][0] = this->try_get_widget_as<image>("morda_lt");
-	this->img_matrix[0][1] = this->try_get_widget_as<image>("morda_t");
-	this->img_matrix[0][2] = this->try_get_widget_as<image>("morda_rt");
+	this->img_widgets_matrix[0][0] = utki::make_shared_from(this->get_widget_as<image>("morda_lt"));
+	this->img_widgets_matrix[0][1] = utki::make_shared_from(this->get_widget_as<image>("morda_t"));
+	this->img_widgets_matrix[0][2] = utki::make_shared_from(this->get_widget_as<image>("morda_rt"));
 
-	this->img_matrix[1][0] = this->try_get_widget_as<image>("morda_l");
-	this->img_matrix[1][1] = this->try_get_widget_as<image>("morda_m");
-	this->img_matrix[1][2] = this->try_get_widget_as<image>("morda_r");
+	this->img_widgets_matrix[1][0] = utki::make_shared_from(this->get_widget_as<image>("morda_l"));
+	this->img_widgets_matrix[1][1] = utki::make_shared_from(this->get_widget_as<image>("morda_m"));
+	this->img_widgets_matrix[1][2] = utki::make_shared_from(this->get_widget_as<image>("morda_r"));
 
-	this->img_matrix[2][0] = this->try_get_widget_as<image>("morda_lb");
-	this->img_matrix[2][1] = this->try_get_widget_as<image>("morda_b");
-	this->img_matrix[2][2] = this->try_get_widget_as<image>("morda_rb");
+	this->img_widgets_matrix[2][0] = utki::make_shared_from(this->get_widget_as<image>("morda_lb"));
+	this->img_widgets_matrix[2][1] = utki::make_shared_from(this->get_widget_as<image>("morda_b"));
+	this->img_widgets_matrix[2][2] = utki::make_shared_from(this->get_widget_as<image>("morda_rb"));
 
 	this->on_blending_change();
 
@@ -156,7 +156,7 @@ sides<real> nine_patch::get_actual_borders()const noexcept{
 
 void nine_patch::applyImages(){
 	if(!this->np_res){
-		for(auto& i : this->img_matrix){
+		for(auto& i : this->img_widgets_matrix){
 			for(auto& j : i){
 				j->set_image(nullptr);
 			}
@@ -168,58 +168,58 @@ void nine_patch::applyImages(){
 //		TRACE(<< "minBorders = " << minBorders << std::endl)
 
 	{
-		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = this->img_matrix[0][0]->get_layout_params_const();
+		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if possible
+		auto& tl_lp = this->img_widgets_matrix[0][0]->get_layout_params_const();
 
 		if(this->borders.left() == layout_params::min){
-			if(layoutParams.dims.x != minBorders.left()){
-				auto& lp = this->img_matrix[0][0]->get_layout_params();
+			if(tl_lp.dims.x != minBorders.left()){
+				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.x = minBorders.left();
 			}
 		}else{
-			if(layoutParams.dims.x != this->borders.left()){
-				auto& lp = this->img_matrix[0][0]->get_layout_params();
+			if(tl_lp.dims.x != this->borders.left()){
+				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.x = this->borders.left();
 			}
 		}
 
 		if(this->borders.top() == layout_params::min){
-			if(layoutParams.dims.y != minBorders.top()){
-				auto& lp = this->img_matrix[0][0]->get_layout_params();
+			if(tl_lp.dims.y != minBorders.top()){
+				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.y = minBorders.top();
 			}
 		}else{
-			if(layoutParams.dims.y != this->borders.top()){
-				auto& lp = this->img_matrix[0][0]->get_layout_params();
+			if(tl_lp.dims.y != this->borders.top()){
+				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.y = this->borders.top();
 			}
 		}
-//			TRACE(<< "layoutParams.dim = " << layoutParams.dim << std::endl)
+//			TRACE(<< "tl_lp.dim = " << tl_lp.dim << std::endl)
 	}
 	{
 		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = this->img_matrix[2][2]->get_layout_params_const();
+		auto& br_lp = this->img_widgets_matrix[2][2]->get_layout_params_const();
 
 		if(this->borders.right() == layout_params::min){
-			if(layoutParams.dims.x != minBorders.right()){
-				auto& lp = this->img_matrix[2][2]->get_layout_params();
+			if(br_lp.dims.x != minBorders.right()){
+				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.x = minBorders.right();
 			}
 		}else{
-			if(layoutParams.dims.x != this->borders.right()){
-				auto& lp = this->img_matrix[2][2]->get_layout_params();
+			if(br_lp.dims.x != this->borders.right()){
+				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.x = this->borders.right();
 			}
 		}
 
 		if(this->borders.bottom() == layout_params::min){
-			if(layoutParams.dims.y != minBorders.bottom()){
-				auto& lp = this->img_matrix[2][2]->get_layout_params();
+			if(br_lp.dims.y != minBorders.bottom()){
+				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.y = minBorders.bottom();
 			}
 		}else{
-			if(layoutParams.dims.y != this->borders.bottom()){
-				auto& lp = this->img_matrix[2][2]->get_layout_params();
+			if(br_lp.dims.y != this->borders.bottom()){
+				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.y = this->borders.bottom();
 			}
 		}
@@ -231,20 +231,20 @@ void nine_patch::applyImages(){
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->img_matrix[i][j]->set_image(this->texture->images()[i][j]);
+			this->img_widgets_matrix[i][j]->set_image(this->texture->images()[i][j]);
 		}
 	}
 }
 
 void nine_patch::set_center_visible(bool visible){
-	ASSERT(this->img_matrix[1][1])
-	this->img_matrix[1][1]->set_visible(visible);
+	ASSERT(this->img_widgets_matrix[1][1])
+	this->img_widgets_matrix[1][1]->set_visible(visible);
 }
 
 void nine_patch::on_blending_change(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->img_matrix[i][j]->set_blending_params(this->get_blending_params());
+			this->img_widgets_matrix[i][j]->set_blending_params(this->get_blending_params());
 		}
 	}
 }

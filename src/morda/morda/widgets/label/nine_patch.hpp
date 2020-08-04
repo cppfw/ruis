@@ -34,7 +34,7 @@ class nine_patch :
 
 	sides<real> borders = sides<real>(layout_params::min);
 
-	std::array<std::array<std::shared_ptr<image>, 3>, 3> img_matrix;
+	std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
 
 	std::shared_ptr<pile> inner_content;
 
