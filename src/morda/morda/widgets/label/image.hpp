@@ -26,8 +26,9 @@ class image :
 	image& operator=(const image&);
 
 	std::shared_ptr<const morda::res::image> img;
+	std::shared_ptr<const morda::res::image> disabled_img; // image for disabled state
 
-	mutable std::shared_ptr<const morda::res::image::texture> scaledImage;
+	mutable std::shared_ptr<const morda::res::image::texture> texture;
 
 	bool keep_aspect_ratio = false;
 
@@ -44,9 +45,16 @@ public:
 
 	morda::vector2 measure(const morda::vector2& quotum)const override;
 
-	void set_image(const std::shared_ptr<const res::image>& image);
+	void set_image(std::shared_ptr<const res::image> image);
+
 	const std::shared_ptr<const res::image>& get_image()const{
 		return this->img;
+	}
+
+	void set_disabled_image(std::shared_ptr<const res::image> image);
+
+	const std::shared_ptr<const res::image>& get_disabled_image()const{
+		return this->disabled_img;
 	}
 
 	void on_resize() override;
@@ -57,15 +65,15 @@ public:
 
 	void set_repeat(decltype(repeat_v) r){
 		this->repeat_v = r;
-		this->scaledImage.reset();
+		this->texture.reset();
 	}
 
 	void set_keep_aspect_ratio(bool keep_aspect_ratio){
 		this->keep_aspect_ratio = keep_aspect_ratio;
 		this->invalidate_layout();
 	}
-private:
 
+	void on_enable_change()override;
 };
 
 }

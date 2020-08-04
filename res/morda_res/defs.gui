@@ -41,6 +41,7 @@ defs{
 	@refresh{
 		@spinner{
 			image {morda_img_refresh}
+			disabled_image {morda_img_refresh_disabled}
 		}
 	}
 

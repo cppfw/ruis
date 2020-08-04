@@ -17,7 +17,8 @@ image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 
 		if(p.value == "image"){
 			this->img = this->context->loader.load<res::image>(get_property_value(p).to_string());
-			this->resize(this->img->dims());
+		}else if(p.value == "disabled_image"){
+			this->disabled_img = this->context->loader.load<res::image>(get_property_value(p).to_string());
 		}else if(p.value == "keep_aspect_ratio"){
 			this->keep_aspect_ratio = get_property_value(p).to_bool();
 		}else if(p.value == "repeat_x"){
@@ -35,7 +36,13 @@ const std::array<r4::vec2f, 4> quadFanTexCoords = {{
 }
 
 void image::render(const morda::matrix4& matrix) const{
-	if(!this->img){
+	auto img = this->img.get();
+
+	if(!this->is_enabled() && this->disabled_img){
+		img = this->disabled_img.get();
+	}
+
+	if(!img){
 		return;
 	}
 
@@ -43,15 +50,15 @@ void image::render(const morda::matrix4& matrix) const{
 	
 	auto& r = *this->context->renderer;
 	
-	if(!this->scaledImage){
-		this->scaledImage = this->img->get(this->rect().d);
+	if(!this->texture){
+		this->texture = img->get(this->rect().d);
 
 		if(this->repeat_v.x || this->repeat_v.y){
 			std::array<r4::vec2f, 4> texCoords;
 			ASSERT(quadFanTexCoords.size() == texCoords.size())
 			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();
-			auto scale = this->rect().d.comp_divided(this->img->dims());
+			auto scale = this->rect().d.comp_divided(img->dims());
 			if(!this->repeat_v.x){
 				scale.x = 1;
 			}
@@ -73,20 +80,26 @@ void image::render(const morda::matrix4& matrix) const{
 			this->vao = this->context->renderer->pos_tex_quad_01_vao;
 		}
 	}
-	ASSERT(this->scaledImage)
+	ASSERT(this->texture)
 
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	this->scaledImage->render(matr, *this->vao);
+	this->texture->render(matr, *this->vao);
 }
 
 morda::vector2 image::measure(const morda::vector2& quotum)const{
-	if(!this->img){
+	auto img = this->img.get();
+
+	if(!this->is_enabled() && this->disabled_img){
+		img = this->disabled_img.get();
+	}
+
+	if(!img){
 		return vector2(0);
 	}
 	
-	vector2 imgDim = this->img->dims(this->context->units.dots_per_inch);
+	vector2 imgDim = img->dims(this->context->units.dots_per_inch);
 	
 	ASSERT_INFO(imgDim.is_positive_or_zero(), "imgDim = " << imgDim)
 	
@@ -102,7 +115,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 		return ret;
 	}
 	
-	ASSERT(this->img)
+	ASSERT(img)
 	ASSERT(imgDim.y > 0)
 	
 	real ratio = imgDim.x / imgDim.y;
@@ -137,17 +150,44 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 	}
 }
 
-void image::set_image(const std::shared_ptr<const res::image>& image) {
+void image::set_image(std::shared_ptr<const res::image> image){
 	if(this->img && image && this->img->dims() == image->dims()){
 	}else{
 		this->invalidate_layout();
 	}
 	
-	this->img = image;
-	this->scaledImage.reset();
+	this->img = std::move(image);
+	this->texture.reset();
 }
 
-void image::on_resize() {
+void image::set_disabled_image(std::shared_ptr<const res::image> image){
+	if(this->disabled_img && image && this->disabled_img->dims() == image->dims()){
+	}else{
+		if(!this->is_enabled()){
+			this->invalidate_layout();
+		}
+	}
+	
+	this->disabled_img = std::move(image);
+	this->texture.reset();
+}
+
+void image::on_resize(){
 	this->widget::on_resize();
-	this->scaledImage.reset();
+	this->texture.reset();
+}
+
+void image::on_enable_change(){
+	if(this->disabled_img && this->img){
+		// if dimension of active image change then need to re-layout
+		if(this->disabled_img->dims() != this->img->dims()){
+			this->invalidate_layout();
+		}
+	}else{
+		// if there is only disabled image, perhaps nobody will ever use it like this, but nevertheless,
+		// let's handle this case gracefully
+		if(this->disabled_img){
+			this->invalidate_layout();
+		}
+	}
 }

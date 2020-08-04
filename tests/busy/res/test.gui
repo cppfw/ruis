@@ -21,5 +21,12 @@
 				id {refresh_spinner}
 			}
 		}
+		@push_button{
+			enabled {false}
+
+			@refresh{
+				id {refresh_spinner}
+			}
+		}
 	}
 }
