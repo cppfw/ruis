@@ -31,13 +31,13 @@ widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 				this->id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			}else if(p.value == "clip"){
-				this->clip_v = get_property_value(p).to_bool();
+				this->clip_enabled = get_property_value(p).to_bool();
 			}else if(p.value == "cache"){
 				this->cache = get_property_value(p).to_bool();
 			}else if(p.value == "visible"){
-				this->isVisible_v = get_property_value(p).to_bool();
+				this->visible = get_property_value(p).to_bool();
 			}else if(p.value == "enabled"){
-				this->isEnabled_v = get_property_value(p).to_bool();
+				this->enabled = get_property_value(p).to_bool();
 			}
 		}catch(std::invalid_argument&){
 			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
@@ -91,11 +91,11 @@ void widget::resize(const morda::vector2& newDims){
 }
 
 std::shared_ptr<widget> widget::remove_from_parent(){
-	if(!this->parent_v){
+	if(!this->parent()){
 		throw std::logic_error("widget::remove_from_parent(): widget is not added to the parent");
 	}
 	auto ret = utki::make_shared_from(*this);
-	this->parent_v->erase(this->parent_v->find(*this));
+	this->parent()->erase(this->parent()->find(*this));
 	return ret;
 }
 
@@ -118,8 +118,8 @@ void widget::invalidate_layout()noexcept{
 		return;
 	}
 	this->relayoutNeeded = true;
-	if(this->parent_v){
-		this->parent_v->invalidate_layout();
+	if(this->parent()){
+		this->parent()->invalidate_layout();
 	}
 	this->cacheTex.reset();
 }
@@ -153,7 +153,7 @@ void widget::renderInternal(const morda::matrix4& matrix)const{
 
 		this->renderFromCache(matrix);
 	}else{
-		if(this->clip_v){
+		if(this->clip_enabled){
 	//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			// set scissor test
@@ -251,8 +251,8 @@ void widget::renderFromCache(const r4::mat4f& matrix) const {
 
 void widget::clear_cache(){
 	this->cacheDirty = true;
-	if(this->parent_v){
-		this->parent_v->clear_cache();
+	if(this->parent()){
+		this->parent()->clear_cache();
 	}
 }
 
@@ -350,13 +350,13 @@ widget& widget::get_widget(const std::string& id){
 
 void widget::set_enabled(bool enable){
 //	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
-	if(this->isEnabled_v == enable){
+	if(this->enabled == enable){
 		return;
 	}
 
-	this->isEnabled_v = enable;
+	this->enabled = enable;
 
-	//Un-hover this widget if it becomes disabled because it is not supposed to receive mouse input.
+	// un-hover this widget if it becomes disabled because it is not supposed to receive mouse input
 	if(!this->is_enabled()){
 		this->set_unhovered();
 	}
@@ -365,8 +365,8 @@ void widget::set_enabled(bool enable){
 }
 
 void widget::set_visible(bool visible){
-	this->isVisible_v = visible;
-	if (!this->isVisible_v) {
+	this->visible = visible;
+	if (!this->visible) {
 		this->set_unhovered();
 	}
 }

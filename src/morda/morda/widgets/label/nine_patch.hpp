@@ -85,7 +85,6 @@ public:
 
 	void on_blending_change()override;
 
-
 private:
 	void applyImages();
 };

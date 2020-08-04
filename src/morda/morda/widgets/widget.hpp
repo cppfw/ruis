@@ -90,18 +90,18 @@ public:
 	};
 
 private:
-	container* parent_v = nullptr;
+	container* parent_container = nullptr;
 
 	std::set<unsigned> hovered;
 
-	bool isVisible_v = true;
+	bool visible = true;
 
-	bool isEnabled_v = true;
+	bool enabled = true;
 
 	morda::rectangle rectangle = morda::rectangle(0);
 
-	//clip widgets contents by widget's border if set to true
-	bool clip_v = false;
+	// clip widgets contents by widget's border if set to true
+	bool clip_enabled = false;
 public:
 	/**
 	 * @brief Check if scissor test is enabled for this widget.
@@ -109,15 +109,15 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_clip_enabled()const noexcept{
-		return this->clip_v;
+		return this->clip_enabled;
 	}
 
 	/**
 	 * @brief Enable/Disable scissor test.
 	 * @param enable - whether to enable (true) or disable (false) the scissor test.
 	 */
-	void set_clip(bool enable)noexcept{
-		this->clip_v = enable;
+	void set_clip_enabled(bool enable)noexcept{
+		this->clip_enabled = enable;
 	}
 
 private:
@@ -201,7 +201,7 @@ public:
 	 * @return Widget's parent container.
 	 */
 	const container* parent()const noexcept{
-		return this->parent_v;
+		return this->parent_container;
 	}
 
 	/**
@@ -209,7 +209,7 @@ public:
 	 * @return Widget's parent container.
 	 */
 	container* parent()noexcept{
-		return this->parent_v;
+		return this->parent_container;
 	}
 
 	/**
@@ -484,7 +484,6 @@ public:
 	virtual vector2 measure(const vector2& quotum)const;
 
 public:
-
 	/**
 	 * @brief Show/hide widget.
 	 * @param visible - whether to show (true) or hide (false) the widget.
@@ -497,7 +496,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_visible()const noexcept{
-		return this->isVisible_v;
+		return this->visible;
 	}
 
 	/**
@@ -512,7 +511,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_enabled()const noexcept{
-		return this->isEnabled_v;
+		return this->enabled;
 	}
 
 	/**

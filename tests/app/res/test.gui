@@ -682,6 +682,7 @@ defs{
 			@push_button{
 				x{10} y{20}
 				@text{text{"Hello world!"}}
+				enabled{false}
 			}
 		}
 

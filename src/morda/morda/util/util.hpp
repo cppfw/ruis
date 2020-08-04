@@ -91,7 +91,7 @@ void set_simple_alpha_blending(renderer& r);
 
 morda::texture_2d::type num_channels_to_texture_type(unsigned numChannels);
 
-r4::vec4f colorToVec4f(std::uint32_t color);
+r4::vec4f color_to_vec4f(uint32_t color);
 
 inline const puu::leaf& get_property_value(const puu::tree& p){
     if(p.children.size() != 1){

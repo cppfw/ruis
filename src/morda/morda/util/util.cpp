@@ -108,7 +108,7 @@ void morda::set_simple_alpha_blending(renderer& r){
 }
 
 
-r4::vec4f morda::colorToVec4f(std::uint32_t color){
+r4::vec4f morda::color_to_vec4f(uint32_t color){
 	return r4::vec4f(
 			float(color & 0xff) / float(0xff),
 			float((color >> 8) & 0xff) / float(0xff),

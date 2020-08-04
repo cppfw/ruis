@@ -18,5 +18,5 @@ void color::render(const morda::matrix4& matrix)const{
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_color());
+	r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_current_color());
 }

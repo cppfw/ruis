@@ -24,7 +24,7 @@ text_input_line::text_input_line(std::shared_ptr<morda::context> c, const puu::f
 		character_input_widget(this->context),
 		color_widget(this->context, desc)
 {
-	this->set_clip(true);
+	this->set_clip_enabled(true);
 }
 
 void text_input_line::render(const morda::matrix4& matrix) const{
@@ -51,7 +51,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
 		this->get_font().render(
 				matr,
-				morda::colorToVec4f(this->get_color()),
+				morda::color_to_vec4f(this->get_current_color()),
 				this->get_text().substr(this->firstVisibleCharIndex, this->get_text().size() - this->firstVisibleCharIndex)
 			);
 	}
@@ -62,7 +62,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		matr.scale(vector2(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
 
 		auto& r = *this->context->renderer;
-		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_color());
+		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_current_color());
 	}
 }
 

@@ -291,6 +291,12 @@ public:
 	virtual void on_children_change(){
 		this->invalidate_layout();
 	}
+
+	/**
+	 * @brief Handler of enable state change.
+	 * This implementation sets the same enabled state to all children of the container.
+	 */
+	void on_enable_change()override;
 };
 
 template <class T> T* widget::find_ancestor(const char* id){

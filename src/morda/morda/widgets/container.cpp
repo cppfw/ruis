@@ -54,6 +54,12 @@ void container::push_back_inflate(const puu::forest& desc){
 		}
 		this->push_back(this->context->inflater.inflate(i, i + 1));
 	}
+
+	// in case this widget is initially disabled, as specified in gui script
+	// we need to update enabled state of children
+	if(!this->is_enabled()){
+		this->on_enable_change();
+	}
 }
 
 void container::render_child(const matrix4& matrix, const widget& c) const {
@@ -231,7 +237,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 
 	auto ret = this->children_v.variable.emplace(before, std::move(w));
 
-	ww.parent_v = this;
+	ww.parent_container = this;
 	ww.on_parent_change();
 
 	this->on_children_change();
@@ -257,7 +263,7 @@ container::widget_list::const_iterator container::erase(widget_list::const_itera
 
 	auto ret = this->children_v.variable.erase(child);
 
-	w->parent_v = nullptr;
+	w->parent_container = nullptr;
 	w->set_unhovered();
 	w->on_parent_change();
 
@@ -372,4 +378,12 @@ container::const_widget_list::const_iterator container::find(const widget& w)con
 				return v.get() == &w;
 			}
 		);
+}
+
+void container::on_enable_change(){
+	blocked_flag_guard blocked_guard(this->is_blocked);
+	
+	for(auto& c : this->children()){
+		c->set_enabled(this->is_enabled());
+	}
 }
