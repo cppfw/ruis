@@ -1,3 +1,9 @@
+libmorda (0.5.135) unstable; urgency=medium
+
+  * image::on_enable_change() fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 05 Aug 2020 00:19:38 +0300
+
 libmorda (0.5.134) unstable; urgency=medium
 
   * disable state rendering
