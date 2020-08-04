@@ -178,16 +178,19 @@ void image::on_resize(){
 }
 
 void image::on_enable_change(){
-	if(this->disabled_img && this->img){
+	if(!this->disabled_img){
+		// no disabled image set, nothing changes
+		return;
+	}
+
+	if(this->img){
 		// if dimension of active image change then need to re-layout
 		if(this->disabled_img->dims() != this->img->dims()){
 			this->invalidate_layout();
 		}
 	}else{
-		// if there is only disabled image, perhaps nobody will ever use it like this, but nevertheless,
+		// there is only disabled image, perhaps nobody will ever use it like this, but nevertheless,
 		// let's handle this case gracefully
-		if(this->disabled_img){
-			this->invalidate_layout();
-		}
+		this->invalidate_layout();
 	}
 }
