@@ -84,7 +84,7 @@ std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const puu::for
 }
 
 nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul) :
-		images_v(l),
+		img_matrix(l),
 		parent(parent),
 		mul(mul)
 {}

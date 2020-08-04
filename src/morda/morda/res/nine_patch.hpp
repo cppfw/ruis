@@ -45,14 +45,14 @@ public:
 	
 	
 	class image_matrix{
-		const std::array<std::array<std::shared_ptr<const res::image>, 3>, 3> images_v;
+		const std::array<std::array<std::shared_ptr<const res::image>, 3>, 3> img_matrix;
 		
 		std::weak_ptr<const nine_patch> parent;
 	
 		real mul;//for erasing from the cache
 	public:
-		decltype(images_v)& images()const noexcept{
-			return this->images_v;
+		decltype(img_matrix)& images()const noexcept{
+			return this->img_matrix;
 		}
 		
 		image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul);

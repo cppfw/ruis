@@ -30,11 +30,11 @@ class nine_patch :
 {
 	std::shared_ptr<const res::nine_patch> res;
 
-	std::shared_ptr<res::nine_patch::image_matrix> scaledImage;
+	std::shared_ptr<res::nine_patch::image_matrix> texture;
 
 	sides<real> borders = sides<real>(layout_params::min);
 
-	std::array<std::array<std::shared_ptr<image>, 3>, 3> imageMatrix_v;
+	std::array<std::array<std::shared_ptr<image>, 3>, 3> img_matrix;
 
 	std::shared_ptr<pile> content_v;
 

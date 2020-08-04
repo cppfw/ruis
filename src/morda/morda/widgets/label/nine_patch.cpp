@@ -78,17 +78,17 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& des
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c)
 {
-	this->imageMatrix_v[0][0] = this->try_get_widget_as<image>("morda_lt");
-	this->imageMatrix_v[0][1] = this->try_get_widget_as<image>("morda_t");
-	this->imageMatrix_v[0][2] = this->try_get_widget_as<image>("morda_rt");
+	this->img_matrix[0][0] = this->try_get_widget_as<image>("morda_lt");
+	this->img_matrix[0][1] = this->try_get_widget_as<image>("morda_t");
+	this->img_matrix[0][2] = this->try_get_widget_as<image>("morda_rt");
 
-	this->imageMatrix_v[1][0] = this->try_get_widget_as<image>("morda_l");
-	this->imageMatrix_v[1][1] = this->try_get_widget_as<image>("morda_m");
-	this->imageMatrix_v[1][2] = this->try_get_widget_as<image>("morda_r");
+	this->img_matrix[1][0] = this->try_get_widget_as<image>("morda_l");
+	this->img_matrix[1][1] = this->try_get_widget_as<image>("morda_m");
+	this->img_matrix[1][2] = this->try_get_widget_as<image>("morda_r");
 
-	this->imageMatrix_v[2][0] = this->try_get_widget_as<image>("morda_lb");
-	this->imageMatrix_v[2][1] = this->try_get_widget_as<image>("morda_b");
-	this->imageMatrix_v[2][2] = this->try_get_widget_as<image>("morda_rb");
+	this->img_matrix[2][0] = this->try_get_widget_as<image>("morda_lb");
+	this->img_matrix[2][1] = this->try_get_widget_as<image>("morda_b");
+	this->img_matrix[2][2] = this->try_get_widget_as<image>("morda_rb");
 
 	this->on_blending_change();
 
@@ -131,7 +131,7 @@ void nine_patch::render(const morda::matrix4& matrix)const{
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np){
 	this->res = std::move(np);
-	this->scaledImage.reset();
+	this->texture.reset();
 
 	this->applyImages();
 
@@ -156,7 +156,7 @@ sides<real> nine_patch::get_actual_borders()const noexcept{
 
 void nine_patch::applyImages(){
 	if(!this->res){
-		for(auto& i : this->imageMatrix_v){
+		for(auto& i : this->img_matrix){
 			for(auto& j : i){
 				j->set_image(nullptr);
 			}
@@ -169,28 +169,28 @@ void nine_patch::applyImages(){
 
 	{
 		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = this->imageMatrix_v[0][0]->get_layout_params_const();
+		auto& layoutParams = this->img_matrix[0][0]->get_layout_params_const();
 
 		if(this->borders.left() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.left()){
-				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
+				auto& lp = this->img_matrix[0][0]->get_layout_params();
 				lp.dims.x = minBorders.left();
 			}
 		}else{
 			if(layoutParams.dims.x != this->borders.left()){
-				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
+				auto& lp = this->img_matrix[0][0]->get_layout_params();
 				lp.dims.x = this->borders.left();
 			}
 		}
 
 		if(this->borders.top() == layout_params::min){
 			if(layoutParams.dims.y != minBorders.top()){
-				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
+				auto& lp = this->img_matrix[0][0]->get_layout_params();
 				lp.dims.y = minBorders.top();
 			}
 		}else{
 			if(layoutParams.dims.y != this->borders.top()){
-				auto& lp = this->imageMatrix_v[0][0]->get_layout_params();
+				auto& lp = this->img_matrix[0][0]->get_layout_params();
 				lp.dims.y = this->borders.top();
 			}
 		}
@@ -198,28 +198,28 @@ void nine_patch::applyImages(){
 	}
 	{
 		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if possible
-		auto& layoutParams = this->imageMatrix_v[2][2]->get_layout_params_const();
+		auto& layoutParams = this->img_matrix[2][2]->get_layout_params_const();
 
 		if(this->borders.right() == layout_params::min){
 			if(layoutParams.dims.x != minBorders.right()){
-				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
+				auto& lp = this->img_matrix[2][2]->get_layout_params();
 				lp.dims.x = minBorders.right();
 			}
 		}else{
 			if(layoutParams.dims.x != this->borders.right()){
-				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
+				auto& lp = this->img_matrix[2][2]->get_layout_params();
 				lp.dims.x = this->borders.right();
 			}
 		}
 
 		if(this->borders.bottom() == layout_params::min){
 			if(layoutParams.dims.y != minBorders.bottom()){
-				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
+				auto& lp = this->img_matrix[2][2]->get_layout_params();
 				lp.dims.y = minBorders.bottom();
 			}
 		}else{
 			if(layoutParams.dims.y != this->borders.bottom()){
-				auto& lp = this->imageMatrix_v[2][2]->get_layout_params();
+				auto& lp = this->img_matrix[2][2]->get_layout_params();
 				lp.dims.y = this->borders.bottom();
 			}
 		}
@@ -227,24 +227,24 @@ void nine_patch::applyImages(){
 	}
 //		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->scaledImage = this->res->get(this->borders);
+	this->texture = this->res->get(this->borders);
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix_v[i][j]->set_image(this->scaledImage->images()[i][j]);
+			this->img_matrix[i][j]->set_image(this->texture->images()[i][j]);
 		}
 	}
 }
 
 void nine_patch::set_center_visible(bool visible){
-	ASSERT(this->imageMatrix_v[1][1])
-	this->imageMatrix_v[1][1]->set_visible(visible);
+	ASSERT(this->img_matrix[1][1])
+	this->img_matrix[1][1]->set_visible(visible);
 }
 
 void nine_patch::on_blending_change(){
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->imageMatrix_v[i][j]->set_blending_params(this->get_blending_params());
+			this->img_matrix[i][j]->set_blending_params(this->get_blending_params());
 		}
 	}
 }
