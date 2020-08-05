@@ -1,6 +1,6 @@
 #pragma once
 
-#include <morda/render/renderer.hpp>
+#include "../render/renderer.hpp"
 
 #include "path.hpp"
 

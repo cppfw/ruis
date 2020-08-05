@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <morda/config.hpp>
+#include "../config.hpp"
 
 namespace morda{
 
