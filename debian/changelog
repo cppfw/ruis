@@ -1,3 +1,9 @@
+libmorda (0.5.136) unstable; urgency=medium
+
+  * path
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 06 Aug 2020 14:05:02 +0300
+
 libmorda (0.5.135) unstable; urgency=medium
 
   * image::on_enable_change() fix
