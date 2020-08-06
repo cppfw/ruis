@@ -11,7 +11,7 @@ path_vba::path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 			{{
 				coreBuf,
 			}},
-			this->renderer->factory->create_index_buffer(utki::make_span(path.inIndices)),
+			this->renderer->factory->create_index_buffer(utki::make_span(path.in_indices)),
 			morda::vertex_array::mode::triangle_strip
 		);
 	
@@ -21,7 +21,7 @@ path_vba::path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 				coreBuf,
 				this->renderer->factory->create_vertex_buffer(utki::make_span(path.alpha)),
 			}},
-			this->renderer->factory->create_index_buffer(utki::make_span(path.outIndices)),
+			this->renderer->factory->create_index_buffer(utki::make_span(path.out_indices)),
 			morda::vertex_array::mode::triangle_strip
 		);
 }

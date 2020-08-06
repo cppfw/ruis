@@ -4,22 +4,22 @@
 
 using namespace morda;
 
-void path::lineTo(morda::vector2 absPos){
-	this->points.emplace_back(absPos);
+void path::line_to(morda::vector2 abs_pos){
+	this->points.emplace_back(abs_pos);
 }
 
-void path::lineBy(morda::vector2 relPos){
+void path::line_by(morda::vector2 rel_pos){
 	ASSERT(this->points.size() != 0)
-	this->lineTo(this->points.back() + relPos);
+	this->line_to(this->points.back() + rel_pos);
 }
 
-void path::cubicBy(morda::vector2 relP1, morda::vector2 relP2, morda::vector2 relP3){
+void path::cubic_by(morda::vector2 rel_p1, morda::vector2 rel_p2, morda::vector2 rel_p3){
 	ASSERT(this->points.size() != 0)
 	auto& d = this->points.back();
-	this->cubicTo(d + relP1, d + relP2, d + relP3);
+	this->cubic_to(d + rel_p1, d + rel_p2, d + rel_p3);
 }
 
-void path::cubicTo(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3){
+void path::cubic_to(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3){
 	auto p0 = this->points.back();
 
 	auto bezier = [p0, p1, p2, p3](morda::real t){
@@ -38,12 +38,12 @@ void path::cubicTo(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3){
 
 	// NOTE: start from dt because 0th point is already there in the path
 	for(morda::real t = dt; t < 1; t += dt){
-		this->lineTo(bezier(t));
+		this->line_to(bezier(t));
 	}
-	this->lineTo(bezier(1));
+	this->line_to(bezier(1));
 }
 
-path::vertices path::stroke(morda::real halfWidth, morda::real antialiasWidth, morda::real antialiasAlpha)const{
+path::vertices path::stroke(morda::real half_width, morda::real antialias_width, morda::real antialias_alpha)const{
 	vertices ret;
 
 	if(this->points.size() <= 1){
@@ -52,7 +52,7 @@ path::vertices path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 
 	const decltype(this->points)::value_type *prev = nullptr, *cur = nullptr, *next = nullptr;
 
-	std::uint16_t inIndex = 0;
+	std::uint16_t in_index = 0;
 
 	for(auto i = this->points.begin(); i != this->points.end(); ++i){
 		prev = cur;
@@ -92,60 +92,60 @@ path::vertices path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 		auto normal = (prevNormal + nextNormal).normalize();
 
 		auto miterCoeff = 1 / (normal * prevNormal);
-		auto miter = miterCoeff * halfWidth;
-		auto antialiasMiter = miterCoeff * (halfWidth + antialiasWidth);
+		auto miter = miterCoeff * half_width;
+		auto antialiasMiter = miterCoeff * (half_width + antialias_width);
 
 		using std::sqrt;
 		using utki::pi;
 
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotated(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotated(pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
 		ret.alpha.push_back(0);
-		++inIndex;
+		++in_index;
 
 		ret.pos.push_back((*cur) - normal * miter);
-		ret.alpha.push_back(antialiasAlpha);
-		ret.inIndices.push_back(inIndex);
-		++inIndex;
+		ret.alpha.push_back(antialias_alpha);
+		ret.in_indices.push_back(in_index);
+		++in_index;
 
 		ret.pos.push_back((*cur) + normal * miter);
-		ret.alpha.push_back(antialiasAlpha);
-		ret.inIndices.push_back(inIndex);
-		++inIndex;
+		ret.alpha.push_back(antialias_alpha);
+		ret.in_indices.push_back(in_index);
+		++in_index;
 
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rotated(utki::pi<morda::real>() / 4) * antialias_width * std::sqrt(2));
 		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rotated(-utki::pi<morda::real>() / 4) * antialias_width * std::sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}
 		ret.alpha.push_back(0);
-		++inIndex;
+		++in_index;
 	}
 
-	ret.outIndices.push_back(3);
-	ret.outIndices.push_back(2);
+	ret.out_indices.push_back(3);
+	ret.out_indices.push_back(2);
 
 	for(unsigned i = 0; i != this->points.size(); ++i){
-		ret.outIndices.push_back(4 * i);
-		ret.outIndices.push_back(4 * i + 1);
+		ret.out_indices.push_back(4 * i);
+		ret.out_indices.push_back(4 * i + 1);
 	}
 
 	for(unsigned i = this->points.size() - 1; i != 0; --i){
-		ret.outIndices.push_back(4 * i + 3);
-		ret.outIndices.push_back(4 * i + 2);
+		ret.out_indices.push_back(4 * i + 3);
+		ret.out_indices.push_back(4 * i + 2);
 	}
 
-	ret.outIndices.push_back(3);
-	ret.outIndices.push_back(2);
+	ret.out_indices.push_back(3);
+	ret.out_indices.push_back(2);
 
 	return ret;
 }
