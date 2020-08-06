@@ -1,3 +1,9 @@
+libmorda (0.5.137) unstable; urgency=medium
+
+  * path_vba default constructor
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 06 Aug 2020 17:20:02 +0300
+
 libmorda (0.5.136) unstable; urgency=medium
 
   * path
