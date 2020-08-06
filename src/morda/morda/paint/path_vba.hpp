@@ -18,7 +18,6 @@ public:
 	path_vba& operator=(const path_vba&) = delete;
 	
 	void render(const morda::matrix4& matrix, uint32_t color);
-private:
 };
 
 }
