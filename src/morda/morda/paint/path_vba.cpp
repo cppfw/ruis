@@ -26,7 +26,14 @@ path_vba::path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 		);
 }
 
-void path_vba::render(const morda::matrix4& matrix, uint32_t color){
+void path_vba::render(const morda::matrix4& matrix, uint32_t color)const{
+	if(!this->renderer || ! this->core){
+		return;
+	}
+
 	this->renderer->shader->color_pos->render(matrix, *this->core, color);
-	this->renderer->shader->color_pos_lum->render(matrix, *this->border, color);
+
+	if(this->border){
+		this->renderer->shader->color_pos_lum->render(matrix, *this->border, color);
+	}
 }

@@ -62,6 +62,20 @@
             "command": "make run_busy debug=true",
             "problemMatcher": [],
             "dependsOn": "build_debug"
+        },
+        {
+            "label": "run_paint",
+            "type": "shell",
+            "command": "make run_paint",
+            "problemMatcher": [],
+            "dependsOn": "build"
+		},
+		{
+            "label": "run_paint_debug",
+            "type": "shell",
+            "command": "make run_paint debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
 		},
 		{
             "label": "run_widget_set_debug",
