@@ -34,6 +34,7 @@
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
 #include "widgets/proxy/resize_proxy.hpp"
+#include "widgets/proxy/ratio_proxy.hpp"
 
 using namespace morda;
 
@@ -201,6 +202,7 @@ gui::gui(
 	this->context->inflater.register_widget<list>("list");
 	this->context->inflater.register_widget<book>("book");
 	this->context->inflater.register_widget<spinner>("spinner");
+	this->context->inflater.register_widget<ratio_proxy>("ratio_proxy");
 
 	this->context->inflater.inflate(default_defs);
 }

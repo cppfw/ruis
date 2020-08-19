@@ -1,5 +1,6 @@
 #include "../../src/morda/morda/context.hpp"
 #include "../../src/morda/morda/widgets/group/pile.hpp"
+#include "../../src/morda/morda/widgets/proxy/ratio_proxy.hpp"
 
 #include "../harness/fake_renderer/fake_renderer.hpp"
 
@@ -89,12 +90,16 @@ int main(int argc, char** argv){
 			@container{
 				defs{
 					@Cont{
-						x y layout
+						x y layout t
 						@container{
 							x{${x}} y{${x}}
 							layout{
 								dx{fill} dy{max}
 								${layout}
+							}
+							@widget{
+								id {test_widget}
+								x{${t}}
 							}
 						}
 					}
@@ -103,6 +108,7 @@ int main(int argc, char** argv){
 				@Cont{
 					x{23}
 					dx{45}
+					t{13}
 					layout{
 						dx{max}
 					}
@@ -119,9 +125,43 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(c->children().front()->rect().p.x == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().p.y == 23)
 		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
+		ASSERT_ALWAYS(c->children().front()->rect().d.x == 45)
+		ASSERT_ALWAYS(c->children().front()->get_widget("test_widget").rect().p.x == 13)
 		auto lp = c->children().front()->get_layout_params();
 		ASSERT_INFO_ALWAYS(lp.dims[0] == morda::widget::layout_params::max, "lp.dims[0] = " << lp.dims[0])
 		ASSERT_INFO_ALWAYS(lp.dims[1] == morda::widget::layout_params::max, "lp.dims[1] = " << lp.dims[1])
+	}
+
+	// test template arguments inside of nested containers
+	{
+		TRACE_ALWAYS(<< "!!!!!!!!!!!!!!!" << std::endl)
+		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
+			@container{
+				@container{
+					defs{
+						@test_box{
+							r t
+							@widget{
+								id {test_widget}
+								x {${r}}
+							}
+						}
+					}
+
+					@test_box{
+						r {2.5}
+						t {"1:2"}
+					}
+				}
+			}
+		)qwertyuiop"));
+
+		ASSERT_ALWAYS(w)
+		auto c = std::dynamic_pointer_cast<morda::container>(w);
+		ASSERT_ALWAYS(c)
+		auto& r = w->get_widget_as<morda::widget>("test_widget");
+		ASSERT_INFO_ALWAYS(r.rect().p.x == 2.5, "x = " << r.rect().p.x)
 	}
 
 	// test two levels of templates

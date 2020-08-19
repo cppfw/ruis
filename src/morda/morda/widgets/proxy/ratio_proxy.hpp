@@ -4,13 +4,13 @@
 
 namespace morda{
 
-class aspect_proxy : widget{
+class ratio_proxy : virtual public widget{
     real x_above_y = 1;
 public:
-    aspect_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
+    ratio_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-    aspect_proxy(const aspect_proxy&) = delete;
-    aspect_proxy& operator=(const aspect_proxy&) = delete;
+    ratio_proxy(const ratio_proxy&) = delete;
+    ratio_proxy& operator=(const ratio_proxy&) = delete;
 
     void set_aspect_ratio(real x_above_y);
 

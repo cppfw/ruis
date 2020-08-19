@@ -1,0 +1,41 @@
+@container{
+	@pile{
+		title {"ratio proxy"}
+
+		x {200}
+		y {200}
+		dx {200}
+		dy {100}
+
+		defs{
+			@ratio_box{ r t
+				@pile{
+					layout{
+						dy {fill}
+					}
+					@ratio_proxy{
+						layout{
+							dy {fill}
+						}
+						ratio {${r}}
+					}
+					@color{
+						layout{
+							dx {fill}
+							dy {fill}
+						}
+						color {0xff008080}
+					}
+					@text{
+						text {${t}}
+					}
+				}
+			}
+		}
+
+		@ratio_box{
+			r {0.5}
+			t {"1:2"}
+		}
+	}
+}

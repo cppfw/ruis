@@ -34,15 +34,6 @@
             "problemMatcher": []
         },
         {
-            "label": "test_debug",
-            "type": "shell",
-            "command": "make test debug=true autojobs=true",
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "dependsOn": "build_debug"
-        },
-        {
             "label": "run",
             "type": "shell",
             "command": "make run",
@@ -60,6 +51,20 @@
             "label": "run_busy_debug",
             "type": "shell",
             "command": "make run_busy debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
+		},
+		{
+            "label": "run_ratio_proxy",
+            "type": "shell",
+            "command": "make run_ratio_proxy",
+            "problemMatcher": [],
+            "dependsOn": "build"
+		},
+		{
+            "label": "run_ratio_proxy_debug",
+            "type": "shell",
+            "command": "make run_ratio_proxy debug=true",
             "problemMatcher": [],
             "dependsOn": "build_debug"
         },
@@ -104,6 +109,27 @@
             "command": "make test autojobs=true",
             "problemMatcher": [],
             "dependsOn": "build"
+		},
+		{
+            "label": "test_debug",
+            "type": "shell",
+            "command": "make test debug=true autojobs=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
+		},
+		{
+            "label": "test_inflating",
+            "type": "shell",
+            "command": "make -C tests/inflating test",
+            "problemMatcher": [],
+            "dependsOn": "build"
+		},
+		{
+            "label": "test_inflating_debug",
+            "type": "shell",
+            "command": "make -C tests/inflating test debug=true",
+            "problemMatcher": [],
+            "dependsOn": "build_debug"
         },
         {
             "label": "run_ogles2",

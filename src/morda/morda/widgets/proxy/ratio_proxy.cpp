@@ -1,8 +1,8 @@
-#include "aspect_proxy.hpp"
+#include "ratio_proxy.hpp"
 
 using namespace morda;
 
-aspect_proxy::aspect_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+ratio_proxy::ratio_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		morda::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -16,7 +16,7 @@ aspect_proxy::aspect_proxy(std::shared_ptr<morda::context> c, const puu::forest&
 	}
 }
 
-void aspect_proxy::set_aspect_ratio(real x_above_y){
+void ratio_proxy::set_aspect_ratio(real x_above_y){
 	if(this->x_above_y == x_above_y){
 		return;
 	}
@@ -25,7 +25,7 @@ void aspect_proxy::set_aspect_ratio(real x_above_y){
 	this->invalidate_layout();
 }
 
-morda::vector2 aspect_proxy::measure(const morda::vector2& quotum)const{
+morda::vector2 ratio_proxy::measure(const morda::vector2& quotum)const{
 	if(quotum.x < 0 && quotum.y < 0){
 		return morda::vector2(0);
 	}
