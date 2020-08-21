@@ -36,11 +36,17 @@ const char* wording_defs = "defs";
 }
 
 namespace{
-void substitute_vars(puu::forest& to, const std::function<const puu::forest*(const std::string&)>& find_var, bool blank_not_found_vars){
+void substitute_vars(
+		puu::forest& to,
+		const std::function<const puu::forest*(const std::string&)>& find_var,
+		bool blank_not_found_vars,
+		bool go_beyond_child_widgets
+	)
+{
 	ASSERT(find_var)
 
 	for(auto i = to.begin(); i != to.end();){
-		TRACE(<< "i->value = " << i->value.to_string() << std::endl)
+		// TRACE(<< "i->value = " << i->value.to_string() << std::endl)
 		if(i->value == "$"){
 			if(i->children.empty()){
 				throw std::invalid_argument("malformed GUI definition: error: reference to a variable holds no variable name");
@@ -66,7 +72,9 @@ void substitute_vars(puu::forest& to, const std::function<const puu::forest*(con
 				continue;
 			}
 		}else{
-			substitute_vars(i->children, find_var, blank_not_found_vars);
+			if(i->value.empty() || go_beyond_child_widgets || i->value[0] != '@'){
+				substitute_vars(i->children, find_var, blank_not_found_vars, true);
+			}
 		}
 		++i;
 	}
@@ -75,7 +83,7 @@ void substitute_vars(puu::forest& to, const std::function<const puu::forest*(con
 
 namespace{
 puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::string>& var_names, puu::forest&& trees){
-	TRACE(<< "applying template: " << puu::to_string(templ) << std::endl)
+	// TRACE(<< "applying template: " << puu::to_string(templ) << std::endl)
 	puu::forest ret = templ;
 
 	std::map<std::string, puu::forest> vars;
@@ -101,25 +109,26 @@ puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::str
 	}
 	vars["children"] = std::move(children);
 
-#ifdef DEBUG
-	for(auto& v : vars){
-		TRACE(<< "v = " << v.first << std::endl)
-	}
-#endif
-	TRACE(<< "ret = " << puu::to_string(ret) << std::endl)
+// #ifdef DEBUG
+// 	for(auto& v : vars){
+// 		TRACE(<< "v = " << v.first << std::endl)
+// 	}
+// #endif
+// 	TRACE(<< "ret = " << puu::to_string(ret) << std::endl)
 	substitute_vars(
 			ret,
 			[&vars](const std::string& name) -> const puu::forest*{
-				TRACE(<< "looking for var = " << name << std::endl)
+				// TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
 				if(i == vars.end()){
-					TRACE(<< "not found" << std::endl)
+					// TRACE(<< "not found" << std::endl)
 					return nullptr;
 				}
-				TRACE(<< "found = " << puu::to_string(i->second) << std::endl)
+				// TRACE(<< "found = " << puu::to_string(i->second) << std::endl)
 				return &i->second;
 			},
-			false
+			false,
+			true
 		);
 
 	return ret;
@@ -147,11 +156,6 @@ std::shared_ptr<widget> inflater::inflate(const std::string& str){
 }
 
 std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
-	TRACE(<< "inflater::inflate():" << std::endl)
-	for(auto iii = begin; iii != end; ++iii){
-		TRACE(<< puu::to_string(*iii) << std::endl)
-	}
-
 	auto i = begin;
 
 	for(; i != end && is_leaf_property(i->value); ++i){
@@ -174,11 +178,11 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	std::string widget_name;
 	puu::forest widget_desc;
 
-	TRACE(<< "inflating = " << i->value.to_string() << std::endl)
+	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if(auto tmpl = this->find_template(i->value.to_string().substr(1))){
 		widget_name = tmpl->templ.value.to_string().substr(1);
 		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::forest(i->children));
-		TRACE(<< "After applying template: " << puu::to_string(widget_desc) << std::endl)
+		// TRACE(<< "After applying template: " << puu::to_string(widget_desc) << std::endl)
 	}else{
 		widget_name = i->value.to_string().substr(1);
 		widget_desc = i->children;
@@ -197,7 +201,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 		if(d.value != wording_defs){
 			continue;
 		}
-		TRACE(<< "push local defs: " << puu::to_string(d.children) << std::endl)
+		// TRACE(<< "push local defs: " << puu::to_string(d.children) << std::endl)
 		this->push_defs(d.children);
 		++num_pop_defs;
 	}
@@ -207,19 +211,20 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 			[this](const std::string& name) -> const puu::forest*{
 				return this->find_variable(name);
 			},
-			true
+			true,
+			false
 		);
 	
 	try{
 		return fac(utki::make_shared_from(this->context), widget_desc);
 	}catch(...){
-		TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
+		// TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
 		throw;
 	}
 }
 
 inflater::widget_template inflater::parse_template(const puu::forest& templ){
-	TRACE(<< "parse_template(): templ = " << puu::to_string(templ) << std::endl)
+	// TRACE(<< "parse_template(): templ = " << puu::to_string(templ) << std::endl)
 	widget_template ret;
 
 	for(auto& n : templ){
@@ -247,10 +252,10 @@ inflater::widget_template inflater::parse_template(const puu::forest& templ){
 	}
 	// TRACE(<< "template definition found: " << puu::to_string(ret.templ) << std::endl)
 
-	TRACE(<< "vars:" << std::endl)
+	// TRACE(<< "vars:" << std::endl)
 	// for each variable create a stub property if needed
 	for(auto& v : ret.vars){
-		TRACE(<< " " << v << std::endl)
+		// TRACE(<< " " << v << std::endl)
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if(i == ret.templ.children.end()){
 			ret.templ.children.push_back(
@@ -269,7 +274,7 @@ inflater::widget_template inflater::parse_template(const puu::forest& templ){
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
-	TRACE(<< "template parsed: " << puu::to_string(ret.templ) << std::endl)
+	// TRACE(<< "template parsed: " << puu::to_string(ret.templ) << std::endl)
 	return ret;
 }
 
@@ -294,7 +299,7 @@ void inflater::push_templates(const puu::forest& chain){
 		if(c.children.empty()){
 			throw std::invalid_argument("inflater::push_templates(): template name has no children, error.");
 		}
-		TRACE(<< "pushing template: " << puu::to_string(c.children) << std::endl)
+		// TRACE(<< "pushing template: " << puu::to_string(c.children) << std::endl)
 
 		ASSERT(!c.value.empty())
 		ASSERT(c.value.to_string()[0] == '@')
@@ -358,6 +363,7 @@ void inflater::push_variables(const puu::forest& defs){
 			[this](const std::string& name) -> const puu::forest*{
 				return this->find_variable(name);
 			},
+			true,
 			true
 		);
 

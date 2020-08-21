@@ -134,7 +134,7 @@ int main(int argc, char** argv){
 
 	// test template arguments inside of nested containers
 	{
-		TRACE_ALWAYS(<< "!!!!!!!!!!!!!!!" << std::endl)
+		// TRACE_ALWAYS(<< "!!!!!!!!!!!!!!!" << std::endl)
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
