@@ -1,5 +1,5 @@
 @container{
-	@pile{
+	@window{
 		title {"ratio proxy"}
 
 		x {200}
