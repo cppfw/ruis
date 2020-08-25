@@ -124,3 +124,7 @@ bool morda::is_leaf_property(const puu::leaf& l){
 bool morda::is_property(const puu::tree& t){
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
+
+bool morda::is_leaf_child(const puu::leaf& l){
+	return !is_leaf_property(l);
+}

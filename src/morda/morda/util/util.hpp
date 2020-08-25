@@ -73,6 +73,8 @@ bool is_property(const puu::tree& t);
 
 bool is_leaf_property(const puu::leaf& l);
 
+bool is_leaf_child(const puu::leaf& l);
+
 /**
  * @brief Load texture from file.
  * @param r - renderer.

@@ -253,6 +253,43 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(std::dynamic_pointer_cast<morda::container>(c->children().front()))
 	}
 
+	// test template recursion detection
+	{
+		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		bool exc_caught = false;
+		try{
+			auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
+				defs{
+					@container{ x y layout dx
+						@pile{
+							@container{
+								x{${x}} y{${y}}
+								dy{${dx}}
+								layout{
+									${layout}
+									dx{fill} dy{max}
+								}
+								${children}
+							}
+							@container{}
+						}
+					}
+
+					@Tmpl{
+						@container
+					}
+				}
+				@container{
+					@Tmpl
+				}
+			)qwertyuiop"));
+		}catch(std::logic_error& e){
+			exc_caught = true;
+		}
+
+		ASSERT_ALWAYS(exc_caught)
+	}
+
 	// test two defs blocks in widget
 	{
 		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);

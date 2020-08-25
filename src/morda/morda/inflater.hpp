@@ -137,7 +137,7 @@ private:
 		std::set<std::string> vars;
 	};
 
-	widget_template parse_template(const puu::forest& chain);
+	widget_template parse_template(const std::string& name, const puu::forest& chain);
 
 	std::vector<std::map<std::string, widget_template>> templates;
 

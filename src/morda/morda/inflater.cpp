@@ -223,7 +223,23 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	}
 }
 
-inflater::widget_template inflater::parse_template(const puu::forest& templ){
+namespace{
+// name starts with @
+void check_template_recursion(const std::string& name, const puu::forest& desc){
+	for(auto& c : desc){
+		if(is_leaf_child(c.value)){
+			if(c.value == name){
+				std::stringstream ss;
+				ss << "error: template '" << name << "' has recursion";
+				throw std::logic_error(ss.str());
+			}
+			check_template_recursion(name, c.children);
+		}
+	}
+}
+}
+
+inflater::widget_template inflater::parse_template(const std::string& name, const puu::forest& templ){
 	// TRACE(<< "parse_template(): templ = " << puu::to_string(templ) << std::endl)
 	widget_template ret;
 
@@ -265,7 +281,10 @@ inflater::widget_template inflater::parse_template(const puu::forest& templ){
 		}
 	}
 
+	ASSERT(!ret.templ.value.empty())
 	ASSERT(ret.templ.value.to_string()[0] == '@')
+
+	check_template_recursion(name, ret.templ.children);
 
 	if(auto tmpl = this->find_template(ret.templ.value.to_string().substr(1))){
 		ret.templ.value = tmpl->templ.value;
@@ -293,6 +312,7 @@ void inflater::push_templates(const puu::forest& chain){
 
 	for(auto& c : chain){
 		if(is_property(c)){
+			// skip variables
 			continue;
 		}
 
@@ -304,8 +324,10 @@ void inflater::push_templates(const puu::forest& chain){
 		ASSERT(!c.value.empty())
 		ASSERT(c.value.to_string()[0] == '@')
 
+		const auto& name = c.value.to_string();
+
 		auto res = m.insert(
-				std::make_pair(c.value.to_string().substr(1), parse_template(c.children))
+				std::make_pair(name.substr(1), parse_template(name, c.children))
 			);
 
 		if(!res.second){
