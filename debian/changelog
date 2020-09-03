@@ -1,3 +1,9 @@
+libmorda (0.5.139) unstable; urgency=medium
+
+  * add ratio_proxy widget
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 03 Sep 2020 14:20:23 +0300
+
 libmorda (0.5.138) unstable; urgency=medium
 
   * deploy to raspbian buster

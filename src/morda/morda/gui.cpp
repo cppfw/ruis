@@ -194,15 +194,16 @@ gui::gui(
 	this->context->inflater.register_widget<pile>("pile");
 	this->context->inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context->inflater.register_widget<click_proxy>("click_proxy");
-	this->context->inflater.register_widget<scroll_area>("scroll_area");
+	this->context->inflater.register_widget<ratio_proxy>("ratio_proxy");
 	this->context->inflater.register_widget<key_proxy>("key_proxy");
-	this->context->inflater.register_widget<overlay>("overlay");
 	this->context->inflater.register_widget<resize_proxy>("resize_proxy");
+
+	this->context->inflater.register_widget<scroll_area>("scroll_area");
+	this->context->inflater.register_widget<overlay>("overlay");
 	this->context->inflater.register_widget<pan_list>("pan_list");
 	this->context->inflater.register_widget<list>("list");
 	this->context->inflater.register_widget<book>("book");
 	this->context->inflater.register_widget<spinner>("spinner");
-	this->context->inflater.register_widget<ratio_proxy>("ratio_proxy");
 
 	this->context->inflater.inflate(default_defs);
 }
