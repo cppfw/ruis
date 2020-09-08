@@ -69,9 +69,9 @@ this_test := $(word $(words $(this_dirs)),$(this_dirs))
 
 define this_rules
 test:: $(prorab_this_name)
-	@myci-running-test.sh $(this_test)
-	@(cd $(d); LD_LIBRARY_PATH=../../src/morda/build $$^)
-	@myci-passed.sh
+$(.RECIPEPREFIX)@myci-running-test.sh $(this_test)
+$(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/build $$^)
+$(.RECIPEPREFIX)@myci-passed.sh
 endef
 $(eval $(this_rules))
 

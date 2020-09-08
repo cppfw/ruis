@@ -204,6 +204,9 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 		// TRACE(<< "push local defs: " << puu::to_string(d.children) << std::endl)
 		this->push_defs(d.children);
 		++num_pop_defs;
+
+		// OPTIMIZATION: clear defs block to preven unnecessary variables substitution inside the defs block later
+		d.children.clear();
 	}
 
 	substitute_vars(
