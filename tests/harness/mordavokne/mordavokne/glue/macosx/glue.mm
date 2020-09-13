@@ -90,7 +90,7 @@ void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	handleMouseButton(
 			mordavokne::application::inst(),
 			isDown,
-			morda::vector2(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
+			morda::vector2(pos.x(), mordavokne::application::inst().window_dims().y() - pos.y()),
 			button,
 			0
 		);
@@ -100,7 +100,7 @@ void macosx_HandleMouseMove(const morda::vector2& pos, unsigned id){
 //	TRACE(<< "Macosx_HandleMouseMove(): pos = " << pos << std::endl)
 	handleMouseMove(
 			mordavokne::application::inst(),
-			morda::vector2(pos.x, mordavokne::application::inst().window_dims().y - pos.y),
+			morda::vector2(pos.x(), mordavokne::application::inst().window_dims().y() - pos.y()),
 			id
 		);
 }
@@ -494,7 +494,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
 	macosx_HandleMouseMove(
-			morda::vector2(pos.x, pos.y).rounded(),
+			morda::vector2(pos.x(), pos.y()).rounded(),
 			0
 		);
 }
@@ -827,8 +827,8 @@ application::application(std::string&& name, const window_params& wp) :
 			morda::rectangle(
 					0,
 					0,
-					float(wp.dim.x),
-					float(wp.dim.y)
+					float(wp.dim.x()),
+					float(wp.dim.y())
 				)
 		);
 }
@@ -848,10 +848,10 @@ void application::set_fullscreen(bool enable){
 	if(enable){
 		// save old window size
 		NSRect rect = [ww.windowObjectId frame];
-		this->beforeFullScreenWindowRect.p.x = rect.origin.x;
-		this->beforeFullScreenWindowRect.p.y = rect.origin.y;
-		this->beforeFullScreenWindowRect.d.x = rect.size.width;
-		this->beforeFullScreenWindowRect.d.y = rect.size.height;
+		this->beforeFullScreenWindowRect.p.x() = rect.origin.x;
+		this->beforeFullScreenWindowRect.p.y() = rect.origin.y;
+		this->beforeFullScreenWindowRect.d.x() = rect.size.width;
+		this->beforeFullScreenWindowRect.d.y() = rect.size.height;
 
 		[ww.windowObjectId setStyleMask:([ww.windowObjectId styleMask] & (~(NSWindowStyleMaskTitled | NSWindowStyleMaskResizable)))];
 
@@ -861,10 +861,10 @@ void application::set_fullscreen(bool enable){
 		[ww.windowObjectId setStyleMask:([ww.windowObjectId styleMask] | NSWindowStyleMaskTitled | NSWindowStyleMaskResizable)];
 
 		NSRect oldFrame;
-		oldFrame.origin.x = this->beforeFullScreenWindowRect.p.x;
-		oldFrame.origin.y = this->beforeFullScreenWindowRect.p.y;
-		oldFrame.size.width = this->beforeFullScreenWindowRect.d.x;
-		oldFrame.size.height = this->beforeFullScreenWindowRect.d.y;
+		oldFrame.origin.x = this->beforeFullScreenWindowRect.p.x();
+		oldFrame.origin.y = this->beforeFullScreenWindowRect.p.y();
+		oldFrame.size.width = this->beforeFullScreenWindowRect.d.x();
+		oldFrame.size.height = this->beforeFullScreenWindowRect.d.y();
 
 		[ww.windowObjectId setFrame:oldFrame display:YES animate:NO];
 		[ww.windowObjectId setLevel:NSNormalWindowLevel];
