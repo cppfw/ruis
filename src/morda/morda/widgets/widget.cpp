@@ -20,13 +20,13 @@ widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			if(p.value == "layout"){
 				this->layout_desc = p.children;
 			}else if(p.value == "x"){
-				this->rectangle.p.x = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "y"){
-				this->rectangle.p.y = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "dx"){
-				this->rectangle.d.x = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "dy"){
-				this->rectangle.d.y = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context->units);
 			}else if(p.value == "id"){
 				this->id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
@@ -54,9 +54,9 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 
 		try{
 			if(p.value == "dx"){
-				this->dims.x = parse_layout_dimension_value(get_property_value(p), units);
+				this->dims.x() = parse_layout_dimension_value(get_property_value(p), units);
 			}else if(p.value == "dy"){
-				this->dims.y = parse_layout_dimension_value(get_property_value(p), units);
+				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
 			}
 		}catch(std::invalid_argument&){
 			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
@@ -82,10 +82,12 @@ void widget::resize(const morda::vector2& newDims){
 		return;
 	}
 
+	using std::max;
+
 	this->clear_cache();
 	this->rectangle.d = newDims;
-	this->rectangle.d.x = std::max(this->rectangle.d.x, real(0.0f)); // clamp bottom
-	this->rectangle.d.y = std::max(this->rectangle.d.y, real(0.0f)); // clamp bottom
+	this->rectangle.d.x() = max(this->rectangle.d.x(), real(0.0f)); // clamp bottom
+	this->rectangle.d.y() = max(this->rectangle.d.y(), real(0.0f)); // clamp bottom
 	this->relayoutNeeded = false;
 	this->on_resize(); // call virtual method
 }
@@ -292,10 +294,10 @@ void widget::unfocus()noexcept{
 
 r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	r4::recti ret(
-			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>()).rounded().to<int>(),
+			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>()).rou().to<int>(),
 			this->rect().d.to<int>()
 		);
-	ret.p.y -= ret.d.y;
+	ret.p.y() -= ret.d.y();
 	return ret;
 }
 

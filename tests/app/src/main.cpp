@@ -142,7 +142,7 @@ public:
 class CubeWidget : public morda::widget, public morda::updateable{
 	std::shared_ptr<morda::res::texture> tex;
 
-	morda::quaternion rot = morda::quaternion().identity();
+	morda::quaternion rot = morda::quaternion().set_identity();
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 
@@ -202,7 +202,7 @@ public:
 		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles);
 
 		this->tex = this->context->loader.load<morda::res::texture>("tex_sample");
-		this->rot.identity();
+		this->rot.set_identity();
 	}
 
 	unsigned fps = 0;
@@ -211,7 +211,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::quaternion().rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::quaternion().set_rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;
@@ -683,12 +683,12 @@ public:
 				auto visibleArea = sc->get_visible_area_fraction();
 
 				if(auto v = vs.lock()){
-					v->set_fraction(sc->get_scroll_factor().y);
-					v->set_band_fraction(visibleArea.y);
+					v->set_fraction(sc->get_scroll_factor().y());
+					v->set_band_fraction(visibleArea.y());
 				}
 				if(auto h = hs.lock()){
-					h->set_fraction(sc->get_scroll_factor().x);
-					h->set_band_fraction(visibleArea.x);
+					h->set_fraction(sc->get_scroll_factor().x());
+					h->set_band_fraction(visibleArea.x());
 				}
 			};
 			resizeProxy->on_resize();
@@ -696,7 +696,7 @@ public:
 			vertSlider->fraction_change_handler = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
-					sf.y = slider.fraction();
+					sf.y() = slider.fraction();
 					s->set_scroll_factor(sf);
 				}
 			};
@@ -704,7 +704,7 @@ public:
 			horiSlider->fraction_change_handler = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
-					sf.x = slider.fraction();
+					sf.x() = slider.fraction();
 					s->set_scroll_factor(sf);
 				}
 			};
@@ -758,7 +758,7 @@ public:
 					auto dp = state->oldPos - e.pos;
 					state->oldPos = e.pos;
 					if(auto l = vl.lock()){
-						l->scroll_by(dp.y);
+						l->scroll_by(dp.y());
 						if(auto s = vs.lock()){
 							s->set_fraction(l->get_scroll_factor());
 						}
@@ -819,7 +819,7 @@ public:
 					auto dp = state->oldPos - e.pos;
 					state->oldPos = e.pos;
 					if(auto l = hl.lock()){
-						l->scroll_by(dp.x);
+						l->scroll_by(dp.x());
 						if(auto s = hs.lock()){
 							s->set_fraction(l->get_scroll_factor());
 						}
@@ -873,10 +873,10 @@ public:
 					return;
 				}
 				if(auto h = hs.lock()){
-					h->set_fraction(t->get_scroll_factor().x);
+					h->set_fraction(t->get_scroll_factor().x());
 				}
 				if(auto v = vs.lock()){
-					v->set_fraction(t->get_scroll_factor().y);
+					v->set_fraction(t->get_scroll_factor().y());
 				}
 			};
 
@@ -887,7 +887,6 @@ public:
 					}
 				}
 			};
-
 
 			auto insertBeforeButton = c->try_get_widget_as<morda::push_button>("insert_before");
 			auto insertAfterButton = c->try_get_widget_as<morda::push_button>("insert_after");

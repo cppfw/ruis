@@ -69,19 +69,22 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 
 		d = c->measure(d);
 
-		length += d.x;
+		length += d.x();
+
+		using std::min;
+		using std::max;
 
 		auto borders = t->get_actual_borders();
-		length -= std::min(prevBorders.right(), borders.left());
+		length -= min(prevBorders.right(), borders.left());
 		prevBorders = borders;
 
-		if(quotum.y < 0){
-			ret.y = std::max(ret.y, d.y); // clamp bottom
+		if(quotum.y() < 0){
+			ret.y() = max(ret.y(), d.y()); // clamp bottom
 		}
 	}
 
-	if(quotum.x < 0){
-		ret.x = length;
+	if(quotum.x() < 0){
+		ret.x() = length;
 	}
 
 	return ret;
@@ -107,8 +110,8 @@ void tab_group::lay_out(){
 		auto borders = t->get_actual_borders();
 
 		pos -= std::min(prevBorders.right(), borders.left());
-		c->move_to(vector2(pos, std::round((this->rect().d.y - c->rect().d.y) / 2)));
-		pos += dim.x;
+		c->move_to(vector2(pos, std::round((this->rect().d.y() - c->rect().d.y()) / 2)));
+		pos += dim.x();
 
 		prevBorders = borders;
 	}
@@ -128,12 +131,12 @@ void tab_group::render(const morda::matrix4& matrix)const{
 
 	// render filler
 	if(this->children().size() != 0){
-		real ce = this->children().back()->rect().right();
-		real l = this->rect().d.x - ce;
+		real ce = this->children().back()->rect().pdx();
+		real l = this->rect().d.x() - ce;
 		if(l > 0){
 			matrix4 m(matrix);
-			m.translate(ce, this->rect().d.y - this->fillerTexture->dims.y);
-			m.scale(l, this->fillerTexture->dims.y);
+			m.translate(ce, this->rect().d.y() - this->fillerTexture->dims.y());
+			m.scale(l, this->fillerTexture->dims.y());
 			this->fillerTexture->render(m);
 		}
 	}

@@ -110,7 +110,7 @@ public:
 	}
 
 	vector2 get_scroll_factor()const{
-		return vector2(this->scroll_area::get_scroll_factor().x, this->item_list->get_scroll_factor());
+		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list->get_scroll_factor());
 	}
 };
 

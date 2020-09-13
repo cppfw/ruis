@@ -102,7 +102,7 @@ void linear_container::lay_out(){
 					}else{
 						d[transIndex] = lp.dims[transIndex];
 					}
-					if(d.x < 0 || d.y < 0){
+					if(d.x() < 0 || d.y() < 0){
 						vector2 md = (*i)->measure(d);
 						for(unsigned i = 0; i != md.size(); ++i){
 							if(d[i] < 0){

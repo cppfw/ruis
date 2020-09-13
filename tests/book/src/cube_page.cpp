@@ -13,7 +13,7 @@ namespace{
 class CubeWidget : public morda::widget, public morda::updateable{
 	std::shared_ptr<morda::res::texture> tex;
 	
-	morda::quaternion rot = morda::quaternion().identity();
+	morda::quaternion rot = morda::quaternion().set_identity();
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 	
@@ -73,7 +73,7 @@ public:
 		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles);
 		
 		this->tex = this->context->loader.load<morda::res::texture>("tex_sample");
-		this->rot.identity();	
+		this->rot.set_identity();
 	}
 	
 	unsigned fps = 0;
@@ -82,7 +82,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::quaternion().rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::quaternion().set_rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;

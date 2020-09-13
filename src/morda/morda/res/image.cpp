@@ -44,7 +44,7 @@ atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res:
 
 std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
 	std::shared_ptr<res::texture> tex;
-	rectangle rect(-1);
+	rectangle rect(-1, -1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
@@ -58,7 +58,7 @@ std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const puu::f
 		throw std::runtime_error("atlas_image::load(): could not load texture");
 	}
 	
-	if(rect.p.x >= 0){
+	if(rect.p.x() >= 0){
 		return std::make_shared<atlas_image>(utki::make_shared_from(ctx), tex, rect);
 	}else{
 		return std::make_shared<atlas_image>(utki::make_shared_from(ctx), tex);
@@ -137,16 +137,16 @@ public:
 		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
 				r4::vec2ui d = this->tex_v->dims().to<unsigned>();
-				p->cache.erase(std::make_tuple(d.x, d.y));
+				p->cache.erase(std::make_tuple(d.x(), d.y()));
 			}
 		}
 	};
 	
 	std::shared_ptr<const texture> get(vector2 forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
-		unsigned width = unsigned(forDim.x);
+		unsigned width = unsigned(forDim.x());
 //		TRACE(<< "imWidth = " << imWidth << std::endl)
-		unsigned height = unsigned(forDim.y);
+		unsigned height = unsigned(forDim.y());
 //		TRACE(<< "imHeight = " << imHeight << std::endl)
 
 		{ // check if in cache

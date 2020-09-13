@@ -21,7 +21,7 @@ public:
 protected:
 	struct params{
 		unsigned max_texture_size = 2048;
-		r4::mat4f initial_matrix = r4::mat4f().identity();
+		r4::mat4f initial_matrix = r4::mat4f().set_identity();
 	};
 	
 	renderer(std::unique_ptr<render_factory> factory, const params& params);

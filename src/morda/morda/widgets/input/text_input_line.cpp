@@ -35,7 +35,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 				this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos,
 				0
 			);
-		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y));
+		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y()));
 
 		auto& r = *this->context->renderer;
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, 0xff804040);
@@ -46,7 +46,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		
 		using std::round;
 		
-		matr.translate(-this->get_bounding_box().p.x + this->xOffset, round((this->get_font().get_height() + this->get_font().get_ascender() - this->get_font().get_descender()) / 2));
+		matr.translate(-this->get_bounding_box().p.x() + this->xOffset, round((this->get_font().get_height() + this->get_font().get_ascender() - this->get_font().get_descender()) / 2));
 		
 		ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
 		this->get_font().render(
@@ -59,7 +59,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::matrix4 matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(vector2(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y));
+		matr.scale(vector2(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y()));
 
 		auto& r = *this->context->renderer;
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_current_color());
@@ -74,7 +74,7 @@ bool text_input_line::on_mouse_button(const mouse_button_event& e){
 	this->leftMouseButtonDown = e.is_down;
 	
 	if(e.is_down){
-		this->set_cursor_index(this->posToIndex(e.pos.x));
+		this->set_cursor_index(this->posToIndex(e.pos.x()));
 	}
 	
 	return true;
@@ -85,7 +85,7 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e){
 		return false;
 	}
 	
-	this->set_cursor_index(this->posToIndex(e.pos.x), true);
+	this->set_cursor_index(this->posToIndex(e.pos.x()), true);
 	return true;
 }
 
@@ -93,16 +93,16 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e){
 vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 	vector2 ret;
 	
-	if(quotum.x < 0){
-		ret.x = this->single_line_text_widget::measure(vector2(-1)).x + cursorWidth_c * this->context->units.dots_per_dp;
+	if(quotum.x() < 0){
+		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() + cursorWidth_c * this->context->units.dots_per_dp;
 	}else{
-		ret.x = quotum.x;
+		ret.x() = quotum.x();
 	}
 	
-	if(quotum.y < 0){
-		ret.y = this->get_font().get_height();
+	if(quotum.y() < 0){
+		ret.y() = this->get_font().get_height();
 	}else{
-		ret.y = quotum.y;
+		ret.y() = quotum.y();
 	}
 	
 	return ret;
@@ -143,8 +143,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x - cursorWidth_c * this->context->units.dots_per_dp){
-		this->cursorPos = this->rect().d.x - cursorWidth_c * this->context->units.dots_per_dp;
+	if(this->cursorPos > this->rect().d.x() - cursorWidth_c * this->context->units.dots_per_dp){
+		this->cursorPos = this->rect().d.x() - cursorWidth_c * this->context->units.dots_per_dp;
 		
 		this->xOffset = this->cursorPos; // start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -180,8 +180,8 @@ real text_input_line::indexToPos(size_t index){
 		)
 	{
 		ret += this->get_font().get_advance(*i);
-		if(ret >= this->rect().d.x){
-			ret = this->rect().d.x;
+		if(ret >= this->rect().d.x()){
+			ret = this->rect().d.x();
 			break;
 		}
 	}

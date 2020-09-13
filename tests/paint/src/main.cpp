@@ -21,8 +21,8 @@ public:
 		morda::path path;
 		path.line_to(this->rect().d / 2);
 		path.cubic_by(
-				morda::vector2(this->rect().d.x / 2, 0),
-				morda::vector2(0, this->rect().d.y / 2),
+				morda::vector2(this->rect().d.x() / 2, 0),
+				morda::vector2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
 		this->vba = morda::path_vba(this->context->renderer, path.stroke());

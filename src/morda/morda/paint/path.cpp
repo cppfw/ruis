@@ -67,19 +67,21 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 			}
 		}
 
-		morda::vector2 prevNormal, nextNormal;
+		morda::vector2 prevNormal{0}, nextNormal;
 
 		ASSERT(prev || next)
 
 		if(prev){
+			using std::swap;
 			prevNormal = (*cur - *prev).normalize();
-			std::swap(prevNormal.x, prevNormal.y);
-			prevNormal.x = -prevNormal.x;
+			swap(prevNormal.x(), prevNormal.y());
+			prevNormal.x() = -prevNormal.x();
 		}
 		if(next){
+			using std::swap;
 			nextNormal = (*next - *cur).normalize();
-			std::swap(nextNormal.x, nextNormal.y);
-			nextNormal.x = -nextNormal.x;
+			swap(nextNormal.x(), nextNormal.y());
+			nextNormal.x() = -nextNormal.x();
 		}else{
 			ASSERT(prev)
 			nextNormal = prevNormal;
@@ -100,10 +102,10 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
@@ -121,9 +123,9 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		++in_index;
 
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(utki::pi<morda::real>() / 4) * antialias_width * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(-utki::pi<morda::real>() / 4) * antialias_width * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}

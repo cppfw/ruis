@@ -78,9 +78,9 @@ collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::fores
 		sw->press_handler = [this](button& tb){
 			auto& lp = this->contentArea->get_layout_params();
 			if(tb.is_pressed()){
-				lp.dims.y = 0;
+				lp.dims.y() = 0;
 			}else{
-				lp.dims.y = widget::layout_params::min;
+				lp.dims.y() = widget::layout_params::min;
 			}
 		};
 	}

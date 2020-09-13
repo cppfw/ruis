@@ -18,7 +18,7 @@ void raster_image::init(r4::vec2ui dimensions, color_depth typeOfImage){
 	this->reset();
 	this->dims_v = dimensions;
 	this->colorDepth_v = typeOfImage;
-	this->buf_v.resize(this->dims().x * this->dims().y * this->num_channels());
+	this->buf_v.resize(this->dims().x() * this->dims().y() * this->num_channels());
 }
 
 raster_image::raster_image(r4::vec2ui dimensions, color_depth typeOfImage, const std::uint8_t* srcBuf){
@@ -28,11 +28,11 @@ raster_image::raster_image(r4::vec2ui dimensions, color_depth typeOfImage, const
 }
 
 raster_image::raster_image(r4::vec2ui pos, r4::vec2ui dimensions, const raster_image& src){
-	if(src.dims().x == 0 || src.dims().y == 0){
+	if(src.dims().x() == 0 || src.dims().y() == 0){
 		throw std::invalid_argument("Image::Image(): source image has zero dimensions");
 	}
 
-	if( src.dims().x <= pos.x || src.dims().y <= pos.y || src.dims().x < (pos.x + dimensions.x) || src.dims().y < (pos.y + dimensions.y) ){
+	if(src.dims().x() <= pos.x() || src.dims().y() <= pos.y() || src.dims().x() < (pos.x() + dimensions.x()) || src.dims().y() < (pos.y() + dimensions.y())){
 		throw std::invalid_argument("Image::Image(): incorrect dimensions of given images");
 	}
 
@@ -53,7 +53,7 @@ void raster_image::clear(std::uint8_t val){
 }
 
 void raster_image::clear(unsigned chan, std::uint8_t val){
-	for(unsigned i = 0; i < this->dims().x * this->dims().y; ++i){
+	for(unsigned i = 0; i < this->dims().x() * this->dims().y(); ++i){
 		this->buf_v[i * this->num_channels() + chan] = val;
 	}
 }
@@ -70,18 +70,16 @@ void raster_image::flip_vertical(){
 		return;
 	}
 
-	unsigned stride = this->num_channels() * this->dims().x; // stride
+	unsigned stride = this->num_channels() * this->dims().x(); // stride
 	std::vector<std::uint8_t> line(stride);
 
 	//TODO: use iterators
-	for(unsigned i = 0; i < this->dims().y / 2; ++i){
+	for(unsigned i = 0; i < this->dims().y() / 2; ++i){
 		memcpy(&*line.begin(), &*this->buf_v.begin() + stride * i, stride); // move line to temp
-		memcpy(&*this->buf_v.begin() + stride * i, &*this->buf_v.begin() + stride * (this->dims().y - i - 1), stride); // move bottom line to top
-		memcpy(&*this->buf_v.begin() + stride * (this->dims().y - i - 1), &*line.begin(), stride);
+		memcpy(&*this->buf_v.begin() + stride * i, &*this->buf_v.begin() + stride * (this->dims().y() - i - 1), stride); // move bottom line to top
+		memcpy(&*this->buf_v.begin() + stride * (this->dims().y() - i - 1), &*line.begin(), stride);
 	}
 }
-
-
 
 void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 	ASSERT(this->buf_v.size() != 0)
@@ -89,8 +87,10 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 		throw std::invalid_argument("Image::Blit(): bits per pixel values do not match");
 	}
 
-	unsigned blitAreaW = std::min(src.dims().x, this->dims().x - x);
-	unsigned blitAreaH = std::min(src.dims().y, this->dims().y - y);
+	using std::min;
+
+	unsigned blitAreaW = min(src.dims().x(), this->dims().x() - x);
+	unsigned blitAreaH = min(src.dims().y(), this->dims().y() - y);
 
 	//TODO: implement blitting for all image types
 	switch(this->depth()){
@@ -115,8 +115,6 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 	}
 }
 
-
-
 void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_v.size())
 	if(dstChan >= this->num_channels()){
@@ -127,8 +125,10 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigne
 		throw std::invalid_argument("Image::Blit(): source channel index is greater than number of channels in the image");
 	}
 
-	unsigned blitAreaW = std::min(src.dims().x, this->dims().x - x);
-	unsigned blitAreaH = std::min(src.dims().y, this->dims().y - y);
+	using std::min;
+
+	unsigned blitAreaW = min(src.dims().x(), this->dims().x() - x);
+	unsigned blitAreaH = min(src.dims().y(), this->dims().y() - y);
 
 	for(unsigned j = 0; j < blitAreaH; ++j){
 		for(unsigned i = 0; i < blitAreaW; ++i){
@@ -270,7 +270,7 @@ void raster_image::load_png(const papki::file& fi){
 	png_size_t bytesPerRow = png_get_rowbytes(pngPtr, infoPtr); // get bytes per row
 
 	// check that our expectations are correct
-	if(bytesPerRow != this->dims().x * this->num_channels()){
+	if(bytesPerRow != this->dims().x() * this->num_channels()){
 		throw std::runtime_error("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
@@ -278,11 +278,11 @@ void raster_image::load_png(const papki::file& fi){
 
 //	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
-		ASSERT(this->dims().y && this->buf_v.size())
-		std::vector<png_bytep> rows(this->dims().y);
+		ASSERT(this->dims().y() && this->buf_v.size())
+		std::vector<png_bytep> rows(this->dims().y());
 		// initialize row pointers
 //		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
-		for(unsigned i = 0; i < this->dims().y; ++i){
+		for(unsigned i = 0; i < this->dims().y(); ++i){
 			rows[i] = &*this->buf_v.begin() + i * bytesPerRow;
 //			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
@@ -466,7 +466,7 @@ void raster_image::load_jpg(const papki::file& fi){
 	this->init(r4::vec2ui(cinfo.output_width, cinfo.output_height), imageType);
 
 	// calculate the size of a row in bytes
-	int bytesRow = this->dims().x * this->num_channels();
+	int bytesRow = this->dims().x() * this->num_channels();
 
 	// Allocate memory for one row. It is an array of rows which
 	// contains only one row. JPOOL_IMAGE means that the memory is allocated
@@ -480,7 +480,7 @@ void raster_image::load_jpg(const papki::file& fi){
 	memset(*buffer, 0, sizeof(JSAMPLE) * bytesRow);
 
 	int y = 0;
-	while(cinfo.output_scanline < this->dims().y){
+	while(cinfo.output_scanline < this->dims().y()){
 		// read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		// copy the data to an image
@@ -505,5 +505,3 @@ void raster_image::load(const papki::file& fi){
 		throw std::invalid_argument("Image::Load(): unknown image format");
 	}
 }
-
-

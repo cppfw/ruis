@@ -6,9 +6,9 @@ using namespace morda;
 bool tab::maskOverlaps(vector2 pos) {
 	auto borders = this->get_actual_borders();
 
-	if(pos.x < borders.left()){
-		if(pos.y != 0 && this->rect().d.y != 0){
-			if(pos.x / (this->rect().d.y - pos.y) < borders.left() / this->rect().d.y){
+	if(pos.x() < borders.left()){
+		if(pos.y() != 0 && this->rect().d.y() != 0){
+			if(pos.x() / (this->rect().d.y() - pos.y()) < borders.left() / this->rect().d.y()){
 				return false;
 			}
 		}
@@ -27,11 +27,11 @@ bool tab::maskOverlaps(vector2 pos) {
 			}
 		}
 	}else{
-		auto rb = this->rect().d.x - borders.right();
-		auto dx = pos.x - rb;
+		auto rb = this->rect().d.x() - borders.right();
+		auto dx = pos.x() - rb;
 		if(dx > 0){
-			if(pos.y != 0 && this->rect().d.y != 0){
-				if(dx / pos.y > borders.right() / this->rect().d.y){
+			if(pos.y() != 0 && this->rect().d.y() != 0){
+				if(dx / pos.y() > borders.right() / this->rect().d.y()){
 					return false;
 				}
 			}

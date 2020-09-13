@@ -61,10 +61,10 @@ public:
 
 	void clear_framebuffer()override{}
 	r4::recti get_scissor()const override{
-		return r4::recti(0);
+		return r4::recti(0, 0);
 	}
 	r4::recti get_viewport()const override{
-		return r4::recti(0);
+		return r4::recti(0, 0);
 	}
 	bool is_scissor_enabled()const override{
 		return false;

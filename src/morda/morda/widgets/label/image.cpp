@@ -22,9 +22,9 @@ image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		}else if(p.value == "keep_aspect_ratio"){
 			this->keep_aspect_ratio = get_property_value(p).to_bool();
 		}else if(p.value == "repeat_x"){
-			this->repeat_v.x = get_property_value(p).to_bool();
+			this->repeat_v.x() = get_property_value(p).to_bool();
 		}else if(p.value == "repeat_y"){
-			this->repeat_v.y = get_property_value(p).to_bool();
+			this->repeat_v.y() = get_property_value(p).to_bool();
 		}
 	}
 }
@@ -53,20 +53,20 @@ void image::render(const morda::matrix4& matrix) const{
 	if(!this->texture){
 		this->texture = img->get(this->rect().d);
 
-		if(this->repeat_v.x || this->repeat_v.y){
+		if(this->repeat_v.x() || this->repeat_v.y()){
 			std::array<r4::vec2f, 4> texCoords;
 			ASSERT(quadFanTexCoords.size() == texCoords.size())
 			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();
-			auto scale = this->rect().d.comp_divided(img->dims());
-			if(!this->repeat_v.x){
-				scale.x = 1;
+			auto scale = this->rect().d.comp_div(img->dims());
+			if(!this->repeat_v.x()){
+				scale.x() = 1;
 			}
-			if(!this->repeat_v.y){
-				scale.y = 1;
+			if(!this->repeat_v.y()){
+				scale.y() = 1;
 			}
 			for(; dst != texCoords.end(); ++src, ++dst){
-				*dst = src->comp_multiplied(scale);
+				*dst = src->comp_mul(scale);
 			}
 			this->vao = r.factory->create_vertex_array(
 					{
@@ -116,36 +116,36 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 	}
 	
 	ASSERT(img)
-	ASSERT(imgDim.y > 0)
+	ASSERT(imgDim.y() > 0)
 	
-	real ratio = imgDim.x / imgDim.y;
+	real ratio = imgDim.x() / imgDim.y();
 	
-	if(quotum.x < 0 && quotum.y < 0){
+	if(quotum.x() < 0 && quotum.y() < 0){
 		return imgDim;
-	}else if(quotum.x < 0){
-		ASSERT(quotum.y >= 0)
+	}else if(quotum.x() < 0){
+		ASSERT(quotum.y() >= 0)
 		
 		vector2 ret;
-		ret.y = quotum.y;
-		ret.x = ratio * quotum.y;
+		ret.y() = quotum.y();
+		ret.x() = ratio * quotum.y();
 		return ret;
-	}else if(quotum.y >= 0){
-		ASSERT(quotum.x >= 0)
-		ASSERT(quotum.y >= 0)
+	}else if(quotum.y() >= 0){
+		ASSERT(quotum.x() >= 0)
+		ASSERT(quotum.y() >= 0)
 		// This case is possible when image layout parameters are, for example 'dx{max} dy{fill}', so the
 		// minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
 		// set to fill all the allowed space, in this case the measure() method will be called with
 		// both quotum components to be positive numbers.
 		return quotum;
 	}else{
-		ASSERT(quotum.x >= 0)
-		ASSERT_INFO(quotum.y < 0, "quotum =" << quotum)
+		ASSERT(quotum.x() >= 0)
+		ASSERT_INFO(quotum.y() < 0, "quotum =" << quotum)
 		
 		ASSERT(ratio > 0)
 		
 		vector2 ret;
-		ret.x = quotum.x;
-		ret.y = quotum.x / ratio;
+		ret.x() = quotum.x();
+		ret.y() = quotum.x() / ratio;
 		return ret;
 	}
 }

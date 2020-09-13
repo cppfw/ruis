@@ -98,7 +98,7 @@ private:
 
 	bool enabled = true;
 
-	morda::rectangle rectangle = morda::rectangle(0);
+	morda::rectangle rectangle = morda::rectangle(0, 0, 0, 0);
 
 	// clip widgets contents by widget's border if set to true
 	bool clip_enabled = false;

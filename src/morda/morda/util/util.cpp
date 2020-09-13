@@ -36,7 +36,7 @@ morda::rectangle morda::parse_rect(const puu::forest& desc){
 morda::sides<real> morda::parse_sides(const puu::forest& desc){
 	vector2 p = parse_vec2(desc.begin(), desc.end());
 	vector2 d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
-	return sides<real>(p.x, p.y, d.x, d.y);
+	return sides<real>(p.x(), p.y(), d.x(), d.y());
 }
 
 real morda::parse_dimension_value(const puu::leaf& l, const morda::units& units){

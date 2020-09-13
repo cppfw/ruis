@@ -1,6 +1,5 @@
 #include <algorithm>
 
-
 #include <utki/debug.hpp>
 
 #include "../util/raster_image.hpp"
@@ -90,7 +89,6 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 	return g;
 }
 
-
 texture_font::texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
 		font(std::move(c)),
 		maxCached(maxCached),
@@ -124,7 +122,6 @@ texture_font::texture_font(std::shared_ptr<morda::context> c, const papki::file&
 //	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
 
-
 const texture_font::Glyph& texture_font::getGlyph(char32_t c)const{
 	auto i = this->glyphs.find(c);
 	if(i == this->glyphs.end()){
@@ -149,8 +146,6 @@ const texture_font::Glyph& texture_font::getGlyph(char32_t c)const{
 	return i->second;
 }
 
-
-
 real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vec4f color, char32_t ch)const{
 	const Glyph& g = this->getGlyph(ch);
 	
@@ -162,8 +157,6 @@ real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vec4f c
 
 	return g.advance;
 }
-
-
 
 real texture_font::get_advance_internal(const std::u32string& str)const{
 	real ret = 0;
@@ -182,8 +175,6 @@ real texture_font::get_advance_internal(const std::u32string& str)const{
 	return ret;
 }
 
-
-
 morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str)const{
 	morda::rectangle ret;
 
@@ -201,10 +192,10 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	//init with bounding box of the first glyph
 	{
 		const Glyph& g = this->getGlyph(*s);
-		left = g.topLeft.x;
-		right = g.bottomRight.x;
-		top = g.topLeft.y;
-		bottom = g.bottomRight.y;
+		left = g.topLeft.x();
+		right = g.bottomRight.x();
+		top = g.topLeft.y();
+		bottom = g.bottomRight.y();
 		curAdvance = g.advance;
 		++s;
 	}
@@ -215,26 +206,24 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 		using std::min;
 		using std::max;
 		
-		top = min(g.topLeft.y, top);
-		bottom = max(g.bottomRight.y, bottom);
-		left = min(curAdvance + g.topLeft.x, left);
-		right = max(curAdvance + g.bottomRight.x, right);
+		top = min(g.topLeft.y(), top);
+		bottom = max(g.bottomRight.y(), bottom);
+		left = min(curAdvance + g.topLeft.x(), left);
+		right = max(curAdvance + g.bottomRight.x(), right);
 
 		curAdvance += g.advance;
 	}
 
-	ret.p.x = left;
-	ret.p.y = top;
-	ret.d.x = right - left;
-	ret.d.y = -(top - bottom);
+	ret.p.x() = left;
+	ret.p.y() = top;
+	ret.d.x() = right - left;
+	ret.d.y() = -(top - bottom);
 
-	ASSERT(ret.d.x >= 0)
-	ASSERT(ret.d.y >= 0)
+	ASSERT(ret.d.x() >= 0)
+	ASSERT(ret.d.y() >= 0)
 //	TRACE(<< "texture_font::stringBoundingBoxInternal(): ret = " << ret << std::endl)
 	return ret;
 }
-
-
 
 real texture_font::render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const{
 	if(str.size() == 0){
@@ -258,12 +247,9 @@ real texture_font::render_internal(const morda::matrix4& matrix, r4::vec4f color
 			//ignore
 		}
 	}
-	
 
 	return ret;
 }
-
-
 
 real texture_font::get_advance(char32_t c)const{
 	auto& g = this->getGlyph(c);

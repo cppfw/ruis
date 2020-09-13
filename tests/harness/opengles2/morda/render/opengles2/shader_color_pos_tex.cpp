@@ -53,7 +53,7 @@ void shader_color_pos_tex::render(const r4::mat4f& m, const morda::vertex_array&
 	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
-	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
+	this->setUniform4f(this->colorUniform, color.x(), color.y(), color.z(), color.w());
 	
 	this->shader_base::render(m, va);
 }

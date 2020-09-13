@@ -83,7 +83,7 @@ r4::recti renderer::get_scissor()const{
 }
 
 void renderer::set_scissor(r4::recti r){
-	glScissor(r.p.x, r.p.y, r.d.x, r.d.y);
+	glScissor(r.p.x(), r.p.y(), r.d.x(), r.d.y());
 	assertOpenGLNoError();
 }
 
@@ -96,7 +96,7 @@ r4::recti renderer::get_viewport()const{
 }
 
 void renderer::set_viewport(r4::recti r){
-	glViewport(r.p.x, r.p.y, r.d.x, r.d.y);
+	glViewport(r.p.x(), r.p.y(), r.d.x(), r.d.y());
 	assertOpenGLNoError();
 }
 

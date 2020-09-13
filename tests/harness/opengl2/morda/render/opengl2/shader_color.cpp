@@ -40,7 +40,7 @@ shader_color::shader_color() :
 void shader_color::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const{
 	this->bind();
 	
-	this->setUniform4f(this->colorUniform, color.x, color.y, color.z, color.w);
+	this->setUniform4f(this->colorUniform, color.x(), color.y(), color.z(), color.w());
 	
 	this->OpenGL2ShaderBase::render(m, va);
 }

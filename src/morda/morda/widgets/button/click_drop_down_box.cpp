@@ -125,7 +125,7 @@ void click_drop_down_box::show_drop_down_menu(){
 		auto min_size_forcer = np->try_get_widget("morda_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
-		lp.dims.x = this->rect().d.x;
+		lp.dims.x() = this->rect().d.x();
 	}
 
 	auto va = np->try_get_widget_as<morda::column>("morda_contextmenu_content");
@@ -146,7 +146,7 @@ void click_drop_down_box::show_drop_down_menu(){
 				return true;
 			};
 
-	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y));
+	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y()));
 }
 
 void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){

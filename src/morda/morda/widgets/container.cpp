@@ -308,7 +308,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 			d[i] = lp.dims[i];
 		}
 	}
-	if(d.x < 0 || d.y < 0){
+	if(d.x() < 0 || d.y() < 0){
 		vector2 md = w.measure(d);
 		for(unsigned i = 0; i != md.size(); ++i){
 			if(d[i] < 0){

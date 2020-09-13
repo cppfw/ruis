@@ -28,10 +28,10 @@ void application::updateWindowRect(const morda::rectangle& rect){
 
 	TRACE(<< "application::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
 	this->gui.context->renderer->set_viewport(r4::recti(
-			int(this->curWinRect.p.x),
-			int(this->curWinRect.p.y),
-			int(this->curWinRect.d.x),
-			int(this->curWinRect.d.y)
+			int(this->curWinRect.p.x()),
+			int(this->curWinRect.p.y()),
+			int(this->curWinRect.d.x()),
+			int(this->curWinRect.d.y())
 		));
 
 	this->gui.set_viewport(this->curWinRect.d);
@@ -63,7 +63,7 @@ morda::real application::get_pixels_per_dp(r4::vec2ui resolution, r4::vec2ui scr
 	return morda::real(1); // TODO:
 #else
 	unsigned xIndex;
-	if(resolution.x > resolution.y){
+	if(resolution.x() > resolution.y()){
 		xIndex = 0;
 	}else{
 		xIndex = 1;

@@ -25,9 +25,9 @@ render_factory::~render_factory()noexcept{}
 std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::texture_2d::bytes_per_pixel(type) == 0)
-	ASSERT(data.size() % dims.x == 0)
+	ASSERT(data.size() % dims.x() == 0)
 
-	ASSERT(data.size() == 0 || data.size() / morda::texture_2d::bytes_per_pixel(type) / dims.x == dims.y)
+	ASSERT(data.size() == 0 || data.size() / morda::texture_2d::bytes_per_pixel(type) / dims.x() == dims.y())
 	
 	auto ret = std::make_shared<texture_2d>(dims.to<float>());
 	
@@ -60,8 +60,8 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 			GL_TEXTURE_2D,
 			0, // 0th level, no mipmaps
 			internalFormat, // internal format
-			dims.x,
-			dims.y,
+			dims.x(),
+			dims.y(),
 			0, // border, should be 0!
 			internalFormat, // format of the texel data
 			GL_UNSIGNED_BYTE,
