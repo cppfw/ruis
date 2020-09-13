@@ -44,4 +44,5 @@ endif
 
 this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lpng -ljpeg -lstdc++ -lm
 
-$(eval $(prorab-build-lib))
+# TODO: uncomment when probe is developed
+# $(eval $(prorab-build-lib))
