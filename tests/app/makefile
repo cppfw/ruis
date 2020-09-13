@@ -77,19 +77,23 @@ $(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/build:../harness/m
 
     # add dependency on libmorda, libmordavokne
     ifeq ($(os),windows)
-        $(prorab_this_name): $(d)libmorda$(dot_so) $(d)libmordavokne$(dot_so)
+        $(prorab_this_name): $(d)$(this_out_dir)/libmorda$(dot_so) $(d)$(this_out_dir)/libmordavokne$(dot_so) $(d)$(this_out_dir)/libmorda-opengl2-ren$(dot_so)
 
         define this_rules
-            $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
+            $(d)$(this_out_dir)/libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
 $(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
 $(.RECIPEPREFIX)$(a)cp $$< $$@
 
-            $(d)libmordavokne$(dot_so): $(abspath $(d)../harness/mordavokne/build/libmordavokne$(dot_so))
+            $(d)$(this_out_dir)/libmordavokne$(dot_so): $(abspath $(d)../harness/mordavokne/build/libmordavokne$(dot_so))
+$(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
+$(.RECIPEPREFIX)$(a)cp $$< $$@
+
+             $(d)$(this_out_dir)/libmorda-opengl2-ren$(dot_so): $(abspath $(d)../harness/opengl2/build/libmorda-opengl2-ren$(dot_so))
 $(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
 $(.RECIPEPREFIX)$(a)cp $$< $$@
 
             clean::
-$(.RECIPEPREFIX)$(a)rm -f $(d)libmorda$(dot_so)
+$(.RECIPEPREFIX)$(a)rm -f $(d)$(this_out_dir)/libmorda$(dot_so)
         endef
         $(eval $(this_rules))
     else
