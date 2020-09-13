@@ -494,7 +494,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
 	macosx_HandleMouseMove(
-			morda::vector2(pos.x, pos.y).rounded(),
+			morda::vector2(pos.x, pos.y).round(),
 			0
 		);
 }
