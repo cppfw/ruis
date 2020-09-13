@@ -86,7 +86,7 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 namespace{
 void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	NSPoint winPos = [e locationInWindow];
-	auto pos = morda::vector2(winPos.x, winPos.y).rounded();
+	auto pos = morda::vector2(winPos.x, winPos.y).rou();
 	handleMouseButton(
 			mordavokne::application::inst(),
 			isDown,
@@ -494,7 +494,7 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
 	macosx_HandleMouseMove(
-			morda::vector2(pos.x(), pos.y()).rounded(),
+			morda::vector2(pos.x, pos.y).rounded(),
 			0
 		);
 }
@@ -621,7 +621,7 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 	});
 
 	this->windowObjectId = [[CocoaWindow alloc]
-		initWithContentRect:NSMakeRect(0, 0, wp.dim.x, wp.dim.y)
+		initWithContentRect:NSMakeRect(0, 0, wp.dim.x(), wp.dim.y())
 		styleMask:(NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskClosable | NSWindowStyleMaskTitled)
 		backing:NSBackingStoreBuffered
 		defer:NO
