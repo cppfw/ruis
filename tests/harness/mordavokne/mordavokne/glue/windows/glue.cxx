@@ -652,8 +652,8 @@ application::application(std::string&& name, const window_params& wp) :
 			morda::rectangle(
 					0,
 					0,
-					float(wp.dim.x),
-					float(wp.dim.y)
+					float(wp.dim.x()),
+					float(wp.dim.y())
 				)
 		);
 }
@@ -750,10 +750,10 @@ void application::set_fullscreen(bool enable){
 		if(GetWindowRect(ww.hwnd, &rect) == 0){
 			throw std::runtime_error("Failed to get window rect");
 		}
-		this->beforeFullScreenWindowRect.p.x = rect.left;
-		this->beforeFullScreenWindowRect.p.y = rect.top;
-		this->beforeFullScreenWindowRect.d.x = rect.right - rect.left;
-		this->beforeFullScreenWindowRect.d.y = rect.bottom - rect.top;
+		this->beforeFullScreenWindowRect.p.x() = rect.left;
+		this->beforeFullScreenWindowRect.p.y() = rect.top;
+		this->beforeFullScreenWindowRect.d.x() = rect.right - rect.left;
+		this->beforeFullScreenWindowRect.d.y() = rect.bottom - rect.top;
 
 		// Set new window style
 		SetWindowLong(
@@ -800,10 +800,10 @@ void application::set_fullscreen(bool enable){
 			SetWindowPos(
 					ww.hwnd,
 					NULL,
-					this->beforeFullScreenWindowRect.p.x,
-					this->beforeFullScreenWindowRect.p.y,
-					this->beforeFullScreenWindowRect.d.x,
-					this->beforeFullScreenWindowRect.d.y,
+					this->beforeFullScreenWindowRect.p.x(),
+					this->beforeFullScreenWindowRect.p.y(),
+					this->beforeFullScreenWindowRect.d.x(),
+					this->beforeFullScreenWindowRect.d.y(),
 					SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED
 				);
 	}
@@ -869,8 +869,8 @@ WindowWrapper::WindowWrapper(const window_params& wp){
 			WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 			0, // x
 			0, // y
-			wp.dim.x + 2 * GetSystemMetrics(SM_CXSIZEFRAME),
-			wp.dim.y + GetSystemMetrics(SM_CYCAPTION) + 2 * GetSystemMetrics(SM_CYSIZEFRAME),
+			wp.dim.x() + 2 * GetSystemMetrics(SM_CXSIZEFRAME),
+			wp.dim.y() + GetSystemMetrics(SM_CYCAPTION) + 2 * GetSystemMetrics(SM_CYSIZEFRAME),
 			NULL, // no parent window
 			NULL, // no menu
 			GetModuleHandle(NULL),
