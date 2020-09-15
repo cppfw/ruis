@@ -315,7 +315,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
-    <Import Project="..\packages\r4.1.0.19\build\native\r4.targets" Condition="Exists('..\packages\r4.1.0.19\build\native\r4.targets')" />
+    <Import Project="..\packages\libr4.1.0.24\build\native\libr4.targets" Condition="Exists('..\packages\libr4.1.0.24\build\native\libr4.targets')" />
     <Import Project="..\packages\zlib_static.1.2.11.5\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.5\build\native\zlib_static.targets')" />
     <Import Project="..\packages\libsvgren.0.4.69\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.4.69\build\native\libsvgren.targets')" />
     <Import Project="..\packages\freetype_static.2.10.1.5\build\native\freetype_static.targets" Condition="Exists('..\packages\freetype_static.2.10.1.5\build\native\freetype_static.targets')" />
@@ -330,14 +330,14 @@
     <Import Project="..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets')" />
     <Import Project="..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets')" />
-    <Import Project="..\packages\puu.0.1.18\build\native\puu.targets" Condition="Exists('..\packages\puu.0.1.18\build\native\puu.targets')" />
+    <Import Project="..\packages\libpuu.0.1.21\build\native\libpuu.targets" Condition="Exists('..\packages\libpuu.0.1.21\build\native\libpuu.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
-    <Error Condition="!Exists('..\packages\r4.1.0.19\build\native\r4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\r4.1.0.19\build\native\r4.targets'))" />
+    <Error Condition="!Exists('..\packages\libr4.1.0.24\build\native\libr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libr4.1.0.24\build\native\libr4.targets'))" />
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.5\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.5\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.4.69\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.4.69\build\native\libsvgren.targets'))" />
     <Error Condition="!Exists('..\packages\freetype_static.2.10.1.5\build\native\freetype_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype_static.2.10.1.5\build\native\freetype_static.targets'))" />
@@ -352,6 +352,6 @@
     <Error Condition="!Exists('..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets'))" />
-    <Error Condition="!Exists('..\packages\puu.0.1.18\build\native\puu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\puu.0.1.18\build\native\puu.targets'))" />
+    <Error Condition="!Exists('..\packages\libpuu.0.1.21\build\native\libpuu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpuu.0.1.21\build\native\libpuu.targets'))" />
   </Target>
 </Project>
