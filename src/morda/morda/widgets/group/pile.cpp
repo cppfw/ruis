@@ -22,9 +22,8 @@ void pile::lay_out(){
 
 morda::vector2 pile::measure(const morda::vector2& quotum)const{
 	vector2 ret(quotum);
-	for(unsigned i = 0; i != ret.size(); ++i){
-		ret[i] = std::max(ret[i], real(0)); // clamp bottom
-	}
+	using std::max;
+	ret = max(ret, real(0)); // clamp bottom
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as_const<container::layout_params>(**i);
@@ -55,7 +54,8 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){
-				ret[j] = std::max(ret[j], d[j]); // clamp bottom
+				using std::max;
+				ret[j] = max(ret[j], d[j]); // clamp bottom
 			}
 		}
 	}

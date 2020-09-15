@@ -85,9 +85,7 @@ void widget::resize(const morda::vector2& newDims){
 	using std::max;
 
 	this->clear_cache();
-	this->rectangle.d = newDims;
-	this->rectangle.d.x() = max(this->rectangle.d.x(), real(0.0f)); // clamp bottom
-	this->rectangle.d.y() = max(this->rectangle.d.y(), real(0.0f)); // clamp bottom
+	this->rectangle.d = max(newDims, real(0)); // clamp bottom
 	this->relayoutNeeded = false;
 	this->on_resize(); // call virtual method
 }

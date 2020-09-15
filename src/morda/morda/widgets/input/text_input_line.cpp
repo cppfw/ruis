@@ -111,7 +111,8 @@ vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 void text_input_line::set_cursor_index(size_t index, bool selection){
 	this->cursorIndex = index;
 	
-	this->cursorIndex = std::min(this->cursorIndex, this->get_text().size()); // clamp top
+	using std::min;
+	this->cursorIndex = min(this->cursorIndex, this->get_text().size()); // clamp top
 	
 	if(!selection){
 		this->selectionStartIndex = this->cursorIndex;
@@ -170,7 +171,8 @@ real text_input_line::indexToPos(size_t index){
 		return 0;
 	}
 	
-	index = std::min(index, this->get_text().size()); // clamp top
+	using std::min;
+	index = min(index, this->get_text().size()); // clamp top
 	
 	real ret = this->xOffset;
 	

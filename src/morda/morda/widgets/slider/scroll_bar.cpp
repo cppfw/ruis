@@ -111,15 +111,18 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& des
 			return false;
 		}
 
+		using std::min;
+		using std::max;
+
 		unsigned longIndex = this->get_long_index();
 
 		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
-		maxPos = std::max(maxPos, 0.0f); // clamp bottom
+		maxPos = max(maxPos, 0.0f); // clamp bottom
 
 		float newPos = this->handle.rect().p[longIndex];
 		newPos += e.pos[longIndex] - this->clickPoint;
-		newPos = std::max(newPos, real(0)); // clamp bottom
-		newPos = std::min(newPos, maxPos); // clamp top
+		newPos = max(newPos, real(0)); // clamp bottom
+		newPos = min(newPos, maxPos); // clamp top
 
 		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
 
@@ -157,7 +160,8 @@ void scroll_bar::lay_out(){
 
 	auto minHandleSize = this->handle.measure(vector2(-1));
 
-	newSize[longIndex] = std::max(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex])); // clamp bottom
+	using std::max;
+	newSize[longIndex] = max(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex])); // clamp bottom
 
 	this->handle.resize(newSize);
 

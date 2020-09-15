@@ -38,9 +38,8 @@ void tab_group::set_filler(std::shared_ptr<res::image> filler){
 
 morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 	vector2 ret(quotum);
-	for(unsigned i = 0; i != ret.size(); ++i){
-		ret[i] = std::max(ret[i], real(0)); // clamp bottom
-	}
+	using std::max;
+	ret = max(ret, real(0)); // clamp bottom
 
 	real length = 0;
 
@@ -109,8 +108,11 @@ void tab_group::lay_out(){
 
 		auto borders = t->get_actual_borders();
 
-		pos -= std::min(prevBorders.right(), borders.left());
-		c->move_to(vector2(pos, std::round((this->rect().d.y() - c->rect().d.y()) / 2)));
+		using std::min;
+		using std::round;
+
+		pos -= min(prevBorders.right(), borders.left());
+		c->move_to(vector2(pos, round((this->rect().d.y() - c->rect().d.y()) / 2)));
 		pos += dim.x();
 
 		prevBorders = borders;

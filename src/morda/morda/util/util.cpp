@@ -28,14 +28,16 @@ morda::vector2 morda::parse_vec2(puu::forest::const_iterator begin, puu::forest:
 }
 
 morda::rectangle morda::parse_rect(const puu::forest& desc){
+	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
 	return rectangle(p, d);
 }
 
 morda::sides<real> morda::parse_sides(const puu::forest& desc){
+	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(std::next(desc.begin(), std::min(size_t(2), desc.size())), desc.end());
+	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
 	return sides<real>(p.x(), p.y(), d.x(), d.y());
 }
 

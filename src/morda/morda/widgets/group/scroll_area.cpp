@@ -154,8 +154,7 @@ void scroll_area::updateEffectiveDim(){
 
 		using std::max;
 
-		minDim.x() = max(minDim.x(), d.x()); // clamp bottom
-		minDim.y() = max(minDim.y(), d.y()); // clamp bottom
+		minDim = max(minDim, d); // clamp bottom
 	}
 
 	this->effectiveDim = minDim - this->rect().d;
@@ -165,10 +164,8 @@ void scroll_area::updateEffectiveDim(){
 vector2 scroll_area::get_visible_area_fraction()const noexcept{
 	auto ret = this->rect().d.comp_div(this->rect().d + this->effectiveDim);
 
-	for(unsigned i = 0; i != ret.size(); ++i){
-		using std::min;
-		ret[i] = min(ret[i], real(1)); // clamp top
-	}
+	using std::min;
+	ret = min(ret, real(1)); // clamp top
 
 	return ret;
 }

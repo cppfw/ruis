@@ -246,8 +246,7 @@ void morda::window::setupWidgets(){
 			if(this->leftTopResizeCaptured){
 				using std::min;
 				morda::vector2 d = e.pos - this->capturePoint;
-				d.x() = min(d.x(), this->rect().d.x() - this->emptyMinDim.x()); // clamp top
-				d.y() = min(d.y(), this->rect().d.y() - this->emptyMinDim.y()); // clamp top
+				d = min(d, this->rect().d - this->emptyMinDim); // clamp top
 				this->move_by(d);
 				this->resize_by(-d);
 			}
@@ -302,8 +301,7 @@ void morda::window::setupWidgets(){
 			if(this->rightBottomResizeCaptured){
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
-				d.x() = max(d.x(), -(this->rect().d.x() - this->emptyMinDim.x())); // clamp bottom
-				d.y() = max(d.y(), -(this->rect().d.y() - this->emptyMinDim.y())); // clamp bottom
+				d = max(d, -(this->rect().d - this->emptyMinDim)); // clamp bottom
 				this->resize_by(d);
 			}
 			return false;

@@ -3,8 +3,10 @@
 using namespace morda;
 
 void fraction_widget::set_fraction(real fraction){
-	fraction = std::max(fraction, real(0)); // clamp bottom
-	fraction = std::min(fraction, real(1)); // clamp top
+	using std::min;
+	using std::max;
+	fraction = max(fraction, real(0)); // clamp bottom
+	fraction = min(fraction, real(1)); // clamp top
 
 	// in case of nan or inf
 	if(!(0 <= fraction && fraction <= 1)){

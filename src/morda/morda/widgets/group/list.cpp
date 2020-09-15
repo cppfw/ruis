@@ -373,7 +373,8 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 
 	vector2 ret(quotum);
 
-	ret[longIndex] = std::max(ret[longIndex], real(0)); // clamp bottom
+	using std::max;
+	ret[longIndex] = max(ret[longIndex], real(0)); // clamp bottom
 
 	if(ret[transIndex] > 0){
 		return ret;
@@ -382,7 +383,7 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 	ret[transIndex] = 0;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		ret[transIndex] = std::max(ret[transIndex], (*i)->rect().d[transIndex]); // clamp bottom
+		ret[transIndex] = max(ret[transIndex], (*i)->rect().d[transIndex]); // clamp bottom
 	}
 
 	return ret;

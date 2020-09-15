@@ -51,16 +51,15 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 
 	vector2 dim = this->dims_for_widget(*w, lp);
 
-	for(unsigned i = 0; i != 2; ++i){
-		dim[i] = std::min(dim[i], this->rect().d[i]);
-	}
+	using std::min;
+	using std::max;
+
+	dim = min(dim, this->rect().d); // clamp top
 
 	w->resize(dim);
 
-	for(unsigned i = 0; i != 2; ++i){
-		anchor[i] = std::max(anchor[i], real(0)); // clamp bottom
-		anchor[i] = std::min(anchor[i], this->rect().d[i] - w->rect().d[i]); // clamp top
-	}
+	anchor = max(anchor, 0); // clamp bottom
+	anchor = min(anchor, this->rect().d - w->rect().d); // clamp top
 
 	w->move_to(anchor);
 

@@ -81,7 +81,7 @@ void raster_image::flip_vertical(){
 	}
 }
 
-void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
+void raster_image::blit(r4::vec2ui pos, const raster_image& src){
 	ASSERT(this->buf_v.size() != 0)
 	if(this->depth() != src.depth()){
 		throw std::invalid_argument("Image::Blit(): bits per pixel values do not match");
@@ -89,23 +89,22 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 
 	using std::min;
 
-	unsigned blitAreaW = min(src.dims().x(), this->dims().x() - x);
-	unsigned blitAreaH = min(src.dims().y(), this->dims().y() - y);
+	auto blit_area = min(src.dims(), this->dims() - pos);
 
 	//TODO: implement blitting for all image types
 	switch(this->depth()){
 		case color_depth::grey:
-			for(unsigned j = 0; j < blitAreaH; ++j){
-				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->pix_chan(i + x, j + y, 0) = src.pix_chan(i, j, 0);
+			for(unsigned j = 0; j < blit_area.y(); ++j){
+				for(unsigned i = 0; i < blit_area.x(); ++i){
+					this->pix_chan(i + pos.x(), j + pos.y(), 0) = src.pix_chan(i, j, 0);
 				}
 			}
 			break;
 		case color_depth::grey_alpha:
-			for(unsigned j = 0; j < blitAreaH; ++j){
-				for(unsigned i = 0; i < blitAreaW; ++i){
-					this->pix_chan(i + x, j + y, 0) = src.pix_chan(i, j, 0);
-					this->pix_chan(i + x, j + y, 1) = src.pix_chan(i, j, 1);
+			for(unsigned j = 0; j < blit_area.y(); ++j){
+				for(unsigned i = 0; i < blit_area.x(); ++i){
+					this->pix_chan(i + pos.x(), j + pos.y(), 0) = src.pix_chan(i, j, 0);
+					this->pix_chan(i + pos.x(), j + pos.y(), 1) = src.pix_chan(i, j, 1);
 				}
 			}
 			break;
@@ -115,7 +114,7 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src){
 	}
 }
 
-void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigned dstChan, unsigned srcChan){
+void raster_image::blit(r4::vec2ui pos, const raster_image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_v.size())
 	if(dstChan >= this->num_channels()){
 		throw std::invalid_argument("Image::Blit(): destination channel index is greater than number of channels in the image");
@@ -127,12 +126,11 @@ void raster_image::blit(unsigned x, unsigned y, const raster_image& src, unsigne
 
 	using std::min;
 
-	unsigned blitAreaW = min(src.dims().x(), this->dims().x() - x);
-	unsigned blitAreaH = min(src.dims().y(), this->dims().y() - y);
+	auto blit_area = min(src.dims(), this->dims() - pos);
 
-	for(unsigned j = 0; j < blitAreaH; ++j){
-		for(unsigned i = 0; i < blitAreaW; ++i){
-			this->pix_chan(i + x, j + y, dstChan) = src.pix_chan(i, j, srcChan);
+	for(unsigned j = 0; j < blit_area.y(); ++j){
+		for(unsigned i = 0; i < blit_area.x(); ++i){
+			this->pix_chan(i + pos.x(), j + pos.y(), dstChan) = src.pix_chan(i, j, srcChan);
 		}
 	}
 }

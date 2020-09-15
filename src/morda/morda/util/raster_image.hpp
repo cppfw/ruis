@@ -162,23 +162,21 @@ public:
 	/**
 	 * @brief Blit another image to this image.
 	 * Copy the whole given image to specified location on this image.
-	 * @param x - destination X location.
-	 * @param y - destination Y location.
+	 * @param pos - destination position.
 	 * @param src - image to copy to this image.
 	 */
-	void blit(unsigned x, unsigned y, const raster_image& src);
+	void blit(r4::vec2ui pos, const raster_image& src);
 
 	/**
 	 * @brief Blit another image to this image for desired color channels only.
 	 * Copy specified color channel of the whole given image to specified color
 	 * channel and specified location on this image.
-	 * @param x - destination X location.
-	 * @param y - destination Y location.
+	 * @param pos - destination position.
 	 * @param src - image to copy to this image.
 	 * @param dstChan - index of destination color channel.
 	 * @param srcChan - index of source color channel.
 	 */
-	void blit(unsigned x, unsigned y, const raster_image& src, unsigned dstChan, unsigned srcChan);
+	void blit(r4::vec2ui pos, const raster_image& src, unsigned dstChan, unsigned srcChan);
 
 	/**
 	 * @brief Get reference to specific channel for given pixel.
