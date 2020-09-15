@@ -298,7 +298,7 @@
     <Import Project="..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets')" />
     <Import Project="..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets" Condition="Exists('..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets')" />
     <Import Project="..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets')" />
-    <Import Project="..\packages\libpuu.0.1.21\build\native\puu.targets" Condition="Exists('..\packages\libpuu.0.1.21\build\native\puu.targets')" />
+    <Import Project="..\packages\libpuu.0.1.21\build\native\libpuu.targets" Condition="Exists('..\packages\libpuu.0.1.21\build\native\libpuu.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -319,6 +319,6 @@
     <Error Condition="!Exists('..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.7\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cairo_static.1.15.4.7\build\native\cairo_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.3.39\build\native\libsvgdom.targets'))" />
-    <Error Condition="!Exists('..\packages\libpuu.0.1.21\build\native\puu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpuu.0.1.21\build\native\puu.targets'))" />
+    <Error Condition="!Exists('..\packages\libpuu.0.1.21\build\native\libpuu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpuu.0.1.21\build\native\libpuu.targets'))" />
   </Target>
 </Project>
