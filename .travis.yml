@@ -83,7 +83,7 @@ before_install:
     fi;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "macosx" ]; then
-    brew install prorab prorab-extra libutki libpapki puu libsvgren z glew freetype r4 libnitki libpng;
+    brew install prorab prorab-extra libutki libpapki libpuu libsvgren z glew freetype r4 libnitki libpng;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then
     sudo gem install cocoapods &&
