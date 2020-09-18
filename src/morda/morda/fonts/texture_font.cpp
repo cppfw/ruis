@@ -35,7 +35,7 @@ texture_font::FreeTypeFaceWrapper::~FreeTypeFaceWrapper()noexcept{
 	FT_Done_Face(this->f);
 }
 
-texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
+texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 	if(FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0){
 		if(c == unknownChar_c){
 			throw std::runtime_error("texture_font::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
@@ -52,6 +52,8 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 	g.advance = real(m->horiAdvance) / (64.0f);
 	
 	if(!slot->bitmap.buffer){
+		g.topLeft.set(0);
+		g.bottomRight.set(0);
 		// empty glyph (space, tab, etc...)
 		return g;
 	}
@@ -85,7 +87,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 			im.dims(),
 			im.pixels()
 		);
-	
+
 	return g;
 }
 
@@ -178,18 +180,19 @@ real texture_font::get_advance_internal(const std::u32string& str)const{
 morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str)const{
 	morda::rectangle ret;
 
-	if(str.size() == 0){
+	if(str.empty()){
 		ret.p.set(0);
 		ret.d.set(0);
 		return ret;
 	}
 
+	ASSERT(!str.empty())
 	auto s = str.begin();
 
 	real curAdvance;
 
 	real left, right, top, bottom;
-	//init with bounding box of the first glyph
+	// init with bounding box of the first glyph
 	{
 		const Glyph& g = this->getGlyph(*s);
 		left = g.topLeft.x();
@@ -221,7 +224,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 
 	ASSERT(ret.d.x() >= 0)
 	ASSERT(ret.d.y() >= 0)
-//	TRACE(<< "texture_font::stringBoundingBoxInternal(): ret = " << ret << std::endl)
+	// TRACE(<< "texture_font::get_bounding_box_internal(): ret = " << ret << std::endl)
 	return ret;
 }
 
