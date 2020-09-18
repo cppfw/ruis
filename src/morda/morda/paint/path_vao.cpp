@@ -1,8 +1,8 @@
-#include "path_vba.hpp"
+#include "path_vao.hpp"
 
 using namespace morda;
 
-path_vba::path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& path) :
+path_vao::path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& path) :
 		renderer(std::move(r))
 {
 	auto coreBuf = this->renderer->factory->create_vertex_buffer(utki::make_span(path.pos));
@@ -26,7 +26,7 @@ path_vba::path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 		);
 }
 
-void path_vba::render(const morda::matrix4& matrix, uint32_t color)const{
+void path_vao::render(const morda::matrix4& matrix, uint32_t color)const{
 	if(!this->renderer || ! this->core){
 		return;
 	}

@@ -6,21 +6,21 @@
 
 namespace morda{
 
-class path_vba{
+class path_vao{
 	std::shared_ptr<morda::vertex_array> core;
 	std::shared_ptr<morda::vertex_array> border;
 	
 	std::shared_ptr<morda::renderer> renderer;
 public:
-	path_vba(){}
+	path_vao(){}
 
-	path_vba(std::shared_ptr<morda::renderer> r, const path::vertices& path);
+	path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& path);
 	
-	path_vba(const path_vba&) = delete;
-	path_vba& operator=(const path_vba&) = delete;
+	path_vao(const path_vao&) = delete;
+	path_vao& operator=(const path_vao&) = delete;
 
-	path_vba(path_vba&&) = default;
-	path_vba& operator=(path_vba&&) = default;
+	path_vao(path_vao&&) = default;
+	path_vao& operator=(path_vao&&) = default;
 	
 	void render(const morda::matrix4& matrix, uint32_t color)const;
 };

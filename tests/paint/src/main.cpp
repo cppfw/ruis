@@ -4,10 +4,10 @@
 
 #include "../../../src/morda/morda/widgets/widget.hpp"
 
-#include "../../../src/morda/morda/paint/path_vba.hpp"
+#include "../../../src/morda/morda/paint/path_vao.hpp"
 
 class path_widget : virtual public morda::widget{
-	morda::path_vba vba;
+	morda::path_vao vba;
 public:
 	path_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 			morda::widget(std::move(c), desc)
@@ -25,7 +25,7 @@ public:
 				morda::vector2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
-		this->vba = morda::path_vba(this->context->renderer, path.stroke());
+		this->vba = morda::path_vao(this->context->renderer, path.stroke());
 	}
 };
 
