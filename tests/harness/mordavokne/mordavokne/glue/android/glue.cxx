@@ -237,11 +237,11 @@ struct WindowWrapper : public utki::destructable{
 		eglDisplayScopeExit.reset();
 	}
 
-	r4::vec2ui getWindowSize(){
+	r4::vector2<unsigned> getWindowSize(){
 		EGLint width, height;
 		eglQuerySurface(this->display, this->surface, EGL_WIDTH, &width);
 		eglQuerySurface(this->display, this->surface, EGL_HEIGHT, &height);
-		return r4::vec2ui(width, height);
+		return r4::vector2<unsigned>(width, height);
 	}
 
 	void swapBuffers(){

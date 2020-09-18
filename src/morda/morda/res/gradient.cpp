@@ -11,13 +11,13 @@ using namespace morda::res;
 morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
 		resource(std::move(c))
 {
-	std::vector<r4::vec2f> vertices;
+	std::vector<r4::vector2<float>> vertices;
 //	std::vector<std::uint32_t> colors;
-	std::vector<r4::vec4f> colors;
+	std::vector<r4::vector4<float>> colors;
 	for(auto& s : stops){
 		{
 			auto c = std::get<1>(s);
-			r4::vec4f clr(
+			r4::vector4<float> clr(
 					float(c & 0xff) / 255,
 					float((c >> 8) & 0xff) / 255,
 					float((c >> 16) & 0xff) / 255,
@@ -31,11 +31,11 @@ morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<st
 //		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 		
 		if(vertical){
-			vertices.push_back(r4::vec2f(0, std::get<0>(s)));
-			vertices.push_back(r4::vec2f(1, std::get<0>(s)));
+			vertices.push_back(r4::vector2<float>(0, std::get<0>(s)));
+			vertices.push_back(r4::vector2<float>(1, std::get<0>(s)));
 		}else{ ASSERT(!vertical)
-			vertices.push_back(r4::vec2f(std::get<0>(s), 1));
-			vertices.push_back(r4::vec2f(std::get<0>(s), 0));
+			vertices.push_back(r4::vector2<float>(std::get<0>(s), 1));
+			vertices.push_back(r4::vector2<float>(std::get<0>(s), 0));
 		}
 //		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}

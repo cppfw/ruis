@@ -15,7 +15,7 @@ namespace morda{ namespace render_opengles2{
 struct texture_2d : public morda::texture_2d{
 	GLuint tex;
 	
-	texture_2d(r4::vec2f dims);
+	texture_2d(r4::vector2<float> dims);
 	
 	~texture_2d()noexcept;
 	

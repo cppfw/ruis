@@ -61,7 +61,7 @@ protected:
 		return this == boundShader;
 	}
 	
-	void setUniformMatrix4f(GLint id, const r4::mat4f& m)const{
+	void setUniformMatrix4f(GLint id, const r4::matrix4<float>& m)const{
 		glUniformMatrix4fv(id, 1, GL_TRUE, reinterpret_cast<const GLfloat*>(&m));
 		assertOpenGLNoError();
 	}
@@ -71,7 +71,7 @@ protected:
 		assertOpenGLNoError();
 	}
 	
-	void setMatrix(const r4::mat4f& m)const{
+	void setMatrix(const r4::matrix4<float>& m)const{
 		this->setUniformMatrix4f(this->matrixUniform, m);
 	}
 	
@@ -81,7 +81,7 @@ protected:
 		return modeMap[unsigned(mode)];
 	}
 	
-	void render(const r4::mat4f& m, const morda::vertex_array& va)const;
+	void render(const r4::matrix4<float>& m, const morda::vertex_array& va)const;
 };
 
 }}

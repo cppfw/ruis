@@ -43,7 +43,7 @@ protected:
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const = 0;
+	virtual real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -68,7 +68,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vec4f color, utki::utf8_iterator str)const{
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, utki::utf8_iterator str)const{
 		return this->render_internal(matrix, color, utki::to_utf32(str));
 	}
 	
@@ -79,7 +79,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const{
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const{
 		return this->render_internal(matrix, color, str);
 	}
 	
@@ -90,7 +90,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vec4f color, const char* str)const{
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, const char* str)const{
 		return this->render(matrix, color, utki::utf8_iterator(str));
 	}
 	
@@ -101,7 +101,7 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vec4f color, const std::string& str)const{
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::string& str)const{
 		return this->render(matrix, color, str.c_str());
 	}
 	

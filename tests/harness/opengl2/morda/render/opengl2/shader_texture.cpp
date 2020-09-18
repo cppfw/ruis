@@ -51,7 +51,7 @@ shader_texture::shader_texture() :
 }
 
 
-void shader_texture::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
+void shader_texture::render(const r4::matrix4<float>& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
 	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	

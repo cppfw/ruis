@@ -32,7 +32,7 @@ class image :
 
 	bool keep_aspect_ratio = false;
 
-	r4::vec2b repeat_v = r4::vec2b(false);
+	r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
 	
 	mutable std::shared_ptr<vertex_array> vao;
 

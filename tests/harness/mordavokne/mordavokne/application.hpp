@@ -28,7 +28,7 @@ struct window_params{
 	/**
 	 * @brief Desired dimensions of the window
 	 */
-	r4::vec2ui dim;
+	r4::vector2<unsigned> dim;
 
 	//TODO: add window title string
 
@@ -44,7 +44,7 @@ struct window_params{
 	 */
 	utki::flags<buffer_type> buffers = false;
 
-	window_params(r4::vec2ui dim) :
+	window_params(r4::vector2<unsigned> dim) :
 			dim(dim)
 	{}
 };
@@ -115,18 +115,18 @@ private:
 	friend void updateWindowRect(application& app, const morda::rectangle& rect);
 
 	// pos is in usual window coordinates, y goes down.
-	void handleMouseMove(const r4::vec2f& pos, unsigned id){
+	void handleMouseMove(const r4::vector2<float>& pos, unsigned id){
 		this->gui.send_mouse_move(pos, id);
 	}
 
-	friend void handleMouseMove(application& app, const r4::vec2f& pos, unsigned id);
+	friend void handleMouseMove(application& app, const r4::vector2<float>& pos, unsigned id);
 
 	// pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id){
+	void handleMouseButton(bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id){
 		this->gui.send_mouse_button(isDown, pos, button, id);
 	}
 
-	friend void handleMouseButton(application& app, bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id);
+	friend void handleMouseButton(application& app, bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id);
 
 	void handleMouseHover(bool is_hovered, unsigned id){
 		this->gui.send_mouse_hover(is_hovered, id);
@@ -190,7 +190,7 @@ public:
 private:
 	bool isFullscreen_v = false;
 
-	r4::rectu beforeFullScreenWindowRect;
+	r4::rectangle<unsigned> beforeFullScreenWindowRect;
 
 public:
 	/**
@@ -222,7 +222,7 @@ public:
 	 * @param screen_size_mm - size of the display in millimeters.
 	 * @return Size of one display density pixel in pixels.
 	 */
-	static morda::real get_pixels_per_dp(r4::vec2ui screen_size_pixels, r4::vec2ui screen_size_mm);
+	static morda::real get_pixels_per_dp(r4::vector2<unsigned> screen_size_pixels, r4::vector2<unsigned> screen_size_mm);
 };
 
 inline application& inst(){

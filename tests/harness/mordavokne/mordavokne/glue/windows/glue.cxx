@@ -591,8 +591,8 @@ morda::real getDotsPerInch(HDC dc){
 
 namespace{
 morda::real getDotsPerPt(HDC dc){
-	r4::vec2ui resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
-	r4::vec2ui screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
+	r4::vector2<unsigned> resolution(GetDeviceCaps(dc, HORZRES), GetDeviceCaps(dc, VERTRES));
+	r4::vector2<unsigned> screenSizeMm(GetDeviceCaps(dc, HORZSIZE), GetDeviceCaps(dc, VERTSIZE));
 
 	return mordavokne::application::get_pixels_per_dp(resolution, screenSizeMm);
 }

@@ -4,7 +4,7 @@
 
 using namespace morda::render_opengl2;
 
-texture_2d::texture_2d(r4::vec2f dims) :
+texture_2d::texture_2d(r4::vector2<float> dims) :
 		morda::texture_2d(dims)
 {
 	glGenTextures(1, &this->tex);

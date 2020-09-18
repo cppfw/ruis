@@ -15,11 +15,11 @@ public:
 	const GLint numComponents;
 	const GLenum type;
 	
-	vertex_buffer(utki::span<const r4::vec4f> vertices);
+	vertex_buffer(utki::span<const r4::vector4<float>> vertices);
 	
-	vertex_buffer(utki::span<const r4::vec3f> vertices);
+	vertex_buffer(utki::span<const r4::vector3<float>> vertices);
 	
-	vertex_buffer(utki::span<const r4::vec2f> vertices);
+	vertex_buffer(utki::span<const r4::vector2<float>> vertices);
 	
 	vertex_buffer(utki::span<const float> vertices);
 	

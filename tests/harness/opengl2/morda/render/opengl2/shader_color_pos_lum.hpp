@@ -19,7 +19,7 @@ public:
 	
 	using morda::coloring_shader::render;
 	
-	void render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const override;
+	void render(const r4::matrix4<float>& m, const morda::vertex_array& va, r4::vector4<float> color)const override;
 };
 
 }}

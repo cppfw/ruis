@@ -13,7 +13,7 @@ void vertex_buffer::init(GLsizeiptr size, const GLvoid* data) {
 }
 
 
-vertex_buffer::vertex_buffer(utki::span<const r4::vec4f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vector4<float>> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(4),
 		type(GL_FLOAT)
@@ -21,7 +21,7 @@ vertex_buffer::vertex_buffer(utki::span<const r4::vec4f> vertices) :
 	this->init(vertices.size_bytes(), vertices.data());
 }
 
-vertex_buffer::vertex_buffer(utki::span<const r4::vec3f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vector3<float>> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(3),
 		type(GL_FLOAT)
@@ -29,7 +29,7 @@ vertex_buffer::vertex_buffer(utki::span<const r4::vec3f> vertices) :
 	this->init(vertices.size_bytes(), vertices.data());
 }
 
-vertex_buffer::vertex_buffer(utki::span<const r4::vec2f> vertices) :
+vertex_buffer::vertex_buffer(utki::span<const r4::vector2<float>> vertices) :
 		morda::vertex_buffer(vertices.size()),
 		numComponents(2),
 		type(GL_FLOAT)

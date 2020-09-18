@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-std::shared_ptr<texture_2d> render_factory::create_texture_2d(r4::vec2ui dims, utki::span<const uint32_t> data){
+std::shared_ptr<texture_2d> render_factory::create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data){
 	return this->create_texture_2d(
 			texture_2d::type::rgba,
 			dims,

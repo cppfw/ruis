@@ -12,7 +12,7 @@ public:
 	
 	virtual ~shader()noexcept{}
 	
-	virtual void render(const r4::mat4f& m, const vertex_array& va)const = 0;
+	virtual void render(const r4::matrix4<float>& m, const vertex_array& va)const = 0;
 };
 
 }

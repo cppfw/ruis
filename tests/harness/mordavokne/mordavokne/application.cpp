@@ -27,7 +27,7 @@ void application::updateWindowRect(const morda::rectangle& rect){
 	this->curWinRect = rect;
 
 	TRACE(<< "application::UpdateWindowRect(): this->curWinRect = " << this->curWinRect << std::endl)
-	this->gui.context->renderer->set_viewport(r4::recti(
+	this->gui.context->renderer->set_viewport(r4::rectangle<int>(
 			int(this->curWinRect.p.x()),
 			int(this->curWinRect.p.y()),
 			int(this->curWinRect.d.x()),
@@ -53,7 +53,7 @@ void application::hide_virtual_keyboard()noexcept{
 }
 #endif
 
-morda::real application::get_pixels_per_dp(r4::vec2ui resolution, r4::vec2ui screenSizeMm){
+morda::real application::get_pixels_per_dp(r4::vector2<unsigned> resolution, r4::vector2<unsigned> screenSizeMm){
 
 	// NOTE: for ordinary desktop displays the PT size should be equal to 1 pixel.
 	// For high density displays it should be more than one pixel, depending on display ppi.

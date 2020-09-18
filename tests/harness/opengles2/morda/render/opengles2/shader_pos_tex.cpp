@@ -51,7 +51,7 @@ shader_pos_tex::shader_pos_tex() :
 	this->textureUniform = this->getUniform("texture0");
 }
 
-void shader_pos_tex::render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
+void shader_pos_tex::render(const r4::matrix4<float>& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
 	ASSERT(dynamic_cast<const texture_2d*>(&tex))
 	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();

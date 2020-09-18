@@ -23,7 +23,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data)override{
+	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data)override{
 		return std::make_shared<fake_texture_2d>();
 	}
 
@@ -40,14 +40,14 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec2f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override{
 		return nullptr;
 	}
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec3f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec4f> vertices)override{
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
 		return nullptr;
 	}
 
@@ -60,11 +60,11 @@ public:
 	{}
 
 	void clear_framebuffer()override{}
-	r4::recti get_scissor()const override{
-		return r4::recti(0, 0);
+	r4::rectangle<int> get_scissor()const override{
+		return r4::rectangle<int>(0, 0);
 	}
-	r4::recti get_viewport()const override{
-		return r4::recti(0, 0);
+	r4::rectangle<int> get_viewport()const override{
+		return r4::rectangle<int>(0, 0);
 	}
 	bool is_scissor_enabled()const override{
 		return false;
@@ -73,6 +73,6 @@ public:
 	void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha)override{}
 	void set_framebuffer_internal(morda::frame_buffer* fb)override{}
 	void set_scissor_enabled(bool enabled)override{}
-	void set_scissor(r4::recti r)override{}
-	void set_viewport(r4::recti r)override{}
+	void set_scissor(r4::rectangle<int> r)override{}
+	void set_viewport(r4::rectangle<int> r)override{}
 };

@@ -21,45 +21,45 @@ public:
 			widget(std::move(c), puu::forest())
 	{
 		std::array<morda::vector3, 36> cubePos = {{
-			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, 1), r4::vec3f(-1, 1, 1),
-			r4::vec3f(1, -1, 1), r4::vec3f(1, 1, 1), r4::vec3f(-1, 1, 1),
+			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
+			{ 1, -1, 1}, {1,  1, 1}, {-1, 1, 1},
 			
-			r4::vec3f(1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, 1, 1),
-			r4::vec3f(1, -1, -1), r4::vec3f(1, 1, -1), r4::vec3f(1, 1, 1),
+			{1, -1,  1}, {1, -1, -1}, {1, 1, 1},
+			{1, -1, -1}, {1,  1, -1}, {1, 1, 1},
 			
-			r4::vec3f(1, -1, -1), r4::vec3f(-1, -1, -1), r4::vec3f(1, 1, -1),
-			r4::vec3f(-1, -1, -1), r4::vec3f(-1, 1, -1), r4::vec3f(1, 1, -1),
+			{ 1, -1, -1}, {-1, -1, -1}, {1, 1, -1},
+			{-1, -1, -1}, {-1,  1, -1}, {1, 1, -1},
 			
-			r4::vec3f(-1, -1, -1), r4::vec3f(-1, -1, 1), r4::vec3f(-1, 1, -1),
-			r4::vec3f(-1, -1, 1), r4::vec3f(-1, 1, 1), r4::vec3f(-1, 1, -1),
+			{-1, -1, -1}, {-1, -1, 1}, {-1, 1, -1},
+			{-1, -1,  1}, {-1,  1, 1}, {-1, 1, -1},
 			
-			r4::vec3f(-1, 1, -1), r4::vec3f(-1, 1, 1), r4::vec3f(1, 1, -1),
-			r4::vec3f(-1, 1, 1), r4::vec3f(1, 1, 1), r4::vec3f(1, 1, -1),
+			{-1, 1, -1}, {-1, 1, 1}, {1, 1, -1},
+			{-1, 1,  1}, { 1, 1, 1}, {1, 1, -1},
 			
-			r4::vec3f(-1, -1, -1), r4::vec3f(1, -1, -1), r4::vec3f(-1, -1, 1),
-			r4::vec3f(-1, -1, 1), r4::vec3f(1, -1, -1), r4::vec3f(1, -1, 1)
+			{-1, -1, -1}, {1, -1, -1}, {-1, -1, 1},
+			{-1, -1,  1}, {1, -1, -1}, { 1, -1, 1}
 		}};
 		
 		auto posVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubePos));
 		
-		std::array<r4::vec2f, 36> cubeTex = {{
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
+		std::array<morda::vector2, 36> cubeTex = {{
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1},
 			
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1},
 			
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1},
 		
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1},
 			
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1),
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1},
 			
-			r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(0, 1),
-			r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
+			{0, 0}, {1, 0}, {0, 1},
+			{1, 0}, {1, 1}, {0, 1}
 		}};
 		
 		auto texVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubeTex));
@@ -82,7 +82,7 @@ public:
 	void update(std::uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot %= morda::quaternion().set_rotation(r4::vec3f(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot %= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
 			this->fpsSecCounter = 0;

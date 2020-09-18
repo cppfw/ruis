@@ -22,7 +22,7 @@ render_factory::render_factory(){}
 
 render_factory::~render_factory()noexcept{}
 
-std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data){
+std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data){
 	//TODO: turn these asserts to real checks with exceptions throwing
 	ASSERT(data.size() % morda::texture_2d::bytes_per_pixel(type) == 0)
 	ASSERT(data.size() % dims.x() == 0)
@@ -82,15 +82,15 @@ std::shared_ptr<morda::texture_2d> render_factory::create_texture_2d(morda::text
 	return ret;
 }
 
-std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec4f> vertices){
+std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vector4<float>> vertices){
 	return std::make_shared<vertex_buffer>(vertices);
 }
 
-std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec3f> vertices){
+std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vector3<float>> vertices){
 	return std::make_shared<vertex_buffer>(vertices);
 }
 
-std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vec2f> vertices){
+std::shared_ptr<morda::vertex_buffer> render_factory::create_vertex_buffer(utki::span<const r4::vector2<float>> vertices){
 	return std::make_shared<vertex_buffer>(vertices);
 }
 

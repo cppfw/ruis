@@ -35,7 +35,7 @@ public:
 			mordavokne::application(
 					"morda-tests",
 					[](){
-						mordavokne::window_params wp(r4::vec2ui(1024, 800));
+						mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
 						return wp;
 					}()
 				)

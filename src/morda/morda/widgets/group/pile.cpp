@@ -16,7 +16,8 @@ void pile::lay_out(){
 
 		(*i)->resize(this->dims_for_widget(**i, lp));
 
-		(*i)->move_to(((this->rect().d - (*i)->rect().d) / 2).round());
+		using std::round;
+		(*i)->move_to(round((this->rect().d - (*i)->rect().d) / 2));
 	}
 }
 

@@ -13,13 +13,13 @@ public:
 	
 	virtual ~render_factory()noexcept;
 
-	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vec2ui dims, utki::span<const uint8_t> data)override;
+	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data)override;
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec4f> vertices)override;
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override;
 	
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec3f> vertices)override;
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override;
 	
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vec2f> vertices)override;
+	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override;
 
 	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const float> vertices)override;
 	

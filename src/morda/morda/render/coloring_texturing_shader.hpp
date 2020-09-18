@@ -17,7 +17,7 @@ public:
 	
 	virtual ~coloring_texturing_shader()noexcept{}
 	
-	virtual void render(const r4::mat4f &m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const = 0;
+	virtual void render(const r4::matrix4<float> &m, const morda::vertex_array& va, r4::vector4<float> color, const morda::texture_2d& tex)const = 0;
 };
 
 }

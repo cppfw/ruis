@@ -12,11 +12,11 @@ void updateWindowRect(application& app, const morda::rectangle& rect){
 	app.updateWindowRect(rect);
 }
 
-void handleMouseMove(application& app, const r4::vec2f& pos, unsigned id){
+void handleMouseMove(application& app, const r4::vector2<float>& pos, unsigned id){
 	app.handleMouseMove(pos, id);
 }
 
-void handleMouseButton(application& app, bool isDown, const r4::vec2f& pos, morda::mouse_button button, unsigned id){
+void handleMouseButton(application& app, bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id){
 	app.handleMouseButton(isDown, pos, button, id);
 }
 

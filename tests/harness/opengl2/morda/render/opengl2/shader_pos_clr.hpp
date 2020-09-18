@@ -17,7 +17,7 @@ public:
 	shader_pos_clr& operator=(const shader_pos_clr&) = delete;
 	
 
-	void render(const r4::mat4f& m, const morda::vertex_array& va) const override;
+	void render(const r4::matrix4<float>& m, const morda::vertex_array& va) const override;
 };
 
 }}

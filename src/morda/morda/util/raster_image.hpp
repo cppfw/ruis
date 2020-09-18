@@ -26,7 +26,7 @@ public:
 
 private:
 	color_depth colorDepth_v;
-	r4::vec2ui dims_v = r4::vec2ui(0);
+	r4::vector2<unsigned> dims_v = r4::vector2<unsigned>(0);
 	std::vector<std::uint8_t> buf_v;//image pixels data
 
 public:
@@ -46,7 +46,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	raster_image(r4::vec2ui dimensions, color_depth colorDepth){
+	raster_image(r4::vector2<unsigned> dimensions, color_depth colorDepth){
 		this->init(dimensions, colorDepth);
 	}
 
@@ -57,7 +57,7 @@ public:
 	 * @param colorDepth - color depth.
 	 * @param srcBuf - pointer to memory buffer to take image data from.
 	 */
-	raster_image(r4::vec2ui dimensions, color_depth colorDepth, const std::uint8_t* srcBuf);
+	raster_image(r4::vector2<unsigned> dimensions, color_depth colorDepth, const std::uint8_t* srcBuf);
 
 	/**
 	 * @brief Constructor.
@@ -66,7 +66,7 @@ public:
 	 * @param dimensions - dimensions of the area to copy.
 	 * @param src - source image to copy area from.
 	 */
-	raster_image(r4::vec2ui pos, r4::vec2ui dimensions, const raster_image& src);
+	raster_image(r4::vector2<unsigned> pos, r4::vector2<unsigned> dimensions, const raster_image& src);
 
 	/**
 	 * @brief Constructor.
@@ -81,7 +81,7 @@ public:
 	 * @brief Get image dimensions.
 	 * @return Image dimensions.
 	 */
-	const r4::vec2ui& dims()const noexcept{
+	const r4::vector2<unsigned>& dims()const noexcept{
 		return this->dims_v;
 	}
 
@@ -132,7 +132,7 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param colorDepth - color depth.
 	 */
-	void init(r4::vec2ui dimensions, color_depth colorDepth);
+	void init(r4::vector2<unsigned> dimensions, color_depth colorDepth);
 
 
 	/**
@@ -165,7 +165,7 @@ public:
 	 * @param pos - destination position.
 	 * @param src - image to copy to this image.
 	 */
-	void blit(r4::vec2ui pos, const raster_image& src);
+	void blit(r4::vector2<unsigned> pos, const raster_image& src);
 
 	/**
 	 * @brief Blit another image to this image for desired color channels only.
@@ -176,7 +176,7 @@ public:
 	 * @param dstChan - index of destination color channel.
 	 * @param srcChan - index of source color channel.
 	 */
-	void blit(r4::vec2ui pos, const raster_image& src, unsigned dstChan, unsigned srcChan);
+	void blit(r4::vector2<unsigned> pos, const raster_image& src, unsigned dstChan, unsigned srcChan);
 
 	/**
 	 * @brief Get reference to specific channel for given pixel.

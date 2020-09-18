@@ -48,7 +48,7 @@ shader_color_pos_tex::shader_color_pos_tex() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void shader_color_pos_tex::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color, const morda::texture_2d& tex)const{
+void shader_color_pos_tex::render(const r4::matrix4<float>& m, const morda::vertex_array& va, r4::vector4<float> color, const morda::texture_2d& tex)const{
 	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	

@@ -76,26 +76,26 @@ void renderer::set_scissor_enabled(bool enabled){
 	}
 }
 
-r4::recti renderer::get_scissor()const{
+r4::rectangle<int> renderer::get_scissor()const{
 	GLint osb[4];
 	glGetIntegerv(GL_SCISSOR_BOX, osb);
-	return r4::recti(osb[0], osb[1], osb[2], osb[3]);
+	return r4::rectangle<int>(osb[0], osb[1], osb[2], osb[3]);
 }
 
-void renderer::set_scissor(r4::recti r){
+void renderer::set_scissor(r4::rectangle<int> r){
 	glScissor(r.p.x(), r.p.y(), r.d.x(), r.d.y());
 	assertOpenGLNoError();
 }
 
-r4::recti renderer::get_viewport()const{
+r4::rectangle<int> renderer::get_viewport()const{
 	GLint vp[4];
 
 	glGetIntegerv(GL_VIEWPORT, vp);
 	
-	return r4::recti(vp[0], vp[1], vp[2], vp[3]);
+	return r4::rectangle<int>(vp[0], vp[1], vp[2], vp[3]);
 }
 
-void renderer::set_viewport(r4::recti r){
+void renderer::set_viewport(r4::rectangle<int> r){
 	glViewport(r.p.x(), r.p.y(), r.d.x(), r.d.y());
 	assertOpenGLNoError();
 }

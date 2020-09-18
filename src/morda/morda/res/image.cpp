@@ -136,7 +136,7 @@ public:
 
 		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
-				r4::vec2ui d = this->tex_v->dims().to<unsigned>();
+				r4::vector2<unsigned> d = this->tex_v->dims().to<unsigned>();
 				p->cache.erase(std::make_tuple(d.x(), d.y()));
 			}
 		}
@@ -176,7 +176,7 @@ public:
 		auto img = std::make_shared<svg_texture>(
 				this->context->renderer,
 				utki::make_shared_from(*this),
-				this->context->renderer->factory->create_texture_2d(r4::vec2ui(svg.width, svg.height), utki::make_span(svg.pixels))
+				this->context->renderer->factory->create_texture_2d(r4::vector2<unsigned>(svg.width, svg.height), utki::make_span(svg.pixels))
 			);
 
 		this->cache[std::make_tuple(svg.width, svg.height)] = img;

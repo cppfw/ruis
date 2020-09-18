@@ -26,13 +26,13 @@ public:
 	
 	void set_scissor_enabled(bool enabled)override;
 	
-	r4::recti get_scissor()const override;
+	r4::rectangle<int> get_scissor()const override;
 	
-	void set_scissor(r4::recti r)override;
+	void set_scissor(r4::rectangle<int> r)override;
 
-	r4::recti get_viewport()const override;
+	r4::rectangle<int> get_viewport()const override;
 	
-	void set_viewport(r4::recti r)override;
+	void set_viewport(r4::rectangle<int> r)override;
 	
 	void set_blend_enabled(bool enable)override;
 

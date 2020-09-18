@@ -37,7 +37,7 @@ shader_color::shader_color() :
 	this->colorUniform = this->getUniform("uniformColor");
 }
 
-void shader_color::render(const r4::mat4f& m, const morda::vertex_array& va, r4::vec4f color)const{
+void shader_color::render(const r4::matrix4<float>& m, const morda::vertex_array& va, r4::vector4<float> color)const{
 	this->bind();
 	
 	this->setUniform4f(this->colorUniform, color.x(), color.y(), color.z(), color.w());

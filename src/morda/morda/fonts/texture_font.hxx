@@ -82,14 +82,14 @@ public:
 	real get_advance(char32_t c)const override;
 	
 protected:
-	real render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const override;
+	real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const override;
 
 	real get_advance_internal(const std::u32string& str)const override;
 
 	morda::rectangle get_bounding_box_internal(const std::u32string& str)const override;
 	
 private:	
-	real renderGlyphInternal(const morda::matrix4& matrix, r4::vec4f color, char32_t ch)const;
+	real renderGlyphInternal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch)const;
 
 	const Glyph& getGlyph(char32_t c)const;
 };

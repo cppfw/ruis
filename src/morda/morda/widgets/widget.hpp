@@ -73,7 +73,7 @@ public:
 		/**
 		 * @param dims - desired dimensions within the layout. Each component can be a non-negative value in pixels or [min, max, fill].
 		 */
-		layout_params(vector2 dims = vector2(min)) :
+		layout_params(vector2 dims = vector2(layout_params::min)) :
 				dims(dims)
 		{}
 
@@ -98,7 +98,7 @@ private:
 
 	bool enabled = true;
 
-	morda::rectangle rectangle = morda::rectangle(0, 0, 0, 0);
+	morda::rectangle rectangle = {0, 0};
 
 	// clip widgets contents by widget's border if set to true
 	bool clip_enabled = false;
@@ -125,7 +125,7 @@ private:
 	mutable bool cacheDirty = true;
 	mutable std::shared_ptr<texture_2d> cacheTex;
 
-	void renderFromCache(const r4::mat4f& matrix)const;
+	void renderFromCache(const r4::matrix4<float>& matrix)const;
 
 protected:
 	void clear_cache();
@@ -268,7 +268,7 @@ public:
 	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
-	r4::recti compute_viewport_rect(const matrix4& matrix)const noexcept;
+	r4::rectangle<int> compute_viewport_rect(const matrix4& matrix)const noexcept;
 
 	/**
 	 * @brief Move widget to position within its parent.

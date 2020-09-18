@@ -40,7 +40,7 @@ shader_pos_clr::shader_pos_clr() :
 {
 }
 
-void shader_pos_clr::render(const r4::mat4f& m, const morda::vertex_array& va) const {
+void shader_pos_clr::render(const r4::matrix4<float>& m, const morda::vertex_array& va) const {
 	this->bind();
 	
 	this->OpenGL2ShaderBase::render(m, va);

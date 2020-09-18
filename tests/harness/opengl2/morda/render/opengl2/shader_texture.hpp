@@ -14,7 +14,7 @@ class shader_texture :
 public:
 	shader_texture();
 	
-	void render(const r4::mat4f& m, const morda::vertex_array& va, const morda::texture_2d& tex)const override;
+	void render(const r4::matrix4<float>& m, const morda::vertex_array& va, const morda::texture_2d& tex)const override;
 };
 
 }}

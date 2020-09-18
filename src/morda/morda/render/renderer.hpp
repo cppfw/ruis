@@ -21,7 +21,7 @@ public:
 protected:
 	struct params{
 		unsigned max_texture_size = 2048;
-		r4::mat4f initial_matrix = r4::mat4f().set_identity();
+		r4::matrix4<float> initial_matrix = r4::matrix4<float>().set_identity();
 	};
 	
 	renderer(std::unique_ptr<render_factory> factory, const params& params);
@@ -40,7 +40,7 @@ public:
 	 * @brief Initial matrix to use for rendering.
 	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
 	 */
-	const r4::mat4f initial_matrix;
+	const r4::matrix4<float> initial_matrix;
 	
 	/**
 	 * @brief Set current framebuffer.
@@ -54,13 +54,13 @@ public:
 	
 	virtual void set_scissor_enabled(bool enabled) = 0;
 	
-	virtual r4::recti get_scissor()const = 0;
+	virtual r4::rectangle<int> get_scissor()const = 0;
 	
-	virtual void set_scissor(r4::recti r) = 0;
+	virtual void set_scissor(r4::rectangle<int> r) = 0;
 	
-	virtual r4::recti get_viewport()const = 0;
+	virtual r4::rectangle<int> get_viewport()const = 0;
 	
-	virtual void set_viewport(r4::recti r) = 0;
+	virtual void set_viewport(r4::rectangle<int> r) = 0;
 	
 	virtual void set_blend_enabled(bool enable) = 0;
 	

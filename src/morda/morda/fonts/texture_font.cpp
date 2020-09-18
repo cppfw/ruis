@@ -56,13 +56,13 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const{
 		return g;
 	}
 	
-	raster_image glyphim(r4::vec2ui(slot->bitmap.width, slot->bitmap.rows), raster_image::color_depth::grey, slot->bitmap.buffer);
+	raster_image glyphim(r4::vector2<unsigned>(slot->bitmap.width, slot->bitmap.rows), raster_image::color_depth::grey, slot->bitmap.buffer);
 
 	raster_image im(glyphim.dims(), raster_image::color_depth::grey_alpha);
 	im.blit({0, 0}, glyphim, 1, 0);
 	im.clear(0, std::uint8_t(0xff));
 	
-	std::array<r4::vec2f, 4> verts;
+	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
 	verts[1] = (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
 	verts[2] = (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
@@ -146,7 +146,7 @@ const texture_font::Glyph& texture_font::getGlyph(char32_t c)const{
 	return i->second;
 }
 
-real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vec4f color, char32_t ch)const{
+real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch)const{
 	const Glyph& g = this->getGlyph(ch);
 	
 	// texture can be null for glyph of empty characters, like space, tab etc...
@@ -225,7 +225,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	return ret;
 }
 
-real texture_font::render_internal(const morda::matrix4& matrix, r4::vec4f color, const std::u32string& str)const{
+real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const{
 	if(str.size() == 0){
 		return 0;
 	}

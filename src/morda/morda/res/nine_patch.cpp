@@ -122,7 +122,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 //	TRACE(<< "this->image->dim() = " << std::setprecision(10) << this->image->dim() << std::endl)
 //	TRACE(<< "mul = " << std::setprecision(10) << mul << std::endl)
 	
-	auto quadTex = this->image->get((this->image->dims() * mul).round());
+	using std::round;
+	auto quadTex = this->image->get(round(this->image->dims() * mul));
 //	TRACE(<< "quadTex->dim() = " << quadTex->dim() << std::endl)
 	
 	vector2 actMul = quadTex->dims.comp_div(this->image->dims());

@@ -157,9 +157,9 @@ void widget::renderInternal(const morda::matrix4& matrix)const{
 	//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			// set scissor test
-			r4::recti scissor = this->compute_viewport_rect(matrix);
+			r4::rectangle<int> scissor = this->compute_viewport_rect(matrix);
 
-			r4::recti oldScissor;
+			r4::rectangle<int> oldScissor;
 			bool scissorTestWasEnabled = r.is_scissor_enabled();
 			if(scissorTestWasEnabled){
 				oldScissor = r.get_scissor();
@@ -191,9 +191,9 @@ void widget::renderInternal(const morda::matrix4& matrix)const{
 	s.SetMatrix(matr);
 
 	if(this->is_hovered()){
-		s.SetColor(r4::vec3f(0, 1, 0));
+		s.SetColor(r4::vector3<float>(0, 1, 0));
 	}else{
-		s.SetColor(r4::vec3f(1, 0, 1));
+		s.SetColor(r4::vector3<float>(1, 0, 1));
 	}
 	s.render(s.quad01Fan, Shader::EMode::LINE_LOOP);
 #endif
@@ -225,7 +225,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 		r.set_viewport(oldViewport);
 	});
 
-	r.set_viewport(r4::recti(r4::vec2i(0), this->rect().d.to<int>()));
+	r.set_viewport(r4::rectangle<int>(0, this->rect().d.to<int>()));
 
 	r.clear_framebuffer();
 
@@ -240,7 +240,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 	return tex;
 }
 
-void widget::renderFromCache(const r4::mat4f& matrix) const {
+void widget::renderFromCache(const r4::matrix4<float>& matrix) const {
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
@@ -290,9 +290,10 @@ void widget::unfocus()noexcept{
 	this->context->set_focused_widget(nullptr);
 }
 
-r4::recti widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
-	r4::recti ret(
-			((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>()).rou().to<int>(),
+r4::rectangle<int> widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
+	using std::round;
+	r4::rectangle<int> ret(
+			round(((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>())).to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y() -= ret.d.y();

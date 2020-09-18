@@ -30,8 +30,8 @@ image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 }
 
 namespace{
-const std::array<r4::vec2f, 4> quadFanTexCoords = {{
-	r4::vec2f(0, 0), r4::vec2f(1, 0), r4::vec2f(1, 1), r4::vec2f(0, 1)
+const std::array<r4::vector2<float>, 4> quadFanTexCoords = {{
+	r4::vector2<float>(0, 0), r4::vector2<float>(1, 0), r4::vector2<float>(1, 1), r4::vector2<float>(0, 1)
 }};
 }
 
@@ -54,7 +54,7 @@ void image::render(const morda::matrix4& matrix) const{
 		this->texture = img->get(this->rect().d);
 
 		if(this->repeat_v.x() || this->repeat_v.y()){
-			std::array<r4::vec2f, 4> texCoords;
+			std::array<r4::vector2<float>, 4> texCoords;
 			ASSERT(quadFanTexCoords.size() == texCoords.size())
 			auto src = quadFanTexCoords.cbegin();
 			auto dst = texCoords.begin();

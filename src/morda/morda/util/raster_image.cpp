@@ -14,20 +14,20 @@ extern "C"{
 
 using namespace morda;
 
-void raster_image::init(r4::vec2ui dimensions, color_depth typeOfImage){
+void raster_image::init(r4::vector2<unsigned> dimensions, color_depth typeOfImage){
 	this->reset();
 	this->dims_v = dimensions;
 	this->colorDepth_v = typeOfImage;
 	this->buf_v.resize(this->dims().x() * this->dims().y() * this->num_channels());
 }
 
-raster_image::raster_image(r4::vec2ui dimensions, color_depth typeOfImage, const std::uint8_t* srcBuf){
+raster_image::raster_image(r4::vector2<unsigned> dimensions, color_depth typeOfImage, const std::uint8_t* srcBuf){
 	ASSERT(srcBuf)
 	this->init(dimensions, typeOfImage);
 	memcpy(&*this->buf_v.begin(), srcBuf, this->buf_v.size() * sizeof(this->buf_v[0]));
 }
 
-raster_image::raster_image(r4::vec2ui pos, r4::vec2ui dimensions, const raster_image& src){
+raster_image::raster_image(r4::vector2<unsigned> pos, r4::vector2<unsigned> dimensions, const raster_image& src){
 	if(src.dims().x() == 0 || src.dims().y() == 0){
 		throw std::invalid_argument("Image::Image(): source image has zero dimensions");
 	}
@@ -81,7 +81,7 @@ void raster_image::flip_vertical(){
 	}
 }
 
-void raster_image::blit(r4::vec2ui pos, const raster_image& src){
+void raster_image::blit(r4::vector2<unsigned> pos, const raster_image& src){
 	ASSERT(this->buf_v.size() != 0)
 	if(this->depth() != src.depth()){
 		throw std::invalid_argument("Image::Blit(): bits per pixel values do not match");
@@ -114,7 +114,7 @@ void raster_image::blit(r4::vec2ui pos, const raster_image& src){
 	}
 }
 
-void raster_image::blit(r4::vec2ui pos, const raster_image& src, unsigned dstChan, unsigned srcChan){
+void raster_image::blit(r4::vector2<unsigned> pos, const raster_image& src, unsigned dstChan, unsigned srcChan){
 	ASSERT(this->buf_v.size())
 	if(dstChan >= this->num_channels()){
 		throw std::invalid_argument("Image::Blit(): destination channel index is greater than number of channels in the image");
@@ -260,7 +260,7 @@ void raster_image::load_png(const papki::file& fi){
 	}
 
 	// set image dimensions and set buffer size
-	this->init(r4::vec2ui(width, height), imageType); // set buf array size (allocate memory)
+	this->init(r4::vector2<unsigned>(width, height), imageType); // set buf array size (allocate memory)
 
 //	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
 
@@ -461,7 +461,7 @@ void raster_image::load_jpg(const papki::file& fi){
 	}
 	
 	// set buffer size (allocate memory for image)
-	this->init(r4::vec2ui(cinfo.output_width, cinfo.output_height), imageType);
+	this->init(r4::vector2<unsigned>(cinfo.output_width, cinfo.output_height), imageType);
 
 	// calculate the size of a row in bytes
 	int bytesRow = this->dims().x() * this->num_channels();

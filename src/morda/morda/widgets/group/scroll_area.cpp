@@ -49,7 +49,8 @@ void scroll_area::clampScrollPos(){
 }
 
 void scroll_area::set_scroll_pos(const vector2& newScrollPos){
-	this->curScrollPos = newScrollPos.rou();
+	using std::round;
+	this->curScrollPos = round(newScrollPos);
 
 	this->clampScrollPos();
 	this->updateScrollFactor();
