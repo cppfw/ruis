@@ -86,7 +86,8 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 namespace{
 void mouseButton(NSEvent* e, bool isDown, morda::mouse_button button){
 	NSPoint winPos = [e locationInWindow];
-	auto pos = morda::vector2(winPos.x, winPos.y).rou();
+	using std::round;
+	auto pos = round(morda::vector2(winPos.x, winPos.y));
 	handleMouseButton(
 			mordavokne::application::inst(),
 			isDown,
@@ -493,8 +494,9 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {{
 //	TRACE(<< "mouseMoved event!!!!!" << std::endl)
 	NSPoint pos = [e locationInWindow];
 //	TRACE(<< "x = " << pos.x << std::endl)
+	using std::round;
 	macosx_HandleMouseMove(
-			morda::vector2(pos.x, pos.y).round(),
+			round(morda::vector2(pos.x, pos.y)),
 			0
 		);
 }
@@ -787,8 +789,8 @@ morda::real getDotsPerPt(){
 			[[description objectForKey:@"NSScreenNumber"] unsignedIntValue]
 		);
 
-	r4::vec2ui resolution(displayPixelSize.width, displayPixelSize.height);
-	r4::vec2ui screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
+	r4::vector2<unsigned> resolution(displayPixelSize.width, displayPixelSize.height);
+	r4::vector2<unsigned> screenSizeMm(displayPhysicalSize.width, displayPhysicalSize.height);
 
 	return application::get_pixels_per_dp(resolution, screenSizeMm);
 }
