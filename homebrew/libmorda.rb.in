@@ -14,7 +14,7 @@ class Libmorda < Formula
   depends_on "jpeg"
   depends_on "z"
   depends_on "freetype"
-  depends_on "r4"
+  depends_on "libr4"
   depends_on "libsvgdom"
   depends_on "libsvgren"
   
