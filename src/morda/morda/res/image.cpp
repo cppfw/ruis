@@ -164,11 +164,11 @@ public:
 //		TRACE(<< "height = " << this->dom->height << std::endl)
 //		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
-		svgren::parameters svgParams;
-		svgParams.dpi = this->context->units.dots_per_inch;
-		svgParams.width_request = width;
-		svgParams.height_request = height;
-		auto svg = svgren::render(*this->dom, svgParams);
+		svgren::parameters svg_params;
+		svg_params.dpi = unsigned(this->context->units.dots_per_inch);
+		svg_params.width_request = width;
+		svg_params.height_request = height;
+		auto svg = svgren::render(*this->dom, svg_params);
 		ASSERT(svg.width != 0)
 		ASSERT(svg.height != 0)
 		ASSERT_INFO(svg.width * svg.height == svg.pixels.size(), "imWidth = " << svg.width << " imHeight = " << svg.height << " pixels.size() = " << svg.pixels.size())
