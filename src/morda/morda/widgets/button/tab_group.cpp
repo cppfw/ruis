@@ -133,7 +133,7 @@ void tab_group::render(const morda::matrix4& matrix)const{
 
 	// render filler
 	if(this->children().size() != 0){
-		real ce = this->children().back()->rect().pdx();
+		real ce = this->children().back()->rect().x2();
 		real l = this->rect().d.x() - ce;
 		if(l > 0){
 			matrix4 m(matrix);

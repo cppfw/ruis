@@ -31,9 +31,9 @@ public:
 		std::array<vector2, 4> texCoords;
 		
 		texCoords[0] = rect.p.comp_div(this->tex->dims);
-		texCoords[1] = rect.x_pdy().comp_div(this->tex->dims);
-		texCoords[2] = rect.pdx_pdy().comp_div(this->tex->dims);
-		texCoords[3] = rect.pdx_y().comp_div(this->tex->dims);
+		texCoords[1] = rect.x1_y2().comp_div(this->tex->dims);
+		texCoords[2] = rect.x2_y2().comp_div(this->tex->dims);
+		texCoords[3] = rect.x2_y1().comp_div(this->tex->dims);
 //		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
 		auto& r = *this->context->renderer;
 		this->vao = r.factory->create_vertex_array(
