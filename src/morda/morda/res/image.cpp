@@ -137,20 +137,16 @@ public:
 		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
 				r4::vector2<unsigned> d = this->tex_v->dims().to<unsigned>();
-				p->cache.erase(std::make_tuple(d.x(), d.y()));
+				p->cache.erase(d);
 			}
 		}
 	};
 	
 	std::shared_ptr<const texture> get(vector2 forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
-		unsigned width = unsigned(forDim.x());
-//		TRACE(<< "imWidth = " << imWidth << std::endl)
-		unsigned height = unsigned(forDim.y());
-//		TRACE(<< "imHeight = " << imHeight << std::endl)
 
 		{ // check if in cache
-			auto i = this->cache.find(std::make_tuple(width, height));
+			auto i = this->cache.find(forDim.to<unsigned>());
 			if(i != this->cache.end()){
 				if(auto p = i->second.lock()){
 					return p;
@@ -166,25 +162,24 @@ public:
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::parameters svg_params;
 		svg_params.dpi = unsigned(this->context->units.dots_per_inch);
-		svg_params.width_request = width;
-		svg_params.height_request = height;
+		svg_params.dims_request = forDim.to<unsigned>();
 		auto svg = svgren::render(*this->dom, svg_params);
-		ASSERT(svg.width != 0)
-		ASSERT(svg.height != 0)
-		ASSERT_INFO(svg.width * svg.height == svg.pixels.size(), "imWidth = " << svg.width << " imHeight = " << svg.height << " pixels.size() = " << svg.pixels.size())
+		ASSERT(svg.dims.x() != 0)
+		ASSERT(svg.dims.y() != 0)
+		ASSERT_INFO(svg.dims.x() * svg.dims.y() == svg.pixels.size(), "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size())
 		
 		auto img = std::make_shared<svg_texture>(
 				this->context->renderer,
 				utki::make_shared_from(*this),
-				this->context->renderer->factory->create_texture_2d(r4::vector2<unsigned>(svg.width, svg.height), utki::make_span(svg.pixels))
+				this->context->renderer->factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
 			);
 
-		this->cache[std::make_tuple(svg.width, svg.height)] = img;
+		this->cache[svg.dims] = img;
 
 		return img;
 	}
 	
-	mutable std::map<std::tuple<unsigned, unsigned>, std::weak_ptr<texture>> cache;
+	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 	
 	static std::shared_ptr<res_svg_image> load(morda::context& ctx, const papki::file& fi){
 		return std::make_shared<res_svg_image>(utki::make_shared_from(ctx), svgdom::load(fi));
