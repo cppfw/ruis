@@ -83,8 +83,7 @@ before_install:
     fi;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "macosx" ]; then
-    brew upgrade freetype &&
-    brew install `myci-list-deps-homebrew.sh` glew libnitki;
+    myci-brew-install.sh `myci-list-deps-homebrew.sh` glew libnitki;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then
     sudo gem install cocoapods &&
