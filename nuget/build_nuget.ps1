@@ -45,14 +45,14 @@ msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_D
 If(!$?){exit 1}
 msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MD /p:Platform=x64 /v:minimal /nologo
 If(!$?){exit 1}
-msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Debug_MT /p:Platform=x86 /v:minimal /nologo
-If(!$?){exit 1}
-msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MT /p:Platform=x86 /v:minimal /nologo
-If(!$?){exit 1}
-msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Debug_MT /p:Platform=x64 /v:minimal /nologo
-If(!$?){exit 1}
-msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MT /p:Platform=x64 /v:minimal /nologo
-If(!$?){exit 1}
+# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Debug_MT /p:Platform=x86 /v:minimal /nologo
+# If(!$?){exit 1}
+# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MT /p:Platform=x86 /v:minimal /nologo
+# If(!$?){exit 1}
+# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Debug_MT /p:Platform=x64 /v:minimal /nologo
+# If(!$?){exit 1}
+# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MT /p:Platform=x64 /v:minimal /nologo
+# If(!$?){exit 1}
 
 Write-NuGetPackage nuget.autopkg
 If(!$?){exit 1}
