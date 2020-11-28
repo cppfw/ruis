@@ -24,6 +24,9 @@ Global
 		v142_Debug_MD|ARM = v142_Debug_MD|ARM
 		v142_Debug_MD|x64 = v142_Debug_MD|x64
 		v142_Debug_MD|x86 = v142_Debug_MD|x86
+		v142_Release_MD|ARM = v142_Release_MD|ARM
+		v142_Release_MD|x64 = v142_Release_MD|x64
+		v142_Release_MD|x86 = v142_Release_MD|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{111D4939-C046-4338-B740-ECA7F87785D6}.v140_Debug|ARM.ActiveCfg = v140_Debug|Win32
@@ -51,6 +54,11 @@ Global
 		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Debug_MD|x64.Build.0 = v142_Debug_MD|x64
 		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Debug_MD|x86.ActiveCfg = v142_Debug_MD|Win32
 		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Debug_MD|x86.Build.0 = v142_Debug_MD|Win32
+		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Release_MD|ARM.ActiveCfg = v142_Release_MD|Win32
+		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Release_MD|x64.ActiveCfg = v142_Release_MD|x64
+		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Release_MD|x64.Build.0 = v142_Release_MD|x64
+		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Release_MD|x86.ActiveCfg = v142_Release_MD|Win32
+		{111D4939-C046-4338-B740-ECA7F87785D6}.v142_Release_MD|x86.Build.0 = v142_Release_MD|Win32
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v140_Debug|ARM.ActiveCfg = v140_Debug|Win32
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v140_Debug|x64.ActiveCfg = v140_Debug|x64
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v140_Debug|x64.Build.0 = v140_Debug|x64
@@ -76,6 +84,11 @@ Global
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Debug_MD|x64.Build.0 = v142_Debug_MD|x64
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Debug_MD|x86.ActiveCfg = v142_Debug_MD|Win32
 		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Debug_MD|x86.Build.0 = v142_Debug_MD|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Release_MD|ARM.ActiveCfg = v142_Release_MD|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Release_MD|x64.ActiveCfg = v142_Release_MD|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Release_MD|x64.Build.0 = v142_Release_MD|x64
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Release_MD|x86.ActiveCfg = v142_Release_MD|Win32
+		{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}.v142_Release_MD|x86.Build.0 = v142_Release_MD|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
