@@ -102,6 +102,7 @@ nuget{
 
 		// ====== v142 ======
 
+		/*
 		[x86,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\v142_Release_MT\libmorda.lib;
 		}
@@ -114,6 +115,8 @@ nuget{
 		[x64,v142,debug,MultiThreadedDebug] {
 			lib: ..\msvs_solution\x64\v142_Debug_MT\libmorda.lib;
 		}
+		*/
+		
 		[x86,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\v142_Release_MD\libmorda.lib;
 		}
