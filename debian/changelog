@@ -1,3 +1,9 @@
+libmorda (0.5.144) unstable; urgency=medium
+
+  * msvs: v142 tools
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 28 Nov 2020 14:08:10 +0200
+
 libmorda (0.5.143) unstable; urgency=medium
 
   * link against latest libs
