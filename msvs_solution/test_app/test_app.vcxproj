@@ -466,7 +466,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
     <Import Project="..\packages\freetype_static.2.10.1.6\build\native\freetype_static.targets" Condition="Exists('..\packages\freetype_static.2.10.1.6\build\native\freetype_static.targets')" />
-    <Import Project="..\packages\libpng_static.1.4.1.8\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.8\build\native\libpng_static.targets')" />
     <Import Project="..\packages\libsvgdom.0.3.48\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.3.48\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\libsvgren.0.5.1\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.5.1\build\native\libsvgren.targets')" />
     <Import Project="..\packages\libmikroxml.0.1.29\build\native\libmikroxml.targets" Condition="Exists('..\packages\libmikroxml.0.1.29\build\native\libmikroxml.targets')" />
@@ -488,7 +487,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
     <Error Condition="!Exists('..\packages\freetype_static.2.10.1.6\build\native\freetype_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype_static.2.10.1.6\build\native\freetype_static.targets'))" />
-    <Error Condition="!Exists('..\packages\libpng_static.1.4.1.8\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.8\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.3.48\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.3.48\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.5.1\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.5.1\build\native\libsvgren.targets'))" />
     <Error Condition="!Exists('..\packages\libmikroxml.0.1.29\build\native\libmikroxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libmikroxml.0.1.29\build\native\libmikroxml.targets'))" />
