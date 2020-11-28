@@ -102,10 +102,10 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rot(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(-pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2)));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2)));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
@@ -123,9 +123,9 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		++in_index;
 
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rot(pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2)));
 		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rot(-pi<morda::real>() / 4) * antialias_width * sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(-pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2)));
 		}else{
 			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}
@@ -141,7 +141,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		ret.out_indices.push_back(4 * i + 1);
 	}
 
-	for(unsigned i = this->points.size() - 1; i != 0; --i){
+	for(unsigned i = unsigned(this->points.size() - 1); i != 0; --i){
 		ret.out_indices.push_back(4 * i + 3);
 		ret.out_indices.push_back(4 * i + 2);
 	}
