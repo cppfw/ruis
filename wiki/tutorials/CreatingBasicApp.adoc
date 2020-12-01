@@ -1,8 +1,8 @@
-# Creating basic application
+= Creating basic application
 
 Install *morda* on your system.
 
-This sample uses link:https://github.com/igagis/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your system too.
+This sample uses link:https://github.com/cppfw/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your system too.
 
 Entry point of the *mordavokne* application is a method called `mordavokne::create_application()`, and not a traditional `main()`.
 *mordavokne* defines `main()` internally, so the user should not define `main()`.

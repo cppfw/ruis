@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="igagis.github.io.mordatests">
+    package="cppfw.github.io.mordatests">
 
     <supports-screens
         android:anyDensity="true"
@@ -11,7 +11,7 @@
     <application>
         <activity
             android:icon="@mipmap/ic_launcher"
-            android:name="io.github.igagis.mordavokne.MordaVOkneActivity"
+            android:name="io.github.cppfw.mordavokne.MordaVOkneActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar"
             android:hasCode="true"

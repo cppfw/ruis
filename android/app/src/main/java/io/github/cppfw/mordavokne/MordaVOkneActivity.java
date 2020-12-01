@@ -1,4 +1,4 @@
-package io.github.igagis.mordavokne;
+package io.github.cppfw.mordavokne;
 
 import android.app.NativeActivity;
 import android.app.Service;

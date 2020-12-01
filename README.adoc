@@ -1,0 +1,17 @@
+:name: morda
+
+= {name}
+
+|====
+| link:https://github.com/cppfw/{name}/releases[image:https://img.shields.io/github/tag/cppfw/{name}.svg[releases]] | link:https://github.com/cppfw/{name}/actions[image:https://github.com/cppfw/{name}/workflows/ci/badge.svg[ci status]]
+|====
+
+GUI library in C++
+
+link:https://raw.githubusercontent.com/cppfw/morda/master/wiki/images/screenshot2.png[image:wiki/images/screenshot2_thumbnail.png[screenshot]]
+
+**morda** is a cross-platform non-intrusive GUI framework dedicated to games and multimedia applications. Its design was inspired by GUI system from Android and many concepts are borrowed from there. Its designed to use modern 3d graphics APIs like OpenGL etc.
+
+= Useful info
+  - link:wiki/Installation.adoc[Installation]
+  - link:wiki/Tutorials.adoc[Tutorials]

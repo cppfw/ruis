@@ -46,18 +46,18 @@ android {
 
 repositories {
     maven {
-        url 'https://dl.bintray.com/igagis/android/'
+        url 'https://dl.bintray.com/cppfw/android/'
     }
 }
 dependencies {
-    implementation 'io.github.igagis:utki:+'
-    implementation 'io.github.igagis:papki:+'
-    implementation 'io.github.igagis:r4:+'
-    implementation 'io.github.igagis:puu:+'
-    implementation 'io.github.igagis:svgren:+'
-    implementation 'io.github.igagis:png:+'
-    implementation 'io.github.igagis:jpeg:+'
-    implementation 'io.github.igagis:freetype:+'
+    implementation 'io.github.cppfw:utki:+'
+    implementation 'io.github.cppfw:papki:+'
+    implementation 'io.github.cppfw:r4:+'
+    implementation 'io.github.cppfw:puu:+'
+    implementation 'io.github.cppfw:svgren:+'
+    implementation 'io.github.cppfw:png:+'
+    implementation 'io.github.cppfw:jpeg:+'
+    implementation 'io.github.cppfw:freetype:+'
 }
 
 

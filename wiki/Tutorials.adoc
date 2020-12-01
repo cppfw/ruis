@@ -1,4 +1,4 @@
-# Tutorials
+= Tutorials
 
 - link:tutorials/BasicInfo.adoc[Basic info]
 - link:tutorials/CreatingBasicApp.adoc[Creating basic application]

@@ -4,7 +4,7 @@ apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after androi
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "io.github.igagis.morda_tests"
+        applicationId "io.github.cppfw.morda_tests"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -41,20 +41,20 @@ android {
 
 repositories {
     maven {
-        url 'https://dl.bintray.com/igagis/android/'
+        url 'https://dl.bintray.com/cppfw/android/'
     }
 }
 dependencies {
-    implementation 'io.github.igagis:utki:+'
-    implementation 'io.github.igagis:r4:+'
-    implementation 'io.github.igagis:papki:+'
-    implementation 'io.github.igagis:puu:+'
-    implementation 'io.github.igagis:nitki:+'
-    implementation 'io.github.igagis:svgdom:+'
-    implementation 'io.github.igagis:svgren:+'
-    implementation 'io.github.igagis:png:+'
-    implementation 'io.github.igagis:jpeg:+'
-    implementation 'io.github.igagis:freetype:+'
+    implementation 'io.github.cppfw:utki:+'
+    implementation 'io.github.cppfw:r4:+'
+    implementation 'io.github.cppfw:papki:+'
+    implementation 'io.github.cppfw:puu:+'
+    implementation 'io.github.cppfw:nitki:+'
+    implementation 'io.github.cppfw:svgdom:+'
+    implementation 'io.github.cppfw:svgren:+'
+    implementation 'io.github.cppfw:png:+'
+    implementation 'io.github.cppfw:jpeg:+'
+    implementation 'io.github.cppfw:freetype:+'
     implementation project(path: ':morda', configuration: 'default')
 }
 

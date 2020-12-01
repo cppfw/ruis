@@ -1,5 +1,7 @@
 # Manifest #
 
+TODO: rewise this
+
 Put the following under **`<manifest></manifest>`** tag:
 
 ```

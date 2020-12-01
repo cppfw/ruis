@@ -1,6 +1,0 @@
-# Contribution instruction
-
-## Building from sources
-  * link:contribution/BuildingInLinux.md[how to build in Linux]
-  * link:contribution/BuildingInWindows.adoc[how to build in Windows]
-  * link:contribution/BuildingInMacOSX.md[how to build in MacOS X]

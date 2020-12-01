@@ -18,9 +18,9 @@ nuget{
 		title: C++ GUI library;
 		authors: {Ivan Gagis};
 		owners: {Ivan Gagis};
-		licenseUrl: "https://raw.githubusercontent.com/igagis/morda/master/LICENSE";
-		projectUrl: "https://github.com/igagis/morda";
-		iconUrl: "https://github.com/igagis/morda/blob/master/logo.svg";
+		licenseUrl: "https://raw.githubusercontent.com/cppfw/morda/master/LICENSE";
+		projectUrl: "https://github.com/cppfw/morda";
+		iconUrl: "https://github.com/cppfw/morda/blob/master/logo.svg";
 		requireLicenseAcceptance:false;
 		summary: C++ GUI library;
 

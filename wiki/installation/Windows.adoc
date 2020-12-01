@@ -1,7 +1,0 @@
-# Installation in Windows
-
-## Visual Studio 2015
-
-. Create a new project for your application.
-
-. Install *libmorda* NuGet package to your project, the package is available on _nuget.org_ and should be found by NuGet manager.
