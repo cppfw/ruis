@@ -286,7 +286,7 @@ public:
 
 	}
 
-	const char* DPlusMinus = R"qwertyuiop(
+	const puu::forest DPlusMinus = puu::read(R"qwertyuiop(
 			@pile{
 				@image{
 					id{plusminus}
@@ -298,9 +298,9 @@ public:
 					id{plusminus_mouseproxy}
 				}
 			}
-		)qwertyuiop";
+		)qwertyuiop");
 
-	const char* DLine = R"qwertyuiop(
+	const puu::forest DLine = puu::read(R"qwertyuiop(
 			@pile{
 				layout{dx{5mm} dy{fill}}
 				@color{
@@ -308,9 +308,9 @@ public:
 					color{${morda_color_highlight}}
 				}
 			}
-		)qwertyuiop";
+		)qwertyuiop");
 
-	const char* DLineEnd = R"qwertyuiop(
+	const puu::forest DLineEnd = puu::read(R"qwertyuiop(
 			@pile{
 				layout{dx{5mm} dy{max}}
 				@column{
@@ -330,9 +330,9 @@ public:
 					}
 				}
 			}
-		)qwertyuiop";
+		)qwertyuiop");
 
-	const char* DLineMiddle = R"qwertyuiop(
+	const puu::forest DLineMiddle = puu::read(R"qwertyuiop(
 			@pile{
 				layout{dx{5mm} dy{max}}
 				@color{
@@ -348,11 +348,11 @@ public:
 					}
 				}
 			}
-		)qwertyuiop";
+		)qwertyuiop");
 
-	const char* DEmpty = R"qwertyuiop(
+	const puu::forest DEmpty = puu::read(R"qwertyuiop(
 			@widget{layout{dx{5mm}dy{0}}}
-		)qwertyuiop";
+		)qwertyuiop");
 
 private:
 	std::vector<size_t> selectedItem;
@@ -454,7 +454,7 @@ public:
 		ASSERT(isLastItemInParent.size() == path.size())
 
 		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->push_back_inflate(isLastItemInParent[i] ? puu::read(DEmpty) : puu::read(DLine));
+			ret->push_back_inflate(isLastItemInParent[i] ? DEmpty : DLine);
 		}
 
 		{
