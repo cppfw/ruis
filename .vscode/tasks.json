@@ -9,7 +9,8 @@
             "command": "make autojobs=true",
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "group": "build"
         },
         {
             "label": "build_ogles2",
@@ -17,7 +18,8 @@
             "command": "make autojobs=true ogles2=true",
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "group": "build"
         },
         {
             "label": "build_debug",
@@ -25,131 +27,150 @@
             "command": "make autojobs=true debug=true",
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "group": "build"
         },
         {
             "label": "clean",
             "type": "shell",
             "command": "make clean",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "group": "build"
         },
         {
             "label": "run",
             "type": "shell",
             "command": "make run",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "run_busy",
             "type": "shell",
             "command": "make run_busy",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "run_busy_debug",
             "type": "shell",
             "command": "make run_busy debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
 		},
 		{
             "label": "run_ratio_proxy",
             "type": "shell",
             "command": "make run_ratio_proxy",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "run_ratio_proxy_debug",
             "type": "shell",
             "command": "make run_ratio_proxy debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
         },
         {
             "label": "run_paint",
             "type": "shell",
             "command": "make run_paint",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "run_paint_debug",
             "type": "shell",
             "command": "make run_paint debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
 		},
 		{
             "label": "run_widget_set_debug",
             "type": "shell",
             "command": "make run_widget_set debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
 		},
 		{
             "label": "run_book",
             "type": "shell",
             "command": "make run_book",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "run_book_debug",
             "type": "shell",
             "command": "make run_book debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
         },
         {
             "label": "test",
             "type": "shell",
             "command": "make test autojobs=true",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "test_debug",
             "type": "shell",
             "command": "make test debug=true autojobs=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
 		},
 		{
             "label": "test_inflating",
             "type": "shell",
             "command": "make -C tests/inflating test",
             "problemMatcher": [],
-            "dependsOn": "build"
+            "dependsOn": "build",
+            "group": "build"
 		},
 		{
             "label": "test_inflating_debug",
             "type": "shell",
             "command": "make -C tests/inflating test debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
         },
         {
             "label": "run_ogles2",
             "type": "shell",
             "command": "make run ogles2=true",
             "problemMatcher": [],
-            "dependsOn": "build_ogles2"
+            "dependsOn": "build_ogles2",
+            "group": "build"
         },
         {
             "label": "run_debug",
             "type": "shell",
             "command": "make run debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug"
+            "dependsOn": "build_debug",
+            "group": "build"
         },
         {
             "label": "rebuild",
             "type": "shell",
             "command": "make clean && make autojobs=true",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }
