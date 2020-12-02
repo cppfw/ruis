@@ -442,9 +442,9 @@ public:
 
 		puu::tree* n = nullptr;
 
-		for(auto i = path.begin(); i != path.end(); ++i){
-			isLastItemInParent.push_back(*i + 1 == list->size());
-			n = &(*list)[*i];
+		for(const auto& i : path){
+			isLastItemInParent.push_back(i + 1 == list->size());
+			n = &(*list)[i];
 			parent_list = list;
 			list = &n->children;
 		}
