@@ -55,7 +55,7 @@ public:
 		void set_children(decltype(iter) i, size_t num_children);
 
 	protected:
-		provider();
+		provider() = default;
 	public:
 
 		virtual std::shared_ptr<widget> get_widget(const std::vector<size_t>& index, bool isCollapsed) = 0;

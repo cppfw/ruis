@@ -31,35 +31,23 @@ tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc)
 }
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider){
+	item_provider->notify_data_set_changed();
 	this->item_list->set_provider(
 			std::static_pointer_cast<list_widget::provider>(item_provider)
 		);
 }
 
-tree_view::provider::provider(){
-	this->notify_data_set_changed();
-}
-
 void tree_view::provider::notify_data_set_changed(){
+	auto size = this->count(std::vector<size_t>());
 	this->visible_tree.children.clear();
-	this->visible_tree.value.subtree_size = 1; // this indicates that number of root node children must be queried via count() call
-	this->iter_index = 0;
+	this->visible_tree.children.resize(size);
+	this->visible_tree.value.subtree_size = size;
 	this->iter = this->traversal().begin();
+	this->iter_index = 0;
 	this->list_widget::provider::notify_data_set_change();
 }
 
 size_t tree_view::provider::count()const noexcept{
-	if(this->visible_tree.children.empty()){
-		if(this->visible_tree.value.subtree_size == 0){
-			return 0;
-		}
-
-		auto size = this->count(std::vector<size_t>());
-		this->visible_tree.value.subtree_size = size;
-		this->visible_tree.children.resize(size);
-		this->iter = this->traversal().begin();
-		this->iter_index = 0;
-	}
 	return this->visible_tree.value.subtree_size;
 }
 
