@@ -286,74 +286,6 @@ public:
 
 	}
 
-	const puu::forest DPlusMinus = puu::read(R"qwertyuiop(
-			@pile{
-				@image{
-					id{plusminus}
-				}
-				@mouse_proxy{
-					layout{
-						dx{fill} dy{fill}
-					}
-					id{plusminus_mouseproxy}
-				}
-			}
-		)qwertyuiop");
-
-	const puu::forest DLine = puu::read(R"qwertyuiop(
-			@pile{
-				layout{dx{5mm} dy{fill}}
-				@color{
-					layout{dx{1pt}dy{fill}}
-					color{${morda_color_highlight}}
-				}
-			}
-		)qwertyuiop");
-
-	const puu::forest DLineEnd = puu::read(R"qwertyuiop(
-			@pile{
-				layout{dx{5mm} dy{max}}
-				@column{
-					layout{dx{max}dy{max}}
-					@color{
-						layout{dx{1pt}dy{0}weight{1}}
-						color{${morda_color_highlight}}
-					}
-					@widget{layout{dx{max}dy{0}weight{1}}}
-				}
-				@row{
-					layout{dx{max}dy{max}}
-					@widget{layout{dx{0}dy{max}weight{1}}}
-					@color{
-						layout{dx{0}dy{1pt}weight{1}}
-						color{${morda_color_highlight}}
-					}
-				}
-			}
-		)qwertyuiop");
-
-	const puu::forest DLineMiddle = puu::read(R"qwertyuiop(
-			@pile{
-				layout{dx{5mm} dy{max}}
-				@color{
-					layout{dx{1pt}dy{max}}
-					color{${morda_color_highlight}}
-				}
-				@row{
-					layout{dx{max}dy{max}}
-					@widget{layout{dx{0}dy{max}weight{1}}}
-					@color{
-						layout{dx{0}dy{1pt}weight{1}}
-						color{${morda_color_highlight}}
-					}
-				}
-			}
-		)qwertyuiop");
-
-	const puu::forest DEmpty = puu::read(R"qwertyuiop(
-			@widget{layout{dx{5mm}dy{0}}}
-		)qwertyuiop");
-
 private:
 	std::vector<size_t> selectedItem;
 
@@ -450,56 +382,6 @@ public:
 		}
 
 		auto ret = std::make_shared<morda::row>(this->context, puu::forest());
-
-		ASSERT(isLastItemInParent.size() == path.size())
-
-		for(unsigned i = 0; i != path.size() - 1; ++i){
-			ret->push_back_inflate(isLastItemInParent[i] ? DEmpty : DLine);
-		}
-
-		{
-			auto widget = this->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
-			ASSERT(widget)
-
-			if(!n->children.empty()){
-				auto w = this->context->inflater.inflate(DPlusMinus);
-
-				auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
-				ASSERT(plusminus)
-				plusminus->set_image(
-						isCollapsed ?
-								this->context->loader.load<morda::res::image>("morda_img_treeview_plus") :
-								this->context->loader.load<morda::res::image>("morda_img_treeview_minus")
-					);
-
-				auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
-				ASSERT(plusminusMouseProxy)
-				plusminusMouseProxy->mouse_button_handler = [this, path, isCollapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
-					if(e.button != morda::mouse_button::left){
-						return false;
-					}
-					if(!e.is_down){
-						return false;
-					}
-
-					if(isCollapsed){
-						this->uncollapse(path);
-					}else{
-						this->collapse(path);
-					}
-
-					TRACE_ALWAYS(<< "plusminus clicked:")
-					for(auto i = path.begin(); i != path.end(); ++i){
-						TRACE_ALWAYS(<< " " << (*i))
-					}
-					TRACE_ALWAYS(<< std::endl)
-
-					return true;
-				};
-				widget->push_back(w);
-			}
-			ret->push_back(widget);
-		}
 
 		{
 			auto v = this->context->inflater.inflate(
