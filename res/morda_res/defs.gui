@@ -5,6 +5,8 @@ defs{
 	morda_color_mg{0xff424242}
 	morda_color_fg{0xff505050}
 
+	morda_tree_view_indent{17pt}
+
 	@text_input_line_{
 		@text_input_line{
 			id{text_input_line}
@@ -19,7 +21,6 @@ defs{
 	morda_window_border_size{5dp}
 
 	morda_color_highlight{0xffad9869}
-
 //	morda_color_highlight{0xff329ce1}
 
 	@text{

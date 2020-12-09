@@ -52,7 +52,7 @@ size_t tree_view::provider::count()const noexcept{
 }
 
 namespace{
-const puu::forest DPlusMinus = puu::read(R"qwertyuiop(
+const puu::forest plus_minus_layout = puu::read(R"qwertyuiop(
 		@pile{
 			@image{
 				id{plusminus}
@@ -66,9 +66,9 @@ const puu::forest DPlusMinus = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest DLine = puu::read(R"qwertyuiop(
+const puu::forest vert_line_layout = puu::read(R"qwertyuiop(
 		@pile{
-			layout{dx{5mm} dy{fill}}
+			layout{dx{${morda_tree_view_indent}} dy{fill}}
 			@color{
 				layout{dx{1pt}dy{fill}}
 				color{${morda_color_highlight}}
@@ -76,9 +76,9 @@ const puu::forest DLine = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest DLineEnd = puu::read(R"qwertyuiop(
+const puu::forest line_end_layout = puu::read(R"qwertyuiop(
 		@pile{
-			layout{dx{5mm} dy{max}}
+			layout{dx{${morda_tree_view_indent}} dy{max}}
 			@column{
 				layout{dx{max}dy{max}}
 				@color{
@@ -98,9 +98,9 @@ const puu::forest DLineEnd = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest DLineMiddle = puu::read(R"qwertyuiop(
+const puu::forest line_middle_layout = puu::read(R"qwertyuiop(
 		@pile{
-			layout{dx{5mm} dy{max}}
+			layout{dx{${morda_tree_view_indent}} dy{max}}
 			@color{
 				layout{dx{1pt}dy{max}}
 				color{${morda_color_highlight}}
@@ -116,8 +116,8 @@ const puu::forest DLineMiddle = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest DEmpty = puu::read(R"qwertyuiop(
-		@widget{layout{dx{5mm}dy{0}}}
+const puu::forest empty_layout = puu::read(R"qwertyuiop(
+		@widget{layout{dx{${morda_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 }
 
@@ -146,15 +146,15 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 	ASSERT(isLastItemInParent.size() == path.size())
 
 	for(unsigned i = 0; i != path.size() - 1; ++i){
-		ret->push_back_inflate(isLastItemInParent[i] ? DEmpty : DLine);
+		ret->push_back_inflate(isLastItemInParent[i] ? empty_layout : vert_line_layout);
 	}
 
 	{
-		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? DLineEnd : DLineMiddle);
+		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? line_end_layout : line_middle_layout);
 		ASSERT(widget)
 
 		if(this->count(path) != 0){
-			auto w = this->get_list()->context->inflater.inflate(DPlusMinus);
+			auto w = this->get_list()->context->inflater.inflate(plus_minus_layout);
 
 			auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
 			ASSERT(plusminus)
