@@ -36,7 +36,7 @@ public:
 		size_t count()const noexcept override;
 
 		struct node{
-			size_t subtree_size = 0;
+			size_t subtree_size = 0; // size of the visible subtree
 		};
 		
 		mutable utki::tree<node> visible_tree;
@@ -55,9 +55,7 @@ public:
 		void set_children(decltype(iter) i, size_t num_children);
 
 	protected:
-		provider(){
-			this->notify_data_set_changed();
-		}
+		provider() = default;
 	public:
 
 		virtual std::shared_ptr<widget> get_widget(const std::vector<size_t>& index, bool isCollapsed) = 0;

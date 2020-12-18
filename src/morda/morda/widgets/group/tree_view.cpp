@@ -2,6 +2,13 @@
 
 #include "../../context.hpp"
 
+#include "../label/image.hpp"
+
+#include "../proxy/mouse_proxy.hpp"
+
+#include "row.hpp"
+#include "pile.hpp"
+
 using namespace morda;
 
 tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc) :
@@ -24,37 +31,171 @@ tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc)
 }
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider){
+	item_provider->notify_data_set_changed();
 	this->item_list->set_provider(
 			std::static_pointer_cast<list_widget::provider>(item_provider)
 		);
 }
 
 void tree_view::provider::notify_data_set_changed(){
+	auto size = this->count(std::vector<size_t>());
 	this->visible_tree.children.clear();
-	this->visible_tree.value.subtree_size = 0;
-	this->iter_index = 0;
+	this->visible_tree.children.resize(size);
+	this->visible_tree.value.subtree_size = size;
 	this->iter = this->traversal().begin();
+	this->iter_index = 0;
 	this->list_widget::provider::notify_data_set_change();
 }
 
 size_t tree_view::provider::count()const noexcept{
-	if(this->visible_tree.value.subtree_size == 0){
-		ASSERT(this->visible_tree.children.empty())
-		auto size = this->count(std::vector<size_t>());
-		if(size != 0){
-			this->visible_tree.value.subtree_size = size;
-			this->visible_tree.children.resize(size);
-			this->iter = this->traversal().begin();
-			this->iter_index = 0;
-		}
-	}
 	return this->visible_tree.value.subtree_size;
+}
+
+namespace{
+const puu::forest plus_minus_layout = puu::read(R"qwertyuiop(
+		@pile{
+			@image{
+				id{plusminus}
+			}
+			@mouse_proxy{
+				layout{
+					dx{fill} dy{fill}
+				}
+				id{plusminus_mouseproxy}
+			}
+		}
+	)qwertyuiop");
+
+const puu::forest vert_line_layout = puu::read(R"qwertyuiop(
+		@pile{
+			layout{dx{${morda_tree_view_indent}} dy{fill}}
+			@color{
+				layout{dx{1pt}dy{fill}}
+				color{${morda_color_highlight}}
+			}
+		}
+	)qwertyuiop");
+
+const puu::forest line_end_layout = puu::read(R"qwertyuiop(
+		@pile{
+			layout{dx{${morda_tree_view_indent}} dy{max}}
+			@column{
+				layout{dx{max}dy{max}}
+				@color{
+					layout{dx{1pt}dy{0}weight{1}}
+					color{${morda_color_highlight}}
+				}
+				@widget{layout{dx{max}dy{0}weight{1}}}
+			}
+			@row{
+				layout{dx{max}dy{max}}
+				@widget{layout{dx{0}dy{max}weight{1}}}
+				@color{
+					layout{dx{0}dy{1pt}weight{1}}
+					color{${morda_color_highlight}}
+				}
+			}
+		}
+	)qwertyuiop");
+
+const puu::forest line_middle_layout = puu::read(R"qwertyuiop(
+		@pile{
+			layout{dx{${morda_tree_view_indent}} dy{max}}
+			@color{
+				layout{dx{1pt}dy{max}}
+				color{${morda_color_highlight}}
+			}
+			@row{
+				layout{dx{max}dy{max}}
+				@widget{layout{dx{0}dy{max}weight{1}}}
+				@color{
+					layout{dx{0}dy{1pt}weight{1}}
+					color{${morda_color_highlight}}
+				}
+			}
+		}
+	)qwertyuiop");
+
+const puu::forest empty_layout = puu::read(R"qwertyuiop(
+		@widget{layout{dx{${morda_tree_view_indent}}dy{0}}}
+	)qwertyuiop");
 }
 
 std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 	auto& i = this->iter_for(index);
 
-	return this->get_widget(i.index(), i->value.subtree_size == 0);
+	auto path = i.index();
+	bool is_collapsed = i->value.subtree_size == 0;
+
+	auto list = &this->visible_tree.children;
+
+	std::vector<bool> isLastItemInParent;
+
+	decltype(this->visible_tree)* n = nullptr;
+
+	for(const auto& i : path){
+		isLastItemInParent.push_back(i + 1 == list->size());
+		n = &(*list)[i];
+		list = &n->children;
+	}
+
+	ASSERT_INFO(this->get_list(), "provider is not set to a list_widget")
+
+	auto ret = std::make_shared<morda::row>(this->get_list()->context, puu::forest());
+
+	ASSERT(isLastItemInParent.size() == path.size())
+
+	for(unsigned i = 0; i != path.size() - 1; ++i){
+		ret->push_back_inflate(isLastItemInParent[i] ? empty_layout : vert_line_layout);
+	}
+
+	{
+		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? line_end_layout : line_middle_layout);
+		ASSERT(widget)
+
+		if(this->count(path) != 0){
+			auto w = this->get_list()->context->inflater.inflate(plus_minus_layout);
+
+			auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
+			ASSERT(plusminus)
+			plusminus->set_image(
+					is_collapsed ?
+							this->get_list()->context->loader.load<morda::res::image>("morda_img_treeview_plus") :
+							this->get_list()->context->loader.load<morda::res::image>("morda_img_treeview_minus")
+				);
+
+			auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
+			ASSERT(plusminusMouseProxy)
+			plusminusMouseProxy->mouse_button_handler = [this, path, is_collapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
+				if(e.button != morda::mouse_button::left){
+					return false;
+				}
+				if(!e.is_down){
+					return false;
+				}
+
+				if(is_collapsed){
+					this->uncollapse(path);
+				}else{
+					this->collapse(path);
+				}
+
+				TRACE_ALWAYS(<< "plusminus clicked:")
+				for(auto i = path.begin(); i != path.end(); ++i){
+					TRACE_ALWAYS(<< " " << (*i))
+				}
+				TRACE_ALWAYS(<< std::endl)
+
+				return true;
+			};
+			widget->push_back(w);
+		}
+		ret->push_back(widget);
+	}
+
+	ret->push_back(this->get_widget(path, is_collapsed));
+
+	return ret;
 }
 
 void tree_view::provider::recycle(size_t index, std::shared_ptr<widget> w){
@@ -127,11 +268,11 @@ void tree_view::provider::set_children(decltype(iter) i, size_t num_children){
 	auto index = i.index();
 	ASSERT(this->traversal().is_valid(index));
 
-	auto old_num_children = i->value.subtree_size;
+	auto old_subtree_size = i->value.subtree_size;
 
 	auto p = &this->visible_tree;
 	for(auto t : index){
-		p->value.subtree_size -= old_num_children;
+		p->value.subtree_size -= old_subtree_size;
 		p->value.subtree_size += num_children;
 		p = &p->children[t];
 	}
@@ -267,10 +408,10 @@ void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 	cur_iter_index = this->iter.index();
 
 	{
-		auto num_children_removed = ri->value.subtree_size + 1;
+		auto removed_subtree_size = ri->value.subtree_size + 1;
 		auto* p = &this->visible_tree;
 		for(auto k : index){
-			p->value.subtree_size -= num_children_removed;
+			p->value.subtree_size -= removed_subtree_size;
 			p = &p->children[k];
 		}
 	}
