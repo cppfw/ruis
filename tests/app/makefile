@@ -17,7 +17,7 @@ ifneq ($(raspberrypi),true)
     this_cxxflags += -DDEBUG
     this_cxxflags += -fstrict-aliasing
     this_cxxflags += -g
-    this_cxxflags += -std=c++14
+    this_cxxflags += -std=c++17
 
     ifeq ($(debug), true)
         this_cxxflags += -DDEBUG

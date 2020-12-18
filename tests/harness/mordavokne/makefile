@@ -10,7 +10,7 @@ this_cxxflags += -Wall
 this_cxxflags += -Werror
 this_cxxflags += -funsigned-char # the 'char' type is unsigned
 this_cxxflags += -fstrict-aliasing
-this_cxxflags += -std=c++14
+this_cxxflags += -std=c++17
 this_cxxflags += -g
 
 ifeq ($(debug),true)
@@ -22,7 +22,7 @@ endif
 this_srcs += $(call prorab-src-dir, .)
 
 this_cxxflags += -I$(d)../../../src/morda
-this_objcflags += -I$(d)../../../src/morda -I$(d)../opengl2 -std=c++14
+this_objcflags += -I$(d)../../../src/morda -I$(d)../opengl2 -std=c++17
 
 this_ldlibs += -lmorda -lnitki -lopros -lpapki
 this_ldflags += -L$(d)../../../src/morda/build

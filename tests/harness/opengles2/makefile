@@ -12,7 +12,7 @@ this_cxxflags += -Wall
 this_cxxflags += -Werror
 this_cxxflags += -funsigned-char # the 'char' type is unsigned
 this_cxxflags += -fstrict-aliasing
-this_cxxflags += -std=c++14
+this_cxxflags += -std=c++17
 this_cxxflags += -g
 
 ifeq ($(debug),true)
