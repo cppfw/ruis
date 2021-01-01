@@ -234,6 +234,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fno-aligned-allocation",
+				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -247,6 +251,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fno-aligned-allocation",
+				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
