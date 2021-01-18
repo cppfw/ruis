@@ -18,9 +18,6 @@ namespace morda{
 class text_widget : virtual public widget{
 	std::shared_ptr<res::font> font_v;
 
-protected:
-	std::vector<std::u32string> lines;
-
 public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;
@@ -35,9 +32,9 @@ public:
 		this->set_text(utki::to_utf32(text));
 	}
 
-	void set_text(std::u32string&& text);
+	virtual void set_text(std::u32string&& text) = 0;
 
-	std::u32string get_text()const;
+	virtual std::u32string get_text()const = 0;
 
 	void clear(){
 		this->set_text(std::u32string());
@@ -63,6 +60,7 @@ private:
 class single_line_text_widget : public text_widget{
 	mutable morda::rectangle bb;
 
+	std::u32string text;
 protected:
 	vector2 measure(const morda::vector2& quotum)const noexcept override;
 
@@ -76,6 +74,12 @@ protected:
 		this->bb = this->get_font().get_bounding_box(this->get_text());
 	}
 public:
+	using text_widget::set_text;
+
+	void set_text(std::u32string&& text)override;
+
+	std::u32string get_text()const override;
+
 	void on_font_change()override{
 		this->recompute_bounding_box();
 	}

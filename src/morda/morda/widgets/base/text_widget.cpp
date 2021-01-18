@@ -69,19 +69,12 @@ void single_line_text_widget::on_text_change(){
 	this->text_widget::on_text_change();
 }
 
-void text_widget::set_text(std::u32string&& text){
-	this->lines.clear();
-	this->lines.emplace_back(std::move(text));
+void single_line_text_widget::set_text(std::u32string&& text){
+	this->text = std::move(text);
 	this->invalidate_layout();
 	this->on_text_change();
 }
 
-std::u32string text_widget::get_text()const{
-	std::u32string ret;
-
-	for(auto& l : this->lines){
-		ret.append(l);
-	}
-
-	return ret;
+std::u32string single_line_text_widget::get_text()const{
+	return this->text;
 }
