@@ -1,3 +1,9 @@
+libmorda (0.5.146) unstable; urgency=medium
+
+  * text_widget refactoring
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 18 Jan 2021 17:23:19 +0200
+
 libmorda (0.5.145) unstable; urgency=medium
 
   * github actions
