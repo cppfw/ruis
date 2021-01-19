@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - {os: debian, codename: buster, image_owner: , package_type: deb}
-          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [qemu,docker]}
+          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
