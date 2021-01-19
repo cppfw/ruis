@@ -44,7 +44,7 @@ jobs:
       - name: install deps
         run: myci-deb-install-build-deps.sh
       - name: build
-        run: autojobs=true dpkg-buildpackage --unsigned-source --unsigned-changes
+        run: dpkg-buildpackage --unsigned-source --unsigned-changes
       - name: deploy deb packages
         run: myci-deploy-debian-bintray.sh --owner cppfw --repo ${{ matrix.os }} --distro ${{ matrix.codename }} --component main --package $PACKAGE_NAME ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
