@@ -25,7 +25,7 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const puu::fores
 	for(auto& p : desc){
 		if(p.value == "size"){
 			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx.units));
-		}else if(p.value == "maxCached"){
+		}else if(p.value == "max_cached"){
 			maxCached = unsigned(get_property_value(p).to_uint32());
 		}else if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());
