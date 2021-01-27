@@ -16,7 +16,7 @@ namespace morda{
  * @brief Abstract widget displaying a text.
  */
 class text_widget : virtual public widget{
-	std::shared_ptr<res::font> font_v;
+	std::shared_ptr<res::font> font;
 
 public:
 	text_widget(const text_widget&) = delete;
@@ -24,8 +24,9 @@ public:
 
 	void set_font(std::shared_ptr<res::font> font);
 
-	const morda::font& get_font()const{
-		return this->font_v->get();
+	const res::font& get_font()const{
+		ASSERT(this->font)
+		return *this->font;
 	}
 
 	void set_text(const std::string& text){
@@ -71,7 +72,7 @@ protected:
 	}
 
 	void recompute_bounding_box(){
-		this->bb = this->get_font().get_bounding_box(this->get_text());
+		this->bb = this->get_font().get().get_bounding_box(this->get_text());
 	}
 public:
 	using text_widget::set_text;

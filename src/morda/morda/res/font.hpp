@@ -64,7 +64,7 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	const morda::font& get(style font_style = style::normal)noexcept{
+	const morda::font& get(style font_style = style::normal)const noexcept{
 		ASSERT(this->fonts[unsigned(style::normal)])
 		const auto& ret = this->fonts[unsigned(font_style)];
 		if(ret){

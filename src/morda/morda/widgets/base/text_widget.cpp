@@ -11,7 +11,7 @@ void text_widget::set_font(std::shared_ptr<res::font> font){
 		throw std::invalid_argument("text_widget::SetFont(): passed argument is null");
 	}
 
-	this->font_v = std::move(font);
+	this->font = std::move(font);
 
 	this->invalidate_layout();
 
@@ -27,13 +27,13 @@ text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& d
 		}
 
 		if(p.value == "font"){
-			this->font_v = this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
+			this->font = this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
 		}
 	}
 
 	// load default font if needed
-	if(!this->font_v){
-		this->font_v = this->context->loader.load<res::font>("morda_fnt_text");
+	if(!this->font){
+		this->font = this->context->loader.load<res::font>("morda_fnt_text");
 	}
 }
 
@@ -53,7 +53,7 @@ single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context>
 }
 
 vector2 single_line_text_widget::measure(const morda::vector2& quotum)const noexcept{
-	vector2 ret(this->bb.d.x(), this->get_font().get_height());
+	vector2 ret(this->bb.d.x(), this->get_font().get().get_height());
 
 	for(unsigned i = 0; i != ret.size(); ++i){
 		if(quotum[i] >= 0){
