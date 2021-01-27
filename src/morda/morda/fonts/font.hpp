@@ -43,7 +43,7 @@ protected:
 	 * @param str - string of text to render.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const = 0;
+	virtual real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -68,10 +68,10 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, utki::utf8_iterator str)const{
-		return this->render_internal(matrix, color, utki::to_utf32(str));
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const{
+		return this->render_internal(matrix, color, str);
 	}
-	
+
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering.
@@ -79,8 +79,8 @@ public:
 	 * @param str - string of text to render.
 	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const{
-		return this->render_internal(matrix, color, str);
+	real render(const morda::matrix4& matrix, r4::vector4<float> color, utki::utf8_iterator str)const{
+		return this->render(matrix, color, utki::to_utf32(str));
 	}
 	
 	/**

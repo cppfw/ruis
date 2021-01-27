@@ -228,7 +228,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	return ret;
 }
 
-real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const{
+real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const{
 	if(str.size() == 0){
 		return 0;
 	}

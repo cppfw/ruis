@@ -82,7 +82,7 @@ public:
 	real get_advance(char32_t c)const override;
 	
 protected:
-	real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string& str)const override;
+	real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const override;
 
 	real get_advance_internal(const std::u32string& str)const override;
 
