@@ -25,7 +25,7 @@ public:
 	void set_font(std::shared_ptr<res::font> font);
 
 	const morda::font& get_font()const{
-		return this->font_v->get_font();
+		return this->font_v->get();
 	}
 
 	void set_text(const std::string& text){

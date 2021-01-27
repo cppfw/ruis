@@ -1,3 +1,9 @@
+libmorda (0.5.148) unstable; urgency=medium
+
+  * res::font::style
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Jan 2021 01:01:51 +0200
+
 libmorda (0.5.147) unstable; urgency=medium
 
   * string_view

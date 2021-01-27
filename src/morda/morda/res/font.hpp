@@ -17,15 +17,18 @@ namespace morda{ namespace res{
  * 
  * %resource description:
  * 
- * @param file - file to load the font from, TrueType ttf file.
+ * @param normal - file to load normal font from, the True-Type ttf file.
+ * @param bold - file to load bold font from, True-Type ttf file. If omitted, the bold font will be the same as normal.
+ * @param italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as normal.
+ * @param bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be the same as normal.
  * @param chars - list of all chars for which the glyphs should be created.
  * @param size - size of glyphs, in length units, i.e.: no unit(pixels), dp, mm.
- * @param outline - thickness of the outline in length units.
  * 
  * Example:
  * @code
  * fnt_normal{
- *     file {Vera.ttf}
+ *     normal {Vera.ttf}
+ *     bold {Vera_bold.ttf}
  *     size {12dp}
  * }
  * @endcode
@@ -33,10 +36,27 @@ namespace morda{ namespace res{
 class font : public morda::resource{
 	friend class morda::resource_loader;
 
-	std::unique_ptr<morda::font> f;
+public:
+	enum class style{
+		normal,
+		bold,
+		italic,
+		bold_italic
+	};
+
+private:
+	std::array<std::unique_ptr<const morda::font>, 4> fonts;
 
 public:
-	font(std::shared_ptr<morda::context> context, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	font(
+			std::shared_ptr<morda::context> context,
+			const papki::file& file_normal,
+			std::unique_ptr<const papki::file> file_bold,
+			std::unique_ptr<const papki::file> file_italic,
+			std::unique_ptr<const papki::file> file_bold_italic,
+			unsigned font_size,
+			unsigned max_cached
+		);
 
 	~font()noexcept{}
 
@@ -44,9 +64,13 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	const morda::font& get_font()noexcept{
-		ASSERT(this->f)
-		return *this->f;
+	const morda::font& get(style font_style = style::normal)noexcept{
+		ASSERT(this->fonts[unsigned(style::normal)])
+		const auto& ret = this->fonts[unsigned(font_style)];
+		if(ret){
+			return *ret;
+		}
+		return *this->fonts[unsigned(style::normal)];
 	}
 	
 private:

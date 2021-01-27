@@ -1,23 +1,8 @@
-morda_fnt_normal{
-	file {Vera.ttf}
-	size {12dp}
-	max_cached{100}
-}
-
-morda_fnt_bold{
-	file {VeraBd.ttf}
-	size {12dp}
-	max_cached{100}
-}
-
-morda_fnt_italic{
-	file {VeraIt.ttf}
-	size {12dp}
-	max_cached{100}
-}
-
-morda_fnt_bold_italic{
-	file {VeraBI.ttf}
+morda_fnt_text{
+	normal {Vera.ttf}
+	bold {VeraBd.ttf}
+	italic {VeraIt.ttf}
+	bold_italic {VeraBI.ttf}
 	size {12dp}
 	max_cached{100}
 }

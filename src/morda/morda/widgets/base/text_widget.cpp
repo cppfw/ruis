@@ -33,7 +33,7 @@ text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& d
 
 	// load default font if needed
 	if(!this->font_v){
-		this->font_v = this->context->loader.load<res::font>("morda_fnt_normal");
+		this->font_v = this->context->loader.load<res::font>("morda_fnt_text");
 	}
 }
 
