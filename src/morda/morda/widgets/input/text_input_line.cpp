@@ -91,7 +91,6 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e){
 	return true;
 }
 
-
 vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 	vector2 ret;
 	
