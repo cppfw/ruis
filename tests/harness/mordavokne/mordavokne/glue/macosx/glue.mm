@@ -724,7 +724,7 @@ int main (int argc, const char** argv){
 	do{
 		render(mordavokne::inst());
 
-		std::uint32_t millis = mordavokne::inst().gui.update();
+		uint32_t millis = mordavokne::inst().gui.update();
 
 		NSEvent *event = [ww.applicationObjectId
 				nextEventMatchingMask:NSEventMaskAny

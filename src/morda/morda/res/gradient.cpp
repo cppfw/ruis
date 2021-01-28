@@ -8,11 +8,11 @@
 
 using namespace morda::res;
 
-morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,std::uint32_t> >& stops, bool vertical) :
+morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,uint32_t> >& stops, bool vertical) :
 		resource(std::move(c))
 {
 	std::vector<r4::vector2<float>> vertices;
-//	std::vector<std::uint32_t> colors;
+//	std::vector<uint32_t> colors;
 	std::vector<r4::vector4<float>> colors;
 	for(auto& s : stops){
 		{
@@ -62,7 +62,7 @@ morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<st
 std::shared_ptr<gradient> gradient::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
-	std::vector<std::tuple<real,std::uint32_t>> stops;
+	std::vector<std::tuple<real,uint32_t>> stops;
 
 	const char* stop_c = "Stop";
 

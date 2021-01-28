@@ -322,7 +322,7 @@ struct WindowWrapper : public utki::destructable{
 
 			VC_RECT_T dst_rect, src_rect;
 
-			std::uint32_t display_width, display_height;
+			uint32_t display_width, display_height;
 
 			// create an EGL window surface, passing context width/height
 			if(graphics_get_display_size(

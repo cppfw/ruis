@@ -46,10 +46,10 @@ public:
 		this->tex = this->context->loader.load<morda::res::texture>("tex_sample");
 	}
 
-	std::uint32_t timer = 0;
-	std::uint32_t cnt = 0;
+	uint32_t timer = 0;
+	uint32_t cnt = 0;
 
-	void update(std::uint32_t dt) override{
+	void update(uint32_t dt) override{
 		this->timer += dt;
 		++this->cnt;
 
@@ -206,9 +206,9 @@ public:
 	}
 
 	unsigned fps = 0;
-	std::uint32_t fpsSecCounter = 0;
+	uint32_t fpsSecCounter = 0;
 
-	void update(std::uint32_t dt) override{
+	void update(uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
 		this->rot %= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));

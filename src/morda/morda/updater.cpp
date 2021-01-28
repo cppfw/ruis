@@ -117,7 +117,7 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 
 
 uint32_t updater::update(){
-	std::uint32_t curTime = utki::get_ticks_ms();
+	uint32_t curTime = utki::get_ticks_ms();
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
@@ -153,7 +153,7 @@ uint32_t updater::update(){
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
-	std::uint32_t closestTime;
+	uint32_t closestTime;
 	if(this->activeQueue->size() != 0){
 		ASSERT(curTime <= this->activeQueue->front().first)
 		closestTime = this->activeQueue->front().first;
@@ -161,12 +161,12 @@ uint32_t updater::update(){
 		ASSERT(curTime > this->inactiveQueue->front().first)
 		closestTime = this->inactiveQueue->front().first;
 	}else{
-		return std::uint32_t(-1);
+		return uint32_t(-1);
 	}
 	
-	std::uint32_t uncorrectedDt = closestTime - curTime;
+	uint32_t uncorrectedDt = closestTime - curTime;
 	
-	std::uint32_t correction = utki::get_ticks_ms() - curTime;
+	uint32_t correction = utki::get_ticks_ms() - curTime;
 	
 	if(correction >= uncorrectedDt){
 		return 0;
