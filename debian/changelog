@@ -1,3 +1,9 @@
+libmorda (0.5.151) unstable; urgency=medium
+
+  * nuget pack resources
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 00:49:39 +0200
+
 libmorda (0.5.150) unstable; urgency=medium
 
   * update to latest r4
