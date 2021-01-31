@@ -17,8 +17,6 @@
 
 #include "config.hpp"
 
-
-
 namespace mordavokne{
 
 /**

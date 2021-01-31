@@ -148,18 +148,18 @@ public:
 			morda::widget(std::move(c), desc)
 	{
 		std::array<morda::vector3, 36> cubePos = {{
-			morda::vector3(-1, -1,  1), morda::vector3( 1, -1,  1), morda::vector3(-1, 1, 1),
- 			morda::vector3( 1, -1,  1), morda::vector3( 1,  1,  1), morda::vector3(-1, 1, 1),
-			morda::vector3( 1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1, 1, 1),
-			morda::vector3( 1, -1, -1), morda::vector3( 1,  1, -1), morda::vector3( 1, 1, 1),
-			morda::vector3( 1, -1, -1), morda::vector3(-1, -1, -1), morda::vector3( 1, 1,-1),
-			morda::vector3(-1, -1, -1), morda::vector3(-1,  1, -1), morda::vector3( 1, 1,-1),
-			morda::vector3(-1, -1, -1), morda::vector3(-1, -1,  1), morda::vector3(-1, 1,-1),
-			morda::vector3(-1, -1,  1), morda::vector3(-1,  1,  1), morda::vector3(-1, 1,-1),
-			morda::vector3(-1,  1, -1), morda::vector3(-1,  1,  1), morda::vector3( 1, 1,-1),
-			morda::vector3(-1,  1,  1), morda::vector3( 1,  1,  1), morda::vector3( 1, 1,-1),
-			morda::vector3(-1, -1, -1), morda::vector3( 1, -1, -1), morda::vector3(-1,-1, 1),
-			morda::vector3(-1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1,-1, 1)
+			morda::vector3(-1, -1,  1), morda::vector3( 1, -1,  1), morda::vector3(-1,  1,  1),
+ 			morda::vector3( 1, -1,  1), morda::vector3( 1,  1,  1), morda::vector3(-1,  1,  1),
+			morda::vector3( 1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1,  1,  1),
+			morda::vector3( 1, -1, -1), morda::vector3( 1,  1, -1), morda::vector3( 1,  1,  1),
+			morda::vector3( 1, -1, -1), morda::vector3(-1, -1, -1), morda::vector3( 1,  1, -1),
+			morda::vector3(-1, -1, -1), morda::vector3(-1,  1, -1), morda::vector3( 1,  1, -1),
+			morda::vector3(-1, -1, -1), morda::vector3(-1, -1,  1), morda::vector3(-1,  1, -1),
+			morda::vector3(-1, -1,  1), morda::vector3(-1,  1,  1), morda::vector3(-1,  1, -1),
+			morda::vector3(-1,  1, -1), morda::vector3(-1,  1,  1), morda::vector3( 1,  1, -1),
+			morda::vector3(-1,  1,  1), morda::vector3( 1,  1,  1), morda::vector3( 1,  1, -1),
+			morda::vector3(-1, -1, -1), morda::vector3( 1, -1, -1), morda::vector3(-1, -1,  1),
+			morda::vector3(-1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1, -1,  1)
 		}};
 
 		auto posVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubePos));
@@ -205,6 +205,7 @@ public:
 			this->fpsSecCounter = 0;
 			this->fps = 0;
 		}
+		this->clear_cache();
 	}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -212,8 +213,8 @@ public:
 
 		morda::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
+		matr.translate(1, 1);
 		matr.scale(1, -1);
-		matr.translate(1, -1);
 		matr.set_frustum(-2, 2, -1.5, 1.5, 2, 100);
 
 		morda::matrix4 m(matr);
