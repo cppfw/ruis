@@ -1,3 +1,9 @@
+libmorda (0.5.152) unstable; urgency=medium
+
+  * nuget: do not correct resources dir structure
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 01:44:43 +0200
+
 libmorda (0.5.151) unstable; urgency=medium
 
   * nuget pack resources
