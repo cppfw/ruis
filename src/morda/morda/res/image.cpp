@@ -24,7 +24,7 @@ image::image(std::shared_ptr<morda::context> c) :
 
 atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect) :
 		image(std::move(c)),
-		image::texture(this->context->renderer, rect.d.abs()),
+		image::texture(this->context->renderer, abs(rect.d)),
 		tex(std::move(tex))
 {
 //	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());

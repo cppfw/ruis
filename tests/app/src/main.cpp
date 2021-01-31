@@ -226,7 +226,7 @@ public:
 		matr.scale(this->rect().d / 2);
 		matr.scale(1, -1);
 		matr.translate(1, -1);
-		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
+		matr.set_frustum(-2, 2, -1.5, 1.5, 2, 100);
 
 		morda::matrix4 m(matr);
 		m.translate(0, 0, -4);
