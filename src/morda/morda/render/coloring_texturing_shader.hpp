@@ -3,8 +3,8 @@
 #include "texture_2d.hpp"
 #include "vertex_array.hpp"
 
-#include <r4/matrix4.hpp>
-#include <r4/vector4.hpp>
+#include <r4/matrix.hpp>
+#include <r4/vector.hpp>
 
 namespace morda{
 

@@ -4,7 +4,7 @@
 #include <utki/debug.hpp>
 #include <utki/span.hpp>
 
-#include <r4/matrix4.hpp>
+#include <r4/matrix.hpp>
 
 #include <vector>
 

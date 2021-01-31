@@ -2,7 +2,7 @@
 
 #include <utki/span.hpp>
 
-#include <r4/vector2.hpp>
+#include <r4/vector.hpp>
 
 #include <morda/render/vertex_buffer.hpp>
 

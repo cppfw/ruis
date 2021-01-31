@@ -3,7 +3,7 @@
 #include <utki/config.hpp>
 #include <utki/debug.hpp>
 
-#include <r4/matrix4.hpp>
+#include <r4/matrix.hpp>
 
 #include <vector>
 

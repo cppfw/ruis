@@ -6,7 +6,7 @@
 namespace morda{
 
 class path{
-	std::vector<morda::vector2> points = {{0}};
+	std::vector<morda::vector2> points = {{ morda::vector2(0) }};
 	
 public:
 	path() = default;

@@ -8,7 +8,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <r4/vector2.hpp>
+#include <r4/vector.hpp>
 #include <r4/rectangle.hpp>
 
 #include <papki/file.hpp>

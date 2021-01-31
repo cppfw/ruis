@@ -67,7 +67,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 			}
 		}
 
-		morda::vector2 prevNormal{0}, nextNormal;
+		morda::vector2 prevNormal = 0, nextNormal;
 
 		ASSERT(prev || next)
 

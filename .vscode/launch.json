@@ -65,6 +65,26 @@
 			"preLaunchTask": "build_debug"
 		},
 		{
+			"name": "(gdb) paint",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/paint/build/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/paint",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_debug"
+		},
+		{
 			"name": "(gdb) widget_set",
 			"type": "cppdbg",
 			"request": "launch",

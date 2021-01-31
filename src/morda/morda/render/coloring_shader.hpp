@@ -1,6 +1,6 @@
 #pragma once
 
-#include <r4/matrix4.hpp>
+#include <r4/matrix.hpp>
 
 #include "vertex_array.hpp"
 

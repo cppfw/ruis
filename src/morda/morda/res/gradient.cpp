@@ -1,4 +1,4 @@
-#include <r4/vector4.hpp>
+#include <r4/vector.hpp>
 
 #include "gradient.hpp"
 

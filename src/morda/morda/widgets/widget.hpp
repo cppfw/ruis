@@ -8,8 +8,8 @@
 
 #include <puu/tree.hpp>
 
-#include <r4/matrix4.hpp>
-#include <r4/vector2.hpp>
+#include <r4/matrix.hpp>
+#include <r4/vector.hpp>
 #include <r4/rectangle.hpp>
 
 #include "../config.hpp"

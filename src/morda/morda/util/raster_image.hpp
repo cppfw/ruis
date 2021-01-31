@@ -4,7 +4,7 @@
 
 #include <papki/file.hpp>
 
-#include <r4/vector2.hpp>
+#include <r4/vector.hpp>
 
 namespace morda{
 
