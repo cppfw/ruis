@@ -1,3 +1,9 @@
+libmorda (0.5.150) unstable; urgency=medium
+
+  * update to latest r4
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Jan 2021 21:04:34 +0200
+
 libmorda (0.5.149) unstable; urgency=medium
 
   * text_widget::get_font() returns resource
