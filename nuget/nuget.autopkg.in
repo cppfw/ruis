@@ -105,29 +105,37 @@ nuget{
 		/*
 		[x86,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\v142_Release_MT\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebug] {
 			lib: ..\msvs_solution\v142_Debug_MT\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x64,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\x64\v142_Release_MT\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebug] {
 			lib: ..\msvs_solution\x64\v142_Debug_MT\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		*/
 		
 		[x86,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\v142_Release_MD\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebugDLL] {
 			lib: ..\msvs_solution\v142_Debug_MD\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x64,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\x64\v142_Release_MD\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebugDLL] {
 			lib: ..\msvs_solution\x64\v142_Debug_MD\libmorda.lib;
+			res: ..\res\morda_res\**\*;
 		}
 	}
 }
