@@ -57,7 +57,7 @@ public:
 
 	void on_resize()override;
 
-	void update(std::uint32_t dt)override;
+	void update(uint32_t dt)override;
 
 	void on_character_input(const std::u32string& unicode, key keycode)override;
 

@@ -13,7 +13,7 @@
 using namespace morda;
 
 namespace{
-const std::uint32_t cursorBlinkPeriod_c = 500; // milliseconds
+const uint32_t cursorBlinkPeriod_c = 500; // milliseconds
 
 const real cursorWidth_c = real(1.0);
 }
@@ -90,7 +90,6 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e){
 	this->set_cursor_index(this->posToIndex(e.pos.x()), true);
 	return true;
 }
-
 
 vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 	vector2 ret;
@@ -219,7 +218,7 @@ size_t text_input_line::posToIndex(real pos){
 }
 
 
-void text_input_line::update(std::uint32_t dt){
+void text_input_line::update(uint32_t dt){
 	this->cursorBlinkVisible = !this->cursorBlinkVisible;
 }
 
@@ -275,7 +274,7 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 					bool spaceSkipped = false;
 					newIndex = this->cursorIndex;
 					for(auto i = this->get_text().begin() + this->cursorIndex; i != this->get_text().end(); ++i, ++newIndex){
-						if(*i == std::uint32_t(' ')){
+						if(*i == uint32_t(' ')){
 							if(spaceSkipped){
 								break;
 							}
@@ -301,7 +300,7 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 							++i, --newIndex
 						)
 					{
-						if(*i == std::uint32_t(' ')){
+						if(*i == uint32_t(' ')){
 							if(spaceSkipped){
 								break;
 							}

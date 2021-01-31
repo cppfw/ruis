@@ -11,7 +11,7 @@ class updateable;
 class updater : public std::enable_shared_from_this<updater>{
 	friend class morda::updateable;
 
-	typedef std::pair<std::uint32_t, std::weak_ptr<morda::updateable>> T_Pair;
+	typedef std::pair<uint32_t, std::weak_ptr<morda::updateable>> T_Pair;
 
 	class UpdateQueue : public std::list<T_Pair>{
 	public:
@@ -28,7 +28,7 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	UpdateQueue *activeQueue, *inactiveQueue;
 
-	std::uint32_t lastUpdatedTimestamp = 0;
+	uint32_t lastUpdatedTimestamp = 0;
 
 	typedef std::list<std::shared_ptr<morda::updateable> > T_ToAddList;
 	T_ToAddList toAdd;

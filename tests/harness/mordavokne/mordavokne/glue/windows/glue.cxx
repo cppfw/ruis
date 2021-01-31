@@ -692,7 +692,7 @@ void winmain(int argc, const char** argv){
 	ShowWindow(ww.hwnd, SW_SHOW);
 
 	while (!ww.quitFlag){
-		std::uint32_t timeout = app->gui.update();
+		uint32_t timeout = app->gui.update();
 		//		TRACE(<< "timeout = " << timeout << std::endl)
 
 		DWORD status = MsgWaitForMultipleObjectsEx(

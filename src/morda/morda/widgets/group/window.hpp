@@ -25,8 +25,8 @@ class window :
 	morda::vector2 emptyMinDim; // minimal dimension of empty window
 
 	std::shared_ptr<color> titleBg;
-	std::uint32_t titleBgColorTopmost = 0xffff0000;
-	std::uint32_t titleBgColorNonTopmost = 0xff808080;
+	uint32_t titleBgColorTopmost = 0xffff0000;
+	uint32_t titleBgColorNonTopmost = 0xff808080;
 
 	std::shared_ptr<text> title;
 

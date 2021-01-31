@@ -51,7 +51,7 @@ public:
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, std::uint32_t>>& stops, bool vertical);
+	gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, uint32_t>>& stops, bool vertical);
 	
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;

@@ -10,7 +10,7 @@ namespace morda{ namespace render_opengles2{
 
 class renderer : public morda::renderer{
 	bool defaultFramebufferInitialized = false;
-	std::uint32_t defaultFramebuffer; // NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use std::uint32_t.
+	uint32_t defaultFramebuffer; // NOTE: GLuint is fixed 32bit type, according to OpenGL specs, so use uint32_t.
 public:
 	renderer(std::unique_ptr<render_factory> factory = std::make_unique<render_factory>());
 	
