@@ -193,8 +193,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: build
       run: .\nuget\build_nuget.ps1
-    - name: correct structure of the bin dir inside nuget package
-      run: .\nuget\keep_bin_dir_structure.ps1
+    # - name: correct structure of the bin dir inside nuget package
+    #   run: .\nuget\keep_bin_dir_structure.ps1
     - name: deploy
       uses: myci-actions/publish-nuget@master
       with:
