@@ -210,27 +210,22 @@ public:
 
 	void render(const morda::matrix4& matrix)const override{
 		this->widget::render(matrix);
-
+		
 		morda::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
 		matr.scale(1, -1);
-		matr.set_frustum(-2, 2, -1.5, 1.5, 2, 100);
-
-		morda::matrix4 m(matr);
-		m.translate(0, 0, -4);
-
-		m.rotate(this->rot);
+		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
+		matr.translate(0, 0, -4);
+		matr.rotate(this->rot);
 
 //		glEnable(GL_CULL_FACE);
 
-		this->context->renderer->shader->pos_tex->render(m, *this->cubeVAO, this->tex->tex());
+		this->context->renderer->shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
 	}
 };
-
-
 
 class TreeViewItemsProvider : public morda::tree_view::provider{
 	puu::forest root;
@@ -458,8 +453,6 @@ public:
 	}
 
 };
-
-
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
@@ -783,7 +776,6 @@ public:
 			};
 		}
 
-
 		// fullscreen
 		{
 			auto b = c->try_get_widget_as<morda::push_button>("fullscreen_button");
@@ -798,7 +790,6 @@ public:
 				this->set_fullscreen(true);
 			};
 		}
-
 
 		// mouse cursor
 		{
@@ -828,8 +819,6 @@ public:
 		}
 	}
 };
-
-
 
 std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
 	return std::make_unique<::application>();

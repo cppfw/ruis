@@ -50,11 +50,9 @@ shader_texture::shader_texture() :
 	this->textureUniform = this->getUniform("texture0");
 }
 
-
 void shader_texture::render(const r4::matrix4<float>& m, const morda::vertex_array& va, const morda::texture_2d& tex)const{
 	static_cast<const texture_2d&>(tex).bind(0);
 	this->bind();
 	
 	this->OpenGL2ShaderBase::render(m, va);
 }
-

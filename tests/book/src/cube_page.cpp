@@ -93,14 +93,11 @@ public:
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
 		matr.scale(1, -1);
-		matr.set_frustum(-2, 2, -1.5, 1.5, 2, 100);
+		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
+		matr.translate(0, 0, -4);
+		matr.rotate(this->rot);
 		
-		morda::matrix4 m(matr);
-		m.translate(0, 0, -4);
-		
-		m.rotate(this->rot);
-		
-		this->context->renderer->shader->pos_tex->render(m, *this->cubeVAO, this->tex->tex());
+		this->context->renderer->shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 	}
 };
 }
