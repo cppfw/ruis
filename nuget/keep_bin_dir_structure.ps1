@@ -48,10 +48,14 @@ ForEach ($nugetFile in $nugetFiles) {
 			#$nodes
 			ForEach($node in $nodes){
 				$path = $node.SourceFiles
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Debug(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
-				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Release(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Debug[\/\\]MultiThreadedDebugDLL(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Debug[\/\\]MultiThreadedDebugDLL(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Debug[\/\\]MultiThreadedDebug(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Debug[\/\\]MultiThreadedDebug(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Release[\/\\]MultiThreadedDLL(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Release[\/\\]MultiThreadedDLL(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]x64[\/\\]v\d*[\/\\]Release[\/\\]MultiThreaded(.*)[\/\\][^\/\\]*$",'$1'
+				$path = $path -replace  ".*build[\/\\]native[\/\\]bin[\/\\]Win32[\/\\]v\d*[\/\\]Release[\/\\]MultiThreaded(.*)[\/\\][^\/\\]*$",'$1'
 				
 				#$path
 				#$node.DestinationFolder
