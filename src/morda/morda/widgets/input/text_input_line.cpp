@@ -247,15 +247,15 @@ void text_input_line::startCursorBlinking(){
 		);
 }
 
-bool text_input_line::on_key(bool isDown, key keyCode){
-	switch(keyCode){
-		case key::left_control:
-		case key::right_control:
-			this->ctrlPressed = isDown;
+bool text_input_line::on_key(bool is_down, morda::key key){
+	switch(key){
+		case morda::key::left_control:
+		case morda::key::right_control:
+			this->ctrlPressed = is_down;
 			break;
-		case key::left_shift:
-		case key::right_shift:
-			this->shiftPressed = isDown;
+		case morda::key::left_shift:
+		case morda::key::right_shift:
+			this->shiftPressed = is_down;
 			break;
 		default:
 			break;
@@ -263,11 +263,11 @@ bool text_input_line::on_key(bool isDown, key keyCode){
 	return false;
 }
 
-void text_input_line::on_character_input(const std::u32string& unicode, key keycode){
-	switch(keycode){
-		case key::enter:
+void text_input_line::on_character_input(const std::u32string& unicode, morda::key key){
+	switch(key){
+		case morda::key::enter:
 			break;
-		case key::right:
+		case morda::key::right:
 			if(this->cursorIndex != this->get_text().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -289,7 +289,7 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 				this->set_cursor_index(newIndex, this->shiftPressed);
 			}
 			break;
-		case key::left:
+		case morda::key::left:
 			if(this->cursorIndex != 0){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -314,13 +314,13 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 				this->set_cursor_index(newIndex, this->shiftPressed);
 			}
 			break;
-		case key::end:
+		case morda::key::end:
 			this->set_cursor_index(this->get_text().size(), this->shiftPressed);
 			break;
-		case key::home:
+		case morda::key::home:
 			this->set_cursor_index(0, this->shiftPressed);
 			break;
-		case key::backspace:
+		case morda::key::backspace:
 			if(this->thereIsSelection()){
 				this->set_cursor_index(this->deleteSelection());
 			}else{
@@ -333,7 +333,7 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 				}
 			}
 			break;
-		case key::deletion:
+		case morda::key::deletion:
 			if(this->thereIsSelection()){
 				this->set_cursor_index(this->deleteSelection());
 			}else{
@@ -346,10 +346,10 @@ void text_input_line::on_character_input(const std::u32string& unicode, key keyc
 			}
 			this->startCursorBlinking();
 			break;
-		case key::escape:
+		case morda::key::escape:
 			// do nothing
 			break;
-		case key::a:
+		case morda::key::a:
 			if(this->ctrlPressed){
 				this->selectionStartIndex = 0;
 				this->set_cursor_index(this->get_text().size(), true);

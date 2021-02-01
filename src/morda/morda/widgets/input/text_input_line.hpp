@@ -53,13 +53,13 @@ public:
 
 	void on_focus_change()override;
 
-	bool on_key(bool isDown, key keyCode)override;
+	bool on_key(bool is_down, morda::key key)override;
 
 	void on_resize()override;
 
 	void update(uint32_t dt)override;
 
-	void on_character_input(const std::u32string& unicode, key keycode)override;
+	void on_character_input(const std::u32string& unicode, morda::key key)override;
 
 	void set_cursor_index(size_t index, bool selection = false);
 
