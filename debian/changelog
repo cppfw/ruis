@@ -1,3 +1,9 @@
+libmorda (0.5.153) unstable; urgency=medium
+
+  * msvs keep dir structure fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 22:10:16 +0200
+
 libmorda (0.5.152) unstable; urgency=medium
 
   * nuget: do not correct resources dir structure
