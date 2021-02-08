@@ -237,7 +237,7 @@ font::render_result texture_font::render_internal(
 	)const
 {
 	if(str.size() == 0){
-		return {.advance = 0, .offset = 0};
+		return {0, 0};
 	}
 	
 	set_simple_alpha_blending(*this->context->renderer);
@@ -260,7 +260,7 @@ font::render_result texture_font::render_internal(
 		}
 	}
 
-	return {.advance = ret, .offset = 0};
+	return {ret, 0};
 }
 
 real texture_font::get_advance(char32_t c)const{
