@@ -237,7 +237,7 @@ font::render_result texture_font::render_internal(
 	)const
 {
 	if(str.size() == 0){
-		return {advance: 0, offset: 0};
+		return {.advance = 0, .offset = 0};
 	}
 	
 	set_simple_alpha_blending(*this->context->renderer);
@@ -256,11 +256,11 @@ font::render_result texture_font::render_internal(
 			ret += advance;
 			matr.translate(advance, 0);
 		}catch(std::out_of_range&){
-			//ignore
+			// ignore
 		}
 	}
 
-	return {advance: ret, offset: 0};
+	return {.advance = ret, .offset = 0};
 }
 
 real texture_font::get_advance(char32_t c)const{
