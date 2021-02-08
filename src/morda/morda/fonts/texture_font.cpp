@@ -228,9 +228,16 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	return ret;
 }
 
-real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const{
+font::render_result texture_font::render_internal(
+		const morda::matrix4& matrix,
+		r4::vector4<float> color,
+		const std::u32string_view str,
+		size_t tab_size,
+		size_t offset
+	)const
+{
 	if(str.size() == 0){
-		return 0;
+		return {advance: 0, offset: 0};
 	}
 	
 	set_simple_alpha_blending(*this->context->renderer);
@@ -240,6 +247,8 @@ real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<flo
 	morda::matrix4 matr(matrix);
 
 	auto s = str.begin();
+
+	// TODO: implement tabulations
 
 	for(; s != str.end(); ++s){
 		try{
@@ -251,7 +260,7 @@ real texture_font::render_internal(const morda::matrix4& matrix, r4::vector4<flo
 		}
 	}
 
-	return ret;
+	return {advance: ret, offset: 0};
 }
 
 real texture_font::get_advance(char32_t c)const{

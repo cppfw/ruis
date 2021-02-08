@@ -36,14 +36,45 @@ protected:
 	font(const font&) = delete;
 	font& operator=(const font&) = delete;
 	
+public:
+
+	/**
+	 * @brief String rendering result.
+	 */
+	struct render_result{
+		/**
+		 * @brief String advance.
+		 */
+		real advance;
+
+		/**
+		 * @brief String length in characters.
+		 * This only makes sence for monospaced fonts.
+		 * This takes tabulations into account.
+		 */
+		size_t offset;
+	};
+
+protected:
+
 	/**
 	 * @brief Render string of text.
 	 * @param matrix - transformation matrix to use when rendering the text.
 	 * @param color - text color.
 	 * @param str - string of text to render.
+	 * @param tab_size - tab size in characters. For non-monospace fonts this is the number of space-character advances.
+	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
+	 *                 This is only for monospaced fonts.
+	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
-	virtual real render_internal(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const = 0;
+	virtual render_result render_internal(
+			const morda::matrix4& matrix,
+			r4::vector4<float> color,
+			const std::u32string_view str,
+			size_t tab_size,
+			size_t offset
+		)const = 0;
 	
 	/**
 	 * @brief Get string advance.
@@ -66,10 +97,21 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
-	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 * @param tab_size - tab size in characters. For non-monospace fonts this is the number of space-character advances.
+	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
+	 *                 This is only for monospaced fonts.
+	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
+	 * @return Render result.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::u32string_view str)const{
-		return this->render_internal(matrix, color, str);
+	render_result render(
+			const morda::matrix4& matrix,
+			r4::vector4<float> color,
+			const std::u32string_view str,
+			size_t tab_size = 4,
+			size_t offset = 0
+		)const
+	{
+		return this->render_internal(matrix, color, str, tab_size, offset);
 	}
 
 	/**
@@ -77,10 +119,21 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
-	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 * @param tab_size - tab size in characters. For non-monospace fonts this is the number of space-character advances.
+	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
+	 *                 This is only for monospaced fonts.
+	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
+	 * @return Render result.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, utki::utf8_iterator str)const{
-		return this->render(matrix, color, utki::to_utf32(str));
+	render_result render(
+			const morda::matrix4& matrix,
+			r4::vector4<float> color,
+			utki::utf8_iterator str,
+			size_t tab_size = 4,
+			size_t offset = 0
+		)const
+	{
+		return this->render(matrix, color, utki::to_utf32(str), tab_size, offset);
 	}
 	
 	/**
@@ -88,9 +141,20 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
-	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 * @param tab_size - tab size in characters. For non-monospace fonts this is the number of space-character advances.
+	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
+	 *                 This is only for monospaced fonts.
+	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
+	 * @return Render result.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, const char* str)const{
+	render_result render(
+			const morda::matrix4& matrix,
+			r4::vector4<float> color,
+			const char* str,
+			size_t tab_size = 4,
+			size_t offset = 0
+		)const
+	{
 		return this->render(matrix, color, utki::utf8_iterator(str));
 	}
 	
@@ -99,12 +163,23 @@ public:
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
-	 * @return Advance of the rendered text string. It can be used to position the next text string when rendering.
+	 * @param tab_size - tab size in characters. For non-monospace fonts this is the number of space-character advances.
+	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
+	 *                 This is only for monospaced fonts.
+	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
+	 * @return Redner result.
 	 */
-	real render(const morda::matrix4& matrix, r4::vector4<float> color, const std::string& str)const{
-		return this->render(matrix, color, str.c_str());
+	render_result render(
+			const morda::matrix4& matrix,
+			r4::vector4<float> color,
+			const std::string& str,
+			size_t tab_size = 4,
+			size_t offset = 0
+		)const
+	{
+		return this->render(matrix, color, str.c_str(), tab_size, offset);
 	}
-	
+
 	/**
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
@@ -140,16 +215,14 @@ public:
 	real get_advance(const std::string& str)const{
 		return this->get_advance(str.c_str());
 	}
-	
-	
+
 	/**
 	 * @brief Get advance of the character.
 	 * @param c - character to get advance for.
 	 * @return Advance of the character.
 	 */
 	virtual real get_advance(char32_t c)const = 0;
-	
-	
+
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
