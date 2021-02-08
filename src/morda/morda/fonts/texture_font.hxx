@@ -79,7 +79,7 @@ public:
 	 */
 	texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
-	real get_advance(char32_t c)const override;
+	real get_advance(char32_t c, size_t tab_size)const override;
 	
 protected:
 	render_result render_internal(
@@ -90,9 +90,9 @@ protected:
 			size_t offset
 		)const override;
 
-	real get_advance_internal(const std::u32string& str)const override;
+	real get_advance_internal(const std::u32string& str, size_t tab_size)const override;
 
-	morda::rectangle get_bounding_box_internal(const std::u32string& str)const override;
+	morda::rectangle get_bounding_box_internal(const std::u32string& str, size_t tab_size)const override;
 	
 private:	
 	real renderGlyphInternal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch)const;

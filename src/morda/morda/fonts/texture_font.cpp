@@ -54,7 +54,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 	if(!slot->bitmap.buffer){
 		g.topLeft.set(0);
 		g.bottomRight.set(0);
-		// empty glyph (space, tab, etc...)
+		// empty glyph (space)
 		return g;
 	}
 	
@@ -160,15 +160,19 @@ real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vector4
 	return g.advance;
 }
 
-real texture_font::get_advance_internal(const std::u32string& str)const{
+real texture_font::get_advance_internal(const std::u32string& str, size_t tab_size)const{
 	real ret = 0;
-
-	auto s = str.begin();
 	
-	for(; s != str.end(); ++s){
+	real space_advance = this->getGlyph(U' ').advance;
+
+	for(auto s = str.begin(); s != str.end(); ++s){
 		try{
-			const Glyph& g = this->getGlyph(*s);
-			ret += g.advance;
+			if(*s == U'\t'){
+				ret += space_advance * tab_size;
+			}else{
+				const Glyph& g = this->getGlyph(*s);
+				ret += g.advance;
+			}
 		}catch(std::out_of_range&){
 			// ignore
 		}
@@ -177,7 +181,7 @@ real texture_font::get_advance_internal(const std::u32string& str)const{
 	return ret;
 }
 
-morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str)const{
+morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str, size_t tab_size)const{
 	morda::rectangle ret;
 
 	if(str.empty()){
@@ -203,18 +207,24 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 		++s;
 	}
 
+	real space_advance = this->getGlyph(U' ').advance;
+
 	for(; s != str.end(); ++s){
-		const Glyph& g = this->getGlyph(*s);
+		if(*s == U'\t'){
+			curAdvance += space_advance * tab_size;
+		}else{
+			const Glyph& g = this->getGlyph(*s);
 
-		using std::min;
-		using std::max;
-		
-		top = min(g.topLeft.y(), top);
-		bottom = max(g.bottomRight.y(), bottom);
-		left = min(curAdvance + g.topLeft.x(), left);
-		right = max(curAdvance + g.bottomRight.x(), right);
+			using std::min;
+			using std::max;
+			
+			top = min(g.topLeft.y(), top);
+			bottom = max(g.bottomRight.y(), bottom);
+			left = min(curAdvance + g.topLeft.x(), left);
+			right = max(curAdvance + g.bottomRight.x(), right);
 
-		curAdvance += g.advance;
+			curAdvance += g.advance;
+		}
 	}
 
 	ret.p.x() = left;
@@ -236,34 +246,57 @@ font::render_result texture_font::render_internal(
 		size_t offset
 	)const
 {
+	render_result ret = {0, 0};
+
 	if(str.size() == 0){
-		return {0, 0};
+		return ret;
 	}
 	
 	set_simple_alpha_blending(*this->context->renderer);
-
-	real ret = 0;
 
 	morda::matrix4 matr(matrix);
 
 	auto s = str.begin();
 
-	// TODO: implement tabulations
+	real space_advance = this->getGlyph(U' ').advance;
+
+	size_t cur_offset = offset;
 
 	for(; s != str.end(); ++s){
 		try{
-			real advance = this->renderGlyphInternal(matr, color, *s);
-			ret += advance;
+			real advance;
+			
+			if(*s == U'\t'){ // if tabulation
+				size_t actual_tab_size;
+				if(offset == std::numeric_limits<size_t>::max()){
+					actual_tab_size = tab_size;
+				}else{
+					actual_tab_size = tab_size - cur_offset % tab_size;
+				}
+				advance = space_advance * actual_tab_size;
+				ret.length += actual_tab_size;
+				cur_offset += actual_tab_size;
+			}else{ // all other characters
+				advance = this->renderGlyphInternal(matr, color, *s);
+				++ret.length;
+				++cur_offset;
+			}
+
+			ret.advance += advance;
 			matr.translate(advance, 0);
 		}catch(std::out_of_range&){
 			// ignore
 		}
 	}
 
-	return {ret, 0};
+	return ret;
 }
 
-real texture_font::get_advance(char32_t c)const{
-	auto& g = this->getGlyph(c);
-	return g.advance;
+real texture_font::get_advance(char32_t c, size_t tab_size)const{
+	if(c == U'\t'){
+		return this->getGlyph(U' ').advance * tab_size;
+	}else{
+		auto& g = this->getGlyph(c);
+		return g.advance;
+	}
 }

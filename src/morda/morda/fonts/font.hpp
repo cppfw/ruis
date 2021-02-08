@@ -52,7 +52,7 @@ public:
 		 * This only makes sence for monospaced fonts.
 		 * This takes tabulations into account.
 		 */
-		size_t offset;
+		size_t length;
 	};
 
 protected:
@@ -66,6 +66,7 @@ protected:
 	 * @param offset - in case the string rendered is a sub-string of a bigger string, this is a sub-string offset from the string start.
 	 *                 This is only for monospaced fonts.
 	 *                 This is used to calculated proper tab size as it depends on at which place of the string it appears.
+	 *                 Value of std::numeric_limits<size_t>::max() indicates that no tabulator length adjustement will be done.
 	 * @return An advance to the end of the rendered text string. It can be used to position the next text string when rendering.
 	 */
 	virtual render_result render_internal(
@@ -79,16 +80,18 @@ protected:
 	/**
 	 * @brief Get string advance.
 	 * @param str - string of text to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the text string.
 	 */
-	virtual real get_advance_internal(const std::u32string& str)const = 0;
+	virtual real get_advance_internal(const std::u32string& str, size_t tab_size)const = 0;
 	
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	virtual morda::rectangle get_bounding_box_internal(const std::u32string& str)const = 0;
+	virtual morda::rectangle get_bounding_box_internal(const std::u32string& str, size_t tab_size)const = 0;
 public:
 	virtual ~font()noexcept{}
 	
@@ -108,7 +111,7 @@ public:
 			r4::vector4<float> color,
 			const std::u32string_view str,
 			size_t tab_size = 4,
-			size_t offset = 0
+			size_t offset = std::numeric_limits<size_t>::max()
 		)const
 	{
 		return this->render_internal(matrix, color, str, tab_size, offset);
@@ -130,7 +133,7 @@ public:
 			r4::vector4<float> color,
 			utki::utf8_iterator str,
 			size_t tab_size = 4,
-			size_t offset = 0
+			size_t offset = std::numeric_limits<size_t>::max()
 		)const
 	{
 		return this->render(matrix, color, utki::to_utf32(str), tab_size, offset);
@@ -152,7 +155,7 @@ public:
 			r4::vector4<float> color,
 			const char* str,
 			size_t tab_size = 4,
-			size_t offset = 0
+			size_t offset = std::numeric_limits<size_t>::max()
 		)const
 	{
 		return this->render(matrix, color, utki::utf8_iterator(str));
@@ -174,7 +177,7 @@ public:
 			r4::vector4<float> color,
 			const std::string& str,
 			size_t tab_size = 4,
-			size_t offset = 0
+			size_t offset = std::numeric_limits<size_t>::max()
 		)const
 	{
 		return this->render(matrix, color, str.c_str(), tab_size, offset);
@@ -183,80 +186,89 @@ public:
 	/**
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(utki::utf8_iterator str)const{
-		return this->get_advance_internal(utki::to_utf32(str));
+	real get_advance(utki::utf8_iterator str, size_t tab_size = 4)const{
+		return this->get_advance_internal(utki::to_utf32(str), tab_size);
 	}
 	
 	/**
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const std::u32string& str)const{
-		return this->get_advance_internal(str);
+	real get_advance(const std::u32string& str, size_t tab_size = 4)const{
+		return this->get_advance_internal(str, tab_size);
 	}
 	
 	/**
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const char* str)const{
-		return this->get_advance(utki::utf8_iterator(str));
+	real get_advance(const char* str, size_t tab_size = 4)const{
+		return this->get_advance(utki::utf8_iterator(str), tab_size);
 	}
 	
 	/**
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const std::string& str)const{
-		return this->get_advance(str.c_str());
+	real get_advance(const std::string& str, size_t tab_size = 4)const{
+		return this->get_advance(str.c_str(), tab_size);
 	}
 
 	/**
 	 * @brief Get advance of the character.
 	 * @param c - character to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the character.
 	 */
-	virtual real get_advance(char32_t c)const = 0;
+	virtual real get_advance(char32_t c, size_t tab_size = 4)const = 0;
 
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	morda::rectangle get_bounding_box(utki::utf8_iterator str)const{
-		return this->get_bounding_box_internal(utki::to_utf32(str));
+	morda::rectangle get_bounding_box(utki::utf8_iterator str, size_t tab_size = 4)const{
+		return this->get_bounding_box_internal(utki::to_utf32(str), tab_size);
 	}
 	
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	morda::rectangle get_bounding_box(const std::u32string& str)const{
-		return this->get_bounding_box_internal(str);
+	morda::rectangle get_bounding_box(const std::u32string& str, size_t tab_size = 4)const{
+		return this->get_bounding_box_internal(str, tab_size);
 	}
 	
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	morda::rectangle get_bounding_box(const char* str)const{
-		return this->get_bounding_box(utki::utf8_iterator(str));
+	morda::rectangle get_bounding_box(const char* str, size_t tab_size = 4)const{
+		return this->get_bounding_box(utki::utf8_iterator(str), tab_size);
 	}
 	
 	/**
 	 * @brief Get bounding box of the string.
 	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	morda::rectangle get_bounding_box(const std::string& str)const{
-		return this->get_bounding_box(str.c_str());
+	morda::rectangle get_bounding_box(const std::string& str, size_t tab_size = 4)const{
+		return this->get_bounding_box(str.c_str(), tab_size);
 	}
 	
 	/**
