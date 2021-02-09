@@ -16,13 +16,13 @@ namespace morda{
  * its minimal size.
  */
 class scroll_area : public container{
-	//offset from top left corner
+	// offset from top left corner
 	vector2 curScrollPos = vector2(0);
 
-	//cached effectiveDim
+	// cached effectiveDim
 	vector2 effectiveDim;
 
-	//cached scroll factor
+	// cached scroll factor
 	vector2 curScrollFactor;
 
 protected:
@@ -33,7 +33,6 @@ public:
 
 	scroll_area(const scroll_area&) = delete;
 	scroll_area& operator=(const scroll_area&) = delete;
-
 
 	bool on_mouse_button(const mouse_button_event& event)override;
 
