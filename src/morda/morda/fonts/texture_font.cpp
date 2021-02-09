@@ -256,13 +256,11 @@ font::render_result texture_font::render_internal(
 
 	morda::matrix4 matr(matrix);
 
-	auto s = str.begin();
-
 	real space_advance = this->getGlyph(U' ').advance;
 
 	size_t cur_offset = offset;
 
-	for(; s != str.end(); ++s){
+	for(auto s = str.begin(); s != str.end(); ++s){
 		try{
 			real advance;
 			
