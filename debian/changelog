@@ -1,3 +1,9 @@
+libmorda (0.5.154) unstable; urgency=medium
+
+  * tab
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Feb 2021 02:08:00 +0200
+
 libmorda (0.5.153) unstable; urgency=medium
 
   * msvs keep dir structure fix
