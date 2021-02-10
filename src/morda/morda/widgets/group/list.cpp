@@ -53,9 +53,9 @@ list_widget::list_widget(std::shared_ptr<morda::context> c, const puu::forest& d
 void list_widget::lay_out(){
 //	TRACE(<< "list_widget::lay_out(): invoked" << std::endl)
 
-	this->numTailItems = 0;//means that it needs to be recomputed
+	this->num_tail_items = 0;//means that it needs to be recomputed
 
-	this->updateChildrenList();
+	this->update_children_list();
 }
 
 void list_widget::set_provider(std::shared_ptr<provider> item_provider){
@@ -70,7 +70,7 @@ void list_widget::set_provider(std::shared_ptr<provider> item_provider){
 	if(this->item_provider){
 		this->item_provider->parent_list = this;
 	}
-	this->handleDataSetChanged();
+	this->handle_data_set_changed();
 }
 
 real list_widget::get_scroll_factor()const noexcept{
@@ -82,28 +82,28 @@ real list_widget::get_scroll_factor()const noexcept{
 		return 0;
 	}
 
-	ASSERT(this->item_provider->count() >= this->numTailItems)
+	ASSERT(this->item_provider->count() >= this->num_tail_items)
 
-	size_t length = this->item_provider->count() - this->numTailItems;
+	size_t length = this->item_provider->count() - this->num_tail_items;
 
 	if(length == 0){
 		return 0;
 	}
 
-	if(this->numTailItems == 0){
+	if(this->num_tail_items == 0){
 		return 0;
 	}
 
 	real d = this->rect().d[this->get_long_index()];
 
-	ASSERT(this->numTailItems != 0)
-	d = (d + this->firstTailItemOffset) / this->numTailItems;
+	ASSERT(this->num_tail_items != 0)
+	d = (d + this->first_tail_item_offset) / this->num_tail_items;
 
 	if(d <= 0){
 		return 0;
 	}
 
-	return (real(this->posIndex) * d + this->posOffset) / (real(length) * d + this->firstTailItemOffset);
+	return (real(this->pos_index) * d + this->pos_offset) / (real(length) * d + this->first_tail_item_offset);
 }
 
 void list_widget::set_scroll_factor(real factor){
@@ -111,35 +111,35 @@ void list_widget::set_scroll_factor(real factor){
 		return;
 	}
 
-	if(this->numTailItems == 0){
-		this->updateTailItemsInfo();
+	if(this->num_tail_items == 0){
+		this->update_tail_items_info();
 	}
 
-	this->posIndex = size_t(factor * real(this->item_provider->count() - this->numTailItems));
+	this->pos_index = size_t(factor * real(this->item_provider->count() - this->num_tail_items));
 
-//	TRACE(<< "list_widget::setScrollPosAsFactor(): this->posIndex = " << this->posIndex << std::endl)
+//	TRACE(<< "list_widget::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
 
-	if(this->item_provider->count() != this->numTailItems){
-		real intFactor = real(this->posIndex) / real(this->item_provider->count() - this->numTailItems);
+	if(this->item_provider->count() != this->num_tail_items){
+		real intFactor = real(this->pos_index) / real(this->item_provider->count() - this->num_tail_items);
 
 		if(this->children().size() != 0){
 			real d = this->rect().d[this->get_long_index()];
-			d = (d + this->firstTailItemOffset) / this->numTailItems;
+			d = (d + this->first_tail_item_offset) / this->num_tail_items;
 
-			this->posOffset = ::round(d * (factor - intFactor) * real(this->item_provider->count() - this->numTailItems) + factor * this->firstTailItemOffset);
+			this->pos_offset = ::round(d * (factor - intFactor) * real(this->item_provider->count() - this->num_tail_items) + factor * this->first_tail_item_offset);
 		}else{
-			this->posOffset = 0;
+			this->pos_offset = 0;
 		}
 	}else{
-		ASSERT(this->posIndex == 0)
-		this->posOffset = ::round(factor * this->firstTailItemOffset);
+		ASSERT(this->pos_index == 0)
+		this->pos_offset = ::round(factor * this->first_tail_item_offset);
 	}
 
-	this->updateChildrenList();
+	this->update_children_list();
 }
 
 // TODO: refactor
-bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
+bool list_widget::arrange_widget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
 	auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 
 	vector2 dim = this->dims_for_widget(*w, lp);
@@ -162,18 +162,18 @@ bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool adde
 			insertBefore = this->insert(w, insertBefore);
 		}
 		++insertBefore;
-		if(this->addedIndex > index){
-			this->addedIndex = index;
+		if(this->added_index > index){
+			this->added_index = index;
 		}
 	}else{
-		++this->posIndex;
-		this->posOffset -= w->rect().d[longIndex];
+		++this->pos_index;
+		this->pos_offset -= w->rect().d[longIndex];
 		if(added){
 			insertBefore = this->erase(insertBefore);
 			if(this->item_provider){
 				this->item_provider->recycle(index, w);
 			}
-			++this->addedIndex;
+			++this->added_index;
 		}else{
 			if(this->item_provider){
 				this->item_provider->recycle(index, w);
@@ -189,47 +189,47 @@ bool list_widget::arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool adde
 }
 
 // TODO: refactor
-void list_widget::updateChildrenList(){
+void list_widget::update_children_list(){
 	if(!this->item_provider){
-		this->posIndex = 0;
-		this->posOffset = 0;
+		this->pos_index = 0;
+		this->pos_offset = 0;
 
 		this->clear();
-		this->addedIndex = size_t(-1);
+		this->added_index = size_t(-1);
 		return;
 	}
 
-	if(this->numTailItems == 0){
-		this->updateTailItemsInfo();
+	if(this->num_tail_items == 0){
+		this->update_tail_items_info();
 	}
 
-	if(this->posIndex == this->firstTailItemIndex){
-		if(this->posOffset > this->firstTailItemOffset){
-			this->posOffset = this->firstTailItemOffset;
+	if(this->pos_index == this->first_tail_item_index){
+		if(this->pos_offset > this->first_tail_item_offset){
+			this->pos_offset = this->first_tail_item_offset;
 		}
-	}else if(this->posIndex > this->firstTailItemIndex){
-		this->posIndex = this->firstTailItemIndex;
-		this->posOffset = this->firstTailItemOffset;
+	}else if(this->pos_index > this->first_tail_item_index){
+		this->pos_index = this->first_tail_item_index;
+		this->pos_offset = this->first_tail_item_offset;
 	}
 
-	real pos = -this->posOffset;
+	real pos = -this->pos_offset;
 
-//	TRACE(<< "list_widget::updateChildrenList(): this->addedIndex = " << this->addedIndex << " this->posIndex = " << this->posIndex << std::endl)
+//	TRACE(<< "list_widget::update_children_list(): this->added_index = " << this->added_index << " this->pos_index = " << this->pos_index << std::endl)
 
 	// remove widgets from top
-	for(; this->children().size() != 0 && this->addedIndex < this->posIndex; ++this->addedIndex){
+	for(; this->children().size() != 0 && this->added_index < this->pos_index; ++this->added_index){
 		auto i = this->children().begin();
 		auto w = *i;
 		this->erase(i);
 		if(this->item_provider){
-			this->item_provider->recycle(this->addedIndex, w);
+			this->item_provider->recycle(this->added_index, w);
 		}
 	}
 
 	auto iter = this->children().begin();
-	size_t iterIndex = this->addedIndex;
+	size_t iterIndex = this->added_index;
 	const size_t iterEndIndex = iterIndex + this->children().size();
-	size_t index = this->posIndex;
+	size_t index = this->pos_index;
 	for(bool is_last = false; index < this->item_provider->count() && !is_last;){
 		std::shared_ptr<widget> w;
 		bool isAdded;
@@ -242,7 +242,7 @@ void list_widget::updateChildrenList(){
 			isAdded = false;
 		}
 
-		is_last = this->arrangeWidget(w, pos, isAdded, index, iter);
+		is_last = this->arrange_widget(w, pos, isAdded, index, iter);
 		++index;
 	}
 
@@ -259,8 +259,8 @@ void list_widget::updateChildrenList(){
 	}
 }
 
-void list_widget::updateTailItemsInfo(){
-	this->numTailItems = 0;
+void list_widget::update_tail_items_info(){
+	this->num_tail_items = 0;
 
 	if(!this->item_provider || this->item_provider->count() == 0){
 		return;
@@ -274,7 +274,7 @@ void list_widget::updateTailItemsInfo(){
 	ASSERT(this->item_provider->count() > 0)
 
 	for(size_t i = this->item_provider->count(); i != 0 && dim > 0; --i){
-		++this->numTailItems;
+		++this->num_tail_items;
 
 		auto w = this->item_provider->get_widget(i - 1);
 		ASSERT(w)
@@ -286,12 +286,12 @@ void list_widget::updateTailItemsInfo(){
 		dim -= d[longIndex];
 	}
 
-	this->firstTailItemIndex = this->item_provider->count() - this->numTailItems;
+	this->first_tail_item_index = this->item_provider->count() - this->num_tail_items;
 
 	if(dim > 0){
-		this->firstTailItemOffset = -1;
+		this->first_tail_item_offset = -1;
 	}else{
-		this->firstTailItemOffset = -dim;
+		this->first_tail_item_offset = -dim;
 	}
 }
 
@@ -306,57 +306,57 @@ void list_widget::scroll_by(real delta) {
 
 	if(delta >= 0){
 		for(auto& c : this->children()){
-			auto wd = c->rect().d[longIndex] - this->posOffset;
+			auto wd = c->rect().d[longIndex] - this->pos_offset;
 			if(wd > delta){
-				this->posOffset += delta;
+				this->pos_offset += delta;
 				delta -= wd;
 				break;
 			}
 
 			delta -= wd;
-			this->posOffset = 0;
-			++this->posIndex;
+			this->pos_offset = 0;
+			++this->pos_index;
 		}
 
 		if(delta > 0){
 			ASSERT_INFO(
-					this->posIndex > this->addedIndex + this->children().size(),
-					"this->posIndex = " << this->posIndex
-					<< " this->addedIndex = " << this->addedIndex
+					this->pos_index > this->added_index + this->children().size(),
+					"this->pos_index = " << this->pos_index
+					<< " this->added_index = " << this->added_index
 					<< " this->children().size() = " << this->children().size()
 				)
-			for(; this->posIndex < this->firstTailItemIndex;){
-				auto w = this->item_provider->get_widget(this->posIndex);
+			for(; this->pos_index < this->first_tail_item_index;){
+				auto w = this->item_provider->get_widget(this->pos_index);
 				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 				vector2 d = this->dims_for_widget(*w, lp);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
-					this->posOffset = delta;
+					this->pos_offset = delta;
 					break;
 				}
 				delta -= d[longIndex];
-				ASSERT(this->posOffset == 0)
-				++this->posIndex;
+				ASSERT(this->pos_offset == 0)
+				++this->pos_index;
 			}
 		}
 	}else{
 		delta = -delta;
-		if(delta <= this->posOffset){
-			this->posOffset -= delta;
+		if(delta <= this->pos_offset){
+			this->pos_offset -= delta;
 		}else{
-			ASSERT(this->addedIndex == this->posIndex)
-			delta -= this->posOffset;
-			this->posOffset = 0;
-			for(; this->posIndex > 0;){
-				ASSERT(this->addedIndex == this->posIndex)
-				--this->posIndex;
-				auto w = this->item_provider->get_widget(this->posIndex);
+			ASSERT(this->added_index == this->pos_index)
+			delta -= this->pos_offset;
+			this->pos_offset = 0;
+			for(; this->pos_index > 0;){
+				ASSERT(this->added_index == this->pos_index)
+				--this->pos_index;
+				auto w = this->item_provider->get_widget(this->pos_index);
 				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 				vector2 d = this->dims_for_widget(*w, lp);
 				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
-				--this->addedIndex;
+				--this->added_index;
 				if(d[longIndex] > delta){
-					this->posOffset = d[longIndex] - delta;
+					this->pos_offset = d[longIndex] - delta;
 					break;
 				}
 				delta -= d[longIndex];
@@ -364,7 +364,7 @@ void list_widget::scroll_by(real delta) {
 		}
 	}
 
-	this->updateChildrenList();
+	this->update_children_list();
 }
 
 morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
@@ -396,18 +396,18 @@ void list_widget::provider::notify_data_set_change(){
 
 	this->get_list()->context->run_from_ui_thread(
 		[this](){
-			this->get_list()->handleDataSetChanged();
+			this->get_list()->handle_data_set_changed();
 		}
 	);
 }
 
-void list_widget::handleDataSetChanged(){
-	this->numTailItems = 0; // 0 means that it needs to be recomputed
+void list_widget::handle_data_set_changed(){
+	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 
 	this->clear();
-	this->addedIndex = size_t(-1);
+	this->added_index = size_t(-1);
 
-	this->updateChildrenList();
+	this->update_children_list();
 
 	if(this->data_set_change_handler){
 		this->data_set_change_handler(*this);

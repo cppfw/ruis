@@ -19,14 +19,14 @@ class list_widget :
 		protected oriented_widget
 {
 	// index of the first item added to container as child
-	size_t addedIndex = size_t(-1);
+	size_t added_index = size_t(-1);
 
-	size_t posIndex = 0;
-	real posOffset = real(0);
+	size_t pos_index = 0; // index of the first visible item
+	real pos_offset = real(0); // offset in pixels of the first visible item
 
-	size_t numTailItems = 0; // Zero means that number of tail items has to be recomputed
-	size_t firstTailItemIndex = 0;
-	real firstTailItemOffset = real(0);
+	size_t num_tail_items = 0; // Zero means that number of tail items has to be recomputed
+	size_t first_tail_item_index = 0;
+	real first_tail_item_offset = real(0);
 
 protected:
 	list_widget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
@@ -110,13 +110,20 @@ public:
 private:
 	std::shared_ptr<provider> item_provider;
 
-	void updateChildrenList();
+	void update_children_list();
 
-	bool arrangeWidget(std::shared_ptr<widget>& w, real& pos, bool add, size_t index, widget_list::const_iterator& insertBefore); // returns true if it was the last visible widget
+	// returns true if it was the last visible widget
+	bool arrange_widget(
+			std::shared_ptr<widget>& w,
+			real& pos,
+			bool add,
+			size_t index,
+			widget_list::const_iterator& insertBefore
+		);
 
-	void updateTailItemsInfo();
+	void update_tail_items_info();
 
-	void handleDataSetChanged();
+	void handle_data_set_changed();
 };
 
 /**
