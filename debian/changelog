@@ -1,3 +1,9 @@
+libmorda (0.5.155) unstable; urgency=medium
+
+  * add list::get_pos_index()/get_pos_offset()
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 10 Feb 2021 19:57:13 +0200
+
 libmorda (0.5.154) unstable; urgency=medium
 
   * tab
