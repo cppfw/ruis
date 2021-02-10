@@ -22,7 +22,10 @@ class list_widget :
 	size_t added_index = size_t(-1);
 
 	size_t pos_index = 0; // index of the first visible item
-	real pos_offset = real(0); // offset in pixels of the first visible item
+
+	// offset in pixels of the first visible item.
+	// the value is positive, tough the item is biased towards negative coordinate values.
+	real pos_offset = real(0);
 
 	size_t num_tail_items = 0; // Zero means that number of tail items has to be recomputed
 	size_t first_tail_item_index = 0;
@@ -94,6 +97,23 @@ public:
 	 * @return Current scroll position as factor from [0:1].
 	 */
 	real get_scroll_factor()const noexcept;
+
+	/**
+	 * @brief Get index of the first visible item.
+	 * @return index of the first visible item.
+	 */
+	size_t get_pos_index()const noexcept{
+		return this->pos_index;
+	}
+
+	/**
+	 * @brief Get offset of the first visible item.
+	 * The value is positive, though the item coordinate is <= 0.
+	 * @return offset in pixels of the first visible item.
+	 */
+	real get_pos_offset()const noexcept{
+		return this->pos_offset;
+	}
 
 	/**
 	 * @brief Scroll the list by given number of pixels.
