@@ -54,6 +54,8 @@ void scroll_area::set_scroll_pos(const vector2& new_scroll_pos){
 
 	this->clamp_scroll_pos();
 	this->update_scroll_factor();
+	
+	this->on_scroll_pos_change();
 }
 
 void scroll_area::set_scroll_factor(const vector2& factor){
@@ -169,4 +171,10 @@ vector2 scroll_area::get_visible_area_fraction()const noexcept{
 	ret = min(ret, real(1)); // clamp top
 
 	return ret;
+}
+
+void scroll_area::on_scroll_pos_change(){
+	if(this->scroll_pos_change_handler){
+		this->scroll_pos_change_handler(*this);
+	}
 }

@@ -7,8 +7,7 @@
 #include "../group/pile.hpp"
 
 #include "../base/oriented_widget.hpp"
-
-#include "fraction_band_widget.hpp"
+#include "../base/fraction_band_widget.hpp"
 
 // disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC

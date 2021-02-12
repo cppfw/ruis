@@ -78,6 +78,10 @@ public:
 
 	vector2 get_visible_area_fraction()const noexcept;
 
+	virtual void on_scroll_pos_change();
+
+	std::function<void(scroll_area&)> scroll_pos_change_handler;
+
 private:
 	void update_effective_dims();
 
