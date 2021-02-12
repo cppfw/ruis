@@ -15,7 +15,7 @@ class list_widget :
 		// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public widget,
-		private container,
+		public container,
 		protected oriented_widget
 {
 	// index of the first item added to container as child
