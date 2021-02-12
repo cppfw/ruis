@@ -12,7 +12,7 @@ scroll_area::scroll_area(std::shared_ptr<morda::context> c, const puu::forest& d
 {}
 
 bool scroll_area::on_mouse_button(const mouse_button_event& e){
-	vector2 d = -this->curScrollPos;
+	vector2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_button(mouse_button_event{
 			e.is_down,
 			e.pos - d,
@@ -22,7 +22,7 @@ bool scroll_area::on_mouse_button(const mouse_button_event& e){
 }
 
 bool scroll_area::on_mouse_move(const mouse_move_event& e){
-	vector2 d = -this->curScrollPos;
+	vector2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_move(mouse_move_event{
 			e.pos - d,
 			e.pointer_id
@@ -30,7 +30,7 @@ bool scroll_area::on_mouse_move(const mouse_move_event& e){
 }
 
 void scroll_area::render(const morda::matrix4& matrix)const{
-	vector2 d = -this->curScrollPos;
+	vector2 d = -this->cur_scroll_pos;
 
 	matrix4 matr(matrix);
 	matr.translate(d);
@@ -38,43 +38,43 @@ void scroll_area::render(const morda::matrix4& matrix)const{
 	this->container::render(matr);
 }
 
-void scroll_area::clampScrollPos(){
-	if(this->effectiveDim.x() < 0){
-		this->curScrollPos.x() = 0;
+void scroll_area::clamp_scroll_pos(){
+	if(this->effective_dims.x() < 0){
+		this->cur_scroll_pos.x() = 0;
 	}
 
-	if(this->effectiveDim.y() < 0){
-		this->curScrollPos.y() = 0;
+	if(this->effective_dims.y() < 0){
+		this->cur_scroll_pos.y() = 0;
 	}
 }
 
-void scroll_area::set_scroll_pos(const vector2& newScrollPos){
+void scroll_area::set_scroll_pos(const vector2& new_scroll_pos){
 	using std::round;
-	this->curScrollPos = round(newScrollPos);
+	this->cur_scroll_pos = round(new_scroll_pos);
 
-	this->clampScrollPos();
-	this->updateScrollFactor();
+	this->clamp_scroll_pos();
+	this->update_scroll_factor();
 }
 
 void scroll_area::set_scroll_factor(const vector2& factor){
-	vector2 newScrollPos = this->effectiveDim.comp_mul(factor);
+	vector2 new_scroll_pos = this->effective_dims.comp_mul(factor);
 
-	this->set_scroll_pos(newScrollPos);
+	this->set_scroll_pos(new_scroll_pos);
 }
 
-void scroll_area::updateScrollFactor(){
+void scroll_area::update_scroll_factor(){
 	// at this point effective dimension should be updated
-	vector2 factor = this->curScrollPos.comp_div(this->effectiveDim);
+	vector2 factor = this->cur_scroll_pos.comp_div(this->effective_dims);
 
-	if(this->curScrollFactor == factor){
+	if(this->cur_scroll_factor == factor){
 		return;
 	}
 
 	for(unsigned i = 0; i != 2; ++i){
-		if(this->effectiveDim[i] <= 0){
-			this->curScrollFactor[i] = 0;
+		if(this->effective_dims[i] <= 0){
+			this->cur_scroll_factor[i] = 0;
 		}else{
-			this->curScrollFactor[i] = this->curScrollPos[i] / this->effectiveDim[i];
+			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->effective_dims[i];
 		}
 	}
 }
@@ -105,7 +105,7 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 	return d;
 }
 
-void scroll_area::arrangeWidgets(){
+void scroll_area::arrange_widgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_const(**i);
 
@@ -116,36 +116,36 @@ void scroll_area::arrangeWidgets(){
 }
 
 void scroll_area::lay_out(){
-	this->arrangeWidgets();
-	this->updateEffectiveDim();
+	this->arrange_widgets();
+	this->update_effective_dims();
 
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
-	vector2 br = this->curScrollPos - this->effectiveDim;
+	vector2 br = this->cur_scroll_pos - this->effective_dims;
 
 	if(br.x() > 0){
-		if(br.x() <= this->curScrollPos.x()){
-			this->curScrollPos.x() -= br.x();
+		if(br.x() <= this->cur_scroll_pos.x()){
+			this->cur_scroll_pos.x() -= br.x();
 		}else{
-			this->curScrollPos.x() = 0;
+			this->cur_scroll_pos.x() = 0;
 		}
 	}
 
 	if(br.y() > 0){
-		if(br.y() <= this->curScrollPos.y()){
-			this->curScrollPos.y() -= br.y();
+		if(br.y() <= this->cur_scroll_pos.y()){
+			this->cur_scroll_pos.y() -= br.y();
 		}else{
-			this->curScrollPos.y() = 0;
+			this->cur_scroll_pos.y() = 0;
 		}
 	}
 }
 
 void scroll_area::on_children_change(){
 	this->container::on_children_change();
-	this->arrangeWidgets();
-	this->updateEffectiveDim();
+	this->arrange_widgets();
+	this->update_effective_dims();
 }
 
-void scroll_area::updateEffectiveDim(){
+void scroll_area::update_effective_dims(){
 	morda::vector2 minDim(0);
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
@@ -158,12 +158,12 @@ void scroll_area::updateEffectiveDim(){
 		minDim = max(minDim, d); // clamp bottom
 	}
 
-	this->effectiveDim = minDim - this->rect().d;
-	this->updateScrollFactor();
+	this->effective_dims = minDim - this->rect().d;
+	this->update_scroll_factor();
 }
 
 vector2 scroll_area::get_visible_area_fraction()const noexcept{
-	auto ret = this->rect().d.comp_div(this->rect().d + this->effectiveDim);
+	auto ret = this->rect().d.comp_div(this->rect().d + this->effective_dims);
 
 	using std::min;
 	ret = min(ret, real(1)); // clamp top

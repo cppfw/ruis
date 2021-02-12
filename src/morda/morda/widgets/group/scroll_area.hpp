@@ -17,13 +17,13 @@ namespace morda{
  */
 class scroll_area : public container{
 	// offset from top left corner
-	vector2 curScrollPos = vector2(0);
+	vector2 cur_scroll_pos = vector2(0);
 
-	// cached effectiveDim
-	vector2 effectiveDim;
+	// cached effective dimensions
+	vector2 effective_dims;
 
 	// cached scroll factor
-	vector2 curScrollFactor;
+	vector2 cur_scroll_factor;
 
 protected:
 	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
@@ -53,14 +53,14 @@ public:
 	 * @return Current scrolling position in pixels.
 	 */
 	const vector2& get_scroll_pos()const{
-		return this->curScrollPos;
+		return this->cur_scroll_pos;
 	}
 
 	/**
 	 * @brief Set scroll position.
-	 * @param newScrollPos - new scroll position.
+	 * @param new_scroll_pos - new scroll position.
 	 */
-	void set_scroll_pos(const vector2& newScrollPos);
+	void set_scroll_pos(const vector2& new_scroll_pos);
 
 	/**
 	 * @brief Set scroll position as factor.
@@ -73,19 +73,19 @@ public:
 	 * @return Current scroll position as factor with components from range [0:1].
 	 */
 	const vector2& get_scroll_factor()const{
-		return this->curScrollFactor;
+		return this->cur_scroll_factor;
 	}
 
 	vector2 get_visible_area_fraction()const noexcept;
 
 private:
-	void updateEffectiveDim();
+	void update_effective_dims();
 
-	void updateScrollFactor();
+	void update_scroll_factor();
 
-	void clampScrollPos();
+	void clamp_scroll_pos();
 
-	void arrangeWidgets();
+	void arrange_widgets();
 };
 
 }
