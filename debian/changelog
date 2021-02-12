@@ -1,3 +1,9 @@
+libmorda (0.5.156) unstable; urgency=medium
+
+  * list_widget::scroll_pos_change_handler
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Feb 2021 17:59:23 +0200
+
 libmorda (0.5.155) unstable; urgency=medium
 
   * add list::get_pos_index()/get_pos_offset()
