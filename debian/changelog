@@ -1,3 +1,9 @@
+libmorda (0.5.157) unstable; urgency=medium
+
+  * scroll_area::on_scroll_pos_change()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 00:53:44 +0200
+
 libmorda (0.5.156) unstable; urgency=medium
 
   * list_widget::scroll_pos_change_handler
