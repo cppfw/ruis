@@ -601,6 +601,12 @@ public:
 				}
 			};
 
+			verticalList->scroll_pos_change_handler = [vs](morda::list_widget& l){
+				if(auto s = vs.lock()){
+					s->set_fraction(l.get_scroll_factor(), false);
+				}
+			};
+
 			auto mouseProxy = c->try_get_widget_as<morda::mouse_proxy>("list_mouseproxy");
 			struct State : public utki::shared{
 				morda::vector2 oldPos = 0;
@@ -623,9 +629,6 @@ public:
 					state->oldPos = e.pos;
 					if(auto l = vl.lock()){
 						l->scroll_by(dp.y());
-						if(auto s = vs.lock()){
-							s->set_fraction(l->get_scroll_factor());
-						}
 					}
 					return true;
 				}
@@ -641,6 +644,12 @@ public:
 			auto horizontalSlider = c->try_get_widget_as<morda::fraction_widget>("horizontal_list_slider");
 			ASSERT(horizontalSlider)
 			auto hs = utki::make_weak(horizontalSlider);
+
+			horizontalList->scroll_pos_change_handler = [hs](morda::list_widget& l){
+				if(auto h = hs.lock()){
+					h->set_fraction(l.get_scroll_factor(), false);
+				}
+			};
 
 			horizontalSlider->fraction_change_handler = [hl](morda::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
@@ -684,9 +693,6 @@ public:
 					state->oldPos = e.pos;
 					if(auto l = hl.lock()){
 						l->scroll_by(dp.x());
-						if(auto s = hs.lock()){
-							s->set_fraction(l->get_scroll_factor());
-						}
 					}
 					return true;
 				}

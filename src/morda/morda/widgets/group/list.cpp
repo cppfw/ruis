@@ -55,7 +55,23 @@ void list_widget::lay_out(){
 
 	this->num_tail_items = 0;//means that it needs to be recomputed
 
+	size_t old_index = this->pos_index;
+	real old_offset = this->pos_offset;
+
 	this->update_children_list();
+
+	// notify scroll position change from ui thread
+	this->context->run_from_ui_thread(
+			[
+				wl = utki::make_weak_from(*this),
+				old_offset,
+				old_index
+			](){
+				if(auto l = wl.lock()){
+					l->notify_scroll_pos_changed(old_index, old_offset);
+				}
+			}
+		);
 }
 
 void list_widget::set_provider(std::shared_ptr<provider> item_provider){
@@ -115,6 +131,9 @@ void list_widget::set_scroll_factor(real factor){
 		this->update_tail_items_info();
 	}
 
+	size_t old_index = this->pos_index;
+	real old_offset = this->pos_offset;
+
 	this->pos_index = size_t(factor * real(this->item_provider->count() - this->num_tail_items));
 
 //	TRACE(<< "list_widget::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
@@ -136,6 +155,8 @@ void list_widget::set_scroll_factor(real factor){
 	}
 
 	this->update_children_list();
+
+	this->notify_scroll_pos_changed(old_index, old_offset);
 }
 
 // TODO: refactor
@@ -295,10 +316,21 @@ void list_widget::update_tail_items_info(){
 	}
 }
 
+void list_widget::notify_scroll_pos_changed(size_t old_index, real old_offset){
+	if(old_index != this->pos_index || old_offset != this->pos_offset){
+		if(this->scroll_pos_change_handler){
+			this->scroll_pos_change_handler(*this);
+		}
+	}
+}
+
 void list_widget::scroll_by(real delta) {
 	if(!this->item_provider){
 		return;
 	}
+
+	size_t old_index = this->pos_index;
+	real old_offset = this->pos_offset;
 
 	unsigned longIndex = this->get_long_index();
 
@@ -365,6 +397,8 @@ void list_widget::scroll_by(real delta) {
 	}
 
 	this->update_children_list();
+
+	this->notify_scroll_pos_changed(old_index, old_offset);
 }
 
 morda::vector2 list_widget::measure(const morda::vector2& quotum)const{

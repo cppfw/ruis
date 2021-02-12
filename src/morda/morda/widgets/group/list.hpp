@@ -127,6 +127,11 @@ public:
 	 */
 	std::function<void(list_widget&)> data_set_change_handler;
 
+	/**
+	 * @brief Scroll position changed signal.
+	 * Emitted when list's scroll position has changed.
+	 */
+	std::function<void(list_widget&)> scroll_pos_change_handler;
 private:
 	std::shared_ptr<provider> item_provider;
 
@@ -144,6 +149,8 @@ private:
 	void update_tail_items_info();
 
 	void handle_data_set_changed();
+
+	void notify_scroll_pos_changed(size_t old_index, real old_offset);
 };
 
 /**
