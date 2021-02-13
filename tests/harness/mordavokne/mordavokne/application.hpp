@@ -28,13 +28,13 @@ struct window_params{
 	 */
 	r4::vector2<unsigned> dim;
 
-	//TODO: add window title string
+	// TODO: add window title string
 
 	enum class buffer_type{
 		depth,
 		stencil,
 
-		ENUM_SIZE
+		enum_size
 	};
 
 	/**

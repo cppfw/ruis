@@ -31,16 +31,16 @@ nuget{
 	}
 	dependencies {
 		packages : {
-			libr4/1.0.24;
-			freetype_static/2.10.1.1;
-			libjpeg_static/6.1.1.2;
-			libpapki/1.0.82;
-			libpng_static/1.4.0;
-			libpuu/0.1.21;
-			libutki/1.1.93;
-			zlib_static/1.2.11.1;
-			libsvgdom/0.2.14;
-			libsvgren/0.4.57;
+			libr4/1.0.51;
+			freetype_static/2.10.1.7;
+			libjpeg_static/6.1.1.9;
+			libpapki/1.0.91;
+			libpng_static/1.4.1.25;
+			libpuu/0.1.25;
+			libutki/1.1.112;
+			zlib_static/1.2.11.7;
+			libsvgdom/0.3.56;
+			libsvgren/0.5.7;
 		};
 	}
 	files {
