@@ -1,6 +1,6 @@
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
+# include $(d)../../raspberrypi.mk
 
 # ifneq ($(raspberrypi),true)
 

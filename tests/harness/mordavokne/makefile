@@ -63,7 +63,7 @@ ifeq ($(ogles2), true)
     ifeq ($(raspberrypi),true)
         this_cxxflags += -I/opt/vc/include -DM_RASPBERRYPI
         this_ldflags += -L/opt/vc/lib
-        this_ldlibs += -lbrcmEGL
+        this_ldlibs += -lbrcmEGL `pkg-config --libs glesv2`
     else
         this_ldlibs += `pkg-config --libs egl`
     endif
