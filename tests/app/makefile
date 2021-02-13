@@ -2,7 +2,7 @@ include prorab.mk
 
 include $(d)../../raspberrypi.mk
 
-ifneq ($(raspberrypi),true)
+# ifneq ($(raspberrypi),true)
 
     this_name := tests
 
@@ -103,4 +103,4 @@ $(.RECIPEPREFIX)$(a)rm -f $(d)$(this_out_dir)/libmorda$(dot_so)
     $(eval $(call prorab-include, ../../src/morda/makefile))
     $(eval $(call prorab-include, ../harness/mordavokne/makefile))
 
-endif
+# endif

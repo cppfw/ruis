@@ -59,11 +59,13 @@ ifeq ($(ogles2), true)
     this_cxxflags += -I$(d)../opengles2
     this_ldflags += -L$(d)../opengles2/build
     this_ldlibs += -lmorda-opengles2-ren
-    this_ldlibs += `pkg-config --libs egl`
 
     ifeq ($(raspberrypi),true)
-        this_cxxflags += -I/opt/vc/include
+        this_cxxflags += -I/opt/vc/include -DM_RASPBERRYPI
         this_ldflags += -L/opt/vc/lib
+        this_ldlibs += -lbrcmEGL
+    else
+        this_ldlibs += `pkg-config --libs egl`
     endif
 else
     this_cxxflags += -DMORDAVOKNE_RENDER_OPENGL2
