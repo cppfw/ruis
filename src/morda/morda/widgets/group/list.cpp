@@ -60,7 +60,7 @@ void list_widget::lay_out(){
 
 	this->update_children_list();
 
-	// notify scroll position change from ui thread
+	// defer the scroll position change notification, because layouting happens during render phase
 	this->context->run_from_ui_thread(
 			[
 				wl = utki::make_weak_from(*this),
