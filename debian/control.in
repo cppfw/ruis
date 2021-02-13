@@ -4,7 +4,7 @@ Standards-Version: 3.9.5
 Section: libs
 Build-Depends: g++ (>= 4:4.8), debhelper (>= 9), prorab (>= 1.8.3), prorab-extra, myci, pkg-config,
 		libutki-dev (>= 1.1.112), libpapki-dev (>= 1.0.91),
-		libr4-dev (>= 1.0.51), libsvgdom-dev (>= 0.3.56), libsvgren-dev (0.5.7),
+		libr4-dev (>= 1.0.51), libsvgdom-dev (>= 0.3.56), libsvgren-dev (>= 0.5.7),
 		libpuu-dev (>= 0.1.25),
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev,
 		libnitki-dev (>= 1.0.39),
