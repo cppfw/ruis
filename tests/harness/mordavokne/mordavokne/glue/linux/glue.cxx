@@ -344,7 +344,7 @@ struct WindowWrapper : public utki::destructable{
 			src_rect.width = display_width << 16;
 			src_rect.height = display_height << 16;
 
-			this->rpiDispmanDisplay = vc_dispmanx_display_open(0); //0 = LCD
+			this->rpiDispmanDisplay = vc_dispmanx_display_open(0); // 0 = LCD
 			this->rpiDispmanUpdate = vc_dispmanx_update_start(0);
 
 			this->rpiDispmanElement = vc_dispmanx_element_add(
