@@ -35,7 +35,7 @@ nuget{
 			freetype_static/2.10.1.7;
 			libjpeg_static/6.1.1.9;
 			libpapki/1.0.91;
-			libpng_static/1.4.1.25;
+			libpng_static/1.4.1.9;
 			libpuu/0.1.25;
 			libutki/1.1.112;
 			zlib_static/1.2.11.7;
