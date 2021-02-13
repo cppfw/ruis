@@ -1,3 +1,9 @@
+libmorda (0.5.159) unstable; urgency=medium
+
+  * nuget dependency versions fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 23:50:22 +0200
+
 libmorda (0.5.158) unstable; urgency=medium
 
   * dependency versions update
