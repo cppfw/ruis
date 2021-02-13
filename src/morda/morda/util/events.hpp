@@ -14,7 +14,7 @@ enum class mouse_button{
 	wheel_up,
 	wheel_down,
 
-	ENUM_SIZE
+	enum_size
 };
 
 struct mouse_button_event{
