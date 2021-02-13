@@ -1,3 +1,9 @@
+libmorda (0.5.158) unstable; urgency=medium
+
+  * dependency versions update
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 22:39:32 +0200
+
 libmorda (0.5.157) unstable; urgency=medium
 
   * scroll_area::on_scroll_pos_change()
