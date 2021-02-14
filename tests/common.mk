@@ -18,7 +18,6 @@ else ifeq ($(os),macosx)
     this_ldflags += -rdynamic
 else ifeq ($(os),linux)
     this_ldflags += -rdynamic
-    this_ldlibs += -lGLEW
 endif
 
 ifeq ($(ren),gles2)
