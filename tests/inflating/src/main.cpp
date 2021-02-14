@@ -1,10 +1,10 @@
-#include "../../src/morda/morda/context.hpp"
-#include "../../src/morda/morda/widgets/group/pile.hpp"
-#include "../../src/morda/morda/widgets/proxy/ratio_proxy.hpp"
+#include "../../../src/morda/morda/context.hpp"
+#include "../../../src/morda/morda/widgets/group/pile.hpp"
+#include "../../../src/morda/morda/widgets/proxy/ratio_proxy.hpp"
 
-#include "../harness/fake_renderer/fake_renderer.hpp"
+#include "../../harness/fake_renderer/fake_renderer.hpp"
 
-#include "../../src/morda/morda/gui.hpp"
+#include "../../../src/morda/morda/gui.hpp"
 
 int main(int argc, char** argv){
 	// test that whole definition chain is substituted

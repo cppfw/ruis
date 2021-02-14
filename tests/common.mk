@@ -17,7 +17,9 @@ else
     this_mordavokne_lib := mordavokne-$(this_render)
 endif
 
-this_ldlibs += -l$(this_mordavokne_lib)
+ifeq ($(this_is_interactive),true)
+    this_ldlibs += -l$(this_mordavokne_lib)
+endif
 
 ifeq ($(os),windows)
     this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
@@ -37,11 +39,23 @@ this_no_install := true
 
 $(eval $(prorab-build-app))
 
-define this_rules
-    run_$(notdir $(patsubst %/,%,$(d))):: $(prorab_this_name)
+ifeq ($(this_is_interactive),true)
+    define this_rules
+        run_$(notdir $(patsubst %/,%,$(d))):: $(prorab_this_name)
 $(.RECIPEPREFIX)@echo running $$^...
 $(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/out/$(c):../harness/mordavokne/out/$(c):../harness/opengl2/out/$(c):../harness/opengles2/out/$(c) $$^)
-endef
+    endef
+else
+    this_dirs := $(subst /, ,$(d))
+    this_test := $(word $(words $(this_dirs)),$(this_dirs))
+
+    define this_rules
+        test:: $(prorab_this_name)
+$(.RECIPEPREFIX)@myci-running-test.sh $(this_test)
+$(.RECIPEPREFIX)$(a)(cd $(d); LD_LIBRARY_PATH=../../src/morda/out/$(c) $$^)
+$(.RECIPEPREFIX)@myci-passed.sh
+    endef
+endif
 $(eval $(this_rules))
 
 # add dependency on libmordavokne
