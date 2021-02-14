@@ -31,7 +31,7 @@ nuget{
 	}
 	dependencies {
 		packages : {
-			libr4/1.0.51;
+			libr4/1.0.52;
 			freetype_static/2.10.1.7;
 			libjpeg_static/6.1.1.9;
 			libpapki/1.0.91;

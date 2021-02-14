@@ -24,7 +24,7 @@
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>r4</artifactId>
-		  <version>[1.0.51,)</version>
+		  <version>[1.0.52,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>

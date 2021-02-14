@@ -67,8 +67,7 @@ protected:
 	}
 	
 	void setUniformMatrix4f(GLint id, const r4::matrix4<float>& m)const{
-		auto mm = m;
-		mm.transpose();
+		auto mm = m.tpos();
 		glUniformMatrix4fv(
 				id,
 				1,
