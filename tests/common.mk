@@ -33,6 +33,7 @@ ifeq ($(this_is_interactive),true)
     this_ldflags += -L$(d)../harness/$(this_render)/out/$(c)
     this_ldflags += -L$(d)../harness/mordavokne/out/$(c)
     this_ldlibs += -l$(this_mordavokne_lib)
+    this_ldlibs += -lmorda-$(this_render)-ren
 endif
 
 this_ldlibs += -lmorda -lpapki -lpuu -lutki -lm
