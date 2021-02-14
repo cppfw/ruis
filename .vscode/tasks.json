@@ -13,9 +13,9 @@
             "group": "build"
         },
         {
-            "label": "build_ogles2",
+            "label": "build_gles2",
             "type": "shell",
-            "command": "make autojobs=true ogles2=true",
+            "command": "make autojobs=true ren=gles2",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -38,9 +38,9 @@
             "group": "build"
         },
         {
-            "label": "run",
+            "label": "run_app",
             "type": "shell",
-            "command": "make run",
+            "command": "make run_app",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
@@ -150,15 +150,15 @@
             "group": "build"
         },
         {
-            "label": "run_ogles2",
+            "label": "run_app_ogles2",
             "type": "shell",
-            "command": "make run ogles2=true",
+            "command": "make run ren=gles2",
             "problemMatcher": [],
-            "dependsOn": "build_ogles2",
+            "dependsOn": "build_gles2",
             "group": "build"
         },
         {
-            "label": "run_debug",
+            "label": "run_app_debug",
             "type": "shell",
             "command": "make run debug=true",
             "problemMatcher": [],
