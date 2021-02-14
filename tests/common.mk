@@ -7,7 +7,6 @@ $(eval $(call prorab-config, ../../config))
 this_cxxflags += -I$(d)../../src/morda -I$(d)../harness/mordavokne
 
 this_ldflags += -L$(d)../../src/morda/out/$(c)
-this_ldflags += -L$(d)../harness/mordavokne/out/$(c)
 
 ifeq ($(ren),gles2)
     this_render := opengles2
@@ -18,6 +17,8 @@ else
 endif
 
 ifeq ($(this_is_interactive),true)
+    this_ldflags += -L$(d)../harness/$(this_render)/out/$(c)
+    this_ldflags += -L$(d)../harness/mordavokne/out/$(c)
     this_ldlibs += -l$(this_mordavokne_lib)
 endif
 
