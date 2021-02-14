@@ -8,6 +8,18 @@ this_cxxflags += -I$(d)../../src/morda -I$(d)../harness/mordavokne
 
 this_ldflags += -L$(d)../../src/morda/out/$(c)
 
+ifeq ($(os),windows)
+    this_ldlibs += -lmingw32 -mwindows # these should go first, otherwise linker will complain about undefined reference to WinMain
+    this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype
+else ifeq ($(os),macosx)
+    this_ldlibs += -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
+    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
+
+    this_ldflags += -rdynamic
+else ifeq ($(os),linux)
+    this_ldflags += -rdynamic
+endif
+
 ifeq ($(ren),gles2)
     this_render := opengles2
     this_mordavokne_lib := mordavokne-$(this_render)
@@ -20,18 +32,6 @@ ifeq ($(this_is_interactive),true)
     this_ldflags += -L$(d)../harness/$(this_render)/out/$(c)
     this_ldflags += -L$(d)../harness/mordavokne/out/$(c)
     this_ldlibs += -l$(this_mordavokne_lib)
-endif
-
-ifeq ($(os),windows)
-    this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
-else ifeq ($(os),macosx)
-    this_ldlibs += -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
-    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
-
-    this_ldflags += -rdynamic
-else ifeq ($(os),linux)
-    this_ldflags += -rdynamic
 endif
 
 this_ldlibs += -lmorda -lpapki -lpuu -lutki -lm
