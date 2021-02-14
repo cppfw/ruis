@@ -36,7 +36,6 @@ else ifeq ($(os),macosx)
     endef
     $(eval $(this_rules))
 else ifeq ($(os),linux)
-    this_cxxflags += -fPIC
     this_ldlibs += -pthread -ldl
     this_ldflags += -rdynamic
 endif

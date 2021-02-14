@@ -18,16 +18,12 @@ include $(d)../../raspberrypi.mk
     ifeq ($(os),windows)
         this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
         this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
-        this_ldlibs += -lstdc++
     else ifeq ($(os),macosx)
         this_ldlibs += -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
-        this_ldlibs += -lc++
         this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 
         this_ldflags += -rdynamic
     else ifeq ($(os),linux)
-        this_cxxflags += -fPIC
-        this_ldlibs += -lstdc++
         this_ldflags += -rdynamic
     endif
 

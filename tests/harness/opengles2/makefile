@@ -17,11 +17,8 @@ this_ldlibs += `pkg-config --libs glesv2`
 this_ldflags += -L$(d)../../../src/morda/out/$(c)
 
 ifeq ($(os), linux)
-    this_cxxflags += -fPIC
-    this_ldlibs +=
 else ifeq ($(os), macosx)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
-    this_ldlibs += -lc++
 else ifeq ($(os),windows)
 endif
 
