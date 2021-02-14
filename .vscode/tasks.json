@@ -152,7 +152,7 @@
         {
             "label": "run_app_ogles2",
             "type": "shell",
-            "command": "make run ren=gles2",
+            "command": "make run_app ren=gles2",
             "problemMatcher": [],
             "dependsOn": "build_gles2",
             "group": "build"
