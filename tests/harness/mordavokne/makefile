@@ -11,7 +11,6 @@ define mordavokne_rules
     this_srcs += $$(call prorab-src-dir, .)
 
     this_cxxflags += -I$(d)../../../src/morda
-    this_objcflags += -I$(d)../../../src/morda -I$(d)../$1
 
     this_ldlibs += -lmorda -lnitki -lopros -lpapki
     this_ldflags += -L$(d)../../../src/morda/out/$(c)
@@ -23,6 +22,8 @@ define mordavokne_rules
         this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
         this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
+
+        this_objcflags += -I$(d)../../../src/morda -I$(d)../$1
 
         this_ldflags += -rdynamic
 
