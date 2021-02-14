@@ -406,11 +406,13 @@ public:
 					}
 
 					this->selectedItem = path;
+#ifdef DEBUG
 					TRACE(<< " selected item = ")
 					for(auto& k : this->selectedItem){
 						TRACE(<< k << ", ")
 					}
 					TRACE(<< std::endl)
+#endif
 					this->notify_item_changed();
 
 					return true;

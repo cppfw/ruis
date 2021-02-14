@@ -4,20 +4,7 @@ this_name := mordavokne
 
 this_soname := 0
 
-this_out_dir := build
-
-this_cxxflags += -Wall
-this_cxxflags += -Werror
-this_cxxflags += -funsigned-char # the 'char' type is unsigned
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -std=c++17
-this_cxxflags += -g
-
-ifeq ($(debug),true)
-    this_cxxflags += -DDEBUG
-else
-    this_cxxflags += -O3
-endif
+$(eval $(call prorab-config, ../../../config))
 
 this_srcs += $(call prorab-src-dir, .)
 
@@ -25,16 +12,14 @@ this_cxxflags += -I$(d)../../../src/morda
 this_objcflags += -I$(d)../../../src/morda -I$(d)../opengl2 -std=c++17
 
 this_ldlibs += -lmorda -lnitki -lopros -lpapki
-this_ldflags += -L$(d)../../../src/morda/build
+this_ldflags += -L$(d)../../../src/morda/out/$(c)
 
 ifeq ($(os),windows)
     this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += -lglew32 -lopengl32 -lpng -ljpeg -lz -lfreetype -mwindows
-    this_ldlibs += -lstdc++
 else ifeq ($(os),macosx)
     this_ldlibs += -lGLEW -framework OpenGL -framework Cocoa -lpng -ljpeg -lfreetype
 
-    this_ldlibs += -lc++
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 
     this_ldflags += -rdynamic
@@ -49,15 +34,14 @@ $(.RECIPEPREFIX)$(a)$(this_cc) -ObjC++ -std=c++11 -c -o "$$@" $(this_objcflags) 
     endef
     $(eval $(this_rules))
 else ifeq ($(os),linux)
-    this_cxxflags += -fPIC
-    this_ldlibs += -pthread -lX11 -ldl -lstdc++
+    this_ldlibs += -pthread -lX11 -ldl
     this_ldflags += -rdynamic
 endif
 
 ifeq ($(ogles2), true)
     this_cxxflags += -DMORDAVOKNE_RENDER_OPENGLES2
     this_cxxflags += -I$(d)../opengles2
-    this_ldflags += -L$(d)../opengles2/build
+    this_ldflags += -L$(d)../opengles2/out/$(c)
     this_ldlibs += -lmorda-opengles2-ren
 
     ifeq ($(raspberrypi),true)
@@ -70,7 +54,7 @@ ifeq ($(ogles2), true)
 else
     this_cxxflags += -DMORDAVOKNE_RENDER_OPENGL2
     this_cxxflags += -I$(d)../opengl2
-    this_ldflags += -L$(d)../opengl2/build
+    this_ldflags += -L$(d)../opengl2/out/$(c)
     this_ldlibs += -lmorda-opengl2-ren
 endif
 
@@ -85,12 +69,12 @@ ifeq ($(os),macosx)
 endif
 
 # add dependency on libs
-$(prorab_this_name): $(abspath $(d)../../../src/morda/build/libmorda$(dot_so))
+$(prorab_this_name): $(abspath $(d)../../../src/morda/out/$(c)/libmorda$(dot_so))
 
 ifeq ($(ogles2), true)
-    $(prorab_this_name): $(abspath $(d)../opengles2/build/libmorda-opengles2-ren$(dot_so))
+    $(prorab_this_name): $(abspath $(d)../opengles2/out/$(c)/libmorda-opengles2-ren$(dot_so))
 else
-    $(prorab_this_name): $(abspath $(d)../opengl2/build/libmorda-opengl2-ren$(dot_so))
+    $(prorab_this_name): $(abspath $(d)../opengl2/out/$(c)/libmorda-opengl2-ren$(dot_so))
 endif
 
 

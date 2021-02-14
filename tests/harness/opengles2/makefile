@@ -6,20 +6,7 @@ this_name := morda-opengles2-ren
 
 this_soname := 0
 
-this_out_dir := build
-
-this_cxxflags += -Wall
-this_cxxflags += -Werror
-this_cxxflags += -funsigned-char # the 'char' type is unsigned
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -std=c++17
-this_cxxflags += -g
-
-ifeq ($(debug),true)
-    this_cxxflags += -DDEBUG
-else
-    this_cxxflags += -O3
-endif
+$(eval $(call prorab-config, ../../../config))
 
 this_srcs += $(call prorab-src-dir, .)
 
@@ -27,7 +14,7 @@ this_cxxflags += -I$(d)../../../src/morda
 
 this_ldlibs += -lmorda -lstdc++
 this_ldlibs += `pkg-config --libs glesv2`
-this_ldflags += -L$(d)../../../src/morda/build
+this_ldflags += -L$(d)../../../src/morda/out/$(c)
 
 ifeq ($(os), linux)
     this_cxxflags += -fPIC
@@ -43,7 +30,7 @@ this_no_install := true
 $(eval $(prorab-build-lib))
 
 # add dependency on libmorda
-$(prorab_this_name): $(abspath $(d)../../../src/morda/build/libmorda$(dot_so))
+$(prorab_this_name): $(abspath $(d)../../../src/morda/out/$(c)/libmorda$(dot_so))
 
 $(eval $(call prorab-include, ../../../src/morda/makefile))
 

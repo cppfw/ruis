@@ -4,20 +4,7 @@ this_name := tests
 
 this_srcs += $(call prorab-src-dir,.)
 
-this_cxxflags += -Wall
-this_cxxflags += -Wno-comment # no warnings on nested comments
-this_cxxflags += -Wno-format # no warnings about format
-this_cxxflags += -Wno-format-security # no warnings about format
-this_cxxflags += -DDEBUG
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -g
-this_cxxflags += -std=c++17
-
-ifeq ($(debug), true)
-    this_cxxflags += -DDEBUG
-else
-    this_cxxflags += -O3
-endif
+$(eval $(call prorab-config, ../../config))
 
 this_cxxflags += -I$(d)../../src/morda
 this_objcflags += -I$(d)../../src/morda
@@ -49,18 +36,15 @@ else ifeq ($(os),macosx)
     endef
     $(eval $(this_rules))
 else ifeq ($(os),linux)
-    this_cxxflags += -fPIC
     this_ldlibs += -pthread -lX11 -ldl
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += $(d)../../src/morda/build/libmorda$(dot_so)
+this_ldlibs += $(d)../../src/morda/out/$(c)/libmorda$(dot_so)
 
-this_ldlibs += -lnitki -lopros -lpuu -lpapki -lstdc++ -lm
+this_ldlibs += -lnitki -lopros -lpuu -lpapki -lm
 
 this_no_install := true
-
-this_out_dir := build
 
 $(eval $(prorab-build-app))
 
@@ -70,14 +54,14 @@ this_test := $(word $(words $(this_dirs)),$(this_dirs))
 define this_rules
 test:: $(prorab_this_name)
 	@myci-running-test.sh $(this_test)
-	@(cd $(d); LD_LIBRARY_PATH=../../src/morda/build $$^)
+	@(cd $(d); LD_LIBRARY_PATH=../../src/morda/out/$(c) $$^)
 	@myci-passed.sh
 endef
 $(eval $(this_rules))
 
 # add dependency on libmorda
 ifeq ($(os),windows)
-    $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
+    $(d)libmorda$(dot_so): $(abspath $(d)../../src/morda/out/$(c)/libmorda$(dot_so))
 	@cp $< $@
 
     $(prorab_this_name): $(d)libmorda$(dot_so)
@@ -88,7 +72,7 @@ ifeq ($(os),windows)
     endef
     $(eval $(this_rules))
 else
-    $(prorab_this_name): $(abspath $(d)../../src/morda/build/libmorda$(dot_so))
+    $(prorab_this_name): $(abspath $(d)../../src/morda/out/$(c)/libmorda$(dot_so))
 endif
 
 $(eval $(call prorab-include, ../../src/morda/makefile))
