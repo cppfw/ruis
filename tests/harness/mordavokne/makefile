@@ -49,7 +49,7 @@ $(.RECIPEPREFIX)$(a)$$(this_cc) -ObjC++ -std=c++11 -c -o "$$$$@" $$(this_objcfla
     ifeq ($1,opengles2)
         this_raspberrypi := $(shell test -d /opt/vc && echo true)
         ifeq ($(this_raspberrypi), true)
-            this_cxxflags += -DM_RASPBERRYPI -I/opt/vc/include
+            this_cxxflags += -DMORDAVOKNE_RASPBERRYPI -I/opt/vc/include
             this_ldflags += -L/opt/vc/lib
             this_ldlibs += -lbrcmEGL `pkg-config --libs glesv2`
         else

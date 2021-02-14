@@ -20,7 +20,7 @@
 
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 #	include <EGL/egl.h>
-#	ifdef M_RASPBERRYPI
+#	ifdef MORDAVOKNE_RASPBERRYPI
 #		include <bcm_host.h>
 #	endif
 
@@ -43,7 +43,7 @@ struct WindowWrapper : public utki::destructable{
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 	GLXContext glContext;
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
-#	ifdef M_RASPBERRYPI
+#	ifdef MORDAVOKNE_RASPBERRYPI
 	EGL_DISPMANX_WINDOW_T rpiNativeWindow;
 	DISPMANX_DISPLAY_HANDLE_T rpiDispmanDisplay;
 	DISPMANX_UPDATE_HANDLE_T rpiDispmanUpdate;
@@ -192,7 +192,7 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
-#	ifdef M_RASPBERRYPI
+#	ifdef MORDAVOKNE_RASPBERRYPI
 		{
 			int numVisuals;
 			XVisualInfo visTemplate;
@@ -316,7 +316,7 @@ struct WindowWrapper : public utki::destructable{
 		}
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 
-#	ifdef M_RASPBERRYPI
+#	ifdef MORDAVOKNE_RASPBERRYPI
 		{
 			bcm_host_init();
 
@@ -370,7 +370,7 @@ struct WindowWrapper : public utki::destructable{
 		this->eglSurface = eglCreateWindowSurface(
 				this->eglDisplay,
 				eglConfig,
-#	ifdef M_RASPBERRYPI
+#	ifdef MORDAVOKNE_RASPBERRYPI
 				reinterpret_cast<EGLNativeWindowType>(&this->rpiNativeWindow),
 #	else
 				this->window,
@@ -540,7 +540,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 			),
 		storage_dir(initializeStorageDir(this->name))
 {
-#ifdef M_RASPBERRYPI
+#ifdef MORDAVOKNE_RASPBERRYPI
 	this->set_fullscreen(true);
 #endif
 }
@@ -1057,7 +1057,7 @@ int main(int argc, const char** argv){
 }
 
 void application::set_fullscreen(bool enable){
-#ifdef M_RASPBERRYPI
+#ifdef MORDAVOKNE_RASPBERRYPI
 	if(this->is_fullscreen()){
 		return;
 	}
