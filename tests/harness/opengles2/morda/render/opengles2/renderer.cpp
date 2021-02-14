@@ -16,6 +16,7 @@ namespace{
 unsigned getMaxTextureSize(){
 	GLint val;
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &val);
+	assertOpenGLNoError();
 	ASSERT_INFO(val > 0, "val = " << val)
 	return unsigned(val);
 }
