@@ -24,9 +24,11 @@ endif
 ifeq ($(ren),gles2)
     this_render := opengles2
     this_mordavokne_lib := mordavokne-$(this_render)
-else
+else ifeq ($(filter-out gl2,$(ren)),)
     this_render := opengl2
     this_mordavokne_lib := mordavokne-$(this_render)
+else
+    $(error unknown value of 'ren': $(ren))
 endif
 
 ifeq ($(this_is_interactive),true)
