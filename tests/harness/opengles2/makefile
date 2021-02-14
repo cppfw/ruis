@@ -12,8 +12,16 @@ this_srcs += $(call prorab-src-dir, .)
 
 this_cxxflags += -I$(d)../../../src/morda
 
-this_ldlibs += -lmorda -lstdc++
-this_ldlibs += `pkg-config --libs glesv2`
+this_ldlibs += -lmorda
+
+this_raspberrypi := $(shell test -d /opt/vc && echo true)
+ifeq ($$(this_raspberrypi),true)
+    this_ldflags += -L/opt/vc/lib
+    this_ldlibs += -lbrcmGLESv2
+else
+    this_ldlibs += `pkg-config --libs glesv2`
+endif
+
 this_ldflags += -L$(d)../../../src/morda/out/$(c)
 
 ifeq ($(os), linux)
