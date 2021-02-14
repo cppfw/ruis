@@ -14,6 +14,7 @@ this_ldlibs += -lmorda
 this_ldflags += -L$(d)../../../src/morda/out/$(c)
 
 ifeq ($(os), linux)
+    this_ldlibs += -lGLEW
 else ifeq ($(os), macosx)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 else ifeq ($(os),windows)

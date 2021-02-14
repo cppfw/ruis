@@ -1,7 +1,5 @@
 include prorab.mk
 
-include $(d)../../raspberrypi.mk
-
 # ifneq ($(raspberrypi),true)
 
     this_name := tests
