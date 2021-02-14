@@ -63,14 +63,14 @@ $(prorab_this_name): $(abspath $(d)../harness/mordavokne/out/$(c)/lib$(this_mord
 
 # add dependency on libmorda, libmordavokne
 ifeq ($(os),windows)
-$(prorab_this_name): $(d)$(this_out_dir)/libmorda$(dot_so) $(d)$(this_out_dir)/libmordavokne$(dot_so) $(d)$(this_out_dir)/libmorda-opengl2-ren$(dot_so)
+$(prorab_this_name): $(d)$(this_out_dir)/libmorda$(dot_so) $(d)$(this_out_dir)/lib$(this_mordavokne_lib)$(dot_so) $(d)$(this_out_dir)/libmorda-opengl2-ren$(dot_so)
 
     define this_rules
         $(d)$(this_out_dir)/libmorda$(dot_so): $(abspath $(d)../../src/morda/out/$(c)/libmorda$(dot_so))
 $(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
 $(.RECIPEPREFIX)$(a)cp $$< $$@
 
-        $(d)$(this_out_dir)/libmordavokne$(dot_so): $(abspath $(d)../harness/mordavokne/out/$(c)/libmordavokne$(dot_so))
+        $(d)$(this_out_dir)/lib$(this_mordavokne_lib)$(dot_so): $(abspath $(d)../harness/mordavokne/out/$(c)/lib$(this_mordavokne_lib)$(dot_so))
 $(.RECIPEPREFIX)@echo "copy $$(notdir $$@)"
 $(.RECIPEPREFIX)$(a)cp $$< $$@
 
