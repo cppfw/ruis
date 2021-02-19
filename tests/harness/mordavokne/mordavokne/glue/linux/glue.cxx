@@ -615,12 +615,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 				},
 				[this](morda::mouse_cursor c){
 					auto& ww = get_impl(*this);
-					XDefineCursor(
-							ww.display.display,
-							ww.window,
-							XCreateFontCursor(ww.display.display, x_cursor_map.at(c))
-						);
-						// TODO: save current cursor and call XCursorFree when it is not needed
+					ww.set_cursor(c);
 				},
 				getDotsPerInch(getImpl(windowPimpl).display.display),
 				::getDotsPerPt(getImpl(windowPimpl).display.display)
