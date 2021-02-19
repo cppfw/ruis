@@ -9,7 +9,14 @@
 int main(int argc, char** argv){
 	// test that whole definition chain is substituted
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
 				defs{
@@ -45,7 +52,14 @@ int main(int argc, char** argv){
 
 	// test template properties overriding
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
 				defs{
@@ -85,7 +99,14 @@ int main(int argc, char** argv){
 
 	// test template arguments
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
 				defs{
@@ -135,7 +156,14 @@ int main(int argc, char** argv){
 	// test template arguments inside of nested containers
 	{
 		// TRACE_ALWAYS(<< "!!!!!!!!!!!!!!!" << std::endl)
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
 				@container{
@@ -166,7 +194,14 @@ int main(int argc, char** argv){
 
 	// test two levels of templates
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				@Cont{ x y layout dx
@@ -216,7 +251,14 @@ int main(int argc, char** argv){
 
 	// test template which nests same named widget on 2nd level
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				@Container_{@container}
@@ -255,7 +297,14 @@ int main(int argc, char** argv){
 
 	// test template recursion detection
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		bool exc_caught = false;
 		try{
 			auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
@@ -292,7 +341,14 @@ int main(int argc, char** argv){
 
 	// test two defs blocks in widget
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			@container{
 				defs{
@@ -317,7 +373,14 @@ int main(int argc, char** argv){
 
 	// test variables overriding
 	{
-		morda::gui m(std::make_shared<FakeRenderer>(), std::make_shared<morda::updater>(), [](std::function<void()>&&){}, 0, 0);
+		morda::gui m(std::make_shared<morda::context>(
+				std::make_shared<FakeRenderer>(),
+				std::make_shared<morda::updater>(),
+				[](std::function<void()>&&){},
+				[](morda::mouse_cursor){},
+				0,
+				0
+			));
 		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
 			defs{
 				test_var{13}

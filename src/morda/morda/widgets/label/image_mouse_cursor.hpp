@@ -9,21 +9,21 @@ namespace morda{
 /**
  * @brief Mouse cursor widget.
  * This widget displays mouse cursor.
- * From GUI script this widget can be instantiated as "mouse_cursor".
+ * From GUI script this widget can be instantiated as "image_mouse_cursor".
  *
  * @param cursor - reference to cursor resource.
  */
-class mouse_cursor : virtual public widget{
+class image_mouse_cursor : virtual public widget{
 	std::shared_ptr<const res::cursor> cursor;
 
 	std::shared_ptr<const res::image::texture> quadTex;
 
 	vector2 cursorPos;
 public:
-	mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	image_mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc);
 
-	mouse_cursor(const mouse_cursor&) = delete;
-	mouse_cursor& operator=(const mouse_cursor&) = delete;
+	image_mouse_cursor(const image_mouse_cursor&) = delete;
+	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;
 
 	void setCursor(std::shared_ptr<const res::cursor> cursor);
 

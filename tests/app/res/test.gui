@@ -863,10 +863,10 @@ defs{
 	}
 
 }
-}//~Overlay
+} // ~overlay
 
 
-@mouse_cursor{
+@image_mouse_cursor{
 	layout{
 		dx{fill} dy{fill}
 	}
@@ -874,4 +874,4 @@ defs{
 	cursor{crs_arrow}
 }
 
-}//~KeyProxyContainer
+} // ~key_proxy

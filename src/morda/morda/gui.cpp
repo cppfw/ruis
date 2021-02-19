@@ -18,7 +18,7 @@
 #include "widgets/label/color.hpp"
 #include "widgets/label/text.hpp"
 #include "widgets/label/gradient.hpp"
-#include "widgets/label/mouse_cursor.hpp"
+#include "widgets/label/image_mouse_cursor.hpp"
 #include "widgets/label/spinner.hpp"
 
 #include "widgets/input/text_input_line.hpp"
@@ -168,20 +168,8 @@ defs{
 )qwertyuiop";
 }
 
-gui::gui(
-		std::shared_ptr<morda::renderer> r,
-        std::shared_ptr<morda::updater> u,
-		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
-		real dots_per_inch,
-		real dots_per_dp
-	) :
-		context(std::make_shared<morda::context>(
-				std::move(r),
-                std::move(u),
-				std::move(run_from_ui_thread_function),
-				dots_per_inch,
-				dots_per_dp
-			))
+gui::gui(std::shared_ptr<morda::context> context) :
+		context(std::move(context))
 {
 	ASSERT(this->context)
 
@@ -275,7 +263,7 @@ void gui::initStandardWidgets(papki::file& fi) {
 	this->context->inflater.register_widget<click_drop_down_box>("click_drop_down_box");
 	this->context->inflater.register_widget<radio_button>("radio_button");
 	this->context->inflater.register_widget<choice_group>("choice_group");
-	this->context->inflater.register_widget<mouse_cursor>("mouse_cursor");
+	this->context->inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");
 	this->context->inflater.register_widget<collapse_area>("collapse_area");
 	this->context->inflater.register_widget<image_toggle>("image_toggle");
 	this->context->inflater.register_widget<image_push_button>("image_push_button");

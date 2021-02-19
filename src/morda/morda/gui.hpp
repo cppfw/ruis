@@ -14,19 +14,9 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param r - renderer implementation.
-	 * @param u - updater to use along with this gui.
-	 * @param post_to_ui_thread_function - function to use when posting an action to UI thread is needed.
-	 * @param dots_per_inch - DPI of your display.
-	 * @param dots_per_dp - desired dots per density pixel.
+	 * @param context - morda context to use for this gui instance.
 	 */
-	gui(
-			std::shared_ptr<morda::renderer> r,
-            std::shared_ptr<morda::updater> u,
-			std::function<void(std::function<void()>&&)>&& post_to_ui_thread_function,
-			real dots_per_inch,
-			real dots_per_dp
-		);
+	gui(std::shared_ptr<morda::context> context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;

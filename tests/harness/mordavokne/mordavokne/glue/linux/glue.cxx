@@ -523,7 +523,7 @@ morda::real getDotsPerPt(Display* display){
 application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
-		gui(
+		gui(std::make_shared<morda::context>(
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<morda::render_opengl2::renderer>(),
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
@@ -535,9 +535,12 @@ application::application(std::string&& name, const window_params& requestedWindo
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
 				},
+				[this](morda::mouse_cursor c){
+					// TODO:
+				},
 				getDotsPerInch(getImpl(windowPimpl).display),
 				::getDotsPerPt(getImpl(windowPimpl).display)
-			),
+			)),
 		storage_dir(initializeStorageDir(this->name))
 {
 #ifdef MORDAVOKNE_RASPBERRYPI

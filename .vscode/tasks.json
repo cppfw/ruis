@@ -22,9 +22,9 @@
             "group": "build"
         },
         {
-            "label": "build_debug",
+            "label": "build_dbg",
             "type": "shell",
-            "command": "make autojobs=true debug=true",
+            "command": "make autojobs=true config=dbg",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -54,11 +54,11 @@
             "group": "build"
 		},
 		{
-            "label": "run_busy_debug",
+            "label": "run_busy_dbg",
             "type": "shell",
             "command": "make run_busy debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
 		},
 		{
@@ -70,11 +70,11 @@
             "group": "build"
 		},
 		{
-            "label": "run_ratio_proxy_debug",
+            "label": "run_ratio_proxy_dbg",
             "type": "shell",
             "command": "make run_ratio_proxy debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
         },
         {
@@ -86,19 +86,19 @@
             "group": "build"
 		},
 		{
-            "label": "run_paint_debug",
+            "label": "run_paint_dbg",
             "type": "shell",
             "command": "make run_paint debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
 		},
 		{
-            "label": "run_widget_set_debug",
+            "label": "run_widget_set_dbg",
             "type": "shell",
             "command": "make run_widget_set debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
 		},
 		{
@@ -110,11 +110,11 @@
             "group": "build"
 		},
 		{
-            "label": "run_book_debug",
+            "label": "run_book_dbg",
             "type": "shell",
             "command": "make run_book debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
         },
         {
@@ -126,11 +126,11 @@
             "group": "build"
 		},
 		{
-            "label": "test_debug",
+            "label": "test_dbg",
             "type": "shell",
             "command": "make test debug=true autojobs=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
 		},
 		{
@@ -142,11 +142,11 @@
             "group": "build"
 		},
 		{
-            "label": "test_inflating_debug",
+            "label": "test_inflating_dbg",
             "type": "shell",
             "command": "make -C tests/inflating test debug=true",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
         },
         {
@@ -158,11 +158,11 @@
             "group": "build"
         },
         {
-            "label": "run_app_debug",
+            "label": "run_app_dbg",
             "type": "shell",
-            "command": "make run debug=true",
+            "command": "make run_app config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_debug",
+            "dependsOn": "build_dbg",
             "group": "build"
         },
         {

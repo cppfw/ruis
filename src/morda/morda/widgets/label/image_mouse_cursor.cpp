@@ -1,4 +1,4 @@
-#include "mouse_cursor.hpp"
+#include "image_mouse_cursor.hpp"
 
 #include "../../context.hpp"
 
@@ -6,7 +6,7 @@
 
 using namespace morda;
 
-mouse_cursor::mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -20,7 +20,7 @@ mouse_cursor::mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest&
 	}
 }
 
-void mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
+void image_mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
 	this->cursor = std::move(cursor);
 	this->quadTex.reset();
 	if(this->cursor){
@@ -28,14 +28,14 @@ void mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
 	}
 }
 
-bool mouse_cursor::on_mouse_move(const mouse_move_event& e){
+bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
 	if(e.pointer_id == 0){
 		this->cursorPos = e.pos;
 	}
 	return false;
 }
 
-void mouse_cursor::render(const morda::matrix4& matrix)const{
+void image_mouse_cursor::render(const morda::matrix4& matrix)const{
 	if(!this->cursor){
 		return;
 	}
@@ -50,7 +50,7 @@ void mouse_cursor::render(const morda::matrix4& matrix)const{
 	matr.translate(-this->cursor->hotspot());
 	matr.scale(this->quadTex->dims);
 	
-//	TRACE(<< "mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
+//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
 	this->quadTex->render(matr, *this->context->renderer->pos_tex_quad_01_vao);
 }
