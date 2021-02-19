@@ -8,11 +8,11 @@
 			"name": "(gdb) app",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/build/tests",
+			"program": "${workspaceFolder}/tests/app/out/dbg/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/mordavokne/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -22,7 +22,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build_dbg"
 		},
 		{
 			"name": "(gdb) busy",

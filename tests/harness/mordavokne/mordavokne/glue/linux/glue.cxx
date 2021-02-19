@@ -11,6 +11,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/cursorfont.h>
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 #	include <GL/glew.h>
@@ -36,8 +37,41 @@
 using namespace mordavokne;
 
 namespace{
+const std::map<morda::mouse_cursor, unsigned> x_cursor_map = {
+	{morda::mouse_cursor::arrow, XC_left_ptr},
+	{morda::mouse_cursor::left_right_arrow, XC_sb_h_double_arrow},
+	{morda::mouse_cursor::up_down_arrow, XC_sb_v_double_arrow},
+	{morda::mouse_cursor::left_side, XC_left_side},
+	{morda::mouse_cursor::right_side, XC_right_side},
+	{morda::mouse_cursor::top_side, XC_top_side},
+	{morda::mouse_cursor::bottom_side, XC_bottom_side},
+	{morda::mouse_cursor::top_left_corner, XC_top_left_corner},
+	{morda::mouse_cursor::top_right_corner, XC_top_right_corner},
+	{morda::mouse_cursor::bottom_left_corner, XC_bottom_left_corner},
+	{morda::mouse_cursor::bottom_right_corner, XC_bottom_right_corner},
+	{morda::mouse_cursor::index_finger, XC_hand2},
+	{morda::mouse_cursor::grab, XC_hand1},
+	{morda::mouse_cursor::caret, XC_xterm}
+};
+}
+
+namespace{
 struct WindowWrapper : public utki::destructable{
-	Display* display;
+	struct display_wrapper{
+		Display* display;
+
+		display_wrapper(){
+			this->display = XOpenDisplay(0);
+			if(!this->display){
+				throw std::runtime_error("XOpenDisplay() failed");
+			}
+		}
+
+		~display_wrapper(){
+			XCloseDisplay(this->display);
+		}
+	} display;
+
 	Colormap colorMap;
 	::Window window;
 #ifdef MORDAVOKNE_RENDER_OPENGL2
@@ -55,6 +89,38 @@ struct WindowWrapper : public utki::destructable{
 #else
 #	error "Unknown graphics API"
 #endif
+	struct cursor_wrapper{
+		WindowWrapper& owner;
+		Cursor cursor;
+	
+		cursor_wrapper(WindowWrapper& owner, morda::mouse_cursor c) :
+				owner(owner)
+		{
+			if(c == morda::mouse_cursor::none){
+				Pixmap blank;
+				XColor dummy;
+				char data[1] = {0};
+
+				blank = XCreateBitmapFromData(this->owner.display.display, this->owner.window, data, 1, 1);
+				if(blank == None){
+					throw std::runtime_error("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
+				}
+				utki::scope_exit scopeExit([this, &blank](){
+					XFreePixmap(this->owner.display.display, blank);
+				});
+				this->cursor = XCreatePixmapCursor(this->owner.display.display, blank, blank, &dummy, &dummy, 0, 0);
+			}else{
+				this->cursor = XCreateFontCursor(this->owner.display.display, x_cursor_map.at(c));
+			}
+		}
+
+		~cursor_wrapper(){
+			XFreeCursor(this->owner.display.display, this->cursor);
+		}
+	};
+
+	std::map<morda::mouse_cursor, std::unique_ptr<cursor_wrapper>> cursors;
+
 	Cursor emptyCursor;
 	XIM inputMethod;
 	XIC inputContext;
@@ -64,18 +130,10 @@ struct WindowWrapper : public utki::destructable{
 	volatile bool quitFlag = false;
 
 	WindowWrapper(const window_params& wp){
-		this->display = XOpenDisplay(0);
-		if(!this->display){
-			throw std::runtime_error("XOpenDisplay() failed");
-		}
-		utki::scope_exit scopeExitDisplay([this](){
-			XCloseDisplay(this->display);
-		});
-
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 		{
 			int glxVerMajor, glxVerMinor;
-			if(!glXQueryVersion(this->display, &glxVerMajor, &glxVerMinor)){
+			if(!glXQueryVersion(this->display.display, &glxVerMajor, &glxVerMinor)){
 				throw std::runtime_error("glXQueryVersion() failed");
 			}
 
@@ -108,7 +166,7 @@ struct WindowWrapper : public utki::destructable{
 			visualAttribs.push_back(None);
 
 			int fbcount;
-			GLXFBConfig* fbc = glXChooseFBConfig(this->display, DefaultScreen(this->display), &*visualAttribs.begin(), &fbcount);
+			GLXFBConfig* fbc = glXChooseFBConfig(this->display.display, DefaultScreen(this->display.display), &*visualAttribs.begin(), &fbcount);
 			if(!fbc){
 				throw std::runtime_error("glXChooseFBConfig() returned empty list");
 			}
@@ -119,11 +177,11 @@ struct WindowWrapper : public utki::destructable{
 			int bestFbcIdx = -1, worstFbc = -1, bestNumSamp = -1, worstNumSamp = 999;
 
 			for(int i = 0; i < fbcount; ++i){
-				XVisualInfo *vi = glXGetVisualFromFBConfig( display, fbc[i] );
+				XVisualInfo *vi = glXGetVisualFromFBConfig(this->display.display, fbc[i]);
 				if(vi){
 					int samp_buf, samples;
-					glXGetFBConfigAttrib(this->display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
-					glXGetFBConfigAttrib(this->display, fbc[i], GLX_SAMPLES, &samples);
+					glXGetFBConfigAttrib(this->display.display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
+					glXGetFBConfigAttrib(this->display.display, fbc[i], GLX_SAMPLES, &samples);
 
 					if ( bestFbcIdx < 0 || (samp_buf && samples > bestNumSamp )){
 						bestFbcIdx = i, bestNumSamp = samples;
@@ -187,7 +245,7 @@ struct WindowWrapper : public utki::destructable{
 
 		XVisualInfo *vi;
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		vi = glXGetVisualFromFBConfig(this->display, bestFbc);
+		vi = glXGetVisualFromFBConfig(this->display.display, bestFbc);
 		if (!vi) {
 			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
@@ -219,7 +277,7 @@ struct WindowWrapper : public utki::destructable{
 			XVisualInfo visTemplate;
 			visTemplate.visualid = vid;
 			vi = XGetVisualInfo(
-					this->display,
+					this->display.display,
 					VisualIDMask,
 					&visTemplate,
 					&numVisuals
@@ -237,14 +295,14 @@ struct WindowWrapper : public utki::destructable{
 		});
 
 		this->colorMap = XCreateColormap(
-				this->display,
-				RootWindow(this->display, vi->screen),
+				this->display.display,
+				RootWindow(this->display.display, vi->screen),
 				vi->visual,
 				AllocNone
 			);
 		//TODO: check for error?
 		utki::scope_exit scopeExitColorMap([this](){
-			XFreeColormap(this->display, this->colorMap);
+			XFreeColormap(this->display.display, this->colorMap);
 		});
 
 		{
@@ -267,8 +325,8 @@ struct WindowWrapper : public utki::destructable{
 			unsigned long fields = CWBorderPixel | CWColormap | CWEventMask;
 
 			this->window = XCreateWindow(
-					this->display,
-					RootWindow(this->display, vi->screen),
+					this->display.display,
+					RootWindow(this->display.display, vi->screen),
 					0,
 					0,
 					wp.dim.x(),
@@ -285,29 +343,29 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("Failed to create window");
 		}
 		utki::scope_exit scopeExitWindow([this](){
-			XDestroyWindow(this->display, this->window);
+			XDestroyWindow(this->display.display, this->window);
 		});
 
 		{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
-			Atom a = XInternAtom(this->display, "WM_DELETE_WINDOW", True);
-			XSetWMProtocols(this->display, this->window, &a, 1);
+			Atom a = XInternAtom(this->display.display, "WM_DELETE_WINDOW", True);
+			XSetWMProtocols(this->display.display, this->window, &a, 1);
 		}
 
-		XMapWindow(this->display, this->window);
+		XMapWindow(this->display.display, this->window);
 
-		XFlush(this->display);
+		XFlush(this->display.display);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		this->glContext = glXCreateContext(this->display, vi, 0, GL_TRUE);
+		this->glContext = glXCreateContext(this->display.display, vi, 0, GL_TRUE);
 		if(this->glContext == NULL){
 			throw std::runtime_error("glXCreateContext() failed");
 		}
 		utki::scope_exit scopeExitGLContext([this](){
-			glXMakeCurrent(this->display, None, NULL);
-			glXDestroyContext(this->display, this->glContext);
+			glXMakeCurrent(this->display.display, None, NULL);
+			glXDestroyContext(this->display.display, this->glContext);
 		});
 
-		glXMakeCurrent(this->display, this->window, this->glContext);
+		glXMakeCurrent(this->display.display, this->window, this->glContext);
 
 		TRACE(<< "OpenGL version: " << glGetString(GL_VERSION) << std::endl)
 
@@ -413,21 +471,21 @@ struct WindowWrapper : public utki::destructable{
 			XColor dummy;
 			char data[1] = {0};
 
-			blank = XCreateBitmapFromData(this->display, this->window, data, 1, 1);
+			blank = XCreateBitmapFromData(this->display.display, this->window, data, 1, 1);
 			if(blank == None){
 				throw std::runtime_error("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
 			}
 			utki::scope_exit scopeExit([this, &blank](){
-				XFreePixmap(this->display, blank);
+				XFreePixmap(this->display.display, blank);
 			});
 
-			this->emptyCursor = XCreatePixmapCursor(this->display, blank, blank, &dummy, &dummy, 0, 0);
+			this->emptyCursor = XCreatePixmapCursor(this->display.display, blank, blank, &dummy, &dummy, 0, 0);
 		}
 		utki::scope_exit scopeExitEmptyCursor([this](){
-			XFreeCursor(this->display, this->emptyCursor);
+			XFreeCursor(this->display.display, this->emptyCursor);
 		});
 
-		this->inputMethod = XOpenIM(this->display, NULL, NULL, NULL);
+		this->inputMethod = XOpenIM(this->display.display, NULL, NULL, NULL);
 		if(this->inputMethod == NULL){
 			throw std::runtime_error("XOpenIM() failed");
 		}
@@ -455,7 +513,6 @@ struct WindowWrapper : public utki::destructable{
 		scopeExitEmptyCursor.reset();
 		scopeExitWindow.reset();
 		scopeExitColorMap.reset();
-		scopeExitDisplay.reset();
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 		scopeExitGLContext.reset();
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
@@ -471,11 +528,11 @@ struct WindowWrapper : public utki::destructable{
 		XDestroyIC(this->inputContext);
 
 		XCloseIM(this->inputMethod);
-		XFreeCursor(this->display, this->emptyCursor);
+		XFreeCursor(this->display.display, this->emptyCursor);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		glXMakeCurrent(this->display, None, NULL);
-		glXDestroyContext(this->display, this->glContext);
+		glXMakeCurrent(this->display.display, None, NULL);
+		glXDestroyContext(this->display.display, this->glContext);
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		eglMakeCurrent(this->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 		eglDestroyContext(this->eglDisplay, this->eglContext);
@@ -484,20 +541,22 @@ struct WindowWrapper : public utki::destructable{
 #	error "Unknown graphics API"
 #endif
 
-		XDestroyWindow(this->display, this->window);
-		XFreeColormap(this->display, this->colorMap);
+		XDestroyWindow(this->display.display, this->window);
+		XFreeColormap(this->display.display, this->colorMap);
 
 #ifdef MORDAVOKNE_RENDER_OPENGLES2
 		eglTerminate(this->eglDisplay);
 #endif
-
-		XCloseDisplay(this->display);
 	}
 };
 
 WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
 	return static_cast<WindowWrapper&>(*pimpl);
+}
+
+WindowWrapper& get_impl(application& app){
+	return getImpl(getWindowPimpl(app));
 }
 
 }
@@ -536,10 +595,16 @@ application::application(std::string&& name, const window_params& requestedWindo
 					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
 				},
 				[this](morda::mouse_cursor c){
-					// TODO:
+					auto& ww = get_impl(*this);
+					XDefineCursor(
+							ww.display.display,
+							ww.window,
+							XCreateFontCursor(ww.display.display, x_cursor_map.at(c))
+						);
+						// TODO: save current cursor and call XCursorFree when it is not needed
 				},
-				getDotsPerInch(getImpl(windowPimpl).display),
-				::getDotsPerPt(getImpl(windowPimpl).display)
+				getDotsPerInch(getImpl(windowPimpl).display.display),
+				::getDotsPerPt(getImpl(windowPimpl).display.display)
 			)),
 		storage_dir(initializeStorageDir(this->name))
 {
@@ -911,7 +976,7 @@ int main(int argc, const char** argv){
 
 	auto& ww = getImpl(getWindowPimpl(*app));
 
-	XEvent_waitable xew(ww.display);
+	XEvent_waitable xew(ww.display.display);
 
 	opros::wait_set wait_set(2);
 
@@ -940,10 +1005,10 @@ int main(int argc, const char** argv){
 		// NOTE: do not check 'read' flag for X event, for some reason when waiting with 0 timeout it will never be set.
 		//       Maybe some bug in XWindows, maybe something else.
 		bool x_event_arrived = false;
-		while(XPending(ww.display) > 0){
+		while(XPending(ww.display.display) > 0){
 			x_event_arrived = true;
 			XEvent event;
-			XNextEvent(ww.display, &event);
+			XNextEvent(ww.display.display, &event);
 			// TRACE(<< "X event got, type = " << (event.type) << std::endl)
 			switch(event.type){
 				case Expose:
@@ -971,9 +1036,9 @@ int main(int argc, const char** argv){
 						morda::key key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
 
 						// detect auto-repeated key events
-						if(XEventsQueued(ww.display, QueuedAfterReading)){ // if there are other events queued
+						if(XEventsQueued(ww.display.display, QueuedAfterReading)){ // if there are other events queued
 							XEvent nev;
-							XPeekEvent(ww.display, &nev);
+							XPeekEvent(ww.display.display, &nev);
 
 							if(nev.type == KeyPress
 									&& nev.xkey.time == event.xkey.time
@@ -983,7 +1048,7 @@ int main(int argc, const char** argv){
 								// key wasn't actually released
 								handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
 
-								XNextEvent(ww.display, &nev); // remove the key down event from queue
+								XNextEvent(ww.display.display, &nev); // remove the key down event from queue
 								break;
 							}
 						}
@@ -1030,7 +1095,7 @@ int main(int argc, const char** argv){
 //						TRACE(<< "ClientMessage X event got" << std::endl)
 					// probably a WM_DELETE_WINDOW event
 					{
-						char* name = XGetAtomName(ww.display, event.xclient.message_type);
+						char* name = XGetAtomName(ww.display.display, event.xclient.message_type);
 						if(*name == *"WM_PROTOCOLS"){
 							ww.quitFlag = true;
 						}
@@ -1075,8 +1140,8 @@ void application::set_fullscreen(bool enable){
 	Atom stateAtom;
 	Atom atom;
 
-	stateAtom = XInternAtom(ww.display, "_NET_WM_STATE", False);
-	atom = XInternAtom(ww.display, "_NET_WM_STATE_FULLSCREEN", False);
+	stateAtom = XInternAtom(ww.display.display, "_NET_WM_STATE", False);
+	atom = XInternAtom(ww.display.display, "_NET_WM_STATE_FULLSCREEN", False);
 
 	event.xclient.type = ClientMessage;
 	event.xclient.serial = 0;
@@ -1088,9 +1153,15 @@ void application::set_fullscreen(bool enable){
 	event.xclient.data.l[1]	= atom;
 	event.xclient.data.l[2]	= 0;
 
-	XSendEvent(ww.display, DefaultRootWindow(ww.display), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+	XSendEvent(
+			ww.display.display,
+			DefaultRootWindow(ww.display.display),
+			False,
+			SubstructureRedirectMask | SubstructureNotifyMask,
+			&event
+		);
 
-	XFlush(ww.display);
+	XFlush(ww.display.display);
 
 	this->isFullscreen_v = enable;
 }
@@ -1099,9 +1170,9 @@ void application::set_mouse_cursor_visible(bool visible){
 	auto& ww = getImpl(this->windowPimpl);
 
 	if(visible){
-		XUndefineCursor(ww.display, ww.window);
+		XUndefineCursor(ww.display.display, ww.window);
 	}else{
-		XDefineCursor(ww.display, ww.window, ww.emptyCursor);
+		XDefineCursor(ww.display.display, ww.window, ww.emptyCursor);
 	}
 }
 
@@ -1109,7 +1180,7 @@ void application::swapFrameBuffers(){
 	auto& ww = getImpl(this->windowPimpl);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-	glXSwapBuffers(ww.display, ww.window);
+	glXSwapBuffers(ww.display.display, ww.window);
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 	eglSwapBuffers(ww.eglDisplay, ww.eglSurface);
 #else
