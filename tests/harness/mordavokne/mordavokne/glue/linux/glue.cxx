@@ -119,9 +119,50 @@ struct WindowWrapper : public utki::destructable{
 		}
 	};
 
+	cursor_wrapper* cur_cursor = nullptr;
+	bool cursor_visible = true;
 	std::map<morda::mouse_cursor, std::unique_ptr<cursor_wrapper>> cursors;
 
-	Cursor emptyCursor;
+	void apply_cursor(cursor_wrapper& c){
+		XDefineCursor(
+				this->display.display,
+				this->window,
+				c.cursor
+			);
+	}
+
+	cursor_wrapper* get_cursor(morda::mouse_cursor c){
+		auto i = this->cursors.find(c);
+		if(i == this->cursors.end()){
+			i = this->cursors.insert(std::make_pair(
+					c,
+					std::make_unique<cursor_wrapper>(*this, c)
+				)).first;
+		}
+		return i->second.get();
+	}
+
+	void set_cursor(morda::mouse_cursor c){
+		this->cur_cursor = this->get_cursor(c);
+
+		if(this->cursor_visible){
+			this->apply_cursor(*this->cur_cursor);
+		}
+	}
+
+	void set_cursor_visible(bool visible){
+		this->cursor_visible = visible;
+		if(visible){
+			if(this->cur_cursor){
+				this->apply_cursor(*this->cur_cursor);
+			}else{
+				XUndefineCursor(this->display.display, this->window);
+			}
+		}else{
+			this->apply_cursor(*this->get_cursor(morda::mouse_cursor::none));
+		}
+	}
+
 	XIM inputMethod;
 	XIC inputContext;
 
@@ -465,26 +506,6 @@ struct WindowWrapper : public utki::destructable{
 #else
 #	error "Unknown graphics API"
 #endif
-
-		{
-			Pixmap blank;
-			XColor dummy;
-			char data[1] = {0};
-
-			blank = XCreateBitmapFromData(this->display.display, this->window, data, 1, 1);
-			if(blank == None){
-				throw std::runtime_error("application::XEmptyMouseCursor::XEmptyMouseCursor(): could not create bitmap");
-			}
-			utki::scope_exit scopeExit([this, &blank](){
-				XFreePixmap(this->display.display, blank);
-			});
-
-			this->emptyCursor = XCreatePixmapCursor(this->display.display, blank, blank, &dummy, &dummy, 0, 0);
-		}
-		utki::scope_exit scopeExitEmptyCursor([this](){
-			XFreeCursor(this->display.display, this->emptyCursor);
-		});
-
 		this->inputMethod = XOpenIM(this->display.display, NULL, NULL, NULL);
 		if(this->inputMethod == NULL){
 			throw std::runtime_error("XOpenIM() failed");
@@ -510,7 +531,6 @@ struct WindowWrapper : public utki::destructable{
 
 		scopeExitInputContext.reset();
 		scopeExitInputMethod.reset();
-		scopeExitEmptyCursor.reset();
 		scopeExitWindow.reset();
 		scopeExitColorMap.reset();
 #ifdef MORDAVOKNE_RENDER_OPENGL2
@@ -528,7 +548,6 @@ struct WindowWrapper : public utki::destructable{
 		XDestroyIC(this->inputContext);
 
 		XCloseIM(this->inputMethod);
-		XFreeCursor(this->display.display, this->emptyCursor);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 		glXMakeCurrent(this->display.display, None, NULL);
@@ -1167,13 +1186,7 @@ void application::set_fullscreen(bool enable){
 }
 
 void application::set_mouse_cursor_visible(bool visible){
-	auto& ww = getImpl(this->windowPimpl);
-
-	if(visible){
-		XUndefineCursor(ww.display.display, ww.window);
-	}else{
-		XDefineCursor(ww.display.display, ww.window, ww.emptyCursor);
-	}
+	get_impl(*this).set_cursor_visible(visible);
 }
 
 void application::swapFrameBuffers(){
