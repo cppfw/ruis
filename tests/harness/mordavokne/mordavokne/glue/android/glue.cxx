@@ -978,12 +978,13 @@ std::string initializeStorageDir(const std::string& appName){
 mordavokne::application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
-		gui(
+		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
 					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
 				},
+				[this](morda::mouse_cursor){},
 				[]() -> float{
 					ASSERT(javaFunctionsWrapper)
 
@@ -994,7 +995,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}()
-			),
+			)),
 		storage_dir(initializeStorageDir(this->name))
 {
 	auto winSize = getImpl(this->windowPimpl).getWindowSize();

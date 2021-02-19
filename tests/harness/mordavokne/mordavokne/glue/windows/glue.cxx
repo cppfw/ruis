@@ -633,7 +633,7 @@ std::string initializeStorageDir(const std::string& appName){
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
 		windowPimpl(std::make_unique<WindowWrapper>(wp)),
-		gui(
+		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengl2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
@@ -642,9 +642,12 @@ application::application(std::string&& name, const window_params& wp) :
 						throw std::runtime_error("PostMessage(): failed");
 					}
 				},
+				[this](morda::mouse_cursor c){
+					// TODO:
+				},
 				getDotsPerInch(getImpl(this->windowPimpl).hdc),
 				getDotsPerPt(getImpl(this->windowPimpl).hdc)
-			),
+			)),
 		storage_dir(initializeStorageDir(this->name)),
 		curWinRect(0, 0, -1, -1)
 {

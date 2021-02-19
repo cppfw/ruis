@@ -336,7 +336,7 @@ morda::real getDotsPerDp(){
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
 		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
-		gui(
+		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
@@ -347,9 +347,10 @@ application::application(std::string&& name, const window_params& wp) :
 						(*m)();
 					});
 				},
+				[this](morda::mouse_cursor){},
 				getDotsPerInch(),
 				getDotsPerDp()
-			),
+			)),
 		storage_dir("") //TODO: initialize to proper value
 {
 	this->set_fullscreen(false);//this will intialize the viewport
