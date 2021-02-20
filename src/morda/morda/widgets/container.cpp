@@ -98,16 +98,23 @@ bool container::on_mouse_button(const mouse_button_event& e){
 							e.pointer_id
 						});
 
-					unsigned& n = i->second.num_buttons_captured;
+					unsigned& num_buttons_captured = i->second.num_buttons_captured;
 					if(e.is_down){
-						++n;
+						// if we get button down event for mouse capturing widget, then it is not for the buttons
+						// which are already down, so we increase the button counter.
+						++num_buttons_captured;
 					}else{
-						--n;
+						//If we get button up event,
+						// then it is for one of the buttons which was down before, so we decrease the button counter.
+						--num_buttons_captured;
 					}
-					if(n == 0){
+					if(num_buttons_captured == 0){
 						this->mouse_capture_map.erase(i);
 					}
-					return true; // doesn't matter what to return
+
+					// doesn't matter what to return because parent widget also captured
+					// the mouse and in this case the return value is ignored
+					return true;
 				}
 			}
 			this->mouse_capture_map.erase(i);
@@ -129,6 +136,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 		// Sometimes mouse click event comes without prior mouse move,
 		// but, since we get mouse click, then the widget was hovered before the click.
 		c->set_hovered(true, e.pointer_id);
+
 		if(c->on_mouse_button(mouse_button_event{
 				e.is_down,
 				e.pos - c->rect().p,
@@ -138,7 +146,12 @@ bool container::on_mouse_button(const mouse_button_event& e){
 		{
 			ASSERT(this->mouse_capture_map.find(e.pointer_id) == this->mouse_capture_map.end())
 
-			if(e.is_down){ // in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
+			// normally, we get here only when the mouse was not captured by widget, because
+			// as soon as mouse button down event comes to some widget, it captures the mouse.
+			// So, the event should be button down.
+			// But, in theory, it can be button up event here, if some widget which captured
+			// mouse was removed from its parent. So, check if we have button down event.
+			if(e.is_down){
 				this->mouse_capture_map.insert(std::make_pair(
 						e.pointer_id,
 						mouse_capture_info{

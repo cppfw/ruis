@@ -252,6 +252,7 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
+		caption->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::grab);
 	}
 
 	{
