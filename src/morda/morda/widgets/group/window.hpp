@@ -53,7 +53,7 @@ class window :
 
 	morda::vector2 capturePoint;
 
-	void setupWidgets();
+	void setup_widgets();
 
 	void updateTopmost();
 

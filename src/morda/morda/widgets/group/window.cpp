@@ -153,7 +153,7 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 		widget(std::move(c), desc),
 		pile(nullptr, windowDesc_c)
 {
-	this->setupWidgets();
+	this->setup_widgets();
 
 	const real default_border_size_px = 5;
 	sides<real> borders(default_border_size_px);
@@ -197,7 +197,22 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 	this->contentArea->push_back_inflate(desc);
 }
 
-void morda::window::setupWidgets(){
+namespace{
+decltype(morda::mouse_proxy::hover_change_handler) make_hover_change_handler(morda::mouse_cursor cursor){
+	return [cursor](mouse_proxy& mp, unsigned){
+			if(mp.is_hovered()){
+				// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
+				mp.context->run_from_ui_thread([context = mp.context, cursor](){
+					context->set_mouse_cursor(cursor);
+				});
+			}else{
+				mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
+			}
+		};
+}
+}
+
+void morda::window::setup_widgets(){
 	this->contentArea = this->try_get_widget_as<pile>("morda_content");
 	ASSERT(this->contentArea)
 
@@ -252,6 +267,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_left_corner);
 		this->ltBorder = w;
 	}
 
@@ -271,6 +287,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_left_corner);
 		this->lbBorder = w;
 	}
 
@@ -290,6 +307,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_right_corner);
 		this->rtBorder = w;
 	}
 
@@ -306,6 +324,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_right_corner);
 		this->rbBorder = w;
 	}
 
@@ -323,6 +342,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::left_side);
 		this->lBorder = w;
 	}
 
@@ -339,6 +359,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::right_side);
 		this->rBorder = w;
 	}
 
@@ -356,6 +377,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_side);
 		this->tBorder = w;
 	}
 
@@ -372,6 +394,7 @@ void morda::window::setupWidgets(){
 			}
 			return false;
 		};
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_side);
 		this->bBorder = w;
 	}
 }
