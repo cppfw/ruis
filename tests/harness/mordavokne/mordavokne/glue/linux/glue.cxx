@@ -295,9 +295,9 @@ struct WindowWrapper : public utki::destructable{
 		{
 			int numVisuals;
 			XVisualInfo visTemplate;
-			visTemplate.screen = DefaultScreen(this->display); //LCD
+			visTemplate.screen = DefaultScreen(this->display.display); // LCD
 			vi = XGetVisualInfo(
-					this->display,
+					this->display.display,
 					VisualScreenMask,
 					&visTemplate,
 					&numVisuals
