@@ -261,6 +261,10 @@ WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 	return static_cast<WindowWrapper&>(*pimpl);
 }
 
+WindowWrapper& get_impl(application& app){
+	return getImpl(getWindowPimpl(app));
+}
+
 class asset_file : public papki::file{
 	AAssetManager* manager;
 
@@ -982,7 +986,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(*this)).uiQueue.push_back(std::move(a));
+					get_impl(*this).uiQueue.push_back(std::move(a));
 				},
 				[this](morda::mouse_cursor){},
 				[]() -> float{
@@ -991,14 +995,14 @@ mordavokne::application::application(std::string&& name, const window_params& re
 					return javaFunctionsWrapper->getDotsPerInch();
 				}(),
 				[this]() -> float{
-					auto res = getImpl(this->windowPimpl).getWindowSize();
+					auto res = get_impl(*this).getWindowSize();
 					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}()
 			)),
 		storage_dir(initializeStorageDir(this->name))
 {
-	auto winSize = getImpl(this->windowPimpl).getWindowSize();
+	auto winSize = get_impl(*this).getWindowSize();
 	this->updateWindowRect(morda::rectangle(morda::vector2(0), winSize.to<morda::real>()));
 }
 
@@ -1007,7 +1011,7 @@ std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::st
 }
 
 void mordavokne::application::swapFrameBuffers(){
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = get_impl(*this);
 	ww.swapBuffers();
 }
 
