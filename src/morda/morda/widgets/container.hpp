@@ -46,8 +46,13 @@ private:
 		}
 	} children_v;
 
+	struct mouse_capture_info{
+		std::weak_ptr<widget> capturing_widget;
+		unsigned num_buttons_captured;
+	};
+
 	// Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
-	std::map<unsigned, std::pair<std::weak_ptr<widget>, unsigned>> mouseCaptureMap;
+	std::map<unsigned, mouse_capture_info> mouse_capture_map;
 
 private:
 	// flag indicating that modifications to children list are blocked

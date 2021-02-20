@@ -200,15 +200,16 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 namespace{
 decltype(morda::mouse_proxy::hover_change_handler) make_hover_change_handler(morda::mouse_cursor cursor){
 	return [cursor](mouse_proxy& mp, unsigned){
-			if(mp.is_hovered()){
-				// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
-				mp.context->run_from_ui_thread([context = mp.context, cursor](){
-					context->set_mouse_cursor(cursor);
-				});
-			}else{
-				mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
-			}
-		};
+		LOG("hover = " << mp.is_hovered() << std::endl)
+		if(mp.is_hovered()){
+			// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
+			mp.context->run_from_ui_thread([context = mp.context, cursor](){
+				context->set_mouse_cursor(cursor);
+			});
+		}else{
+			mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
+		}
+	};
 }
 }
 

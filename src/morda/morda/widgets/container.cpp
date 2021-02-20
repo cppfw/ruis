@@ -86,9 +86,9 @@ bool container::on_mouse_button(const mouse_button_event& e){
 
 	// check if mouse captured
 	{
-		auto i = this->mouseCaptureMap.find(e.pointer_id);
-		if(i != this->mouseCaptureMap.end()){
-			if(auto w = i->second.first.lock()){
+		auto i = this->mouse_capture_map.find(e.pointer_id);
+		if(i != this->mouse_capture_map.end()){
+			if(auto w = i->second.capturing_widget.lock()){
 				if(w->is_interactive()){
 					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 					w->on_mouse_button(mouse_button_event{
@@ -98,20 +98,19 @@ bool container::on_mouse_button(const mouse_button_event& e){
 							e.pointer_id
 						});
 
-					unsigned& n = i->second.second;
-					// TODO: why is this counter needed?
+					unsigned& n = i->second.num_buttons_captured;
 					if(e.is_down){
 						++n;
 					}else{
 						--n;
 					}
 					if(n == 0){
-						this->mouseCaptureMap.erase(i);
+						this->mouse_capture_map.erase(i);
 					}
 					return true; // doesn't matter what to return
 				}
 			}
-			this->mouseCaptureMap.erase(i);
+			this->mouse_capture_map.erase(i);
 		}
 	}
 
@@ -137,10 +136,16 @@ bool container::on_mouse_button(const mouse_button_event& e){
 				e.pointer_id
 			}))
 		{
-			ASSERT(this->mouseCaptureMap.find(e.pointer_id) == this->mouseCaptureMap.end())
+			ASSERT(this->mouse_capture_map.find(e.pointer_id) == this->mouse_capture_map.end())
 
 			if(e.is_down){ // in theory, it can be button up event here, if some widget which captured mouse was removed from its parent
-				this->mouseCaptureMap.insert(std::make_pair(e.pointer_id, std::make_pair(std::weak_ptr<widget>(c), 1)));
+				this->mouse_capture_map.insert(std::make_pair(
+						e.pointer_id,
+						mouse_capture_info{
+							utki::make_weak(c),
+							1
+						}
+					));
 			}
 
 			return true;
@@ -151,7 +156,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 }
 
 bool container::on_mouse_move(const mouse_move_event& e){
-//	TRACE(<< "container::OnMouseMove(): pos = " << pos << std::endl)
+//	TRACE(<< "container::on_mouse_move(): pos = " << pos << std::endl)
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
@@ -164,7 +169,10 @@ bool container::on_mouse_move(const mouse_move_event& e){
 			continue;
 		}
 
-		bool consumed = c->on_mouse_move(mouse_move_event{
+		bool consumed;
+		
+		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
+		consumed = c->on_mouse_move(mouse_move_event{
 				e.pos - c->rect().p,
 				e.pointer_id
 			});
@@ -188,10 +196,7 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		}
 	}
 
-	return this->widget::on_mouse_move(mouse_move_event{
-			e.pos,
-			e.pointer_id
-		});
+	return false;
 }
 
 void container::on_hover_change(unsigned pointerID){

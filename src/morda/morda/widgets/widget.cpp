@@ -386,10 +386,10 @@ void widget::set_hovered(bool isHovered, unsigned pointerID){
 	}
 //	TRACE(<< "widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
 
-	if (isHovered) {
+	if(isHovered){
 		ASSERT(!this->is_hovered(pointerID))
 		this->hovered.insert(pointerID);
-	} else {
+	}else{
 		ASSERT(this->is_hovered(pointerID))
 		this->hovered.erase(pointerID);
 	}
