@@ -25,6 +25,7 @@ struct mouse_button_event{
 };
 
 struct mouse_move_event{
+	vector2 absolute_pos; /// position of the mouse cursor at the moment when the button event has occurred, in application viewport coordinates
 	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local coordinates
 	unsigned pointer_id; /// id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens
 };

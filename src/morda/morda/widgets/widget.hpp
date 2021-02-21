@@ -123,7 +123,7 @@ public:
 private:
 	bool cache = false;
 	mutable bool cacheDirty = true;
-	mutable std::shared_ptr<texture_2d> cacheTex;
+	mutable std::shared_ptr<texture_2d> cache_texture;
 
 	void renderFromCache(const r4::matrix4<float>& matrix)const;
 
@@ -262,6 +262,18 @@ public:
 	const morda::rectangle& rect()const noexcept{
 		return this->rectangle;
 	}
+
+	/**
+	 * @brief Get widget's position in absolute coordinates.
+	 * @return widget's position in absolute coordinates.
+	 */
+	morda::vector2 get_absolute_pos()const noexcept;
+
+	/**
+	 * @brief Get widget's rectangle in absolute coordinates.
+	 * @return widget's absolute coordinates rectangle.
+	 */
+	morda::rectangle get_absolute_rect()const noexcept;
 
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.

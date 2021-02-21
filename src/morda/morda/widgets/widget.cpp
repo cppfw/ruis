@@ -121,7 +121,7 @@ void widget::invalidate_layout()noexcept{
 	if(this->parent()){
 		this->parent()->invalidate_layout();
 	}
-	this->cacheTex.reset();
+	this->cache_texture.reset();
 }
 
 void widget::renderInternal(const morda::matrix4& matrix)const{
@@ -137,11 +137,11 @@ void widget::renderInternal(const morda::matrix4& matrix)const{
 			r.set_scissor_enabled(false);
 
 			// check if can re-use old texture
-			if(!this->cacheTex || this->cacheTex->dims() != this->rect().d){
-				this->cacheTex = this->render_to_texture();
+			if(!this->cache_texture || this->cache_texture->dims() != this->rect().d){
+				this->cache_texture = this->render_to_texture();
 			}else{
-				ASSERT(this->cacheTex->dims() == this->rect().d)
-				this->cacheTex = this->render_to_texture(std::move(this->cacheTex));
+				ASSERT(this->cache_texture->dims() == this->rect().d)
+				this->cache_texture = this->render_to_texture(std::move(this->cache_texture));
 			}
 
 			r.set_scissor_enabled(scissorTestWasEnabled);
@@ -245,8 +245,8 @@ void widget::renderFromCache(const r4::matrix4<float>& matrix) const {
 	matr.scale(this->rect().d);
 
 	auto& r = *this->context->renderer;
-	ASSERT(this->cacheTex)
-	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cacheTex);
+	ASSERT(this->cache_texture)
+	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cache_texture);
 }
 
 void widget::clear_cache(){
@@ -298,6 +298,23 @@ r4::rectangle<int> widget::compute_viewport_rect(const matrix4& matrix)const noe
 		);
 	ret.p.y() -= ret.d.y();
 	return ret;
+}
+
+morda::vector2 widget::get_absolute_pos()const noexcept{
+	if(!this->parent()){
+		return this->rect().p;
+	}
+	return this->parent()->get_absolute_pos() + this->rect().p;
+}
+
+morda::rectangle widget::get_absolute_rect()const noexcept{
+	if(this->parent()){
+		return {
+			this->get_absolute_pos(),
+			this->rect().d
+		};
+	}
+	return this->rect();
 }
 
 vector2 widget::measure(const morda::vector2& quotum)const{
