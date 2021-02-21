@@ -184,14 +184,13 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
 		bool consumed = c->on_mouse_move(mouse_move_event{
-				e.absolute_pos,
 				e.pos - c->rect().p,
 				e.pointer_id
 			});
 
 		// set hovered goes after move notification because position of widget could change
 		// during handling the notification, so need to check after that for hovering
-		if(!c->get_absolute_rect().overlaps(e.absolute_pos)){
+		if(!c->rect().overlaps(e.pos)){
 			c->set_hovered(false, e.pointer_id);
 			continue;
 		}

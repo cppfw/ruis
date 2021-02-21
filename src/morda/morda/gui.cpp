@@ -334,7 +334,6 @@ void gui::send_mouse_move(const vector2& pos, unsigned id){
 		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
 		this->root_widget->on_mouse_move(mouse_move_event{
 				pos,
-				pos,
 				id
 			});
 	}
