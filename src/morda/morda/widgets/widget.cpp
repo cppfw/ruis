@@ -72,6 +72,10 @@ std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	return nullptr;
 }
 
+void widget::move_to(const vector2& new_pos){
+	this->rectangle.p = new_pos;
+}
+
 void widget::resize(const morda::vector2& newDims){
 	if(this->rectangle.d == newDims){
 		if(this->relayoutNeeded){
@@ -384,7 +388,7 @@ void widget::set_enabled(bool enable){
 
 void widget::set_visible(bool visible){
 	this->visible = visible;
-	if (!this->visible) {
+	if(!this->visible){
 		this->set_unhovered();
 	}
 }
@@ -397,19 +401,26 @@ void widget::set_unhovered(){
 	}
 }
 
-void widget::set_hovered(bool isHovered, unsigned pointerID){
-	if(isHovered == this->is_hovered(pointerID)){
+void widget::set_hovered(bool is_hovered, unsigned pointer_id){
+	if(is_hovered == this->is_hovered(pointer_id)){
 		return;
 	}
 //	TRACE(<< "widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
 
-	if(isHovered){
-		ASSERT(!this->is_hovered(pointerID))
-		this->hovered.insert(pointerID);
+	if(is_hovered){
+		ASSERT(!this->is_hovered(pointer_id))
+		this->hovered.insert(pointer_id);
 	}else{
-		ASSERT(this->is_hovered(pointerID))
-		this->hovered.erase(pointerID);
+		ASSERT(this->is_hovered(pointer_id))
+		this->hovered.erase(pointer_id);
 	}
 
-	this->on_hover_change(pointerID);
+	this->on_hover_change(pointer_id);
+}
+
+void widget::update_hovering(const morda::vector2& pos, unsigned pointer_id){
+	if(!this->is_interactive()){
+		return;
+	}
+	this->set_hovered(this->rect().overlaps(pos), pointer_id);
 }

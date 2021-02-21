@@ -249,9 +249,11 @@ public:
 	}
 
 private:
-	void set_hovered(bool isHovered, unsigned pointerID);
+	void set_hovered(bool is_hovered, unsigned pointer_id);
 
 	void set_unhovered();
+
+	virtual void update_hovering(const morda::vector2& pos, unsigned pointer_id);
 public:
 
 	/**
@@ -286,16 +288,14 @@ public:
 	 * @brief Move widget to position within its parent.
 	 * @param new_pos - new widget's position.
 	 */
-	void move_to(const vector2& new_pos)noexcept{
-		this->rectangle.p = new_pos;
-	}
+	void move_to(const vector2& new_pos);
 
 	/**
 	 * @brief Shift widget within its parent.
 	 * @param delta - vector to shift the widget by.
 	 */
-	void move_by(const vector2& delta)noexcept{
-		this->rectangle.p += delta;
+	void move_by(const vector2& delta){
+		this->move_to(this->rectangle.p + delta);
 	}
 
 	/**

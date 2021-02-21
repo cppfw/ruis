@@ -24,7 +24,6 @@ namespace morda{
  * @endcode
  */
 class container : virtual public widget{
-
 public:
 	typedef std::vector<std::shared_ptr<widget>> widget_list;
 	typedef std::vector<std::shared_ptr<const widget>> const_widget_list;
@@ -72,7 +71,7 @@ private:
 		}
 	};
 
-
+	void update_hovering(const morda::vector2& pos, unsigned pointer_id)override;
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.

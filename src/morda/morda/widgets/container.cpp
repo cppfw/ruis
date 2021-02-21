@@ -173,6 +173,15 @@ bool container::on_mouse_move(const mouse_move_event& e){
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
+	// find widget which captures the mouse pointer currently, in case the mouse pointer is captured
+	widget* capturing_widget = nullptr;
+	auto i = this->mouse_capture_map.find(e.pointer_id);
+	if(i != this->mouse_capture_map.end()){
+		if(auto w = i->second.capturing_widget.lock()){
+			capturing_widget = w.get();
+		}
+	}
+
 	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
 		auto& c = *i;
@@ -182,27 +191,18 @@ bool container::on_mouse_move(const mouse_move_event& e){
 			continue;
 		}
 		
-		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
-		bool consumed = c->on_mouse_move(mouse_move_event{
-				e.pos - c->rect().p,
-				e.pointer_id
-			});
-
-		// set hovered goes after move notification because position of widget could change
-		// during handling the notification, so need to check after that for hovering
-		if(!c->rect().overlaps(e.pos)){
-			c->set_hovered(false, e.pointer_id);
+		// in case the child widget does not capture the mouse pointer and the mouse pointer is not
+		// within the widget's rectangle, then do not send mouse move event to such child widget
+		if(!c->rect().overlaps(e.pos) && c.get() != capturing_widget){
 			continue;
 		}
 
-		c->set_hovered(true, e.pointer_id);
-
-		if(consumed){ // consumed mouse move event
-			// un-hover rest of the children
-			for(++i; i != this->children().rend(); ++i){
-				auto& c = *i;
-				c->set_hovered(false, e.pointer_id);
-			}
+		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
+		if(c->on_mouse_move(mouse_move_event{
+				e.pos - c->rect().p,
+				e.pointer_id
+			}))
+		{
 			return true;
 		}
 	}
@@ -210,15 +210,15 @@ bool container::on_mouse_move(const mouse_move_event& e){
 	return false;
 }
 
-void container::on_hover_change(unsigned pointerID){
-	if(this->is_hovered(pointerID)){
+void container::on_hover_change(unsigned pointer_id){
+	if(this->is_hovered(pointer_id)){
 		return;
 	}
 
-	// un-hover all the children if container became un-hovered
+	// un-hover all the children since container became un-hovered
 	blocked_flag_guard blocked_guard(this->is_blocked);
 	for(auto& w : this->children()){
-		w->set_hovered(false, pointerID);
+		w->set_hovered(false, pointer_id);
 	}
 }
 
@@ -401,5 +401,22 @@ void container::on_enable_change(){
 	
 	for(auto& c : this->children()){
 		c->set_enabled(this->is_enabled());
+	}
+}
+
+void container::update_hovering(const morda::vector2& pos, unsigned pointer_id){
+	this->widget::update_hovering(pos, pointer_id);
+
+	if(!this->is_hovered(pointer_id)){
+		return;
+	}
+
+	// container is hovered, need to update hovering of all the children
+	blocked_flag_guard blocked_guard(this->is_blocked);
+	for(auto& c : this->children()){
+		c->update_hovering(
+				pos - this->rect().p,
+				pointer_id
+			);
 	}
 }
