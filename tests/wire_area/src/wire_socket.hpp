@@ -26,6 +26,7 @@ public:
 public:
 	wire_socket(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
+protected:
 	std::shared_ptr<wire_socket> getRemote();
 public:
 
